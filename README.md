@@ -97,4 +97,6 @@ cargo build --release --no-default-features
 
 ## License
 
-MIT
+Apache 2.0
+
+Copyright 2026 Gobby AI
