@@ -74,6 +74,7 @@ impl Neo4jClient {
     }
 
     /// Check if Neo4j is reachable.
+    #[allow(dead_code)]
     pub fn ping(&self) -> bool {
         self.query("RETURN 1 AS ok", None).is_ok()
     }

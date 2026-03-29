@@ -113,6 +113,7 @@ impl IndexedFile {
         Uuid::new_v5(&CODE_INDEX_UUID_NAMESPACE, key.as_bytes()).to_string()
     }
 
+    #[allow(dead_code)]
     pub fn from_row(row: &Row) -> rusqlite::Result<Self> {
         Ok(Self {
             id: row.get("id")?,
@@ -153,7 +154,7 @@ impl ContentChunk {
 pub struct ImportRelation {
     pub file_path: String,
     pub module_name: String,
-    pub project_id: String,
+    pub _project_id: String,
 }
 
 /// Call relationship extracted from AST.
@@ -163,7 +164,7 @@ pub struct CallRelation {
     pub callee_name: String,
     pub file_path: String,
     pub line: usize,
-    pub project_id: String,
+    pub _project_id: String,
 }
 
 /// Project index statistics.

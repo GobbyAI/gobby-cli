@@ -317,7 +317,7 @@ fn extract_imports(
                 imports.push(ImportRelation {
                     file_path: rel_path.to_string(),
                     module_name: text,
-                    project_id: String::new(),
+                    _project_id: String::new(),
                 });
             }
         }
@@ -372,10 +372,9 @@ fn extract_calls(
         let target = call_node.unwrap_or(name_n);
         let caller_id = symbols
             .iter()
-            .filter(|s| {
+            .rfind(|s| {
                 s.byte_start <= target.start_byte() && target.start_byte() <= s.byte_end
             })
-            .next_back()
             .map(|s| s.id.clone())
             .unwrap_or_default();
 
@@ -384,7 +383,7 @@ fn extract_calls(
             callee_name,
             file_path: rel_path.to_string(),
             line: name_n.start_position().row + 1,
-            project_id: String::new(),
+            _project_id: String::new(),
         });
     }
 

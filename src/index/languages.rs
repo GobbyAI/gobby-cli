@@ -10,6 +10,7 @@ pub struct LanguageSpec {
     pub symbol_query: &'static str,
     pub import_query: &'static str,
     pub call_query: &'static str,
+    #[allow(dead_code)]
     pub container_types: &'static [&'static str],
 }
 

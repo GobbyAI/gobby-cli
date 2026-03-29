@@ -15,6 +15,7 @@ use serde_json::Value;
 use crate::config::{Context, QdrantConfig};
 
 /// Embedding dimension for nomic-embed-text-v1.5.
+#[cfg(feature = "embeddings")]
 const EMBEDDING_DIM: usize = 768;
 
 // ── Embedding model (requires `embeddings` feature) ─────────────────
@@ -151,6 +152,7 @@ pub fn embed_text(_text: &str, _is_query: bool) -> Option<Vec<f32>> {
 }
 
 #[cfg(not(feature = "embeddings"))]
+#[allow(dead_code)]
 pub fn embed_texts(texts: &[String], _is_query: bool) -> Vec<Option<Vec<f32>>> {
     vec![None; texts.len()]
 }
@@ -211,6 +213,7 @@ pub fn vector_search(
 }
 
 /// Upsert vectors to Qdrant for symbols.
+#[allow(dead_code)]
 pub fn upsert_vectors(
     config: &QdrantConfig,
     collection: &str,
@@ -275,6 +278,7 @@ pub fn semantic_search(ctx: &Context, query: &str, limit: usize) -> Vec<(String,
 }
 
 /// Build embedding text for a symbol (name + signature + docstring).
+#[allow(dead_code)]
 pub fn symbol_embed_text(sym: &crate::models::Symbol) -> String {
     let mut text = sym.qualified_name.clone();
     if let Some(sig) = &sym.signature {

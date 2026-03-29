@@ -13,7 +13,3 @@ pub fn print_json<T: Serialize>(value: &T) -> anyhow::Result<()> {
     Ok(())
 }
 
-/// Print a plain text line to stdout.
-pub fn print_text(text: &str) {
-    println!("{text}");
-}
