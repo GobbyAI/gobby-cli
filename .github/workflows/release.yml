@@ -1,20 +1,16 @@
-name: Build
+name: Release
 
 on:
   push:
-    branches: [main]
-    paths: ['src/**', 'Cargo.toml', 'Cargo.lock', '.github/workflows/build.yml']
-  pull_request:
-    paths: ['src/**', 'Cargo.toml', 'Cargo.lock', '.github/workflows/build.yml']
-  workflow_dispatch:
+    tags:
+      - "v*"
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+permissions:
+  contents: write
 
 jobs:
-  check:
-    name: Check & Lint
+  test:
+    name: Test before release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,20 +18,7 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
-          components: clippy, rustfmt
-
-      - name: Cache cargo registry & build
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('Cargo.lock') }}
-          restore-keys: ${{ runner.os }}-cargo-
-
-      - name: Check formatting
-        run: cargo fmt --check
+          components: clippy
 
       - name: Clippy
         run: cargo clippy --no-default-features -- -D warnings
@@ -44,41 +27,41 @@ jobs:
         run: cargo test --no-default-features
 
   build:
-    needs: check
+    needs: test
     strategy:
       fail-fast: false
       matrix:
         include:
           # macOS — embeddings enabled (Metal GPU)
-          - os: macos-latest
-            target: aarch64-apple-darwin
+          - target: aarch64-apple-darwin
+            os: macos-latest
             features: "--features embeddings"
             install_cmake: true
             cross: false
-          - os: macos-13
-            target: x86_64-apple-darwin
+          - target: x86_64-apple-darwin
+            os: macos-13
             features: "--features embeddings"
             install_cmake: true
             cross: false
           # Linux — no embeddings (no Metal)
-          - os: ubuntu-latest
-            target: x86_64-unknown-linux-gnu
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
             features: "--no-default-features"
             install_cmake: false
             cross: false
-          - os: ubuntu-latest
-            target: aarch64-unknown-linux-gnu
+          - target: aarch64-unknown-linux-gnu
+            os: ubuntu-latest
             features: "--no-default-features"
             install_cmake: false
             cross: true
           # Windows — no embeddings
-          - os: windows-latest
-            target: x86_64-pc-windows-msvc
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
             features: "--no-default-features"
             install_cmake: false
             cross: false
-          - os: windows-latest
-            target: aarch64-pc-windows-msvc
+          - target: aarch64-pc-windows-msvc
+            os: windows-latest
             features: "--no-default-features"
             install_cmake: false
             cross: true
@@ -105,12 +88,8 @@ jobs:
           sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
           echo "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc" >> $GITHUB_ENV
 
-      - name: Build
+      - name: Build release binary
         run: cargo build --release --target ${{ matrix.target }} ${{ matrix.features }}
-
-      - name: Test
-        if: "!matrix.cross"
-        run: cargo test ${{ matrix.features }}
 
       - name: Package (Unix)
         if: "!startsWith(matrix.os, 'windows')"
@@ -135,23 +114,23 @@ jobs:
             gcode-${{ matrix.target }}.zip
 
   release:
-    if: startsWith(github.ref, 'refs/tags/v')
     needs: build
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
-      - uses: actions/download-artifact@v4
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
 
-      - name: Create Release
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            gcode-aarch64-apple-darwin/gcode-aarch64-apple-darwin.tar.gz
-            gcode-x86_64-apple-darwin/gcode-x86_64-apple-darwin.tar.gz
-            gcode-x86_64-unknown-linux-gnu/gcode-x86_64-unknown-linux-gnu.tar.gz
-            gcode-aarch64-unknown-linux-gnu/gcode-aarch64-unknown-linux-gnu.tar.gz
-            gcode-x86_64-pc-windows-msvc/gcode-x86_64-pc-windows-msvc.zip
-            gcode-aarch64-pc-windows-msvc/gcode-aarch64-pc-windows-msvc.zip
+            gcode-aarch64-apple-darwin.tar.gz
+            gcode-x86_64-apple-darwin.tar.gz
+            gcode-x86_64-unknown-linux-gnu.tar.gz
+            gcode-aarch64-unknown-linux-gnu.tar.gz
+            gcode-x86_64-pc-windows-msvc.zip
+            gcode-aarch64-pc-windows-msvc.zip
           generate_release_notes: true
