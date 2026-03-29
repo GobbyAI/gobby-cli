@@ -50,7 +50,9 @@ pub fn search_symbols_fts(
          LIMIT ?4"
     );
 
-    let result = if let Some(k) = kind {
+    
+
+    if let Some(k) = kind {
         let mut stmt = match conn.prepare(&sql) {
             Ok(s) => s,
             Err(_) => return Vec::new(),
@@ -64,13 +66,11 @@ pub fn search_symbols_fts(
         .unwrap_or_default()
     } else {
         // Without kind filter, ?3 is limit
-        let sql_no_kind = format!(
-            "SELECT cs.* FROM code_symbols_fts fts \
+        let sql_no_kind = "SELECT cs.* FROM code_symbols_fts fts \
              JOIN code_symbols cs ON cs.rowid = fts.rowid \
              WHERE code_symbols_fts MATCH ?1 AND cs.project_id = ?2 \
              ORDER BY rank \
-             LIMIT ?3"
-        );
+             LIMIT ?3".to_string();
         let mut stmt = match conn.prepare(&sql_no_kind) {
             Ok(s) => s,
             Err(_) => return Vec::new(),
@@ -82,9 +82,7 @@ pub fn search_symbols_fts(
         .ok()
         .map(|rows| rows.filter_map(|r| r.ok()).collect::<Vec<_>>())
         .unwrap_or_default()
-    };
-
-    result
+    }
 }
 
 /// Fallback LIKE search on symbol names.
@@ -118,11 +116,9 @@ pub fn search_symbols_by_name(
         .map(|rows| rows.filter_map(|r| r.ok()).collect())
         .unwrap_or_default()
     } else {
-        let sql_no_kind = format!(
-            "SELECT * FROM code_symbols WHERE project_id = ?1 \
+        let sql_no_kind = "SELECT * FROM code_symbols WHERE project_id = ?1 \
              AND (name LIKE ?2 OR qualified_name LIKE ?2) \
-             ORDER BY name LIMIT ?3"
-        );
+             ORDER BY name LIMIT ?3".to_string();
         let mut stmt = match conn.prepare(&sql_no_kind) {
             Ok(s) => s,
             Err(_) => return Vec::new(),

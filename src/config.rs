@@ -208,9 +208,7 @@ fn resolve_qdrant_config(db_path: &Path, quiet: bool) -> Option<QdrantConfig> {
         .unwrap_or_else(|| "code_symbols_".to_string());
 
     // Only return Some if there's a URL (qdrant_path = embedded mode, not accessible from CLI)
-    if url.is_none() {
-        return None;
-    }
+    url.as_ref()?;
 
     Some(QdrantConfig {
         url,

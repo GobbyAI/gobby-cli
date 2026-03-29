@@ -47,11 +47,10 @@ pub fn index_directory(
     let mut current_hashes: HashMap<String, String> = HashMap::new();
     let stale: Option<std::collections::HashSet<String>> = if incremental {
         for path in &candidates {
-            if let Ok(rel) = relative_path(path, root_path) {
-                if let Ok(h) = hasher::file_content_hash(path) {
+            if let Ok(rel) = relative_path(path, root_path)
+                && let Ok(h) = hasher::file_content_hash(path) {
                     current_hashes.insert(rel, h);
                 }
-            }
         }
         Some(get_stale_files(conn, project_id, &current_hashes))
     } else {
@@ -73,12 +72,11 @@ pub fn index_directory(
             Err(_) => continue,
         };
 
-        if let Some(ref stale_set) = stale {
-            if !stale_set.contains(&rel) {
+        if let Some(ref stale_set) = stale
+            && !stale_set.contains(&rel) {
                 result.files_skipped += 1;
                 continue;
             }
-        }
 
         match index_file(conn, path, project_id, root_path, &excludes, neo4j) {
             Some(count) => {
@@ -156,12 +154,9 @@ pub fn index_files(
             continue;
         }
 
-        match index_file(conn, &abs, project_id, root_path, &excludes, neo4j) {
-            Some(count) => {
-                result.files_indexed += 1;
-                result.symbols_found += count;
-            }
-            None => {}
+        if let Some(count) = index_file(conn, &abs, project_id, root_path, &excludes, neo4j) {
+            result.files_indexed += 1;
+            result.symbols_found += count;
         }
     }
 
@@ -449,15 +444,14 @@ fn get_stale_files(
          LEFT JOIN code_indexed_files cf \
              ON cf.project_id = ?1 AND cf.file_path = ch.file_path \
          WHERE cf.file_path IS NULL OR cf.content_hash != ch.content_hash",
-    ) {
-        if let Ok(rows) = stmt.query_map(rusqlite::params![project_id], |row| {
+    )
+        && let Ok(rows) = stmt.query_map(rusqlite::params![project_id], |row| {
             row.get::<_, String>(0)
         }) {
             for row in rows.flatten() {
                 stale.insert(row);
             }
         }
-    }
 
     let _ = conn.execute_batch("DROP TABLE IF EXISTS _current_hashes;");
     stale
@@ -471,8 +465,8 @@ fn get_orphan_files(
     let mut orphans = Vec::new();
     if let Ok(mut stmt) = conn.prepare(
         "SELECT file_path FROM code_indexed_files WHERE project_id = ?1",
-    ) {
-        if let Ok(rows) = stmt.query_map(rusqlite::params![project_id], |row| {
+    )
+        && let Ok(rows) = stmt.query_map(rusqlite::params![project_id], |row| {
             row.get::<_, String>(0)
         }) {
             for row in rows.flatten() {
@@ -481,7 +475,6 @@ fn get_orphan_files(
                 }
             }
         }
-    }
     orphans
 }
 

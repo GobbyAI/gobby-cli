@@ -242,10 +242,7 @@ fn extract_docstring(node: &tree_sitter::Node, source: &[u8], language: &str) ->
             None
         };
 
-        let string_node = match string_node {
-            Some(n) => n,
-            None => return None,
-        };
+        let string_node = string_node?;
 
         // Try string_content child first
         let mut w4 = string_node.walk();
@@ -378,7 +375,7 @@ fn extract_calls(
             .filter(|s| {
                 s.byte_start <= target.start_byte() && target.start_byte() <= s.byte_end
             })
-            .last()
+            .next_back()
             .map(|s| s.id.clone())
             .unwrap_or_default();
 
