@@ -106,6 +106,7 @@ const RUST: LanguageSpec = LanguageSpec {
     "#,
     call_query: r#"
         (call_expression function: (identifier) @name) @call
+        (call_expression function: (scoped_identifier name: (identifier) @name)) @call
         (call_expression function: (field_expression field: (field_identifier) @name)) @call
     "#,
 };
