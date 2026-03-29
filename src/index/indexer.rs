@@ -12,8 +12,10 @@ use crate::index::hasher;
 use crate::index::languages;
 use crate::index::parser;
 use crate::index::walker;
+use crate::config::QdrantConfig;
 use crate::models::{IndexResult, IndexedFile, IndexedProject};
 use crate::neo4j::Neo4jClient;
+use crate::search::semantic;
 
 /// Default exclude patterns (matching Python CodeIndexConfig defaults).
 const DEFAULT_EXCLUDES: &[&str] = &[
@@ -29,6 +31,7 @@ pub fn index_directory(
     project_id: &str,
     incremental: bool,
     neo4j: Option<&Neo4jClient>,
+    qdrant: Option<&QdrantConfig>,
 ) -> anyhow::Result<IndexResult> {
     let start = Instant::now();
     let mut result = IndexResult {
@@ -78,7 +81,7 @@ pub fn index_directory(
                 continue;
             }
 
-        match index_file(conn, path, project_id, root_path, &excludes, neo4j) {
+        match index_file(conn, path, project_id, root_path, &excludes, neo4j, qdrant) {
             Some(count) => {
                 result.files_indexed += 1;
                 result.symbols_found += count;
@@ -128,6 +131,7 @@ pub fn index_files(
     project_id: &str,
     file_paths: &[String],
     neo4j: Option<&Neo4jClient>,
+    qdrant: Option<&QdrantConfig>,
 ) -> anyhow::Result<IndexResult> {
     let start = Instant::now();
     let mut result = IndexResult {
@@ -154,7 +158,7 @@ pub fn index_files(
             continue;
         }
 
-        if let Some(count) = index_file(conn, &abs, project_id, root_path, &excludes, neo4j) {
+        if let Some(count) = index_file(conn, &abs, project_id, root_path, &excludes, neo4j, qdrant) {
             result.files_indexed += 1;
             result.symbols_found += count;
         }
@@ -172,6 +176,7 @@ fn index_file(
     root_path: &Path,
     exclude_patterns: &[String],
     neo4j: Option<&Neo4jClient>,
+    qdrant: Option<&QdrantConfig>,
 ) -> Option<usize> {
     let rel = relative_path(file_path, root_path).ok()?;
 
@@ -188,6 +193,23 @@ fn index_file(
 
     // Upsert symbols to SQLite
     upsert_symbols(conn, &parse_result.symbols);
+
+    // Upsert embeddings to Qdrant (when embeddings feature + Qdrant configured)
+    if let Some(config) = qdrant {
+        let collection = format!("{}{}", config.collection_prefix, project_id);
+        let points: Vec<(String, Vec<f32>)> = parse_result
+            .symbols
+            .iter()
+            .filter_map(|sym| {
+                let text = semantic::symbol_embed_text(sym);
+                let embedding = semantic::embed_text(&text, false)?;
+                Some((sym.id.clone(), embedding))
+            })
+            .collect();
+        if !points.is_empty() {
+            let _ = semantic::upsert_vectors(config, &collection, &points);
+        }
+    }
 
     // Write graph edges to Neo4j
     if let Some(client) = neo4j {

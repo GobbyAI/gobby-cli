@@ -73,11 +73,6 @@ impl Neo4jClient {
         Ok(parse_v2_response(&data))
     }
 
-    /// Check if Neo4j is reachable.
-    #[allow(dead_code)]
-    pub fn ping(&self) -> bool {
-        self.query("RETURN 1 AS ok", None).is_ok()
-    }
 }
 
 /// Parse Neo4j HTTP API v2 response into flat row dicts.

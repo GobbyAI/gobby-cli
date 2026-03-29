@@ -20,9 +20,10 @@ pub fn run(
     // Create Neo4j client if configured
     let neo4j_client = ctx.neo4j.as_ref().map(Neo4jClient::from_config);
     let neo4j_ref = neo4j_client.as_ref();
+    let qdrant_ref = ctx.qdrant.as_ref();
 
     if let Some(file_list) = files {
-        let result = indexer::index_files(&conn, &root, &ctx.project_id, &file_list, neo4j_ref)?;
+        let result = indexer::index_files(&conn, &root, &ctx.project_id, &file_list, neo4j_ref, qdrant_ref)?;
         if !ctx.quiet {
             eprintln!(
                 "Indexed {} files, {} symbols in {}ms",
@@ -30,7 +31,7 @@ pub fn run(
             );
         }
     } else {
-        indexer::index_directory(&conn, &root, &ctx.project_id, true, neo4j_ref)?;
+        indexer::index_directory(&conn, &root, &ctx.project_id, true, neo4j_ref, qdrant_ref)?;
     }
 
     Ok(())

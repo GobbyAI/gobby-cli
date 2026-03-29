@@ -10,8 +10,6 @@ pub struct LanguageSpec {
     pub symbol_query: &'static str,
     pub import_query: &'static str,
     pub call_query: &'static str,
-    #[allow(dead_code)]
-    pub container_types: &'static [&'static str],
 }
 
 // ── Query Definitions ──────────────────────────────────────────────────
@@ -30,7 +28,6 @@ const PYTHON: LanguageSpec = LanguageSpec {
         (call function: (identifier) @name) @call
         (call function: (attribute attribute: (identifier) @name)) @call
     "#,
-    container_types: &["class_definition"],
 };
 
 const JAVASCRIPT: LanguageSpec = LanguageSpec {
@@ -50,7 +47,6 @@ const JAVASCRIPT: LanguageSpec = LanguageSpec {
         (call_expression function: (identifier) @name) @call
         (call_expression function: (member_expression property: (property_identifier) @name)) @call
     "#,
-    container_types: &["class_declaration", "class"],
 };
 
 const TYPESCRIPT: LanguageSpec = LanguageSpec {
@@ -77,7 +73,6 @@ const TYPESCRIPT: LanguageSpec = LanguageSpec {
         (call_expression function: (identifier) @name) @call
         (call_expression function: (member_expression property: (property_identifier) @name)) @call
     "#,
-    container_types: &["class_declaration", "interface_declaration"],
 };
 
 const GO: LanguageSpec = LanguageSpec {
@@ -94,7 +89,6 @@ const GO: LanguageSpec = LanguageSpec {
         (call_expression function: (identifier) @name) @call
         (call_expression function: (selector_expression field: (field_identifier) @name)) @call
     "#,
-    container_types: &[],
 };
 
 const RUST: LanguageSpec = LanguageSpec {
@@ -114,7 +108,6 @@ const RUST: LanguageSpec = LanguageSpec {
         (call_expression function: (identifier) @name) @call
         (call_expression function: (field_expression field: (field_identifier) @name)) @call
     "#,
-    container_types: &["impl_item"],
 };
 
 const JAVA: LanguageSpec = LanguageSpec {
@@ -132,7 +125,6 @@ const JAVA: LanguageSpec = LanguageSpec {
     call_query: r#"
         (method_invocation name: (identifier) @name) @call
     "#,
-    container_types: &["class_declaration", "interface_declaration", "enum_declaration"],
 };
 
 const PHP: LanguageSpec = LanguageSpec {
@@ -151,7 +143,6 @@ const PHP: LanguageSpec = LanguageSpec {
         (function_call_expression function: (name) @name) @call
         (member_call_expression name: (name) @name) @call
     "#,
-    container_types: &["class_declaration", "interface_declaration", "trait_declaration"],
 };
 
 const DART: LanguageSpec = LanguageSpec {
@@ -166,7 +157,6 @@ const DART: LanguageSpec = LanguageSpec {
         (import_or_export) @import
     "#,
     call_query: "",
-    container_types: &["class_definition"],
 };
 
 const CSHARP: LanguageSpec = LanguageSpec {
@@ -186,7 +176,6 @@ const CSHARP: LanguageSpec = LanguageSpec {
         (invocation_expression function: (identifier) @name) @call
         (invocation_expression function: (member_access_expression name: (identifier) @name)) @call
     "#,
-    container_types: &["class_declaration", "interface_declaration", "struct_declaration"],
 };
 
 const C_LANG: LanguageSpec = LanguageSpec {
@@ -203,7 +192,6 @@ const C_LANG: LanguageSpec = LanguageSpec {
     call_query: r#"
         (call_expression function: (identifier) @name) @call
     "#,
-    container_types: &[],
 };
 
 const CPP: LanguageSpec = LanguageSpec {
@@ -221,7 +209,6 @@ const CPP: LanguageSpec = LanguageSpec {
         (call_expression function: (identifier) @name) @call
         (call_expression function: (field_expression field: (field_identifier) @name)) @call
     "#,
-    container_types: &["class_specifier"],
 };
 
 const ELIXIR: LanguageSpec = LanguageSpec {
@@ -234,7 +221,6 @@ const ELIXIR: LanguageSpec = LanguageSpec {
         (call target: (identifier) @_keyword (#any-of? @_keyword "import" "alias" "use" "require")) @import
     "#,
     call_query: "",
-    container_types: &[],
 };
 
 const RUBY: LanguageSpec = LanguageSpec {
@@ -251,7 +237,6 @@ const RUBY: LanguageSpec = LanguageSpec {
     call_query: r#"
         (call method: (identifier) @name) @call
     "#,
-    container_types: &["class", "module"],
 };
 
 const MARKDOWN: LanguageSpec = LanguageSpec {
@@ -262,7 +247,6 @@ const MARKDOWN: LanguageSpec = LanguageSpec {
     "#,
     import_query: "",
     call_query: "",
-    container_types: &[],
 };
 
 const YAML: LanguageSpec = LanguageSpec {
@@ -272,7 +256,6 @@ const YAML: LanguageSpec = LanguageSpec {
     "#,
     import_query: "",
     call_query: "",
-    container_types: &["block_mapping_pair"],
 };
 
 const JSON_LANG: LanguageSpec = LanguageSpec {
@@ -282,7 +265,6 @@ const JSON_LANG: LanguageSpec = LanguageSpec {
     "#,
     import_query: "",
     call_query: "",
-    container_types: &["pair"],
 };
 
 // ── Registry ───────────────────────────────────────────────────────────

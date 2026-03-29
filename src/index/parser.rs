@@ -317,7 +317,6 @@ fn extract_imports(
                 imports.push(ImportRelation {
                     file_path: rel_path.to_string(),
                     module_name: text,
-                    _project_id: String::new(),
                 });
             }
         }
@@ -383,7 +382,6 @@ fn extract_calls(
             callee_name,
             file_path: rel_path.to_string(),
             line: name_n.start_position().row + 1,
-            _project_id: String::new(),
         });
     }
 

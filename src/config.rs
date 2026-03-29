@@ -51,7 +51,7 @@ impl Context {
             None => detect_project_root()?,
         };
 
-        let db_path = resolve_db_path()?;
+        let db_path = resolve_db_path(&project_root)?;
         let project_id = resolve_project_id(&project_root)?;
 
         // Resolve service configs from config_store (best-effort)
@@ -69,12 +69,18 @@ impl Context {
     }
 }
 
-/// Read database_path from ~/.gobby/bootstrap.yaml, falling back to default.
-fn resolve_db_path() -> anyhow::Result<PathBuf> {
+/// Resolve database path.
+///
+/// Resolution order:
+/// 1. `~/.gobby/bootstrap.yaml` `database_path` key (gobby configured a custom path)
+/// 2. `.gobby/project.json` exists in project root → `~/.gobby/gobby-hub.db` (gobby present)
+/// 3. Neither → `~/.gobby/gobby-code-index.db` (standalone)
+fn resolve_db_path(project_root: &Path) -> anyhow::Result<PathBuf> {
     let gobby_dir = dirs::home_dir()
         .context("cannot determine home directory")?
         .join(".gobby");
 
+    // 1. Explicit config from bootstrap.yaml
     let bootstrap_path = gobby_dir.join("bootstrap.yaml");
     if bootstrap_path.exists() {
         let contents = std::fs::read_to_string(&bootstrap_path)?;
@@ -85,7 +91,13 @@ fn resolve_db_path() -> anyhow::Result<PathBuf> {
         }
     }
 
-    Ok(gobby_dir.join("gobby-hub.db"))
+    // 2. Gobby present → shared DB
+    if project_root.join(".gobby").join("project.json").exists() {
+        return Ok(gobby_dir.join("gobby-hub.db"));
+    }
+
+    // 3. Standalone → gcode's own DB
+    Ok(gobby_dir.join("gobby-code-index.db"))
 }
 
 /// Detect project root by walking up the directory tree.

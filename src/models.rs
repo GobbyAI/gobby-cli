@@ -113,19 +113,6 @@ impl IndexedFile {
         Uuid::new_v5(&CODE_INDEX_UUID_NAMESPACE, key.as_bytes()).to_string()
     }
 
-    #[allow(dead_code)]
-    pub fn from_row(row: &Row) -> rusqlite::Result<Self> {
-        Ok(Self {
-            id: row.get("id")?,
-            project_id: row.get("project_id")?,
-            file_path: row.get("file_path")?,
-            language: row.get("language")?,
-            content_hash: row.get::<_, Option<String>>("content_hash")?.unwrap_or_default(),
-            symbol_count: row.get::<_, i64>("symbol_count")? as usize,
-            byte_size: row.get::<_, i64>("byte_size")? as usize,
-            indexed_at: row.get::<_, Option<String>>("indexed_at")?.unwrap_or_default(),
-        })
-    }
 }
 
 /// A chunk of file content for FTS search.
@@ -154,7 +141,6 @@ impl ContentChunk {
 pub struct ImportRelation {
     pub file_path: String,
     pub module_name: String,
-    pub _project_id: String,
 }
 
 /// Call relationship extracted from AST.
@@ -164,7 +150,6 @@ pub struct CallRelation {
     pub callee_name: String,
     pub file_path: String,
     pub line: usize,
-    pub _project_id: String,
 }
 
 /// Project index statistics.
