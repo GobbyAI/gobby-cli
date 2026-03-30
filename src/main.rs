@@ -49,7 +49,11 @@ enum Command {
     /// Show project index status
     Status,
     /// Clear index and force re-index
-    Invalidate,
+    Invalidate {
+        /// Skip confirmation prompt
+        #[arg(long)]
+        force: bool,
+    },
 
     /// Hybrid search: FTS5 + semantic + graph boost
     Search {
@@ -146,7 +150,7 @@ fn main() -> anyhow::Result<()> {
         Command::Init | Command::Projects => unreachable!(),
         Command::Index { path, files } => commands::index::run(&ctx, path, files),
         Command::Status => commands::status::run(&ctx, cli.format),
-        Command::Invalidate => commands::status::invalidate(&ctx),
+        Command::Invalidate { force } => commands::status::invalidate(&ctx, force),
 
         Command::Search { query, limit, kind } => {
             commands::search::search(&ctx, &query, limit, kind.as_deref(), cli.format)

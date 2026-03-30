@@ -45,7 +45,27 @@ pub fn run(ctx: &Context, format: Format) -> anyhow::Result<()> {
     }
 }
 
-pub fn invalidate(ctx: &Context) -> anyhow::Result<()> {
+pub fn invalidate(ctx: &Context, force: bool) -> anyhow::Result<()> {
+    if !force {
+        let project_name = ctx.project_root
+            .file_name()
+            .map(|n| n.to_string_lossy().to_string())
+            .unwrap_or_else(|| ctx.project_id.clone());
+
+        eprint!(
+            "This will clear the entire code index for '{}'. Continue? [y/N] ",
+            project_name
+        );
+        let _ = std::io::Write::flush(&mut std::io::stderr());
+
+        let mut input = String::new();
+        std::io::stdin().read_line(&mut input)?;
+        if !input.trim().eq_ignore_ascii_case("y") {
+            eprintln!("Aborted.");
+            return Ok(());
+        }
+    }
+
     let conn = db::open_readwrite(&ctx.db_path)?;
     indexer::invalidate(&conn, &ctx.project_id)
 }
