@@ -9,6 +9,7 @@ mod project;
 mod savings;
 mod schema;
 mod search;
+mod skill;
 mod secrets;
 
 use clap::{Parser, Subcommand};

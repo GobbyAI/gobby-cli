@@ -2,6 +2,7 @@ use std::path::Path;
 
 use crate::output::{self, Format};
 use crate::project;
+use crate::skill;
 
 pub fn run(project_root: &Path, format: Format, quiet: bool) -> anyhow::Result<()> {
     let (project_id, was_created) = project::ensure_gcode_json(project_root)?;
@@ -14,12 +15,40 @@ pub fn run(project_root: &Path, format: Format, quiet: bool) -> anyhow::Result<(
         "existing"
     };
 
+    // Detect AI CLIs and install skills (skip if gobby manages this project)
+    let mut installed_skills: Vec<String> = Vec::new();
+    if status != "gobby" {
+        let clis = skill::detect_clis(project_root);
+        for cli in &clis {
+            match skill::install_skill(project_root, cli) {
+                Ok(path) if !path.is_empty() => {
+                    if !quiet {
+                        eprintln!("Installed gcode skill for {} → {}", cli.name, path);
+                    }
+                    installed_skills.push(cli.name.to_string());
+                }
+                Err(e) => {
+                    if !quiet {
+                        eprintln!("Warning: failed to install skill for {}: {}", cli.name, e);
+                    }
+                }
+                _ => {}
+            }
+        }
+    }
+
     match format {
-        Format::Json => output::print_json(&serde_json::json!({
-            "project_id": project_id,
-            "project_root": project_root.to_string_lossy(),
-            "status": status,
-        })),
+        Format::Json => {
+            let mut result = serde_json::json!({
+                "project_id": project_id,
+                "project_root": project_root.to_string_lossy(),
+                "status": status,
+            });
+            if !installed_skills.is_empty() {
+                result["skills_installed"] = serde_json::json!(installed_skills);
+            }
+            output::print_json(&result)
+        }
         Format::Text => {
             if !quiet {
                 match status {
