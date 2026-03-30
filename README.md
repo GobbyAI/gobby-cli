@@ -1,102 +1,195 @@
-# gobby-code
+<!-- markdownlint-disable MD033 MD041 -->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/GobbyAI/gobby/main/logo.png" alt="Gobby" width="160" />
+</p>
 
-Fast Rust CLI for [Gobby](https://github.com/GobbyAI/gobby)'s code index. AST-aware search, symbol navigation, and dependency graph analysis — all from the command line.
+<h1 align="center">gcode</h1>
 
-Binary name: `gcode`
+<p align="center">
+  <strong>AST-aware code search and navigation for AI agents.</strong><br>
+  Fast symbol lookup, dependency graphs, and semantic search — all from the CLI.
+</p>
 
-## What it does
+<p align="center">
+  <a href="https://github.com/GobbyAI/gobby-code/actions/workflows/ci.yml"><img src="https://github.com/GobbyAI/gobby-code/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/GobbyAI/gobby-code/releases/latest"><img src="https://img.shields.io/github/v/release/GobbyAI/gobby-code" alt="Release"></a>
+  <a href="https://github.com/GobbyAI/gobby-code"><img src="https://img.shields.io/badge/built%20with-Gobby-blueviolet" alt="Built with Gobby"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License"></a>
+</p>
 
-`gcode` gives AI coding agents (and humans) fast access to a project's code graph without needing the Gobby daemon running. It reads and writes the same databases as the daemon — SQLite for symbols/search, Neo4j for the call graph, Qdrant for semantic vectors.
+---
+
+## The Problem
+
+AI coding agents read entire files to find a single function. A 2000-line module gets dumped into the context window when all the agent needed was a 15-line method. Multiply that across a session and you're burning thousands of tokens on code that isn't relevant.
+
+## The Fix
+
+gcode indexes your codebase using tree-sitter AST parsing and gives agents (and humans) precise, token-efficient access to symbols, search results, and dependency graphs.
+
+```
+$ gcode search "handleAuth"
+[
+  {"name": "handleAuth", "kind": "function", "file_path": "src/auth/middleware.ts",
+   "line_start": 42, "signature": "async function handleAuth(req, res, next)", ...}
+]
+```
+
+One search call instead of reading 50 files. 90%+ token savings.
+
+## How It Works
+
+```
+codebase → tree-sitter AST → SQLite index → search / retrieve / navigate
+                │                   │
+     ┌──────────┼──────────┐        │
+     │          │          │        │
+  symbols    chunks     files    ┌──┴──┐
+  (FTS5)    (FTS5)   (hashes)   │     │
+                              Neo4j  Qdrant
+                             (calls) (vectors)
+```
+
+1. **Index** — Walk files, parse ASTs with tree-sitter, extract symbols and content chunks
+2. **Store** — SQLite for symbols + FTS5, Neo4j for call/import graphs, Qdrant for semantic vectors
+3. **Search** — Hybrid ranking: FTS5 + semantic similarity + graph relevance → Reciprocal Rank Fusion
+4. **Retrieve** — Byte-offset reads for exact symbol source, no file-level bloat
 
 ## Installation
 
-### From GitHub Releases (recommended)
+### Pre-built binaries
 
-Download the latest binary for your platform from [Releases](https://github.com/GobbyAI/gobby-code/releases).
-
-### From source
+Download from [GitHub Releases](https://github.com/GobbyAI/gobby-code/releases/latest):
 
 ```bash
+# macOS (Apple Silicon)
+curl -L https://github.com/GobbyAI/gobby-code/releases/latest/download/gcode-aarch64-apple-darwin.tar.gz | tar xz
+sudo mv gcode /usr/local/bin/
+
+# macOS (Intel)
+curl -L https://github.com/GobbyAI/gobby-code/releases/latest/download/gcode-x86_64-apple-darwin.tar.gz | tar xz
+sudo mv gcode /usr/local/bin/
+
+# Linux (x86_64)
+curl -L https://github.com/GobbyAI/gobby-code/releases/latest/download/gcode-x86_64-unknown-linux-gnu.tar.gz | tar xz
+sudo mv gcode /usr/local/bin/
+
+# Linux (ARM64)
+curl -L https://github.com/GobbyAI/gobby-code/releases/latest/download/gcode-aarch64-unknown-linux-gnu.tar.gz | tar xz
+sudo mv gcode /usr/local/bin/
+```
+
+### Build from source
+
+```bash
+# With embeddings (requires cmake for llama-cpp-2)
 cargo install --git https://github.com/GobbyAI/gobby-code
+
+# Without embeddings (no cmake needed)
+cargo install --git https://github.com/GobbyAI/gobby-code --no-default-features
 ```
 
-### Via Gobby
+### With Gobby
 
-```bash
-gobby install  # Installs gcode automatically
-```
+gcode is installed automatically as part of the [Gobby](https://github.com/GobbyAI/gobby) platform. If you're using Gobby, you already have it.
 
 ## Usage
 
 ```bash
-# Indexing (standalone — tree-sitter in Rust)
-gcode index [<path>]                      # Full/incremental index
-gcode index --files <f1> <f2>             # Index specific files
-gcode status                              # Project stats
-gcode invalidate                          # Clear index, force re-index
+# Initialize and index a project (one step)
+gcode init
 
 # Search
-gcode search <query> [--limit N]          # Hybrid RRF (FTS + semantic + graph)
-gcode search-text <query> [--limit N]     # FTS5 symbol names
-gcode search-content <query> [--limit N]  # FTS5 file content
+gcode search "query"                      # Hybrid: FTS + semantic + graph boost
+gcode search "query" --kind function      # Filter by symbol kind
+gcode search-text "query"                 # FTS5 on symbol names/signatures
+gcode search-content "query"              # FTS5 on file content
 
 # Symbol retrieval
-gcode outline <file>                      # Hierarchical symbol tree
-gcode symbol <id>                         # Source by ID (byte-offset read)
+gcode outline src/auth.ts                 # Hierarchical symbol tree
+gcode symbol <id>                         # Source code by symbol ID
 gcode symbols <id1> <id2> ...             # Batch retrieve
 gcode tree                                # File tree with symbol counts
 
-# Graph (Neo4j)
-gcode callers <name> [--limit N]          # Who calls this?
-gcode usages <name> [--limit N]           # All references
-gcode imports <file>                      # Import graph
-gcode blast-radius <target> [--depth N]   # Transitive impact analysis
+# Dependency graph (requires Neo4j)
+gcode callers "handleAuth"                # Who calls this?
+gcode usages "handleAuth"                 # All references (calls + imports)
+gcode imports src/auth.ts                 # Import graph for a file
+gcode blast-radius "handleAuth" --depth 3 # Transitive impact analysis
 
-# Summaries
-gcode summary <symbol_id>                 # Cached AI summary
-gcode repo-outline                        # Directory-grouped stats
+# Project management
+gcode status                              # Index stats
+gcode projects                            # List all indexed projects
+gcode index                               # Re-index (incremental)
+gcode invalidate                          # Clear index, force full re-index
+
+# Cross-project queries
+gcode search --project myapp "query"      # By project name
+gcode search --project /path/to/app "q"   # By path
 
 # Global flags
---project <path>     # Override project root
---format text|json   # Output format (default: json)
---quiet              # Suppress warnings
+--format text|json                        # Output format (default: json)
+--quiet                                   # Suppress warnings and progress
 ```
 
-## Data layer
+## Operating Modes
 
-gcode shares Gobby's data layer — it is not a standalone database:
+gcode works in two modes depending on what's present:
 
-| Store | Purpose | Location |
-|-------|---------|----------|
-| SQLite | Symbols, FTS5 search, file metadata, config | `~/.gobby/gobby-hub.db` |
-| Neo4j | Call graph, import graph, blast radius | HTTP API (config from DB) |
-| Qdrant | Semantic vector search | REST API (config from DB) |
+| Mode | When | Database | Services |
+|------|------|----------|----------|
+| **Standalone** | No `.gobby/project.json` | `~/.gobby/gobby-code-index.db` | SQLite only |
+| **Gobby** | `.gobby/project.json` exists | `~/.gobby/gobby-hub.db` | SQLite + Neo4j + Qdrant |
 
-Config is resolved from `~/.gobby/bootstrap.yaml` → SQLite `config_store` table. Secrets are decrypted using Gobby's Fernet key derivation (`~/.gobby/machine_id` + `~/.gobby/.secret_salt`).
+Standalone mode is fully functional for indexing and FTS5 search. Neo4j (graph queries) and Qdrant (semantic search) add capabilities when available but are never required.
 
-## Graceful degradation
+## Graceful Degradation
 
 | Service unavailable | Behavior |
 |---------------------|----------|
 | Neo4j down | Graph commands return `[]`. Search loses graph boost. |
 | Qdrant down | Search loses semantic boost. FTS5 + graph still work. |
 | GGUF model missing | Semantic embeddings disabled. FTS5 + graph still work. |
-| No index yet | `gcode search` returns nothing. `gcode index` creates it. |
+| No index yet | Commands error with `Run gcode init to initialize`. |
 
-## Features
+## Language Support
 
-The `embeddings` Cargo feature (default: on) enables local GGUF embedding generation via `llama-cpp-2`. Requires cmake to build.
+gcode parses ASTs using tree-sitter with support for 18 languages:
+
+| Tier | Languages |
+|------|-----------|
+| **Tier 1** | Python, JavaScript, TypeScript, Go, Rust, Java, C, C++, C#, Ruby, PHP, Swift, Kotlin |
+| **Tier 2** | Dart, Elixir |
+| **Tier 3** | JSON, YAML, Markdown (content indexing only) |
+
+## Build Features
+
+The `embeddings` Cargo feature (default: on) enables local GGUF embedding generation via `llama-cpp-2`. Requires cmake to build. macOS builds use Metal GPU acceleration.
 
 ```bash
-# Build with embeddings (macOS Metal GPU)
-cargo build --release
-
-# Build without embeddings (no cmake needed)
-cargo build --release --no-default-features
+cargo build --release                        # With embeddings
+cargo build --release --no-default-features  # Without embeddings (no cmake)
 ```
+
+## Platform Support
+
+| Platform | Architecture | Status |
+|----------|-------------|--------|
+| macOS | Apple Silicon (aarch64) | Supported |
+| macOS | Intel (x86_64) | Supported |
+| Linux | x86_64 | Supported |
+| Linux | ARM64 (aarch64) | Supported |
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ## License
 
-Apache 2.0
+[Apache 2.0](LICENSE) — Use it, fork it, build on it.
 
-Copyright 2026 Gobby AI
+---
+
+<p align="center">
+  <sub>Part of the <a href="https://github.com/GobbyAI/gobby">Gobby</a> suite.</sub>
+</p>
