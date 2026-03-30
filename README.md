@@ -77,6 +77,10 @@ sudo mv gcode /usr/local/bin/
 # Linux (ARM64)
 curl -L https://github.com/GobbyAI/gobby-code/releases/latest/download/gcode-aarch64-unknown-linux-gnu.tar.gz | tar xz
 sudo mv gcode /usr/local/bin/
+
+# Windows (x86_64) — PowerShell
+Invoke-WebRequest -Uri https://github.com/GobbyAI/gobby-code/releases/latest/download/gcode-x86_64-pc-windows-msvc.zip -OutFile gcode.zip
+Expand-Archive gcode.zip -DestinationPath .
 ```
 
 ### Build from source
@@ -132,16 +136,42 @@ gcode search --project /path/to/app "q"   # By path
 --quiet                                   # Suppress warnings and progress
 ```
 
-## Operating Modes
+## Standalone vs Gobby
 
-gcode works in two modes depending on what's present:
+gcode works out of the box with zero dependencies — just `gcode init` and search. But it's designed to unlock its full potential with [Gobby](https://github.com/GobbyAI/gobby).
 
-| Mode | When | Database | Services |
-|------|------|----------|----------|
-| **Standalone** | No `.gobby/project.json` | `~/.gobby/gobby-code-index.db` | SQLite only |
-| **Gobby** | `.gobby/project.json` exists | `~/.gobby/gobby-hub.db` | SQLite + Neo4j + Qdrant |
+### Standalone
 
-Standalone mode is fully functional for indexing and FTS5 search. Neo4j (graph queries) and Qdrant (semantic search) add capabilities when available but are never required.
+```
+codebase → tree-sitter → SQLite
+                          (symbols + FTS5)
+```
+
+Full indexing and text search. No external services needed.
+
+### With Gobby
+
+```
+codebase → tree-sitter → SQLite        → FTS5 search
+                          Neo4j         → call graphs, blast radius, imports
+                          Qdrant + GGUF → semantic vector search
+                          Gobby daemon  → persistent sessions, task tracking,
+                                          AI agent orchestration, memory
+```
+
+Gobby adds the graph database, semantic search, and a full platform for AI-assisted development. gcode becomes one tool in a larger system — agents can search code, track tasks, store memory, and coordinate across sessions.
+
+| Capability | Standalone | With Gobby |
+|-----------|-----------|-----------|
+| AST indexing + FTS5 search | Yes | Yes |
+| Semantic vector search | — | Yes (Qdrant + GGUF) |
+| Call graph / blast radius | — | Yes (Neo4j) |
+| Import graph | — | Yes (Neo4j) |
+| AI agent orchestration | — | Yes |
+| Persistent sessions + memory | — | Yes |
+| Task tracking + pipelines | — | Yes |
+
+Get started with Gobby at [github.com/GobbyAI/gobby](https://github.com/GobbyAI/gobby).
 
 ## Graceful Degradation
 
@@ -179,6 +209,8 @@ cargo build --release --no-default-features  # Without embeddings (no cmake)
 | macOS | Intel (x86_64) | Supported |
 | Linux | x86_64 | Supported |
 | Linux | ARM64 (aarch64) | Supported |
+| Windows | x86_64 | Supported |
+| Windows | ARM64 (aarch64) | Supported |
 
 ## Contributing
 
