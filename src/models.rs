@@ -5,8 +5,7 @@ use uuid::Uuid;
 /// Stable namespace for deterministic symbol UUIDs.
 /// Must match Python: uuid.UUID("c0de1de0-0000-4000-8000-000000000000")
 pub const CODE_INDEX_UUID_NAMESPACE: Uuid = Uuid::from_bytes([
-    0xc0, 0xde, 0x1d, 0xe0, 0x00, 0x00, 0x40, 0x00, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00,
+    0xc0, 0xde, 0x1d, 0xe0, 0x00, 0x00, 0x40, 0x00, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 ]);
 
 /// A code symbol extracted from AST parsing.
@@ -70,10 +69,16 @@ impl Symbol {
             signature: row.get("signature")?,
             docstring: row.get("docstring")?,
             parent_symbol_id: row.get("parent_symbol_id")?,
-            content_hash: row.get::<_, Option<String>>("content_hash")?.unwrap_or_default(),
+            content_hash: row
+                .get::<_, Option<String>>("content_hash")?
+                .unwrap_or_default(),
             summary: row.get("summary")?,
-            created_at: row.get::<_, Option<String>>("created_at")?.unwrap_or_default(),
-            updated_at: row.get::<_, Option<String>>("updated_at")?.unwrap_or_default(),
+            created_at: row
+                .get::<_, Option<String>>("created_at")?
+                .unwrap_or_default(),
+            updated_at: row
+                .get::<_, Option<String>>("updated_at")?
+                .unwrap_or_default(),
         })
     }
 
@@ -112,7 +117,6 @@ impl IndexedFile {
         let key = format!("{project_id}:{file_path}");
         Uuid::new_v5(&CODE_INDEX_UUID_NAMESPACE, key.as_bytes()).to_string()
     }
-
 }
 
 /// A chunk of file content for FTS search.

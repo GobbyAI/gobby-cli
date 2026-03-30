@@ -74,11 +74,7 @@ pub fn search(
         Format::Json => output::print_json(&results),
         Format::Text => {
             for r in &results {
-                let sources = r
-                    .sources
-                    .as_ref()
-                    .map(|s| s.join("+"))
-                    .unwrap_or_default();
+                let sources = r.sources.as_ref().map(|s| s.join("+")).unwrap_or_default();
                 println!(
                     "{}:{} [{}] {} (score: {:.4}, via: {})",
                     r.file_path, r.line_start, r.kind, r.qualified_name, r.score, sources
@@ -89,12 +85,7 @@ pub fn search(
     }
 }
 
-pub fn search_text(
-    ctx: &Context,
-    query: &str,
-    limit: usize,
-    format: Format,
-) -> anyhow::Result<()> {
+pub fn search_text(ctx: &Context, query: &str, limit: usize, format: Format) -> anyhow::Result<()> {
     let conn = db::open_readonly(&ctx.db_path)?;
     let results = fts::search_text(&conn, query, &ctx.project_id, limit);
     match format {
@@ -123,7 +114,10 @@ pub fn search_content(
         Format::Json => output::print_json(&results),
         Format::Text => {
             for r in &results {
-                println!("{}:{}-{} {}", r.file_path, r.line_start, r.line_end, r.snippet);
+                println!(
+                    "{}:{}-{} {}",
+                    r.file_path, r.line_start, r.line_end, r.snippet
+                );
             }
             Ok(())
         }

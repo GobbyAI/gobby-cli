@@ -109,10 +109,7 @@ pub fn blast_radius(
             } else {
                 for r in &results {
                     let dist = r.distance.unwrap_or(0);
-                    println!(
-                        "{}:{} [distance={}] {}",
-                        r.file_path, r.line, dist, r.name
-                    );
+                    println!("{}:{} [distance={}] {}", r.file_path, r.line, dist, r.name);
                 }
             }
             Ok(())

@@ -7,8 +7,8 @@
 
 use std::collections::HashMap;
 
-use base64::engine::general_purpose::STANDARD;
 use base64::Engine as _;
+use base64::engine::general_purpose::STANDARD;
 use serde_json::Value;
 
 use crate::config::{Context, Neo4jConfig};
@@ -72,7 +72,6 @@ impl Neo4jClient {
         let data: Value = response.json()?;
         Ok(parse_v2_response(&data))
     }
-
 }
 
 /// Parse Neo4j HTTP API v2 response into flat row dicts.
@@ -157,10 +156,7 @@ fn row_to_graph_result(row: &Row) -> GraphResult {
             .and_then(|v| v.as_str())
             .unwrap_or("")
             .to_string(),
-        line: row
-            .get("line")
-            .and_then(|v| v.as_u64())
-            .unwrap_or(0) as usize,
+        line: row.get("line").and_then(|v| v.as_u64()).unwrap_or(0) as usize,
         relation: row
             .get("relation")
             .or_else(|| row.get("rel_type"))
@@ -236,11 +232,7 @@ pub fn get_imports(ctx: &Context, file_path: &str) -> anyhow::Result<Vec<GraphRe
 }
 
 /// Find transitive blast radius of changing a symbol.
-pub fn blast_radius(
-    ctx: &Context,
-    target: &str,
-    depth: usize,
-) -> anyhow::Result<Vec<GraphResult>> {
+pub fn blast_radius(ctx: &Context, target: &str, depth: usize) -> anyhow::Result<Vec<GraphResult>> {
     let depth = depth.clamp(1, 5);
     with_neo4j(ctx, vec![], |client| {
         // Neo4j doesn't support parameterized path length, so we interpolate depth
@@ -272,12 +264,7 @@ pub fn blast_radius(
 // ── Graph write functions (for indexing) ──────────────────────────────
 
 /// Write DEFINES edges: file → symbol.
-pub fn write_defines(
-    client: &Neo4jClient,
-    project_id: &str,
-    file_path: &str,
-    symbols: &[Symbol],
-) {
+pub fn write_defines(client: &Neo4jClient, project_id: &str, file_path: &str, symbols: &[Symbol]) {
     for sym in symbols {
         let _ = client.query(
             "MERGE (f:CodeFile {path: $file, project: $project}) \

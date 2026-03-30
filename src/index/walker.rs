@@ -11,17 +11,13 @@ use crate::index::security;
 
 /// Content-only extensions: chunked for FTS but not AST-parsed.
 const CONTENT_EXTENSIONS: &[&str] = &[
-    ".txt", ".cfg", ".ini", ".toml", ".conf", ".xml", ".html", ".htm",
-    ".css", ".scss", ".less", ".sql", ".sh", ".bash", ".zsh", ".fish",
-    ".bat", ".ps1",
+    ".txt", ".cfg", ".ini", ".toml", ".conf", ".xml", ".html", ".htm", ".css", ".scss", ".less",
+    ".sql", ".sh", ".bash", ".zsh", ".fish", ".bat", ".ps1",
 ];
 
 /// Discover files eligible for indexing under `root`.
 /// Returns (ast_candidates, content_only_candidates) as absolute paths.
-pub fn discover_files(
-    root: &Path,
-    exclude_patterns: &[String],
-) -> (Vec<PathBuf>, Vec<PathBuf>) {
+pub fn discover_files(root: &Path, exclude_patterns: &[String]) -> (Vec<PathBuf>, Vec<PathBuf>) {
     let supported = languages::supported_extensions();
     let content_exts: HashSet<&str> = CONTENT_EXTENSIONS.iter().copied().collect();
 

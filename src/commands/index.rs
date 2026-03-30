@@ -3,11 +3,7 @@ use crate::db;
 use crate::index::indexer;
 use crate::neo4j::Neo4jClient;
 
-pub fn run(
-    ctx: &Context,
-    path: Option<String>,
-    files: Option<Vec<String>>,
-) -> anyhow::Result<()> {
+pub fn run(ctx: &Context, path: Option<String>, files: Option<Vec<String>>) -> anyhow::Result<()> {
     // Auto-init: ensure identity file exists before indexing
     crate::project::ensure_gcode_json(&ctx.project_root)?;
 
@@ -23,7 +19,14 @@ pub fn run(
     let qdrant_ref = ctx.qdrant.as_ref();
 
     if let Some(file_list) = files {
-        let result = indexer::index_files(&conn, &root, &ctx.project_id, &file_list, neo4j_ref, qdrant_ref)?;
+        let result = indexer::index_files(
+            &conn,
+            &root,
+            &ctx.project_id,
+            &file_list,
+            neo4j_ref,
+            qdrant_ref,
+        )?;
         if !ctx.quiet {
             eprintln!(
                 "Indexed {} files, {} symbols in {}ms",
@@ -31,11 +34,22 @@ pub fn run(
             );
         }
     } else {
-        let result = indexer::index_directory(&conn, &root, &ctx.project_id, true, neo4j_ref, qdrant_ref, ctx.quiet)?;
+        let result = indexer::index_directory(
+            &conn,
+            &root,
+            &ctx.project_id,
+            true,
+            neo4j_ref,
+            qdrant_ref,
+            ctx.quiet,
+        )?;
         if !ctx.quiet {
             eprintln!(
                 "Indexed {} files ({} skipped), {} symbols in {}ms",
-                result.files_indexed, result.files_skipped, result.symbols_found, result.duration_ms
+                result.files_indexed,
+                result.files_skipped,
+                result.symbols_found,
+                result.duration_ms
             );
         }
     }

@@ -66,9 +66,7 @@ pub fn print_savings(label: &str, original_chars: usize, actual_chars: usize) {
         return;
     }
     let pct = savings_pct(original_chars, actual_chars);
-    eprintln!(
-        "[gcode \u{2014} {label}, saved {pct:.0}% ({actual_chars}B vs {original_chars}B)]"
-    );
+    eprintln!("[gcode \u{2014} {label}, saved {pct:.0}% ({actual_chars}B vs {original_chars}B)]");
 }
 
 #[cfg(test)]

@@ -45,13 +45,8 @@ mod embedding_impl {
 
     /// Model file path.
     fn model_path() -> Option<PathBuf> {
-        let path = dirs::home_dir()?
-            .join(".gobby/models/nomic-embed-text-v1.5.Q8_0.gguf");
-        if path.exists() {
-            Some(path)
-        } else {
-            None
-        }
+        let path = dirs::home_dir()?.join(".gobby/models/nomic-embed-text-v1.5.Q8_0.gguf");
+        if path.exists() { Some(path) } else { None }
     }
 
     /// Initialize the embedding model (lazy, called once).
@@ -74,8 +69,7 @@ mod embedding_impl {
             }
         };
 
-        let model_params = LlamaModelParams::default()
-            .with_n_gpu_layers(u32::MAX); // Metal/CUDA auto-detect
+        let model_params = LlamaModelParams::default().with_n_gpu_layers(u32::MAX); // Metal/CUDA auto-detect
 
         match LlamaModel::load_from_file(&backend, &path, &model_params) {
             Ok(model) => {

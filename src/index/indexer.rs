@@ -7,12 +7,12 @@ use std::time::Instant;
 
 use rusqlite::Connection;
 
+use crate::config::QdrantConfig;
 use crate::index::chunker;
 use crate::index::hasher;
 use crate::index::languages;
 use crate::index::parser;
 use crate::index::walker;
-use crate::config::QdrantConfig;
 use crate::models::{IndexResult, IndexedFile, IndexedProject};
 use crate::neo4j::Neo4jClient;
 use crate::progress::ProgressBar;
@@ -20,9 +20,22 @@ use crate::search::semantic;
 
 /// Default exclude patterns (matching Python CodeIndexConfig defaults).
 const DEFAULT_EXCLUDES: &[&str] = &[
-    "node_modules", "__pycache__", ".git", ".venv", "venv", "dist", "build",
-    ".tox", ".mypy_cache", ".pytest_cache", ".ruff_cache", "target",
-    ".next", ".nuxt", "coverage", ".cache",
+    "node_modules",
+    "__pycache__",
+    ".git",
+    ".venv",
+    "venv",
+    "dist",
+    "build",
+    ".tox",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    "target",
+    ".next",
+    ".nuxt",
+    "coverage",
+    ".cache",
 ];
 
 /// Index a directory (full or incremental).
@@ -53,9 +66,10 @@ pub fn index_directory(
     let stale: Option<std::collections::HashSet<String>> = if incremental {
         for path in &candidates {
             if let Ok(rel) = relative_path(path, root_path)
-                && let Ok(h) = hasher::file_content_hash(path) {
-                    current_hashes.insert(rel, h);
-                }
+                && let Ok(h) = hasher::file_content_hash(path)
+            {
+                current_hashes.insert(rel, h);
+            }
         }
         Some(get_stale_files(conn, project_id, &current_hashes))
     } else {
@@ -83,10 +97,11 @@ pub fn index_directory(
         progress.tick(&rel);
 
         if let Some(ref stale_set) = stale
-            && !stale_set.contains(&rel) {
-                result.files_skipped += 1;
-                continue;
-            }
+            && !stale_set.contains(&rel)
+        {
+            result.files_skipped += 1;
+            continue;
+        }
 
         match index_file(conn, path, project_id, root_path, &excludes, neo4j, qdrant) {
             Some(count) => {
@@ -164,7 +179,8 @@ pub fn index_files(
             continue;
         }
 
-        if let Some(count) = index_file(conn, &abs, project_id, root_path, &excludes, neo4j, qdrant) {
+        if let Some(count) = index_file(conn, &abs, project_id, root_path, &excludes, neo4j, qdrant)
+        {
             result.files_indexed += 1;
             result.symbols_found += count;
         }
@@ -430,7 +446,12 @@ fn upsert_project_stats(conn: &Connection, project: &IndexedProject) {
     );
 }
 
-fn delete_file_data(conn: &Connection, project_id: &str, file_path: &str, neo4j: Option<&Neo4jClient>) {
+fn delete_file_data(
+    conn: &Connection,
+    project_id: &str,
+    file_path: &str,
+    neo4j: Option<&Neo4jClient>,
+) {
     // Delete graph data first
     if let Some(client) = neo4j {
         crate::neo4j::delete_file_graph(client, project_id, file_path);
@@ -476,14 +497,13 @@ fn get_stale_files(
          LEFT JOIN code_indexed_files cf \
              ON cf.project_id = ?1 AND cf.file_path = ch.file_path \
          WHERE cf.file_path IS NULL OR cf.content_hash != ch.content_hash",
-    )
-        && let Ok(rows) = stmt.query_map(rusqlite::params![project_id], |row| {
-            row.get::<_, String>(0)
-        }) {
-            for row in rows.flatten() {
-                stale.insert(row);
-            }
+    ) && let Ok(rows) =
+        stmt.query_map(rusqlite::params![project_id], |row| row.get::<_, String>(0))
+    {
+        for row in rows.flatten() {
+            stale.insert(row);
         }
+    }
 
     let _ = conn.execute_batch("DROP TABLE IF EXISTS _current_hashes;");
     stale
@@ -495,18 +515,17 @@ fn get_orphan_files(
     current_hashes: &HashMap<String, String>,
 ) -> Vec<String> {
     let mut orphans = Vec::new();
-    if let Ok(mut stmt) = conn.prepare(
-        "SELECT file_path FROM code_indexed_files WHERE project_id = ?1",
-    )
-        && let Ok(rows) = stmt.query_map(rusqlite::params![project_id], |row| {
-            row.get::<_, String>(0)
-        }) {
-            for row in rows.flatten() {
-                if !current_hashes.contains_key(&row) {
-                    orphans.push(row);
-                }
+    if let Ok(mut stmt) =
+        conn.prepare("SELECT file_path FROM code_indexed_files WHERE project_id = ?1")
+        && let Ok(rows) =
+            stmt.query_map(rusqlite::params![project_id], |row| row.get::<_, String>(0))
+    {
+        for row in rows.flatten() {
+            if !current_hashes.contains_key(&row) {
+                orphans.push(row);
             }
         }
+    }
     orphans
 }
 
@@ -521,10 +540,7 @@ fn count_rows(conn: &Connection, table: &str, project_id: &str) -> usize {
 fn relative_path(path: &Path, root: &Path) -> anyhow::Result<String> {
     let abs = path.canonicalize()?;
     let root_abs = root.canonicalize()?;
-    Ok(abs
-        .strip_prefix(&root_abs)?
-        .to_string_lossy()
-        .to_string())
+    Ok(abs.strip_prefix(&root_abs)?.to_string_lossy().to_string())
 }
 
 fn iso_now() -> String {

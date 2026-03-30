@@ -25,9 +25,18 @@ pub struct DetectedCli {
 /// Detect AI CLI directories at the project root.
 pub fn detect_clis(project_root: &Path) -> Vec<DetectedCli> {
     let candidates = [
-        DetectedCli { name: "Claude Code", dir: ".claude" },
-        DetectedCli { name: "Gemini", dir: ".gemini" },
-        DetectedCli { name: "Codex", dir: ".codex" },
+        DetectedCli {
+            name: "Claude Code",
+            dir: ".claude",
+        },
+        DetectedCli {
+            name: "Gemini",
+            dir: ".gemini",
+        },
+        DetectedCli {
+            name: "Codex",
+            dir: ".codex",
+        },
     ];
 
     candidates

@@ -65,10 +65,7 @@ mod tests {
 
     #[test]
     fn test_merge_single_source() {
-        let results = merge(vec![(
-            "fts",
-            vec!["a".into(), "b".into(), "c".into()],
-        )]);
+        let results = merge(vec![("fts", vec!["a".into(), "b".into(), "c".into()])]);
         assert_eq!(results.len(), 3);
         // First result should have highest score
         assert_eq!(results[0].0, "a");
@@ -93,10 +90,7 @@ mod tests {
 
     #[test]
     fn test_merge_two_sources_disjoint() {
-        let results = merge(vec![
-            ("fts", vec!["a".into()]),
-            ("graph", vec!["b".into()]),
-        ]);
+        let results = merge(vec![("fts", vec!["a".into()]), ("graph", vec!["b".into()])]);
         assert_eq!(results.len(), 2);
         // Both have same score (rank 0 in their respective source)
         assert!((results[0].1 - results[1].1).abs() < 1e-10);

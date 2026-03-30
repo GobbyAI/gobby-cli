@@ -307,7 +307,10 @@ pub fn detect_language(file_path: &str) -> Option<&'static str> {
 
 /// Get the language spec for a given language name.
 pub fn get_spec(lang: &str) -> Option<&'static LanguageSpec> {
-    SPECS.iter().find(|(name, _)| *name == lang).map(|(_, s)| *s)
+    SPECS
+        .iter()
+        .find(|(name, _)| *name == lang)
+        .map(|(_, s)| *s)
 }
 
 /// Get the tree-sitter Language object for a given language name.

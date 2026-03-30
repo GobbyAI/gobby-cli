@@ -10,8 +10,8 @@ mod project;
 mod savings;
 mod schema;
 mod search;
-mod skill;
 mod secrets;
+mod skill;
 
 use clap::{Parser, Subcommand};
 
@@ -78,17 +78,11 @@ enum Command {
     },
 
     /// Hierarchical symbol tree for a file
-    Outline {
-        file: String,
-    },
+    Outline { file: String },
     /// Fetch symbol source code by ID (byte-offset read)
-    Symbol {
-        id: String,
-    },
+    Symbol { id: String },
     /// Batch retrieve symbols by ID
-    Symbols {
-        ids: Vec<String>,
-    },
+    Symbols { ids: Vec<String> },
     /// File tree with symbol counts
     Tree,
 
@@ -105,9 +99,7 @@ enum Command {
         limit: usize,
     },
     /// Show import graph for a file
-    Imports {
-        file: String,
-    },
+    Imports { file: String },
     /// Transitive impact analysis
     BlastRadius {
         /// Symbol name or file path
@@ -117,9 +109,7 @@ enum Command {
     },
 
     /// Return cached LLM summary for a symbol
-    Summary {
-        symbol_id: String,
-    },
+    Summary { symbol_id: String },
     /// Directory-grouped project stats
     RepoOutline,
     /// List indexed projects
@@ -178,9 +168,7 @@ fn main() -> anyhow::Result<()> {
             commands::graph::blast_radius(&ctx, &target, depth, cli.format)
         }
 
-        Command::Summary { symbol_id } => {
-            commands::summary::summary(&ctx, &symbol_id, cli.format)
-        }
+        Command::Summary { symbol_id } => commands::summary::summary(&ctx, &symbol_id, cli.format),
         Command::RepoOutline => commands::summary::repo_outline(&ctx, cli.format),
     }
 }

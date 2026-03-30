@@ -319,10 +319,7 @@ mod tests {
     fn test_now_iso8601_format() {
         let ts = now_iso8601();
         // Should match YYYY-MM-DDTHH:MM:SS.ffffff+00:00
-        assert!(
-            ts.len() >= 30,
-            "timestamp too short: {ts}"
-        );
+        assert!(ts.len() >= 30, "timestamp too short: {ts}");
         assert!(ts.ends_with("+00:00"));
         assert!(ts.contains('T'));
     }

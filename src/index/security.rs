@@ -4,7 +4,14 @@
 use std::path::Path;
 
 const SECRET_EXTENSIONS: &[&str] = &[
-    ".env", ".pem", ".key", ".p12", ".pfx", ".jks", ".keystore", ".secret",
+    ".env",
+    ".pem",
+    ".key",
+    ".p12",
+    ".pfx",
+    ".jks",
+    ".keystore",
+    ".secret",
 ];
 
 const SECRET_PREFIXES: &[&str] = &["credentials", ".env", "id_rsa", "id_ed25519", "token"];

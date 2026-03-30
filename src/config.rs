@@ -290,8 +290,8 @@ fn resolve_neo4j_config(db_path: &Path, quiet: bool) -> Option<Neo4jConfig> {
         None => None,
     };
 
-    let database = read_config_value(&conn, "memory.neo4j_database")
-        .unwrap_or_else(|| "neo4j".to_string());
+    let database =
+        read_config_value(&conn, "memory.neo4j_database").unwrap_or_else(|| "neo4j".to_string());
 
     Some(Neo4jConfig {
         url,

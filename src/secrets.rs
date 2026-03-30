@@ -12,8 +12,8 @@
 use std::path::Path;
 
 use anyhow::{Context as _, bail};
-use base64::engine::general_purpose::URL_SAFE;
 use base64::Engine as _;
+use base64::engine::general_purpose::URL_SAFE;
 use pbkdf2::pbkdf2_hmac;
 use sha2::Sha256;
 
@@ -27,8 +27,7 @@ fn derive_fernet_key(machine_id: &str, salt: &[u8]) -> String {
 
 /// Decrypt a Fernet-encrypted token string.
 fn decrypt_fernet(key: &str, token: &str) -> anyhow::Result<String> {
-    let fernet =
-        fernet::Fernet::new(key).ok_or_else(|| anyhow::anyhow!("invalid Fernet key"))?;
+    let fernet = fernet::Fernet::new(key).ok_or_else(|| anyhow::anyhow!("invalid Fernet key"))?;
     let plaintext = fernet
         .decrypt(token)
         .map_err(|_| anyhow::anyhow!("Fernet decryption failed (machine ID may have changed)"))?;
@@ -66,7 +65,12 @@ pub fn resolve_secret(db_path: &Path, secret_name: &str) -> anyhow::Result<Strin
         db_path,
         rusqlite::OpenFlags::SQLITE_OPEN_READ_ONLY | rusqlite::OpenFlags::SQLITE_OPEN_NO_MUTEX,
     )
-    .with_context(|| format!("failed to open DB for secret resolution: {}", db_path.display()))?;
+    .with_context(|| {
+        format!(
+            "failed to open DB for secret resolution: {}",
+            db_path.display()
+        )
+    })?;
     conn.busy_timeout(std::time::Duration::from_millis(5000))?;
 
     let name = secret_name.trim().to_lowercase();

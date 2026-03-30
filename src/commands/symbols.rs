@@ -139,8 +139,10 @@ pub fn symbols(ctx: &Context, ids: &[String], format: Format) -> anyhow::Result<
         placeholders.join(",")
     );
     let mut stmt = conn.prepare(&sql)?;
-    let params: Vec<&dyn rusqlite::types::ToSql> =
-        ids.iter().map(|s| s as &dyn rusqlite::types::ToSql).collect();
+    let params: Vec<&dyn rusqlite::types::ToSql> = ids
+        .iter()
+        .map(|s| s as &dyn rusqlite::types::ToSql)
+        .collect();
     let results: Vec<Symbol> = stmt
         .query_map(&*params, Symbol::from_row)?
         .filter_map(|r| r.ok())
@@ -162,8 +164,7 @@ pub fn symbols(ctx: &Context, ids: &[String], format: Format) -> anyhow::Result<
             total_file_bytes,
             total_symbol_bytes,
         );
-        let metadata =
-            serde_json::json!({"count": results.len(), "ids": ids}).to_string();
+        let metadata = serde_json::json!({"count": results.len(), "ids": ids}).to_string();
         let _ = savings::record_savings(
             &conn,
             "code_index",

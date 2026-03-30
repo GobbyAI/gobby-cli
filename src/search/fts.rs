@@ -12,7 +12,10 @@ pub fn sanitize_fts_query(query: &str) -> String {
         .chars()
         .filter(|c| c.is_alphanumeric() || *c == ' ' || *c == '_')
         .collect();
-    let tokens: Vec<&str> = cleaned.split_whitespace().filter(|t| !t.is_empty()).collect();
+    let tokens: Vec<&str> = cleaned
+        .split_whitespace()
+        .filter(|t| !t.is_empty())
+        .collect();
     if tokens.is_empty() {
         return String::new();
     }
@@ -50,8 +53,6 @@ pub fn search_symbols_fts(
          LIMIT ?4"
     );
 
-    
-
     if let Some(k) = kind {
         let mut stmt = match conn.prepare(&sql) {
             Ok(s) => s,
@@ -70,7 +71,8 @@ pub fn search_symbols_fts(
              JOIN code_symbols cs ON cs.rowid = fts.rowid \
              WHERE code_symbols_fts MATCH ?1 AND cs.project_id = ?2 \
              ORDER BY rank \
-             LIMIT ?3".to_string();
+             LIMIT ?3"
+            .to_string();
         let mut stmt = match conn.prepare(&sql_no_kind) {
             Ok(s) => s,
             Err(_) => return Vec::new(),
@@ -118,7 +120,8 @@ pub fn search_symbols_by_name(
     } else {
         let sql_no_kind = "SELECT * FROM code_symbols WHERE project_id = ?1 \
              AND (name LIKE ?2 OR qualified_name LIKE ?2) \
-             ORDER BY name LIMIT ?3".to_string();
+             ORDER BY name LIMIT ?3"
+            .to_string();
         let mut stmt = match conn.prepare(&sql_no_kind) {
             Ok(s) => s,
             Err(_) => return Vec::new(),

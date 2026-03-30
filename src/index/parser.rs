@@ -61,19 +61,17 @@ pub fn parse_file(
         .canonicalize()
         .ok()
         .and_then(|abs| {
-            root_path
-                .canonicalize()
-                .ok()
-                .and_then(|root| {
-                    abs.strip_prefix(&root)
-                        .ok()
-                        .map(|p| p.to_string_lossy().to_string())
-                })
+            root_path.canonicalize().ok().and_then(|root| {
+                abs.strip_prefix(&root)
+                    .ok()
+                    .map(|p| p.to_string_lossy().to_string())
+            })
         })
         .unwrap_or_else(|| file_str.to_string());
 
-    let mut symbols =
-        extract_symbols(&tree, &source, spec, language, &ts_lang, project_id, &rel_path);
+    let mut symbols = extract_symbols(
+        &tree, &source, spec, language, &ts_lang, project_id, &rel_path,
+    );
     link_parents(&mut symbols);
     let imports = extract_imports(&tree, &source, spec, &ts_lang, &rel_path);
     let calls = extract_calls(&tree, &source, spec, &ts_lang, &rel_path, &symbols);
@@ -108,7 +106,11 @@ fn extract_symbols(
 
     let mut symbols = Vec::new();
     let mut seen_ids = HashSet::new();
-    let capture_names: Vec<String> = query.capture_names().iter().map(|s| s.to_string()).collect();
+    let capture_names: Vec<String> = query
+        .capture_names()
+        .iter()
+        .map(|s| s.to_string())
+        .collect();
 
     while let Some(m) = matches.next() {
         let mut name_text: Option<String> = None;
@@ -139,10 +141,9 @@ fn extract_symbols(
             .position(|&b| b == b'\n')
             .map(|p| node.start_byte() + p)
             .unwrap_or(node.end_byte());
-        let mut signature =
-            String::from_utf8_lossy(&source[node.start_byte()..sig_end])
-                .trim()
-                .to_string();
+        let mut signature = String::from_utf8_lossy(&source[node.start_byte()..sig_end])
+            .trim()
+            .to_string();
         if signature.len() > 200 {
             signature.truncate(200);
             signature.push_str("...");
@@ -150,8 +151,7 @@ fn extract_symbols(
 
         let docstring = extract_docstring(&node, source, language);
         let c_hash = symbol_content_hash(source, node.start_byte(), node.end_byte());
-        let symbol_id =
-            Symbol::make_id(project_id, rel_path, &name, &kind, node.start_byte());
+        let symbol_id = Symbol::make_id(project_id, rel_path, &name, &kind, node.start_byte());
 
         if seen_ids.contains(&symbol_id) {
             continue;
@@ -248,8 +248,7 @@ fn extract_docstring(node: &tree_sitter::Node, source: &[u8], language: &str) ->
         let mut w4 = string_node.walk();
         for sc in string_node.children(&mut w4) {
             if sc.kind() == "string_content" {
-                let raw =
-                    String::from_utf8_lossy(&source[sc.start_byte()..sc.end_byte()]);
+                let raw = String::from_utf8_lossy(&source[sc.start_byte()..sc.end_byte()]);
                 let trimmed = raw.trim();
                 return if trimmed.is_empty() {
                     None
@@ -260,9 +259,8 @@ fn extract_docstring(node: &tree_sitter::Node, source: &[u8], language: &str) ->
         }
 
         // Fallback: strip quotes
-        let raw = String::from_utf8_lossy(
-            &source[string_node.start_byte()..string_node.end_byte()],
-        );
+        let raw =
+            String::from_utf8_lossy(&source[string_node.start_byte()..string_node.end_byte()]);
         let raw = raw.trim();
         let stripped = strip_quotes(raw);
         return if stripped.is_empty() {
@@ -302,18 +300,21 @@ fn extract_imports(
 
     let mut cursor = QueryCursor::new();
     let mut matches = cursor.matches(&query, tree.root_node(), source);
-    let capture_names: Vec<String> = query.capture_names().iter().map(|s| s.to_string()).collect();
+    let capture_names: Vec<String> = query
+        .capture_names()
+        .iter()
+        .map(|s| s.to_string())
+        .collect();
     let mut imports = Vec::new();
 
     while let Some(m) = matches.next() {
         for cap in m.captures {
             let cap_name = &capture_names[cap.index as usize];
             if cap_name == "import" {
-                let text = String::from_utf8_lossy(
-                    &source[cap.node.start_byte()..cap.node.end_byte()],
-                )
-                .trim()
-                .to_string();
+                let text =
+                    String::from_utf8_lossy(&source[cap.node.start_byte()..cap.node.end_byte()])
+                        .trim()
+                        .to_string();
                 imports.push(ImportRelation {
                     file_path: rel_path.to_string(),
                     module_name: text,
@@ -344,7 +345,11 @@ fn extract_calls(
 
     let mut cursor = QueryCursor::new();
     let mut matches = cursor.matches(&query, tree.root_node(), source);
-    let capture_names: Vec<String> = query.capture_names().iter().map(|s| s.to_string()).collect();
+    let capture_names: Vec<String> = query
+        .capture_names()
+        .iter()
+        .map(|s| s.to_string())
+        .collect();
     let mut calls = Vec::new();
 
     while let Some(m) = matches.next() {
@@ -371,9 +376,7 @@ fn extract_calls(
         let target = call_node.unwrap_or(name_n);
         let caller_id = symbols
             .iter()
-            .rfind(|s| {
-                s.byte_start <= target.start_byte() && target.start_byte() <= s.byte_end
-            })
+            .rfind(|s| s.byte_start <= target.start_byte() && target.start_byte() <= s.byte_end)
             .map(|s| s.id.clone())
             .unwrap_or_default();
 

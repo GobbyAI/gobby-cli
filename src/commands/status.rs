@@ -17,7 +17,8 @@ pub fn run(ctx: &Context, format: Format) -> anyhow::Result<()> {
                     root_path: row.get("root_path")?,
                     total_files: row.get::<_, i64>("total_files")? as usize,
                     total_symbols: row.get::<_, i64>("total_symbols")? as usize,
-                    last_indexed_at: row.get::<_, Option<String>>("last_indexed_at")?
+                    last_indexed_at: row
+                        .get::<_, Option<String>>("last_indexed_at")?
                         .unwrap_or_default(),
                     index_duration_ms: row.get::<_, i64>("index_duration_ms")? as u64,
                 })
@@ -39,7 +40,10 @@ pub fn run(ctx: &Context, format: Format) -> anyhow::Result<()> {
             }
         },
         None => {
-            eprintln!("No index found for project {}. Run `gcode index` first.", ctx.project_id);
+            eprintln!(
+                "No index found for project {}. Run `gcode index` first.",
+                ctx.project_id
+            );
             Ok(())
         }
     }
@@ -47,7 +51,8 @@ pub fn run(ctx: &Context, format: Format) -> anyhow::Result<()> {
 
 pub fn invalidate(ctx: &Context, force: bool) -> anyhow::Result<()> {
     if !force {
-        let project_name = ctx.project_root
+        let project_name = ctx
+            .project_root
             .file_name()
             .map(|n| n.to_string_lossy().to_string())
             .unwrap_or_else(|| ctx.project_id.clone());
@@ -105,16 +110,16 @@ pub fn projects(format: Format) -> anyhow::Result<()> {
             continue;
         }
 
-        let mut stmt = conn.prepare(
-            "SELECT * FROM code_indexed_projects ORDER BY last_indexed_at DESC",
-        )?;
+        let mut stmt =
+            conn.prepare("SELECT * FROM code_indexed_projects ORDER BY last_indexed_at DESC")?;
         let rows = stmt.query_map([], |row| {
             Ok(IndexedProject {
                 id: row.get("id")?,
                 root_path: row.get("root_path")?,
                 total_files: row.get::<_, i64>("total_files")? as usize,
                 total_symbols: row.get::<_, i64>("total_symbols")? as usize,
-                last_indexed_at: row.get::<_, Option<String>>("last_indexed_at")?
+                last_indexed_at: row
+                    .get::<_, Option<String>>("last_indexed_at")?
                     .unwrap_or_default(),
                 index_duration_ms: row.get::<_, i64>("index_duration_ms")? as u64,
             })
