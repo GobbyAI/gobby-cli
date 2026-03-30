@@ -28,7 +28,7 @@ gcode init
 
 You'll see a progress bar while indexing:
 
-```
+```text
 Indexing src/config.rs ████████████░░░░░░░░ 18/32
 ```
 

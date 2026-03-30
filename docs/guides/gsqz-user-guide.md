@@ -28,7 +28,7 @@ gsqz --dump-config
 ```
 
 When compression is applied, output is prefixed with a header:
-```
+```text
 [Output compressed by gsqz — git-status, 72% reduction]
 Modified (3):
   src/main.rs
@@ -111,7 +111,7 @@ Collapses consecutive identical or near-identical lines. "Near-identical" means 
 ```
 
 Output:
-```
+```text
 error at pos 42
   [repeated 3 times]
 ```
@@ -178,7 +178,7 @@ gsqz --stats -- your-command-here
 ```
 
 The `--stats` flag prints to stderr:
-```
+```text
 [gsqz] strategy=pytest original=12847 compressed=1923 savings=85.0%
 ```
 
