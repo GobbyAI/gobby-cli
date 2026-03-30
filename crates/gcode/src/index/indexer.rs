@@ -219,14 +219,17 @@ fn index_file(
     // Upsert embeddings to Qdrant (when embeddings feature + Qdrant configured)
     if let Some(config) = qdrant {
         let collection = format!("{}{}", config.collection_prefix, project_id);
+        let texts: Vec<String> = parse_result
+            .symbols
+            .iter()
+            .map(semantic::symbol_embed_text)
+            .collect();
+        let embeddings = semantic::embed_texts(&texts, false);
         let points: Vec<(String, Vec<f32>)> = parse_result
             .symbols
             .iter()
-            .filter_map(|sym| {
-                let text = semantic::symbol_embed_text(sym);
-                let embedding = semantic::embed_text(&text, false)?;
-                Some((sym.id.clone(), embedding))
-            })
+            .zip(embeddings)
+            .filter_map(|(sym, emb)| Some((sym.id.clone(), emb?)))
             .collect();
         if !points.is_empty() {
             let _ = semantic::upsert_vectors(config, &collection, &points);
@@ -308,7 +311,11 @@ fn index_content_only(conn: &Connection, path: &Path, project_id: &str, root_pat
 }
 
 /// Invalidate all index data for a project.
-pub fn invalidate(conn: &Connection, project_id: &str) -> anyhow::Result<()> {
+pub fn invalidate(
+    conn: &Connection,
+    project_id: &str,
+    daemon_url: Option<&str>,
+) -> anyhow::Result<()> {
     conn.execute(
         "DELETE FROM code_symbols WHERE project_id = ?1",
         rusqlite::params![project_id],
@@ -326,7 +333,40 @@ pub fn invalidate(conn: &Connection, project_id: &str) -> anyhow::Result<()> {
         rusqlite::params![project_id],
     )?;
     eprintln!("Invalidated code index for project {project_id}");
+
+    // Notify daemon to clean Neo4j/Qdrant (best-effort)
+    if let Some(url) = daemon_url {
+        notify_daemon_invalidate(url, project_id);
+    }
+
     Ok(())
+}
+
+/// POST to the Gobby daemon requesting Neo4j/Qdrant cleanup for a project.
+/// Fire-and-forget: warns on failure, never errors.
+fn notify_daemon_invalidate(base_url: &str, project_id: &str) {
+    let client = match reqwest::blocking::Client::builder()
+        .timeout(std::time::Duration::from_secs(2))
+        .build()
+    {
+        Ok(c) => c,
+        Err(_) => return,
+    };
+
+    let url = format!("{base_url}/api/code-index/invalidate");
+    match client
+        .post(&url)
+        .json(&serde_json::json!({"project_id": project_id}))
+        .send()
+    {
+        Ok(resp) if !resp.status().is_success() => {
+            eprintln!("Warning: daemon invalidate returned {}", resp.status());
+        }
+        Err(e) => {
+            eprintln!("Warning: could not notify daemon: {e}");
+        }
+        _ => {}
+    }
 }
 
 // ── SQLite helpers ─────────────────────────────────────────────────────
@@ -431,6 +471,7 @@ fn upsert_project_stats(conn: &Connection, project: &IndexedProject) {
             last_indexed_at, index_duration_ms
         ) VALUES (?1,?2,?3,?4,?5,?6)
         ON CONFLICT(id) DO UPDATE SET
+            root_path=excluded.root_path,
             total_files=excluded.total_files,
             total_symbols=excluded.total_symbols,
             last_indexed_at=excluded.last_indexed_at,

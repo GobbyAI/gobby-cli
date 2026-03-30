@@ -41,6 +41,8 @@ pub struct Context {
     pub neo4j: Option<Neo4jConfig>,
     /// Qdrant config (None if unavailable)
     pub qdrant: Option<QdrantConfig>,
+    /// Gobby daemon base URL (e.g. http://localhost:60887)
+    pub daemon_url: Option<String>,
 }
 
 impl Context {
@@ -66,6 +68,8 @@ impl Context {
         let neo4j = resolve_neo4j_config(&db_path, quiet);
         let qdrant = resolve_qdrant_config(&db_path, quiet);
 
+        let daemon_url = resolve_daemon_url();
+
         Ok(Self {
             db_path,
             project_root,
@@ -73,6 +77,7 @@ impl Context {
             quiet,
             neo4j,
             qdrant,
+            daemon_url,
         })
     }
 }
@@ -194,6 +199,38 @@ pub fn detect_project_root() -> anyhow::Result<PathBuf> {
             None => return Ok(cwd), // Last resort: cwd
         }
     }
+}
+
+/// Resolve Gobby daemon base URL.
+///
+/// Resolution order:
+/// 1. `GOBBY_PORT` env var (explicit override)
+/// 2. `~/.gobby/bootstrap.yaml` `daemon_port` + `bind_host` keys
+/// 3. Returns `None` if bootstrap.yaml is missing or unreadable
+fn resolve_daemon_url() -> Option<String> {
+    // Env var override takes priority
+    if let Ok(port) = std::env::var("GOBBY_PORT") {
+        if !port.is_empty() {
+            return Some(format!("http://localhost:{port}"));
+        }
+        return None;
+    }
+
+    // Read from bootstrap.yaml
+    let bootstrap_path = dirs::home_dir()?.join(".gobby").join("bootstrap.yaml");
+    let contents = std::fs::read_to_string(&bootstrap_path).ok()?;
+    let yaml: serde_yaml::Value = serde_yaml::from_str(&contents).ok()?;
+
+    let port = yaml
+        .get("daemon_port")
+        .and_then(|v| v.as_u64())
+        .map(|p| p.to_string())?;
+    let host = yaml
+        .get("bind_host")
+        .and_then(|v| v.as_str())
+        .unwrap_or("localhost");
+
+    Some(format!("http://{host}:{port}"))
 }
 
 /// Resolve project ID from identity files or generate deterministically.
