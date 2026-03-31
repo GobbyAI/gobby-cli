@@ -254,7 +254,7 @@ The database path itself is resolved from:
 The daemon URL (used by `invalidate`) is resolved from:
 1. `GOBBY_PORT` environment variable (e.g. `60887`)
 2. `~/.gobby/bootstrap.yaml` `daemon_port` + `bind_host` keys
-3. Not available if bootstrap.yaml is missing (standalone mode)
+3. Default: `http://localhost:60887`
 
 ## Output Formats
 
