@@ -164,8 +164,10 @@ Source 3: Graph Boost (Neo4j)
   → find_callers + find_usages for query term
   → returns symbol IDs that are connected in the call/import graph
 
-  ↓ All three → RRF merge → Symbol resolution → Pagination
+  ↓ All three → RRF merge → Symbol resolution → Path filter (glob) → Pagination
 ```
+
+When `--path` is provided, FTS queries include a SQL `LIKE` prefix pre-filter for index-assisted narrowing. After RRF merge and symbol resolution, a Rust `glob::Pattern` post-filter ensures exact glob semantics across all sources (including semantic/graph results that lack SQL-side filtering).
 
 ### RRF Merge (rrf.rs)
 

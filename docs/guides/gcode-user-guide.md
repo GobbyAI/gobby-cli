@@ -64,6 +64,7 @@ gcode search "database connection pool"
 gcode search "auth" --limit 5
 gcode search "handler" --kind function
 gcode search "config" --offset 10          # Page 2 of results
+gcode search "Memory" --path "src/storage/**"  # Scope to directory
 ```
 
 **When to use:** General-purpose queries. Best for natural language and conceptual searches.
@@ -72,6 +73,7 @@ gcode search "config" --offset 10          # Page 2 of results
 - `--limit N` — Max results (default: 10)
 - `--offset N` — Skip first N results for pagination (default: 0)
 - `--kind <kind>` — Filter by symbol kind: `function`, `class`, `method`, `type`, etc.
+- `--path <glob>` — Filter by file path glob (e.g. `"src/**/*.rs"`, `"*.py"`, `"tests/*"`). Uses SQL prefix pre-filtering for performance with Rust glob matching for exact semantics.
 
 ### Text Search (`gcode search-text`)
 
@@ -79,9 +81,12 @@ FTS5 search on symbol metadata: names, qualified names, signatures, and docstrin
 
 ```bash
 gcode search-text "parseConfig"
+gcode search-text "parseConfig" --path "src/**"
 ```
 
 **When to use:** You know the exact name or part of a symbol name. Fastest mode.
+
+**Options:** `--limit N`, `--offset N`, `--path <glob>`
 
 ### Content Search (`gcode search-content`)
 
@@ -89,10 +94,12 @@ FTS5 search across file content chunks — finds matches in comments, strings, c
 
 ```bash
 gcode search-content "TODO: refactor"
-gcode search-content "GOBBY_NEO4J_URL"
+gcode search-content "GOBBY_NEO4J_URL" --path "*.py"
 ```
 
 **When to use:** Searching for string literals, comments, configuration values, or patterns that aren't symbol names.
+
+**Options:** `--limit N`, `--offset N`, `--path <glob>`
 
 ## Symbol Retrieval
 
