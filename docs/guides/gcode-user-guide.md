@@ -9,6 +9,15 @@ A complete guide to using `gcode` for code search, symbol navigation, and depend
 Download from [GitHub Releases](https://github.com/GobbyAI/gobby-cli/releases/latest) or build from source:
 
 ```bash
+# With embeddings (macOS gets Metal GPU automatically)
+cargo install gobby-code
+
+# With GPU acceleration on Linux/Windows
+cargo install gobby-code --features cuda    # NVIDIA
+cargo install gobby-code --features vulkan  # Any GPU
+cargo install gobby-code --features rocm    # AMD
+
+# Without embeddings (smallest binary, FTS5 search only)
 cargo install gobby-code --no-default-features
 ```
 

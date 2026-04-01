@@ -51,12 +51,19 @@ Download from [GitHub Releases](https://github.com/GobbyAI/gobby-cli/releases/la
 # gcode (with embeddings — requires cmake)
 cargo install gobby-code
 
+# gcode (with GPU acceleration — pick your backend)
+cargo install gobby-code --features cuda    # NVIDIA (requires CUDA toolkit)
+cargo install gobby-code --features vulkan  # Any GPU (requires Vulkan SDK)
+cargo install gobby-code --features rocm    # AMD (requires ROCm)
+
 # gcode (without embeddings)
 cargo install gobby-code --no-default-features
 
 # gsqz
 cargo install gobby-squeeze
 ```
+
+On macOS, Metal GPU acceleration is enabled automatically. On Linux/Windows, embeddings use CPU inference by default — add a GPU feature flag for hardware acceleration.
 
 ### From source
 
