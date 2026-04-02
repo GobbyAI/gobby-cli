@@ -131,6 +131,16 @@ Fetch multiple symbols in one call:
 gcode symbols "id1" "id2" "id3"
 ```
 
+### Symbol Kinds
+
+List all distinct symbol kinds in the current project index:
+
+```bash
+gcode kinds
+```
+
+Returns kinds like `function`, `class`, `method`, `type`, `struct`, etc. Useful for understanding what `--kind` values are available for search filtering.
+
 ### File Tree
 
 Get the project's file tree with symbol counts per file:
@@ -234,6 +244,10 @@ Index specific files:
 ```bash
 gcode index --files src/config.rs src/main.rs
 ```
+
+In Gobby mode with the daemon running, `gcode index` writes to SQLite only and returns immediately (<1s for incremental). The daemon's background worker handles Neo4j graph edges and Qdrant vector embeddings asynchronously. FTS search (`search-text`, `search-content`) works instantly; graph and semantic search follow within seconds once the daemon syncs.
+
+Without the daemon (standalone mode or daemon not running), gcode performs all writes directly as before.
 
 Reset and rebuild from scratch (destructive — prompts for confirmation):
 

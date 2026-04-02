@@ -83,8 +83,9 @@ walker::discover_files(root, excludes)
       → SHA-256 for incremental detection
     → indexer::upsert_symbols + upsert_file + upsert_chunks
       → SQLite writes + FTS5 population
-      → Qdrant vector upsert (if embeddings enabled)
-      → Neo4j graph writes (DEFINES, CALLS, IMPORTS edges)
+      → upsert_imports + upsert_calls (if tables exist)
+      → [daemon available] return early — flags stay 0, daemon syncs
+      → [standalone] Qdrant vector upsert + Neo4j graph writes
 ```
 
 ### File Discovery (walker.rs)
@@ -131,12 +132,22 @@ Files are split into overlapping chunks for FTS5 content search:
 
 1. **Hash comparison**: SHA-256 content hash per file, stored in `code_indexed_files`
 2. **Stale detection**: Compare current hashes against stored hashes; files with changed hashes are re-indexed. When the `graph_synced` column exists (Gobby mode), files where `graph_synced=0` are also detected as stale with reason `GraphSyncPending`
-3. **Orphan cleanup**: Files in the DB that no longer exist on disk have their data deleted from SQLite, Neo4j, and Qdrant
-4. **Per-file transactions**: SQLite writes (delete old data, upsert symbols, upsert file, upsert content chunks) are wrapped in a single transaction to prevent half-indexed files on crash
-5. **External writes**: After the SQLite transaction commits, Neo4j/Qdrant writes happen outside the transaction. If all succeed, `graph_synced` is set to `1`. If any fail, it stays `0` and the next incremental run retries
-6. **Graph-sync-only path**: Files with `StaleReason::GraphSyncPending` skip the SQLite transaction entirely — only external writes are retried
+3. **Orphan cleanup**: Files in the DB that no longer exist on disk have their data deleted from SQLite. When daemon is available, external cleanup (Neo4j/Qdrant) is deferred to the daemon's `reconcile_stores`
+4. **Per-file transactions**: SQLite writes (delete old data, upsert symbols, upsert file, upsert content chunks, upsert imports/calls) are wrapped in a single transaction to prevent half-indexed files on crash
+5. **Deferred external writes** (Gobby mode with daemon): After the SQLite transaction commits, gcode returns early — `graph_synced` and `vectors_synced` stay at `0`. The daemon's background worker polls for pending files, generates embeddings, writes Qdrant vectors and Neo4j edges, and flips the flags independently
+6. **Direct external writes** (standalone or no daemon): Neo4j/Qdrant writes happen after the SQLite transaction. If all succeed, `graph_synced` is set to `1`. If any fail, it stays `0` and the next incremental run retries
+7. **Graph-sync-only path**: Files with `StaleReason::GraphSyncPending` skip the SQLite transaction entirely — only external writes are retried. When daemon is available, these files are skipped entirely (daemon handles retries)
 
 The `--full` flag skips the hash comparison and re-indexes all files, ensuring stale external index entries are cleaned up.
+
+### Import/Call SQLite Storage
+
+When daemon migration v183 tables exist (`code_imports`, `code_calls`), gcode writes parsed relations during Phase 1:
+
+- **`code_imports`**: `(project_id, source_file, target_module)` — from `parse_result.imports`
+- **`code_calls`**: `(project_id, caller_symbol_id, callee_name, file_path, line)` — from `parse_result.calls`
+
+Both use delete-then-insert per file. Table existence is detected via `has_table()` (PRAGMA-based), so gcode works whether or not the daemon has applied the migration. This eliminates the Python parser dependency from the daemon's sync path — the daemon reads relations directly from SQLite to write Neo4j edges.
 
 ### UUID5 Parity
 
@@ -248,7 +259,32 @@ All search/graph commands return a `PagedResponse` envelope:
 | symbol_count | INTEGER | |
 | byte_size | INTEGER | |
 | indexed_at | TEXT | Epoch seconds |
-| graph_synced | INTEGER | 0=pending, 1=Neo4j/Qdrant synced (Gobby mode only) |
+| graph_synced | INTEGER | 0=pending, 1=Neo4j synced (Gobby mode only) |
+| vectors_synced | INTEGER | 0=pending, 1=Qdrant synced (Gobby mode, daemon migration v183) |
+
+**`code_imports`** — Import relations (daemon migration v183, Gobby mode only)
+
+| Column | Type | Notes |
+|--------|------|-------|
+| id | INTEGER PK | Auto-increment |
+| project_id | TEXT | |
+| source_file | TEXT | File that contains the import |
+| target_module | TEXT | Imported module name |
+
+UNIQUE constraint on `(project_id, source_file, target_module)`.
+
+**`code_calls`** — Call relations (daemon migration v183, Gobby mode only)
+
+| Column | Type | Notes |
+|--------|------|-------|
+| id | INTEGER PK | Auto-increment |
+| project_id | TEXT | |
+| caller_symbol_id | TEXT | UUID5 of calling symbol |
+| callee_name | TEXT | Name of called symbol |
+| file_path | TEXT | File containing the call |
+| line | INTEGER | Line number of call site |
+
+UNIQUE constraint on `(project_id, caller_symbol_id, callee_name, file_path, line)`.
 
 **`code_content_chunks`** — File content for FTS search
 
@@ -322,7 +358,7 @@ Each external service degrades independently:
 | Neo4j | No config or connection refused | Graph commands return `[]` with hint; search loses graph boost |
 | Qdrant | No URL configured | Search loses semantic source; FTS5 still works |
 | GGUF model | File not found | Semantic search disabled (no embeddings to query with) |
-| Daemon | Not running | `invalidate` can't notify; savings not reported |
+| Daemon | Not running | `invalidate` can't notify; savings not reported; external writes happen directly in gcode (slower but functional) |
 
 The system always works with just SQLite — FTS5 search and outline are fully functional in standalone mode.
 
