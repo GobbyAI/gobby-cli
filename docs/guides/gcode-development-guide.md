@@ -308,7 +308,7 @@ UNIQUE constraint on `(project_id, caller_symbol_id, callee_name, file_path, lin
 
 ### Nodes
 
-- **CodeSymbol**: `{id, name, kind, project, file, line}`
+- **CodeSymbol**: `{id, name, kind, project, line_start}`
 - **CodeFile**: `{path, project}`
 - **CodeModule**: `{name}`
 
@@ -323,9 +323,21 @@ UNIQUE constraint on `(project_id, caller_symbol_id, callee_name, file_path, lin
 - **Callers**: `MATCH (caller)-[:CALLS]->(callee {name, project}) RETURN caller`
 - **Usages**: `MATCH (n)-[r]->(target {name, project}) WHERE type(r) IN ['CALLS', 'IMPORTS']`
 - **Imports**: `MATCH (f:CodeFile {path, project})-[:IMPORTS]->(m:CodeModule)`
-- **Blast Radius**: Variable-length path traversal with depth limit
+- **Blast Radius**: Variable-length path traversal with depth limit. Returns `affected.line_start AS line` for symbol line numbers.
 
 Count queries use the same patterns with `RETURN count(...)` for accurate pagination totals.
+
+### Symbol Name Resolution
+
+**File:** `src/search/fts.rs` (`resolve_symbol_name`), `src/commands/graph.rs` (`resolve_name`)
+
+All graph commands resolve user input to an actual symbol name before querying Neo4j. Resolution order:
+
+1. **Exact match** — `SELECT name FROM code_symbols WHERE name = ?`
+2. **LIKE match** — `WHERE name LIKE %input% OR qualified_name LIKE %input%`
+3. **FTS5 search** — `search_symbols_fts()` across names, signatures, docstrings
+
+Single match → used directly. Multiple matches → first used, alternatives shown on stderr. No match → error message, no Neo4j query issued.
 
 ## Qdrant Integration
 

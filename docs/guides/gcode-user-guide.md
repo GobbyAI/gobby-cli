@@ -38,7 +38,7 @@ gcode init
 You'll see a progress bar while indexing:
 
 ```text
-Indexing src/config.rs ████████████░░░░░░░░ 18/32
+[████████████░░░░░░░░] 18/32 : src/config.rs
 ```
 
 After init, you can search immediately.
@@ -154,6 +154,8 @@ Useful for understanding project structure at a glance.
 ## Dependency Graph
 
 Graph commands require Neo4j (available in Gobby mode). In standalone mode, they return empty results gracefully.
+
+All graph commands resolve fuzzy input — you don't need the exact symbol name. Resolution tries exact match, then substring match, then FTS5 search across names, signatures, and docstrings. When multiple matches are found, the best is used and alternatives are shown on stderr.
 
 ### Callers
 
@@ -369,9 +371,11 @@ gcode projects
 - Try `gcode search-content` for string/comment searches
 - Run `gcode index` to pick up recently changed files
 
-### Graph commands return empty arrays
+### Graph commands return empty results
 
-This is expected in standalone mode (no Neo4j). In Gobby mode, check that Neo4j is running and configured:
+If you get "No symbol matching 'X' found", the input didn't resolve to any indexed symbol. Try a different term or check what's indexed with `gcode search-text "X"`.
+
+If results are empty but the symbol exists, this is expected in standalone mode (no Neo4j). In Gobby mode, check that Neo4j is running and configured:
 
 ```bash
 echo $GOBBY_NEO4J_URL
