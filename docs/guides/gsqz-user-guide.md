@@ -23,7 +23,10 @@ gsqz -- uv run pytest tests/
 # See compression stats
 gsqz --stats -- git diff
 
-# Inspect the resolved config (all layers merged)
+# Generate default config in current directory
+gsqz --init
+
+# Inspect the resolved config
 gsqz --dump-config
 ```
 
@@ -118,16 +121,15 @@ error at pos 42
 
 ## Configuration
 
-gsqz uses layered config. Each layer can add new pipelines or override existing ones by name.
+gsqz uses a single config file with simple priority:
 
-| Layer | Path | Purpose |
-|-------|------|---------|
-| Built-in | Compiled into binary | 28 default pipelines |
-| Global | `~/.gobby/gsqz.yaml` | User-wide overrides |
-| Project | `.gobby/gsqz.yaml` | Project-specific pipelines |
-| CLI | `--config path/to/file.yaml` | One-off override |
+| Priority | Path | Purpose |
+|----------|------|---------|
+| 1 | `--config path/to/file.yaml` | Explicit CLI override |
+| 2 | `./gsqz.yaml` | Local config in current directory |
+| 3 | Compiled into binary | Built-in default (fallback) |
 
-Later layers win. Pipelines are merged by name (overlay replaces). Settings only override if they differ from defaults. Excluded commands are additive across layers.
+First found wins entirely — no merging between layers. On first run, if no `./gsqz.yaml` exists, gsqz creates one from the built-in default. Run `gsqz --init` to regenerate it (backs up existing to `gsqz.yaml.bak`).
 
 ### Settings
 

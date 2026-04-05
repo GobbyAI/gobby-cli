@@ -6,7 +6,7 @@ Technical internals for developers and agents working in the gsqz codebase.
 
 ```
 CLI (main.rs, clap)
-  → Config::load (layered: built-in → global → project → CLI override)
+  → Config::load (CLI override → ./gsqz.yaml → compiled default)
   → Execute shell command (sh -c / cmd /C)
   → Capture stdout + stderr
   → Strip ANSI escape codes
@@ -29,23 +29,17 @@ gsqz always exits with code 0 regardless of the subprocess exit code. This is in
 
 **File:** `src/config.rs`
 
-### Layered Configuration
+### Config Resolution
 
-Configs are merged in priority order (later layers override earlier):
+First found wins entirely — no merging:
 
-| Layer | Path | Purpose |
-|-------|------|---------|
-| 1. Built-in | Compiled into binary (`config.yaml`) | Sensible defaults, 20+ pipelines |
-| 2. Global | `~/.gobby/gsqz.yaml` or `$XDG_CONFIG_HOME/gsqz/config.yaml` | User-wide overrides |
-| 3. Project | `.gobby/gsqz.yaml` or `.gsqz.yaml` | Repo-specific pipelines |
-| 4. CLI | `--config <PATH>` | One-off override |
+| Priority | Path | Purpose |
+|----------|------|---------|
+| 1 | `--config <PATH>` | Explicit CLI override |
+| 2 | `./gsqz.yaml` | Local config in current directory |
+| 3 | Compiled into binary (`config.yaml` via `include_str!`) | Built-in default |
 
-### Merge Semantics
-
-- **Pipelines**: Overlay replaces by name, adds new ones
-- **Settings**: Overlay wins if value differs from built-in default
-- **Excluded commands**: Additive (union of all layers)
-- **Fallback steps**: Overlay replaces entirely
+On first run with no config, the default is auto-exported to `./gsqz.yaml`. Malformed YAML exits with a parse error and suggests `gsqz --init`. The `--init` flag regenerates the default config, backing up any existing file to `gsqz.yaml.bak`.
 
 ### Data Structures
 
@@ -401,7 +395,7 @@ This automatically compresses all command output before it enters the LLM contex
 
 ### Custom Pipelines
 
-Add project-specific pipelines in `.gobby/gsqz.yaml`:
+Add custom pipelines in `./gsqz.yaml`:
 
 ```yaml
 pipelines:
@@ -420,7 +414,7 @@ pipelines:
 ### Debugging Compression
 
 ```bash
-# See which config layers are active
+# See the resolved config
 gsqz --dump-config
 
 # See compression stats
@@ -437,7 +431,7 @@ When adding a new pipeline:
 1. Run the target command, capture raw output
 2. Identify what's noise vs signal
 3. Choose steps: filter patterns → grouping mode → dedup → truncation limits
-4. Add to `config.yaml` (built-in) or project `.gobby/gsqz.yaml`
+4. Add to `./gsqz.yaml` (run `gsqz --init` first if needed)
 5. Test with `gsqz --stats -- <command>` to verify savings
 6. Target >50% reduction for the pipeline to be worthwhile
 
