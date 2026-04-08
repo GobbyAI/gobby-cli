@@ -6,23 +6,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A Cargo workspace containing two Gobby CLI tools:
 
-- **gcode** (`crates/gcode/`) — AST-aware code search, symbol navigation, and dependency graph analysis. Reads/writes the same databases as the Gobby daemon (SQLite, Neo4j, Qdrant).
+- **gcode** (`crates/gcode/`) — AST-aware code search, symbol navigation, and dependency graph analysis. Writes to SQLite; reads from SQLite, Neo4j, and Qdrant. External sync (embeddings, graph) is handled by the Gobby daemon.
 - **gsqz** (`crates/gsqz/`) — YAML-configurable output compressor for LLM token optimization. Wraps shell commands and applies pattern-based compression pipelines.
 
 ## Build & Test Commands
 
 ```bash
-cargo build --workspace                              # Build everything (gcode requires cmake for embeddings)
-cargo build --workspace --no-default-features        # Build everything without embeddings
-cargo test --workspace                               # Test everything
-cargo test --workspace --no-default-features         # Test without embeddings
-cargo test -p gobby-code --no-default-features       # Test gcode only
-cargo test -p gobby-squeeze                          # Test gsqz only
-cargo clippy --workspace --no-default-features -- -D warnings  # Lint all
-cargo fmt --all --check                              # Check formatting
+cargo build --workspace                    # Build everything
+cargo test --workspace                     # Test everything
+cargo test -p gobby-code                   # Test gcode only
+cargo test -p gobby-squeeze                # Test gsqz only
+cargo clippy --workspace -- -D warnings    # Lint all
+cargo fmt --all --check                    # Check formatting
 ```
-
-The `embeddings` feature (gcode, default: on) enables local GGUF embedding via `llama-cpp-2` and requires cmake. Metal GPU acceleration is automatically enabled on macOS via target-conditional dependencies; non-macOS platforms get CPU-only inference. CI builds that don't need embeddings use `--no-default-features`.
 
 ## Workspace Layout
 
@@ -46,7 +42,7 @@ Release profiles are in the root `Cargo.toml` with per-package overrides. Each b
 - **`db`** — Thin SQLite connection helpers (`open_readwrite` with WAL, `open_readonly`). All connections use 5s busy timeout.
 - **`models`** — All data types: `Symbol`, `IndexedFile`, `ContentChunk`, `SearchResult`, `GraphResult`, etc.
 - **`secrets`** — Fernet decryption of Gobby secrets using `~/.gobby/machine_id` + `~/.gobby/.secret_salt` for key derivation.
-- **`neo4j`** — HTTP client for Neo4j Cypher queries (callers, usages, imports, blast radius). Write functions return `Result<()>` to enable error tracking.
+- **`neo4j`** — HTTP client for Neo4j Cypher read queries (callers, usages, imports, blast radius). Graph writes are handled by the Gobby daemon.
 - **`output`** — Output formatting (text vs JSON).
 
 ### `commands/` — CLI Command Handlers
@@ -55,15 +51,15 @@ Each subcommand maps to a function: `index::run`, `search::search`, `symbols::ou
 
 ### `index/` — Indexing Pipeline
 
-`walker` (file discovery via `ignore` crate) → `parser` (tree-sitter AST extraction per language) → `chunker` (content splitting for FTS) → `hasher` (SHA-256 for incremental indexing) → `indexer` (SQLite writes + FTS5 population). `languages` maps extensions to tree-sitter grammars. `security` validates paths.
+`walker` (file discovery via `ignore` crate) → `parser` (tree-sitter AST extraction per language) → `chunker` (content splitting for FTS) → `hasher` (SHA-256 for incremental indexing) → `indexer` (SQLite writes + FTS5 population + sync flags for daemon). `languages` maps extensions to tree-sitter grammars. `security` validates paths.
 
 ### `search/` — Search Pipeline
 
-`fts` (FTS5 symbol + content search) + `semantic` (Qdrant vector search) + `graph_boost` (Neo4j relevance boost) → `rrf` (Reciprocal Rank Fusion to merge ranked results).
+`fts` (FTS5 symbol + content search) + `semantic` (Qdrant vector search via OpenAI-compatible embedding API) + `graph_boost` (Neo4j relevance boost) → `rrf` (Reciprocal Rank Fusion to merge ranked results).
 
 ### Graceful Degradation
 
-Neo4j/Qdrant/GGUF model can each be unavailable independently. Graph commands return `[]` when Neo4j is down; search loses the corresponding boost but FTS5 always works if the project is indexed.
+Neo4j/Qdrant/embedding API can each be unavailable independently. Graph commands return `[]` when Neo4j is down; semantic search returns `[]` when Qdrant or the embedding API is unavailable; FTS5 always works if the project is indexed.
 
 ## gsqz Architecture
 
