@@ -6,19 +6,25 @@ Technical internals for developers and agents working in the gsqz codebase.
 
 ```
 CLI (main.rs, clap)
-  → Config::load (CLI override → ./gsqz.yaml → compiled default)
-  → Execute shell command (sh -c / cmd /C)
-  → Capture stdout + stderr
-  → Strip ANSI escape codes
-  → [Optional] Fetch daemon config overrides
-  → Compressor::new(config) → compile pipeline regexes
-  → compress(command, raw_output)
-    → min_length check → excluded check → pipeline match (first wins) or fallback
-    → apply steps sequentially (filter → group → dedup → truncate)
-    → max_lines cap → empty check → savings threshold check
-  → [Optional] Report savings to daemon
-  → Print result with compression banner
-  → Exit 0 (always)
+  → Detect subcommand: input | output | bare (backward compat)
+  ┌─ input mode:
+  │  → Read stdin → compress_prose(text, level) → print → report savings
+  └─ output mode:
+     → Config::load (CLI override → .gobby/gsqz.yaml → ~/.gobby/gsqz.yaml → compiled default)
+     → Execute shell command (sh -c / cmd /C)
+     → Capture stdout + stderr
+     → Strip ANSI escape codes
+     → [Optional] Fetch daemon config overrides
+     → Compressor::new(config) → compile pipeline regexes
+     → compress(command, raw_output)
+       → min_length check → excluded check
+       → split compound command (&&, ||, ;) → try segments in reverse
+       → pipeline match (first wins) or fallback (+ [gsqz:passthrough] marker)
+       → apply steps (match_output can short-circuit)
+       → max_lines cap → on_empty check → low-savings check (+ marker)
+     → [Optional] Report savings to daemon
+     → Print result with compression banner
+     → Exit 0 (always)
 ```
 
 ### Why Exit 0?
@@ -36,10 +42,11 @@ First found wins entirely — no merging:
 | Priority | Path | Purpose |
 |----------|------|---------|
 | 1 | `--config <PATH>` | Explicit CLI override |
-| 2 | `./gsqz.yaml` | Local config in current directory |
-| 3 | Compiled into binary (`config.yaml` via `include_str!`) | Built-in default |
+| 2 | `.gobby/gsqz.yaml` | Project-level config |
+| 3 | `~/.gobby/gsqz.yaml` | Global config (auto-created on first run) |
+| 4 | Compiled into binary (`config.yaml` via `include_str!`) | Built-in default |
 
-On first run with no config, the default is auto-exported to `./gsqz.yaml`. Malformed YAML exits with a parse error and suggests `gsqz --init`. The `--init` flag regenerates the default config, backing up any existing file to `gsqz.yaml.bak`.
+On first run, the default is auto-exported to `~/.gobby/gsqz.yaml`. `--init` writes to `.gobby/gsqz.yaml` (project level), backing up existing to `gsqz.yaml.bak`. Malformed YAML exits with a parse error and suggests `gsqz --init`.
 
 ### Data Structures
 
@@ -55,11 +62,13 @@ pub struct Settings {
     pub min_output_length: usize,       // default: 1000 chars
     pub max_compressed_lines: usize,    // default: 100 lines
     pub daemon_url: Option<String>,
+    pub on_empty: Option<String>,       // global fallback for empty output
 }
 
 pub struct Pipeline {
     pub match_pattern: String,          // regex matched against command string
     pub steps: Vec<Step>,               // ordered compression steps
+    pub on_empty: Option<String>,       // per-pipeline empty output fallback
 }
 ```
 
@@ -69,17 +78,28 @@ The `Step` enum uses a custom `Deserialize` implementation (serde `Visitor` patt
 
 ```yaml
 steps:
+  - match_output:
+      rules:
+        - pattern: 'test result: ok\.'
+          unless: 'FAILED'
+          message: 'All tests passed.'
   - filter_lines:
       patterns: ['^\s*$', '^On branch ']
+  - replace:
+      rules:
+        - pattern: '/home/\w+/'
+          replacement: '~/'
   - group_lines:
       mode: git_status
   - truncate:
       head: 20
       tail: 10
   - dedup: {}
+  - compress_prose:
+      level: standard
 ```
 
-The visitor extracts the key name (`filter_lines`, `group_lines`, `truncate`, `dedup`) and dispatches to the appropriate struct. Invalid step names produce a clear `unknown_variant` error.
+The visitor extracts the key name (`filter_lines`, `group_lines`, `truncate`, `dedup`, `replace`, `match_output`, `compress_prose`) and dispatches to the appropriate struct. Invalid step names produce a clear `unknown_variant` error.
 
 ## Compressor
 
@@ -100,20 +120,27 @@ compress(command, output)
 ├─ command matches excluded_commands?
 │  → return excluded
 │
-├─ match command against pipelines (first regex match wins)
+├─ split compound command at &&, ||, ; (respecting quotes/parens)
+│  → try segments in reverse order (last = most relevant)
+│
+├─ match segment against pipelines (first regex match wins)
 │  ├─ matched: use pipeline.steps, strategy = pipeline.name
 │  └─ no match: use fallback.steps, strategy = "fallback"
+│                prepend [gsqz:passthrough] marker
 │
 ├─ apply_steps(lines, steps) → sequential step execution
+│  └─ match_output can early-return with short message
 │
 ├─ lines.len() > max_compressed_lines?
 │  → cap: keep first 60% (head) + omission marker + last 40% (tail)
 │
 ├─ output empty after compression?
-│  → return passthrough (don't hide content from LLM)
+│  → check pipeline on_empty, then global on_empty
+│  → if found: return message with strategy/on_empty suffix
+│  → otherwise: return passthrough
 │
-├─ compressed_chars >= original_chars * 95%?
-│  → return passthrough (not enough savings to justify)
+├─ compressed_chars >= original_chars * 95% AND matched?
+│  → prepend [gsqz:low-savings] marker, return with strategy/low-savings suffix
 │
 └─ return CompressionResult { compressed, strategy_name, ... }
 ```
@@ -132,6 +159,37 @@ compress(command, output)
 Pipelines are stored as a `Vec`, not a `Map`. The first pipeline whose regex matches the command string is used. This means order matters — more specific regexes should come before general ones in the config (e.g., `cargo test` before `cargo build`).
 
 ## Step Types (Primitives)
+
+### match_output
+
+**File:** `src/primitives/match_output.rs`
+
+Short-circuit step that checks the full output blob (joined lines) against regex rules. Returns a message immediately if matched, skipping remaining steps.
+
+```rust
+pub fn check(lines: &[String], rules: &[MatchOutputRule]) -> Option<String>
+```
+
+- Joins lines into a single string for matching
+- Checks each rule in order: if `pattern` matches AND `unless` doesn't (or is absent), returns `Some(message)`
+- First matching rule wins
+- Invalid regexes are silently skipped
+
+In `apply_steps`, this is the only step that does `return` instead of `lines = ...`.
+
+### replace
+
+**File:** `src/primitives/replace.rs`
+
+Line-by-line regex substitution with backreference support.
+
+```rust
+pub fn replace(lines: Vec<String>, rules: &[ReplaceRule]) -> Vec<String>
+```
+
+- Pre-compiles all regexes once, skips invalid patterns
+- For each line, applies rules sequentially — each rule's output feeds the next
+- Uses `regex.replace_all` which natively supports `$1`, `$2` backreferences
 
 ### filter_lines
 
@@ -279,6 +337,37 @@ Useful for diff output where each file section should be truncated independently
     per_file_lines: 40
     file_marker: '^diff --git'
 ```
+
+### compress_prose
+
+**File:** `src/primitives/prose.rs`
+
+Text-level compression with protected region system. Unlike other steps which work on `Vec<String>` lines, this joins lines into text, compresses, then splits back.
+
+```rust
+pub fn compress_prose(input: &str, level: Level) -> String
+```
+
+Three levels:
+- **Lite**: collapse blank lines, strip HTML comments, trim trailing whitespace
+- **Standard**: + 24 filler phrase rules + 20 filler word patterns, preserving protected regions
+- **Aggressive**: + first-sentence-only paragraphs, list truncation (>5 items)
+
+**Protected regions** (extracted before compression, restored after):
+- Block-level: fenced code blocks (`` ``` ``), YAML frontmatter (`---`)
+- Inline: backtick code, URLs, XML/HTML tags, file paths
+
+### command_split
+
+**File:** `src/command_split.rs`
+
+Splits compound commands for pipeline matching, not a pipeline step.
+
+```rust
+pub fn split_compound(cmd: &str) -> Vec<&str>
+```
+
+State machine tracking single/double quotes and paren depth. Splits at `&&`, `||`, `;`. Pipes (`|`) are NOT split. Used in `compress()` to try segments in reverse order.
 
 ## Built-in Pipelines
 
@@ -443,8 +532,12 @@ Each primitive has comprehensive unit tests:
 - **group.rs**: All 9 modes with realistic tool output, truncation within groups
 - **dedup.rs**: Consecutive groups, mixed content, near-identical detection
 - **truncate.rs**: Global and per-section modes, boundary conditions
-- **config.rs**: Step deserialization, config merging, regex compilation
-- **compressor.rs**: Pipeline matching, fallback, max_lines cap, savings thresholds
+- **replace.rs**: Basic substitution, backreferences, chained rules, invalid regex
+- **match_output.rs**: Pattern match, unless blocking, first-rule-wins, cross-line matching
+- **prose.rs**: All 3 levels, protected region preservation (code blocks, URLs, inline code, XML, paths)
+- **command_split.rs**: All operators, quoted strings, parenthesized groups, pipes preserved
+- **config.rs**: Step deserialization for all 7 variants, config loading, regex compilation
+- **compressor.rs**: Pipeline matching, fallback, compound splitting, match_output short-circuit, on_empty, degradation markers, max_lines cap, savings thresholds
 
 Run tests:
 ```bash

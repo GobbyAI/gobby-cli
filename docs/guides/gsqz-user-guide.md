@@ -15,10 +15,20 @@ If you use [Gobby](https://github.com/GobbyAI/gobby), gsqz is already installed.
 ## Quick Start
 
 ```bash
-# Wrap any command
+# Compress command output
 gsqz -- git status
 gsqz -- cargo test
 gsqz -- uv run pytest tests/
+
+# Explicit output subcommand (identical behavior)
+gsqz output -- cargo build
+
+# Compress prose/text from stdin
+echo "In order to fix this..." | gsqz input
+echo "verbose docs" | gsqz input --level aggressive
+
+# Compound commands work — last segment matched for pipeline selection
+gsqz -- "cargo build && cargo test"
 
 # See compression stats
 gsqz --stats -- git diff
@@ -119,6 +129,96 @@ error at pos 42
   [repeated 3 times]
 ```
 
+### `replace`
+
+Applies regex substitution to each line with backreference support (`$1`, `$2`). Rules chain — each rule's output feeds the next. Useful for normalizing paths, version strings, or timestamps before other steps.
+
+```yaml
+- replace:
+    rules:
+      - pattern: '/home/[^/]+/projects/[^/]+/'
+        replacement: './'
+      - pattern: 'v\d+\.\d+\.\d+'
+        replacement: 'vX.X.X'
+```
+
+### `match_output`
+
+Checks the full output blob (not per-line) against regex rules. If a pattern matches and the optional `unless` pattern does NOT match, returns a short message immediately, skipping all remaining steps. First matching rule wins. Place early in the step sequence for maximum savings.
+
+```yaml
+- match_output:
+    rules:
+      - pattern: 'test result: ok\.'
+        unless: 'FAILED|panicked'
+        message: 'All tests passed.'
+```
+
+### `compress_prose`
+
+Applies prose compression to the output. Three levels available:
+
+- **lite** — collapse blank lines, strip HTML comments, trim trailing whitespace
+- **standard** — lite + remove filler phrases ("In order to" → "To", etc.) and filler words, while preserving code blocks, inline code, URLs, XML tags, file paths, and headings
+- **aggressive** — standard + keep only first sentence per paragraph, truncate lists >5 items
+
+```yaml
+- compress_prose:
+    level: standard
+```
+
+## Prose Compression (Input Mode)
+
+`gsqz input` compresses prose/text from stdin — useful for reducing verbose documentation, LLM responses, or any text before it enters a context window.
+
+```bash
+# Standard compression (default)
+cat verbose-docs.md | gsqz input
+
+# Aggressive — first sentence per paragraph, truncated lists
+cat api-response.txt | gsqz input --level aggressive
+
+# Lite — just whitespace cleanup
+cat notes.txt | gsqz input --level lite
+```
+
+Protected regions (code blocks, YAML frontmatter, inline code, URLs, file paths, XML tags, headings) are preserved at all levels.
+
+## Compound Commands
+
+gsqz splits compound commands at `&&`, `||`, and `;` operators (respecting quotes and parentheses) and tries segments in reverse order for pipeline matching. The last segment's output is typically most relevant.
+
+```bash
+# "cargo test" segment matches the cargo-test pipeline
+gsqz -- "cargo build && cargo test"
+```
+
+Pipe chains (`|`) are NOT split — the output comes from the last command in the pipe.
+
+## Degradation Markers
+
+When output quality is degraded, gsqz prepends markers so the LLM knows:
+
+- `[gsqz:passthrough]` — no pipeline matched, fallback truncation applied
+- `[gsqz:low-savings]` — a pipeline matched but achieved less than 5% compression
+
+## On-Empty Fallback
+
+When pipeline steps produce empty output, gsqz returns a configurable message instead of nothing:
+
+```yaml
+settings:
+  on_empty: 'No output after compression.'
+
+pipelines:
+  my-pipeline:
+    match: '\bmy-cmd\b'
+    on_empty: 'Command produced no meaningful output.'
+    steps: [...]
+```
+
+Pipeline-level `on_empty` overrides the global setting.
+
 ## Configuration
 
 gsqz uses a single config file with simple priority:
@@ -187,6 +287,9 @@ The `--stats` flag prints to stderr:
 
 Strategy names to look for:
 - A pipeline name (e.g. `git-status`, `pytest`, `cargo-test`) — matched and compressed
-- `fallback` — no pipeline matched, generic truncation applied
-- `passthrough` — output was too short, compression didn't help enough, or output was empty
+- `{name}/low-savings` — pipeline matched but compression was marginal (<5%)
+- `{name}/on_empty` — pipeline produced empty output, on_empty fallback used
+- `fallback` — no pipeline matched, generic truncation applied (with `[gsqz:passthrough]` marker)
+- `passthrough` — output was too short or compression didn't help
 - `excluded` — command matched an exclusion pattern
+- `prose/{level}` — prose compression via `gsqz input`
