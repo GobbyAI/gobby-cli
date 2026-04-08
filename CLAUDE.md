@@ -4,10 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-A Cargo workspace containing two Gobby CLI tools:
+A Cargo workspace containing three Gobby CLI tools:
 
 - **gcode** (`crates/gcode/`) — AST-aware code search, symbol navigation, and dependency graph analysis. Writes to SQLite; reads from SQLite, Neo4j, and Qdrant. External sync (embeddings, graph) is handled by the Gobby daemon.
 - **gsqz** (`crates/gsqz/`) — YAML-configurable output compressor for LLM token optimization. Wraps shell commands and applies pattern-based compression pipelines.
+- **gloc** (`crates/gloc/`) — Local LLM launcher. Auto-detects backends (LM Studio, Ollama), manages model lifecycle, and execs into AI CLI tools (Claude Code, Codex) with the right env vars.
 
 ## Build & Test Commands
 
@@ -16,6 +17,7 @@ cargo build --workspace                    # Build everything
 cargo test --workspace                     # Test everything
 cargo test -p gobby-code                   # Test gcode only
 cargo test -p gobby-squeeze                # Test gsqz only
+cargo test -p gobby-local                  # Test gloc only
 cargo clippy --workspace -- -D warnings    # Lint all
 cargo fmt --all --check                    # Check formatting
 ```
@@ -26,6 +28,7 @@ cargo fmt --all --check                    # Check formatting
 crates/
   gcode/    — Heavy binary (tree-sitter, SQLite, Neo4j, Qdrant, opt-level=3)
   gsqz/     — Tiny binary (regex pipelines, shell wrapper, opt-level="z")
+  gloc/     — Tiny binary (local LLM launcher, backend detection, opt-level="z")
 ```
 
 Release profiles are in the root `Cargo.toml` with per-package overrides. Each binary has its own optimization level.
@@ -75,6 +78,18 @@ CLI parses args → loads layered config → executes shell command → strips A
 - **`compressor`** — Orchestrator that compiles pipeline regexes, matches commands, applies steps, and enforces thresholds (min output length, max compressed lines, 95% savings threshold).
 - **`daemon`** — Feature-gated (`#[cfg(feature = "gobby")]`) HTTP integration with the gobby daemon for runtime config overrides and savings reporting. All HTTP calls are fire-and-forget with 1s timeouts.
 - **`primitives/`** — Four composable operations on line collections: `filter`, `group` (8 modes), `dedup`, `truncate`.
+
+## gloc Architecture
+
+### Data Flow
+
+CLI parses args → loads layered config → auto-detects backend (probes LM Studio then Ollama in config order) → resolves client and model (with alias lookup) → ensures model readiness (Ollama: check/pull/warmup; LM Studio: no-op JIT) → sets env vars from client template → `exec`s into client binary.
+
+### Core Modules
+
+- **`config`** — Layered config system (same pattern as gsqz): built-in `config.yaml` → global (`~/.gobby/gloc.yaml`) → project (`.gobby/gloc.yaml`) → CLI override. Template variable resolution (`{backend.url}`, `{backend.auth_token}`, `{backend.name}`, `{model}`).
+- **`backend`** — Backend probing via HTTP GET, Ollama model lifecycle management (check via `/api/tags`, pull via `/api/pull`, warmup via `/api/generate`). LM Studio uses JIT loading (no explicit management needed).
+- **`exec`** — Env var injection from client config templates, argument building, and `exec()` into the client binary (replaces process via `CommandExt::exec()`).
 
 ## Key Constraints
 
