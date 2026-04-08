@@ -126,10 +126,11 @@ gsqz uses a single config file with simple priority:
 | Priority | Path | Purpose |
 |----------|------|---------|
 | 1 | `--config path/to/file.yaml` | Explicit CLI override |
-| 2 | `./gsqz.yaml` | Local config in current directory |
-| 3 | Compiled into binary | Built-in default (fallback) |
+| 2 | `.gobby/gsqz.yaml` | Project-level config |
+| 3 | `~/.gobby/gsqz.yaml` | Global config (auto-created on first run) |
+| 4 | Compiled into binary | Built-in default (fallback) |
 
-First found wins entirely — no merging between layers. On first run, if no `./gsqz.yaml` exists, gsqz creates one from the built-in default. Run `gsqz --init` to regenerate it (backs up existing to `gsqz.yaml.bak`).
+First found wins entirely — no merging between layers. On first run, gsqz auto-exports the default config to `~/.gobby/gsqz.yaml`. Run `gsqz --init` to write a project-level config to `.gobby/gsqz.yaml` (backs up existing to `gsqz.yaml.bak`).
 
 ### Settings
 
