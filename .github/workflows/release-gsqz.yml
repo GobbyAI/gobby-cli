@@ -3,7 +3,7 @@ name: Release gsqz
 on:
   push:
     tags:
-      - "v*"
+      - "gsqz-v*"
 
 permissions:
   contents: write
