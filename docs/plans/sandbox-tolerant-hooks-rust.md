@@ -77,8 +77,11 @@ boundary per atomic item" standard. Each maps to an R-item from the epic.
   - `X-Gobby-Session-Id` from `input_data["session_id"]` (line `:659`).
     Same omit-on-missing semantics.
   - Detach: single `setsid` (matches dispatcher's `start_new_session=True`
-    at `:697`) on Unix; `DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP` on
-    Windows.
+    at `:697`) on Unix; `FreeConsole()` on Windows. `DETACHED_PROCESS` and
+    `CREATE_NEW_PROCESS_GROUP` are `CreateProcess` parent-side flags and
+    cannot be self-applied from the already-spawned child — `FreeConsole`
+    is the correct post-spawn analog (release the inherited console
+    handle).
 - Upgrades beyond dispatcher:
   - **Enqueue-first**: write envelope to
     `~/.gobby/hooks/inbox/<p>-<ts13>-<uuid>.json.tmp` → `fsync` → rename.
@@ -107,6 +110,15 @@ boundary per atomic item" standard. Each maps to an R-item from the epic.
   gsqz/gcode). Publish to crates.io as `gobby-hook` so
   `cargo-binstall` / `cargo install` fallbacks work in the daemon's
   `_install_ghook()`.
+- **Publish-order constraint.** `ghook` depends on `gobby-core`, so
+  `gobby-core` must publish to crates.io before any `ghook` release can
+  complete — crates.io rejects uploads with path-only dependencies. PR 1
+  adds a sibling `.github/workflows/release-gobby-core.yml` that
+  publishes `gobby-core`, and `crates/ghook/Cargo.toml` declares its
+  `gobby-core` dep with both `version = "0.x.y"` and
+  `path = "../gobby-core"` — crates.io consumes the `version`, workspace
+  builds honor the `path`. The first `gobby-hook-v<semver>` tag cannot
+  ship until the matching `gobby-core` version is live on the registry.
 
 ### PR 4 — migrate `gcode` to `gobby-core` (R2-08)
 
@@ -124,7 +136,12 @@ boundary per atomic item" standard. Each maps to an R-item from the epic.
 
 - Cargo package names: `gobby-core` (lib), `gobby-hook` (bin `ghook`).
 - Binary install: `~/.gobby/bin/ghook` + stamp `~/.gobby/bin/.ghook-version`.
-- Crates.io: `gobby-hook` published.
+- Crates.io: `gobby-core` and `gobby-hook` both published. `gobby-core`
+  must publish first — crates.io rejects packages with path-only
+  dependencies, and `ghook` depends on `gobby-core`. `ghook`'s
+  `Cargo.toml` declares `gobby-core = { version = "0.x.y", path = "..." }`
+  so workspace builds stay path-backed while registry builds resolve the
+  version.
 - GitHub release tag: `gobby-hook-v<semver>`. Tarball:
   `ghook-<target-triple>.tar.gz`.
 - Windows: `ghook.exe`.
@@ -163,7 +180,11 @@ last_attempt }`. Agreed with daemon agent.
 ## All contract questions resolved
 
 - **Q1.1** → stdin-only for headers. Env vars enter as terminal_context
-  *data*, not as headers. Parity with dispatcher `:659`.
+  *data*, not as headers. Parity with dispatcher `:659`. Empty stdin
+  normalizes to `input_data = {}` (ghook); dispatcher exits non-zero on
+  empty (`hook_dispatcher.py:677`). Documented transition-window
+  divergence — exit code is still governed by `--critical` alone, no
+  silent drop.
 - **Q1.2** → omit header on missing, mirror `:657-661`.
 - **Q1.3** → write directly to `inbox/quarantine/` with `.meta.json`
   sidecar. No `malformed` flag in envelope schema. Drain never replays.
@@ -182,11 +203,23 @@ last_attempt }`. Agreed with daemon agent.
   fetching release URLs with no auth). CI uses
   `raw.githubusercontent.com/GobbyAI/gobby-cli/<SOURCE_COMMIT>/schemas/*`.
 - **Q6** (serde_yaml) → `0.9`, workspace consistency.
-- **Detach** → single `setsid` (Unix, matches `:697`) /
-  `DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP` (Windows). No double-fork.
+- **Detach** → single `setsid` (Unix, matches `:697`) / `FreeConsole()`
+  (Windows — post-spawn release of the inherited console; `DETACHED_PROCESS`
+  and `CREATE_NEW_PROCESS_GROUP` are `CreateProcess` parent-side flags, not
+  self-applicable from the child). No double-fork.
 - **Terminal context** → ported from `get_terminal_context()` `:181-223`
   with the `TMUX`/`TMUX_PANE` inheritance rule at `:205`. Gated by
   per-CLI `terminal_context_hooks` set from `CLIConfig` `:61`.
+- **POST body shape** → daemon's `/api/hooks/execute` endpoint
+  (`servers/routes/mcp/hooks.py:258`) reads `hook_type`, `input_data`,
+  and `source` from the top level and hands the full payload through to
+  adapters, which only read the fields they need. Both the legacy
+  bare-body shape `{hook_type, input_data, source}` and the schema-v1
+  envelope `{schema_version, enqueued_at, critical, hook_type,
+  input_data, source, headers}` are accepted — envelope extras fall
+  through as silent metadata. ghook sends envelope shape; the Python
+  plan's §2.8 adds a handler test that pins this tolerance so a future
+  refactor can't silently regress envelope-aware clients.
 
 Daemon agent has signed off. Green light to proceed with PRs 1–4.
 
