@@ -21,7 +21,7 @@
 
 ## What's Inside
 
-This workspace contains three Gobby CLI tools:
+This workspace contains four Gobby CLI tools plus a shared library:
 
 ### gcode — Code Search & Navigation
 
@@ -35,11 +35,18 @@ Squeezes CLI output before it eats your context window. 28 built-in pipelines fo
 
 One command to launch Claude Code or Codex against a local LLM backend. Auto-detects LM Studio and Ollama, manages Ollama model lifecycle (pull, load, warmup), sets the right env vars, and `exec`s into your CLI of choice. YAML-configurable with aliases, per-client env templates, and ordered backend priority.
 
+### ghook — Hook Dispatcher
+
+Sandbox-tolerant hook dispatcher invoked by host AI CLIs (Claude Code, Codex, Gemini CLI, Qwen CLI) on lifecycle and tool-use events. Spools envelopes to `~/.gobby/hooks/inbox/` *before* POSTing to the local Gobby daemon, so the daemon's drain worker can replay any delivery lost to a sandbox FS-read denial, network blip, or daemon restart. You don't usually invoke it directly — Gobby wires it into your AI CLI for you.
+
+`gobby-core` underpins them all — a small shared-primitives library (project root walk-up, bootstrap config, daemon URL). Not a standalone tool.
+
 ## Documentation
 
 - [gcode User Guide](docs/guides/gcode-user-guide.md) — search, symbols, dependency graphs, project management
 - [gsqz User Guide](docs/guides/gsqz-user-guide.md) — pipelines, step types, configuration, debugging
 - [gloc User Guide](docs/guides/gloc-user-guide.md) — backends, clients, model management, configuration
+- [ghook User Guide](docs/guides/ghook-user-guide.md) — hook wiring, diagnose mode, inbox/replay, troubleshooting
 - [Changelog](CHANGELOG.md) — release history
 - [gcode README](crates/gcode/README.md) — architecture and build details
 - [gsqz README](crates/gsqz/README.md) — architecture and build details
@@ -69,6 +76,9 @@ cargo install gobby-squeeze
 
 # gloc
 cargo install gobby-local
+
+# ghook
+cargo install gobby-hooks
 ```
 
 On macOS, Metal GPU acceleration is enabled automatically. On Linux/Windows, embeddings use CPU inference by default — add a GPU feature flag for hardware acceleration.
@@ -81,6 +91,7 @@ cd gobby-cli
 cargo install --path crates/gcode
 cargo install --path crates/gsqz
 cargo install --path crates/gloc
+cargo install --path crates/ghook
 ```
 
 ## Development
