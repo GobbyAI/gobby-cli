@@ -288,6 +288,7 @@ The `--stats` flag prints to stderr:
 Strategy names to look for:
 - A pipeline name (e.g. `git-status`, `pytest`, `cargo-test`) — matched and compressed
 - `{name}/low-savings` — pipeline matched but compression was marginal (<5%)
+- `{name}/no-op` — pipeline matched but adding the low-savings marker would have grown the output, so the original is surfaced verbatim (no header, no daemon report)
 - `{name}/on_empty` — pipeline produced empty output, on_empty fallback used
 - `fallback` — no pipeline matched, generic truncation applied (with `[gsqz:passthrough]` marker)
 - `passthrough` — output was too short or compression didn't help
