@@ -38,6 +38,8 @@ On exit, `semantic::shutdown()` explicitly drops the embedding model to prevent 
 3. Otherwise, walk up from cwd looking for `.gobby/project.json` (Gobby-managed) or `.gobby/gcode.json` (standalone)
 4. Fall back to VCS root markers (`.git`, `.hg`, `.svn`) or cwd
 
+The walk-up and `project.json` reading steps use `gobby_core::project::find_project_root` and `gobby_core::project::read_project_id` (extracted from `gcode/src/project.rs` so `ghook` and other binaries can share the same logic). Bootstrap-config and daemon-URL helpers also come from `gobby-core`. See [gobby-core Development Guide](gcore-development-guide.md) for the shared API.
+
 ### Database Path Selection
 
 1. Check `~/.gobby/bootstrap.yaml` for `database_path` key

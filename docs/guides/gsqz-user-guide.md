@@ -200,7 +200,7 @@ Pipe chains (`|`) are NOT split — the output comes from the last command in th
 When output quality is degraded, gsqz prepends markers so the LLM knows:
 
 - `[gsqz:passthrough]` — no pipeline matched, fallback truncation applied
-- `[gsqz:low-savings]` — a pipeline matched but achieved less than 5% compression
+- `[gsqz:low-savings]` — a pipeline matched but achieved less than 5% compression. The marker is suppressed when prepending it would actually grow the output beyond the original — gsqz will only annotate when the annotation isn't itself making things worse.
 
 ## On-Empty Fallback
 
