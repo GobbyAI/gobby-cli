@@ -19,7 +19,7 @@ Two things reshape the original plan:
    `gobby-core`, not `gobby-common`. R2-01 scaffolds it; R2-02/R2-04/R2-05
    extract exactly what ghook needs (bootstrap resolution, project root,
    project metadata). The epic's Hook Integration section (`:151-157`)
-   anticipates a Rust `gobby-hook` binary and permits it against the stable
+   anticipates a Rust `gobby-hooks` binary and permits it against the stable
    public daemon contract. Daemon-side hook *execution* migration is
    Phase 6 (R6-04 through R6-07) — out of scope here. ghook is client-side
    only; daemon stays Python.
@@ -34,7 +34,7 @@ boundary per atomic item" standard. Each maps to an R-item from the epic.
 
 ### PR 1 — `gobby-core` scaffold + project helpers (R2-01 + R2-04 + R2-05)
 
-- New crate `crates/gobby-core/` — workspace lib, no binaries.
+- New crate `crates/gcore/` — workspace lib, no binaries.
 - Move `find_project_root` and `read_project_id` from `gcode/src/project.rs`
   into `gobby-core::project`. Expose as public API.
 - `gcode` keeps its local copy temporarily (R2-08 is the later migration
@@ -104,20 +104,20 @@ boundary per atomic item" standard. Each maps to an R-item from the epic.
 - `~/.gobby/bin/.ghook-compatibility` written by `ghook --version` on first
   run: `{ "schema_version": 1, "ghook_version": "0.1.0" }`.
 - CI: `.github/workflows/release-ghook.yml` mirrors `release-gcode.yml` +
-  binary-specific tag prefix (`gobby-hook-v<semver>`, per commit `bf9eb40`).
+  binary-specific tag prefix (`gobby-hooks-v<semver>`, per commit `bf9eb40`).
   Targets: `darwin-arm64`, `darwin-x86_64`, `linux-x86_64`, `linux-arm64`,
   `windows-x86_64` (mirrors `install_setup.py:249-250` triples for
-  gsqz/gcode). Publish to crates.io as `gobby-hook` so
+  gsqz/gcode). Publish to crates.io as `gobby-hooks` so
   `cargo-binstall` / `cargo install` fallbacks work in the daemon's
   `_install_ghook()`.
 - **Publish-order constraint.** `ghook` depends on `gobby-core`, so
   `gobby-core` must publish to crates.io before any `ghook` release can
   complete — crates.io rejects uploads with path-only dependencies. PR 1
-  adds a sibling `.github/workflows/release-gobby-core.yml` that
+  adds a sibling `.github/workflows/release-gcore.yml` that
   publishes `gobby-core`, and `crates/ghook/Cargo.toml` declares its
   `gobby-core` dep with both `version = "0.x.y"` and
-  `path = "../gobby-core"` — crates.io consumes the `version`, workspace
-  builds honor the `path`. The first `gobby-hook-v<semver>` tag cannot
+  `path = "../gcore"` — crates.io consumes the `version`, workspace
+  builds honor the `path`. The first `gobby-hooks-v<semver>` tag cannot
   ship until the matching `gobby-core` version is live on the registry.
 
 ### PR 4 — migrate `gcode` to `gobby-core` (R2-08)
@@ -134,15 +134,15 @@ boundary per atomic item" standard. Each maps to an R-item from the epic.
 
 ### Crate & distribution
 
-- Cargo package names: `gobby-core` (lib), `gobby-hook` (bin `ghook`).
+- Cargo package names: `gobby-core` (lib), `gobby-hooks` (bin `ghook`).
 - Binary install: `~/.gobby/bin/ghook` + stamp `~/.gobby/bin/.ghook-version`.
-- Crates.io: `gobby-core` and `gobby-hook` both published. `gobby-core`
+- Crates.io: `gobby-core` and `gobby-hooks` both published. `gobby-core`
   must publish first — crates.io rejects packages with path-only
   dependencies, and `ghook` depends on `gobby-core`. `ghook`'s
   `Cargo.toml` declares `gobby-core = { version = "0.x.y", path = "..." }`
   so workspace builds stay path-backed while registry builds resolve the
   version.
-- GitHub release tag: `gobby-hook-v<semver>`. Tarball:
+- GitHub release tag: `gobby-hooks-v<semver>`. Tarball:
   `ghook-<target-triple>.tar.gz`.
 - Windows: `ghook.exe`.
 
@@ -226,14 +226,14 @@ Daemon agent has signed off. Green light to proceed with PRs 1–4.
 ## Critical files (this repo)
 
 **New (PR 1):**
-- `crates/gobby-core/Cargo.toml`
-- `crates/gobby-core/src/lib.rs`
-- `crates/gobby-core/src/project.rs` — moved from gcode
+- `crates/gcore/Cargo.toml`
+- `crates/gcore/src/lib.rs`
+- `crates/gcore/src/project.rs` — moved from gcode
 - Root `Cargo.toml` — add `gobby-core` to workspace members
 
 **New (PR 2):**
-- `crates/gobby-core/src/bootstrap.rs`
-- `crates/gobby-core/src/daemon_url.rs`
+- `crates/gcore/src/bootstrap.rs`
+- `crates/gcore/src/daemon_url.rs`
 
 **New (PR 3):**
 - `crates/ghook/Cargo.toml`
@@ -258,7 +258,7 @@ Daemon agent has signed off. Green light to proceed with PRs 1–4.
 
 - `cargo test --workspace` green at each PR boundary.
 - `cargo clippy --workspace -- -D warnings` green.
-- `cargo build --release -p gobby-hook` produces binary in
+- `cargo build --release -p gobby-hooks` produces binary in
   `gsqz`/`gloc` size ballpark (`opt-level="z"` target).
 - PR 3 manual:
   - `echo '{"session_id":"test"}' | target/release/ghook --gobby-owned
