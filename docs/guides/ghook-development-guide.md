@@ -164,7 +164,7 @@ atomic_write(final_path, bytes):
 
 ### POST + Cleanup
 
-`post_and_cleanup` POSTs to `{daemon_url}/api/hooks/execute` with a 30-second timeout. The envelope's `headers` are mirrored as HTTP headers. On 2xx, the inbox file is deleted; otherwise it's left in place.
+`post_and_cleanup` POSTs a Python-compatible hook payload to `{daemon_url}/api/hooks/execute` with a 30-second timeout. The envelope's `headers` are mirrored as HTTP headers. On 2xx, the inbox file is deleted; otherwise it's left in place.
 
 The 30s timeout is deliberately generous — the daemon may be doing real work (DB writes, agent reconciliation). `--detach` is the escape hatch for hooks where the host CLI tears down its session before 30s.
 
@@ -213,16 +213,7 @@ On Windows, `setsid` doesn't exist. `DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP
 
 ## Critical vs Non-Critical Exit Semantics
 
-```text
-                  | POST 2xx          | POST failure      | malformed stdin
-------------------+-------------------+-------------------+------------------
---critical        | exit 0 (Delivered)| exit 2 (Enqueued) | exit 2
-no --critical     | exit 0 (Delivered)| exit 0 (Enqueued) | exit 0
-```
-
-`--critical` is set per-hook in the host CLI's `settings.json`. ghook treats it as opaque — the per-CLI registry in `cli_config.rs` describes what *should* be critical for diagnose purposes, but the actual exit-code decision is driven by the flag the host CLI passed.
-
-The envelope is enqueued in all cases (except malformed stdin, which goes to quarantine). `--critical` only changes whether ghook signals the host CLI to abort.
+`ghook` keeps enqueue-first transport internals, but host-visible stdout/stderr/exit behavior is intended to match the legacy Python dispatcher contract rather than expose separate Rust-specific delivery semantics.
 
 ## Testing
 
@@ -233,7 +224,7 @@ Each module has `#[cfg(test)] mod tests` with comprehensive coverage:
 - **envelope.rs**: serialization shape, schema validation against `inbox-envelope.v1.schema.json`, empty-headers serializing as empty object.
 - **transport.rs**: 13-digit timestamp shape, filename prefix matches `critical`, atomic-write creates parents, no `.tmp` left on success, enqueue produces valid filename, quarantine pair structure.
 - **diagnose.rs**: unknown CLI → not recognized + null source; known CLI/hook combos hit the right critical/terminal-context flags; schema validation for both recognized and unrecognized CLIs.
-- **cli_config.rs**: per-CLI critical/terminal-context membership; case-insensitive CLI lookup; unknown CLIs return `None`.
+- **cli_config.rs**: per-CLI critical/terminal-context membership; case-insensitive CLI lookup; unknown CLIs remain unrecognized for diagnose and fall back to conservative Claude-like config on the live dispatch path.
 - **terminal_context.rs**: tmux socket-path parsing edge cases, `inject` respects existing context, `inject` no-ops on non-objects, `capture` emits all expected keys.
 
 ### Schema Validation in Tests
@@ -283,7 +274,7 @@ The flow to support a new CLI (say, "cursor"):
 
 5. **No transport changes** — same inbox, same daemon endpoint.
 
-Unknown CLIs are tolerated at runtime (`source` falls back to the literal `--cli` value), so a hook script written for a CLI ghook doesn't yet recognize will still spool envelopes — they just won't get terminal-context enrichment or per-CLI critical-hook handling. Adding a registry entry upgrades that path from "tolerated" to "first-class."
+Unknown CLIs fall back to conservative Claude-like dispatch behavior on the live path. Diagnose mode still reports them as unrecognized. Adding a registry entry upgrades that path from fallback behavior to first-class parity.
 
 ## Adding a New Hook Type
 
@@ -291,7 +282,7 @@ Almost always config-only. ghook treats `--type` as opaque. To make a hook criti
 
 ## Versioning
 
-ghook is at `0.1.0`. `SCHEMA_VERSION` is also `1`. The two version numbers are independent:
+ghook is at `0.2.0`. `SCHEMA_VERSION` is also `1`. The two version numbers are independent:
 
 - **Crate version** bumps for any code change (binary behavior, dependencies, perf, etc.).
 - **`SCHEMA_VERSION`** bumps only when the envelope shape changes in a way the daemon must explicitly handle.

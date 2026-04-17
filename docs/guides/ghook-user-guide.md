@@ -25,13 +25,13 @@ host AI CLI fires hook
       ├─ reads stdin (the host CLI's hook payload)
       ├─ enriches input_data with terminal_context (when applicable)
       ├─ writes envelope atomically to ~/.gobby/hooks/inbox/
-      └─ POSTs envelope to the Gobby daemon
-          ├─ 2xx → delete inbox file, exit 0
-          └─ failure → leave inbox file, exit 0 or 2 depending on --critical
+      └─ POSTs Python-compatible hook payload to the Gobby daemon
+          ├─ 2xx → delete inbox file, return Python-dispatcher-compatible stdout/stderr/exit
+          └─ failure → leave inbox file, return Python-dispatcher-compatible stdout/stderr/exit
                        └─ daemon's drain worker replays on next tick
 ```
 
-Spool-first ordering is the whole point. If anything between ghook and the daemon goes wrong (sandbox FS denial, network blip, daemon restart), the envelope is already on disk and the daemon will pick it up on its next drain pass. From the host CLI's perspective the hook either succeeded or failed-loud (exit 2) — replay is invisible.
+Spool-first ordering is the whole point. If anything between ghook and the daemon goes wrong (sandbox FS denial, network blip, daemon restart), the envelope is already on disk and the daemon will pick it up on its next drain pass. Replay is invisible to the host CLI; the host-visible result still follows the mirrored Python dispatcher contract.
 
 ## CLI Surface
 
@@ -50,17 +50,18 @@ ghook --version
 | `--version` | metadata | Prints version and writes `~/.gobby/bin/.ghook-compatibility` for the daemon. |
 | `--cli` | required for dispatch/diagnose | Host CLI name: `claude`, `codex`, `gemini`, `qwen`. Case-insensitive. |
 | `--type` | required for dispatch/diagnose | Hook type. CLI-specific (e.g. `session-start` for Claude, `SessionStart` for Codex/Gemini/Qwen, `PreToolUse`, `PostToolUse`, `Stop`, `pre-compact`, `session-end`). |
-| `--critical` | dispatch | Treat enqueue/POST failure as fatal — exit 2 to signal the host CLI. Default is exit 0 even on failure (envelope is still spooled). |
+| `--critical` | dispatch | Compatibility flag accepted by ghook. Host-visible behavior is derived from the per-CLI dispatcher contract, matching `hook_dispatcher.py`. |
 | `--detach` | dispatch | After enqueue and project-root walk-up, call `setsid(2)` to escape the host CLI's process group before the POST. Useful for hooks where the host CLI tears down its session immediately. |
 
 ### Exit Codes
 
 | Code | Meaning |
 |------|---------|
-| `0` | Delivered (2xx) **OR** non-critical failure (envelope enqueued for replay). |
-| `2` | Critical failure (envelope enqueued; signals the host CLI to abort). Used when `--critical` is set and POST fails. |
+| `0` | Success, including non-Stop deny/block responses returned as JSON for Codex/Gemini/Qwen. |
+| `1` | Non-critical hook failure returned as JSON error output. |
+| `2` | Critical hook failure or blocked critical hook returned as stderr. |
 
-The `2` exit signals the host CLI that the hook didn't deliver synchronously. The envelope is *still* enqueued — the daemon will replay it. `--critical` is only about whether ghook tells the host CLI "this hook didn't go through right now," not about whether the event is lost.
+The inbox/replay path is still enqueue-first, but host-visible stdout/stderr/exit behavior is intended to match the legacy Python dispatcher contract rather than expose transport details.
 
 ## Wiring ghook into Claude Code
 
@@ -138,7 +139,7 @@ Same pattern with different `--cli` and `--type` values. ghook's per-CLI registr
 | `gemini` | `SessionStart` | `SessionStart` |
 | `qwen` | `SessionStart` | `SessionStart` |
 
-Unknown `--cli` values are tolerated — ghook uses the literal name as the source identifier and skips terminal-context enrichment. Hooks written for future CLIs won't break.
+Unknown `--cli` values fall back to conservative Claude-like dispatch behavior on the live path. Diagnose mode still reports unknown CLIs as unrecognized.
 
 ## Diagnose Mode
 
@@ -148,7 +149,7 @@ Unknown `--cli` values are tolerated — ghook uses the literal name as the sour
 $ ghook --diagnose --cli=claude --type=session-start
 {
   "schema_version": 1,
-  "ghook_version": "0.1.0",
+  "ghook_version": "0.2.0",
   "cli": "claude",
   "hook_type": "session-start",
   "source": "claude",
@@ -172,8 +173,8 @@ $ ghook --diagnose --cli=claude --type=session-start
 
 Look for:
 
-- **`cli_recognized: true`** — confirms ghook knows about this CLI. `false` means it'll still spool, but without terminal-context enrichment and without honoring the per-CLI critical-hooks list.
-- **`critical: true/false`** — does ghook *itself* consider this hook type critical for that CLI? Note this is independent of the `--critical` flag, which the host CLI sets based on its own settings.
+- **`cli_recognized: true`** — confirms ghook knows about this CLI explicitly. Unknown CLIs fall back to conservative Claude-like live dispatch behavior.
+- **`critical: true/false`** — does ghook consider this hook type critical under the mirrored Python dispatcher contract for that CLI?
 - **`terminal_context_enabled: true`** — will ghook inject `terminal_context` into `input_data` for this hook? Required for hooks that the daemon uses to reconcile spawned-terminal agents.
 - **`daemon_url`** — where will the POST go? If this is wrong, fix `~/.gobby/bootstrap.yaml`.
 - **`project_root` / `project_id`** — did ghook correctly walk up from cwd to the project? `null` means no `.gobby/project.json` was found — daemon will receive the envelope without an `X-Gobby-Project-Id` header.
@@ -220,7 +221,7 @@ Both flags are mandatory in dispatch mode. Check the hook entry in your host CLI
 
 ### Hook returns exit 2 unexpectedly
 
-The hook is marked `--critical` and the POST failed. The envelope is still spooled — check `~/.gobby/hooks/inbox/` for a `c-...json` file. The daemon will replay it. If you don't want exit 2 to signal the host CLI, drop `--critical` from the hook command (but only if you're OK with delayed delivery for that hook type).
+The hook matched a critical dispatcher path and failed or was blocked. The envelope is still spooled — check `~/.gobby/hooks/inbox/` for a `c-...json` file. The daemon will replay it.
 
 ### Sandbox FS-read denials (macOS)
 
