@@ -25,7 +25,11 @@ This workspace contains four Gobby CLI tools plus a shared library:
 
 ### gcode — Code Search & Navigation
 
-AST-aware code search powered by tree-sitter. Indexes 18 languages into SQLite FTS5 for instant symbol lookup, content search, and file tree navigation. With Gobby, adds semantic vector search (Qdrant) and dependency graph analysis (Neo4j) — callers, usages, imports, and blast-radius. Incremental indexing, cross-project queries, and graceful degradation when services are unavailable.
+AST-aware code search powered by tree-sitter. Indexes 18 languages into SQLite
+FTS5 for symbol lookup, content search, file tree navigation, and hybrid
+ranking. When Neo4j, Qdrant, and an embeddings endpoint are configured -
+typically through Gobby - `gcode` adds graph-aware search, semantic search,
+and dependency analysis (`callers`, `usages`, `imports`, `blast-radius`).
 
 ### gsqz — Output Compression
 
@@ -60,16 +64,8 @@ Download from [GitHub Releases](https://github.com/GobbyAI/gobby-cli/releases/la
 ### From crates.io
 
 ```bash
-# gcode (with embeddings — requires cmake)
+# gcode
 cargo install gobby-code
-
-# gcode (with GPU acceleration — pick your backend)
-cargo install gobby-code --features cuda    # NVIDIA (requires CUDA toolkit)
-cargo install gobby-code --features vulkan  # Any GPU (requires Vulkan SDK)
-cargo install gobby-code --features rocm    # AMD (requires ROCm)
-
-# gcode (without embeddings)
-cargo install gobby-code --no-default-features
 
 # gsqz
 cargo install gobby-squeeze
@@ -81,7 +77,8 @@ cargo install gobby-local
 cargo install gobby-hooks
 ```
 
-On macOS, Metal GPU acceleration is enabled automatically. On Linux/Windows, embeddings use CPU inference by default — add a GPU feature flag for hardware acceleration.
+`gcode` graph and semantic features are configured at runtime. There are no
+Cargo feature flags for Neo4j, Qdrant, or embeddings support.
 
 ### From source
 
@@ -99,7 +96,7 @@ cargo install --path crates/ghook
 ```bash
 cargo build --workspace --no-default-features   # Build all tools
 cargo test --workspace --no-default-features    # Test all tools
-cargo clippy --workspace -- -D warnings         # Lint all tools
+cargo clippy --workspace --no-default-features -- -D warnings  # Lint all tools
 cargo fmt --all --check                         # Check formatting
 ```
 

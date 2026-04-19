@@ -9,17 +9,11 @@ A complete guide to using `gcode` for code search, symbol navigation, and depend
 Download from [GitHub Releases](https://github.com/GobbyAI/gobby-cli/releases/latest) or build from source:
 
 ```bash
-# With embeddings (macOS gets Metal GPU automatically)
 cargo install gobby-code
-
-# With GPU acceleration on Linux/Windows
-cargo install gobby-code --features cuda    # NVIDIA
-cargo install gobby-code --features vulkan  # Any GPU
-cargo install gobby-code --features rocm    # AMD
-
-# Without embeddings (smallest binary, FTS5 search only)
-cargo install gobby-code --no-default-features
 ```
+
+Graph and semantic features are configured at runtime. You do not need Cargo
+feature flags to enable Neo4j, Qdrant, or embeddings support.
 
 If you use [Gobby](https://github.com/GobbyAI/gobby), gcode is already installed.
 
@@ -57,7 +51,10 @@ gcode offers three search modes for different use cases.
 
 ### Hybrid Search (`gcode search`)
 
-The default. Combines FTS5 text matching, semantic vector similarity, and graph relevance using Reciprocal Rank Fusion.
+The default. Combines FTS5 text matching with optional semantic similarity,
+graph boost, and graph expansion using Reciprocal Rank Fusion. If Neo4j,
+Qdrant, or the embeddings endpoint are unavailable, `gcode search` falls back
+to the sources that are configured.
 
 ```bash
 gcode search "database connection pool"
@@ -153,9 +150,16 @@ Useful for understanding project structure at a glance.
 
 ## Dependency Graph
 
-Graph commands require Neo4j (available in Gobby mode). In standalone mode, they return empty results gracefully.
+Graph commands require Neo4j. Gobby-managed projects usually provide this
+automatically, and standalone projects can opt in with `GOBBY_NEO4J_URL` and
+`GOBBY_NEO4J_AUTH`. Without Neo4j, graph commands return empty results
+gracefully.
 
 All graph commands resolve fuzzy input — you don't need the exact symbol name. Resolution tries exact match, then substring match, then FTS5 search across names, signatures, and docstrings. When multiple matches are found, the best is used and alternatives are shown on stderr.
+
+For Python, JavaScript, and TypeScript, graph edges are import-aware. Calls to
+external packages/modules stay external instead of being misclassified as local
+symbol-to-symbol edges.
 
 ### Callers
 
@@ -169,7 +173,7 @@ gcode callers "handleAuth" --offset 10    # Page 2
 
 ### Usages
 
-All references — calls and imports:
+Incoming call sites:
 
 ```bash
 gcode usages "DatabasePool"
@@ -247,9 +251,14 @@ Index specific files:
 gcode index --files src/config.rs src/main.rs
 ```
 
-In Gobby mode with the daemon running, `gcode index` writes to SQLite only and returns immediately (<1s for incremental). The daemon's background worker handles Neo4j graph edges and Qdrant vector embeddings asynchronously. FTS search (`search-text`, `search-content`) works instantly; graph and semantic search follow within seconds once the daemon syncs.
+In Gobby mode with the daemon running, `gcode index` writes to SQLite only and
+returns immediately (<1s for incremental). The daemon's background worker
+handles Neo4j graph edges and Qdrant vector sync asynchronously. FTS search
+(`search-text`, `search-content`) works instantly; graph and semantic search
+follow once the daemon syncs.
 
-Without the daemon (standalone mode or daemon not running), gcode performs all writes directly as before.
+Without the daemon, gcode still writes SQLite immediately and performs direct
+Neo4j/Qdrant sync only when those services are configured.
 
 Reset and rebuild from scratch (destructive — prompts for confirmation):
 
@@ -266,7 +275,7 @@ In Gobby mode, `invalidate` also notifies the daemon to clean up Neo4j graph nod
 
 When there's no `.gobby/project.json` in the project, gcode operates independently:
 - Database: `~/.gobby/gobby-code-index.db`
-- Services: SQLite only (FTS5 search)
+- Services: SQLite by default; optional Neo4j, Qdrant, and embeddings via env vars
 - Identity: `.gobby/gcode.json`
 
 This is the default for projects not managed by Gobby. All indexing and FTS5 search work fully.
@@ -275,18 +284,23 @@ This is the default for projects not managed by Gobby. All indexing and FTS5 sea
 
 When `.gobby/project.json` exists (Gobby manages the project):
 - Database: `~/.gobby/gobby-hub.db` (or path from `bootstrap.yaml`)
-- Services: SQLite + Neo4j + Qdrant (if configured)
+- Services: SQLite plus config-store-managed Neo4j, Qdrant, and embeddings (if configured)
 - Identity: `.gobby/project.json`
 
-Graph commands and semantic search become available in this mode.
+Graph commands and semantic search become available when the required services are configured.
 
 ## Configuration
 
 gcode resolves configuration in this order:
 
 1. **Environment variables** — `GOBBY_NEO4J_URL`, `GOBBY_NEO4J_AUTH`, `GOBBY_QDRANT_URL`, `GOBBY_PORT`
-2. **config_store table** — Key-value pairs in the SQLite database (`databases.neo4j.*`, `databases.qdrant.*`)
-3. **Hardcoded defaults** — Neo4j at `http://localhost:8474`, database `neo4j`
+2. **config_store table** — Key-value pairs in the SQLite database (`databases.neo4j.*`, `databases.qdrant.*`, `embeddings.*`)
+3. **Hardcoded defaults** — Neo4j at `http://localhost:8474`, database `neo4j` (only when `config_store` exists)
+
+Semantic search uses the same precedence rules:
+1. **Environment variables** — `GOBBY_EMBEDDING_URL`, `GOBBY_EMBEDDING_MODEL`, `GOBBY_EMBEDDING_API_KEY`
+2. **config_store table** — `embeddings.api_base`, `embeddings.model`, `embeddings.api_key`
+3. **Hardcoded defaults** — model `nomic-embed-text` once an embeddings API base is configured
 
 The database path itself is resolved from:
 1. `~/.gobby/bootstrap.yaml` `database_path` key
@@ -326,13 +340,14 @@ Text output shows a pagination hint when more results are available:
 
 ### Verbose output
 
-`--verbose` controls both GGML debug logging and output detail level:
+`--verbose` currently affects `outline` output only:
 
 ```bash
 gcode outline src/main.rs --verbose  # Full symbol details instead of slim
 ```
 
-Default output is optimized for token efficiency — slim fields only. Use `--verbose` when you need full symbol details.
+Default outline output is optimized for token efficiency — slim fields only.
+Use `--verbose` when you need the full symbol record.
 
 Suppress warnings and progress bars with `--quiet`:
 
