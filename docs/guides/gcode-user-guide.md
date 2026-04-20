@@ -150,16 +150,32 @@ Useful for understanding project structure at a glance.
 
 ## Dependency Graph
 
-Graph commands require Neo4j. Gobby-managed projects usually provide this
+Read-side graph commands require Neo4j. Gobby-managed projects usually provide this
 automatically, and standalone projects can opt in with `GOBBY_NEO4J_URL` and
-`GOBBY_NEO4J_AUTH`. Without Neo4j, graph commands return empty results
+`GOBBY_NEO4J_AUTH`. Without Neo4j, graph read commands return empty results
 gracefully.
 
-All graph commands resolve fuzzy input — you don't need the exact symbol name. Resolution tries exact match, then substring match, then FTS5 search across names, signatures, and docstrings. When multiple matches are found, the best is used and alternatives are shown on stderr.
+All read-side graph commands resolve fuzzy input — you don't need the exact symbol name. Resolution tries exact match, then substring match, then FTS5 search across names, signatures, and docstrings. When multiple matches are found, the best is used and alternatives are shown on stderr.
 
 For Python, JavaScript, and TypeScript, graph edges are import-aware. Calls to
 external packages/modules stay external instead of being misclassified as local
 symbol-to-symbol edges.
+
+### Graph Lifecycle
+
+`gcode` owns code-index lifecycle commands, including graph clear/rebuild. These
+commands use the current resolved project context and require the Gobby daemon:
+
+```bash
+gcode graph clear
+gcode graph rebuild
+```
+
+- `gcode graph clear` clears the current project's graph projection through the daemon
+- `gcode graph rebuild` asks the daemon to rebuild the current project's graph projection
+- Both commands fail if project context cannot be resolved, if the daemon is unreachable, or if the daemon returns non-JSON success output
+- They respect the existing global `--format` flag; default output remains `json`
+- No confirmation prompt is shown; these are project-scoped graph projection operators, not full index invalidation
 
 ### Callers
 
@@ -269,6 +285,15 @@ gcode index
 
 In Gobby mode, `invalidate` also notifies the daemon to clean up Neo4j graph nodes and Qdrant vectors for the project. Use `--force` to skip the confirmation prompt.
 
+Graph projection lifecycle is separate:
+
+```bash
+gcode graph clear
+gcode graph rebuild
+```
+
+Use those when you want the daemon to clear or replay graph state for the current project without performing a full destructive code-index invalidation.
+
 ## Operating Modes
 
 ### Standalone Mode
@@ -306,7 +331,7 @@ The database path itself is resolved from:
 1. `~/.gobby/bootstrap.yaml` `database_path` key
 2. Default based on mode (standalone vs Gobby)
 
-The daemon URL (used by `invalidate`) is resolved from:
+The daemon URL (used by `invalidate`, `graph clear`, and `graph rebuild`) is resolved from:
 1. `GOBBY_PORT` environment variable (e.g. `60887`)
 2. `~/.gobby/bootstrap.yaml` `daemon_port` + `bind_host` keys
 3. Default: `http://localhost:60887`
@@ -396,6 +421,12 @@ If results are empty but the symbol exists, this is expected in standalone mode 
 echo $GOBBY_NEO4J_URL
 gcode status
 ```
+
+### `gcode graph clear` / `gcode graph rebuild` fail immediately
+
+- If you see a project-context error, initialize the project first with `gcode init` or use `--project <path>`
+- If you see a daemon connectivity error, confirm the Gobby daemon is running and `~/.gobby/bootstrap.yaml` points to the right port
+- If you see an invalid-JSON success error, the daemon endpoint returned a malformed response and the command intentionally aborts instead of guessing
 
 ### Slow first index
 

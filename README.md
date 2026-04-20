@@ -29,7 +29,8 @@ AST-aware code search powered by tree-sitter. Indexes 18 languages into SQLite
 FTS5 for symbol lookup, content search, file tree navigation, and hybrid
 ranking. When Neo4j, Qdrant, and an embeddings endpoint are configured -
 typically through Gobby - `gcode` adds graph-aware search, semantic search,
-and dependency analysis (`callers`, `usages`, `imports`, `blast-radius`).
+dependency analysis (`callers`, `usages`, `imports`, `blast-radius`), and
+daemon-backed graph lifecycle commands (`gcode graph clear`, `gcode graph rebuild`).
 
 ### gsqz — Output Compression
 

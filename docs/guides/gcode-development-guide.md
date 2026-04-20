@@ -24,6 +24,10 @@ CLI (main.rs, clap)
 `--verbose` is currently only consumed by `commands::symbols::outline()`, which
 switches outline output from the slim projection to the full `Symbol` payload.
 
+`gcode graph clear` and `gcode graph rebuild` are nested under a `graph`
+subcommand group, but the existing read-side graph queries remain top-level:
+`callers`, `usages`, `imports`, and `blast-radius`.
+
 ## Configuration Resolution
 
 **File:** `src/config.rs`
@@ -168,6 +172,18 @@ local-symbol edges from unresolved or external calls, and
 `callee_external_module` preserves package/module provenance for external calls.
 Table existence is detected via `has_table()` (PRAGMA-based), so gcode works
 whether or not the daemon has applied the migration.
+
+### Graph Lifecycle RPCs
+
+Read-side graph queries still go straight to Neo4j. Graph lifecycle operations
+are daemon-backed orchestration commands instead:
+
+- `gcode graph clear` → `POST /api/code-index/graph/clear?project_id=...`
+- `gcode graph rebuild` → `POST /api/code-index/graph/rebuild?project_id=...`
+
+These commands use the current resolved `Context.project_id`, require a daemon
+URL, and fail hard on transport errors, non-2xx responses, or invalid JSON
+success bodies. They do not talk to Neo4j directly.
 
 ### UUID5 Parity
 
