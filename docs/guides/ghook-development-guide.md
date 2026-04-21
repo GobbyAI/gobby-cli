@@ -282,7 +282,7 @@ Almost always config-only. ghook treats `--type` as opaque. To make a hook criti
 
 ## Versioning
 
-ghook is at `0.2.0`. `SCHEMA_VERSION` is also `1`. The two version numbers are independent:
+ghook is at `0.2.1`. `SCHEMA_VERSION` is also `1`. The two version numbers are independent:
 
 - **Crate version** bumps for any code change (binary behavior, dependencies, perf, etc.).
 - **`SCHEMA_VERSION`** bumps only when the envelope shape changes in a way the daemon must explicitly handle.
