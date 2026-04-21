@@ -16,6 +16,16 @@ cargo install gobby-hooks
 
 The binary is named `ghook` (the package is `gobby-hooks` to disambiguate from singular use; the binary stays short).
 
+### First run on macOS
+
+Binaries downloaded from a GitHub release archive via a browser land with the `com.apple.quarantine` extended attribute, which Gatekeeper rejects on first run with "ghook cannot be opened because the developer cannot be verified." The binaries are already ad-hoc signed by the Rust linker; the quarantine flag is the blocker, not the signature. Clear it with:
+
+```bash
+xattr -d com.apple.quarantine ~/.gobby/bin/ghook
+```
+
+Or right-click the binary in Finder and choose *Open* once to approve it. `cargo install gobby-hooks` is unaffected — locally compiled binaries never get the quarantine attribute. Archives fetched via `curl`/`wget` also skip it.
+
 ## How It Works
 
 ```text
