@@ -67,7 +67,8 @@ The original Python `hook_dispatcher.py` ran inside the daemon process. That mad
 | File | Validated against in |
 |------|----------------------|
 | `inbox-envelope.v1.schema.json` | `envelope::tests::envelope_validates_against_v1_schema` |
-| `diagnose-output.v1.schema.json` | `diagnose::tests::diagnose_output_validates_against_v1_schema` |
+| `diagnose-output.v2.schema.json` | `diagnose::tests::diagnose_output_validates_against_v2_schema` |
+| `diagnose-output.v1.schema.json` | *(frozen, no longer validated against the live struct — kept for tools that pinned to v1)* |
 
 ## Envelope Schema (v1)
 
@@ -106,13 +107,13 @@ pub struct Envelope {
 
 Both are inserted only when non-empty. The schema enforces `minLength: 1` on header values to match.
 
-## Diagnose Output Schema (v1)
+## Diagnose Output Schema (v2)
 
-`--diagnose` returns a JSON object validated against `schemas/diagnose-output.v1.schema.json`. It runs the same config-resolution code paths as `--gobby-owned` but stops short of any I/O side effect.
+`--diagnose` returns a JSON object validated against `schemas/diagnose-output.v2.schema.json`. It runs the same config-resolution code paths as `--gobby-owned` but stops short of any I/O side effect.
 
 ```rust
 pub struct DiagnoseOutput {
-    pub schema_version: u32,                 // const 1
+    pub schema_version: u32,                 // const 2
     pub ghook_version: &'static str,         // env!("CARGO_PKG_VERSION")
     pub cli: String,
     pub hook_type: String,
@@ -126,10 +127,45 @@ pub struct DiagnoseOutput {
     pub project_id: Option<String>,
     pub terminal_context_preview: Option<Value>,  // populated when terminal_context_enabled
     pub cli_recognized: bool,
+    pub install_method: Option<String>,           // from .ghook-install.json sidecar
+    pub install_source_url: Option<String>,       // from .ghook-install.json sidecar
 }
 ```
 
 The `terminal_context_preview` field is the actual context that *would* be injected — operators can inspect what the daemon will receive without sending a real hook.
+
+`install_method` and `install_source_url` are sourced from the install-provenance sidecar described below. Both fields are `null` when no sidecar is present.
+
+### Install-Provenance Sidecar Contract
+
+The sidecar is the cross-tool boundary between *whoever installs `ghook`* and `ghook --diagnose`. It is the only mechanism by which a `ghook` binary learns how it got onto disk.
+
+| Property | Value |
+|----------|-------|
+| Path | `<dirname of the running ghook binary>/.ghook-install.json` |
+| Writer | The installer (e.g. the Gobby Python installer in `src/gobby/cli/install_setup.py`) — written atomically (temp + rename) every time the installer places a `ghook` binary |
+| Reader | `ghook::diagnose::read_install_provenance` — best-effort, never load-bearing; any failure (missing file, malformed JSON, IO error) collapses to `(None, None)` |
+| Required for ghook to function? | No — ghook works fine without it; only `--diagnose` provenance fields go `null` |
+
+Schema:
+
+```json
+{
+  "install_method": "github-release",
+  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.3.0/ghook-aarch64-apple-darwin.tar.gz",
+  "installed_version": "0.3.0",
+  "installed_at": "2026-04-22T18:30:00Z"
+}
+```
+
+| Field | Type | Notes |
+|-------|------|-------|
+| `install_method` | string \| null | Conventional values: `github-release`, `crates-binstall`, `cargo-install`, `manual`, `unknown`. `ghook` does not validate the value — installers are free to add new ones, but any consumer should fall back to `unknown` for values it doesn't recognize. |
+| `install_source_url` | string \| null | URL the binary was fetched from. `null` for `cargo install` (no URL); the asset URL for `github-release`; a crate URL for `cargo-binstall` if available. |
+| `installed_version` | string | The version the installer believed it was placing. Currently informational only (not surfaced via `--diagnose` in v2) — kept in the file so future schema versions can detect installer/binary version mismatches. |
+| `installed_at` | string | UTC ISO-8601 timestamp. Currently informational only. |
+
+The sidecar is *next to the binary*, not at a fixed path, so `cargo install` ↔ Gobby installer ↔ manual placement all work consistently. `read_install_provenance` resolves it via `std::env::current_exe()`'s parent directory.
 
 ## Transport: Spool & POST
 
@@ -282,9 +318,14 @@ Almost always config-only. ghook treats `--type` as opaque. To make a hook criti
 
 ## Versioning
 
-ghook is at `0.2.1`. `SCHEMA_VERSION` is also `1`. The two version numbers are independent:
+ghook is at `0.3.0`. The envelope `SCHEMA_VERSION` is `1`; the diagnose-output schema is `2`. The three version numbers are independent:
 
 - **Crate version** bumps for any code change (binary behavior, dependencies, perf, etc.).
-- **`SCHEMA_VERSION`** bumps only when the envelope shape changes in a way the daemon must explicitly handle.
+- **Envelope `SCHEMA_VERSION`** bumps only when the inbox envelope shape changes in a way the daemon must explicitly handle.
+- **Diagnose-output schema version** bumps when `--diagnose`'s JSON output adds, removes, or changes fields. v1 → v2 added `install_method` and `install_source_url`; the v1 file is kept as a frozen historical schema.
 
-`--version` writes `~/.gobby/bin/.ghook-compatibility` with both numbers, so the daemon can detect mismatches at startup and refuse to drain envelopes from a future schema it doesn't understand.
+`--version` writes `~/.gobby/bin/.ghook-compatibility` with the crate and envelope-schema numbers, so the daemon can detect mismatches at startup and refuse to drain envelopes from a future envelope schema it doesn't understand.
+
+### Release-Time Tag/Version Alignment
+
+The `release-ghook` workflow runs a guard step before publishing that asserts the pushed `ghook-v{X}` tag's version suffix equals the version in `crates/ghook/Cargo.toml`. This prevents the failure mode described in [GobbyAI/gobby-cli#4](https://github.com/GobbyAI/gobby-cli/issues/4): if the tag and the crate version drift, the public installer's `crates.io → ghook-v{version}` GitHub-asset lookup silently misses, which then collapses to slow `cargo install` fallbacks and reproduces as "bare `Blocked by hook` because users are on an old binary." The guard fails the workflow before any artifact reaches crates.io or the GitHub release.

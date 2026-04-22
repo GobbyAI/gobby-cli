@@ -158,8 +158,8 @@ Unknown `--cli` values fall back to conservative Claude-like dispatch behavior o
 ```bash
 $ ghook --diagnose --cli=claude --type=session-start
 {
-  "schema_version": 1,
-  "ghook_version": "0.2.0",
+  "schema_version": 2,
+  "ghook_version": "0.3.0",
   "cli": "claude",
   "hook_type": "session-start",
   "source": "claude",
@@ -177,7 +177,9 @@ $ ghook --diagnose --cli=claude --type=session-start
     "term_program": "tmux",
     "...": "..."
   },
-  "cli_recognized": true
+  "cli_recognized": true,
+  "install_method": "github-release",
+  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.3.0/ghook-aarch64-apple-darwin.tar.gz"
 }
 ```
 
@@ -188,8 +190,9 @@ Look for:
 - **`terminal_context_enabled: true`** — will ghook inject `terminal_context` into `input_data` for this hook? Required for hooks that the daemon uses to reconcile spawned-terminal agents.
 - **`daemon_url`** — where will the POST go? If this is wrong, fix `~/.gobby/bootstrap.yaml`.
 - **`project_root` / `project_id`** — did ghook correctly walk up from cwd to the project? `null` means no `.gobby/project.json` was found — daemon will receive the envelope without an `X-Gobby-Project-Id` header.
+- **`install_method` / `install_source_url`** — how this `ghook` binary got installed (e.g. `github-release`, `crates-binstall`, `cargo-install`). Both are `null` when the binary was installed without a sidecar-writing installer (e.g. plain `cargo install gobby-hooks`). Useful in bug reports — it tells maintainers exactly which install path a user is on.
 
-The diagnose JSON is validated against `crates/ghook/schemas/diagnose-output.v1.schema.json` in tests, so the schema is stable.
+The diagnose JSON is validated against `crates/ghook/schemas/diagnose-output.v2.schema.json` in tests, so the schema is stable. The legacy `diagnose-output.v1.schema.json` is preserved as a frozen historical schema for tools that pinned to v1.
 
 ## Inbox & Replay
 
