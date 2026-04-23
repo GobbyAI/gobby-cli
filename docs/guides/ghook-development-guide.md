@@ -5,7 +5,7 @@ Technical internals for developers and agents working in the ghook codebase.
 ## Architecture Overview
 
 ```text
-host AI CLI (Claude Code / Codex / Gemini / Qwen)
+host AI CLI (Claude Code / Codex / Gemini / Qwen / Droid)
   │  spawns: ghook --gobby-owned --cli=<c> --type=<t> [--critical] [--detach]
   │  pipes:  stdin = hook payload (JSON object)
   ▼
@@ -55,7 +55,7 @@ The original Python `hook_dispatcher.py` ran inside the daemon process. That mad
 | Module | Responsibility |
 |--------|----------------|
 | `main.rs` | Arg parsing (clap), mode dispatch (`--gobby-owned`/`--diagnose`/`--version`), orchestrates the dispatch flow. |
-| `cli_config.rs` | Per-CLI registry (claude/codex/gemini/qwen) — which hooks are critical, which want terminal context. Compile-time frozen. |
+| `cli_config.rs` | Per-CLI registry (claude/codex/gemini/qwen/droid) — which hooks are critical, which want terminal context. Compile-time frozen. |
 | `envelope.rs` | `Envelope` struct + `SCHEMA_VERSION = 1`. Serializes to the inbox JSON shape. |
 | `transport.rs` | Inbox path resolution, atomic write, enqueue, POST + cleanup, quarantine for malformed stdin. |
 | `terminal_context.rs` | Captures parent PID, TTY, tmux pane/socket, `TERM_PROGRAM`, `GOBBY_*` env vars. Injects under `input_data.terminal_context`. |
@@ -81,7 +81,7 @@ pub struct Envelope {
     pub critical: bool,
     pub hook_type: String,              // host-CLI-specific
     pub input_data: Value,              // verbatim stdin + optional terminal_context
-    pub source: String,                 // "claude" / "codex" / "gemini" / "qwen" / passthrough
+    pub source: String,                 // "claude" / "codex" / "gemini" / "qwen" / "droid" / passthrough
     pub headers: BTreeMap<String, String>,
 }
 ```
@@ -152,8 +152,8 @@ Schema:
 ```json
 {
   "install_method": "github-release",
-  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.3.0/ghook-aarch64-apple-darwin.tar.gz",
-  "installed_version": "0.3.0",
+  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.4.0/ghook-aarch64-apple-darwin.tar.gz",
+  "installed_version": "0.4.0",
   "installed_at": "2026-04-22T18:30:00Z"
 }
 ```
@@ -318,7 +318,7 @@ Almost always config-only. ghook treats `--type` as opaque. To make a hook criti
 
 ## Versioning
 
-ghook is at `0.3.0`. The envelope `SCHEMA_VERSION` is `1`; the diagnose-output schema is `2`. The three version numbers are independent:
+ghook is at `0.4.0`. The envelope `SCHEMA_VERSION` is `1`; the diagnose-output schema is `2`. The three version numbers are independent:
 
 - **Crate version** bumps for any code change (binary behavior, dependencies, perf, etc.).
 - **Envelope `SCHEMA_VERSION`** bumps only when the inbox envelope shape changes in a way the daemon must explicitly handle.

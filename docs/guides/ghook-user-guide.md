@@ -1,6 +1,6 @@
 # ghook User Guide
 
-ghook is the sandbox-tolerant hook dispatcher Gobby uses to receive lifecycle and tool-use events from host AI CLIs (Claude Code, Codex, Gemini CLI, Qwen CLI). It enqueues an envelope to `~/.gobby/hooks/inbox/` *before* attempting to POST to the local Gobby daemon — so the daemon's drain worker can replay any envelope whose POST was lost to a sandbox FS-read denial, a network blip, or a daemon restart.
+ghook is the sandbox-tolerant hook dispatcher Gobby uses to receive lifecycle and tool-use events from host AI CLIs (Claude Code, Codex, Gemini CLI, Qwen CLI, Factory droid). It enqueues an envelope to `~/.gobby/hooks/inbox/` *before* attempting to POST to the local Gobby daemon — so the daemon's drain worker can replay any envelope whose POST was lost to a sandbox FS-read denial, a network blip, or a daemon restart.
 
 You don't usually invoke ghook directly. The Gobby installer wires it into each host CLI's hook configuration. This guide explains what it does, how to verify it's working, and how to wire it manually if you need to.
 
@@ -58,7 +58,7 @@ ghook --version
 | `--gobby-owned` | dispatch | Normal hook invocation. Reads stdin, enqueues, attempts POST. |
 | `--diagnose` | introspection | Prints a JSON snapshot of what *would* happen. No network, no envelope write. |
 | `--version` | metadata | Prints version and writes `~/.gobby/bin/.ghook-compatibility` for the daemon. |
-| `--cli` | required for dispatch/diagnose | Host CLI name: `claude`, `codex`, `gemini`, `qwen`. Case-insensitive. |
+| `--cli` | required for dispatch/diagnose | Host CLI name: `claude`, `codex`, `gemini`, `qwen`, `droid`. Case-insensitive. |
 | `--type` | required for dispatch/diagnose | Hook type. CLI-specific (e.g. `session-start` for Claude, `SessionStart` for Codex/Gemini/Qwen, `PreToolUse`, `PostToolUse`, `Stop`, `pre-compact`, `session-end`). |
 | `--critical` | dispatch | Compatibility flag accepted by ghook. Host-visible behavior is derived from the per-CLI dispatcher contract, matching `hook_dispatcher.py`. |
 | `--detach` | dispatch | After enqueue and project-root walk-up, call `setsid(2)` to escape the host CLI's process group before the POST. Useful for hooks where the host CLI tears down its session immediately. |
@@ -138,7 +138,7 @@ Claude Code uses lowercase-hyphenated names internally for some hooks (`session-
 
 The `--critical` flag is on lifecycle hooks (`session-start`, `session-end`, `pre-compact`) because these set up state the daemon needs immediately. Tool-use hooks are non-critical — the envelope still spools, but a transient daemon outage won't block your tool call.
 
-### Codex, Gemini, Qwen
+### Codex, Gemini, Qwen, Droid
 
 Same pattern with different `--cli` and `--type` values. ghook's per-CLI registry (see `crates/ghook/src/cli_config.rs`) defines which hooks are critical and which receive enriched terminal context for each host CLI:
 
@@ -148,6 +148,9 @@ Same pattern with different `--cli` and `--type` values. ghook's per-CLI registr
 | `codex` | `SessionStart`, `Stop` | `SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `Stop` |
 | `gemini` | `SessionStart` | `SessionStart` |
 | `qwen` | `SessionStart` | `SessionStart` |
+| `droid` | none | none |
+
+Droid uses PascalCase hook types (`SessionStart`, `PreToolUse`, `PostToolUse`, `UserPromptSubmit`, `Notification`, `Stop`, `SubagentStop`, `PreCompact`, `SessionEnd`) and ghook forwards droid's stdin payload unchanged to the daemon with `source: "droid"`. Droid-specific block handling differs slightly from the other CLIs: daemon responses containing `continue:false` exit 2, while other meaningful response JSON is written to stdout with exit 0.
 
 Unknown `--cli` values fall back to conservative Claude-like dispatch behavior on the live path. Diagnose mode still reports unknown CLIs as unrecognized.
 
@@ -159,7 +162,7 @@ Unknown `--cli` values fall back to conservative Claude-like dispatch behavior o
 $ ghook --diagnose --cli=claude --type=session-start
 {
   "schema_version": 2,
-  "ghook_version": "0.3.0",
+  "ghook_version": "0.4.0",
   "cli": "claude",
   "hook_type": "session-start",
   "source": "claude",
@@ -179,7 +182,7 @@ $ ghook --diagnose --cli=claude --type=session-start
   },
   "cli_recognized": true,
   "install_method": "github-release",
-  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.3.0/ghook-aarch64-apple-darwin.tar.gz"
+  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.4.0/ghook-aarch64-apple-darwin.tar.gz"
 }
 ```
 
