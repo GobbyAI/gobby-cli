@@ -47,7 +47,7 @@ Returns matching symbols ranked by relevance — function names, class definitio
 
 ## Search
 
-gcode offers three search modes for different use cases.
+gcode offers four search modes for different use cases.
 
 ### Hybrid Search (`gcode search`)
 
@@ -60,8 +60,9 @@ to the sources that are configured.
 gcode search "database connection pool"
 gcode search "auth" --limit 5
 gcode search "handler" --kind function
-gcode search "config" --offset 10          # Page 2 of results
+gcode search "config" --offset 10              # Page 2 of results
 gcode search "Memory" --path "src/storage/**"  # Scope to directory
+gcode search "Context" --language rust         # Scope to Rust sources
 ```
 
 **When to use:** General-purpose queries. Best for natural language and conceptual searches.
@@ -69,8 +70,28 @@ gcode search "Memory" --path "src/storage/**"  # Scope to directory
 **Options:**
 - `--limit N` — Max results (default: 10)
 - `--offset N` — Skip first N results for pagination (default: 0)
-- `--kind <kind>` — Filter by symbol kind: `function`, `class`, `method`, `type`, etc.
+- `--kind <kind>` — Filter by symbol kind: `function`, `class`, `method`, `type`, etc. Use `gcode kinds` to list what's available in the current index.
+- `--language <lang>` — Filter by source language (e.g. `rust`, `python`, `typescript`, `css`).
 - `--path <glob>` — Filter by file path glob (e.g. `"src/**/*.rs"`, `"*.py"`, `"tests/*"`). Uses SQL prefix pre-filtering for performance with Rust glob matching for exact semantics.
+
+`--kind`, `--language`, and `--path` compose — combine them to narrow as far as you need.
+
+### Symbol Search (`gcode search-symbol`)
+
+Exact-first symbol/name lookup with deterministic ranking. Resolves precise
+matches (exact name, then qualified-name and case-insensitive variants) before
+falling back to FTS5. Useful when you already know (most of) the name and want
+the canonical hit at rank 0 instead of letting hybrid ranking rerank it.
+
+```bash
+gcode search-symbol "outline"
+gcode search-symbol "Context" --kind class --language rust
+gcode search-symbol "ensure_fresh" --path "crates/gcode/**"
+```
+
+**When to use:** You know the symbol's name (or close to it) and want a stable, top-ranked match — for example, before calling `gcode symbol <id>`.
+
+**Options:** `--limit N`, `--offset N`, `--kind <kind>`, `--language <lang>`, `--path <glob>`.
 
 ### Text Search (`gcode search-text`)
 
@@ -79,24 +100,26 @@ FTS5 search on symbol metadata: names, qualified names, signatures, and docstrin
 ```bash
 gcode search-text "parseConfig"
 gcode search-text "parseConfig" --path "src/**"
+gcode search-text "parseConfig" --language python
 ```
 
 **When to use:** You know the exact name or part of a symbol name. Fastest mode.
 
-**Options:** `--limit N`, `--offset N`, `--path <glob>`
+**Options:** `--limit N`, `--offset N`, `--language <lang>`, `--path <glob>`
 
 ### Content Search (`gcode search-content`)
 
-FTS5 search across file content chunks — finds matches in comments, strings, configuration, and code bodies.
+FTS5 search across file content chunks — covers source bodies, comments, configuration files (YAML/TOML/JSON/etc.), and CSS in addition to symbol bodies.
 
 ```bash
 gcode search-content "TODO: refactor"
 gcode search-content "GOBBY_NEO4J_URL" --path "*.py"
+gcode search-content "primary-color" --language css
 ```
 
-**When to use:** Searching for string literals, comments, configuration values, or patterns that aren't symbol names.
+**When to use:** Searching for string literals, comments, configuration values, stylesheet rules, or patterns that aren't symbol names.
 
-**Options:** `--limit N`, `--offset N`, `--path <glob>`
+**Options:** `--limit N`, `--offset N`, `--language <lang>`, `--path <glob>`
 
 ## Symbol Retrieval
 
@@ -314,6 +337,15 @@ When `.gobby/project.json` exists (Gobby manages the project):
 
 Graph commands and semantic search become available when the required services are configured.
 
+### Isolated and worktree-derived identities
+
+Two cases break the usual "one `.gobby/project.json` ↔ one project id" mapping. gcode handles them automatically:
+
+- **Isolation marker** — when `.gobby/project.json` carries `parent_project_path` or `parent_project_id` fields, gcode treats the directory as its own code-index target rather than as part of the parent. The id is a deterministic UUID5 derived from the canonical filesystem path, so the directory gets its own symbol/file rows in the shared `gobby-hub.db` and never collides with the parent's index.
+- **Linked git worktrees** — runs from inside a `git worktree add` directory resolve to the worktree's own top-level (via `git rev-parse --show-toplevel` and `git worktree list --porcelain`). The code-index id is derived from the worktree path, not from any inherited `.gobby/project.json`. If an inherited id would have been used, gcode prints a warning naming the filesystem-derived id it picked instead.
+
+Both cases are reported by `gcode init`'s status line (`isolated`, `linked-worktree`) so it's clear which identity source resolved.
+
 ## Configuration
 
 gcode resolves configuration in this order:
@@ -379,6 +411,26 @@ Suppress warnings and progress bars with `--quiet`:
 ```bash
 gcode index --quiet
 ```
+
+### Read-time freshness
+
+By default, search, symbol, outline, and graph read commands check that the
+indexed source still matches the on-disk file before returning results. If a
+file has changed, gcode incrementally re-indexes the affected file(s)
+transparently and then runs your command. This is meant to keep individual
+reads honest — it is **not** a substitute for `gcode index` after a bulk
+checkout or branch switch.
+
+Disable per-call when you know the index is current and you want zero overhead:
+
+```bash
+gcode --no-freshness search "query"
+gcode --no-freshness outline src/main.rs
+```
+
+Set `GCODE_FRESHNESS_INFLIGHT=1` in nested processes (or scripts that already
+run their own re-index) to short-circuit the same checks. gcode also sets this
+flag internally to prevent the indexer from recursing into itself.
 
 ## Troubleshooting
 

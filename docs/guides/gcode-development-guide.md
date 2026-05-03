@@ -39,9 +39,34 @@ subcommand group, but the existing read-side graph queries remain top-level:
 1. If `--project` is a directory path, use it directly
 2. If `--project` is a name, look up in `code_indexed_projects` table (basename suffix match)
 3. Otherwise, walk up from cwd looking for `.gobby/project.json` (Gobby-managed) or `.gobby/gcode.json` (standalone)
-4. Fall back to VCS root markers (`.git`, `.hg`, `.svn`) or cwd
+4. Otherwise, prefer the git worktree top-level (`git rev-parse --show-toplevel`, including linked worktrees — see "Worktree-aware project root" below)
+5. Fall back to VCS root markers (`.git`, `.hg`) or cwd
 
 The walk-up and `project.json` reading steps use `gobby_core::project::find_project_root` and `gobby_core::project::read_project_id` (extracted from `gcode/src/project.rs` so `ghook` and other binaries can share the same logic). Bootstrap-config and daemon-URL helpers also come from `gobby-core`. See [gobby-core Development Guide](gcore-development-guide.md) for the shared API.
+
+### Project Identity
+
+**File:** `src/config.rs` — `ProjectIdentity`, `ProjectIdentitySource`, `MissingIdentity`, `resolve_project_identity()`
+
+After the project root is detected, `resolve_project_identity()` decides which `project_id` to use and which identity source produced it. This replaces the old "either `.gobby/project.json` or `.gobby/gcode.json`" binary with five sources:
+
+| Source | Trigger | `project_id` derived from | Writes `.gobby/gcode.json`? |
+|--------|---------|---------------------------|-----------------------------|
+| `IsolatedRoot` | `.gobby/project.json` carries `parent_project_path` or `parent_project_id` (read via `project::read_isolation_marker`) | UUID5 of canonical root path (`project::code_index_id_for_root`) | No |
+| `LinkedWorktree` | `git::worktree_info()` reports `WorktreeKind::Linked` | UUID5 of the worktree top-level path | No |
+| `ProjectJson` | `.gobby/project.json` exists, no isolation fields | `project_id` field from the file | No |
+| `GcodeJson` | `.gobby/gcode.json` exists | `project_id` field from the file | No |
+| `Generated` | None of the above | UUID5 of canonical root path | Only when `MissingIdentity::Generate` (i.e. `gcode init`) |
+
+`MissingIdentity::Error` is the default for non-init commands — they fail with "Run `gcode init`" instead of silently creating a generated id. Linked-worktree resolution emits a warning when an inherited `project.json` id differs from the filesystem-derived id, so it's obvious that the latter is the one being used.
+
+### Worktree-aware project root
+
+**File:** `src/git.rs`
+
+`git::worktree_info(path)` shells out to `git -C <path> rev-parse --show-toplevel`, then reads `git worktree list --porcelain` to classify the result as `WorktreeKind::Main`, `WorktreeKind::Linked`, or `WorktreeKind::NotGit`. `Context::resolve` calls this during root detection so commands invoked deep inside a `git worktree add` directory resolve to the worktree's own top-level (not the main repo's `.git`-bearing directory).
+
+Failure modes degrade gracefully: if `git` is missing, the call errors and the resolver falls back to the generic VCS-root markers.
 
 ### Database Path Selection
 
@@ -159,6 +184,29 @@ Files are split into overlapping chunks for FTS5 content search:
 7. **Graph-sync-only path**: Files with `StaleReason::GraphSyncPending` skip the SQLite transaction entirely — only external writes are retried. When daemon is available, these files are skipped entirely (daemon handles retries)
 
 The `--full` flag skips the hash comparison and re-indexes all files, ensuring stale external index entries are cleaned up.
+
+### Read-time Freshness
+
+**File:** `src/freshness.rs`
+
+Search, symbol, outline, and graph read commands gate their work on `freshness::ensure_fresh()` (project-scoped) or `freshness::ensure_symbol_fresh()` (single-symbol). Both verify that the on-disk source still matches the index and incrementally re-index affected files transparently before the read returns.
+
+- **Scopes**: `FreshnessScope::Project` (re-runs the standard incremental indexer over the whole project root) and `FreshnessScope::Files(Vec<PathBuf>)` (limits the re-index to the listed files — used for `outline` and other file-scoped commands).
+- **Symbol scope**: `ensure_symbol_fresh` looks up the symbol's source file and re-indexes just that file when the stored byte range no longer matches the on-disk content.
+- **Re-entrancy guard**: `freshness::ensure_fresh` checks `GCODE_FRESHNESS_INFLIGHT`; if set, it short-circuits. The `FreshnessGuard` RAII helper sets and clears the same env var so the indexer's own subprocesses don't recurse into freshness.
+- **Disable from CLI**: the global `--no-freshness` flag (`Cli::no_freshness`) skips all of the above. `main.rs` wraps each freshness call in `ensure_project_fresh` / `ensure_files_fresh` / `ensure_symbol_fresh` thin helpers that respect the flag.
+- **Boundary**: freshness is per-call repair, not a substitute for `gcode index` after bulk changes (branch switches, large refactors). It's optimized for "this single file changed since the last index run."
+
+### Project-scoped path validation
+
+**File:** `src/commands/scope.rs`
+
+Search, symbol, outline, and graph commands all run resolved paths through the helpers in `commands::scope` before returning results, so stale rows from other projects sharing `gobby-hub.db` cannot leak across project boundaries:
+
+- `normalize_file_arg(ctx, file)` — relativize a CLI-supplied path against the resolved project root.
+- `path_exists_in_current_project(ctx, file_path)` — does the path exist on disk inside the current project root?
+- `indexed_file_exists` / `content_chunks_exist` — does the file have rows in `code_indexed_files` / `code_content_chunks` for the current `project_id`?
+- `current_indexed_path_is_valid` — composite check used as a gate before returning results.
 
 ### Import/Call SQLite Storage
 
