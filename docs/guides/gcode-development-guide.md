@@ -46,27 +46,31 @@ The walk-up and `project.json` reading steps use `gobby_core::project::find_proj
 
 ### Project Identity
 
-**File:** `src/config.rs` — `ProjectIdentity`, `ProjectIdentitySource`, `MissingIdentity`, `resolve_project_identity()`
+**File:** `src/config.rs` — `ProjectIdentity`, `ProjectIdentitySource`, `resolve_project_identity()`. **Companion type:** `IsolationMarker` (in `src/project.rs`).
 
-After the project root is detected, `resolve_project_identity()` decides which `project_id` to use and which identity source produced it. This replaces the old "either `.gobby/project.json` or `.gobby/gcode.json`" binary with five sources:
+After the project root is detected, `resolve_project_identity()` decides which `project_id` to use and which identity source produced it. This replaces the old "either `.gobby/project.json` or `.gobby/gcode.json`" binary with the five sources enumerated by `ProjectIdentitySource`:
 
 | Source | Trigger | `project_id` derived from | Writes `.gobby/gcode.json`? |
 |--------|---------|---------------------------|-----------------------------|
-| `IsolatedRoot` | `.gobby/project.json` carries `parent_project_path` or `parent_project_id` (read via `project::read_isolation_marker`) | UUID5 of canonical root path (`project::code_index_id_for_root`) | No |
+| `IsolatedRoot` | `IsolationMarker` present in `.gobby/project.json` (`parent_project_path` and/or `parent_project_id`), read via `project::read_isolation_marker` | UUID5 of canonical root path (`project::code_index_id_for_root`) | No |
 | `LinkedWorktree` | `git::worktree_info()` reports `WorktreeKind::Linked` | UUID5 of the worktree top-level path | No |
-| `ProjectJson` | `.gobby/project.json` exists, no isolation fields | `project_id` field from the file | No |
+| `ProjectJson` | `.gobby/project.json` exists, no `IsolationMarker` fields | `project_id` field from the file | No |
 | `GcodeJson` | `.gobby/gcode.json` exists | `project_id` field from the file | No |
-| `Generated` | None of the above | UUID5 of canonical root path | Only when `MissingIdentity::Generate` (i.e. `gcode init`) |
+| `Generated` | None of the above | UUID5 of canonical root path | Only when caller passes `MissingIdentity::Generate` (i.e. `gcode init`) |
 
-`MissingIdentity::Error` is the default for non-init commands — they fail with "Run `gcode init`" instead of silently creating a generated id. Linked-worktree resolution emits a warning when an inherited `project.json` id differs from the filesystem-derived id, so it's obvious that the latter is the one being used.
+`MissingIdentity::Error` is the default for non-init commands — they fail with "Run `gcode init`" instead of silently creating a generated id. The `IsolationMarker` struct (`{parent_project_path: Option<String>, parent_project_id: Option<String>}`) is what makes the `IsolatedRoot` branch fire: a non-empty value in either field signals that the directory should keep its own filesystem-derived code-index id even though it carries a Gobby `project.json`. Linked-worktree resolution emits a warning when an inherited `project.json` id differs from the filesystem-derived id, so it's obvious that the latter is the one being used.
 
-### Worktree-aware project root
+### `git` module — worktree detection
 
 **File:** `src/git.rs`
 
-`git::worktree_info(path)` shells out to `git -C <path> rev-parse --show-toplevel`, then reads `git worktree list --porcelain` to classify the result as `WorktreeKind::Main`, `WorktreeKind::Linked`, or `WorktreeKind::NotGit`. `Context::resolve` calls this during root detection so commands invoked deep inside a `git worktree add` directory resolve to the worktree's own top-level (not the main repo's `.git`-bearing directory).
+A new dedicated module that owns all `git` shell-out logic for project-root detection. Public surface:
 
-Failure modes degrade gracefully: if `git` is missing, the call errors and the resolver falls back to the generic VCS-root markers.
+- `WorktreeKind` — enum: `Main`, `Linked`, `NotGit`.
+- `WorktreeInfo` — `{kind: WorktreeKind, top_level: PathBuf, git_dir: PathBuf}`.
+- `worktree_info(path) -> Result<WorktreeInfo>` — shells out to `git -C <path> rev-parse --show-toplevel` and `git rev-parse --git-dir`, then reads `git worktree list --porcelain` to classify the result as `Main`, `Linked`, or `NotGit`.
+
+`Context::resolve` calls `worktree_info` during root detection so commands invoked deep inside a `git worktree add` directory resolve to the worktree's own top-level (not the main repo's `.git`-bearing directory). Failure modes degrade gracefully: if `git` is missing or the directory isn't a git repo, the call errors and the resolver falls back to the generic VCS-root markers.
 
 ### Database Path Selection
 
