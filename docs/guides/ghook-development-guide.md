@@ -152,8 +152,8 @@ Schema:
 ```json
 {
   "install_method": "github-release",
-  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.4.0/ghook-aarch64-apple-darwin.tar.gz",
-  "installed_version": "0.4.0",
+  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.4.1/ghook-aarch64-apple-darwin.tar.gz",
+  "installed_version": "0.4.1",
   "installed_at": "2026-04-22T18:30:00Z"
 }
 ```
@@ -318,7 +318,7 @@ Almost always config-only. ghook treats `--type` as opaque. To make a hook criti
 
 ## Versioning
 
-ghook is at `0.4.0`. The envelope `SCHEMA_VERSION` is `1`; the diagnose-output schema is `2`. The three version numbers are independent:
+ghook is at `0.4.1`. The envelope `SCHEMA_VERSION` is `1`; the diagnose-output schema is `2`. The three version numbers are independent:
 
 - **Crate version** bumps for any code change (binary behavior, dependencies, perf, etc.).
 - **Envelope `SCHEMA_VERSION`** bumps only when the inbox envelope shape changes in a way the daemon must explicitly handle.
