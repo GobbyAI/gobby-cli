@@ -82,6 +82,11 @@ cargo install gobby-hooks
 `gcode` graph and semantic features are configured at runtime. There are no
 Cargo feature flags for Neo4j, Qdrant, or embeddings support.
 
+`gcode` 0.8.0+ uses the migrated Gobby PostgreSQL hub. It reads
+`~/.gobby/bootstrap.yaml`, requires `hub_backend: postgres`, and resolves the
+hub DSN from either `database_url_ref` (OS keyring) or inline `database_url`.
+Installing from source or crates.io requires Rust 1.88+.
+
 ### From source
 
 ```bash
