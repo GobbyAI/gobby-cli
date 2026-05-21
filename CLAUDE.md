@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A Cargo workspace containing three Gobby CLI tools:
 
-- **gcode** (`crates/gcode/`) — AST-aware code search, symbol navigation, and dependency graph analysis. Writes to SQLite; reads from SQLite, Neo4j, and Qdrant. External sync (embeddings, graph) is handled by the Gobby daemon.
+- **gcode** (`crates/gcode/`) — AST-aware code search, symbol navigation, and dependency graph analysis. Reads/writes the Gobby PostgreSQL hub; reads Neo4j and Qdrant when configured. External sync (embeddings, graph) is handled by the Gobby daemon.
 - **gsqz** (`crates/gsqz/`) — YAML-configurable output compressor for LLM token optimization. Wraps shell commands and applies pattern-based compression pipelines.
 - **gloc** (`crates/gloc/`) — Local LLM launcher. Auto-detects backends (LM Studio, Ollama), manages model lifecycle, and execs into AI CLI tools (Claude Code, Codex) with the right env vars.
 
@@ -26,7 +26,7 @@ cargo fmt --all --check                    # Check formatting
 
 ```
 crates/
-  gcode/    — Heavy binary (tree-sitter, SQLite, Neo4j, Qdrant, opt-level=3)
+  gcode/    — Heavy binary (tree-sitter, PostgreSQL, Neo4j, Qdrant, opt-level=3)
   gsqz/     — Tiny binary (regex pipelines, shell wrapper, opt-level="z")
   gloc/     — Tiny binary (local LLM launcher, backend detection, opt-level="z")
 ```
@@ -37,12 +37,12 @@ Release profiles are in the root `Cargo.toml` with per-package overrides. Each b
 
 ### Data Flow
 
-`main.rs` parses CLI args via clap → resolves a `config::Context` (project root, DB path, service configs) → dispatches to the appropriate command handler in `commands/`.
+`main.rs` parses CLI args via clap → resolves a `config::Context` (project root, PostgreSQL DSN, service configs) → dispatches to the appropriate command handler in `commands/`.
 
 ### Core Modules
 
-- **`config`** — Resolves runtime context: `~/.gobby/bootstrap.yaml` → SQLite `config_store` → Neo4j/Qdrant configs. Detects project root by walking up from cwd looking for `.gobby/project.json`. Resolves `$secret:NAME` patterns via `secrets`.
-- **`db`** — Thin SQLite connection helpers (`open_readwrite` with WAL, `open_readonly`). All connections use 5s busy timeout.
+- **`config`** — Resolves runtime context: `~/.gobby/bootstrap.yaml` PostgreSQL DSN → PostgreSQL `config_store` → Neo4j/Qdrant configs. Detects project root by walking up from cwd looking for `.gobby/project.json`. Resolves `$secret:NAME` patterns via `secrets`.
+- **`db`** — PostgreSQL bootstrap/keyring resolution plus read/write connection helpers. Runtime schema is validated, never created or migrated by gcode.
 - **`models`** — All data types: `Symbol`, `IndexedFile`, `ContentChunk`, `SearchResult`, `GraphResult`, etc.
 - **`secrets`** — Fernet decryption of Gobby secrets using `~/.gobby/machine_id` + `~/.gobby/.secret_salt` for key derivation.
 - **`neo4j`** — HTTP client for Neo4j Cypher read queries (callers, usages, imports, blast radius). Graph writes are handled by the Gobby daemon.
@@ -54,15 +54,15 @@ Each subcommand maps to a function: `index::run`, `search::search`, `symbols::ou
 
 ### `index/` — Indexing Pipeline
 
-`walker` (file discovery via `ignore` crate) → `parser` (tree-sitter AST extraction per language) → `chunker` (content splitting for FTS) → `hasher` (SHA-256 for incremental indexing) → `indexer` (SQLite writes + FTS5 population + sync flags for daemon). `languages` maps extensions to tree-sitter grammars. `security` validates paths.
+`walker` (file discovery via `ignore` crate) → `parser` (tree-sitter AST extraction per language) → `chunker` (content splitting for BM25 content search) → `hasher` (SHA-256 for incremental indexing) → `indexer` (PostgreSQL hub writes + sync flags for daemon). `languages` maps extensions to tree-sitter grammars. `security` validates paths.
 
 ### `search/` — Search Pipeline
 
-`fts` (FTS5 symbol + content search) + `semantic` (Qdrant vector search via OpenAI-compatible embedding API) + `graph_boost` (Neo4j relevance boost) → `rrf` (Reciprocal Rank Fusion to merge ranked results).
+`fts` (pg_search BM25 symbol + content search) + `semantic` (Qdrant vector search via OpenAI-compatible embedding API) + `graph_boost` (Neo4j relevance boost) → `rrf` (Reciprocal Rank Fusion to merge ranked results).
 
 ### Graceful Degradation
 
-Neo4j/Qdrant/embedding API can each be unavailable independently. Graph commands return `[]` when Neo4j is down; semantic search returns `[]` when Qdrant or the embedding API is unavailable; FTS5 always works if the project is indexed.
+Neo4j/Qdrant/embedding API can each be unavailable independently. Graph commands return `[]` when Neo4j is down; semantic search returns `[]` when Qdrant or the embedding API is unavailable; BM25 search works when the PostgreSQL hub is configured and indexed.
 
 ## gsqz Architecture
 
@@ -96,5 +96,5 @@ CLI parses args → loads layered config → auto-detects backend (probes LM Stu
 - **UUID5 parity with Python** (gcode): Symbol IDs are deterministic UUID5 using namespace `c0de1de0-0000-4000-8000-000000000000` and key format `{project_id}:{file_path}:{name}:{kind}:{byte_start}`. Must match the Python daemon's `Symbol.make_id()` exactly.
 - **Config resolution order** (gcode): env vars (`GOBBY_NEO4J_URL`, etc.) → `config_store` table → hardcoded defaults.
 - **Tree-sitter grammars** (gcode): Tier 1 (Python/JS/TS/Go/Rust/Java/C/C++/C#/Ruby/PHP/Swift/Kotlin), Tier 2 (Dart/Elixir), Tier 3 (JSON/YAML/Markdown). Adding a language requires a new `tree-sitter-*` dep in `crates/gcode/Cargo.toml` and a grammar entry in `index/languages`.
-- **Non-destructive to Gobby databases** (gcode): Detect and skip existing Gobby-owned databases and tables. Never alter `project.json` or Gobby-managed schema.
+- **Non-destructive to Gobby hub schema** (gcode): Validate existing Gobby-owned PostgreSQL tables and BM25 indexes. Never alter `project.json`, `config_store`, or Gobby-managed schema.
 - **Exit code 0** (gsqz): Always exit 0 regardless of subprocess exit code. The LLM reads pass/fail from content.

@@ -7,19 +7,19 @@ Technical internals for developers and agents working in the gcode codebase.
 ```
 CLI (main.rs, clap)
   → Context::resolve (config.rs)
-    → detect_project_root / resolve_db_path / resolve_services
+    → detect_project_root / resolve_database_url / resolve_services
   → Command dispatch (main.rs match)
     → commands/{search,symbols,graph,index,status,init}.rs
-      → search/ pipeline (FTS5 + optional semantic + optional graph sources → RRF)
+      → search/ pipeline (pg_search BM25 + optional semantic + optional graph sources → RRF)
       → index/ pipeline (walker → parser → chunker → hasher → indexer)
       → neo4j (HTTP Cypher queries)
-      → db (SQLite WAL connections)
+      → db (PostgreSQL hub connections)
       → output (JSON/text formatting)
 ```
 
 ### Entry Point
 
-`main.rs` parses CLI args via clap, resolves a `config::Context` (project root, DB path, service configs), and dispatches to the appropriate command handler. Commands that work without a project context (`init`, `projects`, `prune`) are dispatched before `Context::resolve()`.
+`main.rs` parses CLI args via clap, resolves a `config::Context` (project root, PostgreSQL DSN, service configs), and dispatches to the appropriate command handler. Commands that work without a project context (`init`, `projects`, `prune`) are dispatched before `Context::resolve()`.
 
 `--verbose` is currently only consumed by `commands::symbols::outline()`, which
 switches outline output from the slim projection to the full `Symbol` payload.
@@ -72,11 +72,19 @@ A new dedicated module that owns all `git` shell-out logic for project-root dete
 
 `Context::resolve` calls `worktree_info` during root detection so commands invoked deep inside a `git worktree add` directory resolve to the worktree's own top-level (not the main repo's `.git`-bearing directory). Failure modes degrade gracefully: if `git` is missing or the directory isn't a git repo, the call errors and the resolver falls back to the generic VCS-root markers.
 
-### Database Path Selection
+### PostgreSQL Bootstrap
 
-1. Check `~/.gobby/bootstrap.yaml` for `database_path` key
-2. If `.gobby/project.json` exists → `~/.gobby/gobby-hub.db` (Gobby mode, shared DB)
-3. Otherwise → `~/.gobby/gobby-code-index.db` (standalone mode)
+`src/db.rs` reads `~/.gobby/bootstrap.yaml` (or `$GOBBY_HOME/bootstrap.yaml`) and
+requires `hub_backend: postgres`. It prefers `database_url_ref` and currently
+supports `keyring:gobby:postgres_database_url`; inline `database_url` is accepted
+only when no ref is present. `connect_readwrite()` and `connect_readonly()` both
+return a synchronous `postgres::Client`; PostgreSQL permissions decide actual
+access.
+
+`src/schema.rs` validates runtime schema and never creates or migrates tables.
+It requires the Gobby hub tables, the `pg_search` extension, and BM25 indexes
+`code_symbols_search_bm25` and `code_content_search_bm25`. Missing schema errors
+tell users to finish `gobby postgres migrate-from-sqlite` and cut over.
 
 ### Service Configuration
 
@@ -85,21 +93,18 @@ Resolution order per service (Neo4j, Qdrant, embeddings):
 | Priority | Source | Example |
 |----------|--------|---------|
 | 1 (highest) | Environment variables | `GOBBY_NEO4J_URL`, `GOBBY_QDRANT_URL`, `GOBBY_EMBEDDING_URL` |
-| 2 | `config_store` table in SQLite | `databases.neo4j.url`, `databases.qdrant.url`, `embeddings.api_base` |
+| 2 | `config_store` table in PostgreSQL | `databases.neo4j.url`, `databases.qdrant.url`, `embeddings.api_base` |
 | 3 (lowest) | Hardcoded defaults | Neo4j `http://localhost:8474` / `neo4j`; embeddings model `nomic-embed-text` once an API base exists |
 
 Config values are JSON-encoded in `config_store` — strings have surrounding quotes stripped. Secret patterns like `$secret:NAME` are resolved via `secrets.rs` (Fernet decryption using machine_id + salt, 600K PBKDF2 iterations).
 
-### Operating Modes
+### Runtime Model
 
-| Mode | Trigger | Database | Services |
-|------|---------|----------|----------|
-| Standalone | `.gobby/gcode.json` only | `gobby-code-index.db` | SQLite by default; optional Neo4j/Qdrant/embeddings via env vars |
-| Gobby | `.gobby/project.json` exists | `gobby-hub.db` | SQLite + config-store-managed Neo4j/Qdrant/embeddings |
-
-Standalone mode has no `config_store` table, so hardcoded service defaults never
-apply there. Graph and semantic features can still be enabled explicitly with
-environment variables.
+gcode is daemon-independent but requires the migrated PostgreSQL hub. Project
+identity still comes from `.gobby/project.json`, `.gobby/gcode.json`, isolated
+roots, linked worktrees, or generated identity during `gcode init`. Service
+configuration comes from env vars first, then PostgreSQL `config_store`, then
+defaults where the current behavior defines defaults.
 
 ## Indexing Pipeline
 
@@ -118,11 +123,9 @@ walker::discover_files(root, excludes)
     → hasher::file_content_hash(path)
       → SHA-256 for incremental detection
     → indexer::upsert_symbols + upsert_file + upsert_chunks
-      → SQLite writes + FTS5 population
-      → upsert_imports + upsert_calls (if tables exist)
-      → [daemon available] return early — flags stay 0, daemon syncs
-      → [no daemon + services configured] direct Neo4j/Qdrant writes
-      → [SQLite-only] skip external writes
+      → PostgreSQL hub writes
+      → upsert_imports + upsert_calls
+      → graph_synced=false / vectors_synced=false for daemon sync
 ```
 
 ### File Discovery (walker.rs)
@@ -130,7 +133,7 @@ walker::discover_files(root, excludes)
 Uses the `ignore` crate (`WalkBuilder`) which respects `.gitignore`, `.git/info/exclude`, and git global config. Files are partitioned into:
 
 - **AST candidates**: Extensions matching a tree-sitter language spec (18 languages)
-- **Content-only candidates**: Extensions like `.sh`, `.sql`, `.html`, `.css` — chunked for FTS but no AST parsing
+- **Content-only candidates**: Extensions like `.sh`, `.sql`, `.html`, `.css` — chunked for BM25 content search but no AST parsing
 
 Default excludes: `node_modules`, `__pycache__`, `.git`, `.venv`, `target`, `dist`, `build`, `.next`, `coverage`, etc.
 
@@ -170,7 +173,7 @@ Each language has a `LanguageSpec` with three tree-sitter queries: `symbol_query
 
 ### Content Chunking (chunker.rs)
 
-Files are split into overlapping chunks for FTS5 content search:
+Files are split into overlapping chunks for BM25 content search:
 
 - **Chunk size**: 100 lines
 - **Overlap**: 10 lines (step = 90)
@@ -180,12 +183,10 @@ Files are split into overlapping chunks for FTS5 content search:
 ### Incremental Indexing (indexer.rs)
 
 1. **Hash comparison**: SHA-256 content hash per file, stored in `code_indexed_files`
-2. **Stale detection**: Compare current hashes against stored hashes; files with changed hashes are re-indexed. When the `graph_synced` column exists (Gobby mode), files where `graph_synced=0` are also detected as stale with reason `GraphSyncPending`
-3. **Orphan cleanup**: Files in the DB that no longer exist on disk have their data deleted from SQLite. When daemon is available, external cleanup (Neo4j/Qdrant) is deferred to the daemon's `reconcile_stores`
-4. **Per-file transactions**: SQLite writes (delete old data, upsert symbols, upsert file, upsert content chunks, upsert imports/calls) are wrapped in a single transaction to prevent half-indexed files on crash
-5. **Deferred external writes** (Gobby mode with daemon): After the SQLite transaction commits, gcode returns early — `graph_synced` and `vectors_synced` stay at `0`. The daemon's background worker polls for pending files, generates embeddings, writes Qdrant vectors and Neo4j edges, and flips the flags independently
-6. **Direct external writes** (no daemon, services configured): Neo4j/Qdrant writes happen after the SQLite transaction. If all succeed, `graph_synced` is set to `1`. If any fail, it stays `0` and the next incremental run retries
-7. **Graph-sync-only path**: Files with `StaleReason::GraphSyncPending` skip the SQLite transaction entirely — only external writes are retried. When daemon is available, these files are skipped entirely (daemon handles retries)
+2. **Stale detection**: Compare current hashes against stored hashes; files with changed hashes are re-indexed.
+3. **Orphan cleanup**: Files in the DB that no longer exist on disk have their hub rows deleted. External cleanup (Neo4j/Qdrant) is handled by the daemon's reconcile/sync workers.
+4. **Per-file transactions**: PostgreSQL writes (delete old data, upsert symbols, upsert file, upsert content chunks, upsert imports/calls) are wrapped in a single transaction to prevent half-indexed files on crash.
+5. **External sync flags**: Changed files are written with `graph_synced=false`, `vectors_synced=false`, and `graph_sync_attempted_at=NULL` so the daemon can regenerate graph and vector projections.
 
 The `--full` flag skips the hash comparison and re-indexes all files, ensuring stale external index entries are cleaned up.
 
@@ -205,16 +206,16 @@ Search, symbol, outline, and graph read commands gate their work on `freshness::
 
 **File:** `src/commands/scope.rs`
 
-Search, symbol, outline, and graph commands all run resolved paths through the helpers in `commands::scope` before returning results, so stale rows from other projects sharing `gobby-hub.db` cannot leak across project boundaries:
+Search, symbol, outline, and graph commands all run resolved paths through the helpers in `commands::scope` before returning results, so stale rows from other projects sharing the PostgreSQL hub cannot leak across project boundaries:
 
 - `normalize_file_arg(ctx, file)` — relativize a CLI-supplied path against the resolved project root.
 - `path_exists_in_current_project(ctx, file_path)` — does the path exist on disk inside the current project root?
 - `indexed_file_exists` / `content_chunks_exist` — does the file have rows in `code_indexed_files` / `code_content_chunks` for the current `project_id`?
 - `current_indexed_path_is_valid` — composite check used as a gate before returning results.
 
-### Import/Call SQLite Storage
+### Import/Call PostgreSQL Storage
 
-When daemon migration v183 tables exist (`code_imports`, `code_calls`), gcode writes parsed relations during Phase 1:
+When hub tables exist (`code_imports`, `code_calls`), gcode writes parsed relations during indexing:
 
 - **`code_imports`**: `(project_id, source_file, target_module)` — from `parse_result.imports`
 - **`code_calls`**: `(project_id, caller_symbol_id, callee_symbol_id, callee_name, callee_target_kind, callee_external_module, file_path, line)` — from `parse_result.calls`
@@ -222,8 +223,7 @@ When daemon migration v183 tables exist (`code_imports`, `code_calls`), gcode wr
 Both use delete-then-insert per file. `callee_target_kind` distinguishes stable
 local-symbol edges from unresolved or external calls, and
 `callee_external_module` preserves package/module provenance for external calls.
-Table existence is detected via `has_table()` (PRAGMA-based), so gcode works
-whether or not the daemon has applied the migration.
+The runtime schema validator requires these tables before gcode starts index/search work.
 
 ### Graph Lifecycle RPCs
 
@@ -250,8 +250,8 @@ Symbol IDs are deterministic UUID5 using namespace `c0de1de0-0000-4000-8000-0000
 Four sources are queried and merged via Reciprocal Rank Fusion:
 
 ```
-Source 1: FTS5 (SQLite full-text search)
-  → search_symbols_fts (MATCH query on code_symbols_fts)
+Source 1: pg_search BM25 (PostgreSQL full-text relevance)
+  → search_symbols_fts (BM25 query on code_symbols)
   → fallback: search_symbols_by_name (LIKE query)
 
 Source 2: Semantic (Qdrant vector search)
@@ -270,7 +270,7 @@ Source 4: Graph Expand (Neo4j)
   ↓ All sources → RRF merge → Symbol resolution → Path filter (glob) → Pagination
 ```
 
-When `--path` is provided, FTS queries include a SQL `LIKE` prefix pre-filter for index-assisted narrowing. After RRF merge and symbol resolution, a Rust `glob::Pattern` post-filter ensures exact glob semantics across all sources (including semantic/graph results that lack SQL-side filtering).
+When `--path` is provided, BM25 queries include a SQL `LIKE` prefix pre-filter for index-assisted narrowing. After RRF merge and symbol resolution, a Rust `glob::Pattern` post-filter ensures exact glob semantics across all sources (including semantic/graph results that lack SQL-side filtering).
 
 ### RRF Merge (rrf.rs)
 
@@ -288,15 +288,15 @@ score(symbol) = Σ 1/(K + rank) for each source containing the symbol
 
 ### Symbol Resolution
 
-After RRF merge, ALL symbol IDs are resolved against SQLite before computing `total`. This ensures `total` reflects the count of actually-resolvable symbols (stale Qdrant/Neo4j entries are silently skipped). Offset/limit pagination is applied after resolution.
+After RRF merge, ALL symbol IDs are resolved against PostgreSQL before computing `total`. This ensures `total` reflects the count of actually-resolvable symbols (stale Qdrant/Neo4j entries are silently skipped). Offset/limit pagination is applied after resolution.
 
 The `total` for hybrid search is a best-effort estimate bounded by `fetch_limit`
 per source — exact counts aren't feasible because RRF merges results from
 multiple systems with deduplication.
 
-### FTS Search (`search-text`, `search-content`)
+### BM25 Search (`search-text`, `search-content`)
 
-These use dedicated `count_text`/`count_content` functions (FTS5 COUNT queries) for accurate totals, separate from the paginated result fetch.
+These use dedicated `count_text`/`count_content` functions (pg_search BM25 counts with LIKE fallback) for accurate totals, separate from the paginated result fetch.
 
 ### Pagination
 
@@ -320,6 +320,9 @@ All search/graph commands return a `PagedResponse` envelope:
 
 ## Database Schema
 
+gcode uses Gobby's PostgreSQL baseline schema. Schema changes belong in the
+Gobby repository migrations/baseline; gcode only validates and uses the tables.
+
 ### Core Tables
 
 **`code_symbols`** — Extracted AST symbols
@@ -339,7 +342,7 @@ All search/graph commands return a `PagedResponse` envelope:
 | docstring | TEXT | Python/JS/TS only |
 | parent_symbol_id | TEXT | Enclosing class/type ID |
 | content_hash | TEXT | SHA-256 of symbol source |
-| created_at, updated_at | TEXT | Epoch seconds as string |
+| created_at, updated_at | TIMESTAMPTZ | Cast to text for CLI output |
 
 **`code_indexed_files`** — File index metadata
 
@@ -352,9 +355,9 @@ All search/graph commands return a `PagedResponse` envelope:
 | content_hash | TEXT | SHA-256 for incremental detection |
 | symbol_count | INTEGER | |
 | byte_size | INTEGER | |
-| indexed_at | TEXT | Epoch seconds |
-| graph_synced | INTEGER | 0=pending, 1=Neo4j synced (Gobby mode only) |
-| vectors_synced | INTEGER | 0=pending, 1=Qdrant synced (Gobby mode, daemon migration v183) |
+| indexed_at | TIMESTAMPTZ | Cast to text for CLI output |
+| graph_synced | BOOLEAN | `false` means Neo4j sync pending |
+| vectors_synced | BOOLEAN | `false` means Qdrant sync pending |
 
 **`code_imports`** — Import relations (daemon migration v183, Gobby mode only)
 
@@ -381,7 +384,7 @@ UNIQUE constraint on `(project_id, source_file, target_module)`.
 | file_path | TEXT | File containing the call |
 | line | INTEGER | Line number of call site |
 
-**`code_content_chunks`** — File content for FTS search
+**`code_content_chunks`** — File content for BM25 search
 
 | Column | Type | Notes |
 |--------|------|-------|
@@ -393,7 +396,7 @@ UNIQUE constraint on `(project_id, source_file, target_module)`.
 | content | TEXT | Chunk text (100 lines, 10-line overlap) |
 | language | TEXT | |
 
-**`code_symbols_fts`** / **`code_content_fts`** — FTS5 virtual tables for full-text search
+**`code_symbols_search_bm25`** / **`code_content_search_bm25`** — pg_search BM25 indexes for full-text relevance
 
 **`code_indexed_projects`** — Project statistics
 
@@ -426,15 +429,15 @@ Count queries use the same patterns with `RETURN count(...)` for accurate pagina
 
 ### Symbol Name Resolution
 
-**File:** `src/search/fts.rs` (`resolve_symbol_name`), `src/commands/graph.rs` (`resolve_name`)
+**File:** `src/search/fts.rs` (`resolve_graph_symbol`), `src/commands/graph.rs` (`resolve_symbol`)
 
 All graph commands resolve user input to an actual symbol name before querying Neo4j. Resolution order:
 
-1. **Exact match** — `SELECT name FROM code_symbols WHERE name = ?`
-2. **LIKE match** — `WHERE name LIKE %input% OR qualified_name LIKE %input%`
-3. **FTS5 search** — `search_symbols_fts()` across names, signatures, docstrings
+1. **Exact match** — `SELECT ... FROM code_symbols WHERE id/name/qualified_name = $1`
+2. **LIKE match** — `WHERE name LIKE $pattern OR qualified_name LIKE $pattern`
+3. **BM25 search** — `search_symbols_fts()` across names, signatures, docstrings, summaries
 
-Single match → used directly. Multiple matches → first used, alternatives shown on stderr. No match → error message, no Neo4j query issued.
+Single match → used directly. Multiple matches → fail closed with alternatives shown on stderr. No match → error message, no Neo4j query issued.
 
 ## Semantic Search Integration
 
@@ -450,8 +453,8 @@ Single match → used directly. Multiple matches → first used, alternatives sh
 
 ### Vector Lifecycle
 
-1. **Index**: SQLite writes mark files dirty for external sync; the daemon or direct-sync path handles vector upserts when configured
-2. **Re-index**: stale file cleanup and invalidation trigger corresponding Qdrant cleanup when the external sync path runs
+1. **Index**: PostgreSQL writes mark files dirty for external sync; the daemon handles vector upserts when configured
+2. **Re-index**: stale file cleanup and invalidation trigger corresponding Qdrant cleanup through daemon reconciliation
 3. **Search**: embed query text, search Qdrant, return `(symbol_id, score)` pairs
 
 ### Collection Naming
@@ -465,11 +468,12 @@ Each external service degrades independently:
 | Service | When Unavailable | Impact |
 |---------|-----------------|--------|
 | Neo4j | No config or connection refused | Graph commands return `[]` with hint; search loses graph boost |
-| Qdrant | No URL configured | Search loses semantic source; FTS5 still works |
+| Qdrant | No URL configured | Search loses semantic source; BM25 still works |
 | Embeddings API | No API base, auth failure, or request error | Semantic search disabled for that query |
-| Daemon | Not running | `invalidate` can't notify; direct external sync runs only if Neo4j/Qdrant are configured |
+| Daemon | Not running | Normal index/search still work; graph lifecycle RPCs fail and external sync waits for the daemon |
+| PostgreSQL hub | Missing bootstrap, sqlite backend, unreachable DB, or missing schema | Runtime index/search commands fail clearly |
 
-The system always works with just SQLite — FTS5 search and outline are fully functional in standalone mode.
+The system always works without the daemon process once the PostgreSQL hub is configured and migrated.
 
 ## Output Format
 
@@ -515,5 +519,5 @@ gcode search --project /path/to/myapp "query"  # by path
 
 ```bash
 gcode index --full    # re-process all files, clean stale vectors
-gcode invalidate      # destructive reset (drops all data, re-create)
+gcode invalidate      # destructive reset of current project's code-index rows
 ```

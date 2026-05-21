@@ -15,6 +15,11 @@ cargo install gobby-code
 Graph and semantic features are configured at runtime. You do not need Cargo
 feature flags to enable Neo4j, Qdrant, or embeddings support.
 
+Runtime indexing/search requires Gobby's PostgreSQL hub bootstrap. gcode reads
+`~/.gobby/bootstrap.yaml`, requires `hub_backend: postgres`, and connects
+directly to the migrated hub; the daemon process does not need to be running for
+normal index/search commands.
+
 If you use [Gobby](https://github.com/GobbyAI/gobby), gcode is already installed.
 
 ### Initialize and Index
@@ -51,7 +56,7 @@ gcode offers four search modes for different use cases.
 
 ### Hybrid Search (`gcode search`)
 
-The default. Combines FTS5 text matching with optional semantic similarity,
+The default. Combines pg_search BM25 text matching with optional semantic similarity,
 graph boost, and graph expansion using Reciprocal Rank Fusion. If Neo4j,
 Qdrant, or the embeddings endpoint are unavailable, `gcode search` falls back
 to the sources that are configured.
@@ -80,7 +85,7 @@ gcode search "Context" --language rust         # Scope to Rust sources
 
 Exact-first symbol/name lookup with deterministic ranking. Resolves precise
 matches (exact name, then qualified-name and case-insensitive variants) before
-falling back to FTS5. Useful when you already know (most of) the name and want
+falling back to BM25. Useful when you already know (most of) the name and want
 the canonical hit at rank 0 instead of letting hybrid ranking rerank it.
 
 ```bash
@@ -95,7 +100,7 @@ gcode search-symbol "ensure_fresh" --path "crates/gcode/**"
 
 ### Text Search (`gcode search-text`)
 
-FTS5 search on symbol metadata: names, qualified names, signatures, and docstrings.
+pg_search BM25 search on symbol metadata: names, qualified names, signatures, and docstrings.
 
 ```bash
 gcode search-text "parseConfig"
@@ -109,7 +114,7 @@ gcode search-text "parseConfig" --language python
 
 ### Content Search (`gcode search-content`)
 
-FTS5 search across file content chunks — covers source bodies, comments, configuration files (YAML/TOML/JSON/etc.), and CSS in addition to symbol bodies.
+pg_search BM25 search across file content chunks — covers source bodies, comments, configuration files (YAML/TOML/JSON/etc.), and CSS in addition to symbol bodies.
 
 ```bash
 gcode search-content "TODO: refactor"
@@ -174,11 +179,11 @@ Useful for understanding project structure at a glance.
 ## Dependency Graph
 
 Read-side graph commands require Neo4j. Gobby-managed projects usually provide this
-automatically, and standalone projects can opt in with `GOBBY_NEO4J_URL` and
+automatically, and daemon-independent projects can opt in with `GOBBY_NEO4J_URL` and
 `GOBBY_NEO4J_AUTH`. Without Neo4j, graph read commands return empty results
 gracefully.
 
-All read-side graph commands resolve fuzzy input — you don't need the exact symbol name. Resolution tries exact match, then substring match, then FTS5 search across names, signatures, and docstrings. When multiple matches are found, the best is used and alternatives are shown on stderr.
+All read-side graph commands resolve fuzzy input — you don't need the exact symbol name. Resolution tries exact match, then substring match, then BM25 search across names, signatures, and docstrings. When multiple matches are found, the best is used and alternatives are shown on stderr.
 
 For Python, JavaScript, and TypeScript, graph edges are import-aware. Calls to
 external packages/modules stay external instead of being misclassified as local
@@ -250,7 +255,7 @@ Returns file count, symbol count, last indexed time, and duration.
 
 ### List Projects
 
-See all indexed projects across both databases:
+See all indexed projects in the PostgreSQL hub:
 
 ```bash
 gcode projects
@@ -268,7 +273,7 @@ gcode search --project myapp "query"
 gcode search --project /home/user/projects/myapp "query"
 ```
 
-Name resolution looks up the `code_indexed_projects` table in both `gobby-code-index.db` and `gobby-hub.db`.
+Name resolution looks up the `code_indexed_projects` table in the configured PostgreSQL hub.
 
 ### Re-indexing
 
@@ -290,14 +295,11 @@ Index specific files:
 gcode index --files src/config.rs src/main.rs
 ```
 
-In Gobby mode with the daemon running, `gcode index` writes to SQLite only and
-returns immediately (<1s for incremental). The daemon's background worker
-handles Neo4j graph edges and Qdrant vector sync asynchronously. FTS search
-(`search-text`, `search-content`) works instantly; graph and semantic search
-follow once the daemon syncs.
-
-Without the daemon, gcode still writes SQLite immediately and performs direct
-Neo4j/Qdrant sync only when those services are configured.
+`gcode index` writes symbols, files, chunks, imports, and calls to the
+PostgreSQL hub. It marks graph/vector sync flags dirty; the Gobby daemon handles
+Neo4j graph edges and Qdrant vector sync asynchronously when it is running.
+BM25 search (`search-text`, `search-content`) works as soon as the transaction
+commits; graph and semantic search improve once the external stores sync.
 
 Reset and rebuild from scratch (destructive — prompts for confirmation):
 
@@ -317,23 +319,13 @@ gcode graph rebuild
 
 Use those when you want the daemon to clear or replay graph state for the current project without performing a full destructive code-index invalidation.
 
-## Operating Modes
+## Operating Model
 
-### Standalone Mode
-
-When there's no `.gobby/project.json` in the project, gcode operates independently:
-- Database: `~/.gobby/gobby-code-index.db`
-- Services: SQLite by default; optional Neo4j, Qdrant, and embeddings via env vars
-- Identity: `.gobby/gcode.json`
-
-This is the default for projects not managed by Gobby. All indexing and FTS5 search work fully.
-
-### Gobby Mode
-
-When `.gobby/project.json` exists (Gobby manages the project):
-- Database: `~/.gobby/gobby-hub.db` (or path from `bootstrap.yaml`)
-- Services: SQLite plus config-store-managed Neo4j, Qdrant, and embeddings (if configured)
-- Identity: `.gobby/project.json`
+gcode is daemon-independent but not database-independent:
+- Database: PostgreSQL hub from `~/.gobby/bootstrap.yaml`
+- Required bootstrap: `hub_backend: postgres` plus `database_url_ref` or `database_url`
+- Identity: `.gobby/project.json`, `.gobby/gcode.json`, isolated root, linked worktree, or generated identity from `gcode init`
+- Optional services: Neo4j, Qdrant, and embeddings via env vars or PostgreSQL `config_store`
 
 Graph commands and semantic search become available when the required services are configured.
 
@@ -341,7 +333,7 @@ Graph commands and semantic search become available when the required services a
 
 Two cases break the usual "one `.gobby/project.json` ↔ one project id" mapping. gcode handles them automatically:
 
-- **Isolation marker** — when `.gobby/project.json` carries `parent_project_path` or `parent_project_id` fields, gcode treats the directory as its own code-index target rather than as part of the parent. The id is a deterministic UUID5 derived from the canonical filesystem path, so the directory gets its own symbol/file rows in the shared `gobby-hub.db` and never collides with the parent's index.
+- **Isolation marker** — when `.gobby/project.json` carries `parent_project_path` or `parent_project_id` fields, gcode treats the directory as its own code-index target rather than as part of the parent. The id is a deterministic UUID5 derived from the canonical filesystem path, so the directory gets its own symbol/file rows in the PostgreSQL hub and never collides with the parent's index.
 - **Linked git worktrees** — runs from inside a `git worktree add` directory resolve to the worktree's own top-level (via `git rev-parse --show-toplevel` and `git worktree list --porcelain`). The code-index id is derived from the worktree path, not from any inherited `.gobby/project.json`. If an inherited id would have been used, gcode prints a warning naming the filesystem-derived id it picked instead.
 
 Both cases are reported by `gcode init`'s status line (`isolated`, `linked-worktree`) so it's clear which identity source resolved.
@@ -351,7 +343,7 @@ Both cases are reported by `gcode init`'s status line (`isolated`, `linked-workt
 gcode resolves configuration in this order:
 
 1. **Environment variables** — `GOBBY_NEO4J_URL`, `GOBBY_NEO4J_AUTH`, `GOBBY_QDRANT_URL`, `GOBBY_PORT`
-2. **config_store table** — Key-value pairs in the SQLite database (`databases.neo4j.*`, `databases.qdrant.*`, `embeddings.*`)
+2. **config_store table** — Key-value pairs in the PostgreSQL hub (`databases.neo4j.*`, `databases.qdrant.*`, `embeddings.*`)
 3. **Hardcoded defaults** — Neo4j at `http://localhost:8474`, database `neo4j` (only when `config_store` exists)
 
 Semantic search uses the same precedence rules:
@@ -359,9 +351,10 @@ Semantic search uses the same precedence rules:
 2. **config_store table** — `embeddings.api_base`, `embeddings.model`, `embeddings.api_key`
 3. **Hardcoded defaults** — model `nomic-embed-text` once an embeddings API base is configured
 
-The database path itself is resolved from:
-1. `~/.gobby/bootstrap.yaml` `database_path` key
-2. Default based on mode (standalone vs Gobby)
+The database connection is resolved from `~/.gobby/bootstrap.yaml`:
+1. Require `hub_backend: postgres`
+2. Prefer `database_url_ref` (for example `keyring:gobby:postgres_database_url`)
+3. Fall back to inline `database_url` when present
 
 The daemon URL (used by `invalidate`, `graph clear`, and `graph rebuild`) is resolved from:
 1. `GOBBY_PORT` environment variable (e.g. `60887`)
@@ -467,7 +460,7 @@ gcode projects
 
 If you get "No symbol matching 'X' found", the input didn't resolve to any indexed symbol. Try a different term or check what's indexed with `gcode search-text "X"`.
 
-If results are empty but the symbol exists, this is expected in standalone mode (no Neo4j). In Gobby mode, check that Neo4j is running and configured:
+If results are empty but the symbol exists, this is expected when Neo4j is not configured. In Gobby mode, check that Neo4j is running and configured:
 
 ```bash
 echo $GOBBY_NEO4J_URL

@@ -4,25 +4,25 @@ This file is for AI coding agents (Claude, Copilot, Cursor, etc.) working on the
 
 ## What This Is
 
-`gobby-code` is a Rust CLI (`gcode`) that provides AST-aware code search, symbol navigation, and dependency graph analysis. It reads/writes SQLite for symbols/search, Neo4j for call graphs, and Qdrant for semantic vectors. It works standalone or alongside the Gobby daemon.
+`gobby-code` is a Rust CLI (`gcode`) that provides AST-aware code search, symbol navigation, and dependency graph analysis. It reads/writes the Gobby PostgreSQL hub for symbols/search, Neo4j for call graphs, and Qdrant for semantic vectors. It works without the Gobby daemon process, but requires a migrated PostgreSQL hub bootstrap.
 
 ## Build & Test
 
 ```bash
-cargo build --no-default-features           # Build without embeddings (no cmake needed)
+cargo build --no-default-features           # CI-compatible build
 cargo test --no-default-features            # Run all tests
 cargo clippy --no-default-features -- -D warnings  # Lint (must be zero warnings)
 ```
 
-The `embeddings` feature (default: on) requires cmake. CI builds use `--no-default-features`.
+CI builds use `--no-default-features`.
 
 ## Architecture
 
 ```
 main.rs (clap CLI)
-  → config::Context::resolve()     # Resolves project root, DB path, service configs
+  → config::Context::resolve()     # Resolves project root, PostgreSQL DSN, service configs
   → commands/*::run()              # Command handler
-    → db::open_readwrite/readonly  # SQLite connection
+    → db::connect_readwrite/readonly # PostgreSQL hub connection
     → index/*                      # Indexing pipeline (walker → parser → chunker → indexer)
     → search/*                     # Search pipeline (fts + semantic + graph_boost → rrf)
     → neo4j::*                     # Graph queries via HTTP
@@ -32,12 +32,12 @@ main.rs (clap CLI)
 
 ### 1. Non-destructive to Gobby databases
 
-gcode must detect and skip existing Gobby-owned databases and schema. Never:
+gcode must treat Gobby-owned hub schema as externally managed. Never:
 - Write to `.gobby/project.json` (that's Gobby's file)
-- ALTER or DROP tables that Gobby created
+- CREATE, ALTER, or DROP tables that Gobby created
 - Modify the `config_store` table
 
-The schema module (`src/schema.rs`) checks if `code_symbols` exists before creating anything. If it exists, schema creation is skipped entirely.
+The schema module (`src/schema.rs`) only validates required PostgreSQL tables, the `pg_search` extension, and BM25 indexes. It must not create or migrate schema.
 
 ### 2. UUID5 parity with Python
 
@@ -72,7 +72,7 @@ Always: env vars (`GOBBY_NEO4J_URL`, etc.) → `config_store` table → hardcode
 ### Modify search ranking
 
 Search uses Reciprocal Rank Fusion in `src/search/rrf.rs` to merge results from:
-- `src/search/fts.rs` — FTS5 symbol and content search
+- `src/search/fts.rs` — pg_search BM25 symbol and content search
 - `src/search/semantic.rs` — Qdrant vector similarity
 - `src/search/graph_boost.rs` — Neo4j graph relevance
 
@@ -81,7 +81,7 @@ Search uses Reciprocal Rank Fusion in `src/search/rrf.rs` to merge results from:
 The pipeline in `src/index/indexer.rs` orchestrates:
 - `walker.rs` — file discovery
 - `parser.rs` — tree-sitter AST extraction
-- `chunker.rs` — content splitting for FTS5
+- `chunker.rs` — content splitting for pg_search BM25 content search
 - `hasher.rs` — SHA-256 for incremental detection
 
 ## What NOT to Do
