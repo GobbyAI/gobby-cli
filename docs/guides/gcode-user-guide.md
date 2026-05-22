@@ -17,8 +17,11 @@ feature flags to enable Neo4j, Qdrant, or embeddings support.
 
 Runtime indexing/search requires Gobby's PostgreSQL hub bootstrap. gcode reads
 `~/.gobby/bootstrap.yaml`, requires `hub_backend: postgres`, and connects
-directly to the migrated hub; the daemon process does not need to be running for
-normal index/search commands.
+to the migrated hub. For `database_url_ref:
+keyring:gobby:postgres_database_url`, gcode asks the local daemon broker for the
+DSN first and falls back to the native OS keyring. The daemon process does not
+need to be running for normal index/search commands when keyring fallback is
+available.
 
 If you use [Gobby](https://github.com/GobbyAI/gobby), gcode is already installed.
 
@@ -323,7 +326,7 @@ Use those when you want the daemon to clear or replay graph state for the curren
 
 gcode is daemon-independent but not database-independent:
 - Database: PostgreSQL hub from `~/.gobby/bootstrap.yaml`
-- Required bootstrap: `hub_backend: postgres` plus `database_url_ref` or `database_url`
+- Required bootstrap: `hub_backend: postgres` plus supported `database_url_ref` or `database_url`
 - Identity: `.gobby/project.json`, `.gobby/gcode.json`, isolated root, linked worktree, or generated identity from `gcode init`
 - Optional services: Neo4j, Qdrant, and embeddings via env vars or PostgreSQL `config_store`
 
@@ -353,8 +356,10 @@ Semantic search uses the same precedence rules:
 
 The database connection is resolved from `~/.gobby/bootstrap.yaml`:
 1. Require `hub_backend: postgres`
-2. Prefer `database_url_ref` (for example `keyring:gobby:postgres_database_url`)
-3. Fall back to inline `database_url` when present
+2. Validate supported `database_url_ref` values before any lookup
+3. For `keyring:gobby:postgres_database_url`, request the DSN from the local daemon broker
+4. Fall back silently to the native OS keyring when broker lookup fails
+5. Use inline `database_url` only when no ref is present
 
 The daemon URL (used by `invalidate`, `graph clear`, and `graph rebuild`) is resolved from:
 1. `GOBBY_PORT` environment variable (e.g. `60887`)

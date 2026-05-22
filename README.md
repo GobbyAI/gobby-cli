@@ -84,7 +84,10 @@ Cargo feature flags for Neo4j, Qdrant, or embeddings support.
 
 `gcode` 0.8.0+ uses the migrated Gobby PostgreSQL hub. It reads
 `~/.gobby/bootstrap.yaml`, requires `hub_backend: postgres`, and resolves the
-hub DSN from either `database_url_ref` (OS keyring) or inline `database_url`.
+hub DSN from either `database_url_ref` or inline `database_url`. For
+`database_url_ref: keyring:gobby:postgres_database_url`, `gcode` asks the local
+daemon broker first and falls back to the native OS keyring. The DSN is not
+written to a plaintext runtime file.
 Installing from source or crates.io requires Rust 1.88+.
 
 ### From source
