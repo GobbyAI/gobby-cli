@@ -24,6 +24,9 @@ need to be running for normal index/search commands when keyring fallback is
 available.
 
 If you use [Gobby](https://github.com/GobbyAI/gobby), gcode is already installed.
+If macOS keeps asking for Keychain authorization, run `which -a gcode` and make
+sure stale binaries are removed or ordered after the current Gobby-managed
+install. Older `gcode` binaries bypass the daemon broker.
 
 ### Initialize and Index
 

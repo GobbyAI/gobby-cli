@@ -79,7 +79,7 @@ requires `hub_backend: postgres`. It validates `database_url_ref` before any
 lookup and currently supports only `keyring:gobby:postgres_database_url`. That
 ref resolves through the local daemon broker first using
 `POST /api/local/runtime/database-url` with `X-Gobby-Local-Token` from
-`local_cli_token` and a 1s timeout. Broker failures stay silent at the
+`local_cli_token` and a 3s timeout. Broker failures stay silent at the
 top-level resolver and fall back to native OS keyring stores via
 `keyring-core`. gcode depends on the platform store crates directly rather than
 the `keyring` meta crate, so the fallback path does not pull in the SQLite-backed

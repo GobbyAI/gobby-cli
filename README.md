@@ -88,6 +88,9 @@ hub DSN from either `database_url_ref` or inline `database_url`. For
 `database_url_ref: keyring:gobby:postgres_database_url`, `gcode` asks the local
 daemon broker first and falls back to the native OS keyring. The DSN is not
 written to a plaintext runtime file.
+If macOS keeps asking for Keychain authorization, check `which -a gcode` and
+remove or de-prioritize stale binaries; older installs bypass daemon-brokered
+DSN resolution.
 Installing from source or crates.io requires Rust 1.88+.
 
 ### From source
