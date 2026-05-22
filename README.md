@@ -33,6 +33,11 @@ search, semantic search, dependency analysis (`callers`, `usages`, `imports`,
 `blast-radius`), and daemon-backed graph lifecycle commands (`gcode graph clear`,
 `gcode graph rebuild`).
 
+For non-Gobby-managed projects, `gcode init` installs the bundled `gcode` skill
+for Claude Code, Codex, Droid, Grok, Qwen, Gemini CLI (deprecated
+compatibility), and Antigravity CLI. Gobby-managed projects skip those
+project-local skill writes because Gobby owns CLI wiring.
+
 ### gsqz — Output Compression
 
 Squeezes CLI output before it eats your context window. 28 built-in pipelines for git, cargo, pytest, eslint, ruff, npm, and more. Filters noise, groups errors by rule, collapses repeats, and typically reduces token consumption by >90%. ~9ms overhead. YAML-configurable with layered config (global → project → CLI).

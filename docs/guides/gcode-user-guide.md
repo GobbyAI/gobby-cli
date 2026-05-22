@@ -37,7 +37,7 @@ gcode init
 
 `gcode init` does everything in one step:
 1. Creates `.gobby/gcode.json` (project identity file)
-2. Installs AI CLI skills (Claude Code, etc.) if detected
+2. Installs AI CLI skills for supported project-local targets
 3. Indexes the entire project with tree-sitter
 
 You'll see a progress bar while indexing:
@@ -47,6 +47,24 @@ You'll see a progress bar while indexing:
 ```
 
 After init, you can search immediately.
+
+For non-Gobby-managed projects, `gcode init` installs the bundled `gcode` skill
+for Claude Code, Codex, Droid, Grok, Qwen, Gemini CLI (deprecated
+compatibility), and Antigravity CLI:
+
+| CLI | Project-local files |
+|-----|---------------------|
+| Claude Code | `.claude-plugin/plugin.json`, `skills/gcode/SKILL.md` |
+| Codex | `.codex/skills/gcode/SKILL.md` |
+| Droid | `.factory/skills/gcode/SKILL.md` |
+| Grok | `.grok/skills/gcode/SKILL.md` |
+| Qwen | `.qwen/skills/gcode/SKILL.md` |
+| Gemini CLI (deprecated) | `.gemini/skills/gcode/SKILL.md` |
+| Antigravity CLI | `.agents/skills/gcode/SKILL.md` |
+
+Gobby-managed projects skip these project-local writes because Gobby owns CLI
+wiring. Gemini CLI remains installed for compatibility with older setups, but
+it is deprecated.
 
 ### First Search
 
