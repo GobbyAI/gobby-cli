@@ -91,11 +91,11 @@ Cargo feature flags for FalkorDB, Qdrant, or embeddings support.
 `~/.gobby/bootstrap.yaml`, requires `hub_backend: postgres`, and resolves the
 hub DSN from either `database_url_ref` or inline `database_url`. For
 `database_url_ref: keyring:gobby:postgres_database_url`, `gcode` asks the local
-daemon broker first and falls back to the native OS keyring. The DSN is not
-written to a plaintext runtime file.
-If macOS keeps asking for Keychain authorization, check `which -a gcode` and
-remove or de-prioritize stale binaries; older installs bypass daemon-brokered
-DSN resolution.
+daemon broker and fails clearly if the daemon is unavailable. It never reads
+the native OS keyring directly. The DSN is not written to a plaintext runtime
+file. For explicit daemonless setups, use inline `database_url`.
+If macOS keeps asking for Keychain authorization, check `which -a gcode`; stale
+binaries from before `0.8.4` can still read Keychain directly.
 Installing from source or crates.io requires Rust 1.88+.
 
 ### From source

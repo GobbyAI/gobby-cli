@@ -19,9 +19,8 @@ Runtime indexing/search requires Gobby's PostgreSQL hub bootstrap. gcode reads
 `~/.gobby/bootstrap.yaml`, requires `hub_backend: postgres`, and connects
 to the migrated hub. For `database_url_ref:
 keyring:gobby:postgres_database_url`, gcode asks the local daemon broker for the
-DSN first and falls back to the native OS keyring. The daemon process does not
-need to be running for normal index/search commands when keyring fallback is
-available.
+DSN and fails clearly if the daemon is unavailable. gcode never reads the native
+OS keyring directly. For explicit daemonless setups, use inline `database_url`.
 
 If you use [Gobby](https://github.com/GobbyAI/gobby), gcode is already installed.
 If macOS keeps asking for Keychain authorization, run `which -a gcode` and make
@@ -378,8 +377,9 @@ Semantic search uses the same precedence rules:
 The database connection is resolved from `~/.gobby/bootstrap.yaml`:
 1. Require `hub_backend: postgres`
 2. Validate supported `database_url_ref` values before any lookup
-3. For `keyring:gobby:postgres_database_url`, request the DSN from the local daemon broker
-4. Fall back silently to the native OS keyring when broker lookup fails
+3. For `keyring:gobby:postgres_database_url` or
+   `daemon:gobby:postgres_database_url`, request the DSN from the local daemon broker
+4. Fail clearly when the broker is unavailable, unauthorized, or malformed
 5. Use inline `database_url` only when no ref is present
 
 The daemon URL (used by `invalidate`, `graph clear`, and `graph rebuild`) is resolved from:

@@ -76,16 +76,15 @@ A new dedicated module that owns all `git` shell-out logic for project-root dete
 
 `src/db.rs` reads `~/.gobby/bootstrap.yaml` (or `$GOBBY_HOME/bootstrap.yaml`) and
 requires `hub_backend: postgres`. It validates `database_url_ref` before any
-lookup and currently supports only `keyring:gobby:postgres_database_url`. That
-ref resolves through the local daemon broker first using
+lookup and supports `keyring:gobby:postgres_database_url` for existing
+bootstraps plus `daemon:gobby:postgres_database_url` for broker-only generated
+runtimes. Both refs resolve through the local daemon broker using
 `POST /api/local/runtime/database-url` with `X-Gobby-Local-Token` from
-`local_cli_token` and a 3s timeout. Broker failures stay silent at the
-top-level resolver and fall back to native OS keyring stores via
-`keyring-core`. gcode depends on the platform store crates directly rather than
-the `keyring` meta crate, so the fallback path does not pull in the SQLite-backed
-`db-keystore`/`turso` stack. Inline `database_url` is accepted only when no ref
-is present. `connect_readwrite()` and `connect_readonly()` both return a
-synchronous `postgres::Client`; PostgreSQL permissions decide actual access.
+`local_cli_token` and a 3s timeout. Broker failures fail clearly at the
+top-level resolver; gcode never reads the native OS keyring directly. Inline
+`database_url` is accepted only when no ref is present. `connect_readwrite()`
+and `connect_readonly()` both return a synchronous `postgres::Client`;
+PostgreSQL permissions decide actual access.
 
 `src/schema.rs` validates runtime schema and never creates or migrates tables.
 It requires the Gobby hub tables, the `pg_search` extension, and BM25 indexes
