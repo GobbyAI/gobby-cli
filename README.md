@@ -85,7 +85,10 @@ cargo install gobby-hooks
 ```
 
 `gcode` graph and semantic features are configured at runtime. There are no
-Cargo feature flags for FalkorDB, Qdrant, or embeddings support.
+Cargo feature flags for FalkorDB, Qdrant, or embeddings support. Gobby-managed
+projects read FalkorDB settings from `databases.falkordb.*`; daemon-independent
+setups can use `GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, and
+`GOBBY_FALKORDB_PASSWORD`.
 
 `gcode` 0.8.0+ uses the migrated Gobby PostgreSQL hub. It reads
 `~/.gobby/bootstrap.yaml`, requires `hub_backend: postgres`, and resolves the

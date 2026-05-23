@@ -11,7 +11,7 @@ cargo build --workspace --no-default-features
 cargo test --workspace --no-default-features
 ```
 
-The `rust-toolchain.toml` ensures you have the right toolchain and components (clippy, rustfmt) installed automatically. The `--no-default-features` flag skips the gcode `embeddings` feature which requires cmake.
+The `rust-toolchain.toml` ensures you have the right toolchain and components (clippy, rustfmt) installed automatically. CI uses `--no-default-features`; keep that build clean even when a crate has no default feature set.
 
 ## Development
 
@@ -41,17 +41,17 @@ All PRs must pass CI (fmt, clippy, tests) before merging.
 
 ```
 crates/
-  gcode/                 — AST-aware code search (heavy: tree-sitter, SQLite, opt-level=3)
+  gcode/                 — AST-aware code search (heavy: tree-sitter, PostgreSQL, opt-level=3)
     src/
       main.rs            — CLI entry point, command dispatch
       config.rs          — Runtime context resolution, service configs
-      db.rs              — SQLite connection helpers
+      db.rs              — PostgreSQL hub connection helpers
       models.rs          — Data types: Symbol, IndexedFile, SearchResult, etc.
       secrets.rs         — Fernet decryption for Gobby secrets
-      neo4j.rs           — Neo4j HTTP client for graph queries
+      falkor.rs          — FalkorDB client for graph queries
       commands/          — Subcommand handlers (init, index, search, graph, etc.)
       index/             — Indexing pipeline (walker, parser, chunker, hasher, indexer)
-      search/            — Search pipeline (FTS5, semantic, graph_boost, RRF)
+      search/            — Search pipeline (pg_search BM25, semantic, graph_boost, RRF)
   gsqz/                  — Output compressor (tiny: regex, opt-level="z")
     src/
       main.rs            — CLI entry point, command execution, ANSI stripping

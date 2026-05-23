@@ -45,7 +45,7 @@ This plan does not add Graphify as a runtime dependency.
 - Support `--format json` and `--format text`.
 - Text output should be Markdown-oriented and suitable for dropping into a
   project plan or agent prompt.
-- If the daemon or Neo4j is unavailable, return a clear degraded response rather
+- If the daemon or FalkorDB is unavailable, return a clear degraded response rather
   than failing with a transport-heavy error.
 
 ### Report Contents
@@ -74,7 +74,7 @@ The report should include:
 
 ### Code Graph Edge Metadata
 
-- Update `CodeGraph` Neo4j writes so deterministic code edges include:
+- Update `CodeGraph` FalkorDB writes so deterministic code edges include:
   - `provenance = "EXTRACTED"`
   - `confidence = 1.0`
   - `source_system = "gcode"`
@@ -92,7 +92,7 @@ The report should include:
   - source memory identifiers for auditability
 - Mark uncertain or malformed relationships as `AMBIGUOUS` when extraction can
   recover enough structure to keep them.
-- Keep memory SQLite as source of truth; Neo4j remains a projection.
+- Keep memory SQLite as source of truth; FalkorDB remains a projection.
 
 ### Code/Memory Bridge Edges
 
@@ -106,7 +106,7 @@ The report should include:
 
 ### Project Graph Report Service
 
-- Add a Gobby service that computes a project graph report from Neo4j.
+- Add a Gobby service that computes a project graph report from FalkorDB.
 - Include code graph facts, memory graph facts, and code/memory bridge edges.
 - Return both:
   - Markdown for humans and agent orientation
@@ -189,7 +189,7 @@ the basic report proves useful.
 
 ## Suggested Implementation Order
 
-1. Add edge provenance and confidence to Gobby Neo4j writes and reads.
+1. Add edge provenance and confidence to Gobby FalkorDB writes and reads.
 2. Extend memory knowledge graph and `RELATES_TO_CODE` edges with provenance.
 3. Add the Gobby project graph report service and HTTP route.
 4. Add the MCP tool for retrieving the report.
@@ -202,7 +202,7 @@ the basic report proves useful.
 ### gcode
 
 - Unit tests for `gcode graph report` CLI parsing.
-- Unit tests for daemon URL construction and degraded daemon/Neo4j responses.
+- Unit tests for daemon URL construction and degraded daemon/FalkorDB responses.
 - JSON compatibility tests proving existing graph commands still parse without
   the new metadata fields.
 - Run:
@@ -216,7 +216,7 @@ the basic report proves useful.
 - Unit tests for knowledge graph relationship writes proving inferred edges get
   provenance, confidence, and source memory references.
 - Unit tests for `RELATES_TO_CODE` edge metadata.
-- Route tests for graph report success, empty graph, unavailable Neo4j, and
+- Route tests for graph report success, empty graph, unavailable FalkorDB, and
   project scoping.
 - MCP tests for graph report tool shape and degraded responses.
 - Frontend tests for displaying provenance/confidence in graph detail panels.
@@ -225,7 +225,7 @@ the basic report proves useful.
 
 - Existing gcode graph commands keep working for current JSON consumers.
 - New graph metadata is visible in Gobby HTTP responses and UI detail panels.
-- `gcode graph report` returns a useful report when Gobby and Neo4j are
+- `gcode graph report` returns a useful report when Gobby and FalkorDB are
   available.
 - `gcode graph report` degrades cleanly when graph services are unavailable.
 - Agents can distinguish extracted code facts from inferred semantic links.
@@ -233,8 +233,9 @@ the basic report proves useful.
 
 ## Assumptions
 
-- Neo4j remains the shared graph projection layer for code and memory.
-- SQLite remains source of truth for gcode symbols/files and Gobby memories.
+- FalkorDB remains the shared graph projection layer for code and memory.
+- PostgreSQL remains source of truth for gcode symbols/files; Gobby memory data
+  keeps its own storage contract.
 - Qdrant similarity is acceptable as confidence for code/memory bridge edges.
 - Graph reports are derived artifacts and can be regenerated at any time.
 - Cross-repo graph work starts as read-only views before any persistent merged

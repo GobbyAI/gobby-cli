@@ -13,7 +13,7 @@ cargo install gobby-code
 ```
 
 Graph and semantic features are configured at runtime. You do not need Cargo
-feature flags to enable Neo4j, Qdrant, or embeddings support.
+feature flags to enable FalkorDB, Qdrant, or embeddings support.
 
 Runtime indexing/search requires Gobby's PostgreSQL hub bootstrap. gcode reads
 `~/.gobby/bootstrap.yaml`, requires `hub_backend: postgres`, and connects
@@ -80,7 +80,7 @@ gcode offers four search modes for different use cases.
 ### Hybrid Search (`gcode search`)
 
 The default. Combines pg_search BM25 text matching with optional semantic similarity,
-graph boost, and graph expansion using Reciprocal Rank Fusion. If Neo4j,
+graph boost, and graph expansion using Reciprocal Rank Fusion. If FalkorDB,
 Qdrant, or the embeddings endpoint are unavailable, `gcode search` falls back
 to the sources that are configured.
 
@@ -141,7 +141,7 @@ pg_search BM25 search across file content chunks — covers source bodies, comme
 
 ```bash
 gcode search-content "TODO: refactor"
-gcode search-content "GOBBY_NEO4J_URL" --path "*.py"
+gcode search-content "GOBBY_FALKORDB_HOST" --path "*.py"
 gcode search-content "primary-color" --language css
 ```
 
@@ -201,10 +201,10 @@ Useful for understanding project structure at a glance.
 
 ## Dependency Graph
 
-Read-side graph commands require Neo4j. Gobby-managed projects usually provide this
-automatically, and daemon-independent projects can opt in with `GOBBY_NEO4J_URL` and
-`GOBBY_NEO4J_AUTH`. Without Neo4j, graph read commands return empty results
-gracefully.
+Read-side graph commands require FalkorDB. Gobby-managed projects usually provide this
+automatically, and daemon-independent projects can opt in with `GOBBY_FALKORDB_HOST`,
+`GOBBY_FALKORDB_PORT`, and `GOBBY_FALKORDB_PASSWORD`. Without FalkorDB, graph read
+commands return empty results gracefully.
 
 All read-side graph commands resolve fuzzy input — you don't need the exact symbol name. Resolution tries exact match, then substring match, then BM25 search across names, signatures, and docstrings. When multiple matches are found, the best is used and alternatives are shown on stderr.
 
@@ -320,7 +320,7 @@ gcode index --files src/config.rs src/main.rs
 
 `gcode index` writes symbols, files, chunks, imports, and calls to the
 PostgreSQL hub. It marks graph/vector sync flags dirty; the Gobby daemon handles
-Neo4j graph edges and Qdrant vector sync asynchronously when it is running.
+FalkorDB graph edges and Qdrant vector sync asynchronously when it is running.
 BM25 search (`search-text`, `search-content`) works as soon as the transaction
 commits; graph and semantic search improve once the external stores sync.
 
@@ -331,7 +331,7 @@ gcode invalidate
 gcode index
 ```
 
-In Gobby mode, `invalidate` also notifies the daemon to clean up Neo4j graph nodes and Qdrant vectors for the project. Use `--force` to skip the confirmation prompt.
+In Gobby mode, `invalidate` also notifies the daemon to clean up FalkorDB graph nodes and Qdrant vectors for the project. Use `--force` to skip the confirmation prompt.
 
 Graph projection lifecycle is separate:
 
@@ -348,7 +348,7 @@ gcode is daemon-independent but not database-independent:
 - Database: PostgreSQL hub from `~/.gobby/bootstrap.yaml`
 - Required bootstrap: `hub_backend: postgres` plus supported `database_url_ref` or `database_url`
 - Identity: `.gobby/project.json`, `.gobby/gcode.json`, isolated root, linked worktree, or generated identity from `gcode init`
-- Optional services: Neo4j, Qdrant, and embeddings via env vars or PostgreSQL `config_store`
+- Optional services: FalkorDB, Qdrant, and embeddings via env vars or PostgreSQL `config_store`
 
 Graph commands and semantic search become available when the required services are configured.
 
@@ -363,11 +363,11 @@ Both cases are reported by `gcode init`'s status line (`isolated`, `linked-workt
 
 ## Configuration
 
-gcode resolves configuration in this order:
+gcode resolves graph/vector configuration in this order:
 
-1. **Environment variables** — `GOBBY_NEO4J_URL`, `GOBBY_NEO4J_AUTH`, `GOBBY_QDRANT_URL`, `GOBBY_PORT`
-2. **config_store table** — Key-value pairs in the PostgreSQL hub (`databases.neo4j.*`, `databases.qdrant.*`, `embeddings.*`)
-3. **Hardcoded defaults** — Neo4j at `http://localhost:8474`, database `neo4j` (only when `config_store` exists)
+1. **Environment variables** — `GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, `GOBBY_FALKORDB_PASSWORD`, `GOBBY_QDRANT_URL`
+2. **config_store table** — Key-value pairs in the PostgreSQL hub (`databases.falkordb.host`, `databases.falkordb.port`, `databases.falkordb.requirepass`, `databases.qdrant.*`, `embeddings.*`)
+3. **Hardcoded defaults** — FalkorDB port `16379` and graph name `gobby_code` once a host is configured; no default FalkorDB host is assumed
 
 Semantic search uses the same precedence rules:
 1. **Environment variables** — `GOBBY_EMBEDDING_URL`, `GOBBY_EMBEDDING_MODEL`, `GOBBY_EMBEDDING_API_KEY`
@@ -486,10 +486,11 @@ gcode projects
 
 If you get "No symbol matching 'X' found", the input didn't resolve to any indexed symbol. Try a different term or check what's indexed with `gcode search-text "X"`.
 
-If results are empty but the symbol exists, this is expected when Neo4j is not configured. In Gobby mode, check that Neo4j is running and configured:
+If results are empty but the symbol exists, this is expected when FalkorDB is not configured. In Gobby mode, check that FalkorDB is running and configured:
 
 ```bash
-echo $GOBBY_NEO4J_URL
+echo $GOBBY_FALKORDB_HOST
+echo $GOBBY_FALKORDB_PORT
 gcode status
 ```
 

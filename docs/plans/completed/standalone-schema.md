@@ -4,7 +4,7 @@
 
 gcode currently cannot run without gobby having set up the database first. It has zero `CREATE TABLE` logic — writes silently fail, reads return empty when tables are missing. This plan adds self-initializing schema creation so gcode works fully standalone (FTS5 search, no external deps) while seamlessly integrating when gobby is installed (shared `~/.gobby/gobby-hub.db`).
 
-**Value ladder:** gcode standalone = fast FTS search. With gobby = adds Qdrant semantic search, Neo4j graph, AI summaries.
+**Value ladder:** gcode standalone = fast FTS search. With gobby = adds Qdrant semantic search, FalkorDB graph, AI summaries.
 
 ## Implementation
 

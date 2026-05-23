@@ -6,7 +6,7 @@
 
 We want **gwiki** as a fourth crate in this Cargo workspace alongside gcode/gsqz/gloc. The premise: keep llm-wiki's UX and on-disk artifacts, but back it with gobby's data stack so search, backlinks, and provenance get the same speed and rigor gcode gives code.
 
-**Mapping is natural** — markdown files → tree-sitter-md (already a Tier-3 grammar in gcode), `[[wikilinks]]` → Neo4j edges (like imports/calls), frontmatter tags → metadata, article bodies → FTS5 + Qdrant. The search pipeline (`fts` + `semantic` + `graph_boost` + `rrf`) is generic enough to reuse wholesale.
+**Mapping is natural** — markdown files → tree-sitter-md (already a Tier-3 grammar in gcode), `[[wikilinks]]` → FalkorDB edges (like imports/calls), frontmatter tags → metadata, article bodies → FTS5 + Qdrant. The search pipeline (`fts` + `semantic` + `graph_boost` + `rrf`) is generic enough to reuse wholesale.
 
 **User answers locked in:**
 - Storage: option 3 — both global topics *and* per-project (my take below).
@@ -26,7 +26,7 @@ We want **gwiki** as a fourth crate in this Cargo workspace alongside gcode/gsqz
 **Why it's risky:**
 - Two mental models. Users will ask "where does this note belong?" Mitigate with a *clear default*: inside a gobby project, default scope is project-local; everything else requires explicit `--topic <name>`. Add `gwiki promote <article> --to-topic <name>` to move misfiled notes.
 - Global topics need a synthetic `project_id` so the daemon's project-scoped indexing accepts them — propose UUID5 of `gwiki:topic:<name>` with a `kind=topic` marker. **Risk**: daemon may validate project_ids against a registry; if so, we need a "topic" concept added daemon-side or we register topics as pseudo-projects. *Verify before coding v0.1.*
-- Two collections in Qdrant, two namespaces in Neo4j — keep them strictly separate from gcode's so the non-destructive constraint holds.
+- Two collections in Qdrant, two namespaces in FalkorDB — keep them strictly separate from gcode's so the non-destructive constraint holds.
 
 **Verdict:** ship option 3, but gate v0.1 on confirming the synthetic-project_id approach works with the daemon. If it doesn't, fall back to project-only for v0.1 and add topics in v0.2 once daemon support lands.
 
@@ -55,11 +55,11 @@ crates/gwiki/
       links.rs               # NEW: [[wikilinks]] + std md links + alias resolution
       chunker.rs              # heading-section chunking — adapt crates/gcode/src/index/chunker.rs
       hasher.rs              # SHA-256 freshness — reuse pattern from gcode
-      indexer.rs             # walk → parse → chunk → SQLite/FTS5 + Neo4j edges + Qdrant points
+      indexer.rs             # walk → parse → chunk → SQLite/FTS5 + FalkorDB edges + Qdrant points
     search/
       fts.rs                 # FTS5 over chunks — pattern from crates/gcode/src/search/fts.rs
       semantic.rs            # Qdrant via daemon — pattern from crates/gcode/src/search/semantic.rs
-      graph_boost.rs         # Neo4j backlinks — adapt crates/gcode/src/search/graph_boost.rs
+      graph_boost.rs         # FalkorDB backlinks — adapt crates/gcode/src/search/graph_boost.rs
       rrf.rs                 # COPY (or extract to gcore::search) crates/gcode/src/search/rrf.rs
     ingest/
       mod.rs                 # dispatcher by source kind
@@ -115,7 +115,7 @@ gwiki status
 - `gwiki_ingestions(id, scope, project_id, source_url, source_kind, raw_path, fetched_at, sha256, modality)`
 - `gwiki_sessions(id, scope, started_at, status, last_event_at, checkpoint_path)`
 
-**Neo4j (gwiki-owned labels only — schema isolation, never touch gcode's Symbol/File):**
+**FalkorDB (gwiki-owned labels only — schema isolation, never touch gcode's Symbol/File):**
 - Nodes: `(:WikiDoc {scope, project_id, path, title})`, `(:Source {url, modality})`
 - Edges: `(:WikiDoc)-[:LINKS_TO]->(:WikiDoc)`, `(:WikiDoc)-[:CITES]->(:Source)`
 
@@ -127,7 +127,7 @@ gwiki status
 | Endpoint | Status | Notes |
 |---|---|---|
 | Embeddings | exists (gcode uses) | reuse |
-| Neo4j proxy | exists (gcode uses) | reuse with gwiki labels |
+| FalkorDB proxy | exists (gcode uses) | reuse with gwiki labels |
 | Qdrant proxy | exists (gcode uses) | new collections |
 | `POST /agents/dispatch` | **verify** | spawn N agents with skill, return session IDs |
 | `WS /sessions/<id>/events` | **verify** | stream events for monitor.rs |
@@ -139,7 +139,7 @@ If any of the verify-row endpoints don't exist, the matching gwiki phase is gate
 ### Reuse boundaries
 
 Pull these into `gcore` as part of v0.1 (one PR, both gcode and gwiki then depend on it):
-- `db.rs` — SQLite open helpers (already trivial; lift as-is).
+- `db.rs` — database bootstrap and connection helpers (adapt the gcode/gcore patterns).
 - `search/rrf.rs` — pure RRF fusion, no code/wiki coupling.
 - File walker pattern — parameterize the language/ext filter.
 - SHA-256 hasher — pure utility.
@@ -155,7 +155,7 @@ Keep these in gwiki only (they're domain-specific even though they look similar 
 | Phase | Scope | Gate |
 |---|---|---|
 | **v0.1** | Foundation: crate skeleton, config, scope, schema, walker, frontmatter, markdown+link parsing, FTS5, CLI (init/ingest-file/search/status). Project + topic scopes both work locally. | Synthetic topic project_id verified with daemon. |
-| **v0.2** | Daemon integration: embeddings + Qdrant semantic search, Neo4j edges, RRF fusion, backlinks, link-suggest. | Daemon endpoints reachable. |
+| **v0.2** | Daemon integration: embeddings + Qdrant semantic search, FalkorDB edges, RRF fusion, backlinks, link-suggest. | Daemon endpoints reachable. |
 | **v0.3** | Research dispatch + WS monitor + checkpoint/resume. | `/agents/dispatch` + `/sessions/<id>/events` exist daemon-side. |
 | **v0.4** | URL + PDF + file/paste ingestion. | — |
 | **v0.5** | Compile + audit commands, vendored skills. | — |
@@ -174,8 +174,8 @@ Keep these in gwiki only (they're domain-specific even though they look similar 
 **Read as patterns (do not modify in v0.1):**
 - `crates/gcode/src/main.rs` — clap structure, global flags.
 - `crates/gcode/src/config.rs` — layered config + `detect_project_root()`, `code_index_id_for_root()`.
-- `crates/gcode/src/db.rs` — SQLite open helpers (already minimal).
-- `crates/gcode/src/neo4j.rs` — HTTP Cypher client (read pattern; gwiki will also write, restricted to its own labels).
+- `crates/gcode/src/db.rs` — PostgreSQL bootstrap and hub connection helpers.
+- `crates/gcode/src/falkor.rs` — FalkorDB client and Cypher query patterns.
 - `crates/gcode/src/search/{fts,semantic,graph_boost,rrf}.rs` — search pipeline.
 - `crates/gcode/src/index/{walker,chunker,hasher,indexer}.rs` — pipeline shape.
 - `crates/gcode/src/skill.rs` — skill vendoring.
@@ -189,7 +189,7 @@ Keep these in gwiki only (they're domain-specific even though they look similar 
 1. **Multimodal video** is a v2-sized effort by itself (frame sampling, scene detection, audio split, transcript alignment). Don't let it gate v0.1 ship — phasing keeps it at v0.8.
 2. **Research dispatch** assumes gobby daemon has agent-spawning endpoints. If they don't exist as we need, either we build them first (out of scope for gwiki) or fall back to local subprocesses (user said no). Verify in v0.3 entry gate.
 3. **Topic project_id** — synthetic UUID5 must round-trip through daemon project validation. Spike this in week 1 of v0.1; if it fails, drop topics from v0.1 and add daemon support before v0.2.
-4. **Schema isolation in Neo4j** — gcode's "non-destructive" constraint is currently read-only. gwiki needs *write* access to its own labels. Confirm with daemon team that label-scoped writes are acceptable, or route writes through a daemon endpoint that enforces the namespace.
+4. **Schema isolation in FalkorDB** — gcode's non-destructive constraint is currently read-oriented. gwiki needs write access to its own labels. Confirm with daemon team that label-scoped writes are acceptable, or route writes through a daemon endpoint that enforces the namespace.
 5. **gcode reuse vs. extraction** — pulling `db`, `rrf`, walker into `gcore` is the right move long-term but enlarges v0.1 PR. Acceptable trade — keeps gwiki and gcode from drifting.
 
 ---
@@ -214,7 +214,7 @@ gwiki audit --topic rust-async
 ```
 
 Daemon integration:
-- Tail daemon logs during `gwiki ingest` — confirm Qdrant upsert + Neo4j MERGE land.
+- Tail daemon logs during `gwiki ingest` — confirm Qdrant upsert + FalkorDB MERGE land.
 - Open `~/wiki/topics/rust-async/` in Obsidian — links resolve, frontmatter parses, gwiki-only files (`.gwiki/`, `.session-events.jsonl`) don't break vault.
 - Run `gcode search` on the same project after `gwiki init` (project scope) — confirm gwiki tables don't collide with gcode tables.
 

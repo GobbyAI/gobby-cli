@@ -12,7 +12,7 @@ CLI (main.rs, clap)
     → commands/{search,symbols,graph,index,status,init}.rs
       → search/ pipeline (pg_search BM25 + optional semantic + optional graph sources → RRF)
       → index/ pipeline (walker → parser → chunker → hasher → indexer)
-      → neo4j (HTTP Cypher queries)
+      → falkor (FalkorDB graph queries)
       → db (PostgreSQL hub connections)
       → output (JSON/text formatting)
 ```
@@ -93,13 +93,13 @@ tell users to finish `gobby postgres migrate-from-sqlite` and cut over.
 
 ### Service Configuration
 
-Resolution order per service (Neo4j, Qdrant, embeddings):
+Resolution order per service (FalkorDB, Qdrant, embeddings):
 
 | Priority | Source | Example |
 |----------|--------|---------|
-| 1 (highest) | Environment variables | `GOBBY_NEO4J_URL`, `GOBBY_QDRANT_URL`, `GOBBY_EMBEDDING_URL` |
-| 2 | `config_store` table in PostgreSQL | `databases.neo4j.url`, `databases.qdrant.url`, `embeddings.api_base` |
-| 3 (lowest) | Hardcoded defaults | Neo4j `http://localhost:8474` / `neo4j`; embeddings model `nomic-embed-text` once an API base exists |
+| 1 (highest) | Environment variables | `GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, `GOBBY_FALKORDB_PASSWORD`, `GOBBY_QDRANT_URL`, `GOBBY_EMBEDDING_URL` |
+| 2 | `config_store` table in PostgreSQL | `databases.falkordb.host`, `databases.falkordb.port`, `databases.falkordb.requirepass`, `databases.qdrant.url`, `embeddings.api_base` |
+| 3 (lowest) | Hardcoded defaults | FalkorDB port `16379` and graph name `gobby_code` once a host is configured; embeddings model `nomic-embed-text` once an API base exists |
 
 Config values are JSON-encoded in `config_store` — strings have surrounding quotes stripped. Secret patterns like `$secret:NAME` are resolved via `secrets.rs` (Fernet decryption using machine_id + salt, 600K PBKDF2 iterations).
 
@@ -161,7 +161,7 @@ pass before call targets are finalized:
 - Unmatched calls stay `unresolved`
 - Import-bound external calls are marked `external` and retain their source module
 
-This keeps external package calls out of the local call graph and improves Neo4j
+This keeps external package calls out of the local call graph and improves FalkorDB
 correctness for `callers`, `usages`, `blast-radius`, and graph-backed search.
 
 ### Language Support (languages.rs)
@@ -189,7 +189,7 @@ Files are split into overlapping chunks for BM25 content search:
 
 1. **Hash comparison**: SHA-256 content hash per file, stored in `code_indexed_files`
 2. **Stale detection**: Compare current hashes against stored hashes; files with changed hashes are re-indexed.
-3. **Orphan cleanup**: Files in the DB that no longer exist on disk have their hub rows deleted. External cleanup (Neo4j/Qdrant) is handled by the daemon's reconcile/sync workers.
+3. **Orphan cleanup**: Files in the DB that no longer exist on disk have their hub rows deleted. External cleanup (FalkorDB/Qdrant) is handled by the daemon's reconcile/sync workers.
 4. **Per-file transactions**: PostgreSQL writes (delete old data, upsert symbols, upsert file, upsert content chunks, upsert imports/calls) are wrapped in a single transaction to prevent half-indexed files on crash.
 5. **External sync flags**: Changed files are written with `graph_synced=false`, `vectors_synced=false`, and `graph_sync_attempted_at=NULL` so the daemon can regenerate graph and vector projections.
 
@@ -232,7 +232,7 @@ The runtime schema validator requires these tables before gcode starts index/sea
 
 ### Graph Lifecycle RPCs
 
-Read-side graph queries still go straight to Neo4j. Graph lifecycle operations
+Read-side graph queries still go straight to FalkorDB. Graph lifecycle operations
 are daemon-backed orchestration commands instead:
 
 - `gcode graph clear` → `POST /api/code-index/graph/clear?project_id=...`
@@ -240,7 +240,7 @@ are daemon-backed orchestration commands instead:
 
 These commands use the current resolved `Context.project_id`, require a daemon
 URL, and fail hard on transport errors, non-2xx responses, or invalid JSON
-success bodies. They do not talk to Neo4j directly.
+success bodies. They do not talk to FalkorDB directly.
 
 ### UUID5 Parity
 
@@ -264,11 +264,11 @@ Source 2: Semantic (Qdrant vector search)
   → POST to Qdrant /collections/{name}/points/search
   → returns (symbol_id, score) pairs
 
-Source 3: Graph Boost (Neo4j)
+Source 3: Graph Boost (FalkorDB)
   → find_callers + find_usages for query term
   → returns symbol IDs that are connected in the call/import graph
 
-Source 4: Graph Expand (Neo4j)
+Source 4: Graph Expand (FalkorDB)
   → seed from top FTS + semantic hits
   → expand through callees first, then callers
 
@@ -293,7 +293,7 @@ score(symbol) = Σ 1/(K + rank) for each source containing the symbol
 
 ### Symbol Resolution
 
-After RRF merge, ALL symbol IDs are resolved against PostgreSQL before computing `total`. This ensures `total` reflects the count of actually-resolvable symbols (stale Qdrant/Neo4j entries are silently skipped). Offset/limit pagination is applied after resolution.
+After RRF merge, ALL symbol IDs are resolved against PostgreSQL before computing `total`. This ensures `total` reflects the count of actually-resolvable symbols (stale Qdrant/FalkorDB entries are silently skipped). Offset/limit pagination is applied after resolution.
 
 The `total` for hybrid search is a best-effort estimate bounded by `fetch_limit`
 per source — exact counts aren't feasible because RRF merges results from
@@ -320,7 +320,7 @@ All search/graph commands return a `PagedResponse` envelope:
 
 - `--offset N` skips the first N results
 - `--limit N` caps results per page (default: 10)
-- `hint` is populated when Neo4j is unavailable (graph commands only)
+- `hint` is populated when FalkorDB is unavailable (graph commands only)
 - Text mode shows a pagination footer: `-- 10 of 47 results (use --offset 10 for more)`
 
 ## Database Schema
@@ -361,7 +361,7 @@ Gobby repository migrations/baseline; gcode only validates and uses the tables.
 | symbol_count | INTEGER | |
 | byte_size | INTEGER | |
 | indexed_at | TIMESTAMPTZ | Cast to text for CLI output |
-| graph_synced | BOOLEAN | `false` means Neo4j sync pending |
+| graph_synced | BOOLEAN | `false` means FalkorDB sync pending |
 | vectors_synced | BOOLEAN | `false` means Qdrant sync pending |
 
 **`code_imports`** — Import relations (daemon migration v183, Gobby mode only)
@@ -407,7 +407,7 @@ UNIQUE constraint on `(project_id, source_file, target_module)`.
 
 **`config_store`** — Key-value configuration (Gobby mode only)
 
-## Neo4j Graph Model
+## FalkorDB Graph Model
 
 ### Nodes
 
@@ -436,13 +436,13 @@ Count queries use the same patterns with `RETURN count(...)` for accurate pagina
 
 **File:** `src/search/fts.rs` (`resolve_graph_symbol`), `src/commands/graph.rs` (`resolve_symbol`)
 
-All graph commands resolve user input to an actual symbol name before querying Neo4j. Resolution order:
+All graph commands resolve user input to an actual symbol name before querying FalkorDB. Resolution order:
 
 1. **Exact match** — `SELECT ... FROM code_symbols WHERE id/name/qualified_name = $1`
 2. **LIKE match** — `WHERE name LIKE $pattern OR qualified_name LIKE $pattern`
 3. **BM25 search** — `search_symbols_fts()` across names, signatures, docstrings, summaries
 
-Single match → used directly. Multiple matches → fail closed with alternatives shown on stderr. No match → error message, no Neo4j query issued.
+Single match → used directly. Multiple matches → fail closed with alternatives shown on stderr. No match → error message, no FalkorDB query issued.
 
 ## Semantic Search Integration
 
@@ -472,7 +472,7 @@ Each external service degrades independently:
 
 | Service | When Unavailable | Impact |
 |---------|-----------------|--------|
-| Neo4j | No config or connection refused | Graph commands return `[]` with hint; search loses graph boost |
+| FalkorDB | No config or connection refused | Graph commands return `[]` with hint; search loses graph boost |
 | Qdrant | No URL configured | Search loses semantic source; BM25 still works |
 | Embeddings API | No API base, auth failure, or request error | Semantic search disabled for that query |
 | Daemon | Not running | Normal index/search still work; graph lifecycle RPCs fail and external sync waits for the daemon |
