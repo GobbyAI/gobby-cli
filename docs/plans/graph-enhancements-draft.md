@@ -92,7 +92,7 @@ The report should include:
   - source memory identifiers for auditability
 - Mark uncertain or malformed relationships as `AMBIGUOUS` when extraction can
   recover enough structure to keep them.
-- Keep memory SQLite as source of truth; FalkorDB remains a projection.
+- Keep the memory store as source of truth; FalkorDB remains a projection.
 
 ### Code/Memory Bridge Edges
 

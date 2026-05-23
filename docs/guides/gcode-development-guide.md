@@ -89,7 +89,7 @@ PostgreSQL permissions decide actual access.
 `src/schema.rs` validates runtime schema and never creates or migrates tables.
 It requires the Gobby hub tables, the `pg_search` extension, and BM25 indexes
 `code_symbols_search_bm25` and `code_content_search_bm25`. Missing schema errors
-tell users to finish `gobby postgres migrate-from-sqlite` and cut over.
+tell users to configure the PostgreSQL hub with the required code-index schema.
 
 ### Service Configuration
 
@@ -105,7 +105,7 @@ Config values are JSON-encoded in `config_store` — strings have surrounding qu
 
 ### Runtime Model
 
-gcode is daemon-independent but requires the migrated PostgreSQL hub. Project
+gcode is daemon-independent but requires a configured PostgreSQL hub. Project
 identity still comes from `.gobby/project.json`, `.gobby/gcode.json`, isolated
 roots, linked worktrees, or generated identity during `gcode init`. Service
 configuration comes from env vars first, then PostgreSQL `config_store`, then
@@ -476,9 +476,9 @@ Each external service degrades independently:
 | Qdrant | No URL configured | Search loses semantic source; BM25 still works |
 | Embeddings API | No API base, auth failure, or request error | Semantic search disabled for that query |
 | Daemon | Not running | Normal index/search still work; graph lifecycle RPCs fail and external sync waits for the daemon |
-| PostgreSQL hub | Missing bootstrap, sqlite backend, unreachable DB, or missing schema | Runtime index/search commands fail clearly |
+| PostgreSQL hub | Missing bootstrap, non-postgres backend, unreachable DB, or missing schema | Runtime index/search commands fail clearly |
 
-The system always works without the daemon process once the PostgreSQL hub is configured and migrated.
+The system always works without the daemon process once the PostgreSQL hub is configured with the required schema.
 
 ## Output Format
 

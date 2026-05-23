@@ -6,7 +6,7 @@
 
 We want **gwiki** as a fourth crate in this Cargo workspace alongside gcode/gsqz/gloc. The premise: keep llm-wiki's UX and on-disk artifacts, but back it with gobby's data stack so search, backlinks, and provenance get the same speed and rigor gcode gives code.
 
-**Mapping is natural** — markdown files → tree-sitter-md (already a Tier-3 grammar in gcode), `[[wikilinks]]` → FalkorDB edges (like imports/calls), frontmatter tags → metadata, article bodies → FTS5 + Qdrant. The search pipeline (`fts` + `semantic` + `graph_boost` + `rrf`) is generic enough to reuse wholesale.
+**Mapping is natural** — markdown files → tree-sitter-md (already a Tier-3 grammar in gcode), `[[wikilinks]]` → FalkorDB edges (like imports/calls), frontmatter tags → metadata, article bodies → PostgreSQL hub `pg_search` BM25 + Qdrant. The search pipeline (`fts` + `semantic` + `graph_boost` + `rrf`) is generic enough to reuse wholesale.
 
 **User answers locked in:**
 - Storage: option 3 — both global topics *and* per-project (my take below).
@@ -46,7 +46,7 @@ crates/gwiki/
     config.rs                # layered: built-in → ~/.gobby/gwiki.yaml → .gobby/gwiki.yaml → CLI
     scope.rs                 # NEW: resolve project-local vs --topic; synthesize topic project_id
     db.rs                    # thin wrapper; reuse gcore patterns
-    schema.rs                # gwiki SQLite schema (documents/chunks/links/ingestions/sessions)
+    schema.rs                # gwiki PostgreSQL hub schema (documents/chunks/links/ingestions/sessions)
     models.rs                # Document, Chunk, Link, Ingestion, Backlink
     index/
       walker.rs              # markdown discovery — pattern from crates/gcode/src/index/walker.rs
@@ -55,9 +55,9 @@ crates/gwiki/
       links.rs               # NEW: [[wikilinks]] + std md links + alias resolution
       chunker.rs              # heading-section chunking — adapt crates/gcode/src/index/chunker.rs
       hasher.rs              # SHA-256 freshness — reuse pattern from gcode
-      indexer.rs             # walk → parse → chunk → SQLite/FTS5 + FalkorDB edges + Qdrant points
+      indexer.rs             # walk → parse → chunk → PostgreSQL hub/pg_search BM25 + FalkorDB edges + Qdrant points
     search/
-      fts.rs                 # FTS5 over chunks — pattern from crates/gcode/src/search/fts.rs
+      fts.rs                 # pg_search BM25 over chunks — pattern from crates/gcode/src/search/fts.rs
       semantic.rs            # Qdrant via daemon — pattern from crates/gcode/src/search/semantic.rs
       graph_boost.rs         # FalkorDB backlinks — adapt crates/gcode/src/search/graph_boost.rs
       rrf.rs                 # COPY (or extract to gcore::search) crates/gcode/src/search/rrf.rs
@@ -107,10 +107,10 @@ gwiki status
 
 ### Data model
 
-**SQLite (gwiki-owned, namespaced tables):**
+**PostgreSQL hub (gwiki-owned, namespaced tables plus pg_search BM25 indexes):**
 - `gwiki_documents(id, scope, project_id, path, title, frontmatter_json, sha256, mtime, indexed_at)`
 - `gwiki_chunks(id, document_id, heading_path, byte_start, byte_end, body)`
-- `gwiki_chunks_fts` — FTS5 over `body` + `title`
+- `gwiki_chunks_search_bm25` — pg_search BM25 over `body` + `title`
 - `gwiki_links(src_doc_id, dst_target, kind, byte_start)` — kind: wikilink | markdown | alias
 - `gwiki_ingestions(id, scope, project_id, source_url, source_kind, raw_path, fetched_at, sha256, modality)`
 - `gwiki_sessions(id, scope, started_at, status, last_event_at, checkpoint_path)`
@@ -154,7 +154,7 @@ Keep these in gwiki only (they're domain-specific even though they look similar 
 
 | Phase | Scope | Gate |
 |---|---|---|
-| **v0.1** | Foundation: crate skeleton, config, scope, schema, walker, frontmatter, markdown+link parsing, FTS5, CLI (init/ingest-file/search/status). Project + topic scopes both work locally. | Synthetic topic project_id verified with daemon. |
+| **v0.1** | Foundation: crate skeleton, config, scope, schema, walker, frontmatter, markdown+link parsing, pg_search BM25, CLI (init/ingest-file/search/status). Project + topic scopes both work locally. | Synthetic topic project_id verified with daemon. |
 | **v0.2** | Daemon integration: embeddings + Qdrant semantic search, FalkorDB edges, RRF fusion, backlinks, link-suggest. | Daemon endpoints reachable. |
 | **v0.3** | Research dispatch + WS monitor + checkpoint/resume. | `/agents/dispatch` + `/sessions/<id>/events` exist daemon-side. |
 | **v0.4** | URL + PDF + file/paste ingestion. | — |
