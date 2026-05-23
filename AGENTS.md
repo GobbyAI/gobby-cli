@@ -4,7 +4,7 @@ This file is for AI coding agents (Claude, Copilot, Cursor, etc.) working on the
 
 ## What This Is
 
-`gobby-code` is a Rust CLI (`gcode`) that provides AST-aware code search, symbol navigation, and dependency graph analysis. It reads/writes the Gobby PostgreSQL hub for symbols/search, Neo4j for call graphs, and Qdrant for semantic vectors. It works without the Gobby daemon process, but requires a migrated PostgreSQL hub bootstrap.
+`gobby-code` is a Rust CLI (`gcode`) that provides AST-aware code search, symbol navigation, and dependency graph analysis. It reads/writes the Gobby PostgreSQL hub for symbols/search, FalkorDB for call graphs, and Qdrant for semantic vectors. It works without the Gobby daemon process, but requires a migrated PostgreSQL hub bootstrap.
 
 ## Build & Test
 
@@ -25,7 +25,7 @@ main.rs (clap CLI)
     → db::connect_readwrite/readonly # PostgreSQL hub connection
     → index/*                      # Indexing pipeline (walker → parser → chunker → indexer)
     → search/*                     # Search pipeline (fts + semantic + graph_boost → rrf)
-    → neo4j::*                     # Graph queries via HTTP
+    → falkor::*                     # Graph queries via FalkorDB
 ```
 
 ## Critical Constraints
@@ -49,7 +49,7 @@ These must match the Python daemon's `Symbol.make_id()` exactly. See `src/models
 
 ### 3. Config resolution order
 
-Always: env vars (`GOBBY_NEO4J_URL`, etc.) → `config_store` table → hardcoded defaults. Don't short-circuit.
+Always: env vars (`GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, `GOBBY_FALKORDB_PASSWORD`, etc.) → `config_store` table → hardcoded defaults. Don't short-circuit.
 
 ### 4. Do NOT run `gcode invalidate`
 
@@ -74,7 +74,7 @@ Always: env vars (`GOBBY_NEO4J_URL`, etc.) → `config_store` table → hardcode
 Search uses Reciprocal Rank Fusion in `src/search/rrf.rs` to merge results from:
 - `src/search/fts.rs` — pg_search BM25 symbol and content search
 - `src/search/semantic.rs` — Qdrant vector similarity
-- `src/search/graph_boost.rs` — Neo4j graph relevance
+- `src/search/graph_boost.rs` — FalkorDB graph relevance
 
 ### Modify the indexing pipeline
 
@@ -90,4 +90,4 @@ The pipeline in `src/index/indexer.rs` orchestrates:
 - Don't change UUID5 generation without verifying Python parity
 - Don't add `println!` for user output — use `eprintln!` for status, and `output::print_json` / `output::print_text` for command results
 - Don't skip the `--no-default-features` test pass — CI runs both configurations
-- Don't assume Neo4j or Qdrant are available — all code must handle `None` configs gracefully
+- Don't assume FalkorDB or Qdrant are available — all code must handle `None` configs gracefully

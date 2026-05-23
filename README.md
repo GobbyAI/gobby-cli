@@ -27,7 +27,7 @@ This workspace contains four Gobby CLI tools plus a shared library:
 
 AST-aware code search powered by tree-sitter. Indexes 18 languages into the
 Gobby PostgreSQL hub with pg_search BM25 for symbol lookup, content search, file
-tree navigation, and hybrid ranking. When Neo4j, Qdrant, and an embeddings
+tree navigation, and hybrid ranking. When FalkorDB, Qdrant, and an embeddings
 endpoint are configured - typically through Gobby - `gcode` adds graph-aware
 search, semantic search, dependency analysis (`callers`, `usages`, `imports`,
 `blast-radius`), and daemon-backed graph lifecycle commands (`gcode graph clear`,
@@ -85,7 +85,7 @@ cargo install gobby-hooks
 ```
 
 `gcode` graph and semantic features are configured at runtime. There are no
-Cargo feature flags for Neo4j, Qdrant, or embeddings support.
+Cargo feature flags for FalkorDB, Qdrant, or embeddings support.
 
 `gcode` 0.8.0+ uses the migrated Gobby PostgreSQL hub. It reads
 `~/.gobby/bootstrap.yaml`, requires `hub_backend: postgres`, and resolves the
