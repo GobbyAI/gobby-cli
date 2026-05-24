@@ -120,6 +120,7 @@ walker::discover_files(root, excludes)
   → (ast_candidates, content_only_candidates)
     → parser::parse_file(path, project_id, root, excludes)
       → tree-sitter AST → extract_symbols + extract_imports + extract_calls
+      → optional clangd semantic pass for C/C++ calls
       → link_parents (nest methods in classes, build qualified names)
     → chunker::chunk_file_content(source, rel_path, project_id, lang)
       → 100-line chunks with 10-line overlap
@@ -172,19 +173,30 @@ Current external-callee support:
 | C# | using aliases, namespace-qualified calls, and single-source `using static`; instance/member inference remains unresolved |
 | PHP | namespace `use`, `use function`, and fully qualified static/function calls; dynamic/member dispatch remains unresolved |
 | Swift | direct module imports plus module-qualified calls; unqualified/member calls remain unresolved |
+| Ruby | literal `require` roots from the curated stdlib/gem map plus constant-qualified calls; bare and receiver calls remain unresolved |
+| Dart | explicit `as` aliases from `dart:` imports or external `package:` dependencies in `pubspec.yaml`; unaliased and relative imports remain unresolved |
+| Elixir | curated Mix dependency roots plus explicit `alias` / `require`; `import`, `use`, and dynamic calls remain unresolved |
+| C/C++ | optional clangd-backed semantic resolution when `clangd` and `compile_commands.json` are available; tree-sitter-only calls remain unresolved |
 
-Research spikes define future boundaries for C/C++, Ruby, Dart, and Elixir in
-`docs/spikes/`. This keeps external package calls out of the local call graph
-and improves FalkorDB correctness for `callers`, `usages`, `blast-radius`, and
-graph-backed search.
+C/C++ semantic mode auto-enables when `clangd` is discoverable and
+`compile_commands.json` exists at the project root or common build directories.
+Set `GCODE_CLANGD` to override the clangd command and
+`GCODE_COMPILE_COMMANDS_DIR` to override compile database discovery. Use
+`gcode index --require-cpp-semantics` or `GCODE_REQUIRE_CPP_SEMANTICS=1` to
+fail indexing when C/C++ semantic prerequisites are missing.
+
+Research spikes in `docs/spikes/` define unresolved boundaries for C/C++ edge
+cases plus Kotlin, Bash, Lua, and Scala external callees. This keeps unproven
+external package calls out of the local call graph and improves FalkorDB
+correctness for `callers`, `usages`, `blast-radius`, and graph-backed search.
 
 ### Language Support (languages.rs)
 
-17 languages with tree-sitter queries for symbol definitions, imports, and call sites:
+18 languages with tree-sitter queries for symbol definitions, imports, and call sites:
 
 | Tier | Languages |
 |------|-----------|
-| Tier 1 | Python, JavaScript, TypeScript, Go, Rust, Java, C, C++, C#, Ruby, PHP, Swift |
+| Tier 1 | Python, JavaScript, TypeScript, Go, Rust, Java, C, C++, C#, Ruby, PHP, Swift, Kotlin |
 | Tier 2 | Dart, Elixir |
 | Tier 3 | JSON, YAML, Markdown (content structure only) |
 
