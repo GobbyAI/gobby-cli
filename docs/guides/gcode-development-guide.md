@@ -186,9 +186,10 @@ Set `GCODE_CLANGD` to override the clangd command and
 fail indexing when C/C++ semantic prerequisites are missing.
 
 Research spikes in `docs/spikes/` define unresolved boundaries for C/C++ edge
-cases plus Kotlin, Bash, Lua, and Scala external callees. This keeps unproven
-external package calls out of the local call graph and improves FalkorDB
-correctness for `callers`, `usages`, `blast-radius`, and graph-backed search.
+cases and external callees in Kotlin, Bash, Lua, Scala, Dart, Elixir, and Ruby.
+This keeps unproven external package calls out of the local call graph and
+improves FalkorDB correctness for `callers`, `usages`, `blast-radius`, and
+graph-backed search.
 
 ### Language Support (languages.rs)
 
