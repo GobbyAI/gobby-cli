@@ -116,12 +116,13 @@ the canonical hit at rank 0 instead of letting hybrid ranking rerank it.
 ```bash
 gcode search-symbol "outline"
 gcode search-symbol "Context" --kind class --language rust
-gcode search-symbol "ensure_fresh" --path "crates/gcode/**"
+gcode search-symbol "ensure_fresh" crates/gcode
+gcode search-symbol "Context" crates/gcode/src --kind class --language rust
 ```
 
 **When to use:** You know the symbol's name (or close to it) and want a stable, top-ranked match — for example, before calling `gcode symbol <id>`.
 
-**Options:** `--limit N`, `--offset N`, `--kind <kind>`, `--language <lang>`, `--path <glob>`.
+**Options:** `--limit N`, `--offset N`, `--kind <kind>`, `--language <lang>`, positional `PATH ...`.
 
 ### Text Search (`gcode search-text`)
 

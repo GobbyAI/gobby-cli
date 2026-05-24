@@ -274,7 +274,7 @@ Source 4: Graph Expand (FalkorDB)
   ↓ All sources → RRF merge → Symbol resolution → Positional path filters → Pagination
 ```
 
-`search`, `search-text`, and `search-content` accept positional path filters after the query. Bare paths expand to exact + subtree matches; glob paths stay verbatim; multiple paths use OR semantics. BM25 queries add a parenthesized SQL `LIKE` prefix OR block only when every expanded pattern has a safe prefix. Rust `glob::Pattern` post-filtering then enforces exact semantics across all sources, including semantic/graph results that lack SQL-side filtering.
+`search`, `search-symbol`, `search-text`, and `search-content` accept positional path filters after the query. Bare paths expand to exact + subtree matches; glob paths stay verbatim; multiple paths use OR semantics. BM25 queries add a parenthesized SQL `LIKE` prefix OR block only when every expanded pattern has a safe prefix. Rust `glob::Pattern` post-filtering then enforces exact semantics across all sources, including semantic/graph results that lack SQL-side filtering.
 
 ### RRF Merge (rrf.rs)
 
