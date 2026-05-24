@@ -271,10 +271,10 @@ Source 4: Graph Expand (FalkorDB)
   → seed from top FTS + semantic hits
   → expand through callees first, then callers
 
-  ↓ All sources → RRF merge → Symbol resolution → Path filter (glob) → Pagination
+  ↓ All sources → RRF merge → Symbol resolution → Positional path filters → Pagination
 ```
 
-When `--path` is provided, BM25 queries include a SQL `LIKE` prefix pre-filter for index-assisted narrowing. After RRF merge and symbol resolution, a Rust `glob::Pattern` post-filter ensures exact glob semantics across all sources (including semantic/graph results that lack SQL-side filtering).
+`search`, `search-text`, and `search-content` accept positional path filters after the query. Bare paths expand to exact + subtree matches; glob paths stay verbatim; multiple paths use OR semantics. BM25 queries add a parenthesized SQL `LIKE` prefix OR block only when every expanded pattern has a safe prefix. Rust `glob::Pattern` post-filtering then enforces exact semantics across all sources, including semantic/graph results that lack SQL-side filtering.
 
 ### RRF Merge (rrf.rs)
 
@@ -300,7 +300,7 @@ multiple systems with deduplication.
 
 ### BM25 Search (`search-text`, `search-content`)
 
-These use dedicated `count_text`/`count_content` functions (pg_search BM25 counts with LIKE fallback) for accurate totals, separate from the paginated result fetch.
+These use dedicated `count_text`/`count_content` functions (pg_search BM25 counts with LIKE fallback) for accurate totals when no positional path filters are present. With path filters, handlers fetch up to `FILTERED_FETCH_CAP`, apply glob filtering before pagination, and surface a hint if the cap is hit.
 
 ### Pagination
 

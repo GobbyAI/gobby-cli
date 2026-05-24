@@ -90,7 +90,8 @@ gcode search "database connection pool"
 gcode search "auth" --limit 5
 gcode search "handler" --kind function
 gcode search "config" --offset 10              # Page 2 of results
-gcode search "Memory" --path "src/storage/**"  # Scope to directory
+gcode search "Memory" src/storage              # Scope to directory
+gcode search "Memory" src/storage tests/**/*.rs
 gcode search "Context" --language rust         # Scope to Rust sources
 ```
 
@@ -101,9 +102,9 @@ gcode search "Context" --language rust         # Scope to Rust sources
 - `--offset N` — Skip first N results for pagination (default: 0)
 - `--kind <kind>` — Filter by symbol kind: `function`, `class`, `method`, `type`, etc. Use `gcode kinds` to list what's available in the current index.
 - `--language <lang>` — Filter by source language (e.g. `rust`, `python`, `typescript`, `css`).
-- `--path <glob>` — Filter by file path glob (e.g. `"src/**/*.rs"`, `"*.py"`, `"tests/*"`). Uses SQL prefix pre-filtering for performance with Rust glob matching for exact semantics.
+- Positional `PATH` arguments after the query — Filter by one or more paths or globs (e.g. `src`, `src/**/*.rs`, `tests/*`). Bare paths match the exact file path and descendants; multiple paths use OR semantics.
 
-`--kind`, `--language`, and `--path` compose — combine them to narrow as far as you need.
+`--kind`, `--language`, and positional paths compose — combine them to narrow as far as you need.
 
 ### Symbol Search (`gcode search-symbol`)
 
@@ -128,13 +129,14 @@ pg_search BM25 search on symbol metadata: names, qualified names, signatures, an
 
 ```bash
 gcode search-text "parseConfig"
-gcode search-text "parseConfig" --path "src/**"
+gcode search-text "parseConfig" src
+gcode search-text "parseConfig" src/**/*.py tests
 gcode search-text "parseConfig" --language python
 ```
 
 **When to use:** You know the exact name or part of a symbol name. Fastest mode.
 
-**Options:** `--limit N`, `--offset N`, `--language <lang>`, `--path <glob>`
+**Options:** `--limit N`, `--offset N`, `--language <lang>`, positional `PATH ...`
 
 ### Content Search (`gcode search-content`)
 
@@ -142,13 +144,14 @@ pg_search BM25 search across file content chunks — covers source bodies, comme
 
 ```bash
 gcode search-content "TODO: refactor"
-gcode search-content "GOBBY_FALKORDB_HOST" --path "*.py"
+gcode search-content "GOBBY_FALKORDB_HOST" "*.py"
+gcode search-content "database_url" crates/gcode/src docs/**/*.md
 gcode search-content "primary-color" --language css
 ```
 
 **When to use:** Searching for string literals, comments, configuration values, stylesheet rules, or patterns that aren't symbol names.
 
-**Options:** `--limit N`, `--offset N`, `--language <lang>`, `--path <glob>`
+**Options:** `--limit N`, `--offset N`, `--language <lang>`, positional `PATH ...`
 
 ## Symbol Retrieval
 
