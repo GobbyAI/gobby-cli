@@ -19,7 +19,8 @@ Runtime indexing/search requires Gobby's PostgreSQL hub. gcode asks the local
 daemon broker for the hub DSN first. If the daemon is unavailable, it falls back
 to explicit fallback sources: `GCODE_DATABASE_URL`, `GOBBY_POSTGRES_DSN`,
 `~/.gobby/gcode.yaml` `database_url`, then bootstrap `database_url`.
-Bootstrap fallback requires `hub_backend: postgres`.
+Bootstrap fallback requires `hub_backend: postgres`; bootstrap
+`database_url_ref` is rejected.
 
 If you use [Gobby](https://github.com/GobbyAI/gobby), gcode is already installed.
 
@@ -346,7 +347,7 @@ Use those when you want the daemon to clear or replay graph state for the curren
 
 gcode is daemon-independent but not database-independent:
 - Database: PostgreSQL hub from `~/.gobby/bootstrap.yaml`
-- Required bootstrap: `hub_backend: postgres` plus `database_url`
+- Required bootstrap: `hub_backend: postgres` plus `database_url`; bootstrap `database_url_ref` is rejected
 - Identity: `.gobby/project.json`, `.gobby/gcode.json`, isolated root, linked worktree, or generated identity from `gcode init`
 - Optional services: FalkorDB, Qdrant, and embeddings via env vars or PostgreSQL `config_store`
 
@@ -380,6 +381,9 @@ The database connection is resolved in this order:
 3. `GOBBY_POSTGRES_DSN`
 4. `~/.gobby/gcode.yaml` `database_url`
 5. `~/.gobby/bootstrap.yaml` `database_url`
+
+Bootstrap `database_url_ref` is rejected. Use the daemon broker path or an
+explicit fallback source for daemonless access.
 
 The daemon URL (used by `invalidate`, `graph clear`, and `graph rebuild`) is resolved from:
 1. `GOBBY_PORT` environment variable (e.g. `60887`)

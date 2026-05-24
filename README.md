@@ -94,7 +94,8 @@ setups can use `GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, and
 broker for the hub DSN first. If the daemon is unavailable, it falls back to
 explicit fallback sources: `GCODE_DATABASE_URL`, `GOBBY_POSTGRES_DSN`,
 `~/.gobby/gcode.yaml` `database_url`, then bootstrap `database_url`.
-Bootstrap fallback requires `hub_backend: postgres`.
+Bootstrap fallback requires `hub_backend: postgres`; bootstrap
+`database_url_ref` is rejected.
 Installing from source or crates.io requires Rust 1.88+.
 
 ### From source
