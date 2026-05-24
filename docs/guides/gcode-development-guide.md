@@ -152,23 +152,39 @@ Default excludes: `node_modules`, `__pycache__`, `.git`, `.venv`, `target`, `dis
 
 ### Import Resolution and Call Target Classification
 
-Python, JavaScript, and TypeScript parsing now includes an import-resolution
-pass before call targets are finalized:
+Import-resolution runs before call targets are finalized. It is intentionally
+fail-closed: producers emit external targets only when import or module
+provenance is explicit and structurally unambiguous.
 
 - Local symbol calls resolve to canonical `callee_symbol_id` values
 - Unmatched calls stay `unresolved`
 - Import-bound external calls are marked `external` and retain their source module
 
-This keeps external package calls out of the local call graph and improves FalkorDB
-correctness for `callers`, `usages`, `blast-radius`, and graph-backed search.
+Current external-callee support:
+
+| Language | Safe external scope |
+|----------|---------------------|
+| Python | `import` / `from ... import ...` aliases for external modules |
+| JavaScript / TypeScript | package imports from `package.json`, named/default/namespace imports, and `node:` builtins |
+| Go | explicit import aliases and package selector calls; self-module imports remain unresolved |
+| Rust | Cargo dependency/std roots, explicit `use` aliases, and path calls; glob imports and receiver methods remain unresolved |
+| Java | explicit class imports and static imports; wildcard imports and instance calls remain unresolved |
+| C# | using aliases, namespace-qualified calls, and single-source `using static`; instance/member inference remains unresolved |
+| PHP | namespace `use`, `use function`, and fully qualified static/function calls; dynamic/member dispatch remains unresolved |
+| Swift | direct module imports plus module-qualified calls; unqualified/member calls remain unresolved |
+
+Research spikes define future boundaries for C/C++, Ruby, Dart, and Elixir in
+`docs/spikes/`. This keeps external package calls out of the local call graph
+and improves FalkorDB correctness for `callers`, `usages`, `blast-radius`, and
+graph-backed search.
 
 ### Language Support (languages.rs)
 
-18 languages with tree-sitter queries for symbol definitions, imports, and call sites:
+17 languages with tree-sitter queries for symbol definitions, imports, and call sites:
 
 | Tier | Languages |
 |------|-----------|
-| Tier 1 | Python, JavaScript, TypeScript, Go, Rust, Java, C, C++, C#, Ruby, PHP, Swift, Kotlin |
+| Tier 1 | Python, JavaScript, TypeScript, Go, Rust, Java, C, C++, C#, Ruby, PHP, Swift |
 | Tier 2 | Dart, Elixir |
 | Tier 3 | JSON, YAML, Markdown (content structure only) |
 
@@ -524,3 +540,5 @@ gcode search --project /path/to/myapp "query"  # by path
 gcode index --full    # re-process all files, clean stale vectors
 gcode invalidate      # destructive reset of current project's code-index rows
 ```
+
+_Last verified: 2026-05-24_
