@@ -15,12 +15,13 @@ cargo install gobby-code
 Graph and semantic features are configured at runtime. You do not need Cargo
 feature flags to enable FalkorDB, Qdrant, or embeddings support.
 
-Runtime indexing/search requires Gobby's PostgreSQL hub bootstrap. gcode reads
-`~/.gobby/bootstrap.yaml`, requires `hub_backend: postgres`, and connects
-to the migrated hub. For `database_url_ref:
-keyring:gobby:postgres_database_url`, gcode asks the local daemon broker for the
-DSN and fails clearly if the daemon is unavailable. gcode never reads the native
-OS keyring directly. For explicit daemonless setups, use inline `database_url`.
+Runtime indexing/search requires Gobby's PostgreSQL hub. gcode asks the local
+daemon broker for the hub DSN first. If the daemon is unavailable, it falls back
+to explicit non-keychain sources: `GCODE_DATABASE_URL`, `GOBBY_POSTGRES_DSN`,
+`~/.gobby/gcode.yaml` `database_url`, inline bootstrap `database_url`, then
+supported `database_url_ref` values. Bootstrap fallback requires
+`hub_backend: postgres`. gcode never reads the native OS keyring directly. For
+explicit daemonless setups, use inline `database_url`.
 
 If you use [Gobby](https://github.com/GobbyAI/gobby), gcode is already installed.
 If macOS keeps asking for Keychain authorization, run `which -a gcode` and make
@@ -374,13 +375,17 @@ Semantic search uses the same precedence rules:
 2. **config_store table** — `embeddings.api_base`, `embeddings.model`, `embeddings.api_key`
 3. **Hardcoded defaults** — model `nomic-embed-text` once an embeddings API base is configured
 
-The database connection is resolved from `~/.gobby/bootstrap.yaml`:
-1. Require `hub_backend: postgres`
-2. Validate supported `database_url_ref` values before any lookup
-3. For `keyring:gobby:postgres_database_url` or
-   `daemon:gobby:postgres_database_url`, request the DSN from the local daemon broker
-4. Fail clearly when the broker is unavailable, unauthorized, or malformed
-5. Use inline `database_url` only when no ref is present
+The database connection is resolved in this order:
+1. Local daemon broker
+2. `GCODE_DATABASE_URL`
+3. `GOBBY_POSTGRES_DSN`
+4. `~/.gobby/gcode.yaml` `database_url`
+5. `~/.gobby/bootstrap.yaml` inline `database_url`
+6. Supported `database_url_ref` values via the local daemon broker
+
+For `keyring:gobby:postgres_database_url` or
+`daemon:gobby:postgres_database_url`, broker failures fail clearly when the
+broker is unavailable, unauthorized, or malformed.
 
 The daemon URL (used by `invalidate`, `graph clear`, and `graph rebuild`) is resolved from:
 1. `GOBBY_PORT` environment variable (e.g. `60887`)
