@@ -17,16 +17,11 @@ feature flags to enable FalkorDB, Qdrant, or embeddings support.
 
 Runtime indexing/search requires Gobby's PostgreSQL hub. gcode asks the local
 daemon broker for the hub DSN first. If the daemon is unavailable, it falls back
-to explicit non-keychain sources: `GCODE_DATABASE_URL`, `GOBBY_POSTGRES_DSN`,
-`~/.gobby/gcode.yaml` `database_url`, inline bootstrap `database_url`, then
-supported `database_url_ref` values. Bootstrap fallback requires
-`hub_backend: postgres`. gcode never reads the native OS keyring directly. For
-explicit daemonless setups, use inline `database_url`.
+to explicit fallback sources: `GCODE_DATABASE_URL`, `GOBBY_POSTGRES_DSN`,
+`~/.gobby/gcode.yaml` `database_url`, then bootstrap `database_url`.
+Bootstrap fallback requires `hub_backend: postgres`.
 
 If you use [Gobby](https://github.com/GobbyAI/gobby), gcode is already installed.
-If macOS keeps asking for Keychain authorization, run `which -a gcode` and make
-sure stale binaries are removed or ordered after the current Gobby-managed
-install. Older `gcode` binaries bypass the daemon broker.
 
 ### Initialize and Index
 
@@ -351,7 +346,7 @@ Use those when you want the daemon to clear or replay graph state for the curren
 
 gcode is daemon-independent but not database-independent:
 - Database: PostgreSQL hub from `~/.gobby/bootstrap.yaml`
-- Required bootstrap: `hub_backend: postgres` plus supported `database_url_ref` or `database_url`
+- Required bootstrap: `hub_backend: postgres` plus `database_url`
 - Identity: `.gobby/project.json`, `.gobby/gcode.json`, isolated root, linked worktree, or generated identity from `gcode init`
 - Optional services: FalkorDB, Qdrant, and embeddings via env vars or PostgreSQL `config_store`
 
@@ -384,12 +379,7 @@ The database connection is resolved in this order:
 2. `GCODE_DATABASE_URL`
 3. `GOBBY_POSTGRES_DSN`
 4. `~/.gobby/gcode.yaml` `database_url`
-5. `~/.gobby/bootstrap.yaml` inline `database_url`
-6. Supported `database_url_ref` values via the local daemon broker
-
-For `keyring:gobby:postgres_database_url` or
-`daemon:gobby:postgres_database_url`, broker failures fail clearly when the
-broker is unavailable, unauthorized, or malformed.
+5. `~/.gobby/bootstrap.yaml` `database_url`
 
 The daemon URL (used by `invalidate`, `graph clear`, and `graph rebuild`) is resolved from:
 1. `GOBBY_PORT` environment variable (e.g. `60887`)

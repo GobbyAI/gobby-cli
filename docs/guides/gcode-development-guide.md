@@ -77,11 +77,10 @@ A new dedicated module that owns all `git` shell-out logic for project-root dete
 `src/db.rs` asks the local daemon broker for PostgreSQL DSNs first using
 `POST /api/local/runtime/database-url` with `X-Gobby-Local-Token` from
 `local_cli_token` and a 3s timeout. If the broker is unavailable, gcode falls
-back to explicit non-keychain sources: `GCODE_DATABASE_URL`,
-`GOBBY_POSTGRES_DSN`, `$GOBBY_HOME/gcode.yaml` `database_url`, then
+back to explicit fallback sources: `GCODE_DATABASE_URL`, `GOBBY_POSTGRES_DSN`,
+`$GOBBY_HOME/gcode.yaml` `database_url`, then
 `$GOBBY_HOME/bootstrap.yaml` inline `database_url`. Bootstrap still requires
-`hub_backend: postgres` when used. gcode never reads the native OS keyring
-directly.
+`hub_backend: postgres` when used. Bootstrap `database_url_ref` is rejected.
 `connect_readwrite()` and `connect_readonly()` both return a synchronous
 `postgres::Client`; PostgreSQL permissions decide actual access.
 

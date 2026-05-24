@@ -92,13 +92,9 @@ setups can use `GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, and
 
 `gcode` 0.8.0+ uses the migrated Gobby PostgreSQL hub. It asks the local daemon
 broker for the hub DSN first. If the daemon is unavailable, it falls back to
-explicit non-keychain sources: `GCODE_DATABASE_URL`, `GOBBY_POSTGRES_DSN`,
-`~/.gobby/gcode.yaml` `database_url`, inline bootstrap `database_url`, then
-supported `database_url_ref` values. Bootstrap fallback requires
-`hub_backend: postgres`. It never reads the native OS keyring directly. For
-explicit daemonless setups, use inline `database_url`.
-If macOS keeps asking for Keychain authorization, check `which -a gcode`; stale
-binaries from before `0.8.4` can still read Keychain directly.
+explicit fallback sources: `GCODE_DATABASE_URL`, `GOBBY_POSTGRES_DSN`,
+`~/.gobby/gcode.yaml` `database_url`, then bootstrap `database_url`.
+Bootstrap fallback requires `hub_backend: postgres`.
 Installing from source or crates.io requires Rust 1.88+.
 
 ### From source
