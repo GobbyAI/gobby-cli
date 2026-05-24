@@ -38,7 +38,7 @@ We want **gwiki** as a fourth crate in this Cargo workspace alongside gcode/gsqz
 
 ### Crate layout
 
-```
+```text
 crates/gwiki/
   Cargo.toml                 # name = "gobby-wiki", binary "gwiki", opt-level = 3
   src/
@@ -91,7 +91,7 @@ crates/gwiki/
 
 ### CLI surface
 
-```
+```bash
 gwiki init [--topic <name>]                       # set up project-local or topic wiki
 gwiki ingest <path|url> [--topic <name>]          # add source to raw/
 gwiki research "<thesis>" [--agents N] [--topic ...] # dispatch parallel research via daemon

@@ -45,6 +45,9 @@ jobs:
       - name: Run tests
         run: cargo test -p gobby-squeeze
 
+      - name: Run tests without default features
+        run: cargo test -p gobby-squeeze --no-default-features
+
   build:
     needs: test
     strategy:
