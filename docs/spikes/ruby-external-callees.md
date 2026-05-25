@@ -37,9 +37,9 @@ Only classify when all of these are true:
 Ruby call extraction needs to capture constant-qualified receivers, not just method names. The implementation should distinguish:
 
 - `JSON.parse` as a candidate external call with root `JSON`.
-- `client.parse` as receiver dispatch and unresolved.
-- `parse` as a bare call and unresolved unless a future static import model proves ownership.
-- `send(:parse)` and `public_send(:parse)` as dynamic and unresolved.
+- Receiver-dispatched calls like `client.parse` remain unresolved.
+- Bare calls such as `parse` are unresolved unless a future static import model proves ownership.
+- Dynamic invocations like `send(:parse)` and `public_send(:parse)` are also unresolved.
 
 Imports should separate:
 
