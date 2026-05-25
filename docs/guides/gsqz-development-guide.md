@@ -107,18 +107,20 @@ The visitor extracts the key name (`filter_lines`, `group_lines`, `truncate`, `d
 
 ### Initialization
 
-`Compressor::new(config)` compiles all pipeline `match_pattern` regexes and excluded command patterns at construction time (not per-compress call). Invalid regexes are silently skipped via `filter_map`.
+`Compressor::new(config)` compiles all pipeline `match_pattern` regexes and configured excluded command patterns at construction time (not per-compress call). Invalid regexes are silently skipped via `filter_map`.
+
+Built-in exclusions are checked by executable name before regex exclusions: `gobby`, `gobby-cli`, `gcode`, `ghook`, `gloc`, `gsqz`, and `git`. These commands are raw passthrough because their output is already structured or source-of-truth diagnostic data.
 
 ### Compression Flow
 
 ```
 compress(command, output)
 │
+├─ command matches built-in or configured exclusions?
+│  → return excluded
+│
 ├─ output.len() < min_output_length?
 │  → return passthrough (don't compress tiny output)
-│
-├─ command matches excluded_commands?
-│  → return excluded
 │
 ├─ split compound command at &&, ||, ; (respecting quotes/parens)
 │  → try segments in reverse order (last = most relevant)
@@ -373,15 +375,10 @@ State machine tracking single/double quotes and paren depth. Splits at `&&`, `||
 
 **File:** `config.yaml` (compiled into binary)
 
-20+ pipelines covering common developer tools:
+15+ pipelines covering common developer tools:
 
 | Pipeline | Match | Strategy |
 |----------|-------|----------|
-| git-status | `\bgit\s+status\b` | filter + group(git_status) |
-| git-diff | `\bgit\s+diff\b` | group(git_diff) + truncate |
-| git-log | `\bgit\s+log\b` | filter + truncate |
-| git-transfer | `git\s+(?:push\|pull\|fetch\|clone)` | filter(progress) + truncate |
-| git-mutation | `git\s+(?:add\|commit\|stash\|tag\|branch)` | filter + truncate |
 | pytest | `\b(?:pytest\|py\.test)\b` | filter(pass/meta) + group(pytest_failures) |
 | cargo-test | `\bcargo\s+test\b` | filter(pass/compile) + group(test_failures) |
 | generic-test | `npm\s+test\|vitest\|jest\|mocha\|go\s+test` | filter(pass) + group(test_failures) |
@@ -431,7 +428,7 @@ After compression, gsqz reports savings to the daemon:
 ```
 POST {daemon_url}/api/admin/savings/record
 { "category": "compression", "original_chars": 10000, "actual_chars": 2500,
-  "metadata": { "strategy": "git-status" } }
+  "metadata": { "strategy": "cargo-test" } }
 ```
 
 Only reports for meaningful strategies — `passthrough` and `excluded` are skipped.
@@ -507,9 +504,9 @@ pipelines:
 gsqz --dump-config
 
 # See compression stats
-gsqz --stats -- git status
+gsqz --stats -- cargo test
 
-# Bypass compression (run command directly)
+# Bypass compression manually (Gobby CLIs and git are bypassed automatically)
 git status
 ```
 

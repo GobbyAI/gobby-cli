@@ -25,13 +25,15 @@ This workspace contains four Gobby CLI tools plus a shared library:
 
 ### gcode — Code Search & Navigation
 
-AST-aware code search powered by tree-sitter. Indexes 18 languages into the
-Gobby PostgreSQL hub with pg_search BM25 for symbol lookup, content search, file
-tree navigation, and hybrid ranking. When FalkorDB, Qdrant, and an embeddings
+AST-aware code search powered by tree-sitter. Indexes 18 languages plus safe
+repo text files into the Gobby PostgreSQL hub, with pg_search BM25 for symbol
+lookup, repo-content search across source/docs/config/scripts, file tree
+navigation, and hybrid ranking. When FalkorDB, Qdrant, and an embeddings
 endpoint are configured - typically through Gobby - `gcode` adds graph-aware
-search, semantic search, dependency analysis (`callers`, `usages`, `imports`,
-`blast-radius`), and daemon-backed graph lifecycle commands (`gcode graph clear`,
-`gcode graph rebuild`).
+search, semantic search, optional graph expansion for exact symbol lookup
+(`gcode search-symbol --with-graph`), dependency analysis (`callers`, `usages`,
+`imports`, `blast-radius`), and daemon-backed graph lifecycle commands
+(`gcode graph clear`, `gcode graph rebuild`).
 
 For non-Gobby-managed projects, `gcode init` installs the bundled `gcode` skill
 for Claude Code, Codex, Droid, Grok, Qwen, Gemini CLI (deprecated
@@ -90,15 +92,14 @@ projects read FalkorDB settings from `databases.falkordb.*`; daemon-independent
 setups can use `GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, and
 `GOBBY_FALKORDB_PASSWORD`.
 
-`gcode` 0.8.0+ uses the migrated Gobby PostgreSQL hub. It reads
-`~/.gobby/bootstrap.yaml`, requires `hub_backend: postgres`, and resolves the
-hub DSN from either `database_url_ref` or inline `database_url`. For
-`database_url_ref: keyring:gobby:postgres_database_url`, `gcode` asks the local
-daemon broker and fails clearly if the daemon is unavailable. It never reads
-the native OS keyring directly. The DSN is not written to a plaintext runtime
-file. For explicit daemonless setups, use inline `database_url`.
-If macOS keeps asking for Keychain authorization, check `which -a gcode`; stale
-binaries from before `0.8.4` can still read Keychain directly.
+`gcode` 0.8.0+ uses the migrated Gobby PostgreSQL hub. It asks the local daemon
+broker for the hub DSN first. If the daemon is unavailable, it checks fallback
+sources in order: `GCODE_DATABASE_URL`, `GOBBY_POSTGRES_DSN`,
+`~/.gobby/gcode.yaml` `database_url`, then bootstrap `database_url`.
+Bootstrap fallback is valid only when `hub_backend: postgres` and bootstrap
+contains an inline `database_url`. Bootstrap `database_url_ref` is rejected
+during bootstrap validation; it is never resolved or used to restart the
+fallback chain.
 Installing from source or crates.io requires Rust 1.88+.
 
 ### From source

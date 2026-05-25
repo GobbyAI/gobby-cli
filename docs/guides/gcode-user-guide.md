@@ -15,17 +15,16 @@ cargo install gobby-code
 Graph and semantic features are configured at runtime. You do not need Cargo
 feature flags to enable FalkorDB, Qdrant, or embeddings support.
 
-Runtime indexing/search requires Gobby's PostgreSQL hub bootstrap. gcode reads
-`~/.gobby/bootstrap.yaml`, requires `hub_backend: postgres`, and connects
-to the migrated hub. For `database_url_ref:
-keyring:gobby:postgres_database_url`, gcode asks the local daemon broker for the
-DSN and fails clearly if the daemon is unavailable. gcode never reads the native
-OS keyring directly. For explicit daemonless setups, use inline `database_url`.
+Runtime indexing/search requires Gobby's PostgreSQL hub. gcode asks the local
+daemon broker for the hub DSN first. If the daemon is unavailable, it checks
+fallback sources in order: `GCODE_DATABASE_URL`, `GOBBY_POSTGRES_DSN`,
+`~/.gobby/gcode.yaml` `database_url`, then bootstrap `database_url`.
+Bootstrap fallback is valid only when `hub_backend: postgres` and bootstrap
+contains an inline `database_url`. Bootstrap `database_url_ref` is rejected
+during bootstrap validation; it is never resolved or used to restart the
+fallback chain.
 
 If you use [Gobby](https://github.com/GobbyAI/gobby), gcode is already installed.
-If macOS keeps asking for Keychain authorization, run `which -a gcode` and make
-sure stale binaries are removed or ordered after the current Gobby-managed
-install. Older `gcode` binaries bypass the daemon broker.
 
 ### Initialize and Index
 
@@ -37,7 +36,7 @@ gcode init
 `gcode init` does everything in one step:
 1. Creates `.gobby/gcode.json` (project identity file)
 2. Installs AI CLI skills for supported project-local targets
-3. Indexes the entire project with tree-sitter
+3. Indexes the entire project with tree-sitter AST parsing plus non-binary text files
 
 You'll see a progress bar while indexing:
 
@@ -82,14 +81,17 @@ gcode offers four search modes for different use cases.
 The default. Combines pg_search BM25 text matching with optional semantic similarity,
 graph boost, and graph expansion using Reciprocal Rank Fusion. If FalkorDB,
 Qdrant, or the embeddings endpoint are unavailable, `gcode search` falls back
-to the sources that are configured.
+to the sources that are configured. JSON results expose `score` as the final
+display rank score, `rrf_score` as the raw RRF contribution, and sorted
+`sources` values for source attribution.
 
 ```bash
 gcode search "database connection pool"
 gcode search "auth" --limit 5
 gcode search "handler" --kind function
 gcode search "config" --offset 10              # Page 2 of results
-gcode search "Memory" --path "src/storage/**"  # Scope to directory
+gcode search "Memory" src/storage              # Scope to directory
+gcode search "Memory" src/storage tests/**/*.rs
 gcode search "Context" --language rust         # Scope to Rust sources
 ```
 
@@ -100,9 +102,9 @@ gcode search "Context" --language rust         # Scope to Rust sources
 - `--offset N` — Skip first N results for pagination (default: 0)
 - `--kind <kind>` — Filter by symbol kind: `function`, `class`, `method`, `type`, etc. Use `gcode kinds` to list what's available in the current index.
 - `--language <lang>` — Filter by source language (e.g. `rust`, `python`, `typescript`, `css`).
-- `--path <glob>` — Filter by file path glob (e.g. `"src/**/*.rs"`, `"*.py"`, `"tests/*"`). Uses SQL prefix pre-filtering for performance with Rust glob matching for exact semantics.
+- Positional `PATH` arguments after the query — Filter by one or more paths or globs (e.g. `src`, `src/**/*.rs`, `tests/*`). Bare paths match the exact file path and descendants; multiple paths use OR semantics.
 
-`--kind`, `--language`, and `--path` compose — combine them to narrow as far as you need.
+`--kind`, `--language`, and positional paths compose — combine them to narrow as far as you need. Globs that cannot be converted to SQL prefixes are still honored through post-filtering; JSON output includes a hint and text output prints a warning when that broader fetch path is used.
 
 ### Symbol Search (`gcode search-symbol`)
 
@@ -114,12 +116,14 @@ the canonical hit at rank 0 instead of letting hybrid ranking rerank it.
 ```bash
 gcode search-symbol "outline"
 gcode search-symbol "Context" --kind class --language rust
-gcode search-symbol "ensure_fresh" --path "crates/gcode/**"
+gcode search-symbol "ensure_fresh" crates/gcode
+gcode search-symbol "Context" crates/gcode/src --kind class --language rust
+gcode search-symbol "Context" --with-graph
 ```
 
 **When to use:** You know the symbol's name (or close to it) and want a stable, top-ranked match — for example, before calling `gcode symbol <id>`.
 
-**Options:** `--limit N`, `--offset N`, `--kind <kind>`, `--language <lang>`, `--path <glob>`.
+**Options:** `--limit N`, `--offset N`, `--kind <kind>`, `--language <lang>`, `--with-graph`, positional `PATH ...`. `--with-graph` keeps exact-first ranking but adds FalkorDB graph neighbors when available.
 
 ### Text Search (`gcode search-text`)
 
@@ -127,27 +131,36 @@ pg_search BM25 search on symbol metadata: names, qualified names, signatures, an
 
 ```bash
 gcode search-text "parseConfig"
-gcode search-text "parseConfig" --path "src/**"
+gcode search-text "parseConfig" src
+gcode search-text "parseConfig" src/**/*.py tests
 gcode search-text "parseConfig" --language python
 ```
 
 **When to use:** You know the exact name or part of a symbol name. Fastest mode.
 
-**Options:** `--limit N`, `--offset N`, `--language <lang>`, `--path <glob>`
+**Options:** `--limit N`, `--offset N`, `--language <lang>`, positional `PATH ...`
 
 ### Content Search (`gcode search-content`)
 
-pg_search BM25 search across file content chunks — covers source bodies, comments, configuration files (YAML/TOML/JSON/etc.), and CSS in addition to symbol bodies.
+pg_search BM25 search across file content chunks. It covers AST-supported
+source bodies and comments plus safe repo text files such as docs, Markdown,
+skill files, configs (YAML/TOML/JSON/etc.), SQL/CSS, scripts,
+`Dockerfile`/`Makefile`, and extensionless text.
 
 ```bash
 gcode search-content "TODO: refactor"
-gcode search-content "GOBBY_FALKORDB_HOST" --path "*.py"
+gcode search-content "GOBBY_FALKORDB_HOST" *.py
+gcode search-content "database_url" crates/gcode/src docs/**/*.md
 gcode search-content "primary-color" --language css
 ```
 
 **When to use:** Searching for string literals, comments, configuration values, stylesheet rules, or patterns that aren't symbol names.
 
-**Options:** `--limit N`, `--offset N`, `--language <lang>`, `--path <glob>`
+Unsupported text files use their extension as the language label when one
+exists, otherwise `text`. Binary, secret-like, excluded, empty, and >10MB files
+are skipped.
+
+**Options:** `--limit N`, `--offset N`, `--language <lang>`, positional `PATH ...`
 
 ## Symbol Retrieval
 
@@ -159,7 +172,10 @@ Get the hierarchical symbol tree for a file:
 gcode outline src/config.rs
 ```
 
-Returns all functions, classes, methods, structs, etc. in the file with their line ranges and signatures. JSON output uses a slim format (id, name, kind, line_start, line_end, signature) — use `--verbose` for full symbol details. Much cheaper than reading the entire file.
+Returns all functions, classes, methods, structs, Markdown headings, JSON/YAML
+properties, etc. in the file with their line ranges and signatures. JSON output
+uses a slim format (id, name, kind, line_start, line_end, signature) — use
+`--verbose` for full symbol details. Much cheaper than reading the entire file.
 
 ### Symbol by ID
 
@@ -197,7 +213,8 @@ Get the project's file tree with symbol counts per file:
 gcode tree
 ```
 
-Useful for understanding project structure at a glance.
+Useful for understanding project structure at a glance. Content-only text files
+appear with a zero symbol count once indexed.
 
 ## Dependency Graph
 
@@ -315,7 +332,7 @@ gcode index --full
 Index specific files:
 
 ```bash
-gcode index --files src/config.rs src/main.rs
+gcode index --files src/config.rs docs/notes.md Dockerfile
 ```
 
 `gcode index` writes symbols, files, chunks, imports, and calls to the
@@ -346,7 +363,7 @@ Use those when you want the daemon to clear or replay graph state for the curren
 
 gcode is daemon-independent but not database-independent:
 - Database: PostgreSQL hub from `~/.gobby/bootstrap.yaml`
-- Required bootstrap: `hub_backend: postgres` plus supported `database_url_ref` or `database_url`
+- Required bootstrap: `hub_backend: postgres` plus `database_url`; bootstrap `database_url_ref` is rejected
 - Identity: `.gobby/project.json`, `.gobby/gcode.json`, isolated root, linked worktree, or generated identity from `gcode init`
 - Optional services: FalkorDB, Qdrant, and embeddings via env vars or PostgreSQL `config_store`
 
@@ -374,13 +391,15 @@ Semantic search uses the same precedence rules:
 2. **config_store table** — `embeddings.api_base`, `embeddings.model`, `embeddings.api_key`
 3. **Hardcoded defaults** — model `nomic-embed-text` once an embeddings API base is configured
 
-The database connection is resolved from `~/.gobby/bootstrap.yaml`:
-1. Require `hub_backend: postgres`
-2. Validate supported `database_url_ref` values before any lookup
-3. For `keyring:gobby:postgres_database_url` or
-   `daemon:gobby:postgres_database_url`, request the DSN from the local daemon broker
-4. Fail clearly when the broker is unavailable, unauthorized, or malformed
-5. Use inline `database_url` only when no ref is present
+The database connection is resolved in this order:
+1. Local daemon broker
+2. `GCODE_DATABASE_URL`
+3. `GOBBY_POSTGRES_DSN`
+4. `~/.gobby/gcode.yaml` `database_url`
+5. `~/.gobby/bootstrap.yaml` `database_url`
+
+Bootstrap `database_url_ref` is rejected. Use the daemon broker path or an
+explicit fallback source for daemonless access.
 
 The daemon URL (used by `invalidate`, `graph clear`, and `graph rebuild`) is resolved from:
 1. `GOBBY_PORT` environment variable (e.g. `60887`)

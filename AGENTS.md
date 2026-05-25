@@ -18,7 +18,7 @@ CI builds use `--no-default-features`.
 
 ## Architecture
 
-```
+```text
 main.rs (clap CLI)
   → config::Context::resolve()     # Resolves project root, PostgreSQL DSN, service configs
   → commands/*::run()              # Command handler

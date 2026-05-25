@@ -156,7 +156,7 @@ CREATE TABLE IF NOT EXISTS gcode_schema (version INTEGER NOT NULL);
 ```
 Insert version 1 if table is empty. On startup, check version matches `SCHEMA_VERSION` const. If version < expected, run ALTER TABLE migrations. If version > expected, warn but continue.
 
-**Implementation note:** Use `conn.execute_batch()` (rusqlite) to run all SQL in a single transaction. FTS triggers contain semicolons inside BEGIN...END blocks, so they must be executed individually via `conn.execute()`, not split on `;`.
+**Implementation note:** For embedded-store prototypes, run schema setup in one transaction. Triggers whose bodies contain semicolons must be executed as complete statements, not split on `;`.
 
 ### 2. Update `src/db.rs`
 

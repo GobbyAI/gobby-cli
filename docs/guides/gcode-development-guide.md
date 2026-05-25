@@ -74,22 +74,20 @@ A new dedicated module that owns all `git` shell-out logic for project-root dete
 
 ### PostgreSQL Bootstrap
 
-`src/db.rs` reads `~/.gobby/bootstrap.yaml` (or `$GOBBY_HOME/bootstrap.yaml`) and
-requires `hub_backend: postgres`. It validates `database_url_ref` before any
-lookup and supports `keyring:gobby:postgres_database_url` for existing
-bootstraps plus `daemon:gobby:postgres_database_url` for broker-only generated
-runtimes. Both refs resolve through the local daemon broker using
+`src/db.rs` asks the local daemon broker for PostgreSQL DSNs first using
 `POST /api/local/runtime/database-url` with `X-Gobby-Local-Token` from
-`local_cli_token` and a 3s timeout. Broker failures fail clearly at the
-top-level resolver; gcode never reads the native OS keyring directly. Inline
-`database_url` is accepted only when no ref is present. `connect_readwrite()`
-and `connect_readonly()` both return a synchronous `postgres::Client`;
-PostgreSQL permissions decide actual access.
+`local_cli_token` and a 3s timeout. If the broker is unavailable, gcode falls
+back to explicit fallback sources: `GCODE_DATABASE_URL`, `GOBBY_POSTGRES_DSN`,
+`$GOBBY_HOME/gcode.yaml` `database_url`, then
+`$GOBBY_HOME/bootstrap.yaml` inline `database_url`. Bootstrap still requires
+`hub_backend: postgres` when used. Bootstrap `database_url_ref` is rejected.
+`connect_readwrite()` and `connect_readonly()` both return a synchronous
+`postgres::Client`; PostgreSQL permissions decide actual access.
 
 `src/schema.rs` validates runtime schema and never creates or migrates tables.
 It requires the Gobby hub tables, the `pg_search` extension, and BM25 indexes
 `code_symbols_search_bm25` and `code_content_search_bm25`. Missing schema errors
-tell users to finish `gobby postgres migrate-from-sqlite` and cut over.
+tell users to configure the PostgreSQL hub with the required code-index schema.
 
 ### Service Configuration
 
@@ -105,7 +103,7 @@ Config values are JSON-encoded in `config_store` — strings have surrounding qu
 
 ### Runtime Model
 
-gcode is daemon-independent but requires the migrated PostgreSQL hub. Project
+gcode is daemon-independent but requires a configured PostgreSQL hub. Project
 identity still comes from `.gobby/project.json`, `.gobby/gcode.json`, isolated
 roots, linked worktrees, or generated identity during `gcode init`. Service
 configuration comes from env vars first, then PostgreSQL `config_store`, then
@@ -122,6 +120,7 @@ walker::discover_files(root, excludes)
   → (ast_candidates, content_only_candidates)
     → parser::parse_file(path, project_id, root, excludes)
       → tree-sitter AST → extract_symbols + extract_imports + extract_calls
+      → optional clangd semantic pass for C/C++ calls
       → link_parents (nest methods in classes, build qualified names)
     → chunker::chunk_file_content(source, rel_path, project_id, lang)
       → 100-line chunks with 10-line overlap
@@ -135,12 +134,20 @@ walker::discover_files(root, excludes)
 
 ### File Discovery (walker.rs)
 
-Uses the `ignore` crate (`WalkBuilder`) which respects `.gitignore`, `.git/info/exclude`, and git global config. Files are partitioned into:
+Uses the `ignore` crate (`WalkBuilder`) which respects `.gitignore`,
+`.git/info/exclude`, git global config, and the existing hidden-file behavior.
+Files are partitioned through a shared classifier used by both directory
+indexing and explicit `gcode index --files ...` indexing:
 
-- **AST candidates**: Extensions matching a tree-sitter language spec (18 languages)
-- **Content-only candidates**: Extensions like `.sh`, `.sql`, `.html`, `.css` — chunked for BM25 content search but no AST parsing
+- **AST candidates**: Safe files where `languages::detect_language()` matches a tree-sitter language spec
+- **Content-only candidates**: Safe non-secret, non-binary text files with no tree-sitter match — docs, skill files, configs, SQL/CSS, shell scripts, `Dockerfile`/`Makefile`, and extensionless text
 
 Default excludes: `node_modules`, `__pycache__`, `.git`, `.venv`, `target`, `dist`, `build`, `.next`, `coverage`, etc.
+
+Both candidate types obey path validation, symlink safety, binary detection
+(8KB read), secret-name detection, empty-file rejection, the 10MB size limit,
+and configured exclude patterns. Content-only files use the lowercase extension
+as their language label, or `text` for extensionless files.
 
 ### Tree-Sitter Parsing (parser.rs)
 
@@ -154,25 +161,59 @@ Default excludes: `node_modules`, `__pycache__`, `.git`, `.venv`, `target`, `dis
 
 ### Import Resolution and Call Target Classification
 
-Python, JavaScript, and TypeScript parsing now includes an import-resolution
-pass before call targets are finalized:
+Import-resolution runs before call targets are finalized. It is intentionally
+fail-closed: producers emit external targets only when import or module
+provenance is explicit and structurally unambiguous.
 
 - Local symbol calls resolve to canonical `callee_symbol_id` values
 - Unmatched calls stay `unresolved`
 - Import-bound external calls are marked `external` and retain their source module
 
-This keeps external package calls out of the local call graph and improves FalkorDB
-correctness for `callers`, `usages`, `blast-radius`, and graph-backed search.
+Current external-callee support:
+
+| Language | Safe external scope |
+|----------|---------------------|
+| Python | `import` / `from ... import ...` aliases for external modules |
+| JavaScript / TypeScript | package imports from `package.json`, named/default/namespace imports, and `node:` builtins |
+| Go | explicit import aliases and package selector calls; self-module imports remain unresolved |
+| Rust | Cargo dependency/std roots, explicit or grouped `use` aliases, and path calls; glob imports and receiver methods remain unresolved |
+| Java | explicit class imports and static imports; wildcard imports and instance calls remain unresolved |
+| C# | using aliases, namespace-qualified calls, and single-source `using static`; instance/member inference remains unresolved |
+| PHP | namespace `use`, `use function`, and fully qualified static/function calls; dynamic/member dispatch remains unresolved |
+| Swift | direct module imports plus module-qualified calls; unqualified/member calls remain unresolved |
+| Ruby | literal `require` roots from the curated stdlib/gem map plus constant-qualified calls; bare and receiver calls remain unresolved |
+| Dart | explicit `as` aliases from `dart:` imports or external `package:` dependencies in `pubspec.yaml`; unaliased and relative imports remain unresolved |
+| Elixir | curated Mix dependency roots plus explicit `alias` / `require`; `import`, `use`, and dynamic calls remain unresolved |
+| C/C++ | optional clangd-backed semantic resolution when `clangd` and `compile_commands.json` are available; tree-sitter-only calls remain unresolved |
+
+External resolution checks parameter and local variable shadowing before
+classifying bare calls or qualified roots as external. Swift scoped imports
+such as `import struct Foundation.Date` bind the module root (`Foundation`),
+not the scoped keyword.
+
+C/C++ semantic mode auto-enables when `clangd` is discoverable and
+`compile_commands.json` exists at the project root or common build directories.
+Set `GCODE_CLANGD` to override the clangd command and
+`GCODE_COMPILE_COMMANDS_DIR` to override compile database discovery. Use
+`gcode index --require-cpp-semantics` or `GCODE_REQUIRE_CPP_SEMANTICS=1` to
+fail indexing when C/C++ semantic prerequisites are missing.
+
+Research spikes in `docs/spikes/` define unresolved boundaries for C/C++ edge
+cases and remaining external-callee work in Kotlin, Bash, Lua, Scala, Dart,
+Elixir, and Ruby. This keeps unproven external package calls out of the local
+call graph and improves FalkorDB correctness for `callers`, `usages`,
+`blast-radius`, and graph-backed search.
 
 ### Language Support (languages.rs)
 
-18 languages with tree-sitter queries for symbol definitions, imports, and call sites:
+18 languages with tree-sitter queries for symbol definitions, imports, and call
+sites where the grammar exposes a safe surface:
 
 | Tier | Languages |
 |------|-----------|
 | Tier 1 | Python, JavaScript, TypeScript, Go, Rust, Java, C, C++, C#, Ruby, PHP, Swift, Kotlin |
 | Tier 2 | Dart, Elixir |
-| Tier 3 | JSON, YAML, Markdown (content structure only) |
+| Tier 3 | JSON, YAML, Markdown (structural symbols + content chunks) |
 
 Each language has a `LanguageSpec` with three tree-sitter queries: `symbol_query`, `import_query`, `call_query`. Empty queries mean that feature is disabled for the language.
 
@@ -184,6 +225,10 @@ Files are split into overlapping chunks for BM25 content search:
 - **Overlap**: 10 lines (step = 90)
 - **1-indexed**: line_start/line_end use 1-based indexing
 - Empty/whitespace-only chunks are pruned
+
+AST candidates and content-only candidates both write chunks. Content-only files
+write `code_indexed_files` rows with `symbol_count=0`, so `tree`, `status`, and
+`search-content` see the broader repo text corpus without schema changes.
 
 ### Incremental Indexing (indexer.rs)
 
@@ -272,10 +317,10 @@ Source 4: Graph Expand (FalkorDB)
   → seed from top FTS + semantic hits
   → expand through callees first, then callers
 
-  ↓ All sources → RRF merge → Symbol resolution → Path filter (glob) → Pagination
+  ↓ All sources → RRF merge → Symbol resolution → Positional path filters → Pagination
 ```
 
-When `--path` is provided, BM25 queries include a SQL `LIKE` prefix pre-filter for index-assisted narrowing. After RRF merge and symbol resolution, a Rust `glob::Pattern` post-filter ensures exact glob semantics across all sources (including semantic/graph results that lack SQL-side filtering).
+`search`, `search-symbol`, `search-text`, and `search-content` accept positional path filters after the query. Bare paths expand to exact + subtree matches; glob paths stay verbatim; multiple paths use OR semantics. BM25 queries add a parenthesized SQL `LIKE` prefix OR block only when every expanded pattern has a safe prefix. Rust `glob::Pattern` post-filtering then enforces exact semantics across all sources, including semantic/graph results that lack SQL-side filtering. If a path glob cannot be lowered to a SQL prefix, handlers surface a hint and rely on post-query filtering after a broader fetch.
 
 ### RRF Merge (rrf.rs)
 
@@ -288,8 +333,12 @@ score(symbol) = Σ 1/(K + rank) for each source containing the symbol
 - Rank 0 is best (first in source list)
 - Single-source max score: 1/60 ≈ 0.0167
 - Multi-source: scores are additive across sources
-- Results sorted by combined score, descending
-- Source attribution preserved (e.g., `["fts", "graph_expand"]`)
+- `gcode search` sorts by exact tier first, then RRF score; public `score`
+  reflects that final display order and `rrf_score` preserves the raw RRF value.
+- `gcode search-symbol --with-graph` uses the same RRF metadata for exact hits
+  plus optional FalkorDB graph neighbors; default `search-symbol` stays exact-first
+  without graph expansion.
+- Source attribution is sorted deterministically (e.g., `["fts", "graph_expand"]`)
 
 ### Symbol Resolution
 
@@ -301,7 +350,7 @@ multiple systems with deduplication.
 
 ### BM25 Search (`search-text`, `search-content`)
 
-These use dedicated `count_text`/`count_content` functions (pg_search BM25 counts with LIKE fallback) for accurate totals, separate from the paginated result fetch.
+These use dedicated `count_text`/`count_content` functions (pg_search BM25 counts with LIKE fallback) for accurate totals when no positional path filters are present. With path filters, handlers fetch up to `FILTERED_FETCH_CAP`, apply glob filtering before pagination, and surface a hint if the cap is hit or a glob required SQL-filter fallback.
 
 ### Pagination
 
@@ -476,9 +525,9 @@ Each external service degrades independently:
 | Qdrant | No URL configured | Search loses semantic source; BM25 still works |
 | Embeddings API | No API base, auth failure, or request error | Semantic search disabled for that query |
 | Daemon | Not running | Normal index/search still work; graph lifecycle RPCs fail and external sync waits for the daemon |
-| PostgreSQL hub | Missing bootstrap, sqlite backend, unreachable DB, or missing schema | Runtime index/search commands fail clearly |
+| PostgreSQL hub | Missing bootstrap, non-postgres backend, unreachable DB, or missing schema | Runtime index/search commands fail clearly |
 
-The system always works without the daemon process once the PostgreSQL hub is configured and migrated.
+The system always works without the daemon process once the PostgreSQL hub is configured with the required schema.
 
 ## Output Format
 
@@ -526,3 +575,5 @@ gcode search --project /path/to/myapp "query"  # by path
 gcode index --full    # re-process all files, clean stale vectors
 gcode invalidate      # destructive reset of current project's code-index rows
 ```
+
+_Last verified: 2026-05-24_

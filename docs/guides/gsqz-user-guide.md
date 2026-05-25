@@ -1,6 +1,6 @@
 # gsqz User Guide
 
-gsqz wraps shell commands and compresses their output for LLM consumption. Instead of feeding 500 lines of `git status` or test output into a context window, gsqz reduces it to the essential information.
+gsqz wraps shell commands and compresses their output for LLM consumption. Instead of feeding 500 lines of test or build output into a context window, gsqz reduces it to the essential information.
 
 ## Installation
 
@@ -16,7 +16,6 @@ If you use [Gobby](https://github.com/GobbyAI/gobby), gsqz is already installed.
 
 ```bash
 # Compress command output
-gsqz -- git status
 gsqz -- cargo test
 gsqz -- uv run pytest tests/
 
@@ -31,7 +30,7 @@ echo "verbose docs" | gsqz input --level aggressive
 gsqz -- "cargo build && cargo test"
 
 # See compression stats
-gsqz --stats -- git diff
+gsqz --stats -- cargo test
 
 # Generate default config in current directory
 gsqz --init
@@ -42,23 +41,19 @@ gsqz --dump-config
 
 When compression is applied, output is prefixed with a header:
 ```text
-[Output compressed by gsqz — git-status, 72% reduction]
-Modified (3):
-  src/main.rs
-  src/lib.rs
-  src/config.rs
-Untracked (1):
-  new_file.txt
+[Output compressed by gsqz — cargo-test, 95% reduction]
+All tests passed.
 ```
 
 ## How It Works
 
 1. gsqz runs your command via `sh -c` and captures stdout + stderr
 2. ANSI escape codes are stripped
-3. The command string is matched against pipeline regexes (first match wins)
-4. The matched pipeline's steps run sequentially, each transforming the line list
-5. If no pipeline matches, the fallback steps apply (default: truncate head:20, tail:20)
-6. If compression doesn't achieve at least 5% reduction, the original output is returned unchanged
+3. Built-in and configured exclusions are surfaced unchanged
+4. The command string is matched against pipeline regexes (first match wins)
+5. The matched pipeline's steps run sequentially, each transforming the line list
+6. If no pipeline matches, the fallback steps apply (default: truncate head:20, tail:20)
+7. If compression doesn't achieve at least 5% reduction, the original output is returned unchanged
 
 Output under 1000 characters is never compressed (configurable via `min_output_length`).
 
@@ -76,7 +71,6 @@ Removes lines matching any of the given regex patterns. Use this to strip noise 
 - filter_lines:
     patterns:
       - '^\s*$'            # blank lines
-      - '^On branch '      # git status header
       - '^\s*Compiling '   # cargo build progress
 ```
 
@@ -86,7 +80,6 @@ Aggregates lines into a structured summary. Available modes:
 
 | Mode | Use Case | What It Does |
 |------|----------|-------------|
-| `git_status` | `git status` | Groups files by status (M/A/D/R/C/U/??) with counts. Shows up to 20 files per group. |
 | `pytest_failures` | pytest output | Extracts FAILURES/ERRORS sections and the summary line. Drops passing tests entirely. |
 | `test_failures` | Any test runner | Detects FAIL/FAILED/ERROR lines and includes everything from the first failure onward. If no failures, outputs "All tests passed." |
 | `lint_by_rule` | Linter output | Groups diagnostics by rule code (e.g. E001, W123, `[rule-name]`). Shows up to 5 examples per rule. |
@@ -251,6 +244,8 @@ excluded_commands:
   - '\becho\b'
 ```
 
+Gobby-owned CLIs (`gobby`, `gobby-cli`, `gcode`, `ghook`, `gloc`, `gsqz`) and `git` are built-in exclusions. Their output is already structured or source-of-truth diagnostic data, so gsqz surfaces it verbatim with no compression header and no savings report.
+
 ### Full Pipeline Example
 
 ```yaml
@@ -286,11 +281,11 @@ The `--stats` flag prints to stderr:
 ```
 
 Strategy names to look for:
-- A pipeline name (e.g. `git-status`, `pytest`, `cargo-test`) — matched and compressed
+- A pipeline name (e.g. `pytest`, `cargo-test`) — matched and compressed
 - `{name}/low-savings` — pipeline matched but compression was marginal (<5%)
 - `{name}/no-op` — pipeline matched but adding the low-savings marker would have grown the output, so the original is surfaced verbatim (no header, no daemon report)
 - `{name}/on_empty` — pipeline produced empty output, on_empty fallback used
 - `fallback` — no pipeline matched, generic truncation applied (with `[gsqz:passthrough]` marker)
 - `passthrough` — output was too short or compression didn't help
-- `excluded` — command matched an exclusion pattern
+- `excluded` — command matched a built-in or configured exclusion pattern
 - `prose/{level}` — prose compression via `gsqz input`
