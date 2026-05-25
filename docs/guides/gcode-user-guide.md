@@ -16,11 +16,13 @@ Graph and semantic features are configured at runtime. You do not need Cargo
 feature flags to enable FalkorDB, Qdrant, or embeddings support.
 
 Runtime indexing/search requires Gobby's PostgreSQL hub. gcode asks the local
-daemon broker for the hub DSN first. If the daemon is unavailable, it falls back
-to explicit fallback sources: `GCODE_DATABASE_URL`, `GOBBY_POSTGRES_DSN`,
+daemon broker for the hub DSN first. If the daemon is unavailable, it checks
+fallback sources in order: `GCODE_DATABASE_URL`, `GOBBY_POSTGRES_DSN`,
 `~/.gobby/gcode.yaml` `database_url`, then bootstrap `database_url`.
-Bootstrap fallback requires `hub_backend: postgres`; bootstrap
-`database_url_ref` is rejected.
+Bootstrap fallback is valid only when `hub_backend: postgres` and bootstrap
+contains an inline `database_url`. Bootstrap `database_url_ref` is rejected
+during bootstrap validation; it is never resolved or used to restart the
+fallback chain.
 
 If you use [Gobby](https://github.com/GobbyAI/gobby), gcode is already installed.
 
@@ -34,7 +36,7 @@ gcode init
 `gcode init` does everything in one step:
 1. Creates `.gobby/gcode.json` (project identity file)
 2. Installs AI CLI skills for supported project-local targets
-3. Indexes the entire project with tree-sitter plus safe repo text chunks
+3. Indexes the entire project with tree-sitter AST parsing plus non-binary text files
 
 You'll see a progress bar while indexing:
 
@@ -144,7 +146,7 @@ skill files, configs (YAML/TOML/JSON/etc.), SQL/CSS, scripts,
 
 ```bash
 gcode search-content "TODO: refactor"
-gcode search-content "GOBBY_FALKORDB_HOST" "*.py"
+gcode search-content "GOBBY_FALKORDB_HOST" *.py
 gcode search-content "database_url" crates/gcode/src docs/**/*.md
 gcode search-content "primary-color" --language css
 ```

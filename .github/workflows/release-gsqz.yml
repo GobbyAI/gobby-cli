@@ -42,6 +42,21 @@ jobs:
       - name: Clippy
         run: cargo clippy -p gobby-squeeze -- -D warnings
 
+      - name: Clippy without default features
+        run: cargo clippy -p gobby-squeeze --no-default-features -- -D warnings
+
+      - name: Run tests
+        run: cargo test -p gobby-squeeze
+
+      - name: Clippy without default features
+        run: cargo clippy -p gobby-squeeze --no-default-features -- -D warnings
+
+      - name: Run tests
+        run: cargo test -p gobby-squeeze
+
+      - name: Clippy without default features
+        run: cargo clippy -p gobby-squeeze --no-default-features -- -D warnings
+
       - name: Run tests
         run: cargo test -p gobby-squeeze
 
