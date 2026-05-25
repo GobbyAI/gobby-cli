@@ -25,9 +25,10 @@ This workspace contains four Gobby CLI tools plus a shared library:
 
 ### gcode — Code Search & Navigation
 
-AST-aware code search powered by tree-sitter. Indexes 18 languages into the
-Gobby PostgreSQL hub with pg_search BM25 for symbol lookup, content search, file
-tree navigation, and hybrid ranking. When FalkorDB, Qdrant, and an embeddings
+AST-aware code search powered by tree-sitter. Indexes 18 languages plus safe
+repo text files into the Gobby PostgreSQL hub, with pg_search BM25 for symbol
+lookup, repo-content search across source/docs/config/scripts, file tree
+navigation, and hybrid ranking. When FalkorDB, Qdrant, and an embeddings
 endpoint are configured - typically through Gobby - `gcode` adds graph-aware
 search, semantic search, dependency analysis (`callers`, `usages`, `imports`,
 `blast-radius`), and daemon-backed graph lifecycle commands (`gcode graph clear`,

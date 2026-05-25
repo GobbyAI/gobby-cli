@@ -2,31 +2,43 @@
 
 ## Decision
 
-Dart and Elixir need parser-surface work before external callee classification can be implemented safely. Both language specs currently have empty call queries, so gcode cannot produce call relations for either language, external or otherwise.
+Dart and Elixir now have enough parser/import surface for conservative external
+callee classification in the safe subsets below. The remaining rule is still
+fail-closed: emit external targets only when provenance is explicit, and leave
+ambiguous local, receiver, wildcard/imported, or dynamic calls unresolved.
 
-The minimum path is:
+Dart uses textual call extraction because the grammar does not expose a stable
+call query shape for every case. Elixir uses tree-sitter call captures plus
+explicit Mix/alias provenance.
 
-1. Add call query captures.
-2. Capture import or alias provenance with enough structure to distinguish local, package, and standard-library roots.
-3. Add manifest-backed external provenance.
-4. Classify only direct, explicit, module-qualified calls.
+The minimum bar for future expansion is:
+
+1. Capture import or alias provenance with enough structure to distinguish local, package, and standard-library roots.
+2. Add manifest-backed external provenance where imports alone are insufficient.
+3. Classify only direct, explicit, module-qualified calls.
+4. Preserve local collision checks.
 
 ## Dart
 
 ### Current Surface
 
-`languages.rs` captures Dart symbols from function, class, method, and enum declarations. It captures imports through `import_or_export`, but `call_query` is empty.
+`languages.rs` captures Dart symbols from function, class, method, and enum
+declarations. It captures imports through `import_or_export`; `parser.rs`
+extracts Dart calls textually and can ask a `SemanticCallResolver` about
+otherwise unresolved textual calls.
 
-### Required Query Additions
+### Implemented Call Surface
 
-Dart needs call captures for:
+Dart call extraction handles:
 
 - Bare function calls, kept unresolved unless local same-file resolution applies.
 - Prefixed calls such as `json.decode(...)`.
 - Static or constructor-like qualified calls such as `http.Client(...)` when the prefix maps to an imported package alias.
 - Method invocations on receivers, kept unresolved.
 
-The query layer must capture the callee name and the root prefix separately. Capturing only the final identifier is not enough because `decode(...)`, `json.decode(...)`, and `client.decode(...)` have different provenance.
+The extractor tracks callee name and qualifier path separately. Capturing only
+the final identifier is not enough because `decode(...)`, `json.decode(...)`,
+and `client.decode(...)` have different provenance.
 
 ### Provenance Needed
 
@@ -63,11 +75,13 @@ Leave unresolved:
 
 ### Current Surface
 
-`languages.rs` captures Elixir functions through `def`, `defp`, and `defmacro`, modules through `defmodule`, and imports through calls to `import`, `alias`, `use`, and `require`. `call_query` is empty.
+`languages.rs` captures Elixir functions through `def`, `defp`, and `defmacro`,
+modules through `defmodule`, imports through calls to `import`, `alias`, `use`,
+and `require`, and call sites through the Elixir `call_query`.
 
-### Required Query Additions
+### Current Call Surface
 
-Elixir needs call captures for:
+Elixir call extraction covers:
 
 - Remote calls such as `Jason.decode!(body)`.
 - Aliased module calls such as `HTTPoison.get(url)`.
@@ -104,9 +118,8 @@ Leave unresolved:
 
 ## Shared Implementation Notes
 
-- Add call queries before adding external classification.
 - Extend `ImportBindings` only with explicit roots or aliases.
 - Preserve local-symbol and local-module collision checks.
-- Add parser tests for positive external remote calls and fail-closed local, wildcard/imported, receiver, and dynamic cases.
+- Add parser tests for positive external remote calls and fail-closed local, wildcard/imported, receiver, and dynamic cases before widening either language.
 
 _Last verified: 2026-05-24_

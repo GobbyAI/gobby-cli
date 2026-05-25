@@ -34,7 +34,7 @@ gcode init
 `gcode init` does everything in one step:
 1. Creates `.gobby/gcode.json` (project identity file)
 2. Installs AI CLI skills for supported project-local targets
-3. Indexes the entire project with tree-sitter
+3. Indexes the entire project with tree-sitter plus safe repo text chunks
 
 You'll see a progress bar while indexing:
 
@@ -137,7 +137,10 @@ gcode search-text "parseConfig" --language python
 
 ### Content Search (`gcode search-content`)
 
-pg_search BM25 search across file content chunks — covers source bodies, comments, configuration files (YAML/TOML/JSON/etc.), and CSS in addition to symbol bodies.
+pg_search BM25 search across file content chunks. It covers AST-supported
+source bodies and comments plus safe repo text files such as docs, Markdown,
+skill files, configs (YAML/TOML/JSON/etc.), SQL/CSS, scripts,
+`Dockerfile`/`Makefile`, and extensionless text.
 
 ```bash
 gcode search-content "TODO: refactor"
@@ -147,6 +150,10 @@ gcode search-content "primary-color" --language css
 ```
 
 **When to use:** Searching for string literals, comments, configuration values, stylesheet rules, or patterns that aren't symbol names.
+
+Unsupported text files use their extension as the language label when one
+exists, otherwise `text`. Binary, secret-like, excluded, empty, and >10MB files
+are skipped.
 
 **Options:** `--limit N`, `--offset N`, `--language <lang>`, positional `PATH ...`
 
@@ -160,7 +167,10 @@ Get the hierarchical symbol tree for a file:
 gcode outline src/config.rs
 ```
 
-Returns all functions, classes, methods, structs, etc. in the file with their line ranges and signatures. JSON output uses a slim format (id, name, kind, line_start, line_end, signature) — use `--verbose` for full symbol details. Much cheaper than reading the entire file.
+Returns all functions, classes, methods, structs, Markdown headings, JSON/YAML
+properties, etc. in the file with their line ranges and signatures. JSON output
+uses a slim format (id, name, kind, line_start, line_end, signature) — use
+`--verbose` for full symbol details. Much cheaper than reading the entire file.
 
 ### Symbol by ID
 
@@ -198,7 +208,8 @@ Get the project's file tree with symbol counts per file:
 gcode tree
 ```
 
-Useful for understanding project structure at a glance.
+Useful for understanding project structure at a glance. Content-only text files
+appear with a zero symbol count once indexed.
 
 ## Dependency Graph
 
@@ -316,7 +327,7 @@ gcode index --full
 Index specific files:
 
 ```bash
-gcode index --files src/config.rs src/main.rs
+gcode index --files src/config.rs docs/notes.md Dockerfile
 ```
 
 `gcode index` writes symbols, files, chunks, imports, and calls to the

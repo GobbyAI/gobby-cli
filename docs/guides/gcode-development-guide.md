@@ -134,12 +134,20 @@ walker::discover_files(root, excludes)
 
 ### File Discovery (walker.rs)
 
-Uses the `ignore` crate (`WalkBuilder`) which respects `.gitignore`, `.git/info/exclude`, and git global config. Files are partitioned into:
+Uses the `ignore` crate (`WalkBuilder`) which respects `.gitignore`,
+`.git/info/exclude`, git global config, and the existing hidden-file behavior.
+Files are partitioned through a shared classifier used by both directory
+indexing and explicit `gcode index --files ...` indexing:
 
-- **AST candidates**: Extensions matching a tree-sitter language spec (18 languages)
-- **Content-only candidates**: Extensions like `.sh`, `.sql`, `.html`, `.css` — chunked for BM25 content search but no AST parsing
+- **AST candidates**: Safe files where `languages::detect_language()` matches a tree-sitter language spec
+- **Content-only candidates**: Safe non-secret, non-binary text files with no tree-sitter match — docs, skill files, configs, SQL/CSS, shell scripts, `Dockerfile`/`Makefile`, and extensionless text
 
 Default excludes: `node_modules`, `__pycache__`, `.git`, `.venv`, `target`, `dist`, `build`, `.next`, `coverage`, etc.
+
+Both candidate types obey path validation, symlink safety, binary detection
+(8KB read), secret-name detection, empty-file rejection, the 10MB size limit,
+and configured exclude patterns. Content-only files use the lowercase extension
+as their language label, or `text` for extensionless files.
 
 ### Tree-Sitter Parsing (parser.rs)
 
@@ -168,7 +176,7 @@ Current external-callee support:
 | Python | `import` / `from ... import ...` aliases for external modules |
 | JavaScript / TypeScript | package imports from `package.json`, named/default/namespace imports, and `node:` builtins |
 | Go | explicit import aliases and package selector calls; self-module imports remain unresolved |
-| Rust | Cargo dependency/std roots, explicit `use` aliases, and path calls; glob imports and receiver methods remain unresolved |
+| Rust | Cargo dependency/std roots, explicit or grouped `use` aliases, and path calls; glob imports and receiver methods remain unresolved |
 | Java | explicit class imports and static imports; wildcard imports and instance calls remain unresolved |
 | C# | using aliases, namespace-qualified calls, and single-source `using static`; instance/member inference remains unresolved |
 | PHP | namespace `use`, `use function`, and fully qualified static/function calls; dynamic/member dispatch remains unresolved |
@@ -186,20 +194,21 @@ Set `GCODE_CLANGD` to override the clangd command and
 fail indexing when C/C++ semantic prerequisites are missing.
 
 Research spikes in `docs/spikes/` define unresolved boundaries for C/C++ edge
-cases and external callees in Kotlin, Bash, Lua, Scala, Dart, Elixir, and Ruby.
-This keeps unproven external package calls out of the local call graph and
-improves FalkorDB correctness for `callers`, `usages`, `blast-radius`, and
-graph-backed search.
+cases and remaining external-callee work in Kotlin, Bash, Lua, Scala, Dart,
+Elixir, and Ruby. This keeps unproven external package calls out of the local
+call graph and improves FalkorDB correctness for `callers`, `usages`,
+`blast-radius`, and graph-backed search.
 
 ### Language Support (languages.rs)
 
-18 languages with tree-sitter queries for symbol definitions, imports, and call sites:
+18 languages with tree-sitter queries for symbol definitions, imports, and call
+sites where the grammar exposes a safe surface:
 
 | Tier | Languages |
 |------|-----------|
 | Tier 1 | Python, JavaScript, TypeScript, Go, Rust, Java, C, C++, C#, Ruby, PHP, Swift, Kotlin |
 | Tier 2 | Dart, Elixir |
-| Tier 3 | JSON, YAML, Markdown (content structure only) |
+| Tier 3 | JSON, YAML, Markdown (structural symbols + content chunks) |
 
 Each language has a `LanguageSpec` with three tree-sitter queries: `symbol_query`, `import_query`, `call_query`. Empty queries mean that feature is disabled for the language.
 
@@ -211,6 +220,10 @@ Files are split into overlapping chunks for BM25 content search:
 - **Overlap**: 10 lines (step = 90)
 - **1-indexed**: line_start/line_end use 1-based indexing
 - Empty/whitespace-only chunks are pruned
+
+AST candidates and content-only candidates both write chunks. Content-only files
+write `code_indexed_files` rows with `symbol_count=0`, so `tree`, `status`, and
+`search-content` see the broader repo text corpus without schema changes.
 
 ### Incremental Indexing (indexer.rs)
 
