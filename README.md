@@ -30,9 +30,10 @@ repo text files into the Gobby PostgreSQL hub, with pg_search BM25 for symbol
 lookup, repo-content search across source/docs/config/scripts, file tree
 navigation, and hybrid ranking. When FalkorDB, Qdrant, and an embeddings
 endpoint are configured - typically through Gobby - `gcode` adds graph-aware
-search, semantic search, dependency analysis (`callers`, `usages`, `imports`,
-`blast-radius`), and daemon-backed graph lifecycle commands (`gcode graph clear`,
-`gcode graph rebuild`).
+search, semantic search, optional graph expansion for exact symbol lookup
+(`gcode search-symbol --with-graph`), dependency analysis (`callers`, `usages`,
+`imports`, `blast-radius`), and daemon-backed graph lifecycle commands
+(`gcode graph clear`, `gcode graph rebuild`).
 
 For non-Gobby-managed projects, `gcode init` installs the bundled `gcode` skill
 for Claude Code, Codex, Droid, Grok, Qwen, Gemini CLI (deprecated

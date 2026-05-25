@@ -81,7 +81,9 @@ gcode offers four search modes for different use cases.
 The default. Combines pg_search BM25 text matching with optional semantic similarity,
 graph boost, and graph expansion using Reciprocal Rank Fusion. If FalkorDB,
 Qdrant, or the embeddings endpoint are unavailable, `gcode search` falls back
-to the sources that are configured.
+to the sources that are configured. JSON results expose `score` as the final
+display rank score, `rrf_score` as the raw RRF contribution, and sorted
+`sources` values for source attribution.
 
 ```bash
 gcode search "database connection pool"
@@ -102,7 +104,7 @@ gcode search "Context" --language rust         # Scope to Rust sources
 - `--language <lang>` — Filter by source language (e.g. `rust`, `python`, `typescript`, `css`).
 - Positional `PATH` arguments after the query — Filter by one or more paths or globs (e.g. `src`, `src/**/*.rs`, `tests/*`). Bare paths match the exact file path and descendants; multiple paths use OR semantics.
 
-`--kind`, `--language`, and positional paths compose — combine them to narrow as far as you need.
+`--kind`, `--language`, and positional paths compose — combine them to narrow as far as you need. Globs that cannot be converted to SQL prefixes are still honored through post-filtering; JSON output includes a hint and text output prints a warning when that broader fetch path is used.
 
 ### Symbol Search (`gcode search-symbol`)
 
@@ -116,11 +118,12 @@ gcode search-symbol "outline"
 gcode search-symbol "Context" --kind class --language rust
 gcode search-symbol "ensure_fresh" crates/gcode
 gcode search-symbol "Context" crates/gcode/src --kind class --language rust
+gcode search-symbol "Context" --with-graph
 ```
 
 **When to use:** You know the symbol's name (or close to it) and want a stable, top-ranked match — for example, before calling `gcode symbol <id>`.
 
-**Options:** `--limit N`, `--offset N`, `--kind <kind>`, `--language <lang>`, positional `PATH ...`.
+**Options:** `--limit N`, `--offset N`, `--kind <kind>`, `--language <lang>`, `--with-graph`, positional `PATH ...`. `--with-graph` keeps exact-first ranking but adds FalkorDB graph neighbors when available.
 
 ### Text Search (`gcode search-text`)
 

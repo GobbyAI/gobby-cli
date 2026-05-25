@@ -186,6 +186,11 @@ Current external-callee support:
 | Elixir | curated Mix dependency roots plus explicit `alias` / `require`; `import`, `use`, and dynamic calls remain unresolved |
 | C/C++ | optional clangd-backed semantic resolution when `clangd` and `compile_commands.json` are available; tree-sitter-only calls remain unresolved |
 
+External resolution checks parameter and local variable shadowing before
+classifying bare calls or qualified roots as external. Swift scoped imports
+such as `import struct Foundation.Date` bind the module root (`Foundation`),
+not the scoped keyword.
+
 C/C++ semantic mode auto-enables when `clangd` is discoverable and
 `compile_commands.json` exists at the project root or common build directories.
 Set `GCODE_CLANGD` to override the clangd command and
@@ -315,7 +320,7 @@ Source 4: Graph Expand (FalkorDB)
   ↓ All sources → RRF merge → Symbol resolution → Positional path filters → Pagination
 ```
 
-`search`, `search-symbol`, `search-text`, and `search-content` accept positional path filters after the query. Bare paths expand to exact + subtree matches; glob paths stay verbatim; multiple paths use OR semantics. BM25 queries add a parenthesized SQL `LIKE` prefix OR block only when every expanded pattern has a safe prefix. Rust `glob::Pattern` post-filtering then enforces exact semantics across all sources, including semantic/graph results that lack SQL-side filtering.
+`search`, `search-symbol`, `search-text`, and `search-content` accept positional path filters after the query. Bare paths expand to exact + subtree matches; glob paths stay verbatim; multiple paths use OR semantics. BM25 queries add a parenthesized SQL `LIKE` prefix OR block only when every expanded pattern has a safe prefix. Rust `glob::Pattern` post-filtering then enforces exact semantics across all sources, including semantic/graph results that lack SQL-side filtering. If a path glob cannot be lowered to a SQL prefix, handlers surface a hint and rely on post-query filtering after a broader fetch.
 
 ### RRF Merge (rrf.rs)
 
@@ -328,8 +333,12 @@ score(symbol) = Σ 1/(K + rank) for each source containing the symbol
 - Rank 0 is best (first in source list)
 - Single-source max score: 1/60 ≈ 0.0167
 - Multi-source: scores are additive across sources
-- Results sorted by combined score, descending
-- Source attribution preserved (e.g., `["fts", "graph_expand"]`)
+- `gcode search` sorts by exact tier first, then RRF score; public `score`
+  reflects that final display order and `rrf_score` preserves the raw RRF value.
+- `gcode search-symbol --with-graph` uses the same RRF metadata for exact hits
+  plus optional FalkorDB graph neighbors; default `search-symbol` stays exact-first
+  without graph expansion.
+- Source attribution is sorted deterministically (e.g., `["fts", "graph_expand"]`)
 
 ### Symbol Resolution
 
@@ -341,7 +350,7 @@ multiple systems with deduplication.
 
 ### BM25 Search (`search-text`, `search-content`)
 
-These use dedicated `count_text`/`count_content` functions (pg_search BM25 counts with LIKE fallback) for accurate totals when no positional path filters are present. With path filters, handlers fetch up to `FILTERED_FETCH_CAP`, apply glob filtering before pagination, and surface a hint if the cap is hit.
+These use dedicated `count_text`/`count_content` functions (pg_search BM25 counts with LIKE fallback) for accurate totals when no positional path filters are present. With path filters, handlers fetch up to `FILTERED_FETCH_CAP`, apply glob filtering before pagination, and surface a hint if the cap is hit or a glob required SQL-filter fallback.
 
 ### Pagination
 
