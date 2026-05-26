@@ -66,7 +66,7 @@ thiserror = "2"
 # Feature-gated
 postgres = { version = "0.19", optional = true }
 postgres-types = { version = "0.2", optional = true }
-falkordb = { version = "0.3", optional = true }
+falkordb = { version = "0.2", optional = true }
 reqwest = { version = "0.12", features = ["blocking", "json"], optional = true }
 ignore = { version = "0.4", optional = true }
 sha2 = { version = "0.10", optional = true }
@@ -320,16 +320,22 @@ pub struct EmbeddingConfig {
 /// The Gobby config_store stores values as raw strings that may be
 /// JSON-encoded. This function handles:
 /// - JSON strings (`"http://host:7474"`) → inner value (`http://host:7474`)
+/// - JSON arrays/objects → re-serialized as JSON strings (preserves
+///   structured config values like `["alpha",1,true]`)
+/// - JSON scalars (numbers, bools) → `value.to_string()`
 /// - Plain strings (`http://host:7474`) → pass-through
-/// - JSON arrays/objects → `None` (not a scalar config value)
+/// - JSON null → `None`
 ///
-/// Matches the behavior of `gcode`'s `decode_config_value`.
+/// Matches the behavior of `gcode`'s `decode_config_value`
+/// (`crates/gcode/src/config.rs:359-368`).
 pub fn decode_config_value(raw: &str) -> Option<String> {
     match serde_json::from_str::<serde_json::Value>(raw) {
         Ok(serde_json::Value::String(s)) => Some(s),
-        Ok(serde_json::Value::Number(n)) => Some(n.to_string()),
-        Ok(serde_json::Value::Bool(b)) => Some(b.to_string()),
-        Ok(_) => None, // arrays, objects, null
+        Ok(value @ (serde_json::Value::Array(_) | serde_json::Value::Object(_))) => {
+            Some(serde_json::to_string(&value).unwrap_or_else(|_| raw.to_string()))
+        }
+        Ok(serde_json::Value::Null) => None,
+        Ok(value) => Some(value.to_string()),
         Err(_) => Some(raw.to_string()), // plain string
     }
 }
@@ -457,7 +463,7 @@ The resolution functions are not feature-gated themselves — they take `&mut im
 - 1.3.2 - FalkorDB and Qdrant resolution preserves env-var precedence over `config_store` over defaults. test: `crates/gcore/src/config.rs::tests::env_overrides_config_store`.
 - 1.3.3 - Missing optional service config is represented as `None` and does not panic. test: `crates/gcore/src/context.rs::tests::missing_optional_services_are_none`.
 - 1.3.4 - Existing `bootstrap.rs` and `project.rs` public APIs are unchanged. test: `crates/gcore/src/project.rs::tests::read_project_id_is_non_destructive`.
-- 1.3.5 - `decode_config_value` unwraps JSON strings, passes through plain strings, and returns `None` for JSON arrays/objects. test: `crates/gcore/src/config.rs::tests::decode_config_value_handles_json_and_plain`.
+- 1.3.5 - `decode_config_value` unwraps JSON strings, re-serializes JSON arrays/objects as JSON strings (preserving structured config values), converts scalars via `to_string`, passes through plain strings, and returns `None` only for JSON null. test: `crates/gcore/src/config.rs::tests::decode_config_value_handles_json_and_plain`.
 - 1.3.6 - `resolve_env_pattern` resolves `${VAR}` and `${VAR:-default}` patterns from environment variables. test: `crates/gcore/src/config.rs::tests::resolve_env_pattern_with_defaults`.
 - 1.3.7 - Resolution functions accept `&mut impl ConfigSource` for config reads and `$secret:NAME` interpolation; `EnvOnlySource` provides a no-database baseline. test: `crates/gcore/src/config.rs::tests::config_source_handles_secrets`.
 - 1.3.8 - `CoreContext::build` resolves service configs through `ConfigSource` and produces a complete context from pre-resolved DSN, project root, and project ID. test: `crates/gcore/src/context.rs::tests::build_with_env_only_source`.
@@ -1137,4 +1143,5 @@ Integration validation after dependent plans land:
 - **R2 (2026-05-26)**: Added Cargo feature-gate strategy to constraints and task 1.1; concrete code examples (struct/trait/function signatures) to all deliverable sections; acknowledged existing `bootstrap.rs`/`project.rs` modules in task 1.2; added `Cargo.toml` as target for 1.1; added `--all-features` build/test to verification; clarified config-store resolution requires `postgres` feature.
 - **R3 (2026-05-26)**: Addressed R2 adversary findings F1–F4. (F1) Fixed `with_graph` return type to `anyhow::Result<(T, ServiceState)>` with explicit four-state degradation contract; updated acceptance 2.2.1/2.2.4. (F2) Replaced `collection_name(namespace, id)` with `CollectionScope` enum supporting `Project`, `Topic`, and `Custom` scopes; documented gcode's legacy `code_symbols_` preservation via `Custom`; added acceptance 2.3.2 covering all scopes. (F3) Replaced `qdrant-client` + `tokio` with `reqwest::blocking` matching gcode's existing sync HTTP pattern; documented runtime contract; added acceptance 2.3.5 for sync CLI path. (F4) Added concrete definitions for `ValidationContext`, `ValidationReport`, `SetupContext`, `SetupReport`, `SetupError`, `OwnedObject` in §1.3 and `SchemaCheck` in §2.1. Swept: updated §1.1 Cargo.toml features; fixed §3.3 dependency from `(depends: 3.1, 3.2)` to `(depends: 1.1)` since degradation.rs is always-available and consumed by P1/P2 tasks.
 - **R4 (2026-05-26)**: Addressed R3 adversary findings F1–F4. (F1) Moved degradation contract from §3.3/P3 to §1.2/P1 so it precedes all consumers (§1.4, §2.2, §2.3, §3.2); renumbered §1.2→§1.3, §1.3→§1.4; removed `degradation.rs` from §2.2, §2.3, §3.2 targets to prevent multi-agent edits to the same file; §1.4 now depends on both §1.2 and §1.3. (F2) Changed `ValidationContext`/`SetupContext` to use `&'a mut postgres::Client` mutable borrows instead of owned `postgres::Client`; changed validators to `FnMut(&mut ValidationContext<'_>)` and creators to `FnMut(&mut SetupContext<'_>)`; added acceptance items 1.4.5/1.4.6 proving mutable query and DDL execution. (F3) Added `dep:urlencoding` to `falkor` feature in Cargo.toml; added acceptance 1.1.5 for per-feature isolation builds. (F4) Added `decode_config_value` (JSON string unwrapping), `resolve_env_pattern` (`${VAR}`/`${VAR:-default}`), and `ValueResolver` callback type to §1.3; resolution functions accept consumer-supplied resolver for `$secret:NAME` interpolation; documented config value pipeline; updated `read_config_value` docs to reference decode step; added acceptance items 1.3.5/1.3.6/1.3.7. Swept all deliverables for same finding classes: verified no other shared type definitions are consumed before being defined; verified all targets correctly reflect file ownership.
+- **R6 (2026-05-26)**: Addressed R5 adversary findings F1–F2. (F1) Changed `falkordb` dependency from `"0.3"` (not published on crates.io) to `"0.2"` matching the workspace version at `crates/gcode/Cargo.toml:36`. (F2) Updated `decode_config_value` to match gcode's actual behavior: JSON arrays/objects are re-serialized as JSON strings via `serde_json::to_string` instead of returning `None`; JSON null returns `None`; updated acceptance 1.3.5 to assert array/object preservation. Swept: verified all planned dependency versions against workspace Cargo.toml files — no other version mismatches found; verified no other plan sections reference the old arrays-return-None semantics.
 - **R5 (2026-05-26)**: Addressed R4 adversary findings F1–F4. (F1) Replaced `ValueResolver` callback with `ConfigSource` trait that owns its datastore connection via `&mut self`, eliminating the borrow conflict between `&mut postgres::Client` and the resolver closure; added `EnvOnlySource` for no-database baseline; removed `#[cfg(feature = "postgres")]` from resolution functions since `ConfigSource` abstracts the connection; showed `PostgresConfigSource` implementation example matching gcode's existing `FalkorConfigSource` pattern; added acceptance 1.3.7/1.3.10. (F2) Changed `CollectionScope::Custom` to return the supplied name verbatim without namespace prefix, so `collection_name("gcode", Custom("code_symbols_abc"))` returns `"code_symbols_abc"` preserving existing gcode collections without migration; added acceptance 2.3.6. (F3) Changed `GOBBY_EMBEDDING_API_BASE` to `GOBBY_EMBEDDING_URL` matching existing gcode env var at `crates/gcode/src/config.rs:534`; added acceptance 1.3.9. (F4) Added concrete `CoreContext::build` method with explicit parameter contract: DSN resolution is consumer-owned (documented gcode/gwiki fallback chains), project identity uses existing `project.rs` helpers, service configs resolve through `ConfigSource`, daemon URL from `daemon_url::daemon_url()`; added acceptance 1.3.8. Swept: verified all env var names in plan match codebase (GOBBY_FALKORDB_HOST/PORT/PASSWORD, GOBBY_QDRANT_URL, GOBBY_EMBEDDING_URL, GOBBY_EMBEDDING_MODEL, GOBBY_EMBEDDING_API_KEY); verified no other resolution functions have borrow-conflict patterns.
