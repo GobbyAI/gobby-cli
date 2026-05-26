@@ -109,7 +109,7 @@ The visitor extracts the key name (`filter_lines`, `group_lines`, `truncate`, `d
 
 `Compressor::new(config)` compiles all pipeline `match_pattern` regexes and configured excluded command patterns at construction time (not per-compress call). Invalid regexes are silently skipped via `filter_map`.
 
-Built-in exclusions are checked by executable name before regex exclusions: `gobby`, `gobby-cli`, `gcode`, `ghook`, `gloc`, `gsqz`, `git`, `rg`, and `sed`. These commands are raw passthrough because their output is already structured or source-of-truth diagnostic data.
+Built-in exclusions are checked by executable name before regex exclusions: `gobby`, `gobby-cli`, `gcode`, `ghook`, `gloc`, `gsqz`, `git`, `gh`, `rg`, and `sed`. These commands are raw passthrough because their output is already structured or source-of-truth diagnostic data.
 
 ### Compression Flow
 
@@ -392,7 +392,6 @@ State machine tracking single/double quotes and paren depth. Splits at `&&`, `||
 | package-mgmt | `pip\s+install\|npm\s+install\|uv\s+pip` | filter + truncate |
 | docker-list | `docker\s+(?:ps\|images)` | truncate |
 | container-logs | `docker\s+logs\|kubectl\s+logs` | dedup + truncate |
-| gh-cli | `gh\s+(?:pr\|issue)\s+(?:list\|view)` | filter + truncate |
 | download | `\b(?:wget\|curl)\b` | filter(progress) + truncate |
 
 ### Fallback
