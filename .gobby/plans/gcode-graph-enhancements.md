@@ -1,18 +1,20 @@
-# gcode graph core: reusable Rust graph with provenance and reports
+# gcode graph enhancements on the Rust foundation
 
 ## Overview
 `kind: framing`
 
-`gcode` is the Rust interim landing zone for code-index behavior while the Gobby daemon migrates to Rust. The durable target is not a CLI-owned graph implementation; it is a reusable Rust code-index/graph core that the CLI wraps today and the future Rust daemon links directly. Python daemon shims may shell out to `gcode` during the migration window, but that is a compatibility bridge, not the final architecture.
+`gcode` owns code-index and code-graph behavior on top of the shared Rust foundation defined in `.gobby/plans/gcore-rust-foundation.md`. The durable target is not a generic datastore/search substrate inside `gobby-code`; it is a code-specific graph API that the CLI wraps today and the future Rust daemon links directly. Python daemon shims may shell out to `gcode` during the migration window, but that is a compatibility bridge, not the final architecture.
 
-This plan moves code-graph writes, reads, lifecycle operations, and project graph reporting into Rust library boundaries first. `gcode` remains the user-facing CLI wrapper for those APIs. The code graph must work without the daemon process, and standalone mode gets an explicit setup path for the minimal app schema it needs.
+This plan moves code-graph writes, reads, lifecycle operations, and project graph reporting into `gobby-code` library boundaries first. Shared context/config resolution, attached versus standalone setup contracts, PostgreSQL/FalkorDB/Qdrant adapters, generic indexing/search primitives, and degradation vocabulary are consumed from `gobby-core`. `gcode` remains the user-facing CLI wrapper for code APIs. The code graph must work without the daemon process, and standalone mode gets an explicit setup path for the minimal gcode-owned app schema it needs.
 
 The code/memory boundary stays sharp. Rust code-index modules own deterministic code facts: files, symbols, imports, definitions, calls, unresolved call targets, and code graph reports derived from those facts. Gobby memory services own memories, knowledge graph extraction, and `RELATES_TO_CODE` bridge creation. Rust report code may read bridge edges when present so agents can see hypotheses beside extracted code facts, but it must not create or mutate memory-owned data.
 
 ## Architecture Principles
 `kind: framing`
 
-- Core first: graph, report, setup, and schema behavior lives behind reusable Rust library APIs. `gcode` parses CLI args, resolves context, calls the library, and formats output.
+- Foundation dependency: shared context/config, setup contracts, datastore adapters, generic indexing/search primitives, and degradation types come from `gobby-core`.
+- Code-specific core: code graph writes, reads, lifecycle operations, reports, symbol IDs, language facts, and code graph API shapes live in `gobby-code`.
+- CLI wrapper: `gcode` parses CLI args, resolves context, calls library APIs, and formats output.
 - Direct linking is the target daemon integration. The future Rust daemon links the same Rust code directly; no daemon HTTP, MCP, or CLI shell boundary is the target internal architecture.
 - Python daemon shell-outs are transitional only. If needed before the Rust daemon lands, Python calls stable `gcode` JSON commands and treats failures as explicit degradation.
 - Gobby-attached mode remains non-destructive. It validates the externally managed hub schema and must not create, alter, or drop Gobby-owned tables.
@@ -26,6 +28,7 @@ The code/memory boundary stays sharp. Rust code-index modules own deterministic 
 `kind: framing`
 
 - Do not make `gcode` the long-term owner of daemon orchestration, UI, MCP, or memory graph behavior.
+- Do not add generic datastore, search, indexing, or degradation primitives to `gobby-code` when they belong in `gobby-core`.
 - Do not add daemon-backed graph/report CLI commands as the target architecture.
 - Do not rely on inherited Gobby-owned migrations as the standalone story.
 - Do not write `.gobby/project.json`, mutate `config_store`, or run `gcode invalidate`.
@@ -35,11 +38,13 @@ The code/memory boundary stays sharp. Rust code-index modules own deterministic 
 ## P1: Core Boundary And Setup
 `kind: framing`
 
-### 1.1 Create the reusable Rust library boundary [category: code]
+### 1.1 Create the gobby-code graph library boundary [category: code]
 `kind: deliverable`
 Targets: `crates/gcode/Cargo.toml`, `crates/gcode/src/lib.rs`, `crates/gcode/src/main.rs`, `crates/gcode/src/commands/graph.rs`, `crates/gcode/src/falkor.rs`
 
-Add a library target for `gobby-code` and move reusable code-index behavior behind modules callable from both the CLI and a future Rust daemon. The CLI keeps the existing binary surface, but implementation entry points should be library functions with input structs and serializable output structs.
+Add a library target for `gobby-code` and move code-specific graph behavior behind modules callable from both the CLI and a future Rust daemon. The CLI keeps the existing binary surface, but implementation entry points should be library functions with input structs and serializable output structs.
+
+Shared context/config, setup contracts, datastore adapters, generic indexing/search primitives, and degradation contracts come from `gobby-core`. `gobby-code` owns code graph API types, code fact models, graph writes/reads, lifecycle commands, reports, and code-specific search boosts.
 
 Initial module shape:
 
@@ -47,8 +52,8 @@ Initial module shape:
 - `graph::typed_query` owns safe FalkorDB parameter rendering.
 - `graph::code_graph` owns code graph writes, reads, and lifecycle operations.
 - `graph::report` owns project graph report generation.
-- `setup` owns explicit standalone setup.
-- `schema` keeps attached-mode validation.
+- `setup` integrates explicit standalone setup through `gobby-core` contracts.
+- `schema` keeps gcode-specific attached-mode validation.
 
 `crates/gcode/src/falkor.rs` remains a compatibility facade for the external Phase 7 contract while implementation moves behind the library boundary. Do not collapse it into a pure re-export until the Gobby-side source-inspection test is revised.
 
@@ -265,7 +270,8 @@ Document the migration contract for Gobby daemon consumers:
 ## Acceptance Criteria
 `kind: framing`
 
-- Reusable Rust library APIs own code graph writes, reads, lifecycle, setup, and report generation.
+- `gobby-code` library APIs own code graph writes, reads, lifecycle, setup integration, and report generation.
+- Shared foundation concerns route through `gobby-core`, not copied `gcode` utilities.
 - `gcode` graph commands are CLI wrappers over library APIs.
 - Future Rust daemon can link the same code directly.
 - Python daemon shell-outs, if used, are explicitly transitional.
@@ -281,12 +287,13 @@ Document the migration contract for Gobby daemon consumers:
 
 - **R1-R12 (2026-05-24)**: Earlier iterations specified direct `gcode` ownership of graph writes/reads, route-shaped CLI commands, provenance metadata, graph lifecycle cleanup, report output, and Phase 7 compatibility constraints.
 - **R13 (2026-05-26)**: Reframed the plan around reusable Rust core/library boundaries with `gcode` as CLI wrapper; made future Rust daemon direct linking the target; limited Python daemon shell-outs to transitional shims; added explicit standalone setup and minimal app-schema creation; preserved provenance/confidence, code-vs-memory ownership, graph report, and degraded behavior concepts; removed stale daemon-backed CLI and inherited-migration framing.
+- **R14 (2026-05-26)**: Added dependency on `gobby-core` foundation plan; clarified that `gobby-code` owns code-specific graph APIs while shared context/config, setup, datastore, search/index primitives, and degradation contracts route through `gobby-core`.
 
 ## Task Plan
 `kind: framing`
 
 ```yaml
-- title: Create reusable Rust library boundary
+- title: Create gobby-code graph library boundary
   category: code
   task_type: feature
   depends_on: []
