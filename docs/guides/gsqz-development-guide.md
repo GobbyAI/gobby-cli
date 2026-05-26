@@ -109,7 +109,7 @@ The visitor extracts the key name (`filter_lines`, `group_lines`, `truncate`, `d
 
 `Compressor::new(config)` compiles all pipeline `match_pattern` regexes and configured excluded command patterns at construction time (not per-compress call). Invalid regexes are silently skipped via `filter_map`.
 
-Built-in exclusions are checked by executable name before regex exclusions: `gobby`, `gobby-cli`, `gcode`, `ghook`, `gloc`, `gsqz`, and `git`. These commands are raw passthrough because their output is already structured or source-of-truth diagnostic data.
+Built-in exclusions are checked by executable name before regex exclusions: `gobby`, `gobby-cli`, `gcode`, `ghook`, `gloc`, `gsqz`, `git`, `rg`, and `sed`. These commands are raw passthrough because their output is already structured or source-of-truth diagnostic data.
 
 ### Compression Flow
 
@@ -387,7 +387,7 @@ State machine tracking single/double quotes and paren depth. Splits at `&&`, `||
 | go-lint | `\b(?:golangci-lint\|staticcheck)\b` | dedup + group(lint_by_rule) + truncate |
 | ls-tree | `\b(?:ls\|tree)\b` | group(by_extension) + truncate |
 | find | `\bfind\b` | group(by_directory) + truncate |
-| grep | `\b(?:grep\|rg\|ripgrep)\b` | group(by_file) + truncate |
+| grep | `\b(?:grep\|ripgrep)\b` | group(by_file) + truncate |
 | build | `cargo\s+build\|go\s+build\|make\|webpack` | filter + group(errors_warnings) + truncate |
 | package-mgmt | `pip\s+install\|npm\s+install\|uv\s+pip` | filter + truncate |
 | docker-list | `docker\s+(?:ps\|images)` | truncate |

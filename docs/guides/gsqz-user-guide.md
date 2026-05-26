@@ -244,7 +244,7 @@ excluded_commands:
   - '\becho\b'
 ```
 
-Gobby-owned CLIs (`gobby`, `gobby-cli`, `gcode`, `ghook`, `gloc`, `gsqz`) and `git` are built-in exclusions. Their output is already structured or source-of-truth diagnostic data, so gsqz surfaces it verbatim with no compression header and no savings report.
+Gobby-owned CLIs (`gobby`, `gobby-cli`, `gcode`, `ghook`, `gloc`, `gsqz`), `git`, `rg`, and `sed` are built-in exclusions. Their output is already structured or source-of-truth diagnostic data, so gsqz surfaces it verbatim with no compression header and no savings report.
 
 ### Full Pipeline Example
 
