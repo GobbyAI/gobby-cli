@@ -220,9 +220,10 @@ use std::path::PathBuf;
 
 /// Resolved runtime context for any gobby-core consumer.
 ///
-/// Built by `CoreContext::resolve()`. Contains project identity and
-/// optional service configs. Domain-specific fields (quiet flags,
-/// output format) stay in consumer crates.
+/// Built by `CoreContext::build()` from pre-resolved inputs.
+/// Contains project identity and optional service configs.
+/// Domain-specific fields (quiet flags, output format) stay
+/// in consumer crates.
 pub struct CoreContext {
     /// Project root directory (contains `.gobby/`)
     pub project_root: PathBuf,
@@ -238,6 +239,51 @@ pub struct CoreContext {
     pub embedding: Option<EmbeddingConfig>,
     /// Gobby daemon base URL
     pub daemon_url: Option<String>,
+}
+
+impl CoreContext {
+    /// Build a CoreContext from pre-resolved inputs.
+    ///
+    /// **DSN resolution is consumer-owned.** Each consumer resolves
+    /// its database URL through its own fallback chain:
+    /// - `gcode`: daemon broker → `GCODE_DATABASE_URL` →
+    ///   `GOBBY_POSTGRES_DSN` → `~/.gobby/gcode.yaml` →
+    ///   `bootstrap.yaml` direct DSN
+    /// - `gwiki`: same chain with `GWIKI_DATABASE_URL` priority
+    ///
+    /// **Project identity** uses existing `gobby-core` helpers:
+    /// `project::find_project_root` walks up from cwd,
+    /// `project::read_project_id` reads `.gobby/project.json`.
+    ///
+    /// **Service config resolution** (FalkorDB, Qdrant, embedding)
+    /// is shared through the `ConfigSource` trait. The consumer
+    /// provides a `ConfigSource` implementation that owns its own
+    /// database connection (e.g. `PostgresConfigSource` wrapping
+    /// `&mut Client`). When no database is available, pass an
+    /// `EnvOnlySource` to resolve from environment variables only.
+    ///
+    /// **Daemon URL** is resolved from the existing
+    /// `daemon_url::daemon_url()` helper.
+    pub fn build(
+        project_root: PathBuf,
+        project_id: String,
+        database_url: Option<String>,
+        source: &mut impl ConfigSource,
+    ) -> Self {
+        let falkordb = resolve_falkordb_config(source);
+        let qdrant = resolve_qdrant_config(source);
+        let embedding = resolve_embedding_config(source);
+        let daemon_url = Some(crate::daemon_url::daemon_url());
+        Self {
+            project_root,
+            project_id,
+            database_url,
+            falkordb,
+            qdrant,
+            embedding,
+            daemon_url,
+        }
+    }
 }
 ```
 
@@ -302,34 +348,74 @@ pub fn resolve_env_pattern(value: &str) -> anyhow::Result<Option<String>> {
     todo!("implementation")
 }
 
-/// Consumer-supplied value resolver for `$secret:NAME` and other
-/// interpolation patterns.
+/// Source for config values and value resolution.
 ///
-/// `gcode` passes its `secrets::resolve_config_value` which decrypts
-/// Fernet-encrypted secrets from the `secrets` table using machine_id
-/// and secret_salt. `gobby-wiki` will use the same resolver.
+/// Implementors own their datastore connection internally, avoiding
+/// the borrow conflict between connection access and value resolution
+/// that a `Box<dyn Fn>` callback would cause. `gobby-core` calls
+/// `config_value` to read settings and `resolve_value` to expand
+/// `$secret:NAME` and `${VAR}` patterns.
 ///
-/// The resolver receives the raw value string after `decode_config_value`
-/// and returns the fully resolved value. `gobby-core` calls
-/// `decode_config_value` first, then passes the decoded value to the
-/// resolver if one is provided.
-pub type ValueResolver = Box<dyn Fn(&str) -> anyhow::Result<String>>;
+/// This mirrors the existing `FalkorConfigSource` trait pattern in
+/// `gcode` (`crates/gcode/src/config.rs`). `gcode` implements this
+/// with a `PostgresConfigSource` that holds `&'a mut postgres::Client`:
+///
+/// ```rust
+/// struct PostgresConfigSource<'a> {
+///     conn: &'a mut postgres::Client,
+/// }
+/// impl ConfigSource for PostgresConfigSource<'_> {
+///     fn config_value(&mut self, key: &str) -> Option<String> {
+///         gobby_core::postgres::read_config_value(self.conn, key)
+///             .ok().flatten()
+///     }
+///     fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {
+///         crate::secrets::resolve_config_value(value, self.conn)
+///     }
+/// }
+/// ```
+pub trait ConfigSource {
+    /// Read a config value by key (from config_store, env, etc.).
+    /// Returns `None` for missing keys. Implementations that read
+    /// from `config_store` should pipe through `decode_config_value`
+    /// to unwrap JSON string encoding.
+    fn config_value(&mut self, key: &str) -> Option<String>;
+
+    /// Resolve interpolation patterns in a config value.
+    /// Handles `$secret:NAME`, `${VAR}`, `${VAR:-default}`.
+    fn resolve_value(&mut self, value: &str) -> anyhow::Result<String>;
+}
+
+/// Env-only config source for consumers without database access.
+///
+/// Returns `None` for all config keys (no config_store) and resolves
+/// only `${VAR}` patterns (not `$secret:NAME`). Used when
+/// `database_url` is `None` or the `postgres` feature is disabled.
+pub struct EnvOnlySource;
+
+impl ConfigSource for EnvOnlySource {
+    fn config_value(&mut self, _key: &str) -> Option<String> {
+        None
+    }
+    fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {
+        resolve_env_pattern(value)?
+            .ok_or_else(|| anyhow::anyhow!("unresolved pattern: {value}"))
+    }
+}
 
 /// Resolve FalkorDB config from env → config_store → defaults.
 ///
 /// Env vars: GOBBY_FALKORDB_HOST, GOBBY_FALKORDB_PORT,
 ///           GOBBY_FALKORDB_PASSWORD, GOBBY_FALKORDB_GRAPH
 ///
-/// The `value_resolver` callback handles `$secret:NAME` and `${VAR}`
-/// patterns found in config_store values. Consumers supply their own
-/// resolver (e.g. `gcode` passes `secrets::resolve_config_value`).
-/// Pass `None` to skip interpolation and use raw decoded values.
+/// The `ConfigSource` handles reading config values and resolving
+/// `$secret:NAME` and `${VAR}` patterns. Env vars take precedence
+/// over config_store; config_store values are decoded and resolved
+/// through `source.config_value` and `source.resolve_value`.
 ///
 /// Returns None when no host is configured from any source.
-#[cfg(feature = "postgres")]
 pub fn resolve_falkordb_config(
-    conn: &mut postgres::Client,
-    value_resolver: Option<&ValueResolver>,
+    source: &mut impl ConfigSource,
 ) -> Option<FalkorConfig> { /* ... */ }
 
 /// Resolve Qdrant config from env → config_store → defaults.
@@ -337,29 +423,28 @@ pub fn resolve_falkordb_config(
 /// Env vars: GOBBY_QDRANT_URL, GOBBY_QDRANT_API_KEY,
 ///           GOBBY_QDRANT_COLLECTION_PREFIX
 ///
-/// Same resolver semantics as `resolve_falkordb_config`.
-#[cfg(feature = "postgres")]
+/// Same source semantics as `resolve_falkordb_config`.
 pub fn resolve_qdrant_config(
-    conn: &mut postgres::Client,
-    value_resolver: Option<&ValueResolver>,
+    source: &mut impl ConfigSource,
 ) -> Option<QdrantConfig> { /* ... */ }
 
 /// Resolve embedding API config from env → config_store → defaults.
 ///
-/// Env vars: GOBBY_EMBEDDING_API_BASE, GOBBY_EMBEDDING_MODEL,
+/// Env vars: GOBBY_EMBEDDING_URL, GOBBY_EMBEDDING_MODEL,
 ///           GOBBY_EMBEDDING_API_KEY
 ///
-/// Same resolver semantics as `resolve_falkordb_config`.
-#[cfg(feature = "postgres")]
+/// `GOBBY_EMBEDDING_URL` is the canonical env var, matching existing
+/// `gcode` behavior (`crates/gcode/src/config.rs:534`).
+///
+/// Same source semantics as `resolve_falkordb_config`.
 pub fn resolve_embedding_config(
-    conn: &mut postgres::Client,
-    value_resolver: Option<&ValueResolver>,
+    source: &mut impl ConfigSource,
 ) -> Option<EmbeddingConfig> { /* ... */ }
 ```
 
-The resolution functions that read `config_store` require the `postgres` feature. When `postgres` is not enabled, consumers supply their own config structs or resolve from environment only. `resolve_from_env_only()` variants are always available.
+The resolution functions are not feature-gated themselves — they take `&mut impl ConfigSource`, and the consumer's `ConfigSource` implementation decides how to access the datastore. When no database is available, consumers pass `EnvOnlySource` to resolve from environment variables only.
 
-**Config value pipeline:** `read_config_value` reads the raw string from `config_store` → `decode_config_value` unwraps JSON encoding → the consumer-supplied `ValueResolver` handles `$secret:NAME` and remaining `${VAR}` patterns. This preserves the existing `gcode` resolution semantics (env → config_store with JSON decode → secret/env interpolation → defaults) without pulling Fernet crypto dependencies into `gobby-core`.
+**Config value pipeline:** `ConfigSource.config_value` reads and decodes the config value (the PostgreSQL implementation calls `read_config_value` then `decode_config_value`) → `ConfigSource.resolve_value` handles `$secret:NAME` and `${VAR}` patterns. This preserves the existing `gcode` resolution semantics (env → config_store with JSON decode → secret/env interpolation → defaults) without pulling Fernet crypto dependencies into `gobby-core`. The `ConfigSource` trait eliminates the borrow conflict between connection access and value resolution because the implementor owns its connection internally via `&mut self`.
 
 **Existing modules — no breaking changes:**
 
@@ -374,7 +459,10 @@ The resolution functions that read `config_store` require the `postgres` feature
 - 1.3.4 - Existing `bootstrap.rs` and `project.rs` public APIs are unchanged. test: `crates/gcore/src/project.rs::tests::read_project_id_is_non_destructive`.
 - 1.3.5 - `decode_config_value` unwraps JSON strings, passes through plain strings, and returns `None` for JSON arrays/objects. test: `crates/gcore/src/config.rs::tests::decode_config_value_handles_json_and_plain`.
 - 1.3.6 - `resolve_env_pattern` resolves `${VAR}` and `${VAR:-default}` patterns from environment variables. test: `crates/gcore/src/config.rs::tests::resolve_env_pattern_with_defaults`.
-- 1.3.7 - Resolution functions accept a consumer-supplied `ValueResolver` for `$secret:NAME` interpolation; passing `None` uses raw decoded values. test: `crates/gcore/src/config.rs::tests::resolver_callback_handles_secrets`.
+- 1.3.7 - Resolution functions accept `&mut impl ConfigSource` for config reads and `$secret:NAME` interpolation; `EnvOnlySource` provides a no-database baseline. test: `crates/gcore/src/config.rs::tests::config_source_handles_secrets`.
+- 1.3.8 - `CoreContext::build` resolves service configs through `ConfigSource` and produces a complete context from pre-resolved DSN, project root, and project ID. test: `crates/gcore/src/context.rs::tests::build_with_env_only_source`.
+- 1.3.9 - `resolve_embedding_config` uses `GOBBY_EMBEDDING_URL` as the canonical env var, preserving existing `gcode` behavior. test: `crates/gcore/src/config.rs::tests::embedding_url_env_var_is_canonical`.
+- 1.3.10 - `ConfigSource` trait methods use `&mut self`, allowing implementations to hold mutable database connections without borrow conflicts. test: `crates/gcore/src/config.rs::tests::postgres_config_source_resolves_secrets`.
 
 ### 1.4 Define attached and standalone setup contracts [category: code] (depends: 1.2, 1.3)
 `kind: deliverable`
@@ -743,8 +831,10 @@ pub enum CollectionScope<'a> {
     Project(&'a str),
     /// `{namespace}:topic:{name}` — topic-scoped store (e.g. gwiki topics).
     Topic(&'a str),
-    /// Arbitrary suffix — preserves legacy naming (e.g. gcode's
-    /// `code_symbols_<project_id>`).
+    /// Verbatim collection name — returns the supplied name as-is,
+    /// without namespace prefixing. Preserves existing collections
+    /// (e.g. gcode's `code_symbols_<project_id>`). The `namespace`
+    /// parameter is unused for this variant.
     Custom(&'a str),
 }
 
@@ -756,12 +846,12 @@ pub enum CollectionScope<'a> {
 ///   collection_name("gwiki", CollectionScope::Topic("rust-async"))
 ///       → "gwiki:topic:rust-async"
 ///   collection_name("gcode", CollectionScope::Custom("code_symbols_abc-123"))
-///       → "gcode:code_symbols_abc-123"
+///       → "code_symbols_abc-123"
 pub fn collection_name(namespace: &str, scope: CollectionScope<'_>) -> String {
     match scope {
         CollectionScope::Project(id) => format!("{namespace}:project:{id}"),
         CollectionScope::Topic(name) => format!("{namespace}:topic:{name}"),
-        CollectionScope::Custom(suffix) => format!("{namespace}:{suffix}"),
+        CollectionScope::Custom(name) => name.to_string(),
     }
 }
 
@@ -848,6 +938,7 @@ pub fn upsert(
 - 2.3.3 - `UpsertRequest` and `SearchRequest` accept domain payloads without knowing their schema. test: `crates/gcore/src/qdrant.rs::tests::payload_schema_is_opaque`.
 - 2.3.4 - Missing Qdrant or embedding API surfaces typed `ServiceState` degradation. test: `crates/gcore/src/degradation.rs::tests::vector_services_degrade_explicitly`.
 - 2.3.5 - All Qdrant adapter functions are synchronous (`reqwest::blocking`); no Tokio runtime is required. test: `crates/gcore/src/qdrant.rs::tests::sync_search_from_cli_path`.
+- 2.3.6 - `CollectionScope::Custom` returns the supplied name verbatim without namespace prefixing, preserving existing gcode collection names (`code_symbols_<project_id>`). test: `crates/gcore/src/qdrant.rs::tests::custom_scope_returns_verbatim_name`.
 
 ## P3: Generic Indexing And Search Primitives
 `kind: framing`
@@ -1046,3 +1137,4 @@ Integration validation after dependent plans land:
 - **R2 (2026-05-26)**: Added Cargo feature-gate strategy to constraints and task 1.1; concrete code examples (struct/trait/function signatures) to all deliverable sections; acknowledged existing `bootstrap.rs`/`project.rs` modules in task 1.2; added `Cargo.toml` as target for 1.1; added `--all-features` build/test to verification; clarified config-store resolution requires `postgres` feature.
 - **R3 (2026-05-26)**: Addressed R2 adversary findings F1–F4. (F1) Fixed `with_graph` return type to `anyhow::Result<(T, ServiceState)>` with explicit four-state degradation contract; updated acceptance 2.2.1/2.2.4. (F2) Replaced `collection_name(namespace, id)` with `CollectionScope` enum supporting `Project`, `Topic`, and `Custom` scopes; documented gcode's legacy `code_symbols_` preservation via `Custom`; added acceptance 2.3.2 covering all scopes. (F3) Replaced `qdrant-client` + `tokio` with `reqwest::blocking` matching gcode's existing sync HTTP pattern; documented runtime contract; added acceptance 2.3.5 for sync CLI path. (F4) Added concrete definitions for `ValidationContext`, `ValidationReport`, `SetupContext`, `SetupReport`, `SetupError`, `OwnedObject` in §1.3 and `SchemaCheck` in §2.1. Swept: updated §1.1 Cargo.toml features; fixed §3.3 dependency from `(depends: 3.1, 3.2)` to `(depends: 1.1)` since degradation.rs is always-available and consumed by P1/P2 tasks.
 - **R4 (2026-05-26)**: Addressed R3 adversary findings F1–F4. (F1) Moved degradation contract from §3.3/P3 to §1.2/P1 so it precedes all consumers (§1.4, §2.2, §2.3, §3.2); renumbered §1.2→§1.3, §1.3→§1.4; removed `degradation.rs` from §2.2, §2.3, §3.2 targets to prevent multi-agent edits to the same file; §1.4 now depends on both §1.2 and §1.3. (F2) Changed `ValidationContext`/`SetupContext` to use `&'a mut postgres::Client` mutable borrows instead of owned `postgres::Client`; changed validators to `FnMut(&mut ValidationContext<'_>)` and creators to `FnMut(&mut SetupContext<'_>)`; added acceptance items 1.4.5/1.4.6 proving mutable query and DDL execution. (F3) Added `dep:urlencoding` to `falkor` feature in Cargo.toml; added acceptance 1.1.5 for per-feature isolation builds. (F4) Added `decode_config_value` (JSON string unwrapping), `resolve_env_pattern` (`${VAR}`/`${VAR:-default}`), and `ValueResolver` callback type to §1.3; resolution functions accept consumer-supplied resolver for `$secret:NAME` interpolation; documented config value pipeline; updated `read_config_value` docs to reference decode step; added acceptance items 1.3.5/1.3.6/1.3.7. Swept all deliverables for same finding classes: verified no other shared type definitions are consumed before being defined; verified all targets correctly reflect file ownership.
+- **R5 (2026-05-26)**: Addressed R4 adversary findings F1–F4. (F1) Replaced `ValueResolver` callback with `ConfigSource` trait that owns its datastore connection via `&mut self`, eliminating the borrow conflict between `&mut postgres::Client` and the resolver closure; added `EnvOnlySource` for no-database baseline; removed `#[cfg(feature = "postgres")]` from resolution functions since `ConfigSource` abstracts the connection; showed `PostgresConfigSource` implementation example matching gcode's existing `FalkorConfigSource` pattern; added acceptance 1.3.7/1.3.10. (F2) Changed `CollectionScope::Custom` to return the supplied name verbatim without namespace prefix, so `collection_name("gcode", Custom("code_symbols_abc"))` returns `"code_symbols_abc"` preserving existing gcode collections without migration; added acceptance 2.3.6. (F3) Changed `GOBBY_EMBEDDING_API_BASE` to `GOBBY_EMBEDDING_URL` matching existing gcode env var at `crates/gcode/src/config.rs:534`; added acceptance 1.3.9. (F4) Added concrete `CoreContext::build` method with explicit parameter contract: DSN resolution is consumer-owned (documented gcode/gwiki fallback chains), project identity uses existing `project.rs` helpers, service configs resolve through `ConfigSource`, daemon URL from `daemon_url::daemon_url()`; added acceptance 1.3.8. Swept: verified all env var names in plan match codebase (GOBBY_FALKORDB_HOST/PORT/PASSWORD, GOBBY_QDRANT_URL, GOBBY_EMBEDDING_URL, GOBBY_EMBEDDING_MODEL, GOBBY_EMBEDDING_API_KEY); verified no other resolution functions have borrow-conflict patterns.
