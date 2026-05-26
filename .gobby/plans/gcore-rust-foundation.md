@@ -117,6 +117,7 @@ Update `docs/guides/gcore-development-guide.md` to document the expanded module 
 - 1.1.3 - `docs/guides/gcore-development-guide.md` describes `gobby-core` as shared substrate with feature gate documentation. file: `docs/guides/gcore-development-guide.md`.
 - 1.1.4 - `gobby-core` builds under `--no-default-features` with only the lightweight baseline modules. test: `cargo build -p gobby-core --no-default-features`.
 - 1.1.5 - Each individual feature compiles in isolation: `cargo build -p gobby-core --features falkor`, `--features qdrant`, `--features postgres`, `--features indexing`. test: `cargo build -p gobby-core --features falkor && cargo build -p gobby-core --features qdrant && cargo build -p gobby-core --features postgres && cargo build -p gobby-core --features indexing`.
+- 1.1.6 - Baseline `gobby-core` (no features) passes build, test, and clippy without datastore dependencies, matching CI's `--no-default-features` requirement from `AGENTS.md`. test: `cargo build -p gobby-core --no-default-features && cargo test -p gobby-core --no-default-features && cargo clippy -p gobby-core --no-default-features -- -D warnings`.
 
 ### 1.2 Add shared error and degradation contracts [category: code] (depends: 1.1)
 `kind: deliverable`
@@ -374,6 +375,7 @@ pub fn resolve_env_pattern(value: &str) -> anyhow::Result<Option<String>> {
 ///     fn config_value(&mut self, key: &str) -> Option<String> {
 ///         gobby_core::postgres::read_config_value(self.conn, key)
 ///             .ok().flatten()
+///             .and_then(|raw| gobby_core::config::decode_config_value(&raw))
 ///     }
 ///     fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {
 ///         crate::secrets::resolve_config_value(value, self.conn)
@@ -381,10 +383,13 @@ pub fn resolve_env_pattern(value: &str) -> anyhow::Result<Option<String>> {
 /// }
 /// ```
 pub trait ConfigSource {
-    /// Read a config value by key (from config_store, env, etc.).
-    /// Returns `None` for missing keys. Implementations that read
-    /// from `config_store` should pipe through `decode_config_value`
-    /// to unwrap JSON string encoding.
+    /// Read a decoded config value by key (from config_store, env, etc.).
+    /// Returns `None` for missing keys. Implementations that read from
+    /// `config_store` MUST pipe raw values through `decode_config_value`
+    /// before returning — this unwraps JSON string encoding and
+    /// re-serializes arrays/objects, matching `gcode`'s existing behavior.
+    /// Returning raw `read_config_value` output would pass JSON-encoded
+    /// strings into service config resolution.
     fn config_value(&mut self, key: &str) -> Option<String>;
 
     /// Resolve interpolation patterns in a config value.
@@ -469,6 +474,7 @@ The resolution functions are not feature-gated themselves — they take `&mut im
 - 1.3.8 - `CoreContext::build` resolves service configs through `ConfigSource` and produces a complete context from pre-resolved DSN, project root, and project ID. test: `crates/gcore/src/context.rs::tests::build_with_env_only_source`.
 - 1.3.9 - `resolve_embedding_config` uses `GOBBY_EMBEDDING_URL` as the canonical env var, preserving existing `gcode` behavior. test: `crates/gcore/src/config.rs::tests::embedding_url_env_var_is_canonical`.
 - 1.3.10 - `ConfigSource` trait methods use `&mut self`, allowing implementations to hold mutable database connections without borrow conflicts. test: `crates/gcore/src/config.rs::tests::postgres_config_source_resolves_secrets`.
+- 1.3.11 - End-to-end: `resolve_falkordb_config`, `resolve_qdrant_config`, and `resolve_embedding_config` correctly consume JSON-encoded config-store strings (e.g. `"\"http://host:7474\""` unwrapped to `http://host:7474`) and structured values (e.g. `"[\"alpha\",1]"` re-serialized) when the `ConfigSource` implementation pipes through `decode_config_value`. test: `crates/gcore/src/config.rs::tests::resolve_config_handles_json_encoded_store_values`.
 
 ### 1.4 Define attached and standalone setup contracts [category: code] (depends: 1.2, 1.3)
 `kind: deliverable`
@@ -884,10 +890,40 @@ pub struct SearchHit {
     pub payload: serde_json::Map<String, Value>,
 }
 
+/// Run a closure with Qdrant config, with typed degradation.
+///
+/// Degradation contract (mirrors `with_graph` from §2.2):
+/// - Config missing (`None`)         → `Ok((default, ServiceState::NotConfigured))`
+/// - Config present, `url` is `None` → `Ok((default, ServiceState::NotConfigured))`
+/// - Closure returns `Ok(value)`     → `Ok((value, ServiceState::Available))`
+/// - Closure returns `Err(e)`        → `Err(e)` (propagated — consumer decides)
+///
+/// This is the primary entry point for consumers. It bridges the gap
+/// between `CoreContext.qdrant: Option<QdrantConfig>` and the search/upsert
+/// functions that require `&QdrantConfig`, providing honest typed
+/// degradation for the missing-config path.
+pub fn with_qdrant<T>(
+    config: Option<&QdrantConfig>,
+    default: T,
+    f: impl FnOnce(&QdrantConfig) -> anyhow::Result<T>,
+) -> anyhow::Result<(T, ServiceState)> {
+    let Some(cfg) = config else {
+        return Ok((default, ServiceState::NotConfigured));
+    };
+    if cfg.url.is_none() {
+        return Ok((default, ServiceState::NotConfigured));
+    }
+    let value = f(cfg)?;
+    Ok((value, ServiceState::Available))
+}
+
 /// Execute a vector search via Qdrant REST API (synchronous).
 ///
 /// Uses `reqwest::blocking::Client` to POST to `/collections/{collection}/points/search`.
 /// Returns `ServiceState` alongside results for degradation tracking.
+///
+/// Callers typically use `with_qdrant` to handle the missing-config path
+/// before calling this function.
 pub fn search(
     config: &QdrantConfig,
     collection: &str,
@@ -942,9 +978,10 @@ pub fn upsert(
 - 2.3.1 - Qdrant and embedding configs follow the shared env → `config_store` → default resolution order. test: `crates/gcore/src/config.rs::tests::qdrant_and_embedding_resolution_order`.
 - 2.3.2 - `collection_name` accepts `CollectionScope::Project`, `CollectionScope::Topic`, and `CollectionScope::Custom` for caller-controlled naming. test: `crates/gcore/src/qdrant.rs::tests::collection_name_covers_all_scopes`.
 - 2.3.3 - `UpsertRequest` and `SearchRequest` accept domain payloads without knowing their schema. test: `crates/gcore/src/qdrant.rs::tests::payload_schema_is_opaque`.
-- 2.3.4 - Missing Qdrant or embedding API surfaces typed `ServiceState` degradation. test: `crates/gcore/src/degradation.rs::tests::vector_services_degrade_explicitly`.
+- 2.3.4 - `with_qdrant` returns `Ok((default, ServiceState::NotConfigured))` when config is `None` or `url` is `None`, `Ok((value, ServiceState::Available))` on success, and propagates `Err` from the closure. test: `crates/gcore/src/qdrant.rs::tests::with_qdrant_degradation_contract`.
 - 2.3.5 - All Qdrant adapter functions are synchronous (`reqwest::blocking`); no Tokio runtime is required. test: `crates/gcore/src/qdrant.rs::tests::sync_search_from_cli_path`.
 - 2.3.6 - `CollectionScope::Custom` returns the supplied name verbatim without namespace prefixing, preserving existing gcode collection names (`code_symbols_<project_id>`). test: `crates/gcore/src/qdrant.rs::tests::custom_scope_returns_verbatim_name`.
+- 2.3.7 - Missing Qdrant config (`None`), missing embedding config, unreachable Qdrant, and successful empty search each produce distinguishable `ServiceState` values — consumers can differentiate "not configured" from "unreachable" from "available but empty". test: `crates/gcore/src/qdrant.rs::tests::qdrant_degradation_distinguishes_all_states`.
 
 ## P3: Generic Indexing And Search Primitives
 `kind: framing`
@@ -1111,6 +1148,8 @@ Validation for this plan:
 
 - `uv run gobby plans validate .gobby/plans/gcore-rust-foundation.md`
 - `cargo build -p gobby-core --no-default-features`
+- `cargo test -p gobby-core --no-default-features`
+- `cargo clippy -p gobby-core --no-default-features -- -D warnings`
 - `cargo build -p gobby-core --features postgres`
 - `cargo build -p gobby-core --features falkor`
 - `cargo build -p gobby-core --features qdrant`
@@ -1144,4 +1183,5 @@ Integration validation after dependent plans land:
 - **R3 (2026-05-26)**: Addressed R2 adversary findings F1–F4. (F1) Fixed `with_graph` return type to `anyhow::Result<(T, ServiceState)>` with explicit four-state degradation contract; updated acceptance 2.2.1/2.2.4. (F2) Replaced `collection_name(namespace, id)` with `CollectionScope` enum supporting `Project`, `Topic`, and `Custom` scopes; documented gcode's legacy `code_symbols_` preservation via `Custom`; added acceptance 2.3.2 covering all scopes. (F3) Replaced `qdrant-client` + `tokio` with `reqwest::blocking` matching gcode's existing sync HTTP pattern; documented runtime contract; added acceptance 2.3.5 for sync CLI path. (F4) Added concrete definitions for `ValidationContext`, `ValidationReport`, `SetupContext`, `SetupReport`, `SetupError`, `OwnedObject` in §1.3 and `SchemaCheck` in §2.1. Swept: updated §1.1 Cargo.toml features; fixed §3.3 dependency from `(depends: 3.1, 3.2)` to `(depends: 1.1)` since degradation.rs is always-available and consumed by P1/P2 tasks.
 - **R4 (2026-05-26)**: Addressed R3 adversary findings F1–F4. (F1) Moved degradation contract from §3.3/P3 to §1.2/P1 so it precedes all consumers (§1.4, §2.2, §2.3, §3.2); renumbered §1.2→§1.3, §1.3→§1.4; removed `degradation.rs` from §2.2, §2.3, §3.2 targets to prevent multi-agent edits to the same file; §1.4 now depends on both §1.2 and §1.3. (F2) Changed `ValidationContext`/`SetupContext` to use `&'a mut postgres::Client` mutable borrows instead of owned `postgres::Client`; changed validators to `FnMut(&mut ValidationContext<'_>)` and creators to `FnMut(&mut SetupContext<'_>)`; added acceptance items 1.4.5/1.4.6 proving mutable query and DDL execution. (F3) Added `dep:urlencoding` to `falkor` feature in Cargo.toml; added acceptance 1.1.5 for per-feature isolation builds. (F4) Added `decode_config_value` (JSON string unwrapping), `resolve_env_pattern` (`${VAR}`/`${VAR:-default}`), and `ValueResolver` callback type to §1.3; resolution functions accept consumer-supplied resolver for `$secret:NAME` interpolation; documented config value pipeline; updated `read_config_value` docs to reference decode step; added acceptance items 1.3.5/1.3.6/1.3.7. Swept all deliverables for same finding classes: verified no other shared type definitions are consumed before being defined; verified all targets correctly reflect file ownership.
 - **R6 (2026-05-26)**: Addressed R5 adversary findings F1–F2. (F1) Changed `falkordb` dependency from `"0.3"` (not published on crates.io) to `"0.2"` matching the workspace version at `crates/gcode/Cargo.toml:36`. (F2) Updated `decode_config_value` to match gcode's actual behavior: JSON arrays/objects are re-serialized as JSON strings via `serde_json::to_string` instead of returning `None`; JSON null returns `None`; updated acceptance 1.3.5 to assert array/object preservation. Swept: verified all planned dependency versions against workspace Cargo.toml files — no other version mismatches found; verified no other plan sections reference the old arrays-return-None semantics.
+- **R7 (2026-05-26)**: Addressed R6 adversary findings F1–F3. (F1) Updated `PostgresConfigSource` example in §1.3 to pipe raw `read_config_value` through `decode_config_value` before returning; strengthened `ConfigSource.config_value` trait doc to mandate decode step; added acceptance 1.3.11 for end-to-end proof that `resolve_*_config` functions handle JSON-encoded config-store values correctly. (F2) Added `with_qdrant` wrapper to §2.3 accepting `Option<&QdrantConfig>` with four-state degradation contract matching `with_graph` pattern; bridges the gap between `CoreContext.qdrant: Option<QdrantConfig>` and `search`/`upsert` functions; updated acceptance 2.3.4 and added 2.3.7 covering missing config, unreachable, and empty-result degradation paths. (F3) Added `cargo test -p gobby-core --no-default-features` and `cargo clippy -p gobby-core --no-default-features -- -D warnings` to VS1; added acceptance 1.1.6 for baseline build/test/clippy matching CI's `AGENTS.md` requirement. Swept: no other raw `read_config_value` pass-throughs in plan; no other `Option<Config>` adapter patterns missing degradation wrappers; `--no-default-features` now covered in both §1.1 acceptance and VS1.
 - **R5 (2026-05-26)**: Addressed R4 adversary findings F1–F4. (F1) Replaced `ValueResolver` callback with `ConfigSource` trait that owns its datastore connection via `&mut self`, eliminating the borrow conflict between `&mut postgres::Client` and the resolver closure; added `EnvOnlySource` for no-database baseline; removed `#[cfg(feature = "postgres")]` from resolution functions since `ConfigSource` abstracts the connection; showed `PostgresConfigSource` implementation example matching gcode's existing `FalkorConfigSource` pattern; added acceptance 1.3.7/1.3.10. (F2) Changed `CollectionScope::Custom` to return the supplied name verbatim without namespace prefix, so `collection_name("gcode", Custom("code_symbols_abc"))` returns `"code_symbols_abc"` preserving existing gcode collections without migration; added acceptance 2.3.6. (F3) Changed `GOBBY_EMBEDDING_API_BASE` to `GOBBY_EMBEDDING_URL` matching existing gcode env var at `crates/gcode/src/config.rs:534`; added acceptance 1.3.9. (F4) Added concrete `CoreContext::build` method with explicit parameter contract: DSN resolution is consumer-owned (documented gcode/gwiki fallback chains), project identity uses existing `project.rs` helpers, service configs resolve through `ConfigSource`, daemon URL from `daemon_url::daemon_url()`; added acceptance 1.3.8. Swept: verified all env var names in plan match codebase (GOBBY_FALKORDB_HOST/PORT/PASSWORD, GOBBY_QDRANT_URL, GOBBY_EMBEDDING_URL, GOBBY_EMBEDDING_MODEL, GOBBY_EMBEDDING_API_KEY); verified no other resolution functions have borrow-conflict patterns.
