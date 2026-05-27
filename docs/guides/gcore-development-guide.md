@@ -106,6 +106,15 @@ pub enum DegradationKind;
 
 `Guidance` and `SetupIssue` carry structured setup remediation for attached and standalone validation. Consumer CLIs render the `problem`, `action`, and optional `command_hint` fields in their own output style; `gobby-core` only provides the serializable contract.
 
+### `setup`
+
+`setup` defines the shared contracts for two separate workflows:
+
+- **Attached mode** uses `AttachedValidator` and `RequiredObject` declarations to check that externally managed resources already exist. It returns a `ValidationReport` containing present objects and missing objects with typed `SetupIssue` guidance. `gobby-core` does not create, alter, drop, or migrate Gobby-owned schema in attached mode.
+- **Standalone mode** uses `StandaloneSetup` and `OwnedObject` declarations for explicit setup commands that create consumer-owned resources. Consumers must declare a namespace such as `gcode` or `gwiki` so owned tables, graph labels, and vector collections stay domain-scoped.
+
+`ValidationContext` and `SetupContext` pass optional datastore handles/configuration into callbacks. PostgreSQL handles are mutable because `postgres::Client::query` and `postgres::Client::execute` both require `&mut self`; the callbacks borrow the supplied context and do not take ownership from later validators or creators.
+
 ## Boundary Rules
 
 Each module exists because multiple Rust consumers need the same infrastructure contract, and getting it slightly wrong in one crate would silently misbehave.
