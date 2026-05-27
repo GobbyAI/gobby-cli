@@ -170,7 +170,7 @@ pub struct Guidance {
 }
 
 /// Fatal errors that prevent a command from completing.
-#[derive(Debug, thiserror::Error)]
+#[derive(Debug, Serialize, Deserialize, thiserror::Error)]
 pub enum CoreError {
     #[error("invalid configuration: {0}")]
     InvalidConfig(String),
@@ -204,6 +204,7 @@ Consumers decide which services are required versus optional for each command. `
 - 1.2.2 - `ServiceState::NotConfigured` and `ServiceState::Unreachable` are distinct from `CoreError::RequiredServiceUnavailable`. test: `crates/gcore/src/degradation.rs::tests::optional_service_degradation_is_not_fatal`.
 - 1.2.3 - `Guidance` carries structured `problem`, `action`, and optional `command_hint` fields. test: `crates/gcore/src/degradation.rs::tests::guidance_is_structured`.
 - 1.2.4 - Development guide documents how `gobby-code` and `gobby-wiki` consume degradation contracts. file: `docs/guides/gcore-development-guide.md`.
+- 1.2.5 - `CoreError` round-trips through `serde_json::to_string` / `serde_json::from_str` for at least the `InvalidConfig` and `RequiredServiceUnavailable` variants. test: `crates/gcore/src/degradation.rs::tests::core_error_serialization_roundtrip`.
 
 ### 1.3 Add shared context and config resolution [category: code] (depends: 1.1)
 `kind: deliverable`
@@ -367,7 +368,9 @@ pub fn resolve_env_pattern(value: &str) -> anyhow::Result<Option<String>> {
 /// `gcode` (`crates/gcode/src/config.rs`). `gcode` implements this
 /// with a `PostgresConfigSource` that holds `&'a mut postgres::Client`:
 ///
-/// ```rust
+/// ```rust,ignore
+/// // Requires feature "postgres" — references gobby_core::postgres
+/// // and consumer-only crate::secrets (not in gobby-core).
 /// struct PostgresConfigSource<'a> {
 ///     conn: &'a mut postgres::Client,
 /// }
@@ -631,7 +634,7 @@ pub trait StandaloneSetup {
 ### 2.1 Add PostgreSQL hub adapter [category: code] (depends: P1)
 `kind: deliverable`
 
-Targets: `crates/gcore/src/postgres.rs`, `crates/gcore/src/config.rs`
+Targets: `crates/gcore/src/postgres.rs`
 
 Provide shared PostgreSQL connection helpers and read-only config-store access behind the `postgres` feature gate. `gcode` currently has these at `crates/gcode/src/db.rs` (649 lines) with `resolve_database_url`, `connect_readonly`, `connect_readwrite`, and config-store reads. The shared module extracts the domain-independent parts.
 
@@ -820,7 +823,7 @@ The adapter has no hardcoded code labels (`CodeSymbol`, `CALLS`, `IMPORTS`) or w
 ### 2.3 Add Qdrant and embedding configuration adapter [category: code] (depends: P1)
 `kind: deliverable`
 
-Targets: `crates/gcore/src/qdrant.rs`, `crates/gcore/src/config.rs`
+Targets: `crates/gcore/src/qdrant.rs`
 
 Provide shared Qdrant and embedding configuration primitives behind the `qdrant` feature gate. `gcode` currently resolves these configs inline in `crates/gcode/src/config.rs` and uses them in `crates/gcode/src/search/semantic.rs`.
 
@@ -981,7 +984,7 @@ pub fn upsert(
 - 2.3.4 - `with_qdrant` returns `Ok((default, ServiceState::NotConfigured))` when config is `None` or `url` is `None`, `Ok((value, ServiceState::Available))` on success, and propagates `Err` from the closure. test: `crates/gcore/src/qdrant.rs::tests::with_qdrant_degradation_contract`.
 - 2.3.5 - All Qdrant adapter functions are synchronous (`reqwest::blocking`); no Tokio runtime is required. test: `crates/gcore/src/qdrant.rs::tests::sync_search_from_cli_path`.
 - 2.3.6 - `CollectionScope::Custom` returns the supplied name verbatim without namespace prefixing, preserving existing gcode collection names (`code_symbols_<project_id>`). test: `crates/gcore/src/qdrant.rs::tests::custom_scope_returns_verbatim_name`.
-- 2.3.7 - Missing Qdrant config (`None`), missing embedding config, unreachable Qdrant, and successful empty search each produce distinguishable `ServiceState` values — consumers can differentiate "not configured" from "unreachable" from "available but empty". test: `crates/gcore/src/qdrant.rs::tests::qdrant_degradation_distinguishes_all_states`.
+- 2.3.7 - `with_qdrant` and `search` produce three distinguishable `ServiceState` values for Qdrant-layer states: missing config (`None` or `url: None`) → `ServiceState::NotConfigured`, connection/HTTP failure → `ServiceState::Unreachable`, successful empty result → `ServiceState::Available` with empty vec. Embedding config absence is consumer-owned — consumers check `Option<&EmbeddingConfig>` before generating a query vector and report missing embedding via `DegradationKind::ServiceUnavailable { service: "embedding", state: ServiceState::NotConfigured }` without entering the Qdrant adapter. test: `crates/gcore/src/qdrant.rs::tests::qdrant_degradation_distinguishes_all_states`.
 
 ## P3: Generic Indexing And Search Primitives
 `kind: framing`
@@ -1108,7 +1111,12 @@ pub fn rrf_merge(
 ) -> Vec<SearchResult> {
     let mut entries: HashMap<String, Vec<SourceExplanation>> = HashMap::new();
     for (source_name, ids) in &sources {
+        // Deduplicate IDs within this source, keeping the best (lowest) rank
+        let mut best_rank: HashMap<&String, usize> = HashMap::new();
         for (rank, id) in ids.iter().enumerate() {
+            best_rank.entry(id).and_modify(|r| *r = (*r).min(rank)).or_insert(rank);
+        }
+        for (id, rank) in best_rank {
             let score = 1.0 / (RRF_K + rank as f64);
             entries.entry(id.clone()).or_default().push(SourceExplanation {
                 source: source_name.to_string(),
@@ -1140,6 +1148,7 @@ PostgreSQL query SQL, Qdrant payload filters, graph boost semantics, and user-fa
 - 3.2.2 - `SearchResult` preserves per-source explanations and `SearchDegradation` tracks unavailable sources. test: `crates/gcore/src/search.rs::tests::rrf_preserves_explanations_and_degradation`.
 - 3.2.3 - `SearchResult` is `Serialize + Deserialize` without CLI formatting types. test: `crates/gcore/src/search.rs::tests::search_result_is_cli_independent`.
 - 3.2.4 - The search module source contains no domain-specific SQL, graph labels, or payload filter code. test: `crates/gcore/src/search.rs::tests::search_core_has_no_domain_queries`.
+- 3.2.5 - `rrf_merge` deduplicates IDs within a single source, keeping the best rank; a source returning `["a", "a"]` contributes one RRF score and one `SourceExplanation` for `"a"`. test: `crates/gcore/src/search.rs::tests::rrf_deduplicates_within_source`.
 
 ## VS1: Verification
 `kind: verification`
@@ -1184,4 +1193,5 @@ Integration validation after dependent plans land:
 - **R4 (2026-05-26)**: Addressed R3 adversary findings F1–F4. (F1) Moved degradation contract from §3.3/P3 to §1.2/P1 so it precedes all consumers (§1.4, §2.2, §2.3, §3.2); renumbered §1.2→§1.3, §1.3→§1.4; removed `degradation.rs` from §2.2, §2.3, §3.2 targets to prevent multi-agent edits to the same file; §1.4 now depends on both §1.2 and §1.3. (F2) Changed `ValidationContext`/`SetupContext` to use `&'a mut postgres::Client` mutable borrows instead of owned `postgres::Client`; changed validators to `FnMut(&mut ValidationContext<'_>)` and creators to `FnMut(&mut SetupContext<'_>)`; added acceptance items 1.4.5/1.4.6 proving mutable query and DDL execution. (F3) Added `dep:urlencoding` to `falkor` feature in Cargo.toml; added acceptance 1.1.5 for per-feature isolation builds. (F4) Added `decode_config_value` (JSON string unwrapping), `resolve_env_pattern` (`${VAR}`/`${VAR:-default}`), and `ValueResolver` callback type to §1.3; resolution functions accept consumer-supplied resolver for `$secret:NAME` interpolation; documented config value pipeline; updated `read_config_value` docs to reference decode step; added acceptance items 1.3.5/1.3.6/1.3.7. Swept all deliverables for same finding classes: verified no other shared type definitions are consumed before being defined; verified all targets correctly reflect file ownership.
 - **R6 (2026-05-26)**: Addressed R5 adversary findings F1–F2. (F1) Changed `falkordb` dependency from `"0.3"` (not published on crates.io) to `"0.2"` matching the workspace version at `crates/gcode/Cargo.toml:36`. (F2) Updated `decode_config_value` to match gcode's actual behavior: JSON arrays/objects are re-serialized as JSON strings via `serde_json::to_string` instead of returning `None`; JSON null returns `None`; updated acceptance 1.3.5 to assert array/object preservation. Swept: verified all planned dependency versions against workspace Cargo.toml files — no other version mismatches found; verified no other plan sections reference the old arrays-return-None semantics.
 - **R7 (2026-05-26)**: Addressed R6 adversary findings F1–F3. (F1) Updated `PostgresConfigSource` example in §1.3 to pipe raw `read_config_value` through `decode_config_value` before returning; strengthened `ConfigSource.config_value` trait doc to mandate decode step; added acceptance 1.3.11 for end-to-end proof that `resolve_*_config` functions handle JSON-encoded config-store values correctly. (F2) Added `with_qdrant` wrapper to §2.3 accepting `Option<&QdrantConfig>` with four-state degradation contract matching `with_graph` pattern; bridges the gap between `CoreContext.qdrant: Option<QdrantConfig>` and `search`/`upsert` functions; updated acceptance 2.3.4 and added 2.3.7 covering missing config, unreachable, and empty-result degradation paths. (F3) Added `cargo test -p gobby-core --no-default-features` and `cargo clippy -p gobby-core --no-default-features -- -D warnings` to VS1; added acceptance 1.1.6 for baseline build/test/clippy matching CI's `AGENTS.md` requirement. Swept: no other raw `read_config_value` pass-throughs in plan; no other `Option<Config>` adapter patterns missing degradation wrappers; `--no-default-features` now covered in both §1.1 acceptance and VS1.
+- **R8 (2026-05-26)**: Addressed R7 adversary findings F1–F5. (F1) Added `Serialize, Deserialize` derives to `CoreError` matching acceptance 1.2.1's contract; added acceptance 1.2.5 for serialization round-trip test. (F2) Removed "missing embedding config" from §2.3 acceptance 2.3.7 — embedding config absence is consumer-owned (checked before generating query vector, reported via `DegradationKind::ServiceUnavailable { service: "embedding", ... }`); Qdrant adapter's three states (`NotConfigured`, `Unreachable`, `Available`) are distinguishable. (F3) Removed `crates/gcore/src/config.rs` from §2.1 targets (only implements `postgres.rs`); sweep: also removed from §2.3 targets (only implements `qdrant.rs`); all P2 tasks now own disjoint files. (F4) Added per-source ID deduplication to `rrf_merge` keeping best rank per `(source, id)` pair; added acceptance 3.2.5 for duplicate-ID-within-source behavior. (F5) Changed `ConfigSource` doc example fence to `rust,ignore` with feature-gate note — references consumer-only `crate::secrets` and feature-gated `postgres::Client`; no other un-tagged doctest fences in plan. Swept: all `#[derive]` annotations match acceptance Serialize+Deserialize claims; all P2 target lists are disjoint; no other doctest-compilability issues.
 - **R5 (2026-05-26)**: Addressed R4 adversary findings F1–F4. (F1) Replaced `ValueResolver` callback with `ConfigSource` trait that owns its datastore connection via `&mut self`, eliminating the borrow conflict between `&mut postgres::Client` and the resolver closure; added `EnvOnlySource` for no-database baseline; removed `#[cfg(feature = "postgres")]` from resolution functions since `ConfigSource` abstracts the connection; showed `PostgresConfigSource` implementation example matching gcode's existing `FalkorConfigSource` pattern; added acceptance 1.3.7/1.3.10. (F2) Changed `CollectionScope::Custom` to return the supplied name verbatim without namespace prefix, so `collection_name("gcode", Custom("code_symbols_abc"))` returns `"code_symbols_abc"` preserving existing gcode collections without migration; added acceptance 2.3.6. (F3) Changed `GOBBY_EMBEDDING_API_BASE` to `GOBBY_EMBEDDING_URL` matching existing gcode env var at `crates/gcode/src/config.rs:534`; added acceptance 1.3.9. (F4) Added concrete `CoreContext::build` method with explicit parameter contract: DSN resolution is consumer-owned (documented gcode/gwiki fallback chains), project identity uses existing `project.rs` helpers, service configs resolve through `ConfigSource`, daemon URL from `daemon_url::daemon_url()`; added acceptance 1.3.8. Swept: verified all env var names in plan match codebase (GOBBY_FALKORDB_HOST/PORT/PASSWORD, GOBBY_QDRANT_URL, GOBBY_EMBEDDING_URL, GOBBY_EMBEDDING_MODEL, GOBBY_EMBEDDING_API_KEY); verified no other resolution functions have borrow-conflict patterns.
