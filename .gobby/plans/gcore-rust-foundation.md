@@ -293,20 +293,26 @@ impl CoreContext {
 
 ```rust
 /// FalkorDB connection configuration.
+///
+/// Contains connection-level config only. Graph name selection is
+/// consumer-owned — gcode supplies "gobby_code", gwiki supplies its
+/// own graph name — so it is passed to `GraphClient::from_config`
+/// (§2.2) rather than stored here.
 #[derive(Debug, Clone)]
 pub struct FalkorConfig {
     pub host: String,
     pub port: u16,
     pub password: Option<String>,
-    pub graph_name: String,
 }
 
 /// Qdrant connection configuration.
+///
+/// Contains connection-level config only. Collection naming is
+/// consumer-owned via `CollectionScope` and `collection_name` (§2.3).
 #[derive(Debug, Clone)]
 pub struct QdrantConfig {
     pub url: Option<String>,
     pub api_key: Option<String>,
-    pub collection_prefix: String,
 }
 
 /// Embedding API configuration (OpenAI-compatible endpoint).
@@ -328,8 +334,14 @@ pub struct EmbeddingConfig {
 /// - Plain strings (`http://host:7474`) → pass-through
 /// - JSON null → `None`
 ///
-/// Matches the behavior of `gcode`'s `decode_config_value`
-/// (`crates/gcode/src/config.rs:359-368`).
+/// **Intentional divergence from current `gcode`:** current `gcode`
+/// (`crates/gcode/src/config.rs:378-386`) has no explicit `Null` branch,
+/// so JSON null falls through to `Ok(value) => Some(value.to_string())`
+/// producing `Some("null")`. This is a bug: the literal string `"null"`
+/// would be passed as a FalkorDB password, Qdrant URL, or embedding
+/// model name, which is incorrect. JSON null in config-store semantically
+/// means "absent", so this shared version returns `None`. The `gcode`
+/// migration to `gobby-core` will adopt the fixed behavior.
 pub fn decode_config_value(raw: &str) -> Option<String> {
     match serde_json::from_str::<serde_json::Value>(raw) {
         Ok(serde_json::Value::String(s)) => Some(s),
@@ -420,7 +432,10 @@ impl ConfigSource for EnvOnlySource {
 /// Resolve FalkorDB config from env → config_store → defaults.
 ///
 /// Env vars: GOBBY_FALKORDB_HOST, GOBBY_FALKORDB_PORT,
-///           GOBBY_FALKORDB_PASSWORD, GOBBY_FALKORDB_GRAPH
+///           GOBBY_FALKORDB_PASSWORD
+///
+/// Graph name is NOT resolved here — it is consumer-owned.
+/// See `GraphClient::from_config` (§2.2).
 ///
 /// The `ConfigSource` handles reading config values and resolving
 /// `$secret:NAME` and `${VAR}` patterns. Env vars take precedence
@@ -434,8 +449,10 @@ pub fn resolve_falkordb_config(
 
 /// Resolve Qdrant config from env → config_store → defaults.
 ///
-/// Env vars: GOBBY_QDRANT_URL, GOBBY_QDRANT_API_KEY,
-///           GOBBY_QDRANT_COLLECTION_PREFIX
+/// Env vars: GOBBY_QDRANT_URL, GOBBY_QDRANT_API_KEY
+///
+/// Collection naming is NOT resolved here — it is consumer-owned
+/// via `CollectionScope` and `collection_name` (§2.3).
 ///
 /// Same source semantics as `resolve_falkordb_config`.
 pub fn resolve_qdrant_config(
@@ -471,13 +488,15 @@ The resolution functions are not feature-gated themselves — they take `&mut im
 - 1.3.2 - FalkorDB and Qdrant resolution preserves env-var precedence over `config_store` over defaults. test: `crates/gcore/src/config.rs::tests::env_overrides_config_store`.
 - 1.3.3 - Missing optional service config is represented as `None` and does not panic. test: `crates/gcore/src/context.rs::tests::missing_optional_services_are_none`.
 - 1.3.4 - Existing `bootstrap.rs` and `project.rs` public APIs are unchanged. test: `crates/gcore/src/project.rs::tests::read_project_id_is_non_destructive`.
-- 1.3.5 - `decode_config_value` unwraps JSON strings, re-serializes JSON arrays/objects as JSON strings (preserving structured config values), converts scalars via `to_string`, passes through plain strings, and returns `None` only for JSON null. test: `crates/gcore/src/config.rs::tests::decode_config_value_handles_json_and_plain`.
+- 1.3.5 - `decode_config_value` unwraps JSON strings, re-serializes JSON arrays/objects as JSON strings (preserving structured config values), converts scalars via `to_string`, passes through plain strings, and returns `None` for JSON null. This is an intentional fix: current `gcode` returns `Some("null")` for JSON null, which is incorrect for config values used as passwords, URLs, or model names. test: `crates/gcore/src/config.rs::tests::decode_config_value_handles_json_and_plain`.
 - 1.3.6 - `resolve_env_pattern` resolves `${VAR}` and `${VAR:-default}` patterns from environment variables. test: `crates/gcore/src/config.rs::tests::resolve_env_pattern_with_defaults`.
 - 1.3.7 - Resolution functions accept `&mut impl ConfigSource` for config reads and `$secret:NAME` interpolation; `EnvOnlySource` provides a no-database baseline. test: `crates/gcore/src/config.rs::tests::config_source_handles_secrets`.
 - 1.3.8 - `CoreContext::build` resolves service configs through `ConfigSource` and produces a complete context from pre-resolved DSN, project root, and project ID. test: `crates/gcore/src/context.rs::tests::build_with_env_only_source`.
 - 1.3.9 - `resolve_embedding_config` uses `GOBBY_EMBEDDING_URL` as the canonical env var, preserving existing `gcode` behavior. test: `crates/gcore/src/config.rs::tests::embedding_url_env_var_is_canonical`.
 - 1.3.10 - `ConfigSource` trait methods use `&mut self`, allowing implementations to hold mutable database connections without borrow conflicts. test: `crates/gcore/src/config.rs::tests::postgres_config_source_resolves_secrets`.
 - 1.3.11 - End-to-end: `resolve_falkordb_config`, `resolve_qdrant_config`, and `resolve_embedding_config` correctly consume JSON-encoded config-store strings (e.g. `"\"http://host:7474\""` unwrapped to `http://host:7474`) and structured values (e.g. `"[\"alpha\",1]"` re-serialized) when the `ConfigSource` implementation pipes through `decode_config_value`. test: `crates/gcore/src/config.rs::tests::resolve_config_handles_json_encoded_store_values`.
+- 1.3.12 - `FalkorConfig` contains only connection-level config (host, port, password); no `graph_name` field — graph name selection is consumer-owned via `GraphClient::from_config(config, graph_name)` (§2.2). `gobby-core` source contains no `"gobby_code"` string or wiki graph name default. test: `crates/gcore/src/config.rs::tests::falkordb_config_has_no_domain_graph_name`.
+- 1.3.13 - `QdrantConfig` contains only connection-level config (url, api_key); no `collection_prefix` field — collection naming is consumer-owned via `CollectionScope` and `collection_name` (§2.3). test: `crates/gcore/src/config.rs::tests::qdrant_config_has_no_domain_collection_prefix`.
 
 ### 1.4 Define attached and standalone setup contracts [category: code] (depends: 1.2, 1.3)
 `kind: deliverable`
@@ -740,7 +759,10 @@ pub struct GraphClient {
 }
 
 impl GraphClient {
-    pub fn from_config(config: &FalkorConfig) -> anyhow::Result<Self> {
+    /// `graph_name` is consumer-supplied — gcode passes "gobby_code",
+    /// gwiki passes its own graph name. The shared `FalkorConfig` holds
+    /// only connection-level config (host/port/password).
+    pub fn from_config(config: &FalkorConfig, graph_name: &str) -> anyhow::Result<Self> {
         let password = config.password.as_deref().unwrap_or_default();
         let url = format!(
             "falkor://:{}@{}:{}",
@@ -753,7 +775,7 @@ impl GraphClient {
             .with_connection_info(conn_info)
             .build()?;
         Ok(Self {
-            graph: client.select_graph(&config.graph_name),
+            graph: client.select_graph(graph_name),
         })
     }
 
@@ -776,15 +798,17 @@ impl GraphClient {
 /// This gives consumers explicit control: optional search-boost paths can
 /// `.unwrap_or((default, ServiceState::...))`, while hard graph commands
 /// (e.g. `gcode callers`) can `?` the error to surface it.
+/// `graph_name` is consumer-supplied, matching the `from_config` contract.
 pub fn with_graph<T>(
     config: Option<&FalkorConfig>,
+    graph_name: &str,
     default: T,
     f: impl FnOnce(&mut GraphClient) -> anyhow::Result<T>,
 ) -> anyhow::Result<(T, ServiceState)> {
     let Some(cfg) = config else {
         return Ok((default, ServiceState::NotConfigured));
     };
-    let mut client = match GraphClient::from_config(cfg) {
+    let mut client = match GraphClient::from_config(cfg, graph_name) {
         Ok(c) => c,
         Err(e) => {
             return Ok((default, ServiceState::Unreachable {
@@ -815,10 +839,11 @@ The adapter has no hardcoded code labels (`CodeSymbol`, `CALLS`, `IMPORTS`) or w
 
 **Acceptance:**
 
-- 2.2.1 - `with_graph` returns `Ok((default, ServiceState::NotConfigured))` when config is `None`, `Ok((default, ServiceState::Unreachable))` on connection failure, `Ok((value, ServiceState::Available))` on success, and propagates `Err` from the closure. test: `crates/gcore/src/falkor.rs::tests::with_graph_degradation_contract`.
+- 2.2.1 - `with_graph` accepts a consumer-supplied `graph_name` parameter and returns `Ok((default, ServiceState::NotConfigured))` when config is `None`, `Ok((default, ServiceState::Unreachable))` on connection failure, `Ok((value, ServiceState::Available))` on success, and propagates `Err` from the closure. test: `crates/gcore/src/falkor.rs::tests::with_graph_degradation_contract`.
 - 2.2.2 - Escaping helpers cover labels, relation types, property keys, and string parameters. test: `crates/gcore/src/falkor.rs::tests::escapes_graph_tokens`.
 - 2.2.3 - The adapter source contains no code-graph or wiki-graph label strings. test: `crates/gcore/src/falkor.rs::tests::no_domain_labels_in_adapter`.
 - 2.2.4 - `with_graph` distinguishes `ServiceState::NotConfigured`, `ServiceState::Unreachable`, and `ServiceState::Available` — consumers can differentiate unavailable-service from successful-empty-result. test: `crates/gcore/src/falkor.rs::tests::graph_unavailable_is_not_empty_success`.
+- 2.2.5 - `GraphClient::from_config` accepts a consumer-supplied `graph_name` parameter; `gobby-core` contains no hardcoded `"gobby_code"` or wiki graph name defaults. test: `crates/gcore/src/falkor.rs::tests::graph_name_is_consumer_supplied`.
 
 ### 2.3 Add Qdrant and embedding configuration adapter [category: code] (depends: P1)
 `kind: deliverable`
@@ -836,7 +861,7 @@ The `degradation.rs` module is owned by §1.2; this task consumes `ServiceState`
 **qdrant.rs — adapter (feature = "qdrant"):**
 
 ```rust
-use crate::config::{QdrantConfig, EmbeddingConfig};
+use crate::config::QdrantConfig;
 use crate::degradation::ServiceState;
 use serde_json::Value;
 
@@ -923,18 +948,38 @@ pub fn with_qdrant<T>(
 /// Execute a vector search via Qdrant REST API (synchronous).
 ///
 /// Uses `reqwest::blocking::Client` to POST to `/collections/{collection}/points/search`.
-/// Returns `ServiceState` alongside results for degradation tracking.
+/// Returns only search results — `ServiceState` is NOT part of this
+/// function's return type. `with_qdrant` is the single degradation
+/// boundary for Qdrant operations:
 ///
-/// Callers typically use `with_qdrant` to handle the missing-config path
-/// before calling this function.
+/// ```rust,ignore
+/// // Typical composition — with_qdrant handles config-missing states,
+/// // search handles the HTTP call, Err propagates to consumer.
+/// with_qdrant(ctx.qdrant.as_ref(), vec![], |cfg| {
+///     search(cfg, &collection, request)
+/// })
+/// ```
+///
+/// Both connection failure (`reqwest` send error) and non-success HTTP
+/// status produce `Err`. Consumers that want degradation instead of
+/// propagation catch the outer `Err`:
+///
+/// ```rust,ignore
+/// match with_qdrant(ctx.qdrant.as_ref(), vec![], |cfg| search(cfg, coll, req)) {
+///     Ok((hits, state)) => (hits, vec![], state),
+///     Err(e) => (vec![], vec![DegradationKind::ServiceUnavailable {
+///         service: "qdrant".into(),
+///         state: ServiceState::Unreachable { message: e.to_string() },
+///     }], ServiceState::Unreachable { message: e.to_string() }),
+/// }
+/// ```
 pub fn search(
     config: &QdrantConfig,
     collection: &str,
     request: SearchRequest,
-) -> anyhow::Result<(Vec<SearchHit>, ServiceState)> {
-    let Some(url) = &config.url else {
-        return Ok((vec![], ServiceState::NotConfigured));
-    };
+) -> anyhow::Result<Vec<SearchHit>> {
+    let url = config.url.as_deref()
+        .ok_or_else(|| anyhow::anyhow!("Qdrant URL not configured"))?;
     let client = reqwest::blocking::Client::builder()
         .timeout(std::time::Duration::from_secs(5))
         .build()?;
@@ -944,26 +989,19 @@ pub fn search(
     if let Some(key) = &config.api_key {
         req = req.header("api-key", key);
     }
-    // Build search body from request fields
     let body = serde_json::json!({
         "vector": request.vector,
         "limit": request.limit,
         "filter": request.filter,
         "with_payload": true,
     });
-    match req.json(&body).send() {
-        Ok(resp) if resp.status().is_success() => {
-            // Parse response into SearchHit vec
-            // (implementation parses Qdrant JSON response format)
-            Ok((/* parsed hits */, ServiceState::Available))
-        }
-        Ok(resp) => Err(anyhow::anyhow!(
-            "Qdrant search failed: HTTP {}", resp.status()
-        )),
-        Err(e) => Ok((vec![], ServiceState::Unreachable {
-            message: e.to_string(),
-        })),
+    let resp = req.json(&body).send()?;
+    if !resp.status().is_success() {
+        anyhow::bail!("Qdrant search failed: HTTP {}", resp.status());
     }
+    // Parse response into SearchHit vec
+    // (implementation parses Qdrant JSON response format)
+    Ok(/* parsed hits */)
 }
 
 /// Execute a batch vector upsert via Qdrant REST API (synchronous).
@@ -983,8 +1021,9 @@ pub fn upsert(
 - 2.3.3 - `UpsertRequest` and `SearchRequest` accept domain payloads without knowing their schema. test: `crates/gcore/src/qdrant.rs::tests::payload_schema_is_opaque`.
 - 2.3.4 - `with_qdrant` returns `Ok((default, ServiceState::NotConfigured))` when config is `None` or `url` is `None`, `Ok((value, ServiceState::Available))` on success, and propagates `Err` from the closure. test: `crates/gcore/src/qdrant.rs::tests::with_qdrant_degradation_contract`.
 - 2.3.5 - All Qdrant adapter functions are synchronous (`reqwest::blocking`); no Tokio runtime is required. test: `crates/gcore/src/qdrant.rs::tests::sync_search_from_cli_path`.
+- 2.3.5a - `with_qdrant(config, vec![], |cfg| search(cfg, coll, req))` composes without nested `ServiceState` — the closure returns `Vec<SearchHit>`, `with_qdrant` maps it to `(Vec<SearchHit>, ServiceState)`. test: `crates/gcore/src/qdrant.rs::tests::with_qdrant_search_composition`.
 - 2.3.6 - `CollectionScope::Custom` returns the supplied name verbatim without namespace prefixing, preserving existing gcode collection names (`code_symbols_<project_id>`). test: `crates/gcore/src/qdrant.rs::tests::custom_scope_returns_verbatim_name`.
-- 2.3.7 - `with_qdrant` and `search` produce three distinguishable `ServiceState` values for Qdrant-layer states: missing config (`None` or `url: None`) → `ServiceState::NotConfigured`, connection/HTTP failure → `ServiceState::Unreachable`, successful empty result → `ServiceState::Available` with empty vec. Embedding config absence is consumer-owned — consumers check `Option<&EmbeddingConfig>` before generating a query vector and report missing embedding via `DegradationKind::ServiceUnavailable { service: "embedding", state: ServiceState::NotConfigured }` without entering the Qdrant adapter. test: `crates/gcore/src/qdrant.rs::tests::qdrant_degradation_distinguishes_all_states`.
+- 2.3.7 - `with_qdrant` is the single `ServiceState` boundary for Qdrant operations. `search` returns `anyhow::Result<Vec<SearchHit>>` with no `ServiceState` — both connection failure and HTTP non-success produce `Err`. Composing `with_qdrant(config, vec![], |cfg| search(cfg, coll, req))` produces three distinguishable outcomes: config missing (`None` or `url: None`) → `Ok((vec![], ServiceState::NotConfigured))`, successful search → `Ok((hits, ServiceState::Available))`, search error → `Err(e)` (consumer decides whether to degrade or propagate). Embedding config absence is consumer-owned — consumers check `Option<&EmbeddingConfig>` before generating a query vector and report missing embedding via `DegradationKind::ServiceUnavailable { service: "embedding", state: ServiceState::NotConfigured }` without entering the Qdrant adapter. test: `crates/gcore/src/qdrant.rs::tests::qdrant_single_state_boundary`.
 
 ## P3: Generic Indexing And Search Primitives
 `kind: framing`
@@ -1062,14 +1101,13 @@ Targets: `crates/gcore/src/search.rs`
 
 Provide reusable search result and fusion primitives behind the `search` feature gate. `gcode` currently has RRF fusion at `crates/gcode/src/search/rrf.rs` (133 lines) as a pure function operating on string IDs. The shared version generalizes this to work for any consumer.
 
-The `degradation.rs` module is owned by §1.2; this task consumes `ServiceState` and `DegradationKind` from it but does not modify the file.
+The search fusion layer is degradation-agnostic. Adapters (§2.2, §2.3) own `ServiceState` boundaries; consumers build `SearchDegradation` from their adapter results. The fusion module operates on ranked ID lists and does not import or carry degradation types.
 
 **search.rs — generic fusion (feature = "search"):**
 
 ```rust
 use std::collections::HashMap;
 use serde::{Serialize, Deserialize};
-use crate::degradation::ServiceState;
 
 /// RRF constant — matches Python RRF_K in code_index/searcher.py.
 const RRF_K: f64 = 60.0;
@@ -1127,8 +1165,11 @@ pub fn rrf_merge(
     }
     let mut results: Vec<SearchResult> = entries
         .into_iter()
-        .map(|(id, explanations)| {
+        .map(|(id, mut explanations)| {
             let score = explanations.iter().map(|e| e.score).sum();
+            // Sort explanations by source name for deterministic output,
+            // matching current gcode's source_names.sort() behavior.
+            explanations.sort_by(|a, b| a.source.cmp(&b.source));
             let sources = explanations.iter().map(|e| e.source.clone()).collect();
             SearchResult { id, score, sources, explanations }
         })
@@ -1149,6 +1190,7 @@ PostgreSQL query SQL, Qdrant payload filters, graph boost semantics, and user-fa
 - 3.2.3 - `SearchResult` is `Serialize + Deserialize` without CLI formatting types. test: `crates/gcore/src/search.rs::tests::search_result_is_cli_independent`.
 - 3.2.4 - The search module source contains no domain-specific SQL, graph labels, or payload filter code. test: `crates/gcore/src/search.rs::tests::search_core_has_no_domain_queries`.
 - 3.2.5 - `rrf_merge` deduplicates IDs within a single source, keeping the best rank; a source returning `["a", "a"]` contributes one RRF score and one `SourceExplanation` for `"a"`. test: `crates/gcore/src/search.rs::tests::rrf_deduplicates_within_source`.
+- 3.2.6 - `rrf_merge` sorts `sources` and `explanations` within each `SearchResult` by source name, producing deterministic output matching current `gcode`'s `source_names.sort()` behavior. A two-source overlap case (e.g. `("semantic", ["b"]), ("fts", ["b"])`) produces `sources: ["fts", "semantic"]` in alphabetical order. test: `crates/gcore/src/search.rs::tests::rrf_sorts_sources_deterministically`.
 
 ## VS1: Verification
 `kind: verification`
@@ -1195,3 +1237,5 @@ Integration validation after dependent plans land:
 - **R7 (2026-05-26)**: Addressed R6 adversary findings F1–F3. (F1) Updated `PostgresConfigSource` example in §1.3 to pipe raw `read_config_value` through `decode_config_value` before returning; strengthened `ConfigSource.config_value` trait doc to mandate decode step; added acceptance 1.3.11 for end-to-end proof that `resolve_*_config` functions handle JSON-encoded config-store values correctly. (F2) Added `with_qdrant` wrapper to §2.3 accepting `Option<&QdrantConfig>` with four-state degradation contract matching `with_graph` pattern; bridges the gap between `CoreContext.qdrant: Option<QdrantConfig>` and `search`/`upsert` functions; updated acceptance 2.3.4 and added 2.3.7 covering missing config, unreachable, and empty-result degradation paths. (F3) Added `cargo test -p gobby-core --no-default-features` and `cargo clippy -p gobby-core --no-default-features -- -D warnings` to VS1; added acceptance 1.1.6 for baseline build/test/clippy matching CI's `AGENTS.md` requirement. Swept: no other raw `read_config_value` pass-throughs in plan; no other `Option<Config>` adapter patterns missing degradation wrappers; `--no-default-features` now covered in both §1.1 acceptance and VS1.
 - **R8 (2026-05-26)**: Addressed R7 adversary findings F1–F5. (F1) Added `Serialize, Deserialize` derives to `CoreError` matching acceptance 1.2.1's contract; added acceptance 1.2.5 for serialization round-trip test. (F2) Removed "missing embedding config" from §2.3 acceptance 2.3.7 — embedding config absence is consumer-owned (checked before generating query vector, reported via `DegradationKind::ServiceUnavailable { service: "embedding", ... }`); Qdrant adapter's three states (`NotConfigured`, `Unreachable`, `Available`) are distinguishable. (F3) Removed `crates/gcore/src/config.rs` from §2.1 targets (only implements `postgres.rs`); sweep: also removed from §2.3 targets (only implements `qdrant.rs`); all P2 tasks now own disjoint files. (F4) Added per-source ID deduplication to `rrf_merge` keeping best rank per `(source, id)` pair; added acceptance 3.2.5 for duplicate-ID-within-source behavior. (F5) Changed `ConfigSource` doc example fence to `rust,ignore` with feature-gate note — references consumer-only `crate::secrets` and feature-gated `postgres::Client`; no other un-tagged doctest fences in plan. Swept: all `#[derive]` annotations match acceptance Serialize+Deserialize claims; all P2 target lists are disjoint; no other doctest-compilability issues.
 - **R5 (2026-05-26)**: Addressed R4 adversary findings F1–F4. (F1) Replaced `ValueResolver` callback with `ConfigSource` trait that owns its datastore connection via `&mut self`, eliminating the borrow conflict between `&mut postgres::Client` and the resolver closure; added `EnvOnlySource` for no-database baseline; removed `#[cfg(feature = "postgres")]` from resolution functions since `ConfigSource` abstracts the connection; showed `PostgresConfigSource` implementation example matching gcode's existing `FalkorConfigSource` pattern; added acceptance 1.3.7/1.3.10. (F2) Changed `CollectionScope::Custom` to return the supplied name verbatim without namespace prefix, so `collection_name("gcode", Custom("code_symbols_abc"))` returns `"code_symbols_abc"` preserving existing gcode collections without migration; added acceptance 2.3.6. (F3) Changed `GOBBY_EMBEDDING_API_BASE` to `GOBBY_EMBEDDING_URL` matching existing gcode env var at `crates/gcode/src/config.rs:534`; added acceptance 1.3.9. (F4) Added concrete `CoreContext::build` method with explicit parameter contract: DSN resolution is consumer-owned (documented gcode/gwiki fallback chains), project identity uses existing `project.rs` helpers, service configs resolve through `ConfigSource`, daemon URL from `daemon_url::daemon_url()`; added acceptance 1.3.8. Swept: verified all env var names in plan match codebase (GOBBY_FALKORDB_HOST/PORT/PASSWORD, GOBBY_QDRANT_URL, GOBBY_EMBEDDING_URL, GOBBY_EMBEDDING_MODEL, GOBBY_EMBEDDING_API_KEY); verified no other resolution functions have borrow-conflict patterns.
+- **R9 (2026-05-27)**: Addressed R8 adversary findings F1–F2. (F1) Removed `graph_name` from `FalkorConfig` — graph name selection is now consumer-owned via `GraphClient::from_config(config, graph_name)` and `with_graph(config, graph_name, default, f)` in §2.2; removed `GOBBY_FALKORDB_GRAPH` from `resolve_falkordb_config` env vars; added acceptance 1.3.12 proving `gobby-core` contains no `"gobby_code"` or wiki graph default, and 2.2.5 proving graph name is consumer-supplied. (F2) Removed `ServiceState` from `search` return type — now returns `anyhow::Result<Vec<SearchHit>>` with both connection and HTTP failures as `Err`; `with_qdrant` is the single `ServiceState` boundary; added composition examples showing `with_qdrant(config, vec![], |cfg| search(cfg, coll, req))`; updated acceptance 2.3.7 to describe single-state-owner design; added 2.3.5a for composition path test. Swept same finding classes: (a) removed `collection_prefix` from `QdrantConfig` (same domain-leak pattern as `graph_name` — unused by `CollectionScope` API); removed `GOBBY_QDRANT_COLLECTION_PREFIX` from `resolve_qdrant_config`; added acceptance 1.3.13; (b) verified no other adapter functions return nested `ServiceState` — `with_graph` closure returns `T` not `(T, ServiceState)`, consistent with fixed `search`; `upsert` returns `anyhow::Result<()>` with no state, consistent.
+- **R10 (2026-05-27)**: Addressed R9 adversary findings F1–F3. (F1) Documented `decode_config_value` JSON-null behavior as an intentional divergence from current `gcode` — current `gcode` returns `Some("null")` for JSON null (no explicit `Null` branch), which is incorrect for config values used as passwords, URLs, or model names; updated docstring and acceptance 1.3.5 to state the fix explicitly. (F2) Removed unused `ServiceState` import from search.rs; replaced degradation-consumption claim with statement that search fusion is degradation-agnostic (adapters own `ServiceState`, consumers build `SearchDegradation`). (F3) Added deterministic source ordering to `rrf_merge` — `explanations` sorted by source name before deriving `sources`, matching current `gcode`'s `source_names.sort()` at `rrf.rs:42`; added acceptance 3.2.6 for two-source overlap ordering parity. Swept same finding classes: (a) removed unused `EmbeddingConfig` import from qdrant.rs (same unused-import class as F2 — embedding config is consumer-owned, not used in adapter functions); (b) verified no other `HashMap` iteration order reaches output-facing fields; (c) verified remaining parity claims (env var names, `reqwest::blocking`, `CollectionScope::Custom`) match codebase.
