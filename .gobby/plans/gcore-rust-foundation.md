@@ -1239,3 +1239,169 @@ Integration validation after dependent plans land:
 - **R5 (2026-05-26)**: Addressed R4 adversary findings F1–F4. (F1) Replaced `ValueResolver` callback with `ConfigSource` trait that owns its datastore connection via `&mut self`, eliminating the borrow conflict between `&mut postgres::Client` and the resolver closure; added `EnvOnlySource` for no-database baseline; removed `#[cfg(feature = "postgres")]` from resolution functions since `ConfigSource` abstracts the connection; showed `PostgresConfigSource` implementation example matching gcode's existing `FalkorConfigSource` pattern; added acceptance 1.3.7/1.3.10. (F2) Changed `CollectionScope::Custom` to return the supplied name verbatim without namespace prefix, so `collection_name("gcode", Custom("code_symbols_abc"))` returns `"code_symbols_abc"` preserving existing gcode collections without migration; added acceptance 2.3.6. (F3) Changed `GOBBY_EMBEDDING_API_BASE` to `GOBBY_EMBEDDING_URL` matching existing gcode env var at `crates/gcode/src/config.rs:534`; added acceptance 1.3.9. (F4) Added concrete `CoreContext::build` method with explicit parameter contract: DSN resolution is consumer-owned (documented gcode/gwiki fallback chains), project identity uses existing `project.rs` helpers, service configs resolve through `ConfigSource`, daemon URL from `daemon_url::daemon_url()`; added acceptance 1.3.8. Swept: verified all env var names in plan match codebase (GOBBY_FALKORDB_HOST/PORT/PASSWORD, GOBBY_QDRANT_URL, GOBBY_EMBEDDING_URL, GOBBY_EMBEDDING_MODEL, GOBBY_EMBEDDING_API_KEY); verified no other resolution functions have borrow-conflict patterns.
 - **R9 (2026-05-27)**: Addressed R8 adversary findings F1–F2. (F1) Removed `graph_name` from `FalkorConfig` — graph name selection is now consumer-owned via `GraphClient::from_config(config, graph_name)` and `with_graph(config, graph_name, default, f)` in §2.2; removed `GOBBY_FALKORDB_GRAPH` from `resolve_falkordb_config` env vars; added acceptance 1.3.12 proving `gobby-core` contains no `"gobby_code"` or wiki graph default, and 2.2.5 proving graph name is consumer-supplied. (F2) Removed `ServiceState` from `search` return type — now returns `anyhow::Result<Vec<SearchHit>>` with both connection and HTTP failures as `Err`; `with_qdrant` is the single `ServiceState` boundary; added composition examples showing `with_qdrant(config, vec![], |cfg| search(cfg, coll, req))`; updated acceptance 2.3.7 to describe single-state-owner design; added 2.3.5a for composition path test. Swept same finding classes: (a) removed `collection_prefix` from `QdrantConfig` (same domain-leak pattern as `graph_name` — unused by `CollectionScope` API); removed `GOBBY_QDRANT_COLLECTION_PREFIX` from `resolve_qdrant_config`; added acceptance 1.3.13; (b) verified no other adapter functions return nested `ServiceState` — `with_graph` closure returns `T` not `(T, ServiceState)`, consistent with fixed `search`; `upsert` returns `anyhow::Result<()>` with no state, consistent.
 - **R10 (2026-05-27)**: Addressed R9 adversary findings F1–F3. (F1) Documented `decode_config_value` JSON-null behavior as an intentional divergence from current `gcode` — current `gcode` returns `Some("null")` for JSON null (no explicit `Null` branch), which is incorrect for config values used as passwords, URLs, or model names; updated docstring and acceptance 1.3.5 to state the fix explicitly. (F2) Removed unused `ServiceState` import from search.rs; replaced degradation-consumption claim with statement that search fusion is degradation-agnostic (adapters own `ServiceState`, consumers build `SearchDegradation`). (F3) Added deterministic source ordering to `rrf_merge` — `explanations` sorted by source name before deriving `sources`, matching current `gcode`'s `source_names.sort()` at `rrf.rs:42`; added acceptance 3.2.6 for two-source overlap ordering parity. Swept same finding classes: (a) removed unused `EmbeddingConfig` import from qdrant.rs (same unused-import class as F2 — embedding config is consumer-owned, not used in adapter functions); (b) verified no other `HashMap` iteration order reaches output-facing fields; (c) verified remaining parity claims (env var names, `reqwest::blocking`, `CollectionScope::Custom`) match codebase.
+
+## M1 Task Manifest
+`kind: manifest`
+
+```yaml
+- title: Define the gobby-core public boundary
+  category: code
+  task_type: feature
+  depends_on: []
+  validation_criteria: "cargo build -p gobby-core --no-default-features && cargo clippy -p gobby-core --no-default-features -- -D warnings"
+  labels:
+    - covers:gcore-rust-foundation:1.1:1.1.1
+    - covers:gcore-rust-foundation:1.1:1.1.2
+    - covers:gcore-rust-foundation:1.1:1.1.3
+    - covers:gcore-rust-foundation:1.1:1.1.4
+    - covers:gcore-rust-foundation:1.1:1.1.5
+    - covers:gcore-rust-foundation:1.1:1.1.6
+  implementation_domain: backend
+  tdd: true
+  source_section: "1.1"
+- title: Add shared error and degradation contracts
+  category: code
+  task_type: feature
+  depends_on:
+    - "1.1"
+  validation_criteria: "cargo test -p gobby-core --no-default-features degradation::tests"
+  labels:
+    - covers:gcore-rust-foundation:1.2:1.2.1
+    - covers:gcore-rust-foundation:1.2:1.2.2
+    - covers:gcore-rust-foundation:1.2:1.2.3
+    - covers:gcore-rust-foundation:1.2:1.2.4
+    - covers:gcore-rust-foundation:1.2:1.2.5
+  implementation_domain: backend
+  tdd: true
+  source_section: "1.2"
+- title: Add shared context and config resolution
+  category: code
+  task_type: feature
+  depends_on:
+    - "1.1"
+  validation_criteria: "cargo test -p gobby-core --no-default-features config::tests && cargo test -p gobby-core --no-default-features context::tests"
+  labels:
+    - covers:gcore-rust-foundation:1.3:1.3.1
+    - covers:gcore-rust-foundation:1.3:1.3.2
+    - covers:gcore-rust-foundation:1.3:1.3.3
+    - covers:gcore-rust-foundation:1.3:1.3.4
+    - covers:gcore-rust-foundation:1.3:1.3.5
+    - covers:gcore-rust-foundation:1.3:1.3.6
+    - covers:gcore-rust-foundation:1.3:1.3.7
+    - covers:gcore-rust-foundation:1.3:1.3.8
+    - covers:gcore-rust-foundation:1.3:1.3.9
+    - covers:gcore-rust-foundation:1.3:1.3.10
+    - covers:gcore-rust-foundation:1.3:1.3.11
+    - covers:gcore-rust-foundation:1.3:1.3.12
+    - covers:gcore-rust-foundation:1.3:1.3.13
+  implementation_domain: backend
+  tdd: true
+  source_section: "1.3"
+- title: Define attached and standalone setup contracts
+  category: code
+  task_type: feature
+  depends_on:
+    - "1.2"
+    - "1.3"
+  validation_criteria: "cargo test -p gobby-core --no-default-features setup::tests"
+  labels:
+    - covers:gcore-rust-foundation:1.4:1.4.1
+    - covers:gcore-rust-foundation:1.4:1.4.2
+    - covers:gcore-rust-foundation:1.4:1.4.3
+    - covers:gcore-rust-foundation:1.4:1.4.4
+    - covers:gcore-rust-foundation:1.4:1.4.5
+    - covers:gcore-rust-foundation:1.4:1.4.6
+  implementation_domain: backend
+  tdd: true
+  source_section: "1.4"
+- title: Add PostgreSQL hub adapter
+  category: code
+  task_type: feature
+  depends_on:
+    - "1.1"
+    - "1.2"
+    - "1.3"
+    - "1.4"
+  validation_criteria: "cargo test -p gobby-core --features postgres postgres::tests"
+  labels:
+    - covers:gcore-rust-foundation:2.1:2.1.1
+    - covers:gcore-rust-foundation:2.1:2.1.2
+    - covers:gcore-rust-foundation:2.1:2.1.3
+    - covers:gcore-rust-foundation:2.1:2.1.4
+  implementation_domain: backend
+  tdd: true
+  source_section: "2.1"
+- title: Add FalkorDB adapter and query safety boundary
+  category: code
+  task_type: feature
+  depends_on:
+    - "1.1"
+    - "1.2"
+    - "1.3"
+    - "1.4"
+  validation_criteria: "cargo test -p gobby-core --features falkor falkor::tests"
+  labels:
+    - covers:gcore-rust-foundation:2.2:2.2.1
+    - covers:gcore-rust-foundation:2.2:2.2.2
+    - covers:gcore-rust-foundation:2.2:2.2.3
+    - covers:gcore-rust-foundation:2.2:2.2.4
+    - covers:gcore-rust-foundation:2.2:2.2.5
+  implementation_domain: backend
+  tdd: true
+  source_section: "2.2"
+- title: Add Qdrant and embedding configuration adapter
+  category: code
+  task_type: feature
+  depends_on:
+    - "1.1"
+    - "1.2"
+    - "1.3"
+    - "1.4"
+  validation_criteria: "cargo test -p gobby-core --features qdrant qdrant::tests"
+  labels:
+    - covers:gcore-rust-foundation:2.3:2.3.1
+    - covers:gcore-rust-foundation:2.3:2.3.2
+    - covers:gcore-rust-foundation:2.3:2.3.3
+    - covers:gcore-rust-foundation:2.3:2.3.4
+    - covers:gcore-rust-foundation:2.3:2.3.5
+    - covers:gcore-rust-foundation:2.3:2.3.5a
+    - covers:gcore-rust-foundation:2.3:2.3.6
+    - covers:gcore-rust-foundation:2.3:2.3.7
+  implementation_domain: backend
+  tdd: true
+  source_section: "2.3"
+- title: Add generic indexing primitives
+  category: code
+  task_type: feature
+  depends_on:
+    - "2.1"
+    - "2.2"
+    - "2.3"
+  validation_criteria: "cargo test -p gobby-core --features indexing indexing::tests"
+  labels:
+    - covers:gcore-rust-foundation:3.1:3.1.1
+    - covers:gcore-rust-foundation:3.1:3.1.2
+    - covers:gcore-rust-foundation:3.1:3.1.3
+    - covers:gcore-rust-foundation:3.1:3.1.4
+  implementation_domain: backend
+  tdd: true
+  source_section: "3.1"
+- title: Add generic search fusion primitives
+  category: code
+  task_type: feature
+  depends_on:
+    - "2.1"
+    - "2.2"
+    - "2.3"
+  validation_criteria: "cargo test -p gobby-core --features search search::tests"
+  labels:
+    - covers:gcore-rust-foundation:3.2:3.2.1
+    - covers:gcore-rust-foundation:3.2:3.2.2
+    - covers:gcore-rust-foundation:3.2:3.2.3
+    - covers:gcore-rust-foundation:3.2:3.2.4
+    - covers:gcore-rust-foundation:3.2:3.2.5
+    - covers:gcore-rust-foundation:3.2:3.2.6
+  implementation_domain: backend
+  tdd: true
+  source_section: "3.2"
+```
