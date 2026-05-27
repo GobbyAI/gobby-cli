@@ -88,6 +88,24 @@ ureq::post(&format!("{url}/api/hooks/execute")).send_string(body)?;
 
 Bracketing IPv6 literals for URL embedding is **not** handled here — in practice `bootstrap.yaml` is always `localhost`, an IPv4 literal, or a wildcard. If that ever stops being true, this is the place to add it.
 
+### `degradation`
+
+```rust
+pub enum ServiceState;
+pub struct SetupIssue;
+pub struct Guidance;
+pub enum CoreError;
+pub enum DegradationKind;
+```
+
+`degradation` defines the shared vocabulary for fatal core failures and non-fatal partial results. `ServiceState` travels with adapter results so callers can distinguish an available service, a service with no configuration, and a configured service that is unreachable. `CoreError` is reserved for command-stopping failures such as invalid configuration, unavailable required services, failed writes, and corrupted input.
+
+`DegradationKind` is for successful operations that returned less than the ideal result. A `gobby-code` search can return symbol or content results while marking Qdrant or FalkorDB as an optional `ServiceUnavailable` degradation. It can also report `PartialSearch`, `StaleIndex`, or `SkippedArtifacts` without converting those states into fatal CLI errors.
+
+`gobby-wiki` should use the same contracts for wiki search and indexing. Missing vector search, stale vault index data, or skipped files should be reported as degradation metadata alongside partial results. A required store or write path failure should become `CoreError` only when the command cannot complete.
+
+`Guidance` and `SetupIssue` carry structured setup remediation for attached and standalone validation. Consumer CLIs render the `problem`, `action`, and optional `command_hint` fields in their own output style; `gobby-core` only provides the serializable contract.
+
 ## Boundary Rules
 
 Each module exists because multiple Rust consumers need the same infrastructure contract, and getting it slightly wrong in one crate would silently misbehave.
