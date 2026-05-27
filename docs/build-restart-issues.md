@@ -5,6 +5,7 @@ This note records the restart and recovery problems seen while running the
 
 ## Context
 
+- Observed: 2026-05-27 (or appropriate date)
 - Repository: `/Users/josh/Projects/gobby-cli`
 - Target branch: `dev`
 - Plan file: `.gobby/plans/gcore-rust-foundation.md`
@@ -121,5 +122,5 @@ requiring a new task. The useful behavior would be:
   plan/build provenance implies expansion, development, and QA stages.
 - Worktree deletion either completes registry and Git cleanup atomically or
   fails before removing filesystem state.
-- A planning-only cap override does not remove non-planning stages.
+- A planning-only cap override should preserve all non-planning stages.
 - Planning remains non-isolated under a worktree-isolated build.
