@@ -24,6 +24,25 @@ contains an inline `database_url`. Bootstrap `database_url_ref` is rejected
 during bootstrap validation; it is never resolved or used to restart the
 fallback chain.
 
+For daemon-independent service provisioning:
+
+```bash
+gcode setup --standalone
+```
+
+The default setup path is non-destructive. If incompatible existing code-index
+PostgreSQL state is detected, setup fails with guidance instead of dropping
+objects. For daemon adoption or explicit recovery, run:
+
+```bash
+gcode setup --standalone --overwrite-code-index
+```
+
+That advanced reset recreates only gcode-owned code-index PostgreSQL objects,
+clears code-index graph nodes in FalkorDB, and deletes Qdrant collections named
+with the `code_symbols_` prefix. It leaves Gobby project files, config,
+secrets, tasks, sessions, memory, and other daemon-owned data untouched.
+
 If you use [Gobby](https://github.com/GobbyAI/gobby), gcode is already installed.
 
 ### Initialize and Index
@@ -341,14 +360,21 @@ FalkorDB graph edges and Qdrant vector sync asynchronously when it is running.
 BM25 search (`search-text`, `search-content`) works as soon as the transaction
 commits; graph and semantic search improve once the external stores sync.
 
-Reset and rebuild from scratch (destructive — prompts for confirmation):
+Reset the current project and rebuild from scratch (destructive — prompts for confirmation):
 
 ```bash
 gcode invalidate
 gcode index
 ```
 
-In Gobby mode, `invalidate` also notifies the daemon to clean up FalkorDB graph nodes and Qdrant vectors for the project. Use `--force` to skip the confirmation prompt.
+`invalidate` deletes only rows for the current project from PostgreSQL. When a
+daemon URL or standalone service config is available, it also cleans only that
+project's FalkorDB graph nodes and `code_symbols_{project_id}` Qdrant
+projection. Use `--force` to skip the confirmation prompt.
+
+For a full standalone code-index reset across projects and projections, use
+`gcode setup --standalone --overwrite-code-index`. That command is intended for
+daemon adoption and explicit recovery.
 
 Graph projection lifecycle is separate:
 

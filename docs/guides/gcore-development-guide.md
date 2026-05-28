@@ -160,11 +160,11 @@ Every individual feature must compile in isolation. Do not rely on `--all-featur
 
 `gobby-core` is `0.x`. The contract:
 
-- **Patch bumps (0.1.x)** — bug fixes, doc changes, internal refactors with no public API change.
+- **Patch bumps (0.2.x)** — bug fixes, doc changes, internal refactors with no public API change.
 - **Minor bumps (0.x.0)** — additive public API (new functions, new fields). Existing consumers stay compatible.
 - **Pre-1.0 breaking changes** — bump the minor and bump *every* consumer crate's gobby-core dep in the same release. Don't strand consumers on an old gobby-core.
 
-Consumers pin to a minor version (`gobby-core = "0.1"`) so patch updates are picked up automatically but additive changes require a coordinated bump.
+Consumers pin to a minor version (`gobby-core = "0.2"`) so patch updates are picked up automatically but additive changes require a coordinated bump.
 
 ## How to Consume
 
@@ -172,7 +172,7 @@ Consumers pin to a minor version (`gobby-core = "0.1"`) so patch updates are pic
 
 ```toml
 [dependencies]
-gobby-core = { path = "../gcore", version = "0.1" }
+gobby-core = { path = "../gcore", version = "0.2" }
 ```
 
 The `path` is for local workspace builds; `version` is required by `cargo publish` and gets used when consumers install the crate from crates.io. Don't drop the `version` field — `cargo publish` will reject the consumer's manifest.
@@ -181,7 +181,7 @@ Opt in to heavier modules explicitly:
 
 ```toml
 [dependencies]
-gobby-core = { path = "../gcore", version = "0.1", features = ["postgres", "search"] }
+gobby-core = { path = "../gcore", version = "0.2", features = ["postgres", "search"] }
 ```
 
 Small binaries should keep the default empty feature set unless they directly use a feature-gated module.
@@ -190,7 +190,7 @@ Small binaries should keep the default empty feature set unless they directly us
 
 ```toml
 [dependencies]
-gobby-core = "0.1"
+gobby-core = "0.2"
 ```
 
 Resolves against crates.io. The default crate has no datastore dependencies. It will not pull in PostgreSQL, FalkorDB, Qdrant, reqwest, ignore, sha2, tokio, tracing, or anything else heavy unless the consumer selects the matching feature.
@@ -213,8 +213,8 @@ If yes to all checks, add the helper:
 3. For a new heavy module, add an optional dependency, a feature entry, and a `#[cfg(feature = "<feature>")] pub mod <name>;` guard.
 4. Write tests that pin behavior under the failure modes the consumer cares about (missing input, malformed input, edge-case values).
 5. Update this guide's module map and feature gate table when the public boundary changes.
-6. Bump `gobby-core` to the next minor version (`0.2.0`) since you're adding public API.
-7. Update consumer crates to use the new helper, replacing any duplicated implementation. Bump their versions too.
+6. Bump `gobby-core` to the next minor version since you're adding public API.
+7. Update consumer crates to use the new helper, replacing any duplicated implementation. Bump consumer package versions when those crates are part of the release.
 
 ## Testing
 

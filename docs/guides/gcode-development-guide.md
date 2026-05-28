@@ -576,4 +576,15 @@ gcode index --full    # re-process all files, clean stale vectors
 gcode invalidate      # destructive reset of current project's code-index rows
 ```
 
-_Last verified: 2026-05-24_
+`gcode invalidate` is project-scoped: PostgreSQL deletes are filtered by the
+resolved project id, FalkorDB cleanup targets nodes with that project id, and
+Qdrant cleanup targets only `code_symbols_{project_id}`.
+
+`gcode setup --standalone --overwrite-code-index` is the full standalone
+code-index reset. It drops/recreates only allowlisted gcode PostgreSQL
+relations and BM25 indexes, clears code-index graph labels in FalkorDB, and
+deletes Qdrant collections with the `code_symbols_` prefix. Default standalone
+setup fails on incompatible existing code-index state and prints the overwrite
+rerun guidance.
+
+_Last verified: 2026-05-28_
