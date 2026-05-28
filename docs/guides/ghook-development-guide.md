@@ -11,6 +11,9 @@ host AI CLI (Claude Code / Codex / Gemini / Qwen / Droid)
   ▼
 main.rs::run_gobby_owned
   │
+  ├─ planned_shutdown::should_continue_before_dispatch
+  │     ── Stop only; fresh marker + unreachable health endpoint exits 0
+  │
   ├─ project::find_project_root + read_project_id      (gobby-core)
   │     ── walk-up BEFORE any detach; sandbox-safe.
   │
@@ -34,6 +37,7 @@ main.rs::run_gobby_owned
         ├─ POST {daemon_url}/api/hooks/execute  (30s timeout)
         ├─ 2xx     → fs::remove_file(envelope) → ExitCode::SUCCESS
         └─ failure → leave envelope               → ExitCode::SUCCESS or 2
+                    └─ planned Stop shutdown race may delete envelope + continue
                                                     (drain worker replays)
 ```
 
@@ -57,6 +61,7 @@ The original Python `hook_dispatcher.py` ran inside the daemon process. That mad
 | `main.rs` | Arg parsing (clap), mode dispatch (`--gobby-owned`/`--diagnose`/`--version`), orchestrates the dispatch flow. |
 | `cli_config.rs` | Per-CLI registry (claude/codex/gemini/qwen/droid) — which hooks are critical, which want terminal context. Compile-time frozen. |
 | `envelope.rs` | `Envelope` struct + `SCHEMA_VERSION = 1`. Serializes to the inbox JSON shape. |
+| `planned_shutdown.rs` | Stop-only planned shutdown markers, daemon health preflight, and post-enqueue daemon-death suppression. |
 | `transport.rs` | Inbox path resolution, atomic write, enqueue, POST + cleanup, quarantine for malformed stdin. |
 | `terminal_context.rs` | Captures parent PID, TTY, tmux pane/socket, `TERM_PROGRAM`, `GOBBY_*` env vars. Injects under `input_data.terminal_context`. |
 | `diagnose.rs` | `--diagnose` mode — pure introspection, no I/O side effects. Returns `DiagnoseOutput` matching `schemas/diagnose-output.v1.schema.json`. |
@@ -152,8 +157,8 @@ Schema:
 ```json
 {
   "install_method": "github-release",
-  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.4.1/ghook-aarch64-apple-darwin.tar.gz",
-  "installed_version": "0.4.1",
+  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.4.2/ghook-aarch64-apple-darwin.tar.gz",
+  "installed_version": "0.4.2",
   "installed_at": "2026-04-22T18:30:00Z"
 }
 ```
@@ -203,6 +208,33 @@ atomic_write(final_path, bytes):
 `post_and_cleanup` POSTs a Python-compatible hook payload to `{daemon_url}/api/hooks/execute` with a 30-second timeout. The envelope's `headers` are mirrored as HTTP headers. On 2xx, the inbox file is deleted; otherwise it's left in place.
 
 The 30s timeout is deliberately generous — the daemon may be doing real work (DB writes, agent reconciliation). `--detach` is the escape hatch for hooks where the host CLI tears down its session before 30s.
+
+### Planned Shutdown Stops
+
+`planned_shutdown` handles intentional daemon stop/restart windows without
+changing the envelope schema. Before any project lookup, stdin read,
+terminal-context injection, or enqueue, Stop hooks check
+`shutdown_intent_active.json` and then `shutdown_source.json` under
+`$GOBBY_HOME` or `~/.gobby`. Fresh markers are accepted for `intent` values
+`stop`/`restart` or source prefixes `cli_`, `http_`, `service_`, and `mcp_`.
+
+Accepted markers trigger a short GET to `{daemon_url}/api/admin/health`. Any
+HTTP response means the daemon is reachable; transport failures mean it is
+unreachable. Fresh marker plus unreachable daemon returns `{"continue":true}`
+with exit 0 and no stdin/enqueue side effects.
+
+After enqueue, the same marker rule suppresses only Stop live POST failures
+classified as `Connect` or `Timeout`. `ghook` removes the just-enqueued Stop
+envelope first; if removal fails, the normal critical-hook failure path stays in
+force. HTTP failures are treated as daemon responses and are never suppressed.
+
+Environment:
+
+- `GOBBY_DAEMON_URL` overrides `gobby_core::daemon_url::daemon_url()` for the
+  preflight and live POST.
+- `GOBBY_HOME` controls marker lookup.
+- `GOBBY_SHUTDOWN_HOOK_ALLOW_SECONDS` overrides the default 120-second marker
+  window when positive and parseable.
 
 ### Quarantine for Malformed Stdin
 
@@ -259,6 +291,7 @@ Each module has `#[cfg(test)] mod tests` with comprehensive coverage:
 
 - **envelope.rs**: serialization shape, schema validation against `inbox-envelope.v1.schema.json`, empty-headers serializing as empty object.
 - **transport.rs**: 13-digit timestamp shape, filename prefix matches `critical`, atomic-write creates parents, no `.tmp` left on success, enqueue produces valid filename, quarantine pair structure.
+- **planned_shutdown.rs**: marker parsing and freshness, allowed intents and source prefixes, env overrides, Stop matching, health reachability, and post-enqueue race suppression.
 - **diagnose.rs**: unknown CLI → not recognized + null source; known CLI/hook combos hit the right critical/terminal-context flags; schema validation for both recognized and unrecognized CLIs.
 - **cli_config.rs**: per-CLI critical/terminal-context membership; case-insensitive CLI lookup; unknown CLIs remain unrecognized for diagnose and fall back to conservative Claude-like config on the live dispatch path.
 - **terminal_context.rs**: tmux socket-path parsing edge cases, `inject` respects existing context, `inject` no-ops on non-objects, `capture` emits all expected keys.
@@ -318,7 +351,7 @@ Almost always config-only. ghook treats `--type` as opaque. To make a hook criti
 
 ## Versioning
 
-ghook is at `0.4.1`. The envelope `SCHEMA_VERSION` is `1`; the diagnose-output schema is `2`. The three version numbers are independent:
+ghook is at `0.4.2`. The envelope `SCHEMA_VERSION` is `1`; the diagnose-output schema is `2`. The three version numbers are independent:
 
 - **Crate version** bumps for any code change (binary behavior, dependencies, perf, etc.).
 - **Envelope `SCHEMA_VERSION`** bumps only when the inbox envelope shape changes in a way the daemon must explicitly handle.

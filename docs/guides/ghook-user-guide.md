@@ -31,6 +31,8 @@ Or right-click the binary in Finder and choose *Open* once to approve it. `cargo
 ```text
 host AI CLI fires hook
   └─ runs ghook --gobby-owned --cli=<c> --type=<t>
+      ├─ Stop only: planned-shutdown marker + daemon health preflight
+      │   └─ fresh marker + unreachable daemon → {"continue":true}; no stdin/enqueue
       ├─ resolves project root (walk up from cwd to .gobby/project.json)
       ├─ reads stdin (the host CLI's hook payload)
       ├─ enriches input_data with terminal_context (when applicable)
@@ -42,6 +44,33 @@ host AI CLI fires hook
 ```
 
 Spool-first ordering is the whole point. If anything between ghook and the daemon goes wrong (sandbox FS denial, network blip, daemon restart), the envelope is already on disk and the daemon will pick it up on its next drain pass. Replay is invisible to the host CLI; the host-visible result still follows the mirrored Python dispatcher contract.
+
+### Planned Shutdown Stop Handling
+
+When Gobby intentionally stops or restarts the daemon, a host CLI may fire a
+Stop hook after the daemon has already exited. For Stop hooks only, `ghook`
+checks `$GOBBY_HOME/shutdown_intent_active.json` and then
+`$GOBBY_HOME/shutdown_source.json` before project lookup, stdin reads,
+terminal-context injection, or enqueue.
+
+A marker is accepted when its `timestamp` is fresh, its `intent` is `stop` or
+`restart`, or its `source` starts with `cli_`, `http_`, `service_`, or `mcp_`.
+If `{daemon_url}/api/admin/health` is unreachable during that fresh window,
+`ghook` prints `{"continue":true}` and exits 0. Any HTTP response from the
+health endpoint counts as reachable, including 4xx/5xx.
+
+If the daemon dies after enqueue but before the live Stop POST completes,
+`ghook` suppresses only `Connect` and `Timeout` failures with a fresh marker. It
+deletes the just-enqueued Stop envelope first; delete failures, stale markers,
+HTTP errors, and non-Stop hooks keep the normal fail-closed behavior.
+
+Environment knobs:
+
+- `GOBBY_DAEMON_URL` overrides the daemon URL used for Stop preflight and live
+  POSTs.
+- `GOBBY_HOME` controls marker lookup; default is `~/.gobby`.
+- `GOBBY_SHUTDOWN_HOOK_ALLOW_SECONDS` overrides freshness when it is a positive
+  number; default is 120 seconds.
 
 ## CLI Surface
 
@@ -162,7 +191,7 @@ Unknown `--cli` values fall back to conservative Claude-like dispatch behavior o
 $ ghook --diagnose --cli=claude --type=session-start
 {
   "schema_version": 2,
-  "ghook_version": "0.4.1",
+  "ghook_version": "0.4.2",
   "cli": "claude",
   "hook_type": "session-start",
   "source": "claude",
@@ -182,7 +211,7 @@ $ ghook --diagnose --cli=claude --type=session-start
   },
   "cli_recognized": true,
   "install_method": "github-release",
-  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.4.1/ghook-aarch64-apple-darwin.tar.gz"
+  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.4.2/ghook-aarch64-apple-darwin.tar.gz"
 }
 ```
 
