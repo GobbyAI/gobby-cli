@@ -129,7 +129,7 @@ walker::discover_files(root, excludes)
     → indexer::upsert_symbols + upsert_file + upsert_chunks
       → PostgreSQL hub writes
       → upsert_imports + upsert_calls
-      → graph_synced=false / vectors_synced=false for daemon sync
+      → graph_synced=false / vectors_synced=false for projection sync
 ```
 
 ### File Discovery (walker.rs)
@@ -234,7 +234,7 @@ write `code_indexed_files` rows with `symbol_count=0`, so `tree`, `status`, and
 
 1. **Hash comparison**: SHA-256 content hash per file, stored in `code_indexed_files`
 2. **Stale detection**: Compare current hashes against stored hashes; files with changed hashes are re-indexed.
-3. **Orphan cleanup**: Files in the DB that no longer exist on disk have their hub rows deleted. External cleanup (FalkorDB/Qdrant) is handled by the daemon's reconcile/sync workers.
+3. **Orphan cleanup**: Files in the DB that no longer exist on disk have their FalkorDB code graph projection and Qdrant code-symbol vectors cleaned first, then their hub rows are deleted. Cleanup failures are recorded in `IndexOutcome.degraded`; PostgreSQL deletes still proceed.
 4. **Per-file transactions**: PostgreSQL writes (delete old data, upsert symbols, upsert file, upsert content chunks, upsert imports/calls) are wrapped in a single transaction to prevent half-indexed files on crash.
 5. **External sync flags**: Changed files are written with `graph_synced=false`, `vectors_synced=false`, and `graph_sync_attempted_at=NULL` so the daemon can regenerate graph and vector projections.
 
@@ -275,17 +275,20 @@ local-symbol edges from unresolved or external calls, and
 `callee_external_module` preserves package/module provenance for external calls.
 The runtime schema validator requires these tables before gcode starts index/search work.
 
-### Graph Lifecycle RPCs
+### Graph Lifecycle
 
-Read-side graph queries still go straight to FalkorDB. Graph lifecycle operations
-are daemon-backed orchestration commands instead:
+Read-side graph queries still go straight to FalkorDB. `gcode graph overview`
+accepts `--limit N`, which maps to the daemon's
+`GET /api/code-index/graph?limit=...` contract when the daemon delegates overview
+reads to `gcode`. Graph lifecycle operations are Rust-owned FalkorDB operations:
 
-- `gcode graph clear` → `POST /api/code-index/graph/clear?project_id=...`
-- `gcode graph rebuild` → `POST /api/code-index/graph/rebuild?project_id=...`
+- `gcode graph clear` clears the current resolved project id.
+- `gcode graph clear --project-id <PROJECT_ID>` clears by explicit project id before normal `Context::resolve()` and is the daemon stale-project cleanup path.
+- `gcode graph rebuild` clears and rebuilds the current resolved project id from PostgreSQL graph facts.
 
-These commands use the current resolved `Context.project_id`, require a daemon
-URL, and fail hard on transport errors, non-2xx responses, or invalid JSON
-success bodies. They do not talk to FalkorDB directly.
+Graph clear uses `MATCH (n {project: $project})` plus the code-index label
+predicate (`CodeFile`, `CodeSymbol`, `CodeModule`, `UnresolvedCallee`,
+`ExternalSymbol`). It must not target memory graph labels or bridge ownership.
 
 ### UUID5 Parity
 
@@ -507,9 +510,13 @@ Single match → used directly. Multiple matches → fail closed with alternativ
 
 ### Vector Lifecycle
 
-1. **Index**: PostgreSQL writes mark files dirty for external sync; the daemon handles vector upserts when configured
-2. **Re-index**: stale file cleanup and invalidation trigger corresponding Qdrant cleanup through daemon reconciliation
+1. **Index**: PostgreSQL writes mark files dirty for external sync; `gcode index --sync-projections` handles vector upserts when Qdrant and embeddings are configured
+2. **Re-index**: stale file cleanup deletes Qdrant points filtered by `project_id` and `file_path` before hub facts are removed
 3. **Search**: embed query text, search Qdrant, return `(symbol_id, score)` pairs
+
+Project vector clear/rebuild targets only the `code_symbols_{project_id}`
+collection and filters by `project_id`; it must not list, drop, or mutate memory
+vector collections.
 
 ### Collection Naming
 
@@ -524,7 +531,7 @@ Each external service degrades independently:
 | FalkorDB | No config or connection refused | Graph commands return `[]` with hint; search loses graph boost |
 | Qdrant | No URL configured | Search loses semantic source; BM25 still works |
 | Embeddings API | No API base, auth failure, or request error | Semantic search disabled for that query |
-| Daemon | Not running | Normal index/search still work; graph lifecycle RPCs fail and external sync waits for the daemon |
+| Daemon | Not running | Normal index/search and configured graph/vector lifecycle still work; daemon automation is unavailable |
 | PostgreSQL hub | Missing bootstrap, non-postgres backend, unreachable DB, or missing schema | Runtime index/search commands fail clearly |
 
 The system always works without the daemon process once the PostgreSQL hub is configured with the required schema.
@@ -576,4 +583,15 @@ gcode index --full    # re-process all files, clean stale vectors
 gcode invalidate      # destructive reset of current project's code-index rows
 ```
 
-_Last verified: 2026-05-24_
+`gcode invalidate` is project-scoped: PostgreSQL deletes are filtered by the
+resolved project id, FalkorDB cleanup targets nodes with that project id, and
+Qdrant cleanup targets only `code_symbols_{project_id}`.
+
+`gcode setup --standalone --overwrite-code-index` is the full standalone
+code-index reset. It drops/recreates only allowlisted gcode PostgreSQL
+relations and BM25 indexes, clears code-index graph labels in FalkorDB, and
+deletes Qdrant collections with the `code_symbols_` prefix. Default standalone
+setup fails on incompatible existing code-index state and prints the overwrite
+rerun guidance.
+
+_Last verified: 2026-05-28_

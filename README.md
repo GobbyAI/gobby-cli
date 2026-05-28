@@ -32,8 +32,9 @@ navigation, and hybrid ranking. When FalkorDB, Qdrant, and an embeddings
 endpoint are configured - typically through Gobby - `gcode` adds graph-aware
 search, semantic search, optional graph expansion for exact symbol lookup
 (`gcode search-symbol --with-graph`), dependency analysis (`callers`, `usages`,
-`imports`, `blast-radius`), and daemon-backed graph lifecycle commands
-(`gcode graph clear`, `gcode graph rebuild`).
+`imports`, `blast-radius`), and Rust-owned graph/vector projection lifecycle.
+`gcode graph clear --project-id <PROJECT_ID>` is available for daemon
+stale-project graph cleanup without cwd project resolution.
 
 For non-Gobby-managed projects, `gcode init` installs the bundled `gcode` skill
 for Claude Code, Codex, Droid, Grok, Qwen, Gemini CLI (deprecated
@@ -52,7 +53,9 @@ One command to launch Claude Code or Codex against a local LLM backend. Auto-det
 
 Sandbox-tolerant hook dispatcher invoked by host AI CLIs (Claude Code, Codex, Gemini CLI, Qwen CLI) on lifecycle and tool-use events. Spools envelopes to `~/.gobby/hooks/inbox/` *before* POSTing to the local Gobby daemon, so the daemon's drain worker can replay any delivery lost to a sandbox FS-read denial, network blip, or daemon restart. You don't usually invoke it directly — Gobby wires it into your AI CLI for you.
 
-`gobby-core` underpins them all — a small shared-primitives library (project root walk-up, bootstrap config, daemon URL). Not a standalone tool.
+`gobby-core` underpins them all — a small shared-primitives library for project
+root walk-up, bootstrap config, daemon URL composition, setup/provisioning
+contracts, and optional datastore adapters. It is not a standalone tool.
 
 ## Documentation
 
@@ -100,6 +103,17 @@ Bootstrap fallback is valid only when `hub_backend: postgres` and bootstrap
 contains an inline `database_url`. Bootstrap `database_url_ref` is rejected
 during bootstrap validation; it is never resolved or used to restart the
 fallback chain.
+
+For daemon-independent service provisioning, use `gcode setup --standalone`.
+The default setup path is non-destructive. If incompatible code-index state is
+already present, rerun with `gcode setup --standalone --overwrite-code-index`
+only when you intend to reset all gcode-owned code-index PostgreSQL,
+FalkorDB, and Qdrant projection state.
+
+Graph/vector lifecycle is code-index scoped. FalkorDB clears target only
+code-index labels, and Qdrant clears target only `code_symbols_{project_id}`;
+Gobby memory graph and memory vector collections stay outside this boundary.
+
 Installing from source or crates.io requires Rust 1.88+.
 
 ### From source
