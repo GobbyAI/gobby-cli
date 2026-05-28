@@ -46,6 +46,7 @@ call Rust-owned lifecycle commands, or stable JSON wrapper functions around the
 same commands:
 
 ```bash
+gcode graph overview --limit 100 --format json
 gcode graph clear --format json
 gcode graph rebuild --format json
 gcode vector clear --format json

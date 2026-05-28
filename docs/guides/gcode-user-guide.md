@@ -248,6 +248,16 @@ For Python, JavaScript, and TypeScript, graph edges are import-aware. Calls to
 external packages/modules stay external instead of being misclassified as local
 symbol-to-symbol edges.
 
+### Graph Overview
+
+```bash
+gcode graph overview --limit 100
+```
+
+- `--limit N` caps the number of files used as overview graph roots
+- Default: `100`
+- Output uses the global `--format` flag; default output remains `json`
+
 ### Graph Lifecycle
 
 `gcode` owns code-index lifecycle commands, including graph clear/rebuild. These

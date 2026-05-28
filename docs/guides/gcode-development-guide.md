@@ -277,8 +277,11 @@ The runtime schema validator requires these tables before gcode starts index/sea
 
 ### Graph Lifecycle RPCs
 
-Read-side graph queries still go straight to FalkorDB. Graph lifecycle operations
-are daemon-backed orchestration commands instead:
+Read-side graph queries still go straight to FalkorDB. `gcode graph overview`
+accepts `--limit N`, which maps to the daemon's
+`GET /api/code-index/graph?limit=...` contract when the daemon delegates overview
+reads to `gcode`. Graph lifecycle operations are daemon-backed orchestration
+commands instead:
 
 - `gcode graph clear` → `POST /api/code-index/graph/clear?project_id=...`
 - `gcode graph rebuild` → `POST /api/code-index/graph/rebuild?project_id=...`
