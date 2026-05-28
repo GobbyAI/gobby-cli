@@ -11,7 +11,7 @@ host AI CLI (Claude Code / Codex / Gemini / Qwen / Droid)
   ▼
 main.rs::run_gobby_owned
   │
-  ├─ planned_shutdown::should_continue_before_dispatch
+  ├─ planned_shutdown::should_skip_dispatch
   │     ── Stop only; fresh marker + unreachable health endpoint exits 0
   │
   ├─ project::find_project_root + read_project_id      (gobby-core)
