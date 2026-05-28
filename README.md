@@ -110,8 +110,8 @@ already present, rerun with `gcode setup --standalone --overwrite-code-index`
 only when you intend to reset all gcode-owned code-index PostgreSQL,
 FalkorDB, and Qdrant projection state.
 
-Graph/vector lifecycle is code-index scoped. FalkorDB clears target only
-code-index labels, and Qdrant clears target only `code_symbols_{project_id}`;
+Graph/vector lifecycle is code-index scoped. FalkorDB clears target-only
+code-index labels, and Qdrant clears target-only `code_symbols_{project_id}`;
 Gobby memory graph and memory vector collections stay outside this boundary.
 
 Installing from source or crates.io requires Rust 1.88+.

@@ -135,7 +135,7 @@ The crate's default feature set is empty:
 ```toml
 [features]
 default = []
-postgres = ["dep:postgres", "dep:postgres-types"]
+postgres = ["dep:postgres", "dep:postgres-types", "dep:postgres-native-tls", "dep:native-tls"]
 falkor = ["dep:falkordb", "dep:urlencoding"]
 qdrant = ["dep:reqwest"]
 indexing = ["dep:ignore", "dep:sha2"]
@@ -147,7 +147,7 @@ Feature rationale:
 
 | Feature | Enables | Why gated |
 |---------|---------|-----------|
-| `postgres` | `postgres`, `postgres-types` | Hub validation and adapter code are only needed by datastore consumers. Lightweight binaries should not inherit PostgreSQL. |
+| `postgres` | `postgres`, `postgres-types`, `postgres-native-tls`, `native-tls` | Hub validation and adapter code are only needed by datastore consumers. Lightweight binaries should not inherit PostgreSQL. |
 | `falkor` | `falkordb`, `urlencoding` | Graph helpers need FalkorDB. `urlencoding` is included because FalkorDB connection URLs must encode passwords safely. |
 | `qdrant` | `reqwest` with `blocking` and `json` | Vector search/storage helpers need HTTP. Other consumers should not pull reqwest. |
 | `indexing` | `ignore`, `sha2` | File walking and content hashing are useful for indexing consumers only. |
@@ -164,7 +164,7 @@ Every individual feature must compile in isolation. Do not rely on `--all-featur
 - **Minor bumps (0.x.0)** — additive public API (new functions, new fields). Existing consumers stay compatible.
 - **Pre-1.0 breaking changes** — bump the minor and bump *every* consumer crate's gobby-core dep in the same release. Don't strand consumers on an old gobby-core.
 
-Consumers pin to a minor version (`gobby-core = "0.2"`) so patch updates are picked up automatically but additive changes require a coordinated bump.
+Consumers that depend only on the minor-line contract can pin to a minor version (`gobby-core = "0.2"`). In-tree crates released with `gobby-core` should pin to the current patch floor when they rely on behavior from that patch, for example `gobby-core = "0.2.1"`.
 
 ## How to Consume
 
@@ -172,7 +172,7 @@ Consumers pin to a minor version (`gobby-core = "0.2"`) so patch updates are pic
 
 ```toml
 [dependencies]
-gobby-core = { path = "../gcore", version = "0.2" }
+gobby-core = { path = "../gcore", version = "0.2.1" }
 ```
 
 The `path` is for local workspace builds; `version` is required by `cargo publish` and gets used when consumers install the crate from crates.io. Don't drop the `version` field — `cargo publish` will reject the consumer's manifest.
@@ -181,7 +181,7 @@ Opt in to heavier modules explicitly:
 
 ```toml
 [dependencies]
-gobby-core = { path = "../gcore", version = "0.2", features = ["postgres", "search"] }
+gobby-core = { path = "../gcore", version = "0.2.1", features = ["postgres", "search"] }
 ```
 
 Small binaries should keep the default empty feature set unless they directly use a feature-gated module.
@@ -190,7 +190,7 @@ Small binaries should keep the default empty feature set unless they directly us
 
 ```toml
 [dependencies]
-gobby-core = "0.2"
+gobby-core = "0.2.1"
 ```
 
 Resolves against crates.io. The default crate has no datastore dependencies. It will not pull in PostgreSQL, FalkorDB, Qdrant, reqwest, ignore, sha2, tokio, tracing, or anything else heavy unless the consumer selects the matching feature.

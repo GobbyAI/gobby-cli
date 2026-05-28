@@ -275,7 +275,7 @@ gcode graph rebuild
 - These commands fail if required project context cannot be resolved or if FalkorDB is unavailable
 - They respect the existing global `--format` flag; default output remains `json`
 - No confirmation prompt is shown; these are project-scoped graph projection operators, not full index invalidation
-- Code graph clears target only code-index FalkorDB labels, not memory graph labels
+- Code graph clears target-only code-index FalkorDB labels, not memory graph labels
 
 ### Callers
 

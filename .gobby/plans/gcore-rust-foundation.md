@@ -3,6 +3,7 @@
 **Plan ID:** gcore-rust-foundation
 
 ## O1: Overview
+
 `kind: framing`
 
 `gobby-core` is the shared Rust migration substrate for Gobby CLI crates and the future Rust daemon. It should hold the boring, reusable platform layer: context and config resolution, attached versus standalone setup contracts, PostgreSQL/FalkorDB/Qdrant adapters, generic indexing/search primitives, and shared error/degradation types.
@@ -12,6 +13,7 @@ Domain behavior stays out of this crate. Code graph facts, symbol IDs, language 
 The crate already exists at `crates/gcore/` with three small modules (`project`, `bootstrap`, `daemon_url`, ~250 lines total) consumed by `gobby-code` and `gobby-hooks`. This plan expands it into the full foundation layer behind Cargo feature gates so consumers that only need project discovery continue to get a tiny dependency.
 
 ## C1: Constraints
+
 `kind: framing`
 
 - **Non-destructive attached mode**: attached Gobby projects validate externally managed schema and service availability. They do not create, alter, drop, or migrate Gobby-owned objects.
@@ -23,6 +25,7 @@ The crate already exists at `crates/gcore/` with three small modules (`project`,
 - **Feature-gated heavy dependencies**: the baseline crate (no features) stays dependency-light (`anyhow`, `dirs`, `serde_json`, `serde_yaml`). Heavy dependencies like `postgres`, `falkordb`, and `reqwest` live behind Cargo features. Consumers opt in to only the adapters they need. `gsqz`, `gloc`, and `ghook` must not inherit datastore dependencies they never use.
 
 ## D1: Dependent Plans
+
 `kind: framing`
 
 This plan is the foundation dependency for `.gobby/plans/gcode-graph-enhancements.md` and `.gobby/plans/gwiki.md`.
@@ -32,11 +35,13 @@ This plan is the foundation dependency for `.gobby/plans/gcode-graph-enhancement
 `gobby-wiki` may depend on the same primitives, but it owns vault semantics, wiki document models, namespaced storage, ingestion, research, compile, audit, and Obsidian-compatible output.
 
 ## P1: Context And Setup Contracts
+
 `kind: framing`
 
 **Goal**: define the shared Rust foundation boundary, degradation vocabulary, context/config resolution, and setup modes that every consumer crate can use without inheriting another domain's behavior.
 
 ### 1.1 Define the gobby-core public boundary [category: code]
+
 `kind: deliverable`
 
 Targets: `crates/gcore/Cargo.toml`, `crates/gcore/src/lib.rs`, `docs/guides/gcore-development-guide.md`
@@ -48,7 +53,7 @@ Expand the existing `gobby-core` crate into the documented foundation layer. The
 ```toml
 [features]
 default = []
-postgres = ["dep:postgres", "dep:postgres-types"]
+postgres = ["dep:postgres", "dep:postgres-types", "dep:postgres-native-tls", "dep:native-tls"]
 falkor = ["dep:falkordb", "dep:urlencoding"]
 qdrant = ["dep:reqwest"]
 indexing = ["dep:ignore", "dep:sha2"]
@@ -66,6 +71,8 @@ thiserror = "2"
 # Feature-gated
 postgres = { version = "0.19", optional = true }
 postgres-types = { version = "0.2", optional = true }
+postgres-native-tls = { version = "0.5", optional = true }
+native-tls = { version = "0.2", optional = true }
 falkordb = { version = "0.2", optional = true }
 reqwest = { version = "0.12", features = ["blocking", "json"], optional = true }
 ignore = { version = "0.4", optional = true }
@@ -120,6 +127,7 @@ Update `docs/guides/gcore-development-guide.md` to document the expanded module 
 - 1.1.6 - Baseline `gobby-core` (no features) passes build, test, and clippy without datastore dependencies, matching CI's `--no-default-features` requirement from `AGENTS.md`. test: `cargo build -p gobby-core --no-default-features && cargo test -p gobby-core --no-default-features && cargo clippy -p gobby-core --no-default-features -- -D warnings`.
 
 ### 1.2 Add shared error and degradation contracts [category: code] (depends: 1.1)
+
 `kind: deliverable`
 
 Targets: `crates/gcore/src/degradation.rs`, `docs/guides/gcore-development-guide.md`
@@ -207,6 +215,7 @@ Consumers decide which services are required versus optional for each command. `
 - 1.2.5 - `CoreError` round-trips through `serde_json::to_string` / `serde_json::from_str` for at least the `InvalidConfig` and `RequiredServiceUnavailable` variants. test: `crates/gcore/src/degradation.rs::tests::core_error_serialization_roundtrip`.
 
 ### 1.3 Add shared context and config resolution [category: code] (depends: 1.1)
+
 `kind: deliverable`
 
 Targets: `crates/gcore/src/context.rs`, `crates/gcore/src/config.rs`, `crates/gcore/src/bootstrap.rs`, `crates/gcore/src/project.rs`
@@ -499,6 +508,7 @@ The resolution functions are not feature-gated themselves — they take `&mut im
 - 1.3.13 - `QdrantConfig` contains only connection-level config (url, api_key); no `collection_prefix` field — collection naming is consumer-owned via `CollectionScope` and `collection_name` (§2.3). test: `crates/gcore/src/config.rs::tests::qdrant_config_has_no_domain_collection_prefix`.
 
 ### 1.4 Define attached and standalone setup contracts [category: code] (depends: 1.2, 1.3)
+
 `kind: deliverable`
 
 Targets: `crates/gcore/src/setup.rs`, `docs/guides/gcore-development-guide.md`
@@ -646,11 +656,13 @@ pub trait StandaloneSetup {
 - 1.4.6 - A standalone creator can execute DDL through the mutable `SetupContext` without moving ownership from subsequent callbacks. test: `crates/gcore/src/setup.rs::tests::creator_executes_without_moving_ownership`.
 
 ## P2: Datastore Adapters
+
 `kind: framing`
 
 **Goal**: centralize client plumbing and safety contracts for PostgreSQL, FalkorDB, and Qdrant while leaving schemas, labels, and payload semantics to consumers.
 
 ### 2.1 Add PostgreSQL hub adapter [category: code] (depends: P1)
+
 `kind: deliverable`
 
 Targets: `crates/gcore/src/postgres.rs`
@@ -730,6 +742,7 @@ Domain crates remain responsible for their own table names, indexes, and standal
 - 2.1.4 - Domain table names are supplied by consumers, not embedded in `gobby-core`. test: `crates/gcore/src/postgres.rs::tests::schema_validator_is_domain_supplied`.
 
 ### 2.2 Add FalkorDB adapter and query safety boundary [category: code] (depends: P1)
+
 `kind: deliverable`
 
 Targets: `crates/gcore/src/falkor.rs`
@@ -846,6 +859,7 @@ The adapter has no hardcoded code labels (`CodeSymbol`, `CALLS`, `IMPORTS`) or w
 - 2.2.5 - `GraphClient::from_config` accepts a consumer-supplied `graph_name` parameter; `gobby-core` contains no hardcoded `"gobby_code"` or wiki graph name defaults. test: `crates/gcore/src/falkor.rs::tests::graph_name_is_consumer_supplied`.
 
 ### 2.3 Add Qdrant and embedding configuration adapter [category: code] (depends: P1)
+
 `kind: deliverable`
 
 Targets: `crates/gcore/src/qdrant.rs`
@@ -1026,11 +1040,13 @@ pub fn upsert(
 - 2.3.7 - `with_qdrant` is the single `ServiceState` boundary for Qdrant operations. `search` returns `anyhow::Result<Vec<SearchHit>>` with no `ServiceState` — both connection failure and HTTP non-success produce `Err`. Composing `with_qdrant(config, vec![], |cfg| search(cfg, coll, req))` produces three distinguishable outcomes: config missing (`None` or `url: None`) → `Ok((vec![], ServiceState::NotConfigured))`, successful search → `Ok((hits, ServiceState::Available))`, search error → `Err(e)` (consumer decides whether to degrade or propagate). Embedding config absence is consumer-owned — consumers check `Option<&EmbeddingConfig>` before generating a query vector and report missing embedding via `DegradationKind::ServiceUnavailable { service: "embedding", state: ServiceState::NotConfigured }` without entering the Qdrant adapter. test: `crates/gcore/src/qdrant.rs::tests::qdrant_single_state_boundary`.
 
 ## P3: Generic Indexing And Search Primitives
+
 `kind: framing`
 
 **Goal**: share mechanics that are genuinely generic while keeping parsing, graph extraction, and UX in domain crates.
 
 ### 3.1 Add generic indexing primitives [category: code] (depends: P2)
+
 `kind: deliverable`
 
 Targets: `crates/gcore/src/indexing.rs`, `crates/gcore/src/lib.rs`
@@ -1095,6 +1111,7 @@ Language parsing, markdown parsing, symbol extraction, wiki link extraction, and
 - 3.1.4 - The indexing module does not depend on tree-sitter or any language grammar crate. test: `crates/gcore/src/indexing.rs::tests::no_domain_parser_dependency`.
 
 ### 3.2 Add generic search fusion primitives [category: code] (depends: P2)
+
 `kind: deliverable`
 
 Targets: `crates/gcore/src/search.rs`
@@ -1193,6 +1210,7 @@ PostgreSQL query SQL, Qdrant payload filters, graph boost semantics, and user-fa
 - 3.2.6 - `rrf_merge` sorts `sources` and `explanations` within each `SearchResult` by source name, producing deterministic output matching current `gcode`'s `source_names.sort()` behavior. A two-source overlap case (e.g. `("semantic", ["b"]), ("fts", ["b"])`) produces `sources: ["fts", "semantic"]` in alphabetical order. test: `crates/gcore/src/search.rs::tests::rrf_sorts_sources_deterministically`.
 
 ## VS1: Verification
+
 `kind: verification`
 
 Validation for this plan:
@@ -1216,6 +1234,7 @@ Integration validation after dependent plans land:
 - Focused tests proving `gobby-code` and `gobby-wiki` consume shared primitives without moving domain behavior into `gobby-core`.
 
 ## AC1: Acceptance Criteria
+
 `kind: verification`
 
 - `gobby-core` exposes shared context/config, setup, datastore, indexing, search, and degradation primitives behind feature gates.
@@ -1227,6 +1246,7 @@ Integration validation after dependent plans land:
 - FalkorDB and Qdrant absence is represented through typed degradation wherever those services are optional.
 
 ## V1 Plan Changelog
+
 `kind: verification`
 
 - **R1 (2026-05-26)**: Created the foundation plan for shared Rust substrate work. Scoped shared primitives to `gobby-core`; kept code graph behavior in `gobby-code` and wiki vault behavior in `gobby-wiki`; defined attached/standalone setup, datastore adapters, generic indexing/search primitives, and shared degradation contracts.
@@ -1241,6 +1261,7 @@ Integration validation after dependent plans land:
 - **R10 (2026-05-27)**: Addressed R9 adversary findings F1–F3. (F1) Documented `decode_config_value` JSON-null behavior as an intentional divergence from current `gcode` — current `gcode` returns `Some("null")` for JSON null (no explicit `Null` branch), which is incorrect for config values used as passwords, URLs, or model names; updated docstring and acceptance 1.3.5 to state the fix explicitly. (F2) Removed unused `ServiceState` import from search.rs; replaced degradation-consumption claim with statement that search fusion is degradation-agnostic (adapters own `ServiceState`, consumers build `SearchDegradation`). (F3) Added deterministic source ordering to `rrf_merge` — `explanations` sorted by source name before deriving `sources`, matching current `gcode`'s `source_names.sort()` at `rrf.rs:42`; added acceptance 3.2.6 for two-source overlap ordering parity. Swept same finding classes: (a) removed unused `EmbeddingConfig` import from qdrant.rs (same unused-import class as F2 — embedding config is consumer-owned, not used in adapter functions); (b) verified no other `HashMap` iteration order reaches output-facing fields; (c) verified remaining parity claims (env var names, `reqwest::blocking`, `CollectionScope::Custom`) match codebase.
 
 ## M1 Task Manifest
+
 `kind: manifest`
 
 ```yaml

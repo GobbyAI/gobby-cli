@@ -3,6 +3,7 @@
 **Plan ID:** gcode-graph-enhancements
 
 ## O1: Overview
+
 `kind: framing`
 
 `gcode` owns code-index behavior and the code projections derived from it on top of the shared Rust foundation defined in `.gobby/plans/gcore-rust-foundation.md`. The durable target is not a graph-only API or a generic datastore/search substrate inside `gobby-code`; it is a code-specific projection layer that owns PostgreSQL code facts, the FalkorDB `gobby_code` graph projection, and Qdrant `code_symbols_<project_id>` symbol-vector collections.
@@ -14,6 +15,7 @@ For code-symbol vectors, `gcode` calls OpenAI-compatible `/v1/embeddings` endpoi
 The code/memory boundary stays sharp. Rust code-index modules own deterministic code facts: files, symbols, imports, definitions, calls, unresolved call targets, and code graph reports derived from those facts. Gobby memory services own memories, knowledge graph extraction, and `RELATES_TO_CODE` bridge creation. Rust report code may read bridge edges when present so agents can see hypotheses beside extracted code facts, but it must not create or mutate memory-owned data.
 
 ## D1: Dependent Plans
+
 `kind: framing`
 
 This plan depends on the shared Rust foundation defined in `.gobby/plans/gcore-rust-foundation.md`. Shared context/config resolution, attached/standalone setup contracts, PostgreSQL/FalkorDB/Qdrant adapters, generic indexing/search primitives, and degradation vocabulary are consumed from `gobby-core`. `gobby-code` owns code-specific PostgreSQL fact writes, FalkorDB `gobby_code` graph projection, Qdrant `code_symbols_<project_id>` vector projection, lifecycle commands, and project graph reports.
@@ -21,6 +23,7 @@ This plan depends on the shared Rust foundation defined in `.gobby/plans/gcore-r
 Memory graph behavior, `RELATES_TO_CODE` bridge edges, and LLM-generated symbol summaries remain owned by the Gobby daemon's memory services and are not in scope for this plan.
 
 ## A1: Architecture Principles
+
 `kind: framing`
 
 - Foundation dependency: shared context/config, setup contracts, datastore adapters, generic indexing/search primitives, and degradation types come from `gobby-core`.
@@ -42,6 +45,7 @@ Memory graph behavior, `RELATES_TO_CODE` bridge edges, and LLM-generated symbol 
 - Phase 7 contract tests in the Gobby repo remain a compatibility gate until that external source-inspection contract changes.
 
 ## N1: Non-Goals
+
 `kind: framing`
 
 - Do not make `gcode` the long-term owner of daemon orchestration, UI, MCP, or memory graph behavior.
@@ -53,9 +57,11 @@ Memory graph behavior, `RELATES_TO_CODE` bridge edges, and LLM-generated symbol 
 - Do not move LLM-generated symbol summaries to Rust in this plan.
 
 ## P1: Core Boundary And Setup
+
 `kind: framing`
 
 ### 1.1 Create the gobby-code projection library boundary [category: code]
+
 `kind: deliverable`
 Targets: `crates/gcode/Cargo.toml`, `crates/gcode/src/lib.rs`, `crates/gcode/src/main.rs`, `crates/gcode/src/commands/graph.rs`, `crates/gcode/src/commands/vector.rs`, `crates/gcode/src/falkor.rs`, `crates/gcode/src/search/semantic.rs`
 
@@ -85,6 +91,7 @@ Initial module shape:
 - 1.1.4 - Phase 7 compatibility surface in `falkor.rs` remains available (file exists, is not a pure re-export, and exposes the basic facade symbols `FalkorClient`, `with_falkor` referenced by downstream gcode modules). The deep source-inspection contract that the Gobby-repo Phase 7 test asserts is pinned by §1.5.11 / §1.5.12 / §1.5.13 / §1.5.14 / §1.5.15 / §1.5.16 once §1.5 lands. test: `crates/gcode/src/lib.rs::tests::falkor_facade_is_available`, test: `gobby/tests/code_index/test_gcode_phase7_contract.py`.
 
 ### 1.2 Add explicit standalone setup [category: code] (depends: 1.1)
+
 `kind: deliverable`
 Targets: `crates/gcode/src/schema.rs`, `crates/gcode/src/setup.rs`, `crates/gcode/src/commands/setup.rs`, `crates/gcode/src/commands/mod.rs`, `crates/gcode/src/main.rs`
 
@@ -132,6 +139,7 @@ Standalone setup must not write `.gobby/project.json`, `config_store`, Gobby mig
 - 1.2.8 - `crates/gcode/src/setup.rs` defines a struct (for example `GcodeStandaloneSetup`) that implements `gobby_core::setup::StandaloneSetup`; its `namespace()` returns a gcode-owned string (for example `"gcode"`), `owned_objects()` enumerates every gcode-owned standalone resource (indexed-files, symbols, content chunks, sync-state, BM25 indexes) as `OwnedObject` entries whose `creator` closures own the literal `CREATE TABLE`/`CREATE INDEX`/`CREATE EXTENSION` strings, and the declared object list refuses to include Gobby-owned tables, `config_store`, or `.gobby/project.json`. The `create` implementation executes the creator closures against the foundation-supplied `gobby_core::setup::SetupContext`; gcode does not bypass `SetupContext` to open raw PostgreSQL connections or issue DDL outside the creator-callback path. test: `crates/gcode/src/setup.rs::tests::standalone_setup_uses_gobby_core_contract`.
 
 ### 1.3 Add safe typed FalkorDB query rendering [category: code] (depends: 1.1, 1.5)
+
 `kind: deliverable`
 Targets: `crates/gcode/src/graph/typed_query.rs`, `crates/gcode/src/falkor.rs`
 
@@ -152,6 +160,7 @@ Rules:
 - 1.3.3 - The wrapper reuses the existing Falkor row conversion boundary. file: `crates/gcode/src/falkor.rs`.
 
 ### 1.4 Add reusable code-fact indexing library API [category: code] (depends: 1.1, 1.5)
+
 `kind: deliverable`
 Targets: `crates/gcode/src/lib.rs`, `crates/gcode/src/index/mod.rs`, `crates/gcode/src/index/indexer.rs`, `crates/gcode/src/commands/index.rs`, `crates/gcode/src/db.rs`
 
@@ -175,6 +184,7 @@ The library API owns code-fact writes only. Graph and vector projection sync is 
 - 1.4.4 - Files, symbols, imports, calls, unresolved targets, and chunks are all written through the library API and reflected in `IndexOutcome` counts. test: `crates/gcode/src/index/indexer.rs::tests::library_writes_all_code_facts`.
 
 ### 1.5 Wire gcode to the gobby-core foundation [category: code] (depends: 1.1)
+
 `kind: deliverable`
 Targets: `crates/gcode/Cargo.toml`, `Cargo.lock`, `crates/gcode/src/lib.rs`, `crates/gcode/src/config.rs`, `crates/gcode/src/db.rs`, `crates/gcode/src/falkor.rs`, `crates/gcode/src/search/semantic.rs`, `crates/gcode/src/secrets.rs`
 
@@ -289,6 +299,8 @@ The external Phase 7 test in `gobby/tests/code_index/test_gcode_phase7_contract.
   - The external Phase 7 test's `_assert_neo4j_transition_state` helper accepts either a complete transitional `Neo4jConfig` shape (with `pub struct Neo4jConfig { ... }` in `config.rs`, `pub neo4j: Option<Neo4jConfig>` on `Context`, and `let neo4j = resolve_neo4j_config(` in `config.rs`) or source-level absence of every Neo4j artifact. This plan commits to the **source-level absence branch** because the current `gobby-code` source has no Neo4j references and FalkorDB is the only graph adapter going forward.
   - `crates/gcode/src/config.rs` MUST NOT declare a `pub struct Neo4jConfig { ... }`; MUST NOT contain a `resolve_neo4j_config` function, free function, or any symbol named `resolve_neo4j_config`; and MUST NOT declare any struct field of the shape `pub neo4j: Option<Neo4jConfig>` on `Context` or any other struct in this file. The Cargo.lock state pinned by §1.5.17 (no `neo4j`/`neo4rs` packages) is a separate dependency-side assertion; this bullet pins the source-side absence the external `_assert_neo4j_transition_state` helper checks against `config.rs` directly.
   - If a future Neo4j transition reintroduces those fields, the wrapper must switch to satisfying the full transitional shape branch (re-add `Neo4jConfig`, `Context.neo4j`, and `resolve_neo4j_config`); the plan must be updated to pin the transitional shape before §1.5.21 is removed.
+- **Facade retirement trigger**:
+  - The Phase 7 source-inspection facade can be retired only after the follow-up maintenance tasks replace it with behavior and foundation API guarantees: #273 adds behavioral Phase 7 contract coverage, #274 exposes the `GraphClient` sync-graph hook, #275 documents the retirement trigger, and #276 removes the pinned facade fragments after those prerequisites land.
 
 The wrapper layer is the only place in `gobby-code` allowed to keep the duplicated symbol shapes that mirror `gobby_core::falkor::GraphClient` / `with_graph` and the only place allowed to instantiate `falkordb::FalkorClientBuilder` (per the facade exception above and the A1 "Phase 7 compatibility facade exception" bullet). All other code-graph consumers in `gobby-code` — the §2.2/§2.3/§2.4 writers, readers, and CLI commands plus §2.6 projection lifecycle code and §3.1 report generation — call `gobby_core::falkor::with_graph` directly; they do not call the wrapper or instantiate `falkordb::FalkorClientBuilder` themselves.
 
@@ -322,10 +334,11 @@ Behavioral guarantees:
 - 1.5.18 - `crates/gcode/src/config.rs` declares the `Context` struct with the literal field `pub falkordb: Option<FalkorConfig>`, contains the literal expression `let falkordb = resolve_falkordb_config(` at the resolver call site that populates that field, and populates `FalkorConfig.graph_name` either via the inline literal `graph_name: "gobby_code".to_string()` or via the pair `const FALKORDB_GRAPH_NAME: &str = "gobby_code";` plus `graph_name: FALKORDB_GRAPH_NAME.to_string()` (canonical form). test: `crates/gcode/src/config.rs::tests::phase7_context_and_falkor_resolver_visible`.
 - 1.5.19 - `crates/gcode/src/config.rs` contains the literal `config_store` key strings `databases.falkordb.host`, `databases.falkordb.port`, and `databases.falkordb.requirepass` so the attached-mode `PostgresConfigSource` adapter reads them verbatim. These appear in addition to the env-var literals (`GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, `GOBBY_FALKORDB_PASSWORD`) already pinned by §1.5.11. test: `crates/gcode/src/config.rs::tests::phase7_falkordb_config_store_keys_visible`.
 - 1.5.20 - `crates/gcode/src/falkor.rs` production code (outside `#[cfg(test)]`) contains the numeric-clamping expressions `depth.clamp(1, 5)`, `limit.clamp(1, MAX_GRAPH_LIMIT)`, and `offset.min(MAX_GRAPH_LIMIT)`; the additional literal Cypher fragments `src.id IN [{ids}]` and standalone `LIMIT {limit}`; and the function signature `fn blast_radius_query(depth: usize, limit: usize)`. These are pinned in addition to the existing fragments listed in §1.5.16. test: `crates/gcode/src/falkor.rs::tests::phase7_additional_query_fragments_visible`.
-- 1.5.21 - `crates/gcode/src/config.rs` contains neither a `pub struct Neo4jConfig { ... }` declaration nor any function or symbol named `resolve_neo4j_config`, and no struct in `config.rs` declares a `pub neo4j: Option<Neo4jConfig>` field (including on `Context`). This matches the source-level-absence branch of the external Phase 7 `_assert_neo4j_transition_state` helper; the plan commits to absence because `gobby-code` has no transitional Neo4j artifacts and FalkorDB is the only graph adapter. If a future change reintroduces a Neo4j transition, the wrapper must switch to satisfying the full transitional shape branch and §1.5.21 must be updated before that change lands. test: `crates/gcode/src/config.rs::tests::phase7_neo4j_transition_state_absent`.
+- 1.5.21 - `crates/gcode/src/config.rs` contains neither a `pub struct Neo4jConfig { ... }` declaration nor any function or symbol named `resolve_neo4j_config`, and no struct in `config.rs` declares a `pub neo4j: Option<Neo4jConfig>` field (including on `Context`). This matches the source-level-absence branch of the external Phase 7 `_assert_neo4j_transition_state` helper; the plan commits to absence because `gobby-code` has no transitional Neo4j artifacts and FalkorDB is the only graph adapter. If a future change reintroduces a Neo4j transition, the wrapper must switch to satisfying the full transitional shape branch and §1.5.21 must be updated before that change lands. The facade retirement trigger is tracked by #273, #274, #275, and #276; source-fragment requirements stay in force until those maintenance tasks land. test: `crates/gcode/src/config.rs::tests::phase7_neo4j_transition_state_absent`.
 - 1.5.22 - `crates/gcode/src/falkor.rs` is the only `gobby-code` source file that instantiates `falkordb::FalkorClientBuilder` directly or bypasses `gobby_core::falkor::with_graph`'s ServiceState boundary; the exception exists because `gobby_core::falkor::GraphClient { graph: SyncGraph }` exposes a private `graph` field and provides no public hook (no `into_sync_graph`, `from_graph_client`, or `with_graph_client` constructor) for building the Phase 7-required local `FalkorClient { graph: SyncGraph }`. All other `gobby-code` graph consumers (graph writes/reads owned by §2.2/§2.3, search graph boost, projection lifecycle code owned by §2.6, report generation owned by §3.1, and CLI command handlers owned by §2.4/§3.2) enter Falkor through `gobby_core::falkor::with_graph` and do not import `falkordb::FalkorClientBuilder`. The narrowed single-file scope mirrors the A1 "Vector projection lifecycle exception" pattern and is documented in the A1 "Phase 7 compatibility facade exception" bullet. test: `crates/gcode/src/lib.rs::tests::falkor_facade_exception_scoped_to_falkor_rs`.
 
 ### 1.6 Consume gobby-core generic indexing and search primitives [category: code] (depends: 1.4)
+
 `kind: deliverable`
 Targets: `crates/gcode/src/index/walker.rs`, `crates/gcode/src/index/hasher.rs`, `crates/gcode/src/index/chunker.rs`, `crates/gcode/src/search/rrf.rs`, `crates/gcode/src/commands/search.rs`, `crates/gcode/src/lib.rs`
 
@@ -361,9 +374,11 @@ O1/D1/A1 require generic indexing and search primitives to be consumed from `gob
 - 1.6.5 - A regression test asserts that gcode's generic indexing and search primitives route through `gobby_core::indexing` / `gobby_core::search` rather than duplicating the foundation logic in `gobby-code`: `index/walker.rs` references `gobby_core::indexing::WalkerSettings`, `index/hasher.rs` references `gobby_core::indexing::file_content_hash`, `search/rrf.rs` references `gobby_core::search::rrf_merge`, and the narrowed boundary for `index/chunker.rs` (no `gobby_core::indexing::Chunk` import) is preserved. test: `crates/gcode/src/lib.rs::tests::indexing_search_primitive_migration`.
 
 ## P2: Code Projection Core
+
 `kind: framing`
 
 ### 2.1 Define provenance and confidence metadata [category: code] (depends: 1.1)
+
 `kind: deliverable`
 Targets: `crates/gcode/src/models.rs`, `crates/gcode/src/graph/code_graph.rs`, `crates/gcode/src/graph/report.rs`, `crates/gcode/src/vector/code_symbols.rs`
 
@@ -383,6 +398,7 @@ Code-derived `CALLS`, `IMPORTS`, and `DEFINES` are always `EXTRACTED` with `sour
 - 2.1.3 - Report output labels bridge edges as inferred hypotheses when present. test: `crates/gcode/src/graph/report.rs::tests::bridge_edges_are_hypotheses`.
 
 ### 2.2 Port code graph writes into the Rust core [category: code] (depends: 1.3, 2.1)
+
 `kind: deliverable`
 Targets: `crates/gcode/src/graph/code_graph.rs`, `crates/gcode/src/models.rs`
 
@@ -407,6 +423,7 @@ The write path preserves Python parity where IDs are externally visible. UUID5 g
 - 2.2.4 - UUID5 parity tests cover all public IDs generated by the write path. test: `crates/gcode/src/models.rs::tests::uuid5_python_parity`.
 
 ### 2.3 Port code graph reads into the Rust core [category: code] (depends: 2.2)
+
 `kind: deliverable`
 Targets: `crates/gcode/src/graph/code_graph.rs`, `crates/gcode/src/search/graph_boost.rs`, `crates/gcode/src/commands/graph.rs`, `crates/gcode/src/falkor.rs`
 
@@ -430,6 +447,7 @@ The existing public read helpers in `crates/gcode/src/falkor.rs` (`count_callers
 - 2.3.4 - Public `falkor.rs` read helpers (`count_callers`, `count_usages`, `find_callers`, `find_usages`, `find_callers_batch`, `find_callees_batch`, `get_imports`, `blast_radius`) delegate their internal Falkor query work to the new `graph::code_graph` read APIs while preserving public signatures, `*_query` siblings, clamping behavior, the `Row` / `query` / `parse_falkor_result` surface, the Cypher-builder helpers and literal fragments, and the unbound-parameter ban pinned by §1.5.13 / §1.5.14 / §1.5.15 / §1.5.16. test: `crates/gcode/src/falkor.rs::tests::read_helpers_delegate_to_code_graph`.
 
 ### 2.4 Wrap core operations with gcode graph commands [category: code] (depends: 1.2, 1.4, 2.2, 2.3)
+
 `kind: deliverable`
 Targets: `crates/gcode/src/commands/graph.rs`, `crates/gcode/src/db.rs`, `crates/gcode/src/main.rs`, `crates/gcode/tests/graph_standalone.rs`
 
@@ -457,6 +475,7 @@ The existing top-level read commands `gcode callers`, `gcode usages`, `gcode imp
 - 2.4.6 - JSON output shape for top-level `gcode callers`, `gcode usages`, `gcode imports`, and `gcode blast-radius` (field names, payload structure, pagination metadata) stays compatible with current consumers; new optional metadata fields per §2.1 are tagged with `#[serde(skip_serializing_if = "Option::is_none")]` so existing parsers continue to accept the responses. test: `crates/gcode/src/commands/graph.rs::tests::top_level_read_commands_preserve_json_shape`.
 
 ### 2.5 Port code-symbol vector projection into the Rust core [category: code] (depends: 1.1, 1.5, 2.1)
+
 `kind: deliverable`
 Targets: `crates/gcode/src/vector/code_symbols.rs`, `crates/gcode/src/search/semantic.rs`, `crates/gcode/src/config.rs`, `crates/gcode/src/commands/vector.rs`, `crates/gcode/tests/vector_projection.rs`
 
@@ -506,6 +525,7 @@ Vector parameter rules:
 - 2.5.11 - Vector payloads carry the §2.1 provenance metadata fields (`provenance = "EXTRACTED"`, `confidence = 1.0`, `source_system = "gcode"`, plus source-detail fields covering file path, source range, and symbol ID). Payloads round-trip through Qdrant upsert without losing these fields. test: `crates/gcode/src/vector/code_symbols.rs::tests::payloads_carry_provenance_metadata`.
 
 ### 2.6 Add projection lifecycle orchestration commands [category: code] (depends: 1.2, 1.4, 2.4, 2.5)
+
 `kind: deliverable`
 Targets: `crates/gcode/src/main.rs`, `crates/gcode/src/commands/index.rs`, `crates/gcode/src/commands/vector.rs`, `crates/gcode/src/commands/mod.rs`, `crates/gcode/src/projection/sync.rs`, `crates/gcode/src/db.rs`, `crates/gcode/src/output.rs`, `crates/gcode/tests/projection_standalone.rs`
 
@@ -561,9 +581,11 @@ Hard lifecycle commands fail non-zero when their explicitly requested backing se
 - 2.6.7 - `crates/gcode/src/commands/mod.rs` exports the new `vector` command module via `pub mod vector;`, sequenced after §1.2's `pub mod setup;` edit so both command-module exports land in a single owner chain rather than racing on the same file. file: `crates/gcode/src/commands/mod.rs`.
 
 ## P3: Report And Daemon Migration Surfaces
+
 `kind: framing`
 
 ### 3.1 Generate a project graph report in Rust core [category: code] (depends: 2.3)
+
 `kind: deliverable`
 Target: `crates/gcode/src/graph/report.rs`
 
@@ -592,6 +614,7 @@ Keep v1 metrics simple and explainable. Do not add advanced community detection 
 - 3.1.4 - Missing optional bridge data does not fail a code-only report; missing required graph service fails with a typed error. test: `crates/gcode/src/graph/report.rs::tests::report_degradation_contract`.
 
 ### 3.2 Add gcode graph report CLI wrapper [category: code] (depends: 2.6, 3.1)
+
 `kind: deliverable`
 Targets: `crates/gcode/src/commands/graph.rs`, `crates/gcode/src/main.rs`
 
@@ -605,6 +628,7 @@ Expose `gcode graph report --top-n <n>` as a thin wrapper over the Rust report A
 - 3.2.4 - Clap parsing proves `--format` remains global and report-specific args stay minimal. test: `crates/gcode/src/main.rs::tests::parse_graph_report_global_format`.
 
 ### 3.3 Document daemon migration contracts [category: docs] (depends: 2.6, 3.2)
+
 `kind: deliverable`
 Target: `docs/guides/gcode-graph-core.md`
 
@@ -629,6 +653,7 @@ Document the migration contract for Gobby daemon consumers:
 - 3.3.4 - Symbol summaries are documented as daemon-side optional enrichment. file: `docs/guides/gcode-graph-core.md`.
 
 ## VS1: Verification
+
 `kind: verification`
 
 - `uv run gobby plans validate .gobby/plans/gcode-graph-enhancements.md`
@@ -647,6 +672,7 @@ Document the migration contract for Gobby daemon consumers:
 - JSON compatibility tests prove current consumers can parse outputs with optional projection metadata.
 
 ## AC1: Acceptance Criteria
+
 `kind: verification`
 
 - `gobby-code` library APIs own PostgreSQL code facts, graph/vector projection sync, lifecycle, setup integration, and report generation.
@@ -666,6 +692,7 @@ Document the migration contract for Gobby daemon consumers:
 - Existing JSON consumers remain compatible.
 
 ## DF1: Deferred Gobby-Repo Python Daemon Shim Transition
+
 `kind: deferred`
 
 The actual Python shim migration in the Gobby repo — rewriting `CodeIndexTrigger`, `gobby/services/code_index/sync_worker.py`, and `gobby/services/code_index/context.py` (`CodeIndexContext`) to shell out to `gcode index --sync-projections`, `gcode graph clear|rebuild`, and `gcode vector clear|rebuild`; removing Python-side `CodeGraph`, graph/vector projection code paths, and projection lifecycle methods; and adding Gobby-repo transition tests proving the shims invoke `gcode` and stop instantiating Python projection code — is out of scope for this `gobby-cli` epic. This plan owns the `gcode` JSON contract (defined in §2.6) and gcode-side migration documentation (defined in §3.3) only.
@@ -696,6 +723,7 @@ original_acceptance_items:
 Provenance label (must be applied to `#15147`): `deferred-from:gcode-graph-enhancements:DF1`.
 
 ## V1 Plan Changelog
+
 `kind: verification`
 
 - **R1-R12 (2026-05-24)**: Earlier iterations specified direct `gcode` ownership of graph writes/reads, route-shaped CLI commands, provenance metadata, graph lifecycle cleanup, report output, and Phase 7 compatibility constraints.
@@ -719,6 +747,7 @@ Provenance label (must be applied to `#15147`): `deferred-from:gcode-graph-enhan
 - **R30 (2026-05-28)**: Addressed Round 29 blocking finding. F1 (traceability — P1 / §1.5): R29 added the A1 "Phase 7 compatibility facade exception" and rewrote the §1.5 "Phase 7 compatibility wrapper" subsection plus acceptance items 1.5.5 / 1.5.12 / 1.5.22 to allow `crates/gcode/src/falkor.rs` to instantiate `falkordb::FalkorClientBuilder` directly and bypass `gobby_core::falkor::with_graph`'s ServiceState boundary, but left two stale normative prose locations that still required the old impossible boundary, contradicting the facade exception and producing a §1.5 leaf that could follow one part of the section and fail another. Surgical fixes (R30): (a) Rewrote the §1.5 "Module migration" bullet for `crates/gcode/src/falkor.rs` (previously claimed `falkor.rs` "routes connection plumbing and graph queries through `gobby_core::falkor::with_graph` / `gobby_core::falkor::GraphClient::from_config(config, graph_name)`"); the new wording matches the R29 facade exception — `falkor.rs` resolves connection-level FalkorConfig fields (host, port, password) through `gobby_core::config::resolve_falkordb_config` via the §1.5 `ConfigSource` adapter, but owns the local Phase 7 `FalkorClient { graph: SyncGraph }` / `with_falkor` connection path (instantiating `falkordb::FalkorClientBuilder` directly) because the foundation `GraphClient.graph` field is private and exposes no public hook for building the Phase 7-required local shape; single-file scope pinned by §1.5.22, all other graph consumers MUST use `gobby_core::falkor::with_graph`; cross-references the A1 facade exception bullet and the "Phase 7 compatibility wrapper" subsection. (b) Rewrote the §1.5 "Behavioral guarantees" bullet for FalkorDB ServiceState transitions (previously claimed "All FalkorDB ServiceState transitions in `gobby-code` enter through `gobby_core::falkor::with_graph`"); the new wording carves out `falkor.rs` — graph consumers OUTSIDE `crates/gcode/src/falkor.rs` enter through `gobby_core::falkor::with_graph`; `falkor.rs` itself owns the local Phase 7 facade connection path per the A1 facade exception and the §1.5 wrapper subsection; single-file scope pinned by §1.5.22; the "does not implement its own four-state Falkor probe" claim is preserved (the facade exception is limited to the connection-building chain required by the external Phase 7 source-inspection contract, not to reimplementing ServiceState probing). Whole-plan F1 sweep (per the adversary's "sweep the current normative plan body, excluding historical changelog entries, for remaining `falkor.rs` + `with_graph` delegation wording before resubmission" instruction): re-grepped the normative body (lines before the V1 Plan Changelog) for any other prose claiming `falkor.rs` delegates connection plumbing or graph queries through `gobby_core::falkor::with_graph` / `gobby_core::falkor::GraphClient::from_config`. Found and fixed one additional location — the §1.5 source-fragment subsection intro line and its closing line (previously said the named source fragments must remain "even if their surrounding bodies are restructured to delegate to `gobby_core::falkor::with_graph` / `gobby_core::falkor::GraphClient`" and that "Wrapper internals MAY add `gobby_core::falkor` delegation alongside them"); the new wording is explicit that the connection-building bodies (`FalkorClient::from_config`, `with_falkor`) own the local `falkordb::FalkorClientBuilder` / `FalkorConnectionInfo` / `SyncGraph` chain directly per the facade exception, while the read-helper query bodies internally delegate to `graph::code_graph` once §2.3 lands (per §2.3.4, which itself uses `gobby_core::falkor::with_graph`); the named fragments MUST remain visible regardless of which delegation path the enclosing body follows. The remaining `with_graph` / `GraphClient` references in the normative body (A1 facade exception bullet at line 28, §1.5 wrapper subsection at line 234, §1.5 closing wrapper-layer sentence at line 293, acceptance 1.5.5 / 1.5.12 / 1.5.22, acceptance 1.5.13 / 1.5.14 / 1.5.15 with permissive "may delegate" language, §2.3 read-helper delegation at line 423, acceptance 2.3.4 at line 430) are all consistent with the facade exception and the R30 fixes — they either describe the facade exception itself, scope the single-file boundary, or use permissive language ("may") that doesn't conflict with the carved-out connection-building bodies. No acceptance items were added or removed by R30, no covers labels changed, and no manifest validation_criteria changed (the §1.5 entry already chains the `falkor_facade_exception_scoped_to_falkor_rs` test that pins the single-file scope). `gobby plans validate` is expected to report valid=true, phase_count=3, deliverable_count=15, contract_plan=true.
 
 ## M1 Task Manifest
+
 `kind: manifest`
 
 ```yaml
