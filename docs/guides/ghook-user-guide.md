@@ -191,7 +191,7 @@ Unknown `--cli` values fall back to conservative Claude-like dispatch behavior o
 $ ghook --diagnose --cli=claude --type=session-start
 {
   "schema_version": 2,
-  "ghook_version": "0.4.2",
+  "ghook_version": "0.4.3",
   "cli": "claude",
   "hook_type": "session-start",
   "source": "claude",
@@ -211,7 +211,7 @@ $ ghook --diagnose --cli=claude --type=session-start
   },
   "cli_recognized": true,
   "install_method": "github-release",
-  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.4.2/ghook-aarch64-apple-darwin.tar.gz"
+  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.4.3/ghook-aarch64-apple-darwin.tar.gz"
 }
 ```
 
