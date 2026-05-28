@@ -32,8 +32,9 @@ navigation, and hybrid ranking. When FalkorDB, Qdrant, and an embeddings
 endpoint are configured - typically through Gobby - `gcode` adds graph-aware
 search, semantic search, optional graph expansion for exact symbol lookup
 (`gcode search-symbol --with-graph`), dependency analysis (`callers`, `usages`,
-`imports`, `blast-radius`), and daemon-backed graph lifecycle commands
-(`gcode graph clear`, `gcode graph rebuild`).
+`imports`, `blast-radius`), and Rust-owned graph/vector projection lifecycle.
+`gcode graph clear --project-id <PROJECT_ID>` is available for daemon
+stale-project graph cleanup without cwd project resolution.
 
 For non-Gobby-managed projects, `gcode init` installs the bundled `gcode` skill
 for Claude Code, Codex, Droid, Grok, Qwen, Gemini CLI (deprecated
@@ -108,6 +109,10 @@ The default setup path is non-destructive. If incompatible code-index state is
 already present, rerun with `gcode setup --standalone --overwrite-code-index`
 only when you intend to reset all gcode-owned code-index PostgreSQL,
 FalkorDB, and Qdrant projection state.
+
+Graph/vector lifecycle is code-index scoped. FalkorDB clears target only
+code-index labels, and Qdrant clears target only `code_symbols_{project_id}`;
+Gobby memory graph and memory vector collections stay outside this boundary.
 
 Installing from source or crates.io requires Rust 1.88+.
 

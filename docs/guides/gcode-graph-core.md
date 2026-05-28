@@ -33,7 +33,9 @@ gcode index --sync-projections --format json
 ```
 
 The JSON response contains indexing counts plus `projections.graph` and
-`projections.vector` reports. Each report includes:
+`projections.vector` reports. Deleted-file projection cleanup failures appear in
+the top-level `degraded` list and must be surfaced without blocking PostgreSQL
+fact deletion. Each projection report includes:
 
 - `status`: `ok`, `degraded`, or `failed`.
 - `synced_files`.
@@ -48,6 +50,7 @@ same commands:
 ```bash
 gcode graph overview --limit 100 --format json
 gcode graph clear --format json
+gcode graph clear --project-id <PROJECT_ID> --format json
 gcode graph rebuild --format json
 gcode vector clear --format json
 gcode vector rebuild --format json
@@ -81,8 +84,25 @@ degraded or failed Rust result.
 | Daemon embedding service | Gobby daemon, outside code projection sync | Code-index projection sync bypasses the daemon embedding service. Runtime config may still come from Gobby-managed config, but embedding HTTP calls for code vectors are performed by Rust. |
 | Symbol summaries | Gobby daemon enrichment | LLM-generated summaries remain daemon-side and optional. `gcode` may read existing summaries for BM25/vector text, but it must treat missing summaries as normal and must not require LLM generation for indexing or projection sync. |
 | Memory graph | Gobby memory services | Memory services continue to own memory nodes, memory relationships, and memory lifecycle. |
+| Memory vectors | Gobby memory services | Memory vector collections are not part of code-symbol projection lifecycle. `gcode` clears and deletes only `code_symbols_{project_id}` points/collections. |
 | `RELATES_TO_CODE` bridge edges | Gobby memory services | Bridge edges are memory-owned hints. `gcode graph report` may read and display them as inferred, optional report input; it must not create, update, or delete them. |
 | UI, MCP, and HTTP surfaces | Gobby daemon repo | User-facing daemon APIs, MCP tools, and HTTP routes call daemon services. They should not become `gcode` CLI responsibilities. |
+
+## Lifecycle Boundaries
+
+`gcode graph clear` and `gcode graph clear --project-id <PROJECT_ID>` delete only
+FalkorDB nodes with code-index labels (`CodeFile`, `CodeSymbol`, `CodeModule`,
+`UnresolvedCallee`, `ExternalSymbol`) for the target project id. They must not
+match memory graph labels or memory-owned `RELATES_TO_CODE` bridge queries.
+
+`gcode vector clear` deletes points from `code_symbols_{project_id}` filtered by
+`project_id`. It must not list, drop, or mutate memory vector collections.
+
+`gcode index` handles deleted-file projection cleanup in Rust before hub fact
+deletion. Missing explicit files and whole-project stale/orphan files delete the
+file's code graph projection and Qdrant code-symbol points using
+`project_id + file_path`; daemon reconciliation is no longer the required cleanup
+mechanism for these cases.
 
 ## Report And Degradation Contract
 

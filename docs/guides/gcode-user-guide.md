@@ -261,18 +261,21 @@ gcode graph overview --limit 100
 ### Graph Lifecycle
 
 `gcode` owns code-index lifecycle commands, including graph clear/rebuild. These
-commands use the current resolved project context and require the Gobby daemon:
+commands use the current resolved project context and require FalkorDB:
 
 ```bash
 gcode graph clear
+gcode graph clear --project-id <PROJECT_ID>
 gcode graph rebuild
 ```
 
-- `gcode graph clear` clears the current project's graph projection through the daemon
-- `gcode graph rebuild` asks the daemon to rebuild the current project's graph projection
-- Both commands fail if project context cannot be resolved, if the daemon is unreachable, or if the daemon returns non-JSON success output
+- `gcode graph clear` clears the current project's graph projection
+- `gcode graph clear --project-id <PROJECT_ID>` is for daemon stale-project cleanup and runs without cwd project-root resolution
+- `gcode graph rebuild` rebuilds the current project's graph projection from PostgreSQL facts
+- These commands fail if required project context cannot be resolved or if FalkorDB is unavailable
 - They respect the existing global `--format` flag; default output remains `json`
 - No confirmation prompt is shown; these are project-scoped graph projection operators, not full index invalidation
+- Code graph clears target only code-index FalkorDB labels, not memory graph labels
 
 ### Callers
 
@@ -365,8 +368,11 @@ gcode index --files src/config.rs docs/notes.md Dockerfile
 ```
 
 `gcode index` writes symbols, files, chunks, imports, and calls to the
-PostgreSQL hub. It marks graph/vector sync flags dirty; the Gobby daemon handles
-FalkorDB graph edges and Qdrant vector sync asynchronously when it is running.
+PostgreSQL hub. It marks graph/vector sync flags dirty; `gcode index
+--sync-projections` updates FalkorDB graph edges and Qdrant code-symbol vectors
+from Rust. Deleted-file cleanup removes code graph/vector projection rows before
+PostgreSQL facts are deleted, including explicit `--files <deleted-file>` and
+whole-project orphan cleanup.
 BM25 search (`search-text`, `search-content`) works as soon as the transaction
 commits; graph and semantic search improve once the external stores sync.
 
@@ -393,7 +399,10 @@ gcode graph clear
 gcode graph rebuild
 ```
 
-Use those when you want the daemon to clear or replay graph state for the current project without performing a full destructive code-index invalidation.
+Use those to clear or replay graph state for the current project without
+performing a full destructive code-index invalidation. Code vector lifecycle is
+similarly scoped to `code_symbols_{project_id}` and does not touch Gobby memory
+vector collections.
 
 ## Operating Model
 
@@ -437,7 +446,7 @@ The database connection is resolved in this order:
 Bootstrap `database_url_ref` is rejected. Use the daemon broker path or an
 explicit fallback source for daemonless access.
 
-The daemon URL (used by `invalidate`, `graph clear`, and `graph rebuild`) is resolved from:
+The daemon URL (used by `invalidate`) is resolved from:
 1. `GOBBY_PORT` environment variable (e.g. `60887`)
 2. `~/.gobby/bootstrap.yaml` `daemon_port` + `bind_host` keys
 3. Default: `http://localhost:60887`
@@ -552,8 +561,8 @@ gcode status
 ### `gcode graph clear` / `gcode graph rebuild` fail immediately
 
 - If you see a project-context error, initialize the project first with `gcode init` or use `--project <path>`
-- If you see a daemon connectivity error, confirm the Gobby daemon is running and `~/.gobby/bootstrap.yaml` points to the right port
-- If you see an invalid-JSON success error, the daemon endpoint returned a malformed response and the command intentionally aborts instead of guessing
+- If you see a FalkorDB configuration or connectivity error, confirm `GOBBY_FALKORDB_HOST` / `GOBBY_FALKORDB_PORT` or `config_store` are correct
+- For stale-project cleanup where cwd has no project context, use `gcode graph clear --project-id <PROJECT_ID>`
 
 ### Slow first index
 
