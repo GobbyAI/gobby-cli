@@ -88,6 +88,27 @@ ureq::post(&format!("{url}/api/hooks/execute")).send_string(body)?;
 
 Bracketing IPv6 literals for URL embedding is **not** handled here — in practice `bootstrap.yaml` is always `localhost`, an IPv4 literal, or a wildcard. If that ever stops being true, this is the place to add it.
 
+### `falkor`
+
+```rust
+pub struct GraphClient;
+
+impl GraphClient {
+    pub fn from_config(config: &FalkorConfig, graph_name: &str) -> anyhow::Result<Self>;
+    pub fn query(
+        &mut self,
+        cypher: &str,
+        params: Option<HashMap<String, String>>,
+    ) -> anyhow::Result<Vec<Row>>;
+    pub fn with_sync_graph<T>(
+        &mut self,
+        f: impl FnOnce(&mut SyncGraph) -> anyhow::Result<T>,
+    ) -> anyhow::Result<T>;
+}
+```
+
+Consumers provide the graph name; `gobby-core` must not hardcode code, wiki, or memory graph defaults. Use `query` for normal Cypher reads/writes. `with_sync_graph` is the narrow escape hatch for consumers that need a FalkorDB crate operation not yet represented by the shared adapter.
+
 ### `degradation`
 
 ```rust

@@ -277,7 +277,8 @@ The runtime schema validator requires these tables before gcode starts index/sea
 
 ### Graph Lifecycle
 
-Read-side graph queries still go straight to FalkorDB. `gcode graph overview`
+Read-side graph queries go through `gobby_core::falkor::with_graph` /
+`GraphClient`, then into gcode-owned query builders. `gcode graph overview`
 accepts `--limit N`, which maps to the daemon's
 `GET /api/code-index/graph?limit=...` contract when the daemon delegates overview
 reads to `gcode`. Graph lifecycle operations are Rust-owned FalkorDB operations:
@@ -289,6 +290,24 @@ reads to `gcode`. Graph lifecycle operations are Rust-owned FalkorDB operations:
 Graph clear uses `MATCH (n {project: $project})` plus the code-index label
 predicate (`CodeFile`, `CodeSymbol`, `CodeModule`, `UnresolvedCallee`,
 `ExternalSymbol`). It must not target memory graph labels or bridge ownership.
+
+### Phase 7 Facade Retirement
+
+`src/falkor.rs` remains as a compatibility facade for callers that still import
+`crate::falkor`, but it now wraps `gobby_core::falkor::GraphClient`. The old
+source-inspection gate that required visible `falkordb::FalkorClientBuilder`,
+`SyncGraph`, and raw Falkor result parsing in gcode has been retired/replaced by
+behavior tests:
+
+- config resolution returns gcode's `FalkorConfig` with core connection fields
+  plus `graph_name = "gobby_code"`;
+- graph read APIs surface typed unavailable-service errors;
+- query helpers preserve safe literal rendering, numeric clamping, and project
+  scoping through returned query/param behavior;
+- `gobby-core` exposes `GraphClient::with_sync_graph` for rare raw
+  `SyncGraph` operations without duplicating connection setup.
+
+Do not reintroduce direct FalkorDB builder/result imports in `gobby-code`.
 
 ### UUID5 Parity
 
