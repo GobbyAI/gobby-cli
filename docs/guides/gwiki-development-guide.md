@@ -8,7 +8,7 @@
 
 ## Verified Endpoint Contracts
 
-The endpoint shapes below were verified from the daemon source under `/Users/josh/Projects/gobby/src/gobby/servers/routes` and `/Users/josh/Projects/gobby/src/gobby/servers/websocket`.
+The endpoint shapes below were verified from the daemon source under `src/gobby/servers/routes` and `src/gobby/servers/websocket`.
 
 | Capability | Endpoint | Request Shape | Response Shape | Fallback |
 |---|---|---|---|---|
