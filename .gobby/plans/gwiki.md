@@ -7,20 +7,20 @@
 
 Port the useful shape of [nvk/llm-wiki](https://github.com/nvk/llm-wiki) into a Rust crate named `gobby-wiki` with binary `gwiki`. The user experience stays file-first and Obsidian-compatible: topic vaults, `[[wikilinks]]`, immutable `raw/` sources, synthesized `wiki/` articles, `_index.md`, `log.md`, and agent-assisted research/compile/audit workflows.
 
-The implementation should not copy the gcode indexing pipeline. Shared context/config resolution, setup contracts, datastore adapters, generic indexing/search primitives, and degradation vocabulary come from the landed `gobby-core` 0.2.1 crate at `crates/gcore/`. `gobby-wiki` owns wiki-specific behavior: vault layout, scope resolution, markdown/frontmatter/link parsing, source manifests, ingestion, research dispatch, synthesis, audit, and command UX.
+The implementation should not copy the gcode indexing pipeline. Shared context/config resolution, setup contracts, datastore adapters, generic indexing/search primitives, and degradation vocabulary come from the landed `gobby-core` 0.2.2 crate at `crates/gcore/`. `gobby-wiki` owns wiki-specific behavior: vault layout, scope resolution, markdown/frontmatter/link parsing, source manifests, ingestion, research dispatch, synthesis, audit, and command UX.
 
 Filesystem markdown is the source of truth. PostgreSQL, FalkorDB, and Qdrant hold derived `gwiki` indexes that can be wiped and rebuilt from the vault.
 
 Current workspace facts as of 2026-05-28:
 
-- `gobby-core` exists at `crates/gcore/`, package version `0.2.1`, with lightweight `config`, `context`, `degradation`, and `setup` modules plus feature-gated `postgres`, `falkor`, `qdrant`, `indexing`, and `search` modules.
+- `gobby-core` exists at `crates/gcore/`, package version `0.2.2`, with always-on `config`, `context`, `degradation`, `setup`, `project`, `daemon_url`, `bootstrap`, and `provisioning` modules plus feature-gated `postgres`, `falkor`, `qdrant`, `indexing`, and `search` modules.
 - The workspace currently contains `crates/gcode`, `crates/gcore`, `crates/ghook`, `crates/gsqz`, and `crates/gloc`; this plan adds `crates/gwiki`.
 - `.gobby/plans/completed/gcore-rust-foundation.md` and `.gobby/plans/completed/gcode-graph-enhancements.md` are completed historical plans. `gwiki` consumes the shipped APIs, not those plans as active work.
 
 ## C1: Constraints
 `kind: framing`
 
-- **Foundation dependency**: `gobby-wiki` consumes `gobby-core = { path = "../gcore", version = "0.2.1", features = ["postgres", "falkor", "qdrant", "indexing", "search"] }` primitives for context/config, setup, PostgreSQL, FalkorDB, Qdrant, generic indexing/search, and degradation handling.
+- **Foundation dependency**: `gobby-wiki` consumes `gobby-core = { path = "../gcore", version = "0.2.2", features = ["postgres", "falkor", "qdrant", "indexing", "search"] }` primitives for context/config, setup, PostgreSQL, FalkorDB, Qdrant, generic indexing/search, and degradation handling.
 - **Workspace integration**: the crate lives at `crates/gwiki/`, has `package.name = "gobby-wiki"`, and exposes binary `gwiki`.
 - **Dual scopes**: global topics and project-local wiki scopes both work. Global topics default under `~/wiki/topics/<topic>/`; project scope defaults under `<project-root>/.gobby/wiki/`.
 - **Vault UX**: each scope preserves llm-wiki/funes-style `raw/`, `raw/INDEX.md`, `raw/assets/`, `wiki/sources/`, `wiki/concepts/`, `wiki/topics/`, `inbox/`, `outputs/`, `meta/health/`, `_index.md`, `log.md`, frontmatter, and `[[wikilinks]]`.
@@ -85,7 +85,7 @@ Targets: `Cargo.toml`, `crates/gwiki/Cargo.toml`, `crates/gwiki/src/main.rs`, `c
 
 Add `crates/gwiki/` to the workspace with package name `gobby-wiki` and binary `gwiki`. The CLI should start with thin command parsing and call library modules for behavior. Initial commands can return structured "not yet implemented" errors for subcommands whose domain modules are not ready, but the binary must build under the workspace no-default-features profile.
 
-`gobby-wiki` depends on `gobby-core` 0.2 for shared project/context/config/setup primitives and feature-gated datastore/search/indexing adapters. It should not depend on `gobby-code`.
+`gobby-wiki` depends on `gobby-core` 0.2.2 for shared project/context/config/setup primitives and feature-gated datastore/search/indexing adapters. It should not depend on `gobby-code`.
 
 **Acceptance:**
 
@@ -106,6 +106,7 @@ Implement explicit scope resolution for global topics and project-local wikis:
 - Both scopes create or validate `raw/`, `raw/INDEX.md`, `raw/assets/`, `wiki/sources/`, `wiki/concepts/`, `wiki/topics/`, `inbox/`, `outputs/`, `meta/health/`, `_index.md`, `log.md`, and `.gwiki/` metadata on explicit init.
 - `wikis.json` stores registered topics/scopes without clobbering existing entries.
 - Scope identity is carried in command context, datastore rows, graph nodes, and vector payloads.
+- Reuse `gobby_core::project` for project-root detection and `gobby_core::context`/`gobby_core::config` for shared context and config resolution instead of reimplementing the `.gobby` walk-up.
 
 **Acceptance:**
 
@@ -268,7 +269,7 @@ Document and probe the daemon endpoints `gwiki` needs:
 - agent dispatch
 - session/event stream monitoring
 
-The command layer should surface unavailable optional capabilities as structured degradation. Endpoint shapes must be verified before implementation code assumes request or response schemas.
+The command layer should surface unavailable optional capabilities as structured degradation. Endpoint shapes must be verified before implementation code assumes request or response schemas. Resolve daemon base URLs through `gobby_core::daemon_url` rather than hardcoding host/port.
 
 **Acceptance:**
 
@@ -421,7 +422,7 @@ Implement `gwiki compile`:
 - 5.1.3 - Existing pages require merge/diff handling before overwrite. test: `crates/gwiki/src/synthesis.rs::tests::existing_page_requires_merge_intent`.
 - 5.1.4 - Compile updates `_index.md` without removing unrelated entries. test: `crates/gwiki/src/compile.rs::tests::index_update_preserves_unrelated_entries`.
 
-### 5.2 Implement audit and lint [category: code] (depends: 5.1)
+### 5.2 Implement audit, lint, and health checks [category: code] (depends: 5.1)
 `kind: deliverable`
 
 Targets: `crates/gwiki/src/audit.rs`, `crates/gwiki/src/lint.rs`, `crates/gwiki/src/health.rs`, `meta/health/`
@@ -557,6 +558,7 @@ Implementation validation after expansion:
 
 - **R1 (2026-05-26)**: Reframed the gwiki plan around `gobby-core` shared primitives plus `gobby-wiki` domain behavior. Preserved llm-wiki vault UX, dual scopes, namespaced data, filesystem source of truth, ingestion/research/compile/audit roadmap, and multimodal extensions. Removed copied-gcode-pipeline and daemon-schema-owner assumptions.
 - **R2 (2026-05-28)**: Updated foundation references for landed `gobby-core` 0.2.1 and current workspace membership. Folded in llm-wiki/funes vault lessons: `raw/INDEX.md`, `raw/assets/`, `wiki/sources/`, `wiki/concepts/`, `wiki/topics/`, `outputs/`, and `meta/health/`. Added keyword search over generated wiki pages and health checks for stale pages, uncited sources, broken links, duplicate concepts, and uncompiled sources. Added the M1 task manifest with `covers:gwiki:<section>:<acceptance>` labels and recorded the sibling daemon/web plan validation plus dry-run build command.
+- **R3 (2026-05-29)**: First autonomous planning pass. Corrected the foundation version from `gobby-core` 0.2.1 to the landed 0.2.2 in the Overview, the Constraints dependency spec, and task 1.1, completed the gcore module inventory (added always-on `project`, `daemon_url`, `bootstrap`, and `provisioning`), and pointed scope resolution (1.2) and daemon endpoints (3.1) at the matching `gobby_core::project`/`gobby_core::daemon_url` primitives. Aligned the §5.2 deliverable title with its manifest entry and health-check acceptance. Re-validated against the Plan-Coverage Contract: valid, 6 phases, 21 deliverables.
 
 ## M1 Task Manifest
 `kind: manifest`
