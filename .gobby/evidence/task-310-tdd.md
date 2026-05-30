@@ -55,3 +55,27 @@ The implementation in `64c29d9dabf01eabdc7a7bdc107ecda98c5ad7b0` provides the
 audio ingest and transcription API referenced by the failing tests. Fresh final
 validation was rerun after this evidence artifact was added, using focused
 `gobby-wiki` commands only.
+
+## Integration Refresh Follow-Up
+
+Holistic QA reopened the multimodal work because the integration branch needed
+to include current `dev`. This #310 follow-up was verified in the refreshed
+integration worktree:
+
+- Branch: `task-310-add-audio-ingestion-and-transcription`
+- Integration pointer: `gobby/integration/290-multimodal-ingestion`
+- Refreshed merge commit before this evidence update:
+  `c3797d261bdc8b727314f6219d02b7dd02f6971c`
+- Current `dev` commit included by that merge:
+  `6528f7d276bfc491282db7aded65a70417ed35c0`
+
+Refresh checks:
+
+```bash
+git merge-base --is-ancestor dev HEAD
+git log --oneline HEAD..dev
+```
+
+Result: `git merge-base --is-ancestor dev HEAD` exited `0`, and
+`git log --oneline HEAD..dev` produced no commits. The audio implementation and
+TDD evidence remain present after the refresh.
