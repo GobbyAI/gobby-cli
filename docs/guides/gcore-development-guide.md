@@ -16,7 +16,7 @@ The baseline crate remains dependency-light. Consumers that only need project di
 
 | Module | Feature | Responsibility |
 |--------|---------|----------------|
-| `project` | always | Walk up from a starting directory to find a `.gobby/` directory containing `project.json` or `gcode.json`. Read the `id` (or legacy `project_id`) field from `project.json`. |
+| `project` | always | Walk up from a starting directory to find a `.gobby/` directory containing `project.json` or `gcode.json`. Read the `id` (or legacy `project_id`) field from `project.json`, falling back to standalone `gcode.json`. |
 | `bootstrap` | always | Read `~/.gobby/bootstrap.yaml` to get the daemon's listen endpoint (`bind_host`, `daemon_port`). Falls back to `127.0.0.1:60887` when the file is missing or malformed. |
 | `daemon_url` | always | Compose a dial URL from a `DaemonEndpoint`, normalizing wildcard listen addresses (`0.0.0.0`, `::`, `::0`) to `127.0.0.1`. |
 | `config` | always | Shared configuration-resolution contracts. Environment variables, `config_store`, and defaults are represented here as the foundation expands. |
@@ -42,7 +42,7 @@ pub fn read_project_id(project_root: &Path) -> anyhow::Result<String>;
 
 `find_project_root` walks up from `start` looking for a `.gobby/project.json` (Gobby-managed) or `.gobby/gcode.json` (gcode-standalone). Returns the directory *containing* `.gobby/`, not `.gobby/` itself. Returns `None` when neither marker is found before hitting the filesystem root.
 
-`read_project_id` reads `<root>/.gobby/project.json` and extracts the `id` field, falling back to the legacy `project_id` key. Errors if the file is missing, malformed, or the field isn't present.
+`read_project_id` reads `<root>/.gobby/project.json` and extracts the `id` field, falling back to the legacy `project_id` key. When `project.json` is absent, it reads `<root>/.gobby/gcode.json` so standalone gcode roots found by `find_project_root` remain usable. Errors if neither file can be read, the JSON is malformed, or the field isn't present.
 
 ```rust
 let cwd = std::env::current_dir()?;
@@ -91,7 +91,9 @@ Bracketing IPv6 literals for URL embedding is **not** handled here — in practi
 ### `falkor`
 
 ```rust
-pub struct GraphClient;
+pub struct GraphClient {
+    graph: SyncGraph,
+}
 
 impl GraphClient {
     pub fn from_config(config: &FalkorConfig, graph_name: &str) -> anyhow::Result<Self>;
@@ -107,7 +109,7 @@ impl GraphClient {
 }
 ```
 
-Consumers provide the graph name; `gobby-core` must not hardcode code, wiki, or memory graph defaults. Use `query` for normal Cypher reads/writes. `with_sync_graph` is the narrow escape hatch for consumers that need a FalkorDB crate operation not yet represented by the shared adapter.
+Consumers provide the graph name through constructor methods such as `GraphClient::from_config`; `gobby-core` must not hardcode code, wiki, or memory graph defaults. The `graph` field stays private so connection ownership cannot leak across domain crates. Use `query` for normal Cypher reads/writes. `with_sync_graph` is the narrow escape hatch for consumers that need a FalkorDB crate operation not yet represented by the shared adapter.
 
 ### `degradation`
 
