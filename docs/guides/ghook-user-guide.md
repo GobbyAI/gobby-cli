@@ -35,7 +35,7 @@ host AI CLI fires hook
       │   └─ fresh marker + unreachable daemon → {"continue":true}; no stdin/enqueue
       ├─ resolves project root (walk up from cwd to .gobby/project.json)
       ├─ reads stdin (the host CLI's hook payload)
-      ├─ enriches input_data with terminal_context (when applicable)
+      ├─ enriches input_data with terminal_context (when TMUX_PANE is valid)
       ├─ writes envelope atomically to ~/.gobby/hooks/inbox/
       └─ POSTs Python-compatible hook payload to the Gobby daemon
           ├─ 2xx → delete inbox file, return Python-dispatcher-compatible stdout/stderr/exit
@@ -71,6 +71,13 @@ Environment knobs:
 - `GOBBY_HOME` controls marker lookup; default is `~/.gobby`.
 - `GOBBY_SHUTDOWN_HOOK_ALLOW_SECONDS` overrides freshness when it is a positive
   number; default is 120 seconds.
+
+### Terminal Context
+
+When `TMUX` is set and `TMUX_PANE` matches `^%\d+$`, `ghook` adds
+`input_data.terminal_context.tmux_pane` to the envelope for every `--cli` value.
+The pane ID is passed through exactly as provided by tmux. If `TMUX_PANE` is
+unset, empty, or invalid, `terminal_context` is omitted.
 
 ## CLI Surface
 
@@ -169,15 +176,18 @@ The `--critical` flag is on lifecycle hooks (`session-start`, `session-end`, `pr
 
 ### Codex, Gemini, Qwen, Droid
 
-Same pattern with different `--cli` and `--type` values. ghook's per-CLI registry (see `crates/ghook/src/cli_config.rs`) defines which hooks are critical and which receive enriched terminal context for each host CLI:
+Same pattern with different `--cli` and `--type` values. ghook's per-CLI
+registry (see `crates/ghook/src/cli_config.rs`) defines which hooks are
+critical. Terminal-context enrichment is CLI-agnostic and only depends on valid
+tmux pane env vars.
 
-| CLI | Critical hooks | Terminal-context hooks |
-|-----|----------------|------------------------|
-| `claude` | `session-start`, `session-end`, `pre-compact` | `session-start` |
-| `codex` | `SessionStart`, `Stop` | `SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `Stop` |
-| `gemini` | `SessionStart` | `SessionStart` |
-| `qwen` | `SessionStart` | `SessionStart` |
-| `droid` | none | none |
+| CLI | Critical hooks |
+|-----|----------------|
+| `claude` | `session-start`, `session-end`, `pre-compact` |
+| `codex` | `SessionStart`, `Stop` |
+| `gemini` | `SessionStart` |
+| `qwen` | `SessionStart` |
+| `droid` | none |
 
 Droid uses PascalCase hook types (`SessionStart`, `PreToolUse`, `PostToolUse`, `UserPromptSubmit`, `Notification`, `Stop`, `SubagentStop`, `PreCompact`, `SessionEnd`) and ghook forwards droid's stdin payload unchanged to the daemon with `source: "droid"`. Droid-specific block handling differs slightly from the other CLIs: daemon responses containing `continue:false` exit 2, while other meaningful response JSON is written to stdout with exit 0.
 
@@ -191,7 +201,7 @@ Unknown `--cli` values fall back to conservative Claude-like dispatch behavior o
 $ ghook --diagnose --cli=claude --type=session-start
 {
   "schema_version": 2,
-  "ghook_version": "0.4.3",
+  "ghook_version": "0.4.4",
   "cli": "claude",
   "hook_type": "session-start",
   "source": "claude",
@@ -206,12 +216,13 @@ $ ghook --diagnose --cli=claude --type=session-start
     "parent_pid": 72441,
     "tty": "/dev/ttys005",
     "tmux_pane": "%179",
+    "tmux_socket_path": "/private/tmp/tmux-501/default",
     "term_program": "tmux",
     "...": "..."
   },
   "cli_recognized": true,
   "install_method": "github-release",
-  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.4.3/ghook-aarch64-apple-darwin.tar.gz"
+  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.4.4/ghook-aarch64-apple-darwin.tar.gz"
 }
 ```
 
@@ -219,7 +230,7 @@ Look for:
 
 - **`cli_recognized: true`** — confirms ghook knows about this CLI explicitly. Unknown CLIs fall back to conservative Claude-like live dispatch behavior.
 - **`critical: true/false`** — does ghook consider this hook type critical under the mirrored Python dispatcher contract for that CLI?
-- **`terminal_context_enabled: true`** — will ghook inject `terminal_context` into `input_data` for this hook? Required for hooks that the daemon uses to reconcile spawned-terminal agents.
+- **`terminal_context_enabled: true`** — this recognized CLI can receive terminal context. `terminal_context_preview` is populated only when the current process has `TMUX` and a valid `TMUX_PANE`.
 - **`daemon_url`** — where will the POST go? If this is wrong, fix `~/.gobby/bootstrap.yaml`.
 - **`project_root` / `project_id`** — did ghook correctly walk up from cwd to the project? `null` means no `.gobby/project.json` was found — daemon will receive the envelope without an `X-Gobby-Project-Id` header.
 - **`install_method` / `install_source_url`** — how this `ghook` binary got installed (e.g. `github-release`, `crates-binstall`, `cargo-install`). Both are `null` when the binary was installed without a sidecar-writing installer (e.g. plain `cargo install gobby-hooks`). Useful in bug reports — it tells maintainers exactly which install path a user is on.
