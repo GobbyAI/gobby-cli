@@ -4,7 +4,7 @@
 
 ## Daemon Capability Probe
 
-`crates/gwiki/src/daemon.rs` defines the current probe contract. It returns a `DaemonCapabilityReport` with one availability record per capability plus a top-level `degraded` list. A 2xx response marks an endpoint available. `405 Method Not Allowed` and `422 Unprocessable Entity` also mark a route as present for mutating endpoints probed without a body. `404`, auth failures, unexpected statuses, and transport failures become `DaemonDegradation` entries with capability, endpoint, reason, status, message, and fallback.
+`crates/gwiki/src/daemon.rs` defines the current probe contract. It returns a `DaemonCapabilityReport` with one availability record per capability plus a top-level `degraded` list. A 2xx response marks an endpoint available. `405 Method Not Allowed` also marks a route as present for mutating endpoints probed without a body. `404`, `422`, auth failures, unexpected statuses, and transport failures become `DaemonDegradation` entries with capability, endpoint, reason, status, message, and fallback.
 
 ## Verified Endpoint Contracts
 
@@ -22,7 +22,7 @@ The endpoint shapes below were verified from the daemon source under `src/gobby/
 | Agent dispatch | `POST /api/agents/spawn` | JSON `AgentSpawnRequest`: `task_id`, `agent_name?`, `prompt?`, `web_chat?`, `isolation?`, `provider?`, `model?`, `reasoning_effort?`, `reasoning_required?`, `workflow?`, `branch_name?`, `base_branch?`, `timeout?`, `max_turns?`. | `AgentSpawnResponse`: `success`, optional `run_id`, `child_session_id`, `conversation_id`, `isolation`, `branch_name`, `pid`, `message`, `reasoning`, or `error`. | Return dispatch degradation metadata. `gwiki` must not spawn or manage internal subprocesses. |
 | Build/lifecycle dispatch | `POST /api/build` | JSON `BuildRequest`: `input_ref`, `project_id?`, `cwd?`, `quick?`, `skip_stages?`, `isolation?`, `workspace_backend?`, `agent?`, `stage?`, `max_active_agents?`, `max_retries?`, and related build options. | Build result object containing lifecycle run state and dispatcher summary fields. | Use only as daemon integration for higher-level build automation; no local process fallback. |
 | Session list and monitoring fallback | `GET /api/sessions` | Query filters such as `source?`, `project_id?`, `status?`, `limit?`, `offset?`. | Session listing object with session rows and count/pagination fields. | Disable live monitoring and rely on explicit command output. |
-| Session messages | `GET /api/sessions/{session_id}/messages` | Query `limit?`, `offset?`, `role?`, `format=rendered|legacy`. | `{ "status": "success", "messages", "total_count", "response_time_ms", "format" }`. | Polling history is unavailable; surface no live session transcript. |
+| Session messages | `GET /api/sessions/{session_id}/messages` | Query `limit?`, `offset?`, `role?`, `format=rendered\|legacy`. | `{ "status": "success", "messages", "total_count", "response_time_ms", "format" }`. | Polling history is unavailable; surface no live session transcript. |
 | Session/event stream | `WS /ws` | Client frames include `subscribe`, `unsubscribe`, `continue_in_chat`, `attach_to_session`, `detach_from_session`, and `send_to_cli_session`. | Broadcast frames include task/session/chat events plus request-correlated responses. Initial connection sends `connection_established`. | Fall back to REST polling where available; otherwise mark monitoring degraded. |
 
 ## Integration Rules
