@@ -228,7 +228,8 @@ Files are split into overlapping chunks for BM25 content search:
 
 AST candidates and content-only candidates both write chunks. Content-only files
 write `code_indexed_files` rows with `symbol_count=0`, so `tree`, `status`, and
-`search-content` see the broader repo text corpus without schema changes.
+`grep`/`search-content` see the broader repo text corpus without schema
+changes.
 
 ### Incremental Indexing (indexer.rs)
 
@@ -285,6 +286,12 @@ reads to `gcode`. Graph lifecycle operations are Rust-owned FalkorDB operations:
 
 - `gcode graph clear` clears the current resolved project id.
 - `gcode graph clear --project-id <PROJECT_ID>` clears by explicit project id before normal `Context::resolve()` and is the daemon stale-project cleanup path.
+- `gcode graph sync-file --file <FILE>` syncs one existing `code_indexed_files`
+  row into FalkorDB. It checks `code_indexed_projects` and `code_indexed_files`
+  in PostgreSQL before any FalkorDB access. Missing project/file contract
+  failures return typed JSON with exit code `2`; `--allow-missing-indexed-file`
+  is reserved for daemon/background workers and turns only a missing indexed
+  file into a skipped payload.
 - `gcode graph rebuild` clears and rebuilds the current resolved project id from PostgreSQL graph facts.
 
 Graph clear uses `MATCH (n {project: $project})` plus the code-index label
@@ -315,7 +322,8 @@ Symbol IDs are deterministic UUID5 using namespace `c0de1de0-0000-4000-8000-0000
 
 ## Search Pipeline
 
-**Files:** `src/search/{fts,semantic,graph_boost,rrf}.rs`, `src/commands/search.rs`
+**Files:** `src/search/{fts,semantic,graph_boost,rrf}.rs`,
+`src/commands/search.rs`, `src/commands/grep.rs`
 
 ### Hybrid Search (`gcode search`)
 
@@ -342,7 +350,32 @@ Source 4: Graph Expand (FalkorDB)
   ↓ All sources → RRF merge → Symbol resolution → Positional path filters → Pagination
 ```
 
-`search`, `search-symbol`, `search-text`, and `search-content` accept positional path filters after the query. Bare paths expand to exact + subtree matches; glob paths stay verbatim; multiple paths use OR semantics. BM25 queries add a parenthesized SQL `LIKE` prefix OR block only when every expanded pattern has a safe prefix. Rust `glob::Pattern` post-filtering then enforces exact semantics across all sources, including semantic/graph results that lack SQL-side filtering. If a path glob cannot be lowered to a SQL prefix, handlers surface a hint and rely on post-query filtering after a broader fetch.
+`search`, `search-symbol`, `search-text`, `search-content`, and `grep` accept
+positional path filters after the query. Bare paths expand to exact + subtree
+matches; glob paths stay verbatim; multiple paths use OR semantics. BM25
+queries add a parenthesized SQL `LIKE` prefix OR block only when every expanded
+pattern has a safe prefix. Rust `glob::Pattern` post-filtering then enforces
+exact semantics across all sources, including semantic/graph results that lack
+SQL-side filtering. If a path glob cannot be lowered to a SQL prefix, handlers
+surface a hint and rely on post-query filtering after a broader fetch. `grep`
+also accepts `-g/--glob`; glob filters compose with positional paths and are
+applied before scanning indexed chunks.
+
+### Indexed Grep (`gcode grep`)
+
+`gcode grep <pattern> [PATH ...]` is exact indexed content search over
+`code_content_chunks`, not a filesystem `rg` wrapper. It loads indexed chunks for
+the current project, applies positional path and `-g/--glob` filters, scans lines
+with either regex or `-F/--fixed-strings` matching, de-duplicates overlapping
+chunks by `(file_path, line)`, and returns stable `file_path`, then line-number
+ordering.
+
+`-m/--max-count` caps matching lines globally. Context lines from `-C/-A/-B` do
+not count toward that cap. JSON output is an envelope with `project_id`,
+`pattern`, flags, `paths`, `globs`, `max_count`, `matched_lines`, `truncated`,
+`scanned_chunks`, and matches containing `path`, `line`, `text`, `spans`,
+`before`, and `after`. `--limit` is rejected so callers do not confuse ranked
+search pagination with grep-style matching-line caps.
 
 ### RRF Merge (rrf.rs)
 
@@ -373,6 +406,10 @@ multiple systems with deduplication.
 ### BM25 Search (`search-text`, `search-content`)
 
 These use dedicated `count_text`/`count_content` functions (pg_search BM25 counts with LIKE fallback) for accurate totals when no positional path filters are present. With path filters, handlers fetch up to `FILTERED_FETCH_CAP`, apply glob filtering before pagination, and surface a hint if the cap is hit or a glob required SQL-filter fallback.
+
+Use `gcode search-content "query" [PATH ...]` for ranked content search. Use
+`gcode grep "pattern" [PATH ...]` or `gcode grep "pattern" src -m 50` for exact
+line-oriented indexed matches.
 
 ### Pagination
 
