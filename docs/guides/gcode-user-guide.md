@@ -159,6 +159,32 @@ gcode search-text "parseConfig" --language python
 
 **Options:** `--limit N`, `--offset N`, `--language <lang>`, positional `PATH ...`
 
+### Indexed Grep (`gcode grep`)
+
+Exact indexed search over the same `code_content_chunks` corpus used by
+`search-content`. It scans indexed chunks after path and glob filters, returns
+stable `file_path` then line-number ordering, and never shells out to `rg`.
+
+```bash
+gcode grep "pattern" [PATH ...]
+gcode grep "pattern" src -m 50
+gcode grep "GOBBY_FALKORDB_HOST" -F -g "*.rs" crates/gcode/src
+gcode grep "todo" --ignore-case -C 2 docs
+```
+
+**When to use:** You need grep-shaped exact matches with line numbers and
+optional context. Text output uses `path:line:match` and `path-line-context`.
+JSON output includes `project_id`, `pattern`, flags, `max_count`,
+`matched_lines`, `truncated`, `scanned_chunks`, and per-line matches with
+spans and context.
+
+**Options:** `-n/--line-number` (accepted; text always shows line numbers),
+`-i/--ignore-case`, `-F/--fixed-strings`, `-C/--context N`,
+`-A/--after-context N`, `-B/--before-context N`, `-g/--glob GLOB`,
+`-m/--max-count N`, positional `PATH ...`. `--limit` is intentionally rejected;
+use `-m/--max-count` for matching-line caps. Use raw `rg` for filesystem grep
+or unsupported ripgrep flags.
+
 ### Content Search (`gcode search-content`)
 
 pg_search BM25 search across file content chunks. It covers AST-supported
@@ -266,16 +292,19 @@ commands use the current resolved project context and require FalkorDB:
 ```bash
 gcode graph clear
 gcode graph clear --project-id <PROJECT_ID>
+gcode graph sync-file --file <FILE>
 gcode graph rebuild
 ```
 
 - `gcode graph clear` clears the current project's graph projection
 - `gcode graph clear --project-id <PROJECT_ID>` is for daemon stale-project cleanup and runs without cwd project-root resolution
+- `gcode graph sync-file --file <FILE>` syncs one already-indexed file into the graph projection
 - `gcode graph rebuild` rebuilds the current project's graph projection from PostgreSQL facts
 - These commands fail if required project context cannot be resolved or if FalkorDB is unavailable
 - They respect the existing global `--format` flag; default output remains `json`
 - No confirmation prompt is shown; these are project-scoped graph projection operators, not full index invalidation
 - Code graph clears target-only code-index FalkorDB labels, not memory graph labels
+- `gcode graph sync-file --allow-missing-indexed-file` is daemon/background-worker only. It converts a missing indexed file into a skipped JSON payload with `reason: "indexed_file_not_found"`; strict human defaults return a typed error with exit code `2`.
 
 ### Callers
 
@@ -543,7 +572,8 @@ gcode projects
 
 - Run `gcode status` to verify the project is indexed
 - Try `gcode search-text` for exact name matches
-- Try `gcode search-content` for string/comment searches
+- Try `gcode grep "pattern" [PATH ...]` for exact string/comment searches
+- Try `gcode search-content` for ranked string/comment searches
 - Run `gcode index` to pick up recently changed files
 
 ### Graph commands return empty results
