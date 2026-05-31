@@ -655,7 +655,10 @@ pass):
 1. **No translation requested** → transcribe (auto-detect), record `source_language`, `translated=false`.
 2. **Translate-to-English** (`audio_translate.target_lang` unset/`en`) → call `/v1/audio/translations` in one pass;
    whisper self-detects the source and always emits English, so **no pre-pass source check is needed** (English source →
-   output unchanged). Record detected `source_language`, `translated=true`.
+   output unchanged). Record detected `source_language`, `translated=true`. **This one-pass *whole-file* upload is valid
+   only for short audio under the transcription byte cap** — a chunked transcript can never be re-uploaded to
+   `/v1/audio/translations`, so for long/chunked media §4.3 is the single owner of English translation and applies the
+   whisper `translate` task **per chunk** (the per-chunk analogue of this one-pass), stitching the translated segments.
 3. **Translate to a non-English target** → transcribe first (auto-detect `source_language`); then if
    `source_language == target_lang` → skip (`translated=false`); else **segment-wise bounded-chunk LLM translation
    preserving each timestamp** (never one `generate_text(full_transcript)`). The per-chunk LLM call requests **indexed
@@ -712,14 +715,31 @@ production endpoint) routes audio over the byte cap through `ai::chunk` (which c
 `write_audio_transcript_markdown` (`transcribe.rs:60`); short audio under the cap bypasses chunking and single-shots.
 Without this wiring `ai/chunk.rs` would be dead code and long audio would exceed the upload byte cap.
 
-**Single-owner composition (depends: 4.2 — Round 20 #1)**: §4.2 and §4.3 both edit the same
-`ingest_audio_with_transcription` seam (`crates/gwiki/src/ingest/audio.rs`), so §4.3 is sequenced **after** §4.2 and is
-the **sole owner of the final chunk-then-translate composition**. §4.3 **preserves** the §4.2 translation precedence
-(`ai::translate`) intact and layers chunking **underneath** it: long audio is transcribed via `ai::chunk`'s chunked
-sequential aggregate first, and the resulting segments then flow through the §4.2 `--translate`/`target_lang` precedence
-(`source==target` skip, English one-pass, non-English segment-wise) **unchanged** — so `--translate` on long media uses
-the chunked transcript as the precedence's input rather than a single over-cap upload. §4.3 adds no second translation
-implementation; it only ensures the chunked path and the §4.2 path compose in one place.
+**Single-owner composition with an explicit short-vs-long split (depends: 4.2 — Round 20 #1 / Round 21 #1)**: §4.2 and
+§4.3 both edit the same `ingest_audio_with_transcription` seam (`crates/gwiki/src/ingest/audio.rs`), so §4.3 is sequenced
+**after** §4.2 and is the **sole owner of the final chunk-then-translate composition**. Because the §4.2 English path is a
+*whole-file* `/v1/audio/translations` upload that **cannot** accept an already-transcribed transcript, §4.3 does **not**
+funnel chunked segments back into that one-pass; instead the byte-cap test selects the algorithm and the chunk loop is
+**task-aware**:
+
+- **Short audio (under the byte cap)** → single-shot, the §4.2 precedence **unchanged**: no translation → one transcribe
+  pass; English target → one-pass `/v1/audio/translations` of the whole file; non-English target → one transcribe pass
+  then segment-wise text-LLM translation.
+- **Long audio (over the byte cap, chunked)** → `ai::chunk` splits into real WAV chunks each under the cap, and each
+  chunk is routed to the §4.2-selected endpoint so the precedence is honored **per chunk**:
+  - **No translation** → each chunk → `/v1/audio/transcriptions`; segments offset/stitched (4.3.1/4.3.2).
+  - **English target** → each chunk → `/v1/audio/translations` (whisper `translate` task), and the translated English
+    segments are offset/stitched — the **per-chunk analogue** of §4.2's whole-file one-pass, never a single over-cap
+    upload. If `/v1/audio/translations` is unsupported and a text LLM is configured, fall back to chunk-transcribe +
+    segment-wise text-LLM translation to English (mirrors §4.2's fallback).
+  - **Non-English target** → each chunk → `/v1/audio/transcriptions`; segments offset/stitched, then the stitched
+    transcript flows through §4.2 step 3's `source==target` skip + segment-wise text-LLM translation.
+
+In every long-media branch `source_language` is the chunk-detected source, `translated` reflects whether translation ran,
+and the partial-aware aggregate (4.3.4) still governs failures: a mid-run chunk failure keeps the completed (translated)
+chunks, marks `partial`, and records the failed window in `missing_ranges` — translation only ever applies to completed
+chunks. §4.3 adds **no second translation precedence**; it routes each chunk to the correct §4.2 endpoint/fallback and
+composes the result in one place.
 
 **Acceptance:**
 
@@ -732,14 +752,19 @@ implementation; it only ensures the chunked path and the §4.2 path compose in o
 - 4.3.4 - A mid-run chunk failure yields `ChunkedTranscription { partial: true }` with completed chunks kept and missing
   ranges recorded. test: `crates/gwiki/src/ai/chunk.rs::tests::partial_chunk_outcome`.
 - 4.3.5 - The `chunk` submodule is declared in gwiki's `ai` module. file: `crates/gwiki/src/ai/mod.rs`.
-- 4.3.6 - The production audio ingest path **invokes** `ai::chunk` and **composes with the §4.2 translation precedence
-  in one owner** — `ingest_audio_with_transcription` routes long audio (over the byte cap) through chunked sequential
-  transcription, single-shots short audio, and feeds the chunked transcript through the **preserved** §4.2
-  `--translate`/`target_lang` precedence (no second translation path), so `--translate` on long media yields a chunked
-  **and** translated transcript rather than a single over-cap upload. file:
-  `crates/gwiki/src/ingest/audio.rs`. test:
+- 4.3.6 - The production audio ingest path **invokes** `ai::chunk` and **owns the chunk-then-translate composition with
+  the explicit short-vs-long split** — `ingest_audio_with_transcription` single-shots short audio through the §4.2
+  precedence unchanged and routes long audio (over the byte cap) through chunked sequential transcription, with each chunk
+  hitting the §4.2-selected endpoint (non-English long target → chunk-transcribe + segment-wise LLM; no second translation
+  precedence), so `--translate` on long media yields a chunked **and** translated transcript rather than a single over-cap
+  upload. file: `crates/gwiki/src/ingest/audio.rs`. test:
   `crates/gwiki/src/ingest/audio.rs::tests::production_path_chunks_long_audio`. test:
   `crates/gwiki/src/ingest/audio.rs::tests::long_media_chunks_then_translates`.
+- 4.3.7 - Long audio with `--translate` to **English** routes **each chunk** through `/v1/audio/translations` (whisper
+  `translate` task) and stitches the translated segments — never a single over-cap upload — recording `source_language`
+  and `translated=true`; with `/v1/audio/translations` unsupported it falls back to chunk-transcribe + segment-wise LLM,
+  and a mid-run chunk failure keeps completed translated chunks while recording `missing_ranges`/`partial`. test:
+  `crates/gwiki/src/ingest/audio.rs::tests::long_english_translation_per_chunk`.
 
 ## P5: Image, video, and document extraction
 
@@ -774,9 +799,11 @@ Target: `crates/gwiki/src/ingest/video.rs`, `crates/gwiki/src/video.rs`
 
 Add real frame-image temp paths to `VideoSnapshot` (currently only `frame_descriptions`/`transcript_segments`,
 `video.rs:9`). In `ingest_video` (`video.rs:41`): `extract_audio_file` → chunked transcribe/translate (P4) → real
-`transcript_segments`; when `--translate`/`--target-lang` is set, video reuses the **same `ai::translate` precedence as
-audio (§4.2)** over the chunked transcript (hence the `depends: 4.2`), so video translation never re-implements
-precedence; `sample_frame_images` at the **gwiki-owned frame interval** (resolved CLI > `config_store` >
+`transcript_segments`; when `--translate`/`--target-lang` is set, video reuses the **same chunk-then-translate composition
+as audio — §4.3's short-vs-long split over §4.2's precedence** (hence the `depends: 4.2, 4.3`), so video translation never
+re-implements precedence: long video audio targeting **English** uses §4.3's **per-chunk `/v1/audio/translations`** branch
+(never a whole-file upload), and a non-English target uses chunk-transcribe + segment-wise LLM; `sample_frame_images` at
+the **gwiki-owned frame interval** (resolved CLI > `config_store` >
 `gcore.yaml` > default, `gwiki.ingest.video_frame_interval_seconds`; Round 6 #8 / no env, Round 11) → `describe_image` per frame → real
 `frame_descriptions`; then reuse `align_transcript_and_frames` (now numeric `start_ms`, Round 6 #2) +
 `write_video_derived_markdown`. **Run modalities sequentially** (transcription → frame vision) per B1. `sample_frames` coerces interval `0`→`1`, so **branch explicitly**:
@@ -788,18 +815,25 @@ precedence; `sample_frame_images` at the **gwiki-owned frame interval** (resolve
   from ffmpeg output. test: `crates/gwiki/src/ingest/video.rs::tests::video_produces_transcript_and_frames`.
 - 5.2.2 - `--video-frame-interval 0` yields an audio-only transcript video doc (no frames). test:
   `crates/gwiki/src/ingest/video.rs::tests::frame_interval_zero_disables_frames`.
+- 5.2.3 - Video `--translate` to English over long (chunked) audio **reuses §4.3's per-chunk translate branch** (no video-
+  side re-implementation), producing a translated transcript with `source_language`/`translated=true` and the same
+  partial/`missing_ranges` handling on a mid-run chunk failure. test:
+  `crates/gwiki/src/ingest/video.rs::tests::video_long_english_translation_reuses_chunk_branch`.
 
 ### 5.3 Add partial-video degradation matrix and media metadata [category: code] (depends: 5.2)
 
 `kind: deliverable`
 
-Target: `crates/gwiki/src/video.rs`
+Target: `crates/gwiki/src/video.rs`, `crates/gwiki/src/ingest/video.rs`
 
 Each failure mode preserves the raw asset and writes a valid derived doc: no ffmpeg → raw + `media_degradation`; audio OK
 / frames fail → transcript-only (existing transcript-only fallback in `align_transcript_and_frames`); frames OK / STT
 fail → frame-timeline-only + transcription degradation; provider fails mid-chunk → consume the `ChunkedTranscription`
 partial aggregate (§4.3): keep completed chunks, mark `partial`, record the missing window range(s). Media degradation
-metadata always records `file_size_bytes` and (when ffprobe succeeds) `duration_seconds`.
+metadata always records `file_size_bytes` and (when ffprobe succeeds) `duration_seconds`. **These matrix branches are
+decided and applied in production `ingest_video` (`crates/gwiki/src/ingest/video.rs`)** — the orchestrator that catches
+extraction/STT/vision failures and selects the derived doc — with the per-row doc-shape/metadata helpers in
+`crates/gwiki/src/video.rs`; a writer-only change would leave `ingest_video` unable to invoke the matrix.
 
 **Acceptance:**
 
@@ -807,6 +841,10 @@ metadata always records `file_size_bytes` and (when ffprobe succeeds) `duration_
   `crates/gwiki/src/video.rs::tests::partial_failure_matrix`.
 - 5.3.2 - Degradation metadata includes `file_size_bytes` and `duration_seconds`. test:
   `crates/gwiki/src/video.rs::tests::degradation_metadata_has_size_and_duration`.
+- 5.3.3 - Production `ingest_video` (`crates/gwiki/src/ingest/video.rs`) drives each degradation-matrix row end-to-end —
+  no ffmpeg, frame-extraction failure, STT failure, and mid-chunk provider failure — invoking the §5.3 matrix and writing
+  the specified derived doc while **preserving the raw asset** in every case. test:
+  `crates/gwiki/src/ingest/video.rs::tests::production_ingest_applies_degradation_matrix`.
 
 ### 5.4 Office, HTML, and structured-text document extraction [category: code] (depends: P1)
 
@@ -867,17 +905,26 @@ document-dispatch arm).
 
 `kind: deliverable`
 
-Target: `crates/gwiki/src/document.rs`, `crates/gwiki/src/lib.rs`
+Target: `crates/gwiki/src/document.rs`, `crates/gwiki/src/lib.rs`, `crates/gwiki/src/ingest/document.rs`, `crates/gwiki/src/ingest/pdf.rs`
 
 A uniform degradation vocabulary and metadata across pdf/office/html mirroring the video matrix (§5.3): each failure mode
 preserves the raw asset and writes a valid derived doc, and metadata always records `file_size_bytes` plus the relevant
-count (`page_count`/`sheet_count`/`slide_count`).
+count (`page_count`/`sheet_count`/`slide_count`). The vocabulary/metadata helpers live in `crates/gwiki/src/document.rs`,
+but they are **applied in the production ingest paths** — Office/HTML failures in `crates/gwiki/src/ingest/document.rs`
+(§5.4) and digital-PDF, scanned-PDF, and parser/vision failures in `crates/gwiki/src/ingest/pdf.rs` (§5.5) — so the matrix
+shapes real Office/HTML/PDF outputs rather than compiling as an unused helper module.
 
 **Acceptance:**
 
 - 5.6.1 - Each document failure mode writes a valid degraded doc preserving the asset, with `file_size_bytes` and the unit
   count recorded. test: `crates/gwiki/src/document.rs::tests::document_degradation_matrix`.
 - 5.6.2 - The new `document` module is declared in the gwiki crate root. file: `crates/gwiki/src/lib.rs`.
+- 5.6.3 - The uniform degradation vocabulary/metadata is applied in the **production** document paths — Office and HTML
+  failures in `crates/gwiki/src/ingest/document.rs`, and digital-PDF, scanned-PDF, and parser/vision failures in
+  `crates/gwiki/src/ingest/pdf.rs`, all emit the same `media_degradation` vocabulary plus `file_size_bytes` and the
+  relevant unit count, preserving the raw asset. test:
+  `crates/gwiki/src/ingest/document.rs::tests::office_html_degradation_uses_uniform_metadata`. test:
+  `crates/gwiki/src/ingest/pdf.rs::tests::pdf_degradation_uses_uniform_metadata`.
 
 ## P6: Daemon capability-registry contract (sibling repo)
 
@@ -1291,13 +1338,19 @@ Target: `crates/gcode/src/commands/codewiki.rs`
 
 Group symbols/files into modules using directory structure plus FalkorDB import/call edges (graph communities), adapting
 CodeWiki's cluster/filter prompts to drop non-core files (tests/vendored/generated) and keep stable `file_path::name`
-component IDs.
+component IDs. **No-graph fallback (FalkorDB is optional per the repo contract — all code handles `None`/unreachable
+graph configs gracefully)**: when FalkorDB is unconfigured or unreachable, clustering degrades to **directory + AST**
+structure only (no graph communities), keeping the same non-core filtering and `file_path::name` component IDs, so
+`gcode codewiki` still emits module docs without a graph.
 
 **Acceptance:**
 
 - 9.2.1 - Components cluster into modules informed by directory + import/call edges; non-core files are filtered and
   component IDs keep the `file_path::name` form. test:
   `crates/gcode/src/commands/codewiki.rs::tests::clusters_modules_from_graph`.
+- 9.2.2 - With FalkorDB unconfigured/unreachable, clustering degrades to directory + AST grouping (no graph edges, no
+  crash) while keeping `file_path::name` component IDs and non-core filtering, and codewiki still emits module docs. test:
+  `crates/gcode/src/commands/codewiki.rs::tests::clusters_without_falkordb`.
 
 ### 9.3 Mermaid diagrams from the graph [category: code] (depends: 9.2)
 
@@ -1307,12 +1360,18 @@ Target: `crates/gcode/src/commands/codewiki.rs`
 
 Emit Mermaid from gcode's FalkorDB graph: a module dependency graph from import edges, call/sequence diagrams from
 callers/callees bounded to 1–2 hops, and an optional class diagram from AST class/inheritance — feeding the bounded
-adjacency (never a full-graph dump) to the renderer.
+adjacency (never a full-graph dump) to the renderer. **No-graph fallback**: when FalkorDB is unconfigured/unreachable the
+graph-derived diagrams are **omitted or emitted with a `degraded: graph-unavailable` marker** (never a crash); the AST
+class diagram and the citation-grounded module/repo prose (which derive from AST, not the graph) still render, so a
+no-graph run produces valid module docs minus the graph diagrams.
 
 **Acceptance:**
 
 - 9.3.1 - Module docs include a Mermaid dependency diagram derived from import edges, bounded to N hops (no full-graph
   dump). test: `crates/gcode/src/commands/codewiki.rs::tests::emits_bounded_mermaid`.
+- 9.3.2 - With FalkorDB unconfigured/unreachable, graph-derived Mermaid diagrams are omitted or marked
+  `degraded: graph-unavailable` (no crash) while the rest of the module doc still renders. test:
+  `crates/gcode/src/commands/codewiki.rs::tests::mermaid_degrades_without_falkordb`.
 
 ### 9.4 Citation grounding and provenance frontmatter [category: code] (depends: 9.1)
 
@@ -1373,13 +1432,15 @@ documented CLI/daemon step (`gcode codewiki --out <vault>/code`, then gwiki inde
 Target: `.github/workflows/ci.yml`, `docs/guides/codewiki.md`
 
 Add CI coverage that runs the `gcode codewiki` tests (driving `text_generate` through a loopback fake), and write
-`docs/guides/codewiki.md` describing the generation pipeline (hierarchy, clustering, diagrams, citations, incremental regen) and
-the gcode→gwiki ingest workflow.
+`docs/guides/codewiki.md` describing the generation pipeline (hierarchy, clustering, diagrams, citations, incremental regen),
+the **no-FalkorDB degraded output** (directory/AST-only clustering per §9.2, omitted/`degraded: graph-unavailable` Mermaid
+per §9.3, with citation-grounded prose still produced), and the gcode→gwiki ingest workflow.
 
 **Acceptance:**
 
 - 9.7.1 - CI runs the `gcode codewiki` tests. file: `.github/workflows/ci.yml`.
-- 9.7.2 - `docs/guides/codewiki.md` documents the generation pipeline and the gcode→gwiki ingest workflow. file:
+- 9.7.2 - `docs/guides/codewiki.md` documents the generation pipeline, the no-FalkorDB degraded output (directory/AST-only
+  clustering and omitted/degraded diagrams), and the gcode→gwiki ingest workflow. file:
   `docs/guides/codewiki.md`.
 
 ## P0E: Embeddings-namespace migration — SEPARATE cross-repo P0 epic (captured for extraction)
@@ -2052,6 +2113,44 @@ epic) rather than a hope.
   test added under existing acceptance 4.3.6; depends_on edits only), every `depends_on` resolves, the leaf DAG is
   acyclic (4.1→4.2→4.3; 8.1→8.2→8.3), and the P8/P9→MVP gate holds.
 
+**Round 22 (stage-native planner — adversary Round 21 blocking fixes)**
+
+- reviewer: stage-native planning adversary (Round 21 findings F1–F4)
+- verdict: incorporated (surgical)
+- blockers fixed:
+  - **F1 §4.2/§4.3/§5.2 long-media English `--translate` was unimplementable** (a chunked transcript can't be re-uploaded
+    to the whole-file `/v1/audio/translations` one-pass §4.2 promised): made the **short-vs-long split explicit** with
+    §4.3 as the single owner. §4.2 step 2 now states the whole-file one-pass is valid **only for short audio under the
+    byte cap**. §4.3's composition paragraph was rewritten: short audio = §4.2 precedence unchanged; long audio = a
+    **task-aware chunk loop** where English routes **each chunk** through `/v1/audio/translations` (whisper `translate`
+    task) and stitches translated segments (per-chunk analogue, never a whole-file upload; LLM fallback when
+    unsupported), and non-English chunk-transcribes then runs §4.2 step-3 segment-wise LLM. Reworked acceptance **4.3.6**
+    and added **4.3.7** (long-English per-chunk path with `source_language`/`translated`/`missing_ranges`). §5.2 body +
+    new acceptance **5.2.3** make video reuse §4.3's branch (no re-implementation);
+  - **F2 §5.3 video degradation matrix target coverage**: production failure handling lives in `ingest_video`
+    (`crates/gwiki/src/ingest/video.rs`), not the writer `video.rs`. Added `crates/gwiki/src/ingest/video.rs` to §5.3's
+    Target + body, and acceptance **5.3.3** requiring production `ingest_video` to drive each matrix row end-to-end while
+    preserving the raw asset;
+  - **F3 §5.6 document degradation matrix target coverage**: the matrix must shape the real Office/HTML
+    (`crates/gwiki/src/ingest/document.rs`) and PDF (`crates/gwiki/src/ingest/pdf.rs`) outputs, not just compile as a
+    helper. Added both ingest files to §5.6's Target + body, and acceptance **5.6.3** asserting Office, HTML, digital PDF,
+    scanned PDF, and parser/vision failures all emit the uniform `media_degradation` vocabulary + metadata;
+  - **F4 §9.2/§9.3 codewiki assumed FalkorDB present** (repo contract: FalkorDB/Qdrant optional, handle `None`): added an
+    explicit **no-graph fallback** — §9.2 degrades to directory + AST clustering (acceptance **9.2.2**); §9.3 omits or
+    marks graph-derived Mermaid `degraded: graph-unavailable` while AST/citation prose still renders (acceptance
+    **9.3.2**); §9.7 body + **9.7.2** now document the degraded no-FalkorDB output;
+- whole-plan sweeps per finding class: (F1, short/long translation-algorithm inconsistency) the audio seam (§4.2/§4.3)
+  and its sole video reuse (§5.2) were the only places translation composes with chunking — no other site funnels a
+  chunked transcript into a whole-file upload. (F2/F3, degradation-matrix deliverable targeting only a writer/helper
+  while the production orchestrator is in `ingest/*`) only §5.3 (video) and §5.6 (document) had the gap; §5.1 image
+  degradation already targets `crates/gwiki/src/ingest/image.rs`, and §4.1/§4.2 audio degradation already targets
+  `crates/gwiki/src/ingest/audio.rs`. (F4, code assuming an always-present FalkorDB graph) only §9.2/§9.3 are
+  graph-derived; §9.1 (AST), §9.4 (symbol spans), §9.5 (SHA-256 hashing), §9.6 (ingest) need no graph;
+- validation: re-ran `uv run gobby plans validate` (see review notes); six acceptance items added (4.3.7, 5.2.3, 5.3.3,
+  5.6.3, 9.2.2, 9.3.2), each carrying one `covers:` label in the manifest (still 1:1 with the 35 deliverables); §5.3 and
+  §5.6 Target lines extended to cover the new `test:` refs; no dependency edges changed (F1's 4.3→4.2 and 5.2→4.2,4.3
+  already existed); leaf DAG acyclic and the P8/P9→MVP gate holds.
+
 ## M1 Task Manifest
 
 `kind: manifest`
@@ -2251,6 +2350,7 @@ epic) rather than a hope.
     - covers:gwiki-multimodal-ai:4.3:4.3.4
     - covers:gwiki-multimodal-ai:4.3:4.3.5
     - covers:gwiki-multimodal-ai:4.3:4.3.6
+    - covers:gwiki-multimodal-ai:4.3:4.3.7
   implementation_domain: backend
   tdd: true
   source_section: "4.3"
@@ -2278,6 +2378,7 @@ epic) rather than a hope.
   labels:
     - covers:gwiki-multimodal-ai:5.2:5.2.1
     - covers:gwiki-multimodal-ai:5.2:5.2.2
+    - covers:gwiki-multimodal-ai:5.2:5.2.3
   implementation_domain: backend
   tdd: true
   source_section: "5.2"
@@ -2290,6 +2391,7 @@ epic) rather than a hope.
   labels:
     - covers:gwiki-multimodal-ai:5.3:5.3.1
     - covers:gwiki-multimodal-ai:5.3:5.3.2
+    - covers:gwiki-multimodal-ai:5.3:5.3.3
   implementation_domain: backend
   tdd: true
   source_section: "5.3"
@@ -2331,6 +2433,7 @@ epic) rather than a hope.
   labels:
     - covers:gwiki-multimodal-ai:5.6:5.6.1
     - covers:gwiki-multimodal-ai:5.6:5.6.2
+    - covers:gwiki-multimodal-ai:5.6:5.6.3
   implementation_domain: backend
   tdd: true
   source_section: "5.6"
@@ -2485,6 +2588,7 @@ epic) rather than a hope.
   validation_criteria: "cargo test -p gobby-code clusters_modules_from_graph"
   labels:
     - covers:gwiki-multimodal-ai:9.2:9.2.1
+    - covers:gwiki-multimodal-ai:9.2:9.2.2
   implementation_domain: backend
   tdd: true
   source_section: "9.2"
@@ -2496,6 +2600,7 @@ epic) rather than a hope.
   validation_criteria: "cargo test -p gobby-code emits_bounded_mermaid"
   labels:
     - covers:gwiki-multimodal-ai:9.3:9.3.1
+    - covers:gwiki-multimodal-ai:9.3:9.3.2
   implementation_domain: backend
   tdd: true
   source_section: "9.3"
