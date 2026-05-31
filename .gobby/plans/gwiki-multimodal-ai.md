@@ -1,8 +1,11 @@
 # gwiki Multimodal AI — productionize multimodal ingest and unify Gobby CLI AI services
 
+<!-- markdownlint-disable MD013 MD036 -->
+
 **Plan ID:** gwiki-multimodal-ai
 
 ## O1: Overview
+
 `kind: framing`
 
 The shipped `gwiki.md` epic built `## P6: Multimodal Ingestion` (image/audio/video) as a **skeleton with
@@ -20,6 +23,7 @@ endpoints HTTP (no new Docker), and graceful degradation everywhere so gwiki/gco
 a separate OpenAI-compatible endpoint, or via the daemon.
 
 ## C1: Constraints
+
 `kind: framing`
 
 - **Ownership split (coherent across gwiki *and* gcode)**: AI *config types*, *`AiContext` resolution*, the
@@ -58,7 +62,7 @@ a separate OpenAI-compatible endpoint, or via the daemon.
   local server / cloud) and adds no containers or schema. Separately, the Postgres/FalkorDB/Qdrant *hub* can be
   provisioned by **either** `gcode setup --standalone` **or** a new `gwiki setup --standalone`, both through the shared
   `gobby_core::provisioning`. Whoever installs first stands up the shared hub (same `~/.gobby/services/docker-compose.yml`
-  + merged `~/.gobby/gcore.yaml`); the other **detects and reuses** it (resolve-existing-DSN → else provision). Tables
+  and merged `~/.gobby/gcore.yaml`); the other **detects and reuses** it (resolve-existing-DSN → else provision). Tables
   are namespaced (`gwiki_*` vs `code_*`) so an independent gcode install and an independent gwiki install coexist in one
   hub without collision (§8.4).
 - **Subset/superset schema ownership + single-hub-with-adoption**: gcode (`code_*`) and gwiki (`gwiki_*`) each own a
@@ -79,6 +83,7 @@ a separate OpenAI-compatible endpoint, or via the daemon.
   never loads or force-downloads a model (lifecycle is gloc's job, §P8).
 
 ## A1: Architecture & ownership boundary
+
 `kind: framing`
 
 - `gobby_core::config` + `gobby_core::ai_context` (always-compiled, no `reqwest`): `AiRouting { Auto, Daemon, Direct,
@@ -116,6 +121,7 @@ a separate OpenAI-compatible endpoint, or via the daemon.
   pulls it, gloc enables it alone without `reqwest`), keeping the lean core HTTP-free (Round 8 #2 / Round 10 #2, §8.1).
 
 ## A2: Capability registry & repo boundary
+
 `kind: framing`
 
 The AI surface is modeled as **capabilities** (what is requested) over **transports** (how a provider connects), shared by
@@ -152,6 +158,7 @@ vocabulary across both repos:
   the capability-error semantics.
 
 ## B1: Memory & model-load discipline
+
 `kind: framing`
 
 Target footprint is **≤ 3 resident models** (one embeddings, one STT, one multimodal). Enforcement levers, implemented
@@ -164,6 +171,7 @@ endpoints unless config says so) so servers evict between runs; **prefer one sha
 gcore::ai never pulls/force-loads; that is gloc's job.
 
 ## S1: Install & runtime scenarios
+
 `kind: framing`
 
 AI routing resolves per modality from `config_store` (DB present) → standalone `~/.gobby/gcore.yaml` → defaults (no
@@ -179,6 +187,7 @@ standalone mode, authenticated direct endpoints store the optional API token dir
 rows may use `$secret:` references resolved by the daemon-backed source.
 
 ## R1: DAG / phase order
+
 `kind: framing`
 
 Hard prerequisite first, then transport, then the gwiki extraction modalities, then docs/CI, then the cross-crate
@@ -191,6 +200,7 @@ none gates the MVP, so the epic→subtask expansion schedules them *after* the m
 (Round 8 #7); they stay in-epic (not file-split like the cross-repo P0E).
 
 ## P1: Ingest dispatch & no-AI baseline
+
 `kind: framing`
 
 **Goal**: route `ingest-file` into the audio/image/video orchestrators and establish always-compiled AI config/context
@@ -202,6 +212,7 @@ being stored as raw, preserved, indexable assets without AI derivation (no trans
 through the orchestrators is a tracked follow-up, not part of this plan.
 
 ### 1.1 Add gcore AI capability config types and per-capability routing [category: code]
+
 `kind: deliverable`
 
 Target: `crates/gcore/src/config.rs`
@@ -249,6 +260,7 @@ Add always-compiled, `reqwest`-free config to `gobby_core::config`, modeled on `
   #4 / Round 9 #3). test: `crates/gcore/src/config.rs::tests::audio_translate_inherits_transcribe_binding`.
 
 ### 1.2 Add shared `gobby_core::ai_context` (AiContext, config source, router) [category: code] (depends: 1.1)
+
 `kind: deliverable`
 
 Target: `crates/gcore/src/ai_context.rs`, `crates/gcore/src/config.rs`
@@ -291,6 +303,7 @@ caller's. gwiki and gcode each construct one `AiContext`; neither defines its ow
   `crates/gcore/src/ai_context.rs::tests::forced_routing_and_no_ai_override`.
 
 ### 1.3 Dispatch ingest-file to orchestrators and add CLI flags [category: code] (depends: 1.2)
+
 `kind: deliverable`
 
 Target: `crates/gwiki/src/ingest/file.rs`, `crates/gwiki/src/main.rs`, `crates/gwiki/src/lib.rs`, `crates/gwiki/src/sources.rs`
@@ -342,12 +355,14 @@ key `gwiki.ingest.video_frame_interval_seconds` (default 5).
 - 1.3.7 - `SourceKind::Office` and `SourceKind::Html` variants exist with `Display`. file: `crates/gwiki/src/sources.rs`.
 
 ## P2: gcore::ai transport (feature-gated)
+
 `kind: framing`
 
 **Goal**: blocking OpenAI-compatible + daemon clients with numeric-timed results, retry/backoff, and a concurrency cap —
 transport only, no routing.
 
 ### 2.1 Add gcore `ai` feature and transport skeleton [category: code] (depends: P1)
+
 `kind: deliverable`
 
 Target: `crates/gcore/Cargo.toml`, `crates/gcore/src/lib.rs`, `crates/gcore/src/ai_types.rs`, `crates/gcore/src/ai/mod.rs`
@@ -394,6 +409,7 @@ is the first line of defense against tripping cloud rate limits.
   `crates/gcore/tests/public_boundary.rs::cargo_features_define_public_boundary`.
 
 ### 2.2 Direct transcription/translation client [category: code] (depends: 2.1)
+
 `kind: deliverable`
 
 Target: `crates/gcore/src/ai/transcription.rs`
@@ -412,6 +428,7 @@ detected `language`. Bearer auth like `search/semantic.rs:190`.
   declared filename and bearer header. test: `crates/gcore/src/ai/transcription.rs::tests::wire_multipart_filename_and_auth`.
 
 ### 2.3 Direct vision and text clients [category: code] (depends: 2.1)
+
 `kind: deliverable`
 
 Target: `crates/gcore/src/ai/vision.rs`, `crates/gcore/src/ai/text.rs`
@@ -430,6 +447,7 @@ prompt, system?)` → `/v1/chat/completions`. Both bearer-auth, retry-wrapped.
   `crates/gcore/src/ai/text.rs::tests::generates_text`.
 
 ### 2.4 Daemon clients with back-compat mapping [category: code] (depends: 2.2, 2.3)
+
 `kind: deliverable`
 
 Target: `crates/gcore/src/ai/daemon.rs`
@@ -461,12 +479,14 @@ omitted otherwise). **Back-compat**: if `/api/voice/transcribe` returns legacy `
   `crates/gcore/src/ai/daemon.rs::tests::voice_multipart_carries_capability_fields`.
 
 ## P3: gwiki routing decision, adapters & media helpers
+
 `kind: framing`
 
 **Goal**: turn resolved routing into production trait clients, fix the daemon vision probe, and add real ffmpeg/ffprobe
 media helpers.
 
 ### 3.1 Add gwiki thin trait adapters over the shared gcore router [category: code] (depends: P2)
+
 `kind: deliverable`
 
 Target: `crates/gwiki/src/ai/clients.rs`, `crates/gwiki/src/transcribe.rs`
@@ -495,6 +515,7 @@ in the model. `align_transcript_and_frames` (`video.rs:81`) currently parses `se
   transcript-only and frame-aligned groupings. test: `crates/gwiki/src/video.rs::tests::aligns_on_numeric_start_ms`.
 
 ### 3.2 Add gwiki::media ffmpeg/ffprobe helpers [category: code] (depends: P1)
+
 `kind: deliverable`
 
 Target: `crates/gwiki/src/media.rs`
@@ -514,6 +535,7 @@ is written to `raw/assets/` first and never tied to a temp lifetime.
   `crates/gwiki/src/media.rs::tests::temp_files_cleaned_asset_survives`.
 
 ### 3.3 Repoint the daemon vision capability probe to a GET status route [category: code] (depends: 3.1)
+
 `kind: deliverable`
 
 Target: `crates/gcore/src/ai/probe.rs`, `crates/gwiki/src/daemon.rs`
@@ -548,12 +570,14 @@ exists that capability degrades; `/api/chat/attachments` is never a description/
   provider/model discovery (Round 9 #4). test: `crates/gcore/src/ai/probe.rs::tests::status_route_is_availability_truth`.
 
 ## P4: Audio transcription, translation & chunking
+
 `kind: framing`
 
 **Goal**: make audio the production centerpiece — real transcription, language auto-detect, configurable translation, and
 deterministic long-media chunking.
 
 ### 4.1 Wire audio ingest to production transcription and extend output [category: code] (depends: 3.1, 3.2)
+
 `kind: deliverable`
 
 Target: `crates/gwiki/src/ingest/audio.rs`, `crates/gwiki/src/transcribe.rs`
@@ -571,6 +595,7 @@ frontmatter (`transcription_task`, `transcription_source_language`, `transcripti
   `crates/gwiki/src/ingest/audio.rs::tests::off_routing_degrades`.
 
 ### 4.2 Add language auto-detect and translation precedence [category: code] (depends: 4.1)
+
 `kind: deliverable`
 
 Target: `crates/gwiki/src/ai/translate.rs`
@@ -604,6 +629,7 @@ LLM translation to English.
   `crates/gwiki/src/ai/translate.rs::tests::english_one_pass_vs_target_first`.
 
 ### 4.3 Add deterministic long-media chunking [category: code] (depends: 4.1, 3.2)
+
 `kind: deliverable`
 
 Target: `crates/gwiki/src/ai/chunk.rs`
@@ -631,12 +657,14 @@ Window/overlap/max-bytes are named constants.
   ranges recorded. test: `crates/gwiki/src/ai/chunk.rs::tests::partial_chunk_outcome`.
 
 ## P5: Image, video, and document extraction
+
 `kind: framing`
 
 **Goal**: production vision for images, audio-centric video with co-equal real frames, and document extraction (PDF
 combining text layer + vision, Office, HTML, structured text) — all to derived Markdown with graceful degradation.
 
 ### 5.1 Wire image ingest to production vision [category: code] (depends: 3.1)
+
 `kind: deliverable`
 
 Target: `crates/gwiki/src/ingest/image.rs`
@@ -654,6 +682,7 @@ frontmatter; else preserve the asset and emit vision degradation (existing `visi
   `crates/gwiki/src/ingest/image.rs::tests::production_vision_writes_description_and_ocr`.
 
 ### 5.2 Wire video to audio-first transcript plus real frames [category: code] (depends: 4.1, 4.3, 3.2, 5.1)
+
 `kind: deliverable`
 
 Target: `crates/gwiki/src/ingest/video.rs`, `crates/gwiki/src/video.rs`
@@ -674,6 +703,7 @@ Add real frame-image temp paths to `VideoSnapshot` (currently only `frame_descri
   `crates/gwiki/src/ingest/video.rs::tests::frame_interval_zero_disables_frames`.
 
 ### 5.3 Add partial-video degradation matrix and media metadata [category: code] (depends: 5.2)
+
 `kind: deliverable`
 
 Target: `crates/gwiki/src/video.rs`
@@ -692,6 +722,7 @@ metadata always records `file_size_bytes` and (when ffprobe succeeds) `duration_
   `crates/gwiki/src/video.rs::tests::degradation_metadata_has_size_and_duration`.
 
 ### 5.4 Office, HTML, and structured-text document extraction [category: code] (depends: P1)
+
 `kind: deliverable`
 
 Target: `crates/gwiki/src/ingest/document.rs`
@@ -710,6 +741,7 @@ Available/Unavailable + `From<DocumentIngestResult> for IngestResult`), behind t
   `crates/gwiki/src/ingest/document.rs::tests::extracts_office_html_and_degrades`.
 
 ### 5.5 PDF — text layer combined with vision [category: code] (depends: 5.4, 3.1, 3.2)
+
 `kind: deliverable`
 
 Target: `crates/gwiki/src/ingest/pdf.rs`
@@ -729,6 +761,7 @@ the shared limiter** (B1). Frontmatter records `page_count`, `has_text_layer`, `
   `crates/gwiki/src/ingest/pdf.rs::tests::combines_text_layer_and_vision`.
 
 ### 5.6 Document degradation matrix and metadata [category: code] (depends: 5.4, 5.5)
+
 `kind: deliverable`
 
 Target: `crates/gwiki/src/document.rs`
@@ -743,6 +776,7 @@ count (`page_count`/`sheet_count`/`slide_count`).
   count recorded. test: `crates/gwiki/src/document.rs::tests::document_degradation_matrix`.
 
 ## P6: Daemon capability-registry contract (sibling repo)
+
 `kind: framing`
 
 **Goal**: pin the contract the CLI routes to when routing=`daemon`. The daemon-side implementation is the gobby agent's
@@ -752,6 +786,7 @@ the runtime providers incl. **agy/Antigravity**). This phase produces only the *
 degrade until the daemon ships. Boundary in A2.
 
 ### 6.1 Author the daemon capability contract (CLI side) [category: docs] (depends: 3.3)
+
 `kind: deliverable`
 
 Target: `docs/guides/ai-daemon-contract.md`, `docs/guides/hub-install-contract.md`
@@ -838,11 +873,13 @@ capability-error semantics, and the hub adoption contract. The daemon implements
   `docs/guides/ai-daemon-contract.md`.
 
 ## P7: Docs, CI, and release
+
 `kind: framing`
 
 **Goal**: ship gwiki v0.1.0 to CI/release parity with the other crates and document configuration.
 
 ### 7.1 Add gwiki and the gcore ai feature to CI [category: config] (depends: P1)
+
 `kind: deliverable`
 
 Target: `.github/workflows/ci.yml`
@@ -863,6 +900,7 @@ proves the store-as-asset degraded path.
   `--no-default-features`) and gcore `--features ai` **clippy and test**. file: `.github/workflows/ci.yml`.
 
 ### 7.2 Add the gwiki release workflow [category: config] (depends: 7.1)
+
 `kind: deliverable`
 
 Target: `.github/workflows/release-gwiki.yml`
@@ -886,6 +924,7 @@ features (`ai` on); gwiki version stays `0.1.0` (`gwiki/Cargo.toml:3`); first ta
   `.github/workflows/release-gwiki.yml`.
 
 ### 7.3 Document the AI configuration matrix [category: docs] (depends: P5)
+
 `kind: deliverable`
 
 Target: `crates/gwiki/README.md`, `docs/guides/ai-configuration.md`
@@ -901,6 +940,7 @@ implementing `/v1/audio/transcriptions`** — LM Studio/Ollama serve text/vision
   `docs/guides/ai-configuration.md`.
 
 ## P8: Crate demarcation — shared provisioning, gcode AI, gloc discovery (downstream)
+
 `kind: framing`
 
 **Goal**: clean up cross-crate responsibilities — give gwiki shared hub-provisioning parity and a single-hub
@@ -919,6 +959,7 @@ provides the same isolation while keeping the cross-crate demarcation legible in
 file only because it is **cross-repo**, spanning the daemon — an orthogonal reason from MVP sequencing.)
 
 ### 8.1 Extract local-backend discovery into gcore and adopt in gloc [category: refactor] (depends: P2, P5, P6, P7)
+
 `kind: deliverable`
 
 Target: `crates/gcore/src/local_backend.rs`, `crates/gloc/src/backend.rs`, `crates/gloc/src/config.rs`,
@@ -953,6 +994,7 @@ distinct STT probe, else degrade to off. gloc retains lifecycle (`ensure_model_r
   `crates/gcore/src/ai_context.rs::tests::stt_not_autodiscovered_to_chat_backend`.
 
 ### 8.2 Fold gcode embeddings under shared routing [category: refactor] (depends: 8.1)
+
 `kind: deliverable`
 
 Target: `crates/gcode/src/vector/code_symbols/embedding.rs`, `crates/gcode/src/config.rs`
@@ -989,6 +1031,7 @@ gcode does not depend on gloc).
   test: `crates/gcode/src/vector/code_symbols/embedding.rs::tests::reads_endpoint_from_shared_binding`.
 
 ### 8.3 Add optional LLM-backed gcode outlines [category: code] (depends: 8.1)
+
 `kind: deliverable`
 
 Target: `crates/gcode/src/commands/symbols.rs`, `crates/gcode/src/cli.rs`
@@ -1008,6 +1051,7 @@ unavailable. This mirrors the daemon's own `code_index/summarizer` path, which `
   `crates/gcode/src/commands/symbols.rs::tests::degrades_to_ast`.
 
 ### 8.4 Give gwiki shared hub-provisioning parity via `ensure_hub` [category: code] (depends: P5, P6, P7)
+
 `kind: deliverable`
 
 Target: `crates/gcore/src/provisioning.rs`, `crates/gwiki/src/commands/setup.rs`, `crates/gwiki/src/main.rs`, `crates/gcode/src/commands/setup.rs`, `crates/gcore/tests/public_boundary.rs`
@@ -1039,6 +1083,7 @@ resolve-from-config path only); update `crates/gcore/tests/public_boundary.rs` i
   coexist. test: `crates/gwiki/src/commands/setup.rs::tests::reuses_existing_gcode_hub`.
 
 ### 8.5 Enforce the single-hub invariant across install orders [category: code] (depends: 8.4)
+
 `kind: deliverable`
 
 Target: `crates/gcore/src/provisioning.rs`, `crates/gwiki/src/support/env.rs`, `crates/gcode/src/db.rs`
@@ -1067,6 +1112,7 @@ Make hub resolution coherent across all three install orders so previously-index
   subset data remains addressable. test: `crates/gcode/src/db.rs::tests::adopted_hub_resolves_without_conflict`.
 
 ## P9: Codebase → wiki documentation (gcode-generated, gwiki-ingested)
+
 `kind: framing`
 
 **Goal**: gcode produces robust, hierarchical, citation-grounded Markdown documentation of a codebase — per-file API docs
@@ -1078,6 +1124,7 @@ adapted freely, no attribution requirement). **Downstream of the MVP**: every P9
 §8.3 (itself MVP-gated via §8.1), so the expansion schedules P9 after the P1–P7 MVP (VS1).
 
 ### 9.1 gcode hierarchical code-doc generator (file → module → repo) [category: code] (depends: 8.3)
+
 `kind: deliverable`
 
 Target: `crates/gcode/src/commands/codewiki.rs`, `crates/gcode/src/cli.rs`
@@ -1096,6 +1143,7 @@ the llama_index tree-summarize template. When text routing is off, degrade to AS
 - 9.1.2 - The `codewiki` subcommand is registered on the gcode CLI. file: `crates/gcode/src/cli.rs`.
 
 ### 9.2 Module clustering from the dependency graph [category: code] (depends: 9.1)
+
 `kind: deliverable`
 
 Target: `crates/gcode/src/commands/codewiki.rs`
@@ -1111,6 +1159,7 @@ component IDs.
   `crates/gcode/src/commands/codewiki.rs::tests::clusters_modules_from_graph`.
 
 ### 9.3 Mermaid diagrams from the graph [category: code] (depends: 9.2)
+
 `kind: deliverable`
 
 Target: `crates/gcode/src/commands/codewiki.rs`
@@ -1125,6 +1174,7 @@ adjacency (never a full-graph dump) to the renderer.
   dump). test: `crates/gcode/src/commands/codewiki.rs::tests::emits_bounded_mermaid`.
 
 ### 9.4 Citation grounding and provenance frontmatter [category: code] (depends: 9.1)
+
 `kind: deliverable`
 
 Target: `crates/gcode/src/commands/codewiki.rs`
@@ -1140,6 +1190,7 @@ frontmatter list (file + line ranges) for staleness detection and reverse lookup
   `crates/gcode/src/commands/codewiki.rs::tests::citations_validated_against_spans`.
 
 ### 9.5 Incremental regeneration [category: code] (depends: 9.1, 9.4)
+
 `kind: deliverable`
 
 Target: `crates/gcode/src/commands/codewiki.rs`
@@ -1153,6 +1204,7 @@ source files changed (file → owning module → repo overview), recording a `_m
   untouched. test: `crates/gcode/src/commands/codewiki.rs::tests::incremental_regenerates_only_changed`.
 
 ### 9.6 gwiki ingest of generated code-docs [category: code] (depends: 9.1, P1)
+
 `kind: deliverable`
 
 Target: `crates/gwiki/src/ingest/code_docs.rs`, `crates/gwiki/src/ingest/file.rs`, `crates/gwiki/src/sources.rs`
@@ -1172,6 +1224,7 @@ documented CLI/daemon step (`gcode codewiki --out <vault>/code`, then gwiki inde
   `crates/gwiki/src/sources.rs`.
 
 ### 9.7 codewiki CI and documentation [category: config] (depends: 9.1, 9.6)
+
 `kind: deliverable`
 
 Target: `.github/workflows/ci.yml`, `docs/guides/codewiki.md`
@@ -1187,6 +1240,7 @@ the gcode→gwiki ingest workflow.
   `docs/guides/codewiki.md`.
 
 ## P0E: Embeddings-namespace migration — SEPARATE cross-repo P0 epic (captured for extraction)
+
 `kind: framing`
 
 **Status**: a *separate* P0 epic spanning **gobby-cli** and the **gobby daemon** (`gwiki-daemon-web.md`), captured here for
@@ -1206,6 +1260,7 @@ writes/reads `embeddings.dim` (the `semantic_search.py:184` "writers use one dae
 here on **`ai.embeddings.dim`**.
 
 **E1 — Expand (both repos; non-breaking; ship anytime, concurrently):**
+
 - **Key constants + CI guard**: centralize embedding key names behind constants and add a CI test rejecting any stray
   literal `embeddings.` key. gcode: `config.rs:165-168`, `context.rs:40`. daemon: `cli/installers/embedding.py`,
   `utils/deps.py`, `ai/registry.py`, `EmbeddingsConfig`/`config/persistence.py`.
@@ -1221,6 +1276,7 @@ here on **`ai.embeddings.dim`**.
   consistency check, both repos).
 
 **E2 — Migrate:**
+
 - Daemon runs the `config_store` migration on upgrade so every existing install has the `ai.embeddings.*` rows; the
   doctor confirms gcode + daemon agree.
 - Both repos flip the *canonical* read to prefer `ai.embeddings.*` (old still fallback); verify real installs resolve from
@@ -1228,6 +1284,7 @@ here on **`ai.embeddings.dim`**.
 
 **E3 / Contract (`## P3` on extraction) — the no-alias cut, OWNED by this migration epic (Round 11); the gwiki epic's
 §8.2 *consumes* it and §6.1 D6 only *documents* it CLI-side:**
+
 - gcode side: drop the old-key fallback in the resolver (`config.rs`/`context.rs`) + the gcore.yaml/setup writers;
   `ai.embeddings.*` only; tests assert old keys rejected. (The gwiki epic's §8.2 embed-routing refactor then depends on
   this and consumes the migrated keys.)
@@ -1236,6 +1293,7 @@ here on **`ai.embeddings.dim`**.
   non-breaking** — the co-release constraint is gone, and the end state has no shims.
 
 ## VS1: Verification
+
 `kind: verification`
 
 End-to-end the epic succeeds when: `gwiki ingest-file` dispatches `.mp3`/`.png`/`.mp4` to the orchestrators (P1); audio
@@ -1260,9 +1318,11 @@ This makes "P1–P7 MVP gate before P8/P9" a checkable invariant (the in-epic eq
 epic) rather than a hope.
 
 ## V1 Plan Changelog
+
 `kind: verification`
 
 **Round 0 (pre-draft, interactive)**
+
 - reviewer: external (codex) + interactive design review
 - verdict: incorporated
 - findings resolved into the draft:
@@ -1279,6 +1339,7 @@ epic) rather than a hope.
   interactive coordinator on approval, then validated with `gobby plans validate --mode expansion`.
 
 **Round 1 (interactive — provisioning & install ordering)**
+
 - verdict: incorporated
 - findings resolved:
   - corrected the "no Docker" constraint: AI is HTTP-only, but the **data hub is gwiki-provisionable** with parity to

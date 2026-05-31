@@ -1,8 +1,11 @@
 # Embeddings Namespace Migration (gobby-cli) — `embeddings.* → ai.embeddings.*`
 
+<!-- markdownlint-disable MD013 MD036 -->
+
 **Plan ID:** embeddings-namespace-migration
 
 ## O1: Overview
+
 `kind: framing`
 
 The gobby-cli (gcode + standalone `gcore.yaml`) half of a **cross-repo P0**: rename embedding configuration from the
@@ -21,6 +24,7 @@ api_key}`; `ai.embeddings.*` does not exist yet.
 `--mode expansion`.
 
 ## C1: Contract & constraints
+
 `kind: framing`
 
 - **Config sources — NO ENV VARS (product decision)**: gcode/standalone embedding config resolves **only** from
@@ -52,6 +56,7 @@ api_key}`; `ai.embeddings.*` does not exist yet.
   `crates/gcode/src/commands/setup.rs:264`; client `crates/gcode/src/vector/code_symbols/embedding.rs`.
 
 ## R1: Phase order
+
 `kind: framing`
 
 `P1 (Expand)` → `P2 (Migrate)` → `P3 (Contract)`. The **namespace** dual-read is non-breaking and ships anytime
@@ -63,6 +68,7 @@ move those values into `config_store`/`gcore.yaml`. P3 (the no-alias cut) is gat
 first, so every reachable install already carries `ai.embeddings.*` rows.
 
 ## P1: Expand
+
 `kind: framing`
 
 **Goal**: introduce `ai.embeddings.*` as a dual-read (old canonical) — **namespace-non-breaking** (resolution still lands
@@ -70,6 +76,7 @@ on `embeddings.*`) but with one **intentional breaking change: the `GOBBY_EMBEDD
 (accepted, per the no-env decision — C1) — centralize key names, make dimension advisory, and ship the doctor.
 
 ### 1.1 Centralize embedding key names + allowlisted CI guard [category: code]
+
 `kind: deliverable`
 
 Target: `crates/gcore/src/config.rs`, `crates/gcode/src/config/context.rs`
@@ -86,6 +93,7 @@ P3.
   `crates/gcore/src/config.rs::tests::ci_guard_rejects_stray_literal`.
 
 ### 1.2 Advisory dimension via endpoint probe [category: code]
+
 `kind: deliverable`
 
 Target: `crates/gcode/src/vector/code_symbols/embedding.rs`, `crates/gcode/src/config/context.rs`, `crates/gcode/src/config/services.rs`
@@ -101,6 +109,7 @@ the `vector_dim`/`dim` split independently of the prefix.
   the probe. test: `crates/gcode/src/vector/code_symbols/embedding.rs::tests::dim_probe_with_override`.
 
 ### 1.3 Dual-read with old canonical, no env layer [category: code]
+
 `kind: deliverable`
 
 Target: `crates/gcore/src/config.rs`
@@ -120,6 +129,7 @@ relocate those values to `config_store`/`gcore.yaml`.
   for an embedding key has no effect. test: `crates/gcore/src/config.rs::tests::dual_read_old_canonical_no_env`.
 
 ### 1.4 `gcode embeddings doctor` [category: code]
+
 `kind: deliverable`
 
 Target: `crates/gcode/src/commands/embeddings_doctor.rs`, `crates/gcode/src/cli.rs`
@@ -141,12 +151,14 @@ probe/transport failure (couldn't reach the embedding endpoint or the daemon doc
   down (agrees=null, exit 0 if self-consistent). test: `crates/gcode/src/commands/embeddings_doctor.rs::tests::doctor_json_and_exit_codes`.
 
 ## P2: Migrate
+
 `kind: framing`
 
 **Goal**: once the daemon epic's migration has populated `ai.embeddings.*` rows, flip gcode's canonical read to prefer the
 new namespace.
 
 ### 2.1 Flip canonical read to prefer `ai.embeddings.*` [category: code]
+
 `kind: deliverable`
 
 Target: `crates/gcore/src/config.rs`
@@ -160,11 +172,13 @@ resolve from the new namespace and the doctor reports agreement.
   `namespace_resolved = "ai.embeddings"`. test: `crates/gcore/src/config.rs::tests::flip_prefers_new_namespace`.
 
 ## P3: Contract
+
 `kind: framing`
 
 **Goal**: the gcode/standalone no-alias cut — the gwiki-multimodal-ai §8.2 routing refactor depends on this.
 
 ### 3.1 Drop old-key fallback; `ai.embeddings.*` only [category: code]
+
 `kind: deliverable`
 
 Target: `crates/gcore/src/config.rs`, `crates/gcode/src/config/context.rs`
@@ -177,6 +191,7 @@ Remove the `embeddings.*` fallback in the resolver and the gcode dim path; `ai.e
   only `ai.embeddings.*` resolves. test: `crates/gcore/src/config.rs::tests::legacy_keys_not_honored`.
 
 ### 3.2 Move gcore.yaml writers; retire env-indirection [category: code]
+
 `kind: deliverable`
 
 Target: `crates/gcore/src/provisioning.rs`, `crates/gcode/src/commands/setup.rs`
@@ -193,6 +208,7 @@ standalone-config round-trip tests.
   redacts it. test: `crates/gcore/src/provisioning.rs::tests::writes_ai_embeddings_standalone_api_key`.
 
 ### 3.3 Tighten the CI allowlist [category: code]
+
 `kind: deliverable`
 
 Target: `crates/gcore/src/config.rs`
@@ -205,6 +221,7 @@ Delete the legacy constants from the allowlist so any remaining `embeddings.` li
   `crates/gcore/src/config.rs::tests::ci_guard_rejects_legacy_namespace`.
 
 ## VS1: Verification
+
 `kind: verification`
 
 The gobby-cli half succeeds when: `ai.embeddings.*` resolves with no env layer and no plaintext api_key (C1); dimension is
