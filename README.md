@@ -21,7 +21,22 @@
 
 ## What's Inside
 
-This workspace contains four Gobby CLI tools plus a shared library:
+This workspace ships four Gobby CLI tools plus a shared library. `gobby-wiki`
+is in the workspace, but it is still unreleased and is not part of the current
+release set.
+
+### Current Release Set
+
+| Crate | Binary | Version | Release tag |
+|---|---|---:|---|
+| `gobby-code` | `gcode` | `0.9.9` | `gcode-v0.9.9` |
+| `gobby-core` | n/a | `0.3.0` | `gobby-core-v0.3.0` |
+| `gobby-hooks` | `ghook` | `0.4.5` | `ghook-v0.4.5` |
+| `gobby-squeeze` | `gsqz` | `0.4.5` | `gsqz-v0.4.5` |
+| `gobby-local` | `gloc` | `0.1.3` | `gloc-v0.1.3` |
+
+`gobby-wiki` / `gwiki` stays at `0.1.0` in-tree and is excluded from this
+release.
 
 ### gcode — Code Search & Navigation
 
@@ -64,6 +79,7 @@ contracts, and optional datastore adapters. It is not a standalone tool.
 - [gsqz User Guide](docs/guides/gsqz-user-guide.md) — pipelines, step types, configuration, debugging
 - [gloc User Guide](docs/guides/gloc-user-guide.md) — backends, clients, model management, configuration
 - [ghook User Guide](docs/guides/ghook-user-guide.md) — hook wiring, diagnose mode, inbox/replay, troubleshooting
+- [Release Guide](docs/guides/release-guide.md) — crate versions, tag order, and local binary installation
 - [Changelog](CHANGELOG.md) — release history
 - [gcode README](crates/gcode/README.md) — architecture and build details
 - [gsqz README](crates/gsqz/README.md) — architecture and build details
