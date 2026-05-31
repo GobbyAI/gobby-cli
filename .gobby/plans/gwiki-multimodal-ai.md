@@ -688,7 +688,7 @@ calls `ai::translate` rather than emitting a transcript-only doc; the result fee
   precedence, not a transcript-only doc. file: `crates/gwiki/src/ingest/audio.rs`. test:
   `crates/gwiki/src/ingest/audio.rs::tests::production_path_applies_translation`.
 
-### 4.3 Add deterministic long-media chunking [category: code] (depends: 4.1, 3.2)
+### 4.3 Add deterministic long-media chunking [category: code] (depends: 4.1, 4.2, 3.2)
 
 `kind: deliverable`
 
@@ -712,6 +712,15 @@ production endpoint) routes audio over the byte cap through `ai::chunk` (which c
 `write_audio_transcript_markdown` (`transcribe.rs:60`); short audio under the cap bypasses chunking and single-shots.
 Without this wiring `ai/chunk.rs` would be dead code and long audio would exceed the upload byte cap.
 
+**Single-owner composition (depends: 4.2 — Round 20 #1)**: §4.2 and §4.3 both edit the same
+`ingest_audio_with_transcription` seam (`crates/gwiki/src/ingest/audio.rs`), so §4.3 is sequenced **after** §4.2 and is
+the **sole owner of the final chunk-then-translate composition**. §4.3 **preserves** the §4.2 translation precedence
+(`ai::translate`) intact and layers chunking **underneath** it: long audio is transcribed via `ai::chunk`'s chunked
+sequential aggregate first, and the resulting segments then flow through the §4.2 `--translate`/`target_lang` precedence
+(`source==target` skip, English one-pass, non-English segment-wise) **unchanged** — so `--translate` on long media uses
+the chunked transcript as the precedence's input rather than a single over-cap upload. §4.3 adds no second translation
+implementation; it only ensures the chunked path and the §4.2 path compose in one place.
+
 **Acceptance:**
 
 - 4.3.1 - Splitting normalizes to 16 kHz mono PCM WAV and keeps each chunk under the byte limit. test:
@@ -723,10 +732,14 @@ Without this wiring `ai/chunk.rs` would be dead code and long audio would exceed
 - 4.3.4 - A mid-run chunk failure yields `ChunkedTranscription { partial: true }` with completed chunks kept and missing
   ranges recorded. test: `crates/gwiki/src/ai/chunk.rs::tests::partial_chunk_outcome`.
 - 4.3.5 - The `chunk` submodule is declared in gwiki's `ai` module. file: `crates/gwiki/src/ai/mod.rs`.
-- 4.3.6 - The production audio ingest path **invokes** `ai::chunk` — `ingest_audio_with_transcription` routes long audio
-  (over the byte cap) through chunked sequential transcription and single-shots short audio, so `--translate`/transcription
-  on long media uses the chunking aggregate rather than a single over-cap upload. file:
-  `crates/gwiki/src/ingest/audio.rs`. test: `crates/gwiki/src/ingest/audio.rs::tests::production_path_chunks_long_audio`.
+- 4.3.6 - The production audio ingest path **invokes** `ai::chunk` and **composes with the §4.2 translation precedence
+  in one owner** — `ingest_audio_with_transcription` routes long audio (over the byte cap) through chunked sequential
+  transcription, single-shots short audio, and feeds the chunked transcript through the **preserved** §4.2
+  `--translate`/`target_lang` precedence (no second translation path), so `--translate` on long media yields a chunked
+  **and** translated transcript rather than a single over-cap upload. file:
+  `crates/gwiki/src/ingest/audio.rs`. test:
+  `crates/gwiki/src/ingest/audio.rs::tests::production_path_chunks_long_audio`. test:
+  `crates/gwiki/src/ingest/audio.rs::tests::long_media_chunks_then_translates`.
 
 ## P5: Image, video, and document extraction
 
@@ -1134,7 +1147,7 @@ Implementation stays in gcode (not migrated into gloc; gcode does not depend on 
   discovery→off can run gcore's discovery) while preserving the existing `gobby-core` features
   (`postgres`/`falkor`/`qdrant`/`search`/`indexing`). file: `crates/gcode/Cargo.toml`.
 
-### 8.3 Add optional LLM-backed gcode outlines [category: code] (depends: 8.1)
+### 8.3 Add optional LLM-backed gcode outlines [category: code] (depends: 8.1, 8.2)
 
 `kind: deliverable`
 
@@ -1147,6 +1160,14 @@ to `gobby_core::ai::generate_text` via the **`text_generate` capability binding*
 unavailable. This mirrors the daemon's own `code_index/summarizer` path, which `gwiki-daemon-web.md` migrates onto
 `text_generate`. No change to deterministic output or UUID5 symbol-ID parity.
 
+**Single-owner `gobby-core` feature line (depends: 8.2 — Round 20 #2)**: §8.2 and §8.3 both edit the **same
+`crates/gcode/Cargo.toml` `gobby-core` dependency feature list**, so §8.3 is sequenced **after** §8.2 and is the **last
+writer** of that line. §8.2 adds `gobby-core/local_backend` (for `embed` discovery); §8.3 then adds `gobby-core/ai`,
+which **transitively pulls `local_backend`**. §8.3 MUST **preserve §8.2's feature set** — the resulting feature list is
+the superset `["postgres", "falkor", "qdrant", "search", "indexing", "local_backend", "ai"]` (explicit `local_backend`
+retained even though `ai` implies it, so neither embeddings discovery nor outline summarization loses its feature) — not
+overwrite or duplicate the line. No other gcode leaf edits this dependency line.
+
 **Acceptance:**
 
 - 8.3.1 - `gcode outline --summarize` returns an LLM outline when text routing is configured. test:
@@ -1156,8 +1177,10 @@ unavailable. This mirrors the daemon's own `code_index/summarizer` path, which `
 - 8.3.3 - The new `--summarize` field on `Command::Outline` is threaded through the `Outline` dispatch arm. file:
   `crates/gcode/src/dispatch.rs`.
 - 8.3.4 - `crates/gcode/Cargo.toml` enables `gobby-core/ai` (which transitively pulls `local_backend`) so
-  `gobby_core::ai::generate_text` compiles into gcode for `outline --summarize`, preserving the existing `gobby-core`
-  features. file: `crates/gcode/Cargo.toml`.
+  `gobby_core::ai::generate_text` compiles into gcode for `outline --summarize`, **preserving §8.2's
+  `gobby-core/local_backend` and the pre-existing `postgres`/`falkor`/`qdrant`/`search`/`indexing` features** — §8.3 is
+  the sole last writer of this dependency line (depends: 8.2), so the final feature list is their superset with no
+  overwrite or duplication (Round 20 #2). file: `crates/gcode/Cargo.toml`.
 
 ### 8.4 Give gwiki shared hub-provisioning parity via `ensure_hub` [category: code] (depends: P5, P6, P7)
 
@@ -1998,6 +2021,37 @@ epic) rather than a hope.
   (new acceptance 1.1.6, 4.2.5, 4.3.6, 8.2.3, 8.3.4 each carry one `covers:` label; 3.1.3 augmented in place), every
   `depends_on` resolves, the leaf DAG is acyclic, and the P8/P9→MVP gate holds.
 
+**Round 21 (stage-native planner — adversary Round 20 blocking fixes)**
+
+- reviewer: stage-native planning adversary (Round 20 findings F1–F2)
+- verdict: incorporated (surgical, serialize-shared-mutation-unit)
+- blockers fixed:
+  - **F1 §4.2/§4.3 parallel edits to `ingest_audio_with_transcription`**: both leaves edit the same audio seam
+    (`crates/gwiki/src/ingest/audio.rs`) and declare `crates/gwiki/src/ai/mod.rs`, but §4.3 depended only on `[4.1, 3.2]`,
+    so expansion could schedule it in parallel with §4.2 and leave no single owner of the final chunk-then-translate
+    behavior. Re-gated §4.3 to `(depends: 4.1, 4.2, 3.2)` (manifest `depends_on` adds `4.2`) and made §4.3 the **sole
+    owner of the composition**: added a "single-owner composition" paragraph stating §4.3 preserves the §4.2 translation
+    precedence intact and layers chunking underneath it (no second translation path), and strengthened acceptance
+    **4.3.6** to require the chunked transcript flow through the preserved §4.2 `--translate`/`target_lang` precedence
+    (new test `long_media_chunks_then_translates`);
+  - **F2 §8.2/§8.3 parallel edits to the `gcode` `gobby-core` feature line**: §8.2 adds `gobby-core/local_backend` and
+    §8.3 adds `gobby-core/ai` to the **same `crates/gcode/Cargo.toml` dependency feature list**, but both depended only on
+    `[8.1]`, so one edit could overwrite/duplicate the other. Re-gated §8.3 to `(depends: 8.1, 8.2)` (manifest
+    `depends_on` adds `8.2`) and made §8.3 the **last writer** of that line: added a "single-owner feature line" paragraph
+    and strengthened acceptance **8.3.4** to require the final list be the superset
+    `["postgres","falkor","qdrant","search","indexing","local_backend","ai"]` (explicit `local_backend` retained even
+    though `ai` implies it) with no overwrite/duplication;
+- whole-plan sweep (finding class = two leaves mutating the same single logical unit — one function's composed behavior
+  or one dependency line — schedulable in parallel): the two flagged pairs were the only genuine cases. `ingest/file.rs`
+  dispatch arms are serialized `1.3→5.4→5.5`; §9.6 adds an **independent additive** `SourceKind::CodeDoc` arm (distinct
+  match arm, P9-gated), not a composed-behavior conflict with the document arms. `video.rs` is serialized
+  `3.1→5.1→5.2→5.3`; `crates/gwiki/Cargo.toml` is partitioned (the `documents` array chained `1.3→5.4→5.5`; `default`/`ai`
+  owned by §3.1, which transitively runs after §1.3). lib.rs / `ai/mod.rs` editors only add **distinct `pub mod` lines**,
+  not shared mutation units. No further edges added (avoids spurious-dependency churn);
+- validation: re-ran `uv run gobby plans validate` (see review notes); manifest stays 1:1 with the 35 deliverables (new
+  test added under existing acceptance 4.3.6; depends_on edits only), every `depends_on` resolves, the leaf DAG is
+  acyclic (4.1→4.2→4.3; 8.1→8.2→8.3), and the P8/P9→MVP gate holds.
+
 ## M1 Task Manifest
 
 `kind: manifest`
@@ -2187,6 +2241,7 @@ epic) rather than a hope.
   task_type: feature
   depends_on:
     - "4.1"
+    - "4.2"
     - "3.2"
   validation_criteria: "cargo test -p gobby-wiki chunks_under_limit_fixed_codec"
   labels:
@@ -2367,6 +2422,7 @@ epic) rather than a hope.
   task_type: feature
   depends_on:
     - "8.1"
+    - "8.2"
   validation_criteria: "cargo test -p gobby-code summarizes_when_configured"
   labels:
     - covers:gwiki-multimodal-ai:8.3:8.3.1
