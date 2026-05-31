@@ -308,24 +308,27 @@ caller's. gwiki and gcode each construct one `AiContext`; neither defines its ow
 
 `kind: deliverable`
 
-Target: `crates/gwiki/src/ingest/file.rs`, `crates/gwiki/src/main.rs`, `crates/gwiki/src/lib.rs`, `crates/gwiki/src/sources.rs`, `crates/gwiki/Cargo.toml`
+Target: `crates/gwiki/src/ingest/file.rs`, `crates/gwiki/src/main.rs`, `crates/gwiki/src/api.rs`, `crates/gwiki/src/commands/mod.rs`, `crates/gwiki/src/commands/index.rs`, `crates/gwiki/src/lib.rs`, `crates/gwiki/src/sources.rs`, `crates/gwiki/Cargo.toml`
 
 Extend `detect_source_kind` (`file.rs:108`) to map audio (`mp3,wav,m4a,flac,ogg,aac,opus`) → `SourceKind::Audio` and
 image (`png,jpg,jpeg,gif,webp,bmp,tiff`) → `SourceKind::Image` (both variants already exist in `sources.rs:15`; video
 already maps). **Also map documents (Round 15)**: `docx,xlsx,xls,ods,pptx` → new `SourceKind::Office`; `html,htm` → new
 `SourceKind::Html`; structured text `csv,json,jsonl,xml,yaml,yml,toml,log` → `SourceKind::Text` (inlined, size-capped —
-> ~256 KB stores as asset); `pdf` already → `SourceKind::Pdf`. `Pdf`/`Office`/`Html` dispatch to the document
-orchestrator (P5 §5.4–5.6) — HTML via the always-linked `scraper`; without the `documents` feature `Pdf`/`Office`
-degrade to store-as-asset. In `ingest_path` (`file.rs:18`), add `scope: &ScopeIdentity` and an `AiContext` and **branch by kind at
+> ~256 KB stores as asset); `pdf` already → `SourceKind::Pdf`. At the P1 baseline these only **classify**: `Office`/`Html`/`Pdf` fall through to the
+generic store-as-asset path here, and the `documents`-feature dispatch into the document path is added later by **§5.4**
+(`Office`/`Html` → `ingest_document`, HTML via the always-linked `scraper`) and **§5.5** (`Pdf` → combined text+vision),
+each degrading to store-as-asset without the `documents` feature. In `ingest_path` (`file.rs:18`), add `scope: &ScopeIdentity` and an `AiContext` and **branch by kind at
 the top of the function, before building the generic `SourceDraft`/calling `SourceManifest::register` (`file.rs:47`)**:
 audio/image/video delegate **entirely** to `ingest_audio_with_transcription` / `ingest_image` / `ingest_video`, each of
 which already does its **own** `SourceManifest::register` and writes its own raw doc — so
-the generic register/asset/markdown path runs **only** for the non-media fallthrough (`Pdf`/`Markdown`/`Text`/`File`).
+the generic register/asset/markdown path runs **only** for the non-media fallthrough
+(`Pdf`/`Office`/`Html`/`Markdown`/`Text`/`File`).
 This avoids double-registration and the wrong-raw-doc bug a register-then-branch ordering would create (Round 8 #3).
 Media orchestrators return via the existing `From<…> for IngestResult` impls (in the audio/video ingest modules) with
 `.into()`. With routing `Off`/unconfigured every modality resolves to its `Unavailable` endpoint (current behavior) —
 assets preserved, no-AI build works. Add flags to **both** `CliCommand::IngestFile` and the library `Command::IngestFile`
-variant (mapped at `main.rs:208`), resolved in the `run_ingest_file` handler: `--no-ai`, `--translate`,
+variant (mapped at `main.rs:208`), threaded through the `commands::run` dispatch (`commands/mod.rs`) and resolved in the
+`execute_ingest_file` handler (`crates/gwiki/src/commands/index.rs`): `--no-ai`, `--translate`,
 `--target-lang <lang>`, `--video-frame-interval <seconds>` (`0` disables frames),
 `--transcription-routing`/`--vision-routing`/`--text-routing`. **`--transcription-routing` governs *both* STT
 capabilities — `audio_transcribe` and `audio_translate` (Round 8 #4)** — since they hit the same whisper/STT server (B1's
@@ -351,12 +354,17 @@ key `gwiki.ingest.video_frame_interval_seconds` (default 5).
 - 1.3.5 - AI/translation/routing flags exist on `CliCommand::IngestFile` and the library `Command::IngestFile`, and
   `--transcription-routing` sets both `audio_transcribe` and `audio_translate` routing (Round 8 #4). file:
   `crates/gwiki/src/main.rs`.
-- 1.3.6 - `detect_source_kind` maps document/structured-text/html extensions and `ingest_path` dispatches `.pdf`/`.docx`/
-  `.html` to the document orchestrator while `.csv`/`.json` inline as size-capped `Text` (Round 15). test:
-  `crates/gwiki/src/ingest/file.rs::tests::detects_and_dispatches_documents`.
+- 1.3.6 - `detect_source_kind` maps document (`pdf,docx,xlsx,xls,ods,pptx`) and html (`html,htm`) extensions to
+  `SourceKind::Pdf`/`Office`/`Html`, and structured text (`csv,json,jsonl,xml,yaml,yml,toml,log`) inlines as size-capped
+  `Text` (> ~256 KB → asset); at the P1 baseline `Office`/`Html`/`Pdf` fall through to store-as-asset (the document-path
+  dispatch is added by §5.4/§5.5). test: `crates/gwiki/src/ingest/file.rs::tests::detects_documents_and_inlines_structured_text`.
 - 1.3.7 - `SourceKind::Office` and `SourceKind::Html` variants exist with `Display`. file: `crates/gwiki/src/sources.rs`.
 - 1.3.8 - The `documents` feature is defined in `crates/gwiki/Cargo.toml` so the document-dispatch `#[cfg(feature =
   "documents")]` branches are valid (the extraction dependencies are added in §5.4–§5.5). file: `crates/gwiki/Cargo.toml`.
+- 1.3.9 - The new ingest flags propagate end-to-end — added to `CliCommand::IngestFile` (`main.rs`), carried on the
+  library `Command::IngestFile` variant (`api.rs`), forwarded through the `commands::run` dispatch arm
+  (`commands/mod.rs`), and consumed by the `execute_ingest_file` handler (`commands/index.rs`) into `ingest_path`. file:
+  `crates/gwiki/src/commands/index.rs`. file: `crates/gwiki/src/api.rs`. file: `crates/gwiki/src/commands/mod.rs`.
 
 ## P2: gcore::ai transport (feature-gated)
 
@@ -492,7 +500,7 @@ omitted otherwise). **Back-compat**: if `/api/voice/transcribe` returns legacy `
 **Goal**: turn resolved routing into production trait clients, fix the daemon vision probe, and add real ffmpeg/ffprobe
 media helpers.
 
-### 3.1 Add gwiki thin trait adapters over the shared gcore router [category: code] (depends: P2)
+### 3.1 Add gwiki thin trait adapters over the shared gcore router [category: code] (depends: 3.3)
 
 `kind: deliverable`
 
@@ -501,7 +509,8 @@ Target: `crates/gwiki/src/ai/clients.rs`, `crates/gwiki/src/ai/mod.rs`, `crates/
 `ProductionTranscriptionClient`/`ProductionVisionClient` implement gwiki's `TranscriptionClient`/`VisionClient` by
 delegating to the `gobby_core::ai` clients selected by the **shared gcore effective router**
 (`gobby_core::ai::effective_route`, which collapses the config-only `ai_context::route` `Auto` via the probe — §1.2,
-Round 6 #1) — gwiki holds **no routing logic of its own**. `Auto` resolves daemon (capability probe present, 750 ms) →
+Round 6 #1; `effective_route` and the capability probe are **built in §3.3, on which this task depends** — the adapters
+only **consume** them) — gwiki holds **no routing logic of its own**. `Auto` resolves daemon (capability probe present, 750 ms) →
 direct (endpoint configured) → off; `daemon`/`direct`/`off` force it; `direct` covers cloud or local (api_base only);
 `daemon` forwards `provider`/`model`/`project_id`. **Numeric timestamps (Round 5 #2 / Round 6 #2)**: change gwiki's
 `TranscriptSegment` (`transcribe.rs:8`) to **integer-millisecond** `start_ms`/`end_ms` (`u64`, + `text`) — preserving the
@@ -515,9 +524,9 @@ in the model. `align_transcript_and_frames` (`video.rs:81`) currently parses `se
 - 3.1.1 - Production clients implement the gwiki traits over the gcore effective router; `TranscriptSegment` holds
   integer-ms `start_ms`/`end_ms` (`Eq` preserved), formatted to strings only in Markdown. file:
   `crates/gwiki/src/ai/clients.rs`.
-- 3.1.2 - The shared gcore effective router (`gobby_core::ai::effective_route`) resolves `Auto` daemon→direct→off per
-  capability against the probe — one router, used by both gwiki and gcode. test:
-  `crates/gcore/src/ai/mod.rs::tests::effective_route_auto_falls_through_per_capability`.
+- 3.1.2 - The production clients **consume** `gobby_core::ai::effective_route` per capability to pick their transport
+  (no gwiki-side routing logic), honoring `daemon`/`direct`/`off` and the `Auto` daemon→direct→off collapse the shared
+  router decides. test: `crates/gwiki/src/ai/clients.rs::tests::clients_consume_effective_route`.
 - 3.1.3 - `align_transcript_and_frames` aligns on numeric `start_ms` (no string-timestamp parsing) and still produces the
   transcript-only and frame-aligned groupings. test: `crates/gwiki/src/video.rs::tests::aligns_on_numeric_start_ms`.
 - 3.1.4 - The new gwiki `ai` module is declared in the crate root (`mod ai;`) with `clients` declared in its `ai/mod.rs`,
@@ -545,7 +554,7 @@ is written to `raw/assets/` first and never tied to a temp lifetime.
   `crates/gwiki/src/media.rs::tests::temp_files_cleaned_asset_survives`.
 - 3.2.3 - The new `media` module is declared in the gwiki crate root. file: `crates/gwiki/src/lib.rs`.
 
-### 3.3 Repoint the daemon vision capability probe to a GET status route [category: code] (depends: 3.1)
+### 3.3 Build the shared capability probe and probe-backed effective router [category: code] (depends: 2.4)
 
 `kind: deliverable`
 
@@ -553,7 +562,10 @@ Target: `crates/gcore/src/ai/probe.rs`, `crates/gcore/src/ai/mod.rs`, `crates/gw
 
 The capability probe **moves into `gobby_core::ai` (shared by gwiki and gcode, Round 5 #5)**; gwiki's existing GET-only
 probe (`daemon.rs:86`) and the stale `VISION` contract (`daemon.rs:125`, which probes upload-only
-`POST /api/chat/attachments`) fold into it. Probe targets: `vision_extract` → new **GET `/api/llm/vision/status`**
+`POST /api/chat/attachments`) fold into it. This task also builds the **probe-backed effective router**
+`gobby_core::ai::effective_route(&AiContext, capability) -> AiRouting` (`crates/gcore/src/ai/mod.rs`) that collapses the
+config-only `ai_context::route` `Auto` (§1.2) to daemon/direct/off using this probe — the single router both gwiki (§3.1)
+and gcode consume. Probe targets: `vision_extract` → new **GET `/api/llm/vision/status`**
 (extraction is `POST /api/llm/vision/extract`, P6); `audio_transcribe`/`audio_translate` → `GET /api/voice/status`;
 `text_generate` → `GET /api/llm/status`. **The probe asserts capability-level truth, not bare HTTP 200 (Round 8 #5)**:
 because `audio_transcribe` and `audio_translate` share `GET /api/voice/status`, a 200 there does **not** prove translate
@@ -580,6 +592,9 @@ exists that capability degrades; `/api/chat/attachments` is never a description/
 - 3.3.4 - Availability is decided by the GET status route, not `/api/providers/models` — the latter is read only for
   provider/model discovery (Round 9 #4). test: `crates/gcore/src/ai/probe.rs::tests::status_route_is_availability_truth`.
 - 3.3.5 - The `probe` submodule is declared in `gobby_core::ai`. file: `crates/gcore/src/ai/mod.rs`.
+- 3.3.6 - The probe-backed `gobby_core::ai::effective_route` collapses `Auto`→daemon→direct→off per capability against
+  the probe — one router consumed by both gwiki (§3.1) and gcode. test:
+  `crates/gcore/src/ai/mod.rs::tests::effective_route_auto_falls_through_per_capability`.
 
 ## P4: Audio transcription, translation & chunking
 
@@ -739,11 +754,13 @@ metadata always records `file_size_bytes` and (when ffprobe succeeds) `duration_
 
 `kind: deliverable`
 
-Target: `crates/gwiki/src/ingest/document.rs`, `crates/gwiki/src/ingest/mod.rs`, `crates/gwiki/Cargo.toml`
+Target: `crates/gwiki/src/ingest/document.rs`, `crates/gwiki/src/ingest/file.rs`, `crates/gwiki/src/ingest/mod.rs`, `crates/gwiki/Cargo.toml`
 
 Add a document orchestrator mirroring the audio/image pattern (`ingest_document` + a `DocumentEndpoint`
 Available/Unavailable + `From<DocumentIngestResult> for IngestResult`), behind the default-on `documents` feature
-(Round 15). Office text: `calamine` (xlsx/xls/ods → bounded Markdown tables), `zip`+`quick-xml` over `word/document.xml`
+(Round 15). **Wire the dispatch in `ingest_path` (`crates/gwiki/src/ingest/file.rs`)**: under `#[cfg(feature = "documents")]`,
+`SourceKind::Office`/`Html` route to `ingest_document` (which does its own `SourceManifest::register`); without the
+feature they fall through to store-as-asset. (The `Pdf` dispatch arm is added by §5.5.) Office text: `calamine` (xlsx/xls/ods → bounded Markdown tables), `zip`+`quick-xml` over `word/document.xml`
 (docx paragraph/run text) and `ppt/slides/slideN.xml` (pptx per-slide text); HTML → readable Markdown via the existing
 `scraper`; structured text is inlined as `Text` by §1.3. Parse failure preserves the raw asset and writes a
 `media_degradation` doc. Embedded office images are a tracked follow-up (text-only here).
@@ -756,12 +773,15 @@ Available/Unavailable + `From<DocumentIngestResult> for IngestResult`), behind t
 - 5.4.2 - The `document` submodule is declared in `crates/gwiki/src/ingest/mod.rs`, and the default-on `documents`
   feature carries the Office extraction dependencies (`calamine`, `zip`, `quick-xml`) in `Cargo.toml`. file:
   `crates/gwiki/src/ingest/mod.rs`. file: `crates/gwiki/Cargo.toml`.
+- 5.4.3 - `ingest_path` routes `.docx`/`.xlsx`/`.pptx`/`.html` to `ingest_document` under the `documents` feature and
+  degrades to store-as-asset when the feature is off. test:
+  `crates/gwiki/src/ingest/file.rs::tests::dispatches_office_html_to_document`.
 
 ### 5.5 PDF — text layer combined with vision [category: code] (depends: 5.4, 3.1, 3.2)
 
 `kind: deliverable`
 
-Target: `crates/gwiki/src/ingest/pdf.rs`, `crates/gwiki/Cargo.toml`
+Target: `crates/gwiki/src/ingest/pdf.rs`, `crates/gwiki/src/ingest/file.rs`, `crates/gwiki/Cargo.toml`
 
 Per page, **combine** (not fall back): extract the text layer with `pdf-extract`; rasterize the page with `pdfium-render`
 (statically bundled pdfium — no external runtime binary) at a configured DPI; run the page image through `vision_extract`
@@ -770,6 +790,9 @@ OCR of image-only regions + visual descriptions, dedup'ing overlap; an optional 
 text routing is configured. Scanned PDFs (empty text layer) collapse to vision-only. Pages run **sequentially, bounded by
 the shared limiter** (B1). Frontmatter records `page_count`, `has_text_layer`, `vision_used`, `model`. Degradation: no
 `ai` → text-layer-only; empty text layer + no vision → store-as-asset + degradation; `documents` off → store-as-asset.
+**Wire the dispatch in `ingest_path` (`crates/gwiki/src/ingest/file.rs`)**: under `#[cfg(feature = "documents")]`, `SourceKind::Pdf`
+routes to this combined path; without the feature it falls through to store-as-asset (extending the §5.4
+document-dispatch arm).
 
 **Acceptance:**
 
@@ -778,6 +801,9 @@ the shared limiter** (B1). Frontmatter records `page_count`, `has_text_layer`, `
   `crates/gwiki/src/ingest/pdf.rs::tests::combines_text_layer_and_vision`.
 - 5.5.2 - The default-on `documents` feature carries the PDF dependencies (`pdf-extract`, `pdfium-render` with statically
   bundled pdfium) in `Cargo.toml`. file: `crates/gwiki/Cargo.toml`.
+- 5.5.3 - `ingest_path` routes `.pdf` to the combined text-layer+vision path under the `documents` feature, degrading to
+  text-layer-only or store-as-asset when vision/the feature is unavailable. test:
+  `crates/gwiki/src/ingest/file.rs::tests::dispatches_pdf_to_combined_path`.
 
 ### 5.6 Document degradation matrix and metadata [category: code] (depends: 5.4, 5.5)
 
@@ -1077,7 +1103,7 @@ unavailable. This mirrors the daemon's own `code_index/summarizer` path, which `
 
 `kind: deliverable`
 
-Target: `crates/gcore/src/provisioning.rs`, `crates/gwiki/src/commands/setup.rs`, `crates/gwiki/src/main.rs`, `crates/gcode/src/commands/setup.rs`, `crates/gcore/tests/public_boundary.rs`
+Target: `crates/gcore/src/provisioning.rs`, `crates/gwiki/src/commands/setup.rs`, `crates/gwiki/src/api.rs`, `crates/gwiki/src/commands/mod.rs`, `crates/gwiki/src/main.rs`, `crates/gcode/src/commands/setup.rs`, `crates/gcore/tests/public_boundary.rs`
 
 Today the resolve-or-provision + `gcore.yaml`-merge orchestration lives only in gcode (`commands/setup.rs:162`
 `resolve_or_provision_database` + `write_gcore_config`); `gwiki setup` (`commands/setup.rs`) only runs DDL when
@@ -1089,9 +1115,12 @@ calls `ensure_hub`, runs the existing `gwiki_*` DDL (`crates/gwiki/src/setup.rs`
 `gcore.yaml` via `StandaloneConfig` (preserving gcode/embedding keys). Refactor gcode's `resolve_or_provision_database`
 to call `ensure_hub`, keeping gcode-specific DSN sources (`GCODE_DATABASE_URL`, daemon broker) as higher-priority
 overrides. gwiki and gcode write only their **own** namespaced subset tables; neither touches the other's or daemon-owned
-objects. **Boundary**: `provisioning` is always-compiled (`lib.rs:12`) but Postgres reachability needs the `postgres`
-feature, so `ensure_hub`'s reachability/identity probe is `#[cfg(feature = "postgres")]`-gated (callers without it get the
-resolve-from-config path only); update `crates/gcore/tests/public_boundary.rs` if the module surface changes.
+objects. **Boundary**: the `provisioning` module **already exists and is already declared `pub mod provisioning;` at
+`crates/gcore/src/lib.rs:12`** (always-compiled), so `ensure_hub` is a **new public *function* added to that existing
+module** — not a new module — and needs **no `lib.rs` edit or new module declaration**. Postgres reachability needs the
+`postgres` feature, so `ensure_hub`'s reachability/identity probe is `#[cfg(feature = "postgres")]`-gated (callers without
+it get the resolve-from-config path only); update `crates/gcore/tests/public_boundary.rs` if the module's public surface
+changes.
 
 **Acceptance:**
 
@@ -1104,6 +1133,9 @@ resolve-from-config path only); update `crates/gcore/tests/public_boundary.rs` i
   `crates/gwiki/src/commands/setup.rs::tests::standalone_provisions_and_merges_config`.
 - 8.4.3 - With a gcode-provisioned hub present, `gwiki setup` reuses the DSN (no new provisioning) and the two subsets
   coexist. test: `crates/gwiki/src/commands/setup.rs::tests::reuses_existing_gcode_hub`.
+- 8.4.4 - `gwiki setup --standalone` (+ service/embedding flags) propagate from `CliCommand::Setup` (`main.rs`) through
+  the library `Command::Setup` variant (`api.rs`) and the `commands::run` dispatch arm (`commands/mod.rs`) into the
+  `commands/setup.rs` handler. file: `crates/gwiki/src/api.rs`. file: `crates/gwiki/src/commands/mod.rs`.
 
 ### 8.5 Enforce the single-hub invariant across install orders [category: code] (depends: 8.4)
 
@@ -1809,6 +1841,51 @@ epic) rather than a hope.
   stays 1:1 with the 35 deliverables (91 → 108 acceptance items, each carrying one `covers:` label), every `depends_on`
   resolves, the leaf DAG is acyclic, and the P8/P9→MVP gate holds.
 
+**Round 19 (stage-native planner — adversary Round 18 blocking fixes)**
+
+- reviewer: stage-native planning adversary (Round 18 findings F1, F2, F3, F4)
+- verdict: incorporated (surgical); F4 resolved as a codebase contradiction
+- blockers fixed:
+  - **F1 §3.1/§3.3 router-before-consumer ordering**: §3.1 (gwiki adapters) required `gobby_core::ai::effective_route`
+    plus the capability probe, but those gcore surfaces are built in §3.3, which depended back on §3.1 — an impossible
+    cycle, and §3.1 could not satisfy its own gcore acceptance from a gwiki-only target set. Reordered: §3.3 is now
+    `(depends: 2.4)` and builds the probe **and** `effective_route`; §3.1 is now `(depends: 3.3)` and only **consumes**
+    the shared router. Moved the gcore `effective_route` acceptance out of §3.1 (was 3.1.2, a `crates/gcore/...` test)
+    into §3.3 as **3.3.6** (same test `effective_route_auto_falls_through_per_capability`), and re-scoped **3.1.2** in
+    place to a gwiki consumption test (`crates/gwiki/src/ai/clients.rs::tests::clients_consume_effective_route`).
+    Manifest `depends_on` updated 3.1→`["3.3"]`, 3.3→`["2.4"]` (both DAG-acyclic, MVP gate intact);
+  - **F2 §1.3/§5.4 document dispatch before the orchestrator exists**: §1.3's 1.3.6 claimed `ingest_path` dispatches
+    `.pdf`/`.docx`/`.html` to `ingest_document`, but that orchestrator is created later by §5.4 (which depends on §1.3).
+    Rewrote 1.3.6 so §1.3 only **classifies** (detection + `SourceKind::Office`/`Html`/`Pdf` + size-capped `Text`
+    inline) and leaves Office/Html/Pdf in the generic store-as-asset fallthrough at the P1 baseline. Moved the
+    document-dispatch arm to the sections that own each handler: **§5.4** adds the `Office`/`Html` → `ingest_document`
+    arm (new target `ingest/file.rs`, acceptance 5.4.3) and **§5.5** adds the `Pdf` → combined-path arm (new target
+    `ingest/file.rs`, acceptance 5.5.3) — no forward references;
+  - **F3 gwiki command-wiring targets (§1.3, §8.4)**: the live ingest/setup flag chain runs `CliCommand` (`main.rs`) →
+    `Command` (`api.rs`) → `commands::run` dispatch (`commands/mod.rs`) → handler. §1.3 added `api.rs`,
+    `commands/mod.rs`, `commands/index.rs` to its `Target` + acceptance **1.3.9** (and corrected the stale handler name
+    `run_ingest_file` → `execute_ingest_file`, the real `commands/index.rs` symbol); §8.4 added `api.rs`,
+    `commands/mod.rs` + acceptance **8.4.4** for `setup --standalone` option propagation;
+  - **F4 §8.4 `provisioning` `lib.rs` target — contradicts the codebase, so not applied as suggested**: the finding
+    assumes `ensure_hub` is a *new module* and that no `provisioning` module exists (`"only pub mod setup; exists"`).
+    The live repo shows `crates/gcore/src/lib.rs:12` **already** declares `pub mod provisioning;` (always-compiled), and
+    §8.4 already cited `lib.rs:12`. `ensure_hub` is a new public **function** in that pre-existing module, so **no
+    `lib.rs` edit is required** and adding `lib.rs` as a change target would be a spurious no-op target. Resolved the
+    underlying compile/visibility concern in-text instead: §8.4's Boundary note now states explicitly that the module
+    pre-exists and `ensure_hub` adds no new module declaration;
+- whole-plan target-coverage sweep (F3/F4 class): re-checked every deliverable that adds a CLI flag/command or a new
+  module against its live parent-wiring file. Only §1.3 and §8.4 had gwiki command-wiring gaps (now fixed); all gcode
+  command additions were already wired in the prior round (§8.3 `Command::Outline` + `dispatch.rs`; §9.1
+  `Command::Codewiki` + `commands/mod.rs` + `dispatch.rs`); every new module already declares its parent
+  (`lib.rs`/`ingest/mod.rs`/`ai/mod.rs`); and §8.4's `provisioning` is the only "new" module that is in fact
+  pre-existing — no other spurious or missing module target found;
+- whole-plan bad-sequencing sweep (F1/F2 class): the only consume-before-exists edges were §3.1→§3.3 (fixed) and
+  §1.3→§5.4 (fixed). §1.3's audio/image/video dispatch targets the pre-existing skeleton orchestrators
+  (`ingest_audio_with_transcription`/`ingest_image`/`ingest_video`), which already exist, so it stays valid;
+- validation: `uv run gobby plans validate` passes (9 phases, 35 deliverables, consumer sweep passed); manifest stays
+  1:1 with the 35 deliverables (new acceptance 1.3.9, 3.3.6, 5.4.3, 5.5.3, 8.4.4 each carry one `covers:` label; 3.1.2
+  re-scoped in place), every `depends_on` resolves, the leaf DAG is acyclic, and the P8/P9→MVP gate holds.
+
 ## M1 Task Manifest
 
 `kind: manifest`
@@ -1859,6 +1936,7 @@ epic) rather than a hope.
     - covers:gwiki-multimodal-ai:1.3:1.3.6
     - covers:gwiki-multimodal-ai:1.3:1.3.7
     - covers:gwiki-multimodal-ai:1.3:1.3.8
+    - covers:gwiki-multimodal-ai:1.3:1.3.9
   implementation_domain: backend
   tdd: true
   source_section: "1.3"
@@ -1924,8 +2002,8 @@ epic) rather than a hope.
   category: code
   task_type: feature
   depends_on:
-    - "2.4"
-  validation_criteria: "cargo test -p gobby-core effective_route_auto_falls_through_per_capability"
+    - "3.3"
+  validation_criteria: "cargo test -p gobby-wiki clients_consume_effective_route"
   labels:
     - covers:gwiki-multimodal-ai:3.1:3.1.1
     - covers:gwiki-multimodal-ai:3.1:3.1.2
@@ -1947,11 +2025,11 @@ epic) rather than a hope.
   implementation_domain: backend
   tdd: true
   source_section: "3.2"
-- title: "Repoint the daemon vision capability probe to a GET status route"
+- title: "Build the shared capability probe and probe-backed effective router"
   category: code
   task_type: feature
   depends_on:
-    - "3.1"
+    - "2.4"
   validation_criteria: "cargo test -p gobby-core capability_status_routes"
   labels:
     - covers:gwiki-multimodal-ai:3.3:3.3.1
@@ -1959,6 +2037,7 @@ epic) rather than a hope.
     - covers:gwiki-multimodal-ai:3.3:3.3.3
     - covers:gwiki-multimodal-ai:3.3:3.3.4
     - covers:gwiki-multimodal-ai:3.3:3.3.5
+    - covers:gwiki-multimodal-ai:3.3:3.3.6
   implementation_domain: backend
   tdd: true
   source_section: "3.3"
@@ -2052,6 +2131,7 @@ epic) rather than a hope.
   labels:
     - covers:gwiki-multimodal-ai:5.4:5.4.1
     - covers:gwiki-multimodal-ai:5.4:5.4.2
+    - covers:gwiki-multimodal-ai:5.4:5.4.3
   implementation_domain: backend
   tdd: true
   source_section: "5.4"
@@ -2066,6 +2146,7 @@ epic) rather than a hope.
   labels:
     - covers:gwiki-multimodal-ai:5.5:5.5.1
     - covers:gwiki-multimodal-ai:5.5:5.5.2
+    - covers:gwiki-multimodal-ai:5.5:5.5.3
   implementation_domain: backend
   tdd: true
   source_section: "5.5"
@@ -2192,6 +2273,7 @@ epic) rather than a hope.
     - covers:gwiki-multimodal-ai:8.4:8.4.1
     - covers:gwiki-multimodal-ai:8.4:8.4.2
     - covers:gwiki-multimodal-ai:8.4:8.4.3
+    - covers:gwiki-multimodal-ai:8.4:8.4.4
   implementation_domain: backend
   tdd: true
   source_section: "8.4"
