@@ -1456,7 +1456,7 @@ source files changed (file → owning module → repo overview), recording a `_m
 
 `kind: deliverable`
 
-Target: `crates/gwiki/src/indexer.rs`, `crates/gwiki/src/store.rs`
+Target: `crates/gwiki/src/indexer.rs`, `crates/gwiki/src/store.rs`, `crates/gwiki/src/support/text.rs`
 
 **Deterministic runnable workflow (Round 22 #4 — vault-native index walk, not `ingest_path`)**: the generated code-doc
 **tree** is ingested through gwiki's **existing vault index walk** — `index_vault` (`crates/gwiki/src/indexer.rs:68`,
@@ -1470,13 +1470,21 @@ it owns the AST/graph and the output-tree layout), and a subsequent `gwiki index
 vault document. **No gwiki→gcode crate dependency** (gwiki reads `.md` only).
 
 gwiki's only change is **recognition/classification** inside the existing walk: add a `WikiDocumentKind::CodeDoc` variant
-(`crates/gwiki/src/store.rs`, alongside `SourceNote`/`Concept`/`Topic`, plus its `document_kind_name` `"code_doc"` arm)
-and a `document_kind`/`is_indexable_vault_path` path-prefix rule for the `["wiki", "code", ..]` subtree
+(`crates/gwiki/src/store.rs`, alongside `SourceNote`/`Concept`/`Topic`) and a
+`document_kind`/`is_indexable_vault_path` path-prefix rule for the `["wiki", "code", ..]` subtree
 (`crates/gwiki/src/indexer.rs`), so generated docs are deterministically distinguished from hand-authored vault Markdown
 **by their `wiki/code/` location** (and carry the `source_files` frontmatter marker, preserved in `WikiFrontmatter` for
 staleness/reverse-lookup). **Idempotency and incremental re-index come for free** from `index_vault`'s existing SHA-256
 hash diff (`discover_indexable_hashes`/`IndexEvent`): re-running `gcode codewiki` rewrites only changed docs (§9.5), and
 the next `gwiki index` re-indexes only those — no new recursion, multi-result, or command/API surface is added.
+
+**Exhaustive-match consumer sweep (Round 23 #1)**: `WikiDocumentKind` is matched exhaustively in **two** places — the
+store-side `document_kind_name` (`crates/gwiki/src/store.rs:755`) **and** the support/search-side `document_kind_name`
+(`crates/gwiki/src/support/text.rs:49`, consumed by `crates/gwiki/src/support/search.rs:105,148`). Both must gain the
+`WikiDocumentKind::CodeDoc => "code_doc"` arm or the search/support path fails to compile (non-exhaustive match).
+`document_kind` in `indexer.rs:226` builds `Option<WikiDocumentKind>` from the path prefix and is **not** an exhaustive
+variant match, so it needs only the additive `["wiki", "code", ..]` rule (9.6.4); there is no reverse string→kind /
+`FromStr` mapping for the enum to update.
 
 **Acceptance:**
 
@@ -1486,10 +1494,13 @@ the next `gwiki index` re-indexes only those — no new recursion, multi-result,
 - 9.6.2 - `index_vault` walks the whole `wiki/code/` tree and re-indexes only changed docs on a second run (idempotent /
   incremental via the existing hash diff), without using `ingest_path`. test:
   `crates/gwiki/src/indexer.rs::tests::codedoc_tree_indexes_idempotently`.
-- 9.6.3 - `WikiDocumentKind::CodeDoc` exists with its `document_kind_name` mapping and `crate_has_no_gcode_dependency`
-  still passes (no crate link). file: `crates/gwiki/src/store.rs`.
+- 9.6.3 - `WikiDocumentKind::CodeDoc` exists with its store-side `document_kind_name` `"code_doc"` mapping and
+  `crate_has_no_gcode_dependency` still passes (no crate link). file: `crates/gwiki/src/store.rs`.
 - 9.6.4 - `document_kind`/`is_indexable_vault_path` classify `wiki/code/**.md` as `CodeDoc` so the generated subtree is
   recognized and indexable. file: `crates/gwiki/src/indexer.rs`.
+- 9.6.5 - The support/search-side `document_kind_name` also maps `WikiDocumentKind::CodeDoc => "code_doc"` so the
+  exhaustive match consumed by `support/search.rs` still compiles and search results surface `code_doc` as the
+  source-kind. file: `crates/gwiki/src/support/text.rs`.
 
 ### 9.7 codewiki CI and documentation [category: config] (depends: 9.3, 9.5, 9.6)
 
@@ -2261,6 +2272,30 @@ epic) rather than a hope.
   `covers:` label; manifest stays 1:1 (126 acceptance ↔ 126 covers, no orphans/dups); every `depends_on` resolves; leaf
   DAG acyclic; P8/P9→MVP gate holds.
 
+**Round 24 (stage-native planner — adversary Round 23 blocking fix)**
+
+- reviewer: stage-native planning adversary (Round 23 finding F1)
+- verdict: incorporated (surgical)
+- blocker fixed:
+  - **F1 §9.6 `WikiDocumentKind::CodeDoc` kind-mapping target coverage**: §9.6 adds the `CodeDoc` variant but `WikiDocumentKind`
+    is matched **exhaustively in two places** — the store-side `document_kind_name` (`crates/gwiki/src/store.rs:755`, covered
+    by 9.6.3) **and** the support/search-side `document_kind_name` (`crates/gwiki/src/support/text.rs:49`, consumed by
+    `crates/gwiki/src/support/search.rs:105,148`). The second match was outside §9.6's Target, so an expanded leaf could add
+    the variant and leave the search/support path non-exhaustive (uncompilable). Added `crates/gwiki/src/support/text.rs` to
+    §9.6's Target, a body **exhaustive-match consumer sweep** note enumerating both match sites, and new acceptance **9.6.5**
+    requiring the `WikiDocumentKind::CodeDoc => "code_doc"` arm in the support/search path. Manifest §9.6 entry gains
+    `covers:…:9.6:9.6.5`. Removed the now-redundant store-side `document_kind_name` aside from the body's variant sentence
+    (the two mappings are owned by 9.6.3 and the new 9.6.5);
+- whole-plan sweep per finding class (new enum variant added to a pre-existing enum with multiple exhaustive match sites /
+  duplicated mapping helpers): the only other new variants are §1.3's `SourceKind::Office`/`Html`, but `SourceKind` has a
+  **single** exhaustive match site — the `Display` impl (`crates/gwiki/src/sources.rs:34`), already covered by 1.3.7 — while
+  its other two match sites (`collect.rs:339`, `ingest/file.rs:172`) carry `_ =>` catch-alls and do not break on a new
+  variant; there is no reverse string→kind/`FromStr` mapping for either enum to update. §9.6 was the only gap;
+- validation: `uv run gobby plans validate` (and `--include-tests`) and daemon `validate_plan` both pass (9 phases, 35
+  deliverables, contract_plan=true, consumer sweep passed). One acceptance item added (9.6.5) carrying one `covers:` label;
+  manifest stays 1:1 (127 acceptance ↔ 127 covers, no orphans/dups); every `depends_on` resolves; leaf DAG acyclic;
+  P8/P9→MVP gate holds.
+
 ## M1 Task Manifest
 
 `kind: manifest`
@@ -2752,6 +2787,7 @@ epic) rather than a hope.
     - covers:gwiki-multimodal-ai:9.6:9.6.2
     - covers:gwiki-multimodal-ai:9.6:9.6.3
     - covers:gwiki-multimodal-ai:9.6:9.6.4
+    - covers:gwiki-multimodal-ai:9.6:9.6.5
   implementation_domain: backend
   tdd: true
   source_section: "9.6"
