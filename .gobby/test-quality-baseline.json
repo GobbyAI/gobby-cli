@@ -1,0 +1,41 @@
+{
+  "issues": [
+    {
+      "fingerprint": "crates/gcode/src/schema.rs::validates_runtime_schema_when_postgres_test_dsn_is_set::NO_ASSERTION",
+      "issue_code": "NO_ASSERTION",
+      "line": 94,
+      "message": "test has no assertion or assertion-like outcome check",
+      "path": "crates/gcode/src/schema.rs",
+      "severity": "high",
+      "test_name": "validates_runtime_schema_when_postgres_test_dsn_is_set"
+    },
+    {
+      "fingerprint": "crates/gcore/src/postgres.rs::validate_schema_accepts_postgres_client_validators::NO_ASSERTION",
+      "issue_code": "NO_ASSERTION",
+      "line": 203,
+      "message": "test has no assertion or assertion-like outcome check",
+      "path": "crates/gcore/src/postgres.rs",
+      "severity": "high",
+      "test_name": "validate_schema_accepts_postgres_client_validators"
+    },
+    {
+      "fingerprint": "crates/ghook/src/diagnose.rs::diagnose_output_for_unknown_cli_validates::NO_ASSERTION",
+      "issue_code": "NO_ASSERTION",
+      "line": 181,
+      "message": "test has no assertion or assertion-like outcome check",
+      "path": "crates/ghook/src/diagnose.rs",
+      "severity": "high",
+      "test_name": "diagnose_output_for_unknown_cli_validates"
+    },
+    {
+      "fingerprint": "crates/ghook/src/diagnose.rs::diagnose_output_validates_against_v2_schema::NO_ASSERTION",
+      "issue_code": "NO_ASSERTION",
+      "line": 173,
+      "message": "test has no assertion or assertion-like outcome check",
+      "path": "crates/ghook/src/diagnose.rs",
+      "severity": "high",
+      "test_name": "diagnose_output_validates_against_v2_schema"
+    }
+  ],
+  "schema_version": 1
+}
