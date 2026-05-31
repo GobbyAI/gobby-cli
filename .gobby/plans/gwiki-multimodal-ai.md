@@ -263,7 +263,7 @@ Add always-compiled, `reqwest`-free config to `gobby_core::config`, modeled on `
 
 `kind: deliverable`
 
-Target: `crates/gcore/src/ai_context.rs`, `crates/gcore/src/config.rs`
+Target: `crates/gcore/src/ai_context.rs`, `crates/gcore/src/config.rs`, `crates/gcore/src/lib.rs`
 
 Centralize AI context **in gcore** so gwiki and gcode share one stack (Round 5 #5/#1). Add an always-compiled
 `gobby_core::ai_context` with a **shared AI `ConfigSource`** resolving in both modes **with no env-var layer (Round 11)**:
@@ -301,12 +301,14 @@ caller's. gwiki and gcode each construct one `AiContext`; neither defines its ow
 - 1.2.5 - `route(capability)` returns the config-only desired routing (forced `daemon`/`direct`/`off` honored, else
   `Auto`); forced modes and `--no-ai` override all per-capability config. test:
   `crates/gcore/src/ai_context.rs::tests::forced_routing_and_no_ai_override`.
+- 1.2.6 - The new `ai_context` module is declared in the gcore crate root (always-compiled, no feature gate). file:
+  `crates/gcore/src/lib.rs`.
 
 ### 1.3 Dispatch ingest-file to orchestrators and add CLI flags [category: code] (depends: 1.2)
 
 `kind: deliverable`
 
-Target: `crates/gwiki/src/ingest/file.rs`, `crates/gwiki/src/main.rs`, `crates/gwiki/src/lib.rs`, `crates/gwiki/src/sources.rs`
+Target: `crates/gwiki/src/ingest/file.rs`, `crates/gwiki/src/main.rs`, `crates/gwiki/src/lib.rs`, `crates/gwiki/src/sources.rs`, `crates/gwiki/Cargo.toml`
 
 Extend `detect_source_kind` (`file.rs:108`) to map audio (`mp3,wav,m4a,flac,ogg,aac,opus`) → `SourceKind::Audio` and
 image (`png,jpg,jpeg,gif,webp,bmp,tiff`) → `SourceKind::Image` (both variants already exist in `sources.rs:15`; video
@@ -353,6 +355,8 @@ key `gwiki.ingest.video_frame_interval_seconds` (default 5).
   `.html` to the document orchestrator while `.csv`/`.json` inline as size-capped `Text` (Round 15). test:
   `crates/gwiki/src/ingest/file.rs::tests::detects_and_dispatches_documents`.
 - 1.3.7 - `SourceKind::Office` and `SourceKind::Html` variants exist with `Display`. file: `crates/gwiki/src/sources.rs`.
+- 1.3.8 - The `documents` feature is defined in `crates/gwiki/Cargo.toml` so the document-dispatch `#[cfg(feature =
+  "documents")]` branches are valid (the extraction dependencies are added in §5.4–§5.5). file: `crates/gwiki/Cargo.toml`.
 
 ## P2: gcore::ai transport (feature-gated)
 
@@ -369,7 +373,7 @@ Target: `crates/gcore/Cargo.toml`, `crates/gcore/src/lib.rs`, `crates/gcore/src/
 
 Add features `local_backend = ["dep:ureq"]` and `ai = ["dep:reqwest", "reqwest/multipart", "local_backend"]` (base
 `reqwest` and `ureq` are both optional; base `reqwest` also lacks `multipart`), plus `#[cfg(feature = "ai")] pub mod ai;`
-(and the `local_backend`-gated probing of §8.1). `ai` pulls `local_backend` so endpoint auto-discovery is available
+and the always-compiled `pub mod ai_types;` declaration (and the `local_backend`-gated probing of §8.1). `ai` pulls `local_backend` so endpoint auto-discovery is available
 whenever transport is. **Adding the features changes the locked public boundary** — update
 `crates/gcore/tests/public_boundary.rs` (which pins the exact manifest incl. the `full`/feature lines) in the same
 change. **The result/error *types* are defined in the always-compiled `gobby_core::ai_types` (Round 8 #1 / Round 9 #2),
@@ -412,7 +416,7 @@ is the first line of defense against tripping cloud rate limits.
 
 `kind: deliverable`
 
-Target: `crates/gcore/src/ai/transcription.rs`
+Target: `crates/gcore/src/ai/transcription.rs`, `crates/gcore/src/ai/mod.rs`
 
 `transcribe(cfg, bytes, file_name, mime, task, language)`: multipart POST to `/v1/audio/transcriptions` (verbatim) or
 `/v1/audio/translations` (whisper→English), `response_format=verbose_json`, an optional `language` form field when the
@@ -426,12 +430,13 @@ detected `language`. Bearer auth like `search/semantic.rs:190`.
   `crates/gcore/src/ai/transcription.rs::tests::builds_multipart_and_parses_segments`.
 - 2.2.2 - A loopback server (`std::net::TcpListener` on `127.0.0.1:0`) receives the multipart `file` part with the
   declared filename and bearer header. test: `crates/gcore/src/ai/transcription.rs::tests::wire_multipart_filename_and_auth`.
+- 2.2.3 - The `transcription` submodule is declared in `gobby_core::ai`. file: `crates/gcore/src/ai/mod.rs`.
 
 ### 2.3 Direct vision and text clients [category: code] (depends: 2.1)
 
 `kind: deliverable`
 
-Target: `crates/gcore/src/ai/vision.rs`, `crates/gcore/src/ai/text.rs`
+Target: `crates/gcore/src/ai/vision.rs`, `crates/gcore/src/ai/text.rs`, `crates/gcore/src/ai/mod.rs`
 
 `describe_image(cfg, bytes, mime)` → `/v1/chat/completions` with an `image_url` data-URI message, prompting for a small
 **structured `{description, ocr_text}`** (JSON or two delimited sections); parse both, and on parse failure or a
@@ -445,12 +450,13 @@ prompt, system?)` → `/v1/chat/completions`. Both bearer-auth, retry-wrapped.
   `crates/gcore/src/ai/vision.rs::tests::sends_image_url_and_parses`.
 - 2.3.2 - Text client sends a chat completion and returns content. test:
   `crates/gcore/src/ai/text.rs::tests::generates_text`.
+- 2.3.3 - The `vision` and `text` submodules are declared in `gobby_core::ai`. file: `crates/gcore/src/ai/mod.rs`.
 
 ### 2.4 Daemon clients with back-compat mapping [category: code] (depends: 2.2, 2.3)
 
 `kind: deliverable`
 
-Target: `crates/gcore/src/ai/daemon.rs`
+Target: `crates/gcore/src/ai/daemon.rs`, `crates/gcore/src/ai/mod.rs`
 
 `transcribe_via_daemon`/`describe_image_via_daemon`/`generate_via_daemon` POST to the daemon routes (P6), taking the
 daemon URL from `gobby_core::daemon_url` and **authenticating with `X-Gobby-Local-Token` read from
@@ -477,6 +483,7 @@ omitted otherwise). **Back-compat**: if `/api/voice/transcribe` returns legacy `
   with `capability` set to the `AICapability` value `audio_transcribe`|`audio_translate` (default `audio_transcribe`),
   **not** `transcribe`/`translate` (Round 9 #1 / Round 10). test:
   `crates/gcore/src/ai/daemon.rs::tests::voice_multipart_carries_capability_fields`.
+- 2.4.5 - The `daemon` submodule is declared in `gobby_core::ai`. file: `crates/gcore/src/ai/mod.rs`.
 
 ## P3: gwiki routing decision, adapters & media helpers
 
@@ -489,7 +496,7 @@ media helpers.
 
 `kind: deliverable`
 
-Target: `crates/gwiki/src/ai/clients.rs`, `crates/gwiki/src/transcribe.rs`
+Target: `crates/gwiki/src/ai/clients.rs`, `crates/gwiki/src/ai/mod.rs`, `crates/gwiki/src/lib.rs`, `crates/gwiki/Cargo.toml`, `crates/gwiki/src/transcribe.rs`
 
 `ProductionTranscriptionClient`/`ProductionVisionClient` implement gwiki's `TranscriptionClient`/`VisionClient` by
 delegating to the `gobby_core::ai` clients selected by the **shared gcore effective router**
@@ -513,12 +520,15 @@ in the model. `align_transcript_and_frames` (`video.rs:81`) currently parses `se
   `crates/gcore/src/ai/mod.rs::tests::effective_route_auto_falls_through_per_capability`.
 - 3.1.3 - `align_transcript_and_frames` aligns on numeric `start_ms` (no string-timestamp parsing) and still produces the
   transcript-only and frame-aligned groupings. test: `crates/gwiki/src/video.rs::tests::aligns_on_numeric_start_ms`.
+- 3.1.4 - The new gwiki `ai` module is declared in the crate root (`mod ai;`) with `clients` declared in its `ai/mod.rs`,
+  and the gwiki `ai = ["gobby-core/ai"]` feature is added to `Cargo.toml` and included in `default`. file:
+  `crates/gwiki/src/lib.rs`. file: `crates/gwiki/src/ai/mod.rs`. file: `crates/gwiki/Cargo.toml`.
 
 ### 3.2 Add gwiki::media ffmpeg/ffprobe helpers [category: code] (depends: P1)
 
 `kind: deliverable`
 
-Target: `crates/gwiki/src/media.rs`
+Target: `crates/gwiki/src/media.rs`, `crates/gwiki/src/lib.rs`
 
 Path-based, temp-file helpers (probe PATH for `ffmpeg`/`ffprobe`; missing → `None`/error so callers degrade and preserve
 assets): `probe_duration(path) -> Option<u32>`; `extract_audio_file(video) -> NamedTempFile`;
@@ -533,12 +543,13 @@ is written to `raw/assets/` first and never tied to a temp lifetime.
   `crates/gwiki/src/media.rs`.
 - 3.2.2 - Temp outputs are cleaned up on a mid-run error while the raw asset survives. test:
   `crates/gwiki/src/media.rs::tests::temp_files_cleaned_asset_survives`.
+- 3.2.3 - The new `media` module is declared in the gwiki crate root. file: `crates/gwiki/src/lib.rs`.
 
 ### 3.3 Repoint the daemon vision capability probe to a GET status route [category: code] (depends: 3.1)
 
 `kind: deliverable`
 
-Target: `crates/gcore/src/ai/probe.rs`, `crates/gwiki/src/daemon.rs`
+Target: `crates/gcore/src/ai/probe.rs`, `crates/gcore/src/ai/mod.rs`, `crates/gwiki/src/daemon.rs`
 
 The capability probe **moves into `gobby_core::ai` (shared by gwiki and gcode, Round 5 #5)**; gwiki's existing GET-only
 probe (`daemon.rs:86`) and the stale `VISION` contract (`daemon.rs:125`, which probes upload-only
@@ -568,6 +579,7 @@ exists that capability degrades; `/api/chat/attachments` is never a description/
   shared 200 (Round 8 #5 / Round 9 #1). test: `crates/gcore/src/ai/probe.rs::tests::status_body_capability_truth`.
 - 3.3.4 - Availability is decided by the GET status route, not `/api/providers/models` — the latter is read only for
   provider/model discovery (Round 9 #4). test: `crates/gcore/src/ai/probe.rs::tests::status_route_is_availability_truth`.
+- 3.3.5 - The `probe` submodule is declared in `gobby_core::ai`. file: `crates/gcore/src/ai/mod.rs`.
 
 ## P4: Audio transcription, translation & chunking
 
@@ -598,7 +610,7 @@ frontmatter (`transcription_task`, `transcription_source_language`, `transcripti
 
 `kind: deliverable`
 
-Target: `crates/gwiki/src/ai/translate.rs`
+Target: `crates/gwiki/src/ai/translate.rs`, `crates/gwiki/src/ai/mod.rs`
 
 Auto-detect is default (omit `language` → whisper detects → record `source_language`); `ai.audio_transcribe.language` is
 an optional hint. **Exact algorithm** (resolves the auto-detect ordering problem — the source is unknown until after a
@@ -627,12 +639,13 @@ LLM translation to English.
 - 4.2.3 - Translate-to-English uses `/v1/audio/translations` in one pass with no pre-transcription source check; a
   non-English target transcribes first then applies the `source==target` skip. test:
   `crates/gwiki/src/ai/translate.rs::tests::english_one_pass_vs_target_first`.
+- 4.2.4 - The `translate` submodule is declared in gwiki's `ai` module. file: `crates/gwiki/src/ai/mod.rs`.
 
 ### 4.3 Add deterministic long-media chunking [category: code] (depends: 4.1, 3.2)
 
 `kind: deliverable`
 
-Target: `crates/gwiki/src/ai/chunk.rs`
+Target: `crates/gwiki/src/ai/chunk.rs`, `crates/gwiki/src/ai/mod.rs`
 
 `gwiki::media::split_audio_file` decodes to a **fixed transcription codec — 16 kHz mono 16-bit PCM WAV** (ffmpeg
 `-ar 16000 -ac 1 -c:a pcm_s16le`), giving ~32 KB/s so chunk-bytes math is deterministic; window = min(duration to reach
@@ -655,6 +668,7 @@ Window/overlap/max-bytes are named constants.
   ffmpeg/ffprobe**. test: `crates/gwiki/src/ai/chunk.rs::tests::short_audio_bypasses_ffmpeg`.
 - 4.3.4 - A mid-run chunk failure yields `ChunkedTranscription { partial: true }` with completed chunks kept and missing
   ranges recorded. test: `crates/gwiki/src/ai/chunk.rs::tests::partial_chunk_outcome`.
+- 4.3.5 - The `chunk` submodule is declared in gwiki's `ai` module. file: `crates/gwiki/src/ai/mod.rs`.
 
 ## P5: Image, video, and document extraction
 
@@ -725,7 +739,7 @@ metadata always records `file_size_bytes` and (when ffprobe succeeds) `duration_
 
 `kind: deliverable`
 
-Target: `crates/gwiki/src/ingest/document.rs`
+Target: `crates/gwiki/src/ingest/document.rs`, `crates/gwiki/src/ingest/mod.rs`, `crates/gwiki/Cargo.toml`
 
 Add a document orchestrator mirroring the audio/image pattern (`ingest_document` + a `DocumentEndpoint`
 Available/Unavailable + `From<DocumentIngestResult> for IngestResult`), behind the default-on `documents` feature
@@ -739,12 +753,15 @@ Available/Unavailable + `From<DocumentIngestResult> for IngestResult`), behind t
 - 5.4.1 - `.xlsx` renders a Markdown table, `.docx`/`.pptx` extract text, `.html` renders readable Markdown, and a parse
   failure degrades while preserving the asset. test:
   `crates/gwiki/src/ingest/document.rs::tests::extracts_office_html_and_degrades`.
+- 5.4.2 - The `document` submodule is declared in `crates/gwiki/src/ingest/mod.rs`, and the default-on `documents`
+  feature carries the Office extraction dependencies (`calamine`, `zip`, `quick-xml`) in `Cargo.toml`. file:
+  `crates/gwiki/src/ingest/mod.rs`. file: `crates/gwiki/Cargo.toml`.
 
 ### 5.5 PDF — text layer combined with vision [category: code] (depends: 5.4, 3.1, 3.2)
 
 `kind: deliverable`
 
-Target: `crates/gwiki/src/ingest/pdf.rs`
+Target: `crates/gwiki/src/ingest/pdf.rs`, `crates/gwiki/Cargo.toml`
 
 Per page, **combine** (not fall back): extract the text layer with `pdf-extract`; rasterize the page with `pdfium-render`
 (statically bundled pdfium — no external runtime binary) at a configured DPI; run the page image through `vision_extract`
@@ -759,12 +776,14 @@ the shared limiter** (B1). Frontmatter records `page_count`, `has_text_layer`, `
 - 5.5.1 - A digital PDF yields per-page Markdown combining text layer + vision (overlap dedup'd); a scanned PDF (no text
   layer) yields vision-OCR Markdown; degraded paths preserve the asset. test:
   `crates/gwiki/src/ingest/pdf.rs::tests::combines_text_layer_and_vision`.
+- 5.5.2 - The default-on `documents` feature carries the PDF dependencies (`pdf-extract`, `pdfium-render` with statically
+  bundled pdfium) in `Cargo.toml`. file: `crates/gwiki/Cargo.toml`.
 
 ### 5.6 Document degradation matrix and metadata [category: code] (depends: 5.4, 5.5)
 
 `kind: deliverable`
 
-Target: `crates/gwiki/src/document.rs`
+Target: `crates/gwiki/src/document.rs`, `crates/gwiki/src/lib.rs`
 
 A uniform degradation vocabulary and metadata across pdf/office/html mirroring the video matrix (§5.3): each failure mode
 preserves the raw asset and writes a valid derived doc, and metadata always records `file_size_bytes` plus the relevant
@@ -774,6 +793,7 @@ count (`page_count`/`sheet_count`/`slide_count`).
 
 - 5.6.1 - Each document failure mode writes a valid degraded doc preserving the asset, with `file_size_bytes` and the unit
   count recorded. test: `crates/gwiki/src/document.rs::tests::document_degradation_matrix`.
+- 5.6.2 - The new `document` module is declared in the gwiki crate root. file: `crates/gwiki/src/lib.rs`.
 
 ## P6: Daemon capability-registry contract (sibling repo)
 
@@ -962,8 +982,7 @@ file only because it is **cross-repo**, spanning the daemon — an orthogonal re
 
 `kind: deliverable`
 
-Target: `crates/gcore/src/local_backend.rs`, `crates/gloc/src/backend.rs`, `crates/gloc/src/config.rs`,
-`crates/gloc/Cargo.toml`
+Target: `crates/gcore/src/local_backend.rs`, `crates/gloc/src/backend.rs`, `crates/gloc/src/config.rs`, `crates/gloc/Cargo.toml`, `crates/gcore/src/lib.rs`
 
 Move `Backend { name, url, probe, auth_token }`, `detect_backend`, and `validate_backend` (currently in
 `crates/gloc/src/backend.rs`) into `gobby_core::local_backend` with the LM Studio/Ollama defaults. **Split data from probing to keep the lean-core
@@ -992,6 +1011,8 @@ distinct STT probe, else degrade to off. gloc retains lifecycle (`ensure_model_r
   `crates/gcore/src/ai/mod.rs::tests::direct_autodiscovers_local_endpoint`.
 - 8.1.3 - STT capabilities are not auto-discovered to an LM Studio/Ollama backend; they require explicit STT config. test:
   `crates/gcore/src/ai_context.rs::tests::stt_not_autodiscovered_to_chat_backend`.
+- 8.1.4 - The new `local_backend` module is declared in the gcore crate root (the `Backend` data type always-compiled;
+  the `ureq` probes gated behind `local_backend`). file: `crates/gcore/src/lib.rs`.
 
 ### 8.2 Fold gcode embeddings under shared routing [category: refactor] (depends: 8.1)
 
@@ -1034,7 +1055,7 @@ gcode does not depend on gloc).
 
 `kind: deliverable`
 
-Target: `crates/gcode/src/commands/symbols.rs`, `crates/gcode/src/cli.rs`
+Target: `crates/gcode/src/commands/symbols.rs`, `crates/gcode/src/cli.rs`, `crates/gcode/src/dispatch.rs`
 
 Default outline stays deterministic AST. Extend the existing `Command::Outline { file }` (`cli.rs:267`) with a
 `--summarize` flag, handled in the flat `commands/symbols.rs` (no module split), that sends code
@@ -1049,6 +1070,8 @@ unavailable. This mirrors the daemon's own `code_index/summarizer` path, which `
   `crates/gcode/src/commands/symbols.rs::tests::summarizes_when_configured`.
 - 8.3.2 - `--summarize` degrades to deterministic AST when text routing is off/unconfigured. test:
   `crates/gcode/src/commands/symbols.rs::tests::degrades_to_ast`.
+- 8.3.3 - The new `--summarize` field on `Command::Outline` is threaded through the `Outline` dispatch arm. file:
+  `crates/gcode/src/dispatch.rs`.
 
 ### 8.4 Give gwiki shared hub-provisioning parity via `ensure_hub` [category: code] (depends: P5, P6, P7)
 
@@ -1127,7 +1150,7 @@ adapted freely, no attribution requirement). **Downstream of the MVP**: every P9
 
 `kind: deliverable`
 
-Target: `crates/gcode/src/commands/codewiki.rs`, `crates/gcode/src/cli.rs`
+Target: `crates/gcode/src/commands/codewiki.rs`, `crates/gcode/src/cli.rs`, `crates/gcode/src/commands/mod.rs`, `crates/gcode/src/dispatch.rs`
 
 Add a `gcode codewiki [--out DIR] [--scope …]` subcommand that generates a Markdown doc set bottom-up — symbol → file →
 module → repo — via `text_generate` (the §8.3 capability), each level summarized **once** (token-efficient tree-summarize,
@@ -1141,6 +1164,9 @@ the llama_index tree-summarize template. When text routing is off, degrade to AS
   AST-only structural docs when text routing is off. test:
   `crates/gcode/src/commands/codewiki.rs::tests::generates_hierarchical_docs`.
 - 9.1.2 - The `codewiki` subcommand is registered on the gcode CLI. file: `crates/gcode/src/cli.rs`.
+- 9.1.3 - The `codewiki` command module is declared in `crates/gcode/src/commands/mod.rs` and a `Command::Codewiki`
+  dispatch arm in `crates/gcode/src/dispatch.rs` invokes the handler. file: `crates/gcode/src/commands/mod.rs`. file:
+  `crates/gcode/src/dispatch.rs`.
 
 ### 9.2 Module clustering from the dependency graph [category: code] (depends: 9.1)
 
@@ -1203,11 +1229,11 @@ source files changed (file → owning module → repo overview), recording a `_m
 - 9.5.1 - After a single-file change, only the affected file/module/overview docs regenerate; unchanged docs are left
   untouched. test: `crates/gcode/src/commands/codewiki.rs::tests::incremental_regenerates_only_changed`.
 
-### 9.6 gwiki ingest of generated code-docs [category: code] (depends: 9.1, P1)
+### 9.6 gwiki ingest of generated code-docs [category: code] (depends: 9.1, 9.4, P1)
 
 `kind: deliverable`
 
-Target: `crates/gwiki/src/ingest/code_docs.rs`, `crates/gwiki/src/ingest/file.rs`, `crates/gwiki/src/sources.rs`
+Target: `crates/gwiki/src/ingest/code_docs.rs`, `crates/gwiki/src/ingest/mod.rs`, `crates/gwiki/src/ingest/file.rs`, `crates/gwiki/src/sources.rs`
 
 Add a `SourceKind::CodeDoc` variant and ingest the gcode-generated Markdown tree into the wiki vault via gwiki's existing
 Markdown path, preserving the `source_files` provenance and converting code-doc cross-references to `[[wikilinks]]`. **No
@@ -1222,8 +1248,10 @@ documented CLI/daemon step (`gcode codewiki --out <vault>/code`, then gwiki inde
   `crates/gwiki/src/ingest/file.rs::tests::dispatches_generated_code_docs`.
 - 9.6.3 - `SourceKind::CodeDoc` exists and `crate_has_no_gcode_dependency` still passes (no crate link). file:
   `crates/gwiki/src/sources.rs`.
+- 9.6.4 - The `code_docs` submodule is declared in `crates/gwiki/src/ingest/mod.rs`. file:
+  `crates/gwiki/src/ingest/mod.rs`.
 
-### 9.7 codewiki CI and documentation [category: config] (depends: 9.1, 9.6)
+### 9.7 codewiki CI and documentation [category: config] (depends: 9.3, 9.5, 9.6)
 
 `kind: deliverable`
 
@@ -1748,6 +1776,39 @@ epic) rather than a hope.
 - validation: `uv run gobby plans validate` passes (9 phases, 35 deliverables, consumer sweep passed); manifest stays
   1:1 with deliverables and the leaf DAG remains acyclic with the P8/P9→MVP gate intact.
 
+**Round 18 (stage-native planner — adversary Round 17 blocking fixes)**
+
+- reviewer: stage-native planning adversary (Round 17 findings F1, F2, F3)
+- verdict: incorporated (surgical)
+- blockers fixed:
+  - **F1 gwiki feature/module wiring targets**: added the parent-declaration wiring file to the `Target:` inventory and
+    acceptance of every deliverable that creates a new gwiki module or feature — §3.2 (`media.rs`) → `lib.rs` (3.2.3); §3.1
+    (`ai/clients.rs`) → `lib.rs` + `ai/mod.rs` + the `ai = ["gobby-core/ai"]` feature in `Cargo.toml` (3.1.4); §4.2/§4.3
+    (`ai/translate.rs`/`ai/chunk.rs`) → `ai/mod.rs` (4.2.4 / 4.3.5); §5.4 (`ingest/document.rs`) → `ingest/mod.rs` + the
+    `documents` Office deps (5.4.2); §5.5 → the `documents` PDF deps (5.5.2); §5.6 (`document.rs`) → `lib.rs` (5.6.2); §9.6
+    (`ingest/code_docs.rs`) → `ingest/mod.rs` (9.6.4). §1.3 now owns defining the `documents` feature in `Cargo.toml`
+    (1.3.8) so the document-dispatch `#[cfg(feature = "documents")]` branches are valid from P1;
+  - **F2 codewiki sequencing (§9.6, §9.7)**: §9.6 is now `(depends: 9.1, 9.4, P1)` (manifest `depends_on` adds `9.4`) so the
+    `source_files` provenance §9.4 introduces exists before §9.6 ingests it; §9.7 is now `(depends: 9.3, 9.5, 9.6)` (manifest
+    `depends_on` → `["9.3", "9.5", "9.6"]`) so codewiki CI/docs run only after clustering, Mermaid, citations, incremental
+    regen, and ingest are built;
+  - **F3 gcode codewiki command wiring (§9.1)**: added `crates/gcode/src/commands/mod.rs` and `crates/gcode/src/dispatch.rs`
+    to §9.1's `Target` and acceptance (9.1.3) — the `codewiki` module declaration plus a `Command::Codewiki` dispatch arm
+    that invokes the handler — so the expanded leaf wires a runnable command, not an orphan handler file;
+- whole-plan sweep (same finding class — a new module/command file not targeting its parent wiring file): extended the fix
+  to the analogous gcore gaps the adversary did not cite — §1.2 (`ai_context.rs`) → `lib.rs` (1.2.6); §2.2/§2.3/§2.4/§3.3
+  (the gcore `ai` submodules) → `ai/mod.rs` (2.2.3 / 2.3.3 / 2.4.5 / 3.3.5); §8.1 (`local_backend.rs`) → `lib.rs` (8.1.4);
+  and the gcode command-shape gap §8.3 (the new `--summarize` field on `Command::Outline`) → `dispatch.rs` (8.3.3). §2.1
+  already targets `lib.rs`; made its always-compiled `pub mod ai_types;` declaration explicit;
+- validation (recovery pass): the Round 17-fix run crashed mid-stage before validating (per the coordinator de-escalation
+  notes — Gobby queued-continuation automation bugs, not a planning gap), so a fresh planner instance re-ran
+  `uv run gobby plans validate` and caught a residual `target-coverage` error: §8.1's `Target:` had been wrapped onto a
+  second physical line, so the validator's single-line Target parser missed `crates/gcore/src/lib.rs` (the parent-wiring
+  file 8.1.4 references). Collapsed §8.1's Target to one line (matching every other deliverable) and swept the whole plan
+  for wrapped Targets — none other. `uv run gobby plans validate` now passes (9 phases, consumer sweep passed); manifest
+  stays 1:1 with the 35 deliverables (91 → 108 acceptance items, each carrying one `covers:` label), every `depends_on`
+  resolves, the leaf DAG is acyclic, and the P8/P9→MVP gate holds.
+
 ## M1 Task Manifest
 
 `kind: manifest`
@@ -1779,6 +1840,7 @@ epic) rather than a hope.
     - covers:gwiki-multimodal-ai:1.2:1.2.3
     - covers:gwiki-multimodal-ai:1.2:1.2.4
     - covers:gwiki-multimodal-ai:1.2:1.2.5
+    - covers:gwiki-multimodal-ai:1.2:1.2.6
   implementation_domain: backend
   tdd: true
   source_section: "1.2"
@@ -1796,6 +1858,7 @@ epic) rather than a hope.
     - covers:gwiki-multimodal-ai:1.3:1.3.5
     - covers:gwiki-multimodal-ai:1.3:1.3.6
     - covers:gwiki-multimodal-ai:1.3:1.3.7
+    - covers:gwiki-multimodal-ai:1.3:1.3.8
   implementation_domain: backend
   tdd: true
   source_section: "1.3"
@@ -1824,6 +1887,7 @@ epic) rather than a hope.
   labels:
     - covers:gwiki-multimodal-ai:2.2:2.2.1
     - covers:gwiki-multimodal-ai:2.2:2.2.2
+    - covers:gwiki-multimodal-ai:2.2:2.2.3
   implementation_domain: backend
   tdd: true
   source_section: "2.2"
@@ -1836,6 +1900,7 @@ epic) rather than a hope.
   labels:
     - covers:gwiki-multimodal-ai:2.3:2.3.1
     - covers:gwiki-multimodal-ai:2.3:2.3.2
+    - covers:gwiki-multimodal-ai:2.3:2.3.3
   implementation_domain: backend
   tdd: true
   source_section: "2.3"
@@ -1851,6 +1916,7 @@ epic) rather than a hope.
     - covers:gwiki-multimodal-ai:2.4:2.4.2
     - covers:gwiki-multimodal-ai:2.4:2.4.3
     - covers:gwiki-multimodal-ai:2.4:2.4.4
+    - covers:gwiki-multimodal-ai:2.4:2.4.5
   implementation_domain: backend
   tdd: true
   source_section: "2.4"
@@ -1864,6 +1930,7 @@ epic) rather than a hope.
     - covers:gwiki-multimodal-ai:3.1:3.1.1
     - covers:gwiki-multimodal-ai:3.1:3.1.2
     - covers:gwiki-multimodal-ai:3.1:3.1.3
+    - covers:gwiki-multimodal-ai:3.1:3.1.4
   implementation_domain: backend
   tdd: true
   source_section: "3.1"
@@ -1876,6 +1943,7 @@ epic) rather than a hope.
   labels:
     - covers:gwiki-multimodal-ai:3.2:3.2.1
     - covers:gwiki-multimodal-ai:3.2:3.2.2
+    - covers:gwiki-multimodal-ai:3.2:3.2.3
   implementation_domain: backend
   tdd: true
   source_section: "3.2"
@@ -1890,6 +1958,7 @@ epic) rather than a hope.
     - covers:gwiki-multimodal-ai:3.3:3.3.2
     - covers:gwiki-multimodal-ai:3.3:3.3.3
     - covers:gwiki-multimodal-ai:3.3:3.3.4
+    - covers:gwiki-multimodal-ai:3.3:3.3.5
   implementation_domain: backend
   tdd: true
   source_section: "3.3"
@@ -1916,6 +1985,7 @@ epic) rather than a hope.
     - covers:gwiki-multimodal-ai:4.2:4.2.1
     - covers:gwiki-multimodal-ai:4.2:4.2.2
     - covers:gwiki-multimodal-ai:4.2:4.2.3
+    - covers:gwiki-multimodal-ai:4.2:4.2.4
   implementation_domain: backend
   tdd: true
   source_section: "4.2"
@@ -1931,6 +2001,7 @@ epic) rather than a hope.
     - covers:gwiki-multimodal-ai:4.3:4.3.2
     - covers:gwiki-multimodal-ai:4.3:4.3.3
     - covers:gwiki-multimodal-ai:4.3:4.3.4
+    - covers:gwiki-multimodal-ai:4.3:4.3.5
   implementation_domain: backend
   tdd: true
   source_section: "4.3"
@@ -1980,6 +2051,7 @@ epic) rather than a hope.
   validation_criteria: "cargo test -p gobby-wiki extracts_office_html_and_degrades"
   labels:
     - covers:gwiki-multimodal-ai:5.4:5.4.1
+    - covers:gwiki-multimodal-ai:5.4:5.4.2
   implementation_domain: backend
   tdd: true
   source_section: "5.4"
@@ -1993,6 +2065,7 @@ epic) rather than a hope.
   validation_criteria: "cargo test -p gobby-wiki combines_text_layer_and_vision"
   labels:
     - covers:gwiki-multimodal-ai:5.5:5.5.1
+    - covers:gwiki-multimodal-ai:5.5:5.5.2
   implementation_domain: backend
   tdd: true
   source_section: "5.5"
@@ -2005,6 +2078,7 @@ epic) rather than a hope.
   validation_criteria: "cargo test -p gobby-wiki document_degradation_matrix"
   labels:
     - covers:gwiki-multimodal-ai:5.6:5.6.1
+    - covers:gwiki-multimodal-ai:5.6:5.6.2
   implementation_domain: backend
   tdd: true
   source_section: "5.6"
@@ -2074,6 +2148,7 @@ epic) rather than a hope.
     - covers:gwiki-multimodal-ai:8.1:8.1.1a
     - covers:gwiki-multimodal-ai:8.1:8.1.2
     - covers:gwiki-multimodal-ai:8.1:8.1.3
+    - covers:gwiki-multimodal-ai:8.1:8.1.4
   implementation_domain: backend
   tdd: false
   source_section: "8.1"
@@ -2098,6 +2173,7 @@ epic) rather than a hope.
   labels:
     - covers:gwiki-multimodal-ai:8.3:8.3.1
     - covers:gwiki-multimodal-ai:8.3:8.3.2
+    - covers:gwiki-multimodal-ai:8.3:8.3.3
   implementation_domain: backend
   tdd: true
   source_section: "8.3"
@@ -2141,6 +2217,7 @@ epic) rather than a hope.
   labels:
     - covers:gwiki-multimodal-ai:9.1:9.1.1
     - covers:gwiki-multimodal-ai:9.1:9.1.2
+    - covers:gwiki-multimodal-ai:9.1:9.1.3
   implementation_domain: backend
   tdd: true
   source_section: "9.1"
@@ -2194,12 +2271,14 @@ epic) rather than a hope.
   task_type: feature
   depends_on:
     - "9.1"
+    - "9.4"
     - "1.3"
   validation_criteria: "cargo test -p gobby-wiki ingests_codedocs_with_provenance"
   labels:
     - covers:gwiki-multimodal-ai:9.6:9.6.1
     - covers:gwiki-multimodal-ai:9.6:9.6.2
     - covers:gwiki-multimodal-ai:9.6:9.6.3
+    - covers:gwiki-multimodal-ai:9.6:9.6.4
   implementation_domain: backend
   tdd: true
   source_section: "9.6"
@@ -2207,7 +2286,8 @@ epic) rather than a hope.
   category: config
   task_type: chore
   depends_on:
-    - "9.1"
+    - "9.3"
+    - "9.5"
     - "9.6"
   validation_criteria: "codewiki CI and documentation: workflow YAML parses (actionlint) and the added CI/release jobs run green"
   labels:
