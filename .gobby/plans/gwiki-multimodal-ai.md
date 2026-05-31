@@ -632,8 +632,21 @@ Target: `crates/gwiki/src/ingest/audio.rs`, `crates/gwiki/src/transcribe.rs`
 
 Build the production `TranscriptionEndpoint` from resolved routing instead of the hardcoded `Unavailable` (`audio.rs:45`),
 keeping the `_with_transcription` seam for fake-client tests. Extend `TranscriptionOutput` (`transcribe.rs:13`) with
-`source_language`, `task`, `target_language`, `translated`, and surface them in `render_audio_transcript_markdown`
-frontmatter (`transcription_task`, `transcription_source_language`, `transcription_target_language`, `translated`).
+`source_language`, `task`, `target_language`, `translated`, **plus optional aggregate fields `partial: bool`,
+`completed_ranges`, and `missing_ranges` (ms ranges; default complete/empty for short single-shot audio)** so the
+chunked aggregate §4.3 produces has a typed home, and surface them in `render_audio_transcript_markdown`
+frontmatter (`transcription_task`, `transcription_source_language`, `transcription_target_language`, `translated`, and —
+when `partial` — `transcription_partial`/`transcription_missing_ranges`).
+
+**Writer-seam ownership (Round 22 #1 — §4.1 is the sole owner of the `transcribe.rs` writer change)**: today
+`write_audio_transcript_markdown` (`transcribe.rs:52`) itself calls `client.transcribe` (`transcribe.rs:60`) and then
+`render_audio_transcript_markdown`. Split that here into a **precomputed-output writer path** that renders a *supplied*
+`TranscriptionOutput` (already transcribed, translated, and/or chunked) **without invoking `client.transcribe` again** —
+hoisting the transcribe call up into the ingest path so the producer (single-shot in §4.1, translation precedence in §4.2,
+chunked aggregate in §4.3) decides how the segments are produced and passes the finished `TranscriptionOutput` to the
+writer. Because **§4.1 owns this seam and §4.2/§4.3 both `depends:` on §4.1**, the later leaves only *consume* this
+precomputed writer (no second transcribe call, no duplicated private rendering in `ingest/audio.rs`); `crates/gwiki/src/transcribe.rs`
+is therefore changed **only here**, never re-edited by §4.2/§4.3.
 
 **Acceptance:**
 
@@ -641,6 +654,11 @@ frontmatter (`transcription_task`, `transcription_source_language`, `transcripti
   test: `crates/gwiki/src/ingest/audio.rs::tests::production_transcription_writes_fields`.
 - 4.1.2 - Unconfigured/`off` routing preserves the asset and writes degraded transcript Markdown. test:
   `crates/gwiki/src/ingest/audio.rs::tests::off_routing_degrades`.
+- 4.1.3 - `write_audio_transcript_markdown` gains a precomputed-output path that renders a supplied `TranscriptionOutput`
+  (transcribed, translated, and/or chunked — including the `translated`/`target_language` and optional
+  `partial`/`missing_ranges` frontmatter) **without calling `client.transcribe` again**; the transcribe call is hoisted
+  into the ingest path so §4.2/§4.3 feed the writer their finished output. file: `crates/gwiki/src/transcribe.rs`. test:
+  `crates/gwiki/src/transcribe.rs::tests::renders_precomputed_output_without_transcribing`.
 
 ### 4.2 Add language auto-detect and translation precedence [category: code] (depends: 4.1)
 
@@ -673,8 +691,10 @@ LLM translation to English.
 production audio ingest path** — `ingest_audio_with_transcription` (`crates/gwiki/src/ingest/audio.rs:54`), which §4.1
 already wires to the production `TranscriptionEndpoint`. The resolved `--translate`/`--target-lang` flags and the
 `audio_translate` binding (`target_lang`, inherited endpoint — §1.1/§1.3) are threaded into that flow so the audio path
-calls `ai::translate` rather than emitting a transcript-only doc; the result feeds the existing
-`write_audio_transcript_markdown` writer (`transcribe.rs:52`). Without this wiring `ai/translate.rs` would be dead code.
+calls `ai::translate` rather than emitting a transcript-only doc; the finished translated `TranscriptionOutput` then feeds
+the **§4.1-owned precomputed-output writer** `write_audio_transcript_markdown` (the writer-API split that drops the inline
+`client.transcribe` call lives in §4.1, not here — §4.2 makes no edit to the writer module). Without this wiring
+`ai/translate.rs` would be dead code.
 
 **Acceptance:**
 
@@ -711,8 +731,11 @@ Window/overlap/max-bytes are named constants.
 **Production integration (the consuming path, not just the helper module)**: chunking is **invoked from the production
 audio ingest path** — `ingest_audio_with_transcription` (`crates/gwiki/src/ingest/audio.rs:54`, the seam §4.1 wires to the
 production endpoint) routes audio over the byte cap through `ai::chunk` (which calls the per-chunk
-`TranscriptionClient`/endpoint sequentially under the shared limiter) instead of the single `client.transcribe` call in
-`write_audio_transcript_markdown` (`transcribe.rs:60`); short audio under the cap bypasses chunking and single-shots.
+`TranscriptionClient`/endpoint sequentially under the shared limiter), then feeds the resulting `ChunkedTranscription`
+aggregate into the **§4.1-owned precomputed-output writer** `write_audio_transcript_markdown` — populating the optional
+`partial`/`missing_ranges`/`completed_ranges` frontmatter fields §4.1 defined on `TranscriptionOutput` and renders (the
+inline `client.transcribe` call having already been removed by §4.1's writer split, so §4.3 makes no edit to the writer
+module); short audio under the cap bypasses chunking and single-shots.
 Without this wiring `ai/chunk.rs` would be dead code and long audio would exceed the upload byte cap.
 
 **Single-owner composition with an explicit short-vs-long split (depends: 4.2 — Round 20 #1 / Round 21 #1)**: §4.2 and
@@ -1113,7 +1136,7 @@ file only because it is **cross-repo**, spanning the daemon — an orthogonal re
 
 `kind: deliverable`
 
-Target: `crates/gcore/src/local_backend.rs`, `crates/gloc/src/backend.rs`, `crates/gloc/src/config.rs`, `crates/gloc/Cargo.toml`, `crates/gcore/src/lib.rs`
+Target: `crates/gcore/src/local_backend.rs`, `crates/gloc/src/backend.rs`, `crates/gloc/src/config.rs`, `crates/gloc/Cargo.toml`, `crates/gcore/src/lib.rs`, `crates/gcore/src/ai/mod.rs`, `crates/gcore/src/ai_context.rs`
 
 Move `Backend { name, url, probe, auth_token }`, `detect_backend`, and `validate_backend` (currently in
 `crates/gloc/src/backend.rs`) into `gobby_core::local_backend` with the LM Studio/Ollama defaults. **Split data from probing to keep the lean-core
@@ -1129,6 +1152,15 @@ auto-discovery serves only `text_generate`/`vision_extract`/`embed` (they expose
 **not** `/v1/audio/transcriptions`); `audio_transcribe`/`audio_translate` are **never** auto-discovered to a
 chat/embeddings backend — they require an explicitly configured STT endpoint (faster-whisper / OpenAI-compatible STT) or a
 distinct STT probe, else degrade to off. gloc retains lifecycle (`ensure_model_ready`).
+
+**Consuming-side routing wiring (Round 22 #2 — this leaf owns the discovery-routing change sites, not just the module
+move)**: the routing code that *consumes* `detect_backend` lives in `gcore::ai`/`ai_context`, so this leaf also edits
+those files to make the section self-contained: in `crates/gcore/src/ai/mod.rs` the `direct`/`auto` resolution fills an
+unset `*_api_base` from `local_backend` discovery (`{backend.url}/v1`) (acceptance 8.1.2), and in
+`crates/gcore/src/ai_context.rs` the capability-aware guard ensures `audio_transcribe`/`audio_translate` are **never**
+auto-discovered to an LM Studio/Ollama chat/embeddings backend (acceptance 8.1.3). Both files are first created/extended
+by P2/P3 (on which §8.1 transitively depends via P2/P5), so §8.1 is the last writer of this discovery-routing behavior —
+no parallel edit of `crates/gcore/src/ai/mod.rs`/`crates/gcore/src/ai_context.rs` is schedulable alongside it.
 
 **Acceptance:**
 
@@ -1285,6 +1317,16 @@ Make hub resolution coherent across all three install orders so previously-index
   database name across both DSNs (proves same physical cluster + database, no marker table, ownership-neutral). If the
   identities differ (genuine divergence), surface a typed conflict (`CoreError`/degradation naming both DSNs) instead of
   silently switching and losing data. Never provision a third hub when any recorded hub is reachable.
+- **Insufficient-privilege branch (Round 22 #3 — `pg_control_system()` is not executable by every role)**: PostgreSQL
+  restricts `pg_control_system()` to superusers / `pg_monitor` members by default, but this epic resolves user-supplied
+  reachable DSNs (env / `gcore.yaml` / `bootstrap.yaml`) whose app role may lack that grant. So the identity probe
+  **preflights** `has_function_privilege(current_user, 'pg_control_system()', 'execute')` (and treats a `42501`
+  permission-denied at call time identically). On insufficient privilege the probe returns a typed
+  `identity_unknown_insufficient_privilege` outcome that is treated as **neither same-hub nor divergent-hub**: resolution
+  **preserves the existing recorded hub** (the one holding the `gcore.yaml`/subset data), **never provisions a third
+  hub**, and surfaces the unknown-identity state (so the operator can grant `pg_monitor` or confirm the DSN) rather than
+  silently adopting or switching. A non-privileged CLI-owned identity marker remains a documented follow-up, not a
+  requirement of this leaf.
 
 **Acceptance:**
 
@@ -1295,6 +1337,10 @@ Make hub resolution coherent across all three install orders so previously-index
   `crates/gcore/src/provisioning.rs::tests::divergent_hubs_surface_conflict`.
 - 8.5.3 - After a daemon adopts the standalone hub (same DSN in both files), CLIs resolve it with no conflict and the
   subset data remains addressable. test: `crates/gcode/src/db.rs::tests::adopted_hub_resolves_without_conflict`.
+- 8.5.4 - When the role cannot execute `pg_control_system()` (preflight `has_function_privilege` false or a `42501`
+  permission-denied), the identity probe returns `identity_unknown_insufficient_privilege` and resolution **preserves the
+  existing recorded hub without provisioning a second/third hub** and without treating the failure as same-hub or
+  divergent-hub. test: `crates/gcore/src/provisioning.rs::tests::insufficient_identity_privilege_preserves_hub`.
 
 ## P9: Codebase → wiki documentation (gcode-generated, gwiki-ingested)
 
@@ -1316,13 +1362,16 @@ Target: `crates/gcode/src/commands/codewiki.rs`, `crates/gcode/src/cli.rs`, `cra
 
 Add a `gcode codewiki [--out DIR] [--scope …]` subcommand that generates a Markdown doc set bottom-up — symbol → file →
 module → repo — via `text_generate` (the §8.3 capability), each level summarized **once** (token-efficient tree-summarize,
-reusing lower-level summaries upward). Per-file docs are built from AST symbol spans (signatures + an LLM-written purpose).
+reusing lower-level summaries upward). **Cross-references between docs are emitted as gwiki `[[wikilinks]]` and each doc is
+written vault-ready**, so `gcode codewiki --out <vault>/wiki/code` drops a tree that gwiki's index walk ingests directly
+(§9.6) with no gwiki-side link conversion. Per-file docs are built from AST symbol spans (signatures + an LLM-written purpose).
 Prompts live in a constants module adapted from autodoc's per-file/folder summaries, CodeWiki's module/repo overviews, and
 the llama_index tree-summarize template. When text routing is off, degrade to AST-only structural docs (no LLM prose).
 
 **Acceptance:**
 
-- 9.1.1 - `gcode codewiki` emits per-file API docs, per-module overviews, and a repo overview as Markdown, and degrades to
+- 9.1.1 - `gcode codewiki` emits per-file API docs, per-module overviews, and a repo overview as vault-ready Markdown with
+  `[[wikilink]]` cross-references between docs (consumed by gwiki §9.6), and degrades to
   AST-only structural docs when text routing is off. test:
   `crates/gcode/src/commands/codewiki.rs::tests::generates_hierarchical_docs`.
 - 9.1.2 - The `codewiki` subcommand is registered on the gcode CLI. file: `crates/gcode/src/cli.rs`.
@@ -1407,23 +1456,40 @@ source files changed (file → owning module → repo overview), recording a `_m
 
 `kind: deliverable`
 
-Target: `crates/gwiki/src/ingest/code_docs.rs`, `crates/gwiki/src/ingest/mod.rs`, `crates/gwiki/src/ingest/file.rs`, `crates/gwiki/src/sources.rs`
+Target: `crates/gwiki/src/indexer.rs`, `crates/gwiki/src/store.rs`
 
-Add a `SourceKind::CodeDoc` variant and ingest the gcode-generated Markdown tree into the wiki vault via gwiki's existing
-Markdown path, preserving the `source_files` provenance and converting code-doc cross-references to `[[wikilinks]]`. **No
-gwiki→gcode crate dependency** — gwiki consumes the pre-generated `.md` only; the generate→ingest orchestration is a
-documented CLI/daemon step (`gcode codewiki --out <vault>/code`, then gwiki indexes).
+**Deterministic runnable workflow (Round 22 #4 — vault-native index walk, not `ingest_path`)**: the generated code-doc
+**tree** is ingested through gwiki's **existing vault index walk** — `index_vault` (`crates/gwiki/src/indexer.rs:68`,
+the `gwiki index` command), which already discovers, hash-diffs, and parses every vault Markdown file (frontmatter +
+`[[wikilink]]` extraction are native to `parse_wiki_document`). **`ingest_path` is *not* used** — it imports a *single
+external* file as a raw source asset (one path → one `IngestResult`) and cannot walk a directory tree; the prior
+`SourceKind::CodeDoc`/`ingest_path` framing is dropped. The orchestration is the documented producer→consumer step from
+C1: `gcode codewiki --out <vault>/wiki/code` writes **vault-ready Markdown** directly into the vault (gcode emits the
+`source_files:` provenance frontmatter (§9.4) and `[[wikilink]]` cross-references between code-docs (§9.1) itself, since
+it owns the AST/graph and the output-tree layout), and a subsequent `gwiki index` run indexes that subtree like any other
+vault document. **No gwiki→gcode crate dependency** (gwiki reads `.md` only).
+
+gwiki's only change is **recognition/classification** inside the existing walk: add a `WikiDocumentKind::CodeDoc` variant
+(`crates/gwiki/src/store.rs`, alongside `SourceNote`/`Concept`/`Topic`, plus its `document_kind_name` `"code_doc"` arm)
+and a `document_kind`/`is_indexable_vault_path` path-prefix rule for the `["wiki", "code", ..]` subtree
+(`crates/gwiki/src/indexer.rs`), so generated docs are deterministically distinguished from hand-authored vault Markdown
+**by their `wiki/code/` location** (and carry the `source_files` frontmatter marker, preserved in `WikiFrontmatter` for
+staleness/reverse-lookup). **Idempotency and incremental re-index come for free** from `index_vault`'s existing SHA-256
+hash diff (`discover_indexable_hashes`/`IndexEvent`): re-running `gcode codewiki` rewrites only changed docs (§9.5), and
+the next `gwiki index` re-indexes only those — no new recursion, multi-result, or command/API surface is added.
 
 **Acceptance:**
 
-- 9.6.1 - A gcode-generated doc tree ingests as `CodeDoc` wiki documents preserving `source_files` provenance and
-  `[[wikilinks]]`. test: `crates/gwiki/src/ingest/code_docs.rs::tests::ingests_codedocs_with_provenance`.
-- 9.6.2 - `ingest_path` recognizes and ingests the generated code-doc tree. test:
-  `crates/gwiki/src/ingest/file.rs::tests::dispatches_generated_code_docs`.
-- 9.6.3 - `SourceKind::CodeDoc` exists and `crate_has_no_gcode_dependency` still passes (no crate link). file:
-  `crates/gwiki/src/sources.rs`.
-- 9.6.4 - The `code_docs` submodule is declared in `crates/gwiki/src/ingest/mod.rs`. file:
-  `crates/gwiki/src/ingest/mod.rs`.
+- 9.6.1 - A `gcode codewiki`-generated doc tree under `wiki/code/` indexes through `index_vault` as
+  `WikiDocumentKind::CodeDoc` documents, preserving the `source_files` provenance frontmatter and the embedded
+  `[[wikilinks]]`. test: `crates/gwiki/src/indexer.rs::tests::indexes_codedocs_with_provenance`.
+- 9.6.2 - `index_vault` walks the whole `wiki/code/` tree and re-indexes only changed docs on a second run (idempotent /
+  incremental via the existing hash diff), without using `ingest_path`. test:
+  `crates/gwiki/src/indexer.rs::tests::codedoc_tree_indexes_idempotently`.
+- 9.6.3 - `WikiDocumentKind::CodeDoc` exists with its `document_kind_name` mapping and `crate_has_no_gcode_dependency`
+  still passes (no crate link). file: `crates/gwiki/src/store.rs`.
+- 9.6.4 - `document_kind`/`is_indexable_vault_path` classify `wiki/code/**.md` as `CodeDoc` so the generated subtree is
+  recognized and indexable. file: `crates/gwiki/src/indexer.rs`.
 
 ### 9.7 codewiki CI and documentation [category: config] (depends: 9.3, 9.5, 9.6)
 
@@ -2151,6 +2217,50 @@ epic) rather than a hope.
   §5.6 Target lines extended to cover the new `test:` refs; no dependency edges changed (F1's 4.3→4.2 and 5.2→4.2,4.3
   already existed); leaf DAG acyclic and the P8/P9→MVP gate holds.
 
+**Round 23 (stage-native planner — adversary Round 22 blocking fixes)**
+
+- reviewer: stage-native planning adversary (Round 22 findings F1–F4)
+- verdict: incorporated (surgical)
+- blockers fixed:
+  - **F1 §4.2/§4.3 audio writer seam (`transcribe.rs` not targeted)**: both leaves claimed to replace
+    `write_audio_transcript_markdown`'s inline `client.transcribe` call but neither targeted the writer module. Made **§4.1
+    the sole owner** of the writer change (it already targets `crates/gwiki/src/transcribe.rs`): §4.1 now adds optional
+    aggregate fields `partial`/`completed_ranges`/`missing_ranges` to `TranscriptionOutput` and **splits the writer into a
+    precomputed-output path** that renders a supplied (transcribed/translated/chunked) result without calling
+    `client.transcribe` again, hoisting the transcribe call into the ingest path (new acceptance **4.1.3**). §4.2 (translation)
+    and §4.3 (chunked aggregate — populating the partial/missing frontmatter §4.1 defines) now only **consume** that
+    precomputed writer; their bodies were reworded so neither edits the writer module, removing the target-coverage miss;
+  - **F2 §8.1 local-backend discovery routing targets**: the `direct` api_base auto-discovery (`ai/mod.rs`) and
+    STT-not-autodiscovered guard (`ai_context.rs`) — the code that consumes `detect_backend` and whose tests are 8.1.2/8.1.3
+    — were outside §8.1's Target. Added `crates/gcore/src/ai/mod.rs` and `crates/gcore/src/ai_context.rs` to §8.1's Target
+    and a body paragraph making §8.1 the last writer of that discovery-routing behavior (serialized after P2/P3 creators);
+  - **F3 §8.5 hub-identity probe insufficient-privilege edge**: `pg_control_system()` is restricted to superuser/`pg_monitor`
+    by default but the epic resolves user-supplied DSNs. Added an explicit insufficient-privilege branch (preflight
+    `has_function_privilege`, treat `42501` identically) returning `identity_unknown_insufficient_privilege` that
+    **preserves the existing hub and never provisions a second/third hub** and is treated as neither same-hub nor
+    divergent-hub (new acceptance **8.5.4**);
+  - **F4 §9.6 code-doc tree ingestion shape**: `ingest_path` is single-path and cannot ingest a tree, and CodeDoc Markdown
+    had no deterministic marker. Rewrote §9.6 to the **vault-native index walk** (Option A): `gcode codewiki --out
+    <vault>/wiki/code` writes vault-ready Markdown (gcode emits `source_files` frontmatter §9.4 and `[[wikilinks]]` §9.1),
+    and gwiki's existing `index_vault` walk indexes it as a new `WikiDocumentKind::CodeDoc` classified by the `wiki/code/`
+    path prefix — idempotency/incremental come free from the existing SHA-256 hash diff. Dropped `SourceKind::CodeDoc`, the
+    `ingest/code_docs.rs` module, and the `ingest_path` dispatch; new Target is `crates/gwiki/src/indexer.rs` +
+    `crates/gwiki/src/store.rs`. Acceptance IDs 9.6.1–9.6.4 preserved (rescoped in place; manifest `covers:` unchanged,
+    validation_criteria test renamed `indexes_codedocs_with_provenance`). Augmented §9.1.1 in place so gcode owns the
+    wikilink/vault-ready emission;
+- whole-plan sweeps per finding class: (F1, deliverable mutating a writer/renderer in a file not in its Target) only the
+  audio writer (`transcribe.rs`) had the gap — video writers §5.2/§5.3 already target `crates/gwiki/src/video.rs` +
+  `ingest/video.rs`, image §5.1 leaves `vision.rs` unchanged, documents §5.4–§5.6 target their `ingest/*` writers. (F2,
+  consuming/change-site code outside Target) a programmatic body-path↔Target sweep across all 35 deliverables found no
+  other change-site gap (remaining hits were `tests/public_boundary.rs`/limiter `test:` refs, the lint's tolerated
+  test-file pattern). (F3, privileged catalog assumption) `pg_control_system()` is the only privileged probe; other DB
+  work is DDL on each crate's own namespaced subset. (F4, directory-vs-single-path ingestion) §9.6 was the only tree
+  ingest; all other ingest is single-file via `ingest_path`;
+- validation: `uv run gobby plans validate` (and `--include-tests`) and daemon `validate_plan` both pass (9 phases, 35
+  deliverables, contract_plan=true, consumer sweep passed). Two acceptance items added (4.1.3, 8.5.4), each carrying one
+  `covers:` label; manifest stays 1:1 (126 acceptance ↔ 126 covers, no orphans/dups); every `depends_on` resolves; leaf
+  DAG acyclic; P8/P9→MVP gate holds.
+
 ## M1 Task Manifest
 
 `kind: manifest`
@@ -2317,6 +2427,7 @@ epic) rather than a hope.
   labels:
     - covers:gwiki-multimodal-ai:4.1:4.1.1
     - covers:gwiki-multimodal-ai:4.1:4.1.2
+    - covers:gwiki-multimodal-ai:4.1:4.1.3
   implementation_domain: backend
   tdd: true
   source_section: "4.1"
@@ -2564,6 +2675,7 @@ epic) rather than a hope.
     - covers:gwiki-multimodal-ai:8.5:8.5.1
     - covers:gwiki-multimodal-ai:8.5:8.5.2
     - covers:gwiki-multimodal-ai:8.5:8.5.3
+    - covers:gwiki-multimodal-ai:8.5:8.5.4
   implementation_domain: backend
   tdd: true
   source_section: "8.5"
@@ -2634,7 +2746,7 @@ epic) rather than a hope.
     - "9.1"
     - "9.4"
     - "1.3"
-  validation_criteria: "cargo test -p gobby-wiki ingests_codedocs_with_provenance"
+  validation_criteria: "cargo test -p gobby-wiki indexes_codedocs_with_provenance"
   labels:
     - covers:gwiki-multimodal-ai:9.6:9.6.1
     - covers:gwiki-multimodal-ai:9.6:9.6.2
