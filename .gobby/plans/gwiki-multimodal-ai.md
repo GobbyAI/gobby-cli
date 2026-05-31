@@ -48,13 +48,13 @@ a separate OpenAI-compatible endpoint, or via the daemon.
   the existing `scraper`; structured text (`csv/json/jsonl/xml/yaml/toml/log`) inlined as `Text`, size-capped. Lean
   `--no-default-features` degrades PDF/Office to store-as-asset; `gcore` is unaffected (P1 §1.3, P5 §5.4–5.6).
 - **Feature isolation (honest)**: the goal is **no AI multipart/STT transport code or `reqwest/multipart` in lean
-  builds**, not "no reqwest anywhere" — `gwiki` already links `reqwest` unconditionally (semantic search,
-  `Cargo.toml:30`) and `gcore` pulls `reqwest` under `qdrant`. gcore gains two features: **`local_backend = ["dep:ureq"]`**
+  builds**, not "no reqwest anywhere" — `gwiki` already links `reqwest` via its default-on `rustls` feature (semantic search,
+  `crates/gwiki/Cargo.toml:14-15,19`) and `gcore` pulls `reqwest` under `qdrant`. gcore gains two features: **`local_backend = ["dep:ureq"]`**
   (the `Backend` data type is always-compiled, but the `ureq` GET probes — `detect_backend`/`validate_backend` — sit
   behind it, §8.1) and **`ai = ["dep:reqwest", "reqwest/multipart", "local_backend"]`** (HTTP transport + the
   probe-backed effective router; `ai` pulls `local_backend` for endpoint auto-discovery). **gloc enables only
   `gobby-core/local_backend`** so the tiny gloc binary gets discovery + `ureq` **without** dragging in `reqwest`/multipart
-  (Round 10 #2). gwiki gains `ai = ["gobby-core/ai"]` with **`default = ["ai"]`** (today `default = []`, `Cargo.toml:15`)
+  (Round 10 #2). gwiki gains `ai = ["gobby-core/ai"]` with **`default = ["rustls", "ai", "documents"]`** (today `default = ["rustls"]` — the existing default-on `rustls` is preserved, not dropped — `crates/gwiki/Cargo.toml:14`)
   so normal and release builds carry AI while `--no-default-features` exercises the lean/degraded path. Adding the gcore
   `ai`/`local_backend` features is a deliberate public-boundary change — `crates/gcore/tests/public_boundary.rs` pins the
   exact manifest and must be updated in lockstep (P2.1); the bare baseline links **neither `reqwest` nor `ureq`**.
@@ -878,7 +878,7 @@ capability-error semantics, and the hub adoption contract. The daemon implements
 
 **Goal**: ship gwiki v0.1.0 to CI/release parity with the other crates and document configuration.
 
-### 7.1 Add gwiki and the gcore ai feature to CI [category: config] (depends: P1)
+### 7.1 Add gwiki and the gcore ai feature to CI [category: config] (depends: P5)
 
 `kind: deliverable`
 
@@ -907,9 +907,9 @@ Target: `.github/workflows/release-gwiki.yml`
 
 Model on `release-gsqz.yml`: trigger on `gwiki-v*`, tag↔`Cargo.toml` version guard (`release-gsqz.yml:23-40`, package
 `gobby-wiki`), cross-platform build matrix (binary `gwiki`), `cargo publish -p gobby-wiki`, GitHub release. **Release
-ordering (Round 5 #7, corrected Round 8 #8)**: `gobby-wiki` depends on `gobby-core = "0.2.2"`, but crates.io's 0.2.2 has
-**no `ai` feature** — so the required gcore version (≥ 0.3.0 with `ai`) must already be on crates.io and
-`gwiki/Cargo.toml:26` pinned to it before `cargo publish -p gobby-wiki` can succeed. **Publishing gcore is *not* this
+ordering (Round 5 #7, corrected Round 8 #8)**: `gobby-wiki` pins `gobby-core` via the workspace (currently `0.3.0`, `crates/gwiki/Cargo.toml:27`), but the published `gobby-core` must carry the new
+`ai` feature (added by P2.1, which requires a gcore version bump) — so the required gcore version (≥ 0.3.0 with `ai`) must already be on crates.io and
+`crates/gwiki/Cargo.toml:27` pinned to it before `cargo publish -p gobby-wiki` can succeed. **Publishing gcore is *not* this
 workflow's job** — it belongs to gcore's own release path; `release-gwiki.yml` only adds a **precondition guard** that
 *verifies* the pinned `gobby-core` version is published with the `ai` feature (e.g. resolve it from the index / a dry-run
 `cargo publish`) and fails fast otherwise, never running `cargo publish -p gobby-core` itself. Release builds use default
@@ -1380,7 +1380,7 @@ epic) rather than a hope.
 - reviewer: external (codex / gobby agent)
 - verdict: incorporated
 - blockers fixed:
-  - **feature graph**: gwiki gains `ai = ["gobby-core/ai"]` with **`default = ["ai"]`**; the gcore `ai` feature is flagged
+  - **feature graph**: gwiki gains `ai = ["gobby-core/ai"]` with **`default = ["rustls", "ai", "documents"]`**; the gcore `ai` feature is flagged
     as a public-boundary change requiring `crates/gcore/tests/public_boundary.rs` updates (C1, P2.1);
   - **config surface**: added `provider` (daemon forwarding), `audio_translate.target_lang`, and video
     `frame_interval_seconds` to `CapabilityBinding`/`AiContext` with env keys + a precedence test (A1, P1.1, P1.2);
@@ -1723,6 +1723,31 @@ epic) rather than a hope.
     acceptance item, every `depends_on` resolves to another entry, acyclic leaf DAG, P8/P9→MVP gate closure) — `gobby
     plans validate` (draft) passes, `parse_mode="expansion"` parses 35 entries 1:1 with deliverables, semantic lint clean.
 
+**Round 17 (stage-native planner — adversary Round 16 blocking fixes)**
+
+- reviewer: stage-native planning adversary (Round 16 findings F1, F2)
+- verdict: incorporated (surgical)
+- blockers fixed:
+  - **F1 bad-sequencing (§7.1 CI vs feature-producing phases)**: §7.1 (the CI task that builds `gobby-core --features ai`
+    and runs the default-on `documents` tests) was gated only on `(depends: P1)` → manifest `depends_on: ["1.3"]`, so
+    expansion could schedule it before the `ai` transport (P2) and document-extraction (P5) surfaces exist. Re-gated §7.1
+    to **`(depends: P5)`** and its manifest entry to **`depends_on: ["5.3", "5.6"]`** (P5's terminal leaves), which
+    transitively orders it after P2 (5.x → … → 3.1 → P2) and the `documents` feature (5.6). §7.2 already sits behind §7.1
+    (`(depends: 7.1)` / `depends_on: ["7.1"]`), so the release workflow inherits the gate;
+  - **F2 stale Cargo/release facts (C1, §7.2, VS1)**: corrected the plan against the live repo — `gwiki` links `reqwest`
+    via its default-on `rustls` feature (not "unconditionally"; `crates/gwiki/Cargo.toml:14-15,19`), and gwiki's default
+    becomes **`default = ["rustls", "ai", "documents"]`** (preserving the existing default-on `rustls`; today
+    `default = ["rustls"]`, `crates/gwiki/Cargo.toml:14`), fixed in both C1 and the VS1 feature-graph note. Reframed
+    §7.2's release-ordering guard: `gobby-wiki` pins `gobby-core` `0.3.0` via the workspace (`crates/gwiki/Cargo.toml:27`,
+    not the stale `0.2.2` / `gwiki/Cargo.toml:26`); the published `gobby-core` carrying the P2.1-added `ai` feature (which
+    requires a gcore version bump) must be on crates.io before `gobby-wiki` publishes. P2.1 already correctly describes
+    adding the `ai`/`local_backend` features to the current featureless gcore `0.3.0`, so it needed no change;
+- whole-plan sweep: the F2 stale-fact class is fully cleared (`0.2.2`, `default = []`, `default = ["ai"]`,
+  "reqwest unconditionally", `gwiki/Cargo.toml:26` all now absent) and the F1 sequencing class has no other under-gated
+  CI/release task (§7.3 docs → P5; §7.2 → 7.1; §8.1/§8.4 → P5, P6, P7 already gate after the feature phases);
+- validation: `uv run gobby plans validate` passes (9 phases, 35 deliverables, consumer sweep passed); manifest stays
+  1:1 with deliverables and the leaf DAG remains acyclic with the P8/P9→MVP gate intact.
+
 ## M1 Task Manifest
 
 `kind: manifest`
@@ -2001,7 +2026,8 @@ epic) rather than a hope.
   category: config
   task_type: chore
   depends_on:
-    - "1.3"
+    - "5.3"
+    - "5.6"
   validation_criteria: "Add gwiki and the gcore ai feature to CI: workflow YAML parses (actionlint) and the added CI/release jobs run green"
   labels:
     - covers:gwiki-multimodal-ai:7.1:7.1.1
