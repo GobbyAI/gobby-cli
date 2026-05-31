@@ -185,6 +185,9 @@ spans and context.
 use `-m/--max-count` for matching-line caps. Use raw `rg` for filesystem grep
 or unsupported ripgrep flags.
 
+For `-g/--glob`, a bare glob such as `*.rs` matches basenames in any directory,
+while a glob containing `/`, such as `src/*.rs`, matches the indexed path.
+
 ### Content Search (`gcode search-content`)
 
 pg_search BM25 search across file content chunks. It covers AST-supported
