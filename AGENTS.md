@@ -49,7 +49,9 @@ These must match the Python daemon's `Symbol.make_id()` exactly. See `src/models
 
 ### 3. Config resolution order
 
-Always: env vars (`GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, `GOBBY_FALKORDB_PASSWORD`, etc.) → `config_store` table → hardcoded defaults. Don't short-circuit.
+Infrastructure and hub-connection config stays env-first: env vars (`GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, `GOBBY_FALKORDB_PASSWORD`, PostgreSQL DSN, etc.) → `config_store` table → hardcoded defaults. Don't short-circuit those paths.
+
+AI capability config is the carve-out: `ai.*` keys resolve from `config_store` → standalone `~/.gobby/gcore.yaml` → defaults, with no `GOBBY_*` env-var layer. CLI flags may still override for a single invocation.
 
 ### 4. Do NOT run `gcode invalidate`
 
