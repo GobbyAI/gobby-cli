@@ -306,7 +306,7 @@ gcode graph rebuild
 - These commands fail if required project context cannot be resolved or if FalkorDB is unavailable
 - They respect the existing global `--format` flag; default output remains `json`
 - No confirmation prompt is shown; these are project-scoped graph projection operators, not full index invalidation
-- Code graph clears target-only code-index FalkorDB labels, not memory graph labels
+- Graph clears delete only code-index projection nodes and edges in FalkorDB; memory graph data is left untouched
 - `gcode graph sync-file --allow-missing-indexed-file` is daemon/background-worker only. It converts a missing indexed file into a skipped JSON payload with `reason: "indexed_file_not_found"`; strict human defaults return a typed error with exit code `2`.
 
 ### Callers
