@@ -1008,7 +1008,7 @@ cut. That epic owns the complete inventory and the dangerous parts — the full 
 (`api_base/model/api_key/query_prefix/provider`, `vector_dim`→**`ai.embeddings.dim`**) under `ai.embeddings.*` in
 `gcore.yaml`/`config_store` with **no env vars (Round 11)** — the legacy `embeddings.api_key_env` env-indirection is
 **retired**, not migrated — the gcore.yaml/setup writers, the daemon-side `config_store` migration, and the api-key storage
-split (`config_store` may use `$secret:embeddings_api_key` / `is_secret`; daemonless `gcore.yaml` may use a plaintext local
+policy (`config_store` may use `$secret:embeddings_api_key` / `is_secret`; daemonless `gcore.yaml` may use a plaintext local
 `ai.embeddings.api_key`; embeddings-namespaced, and for legacy installs that shared `openai_api_key`, copy-not-move).
 **§8.2's
 own work** is the embed-capability routing refactor: route gcode's existing OpenAI-compatible `/embeddings` client
@@ -1698,3 +1698,496 @@ epic) rather than a hope.
     §8.3; no P1–P7 depends on P9); R1 DAG updated (P5 now covers documents; P9 downstream after P8);
   - **doc paths corrected to `docs/guides/`** (repo convention) for the epic-created docs (codewiki, ai-daemon-contract,
     hub-install-contract, ai-configuration).
+
+**Round 16 (stage-native planner — task-manifest authoring)**
+
+- reviewer: stage-native planning pipeline (planner.yaml); pre-adversary draft gate
+- verdict: incorporated
+- changes:
+  - **`## M1 Task Manifest` authored** by the stage-native planner per the planner.yaml TASK MANIFEST contract — one
+    entry per `kind: deliverable` section (35 entries; all 91 acceptance items carried as
+    `covers:gwiki-multimodal-ai:<section>:<item>` labels, one per item). **Supersedes the Round 0 deferral note**: in the
+    stage-native flow the planner emits the manifest once the plan is expansion-ready (reviewer-confirmed Rounds 9–10),
+    and the approving adversary preserves planner-supplied category/domain decisions per the Manifest-on-Approval
+    contract (`docs/contracts/plan-coverage.md`);
+  - **phase-level `(depends: P<N>)` headings translated to leaf `depends_on`** using each phase's terminal leaves
+    (P1→1.3, P2→2.4, P5→[5.3, 5.6], P6→6.1, P7→[7.2, 7.3]) — phase IDs are invalid in `depends_on`;
+  - **VS1 MVP-gate invariant preserved in the manifest DAG**: every P8/P9 entry transitively `depends_on` the P1–P7 MVP
+    and no P1–P7 entry depends on P8/P9 (verified by transitive-closure check); leaf DAG is acyclic;
+  - category→TDD per contract: `code`→`tdd: true`; `config`/`docs`/`refactor`→`tdd: false`; every entry carries
+    `implementation_domain: backend`;
+  - fixed a `target-coverage` semantic-lint finding in §8.2: reworded "the api-key storage **split**" to "…**policy**" so
+    the migration-epic-owned `gcore.yaml` reference (explicitly **not** an §8.2 change target — Round 11) no longer reads
+    as a change-intent path; §8.2's `Target:` inventory (the two `crates/gcode/...rs` files) is unchanged;
+  - self-checked against the Plan-Coverage Contract (1:1 manifest↔deliverable, every `covers:` label resolves to a real
+    acceptance item, every `depends_on` resolves to another entry, acyclic leaf DAG, P8/P9→MVP gate closure) — `gobby
+    plans validate` (draft) passes, `parse_mode="expansion"` parses 35 entries 1:1 with deliverables, semantic lint clean.
+
+## M1 Task Manifest
+
+`kind: manifest`
+
+```yaml
+- title: "Add gcore AI capability config types and per-capability routing"
+  category: code
+  task_type: feature
+  depends_on: []
+  validation_criteria: "cargo test -p gobby-core ai_routing_per_capability_precedence"
+  labels:
+    - covers:gwiki-multimodal-ai:1.1:1.1.1
+    - covers:gwiki-multimodal-ai:1.1:1.1.2
+    - covers:gwiki-multimodal-ai:1.1:1.1.3
+    - covers:gwiki-multimodal-ai:1.1:1.1.4
+    - covers:gwiki-multimodal-ai:1.1:1.1.5
+  implementation_domain: backend
+  tdd: true
+  source_section: "1.1"
+- title: "Add shared `gobby_core::ai_context` (AiContext, config source, router)"
+  category: code
+  task_type: feature
+  depends_on:
+    - "1.1"
+  validation_criteria: "cargo test -p gobby-core resolves_in_db_and_no_db_modes"
+  labels:
+    - covers:gwiki-multimodal-ai:1.2:1.2.1
+    - covers:gwiki-multimodal-ai:1.2:1.2.2
+    - covers:gwiki-multimodal-ai:1.2:1.2.3
+    - covers:gwiki-multimodal-ai:1.2:1.2.4
+    - covers:gwiki-multimodal-ai:1.2:1.2.5
+  implementation_domain: backend
+  tdd: true
+  source_section: "1.2"
+- title: "Dispatch ingest-file to orchestrators and add CLI flags"
+  category: code
+  task_type: feature
+  depends_on:
+    - "1.2"
+  validation_criteria: "cargo test -p gobby-wiki detects_audio_and_image_extensions"
+  labels:
+    - covers:gwiki-multimodal-ai:1.3:1.3.1
+    - covers:gwiki-multimodal-ai:1.3:1.3.2
+    - covers:gwiki-multimodal-ai:1.3:1.3.3
+    - covers:gwiki-multimodal-ai:1.3:1.3.4
+    - covers:gwiki-multimodal-ai:1.3:1.3.5
+    - covers:gwiki-multimodal-ai:1.3:1.3.6
+    - covers:gwiki-multimodal-ai:1.3:1.3.7
+  implementation_domain: backend
+  tdd: true
+  source_section: "1.3"
+- title: "Add gcore `ai` feature and transport skeleton"
+  category: code
+  task_type: feature
+  depends_on:
+    - "1.3"
+  validation_criteria: "cargo test -p gobby-core ai_error_is_transport_neutral"
+  labels:
+    - covers:gwiki-multimodal-ai:2.1:2.1.1
+    - covers:gwiki-multimodal-ai:2.1:2.1.1a
+    - covers:gwiki-multimodal-ai:2.1:2.1.1b
+    - covers:gwiki-multimodal-ai:2.1:2.1.2
+    - covers:gwiki-multimodal-ai:2.1:2.1.3
+    - covers:gwiki-multimodal-ai:2.1:2.1.4
+  implementation_domain: backend
+  tdd: true
+  source_section: "2.1"
+- title: "Direct transcription/translation client"
+  category: code
+  task_type: feature
+  depends_on:
+    - "2.1"
+  validation_criteria: "cargo test -p gobby-core builds_multipart_and_parses_segments"
+  labels:
+    - covers:gwiki-multimodal-ai:2.2:2.2.1
+    - covers:gwiki-multimodal-ai:2.2:2.2.2
+  implementation_domain: backend
+  tdd: true
+  source_section: "2.2"
+- title: "Direct vision and text clients"
+  category: code
+  task_type: feature
+  depends_on:
+    - "2.1"
+  validation_criteria: "cargo test -p gobby-core sends_image_url_and_parses"
+  labels:
+    - covers:gwiki-multimodal-ai:2.3:2.3.1
+    - covers:gwiki-multimodal-ai:2.3:2.3.2
+  implementation_domain: backend
+  tdd: true
+  source_section: "2.3"
+- title: "Daemon clients with back-compat mapping"
+  category: code
+  task_type: feature
+  depends_on:
+    - "2.2"
+    - "2.3"
+  validation_criteria: "cargo test -p gobby-core legacy_text_maps_to_single_segment"
+  labels:
+    - covers:gwiki-multimodal-ai:2.4:2.4.1
+    - covers:gwiki-multimodal-ai:2.4:2.4.2
+    - covers:gwiki-multimodal-ai:2.4:2.4.3
+    - covers:gwiki-multimodal-ai:2.4:2.4.4
+  implementation_domain: backend
+  tdd: true
+  source_section: "2.4"
+- title: "Add gwiki thin trait adapters over the shared gcore router"
+  category: code
+  task_type: feature
+  depends_on:
+    - "2.4"
+  validation_criteria: "cargo test -p gobby-core effective_route_auto_falls_through_per_capability"
+  labels:
+    - covers:gwiki-multimodal-ai:3.1:3.1.1
+    - covers:gwiki-multimodal-ai:3.1:3.1.2
+    - covers:gwiki-multimodal-ai:3.1:3.1.3
+  implementation_domain: backend
+  tdd: true
+  source_section: "3.1"
+- title: "Add gwiki::media ffmpeg/ffprobe helpers"
+  category: code
+  task_type: feature
+  depends_on:
+    - "1.3"
+  validation_criteria: "cargo test -p gobby-wiki temp_files_cleaned_asset_survives"
+  labels:
+    - covers:gwiki-multimodal-ai:3.2:3.2.1
+    - covers:gwiki-multimodal-ai:3.2:3.2.2
+  implementation_domain: backend
+  tdd: true
+  source_section: "3.2"
+- title: "Repoint the daemon vision capability probe to a GET status route"
+  category: code
+  task_type: feature
+  depends_on:
+    - "3.1"
+  validation_criteria: "cargo test -p gobby-core capability_status_routes"
+  labels:
+    - covers:gwiki-multimodal-ai:3.3:3.3.1
+    - covers:gwiki-multimodal-ai:3.3:3.3.2
+    - covers:gwiki-multimodal-ai:3.3:3.3.3
+    - covers:gwiki-multimodal-ai:3.3:3.3.4
+  implementation_domain: backend
+  tdd: true
+  source_section: "3.3"
+- title: "Wire audio ingest to production transcription and extend output"
+  category: code
+  task_type: feature
+  depends_on:
+    - "3.1"
+    - "3.2"
+  validation_criteria: "cargo test -p gobby-wiki production_transcription_writes_fields"
+  labels:
+    - covers:gwiki-multimodal-ai:4.1:4.1.1
+    - covers:gwiki-multimodal-ai:4.1:4.1.2
+  implementation_domain: backend
+  tdd: true
+  source_section: "4.1"
+- title: "Add language auto-detect and translation precedence"
+  category: code
+  task_type: feature
+  depends_on:
+    - "4.1"
+  validation_criteria: "cargo test -p gobby-wiki precedence_and_segment_wise"
+  labels:
+    - covers:gwiki-multimodal-ai:4.2:4.2.1
+    - covers:gwiki-multimodal-ai:4.2:4.2.2
+    - covers:gwiki-multimodal-ai:4.2:4.2.3
+  implementation_domain: backend
+  tdd: true
+  source_section: "4.2"
+- title: "Add deterministic long-media chunking"
+  category: code
+  task_type: feature
+  depends_on:
+    - "4.1"
+    - "3.2"
+  validation_criteria: "cargo test -p gobby-wiki chunks_under_limit_fixed_codec"
+  labels:
+    - covers:gwiki-multimodal-ai:4.3:4.3.1
+    - covers:gwiki-multimodal-ai:4.3:4.3.2
+    - covers:gwiki-multimodal-ai:4.3:4.3.3
+    - covers:gwiki-multimodal-ai:4.3:4.3.4
+  implementation_domain: backend
+  tdd: true
+  source_section: "4.3"
+- title: "Wire image ingest to production vision"
+  category: code
+  task_type: feature
+  depends_on:
+    - "3.1"
+  validation_criteria: "cargo test -p gobby-wiki production_vision_writes_description_and_ocr"
+  labels:
+    - covers:gwiki-multimodal-ai:5.1:5.1.1
+  implementation_domain: backend
+  tdd: true
+  source_section: "5.1"
+- title: "Wire video to audio-first transcript plus real frames"
+  category: code
+  task_type: feature
+  depends_on:
+    - "4.1"
+    - "4.3"
+    - "3.2"
+    - "5.1"
+  validation_criteria: "cargo test -p gobby-wiki video_produces_transcript_and_frames"
+  labels:
+    - covers:gwiki-multimodal-ai:5.2:5.2.1
+    - covers:gwiki-multimodal-ai:5.2:5.2.2
+  implementation_domain: backend
+  tdd: true
+  source_section: "5.2"
+- title: "Add partial-video degradation matrix and media metadata"
+  category: code
+  task_type: feature
+  depends_on:
+    - "5.2"
+  validation_criteria: "cargo test -p gobby-wiki partial_failure_matrix"
+  labels:
+    - covers:gwiki-multimodal-ai:5.3:5.3.1
+    - covers:gwiki-multimodal-ai:5.3:5.3.2
+  implementation_domain: backend
+  tdd: true
+  source_section: "5.3"
+- title: "Office, HTML, and structured-text document extraction"
+  category: code
+  task_type: feature
+  depends_on:
+    - "1.3"
+  validation_criteria: "cargo test -p gobby-wiki extracts_office_html_and_degrades"
+  labels:
+    - covers:gwiki-multimodal-ai:5.4:5.4.1
+  implementation_domain: backend
+  tdd: true
+  source_section: "5.4"
+- title: "PDF — text layer combined with vision"
+  category: code
+  task_type: feature
+  depends_on:
+    - "5.4"
+    - "3.1"
+    - "3.2"
+  validation_criteria: "cargo test -p gobby-wiki combines_text_layer_and_vision"
+  labels:
+    - covers:gwiki-multimodal-ai:5.5:5.5.1
+  implementation_domain: backend
+  tdd: true
+  source_section: "5.5"
+- title: "Document degradation matrix and metadata"
+  category: code
+  task_type: feature
+  depends_on:
+    - "5.4"
+    - "5.5"
+  validation_criteria: "cargo test -p gobby-wiki document_degradation_matrix"
+  labels:
+    - covers:gwiki-multimodal-ai:5.6:5.6.1
+  implementation_domain: backend
+  tdd: true
+  source_section: "5.6"
+- title: "Author the daemon capability contract (CLI side)"
+  category: docs
+  task_type: documentation
+  depends_on:
+    - "3.3"
+  validation_criteria: "Author the daemon capability contract (CLI side): target docs written, reviewed, and consistent with the cited routes/contract"
+  labels:
+    - covers:gwiki-multimodal-ai:6.1:6.1.1
+    - covers:gwiki-multimodal-ai:6.1:6.1.2
+    - covers:gwiki-multimodal-ai:6.1:6.1.3
+    - covers:gwiki-multimodal-ai:6.1:6.1.4
+  implementation_domain: backend
+  tdd: false
+  source_section: "6.1"
+- title: "Add gwiki and the gcore ai feature to CI"
+  category: config
+  task_type: chore
+  depends_on:
+    - "1.3"
+  validation_criteria: "Add gwiki and the gcore ai feature to CI: workflow YAML parses (actionlint) and the added CI/release jobs run green"
+  labels:
+    - covers:gwiki-multimodal-ai:7.1:7.1.1
+  implementation_domain: backend
+  tdd: false
+  source_section: "7.1"
+- title: "Add the gwiki release workflow"
+  category: config
+  task_type: chore
+  depends_on:
+    - "7.1"
+  validation_criteria: "Add the gwiki release workflow: workflow YAML parses (actionlint) and the added CI/release jobs run green"
+  labels:
+    - covers:gwiki-multimodal-ai:7.2:7.2.1
+    - covers:gwiki-multimodal-ai:7.2:7.2.2
+  implementation_domain: backend
+  tdd: false
+  source_section: "7.2"
+- title: "Document the AI configuration matrix"
+  category: docs
+  task_type: documentation
+  depends_on:
+    - "5.3"
+    - "5.6"
+  validation_criteria: "Document the AI configuration matrix: target docs written, reviewed, and consistent with the cited routes/contract"
+  labels:
+    - covers:gwiki-multimodal-ai:7.3:7.3.1
+  implementation_domain: backend
+  tdd: false
+  source_section: "7.3"
+- title: "Extract local-backend discovery into gcore and adopt in gloc"
+  category: refactor
+  task_type: chore
+  depends_on:
+    - "2.4"
+    - "5.3"
+    - "5.6"
+    - "6.1"
+    - "7.2"
+    - "7.3"
+  validation_criteria: "cargo test -p gobby-core detects_first_reachable"
+  labels:
+    - covers:gwiki-multimodal-ai:8.1:8.1.1
+    - covers:gwiki-multimodal-ai:8.1:8.1.1a
+    - covers:gwiki-multimodal-ai:8.1:8.1.2
+    - covers:gwiki-multimodal-ai:8.1:8.1.3
+  implementation_domain: backend
+  tdd: false
+  source_section: "8.1"
+- title: "Fold gcode embeddings under shared routing"
+  category: refactor
+  task_type: chore
+  depends_on:
+    - "8.1"
+  validation_criteria: "cargo test -p gobby-code resolves_via_shared_routing"
+  labels:
+    - covers:gwiki-multimodal-ai:8.2:8.2.1
+    - covers:gwiki-multimodal-ai:8.2:8.2.2
+  implementation_domain: backend
+  tdd: false
+  source_section: "8.2"
+- title: "Add optional LLM-backed gcode outlines"
+  category: code
+  task_type: feature
+  depends_on:
+    - "8.1"
+  validation_criteria: "cargo test -p gobby-code summarizes_when_configured"
+  labels:
+    - covers:gwiki-multimodal-ai:8.3:8.3.1
+    - covers:gwiki-multimodal-ai:8.3:8.3.2
+  implementation_domain: backend
+  tdd: true
+  source_section: "8.3"
+- title: "Give gwiki shared hub-provisioning parity via `ensure_hub`"
+  category: code
+  task_type: feature
+  depends_on:
+    - "5.3"
+    - "5.6"
+    - "6.1"
+    - "7.2"
+    - "7.3"
+  validation_criteria: "cargo test -p gobby-core --test public_boundary"
+  labels:
+    - covers:gwiki-multimodal-ai:8.4:8.4.0
+    - covers:gwiki-multimodal-ai:8.4:8.4.1
+    - covers:gwiki-multimodal-ai:8.4:8.4.2
+    - covers:gwiki-multimodal-ai:8.4:8.4.3
+  implementation_domain: backend
+  tdd: true
+  source_section: "8.4"
+- title: "Enforce the single-hub invariant across install orders"
+  category: code
+  task_type: feature
+  depends_on:
+    - "8.4"
+  validation_criteria: "cargo test -p gobby-core no_double_provision_when_reachable"
+  labels:
+    - covers:gwiki-multimodal-ai:8.5:8.5.1
+    - covers:gwiki-multimodal-ai:8.5:8.5.2
+    - covers:gwiki-multimodal-ai:8.5:8.5.3
+  implementation_domain: backend
+  tdd: true
+  source_section: "8.5"
+- title: "gcode hierarchical code-doc generator (file → module → repo)"
+  category: code
+  task_type: feature
+  depends_on:
+    - "8.3"
+  validation_criteria: "cargo test -p gobby-code generates_hierarchical_docs"
+  labels:
+    - covers:gwiki-multimodal-ai:9.1:9.1.1
+    - covers:gwiki-multimodal-ai:9.1:9.1.2
+  implementation_domain: backend
+  tdd: true
+  source_section: "9.1"
+- title: "Module clustering from the dependency graph"
+  category: code
+  task_type: feature
+  depends_on:
+    - "9.1"
+  validation_criteria: "cargo test -p gobby-code clusters_modules_from_graph"
+  labels:
+    - covers:gwiki-multimodal-ai:9.2:9.2.1
+  implementation_domain: backend
+  tdd: true
+  source_section: "9.2"
+- title: "Mermaid diagrams from the graph"
+  category: code
+  task_type: feature
+  depends_on:
+    - "9.2"
+  validation_criteria: "cargo test -p gobby-code emits_bounded_mermaid"
+  labels:
+    - covers:gwiki-multimodal-ai:9.3:9.3.1
+  implementation_domain: backend
+  tdd: true
+  source_section: "9.3"
+- title: "Citation grounding and provenance frontmatter"
+  category: code
+  task_type: feature
+  depends_on:
+    - "9.1"
+  validation_criteria: "cargo test -p gobby-code citations_validated_against_spans"
+  labels:
+    - covers:gwiki-multimodal-ai:9.4:9.4.1
+  implementation_domain: backend
+  tdd: true
+  source_section: "9.4"
+- title: "Incremental regeneration"
+  category: code
+  task_type: feature
+  depends_on:
+    - "9.1"
+    - "9.4"
+  validation_criteria: "cargo test -p gobby-code incremental_regenerates_only_changed"
+  labels:
+    - covers:gwiki-multimodal-ai:9.5:9.5.1
+  implementation_domain: backend
+  tdd: true
+  source_section: "9.5"
+- title: "gwiki ingest of generated code-docs"
+  category: code
+  task_type: feature
+  depends_on:
+    - "9.1"
+    - "1.3"
+  validation_criteria: "cargo test -p gobby-wiki ingests_codedocs_with_provenance"
+  labels:
+    - covers:gwiki-multimodal-ai:9.6:9.6.1
+    - covers:gwiki-multimodal-ai:9.6:9.6.2
+    - covers:gwiki-multimodal-ai:9.6:9.6.3
+  implementation_domain: backend
+  tdd: true
+  source_section: "9.6"
+- title: "codewiki CI and documentation"
+  category: config
+  task_type: chore
+  depends_on:
+    - "9.1"
+    - "9.6"
+  validation_criteria: "codewiki CI and documentation: workflow YAML parses (actionlint) and the added CI/release jobs run green"
+  labels:
+    - covers:gwiki-multimodal-ai:9.7:9.7.1
+    - covers:gwiki-multimodal-ai:9.7:9.7.2
+  implementation_domain: backend
+  tdd: false
+  source_section: "9.7"
+```
