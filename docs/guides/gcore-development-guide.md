@@ -104,12 +104,15 @@ impl GraphClient {
     ) -> anyhow::Result<Vec<Row>>;
     pub fn with_sync_graph<T>(
         &mut self,
-        f: impl FnOnce(&mut SyncGraph) -> anyhow::Result<T>,
+        f: impl FnOnce(&mut ReadOnlySyncGraph<'_>) -> anyhow::Result<T>,
     ) -> anyhow::Result<T>;
 }
 ```
 
 Consumers provide the graph name through constructor methods such as `GraphClient::from_config`; `gobby-core` must not hardcode code, wiki, or memory graph defaults. The `graph` field stays private so connection ownership cannot leak across domain crates. Use `query` for normal Cypher reads/writes. `with_sync_graph` is the narrow escape hatch for consumers that need a FalkorDB crate operation not yet represented by the shared adapter.
+The closure receives `&mut ReadOnlySyncGraph<'_>` because the FalkorDB crate
+requires mutable access even for `GRAPH.RO_QUERY`; the wrapper exposes only the
+read-only query builder and selected graph name.
 
 ### `degradation`
 
