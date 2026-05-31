@@ -81,6 +81,20 @@ a separate OpenAI-compatible endpoint, or via the daemon.
   multimodal endpoint**.
 - **No in-process inference / no auto model pulls**: every modality is a thin HTTP call to a model *server*; the CLI
   never loads or force-downloads a model (lifecycle is gloc's job, §P8).
+- **AI-config resolution order — deliberate no-env carve-out from AGENTS.md §3 (Round 11 user directive; made concrete,
+  not buried)**: AGENTS.md §3 ("Config resolution order") pins **env vars → `config_store` → hardcoded defaults**, and its
+  own examples are the **infrastructure/hub-connection** settings (`GOBBY_FALKORDB_HOST`/`_PORT`/`_PASSWORD`, the Postgres
+  DSN) — that env-first rule governs **hub-location/infra** config, which this epic **preserves unchanged** (DB-DSN
+  discovery is infra, not AI config — S1, §1.2). **AI capability config is a distinct, newer domain** that, per an
+  explicit user directive (Round 11), resolves `config_store` (DB) → `~/.gobby/gcore.yaml` (standalone) → defaults with
+  **no env-var layer** (CLI flags stay valid per-invocation overrides; secrets via `$secret:` Fernet only). This is **not a
+  novel deviation**: the repo has **already shipped** a no-env AI-config domain — the merged `embeddings-namespace-migration`
+  (tasks #344/#348) made `ai.embeddings.*` canonical and **retired the legacy `embeddings.api_key_env` env-indirection**
+  (`crates/gcore/src/config.rs` `embedding_keys::legacy_keys`, with the `legacy_keys_not_honored` and
+  `ci_guard_rejects_legacy_namespace` tests). The remaining gap is only that **AGENTS.md §3's prose has not been updated**
+  to record the carve-out, so an implementer reading it literally sees a contradiction with §1.1's no-env AI config. **This
+  epic closes that gap in §1.1**: it updates AGENTS.md §3 to scope its env-first rule to infrastructure/hub config and to
+  document the AI-config no-env policy, making the exception concrete in the repo contract rather than only in this plan.
 
 ## A1: Architecture & ownership boundary
 
@@ -215,7 +229,7 @@ through the orchestrators is a tracked follow-up, not part of this plan.
 
 `kind: deliverable`
 
-Target: `crates/gcore/src/config.rs`
+Target: `crates/gcore/src/config.rs`, `AGENTS.md`
 
 Add always-compiled, `reqwest`-free config to `gobby_core::config`, modeled on `EmbeddingConfig`/`resolve_embedding_config`
 (`config.rs:164`) but **resolving from the `ConfigSource` only, with no env-var layer (Round 11)**: AI config is read from
@@ -258,6 +272,11 @@ Add always-compiled, `reqwest`-free config to `gobby_core::config`, modeled on `
 - 1.1.5 - `audio_translate` inherits `routing`/`api_base`/`api_key`/`model`/`provider`/`transport` from `audio_transcribe`
   when unset, keeps `target_lang` local, and an explicit `ai.audio_translate.<field>` overrides just that field (Round 8
   #4 / Round 9 #3). test: `crates/gcore/src/config.rs::tests::audio_translate_inherits_transcribe_binding`.
+- 1.1.6 - AGENTS.md §3 ("Config resolution order") is updated to **scope** its env-first rule (env vars → `config_store` →
+  defaults) to **infrastructure/hub-connection** config and to **document the no-env AI-config carve-out** (AI capability
+  config resolves `config_store` → `gcore.yaml` → defaults with no env layer; CLI flags remain valid overrides; Round 11),
+  so the repo contract no longer contradicts the `ai_config_resolves_store_then_yaml_no_env` behavior established here
+  (this mirrors the already-merged no-env precedent for `ai.embeddings.*`). file: `AGENTS.md`.
 
 ### 1.2 Add shared `gobby_core::ai_context` (AiContext, config source, router) [category: code] (depends: 1.1)
 
@@ -504,7 +523,7 @@ media helpers.
 
 `kind: deliverable`
 
-Target: `crates/gwiki/src/ai/clients.rs`, `crates/gwiki/src/ai/mod.rs`, `crates/gwiki/src/lib.rs`, `crates/gwiki/Cargo.toml`, `crates/gwiki/src/transcribe.rs`
+Target: `crates/gwiki/src/ai/clients.rs`, `crates/gwiki/src/ai/mod.rs`, `crates/gwiki/src/lib.rs`, `crates/gwiki/Cargo.toml`, `crates/gwiki/src/transcribe.rs`, `crates/gwiki/src/video.rs`
 
 `ProductionTranscriptionClient`/`ProductionVisionClient` implement gwiki's `TranscriptionClient`/`VisionClient` by
 delegating to the `gobby_core::ai` clients selected by the **shared gcore effective router**
@@ -527,8 +546,10 @@ in the model. `align_transcript_and_frames` (`video.rs:81`) currently parses `se
 - 3.1.2 - The production clients **consume** `gobby_core::ai::effective_route` per capability to pick their transport
   (no gwiki-side routing logic), honoring `daemon`/`direct`/`off` and the `Auto` daemon→direct→off collapse the shared
   router decides. test: `crates/gwiki/src/ai/clients.rs::tests::clients_consume_effective_route`.
-- 3.1.3 - `align_transcript_and_frames` aligns on numeric `start_ms` (no string-timestamp parsing) and still produces the
-  transcript-only and frame-aligned groupings. test: `crates/gwiki/src/video.rs::tests::aligns_on_numeric_start_ms`.
+- 3.1.3 - The **production** `align_transcript_and_frames` in `crates/gwiki/src/video.rs` is rewritten to align on numeric
+  `start_ms` (it no longer calls `timestamp_seconds_or_zero`/`parse_timestamp_seconds` on `segment.timestamp` strings,
+  `video.rs:102,118`) and still produces the transcript-only and frame-aligned groupings. file:
+  `crates/gwiki/src/video.rs`. test: `crates/gwiki/src/video.rs::tests::aligns_on_numeric_start_ms`.
 - 3.1.4 - The new gwiki `ai` module is declared in the crate root (`mod ai;`) with `clients` declared in its `ai/mod.rs`,
   and the gwiki `ai = ["gobby-core/ai"]` feature is added to `Cargo.toml` and included in `default`. file:
   `crates/gwiki/src/lib.rs`. file: `crates/gwiki/src/ai/mod.rs`. file: `crates/gwiki/Cargo.toml`.
@@ -625,7 +646,7 @@ frontmatter (`transcription_task`, `transcription_source_language`, `transcripti
 
 `kind: deliverable`
 
-Target: `crates/gwiki/src/ai/translate.rs`, `crates/gwiki/src/ai/mod.rs`
+Target: `crates/gwiki/src/ai/translate.rs`, `crates/gwiki/src/ai/mod.rs`, `crates/gwiki/src/ingest/audio.rs`
 
 Auto-detect is default (omit `language` → whisper detects → record `source_language`); `ai.audio_transcribe.language` is
 an optional hint. **Exact algorithm** (resolves the auto-detect ordering problem — the source is unknown until after a
@@ -645,6 +666,13 @@ pass):
 If `/v1/audio/translations` is unsupported and a text LLM is configured, step 2 falls back to transcribe + segment-wise
 LLM translation to English.
 
+**Production integration (the consuming path, not just the helper module)**: this precedence is **invoked from the
+production audio ingest path** — `ingest_audio_with_transcription` (`crates/gwiki/src/ingest/audio.rs:54`), which §4.1
+already wires to the production `TranscriptionEndpoint`. The resolved `--translate`/`--target-lang` flags and the
+`audio_translate` binding (`target_lang`, inherited endpoint — §1.1/§1.3) are threaded into that flow so the audio path
+calls `ai::translate` rather than emitting a transcript-only doc; the result feeds the existing
+`write_audio_transcript_markdown` writer (`transcribe.rs:52`). Without this wiring `ai/translate.rs` would be dead code.
+
 **Acceptance:**
 
 - 4.2.1 - Source==target skips translation; non-English target translates per segment preserving timestamps. test:
@@ -655,12 +683,16 @@ LLM translation to English.
   non-English target transcribes first then applies the `source==target` skip. test:
   `crates/gwiki/src/ai/translate.rs::tests::english_one_pass_vs_target_first`.
 - 4.2.4 - The `translate` submodule is declared in gwiki's `ai` module. file: `crates/gwiki/src/ai/mod.rs`.
+- 4.2.5 - The production audio ingest path **invokes** `ai::translate` — with `--translate`/`--target-lang` (and the
+  `audio_translate` binding) set, `ingest_audio_with_transcription` produces a translated transcript via the translation
+  precedence, not a transcript-only doc. file: `crates/gwiki/src/ingest/audio.rs`. test:
+  `crates/gwiki/src/ingest/audio.rs::tests::production_path_applies_translation`.
 
 ### 4.3 Add deterministic long-media chunking [category: code] (depends: 4.1, 3.2)
 
 `kind: deliverable`
 
-Target: `crates/gwiki/src/ai/chunk.rs`, `crates/gwiki/src/ai/mod.rs`
+Target: `crates/gwiki/src/ai/chunk.rs`, `crates/gwiki/src/ai/mod.rs`, `crates/gwiki/src/ingest/audio.rs`
 
 `gwiki::media::split_audio_file` decodes to a **fixed transcription codec — 16 kHz mono 16-bit PCM WAV** (ffmpeg
 `-ar 16000 -ac 1 -c:a pcm_s16le`), giving ~32 KB/s so chunk-bytes math is deterministic; window = min(duration to reach
@@ -673,6 +705,13 @@ transcribes; unknown duration also single-shots when under the cap). Chunking re
 stays all-or-error (`transcribe.rs:26`); the aggregate records mid-run provider failures for P5.3.
 Window/overlap/max-bytes are named constants.
 
+**Production integration (the consuming path, not just the helper module)**: chunking is **invoked from the production
+audio ingest path** — `ingest_audio_with_transcription` (`crates/gwiki/src/ingest/audio.rs:54`, the seam §4.1 wires to the
+production endpoint) routes audio over the byte cap through `ai::chunk` (which calls the per-chunk
+`TranscriptionClient`/endpoint sequentially under the shared limiter) instead of the single `client.transcribe` call in
+`write_audio_transcript_markdown` (`transcribe.rs:60`); short audio under the cap bypasses chunking and single-shots.
+Without this wiring `ai/chunk.rs` would be dead code and long audio would exceed the upload byte cap.
+
 **Acceptance:**
 
 - 4.3.1 - Splitting normalizes to 16 kHz mono PCM WAV and keeps each chunk under the byte limit. test:
@@ -684,6 +723,10 @@ Window/overlap/max-bytes are named constants.
 - 4.3.4 - A mid-run chunk failure yields `ChunkedTranscription { partial: true }` with completed chunks kept and missing
   ranges recorded. test: `crates/gwiki/src/ai/chunk.rs::tests::partial_chunk_outcome`.
 - 4.3.5 - The `chunk` submodule is declared in gwiki's `ai` module. file: `crates/gwiki/src/ai/mod.rs`.
+- 4.3.6 - The production audio ingest path **invokes** `ai::chunk` — `ingest_audio_with_transcription` routes long audio
+  (over the byte cap) through chunked sequential transcription and single-shots short audio, so `--translate`/transcription
+  on long media uses the chunking aggregate rather than a single over-cap upload. file:
+  `crates/gwiki/src/ingest/audio.rs`. test: `crates/gwiki/src/ingest/audio.rs::tests::production_path_chunks_long_audio`.
 
 ## P5: Image, video, and document extraction
 
@@ -710,7 +753,7 @@ frontmatter; else preserve the asset and emit vision degradation (existing `visi
   `ocr_text` is present, and the model frontmatter. test:
   `crates/gwiki/src/ingest/image.rs::tests::production_vision_writes_description_and_ocr`.
 
-### 5.2 Wire video to audio-first transcript plus real frames [category: code] (depends: 4.1, 4.3, 3.2, 5.1)
+### 5.2 Wire video to audio-first transcript plus real frames [category: code] (depends: 4.1, 4.2, 4.3, 3.2, 5.1)
 
 `kind: deliverable`
 
@@ -718,7 +761,9 @@ Target: `crates/gwiki/src/ingest/video.rs`, `crates/gwiki/src/video.rs`
 
 Add real frame-image temp paths to `VideoSnapshot` (currently only `frame_descriptions`/`transcript_segments`,
 `video.rs:9`). In `ingest_video` (`video.rs:41`): `extract_audio_file` → chunked transcribe/translate (P4) → real
-`transcript_segments`; `sample_frame_images` at the **gwiki-owned frame interval** (resolved CLI > `config_store` >
+`transcript_segments`; when `--translate`/`--target-lang` is set, video reuses the **same `ai::translate` precedence as
+audio (§4.2)** over the chunked transcript (hence the `depends: 4.2`), so video translation never re-implements
+precedence; `sample_frame_images` at the **gwiki-owned frame interval** (resolved CLI > `config_store` >
 `gcore.yaml` > default, `gwiki.ingest.video_frame_interval_seconds`; Round 6 #8 / no env, Round 11) → `describe_image` per frame → real
 `frame_descriptions`; then reuse `align_transcript_and_frames` (now numeric `start_ms`, Round 6 #2) +
 `write_video_derived_markdown`. **Run modalities sequentially** (transcription → frame vision) per B1. `sample_frames` coerces interval `0`→`1`, so **branch explicitly**:
@@ -1044,14 +1089,22 @@ distinct STT probe, else degrade to off. gloc retains lifecycle (`ensure_model_r
 
 `kind: deliverable`
 
-Target: `crates/gcode/src/vector/code_symbols/embedding.rs`, `crates/gcode/src/config.rs`
+Target: `crates/gcode/src/vector/code_symbols/embedding.rs`, `crates/gcode/src/config.rs`, `crates/gcode/Cargo.toml`
 
 Keep the existing OpenAI-compatible `/embeddings` client (`resolve_embedding_config`) but resolve its endpoint/routing
 through the shared **`embed` capability binding** (`ai.embeddings.*`, transport `openai_compatible_http`; A2) +
 `local_backend` discovery — the same vocabulary the daemon registry uses, so embeddings stops being a special case.
-**The `embeddings.* → ai.embeddings.*` rename is owned by the separate `embeddings-namespace-migration` epic, NOT §8.2
-(Round 11)**: §8.2 has a **hard cross-epic dependency on that epic's Contract phase** and does **not** re-own the no-alias
-cut. That epic owns the complete inventory and the dangerous parts — the full gcode/standalone key set
+**The `embeddings.* → ai.embeddings.*` rename was owned by the separate `embeddings-namespace-migration` epic, NOT §8.2
+(Round 11), and that migration has already SHIPPED AND MERGED (tasks #344 "P1 expand" and #348 "Finish embeddings
+namespace migration in gcode", both completed — Round 20)**: `ai.embeddings.*` is now the **canonical, live** namespace and
+the legacy `embeddings.*` keys (including the `api_key_env` env-indirection) are **rejected** — see
+`crates/gcore/src/config.rs` (`embedding_keys` `AI_*` constants at `config.rs:38-46`, `legacy_keys`, and the
+`legacy_keys_not_honored` + `ci_guard_rejects_legacy_namespace` tests). **So §8.2 carries NO pending cross-epic gate** —
+the Contract cut it once waited on is complete; §8.2 simply **consumes** the already-migrated `ai.embeddings.*` keys, and
+its only ordering dependency is the **intra-epic §8.1** (the shared `local_backend` discovery + the always-compiled
+`AiContext`), already encoded as the manifest `depends_on: ["8.1"]` — no unencoded ordering edge remains for expansion to
+violate. For historical reference the migration epic owned the complete inventory and the dangerous parts — the full
+gcode/standalone key set
 (`api_base/model/api_key/query_prefix/provider`, `vector_dim`→**`ai.embeddings.dim`**) under `ai.embeddings.*` in
 `gcore.yaml`/`config_store` with **no env vars (Round 11)** — the legacy `embeddings.api_key_env` env-indirection is
 **retired**, not migrated — the gcore.yaml/setup writers, the daemon-side `config_store` migration, and the api-key storage
@@ -1063,9 +1116,9 @@ own work** is the embed-capability routing refactor: route gcode's existing Open
 the already-migrated `ai.embeddings.*` keys so embeddings stops being a special case and shares the same `AiContext` gwiki
 uses. **`embed` never auto-routes to the daemon (Round 6 #6)**: its `Auto` resolves **direct → `local_backend` discovery →
 off only** (no daemon leg) until the daemon owns a real embedding-generation route. Because the migration epic's
-Expand/Migrate phases already populated and *preferred* `ai.embeddings.*` before its Contract cut, §8.2 (gated on that
-Contract) is independent and non-breaking, with no permanent shim. Implementation stays in gcode (not migrated into gloc;
-gcode does not depend on gloc).
+Expand/Migrate/Contract phases have already shipped (the `ai.embeddings.*` cut is live, above), §8.2's gcode-side gate is
+**already satisfied** — it is a pure, non-breaking embed-routing refactor over migrated keys, with no permanent shim.
+Implementation stays in gcode (not migrated into gloc; gcode does not depend on gloc).
 
 **Acceptance:**
 
@@ -1074,14 +1127,18 @@ gcode does not depend on gloc).
   `crates/gcode/src/vector/code_symbols/embedding.rs::tests::resolves_via_shared_routing`.
 - 8.2.2 - gcode's embeddings client resolves endpoint/model/key/dim/query_prefix from the shared `ai.embeddings.*` binding
   (no private `resolve_embedding_config` key reads); the `embeddings.*`→`ai.embeddings.*` rename and legacy-key rejection
-  are owned and tested by the `embeddings-namespace-migration` epic's Contract phase, on which §8.2 depends (Round 11).
+  were delivered by the now-merged `embeddings-namespace-migration` epic and are already live in
+  `crates/gcore/src/config.rs`, so §8.2 consumes the migrated keys with no pending cross-epic gate (Round 11 / Round 20).
   test: `crates/gcode/src/vector/code_symbols/embedding.rs::tests::reads_endpoint_from_shared_binding`.
+- 8.2.3 - `crates/gcode/Cargo.toml` enables `gobby-core/local_backend` (so `embed`'s `Auto` = direct→`local_backend`
+  discovery→off can run gcore's discovery) while preserving the existing `gobby-core` features
+  (`postgres`/`falkor`/`qdrant`/`search`/`indexing`). file: `crates/gcode/Cargo.toml`.
 
 ### 8.3 Add optional LLM-backed gcode outlines [category: code] (depends: 8.1)
 
 `kind: deliverable`
 
-Target: `crates/gcode/src/commands/symbols.rs`, `crates/gcode/src/cli.rs`, `crates/gcode/src/dispatch.rs`
+Target: `crates/gcode/src/commands/symbols.rs`, `crates/gcode/src/cli.rs`, `crates/gcode/src/dispatch.rs`, `crates/gcode/Cargo.toml`
 
 Default outline stays deterministic AST. Extend the existing `Command::Outline { file }` (`cli.rs:267`) with a
 `--summarize` flag, handled in the flat `commands/symbols.rs` (no module split), that sends code
@@ -1098,6 +1155,9 @@ unavailable. This mirrors the daemon's own `code_index/summarizer` path, which `
   `crates/gcode/src/commands/symbols.rs::tests::degrades_to_ast`.
 - 8.3.3 - The new `--summarize` field on `Command::Outline` is threaded through the `Outline` dispatch arm. file:
   `crates/gcode/src/dispatch.rs`.
+- 8.3.4 - `crates/gcode/Cargo.toml` enables `gobby-core/ai` (which transitively pulls `local_backend`) so
+  `gobby_core::ai::generate_text` compiles into gcode for `outline --summarize`, preserving the existing `gobby-core`
+  features. file: `crates/gcode/Cargo.toml`.
 
 ### 8.4 Give gwiki shared hub-provisioning parity via `ensure_hub` [category: code] (depends: P5, P6, P7)
 
@@ -1308,8 +1368,15 @@ handoff — **not part of this epic's task manifest** (framing only, no `kind: d
 extracted to `.gobby/plans/embeddings-namespace-migration.md` and adversarially expanded on its own (its phases are
 canonical `## P1` Expand / `## P2` Migrate / `## P3` Contract — Round 11). **This epic does not re-own the cut (Round 11)**:
 the no-alias rename lives entirely in the migration epic's **Contract (P3)** phase; this epic's **§8.2 (gcode embed-routing)
-is a downstream *consumer* that depends on that Contract** (not the cut itself), and **§6.1 D6 is a CLI-side contract *doc*
-item**, not a daemon deliverable. Both are gated on the migration epic's Expand/Migrate shipping first.
+is a downstream *consumer* of that Contract** (not the cut itself), and **§6.1 D6 is a CLI-side contract *doc* item**, not a
+daemon deliverable.
+
+**Status update (Round 20)**: the **gcode/gcore side of this migration has already shipped and merged** — tasks #344
+("P1 expand") and #348 ("Finish embeddings namespace migration in gcode") are completed, and `crates/gcore/src/config.rs`
+now carries the canonical `ai.embeddings.*` namespace with legacy keys rejected (`legacy_keys_not_honored`,
+`ci_guard_rejects_legacy_namespace`). **§8.2's cross-epic gate is therefore satisfied** (it consumes live migrated keys; no
+unencoded ordering edge remains). The **daemon-side D6** (`config_store` migration in the gobby daemon, §6.1) remains the
+only cross-repo remainder and is tracked in `gwiki-daemon-web.md`, independent of this epic's expansion.
 
 **Why**: the `embeddings.* → ai.embeddings.*` rename is shared config living in daemon-owned `config_store`; a no-alias
 *atomic* flip would force a same-window co-release and risk silently disabling embeddings (semantic tool search,
@@ -1886,6 +1953,51 @@ epic) rather than a hope.
   1:1 with the 35 deliverables (new acceptance 1.3.9, 3.3.6, 5.4.3, 5.5.3, 8.4.4 each carry one `covers:` label; 3.1.2
   re-scoped in place), every `depends_on` resolves, the leaf DAG is acyclic, and the P8/P9→MVP gate holds.
 
+**Round 20 (stage-native planner — adversary Round 19 blocking fixes)**
+
+- reviewer: stage-native planning adversary (Round 19 findings F1–F5)
+- verdict: incorporated (surgical); F1 and F2 resolved against the live codebase rather than by premise redesign
+- blockers fixed:
+  - **F1 no-env AI config vs AGENTS.md §3**: the env-first rule the finding cites is AGENTS.md §3, whose own examples are
+    **infrastructure/hub-connection** keys (`GOBBY_FALKORDB_*`, the DB DSN) — the plan preserves that env-first path for
+    infra unchanged. The **no-env AI-config** stance is an explicit **Round 11 user directive**, and it is **not a novel
+    deviation**: the repo has already shipped a no-env AI-config domain — the merged `embeddings-namespace-migration` made
+    `ai.embeddings.*` canonical and retired the `embeddings.api_key_env` env-indirection
+    (`crates/gcore/src/config.rs` `legacy_keys`, `legacy_keys_not_honored`/`ci_guard_rejects_legacy_namespace`). Made the
+    carve-out **concrete instead of buried**: added a dedicated C1 constraint reconciling it with AGENTS.md §3, and gave
+    §1.1 ownership of **updating AGENTS.md §3** to scope its env-first rule to infra config and document the AI-config
+    no-env policy (new Target `AGENTS.md`, acceptance **1.1.6**). No premise redesign needed, so no escalation;
+  - **F2 §8.2 "pending cross-epic dependency" was stale**: the finding assumes the `embeddings-namespace-migration`
+    Contract is still future, but it has **already shipped and merged** (tasks #344 + #348 completed; `ai.embeddings.*`
+    live with legacy keys rejected in `crates/gcore/src/config.rs`). Corrected §8.2's body + acceptance 8.2.2 and the P0E
+    status note to reflect the satisfied gate — §8.2 now has **no unencoded cross-epic ordering edge**; its only
+    dependency is the intra-epic §8.1, already the manifest `depends_on: ["8.1"]`. The daemon-side D6 (cross-repo) remains
+    the only outstanding migration remainder;
+  - **F3 §3.1 video.rs target coverage**: the production `align_transcript_and_frames` (`crates/gwiki/src/video.rs`, still
+    parsing `segment.timestamp` strings at `video.rs:102,118`) was named only in a `test:` ref. Added
+    `crates/gwiki/src/video.rs` to §3.1's Target and made acceptance **3.1.3** cover the production rewrite (`file:` ref),
+    not just the test;
+  - **F4 §4.2/§4.3 audio integration + §5.2 dependency**: the translate/chunk helper modules had no consuming-path target.
+    Added `crates/gwiki/src/ingest/audio.rs` to §4.2 and §4.3 with acceptance **4.2.5** (production path invokes
+    `ai::translate` for `--translate`/`--target-lang`) and **4.3.6** (production path routes long audio through
+    `ai::chunk`, short audio single-shots), both via `ingest_audio_with_transcription` (the §4.1 seam). Added the
+    §5.2→§4.2 edge (`(depends: 4.1, 4.2, 4.3, 3.2, 5.1)`; manifest `depends_on` adds `4.2`) so video reuses the audio
+    translation precedence rather than re-implementing it;
+  - **F5 §8.2/§8.3 gcode→gcore feature wiring**: gcode's `gobby-core` dep enables `postgres`/`falkor`/`qdrant`/`search`/
+    `indexing` but not `ai`/`local_backend` (`crates/gcode/Cargo.toml:25`). Added `crates/gcode/Cargo.toml` to §8.2 (enable
+    `gobby-core/local_backend` for embed discovery — acceptance **8.2.3**) and §8.3 (enable `gobby-core/ai` for
+    `generate_text` — acceptance **8.3.4**), each preserving the existing features;
+- whole-plan sweeps: (a) **F1 env class** — every other "no env layer" mention (S1, §1.2, §1.3, §5.2, §8.2) asserts the
+  same no-env AI-config stance and is now governed by the single C1 carve-out; (b) **F2 stale-migration class** — only
+  §8.2 claimed a pending gate (the changelog/§6.1-D6 daemon references are correctly cross-repo and untouched); (c) **F3
+  production-file-only-in-test class** — §5.2 already targets `video.rs`; no other deliverable's prose changes a file
+  absent from its Target; (d) **F4 helper-without-consumer class** — only the audio translate/chunk seam; video consumes
+  via depends 4.2/4.3; (e) **F5 consumer-Cargo-feature class** — gloc (§8.1), gwiki (§3.1/§1.3) already enable their gcore
+  features; gcode §8.2/§8.3 were the only gaps, and §9.x inherits gcode's `ai` from §8.3;
+- validation: re-ran `uv run gobby plans validate` (see review notes); manifest stays 1:1 with the 35 deliverables
+  (new acceptance 1.1.6, 4.2.5, 4.3.6, 8.2.3, 8.3.4 each carry one `covers:` label; 3.1.3 augmented in place), every
+  `depends_on` resolves, the leaf DAG is acyclic, and the P8/P9→MVP gate holds.
+
 ## M1 Task Manifest
 
 `kind: manifest`
@@ -1902,6 +2014,7 @@ epic) rather than a hope.
     - covers:gwiki-multimodal-ai:1.1:1.1.3
     - covers:gwiki-multimodal-ai:1.1:1.1.4
     - covers:gwiki-multimodal-ai:1.1:1.1.5
+    - covers:gwiki-multimodal-ai:1.1:1.1.6
   implementation_domain: backend
   tdd: true
   source_section: "1.1"
@@ -2065,6 +2178,7 @@ epic) rather than a hope.
     - covers:gwiki-multimodal-ai:4.2:4.2.2
     - covers:gwiki-multimodal-ai:4.2:4.2.3
     - covers:gwiki-multimodal-ai:4.2:4.2.4
+    - covers:gwiki-multimodal-ai:4.2:4.2.5
   implementation_domain: backend
   tdd: true
   source_section: "4.2"
@@ -2081,6 +2195,7 @@ epic) rather than a hope.
     - covers:gwiki-multimodal-ai:4.3:4.3.3
     - covers:gwiki-multimodal-ai:4.3:4.3.4
     - covers:gwiki-multimodal-ai:4.3:4.3.5
+    - covers:gwiki-multimodal-ai:4.3:4.3.6
   implementation_domain: backend
   tdd: true
   source_section: "4.3"
@@ -2100,6 +2215,7 @@ epic) rather than a hope.
   task_type: feature
   depends_on:
     - "4.1"
+    - "4.2"
     - "4.3"
     - "3.2"
     - "5.1"
@@ -2242,6 +2358,7 @@ epic) rather than a hope.
   labels:
     - covers:gwiki-multimodal-ai:8.2:8.2.1
     - covers:gwiki-multimodal-ai:8.2:8.2.2
+    - covers:gwiki-multimodal-ai:8.2:8.2.3
   implementation_domain: backend
   tdd: false
   source_section: "8.2"
@@ -2255,6 +2372,7 @@ epic) rather than a hope.
     - covers:gwiki-multimodal-ai:8.3:8.3.1
     - covers:gwiki-multimodal-ai:8.3:8.3.2
     - covers:gwiki-multimodal-ai:8.3:8.3.3
+    - covers:gwiki-multimodal-ai:8.3:8.3.4
   implementation_domain: backend
   tdd: true
   source_section: "8.3"
