@@ -32,7 +32,7 @@ jobs:
             echo "::error::Tag '$tag' does not start with 'gloc-v'."
             exit 1
           fi
-          cargo_version="$(cargo pkgid -p gobby-local | sed 's/.*@//')"
+          cargo_version="$(cargo metadata --no-deps --format-version=1 | jq -r '.packages[] | select(.name == "gobby-local") | .version')"
           if [ "$tag_version" != "$cargo_version" ]; then
             echo "::error::Tag version '$tag_version' does not match crates/gloc/Cargo.toml version '$cargo_version'."
             exit 1
