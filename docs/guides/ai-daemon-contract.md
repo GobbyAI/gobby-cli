@@ -80,6 +80,7 @@ Request is multipart form data:
 | `model` | no | Per-request model override. |
 | `language` | no | Source language hint. |
 | `prompt` | no | Recognition prompt or vocabulary hint. |
+| `project_id` | no | CLI project UUID when available; scopes the request to the current project. |
 
 Response:
 
@@ -112,6 +113,7 @@ Request is multipart form data:
 | `file` | yes | Image file bytes. |
 | `provider` | no | Per-request provider override. |
 | `model` | no | Per-request model override. |
+| `project_id` | no | CLI project UUID when available; scopes the request to the current project. |
 
 Response:
 
@@ -139,13 +141,14 @@ Request body:
 ```json
 {
   "prompt": "Write a concise title.",
-  "system_prompt": "Use project terminology.",
+  "system": "Use project terminology.",
   "provider": "openai-compatible",
   "model": "qwen2.5-coder",
-  "max_tokens": 256,
-  "caller": "gwiki"
+  "project_id": "3bf57fe7-2a0c-4074-8912-a83d9cd4df01"
 }
 ```
+
+The CLI emits the field name `system`. It omits `system_prompt`, `max_tokens`, and `caller`.
 
 Response:
 
@@ -185,7 +188,7 @@ Each request resolves capability, provider, and model in this order:
 3. Configured local or OpenAI-compatible fallback.
 4. Off, with a capability-unavailable degradation.
 
-When `routing=daemon`, the CLI forwards the requested capability and any resolved provider/model values to the daemon. The daemon owns final provider selection for daemon-routed work.
+When `routing=daemon`, the CLI forwards the requested capability where the route requires it, any resolved provider/model values, and `project_id` when available. The daemon owns final provider selection for daemon-routed work.
 
 ## Capability Error Semantics
 
