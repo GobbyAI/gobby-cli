@@ -5,6 +5,7 @@ Task-focused documentation for the released gobby-cli crates.
 ## Users
 
 - [gcode User Guide](./gcode-user-guide.md) - search, symbols, dependency graphs, and project management.
+- [gcode Codewiki Guide](./codewiki.md) - generated codebase docs, degraded graph output, and gwiki ingest.
 - [gsqz User Guide](./gsqz-user-guide.md) - output compression pipelines and configuration.
 - [gloc User Guide](./gloc-user-guide.md) - local LLM backend detection and client launch.
 - [ghook User Guide](./ghook-user-guide.md) - hook dispatch, inbox replay, diagnostics, and troubleshooting.
