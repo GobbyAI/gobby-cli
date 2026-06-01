@@ -1939,7 +1939,7 @@ epic) rather than a hope.
     canonical (D6, migration plans' C1/P1);
   - **doctor JSON gains `api_key_fingerprint`** (migration plans only — the gwiki plan names the doctor but carries no
     field list): the shared-contract shape is now `{endpoint, model, dim, api_key_present, api_key_fingerprint,
-    namespace_resolved, source, agrees, drift}`, with `api_key_fingerprint` the `sha256[:8]` redaction (`string | null`).
+    namespace_resolved, source, agrees, drift}`, with `api_key_fingerprint` the `sha256[:16]` redaction (`string | null`).
 
 **Round 14 (adversarial — migration breaking-change honesty, P8 gate integrity, doctor contract)**
 

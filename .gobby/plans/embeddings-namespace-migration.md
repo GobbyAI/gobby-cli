@@ -135,7 +135,7 @@ relocate those values to `config_store`/`gcore.yaml`.
 Target: `crates/gcode/src/commands/embeddings_doctor.rs`, `crates/gcode/src/cli.rs`
 
 A read-only consistency check emitting the shared-contract JSON (`endpoint, model, dim, api_key_present,
-api_key_fingerprint, namespace_resolved, source, agrees, drift`) — `api_key_fingerprint` is the api_key's `sha256[:8]`
+api_key_fingerprint, namespace_resolved, source, agrees, drift`) — `api_key_fingerprint` is the api_key's `sha256[:16]`
 redaction (`string | null`). **Exit-code contract** (shared verbatim with the daemon doctor): `0` = healthy (embedding
 config resolved and self-consistent; `agrees=true`, or `agrees=null` when no daemon peer is reachable — daemon-absent is
 exit 0, not an error); `10` = config not resolved (`namespace_resolved=null` — no embedding config in either namespace);
