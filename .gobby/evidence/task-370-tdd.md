@@ -110,3 +110,46 @@ Baseline mode: diff
 New issues: 0
 Failing new issues >= high: 0
 ```
+
+## Holistic QA Follow-Up
+
+Holistic QA found the public-boundary test was stale after `base64` became an
+intentional optional dependency for the `ai` vision transport.
+
+Exact red command reported by holistic QA:
+
+```bash
+cargo test -p gobby-core --no-default-features
+```
+
+Result: `public_boundary::cargo_features_define_public_boundary` failed because
+`Cargo.toml` contained:
+
+```text
+ai = ["dep:reqwest", "dep:base64", "reqwest/multipart", "local_backend"]
+```
+
+but the test still expected:
+
+```text
+ai = ["dep:reqwest", "reqwest/multipart", "local_backend"]
+```
+
+Minimal green repair: update `crates/gcore/tests/public_boundary.rs` to pin the
+intentional `dep:base64` feature entry and the optional `base64` dependency.
+
+Fresh follow-up validation:
+
+```bash
+cargo test -p gobby-core --no-default-features --test public_boundary cargo_features_define_public_boundary
+cargo test -p gobby-core --no-default-features
+cargo test -p gobby-core --features ai --test public_boundary cargo_features_define_public_boundary
+uv run gobby test-quality audit crates/gcore/tests/public_boundary.rs --baseline .gobby/test-quality-baseline.json --fail-on-new --min-severity high
+```
+
+Results:
+
+- no-default public-boundary target: 1 passed
+- no-default package validation: 58 unit tests passed, 3 public-boundary tests passed
+- ai-feature public-boundary target: 1 passed
+- test-quality audit: 1 file scanned, 3 tests scanned, 0 issues, 0 new issues
