@@ -10,6 +10,9 @@ then `~/.gobby/gcore.yaml`, then defaults. `GOBBY_*` environment variables are
 not an AI configuration layer. CLI flags still override routing for one
 invocation.
 
+For daemon route and probe semantics, see the
+[AI Daemon Capability Contract](./ai-daemon-contract.md).
+
 ## Capability Matrix
 
 | Capability | OpenAI API direct | Daemon | faster-whisper direct | LM Studio/Ollama direct |
@@ -128,3 +131,5 @@ Keep `ai.max_concurrency` low, usually `1` on constrained machines, so chunks,
 frames, transcription, and text calls share one limiter. Use `ai.keep_alive`
 only with providers that understand it; do not send local-provider-only fields
 to cloud OpenAI-compatible endpoints unless that endpoint documents support.
+
+_Last verified: 2026-06-01_

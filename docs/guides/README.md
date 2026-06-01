@@ -8,6 +8,7 @@ Task-focused documentation for the released gobby-cli crates.
 - [gsqz User Guide](./gsqz-user-guide.md) - output compression pipelines and configuration.
 - [gloc User Guide](./gloc-user-guide.md) - local LLM backend detection and client launch.
 - [ghook User Guide](./ghook-user-guide.md) - hook dispatch, inbox replay, diagnostics, and troubleshooting.
+- [AI Configuration](./ai-configuration.md) - capability/backend routing matrix, mixed routing, `--no-ai`, and local model budget.
 
 ## Maintainers
 
