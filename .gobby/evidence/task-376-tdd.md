@@ -67,3 +67,44 @@ Baseline mode: diff
 New issues: 0
 Failing new issues >= high: 0
 ```
+
+## Holistic QA Follow-Up
+
+### Red
+
+Exact command:
+
+```bash
+cargo test -p gobby-core --no-default-features --features ai effective_route_explicit_routing_modes_are_forced
+```
+
+Result: failed before the router fix. Explicit `AiRouting::Daemon` with an
+unavailable probe and configured direct API base resolved to `Direct`:
+`left: Direct`, `right: Daemon`.
+
+### Minimal Green
+
+Exact command:
+
+```bash
+cargo test -p gobby-core --no-default-features --features ai effective_route_explicit_routing_modes_are_forced
+```
+
+Result: passed after changing explicit `Daemon` and `Direct` routing to return
+their configured routes directly. `Auto` remains the only mode that collapses
+daemon to direct to off.
+
+### Final Green
+
+Exact commands:
+
+```bash
+cargo test -p gobby-core --no-default-features --features ai effective_route_explicit_routing_modes_are_forced
+cargo test -p gobby-core --no-default-features --features ai effective_route_auto_falls_through_per_capability
+cargo clippy -p gobby-core --no-default-features --features ai -- -D warnings
+cargo fmt --check --package gobby-core
+uv run gobby test-quality audit crates/gcore/src/ai/mod.rs --baseline .gobby/test-quality-baseline.json --fail-on-new --min-severity high
+```
+
+Result: all commands passed; the test-quality audit reported 0 new issues at
+high severity or above.
