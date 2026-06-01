@@ -954,7 +954,7 @@ shapes real Office/HTML/PDF outputs rather than compiling as an unused helper mo
 `kind: framing`
 
 **Goal**: pin the contract the CLI routes to when routing=`daemon`. The daemon-side implementation is the gobby agent's
-**Unified AI Capability Registry** plan, folded as new phases into `/Users/josh/Projects/gobby/.gobby/plans/gwiki-daemon-web.md`
+**Unified AI Capability Registry** plan, folded as new phases into `.gobby/plans/gwiki-daemon-web.md`
 (separate repo/epic — it also owns the `LLMService` refactor, the `code_index/summarizer`→`text_generate` migration, and
 the runtime providers incl. **agy/Antigravity**). This phase produces only the **gobby-cli-side contract doc**; gwiki/gcode
 degrade until the daemon ships. Boundary in A2.
