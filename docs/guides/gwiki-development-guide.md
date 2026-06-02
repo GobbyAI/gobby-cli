@@ -6,6 +6,18 @@
 
 `gwiki` PostgreSQL search depends on ParadeDB `pg_search` BM25 indexes. The standalone setup path in `crates/gwiki/src/setup.rs` preflights the `pg_search` extension before creating `gwiki_documents_search_bm25` and `gwiki_chunks_search_bm25`; do not remove that preflight or replace it with plain PostgreSQL full-text search unless the ranking contract changes.
 
+## Source Lifecycle
+
+`gwiki index` rebuilds derived search rows from the vault files already present on disk. It must not re-fetch remote sources or mutate raw source records.
+
+`gwiki refresh` is the source-maintenance path. In v1 it refreshes URL-backed records from `raw/INDEX.md`, using existing global scope flags (`--project` or `--topic <name>`), repeated `--id <SOURCE_ID>` selectors, and `--dry-run`. Do not add `--scope`.
+
+Refresh compares fetched response bytes to the existing manifest `content_hash`. Unchanged sources are reported without rewriting raw files or indexing. Changed sources are ingested through the URL ingest fetch/render path, get a new content-hash-derived source ID, replace the old manifest entry, remove superseded `raw/<old_id>.md` and `raw/assets/<old_id>.*` paths, then run indexing once after the changed batch.
+
+Structured JSON output must preserve stdout even for all-failed explicit refreshes. The response includes `command`, `scope`, `status`, `dry_run`, `planned`, `refreshed`, `unchanged`, `failed`, `skipped`, `indexed`, `index_status`, and `degradations`; `index_status.index_required` is always false after the CLI exits. Daemon, MCP, and web refresh surfaces should call the real CLI command and pass only the existing scope flags.
+
+File and media refresh replay is intentionally deferred. Reprocessing those sources needs a lossless record of ingest options and AI/media routing metadata before it can be safe.
+
 ## Daemon Capability Probe
 
 `crates/gwiki/src/daemon.rs` defines the current probe contract. It returns a `DaemonCapabilityReport` with one availability record per capability plus a top-level `degraded` list. A 2xx response marks an endpoint available. `405 Method Not Allowed` also marks a route as present for mutating endpoints probed without a body. `404`, `422`, auth failures, unexpected statuses, and transport failures become `DaemonDegradation` entries with capability, endpoint, reason, status, message, and fallback.
