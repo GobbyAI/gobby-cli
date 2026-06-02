@@ -2,6 +2,10 @@
 
 `gobby-wiki` owns wiki files and derived wiki indexes. It treats Gobby daemon services as optional integrations. Runtime code must resolve the daemon base URL through `gobby_core::daemon_url::daemon_url()` or `daemon_url_at()` and must report unavailable optional services as structured degradation metadata.
 
+## PostgreSQL Search
+
+`gwiki` PostgreSQL search depends on ParadeDB `pg_search` BM25 indexes. The standalone setup path in `crates/gwiki/src/setup.rs` preflights the `pg_search` extension before creating `gwiki_documents_search_bm25` and `gwiki_chunks_search_bm25`; do not remove that preflight or replace it with plain PostgreSQL full-text search unless the ranking contract changes.
+
 ## Daemon Capability Probe
 
 `crates/gwiki/src/daemon.rs` defines the current probe contract. It returns a `DaemonCapabilityReport` with one availability record per capability plus a top-level `degraded` list. A 2xx response marks an endpoint available. `405 Method Not Allowed` also marks a route as present for mutating endpoints probed without a body. `404`, `422`, auth failures, unexpected statuses, and transport failures become `DaemonDegradation` entries with capability, endpoint, reason, status, message, and fallback.
