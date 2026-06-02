@@ -4,20 +4,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-A Cargo workspace containing three Gobby CLI tools:
+A Cargo workspace with six members: five Gobby CLI binaries plus one shared foundation library.
 
 - **gcode** (`crates/gcode/`) — AST-aware code search, symbol navigation, and dependency graph analysis. Reads/writes the Gobby PostgreSQL hub; reads FalkorDB and Qdrant when configured. External sync (embeddings, graph) is handled by the Gobby daemon.
 - **gsqz** (`crates/gsqz/`) — YAML-configurable output compressor for LLM token optimization. Wraps shell commands and applies pattern-based compression pipelines.
 - **gloc** (`crates/gloc/`) — Local LLM launcher. Auto-detects backends (LM Studio, Ollama), manages model lifecycle, and execs into AI CLI tools (Claude Code, Codex) with the right env vars.
+- **gwiki** (`crates/gwiki/`) — Research/knowledge-vault CLI. Ingests multimodal sources (documents, PDFs, URLs, MediaWiki, git, audio/image/video) into a Markdown vault, then indexes/searches/compiles them. Shares gcode's hybrid BM25 + semantic + graph search stack.
+- **ghook** (`crates/ghook/`) — Sandbox-tolerant hook dispatcher. Rust port of the Python `hook_dispatcher`; enqueues a hook envelope to `~/.gobby/hooks/inbox/` then POSTs to the daemon (enqueue-first).
+- **gcore** (`crates/gcore/`) — Shared foundation library (`gobby-core`, no binary). Project discovery, bootstrap/daemon config, AI routing/context, and feature-gated datastore + search adapters consumed by the binaries above.
 
 ## Build & Test Commands
 
 ```bash
 cargo build --workspace                    # Build everything
+cargo build --workspace --release          # Release build (installed into ~/.gobby/bin)
 cargo test --workspace                     # Test everything
 cargo test -p gobby-code                   # Test gcode only
 cargo test -p gobby-squeeze                # Test gsqz only
 cargo test -p gobby-local                  # Test gloc only
+cargo test -p gobby-wiki                   # Test gwiki only
+cargo test -p gobby-hooks                  # Test ghook only
+cargo test -p gobby-core                   # Test gcore only
 cargo clippy --workspace -- -D warnings    # Lint all
 cargo fmt --all --check                    # Check formatting
 ```
@@ -26,12 +33,19 @@ cargo fmt --all --check                    # Check formatting
 
 ```
 crates/
+  gcore/    — Shared foundation library (no binary; feature-gated datastore/AI adapters)
   gcode/    — Heavy binary (tree-sitter, PostgreSQL, FalkorDB, Qdrant, opt-level=3)
+  gwiki/    — Heavy binary (multimodal ingest, ffmpeg/pdf, hybrid search, opt-level=3)
   gsqz/     — Tiny binary (regex pipelines, shell wrapper, opt-level="z")
   gloc/     — Tiny binary (local LLM launcher, backend detection, opt-level="z")
+  ghook/    — Tiny binary (hook dispatcher, enqueue-first transport, opt-level="z")
 ```
 
 Release profiles are in the root `Cargo.toml` with per-package overrides. Each binary has its own optimization level.
+
+### Installing binaries
+
+`cargo build --workspace --release` produces `target/release/{gcode,gwiki,gsqz,gloc,ghook}`. The deployed copies live in `~/.gobby/bin/`, each with a `.{name}-version` sidecar (and ghook additionally writes `.ghook-compatibility` on `ghook --version`). To update an installed binary, copy it over the existing one (an atomic `cp` to `<name>.new` then `mv` avoids "text file busy" if it is running) and refresh the matching `.{name}-version` sidecar.
 
 ## gcode Architecture
 
@@ -91,6 +105,53 @@ CLI parses args → loads layered config → auto-detects backend (probes LM Stu
 - **`backend`** — Backend probing via HTTP GET, Ollama model lifecycle management (check via `/api/tags`, pull via `/api/pull`, warmup via `/api/generate`). LM Studio uses JIT loading (no explicit management needed).
 - **`exec`** — Env var injection from client config templates, argument building, and `exec()` into the client binary (replaces process via `CommandExt::exec()`).
 
+## gwiki Architecture
+
+### Data Flow
+
+`main.rs` parses CLI args via clap → resolves a gwiki `Context` (project root, vault path, PostgreSQL hub, AI routing) → dispatches to a handler in `commands/`. Ingest path: `ingest/file.rs` routes a source by type → modality orchestrator (`ingest/{document,pdf,url,mediawiki,git,wayback,audio,image,video}.rs`) → derived Markdown written into the vault with frontmatter/provenance → `indexer` writes the Gobby hub + sync flags for the daemon.
+
+### Core Modules
+
+- **`ingest/`** — Per-source ingestion. `file` routes by extension/type; `document`/`pdf`/`url`/`mediawiki`/`git`/`wayback` handle text-bearing sources; `audio`/`image`/`video` are the multimodal orchestrators (transcription/translation, vision, frame extraction).
+- **`ai/`** — AI clients (`clients`), chunking (`chunk`), and translation (`translate`), routed through `gobby_core` AI transport. `transcribe.rs`/`vision.rs`/`video.rs` define the modality client traits and degradation vocabulary.
+- **`search/`** — Same hybrid stack as gcode: `bm25` + `semantic` (Qdrant) + `graph_boost` (FalkorDB) merged via `rrf`.
+- **`commands/`** — One handler per subcommand: `init`, `setup`, `collect`, `index`, `compile`, `export`, `search`, `read`, `backlinks`, `sources`, `status`, `health`, `audit`, `lint`, `research`.
+- **`vault`/`document`/`frontmatter`/`provenance`/`citations`/`credibility`** — The Markdown vault model: documents, frontmatter, source provenance, and citation/credibility tracking.
+
+### Graceful Degradation
+
+Multimodal endpoints (transcription, vision) and the AI transport degrade independently — ingest falls back to skeleton/derived output with explicit degradation markers when a capability is routed off or unavailable. Search degrades exactly like gcode (BM25 standalone; semantic/graph optional).
+
+## ghook Architecture
+
+### Data Flow & Modes
+
+`ghook --gobby-owned --cli=<c> --type=<t> [--critical] [--detach]` builds a hook `Envelope`, enqueues it to `~/.gobby/hooks/inbox/`, then attempts a POST to the daemon (`transport`). Enqueue-first means the hook is durable even if the daemon is down; stdout/stderr/exit codes mirror the legacy Python `hook_dispatcher.py` contract. `--diagnose` prints JSON diagnostics with no network/envelope write. `--version` prints the version and writes `~/.gobby/bin/.ghook-compatibility` (`{schema_version, ghook_version}`).
+
+### Core Modules
+
+- **`envelope`** — Hook payload built from stdin JSON + cli/type/flags.
+- **`transport`** — Inbox enqueue + best-effort daemon POST.
+- **`detach`** / **`planned_shutdown`** — Background detach and clean-shutdown handling.
+- **`cli_config`** / **`statusline`** / **`terminal_context`** / **`diagnose`** — Per-CLI config, status line emission, terminal context capture, and diagnostics.
+
+## gcore Architecture
+
+Shared foundation library (`gobby-core`), kept dependency-light so small binaries do not inherit services they never call. Always-compiled modules are split from feature-gated adapters.
+
+### Always-compiled modules
+
+- **`bootstrap`** / **`daemon_url`** / **`project`** / **`provisioning`** — `~/.gobby/bootstrap.yaml` parsing, daemon URL resolution, project-root discovery (`.gobby/project.json`), and provisioning helpers.
+- **`config`** / **`context`** / **`setup`** — Shared config types and runtime context resolution reused across binaries.
+- **`ai_context`** — AI config types, `AiContext` resolution, per-capability **routing decision** (daemon / direct / off), and an always-compiled concurrency limiter.
+- **`ai_types`** — Pure AI result/error data types (no transport deps), kept separate from `ai_context`.
+- **`degradation`** / **`local_backend`** — Shared degradation vocabulary and local-LLM backend descriptors.
+
+### Feature-gated adapters
+
+`ai` (HTTP transport via `reqwest`), `postgres`, `falkor`, `qdrant`, `indexing`, `search` — each behind its own Cargo feature so a consumer pulls in only the datastores/transport it uses.
+
 ## Key Constraints
 
 - **UUID5 parity with Python** (gcode): Symbol IDs are deterministic UUID5 using namespace `c0de1de0-0000-4000-8000-000000000000` and key format `{project_id}:{file_path}:{name}:{kind}:{byte_start}`. Must match the Python daemon's `Symbol.make_id()` exactly.
@@ -98,3 +159,5 @@ CLI parses args → loads layered config → auto-detects backend (probes LM Stu
 - **Tree-sitter grammars** (gcode): Tier 1 (Python/JS/TS/Go/Rust/Java/C/C++/C#/Ruby/PHP/Swift/Kotlin), Tier 2 (Dart/Elixir), Tier 3 (JSON/YAML/Markdown). Adding a language requires a new `tree-sitter-*` dep in `crates/gcode/Cargo.toml` and a grammar entry in `index/languages`.
 - **Non-destructive to Gobby hub schema** (gcode): Validate existing Gobby-owned PostgreSQL tables and BM25 indexes. Never alter `project.json`, `config_store`, or Gobby-managed schema.
 - **Exit code 0** (gsqz): Always exit 0 regardless of subprocess exit code. The LLM reads pass/fail from content.
+- **Python dispatcher contract** (ghook): stdout, stderr, and exit codes must match the legacy Python `hook_dispatcher.py`. Enqueue-first (inbox write before daemon POST) is an internal detail and must not change the observable contract.
+- **AI ownership split** (gcore): AI config types, `AiContext` resolution, the per-capability routing decision, and the concurrency limiter live in `gobby_core::ai_context` (always-compiled, no `reqwest`); pure result/error data types live in `gobby_core::ai_types` (always-compiled); HTTP transport lives behind the `ai` feature in `gobby_core::ai`. Keep these layers separate — don't pull `reqwest` into the always-compiled modules.
