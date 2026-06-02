@@ -70,16 +70,20 @@ Before tagging, run the focused release checks:
 cargo fmt --all --check
 cargo clippy --workspace --all-targets -- -D warnings
 cargo clippy -p gobby-core --all-targets -- -D warnings
+cargo clippy -p gobby-core --all-targets --no-default-features -- -D warnings
 cargo clippy -p gobby-code -- -D warnings
 cargo clippy -p gobby-code --no-default-features -- -D warnings
 cargo clippy -p gobby-hooks --all-targets -- -D warnings
+cargo clippy -p gobby-hooks --all-targets --no-default-features -- -D warnings
 cargo clippy -p gobby-squeeze -- -D warnings
 cargo clippy -p gobby-squeeze --no-default-features -- -D warnings
 cargo clippy -p gobby-local -- -D warnings
 cargo test -p gobby-core
+cargo test -p gobby-core --no-default-features
 cargo test -p gobby-code
 cargo test -p gobby-code --no-default-features
 cargo test -p gobby-hooks
+cargo test -p gobby-hooks --no-default-features
 cargo test -p gobby-squeeze
 cargo test -p gobby-squeeze --no-default-features
 cargo test -p gobby-local
