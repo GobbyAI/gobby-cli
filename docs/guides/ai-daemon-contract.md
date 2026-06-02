@@ -247,7 +247,7 @@ Daemon-side readers that must prefer `ai.embeddings.*`:
 
 The one-time `config_store` migration is daemon-owned and runs in the hub install or upgrade flow described in `hub-install-contract.md`. It renames existing `embeddings.*` rows to `ai.embeddings.*`, preserves values, and preserves `is_secret`. The CLIs must not rewrite daemon-owned `config_store` rows.
 
-P0E sequencing removes the same-window co-release requirement. Its dual-write and dual-read phases populate and prefer `ai.embeddings.*` before the 0.5.0 contract cut, so daemon D6 and gcode's matching cut can ship independently without a permanent shim.
+The embedding-config migration removes the same-window co-release requirement. Its dual-write and dual-read phases populate and prefer `ai.embeddings.*` before the 0.5.0 contract cut, so daemon D6 and gcode's matching cut can ship independently without a permanent shim.
 
 ## Memory And Residency
 
