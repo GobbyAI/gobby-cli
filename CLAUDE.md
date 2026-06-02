@@ -150,13 +150,13 @@ Shared foundation library (`gobby-core`), kept dependency-light so small binarie
 
 ### Feature-gated adapters
 
-`ai` (HTTP transport via `reqwest`), `postgres`, `falkor`, `qdrant`, `indexing`, `search` — each behind its own Cargo feature so a consumer pulls in only the datastores/transport it uses.
+`ai` (HTTP transport via `reqwest`), `postgres`, `falkor`, `qdrant`, `indexing`, `search` — each behind its own Cargo feature so a consumer pulls in only the datastores/transport it uses. Local backend descriptors are always available from `gobby_core::local_backend`.
 
 ## Key Constraints
 
 - **UUID5 parity with Python** (gcode): Symbol IDs are deterministic UUID5 using namespace `c0de1de0-0000-4000-8000-000000000000` and key format `{project_id}:{file_path}:{name}:{kind}:{byte_start}`. Must match the Python daemon's `Symbol.make_id()` exactly.
 - **Config resolution order** (gcode): env vars (`GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, `GOBBY_FALKORDB_PASSWORD`, etc.) → `config_store` table → hardcoded defaults.
-- **Tree-sitter grammars** (gcode): Tier 1 (Python/JS/TS/Go/Rust/Java/C/C++/C#/Ruby/PHP/Swift/Kotlin), Tier 2 (Dart/Elixir), Tier 3 (JSON/YAML/Markdown). Adding a language requires a new `tree-sitter-*` dep in `crates/gcode/Cargo.toml` and a grammar entry in `index/languages`.
+- **Tree-sitter grammars** (gcode): Tier 1 (Python/JS/TS/Go/Rust/Java/C/C++/C#/Ruby/PHP/Swift/Kotlin), Tier 2 (Dart/Elixir), Tier 3 (JSON/YAML). Markdown is indexed as content-only repo text, outside tree-sitter AST detection. Adding an AST language requires a new `tree-sitter-*` dep in `crates/gcode/Cargo.toml` and a grammar entry in `index/languages`.
 - **Non-destructive to Gobby hub schema** (gcode): Validate existing Gobby-owned PostgreSQL tables and BM25 indexes. Never alter `project.json`, `config_store`, or Gobby-managed schema.
 - **Exit code 0** (gsqz): Always exit 0 regardless of subprocess exit code. The LLM reads pass/fail from content.
 - **Python dispatcher contract** (ghook): stdout, stderr, and exit codes must match the legacy Python `hook_dispatcher.py`. Enqueue-first (inbox write before daemon POST) is an internal detail and must not change the observable contract.

@@ -213,7 +213,7 @@ sites where the grammar exposes a safe surface:
 |------|-----------|
 | Tier 1 | Python, JavaScript, TypeScript, Go, Rust, Java, C, C++, C#, Ruby, PHP, Swift, Kotlin |
 | Tier 2 | Dart, Elixir |
-| Tier 3 | JSON, YAML, Markdown (structural symbols + content chunks) |
+| Tier 3 | JSON, YAML |
 
 Each language has a `LanguageSpec` with three tree-sitter queries: `symbol_query`, `import_query`, `call_query`. Empty queries mean that feature is disabled for the language.
 
@@ -229,7 +229,8 @@ Files are split into overlapping chunks for BM25 content search:
 AST candidates and content-only candidates both write chunks. Content-only files
 write `code_indexed_files` rows with `symbol_count=0`, so `tree`, `status`, and
 `grep`/`search-content` see the broader repo text corpus without schema
-changes.
+changes. Markdown is content-only repo text and is outside tree-sitter AST
+detection.
 
 ### Incremental Indexing (indexer.rs)
 
