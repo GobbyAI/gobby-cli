@@ -547,6 +547,10 @@ Set `GCODE_FRESHNESS_INFLIGHT=1` in nested processes (or scripts that already
 run their own re-index) to short-circuit the same checks. gcode also sets this
 flag internally to prevent the indexer from recursing into itself.
 
+Overlay indexing uses `git status` to find changed paths. Set
+`GCODE_GIT_STATUS_TIMEOUT_SECS` to a positive number to override the default
+5-second timeout; invalid or nonpositive values are ignored with a warning.
+
 ## Troubleshooting
 
 ### "No gcode project found"

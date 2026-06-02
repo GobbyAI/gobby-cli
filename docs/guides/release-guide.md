@@ -67,6 +67,8 @@ Do not copy `gwiki` for this release.
 Before tagging, run the focused release checks:
 
 ```bash
+cargo fmt --all --check
+cargo clippy --workspace --all-targets -- -D warnings
 cargo clippy -p gobby-core --all-targets -- -D warnings
 cargo clippy -p gobby-code -- -D warnings
 cargo clippy -p gobby-code --no-default-features -- -D warnings
