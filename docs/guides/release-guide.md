@@ -87,6 +87,7 @@ cargo test -p gobby-hooks --no-default-features
 cargo test -p gobby-squeeze
 cargo test -p gobby-squeeze --no-default-features
 cargo test -p gobby-local
+cargo test --workspace
 cargo build --workspace --no-default-features
 cargo build --release -p gobby-code -p gobby-hooks -p gobby-squeeze -p gobby-local
 ```
