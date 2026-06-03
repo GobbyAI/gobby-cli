@@ -205,7 +205,8 @@ The JSON result contains:
   "findings": [],
   "gaps": [],
   "warnings": [],
-  "changed_paths": []
+  "changed_paths": [],
+  "session_id": "research-..."
 }
 ```
 
