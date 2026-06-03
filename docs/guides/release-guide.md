@@ -11,23 +11,27 @@ This guide covers the multi-crate Rust release flow for maintainers.
 | `gobby-hooks` | `ghook` | `0.4.5` | `ghook-v0.4.5` | crates.io + GitHub binaries |
 | `gobby-squeeze` | `gsqz` | `0.4.5` | `gsqz-v0.4.5` | crates.io + GitHub binaries |
 | `gobby-local` | `gloc` | `0.1.3` | `gloc-v0.1.3` | crates.io + GitHub binaries |
+| `gobby-wiki` | `gwiki` | `0.2.0` | `gwiki-v0.2.0` | crates.io + GitHub binaries |
 
-`gobby-wiki` / `gwiki` remains unreleased. Keep its package version at `0.1.0`
-until the wiki CLI is ready for a public tag.
+`gobby-wiki` ships its first public release as `0.2.0` in this set.
 
 ## Version Rules
 
 - Keep `gobby-code` at `0.9.9` for this release.
 - Bump `gobby-core` to `0.3.0`.
 - Bump patch versions for `gobby-hooks`, `gobby-squeeze`, and `gobby-local`.
-- Update all path dependencies on `gobby-core` to `0.3.0`, including the
-  unreleased `gobby-wiki` crate, so the workspace resolves against the local
-  core crate.
-- Do not tag or publish `gobby-wiki`.
+- Release `gobby-wiki` for the first time as `0.2.0`.
+- Every binary crate's `gobby-core` path dependency must also carry an explicit
+  `version = "0.3.0"`. crates.io rejects a path dependency with no version, so a
+  bare path dep blocks `cargo publish`. `gobby-local` previously omitted the
+  version and could not publish; it now pins `0.3.0` like the others.
 
 ## Tag Order
 
-Publish upstream library dependencies before binaries that depend on them:
+Publish the upstream library before the binaries that depend on it. Every binary
+crate resolves `gobby-core 0.3.0` from crates.io at publish time, so
+`gobby-core` must be indexed first. `gwiki` additionally re-verifies that the
+published `gobby-core` exposes the `ai` feature.
 
 ```bash
 git tag gobby-core-v0.3.0
@@ -39,28 +43,32 @@ git tag gcode-v0.9.9
 git tag ghook-v0.4.5
 git tag gsqz-v0.4.5
 git tag gloc-v0.1.3
-git push origin gcode-v0.9.9 ghook-v0.4.5 gsqz-v0.4.5 gloc-v0.1.3
+git tag gwiki-v0.2.0
+git push origin gcode-v0.9.9 ghook-v0.4.5 gsqz-v0.4.5 gloc-v0.1.3 gwiki-v0.2.0
 ```
 
-The release workflows verify binary crate tag/version alignment where the
-installer expects GitHub assets. `gobby-core` has no binary artifact matrix.
+`gsqz` has no `gobby-core` dependency and may be tagged at any time. The release
+workflows verify binary crate tag/version alignment where the installer expects
+GitHub assets. `gobby-core` has no binary artifact matrix.
 
 ## Local Install Check
 
-Build release binaries locally before tagging and copy only the released
-binaries into the Gobby bin directory:
+Build release binaries locally before tagging and copy the released binaries
+into the Gobby bin directory:
 
 ```bash
-cargo build --release -p gobby-code -p gobby-hooks -p gobby-squeeze -p gobby-local
+cargo build --release -p gobby-code -p gobby-hooks -p gobby-squeeze -p gobby-local -p gobby-wiki
 mkdir -p ~/.gobby/bin
-cp target/release/gcode target/release/ghook target/release/gsqz target/release/gloc ~/.gobby/bin/
+cp target/release/gcode target/release/ghook target/release/gsqz target/release/gloc target/release/gwiki ~/.gobby/bin/
 ~/.gobby/bin/gcode --version
 ~/.gobby/bin/ghook --version
 ~/.gobby/bin/gsqz --version
 ~/.gobby/bin/gloc --version
+~/.gobby/bin/gwiki --version
 ```
 
-Do not copy `gwiki` for this release.
+Refresh each `~/.gobby/bin/.<name>-version` sidecar to the released version, and
+run `ghook --version` so it rewrites `~/.gobby/bin/.ghook-compatibility`.
 
 ## Validation
 
@@ -78,6 +86,8 @@ cargo clippy -p gobby-hooks --all-targets --no-default-features -- -D warnings
 cargo clippy -p gobby-squeeze -- -D warnings
 cargo clippy -p gobby-squeeze --no-default-features -- -D warnings
 cargo clippy -p gobby-local -- -D warnings
+cargo clippy -p gobby-wiki --all-targets -- -D warnings
+cargo clippy -p gobby-wiki --all-targets --no-default-features -- -D warnings
 cargo test -p gobby-core
 cargo test -p gobby-core --no-default-features
 cargo test -p gobby-code
@@ -87,12 +97,14 @@ cargo test -p gobby-hooks --no-default-features
 cargo test -p gobby-squeeze
 cargo test -p gobby-squeeze --no-default-features
 cargo test -p gobby-local
+cargo test -p gobby-wiki
+cargo test -p gobby-wiki --no-default-features
 cargo test --workspace
 cargo build --workspace --no-default-features
-cargo build --release -p gobby-code -p gobby-hooks -p gobby-squeeze -p gobby-local
+cargo build --release -p gobby-code -p gobby-hooks -p gobby-squeeze -p gobby-local -p gobby-wiki
 ```
 
 The repository CI still owns cross-target release packaging. Local validation
 only proves manifests, lockfile resolution, and native release binaries.
 
-_Last verified: 2026-05-31_
+_Last verified: 2026-06-03_

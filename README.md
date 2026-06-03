@@ -7,7 +7,7 @@
 
 <p align="center">
   <strong>Rust CLI tools for AI-assisted development.</strong><br>
-  Code search, symbol navigation, output compression, and local LLM launching — all from the terminal.
+  Code search, symbol navigation, output compression, local LLM launching, and multimodal research vaults — all from the terminal.
 </p>
 
 <p align="center">
@@ -21,9 +21,7 @@
 
 ## What's Inside
 
-This workspace ships four Gobby CLI tools plus a shared library. `gobby-wiki`
-is in the workspace, but it is still unreleased and is not part of the current
-release set.
+This workspace ships five Gobby CLI tools plus a shared library.
 
 ### Current Release Set
 
@@ -34,9 +32,7 @@ release set.
 | `gobby-hooks` | `ghook` | `0.4.5` | `ghook-v0.4.5` |
 | `gobby-squeeze` | `gsqz` | `0.4.5` | `gsqz-v0.4.5` |
 | `gobby-local` | `gloc` | `0.1.3` | `gloc-v0.1.3` |
-
-`gobby-wiki` / `gwiki` stays at `0.1.0` in-tree and is excluded from this
-release.
+| `gobby-wiki` | `gwiki` | `0.2.0` | `gwiki-v0.2.0` |
 
 ### gcode — Code Search & Navigation
 
@@ -69,6 +65,17 @@ One command to launch Claude Code or Codex against a local LLM backend. Auto-det
 
 Sandbox-tolerant hook dispatcher invoked by host AI CLIs (Claude Code, Codex, Gemini CLI, Qwen CLI) on lifecycle and tool-use events. Spools envelopes to `~/.gobby/hooks/inbox/` *before* POSTing to the local Gobby daemon, so the daemon's drain worker can replay any delivery lost to a sandbox FS-read denial, network blip, or daemon restart. You don't usually invoke it directly — Gobby wires it into your AI CLI for you.
 
+### gwiki — Research Knowledge Vault
+
+Ingests multimodal sources — documents, PDFs, URLs, MediaWiki, git repos,
+Wayback snapshots, and audio/image/video — into a Markdown knowledge vault with
+frontmatter provenance and citations, then indexes and searches them with the
+same hybrid BM25 + semantic + graph stack as `gcode`. Compiles vault material
+into cited briefs, runs a reason-act `research` loop with step/token/source
+budgets, and answers questions directly with `gwiki ask`. Multimodal and AI
+capabilities degrade gracefully when transcription, vision, or the configured
+datastores are unavailable.
+
 `gobby-core` underpins them all — a small shared-primitives library for project
 root walk-up, bootstrap config, daemon URL composition, setup/provisioning
 contracts, and optional datastore adapters. It is not a standalone tool.
@@ -79,10 +86,12 @@ contracts, and optional datastore adapters. It is not a standalone tool.
 - [gsqz User Guide](docs/guides/gsqz-user-guide.md) — pipelines, step types, configuration, debugging
 - [gloc User Guide](docs/guides/gloc-user-guide.md) — backends, clients, model management, configuration
 - [ghook User Guide](docs/guides/ghook-user-guide.md) — hook wiring, diagnose mode, inbox/replay, troubleshooting
+- [gwiki Development Guide](docs/guides/gwiki-development-guide.md) — research vault ingest, indexing, and hybrid search
 - [Release Guide](docs/guides/release-guide.md) — crate versions, tag order, and local binary installation
 - [Changelog](CHANGELOG.md) — release history
 - [gcode README](crates/gcode/README.md) — architecture and build details
 - [gsqz README](crates/gsqz/README.md) — architecture and build details
+- [gwiki README](crates/gwiki/README.md) — architecture and build details
 
 ## Install
 
@@ -104,6 +113,9 @@ cargo install gobby-local
 
 # ghook
 cargo install gobby-hooks
+
+# gwiki
+cargo install gobby-wiki
 ```
 
 `gcode` graph and semantic features are configured at runtime. There are no
@@ -142,6 +154,7 @@ cargo install --path crates/gcode
 cargo install --path crates/gsqz
 cargo install --path crates/gloc
 cargo install --path crates/ghook
+cargo install --path crates/gwiki
 ```
 
 ## Development

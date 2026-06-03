@@ -22,9 +22,9 @@ Task-focused documentation for the released gobby-cli crates.
 - [gsqz Development Guide](./gsqz-development-guide.md) - compressor implementation details.
 - [gloc Development Guide](./gloc-development-guide.md) - local-launcher implementation details.
 - [ghook Development Guide](./ghook-development-guide.md) - hook-dispatch implementation details.
-- [gwiki Development Guide](./gwiki-development-guide.md) - unreleased wiki CLI internals.
+- [gwiki Development Guide](./gwiki-development-guide.md) - research/knowledge-vault CLI internals.
 
-`gobby-wiki` is documented for development only. It is not part of the current
-published release set.
+A `gwiki` user guide is forthcoming. Until then, see the gwiki development guide
+above and the [gwiki README](../../crates/gwiki/README.md).
 
-_Last verified: 2026-06-01_
+_Last verified: 2026-06-03_
