@@ -12,6 +12,7 @@ Version 1 covers the daemon-consumed surface:
 - `contract`
 - `index`
 - `search`
+- `ask`
 - `read`
 - `refresh`
 - `ingest-file`
