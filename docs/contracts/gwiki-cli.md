@@ -42,6 +42,13 @@ with `kind` and `id`.
 AI route flags use `auto|daemon|direct|off`. `direct` means any
 OpenAI-compatible endpoint, local or remote. There is no `local` route.
 
+## Research
+
+`gwiki research` is governed by the standalone research contract in
+[`gwiki-research.md`](gwiki-research.md). That contract defines the replacement
+reason-act loop, audit mode, provenance rules, budgets, and the boundary between
+gwiki-owned wiki mutation and Gobby-owned daemon enhancement.
+
 ## Drift Checks
 
 Both the CLI and daemon tests load this contract. New daemon-facing flags or JSON
