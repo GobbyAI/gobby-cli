@@ -44,8 +44,20 @@ git tag ghook-v0.4.5
 git tag gsqz-v0.4.5
 git tag gloc-v0.1.3
 git tag gwiki-v0.2.0
-git push origin gcode-v0.9.9 ghook-v0.4.5 gsqz-v0.4.5 gloc-v0.1.3 gwiki-v0.2.0
+
+# Push the tags ONE AT A TIME. GitHub Actions does not create push events for
+# any tag when more than three tags arrive in a single push, so a batched
+# `git push origin <tag> <tag> <tag> <tag> ...` silently triggers NO release
+# workflows. Push each tag in its own invocation:
+for tag in gcode-v0.9.9 ghook-v0.4.5 gsqz-v0.4.5 gloc-v0.1.3 gwiki-v0.2.0; do
+  git push origin "refs/tags/$tag"
+done
 ```
+
+If a batch push already created the tags on the remote without triggering
+workflows, delete them first (`git push origin --delete <tag> ...`) and re-push
+individually as above — re-pushing an existing remote tag ref is a no-op and
+fires no event.
 
 `gsqz` has no `gobby-core` dependency and may be tagged at any time. The release
 workflows verify binary crate tag/version alignment where the installer expects
