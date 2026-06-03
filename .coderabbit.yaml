@@ -3,3 +3,6 @@ inheritance: true
 
 reviews:
   profile: assertive
+  path_filters:
+    - "!.gobby/plans/completed/**"
+    - "!docs/plans/completed/**"
