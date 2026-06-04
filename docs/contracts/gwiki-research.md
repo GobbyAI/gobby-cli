@@ -25,6 +25,16 @@ gwiki [--project <ROOT> | --topic <NAME>] [--format json|text] research [QUESTIO
     [--require-ai]
 ```
 
+The v1 compile surface that consumes accepted notes is:
+
+```text
+gwiki [--project <ROOT> | --topic <NAME>] [--format json|text] compile [TOPIC]
+    [--outline <HEADING>]...
+    [--kind source|concept|topic]
+    [--target <PAGE>]
+    [--write-intent]
+```
+
 Scope follows the shared gwiki scope contract: `--topic` wins over
 `--project <ROOT>`, bare `--project` means the current directory, and no scope
 flag detects the project from cwd. JSON output carries the resolved `scope`
@@ -66,6 +76,13 @@ Allowed actions are deliberately small:
 No action may write final article pages directly. Research produces accepted
 notes and audit findings; `gwiki compile` remains the article-generation step.
 
+`gwiki compile [TOPIC]` uses `TOPIC` as the article topic when present;
+otherwise the resolved scope supplies the topic. Repeated `--outline` flags
+preserve order and become the requested heading outline. `--kind` accepts only
+`source`, `concept`, or `topic`; clients migrating from older draft values
+should map `article` to `topic` and `stub` to `concept`, or to `source` when
+the target page is explicitly about one ingested source.
+
 ## Budgets
 
 Defaults are conservative and must be visible in JSON output:
@@ -98,6 +115,13 @@ The run must stop on the first matching rule:
 
 Every stop emits `status`, `stop_reason`, `steps_used`, `tokens_used`,
 `sources_added`, and `changed_paths`.
+
+Daemon clients must parse budget fields as optional for compatibility with
+older gwiki builds. When present, `max_steps`, `max_tokens`, `max_sources`,
+`max_wall_time_seconds`, and `max_note_bytes` are integer caps. Missing caps
+mean "not reported by this CLI version", not zero. `write_conflict` is an
+optional boolean and defaults to `false` only for display; clients should still
+prefer `stop_reason == "write_conflict"` as the stable conflict signal.
 
 ## Write-Conflict Behavior
 
@@ -188,7 +212,22 @@ cron jobs configured per project/scope.
 
 ## JSON Output
 
-The JSON result contains:
+The research JSON result contains these stable keys:
+
+| Key | Type |
+| --- | --- |
+| `command` | string |
+| `scope` | object with `kind` and `id` |
+| `query` | string or null |
+| `audit` | boolean |
+| `status` | string |
+| `stop_reason` | string |
+| `steps_used`, `tokens_used`, `max_steps`, `max_tokens`, `max_sources`, `max_wall_time_seconds`, `max_note_bytes` | integer |
+| `write_conflict` | boolean |
+| `sources_added`, `accepted_notes`, `findings`, `gaps`, `warnings`, `changed_paths` | array |
+| `session_id` | string |
+
+Example:
 
 ```json
 {
@@ -210,8 +249,38 @@ The JSON result contains:
 }
 ```
 
+The compile JSON result contains these stable keys:
+
+| Key | Type |
+| --- | --- |
+| `command` | string |
+| `scope` | object with `kind` and `id` |
+| `status` | string |
+| `target_kind` | `source`, `concept`, or `topic` |
+| `outline` | array of strings |
+| `daemon_synthesis_available` | boolean |
+| `article_path`, `index_path`, `handoff_id`, `prompt` | string or null |
+| `source_paths`, `page_writes` | array |
+
+```json
+{
+  "command": "compile",
+  "scope": {"kind": "topic", "id": "rust-async"},
+  "status": "ok",
+  "target_kind": "concept",
+  "outline": ["Overview", "Tradeoffs"],
+  "daemon_synthesis_available": true,
+  "article_path": "wiki/concepts/borrow-checker.md",
+  "source_paths": ["raw/research/research-1.md"],
+  "index_path": "wiki/index.md",
+  "handoff_id": "handoff-...",
+  "page_writes": [],
+  "prompt": null
+}
+```
+
 Text output is a human summary of the same data. Daemon-facing code consumes
-JSON only.
+JSON only and should ignore unknown keys.
 
 ## Implementation Order
 

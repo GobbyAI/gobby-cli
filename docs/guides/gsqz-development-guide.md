@@ -538,5 +538,7 @@ Each primitive has comprehensive unit tests:
 Run tests:
 ```bash
 cargo nextest run -p gobby-squeeze
+cargo nextest run -p gobby-squeeze --no-default-features
 cargo test --doc -p gobby-squeeze
+cargo test --doc -p gobby-squeeze --no-default-features
 ```
