@@ -6,6 +6,8 @@ This file is for AI coding agents (Claude, Copilot, Cursor, etc.) working on the
 
 These are enforced by hooks, rules and workflows in via the Gobby daemon.
 
+Maintainer note: this section is the canonical source for agent rules. Update it here and link to it from other root instruction files instead of duplicating the list.
+
 1. **ALWAYS use progressive tool discovery.** Do not try to call one step through another (e.g., don't use call_tool to invoke get_tool_schema).
 2. **NEVER create or leave monoliths.** Keep code files under 1,000 lines. For code files, you *MUST* search for an existing refactor task or create it if one does not already exist in gobby-tasks. Leave these tasks for another agent to pick up. Markdown files, including `docs/guides/*.md` and repo-root instruction files, are documentation artifacts and are not subject to this 1,000-line source-file rule; do not create refactor tasks or block docs work based only on Markdown line count.
 3. **ALWAYS create or claim a task before editing a file.** This applies to file edits only — no task needed for plan mode, research, investigation, or answering questions unless the user explicitly requests one.
