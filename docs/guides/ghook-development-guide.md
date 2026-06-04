@@ -319,7 +319,8 @@ This means changing the Rust struct without updating the schema (or vice versa) 
 ### Running Tests
 
 ```bash
-cargo test -p gobby-hooks
+cargo nextest run -p gobby-hooks
+cargo test --doc -p gobby-hooks
 ```
 
 No integration tests — ghook's I/O is contained (one file write, one HTTP POST), and both are covered by unit tests using `tempfile::tempdir()` and dummy daemon URLs.

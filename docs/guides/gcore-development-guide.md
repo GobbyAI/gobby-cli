@@ -252,7 +252,8 @@ Behavioral modules use `#[cfg(test)] mod tests` with `tempfile::tempdir()` for f
 - **public_boundary**: integration test that pins feature gates, `lib.rs` module guards, and this guide's boundary documentation.
 
 ```bash
-cargo test -p gobby-core --no-default-features
+cargo nextest run -p gobby-core --no-default-features
+cargo test --doc -p gobby-core --no-default-features
 ```
 
 Baseline tests are fast, perform no network I/O, and keep filesystem writes inside temporary directories.

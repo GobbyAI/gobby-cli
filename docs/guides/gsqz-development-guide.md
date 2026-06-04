@@ -537,5 +537,6 @@ Each primitive has comprehensive unit tests:
 
 Run tests:
 ```bash
-cargo test -p gobby-squeeze
+cargo nextest run -p gobby-squeeze
+cargo test --doc -p gobby-squeeze
 ```

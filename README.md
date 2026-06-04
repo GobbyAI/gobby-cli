@@ -161,7 +161,8 @@ cargo install --path crates/gwiki
 
 ```bash
 cargo build --workspace --no-default-features   # Build all tools
-cargo test --workspace --no-default-features    # Test all tools
+cargo nextest run --workspace --no-default-features # Test all tools except doctests
+cargo test --doc --workspace --no-default-features  # Test doctests
 cargo clippy --workspace --no-default-features -- -D warnings  # Lint all tools
 cargo fmt --all --check                         # Check formatting
 ```

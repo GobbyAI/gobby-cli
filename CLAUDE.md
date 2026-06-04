@@ -22,13 +22,14 @@ A Cargo workspace with six members: five Gobby CLI binaries plus one shared foun
 ```bash
 cargo build --workspace                    # Build everything
 cargo build --workspace --release          # Release build (installed into ~/.gobby/bin)
-cargo test --workspace                     # Test everything
-cargo test -p gobby-code                   # Test gcode only
-cargo test -p gobby-squeeze                # Test gsqz only
-cargo test -p gobby-local                  # Test gloc only
-cargo test -p gobby-wiki                   # Test gwiki only
-cargo test -p gobby-hooks                  # Test ghook only
-cargo test -p gobby-core                   # Test gcore only
+cargo nextest run --workspace --no-default-features # Test everything except doctests
+cargo test --doc --workspace --no-default-features  # Test doctests
+cargo nextest run -p gobby-code --no-default-features # Test gcode only
+cargo nextest run -p gobby-squeeze         # Test gsqz only
+cargo nextest run -p gobby-local           # Test gloc only
+cargo nextest run -p gobby-wiki            # Test gwiki only
+cargo nextest run -p gobby-hooks           # Test ghook only
+cargo nextest run -p gobby-core            # Test gcore only
 cargo clippy --workspace -- -D warnings    # Lint all
 cargo fmt --all --check                    # Check formatting
 ```

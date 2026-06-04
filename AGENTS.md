@@ -29,9 +29,10 @@ Maintainer note: this section is the canonical source for agent rules. Update it
 ## Build & Test
 
 ```bash
-cargo build --no-default-features           # CI-compatible build
-cargo test --no-default-features            # Run all tests
-cargo clippy --no-default-features -- -D warnings  # Lint (must be zero warnings)
+cargo build --workspace --no-default-features       # CI-compatible build
+cargo nextest run --workspace --no-default-features # Run non-doctest tests
+cargo test --doc --workspace --no-default-features  # Run doctests
+cargo clippy --workspace --no-default-features -- -D warnings  # Lint (must be zero warnings)
 ```
 
 CI builds use `--no-default-features`.

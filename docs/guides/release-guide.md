@@ -100,18 +100,20 @@ cargo clippy -p gobby-squeeze --no-default-features -- -D warnings
 cargo clippy -p gobby-local -- -D warnings
 cargo clippy -p gobby-wiki --all-targets -- -D warnings
 cargo clippy -p gobby-wiki --all-targets --no-default-features -- -D warnings
-cargo test -p gobby-core
-cargo test -p gobby-core --no-default-features
-cargo test -p gobby-code
-cargo test -p gobby-code --no-default-features
-cargo test -p gobby-hooks
-cargo test -p gobby-hooks --no-default-features
-cargo test -p gobby-squeeze
-cargo test -p gobby-squeeze --no-default-features
-cargo test -p gobby-local
-cargo test -p gobby-wiki
-cargo test -p gobby-wiki --no-default-features
-cargo test --workspace
+cargo nextest run --workspace --no-default-features
+cargo test --doc --workspace --no-default-features
+cargo nextest run -p gobby-core
+cargo test --doc -p gobby-core
+cargo nextest run -p gobby-code
+cargo test --doc -p gobby-code
+cargo nextest run -p gobby-hooks
+cargo test --doc -p gobby-hooks
+cargo nextest run -p gobby-squeeze
+cargo test --doc -p gobby-squeeze
+cargo nextest run -p gobby-local
+cargo test --doc -p gobby-local
+cargo nextest run -p gobby-wiki
+cargo test --doc -p gobby-wiki
 cargo build --workspace --no-default-features
 cargo build --release -p gobby-code -p gobby-hooks -p gobby-squeeze -p gobby-local -p gobby-wiki
 ```
