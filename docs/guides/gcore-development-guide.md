@@ -161,23 +161,27 @@ The crate's default feature set is empty:
 ```toml
 [features]
 default = []
-postgres = ["dep:postgres", "dep:postgres-types", "dep:postgres-native-tls", "dep:native-tls"]
+postgres = ["dep:postgres", "dep:postgres-types", "dep:postgres-openssl", "dep:openssl"]
 falkor = ["dep:falkordb", "dep:urlencoding"]
-qdrant = ["dep:reqwest"]
+qdrant = ["dep:reqwest", "dep:urlencoding"]
 indexing = ["dep:ignore", "dep:sha2"]
 search = []
-full = ["postgres", "falkor", "qdrant", "indexing", "search"]
+http = ["dep:ureq"]
+ai = ["dep:reqwest", "dep:base64", "dep:bytes", "dep:httpdate", "dep:rand", "http", "reqwest/multipart"]
+full = ["postgres", "falkor", "qdrant", "indexing", "search", "ai"]
 ```
 
 Feature rationale:
 
 | Feature | Enables | Why gated |
 |---------|---------|-----------|
-| `postgres` | `postgres`, `postgres-types`, `postgres-native-tls`, `native-tls` | Hub validation and adapter code are only needed by datastore consumers. Lightweight binaries should not inherit PostgreSQL. |
+| `postgres` | `postgres`, `postgres-types`, `postgres-openssl`, `openssl` | Hub validation and adapter code are only needed by datastore consumers. Lightweight binaries should not inherit PostgreSQL. |
 | `falkor` | `falkordb`, `urlencoding` | Graph helpers need FalkorDB. `urlencoding` is included because FalkorDB connection URLs must encode passwords safely. |
 | `qdrant` | `reqwest` with `blocking` and `json` | Vector search/storage helpers need HTTP. Other consumers should not pull reqwest. |
 | `indexing` | `ignore`, `sha2` | File walking and content hashing are useful for indexing consumers only. |
 | `search` | no extra dependency today | Search fusion contracts are lightweight, but still opt-in so the public surface remains explicit. |
+| `http` | `ureq` | Lightweight HTTP probes such as local-backend discovery are only needed by consumers that call them. |
+| `ai` | `reqwest`, AI payload helpers, and `http` | AI transport and routing helpers need HTTP clients and multipart payload support. |
 | `full` | all feature modules | Convenience feature for development and consumers that need the whole foundation layer. |
 
 Every individual feature must compile in isolation. Do not rely on `--all-features` to hide missing feature dependencies.
