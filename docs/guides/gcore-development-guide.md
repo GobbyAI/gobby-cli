@@ -166,8 +166,8 @@ falkor = ["dep:falkordb", "dep:urlencoding"]
 qdrant = ["dep:reqwest", "dep:urlencoding"]
 indexing = ["dep:ignore", "dep:sha2"]
 search = []
-http = ["dep:ureq"]
-ai = ["dep:reqwest", "dep:base64", "dep:bytes", "dep:httpdate", "dep:rand", "http", "reqwest/multipart"]
+local-backend = ["dep:ureq"]
+ai = ["dep:reqwest", "dep:base64", "dep:bytes", "dep:httpdate", "dep:rand", "local-backend", "reqwest/multipart"]
 full = ["postgres", "falkor", "qdrant", "indexing", "search", "ai"]
 ```
 
@@ -180,8 +180,8 @@ Feature rationale:
 | `qdrant` | `reqwest` with `blocking` and `json` | Vector search/storage helpers need HTTP. Other consumers should not pull reqwest. |
 | `indexing` | `ignore`, `sha2` | File walking and content hashing are useful for indexing consumers only. |
 | `search` | no extra dependency today | Search fusion contracts are lightweight, but still opt-in so the public surface remains explicit. |
-| `http` | `ureq` | Lightweight HTTP probes such as local-backend discovery are only needed by consumers that call them. |
-| `ai` | `reqwest`, AI payload helpers, and `http` | AI transport and routing helpers need HTTP clients and multipart payload support. |
+| `local-backend` | `ureq` | Lightweight HTTP probes for local backend discovery are only needed by consumers that call them. |
+| `ai` | `reqwest`, AI payload helpers, and `local-backend` | AI transport and routing helpers need HTTP clients, local backend discovery, and multipart payload support. |
 | `full` | all feature modules | Convenience feature for development and consumers that need the whole foundation layer. |
 
 Every individual feature must compile in isolation. Do not rely on `--all-features` to hide missing feature dependencies.
