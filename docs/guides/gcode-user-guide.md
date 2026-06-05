@@ -235,6 +235,21 @@ gcode symbol "80abc77f-bdfe-5037-94a8-1ebcb753761d"
 
 Returns the symbol with its full source code extracted via byte-offset read. Precise and minimal.
 
+### Symbol by Location
+
+Fetch the visible symbol containing a known file location:
+
+```bash
+gcode symbol-at src/auth.ts:42
+gcode symbol-at src/auth.ts:42:7
+gcode symbol-at src/auth.ts 42
+```
+
+Columns are 1-based byte columns. If no symbol contains the location, `symbol-at`
+returns the nearest visible symbol and marks the JSON `lookup.match_kind` as
+`nearest`; text output prints only the selected source and emits a concise stderr
+fallback diagnostic unless `--quiet` is set.
+
 ### Batch Retrieve
 
 Fetch multiple symbols in one call:

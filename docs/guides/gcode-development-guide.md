@@ -612,13 +612,14 @@ Fields never shown even in verbose: `content_hash`, `created_at`, `updated_at`, 
 ### Agent Search Workflow
 
 1. `gcode search "auth middleware"` → ranked results with file:line, signature
-2. Pick result → `gcode symbol <id>` (exact source code) or `Read file_path offset=line_start`
+2. Pick result → `gcode symbol <id>` (exact source code) or `gcode symbol-at file_path:line_start`
 3. Need more? → `gcode search "auth middleware" --offset 10`
 
 ### File Survey
 
 1. `gcode outline src/config.rs` → slim symbol list (name, kind, lines, signature)
-2. Identify relevant functions → `gcode symbol <id>` for source code
+2. If you already have a file and line, use `gcode symbol-at src/config.rs:42`
+3. If navigating by structure or ID, identify relevant functions → `gcode symbol <id>` for source code
 
 ### Impact Analysis
 
