@@ -22,6 +22,16 @@ cargo install gobby-wiki
 
 If you use [Gobby](https://github.com/GobbyAI/gobby), gwiki is already installed.
 
+Release downloads include `gwiki-*.sha256` checksum files. Verify the archive
+before installing it:
+
+```bash
+sha256sum -c gwiki-*.sha256
+```
+
+`sha256sum -c` should print `OK` for the downloaded `gwiki` artifact. On macOS,
+install GNU coreutils for `sha256sum`, or compare the digest with `shasum -a 256`.
+
 `gwiki` is daemon-independent but not database-independent. PostgreSQL-backed
 search uses ParadeDB's **`pg_search`** BM25 indexes on the `gwiki_documents` and
 `gwiki_chunks` tables. The hub DSN is resolved from `~/.gobby/bootstrap.yaml`.

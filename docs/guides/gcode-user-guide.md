@@ -98,11 +98,13 @@ gcode offers four search modes for different use cases.
 ### Hybrid Search (`gcode search`)
 
 The default. Combines pg_search BM25 text matching with semantic similarity,
-graph boost, and graph expansion using Reciprocal Rank Fusion. PostgreSQL,
-Qdrant, FalkorDB, and embeddings are the required datastore/search stack;
-`gcode setup` provisions or validates that stack. JSON results expose `score`
-as the final display rank score, `rrf_score` as the raw RRF contribution, and
-sorted `sources` values for source attribution.
+graph boost, and graph expansion using Reciprocal Rank Fusion. Full hybrid
+ranking requires PostgreSQL with `pg_search`, Qdrant, FalkorDB, and a reachable
+embedding endpoint; `gcode setup` provisions or validates that stack. When
+semantic or graph services are unavailable, search degrades to the reachable
+sources instead of failing as long as BM25 search is available. JSON results
+still expose `score` as the final display rank score, `rrf_score` as the raw RRF
+contribution, and sorted `sources` values for source attribution.
 
 ```bash
 gcode search "database connection pool"
