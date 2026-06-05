@@ -19,11 +19,9 @@ PostgreSQL with `pg_search`, FalkorDB, Qdrant, and an embedding endpoint.
 Runtime indexing/search requires Gobby's PostgreSQL hub. gcode asks the local
 daemon broker for the hub DSN first. If the daemon is unavailable, it checks
 fallback sources in order: `GCODE_DATABASE_URL`, `GOBBY_POSTGRES_DSN`,
-`~/.gobby/gcode.yaml` `database_url`, then bootstrap `database_url`.
+`~/.gobby/gcore.yaml` `databases.postgres.dsn`, then bootstrap `database_url`.
 Bootstrap fallback is valid only when `hub_backend: postgres` and bootstrap
-contains an inline `database_url`. Bootstrap `database_url_ref` is rejected
-during bootstrap validation; it is never resolved or used to restart the
-fallback chain.
+contains an inline `database_url`.
 
 For daemon-independent service provisioning:
 
@@ -67,8 +65,7 @@ You'll see a progress bar while indexing:
 After init, you can search immediately.
 
 For non-Gobby-managed projects, `gcode init` installs the bundled `gcode` skill
-for Claude Code, Codex, Droid, Grok, Qwen, Gemini CLI (deprecated
-compatibility), and Antigravity CLI:
+for Claude Code, Codex, Droid, Grok, Qwen, and Antigravity CLI:
 
 | CLI | Project-local files |
 |-----|---------------------|
@@ -77,12 +74,10 @@ compatibility), and Antigravity CLI:
 | Droid | `.factory/skills/gcode/SKILL.md` |
 | Grok | `.grok/skills/gcode/SKILL.md` |
 | Qwen | `.qwen/skills/gcode/SKILL.md` |
-| Gemini CLI (deprecated) | `.gemini/skills/gcode/SKILL.md` |
 | Antigravity CLI | `.agents/skills/gcode/SKILL.md` |
 
 Gobby-managed projects skip these project-local writes because Gobby owns CLI
-wiring. Gemini CLI remains installed for compatibility with older setups, but
-it is deprecated.
+wiring.
 
 ### First Search
 
@@ -462,13 +457,12 @@ vector collections.
 
 gcode is daemon-independent but not database-independent:
 - Database: PostgreSQL hub from `~/.gobby/bootstrap.yaml`
-- Required bootstrap: `hub_backend: postgres` plus `database_url`; bootstrap `database_url_ref` is rejected
+- Required bootstrap: `hub_backend: postgres` plus `database_url`
 - Identity: `.gobby/project.json`, `.gobby/gcode.json`, isolated root, linked worktree, or generated identity from `gcode init`
 - Required service configs: FalkorDB, Qdrant, and embeddings via env vars or PostgreSQL `config_store`
 
 Graph commands and semantic search become available when the required services
-are configured; unhealthy services are reported as degraded instead of being
-framed as optional enhancers.
+are configured; unhealthy services are reported as degraded required sources.
 
 ### Isolated and worktree-derived identities
 
@@ -481,26 +475,25 @@ Both cases are reported by `gcode init`'s status line (`isolated`, `linked-workt
 
 ## Configuration
 
-gcode resolves graph/vector configuration in this order:
+gcode resolves graph/vector infrastructure configuration in this order:
 
 1. **Environment variables** — `GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, `GOBBY_FALKORDB_PASSWORD`, `GOBBY_QDRANT_URL`
-2. **config_store table** — Key-value pairs in the PostgreSQL hub (`databases.falkordb.host`, `databases.falkordb.port`, `databases.falkordb.requirepass`, `databases.qdrant.*`, `embeddings.*`)
+2. **config_store table** — Key-value pairs in the PostgreSQL hub (`databases.falkordb.host`, `databases.falkordb.port`, `databases.falkordb.requirepass`, `databases.qdrant.*`)
 3. **Hardcoded defaults** — FalkorDB port `16379` and graph name `gobby_code` once a host is configured; no default FalkorDB host is assumed
 
-Semantic search uses the same precedence rules:
-1. **Environment variables** — `GOBBY_EMBEDDING_URL`, `GOBBY_EMBEDDING_MODEL`, `GOBBY_EMBEDDING_API_KEY`
-2. **config_store table** — `embeddings.api_base`, `embeddings.model`, `embeddings.api_key`
+Semantic search embedding config resolves from:
+1. **config_store table** — `ai.embeddings.api_base`, `ai.embeddings.model`, `ai.embeddings.api_key`
+2. **standalone config** — `~/.gobby/gcore.yaml` with the same `ai.embeddings.*` keys
 3. **Hardcoded defaults** — model `nomic-embed-text` once an embeddings API base is configured
 
 The database connection is resolved in this order:
 1. Local daemon broker
 2. `GCODE_DATABASE_URL`
 3. `GOBBY_POSTGRES_DSN`
-4. `~/.gobby/gcode.yaml` `database_url`
+4. `~/.gobby/gcore.yaml` `databases.postgres.dsn`
 5. `~/.gobby/bootstrap.yaml` `database_url`
 
-Bootstrap `database_url_ref` is rejected. Use the daemon broker path or an
-explicit fallback source for daemonless access.
+Use the daemon broker path or an explicit fallback source for daemonless access.
 
 The daemon URL (used by `invalidate`) is resolved from:
 1. `GOBBY_PORT` environment variable (e.g. `60887`)

@@ -80,7 +80,7 @@ cp target/release/gcode target/release/ghook target/release/gsqz target/release/
 ```
 
 Refresh each `~/.gobby/bin/.<name>-version` sidecar to the released version, and
-run `ghook --version` so it rewrites `~/.gobby/bin/.ghook-compatibility`.
+run `ghook --version` so it rewrites `~/.gobby/bin/.ghook-runtime.json`.
 
 ## Validation
 

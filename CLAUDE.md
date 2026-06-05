@@ -50,7 +50,7 @@ Release profiles are in the root `Cargo.toml` with per-package overrides. Each b
 
 ### Installing binaries
 
-`cargo build --workspace --release` produces `target/release/{gcode,gwiki,gsqz,gloc,ghook}`. The deployed copies live in `~/.gobby/bin/`, each with a `.{name}-version` sidecar (and ghook additionally writes `.ghook-compatibility` on `ghook --version`). To update an installed binary, copy it over the existing one (an atomic `cp` to `<name>.new` then `mv` avoids "text file busy" if it is running) and refresh the matching `.{name}-version` sidecar.
+`cargo build --workspace --release` produces `target/release/{gcode,gwiki,gsqz,gloc,ghook}`. The deployed copies live in `~/.gobby/bin/`, each with a `.{name}-version` sidecar (and ghook additionally writes `.ghook-runtime.json` on `ghook --version`). To update an installed binary, copy it over the existing one (an atomic `cp` to `<name>.new` then `mv` avoids "text file busy" if it is running) and refresh the matching `.{name}-version` sidecar.
 
 ## gcode Architecture
 
@@ -132,7 +132,7 @@ Multimodal endpoints (transcription, vision) and the AI transport degrade indepe
 
 ### Data Flow & Modes
 
-`ghook --gobby-owned --cli=<c> --type=<t> [--critical] [--detach]` builds a hook `Envelope`, enqueues it to `~/.gobby/hooks/inbox/`, then attempts a POST to the daemon (`transport`). Enqueue-first means the hook is durable even if the daemon is down; stdout/stderr/exit codes mirror the legacy Python `hook_dispatcher.py` contract. `--diagnose` prints JSON diagnostics with no network/envelope write. `--version` prints the version and writes `~/.gobby/bin/.ghook-compatibility` (`{schema_version, ghook_version}`).
+`ghook --gobby-owned --cli=<c> --type=<t> [--detach]` builds a hook `Envelope`, enqueues it to `~/.gobby/hooks/inbox/`, then attempts a POST to the daemon (`transport`). Enqueue-first means the hook is durable even if the daemon is down; stdout/stderr/exit codes follow the current per-CLI hook protocol. `--diagnose` prints JSON diagnostics with no network/envelope write. `--version` prints the version and writes `~/.gobby/bin/.ghook-runtime.json` (`{schema_version, ghook_version}`).
 
 ### Core Modules
 
@@ -164,5 +164,5 @@ Shared foundation library (`gobby-core`), kept dependency-light so small binarie
 - **Tree-sitter grammars** (gcode): Tier 1 (Python/JS/TS/Go/Rust/Java/C/C++/C#/Ruby/PHP/Swift/Kotlin), Tier 2 (Dart/Elixir), Tier 3 (JSON/YAML). Markdown is indexed as content-only repo text, outside tree-sitter AST detection. Adding an AST language requires a new `tree-sitter-*` dep in `crates/gcode/Cargo.toml` and a grammar entry in `index/languages`.
 - **Non-destructive to Gobby hub schema** (gcode): Validate existing Gobby-owned PostgreSQL tables and BM25 indexes. Never alter `project.json`, `config_store`, or Gobby-managed schema.
 - **Exit code 0** (gsqz): Always exit 0 regardless of subprocess exit code. The LLM reads pass/fail from content.
-- **Python dispatcher contract** (ghook): stdout, stderr, and exit codes must match the legacy Python `hook_dispatcher.py`. Enqueue-first (inbox write before daemon POST) is an internal detail and must not change the observable contract.
+- **Per-CLI hook protocol** (ghook): stdout, stderr, and exit codes must match the current host-CLI hook contracts. Enqueue-first (inbox write before daemon POST) is an internal detail and must not change the observable contract.
 - **AI ownership split** (gcore): AI config types, `AiContext` resolution, the per-capability routing decision, and the concurrency limiter live in `gobby_core::ai_context` (always-compiled, no `reqwest`); pure result/error data types live in `gobby_core::ai_types` (always-compiled); HTTP transport lives behind the `ai` feature in `gobby_core::ai`. Keep these layers separate — don't pull `reqwest` into the always-compiled modules.

@@ -78,9 +78,9 @@ A new dedicated module that owns all `git` shell-out logic for project-root dete
 `POST /api/local/runtime/database-url` with `X-Gobby-Local-Token` from
 `local_cli_token` and a 3s timeout. If the broker is unavailable, gcode falls
 back to explicit fallback sources: `GCODE_DATABASE_URL`, `GOBBY_POSTGRES_DSN`,
-`$GOBBY_HOME/gcode.yaml` `database_url`, then
+`$GOBBY_HOME/gcore.yaml` `databases.postgres.dsn`, then
 `$GOBBY_HOME/bootstrap.yaml` inline `database_url`. Bootstrap still requires
-`hub_backend: postgres` when used. Bootstrap `database_url_ref` is rejected.
+`hub_backend: postgres` when used.
 `connect_readwrite()` and `connect_readonly()` both return a synchronous
 `postgres::Client`; PostgreSQL permissions decide actual access.
 
@@ -91,13 +91,17 @@ tell users to configure the PostgreSQL hub with the required code-index schema.
 
 ### Service Configuration
 
-Resolution order per service (FalkorDB, Qdrant, embeddings):
+Resolution order for infrastructure services (FalkorDB, Qdrant):
 
 | Priority | Source | Example |
 |----------|--------|---------|
-| 1 (highest) | Environment variables | `GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, `GOBBY_FALKORDB_PASSWORD`, `GOBBY_QDRANT_URL`, `GOBBY_EMBEDDING_URL` |
-| 2 | `config_store` table in PostgreSQL | `databases.falkordb.host`, `databases.falkordb.port`, `databases.falkordb.requirepass`, `databases.qdrant.url`, `embeddings.api_base` |
-| 3 (lowest) | Hardcoded defaults | FalkorDB port `16379` and graph name `gobby_code` once a host is configured; embeddings model `nomic-embed-text` once an API base exists |
+| 1 (highest) | Environment variables | `GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, `GOBBY_FALKORDB_PASSWORD`, `GOBBY_QDRANT_URL` |
+| 2 | `config_store` table in PostgreSQL | `databases.falkordb.host`, `databases.falkordb.port`, `databases.falkordb.requirepass`, `databases.qdrant.url` |
+| 3 (lowest) | Hardcoded defaults | FalkorDB port `16379` and graph name `gobby_code` once a host is configured |
+
+AI capability config, including embeddings, resolves from `config_store` first,
+then standalone `~/.gobby/gcore.yaml`, then defaults. Embedding keys use the
+canonical `ai.embeddings.*` namespace.
 
 Config values are JSON-encoded in `config_store` — strings have surrounding quotes stripped. Secret patterns like `$secret:NAME` are resolved via `secrets.rs` (Fernet decryption using machine_id + salt, 600K PBKDF2 iterations).
 
@@ -299,13 +303,11 @@ Graph clear uses `MATCH (n {project: $project})` plus the code-index label
 predicate (`CodeFile`, `CodeSymbol`, `CodeModule`, `UnresolvedCallee`,
 `ExternalSymbol`). It must not target memory graph labels or bridge ownership.
 
-### Phase 7 Facade Retirement
+### Graph Client Boundary
 
-`src/falkor.rs` remains as a compatibility facade for callers that still import
-`crate::falkor`, but it now wraps `gobby_core::falkor::GraphClient`. The old
-source-inspection gate that required visible `falkordb::FalkorClientBuilder`,
-`SyncGraph`, and raw Falkor result parsing in gcode has been retired/replaced by
-behavior tests:
+`src/falkor.rs` has been removed. gcode callers use `graph::code_graph` for
+code-index graph reads and `gobby_core::falkor::GraphClient` for direct FalkorDB
+access. Behavior tests cover the current graph contract:
 
 - config resolution returns gcode's `FalkorConfig` with core connection fields
   plus `graph_name = "gobby_code"`;
@@ -323,7 +325,7 @@ Symbol IDs are deterministic UUID5 using namespace `c0de1de0-0000-4000-8000-0000
 
 ## Search Pipeline
 
-**Files:** `src/search/{fts,semantic,graph_boost,rrf}.rs`,
+**Files:** `src/search/{fts,graph_boost,rrf}.rs`, `src/vector/code_symbols.rs`,
 `src/commands/search.rs`, `src/commands/grep.rs`
 
 ### Hybrid Search (`gcode search`)
@@ -333,7 +335,7 @@ Four sources are queried and merged via Reciprocal Rank Fusion:
 ```
 Source 1: pg_search BM25 (PostgreSQL full-text relevance)
   → search_symbols_fts (BM25 query on code_symbols)
-  → fallback: search_symbols_by_name (LIKE query)
+  → required pg_search query; invalid BM25 input returns no BM25 source results
 
 Source 2: Semantic (Qdrant vector search)
   → embed query text via an OpenAI-compatible /v1/embeddings endpoint
@@ -406,7 +408,7 @@ multiple systems with deduplication.
 
 ### BM25 Search (`search-text`, `search-content`)
 
-These use dedicated `count_text`/`count_content` functions (pg_search BM25 counts with LIKE fallback) for accurate totals when no positional path filters are present. With path filters, handlers fetch up to `FILTERED_FETCH_CAP`, apply glob filtering before pagination, and surface a hint if the cap is hit or a glob required SQL-filter fallback.
+These use dedicated `count_text`/`count_content` functions backed by pg_search BM25 counts for accurate totals when no positional path filters are present. With path filters, handlers fetch up to `FILTERED_FETCH_CAP`, apply glob filtering before pagination, and surface a hint if the cap is hit or a glob required post-query filtering.
 
 Use `gcode search-content "query" [PATH ...]` for ranked content search. Use
 `gcode grep "pattern" [PATH ...]` or `gcode grep "pattern" src -m 50` for exact
@@ -555,14 +557,14 @@ Single match → used directly. Multiple matches → fail closed with alternativ
 
 ## Semantic Search Integration
 
-**File:** `src/search/semantic.rs`
+**File:** `src/vector/code_symbols.rs`
 
 ### Embedding Request
 
 - **Endpoint**: OpenAI-compatible `/v1/embeddings`
-- **Config**: `GOBBY_EMBEDDING_URL` / `embeddings.api_base`
-- **Model**: `GOBBY_EMBEDDING_MODEL` / `embeddings.model` / default `nomic-embed-text`
-- **Auth**: optional bearer token via `GOBBY_EMBEDDING_API_KEY` / `embeddings.api_key`
+- **Config**: `ai.embeddings.api_base`
+- **Model**: `ai.embeddings.model` / default `nomic-embed-text`
+- **Auth**: optional bearer token via `ai.embeddings.api_key`
 - **Task prefix**: `search_query: ` for query embeddings
 
 ### Vector Lifecycle

@@ -16,7 +16,7 @@ The baseline crate remains dependency-light. Consumers that only need project di
 
 | Module | Feature | Responsibility |
 |--------|---------|----------------|
-| `project` | always | Walk up from a starting directory to find a `.gobby/` directory containing `project.json` or `gcode.json`. Read the `id` (or legacy `project_id`) field from `project.json`, falling back to standalone `gcode.json`. |
+| `project` | always | Walk up from a starting directory to find a `.gobby/` directory containing `project.json` or `gcode.json`. Read the `id` field from the project identity file. |
 | `bootstrap` | always | Read `~/.gobby/bootstrap.yaml` to get the daemon's listen endpoint (`bind_host`, `daemon_port`). Falls back to `127.0.0.1:60887` when the file is missing or malformed. |
 | `daemon_url` | always | Compose a dial URL from a `DaemonEndpoint`, normalizing wildcard listen addresses (`0.0.0.0`, `::`, `::0`) to `127.0.0.1`. |
 | `config` | always | Shared configuration-resolution contracts. Environment variables, `config_store`, and defaults are represented here as the foundation expands. |
@@ -42,7 +42,7 @@ pub fn read_project_id(project_root: &Path) -> anyhow::Result<String>;
 
 `find_project_root` walks up from `start` looking for a `.gobby/project.json` (Gobby-managed) or `.gobby/gcode.json` (gcode-standalone). Returns the directory *containing* `.gobby/`, not `.gobby/` itself. Returns `None` when neither marker is found before hitting the filesystem root.
 
-`read_project_id` reads `<root>/.gobby/project.json` and extracts the `id` field, falling back to the legacy `project_id` key. When `project.json` is absent, it reads `<root>/.gobby/gcode.json` so standalone gcode roots found by `find_project_root` remain usable. Errors if neither file can be read, the JSON is malformed, or the field isn't present.
+`read_project_id` reads `<root>/.gobby/project.json` and extracts the `id` field. When `project.json` is absent, it reads the gcode-owned `<root>/.gobby/gcode.json` identity file so standalone gcode roots found by `find_project_root` remain usable. Errors if neither file can be read, the JSON is malformed, or the field isn't present.
 
 ```rust
 let cwd = std::env::current_dir()?;

@@ -504,12 +504,11 @@ configuration is a setup error, not a normal degraded search mode.
   indexed.
 - **Semantic search** requires Qdrant and a configured embedding endpoint.
 - **Graph boost** requires FalkorDB and a synced wiki graph projection.
-- **Multimodal ingest** falls back to storing the raw asset with explicit
-  degradation markers when transcription/vision/text routing is off or
-  unavailable.
+- **Multimodal ingest** stores the raw asset with explicit degradation markers
+  when required transcription, vision, or text routing is unavailable.
 
 JSON output still surfaces a `degradations` array for configured query-time
-datastore outages, AI/media capability fallbacks, and explicit query-time
+datastore outages, AI/media processing degradation, and explicit query-time
 controls.
 
 ## Output Formats

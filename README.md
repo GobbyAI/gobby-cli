@@ -40,18 +40,17 @@ AST-aware code search powered by tree-sitter. Indexes 18 languages plus safe
 repo text files into the Gobby PostgreSQL hub, with pg_search BM25 for symbol
 lookup, exact indexed grep over repo content chunks, ranked repo-content search
 across source/docs/config/scripts, file tree
-navigation, and hybrid ranking. When FalkorDB, Qdrant, and an embeddings
-endpoint are configured - typically through Gobby - `gcode` adds graph-aware
-search, semantic search, optional graph expansion for exact symbol lookup
+navigation, and hybrid ranking. In the full Gobby-backed stack, required
+FalkorDB, Qdrant, and embedding sources provide graph-aware search, semantic
+search, opt-in graph expansion for exact symbol lookup
 (`gcode search-symbol --with-graph`), dependency analysis (`callers`, `usages`,
 `imports`, `blast-radius`), and Rust-owned graph/vector projection lifecycle.
 `gcode graph clear --project-id <PROJECT_ID>` is available for daemon
 stale-project graph cleanup without cwd project resolution.
 
 For non-Gobby-managed projects, `gcode init` installs the bundled `gcode` skill
-for Claude Code, Codex, Droid, Grok, Qwen, Gemini CLI (deprecated
-compatibility), and Antigravity CLI. Gobby-managed projects skip those
-project-local skill writes because Gobby owns CLI wiring.
+for Claude Code, Codex, Droid, Grok, Qwen, and Antigravity CLI. Gobby-managed
+projects skip those project-local skill writes because Gobby owns CLI wiring.
 
 ### gsqz — Output Compression
 
@@ -78,7 +77,7 @@ datastores are unavailable.
 
 `gobby-core` underpins them all — a small shared-primitives library for project
 root walk-up, bootstrap config, daemon URL composition, setup/provisioning
-contracts, and optional datastore adapters. It is not a standalone tool.
+contracts, and datastore client adapters. It is not a standalone tool.
 
 ## Documentation
 
@@ -127,11 +126,9 @@ setups can use `GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, and
 `gcode` 0.8.0+ uses the migrated Gobby PostgreSQL hub. It asks the local daemon
 broker for the hub DSN first. If the daemon is unavailable, it checks fallback
 sources in order: `GCODE_DATABASE_URL`, `GOBBY_POSTGRES_DSN`,
-`~/.gobby/gcode.yaml` `database_url`, then bootstrap `database_url`.
+`~/.gobby/gcore.yaml` `databases.postgres.dsn`, then bootstrap `database_url`.
 Bootstrap fallback is valid only when `hub_backend: postgres` and bootstrap
-contains an inline `database_url`. Bootstrap `database_url_ref` is rejected
-during bootstrap validation; it is never resolved or used to restart the
-fallback chain.
+contains an inline `database_url`.
 
 For daemon-independent service provisioning, use `gcode setup --standalone`.
 The default setup path is non-destructive. If incompatible code-index state is

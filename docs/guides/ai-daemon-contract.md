@@ -23,7 +23,7 @@ Routing is selected per capability with `auto`, `daemon`, `direct`, or `off`.
 
 AI capability config resolves from `config_store` first, then standalone `~/.gobby/gcore.yaml`, then defaults. There is no `GOBBY_*` environment layer for AI capability config. Command flags may still override routing, provider, or model for one invocation.
 
-Daemon-side transports are implementation details behind a capability binding. `openai_compatible_http` means the daemon proxies to an OpenAI-compatible endpoint. `daemon_native` is reserved for daemon-native implementations such as the legacy Whisper speech path. For audio, the daemon binding is `voice.openai_compatible_audio` with `provider`, `url`, `model`, optional `api_key`, `timeout_seconds`, `transcription_enabled`, and `translation_enabled`.
+Daemon-side transports are implementation details behind a capability binding. `openai_compatible_http` means the daemon proxies to an OpenAI-compatible endpoint. `daemon_native` is reserved for daemon-native implementations. For audio, the daemon binding is `voice.openai_compatible_audio` with `provider`, `url`, `model`, optional `api_key`, `timeout_seconds`, `transcription_enabled`, and `translation_enabled`.
 
 ## Probe Routes Match The Contract
 
@@ -39,7 +39,7 @@ The status route is the availability source of truth. `GET /api/providers/models
 | `text_generate` | `GET` | `/api/llm/status` | `text_generate: true` or equivalent capability flag |
 | `embed` | none | none | unavailable for daemon routing |
 
-The daemon should return the canonical fields above. The CLI probe also accepts compatibility aliases while daemon rollout is in progress:
+The daemon should return the canonical fields above. The CLI probe accepts these current status shapes:
 
 - Audio transcription: `transcription_enabled`, `openai_compatible_audio.transcription_enabled`, or `voice.openai_compatible_audio.transcription_enabled`.
 - Audio translation: `translation_enabled`, `openai_compatible_audio.translation_enabled`, or `voice.openai_compatible_audio.translation_enabled`.
@@ -96,7 +96,7 @@ Response:
 }
 ```
 
-`task` is the faster-whisper task value, `transcribe` or `translate`. `text` remains for back compatibility. The daemon should surface faster-whisper `segments` and detected language instead of discarding them.
+`task` is the faster-whisper task value, `transcribe` or `translate`. `text` is the aggregate transcript in the structured response; the daemon must also surface faster-whisper `segments` and detected language instead of discarding them.
 
 ### D2 Vision Extraction
 
@@ -210,9 +210,9 @@ Minimum error payload:
 
 The CLI treats this as capability degradation for the requested capability. Unknown provider remains reserved for provider names absent from the daemon registry.
 
-## D6 Embedding Config Namespace Migration
+## D6 Embedding Config Namespace
 
-The embedding config namespace moves from `embeddings.*` to `ai.embeddings.*` for the 0.5.0 contract. The canonical keys are:
+Embedding config uses the canonical `ai.embeddings.*` namespace:
 
 - `ai.embeddings.provider`
 - `ai.embeddings.api_base`
@@ -222,7 +222,7 @@ The embedding config namespace moves from `embeddings.*` to `ai.embeddings.*` fo
 - `ai.embeddings.timeout_seconds`
 - `ai.embeddings.dim`
 
-Dimension unifies on `ai.embeddings.dim`. Old dimension keys are repo-specific: gcode used `embeddings.vector_dim`, while the daemon used `embeddings.dim`. Each repo's temporary dual-read maps its own old key to the canonical key.
+Dimension is configured only with `ai.embeddings.dim`.
 
 Daemon-side writer:
 

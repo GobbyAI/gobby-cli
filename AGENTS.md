@@ -96,7 +96,7 @@ AI capability config is the carve-out: `ai.*` keys resolve from `config_store` �
 
 Search uses Reciprocal Rank Fusion in `src/search/rrf.rs` to merge results from:
 - `src/search/fts.rs` — pg_search BM25 symbol and content search
-- `src/search/semantic.rs` — Qdrant vector similarity
+- `src/vector/code_symbols.rs` — Qdrant vector similarity
 - `src/search/graph_boost.rs` — FalkorDB graph relevance
 
 ### Modify the indexing pipeline

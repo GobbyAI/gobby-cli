@@ -6,7 +6,7 @@ Technical internals for developers and agents working in the gsqz codebase.
 
 ```
 CLI (main.rs, clap)
-  → Detect subcommand: input | output | bare (backward compat)
+  → Detect explicit subcommand: input | output
   ┌─ input mode:
   │  → Read stdin → compress_prose(text, level) → print → report savings
   └─ output mode:

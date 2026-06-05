@@ -116,8 +116,8 @@ The run must stop on the first matching rule:
 Every stop emits `status`, `stop_reason`, `steps_used`, `tokens_used`,
 `sources_added`, and `changed_paths`.
 
-Daemon clients must parse budget fields as optional for compatibility with
-older gwiki builds. When present, `max_steps`, `max_tokens`, `max_sources`,
+Daemon clients must parse budget fields as optional output fields. When present,
+`max_steps`, `max_tokens`, `max_sources`,
 `max_wall_time_seconds`, and `max_note_bytes` are integer caps. Missing caps
 mean "not reported by this CLI version", not zero. `write_conflict` is an
 optional boolean and defaults to `false` only for display; clients should still
