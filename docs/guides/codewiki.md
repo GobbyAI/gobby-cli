@@ -87,10 +87,11 @@ On later runs, unchanged file docs are preserved; changed files cause their file
 doc, owning module doc, and `repo.md` to regenerate. `_meta/codewiki.json`
 records the generated set for audit and repeat runs.
 
-## No-FalkorDB Output
+## Graph-Degraded Output
 
-FalkorDB is optional. If it is unconfigured or unreachable, codewiki still
-produces valid docs:
+FalkorDB is required for graph-derived codewiki structure. In explicitly
+degraded paths, or when a configured FalkorDB service is unreachable, codewiki
+still produces valid docs:
 
 - Clustering degrades to directory and AST-only grouping.
 - Component IDs remain `file_path::name`.

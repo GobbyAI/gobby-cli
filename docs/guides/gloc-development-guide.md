@@ -256,9 +256,9 @@ Backend tests that require running Ollama/LM Studio are marked `#[ignore]`. They
 ### Running Tests
 
 ```bash
-cargo nextest run -p gobby-local       # all non-doctest tests
-cargo test --doc -p gobby-local        # doctests
-cargo test -p gobby-local -- --ignored # integration tests (requires running backends)
+cargo nextest run -p gobby-local --no-default-features       # all non-doctest tests
+cargo test --doc -p gobby-local --no-default-features        # doctests
+cargo test -p gobby-local --no-default-features -- --ignored # integration tests (requires running backends)
 ```
 
 ## Adding a New Backend

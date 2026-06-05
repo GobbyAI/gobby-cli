@@ -10,7 +10,7 @@ CLI (main.rs, clap)
     → detect_project_root / resolve_database_url / resolve_services
   → Command dispatch (main.rs match)
     → commands/{search,symbols,graph,index,status,init}.rs
-      → search/ pipeline (pg_search BM25 + optional semantic + optional graph sources → RRF)
+      → search/ pipeline (pg_search BM25 + semantic + graph sources → RRF)
       → index/ pipeline (walker → parser → chunker → hasher → indexer)
       → falkor (FalkorDB graph queries)
       → db (PostgreSQL hub connections)
@@ -392,7 +392,7 @@ score(symbol) = Σ 1/(K + rank) for each source containing the symbol
 - `gcode search` sorts by exact tier first, then RRF score; public `score`
   reflects that final display order and `rrf_score` preserves the raw RRF value.
 - `gcode search-symbol --with-graph` uses the same RRF metadata for exact hits
-  plus optional FalkorDB graph neighbors; default `search-symbol` stays exact-first
+  plus FalkorDB graph neighbors; default `search-symbol` stays exact-first
   without graph expansion.
 - Source attribution is sorted deterministically (e.g., `["fts", "graph_expand"]`)
 

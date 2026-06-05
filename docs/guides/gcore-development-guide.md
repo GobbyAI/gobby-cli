@@ -4,7 +4,7 @@ Technical internals for developers and agents working in the `gobby-core` crate 
 
 ## What gobby-core Is
 
-`gobby-core` is the shared Rust migration substrate for Gobby CLI crates and future Rust daemon work. It holds the boring, reusable platform layer: project discovery, bootstrap and daemon addressing, shared context/config contracts, setup boundaries, degradation vocabulary, optional datastore adapters, and generic indexing/search primitives.
+`gobby-core` is the shared Rust migration substrate for Gobby CLI crates and future Rust daemon work. It holds the boring, reusable platform layer: project discovery, bootstrap and daemon addressing, shared context/config contracts, setup boundaries, degradation vocabulary, feature-gated datastore adapters, and generic indexing/search primitives.
 
 Domain behavior stays out of this crate. Code graph facts, symbol IDs, language parsing policy, wiki vault layout, task behavior, memory behavior, and CLI output formatting belong to consumer crates.
 
@@ -20,8 +20,8 @@ The baseline crate remains dependency-light. Consumers that only need project di
 | `bootstrap` | always | Read `~/.gobby/bootstrap.yaml` to get the daemon's listen endpoint (`bind_host`, `daemon_port`). Falls back to `127.0.0.1:60887` when the file is missing or malformed. |
 | `daemon_url` | always | Compose a dial URL from a `DaemonEndpoint`, normalizing wildcard listen addresses (`0.0.0.0`, `::`, `::0`) to `127.0.0.1`. |
 | `config` | always | Shared configuration-resolution contracts. Environment variables, `config_store`, and defaults are represented here as the foundation expands. |
-| `context` | always | Shared runtime context contracts for project identity, daemon URL, and optional service configuration. Consumer-specific CLI state stays outside. |
-| `degradation` | always | Shared vocabulary for optional-service absence, partial search, stale indexes, skipped artifacts, and fatal core errors. |
+| `context` | always | Shared runtime context contracts for project identity, daemon URL, and service configuration. Consumer-specific CLI state stays outside. |
+| `degradation` | always | Shared vocabulary for configured-service unavailability, explicit degraded paths, partial search, stale indexes, skipped artifacts, and fatal core errors. |
 | `setup` | always | Attached and standalone setup contracts. Runtime commands validate externally managed resources and do not implicitly migrate them. |
 | `postgres` | `postgres` | PostgreSQL hub adapter boundary. Validates Gobby-owned schema and BM25 requirements without creating, altering, or dropping managed objects. |
 | `falkor` | `falkor` | FalkorDB adapter boundary. Graph connection helpers live here without making FalkorDB a baseline dependency. |
@@ -126,7 +126,7 @@ pub enum DegradationKind;
 
 `degradation` defines the shared vocabulary for fatal core failures and non-fatal partial results. `ServiceState` travels with adapter results so callers can distinguish an available service, a service with no configuration, and a configured service that is unreachable. `CoreError` is reserved for command-stopping failures such as invalid configuration, unavailable required services, failed writes, and corrupted input.
 
-`DegradationKind` is for successful operations that returned less than the ideal result. A `gobby-code` search can return symbol or content results while marking Qdrant or FalkorDB as an optional `ServiceUnavailable` degradation. It can also report `PartialSearch`, `StaleIndex`, or `SkippedArtifacts` without converting those states into fatal CLI errors.
+`DegradationKind` is for successful operations that returned less than the ideal result. A `gobby-code` search can return symbol or content results while marking a configured Qdrant or FalkorDB outage as a `ServiceUnavailable` degradation. It can also report `PartialSearch`, `StaleIndex`, or `SkippedArtifacts` without converting those states into fatal CLI errors.
 
 `gobby-wiki` should use the same contracts for wiki search and indexing. Missing vector search, stale vault index data, or skipped files should be reported as degradation metadata alongside partial results. A required store or write path failure should become `CoreError` only when the command cannot complete.
 
@@ -139,7 +139,7 @@ pub enum DegradationKind;
 - **Attached mode** uses `AttachedValidator` and `RequiredObject` declarations to check that externally managed resources already exist. It returns a `ValidationReport` containing present objects and missing objects with typed `SetupIssue` guidance. `gobby-core` does not create, alter, drop, or migrate Gobby-owned schema in attached mode.
 - **Standalone mode** uses `StandaloneSetup` and `OwnedObject` declarations for explicit setup commands that create consumer-owned resources. Consumers must declare a namespace such as `gcode` or `gwiki` so owned tables, graph labels, and vector collections stay domain-scoped.
 
-`ValidationContext` and `SetupContext` pass optional datastore handles/configuration into callbacks. PostgreSQL handles are mutable because `postgres::Client::query` and `postgres::Client::execute` both require `&mut self`; the callbacks borrow the supplied context and do not take ownership from later validators or creators.
+`ValidationContext` and `SetupContext` pass nullable datastore handles/configuration into callbacks so diagnostics and explicitly degraded paths can represent absence. PostgreSQL handles are mutable because `postgres::Client::query` and `postgres::Client::execute` both require `&mut self`; the callbacks borrow the supplied context and do not take ownership from later validators or creators.
 
 ## Boundary Rules
 

@@ -498,8 +498,9 @@ configuration is a setup error, not a normal degraded search mode.
   degradation markers when transcription/vision/text routing is off or
   unavailable.
 
-JSON output still surfaces a `degradations` array for AI/media capability
-fallbacks and explicit query-time controls.
+JSON output still surfaces a `degradations` array for configured query-time
+datastore outages, AI/media capability fallbacks, and explicit query-time
+controls.
 
 ## Output Formats
 

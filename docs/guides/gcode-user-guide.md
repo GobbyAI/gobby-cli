@@ -420,8 +420,11 @@ PostgreSQL hub. It marks graph/vector sync flags dirty; `gcode index
 from Rust. Deleted-file cleanup removes code graph/vector projection rows before
 PostgreSQL facts are deleted, including explicit `--files <deleted-file>` and
 whole-project orphan cleanup.
-BM25 search (`search-text`, `search-content`) works as soon as the transaction
-commits; graph and semantic search improve once the external stores sync.
+BM25-specific modes (`search-text`, `search-content`) work as soon as the
+transaction commits. Full hybrid search uses the required PostgreSQL, FalkorDB,
+Qdrant, and embedding stack once graph and vector projections sync; configured
+runtime outages are reported as degradations by callers that support partial
+results.
 
 Reset the current project and rebuild from scratch (destructive — prompts for confirmation):
 
