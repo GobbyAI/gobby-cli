@@ -3,7 +3,10 @@
   "name": "gobby-cli",
   "created_at": "2026-03-30T03:55:15.086968+00:00",
   "verification": {
-    "unit_tests": "cargo test",
-    "lint": "cargo clippy"
+    "build": "cargo build --workspace --no-default-features",
+    "unit_tests": "cargo nextest run --workspace --no-default-features",
+    "doc_tests": "cargo test --doc --workspace --no-default-features",
+    "format": "cargo fmt --check",
+    "lint": "cargo clippy --workspace --no-default-features -- -D warnings"
   }
 }

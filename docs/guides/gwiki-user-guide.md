@@ -29,9 +29,9 @@ Run `gwiki setup --standalone` only against a PostgreSQL hub where the
 `pg_search` extension is installed — setup preflights the extension before it
 creates any BM25 indexes.
 
-FalkorDB, Qdrant, and the embedding endpoint are optional and configured at
-runtime. Without them, `gwiki` degrades gracefully (see
-[Graceful Degradation](#graceful-degradation)).
+PostgreSQL, FalkorDB, Qdrant, and the embedding endpoint are the required
+runtime stack. Use `gwiki setup --standalone` to provision or validate the same
+Docker-backed services that attached Gobby mode uses.
 
 ### Scopes: `--project` vs `--topic`
 
@@ -230,8 +230,8 @@ gwiki --topic rust-async index
 
 Rebuilds BM25/derived search state for the Markdown and source notes in the
 selected scope. Run it after capturing or editing sources so search can see
-them. BM25 search works as soon as indexing commits; semantic and graph search
-improve once the external stores sync.
+them. In PostgreSQL-backed mode, indexing also syncs the wiki graph to FalkorDB;
+semantic search uses the required Qdrant and embedding configuration.
 
 ### Search (`search`)
 
@@ -242,18 +242,14 @@ gwiki --topic rust-async search "lifetime elision" --no-semantic
 ```
 
 Hybrid search across wiki documents: pg_search BM25 text matching merged with
-optional semantic vector search and FalkorDB graph boost via Reciprocal Rank
-Fusion.
+semantic vector search and FalkorDB graph boost via Reciprocal Rank Fusion.
 
 **When to use:** General-purpose queries over vault content. Best for natural
 language and conceptual searches.
 
 **Options:**
 - `--limit <N>` — Max results (default: `10`).
-- `--no-semantic` — Disable semantic vector search for this query (BM25 + graph only).
-
-Semantic search degrades gracefully — without Qdrant or a configured embedding
-endpoint, `search` returns BM25 results and notes the degradation.
+- `--no-semantic` — Disable semantic vector ranking for this query (BM25 + graph only). This is a query-time ranking control; Qdrant and embeddings are still required runtime infrastructure.
 
 ### Ask (`ask`)
 
@@ -490,22 +486,20 @@ budget, and `$secret:` handling, see the canonical
 
 ## Graceful Degradation
 
-Storage and AI backends can each be unavailable independently, and `gwiki`
-degrades to whatever is configured rather than failing:
+The datastore stack is required: PostgreSQL stores the wiki hub/search rows,
+FalkorDB stores the wiki graph, and Qdrant stores vectors. Missing datastore
+configuration is a setup error, not a normal degraded search mode.
 
-- **BM25 search** works as soon as the PostgreSQL hub is configured and the
-  scope is indexed.
-- **Semantic search** is optional — without Qdrant or a configured embedding
-  endpoint, `search`/`ask` return BM25 (plus graph) results and skip the vector
-  source.
-- **Graph boost** is optional — without FalkorDB, the graph contribution is
-  simply absent.
+- **BM25 search** requires the PostgreSQL hub and the selected scope to be
+  indexed.
+- **Semantic search** requires Qdrant and a configured embedding endpoint.
+- **Graph boost** requires FalkorDB and a synced wiki graph projection.
 - **Multimodal ingest** falls back to storing the raw asset with explicit
   degradation markers when transcription/vision/text routing is off or
   unavailable.
 
-JSON output surfaces a `degradations` array so callers can see exactly which
-capability was skipped and why.
+JSON output still surfaces a `degradations` array for AI/media capability
+fallbacks and explicit query-time controls.
 
 ## Output Formats
 
@@ -545,7 +539,8 @@ gwiki --project /path/to/repo status
 
 - Run `gwiki index` to pick up newly captured or edited sources.
 - Confirm the scope is the one you ingested into (`gwiki status`).
-- Try `--no-semantic` to isolate whether the embedding endpoint is the issue.
+- Use `gwiki status` to confirm PostgreSQL, FalkorDB, Qdrant, and embeddings
+  are configured.
 
 ### `pg_search` missing
 
@@ -553,11 +548,11 @@ gwiki --project /path/to/repo status
 Install the `pg_search` extension on the PostgreSQL hub before running
 `gwiki setup --standalone`.
 
-### Semantic search returns nothing
+### Semantic Search Configuration Error
 
-Expected when Qdrant or the embedding endpoint is not configured. BM25 search
-still works; configure embeddings (see [AI Configuration](./ai-configuration.md))
-to enable the semantic source, then re-run `gwiki index`.
+Qdrant and the embedding endpoint are required for PostgreSQL-backed search.
+Run `gwiki setup --standalone` or attach to Gobby's full datastore stack, then
+re-run `gwiki index`.
 
 ### Media ingest produced skeleton output
 
