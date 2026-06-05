@@ -12,8 +12,9 @@ Download from [GitHub Releases](https://github.com/GobbyAI/gobby-cli/releases/la
 cargo install gobby-code
 ```
 
-Graph and semantic features are configured at runtime. You do not need Cargo
-feature flags to enable FalkorDB, Qdrant, or embeddings support.
+Graph and semantic features are configured at runtime, not behind Cargo feature
+flags. Gobby-managed projects provide the required Docker-backed stack:
+PostgreSQL with `pg_search`, FalkorDB, Qdrant, and an embedding endpoint.
 
 Runtime indexing/search requires Gobby's PostgreSQL hub. gcode asks the local
 daemon broker for the hub DSN first. If the daemon is unavailable, it checks
@@ -283,10 +284,11 @@ appear with a zero symbol count once indexed.
 
 ## Dependency Graph
 
-Read-side graph commands require FalkorDB. Gobby-managed projects usually provide this
-automatically, and daemon-independent projects can opt in with `GOBBY_FALKORDB_HOST`,
-`GOBBY_FALKORDB_PORT`, and `GOBBY_FALKORDB_PASSWORD`. Without FalkorDB, graph read
-commands return empty results gracefully.
+Read-side graph commands require FalkorDB. Gobby-managed projects provide this
+through the Docker-backed stack, and daemon-independent projects configure it
+with `GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, and
+`GOBBY_FALKORDB_PASSWORD`. Without FalkorDB, graph read commands report the
+degraded state and callers that can preserve lexical results do so.
 
 All read-side graph commands resolve fuzzy input — you don't need the exact symbol name. Resolution tries exact match, then substring match, then BM25 search across names, signatures, and docstrings. When multiple matches are found, the best is used and alternatives are shown on stderr.
 
@@ -462,9 +464,11 @@ gcode is daemon-independent but not database-independent:
 - Database: PostgreSQL hub from `~/.gobby/bootstrap.yaml`
 - Required bootstrap: `hub_backend: postgres` plus `database_url`; bootstrap `database_url_ref` is rejected
 - Identity: `.gobby/project.json`, `.gobby/gcode.json`, isolated root, linked worktree, or generated identity from `gcode init`
-- Optional services: FalkorDB, Qdrant, and embeddings via env vars or PostgreSQL `config_store`
+- Required service configs: FalkorDB, Qdrant, and embeddings via env vars or PostgreSQL `config_store`
 
-Graph commands and semantic search become available when the required services are configured.
+Graph commands and semantic search become available when the required services
+are configured; unhealthy services are reported as degraded instead of being
+framed as optional enhancers.
 
 ### Isolated and worktree-derived identities
 

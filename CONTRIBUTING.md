@@ -31,7 +31,7 @@ cargo build -p gobby-squeeze                     # gsqz only
 cargo nextest run --workspace --no-default-features     # All non-doctest tests (without embeddings)
 cargo test --doc --workspace --no-default-features      # Doctests (without embeddings)
 cargo nextest run -p gobby-code --no-default-features   # gcode tests only
-cargo nextest run -p gobby-squeeze                      # gsqz tests only
+cargo nextest run -p gobby-squeeze --no-default-features # gsqz tests only
 cargo clippy --workspace -- -D warnings          # Lint
 cargo fmt --all --check                          # Check formatting
 ```
