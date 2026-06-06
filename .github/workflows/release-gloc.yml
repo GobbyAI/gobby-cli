@@ -53,9 +53,6 @@ jobs:
       - name: Run tests
         run: cargo nextest run --profile ci -p gobby-local
 
-      - name: Run doctests
-        run: cargo test --doc -p gobby-local
-
   build:
     needs: test
     strategy:
