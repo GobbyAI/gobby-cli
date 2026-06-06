@@ -27,12 +27,12 @@ This workspace ships five Gobby CLI tools plus a shared library.
 
 | Crate | Binary | Version | Release tag |
 |---|---|---:|---|
-| `gobby-code` | `gcode` | `0.9.9` | `gcode-v0.9.9` |
-| `gobby-core` | n/a | `0.3.0` | `gobby-core-v0.3.0` |
-| `gobby-hooks` | `ghook` | `0.4.5` | `ghook-v0.4.5` |
-| `gobby-squeeze` | `gsqz` | `0.4.5` | `gsqz-v0.4.5` |
-| `gobby-local` | `gloc` | `0.1.3` | `gloc-v0.1.3` |
-| `gobby-wiki` | `gwiki` | `0.2.0` | `gwiki-v0.2.0` |
+| `gobby-code` | `gcode` | `1.0.0` | `gcode-v1.0.0` |
+| `gobby-core` | n/a | `0.4.0` | `gobby-core-v0.4.0` |
+| `gobby-hooks` | `ghook` | `0.4.6` | `ghook-v0.4.6` |
+| `gobby-squeeze` | `gsqz` | `0.4.6` | `gsqz-v0.4.6` |
+| `gobby-local` | `gloc` | `0.1.4` | `gloc-v0.1.4` |
+| `gobby-wiki` | `gwiki` | `0.3.0` | `gwiki-v0.3.0` |
 
 ### gcode — Code Search & Navigation
 
