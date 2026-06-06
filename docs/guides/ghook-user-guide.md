@@ -43,15 +43,14 @@ host AI CLI fires hook
                        └─ daemon's drain worker replays on next tick
 ```
 
-Spool-first ordering is the whole point. If anything between ghook and the daemon goes wrong (sandbox FS denial, network blip, daemon restart), the envelope is already on disk and the daemon will pick it up on its next drain pass. Replay is invisible to the host CLI; the host-visible result still follows the mirrored Python dispatcher contract.
+Spool-first ordering is the whole point. If anything between ghook and the daemon goes wrong (sandbox FS denial, network blip, daemon restart), the envelope is already on disk and the daemon will pick it up on its next drain pass. Replay is invisible to the host CLI; the host-visible result follows the current per-CLI hook protocol.
 
 ### Planned Shutdown Stop Handling
 
 When Gobby intentionally stops or restarts the daemon, a host CLI may fire a
 Stop hook after the daemon has already exited. For Stop hooks only, `ghook`
-checks `$GOBBY_HOME/shutdown_intent_active.json` and then
-`$GOBBY_HOME/shutdown_source.json` before project lookup, stdin reads,
-terminal-context injection, or enqueue.
+checks `$GOBBY_HOME/shutdown_intent_active.json` before project lookup, stdin
+reads, terminal-context injection, or enqueue.
 
 A marker is accepted when its `timestamp` is fresh and either its `intent` is
 `stop` or `restart`, or its `source` starts with `cli_`, `http_`, `service_`, or
@@ -86,7 +85,7 @@ unset, empty, or invalid, `terminal_context` is omitted.
 ghook has three modes. Exactly one must be selected.
 
 ```text
-ghook --gobby-owned --cli=<c> --type=<t> [--critical] [--detach]
+ghook --gobby-owned --cli=<c> --type=<t> [--detach]
 ghook --diagnose    --cli=<c> --type=<t>
 ghook --version
 ```
@@ -95,10 +94,9 @@ ghook --version
 |------|------|---------|
 | `--gobby-owned` | dispatch | Normal hook invocation. Reads stdin, enqueues, attempts POST. |
 | `--diagnose` | introspection | Prints a JSON snapshot of what *would* happen. No network, no envelope write. |
-| `--version` | metadata | Prints version and writes `~/.gobby/bin/.ghook-compatibility` for the daemon. |
+| `--version` | metadata | Prints version and writes `~/.gobby/bin/.ghook-runtime.json` for the daemon. |
 | `--cli` | required for dispatch/diagnose | Host CLI name: `claude`, `codex`, `gemini`, `qwen`, `droid`. Case-insensitive. |
 | `--type` | required for dispatch/diagnose | Hook type. CLI-specific (e.g. `session-start` for Claude, `SessionStart` for Codex/Gemini/Qwen, `PreToolUse`, `PostToolUse`, `Stop`, `pre-compact`, `session-end`). |
-| `--critical` | dispatch | Compatibility flag accepted by ghook. Host-visible behavior is derived from the per-CLI dispatcher contract, matching `hook_dispatcher.py`. |
 | `--detach` | dispatch | After enqueue and project-root walk-up, call `setsid(2)` to escape the host CLI's process group before the POST. Useful for hooks where the host CLI tears down its session immediately. |
 
 ### Exit Codes
@@ -109,7 +107,7 @@ ghook --version
 | `1` | Non-critical hook failure returned as JSON error output. |
 | `2` | Critical hook failure or blocked critical hook returned as stderr. |
 
-The inbox/replay path is still enqueue-first, but host-visible stdout/stderr/exit behavior is intended to match the legacy Python dispatcher contract rather than expose transport details.
+The inbox/replay path is still enqueue-first, but host-visible stdout/stderr/exit behavior follows the current per-CLI hook protocol rather than exposing transport details.
 
 ## Wiring ghook into Claude Code
 
@@ -123,7 +121,7 @@ Most users get this configured automatically by the Gobby installer. To wire it 
         "hooks": [
           {
             "type": "command",
-            "command": "ghook --gobby-owned --cli=claude --type=session-start --critical"
+            "command": "ghook --gobby-owned --cli=claude --type=session-start"
           }
         ]
       }
@@ -133,7 +131,7 @@ Most users get this configured automatically by the Gobby installer. To wire it 
         "hooks": [
           {
             "type": "command",
-            "command": "ghook --gobby-owned --cli=claude --type=session-end --critical"
+            "command": "ghook --gobby-owned --cli=claude --type=session-end"
           }
         ]
       }
@@ -163,7 +161,7 @@ Most users get this configured automatically by the Gobby installer. To wire it 
         "hooks": [
           {
             "type": "command",
-            "command": "ghook --gobby-owned --cli=claude --type=pre-compact --critical"
+            "command": "ghook --gobby-owned --cli=claude --type=pre-compact"
           }
         ]
       }
@@ -174,7 +172,7 @@ Most users get this configured automatically by the Gobby installer. To wire it 
 
 Claude Code uses lowercase-hyphenated names internally for some hooks (`session-start`, `pre-compact`, `session-end`) and PascalCase for others (`PreToolUse`, `PostToolUse`). ghook treats `--type` as an opaque string, so pass the exact identifier the daemon expects for that CLI.
 
-The `--critical` flag is on lifecycle hooks (`session-start`, `session-end`, `pre-compact`) because these set up state the daemon needs immediately. Tool-use hooks are non-critical — the envelope still spools, but a transient daemon outage won't block your tool call.
+Lifecycle hook criticality (`session-start`, `session-end`, `pre-compact`) comes from ghook's per-CLI registry. Tool-use hooks are non-critical — the envelope still spools, but a transient daemon outage won't block your tool call.
 
 ### Codex, Gemini, Qwen, Droid
 
@@ -203,7 +201,7 @@ Unknown `--cli` values fall back to conservative Claude-like dispatch behavior o
 $ ghook --diagnose --cli=claude --type=session-start
 {
   "schema_version": 2,
-  "ghook_version": "0.4.4",
+  "ghook_version": "0.4.6",
   "cli": "claude",
   "hook_type": "session-start",
   "source": "claude",
@@ -224,20 +222,20 @@ $ ghook --diagnose --cli=claude --type=session-start
   },
   "cli_recognized": true,
   "install_method": "github-release",
-  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.4.4/ghook-aarch64-apple-darwin.tar.gz"
+  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.4.6/ghook-aarch64-apple-darwin.tar.gz"
 }
 ```
 
 Look for:
 
 - **`cli_recognized: true`** — confirms ghook knows about this CLI explicitly. Unknown CLIs fall back to conservative Claude-like live dispatch behavior.
-- **`critical: true/false`** — does ghook consider this hook type critical under the mirrored Python dispatcher contract for that CLI?
+- **`critical: true/false`** — does ghook consider this hook type critical under the current per-CLI hook protocol?
 - **`terminal_context_enabled: true`** — this recognized CLI can receive terminal context. `terminal_context_preview` is populated only when the current process has `TMUX` and a valid `TMUX_PANE`.
 - **`daemon_url`** — where will the POST go? If this is wrong, fix `~/.gobby/bootstrap.yaml`.
 - **`project_root` / `project_id`** — did ghook correctly walk up from cwd to the project? `null` means no `.gobby/project.json` was found — daemon will receive the envelope without an `X-Gobby-Project-Id` header.
 - **`install_method` / `install_source_url`** — how this `ghook` binary got installed (e.g. `github-release`, `crates-binstall`, `cargo-install`). Both are `null` when the binary was installed without a sidecar-writing installer (e.g. plain `cargo install gobby-hooks`). Useful in bug reports — it tells maintainers exactly which install path a user is on.
 
-The diagnose JSON is validated against `crates/ghook/schemas/diagnose-output.v2.schema.json` in tests, so the schema is stable. The legacy `diagnose-output.v1.schema.json` is preserved as a frozen historical schema for tools that pinned to v1.
+The diagnose JSON is validated against `crates/ghook/schemas/diagnose-output.v2.schema.json` in tests, so the schema is stable. `diagnose-output.v1.schema.json` remains in the repository as a frozen historical schema for tools that pinned to v1.
 
 ## Inbox & Replay
 
@@ -287,4 +285,4 @@ The whole point of ghook's design is that this case is survivable. The envelope 
 
 ### Schema version mismatch
 
-Envelopes carry `schema_version: 1`. If the daemon rejects envelopes for being a newer version than it understands, the daemon needs updating. ghook's `--version` command writes `~/.gobby/bin/.ghook-compatibility` so the daemon can detect this.
+Envelopes carry `schema_version: 1`. If the daemon rejects envelopes for being a newer version than it understands, the daemon needs updating. ghook's `--version` command writes `~/.gobby/bin/.ghook-runtime.json` so the daemon can detect this.

@@ -16,7 +16,7 @@ CLI output and `clap` types:
   project graph reports.
 - `vector::code_symbols` for code-symbol vector lifecycle and search helpers.
 
-The CLI commands remain compatibility wrappers over these APIs. They are useful
+The CLI commands remain stable wrappers over these APIs. They are useful
 for temporary Python shims and operator workflows, but they are not the long-term
 daemon integration surface.
 

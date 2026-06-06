@@ -6,7 +6,7 @@ Technical internals for developers and agents working in the gsqz codebase.
 
 ```
 CLI (main.rs, clap)
-  → Detect subcommand: input | output | bare (backward compat)
+  → Detect explicit subcommand: input | output
   ┌─ input mode:
   │  → Read stdin → compress_prose(text, level) → print → report savings
   └─ output mode:
@@ -537,5 +537,8 @@ Each primitive has comprehensive unit tests:
 
 Run tests:
 ```bash
-cargo test -p gobby-squeeze
+cargo nextest run -p gobby-squeeze
+cargo nextest run -p gobby-squeeze --no-default-features
+cargo test --doc -p gobby-squeeze
+cargo test --doc -p gobby-squeeze --no-default-features
 ```

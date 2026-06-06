@@ -8,10 +8,11 @@ Thanks for your interest in contributing! This workspace is part of the [Gobby](
 git clone https://github.com/GobbyAI/gobby-cli.git
 cd gobby-cli
 cargo build --workspace --no-default-features
-cargo test --workspace --no-default-features
+cargo nextest run --workspace --no-default-features
+cargo test --doc --workspace --no-default-features
 ```
 
-The `rust-toolchain.toml` ensures you have the right toolchain and components (clippy, rustfmt) installed automatically. CI uses `--no-default-features`; keep that build clean even when a crate has no default feature set.
+The `rust-toolchain.toml` ensures you have the right toolchain and components (clippy, rustfmt) installed automatically. Install `cargo-nextest` separately before running the test commands. CI uses `--no-default-features`; keep that build clean even when a crate has no default feature set.
 
 ## Development
 
@@ -27,10 +28,10 @@ cargo build -p gobby-squeeze                     # gsqz only
 ### Testing
 
 ```bash
-cargo test --workspace                           # All tests
-cargo test --workspace --no-default-features     # All tests (without embeddings)
-cargo test -p gobby-code --no-default-features   # gcode tests only
-cargo test -p gobby-squeeze                      # gsqz tests only
+cargo nextest run --workspace --no-default-features     # All non-doctest tests (without embeddings)
+cargo test --doc --workspace --no-default-features      # Doctests (without embeddings)
+cargo nextest run -p gobby-code --no-default-features   # gcode tests only
+cargo nextest run -p gobby-squeeze --no-default-features # gsqz tests only
 cargo clippy --workspace -- -D warnings          # Lint
 cargo fmt --all --check                          # Check formatting
 ```

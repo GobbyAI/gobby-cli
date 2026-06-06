@@ -6,7 +6,7 @@ Technical internals for developers and agents working in the ghook codebase.
 
 ```text
 host AI CLI (Claude Code / Codex / Gemini / Qwen / Droid)
-  │  spawns: ghook --gobby-owned --cli=<c> --type=<t> [--critical] [--detach]
+  │  spawns: ghook --gobby-owned --cli=<c> --type=<t> [--detach]
   │  pipes:  stdin = hook payload (JSON object)
   ▼
 main.rs::run_gobby_owned
@@ -157,8 +157,8 @@ Schema:
 ```json
 {
   "install_method": "github-release",
-  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.4.4/ghook-aarch64-apple-darwin.tar.gz",
-  "installed_version": "0.4.4",
+  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.4.6/ghook-aarch64-apple-darwin.tar.gz",
+  "installed_version": "0.4.6",
   "installed_at": "2026-04-22T18:30:00Z"
 }
 ```
@@ -214,8 +214,8 @@ The 30s timeout is deliberately generous — the daemon may be doing real work (
 `planned_shutdown` handles intentional daemon stop/restart windows without
 changing the envelope schema. Before any project lookup, stdin read,
 terminal-context injection, or enqueue, Stop hooks check
-`shutdown_intent_active.json` and then `shutdown_source.json` under
-`$GOBBY_HOME` or `~/.gobby`. Fresh markers are accepted for `intent` values
+`shutdown_intent_active.json` under `$GOBBY_HOME` or `~/.gobby`. Fresh markers
+are accepted for `intent` values
 `stop`/`restart` or source prefixes `cli_`, `http_`, `service_`, and `mcp_`.
 
 Accepted markers trigger a short GET to `{daemon_url}/api/admin/health`. Any
@@ -284,7 +284,7 @@ On Windows, `setsid` doesn't exist. `DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP
 
 ## Critical vs Non-Critical Exit Semantics
 
-`ghook` keeps enqueue-first transport internals, but host-visible stdout/stderr/exit behavior is intended to match the legacy Python dispatcher contract rather than expose separate Rust-specific delivery semantics.
+`ghook` keeps enqueue-first transport internals, but host-visible stdout/stderr/exit behavior follows the current per-CLI hook protocol rather than exposing separate Rust-specific delivery semantics.
 
 ## Testing
 
@@ -319,7 +319,8 @@ This means changing the Rust struct without updating the schema (or vice versa) 
 ### Running Tests
 
 ```bash
-cargo test -p gobby-hooks
+cargo nextest run -p gobby-hooks
+cargo test --doc -p gobby-hooks
 ```
 
 No integration tests — ghook's I/O is contained (one file write, one HTTP POST), and both are covered by unit tests using `tempfile::tempdir()` and dummy daemon URLs.
@@ -354,13 +355,13 @@ Almost always config-only. ghook treats `--type` as opaque. To make a hook criti
 
 ## Versioning
 
-ghook is at `0.4.4`. The envelope `SCHEMA_VERSION` is `1`; the diagnose-output schema is `2`. The three version numbers are independent:
+ghook is at `0.4.6`. The envelope `SCHEMA_VERSION` is `1`; the diagnose-output schema is `2`. The three version numbers are independent:
 
 - **Crate version** bumps for any code change (binary behavior, dependencies, perf, etc.).
 - **Envelope `SCHEMA_VERSION`** bumps only when the inbox envelope shape changes in a way the daemon must explicitly handle.
 - **Diagnose-output schema version** bumps when `--diagnose`'s JSON output adds, removes, or changes fields. v1 → v2 added `install_method` and `install_source_url`; the v1 file is kept as a frozen historical schema.
 
-`--version` writes `~/.gobby/bin/.ghook-compatibility` with the crate and envelope-schema numbers, so the daemon can detect mismatches at startup and refuse to drain envelopes from a future envelope schema it doesn't understand.
+`--version` writes `~/.gobby/bin/.ghook-runtime.json` with the crate and envelope-schema numbers, so the daemon can detect mismatches at startup and refuse to drain envelopes from a future envelope schema it doesn't understand.
 
 ### Release-Time Tag/Version Alignment
 

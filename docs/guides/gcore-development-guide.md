@@ -4,7 +4,7 @@ Technical internals for developers and agents working in the `gobby-core` crate 
 
 ## What gobby-core Is
 
-`gobby-core` is the shared Rust migration substrate for Gobby CLI crates and future Rust daemon work. It holds the boring, reusable platform layer: project discovery, bootstrap and daemon addressing, shared context/config contracts, setup boundaries, degradation vocabulary, optional datastore adapters, and generic indexing/search primitives.
+`gobby-core` is the shared Rust migration substrate for Gobby CLI crates and future Rust daemon work. It holds the boring, reusable platform layer: project discovery, bootstrap and daemon addressing, shared context/config contracts, setup boundaries, degradation vocabulary, feature-gated datastore adapters, and generic indexing/search primitives.
 
 Domain behavior stays out of this crate. Code graph facts, symbol IDs, language parsing policy, wiki vault layout, task behavior, memory behavior, and CLI output formatting belong to consumer crates.
 
@@ -16,12 +16,12 @@ The baseline crate remains dependency-light. Consumers that only need project di
 
 | Module | Feature | Responsibility |
 |--------|---------|----------------|
-| `project` | always | Walk up from a starting directory to find a `.gobby/` directory containing `project.json` or `gcode.json`. Read the `id` (or legacy `project_id`) field from `project.json`, falling back to standalone `gcode.json`. |
+| `project` | always | Walk up from a starting directory to find a `.gobby/` directory containing `project.json` or `gcode.json`. Read the `id` field from the project identity file. |
 | `bootstrap` | always | Read `~/.gobby/bootstrap.yaml` to get the daemon's listen endpoint (`bind_host`, `daemon_port`). Falls back to `127.0.0.1:60887` when the file is missing or malformed. |
 | `daemon_url` | always | Compose a dial URL from a `DaemonEndpoint`, normalizing wildcard listen addresses (`0.0.0.0`, `::`, `::0`) to `127.0.0.1`. |
 | `config` | always | Shared configuration-resolution contracts. Environment variables, `config_store`, and defaults are represented here as the foundation expands. |
-| `context` | always | Shared runtime context contracts for project identity, daemon URL, and optional service configuration. Consumer-specific CLI state stays outside. |
-| `degradation` | always | Shared vocabulary for optional-service absence, partial search, stale indexes, skipped artifacts, and fatal core errors. |
+| `context` | always | Shared runtime context contracts for project identity, daemon URL, and service configuration. Consumer-specific CLI state stays outside. |
+| `degradation` | always | Shared vocabulary for configured-service unavailability, explicit degraded paths, partial search, stale indexes, skipped artifacts, and fatal core errors. |
 | `setup` | always | Attached and standalone setup contracts. Runtime commands validate externally managed resources and do not implicitly migrate them. |
 | `postgres` | `postgres` | PostgreSQL hub adapter boundary. Validates Gobby-owned schema and BM25 requirements without creating, altering, or dropping managed objects. |
 | `falkor` | `falkor` | FalkorDB adapter boundary. Graph connection helpers live here without making FalkorDB a baseline dependency. |
@@ -42,7 +42,7 @@ pub fn read_project_id(project_root: &Path) -> anyhow::Result<String>;
 
 `find_project_root` walks up from `start` looking for a `.gobby/project.json` (Gobby-managed) or `.gobby/gcode.json` (gcode-standalone). Returns the directory *containing* `.gobby/`, not `.gobby/` itself. Returns `None` when neither marker is found before hitting the filesystem root.
 
-`read_project_id` reads `<root>/.gobby/project.json` and extracts the `id` field, falling back to the legacy `project_id` key. When `project.json` is absent, it reads `<root>/.gobby/gcode.json` so standalone gcode roots found by `find_project_root` remain usable. Errors if neither file can be read, the JSON is malformed, or the field isn't present.
+`read_project_id` reads `<root>/.gobby/project.json` and extracts the `id` field. When `project.json` is absent, it reads the gcode-owned `<root>/.gobby/gcode.json` identity file so standalone gcode roots found by `find_project_root` remain usable. Errors if neither file can be read, the JSON is malformed, or the field isn't present.
 
 ```rust
 let cwd = std::env::current_dir()?;
@@ -126,7 +126,7 @@ pub enum DegradationKind;
 
 `degradation` defines the shared vocabulary for fatal core failures and non-fatal partial results. `ServiceState` travels with adapter results so callers can distinguish an available service, a service with no configuration, and a configured service that is unreachable. `CoreError` is reserved for command-stopping failures such as invalid configuration, unavailable required services, failed writes, and corrupted input.
 
-`DegradationKind` is for successful operations that returned less than the ideal result. A `gobby-code` search can return symbol or content results while marking Qdrant or FalkorDB as an optional `ServiceUnavailable` degradation. It can also report `PartialSearch`, `StaleIndex`, or `SkippedArtifacts` without converting those states into fatal CLI errors.
+`DegradationKind` is for successful operations that returned less than the ideal result. A `gobby-code` search can return symbol or content results while marking a configured Qdrant or FalkorDB outage as a `ServiceUnavailable` degradation. It can also report `PartialSearch`, `StaleIndex`, or `SkippedArtifacts` without converting those states into fatal CLI errors.
 
 `gobby-wiki` should use the same contracts for wiki search and indexing. Missing vector search, stale vault index data, or skipped files should be reported as degradation metadata alongside partial results. A required store or write path failure should become `CoreError` only when the command cannot complete.
 
@@ -139,7 +139,7 @@ pub enum DegradationKind;
 - **Attached mode** uses `AttachedValidator` and `RequiredObject` declarations to check that externally managed resources already exist. It returns a `ValidationReport` containing present objects and missing objects with typed `SetupIssue` guidance. `gobby-core` does not create, alter, drop, or migrate Gobby-owned schema in attached mode.
 - **Standalone mode** uses `StandaloneSetup` and `OwnedObject` declarations for explicit setup commands that create consumer-owned resources. Consumers must declare a namespace such as `gcode` or `gwiki` so owned tables, graph labels, and vector collections stay domain-scoped.
 
-`ValidationContext` and `SetupContext` pass optional datastore handles/configuration into callbacks. PostgreSQL handles are mutable because `postgres::Client::query` and `postgres::Client::execute` both require `&mut self`; the callbacks borrow the supplied context and do not take ownership from later validators or creators.
+`ValidationContext` and `SetupContext` pass nullable datastore handles/configuration into callbacks so diagnostics and explicitly degraded paths can represent absence. PostgreSQL handles are mutable because `postgres::Client::query` and `postgres::Client::execute` both require `&mut self`; the callbacks borrow the supplied context and do not take ownership from later validators or creators.
 
 ## Boundary Rules
 
@@ -161,23 +161,27 @@ The crate's default feature set is empty:
 ```toml
 [features]
 default = []
-postgres = ["dep:postgres", "dep:postgres-types", "dep:postgres-native-tls", "dep:native-tls"]
+postgres = ["dep:postgres", "dep:postgres-types", "dep:postgres-openssl", "dep:openssl"]
 falkor = ["dep:falkordb", "dep:urlencoding"]
-qdrant = ["dep:reqwest"]
+qdrant = ["dep:reqwest", "dep:urlencoding"]
 indexing = ["dep:ignore", "dep:sha2"]
 search = []
-full = ["postgres", "falkor", "qdrant", "indexing", "search"]
+local-backend = ["dep:ureq"]
+ai = ["dep:reqwest", "dep:base64", "dep:bytes", "dep:httpdate", "dep:rand", "local-backend", "reqwest/multipart"]
+full = ["postgres", "falkor", "qdrant", "indexing", "search", "ai"]
 ```
 
 Feature rationale:
 
 | Feature | Enables | Why gated |
 |---------|---------|-----------|
-| `postgres` | `postgres`, `postgres-types`, `postgres-native-tls`, `native-tls` | Hub validation and adapter code are only needed by datastore consumers. Lightweight binaries should not inherit PostgreSQL. |
+| `postgres` | `postgres`, `postgres-types`, `postgres-openssl`, `openssl` | Hub validation and adapter code are only needed by datastore consumers. Lightweight binaries should not inherit PostgreSQL. |
 | `falkor` | `falkordb`, `urlencoding` | Graph helpers need FalkorDB. `urlencoding` is included because FalkorDB connection URLs must encode passwords safely. |
 | `qdrant` | `reqwest` with `blocking` and `json` | Vector search/storage helpers need HTTP. Other consumers should not pull reqwest. |
 | `indexing` | `ignore`, `sha2` | File walking and content hashing are useful for indexing consumers only. |
 | `search` | no extra dependency today | Search fusion contracts are lightweight, but still opt-in so the public surface remains explicit. |
+| `local-backend` | `ureq` | Lightweight HTTP probes for local backend discovery are only needed by consumers that call them. |
+| `ai` | `reqwest`, AI payload helpers, and `local-backend` | AI transport and routing helpers need HTTP clients, local backend discovery, and multipart payload support. |
 | `full` | all feature modules | Convenience feature for development and consumers that need the whole foundation layer. |
 
 Every individual feature must compile in isolation. Do not rely on `--all-features` to hide missing feature dependencies.
@@ -186,11 +190,11 @@ Every individual feature must compile in isolation. Do not rely on `--all-featur
 
 `gobby-core` is `0.x`. The contract:
 
-- **Patch bumps (0.2.x)** — bug fixes, doc changes, internal refactors with no public API change.
+- **Patch bumps (0.4.x)** — bug fixes, doc changes, internal refactors with no public API change.
 - **Minor bumps (0.x.0)** — additive public API (new functions, new fields). Existing consumers stay compatible.
 - **Pre-1.0 breaking changes** — bump the minor and bump *every* consumer crate's gobby-core dep in the same release. Don't strand consumers on an old gobby-core.
 
-Consumers that depend only on the minor-line contract can pin to a minor version (`gobby-core = "0.2"`). In-tree crates released with `gobby-core` should pin to the current patch floor when they rely on behavior from that patch, for example `gobby-core = "0.2.2"`.
+Consumers that depend only on the minor-line contract can pin to a minor version (`gobby-core = "0.4"`). In-tree crates released with `gobby-core` should pin to the current patch floor when they rely on behavior from that patch, for example `gobby-core = "0.4.0"`.
 
 ## How to Consume
 
@@ -198,7 +202,7 @@ Consumers that depend only on the minor-line contract can pin to a minor version
 
 ```toml
 [dependencies]
-gobby-core = { path = "../gcore", version = "0.2.2" }
+gobby-core = { path = "../gcore", version = "0.4.0" }
 ```
 
 The `path` is for local workspace builds; `version` is required by `cargo publish` and gets used when consumers install the crate from crates.io. Don't drop the `version` field — `cargo publish` will reject the consumer's manifest.
@@ -207,7 +211,7 @@ Opt in to heavier modules explicitly:
 
 ```toml
 [dependencies]
-gobby-core = { path = "../gcore", version = "0.2.2", features = ["postgres", "search"] }
+gobby-core = { path = "../gcore", version = "0.4.0", features = ["postgres", "search"] }
 ```
 
 Small binaries should keep the default empty feature set unless they directly use a feature-gated module.
@@ -216,7 +220,7 @@ Small binaries should keep the default empty feature set unless they directly us
 
 ```toml
 [dependencies]
-gobby-core = "0.2.2"
+gobby-core = "0.4.0"
 ```
 
 Resolves against crates.io. The default crate has no datastore dependencies. It will not pull in PostgreSQL, FalkorDB, Qdrant, reqwest, ignore, sha2, tokio, tracing, or anything else heavy unless the consumer selects the matching feature.
@@ -252,7 +256,8 @@ Behavioral modules use `#[cfg(test)] mod tests` with `tempfile::tempdir()` for f
 - **public_boundary**: integration test that pins feature gates, `lib.rs` module guards, and this guide's boundary documentation.
 
 ```bash
-cargo test -p gobby-core --no-default-features
+cargo nextest run -p gobby-core --no-default-features
+cargo test --doc -p gobby-core --no-default-features
 ```
 
 Baseline tests are fast, perform no network I/O, and keep filesystem writes inside temporary directories.

@@ -6,6 +6,7 @@ Task-focused documentation for the released gobby-cli crates.
 
 - [gcode User Guide](./gcode-user-guide.md) - search, symbols, dependency graphs, and project management.
 - [gcode Codewiki Guide](./codewiki.md) - generated codebase docs, degraded graph output, and gwiki ingest.
+- [gwiki User Guide](./gwiki-user-guide.md) - vault setup, multimodal ingest, hybrid search, research, and maintenance.
 - [gsqz User Guide](./gsqz-user-guide.md) - output compression pipelines and configuration.
 - [gloc User Guide](./gloc-user-guide.md) - local LLM backend detection and client launch.
 - [ghook User Guide](./ghook-user-guide.md) - hook dispatch, inbox replay, diagnostics, and troubleshooting.
@@ -22,9 +23,6 @@ Task-focused documentation for the released gobby-cli crates.
 - [gsqz Development Guide](./gsqz-development-guide.md) - compressor implementation details.
 - [gloc Development Guide](./gloc-development-guide.md) - local-launcher implementation details.
 - [ghook Development Guide](./ghook-development-guide.md) - hook-dispatch implementation details.
-- [gwiki Development Guide](./gwiki-development-guide.md) - unreleased wiki CLI internals.
+- [gwiki Development Guide](./gwiki-development-guide.md) - research/knowledge-vault CLI internals.
 
-`gobby-wiki` is documented for development only. It is not part of the current
-published release set.
-
-_Last verified: 2026-06-01_
+_Last verified: 2026-06-04_

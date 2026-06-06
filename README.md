@@ -7,7 +7,7 @@
 
 <p align="center">
   <strong>Rust CLI tools for AI-assisted development.</strong><br>
-  Code search, symbol navigation, output compression, and local LLM launching — all from the terminal.
+  Code search, symbol navigation, output compression, local LLM launching, and multimodal research vaults — all from the terminal.
 </p>
 
 <p align="center">
@@ -21,22 +21,18 @@
 
 ## What's Inside
 
-This workspace ships four Gobby CLI tools plus a shared library. `gobby-wiki`
-is in the workspace, but it is still unreleased and is not part of the current
-release set.
+This workspace ships five Gobby CLI tools plus a shared library.
 
 ### Current Release Set
 
 | Crate | Binary | Version | Release tag |
 |---|---|---:|---|
-| `gobby-code` | `gcode` | `0.9.9` | `gcode-v0.9.9` |
-| `gobby-core` | n/a | `0.3.0` | `gobby-core-v0.3.0` |
-| `gobby-hooks` | `ghook` | `0.4.5` | `ghook-v0.4.5` |
-| `gobby-squeeze` | `gsqz` | `0.4.5` | `gsqz-v0.4.5` |
-| `gobby-local` | `gloc` | `0.1.3` | `gloc-v0.1.3` |
-
-`gobby-wiki` / `gwiki` stays at `0.1.0` in-tree and is excluded from this
-release.
+| `gobby-code` | `gcode` | `1.0.0` | `gcode-v1.0.0` |
+| `gobby-core` | n/a | `0.4.0` | `gobby-core-v0.4.0` |
+| `gobby-hooks` | `ghook` | `0.4.6` | `ghook-v0.4.6` |
+| `gobby-squeeze` | `gsqz` | `0.4.6` | `gsqz-v0.4.6` |
+| `gobby-local` | `gloc` | `0.1.4` | `gloc-v0.1.4` |
+| `gobby-wiki` | `gwiki` | `0.3.0` | `gwiki-v0.3.0` |
 
 ### gcode — Code Search & Navigation
 
@@ -44,18 +40,17 @@ AST-aware code search powered by tree-sitter. Indexes 18 languages plus safe
 repo text files into the Gobby PostgreSQL hub, with pg_search BM25 for symbol
 lookup, exact indexed grep over repo content chunks, ranked repo-content search
 across source/docs/config/scripts, file tree
-navigation, and hybrid ranking. When FalkorDB, Qdrant, and an embeddings
-endpoint are configured - typically through Gobby - `gcode` adds graph-aware
-search, semantic search, optional graph expansion for exact symbol lookup
+navigation, and hybrid ranking. In the full Gobby-backed stack, required
+FalkorDB, Qdrant, and embedding sources provide graph-aware search, semantic
+search, opt-in graph expansion for exact symbol lookup
 (`gcode search-symbol --with-graph`), dependency analysis (`callers`, `usages`,
 `imports`, `blast-radius`), and Rust-owned graph/vector projection lifecycle.
 `gcode graph clear --project-id <PROJECT_ID>` is available for daemon
 stale-project graph cleanup without cwd project resolution.
 
 For non-Gobby-managed projects, `gcode init` installs the bundled `gcode` skill
-for Claude Code, Codex, Droid, Grok, Qwen, Gemini CLI (deprecated
-compatibility), and Antigravity CLI. Gobby-managed projects skip those
-project-local skill writes because Gobby owns CLI wiring.
+for Claude Code, Codex, Droid, Grok, Qwen, and Antigravity CLI. Gobby-managed
+projects skip those project-local skill writes because Gobby owns CLI wiring.
 
 ### gsqz — Output Compression
 
@@ -69,9 +64,20 @@ One command to launch Claude Code or Codex against a local LLM backend. Auto-det
 
 Sandbox-tolerant hook dispatcher invoked by host AI CLIs (Claude Code, Codex, Gemini CLI, Qwen CLI) on lifecycle and tool-use events. Spools envelopes to `~/.gobby/hooks/inbox/` *before* POSTing to the local Gobby daemon, so the daemon's drain worker can replay any delivery lost to a sandbox FS-read denial, network blip, or daemon restart. You don't usually invoke it directly — Gobby wires it into your AI CLI for you.
 
+### gwiki — Research Knowledge Vault
+
+Ingests multimodal sources — documents, PDFs, URLs, MediaWiki, git repos,
+Wayback snapshots, and audio/image/video — into a Markdown knowledge vault with
+frontmatter provenance and citations, then indexes and searches them with the
+same hybrid BM25 + semantic + graph stack as `gcode`. Compiles vault material
+into cited briefs, runs a reason-act `research` loop with step/token/source
+budgets, and answers questions directly with `gwiki ask`. Multimodal and AI
+capabilities degrade gracefully when transcription, vision, or the configured
+datastores are unavailable.
+
 `gobby-core` underpins them all — a small shared-primitives library for project
 root walk-up, bootstrap config, daemon URL composition, setup/provisioning
-contracts, and optional datastore adapters. It is not a standalone tool.
+contracts, and datastore client adapters. It is not a standalone tool.
 
 ## Documentation
 
@@ -79,10 +85,12 @@ contracts, and optional datastore adapters. It is not a standalone tool.
 - [gsqz User Guide](docs/guides/gsqz-user-guide.md) — pipelines, step types, configuration, debugging
 - [gloc User Guide](docs/guides/gloc-user-guide.md) — backends, clients, model management, configuration
 - [ghook User Guide](docs/guides/ghook-user-guide.md) — hook wiring, diagnose mode, inbox/replay, troubleshooting
+- [gwiki Development Guide](docs/guides/gwiki-development-guide.md) — research vault ingest, indexing, and hybrid search
 - [Release Guide](docs/guides/release-guide.md) — crate versions, tag order, and local binary installation
 - [Changelog](CHANGELOG.md) — release history
 - [gcode README](crates/gcode/README.md) — architecture and build details
 - [gsqz README](crates/gsqz/README.md) — architecture and build details
+- [gwiki README](crates/gwiki/README.md) — architecture and build details
 
 ## Install
 
@@ -104,6 +112,9 @@ cargo install gobby-local
 
 # ghook
 cargo install gobby-hooks
+
+# gwiki
+cargo install gobby-wiki
 ```
 
 `gcode` graph and semantic features are configured at runtime. There are no
@@ -115,11 +126,9 @@ setups can use `GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, and
 `gcode` 0.8.0+ uses the migrated Gobby PostgreSQL hub. It asks the local daemon
 broker for the hub DSN first. If the daemon is unavailable, it checks fallback
 sources in order: `GCODE_DATABASE_URL`, `GOBBY_POSTGRES_DSN`,
-`~/.gobby/gcode.yaml` `database_url`, then bootstrap `database_url`.
+`~/.gobby/gcore.yaml` `databases.postgres.dsn`, then bootstrap `database_url`.
 Bootstrap fallback is valid only when `hub_backend: postgres` and bootstrap
-contains an inline `database_url`. Bootstrap `database_url_ref` is rejected
-during bootstrap validation; it is never resolved or used to restart the
-fallback chain.
+contains an inline `database_url`.
 
 For daemon-independent service provisioning, use `gcode setup --standalone`.
 The default setup path is non-destructive. If incompatible code-index state is
@@ -142,13 +151,15 @@ cargo install --path crates/gcode
 cargo install --path crates/gsqz
 cargo install --path crates/gloc
 cargo install --path crates/ghook
+cargo install --path crates/gwiki
 ```
 
 ## Development
 
 ```bash
 cargo build --workspace --no-default-features   # Build all tools
-cargo test --workspace --no-default-features    # Test all tools
+cargo nextest run --workspace --no-default-features # Test all tools except doctests
+cargo test --doc --workspace --no-default-features  # Test doctests
 cargo clippy --workspace --no-default-features -- -D warnings  # Lint all tools
 cargo fmt --all --check                         # Check formatting
 ```

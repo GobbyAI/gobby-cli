@@ -12,17 +12,16 @@ Download from [GitHub Releases](https://github.com/GobbyAI/gobby-cli/releases/la
 cargo install gobby-code
 ```
 
-Graph and semantic features are configured at runtime. You do not need Cargo
-feature flags to enable FalkorDB, Qdrant, or embeddings support.
+Graph and semantic features are configured at runtime, not behind Cargo feature
+flags. Gobby-managed projects provide the required Docker-backed stack:
+PostgreSQL with `pg_search`, FalkorDB, Qdrant, and an embedding endpoint.
 
 Runtime indexing/search requires Gobby's PostgreSQL hub. gcode asks the local
 daemon broker for the hub DSN first. If the daemon is unavailable, it checks
 fallback sources in order: `GCODE_DATABASE_URL`, `GOBBY_POSTGRES_DSN`,
-`~/.gobby/gcode.yaml` `database_url`, then bootstrap `database_url`.
+`~/.gobby/gcore.yaml` `databases.postgres.dsn`, then bootstrap `database_url`.
 Bootstrap fallback is valid only when `hub_backend: postgres` and bootstrap
-contains an inline `database_url`. Bootstrap `database_url_ref` is rejected
-during bootstrap validation; it is never resolved or used to restart the
-fallback chain.
+contains an inline `database_url`.
 
 For daemon-independent service provisioning:
 
@@ -66,8 +65,7 @@ You'll see a progress bar while indexing:
 After init, you can search immediately.
 
 For non-Gobby-managed projects, `gcode init` installs the bundled `gcode` skill
-for Claude Code, Codex, Droid, Grok, Qwen, Gemini CLI (deprecated
-compatibility), and Antigravity CLI:
+for Claude Code, Codex, Droid, Grok, Qwen, and Antigravity CLI:
 
 | CLI | Project-local files |
 |-----|---------------------|
@@ -76,12 +74,10 @@ compatibility), and Antigravity CLI:
 | Droid | `.factory/skills/gcode/SKILL.md` |
 | Grok | `.grok/skills/gcode/SKILL.md` |
 | Qwen | `.qwen/skills/gcode/SKILL.md` |
-| Gemini CLI (deprecated) | `.gemini/skills/gcode/SKILL.md` |
 | Antigravity CLI | `.agents/skills/gcode/SKILL.md` |
 
 Gobby-managed projects skip these project-local writes because Gobby owns CLI
-wiring. Gemini CLI remains installed for compatibility with older setups, but
-it is deprecated.
+wiring.
 
 ### First Search
 
@@ -97,12 +93,14 @@ gcode offers four search modes for different use cases.
 
 ### Hybrid Search (`gcode search`)
 
-The default. Combines pg_search BM25 text matching with optional semantic similarity,
-graph boost, and graph expansion using Reciprocal Rank Fusion. If FalkorDB,
-Qdrant, or the embeddings endpoint are unavailable, `gcode search` falls back
-to the sources that are configured. JSON results expose `score` as the final
-display rank score, `rrf_score` as the raw RRF contribution, and sorted
-`sources` values for source attribution.
+The default. Combines pg_search BM25 text matching with semantic similarity,
+graph boost, and graph expansion using Reciprocal Rank Fusion. Full hybrid
+ranking requires PostgreSQL with `pg_search`, Qdrant, FalkorDB, and a reachable
+embedding endpoint; `gcode setup` provisions or validates that stack. When
+semantic or graph services are unavailable, search degrades to the reachable
+sources instead of failing as long as BM25 search is available. JSON results
+still expose `score` as the final display rank score, `rrf_score` as the raw RRF
+contribution, and sorted `sources` values for source attribution.
 
 ```bash
 gcode search "database connection pool"
@@ -235,6 +233,21 @@ gcode symbol "80abc77f-bdfe-5037-94a8-1ebcb753761d"
 
 Returns the symbol with its full source code extracted via byte-offset read. Precise and minimal.
 
+### Symbol by Location
+
+Fetch the visible symbol containing a known file location:
+
+```bash
+gcode symbol-at src/auth.ts:42
+gcode symbol-at src/auth.ts:42:7
+gcode symbol-at src/auth.ts 42
+```
+
+Columns are 1-based byte columns. If no symbol contains the location, `symbol-at`
+returns the nearest visible symbol and marks the JSON `lookup.match_kind` as
+`nearest`; text output prints only the selected source and emits a concise stderr
+fallback diagnostic unless `--quiet` is set.
+
 ### Batch Retrieve
 
 Fetch multiple symbols in one call:
@@ -266,10 +279,11 @@ appear with a zero symbol count once indexed.
 
 ## Dependency Graph
 
-Read-side graph commands require FalkorDB. Gobby-managed projects usually provide this
-automatically, and daemon-independent projects can opt in with `GOBBY_FALKORDB_HOST`,
-`GOBBY_FALKORDB_PORT`, and `GOBBY_FALKORDB_PASSWORD`. Without FalkorDB, graph read
-commands return empty results gracefully.
+Read-side graph commands require FalkorDB. Gobby-managed projects provide this
+through the Docker-backed stack, and daemon-independent projects configure it
+with `GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, and
+`GOBBY_FALKORDB_PASSWORD`. Without FalkorDB, graph read commands report the
+degraded state and callers that can preserve lexical results do so.
 
 All read-side graph commands resolve fuzzy input — you don't need the exact symbol name. Resolution tries exact match, then substring match, then BM25 search across names, signatures, and docstrings. When multiple matches are found, the best is used and alternatives are shown on stderr.
 
@@ -405,8 +419,11 @@ PostgreSQL hub. It marks graph/vector sync flags dirty; `gcode index
 from Rust. Deleted-file cleanup removes code graph/vector projection rows before
 PostgreSQL facts are deleted, including explicit `--files <deleted-file>` and
 whole-project orphan cleanup.
-BM25 search (`search-text`, `search-content`) works as soon as the transaction
-commits; graph and semantic search improve once the external stores sync.
+BM25-specific modes (`search-text`, `search-content`) work as soon as the
+transaction commits. Full hybrid search uses the required PostgreSQL, FalkorDB,
+Qdrant, and embedding stack once graph and vector projections sync; configured
+runtime outages are reported as degradations by callers that support partial
+results.
 
 Reset the current project and rebuild from scratch (destructive — prompts for confirmation):
 
@@ -440,11 +457,12 @@ vector collections.
 
 gcode is daemon-independent but not database-independent:
 - Database: PostgreSQL hub from `~/.gobby/bootstrap.yaml`
-- Required bootstrap: `hub_backend: postgres` plus `database_url`; bootstrap `database_url_ref` is rejected
+- Required bootstrap: `hub_backend: postgres` plus `database_url`
 - Identity: `.gobby/project.json`, `.gobby/gcode.json`, isolated root, linked worktree, or generated identity from `gcode init`
-- Optional services: FalkorDB, Qdrant, and embeddings via env vars or PostgreSQL `config_store`
+- Required service configs: FalkorDB, Qdrant, and embeddings via env vars or PostgreSQL `config_store`
 
-Graph commands and semantic search become available when the required services are configured.
+Graph commands and semantic search become available when the required services
+are configured; unhealthy services are reported as degraded required sources.
 
 ### Isolated and worktree-derived identities
 
@@ -457,26 +475,25 @@ Both cases are reported by `gcode init`'s status line (`isolated`, `linked-workt
 
 ## Configuration
 
-gcode resolves graph/vector configuration in this order:
+gcode resolves graph/vector infrastructure configuration in this order:
 
 1. **Environment variables** — `GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, `GOBBY_FALKORDB_PASSWORD`, `GOBBY_QDRANT_URL`
-2. **config_store table** — Key-value pairs in the PostgreSQL hub (`databases.falkordb.host`, `databases.falkordb.port`, `databases.falkordb.requirepass`, `databases.qdrant.*`, `embeddings.*`)
+2. **config_store table** — Key-value pairs in the PostgreSQL hub (`databases.falkordb.host`, `databases.falkordb.port`, `databases.falkordb.requirepass`, `databases.qdrant.*`)
 3. **Hardcoded defaults** — FalkorDB port `16379` and graph name `gobby_code` once a host is configured; no default FalkorDB host is assumed
 
-Semantic search uses the same precedence rules:
-1. **Environment variables** — `GOBBY_EMBEDDING_URL`, `GOBBY_EMBEDDING_MODEL`, `GOBBY_EMBEDDING_API_KEY`
-2. **config_store table** — `embeddings.api_base`, `embeddings.model`, `embeddings.api_key`
+Semantic search embedding config resolves from:
+1. **config_store table** — `ai.embeddings.api_base`, `ai.embeddings.model`, `ai.embeddings.api_key`
+2. **standalone config** — `~/.gobby/gcore.yaml` with the same `ai.embeddings.*` keys
 3. **Hardcoded defaults** — model `nomic-embed-text` once an embeddings API base is configured
 
 The database connection is resolved in this order:
 1. Local daemon broker
 2. `GCODE_DATABASE_URL`
 3. `GOBBY_POSTGRES_DSN`
-4. `~/.gobby/gcode.yaml` `database_url`
+4. `~/.gobby/gcore.yaml` `databases.postgres.dsn`
 5. `~/.gobby/bootstrap.yaml` `database_url`
 
-Bootstrap `database_url_ref` is rejected. Use the daemon broker path or an
-explicit fallback source for daemonless access.
+Use the daemon broker path or an explicit fallback source for daemonless access.
 
 The daemon URL (used by `invalidate`) is resolved from:
 1. `GOBBY_PORT` environment variable (e.g. `60887`)

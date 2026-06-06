@@ -54,19 +54,18 @@ Both subsets are adoptable inputs. Their data must survive the daemon full-schem
 
 After successful adoption, `~/.gobby/bootstrap.yaml` is the CLI source of truth for the hub connection. It must point at the adopted Postgres instance and advertise `hub_backend: postgres`.
 
-The previous `~/.gobby/gcore.yaml` entry can remain for standalone compatibility, but new daemon-aware CLIs should resolve the hub through `bootstrap.yaml`.
+The previous `~/.gobby/gcore.yaml` entry can remain for standalone installs, but new daemon-aware CLIs should resolve the hub through `bootstrap.yaml`.
 
 ## Embedding Namespace Migration
 
 The hub upgrade flow also owns the one-time `config_store` migration from `embeddings.*` to `ai.embeddings.*`. This migration is daemon-owned because `config_store` is daemon-owned.
 
-Migration invariants:
+Embedding namespace invariants:
 
 - Preserve values exactly.
 - Preserve `is_secret`.
-- Map daemon old `embeddings.dim` to canonical `ai.embeddings.dim`.
-- Leave gcode's old local `embeddings.vector_dim` handling to gcode's own dual-read path.
-- Prefer existing `ai.embeddings.*` rows if both old and new keys exist.
+- Write embedding settings under `ai.embeddings.*`.
+- Use `ai.embeddings.dim` for a configured embedding dimension.
 
 See `ai-daemon-contract.md` for the full D6 writer and reader inventory.
 
