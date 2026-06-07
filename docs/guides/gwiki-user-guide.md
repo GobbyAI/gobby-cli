@@ -506,6 +506,15 @@ settings resolve from `config_store` when the daemon database is available, then
 `~/.gobby/gcore.yaml`, then defaults; `GOBBY_*` environment variables are not an
 AI configuration layer.
 
+Indexing respects `.gitignore`, `.git/info/exclude`, and global git excludes by
+default. The shared setting resolves from `config_store`, then
+`~/.gobby/gcore.yaml`, then default `true`:
+
+```yaml
+indexing:
+  respect_gitignore: true
+```
+
 Override routing for a single ingest with `--transcription-routing`,
 `--vision-routing`, and `--text-routing`, or take the privacy path with
 `--no-ai`, which forces every capability to `off` for that command while still

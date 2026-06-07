@@ -486,6 +486,14 @@ Semantic search embedding config resolves from:
 2. **standalone config** — `~/.gobby/gcore.yaml` with the same `ai.embeddings.*` keys
 3. **Hardcoded defaults** — model `nomic-embed-text` once an embeddings API base is configured
 
+Indexing git-ignore behavior resolves from `config_store`, then
+`~/.gobby/gcore.yaml`, then default `true`. Set it in standalone config as:
+
+```yaml
+indexing:
+  respect_gitignore: true
+```
+
 The database connection is resolved in this order:
 1. Local daemon broker
 2. `GCODE_DATABASE_URL`
