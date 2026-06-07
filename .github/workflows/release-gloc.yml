@@ -188,5 +188,4 @@ jobs:
             echo "::error::No gloc release assets found." >&2
             exit 1
           fi
-          gh release create "$tag" --generate-notes --verify-tag
-          gh release upload "$tag" "${assets[@]}"
+          gh release create "$tag" "${assets[@]}" --repo "$GITHUB_REPOSITORY" --generate-notes --verify-tag
