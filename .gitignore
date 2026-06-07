@@ -1,6 +1,13 @@
 /target
 .claude/
-.gobby/
+.gobby/**
+!.gobby/
 !.gobby/tasks.jsonl
 !.gobby/memories.jsonl
+!.gobby/project.json
+!.gobby/project.jsonl
+!.gobby/wiki/
+!.gobby/wiki/**
+!.gobby/plans/
+!.gobby/plans/**
 .playwright/
