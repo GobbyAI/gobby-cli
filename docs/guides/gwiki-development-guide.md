@@ -6,6 +6,35 @@
 
 `gwiki` PostgreSQL search depends on ParadeDB `pg_search` BM25 indexes. The standalone setup path in `crates/gwiki/src/setup.rs` preflights the `pg_search` extension before creating `gwiki_documents_search_bm25` and `gwiki_chunks_search_bm25`; do not remove that preflight or replace it with plain PostgreSQL full-text search unless the ranking contract changes.
 
+Hybrid search fuses BM25, semantic, and graph hits by canonical wiki page key:
+`<scope-kind>:<scope-id>:<wiki-page-path>`. Do not fuse by backend-specific hit
+ID; chunk IDs, Qdrant point IDs, and graph document IDs for the same page must
+merge into one search result while preserving all `sources`, per-source
+`explanations`, and the emitted `fusion_key`.
+
+## Trust Layer
+
+`gwiki trust` is the shared status surface for agents and humans. It composes
+runtime service configuration, index counts, health findings, link hygiene,
+freshness, graph coverage, and audit results into one JSON report.
+
+PostgreSQL, FalkorDB, Qdrant, and embeddings are required for full search and
+graph-backed behavior. Missing services must surface as explicit degradations.
+The command may fall back to a memory vault scan only to report counts when
+PostgreSQL is unavailable; that fallback must set `index_counts.backend` to
+`memory` and keep the datastore degradation visible.
+
+Current Trust Layer limits:
+
+- Graph metrics report wiki link coverage and FalkorDB configuration only.
+  Community detection, centrality, bridge nodes, graph exports, and architecture
+  hotspot analytics remain roadmap work.
+- Audit state reports unsupported claim counts from the current local audit.
+  Citation quality scoring, contradiction detection, and source credibility
+  scoring remain roadmap work.
+- Freshness is based on existing stale page and stale citation checks. Automatic
+  librarian loops and change-triggered refresh remain roadmap work.
+
 ## Source Lifecycle
 
 `gwiki index` rebuilds derived search rows from the vault files already present on disk. It must not re-fetch remote sources or mutate raw source records.

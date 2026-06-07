@@ -25,6 +25,7 @@ Version 1 covers the daemon-consumed surface:
 - `sources`
 - `backlinks`
 - `status`
+- `trust`
 - `remove-source`
 
 ## Scope

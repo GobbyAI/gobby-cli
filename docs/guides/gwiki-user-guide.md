@@ -115,8 +115,26 @@ routing matrix.
 gwiki --topic rust-async status
 ```
 
-Reports shell readiness, the resolved root, and the vault path. Run it after
-`init`/`setup` to confirm the scope resolves before you start ingesting.
+Reports shell readiness, daemon URL, runtime mode, and configured service
+metadata. Run it after `init`/`setup` to confirm the scope resolves before you
+start ingesting.
+
+### Check Trust
+
+```bash
+gwiki --topic rust-async trust
+gwiki --topic rust-async trust --format json
+```
+
+Reports whether the selected wiki is indexed, fresh, searchable, graph-backed,
+and audit-clean. JSON output includes `trust_status`, `services`,
+`index_counts`, `degradations`, `freshness`, `audit_summary`, `link_summary`,
+`graph_metrics`, and `health_summary`.
+
+PostgreSQL, FalkorDB, Qdrant, and embeddings are required for the full product
+path. `trust` can still run when a service is missing so it can report the
+degradation explicitly; PostgreSQL count failures fall back to a memory scan of
+the vault and mark `index_counts.backend` as `memory`.
 
 ## Capture Sources
 
@@ -253,6 +271,9 @@ gwiki --topic rust-async search "lifetime elision" --no-semantic
 
 Hybrid search across wiki documents: pg_search BM25 text matching merged with
 semantic vector search and FalkorDB graph boost via Reciprocal Rank Fusion.
+JSON search results include a `fusion_key` (`scope-kind:scope-id:page-path`) so
+agents can identify the canonical wiki page even when BM25 chunks, semantic
+points, and graph documents contributed separate backend hit IDs.
 
 **When to use:** General-purpose queries over vault content. Best for natural
 language and conceptual searches.
