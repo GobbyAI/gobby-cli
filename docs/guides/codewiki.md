@@ -17,7 +17,7 @@ Write directly into a gwiki vault code-doc subtree:
 
 ```bash
 gcode codewiki --out /path/to/vault/wiki/code
-gwiki index --vault /path/to/vault
+gwiki --project /path/to/project index
 ```
 
 Limit generation to one or more indexed paths:
@@ -108,7 +108,7 @@ PostgreSQL code-index data but no graph service.
 The intended handoff is a file workflow, not a crate dependency:
 
 1. Run `gcode codewiki --out <vault>/wiki/code`.
-2. Run `gwiki index --vault <vault>`.
+2. Run `gwiki --project <project-root> index`.
 3. gwiki's vault index walk discovers `wiki/code/**/*.md`, preserves
    `source_files:` frontmatter, extracts `[[wikilinks]]`, and indexes changed
    docs incrementally.
