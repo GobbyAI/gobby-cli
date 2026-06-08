@@ -5,9 +5,9 @@ The machine-readable contract lives at `crates/gwiki/contract/gwiki.contract.jso
 
 ## Version
 
-`contract_version`: 3
+`contract_version`: 4
 
-Version 3 covers the daemon-consumed surface:
+Version 4 covers the daemon-consumed surface:
 
 - `contract`
 - `index`
@@ -24,24 +24,36 @@ Version 3 covers the daemon-consumed surface:
 - `graph`
 - `graph-context`
 - `health`
+- `librarian`
+- `review-report`
+- `citation-quality`
 - `sources`
 - `backlinks`
 - `status`
 - `trust`
 - `remove-source`
 
-Version 3 adds code-grounded payload fields to `ask` and `graph-context`.
+Version 4 adds the `librarian`, `review-report`, and `citation-quality`
+surfaces to the daemon contract. These entries pin dependency/degradation
+classification fields and advertise trust, freshness, audit, source, and
+degradation payload keys where the surface emits them.
+
+Version 3 added code-grounded payload fields to `ask` and `graph-context`.
 `ask` returns `code_edges` and `code_citations` alongside wiki hits and source
 citations when code graph signals are available. `graph-context` returns
 `code_edges` and `code_citations` alongside `context`, `source_bundle`, `trust`,
 `freshness`, `audit`, `warnings`, and `degradation`.
 
-The `ask`, `graph-context`, and `research` entries pin their dependency and
-degradation rows in the machine-readable contract. `ask` treats model synthesis,
-code graph, semantic vectors, and FalkorDB as optional signals, and can degrade to
-an extractive citation-list answer. `research` treats the model synthesis loop,
-code graph/index, and semantic vectors as optional, and can degrade to a
-retrieval-only research scaffold.
+The `ask`, `graph-context`, `research`, `librarian`, `review-report`, and
+`citation-quality` entries pin their dependency and degradation rows in the
+machine-readable contract. `ask` treats model synthesis, code graph, semantic
+vectors, and FalkorDB as optional signals, and can degrade to an extractive
+citation-list answer. `research` treats the model synthesis loop, code
+graph/index, and semantic vectors as optional, and can degrade to a
+retrieval-only research scaffold. `librarian` keeps deterministic upkeep
+proposals available while skipping unavailable checks. `review-report` can emit
+a report without the risky-shift section when graph analytics are unavailable.
+`citation-quality` can skip unavailable quality sections independently.
 
 ## Scope
 
@@ -117,9 +129,10 @@ Both the CLI and daemon tests load this contract. New daemon-facing flags or JSO
 keys should update this document, the JSON contract, and the corresponding drift
 tests in the same change.
 
-The pinned `ask`, `graph-context`, and `research` command entries record their
-classification rows with top-level `hard_dependencies`, `optional_dependencies`,
-`multimodal`, and `degradation` fields so daemon consumers can detect dependency
-and degradation drift directly from the contract JSON.
+The pinned `ask`, `graph-context`, `research`, `librarian`, `review-report`, and
+`citation-quality` command entries record their classification rows with
+top-level `hard_dependencies`, `optional_dependencies`, `multimodal`, and
+`degradation` fields so daemon consumers can detect dependency and degradation
+drift directly from the contract JSON.
 
 _Last verified: 2026-06-08_
