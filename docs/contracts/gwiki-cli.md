@@ -5,9 +5,9 @@ The machine-readable contract lives at `crates/gwiki/contract/gwiki.contract.jso
 
 ## Version
 
-`contract_version`: 1
+`contract_version`: 2
 
-Version 1 covers the daemon-consumed surface:
+Version 2 covers the daemon-consumed surface:
 
 - `contract`
 - `index`
@@ -21,12 +21,18 @@ Version 1 covers the daemon-consumed surface:
 - `research`
 - `compile`
 - `audit`
+- `graph`
+- `graph-context`
 - `health`
 - `sources`
 - `backlinks`
 - `status`
 - `trust`
 - `remove-source`
+
+Version 2 adds the daemon-facing `graph-context` surface. Its JSON payload keys
+are `command`, `scope`, `context`, `source_bundle`, `trust`, `freshness`,
+`audit`, `warnings`, and `degradation`.
 
 ## Scope
 
@@ -101,5 +107,10 @@ and Markdown vault are hard dependencies for every page.
 Both the CLI and daemon tests load this contract. New daemon-facing flags or JSON
 keys should update this document, the JSON contract, and the corresponding drift
 tests in the same change.
+
+The pinned `graph-context` command entry records the classification row with
+top-level `hard_dependencies`, `optional_dependencies`, `multimodal`, and
+`degradation` fields so daemon consumers can detect dependency and degradation
+drift directly from the contract JSON.
 
 _Last verified: 2026-06-08_
