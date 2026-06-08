@@ -1,0 +1,1466 @@
+header:
+  plan_id: gwiki-multimodal-ai
+  plan_hash: e0e2d148fc6628b53b909f05fc95b9ece04aa6fb819fddc46a454bef6afd2936
+  root_task_ref: '#354'
+  project_id: 3bf57fe7-2a0c-4074-8912-a83d9cd4df01
+  generated_at: '2026-05-31T19:29:25Z'
+  task_tree_source: db
+  task_tree_source_hash: b9868ff6b562596d9e3901d040c929af470bd566bb28109b943173db79b9278e
+  evidence_summary: []
+rows:
+- section_id: '1.1'
+  item_id: 1.1.1
+  plan_node_hash: 071f9155ce641577cb8f553e2a7f71daddb7f9f49a3bda6392753aef176b704f
+  status: covered
+  leaves:
+  - leaf_task_ref: '#367'
+    validation_criteria_snippet: 'cargo test -p gobby-core ai_routing_per_capability_precedence
+      Acceptance artifacts: - 1.1.1: file: `crates/gcore/src/config.rs` - 1.1.2: test:
+      `crates/gcore/sr...'
+    matched_artifact_ref: crates/gcore/src/config.rs
+  deferral_target: null
+  evidence: []
+- section_id: '1.1'
+  item_id: 1.1.2
+  plan_node_hash: 68e040f441b54a0ada4c88e0bc5910f9c483dcc4771913c26bf4a21be72ddb48
+  status: covered
+  leaves:
+  - leaf_task_ref: '#367'
+    validation_criteria_snippet: 'cargo test -p gobby-core ai_routing_per_capability_precedence
+      Acceptance artifacts: - 1.1.1: file: `crates/gcore/src/config.rs` - 1.1.2: test:
+      `crates/gcore/sr...'
+    matched_artifact_ref: crates/gcore/src/config.rs::tests::ai_routing_per_capability_precedence
+  deferral_target: null
+  evidence: []
+- section_id: '1.1'
+  item_id: 1.1.3
+  plan_node_hash: e74b394aef9cb081f05de5a203f0a01eab69808960bdd3d8ba18fe931b411a9e
+  status: covered
+  leaves:
+  - leaf_task_ref: '#367'
+    validation_criteria_snippet: 'cargo test -p gobby-core ai_routing_per_capability_precedence
+      Acceptance artifacts: - 1.1.1: file: `crates/gcore/src/config.rs` - 1.1.2: test:
+      `crates/gcore/sr...'
+    matched_artifact_ref: crates/gcore/src/config.rs::tests::ai_config_resolves_store_then_yaml_no_env
+  deferral_target: null
+  evidence: []
+- section_id: '1.1'
+  item_id: 1.1.4
+  plan_node_hash: 9d604180f3e57ebbb4029e4dcc4d4607eb7706af8883f153b2b6222ed4a4c19a
+  status: covered
+  leaves:
+  - leaf_task_ref: '#367'
+    validation_criteria_snippet: 'cargo test -p gobby-core ai_routing_per_capability_precedence
+      Acceptance artifacts: - 1.1.1: file: `crates/gcore/src/config.rs` - 1.1.2: test:
+      `crates/gcore/sr...'
+    matched_artifact_ref: crates/gcore/src/config.rs::tests::provider_and_translation_fields_resolve
+  deferral_target: null
+  evidence: []
+- section_id: '1.1'
+  item_id: 1.1.5
+  plan_node_hash: 51219ea71c1225283c15c9d86e042c1312996966ab43722649409b6bde0f6b0e
+  status: covered
+  leaves:
+  - leaf_task_ref: '#367'
+    validation_criteria_snippet: 'cargo test -p gobby-core ai_routing_per_capability_precedence
+      Acceptance artifacts: - 1.1.1: file: `crates/gcore/src/config.rs` - 1.1.2: test:
+      `crates/gcore/sr...'
+    matched_artifact_ref: crates/gcore/src/config.rs::tests::audio_translate_inherits_transcribe_binding
+  deferral_target: null
+  evidence: []
+- section_id: '1.1'
+  item_id: 1.1.6
+  plan_node_hash: 1b7e79bfcb42300dab2d2570bae885d9cdb38a0874dae4809ea7d6cfe83bcb45
+  status: covered
+  leaves:
+  - leaf_task_ref: '#367'
+    validation_criteria_snippet: 'cargo test -p gobby-core ai_routing_per_capability_precedence
+      Acceptance artifacts: - 1.1.1: file: `crates/gcore/src/config.rs` - 1.1.2: test:
+      `crates/gcore/sr...'
+    matched_artifact_ref: AGENTS.md
+  deferral_target: null
+  evidence: []
+- section_id: '1.2'
+  item_id: 1.2.1
+  plan_node_hash: c1925b3332358f3209b7e048dd15ce7e726515670c3b2dc50b2b5b32280aeedc
+  status: covered
+  leaves:
+  - leaf_task_ref: '#368'
+    validation_criteria_snippet: 'cargo test -p gobby-core resolves_in_db_and_no_db_modes
+      Acceptance artifacts: - 1.2.1: file: `crates/gcore/src/ai_context.rs` - 1.2.2:
+      test: `crates/gcore/src/...'
+    matched_artifact_ref: crates/gcore/src/ai_context.rs
+  deferral_target: null
+  evidence: []
+- section_id: '1.2'
+  item_id: 1.2.2
+  plan_node_hash: f794e7c6c8c8ec91f3609481dbfb324b88036caabbf31618e91f5fb2b770c8e8
+  status: covered
+  leaves:
+  - leaf_task_ref: '#368'
+    validation_criteria_snippet: 'cargo test -p gobby-core resolves_in_db_and_no_db_modes
+      Acceptance artifacts: - 1.2.1: file: `crates/gcore/src/ai_context.rs` - 1.2.2:
+      test: `crates/gcore/src/...'
+    matched_artifact_ref: crates/gcore/src/ai_context.rs::tests::resolves_in_db_and_no_db_modes
+  deferral_target: null
+  evidence: []
+- section_id: '1.2'
+  item_id: 1.2.3
+  plan_node_hash: 81b47cd3cd5d888445b5ca7975f1c1f03f1885cb75027bddee5a45a36f0d7893
+  status: covered
+  leaves:
+  - leaf_task_ref: '#368'
+    validation_criteria_snippet: 'cargo test -p gobby-core resolves_in_db_and_no_db_modes
+      Acceptance artifacts: - 1.2.1: file: `crates/gcore/src/ai_context.rs` - 1.2.2:
+      test: `crates/gcore/src/...'
+    matched_artifact_ref: crates/gcore/src/ai_context.rs::tests::project_id_is_caller_supplied
+  deferral_target: null
+  evidence: []
+- section_id: '1.2'
+  item_id: 1.2.4
+  plan_node_hash: 07f1759cbcec128b8f0785f20d9a1746c985857b8bb3709bcb88f1ccac31c7e2
+  status: covered
+  leaves:
+  - leaf_task_ref: '#368'
+    validation_criteria_snippet: 'cargo test -p gobby-core resolves_in_db_and_no_db_modes
+      Acceptance artifacts: - 1.2.1: file: `crates/gcore/src/ai_context.rs` - 1.2.2:
+      test: `crates/gcore/src/...'
+    matched_artifact_ref: crates/gcore/src/ai_context.rs::tests::db_without_config_store_falls_through
+  deferral_target: null
+  evidence: []
+- section_id: '1.2'
+  item_id: 1.2.5
+  plan_node_hash: 9a09117c10e487866e6a93e60d3b52097007bc41229a8662030f4656632dc761
+  status: covered
+  leaves:
+  - leaf_task_ref: '#368'
+    validation_criteria_snippet: 'cargo test -p gobby-core resolves_in_db_and_no_db_modes
+      Acceptance artifacts: - 1.2.1: file: `crates/gcore/src/ai_context.rs` - 1.2.2:
+      test: `crates/gcore/src/...'
+    matched_artifact_ref: crates/gcore/src/ai_context.rs::tests::forced_routing_and_no_ai_override
+  deferral_target: null
+  evidence: []
+- section_id: '1.2'
+  item_id: 1.2.6
+  plan_node_hash: 4af0de562f96e95808fe1ac37af2b498aefd6b640b305e9fca74102aca58e297
+  status: covered
+  leaves:
+  - leaf_task_ref: '#368'
+    validation_criteria_snippet: 'cargo test -p gobby-core resolves_in_db_and_no_db_modes
+      Acceptance artifacts: - 1.2.1: file: `crates/gcore/src/ai_context.rs` - 1.2.2:
+      test: `crates/gcore/src/...'
+    matched_artifact_ref: crates/gcore/src/lib.rs
+  deferral_target: null
+  evidence: []
+- section_id: '1.3'
+  item_id: 1.3.1
+  plan_node_hash: 0d1eb21285bb4405ecfa3b99941a27ce425bc28f5b592266a598783b9e28997d
+  status: covered
+  leaves:
+  - leaf_task_ref: '#369'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki detects_audio_and_image_extensions
+      Acceptance artifacts: - 1.3.1: test: `crates/gwiki/src/ingest/file.rs::tests::detects_audio_and_ima...'
+    matched_artifact_ref: crates/gwiki/src/ingest/file.rs::tests::detects_audio_and_image_extensions
+  deferral_target: null
+  evidence: []
+- section_id: '1.3'
+  item_id: 1.3.2
+  plan_node_hash: b5188e251c532168cf1c27154bb60d301acee1a0eb42dd90ee870edf90e0f99c
+  status: covered
+  leaves:
+  - leaf_task_ref: '#369'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki detects_audio_and_image_extensions
+      Acceptance artifacts: - 1.3.1: test: `crates/gwiki/src/ingest/file.rs::tests::detects_audio_and_ima...'
+    matched_artifact_ref: crates/gwiki/src/ingest/file.rs::tests::dispatches_media_to_orchestrators
+  deferral_target: null
+  evidence: []
+- section_id: '1.3'
+  item_id: 1.3.3
+  plan_node_hash: aee57fdb49fd09e71987b1f590b12449dbaf6315616a66f1107ad31d4f6d2864
+  status: covered
+  leaves:
+  - leaf_task_ref: '#369'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki detects_audio_and_image_extensions
+      Acceptance artifacts: - 1.3.1: test: `crates/gwiki/src/ingest/file.rs::tests::detects_audio_and_ima...'
+    matched_artifact_ref: crates/gwiki/src/ingest/file.rs::tests::no_ai_dispatch_degrades
+  deferral_target: null
+  evidence: []
+- section_id: '1.3'
+  item_id: 1.3.4
+  plan_node_hash: cf20ee8338d27eae2b7227bb6690112ecd58aadc075f6bd5344a49861ce372e4
+  status: covered
+  leaves:
+  - leaf_task_ref: '#369'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki detects_audio_and_image_extensions
+      Acceptance artifacts: - 1.3.1: test: `crates/gwiki/src/ingest/file.rs::tests::detects_audio_and_ima...'
+    matched_artifact_ref: crates/gwiki/src/ingest/file.rs::tests::media_dispatch_registers_once
+  deferral_target: null
+  evidence: []
+- section_id: '1.3'
+  item_id: 1.3.5
+  plan_node_hash: e9945c76d81cb9199e9f4ace16009d50c65cbfb89a316999df387d5feb8956e2
+  status: covered
+  leaves:
+  - leaf_task_ref: '#369'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki detects_audio_and_image_extensions
+      Acceptance artifacts: - 1.3.1: test: `crates/gwiki/src/ingest/file.rs::tests::detects_audio_and_ima...'
+    matched_artifact_ref: crates/gwiki/src/main.rs
+  deferral_target: null
+  evidence: []
+- section_id: '1.3'
+  item_id: 1.3.6
+  plan_node_hash: 9680b7fd9476b63cedc59f598dc40fb68d95601c99c8c1af8b54e97c1628274f
+  status: covered
+  leaves:
+  - leaf_task_ref: '#369'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki detects_audio_and_image_extensions
+      Acceptance artifacts: - 1.3.1: test: `crates/gwiki/src/ingest/file.rs::tests::detects_audio_and_ima...'
+    matched_artifact_ref: crates/gwiki/src/ingest/file.rs::tests::detects_documents_and_inlines_structured_text
+  deferral_target: null
+  evidence: []
+- section_id: '1.3'
+  item_id: 1.3.7
+  plan_node_hash: af96ec038449816fafbbfe335b6cfccb343555a29b3dd034868cd4d0c7485311
+  status: covered
+  leaves:
+  - leaf_task_ref: '#369'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki detects_audio_and_image_extensions
+      Acceptance artifacts: - 1.3.1: test: `crates/gwiki/src/ingest/file.rs::tests::detects_audio_and_ima...'
+    matched_artifact_ref: crates/gwiki/src/sources.rs
+  deferral_target: null
+  evidence: []
+- section_id: '1.3'
+  item_id: 1.3.8
+  plan_node_hash: a389081df92314e91b3245d4527de526ebe951e1d6738489ceba83d6cf8350a8
+  status: covered
+  leaves:
+  - leaf_task_ref: '#369'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki detects_audio_and_image_extensions
+      Acceptance artifacts: - 1.3.1: test: `crates/gwiki/src/ingest/file.rs::tests::detects_audio_and_ima...'
+    matched_artifact_ref: crates/gwiki/Cargo.toml
+  deferral_target: null
+  evidence: []
+- section_id: '1.3'
+  item_id: 1.3.9
+  plan_node_hash: 3cc2a7b750b588e1802e6697f0291f1799ae7835ce9d8935231923110deee234
+  status: covered
+  leaves:
+  - leaf_task_ref: '#369'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki detects_audio_and_image_extensions
+      Acceptance artifacts: - 1.3.1: test: `crates/gwiki/src/ingest/file.rs::tests::detects_audio_and_ima...'
+    matched_artifact_ref: crates/gwiki/src/commands/index.rs
+  deferral_target: null
+  evidence: []
+- section_id: '2.1'
+  item_id: 2.1.1
+  plan_node_hash: 92c91187159767d164b97c9fdb7b3222ba26bcca891b2f88dea60ed34ae2f97f
+  status: covered
+  leaves:
+  - leaf_task_ref: '#370'
+    validation_criteria_snippet: 'cargo test -p gobby-core ai_error_is_transport_neutral
+      Acceptance artifacts: - 2.1.1: file: `crates/gcore/Cargo.toml` - 2.1.1a: file:
+      `crates/gcore/src/ai_type...'
+    matched_artifact_ref: crates/gcore/Cargo.toml
+  deferral_target: null
+  evidence: []
+- section_id: '2.1'
+  item_id: 2.1.1a
+  plan_node_hash: bcf94b203792a8bdfd0a982bee11a8c37a08115fa5479b63578bfa355859736b
+  status: covered
+  leaves:
+  - leaf_task_ref: '#370'
+    validation_criteria_snippet: 'cargo test -p gobby-core ai_error_is_transport_neutral
+      Acceptance artifacts: - 2.1.1: file: `crates/gcore/Cargo.toml` - 2.1.1a: file:
+      `crates/gcore/src/ai_type...'
+    matched_artifact_ref: crates/gcore/src/ai_types.rs
+  deferral_target: null
+  evidence: []
+- section_id: '2.1'
+  item_id: 2.1.1b
+  plan_node_hash: 1e6726e2d0d3b2e23ffcb3e5900644d691f8b042495aee68c4a8b18843aa2cae
+  status: covered
+  leaves:
+  - leaf_task_ref: '#370'
+    validation_criteria_snippet: 'cargo test -p gobby-core ai_error_is_transport_neutral
+      Acceptance artifacts: - 2.1.1: file: `crates/gcore/Cargo.toml` - 2.1.1a: file:
+      `crates/gcore/src/ai_type...'
+    matched_artifact_ref: crates/gcore/src/ai_types.rs::tests::ai_error_is_transport_neutral
+  deferral_target: null
+  evidence: []
+- section_id: '2.1'
+  item_id: 2.1.2
+  plan_node_hash: 507b1f78ba38488c168ab3ce9f2685f963ab6ec111b75eba024055c16cd6e38a
+  status: covered
+  leaves:
+  - leaf_task_ref: '#370'
+    validation_criteria_snippet: 'cargo test -p gobby-core ai_error_is_transport_neutral
+      Acceptance artifacts: - 2.1.1: file: `crates/gcore/Cargo.toml` - 2.1.1a: file:
+      `crates/gcore/src/ai_type...'
+    matched_artifact_ref: crates/gcore/src/ai/mod.rs::tests::retry_caps_at_two
+  deferral_target: null
+  evidence: []
+- section_id: '2.1'
+  item_id: 2.1.3
+  plan_node_hash: 78ac713070f1715a4f2a036634636dca6d0c018649f42af3bef5ea9c162045ce
+  status: covered
+  leaves:
+  - leaf_task_ref: '#370'
+    validation_criteria_snippet: 'cargo test -p gobby-core ai_error_is_transport_neutral
+      Acceptance artifacts: - 2.1.1: file: `crates/gcore/Cargo.toml` - 2.1.1a: file:
+      `crates/gcore/src/ai_type...'
+    matched_artifact_ref: crates/gcore/src/ai_context.rs::tests::concurrency_cap_enforced
+  deferral_target: null
+  evidence: []
+- section_id: '2.1'
+  item_id: 2.1.4
+  plan_node_hash: 1d2996f77e57bbc57a66490d4f121daa3e69d0bef9a270a3cbb239ffdbfda2dd
+  status: covered
+  leaves:
+  - leaf_task_ref: '#370'
+    validation_criteria_snippet: 'cargo test -p gobby-core ai_error_is_transport_neutral
+      Acceptance artifacts: - 2.1.1: file: `crates/gcore/Cargo.toml` - 2.1.1a: file:
+      `crates/gcore/src/ai_type...'
+    matched_artifact_ref: crates/gcore/tests/public_boundary.rs::cargo_features_define_public_boundary
+  deferral_target: null
+  evidence: []
+- section_id: '2.2'
+  item_id: 2.2.1
+  plan_node_hash: ac56330e2ca046f261b60b92301e06518320fecf6c0e47b7aeec36ff73be9303
+  status: covered
+  leaves:
+  - leaf_task_ref: '#371'
+    validation_criteria_snippet: 'cargo test -p gobby-core builds_multipart_and_parses_segments
+      Acceptance artifacts: - 2.2.1: test: `crates/gcore/src/ai/transcription.rs::tests::builds_multipa...'
+    matched_artifact_ref: crates/gcore/src/ai/transcription.rs::tests::builds_multipart_and_parses_segments
+  deferral_target: null
+  evidence: []
+- section_id: '2.2'
+  item_id: 2.2.2
+  plan_node_hash: 0e748a5ed7ff735c9b948a63cd899d8c328851cc02ed699f93f85a0469c4c6ea
+  status: covered
+  leaves:
+  - leaf_task_ref: '#371'
+    validation_criteria_snippet: 'cargo test -p gobby-core builds_multipart_and_parses_segments
+      Acceptance artifacts: - 2.2.1: test: `crates/gcore/src/ai/transcription.rs::tests::builds_multipa...'
+    matched_artifact_ref: crates/gcore/src/ai/transcription.rs::tests::wire_multipart_filename_and_auth
+  deferral_target: null
+  evidence: []
+- section_id: '2.2'
+  item_id: 2.2.3
+  plan_node_hash: a744de30148d6f8ba92c9d3640475f9a40bb363ee4ed3bccd4204996f6b0c60e
+  status: covered
+  leaves:
+  - leaf_task_ref: '#371'
+    validation_criteria_snippet: 'cargo test -p gobby-core builds_multipart_and_parses_segments
+      Acceptance artifacts: - 2.2.1: test: `crates/gcore/src/ai/transcription.rs::tests::builds_multipa...'
+    matched_artifact_ref: crates/gcore/src/ai/mod.rs
+  deferral_target: null
+  evidence: []
+- section_id: '2.3'
+  item_id: 2.3.1
+  plan_node_hash: c8b13a8e50d0ab43046de4083636ddca16d5997230259973210871eea4598d33
+  status: covered
+  leaves:
+  - leaf_task_ref: '#372'
+    validation_criteria_snippet: 'cargo test -p gobby-core sends_image_url_and_parses
+      Acceptance artifacts: - 2.3.1: test: `crates/gcore/src/ai/vision.rs::tests::sends_image_url_and_parses`
+      - 2...'
+    matched_artifact_ref: crates/gcore/src/ai/vision.rs::tests::sends_image_url_and_parses
+  deferral_target: null
+  evidence: []
+- section_id: '2.3'
+  item_id: 2.3.2
+  plan_node_hash: e5c51e5f2442cf7be0b23d44031370dbc7e8cc104ed0886a26f715879a8d5df2
+  status: covered
+  leaves:
+  - leaf_task_ref: '#372'
+    validation_criteria_snippet: 'cargo test -p gobby-core sends_image_url_and_parses
+      Acceptance artifacts: - 2.3.1: test: `crates/gcore/src/ai/vision.rs::tests::sends_image_url_and_parses`
+      - 2...'
+    matched_artifact_ref: crates/gcore/src/ai/text.rs::tests::generates_text
+  deferral_target: null
+  evidence: []
+- section_id: '2.3'
+  item_id: 2.3.3
+  plan_node_hash: 621323428e67cc74be6d4c01c86df8093e4a10412936f5cec0248b6230db4a92
+  status: covered
+  leaves:
+  - leaf_task_ref: '#372'
+    validation_criteria_snippet: 'cargo test -p gobby-core sends_image_url_and_parses
+      Acceptance artifacts: - 2.3.1: test: `crates/gcore/src/ai/vision.rs::tests::sends_image_url_and_parses`
+      - 2...'
+    matched_artifact_ref: crates/gcore/src/ai/mod.rs
+  deferral_target: null
+  evidence: []
+- section_id: '2.4'
+  item_id: 2.4.1
+  plan_node_hash: 3c884d9f0e27c9e1d283bdc07adfd225ec1e214cbac4be93ea17fe65532cbd72
+  status: covered
+  leaves:
+  - leaf_task_ref: '#373'
+    validation_criteria_snippet: 'cargo test -p gobby-core legacy_text_maps_to_single_segment
+      Acceptance artifacts: - 2.4.1: test: `crates/gcore/src/ai/daemon.rs::tests::legacy_text_maps_to_sin...'
+    matched_artifact_ref: crates/gcore/src/ai/daemon.rs::tests::legacy_text_maps_to_single_segment
+  deferral_target: null
+  evidence: []
+- section_id: '2.4'
+  item_id: 2.4.2
+  plan_node_hash: 127e261c39e7ae119b8e0062f0e978bb1ed86f6ac0675364e96e92feee7837c4
+  status: covered
+  leaves:
+  - leaf_task_ref: '#373'
+    validation_criteria_snippet: 'cargo test -p gobby-core legacy_text_maps_to_single_segment
+      Acceptance artifacts: - 2.4.1: test: `crates/gcore/src/ai/daemon.rs::tests::legacy_text_maps_to_sin...'
+    matched_artifact_ref: crates/gcore/src/ai/daemon.rs::tests::forwards_provider_model_and_optional_project_id
+  deferral_target: null
+  evidence: []
+- section_id: '2.4'
+  item_id: 2.4.3
+  plan_node_hash: 757681825fd85b026122d640bc96ae93d7e81b5958fcf6eacb2c3138a70ffe70
+  status: covered
+  leaves:
+  - leaf_task_ref: '#373'
+    validation_criteria_snippet: 'cargo test -p gobby-core legacy_text_maps_to_single_segment
+      Acceptance artifacts: - 2.4.1: test: `crates/gcore/src/ai/daemon.rs::tests::legacy_text_maps_to_sin...'
+    matched_artifact_ref: crates/gcore/src/ai/daemon.rs::tests::sends_local_token_and_multipart
+  deferral_target: null
+  evidence: []
+- section_id: '2.4'
+  item_id: 2.4.4
+  plan_node_hash: f696742bfe8b940e591d1eaba341d48c4bbe3e3fcf0191bbb59197faab4b33b1
+  status: covered
+  leaves:
+  - leaf_task_ref: '#373'
+    validation_criteria_snippet: 'cargo test -p gobby-core legacy_text_maps_to_single_segment
+      Acceptance artifacts: - 2.4.1: test: `crates/gcore/src/ai/daemon.rs::tests::legacy_text_maps_to_sin...'
+    matched_artifact_ref: crates/gcore/src/ai/daemon.rs::tests::voice_multipart_carries_capability_fields
+  deferral_target: null
+  evidence: []
+- section_id: '2.4'
+  item_id: 2.4.5
+  plan_node_hash: 5568804ac3c742affe3d7023d257919bbb21ac38e53226930454baaed766ee95
+  status: covered
+  leaves:
+  - leaf_task_ref: '#373'
+    validation_criteria_snippet: 'cargo test -p gobby-core legacy_text_maps_to_single_segment
+      Acceptance artifacts: - 2.4.1: test: `crates/gcore/src/ai/daemon.rs::tests::legacy_text_maps_to_sin...'
+    matched_artifact_ref: crates/gcore/src/ai/mod.rs
+  deferral_target: null
+  evidence: []
+- section_id: '3.1'
+  item_id: 3.1.1
+  plan_node_hash: e6e0f759713e3081dc246ee2bf64cc32226192433ebb8cd22b68dec4c7943cb5
+  status: covered
+  leaves:
+  - leaf_task_ref: '#374'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki clients_consume_effective_route
+      Acceptance artifacts: - 3.1.1: file: `crates/gwiki/src/ai/clients.rs` - 3.1.2:
+      test: `crates/gwiki/src...'
+    matched_artifact_ref: crates/gwiki/src/ai/clients.rs
+  deferral_target: null
+  evidence: []
+- section_id: '3.1'
+  item_id: 3.1.2
+  plan_node_hash: 252e29f42f4e55b3e330e9a699d3de5cf42d95aee80739c8274cadf14450a59a
+  status: covered
+  leaves:
+  - leaf_task_ref: '#374'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki clients_consume_effective_route
+      Acceptance artifacts: - 3.1.1: file: `crates/gwiki/src/ai/clients.rs` - 3.1.2:
+      test: `crates/gwiki/src...'
+    matched_artifact_ref: crates/gwiki/src/ai/clients.rs::tests::clients_consume_effective_route
+  deferral_target: null
+  evidence: []
+- section_id: '3.1'
+  item_id: 3.1.3
+  plan_node_hash: 4d73e5f19fe56fa13b112639c868ab50c9c8efb5763b269a76d425d8f375cc53
+  status: covered
+  leaves:
+  - leaf_task_ref: '#374'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki clients_consume_effective_route
+      Acceptance artifacts: - 3.1.1: file: `crates/gwiki/src/ai/clients.rs` - 3.1.2:
+      test: `crates/gwiki/src...'
+    matched_artifact_ref: crates/gwiki/src/video.rs
+  deferral_target: null
+  evidence: []
+- section_id: '3.1'
+  item_id: 3.1.4
+  plan_node_hash: 6442c442218949dd5084b62afa6732d184f2585f1295dbe5a02dc5532c714a90
+  status: covered
+  leaves:
+  - leaf_task_ref: '#374'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki clients_consume_effective_route
+      Acceptance artifacts: - 3.1.1: file: `crates/gwiki/src/ai/clients.rs` - 3.1.2:
+      test: `crates/gwiki/src...'
+    matched_artifact_ref: crates/gwiki/src/lib.rs
+  deferral_target: null
+  evidence: []
+- section_id: '3.2'
+  item_id: 3.2.1
+  plan_node_hash: cbd368020d222207e3429ef0819816f038978e3fecb9e8f550145da2baa926c1
+  status: covered
+  leaves:
+  - leaf_task_ref: '#375'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki temp_files_cleaned_asset_survives
+      Acceptance artifacts: - 3.2.1: file: `crates/gwiki/src/media.rs` - 3.2.2: test:
+      `crates/gwiki/src/me...'
+    matched_artifact_ref: crates/gwiki/src/media.rs
+  deferral_target: null
+  evidence: []
+- section_id: '3.2'
+  item_id: 3.2.2
+  plan_node_hash: de1fb0bb1ff52d3c1f2e15514de4fac652f0c84bdf9f1b42377012c1ef702583
+  status: covered
+  leaves:
+  - leaf_task_ref: '#375'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki temp_files_cleaned_asset_survives
+      Acceptance artifacts: - 3.2.1: file: `crates/gwiki/src/media.rs` - 3.2.2: test:
+      `crates/gwiki/src/me...'
+    matched_artifact_ref: crates/gwiki/src/media.rs::tests::temp_files_cleaned_asset_survives
+  deferral_target: null
+  evidence: []
+- section_id: '3.2'
+  item_id: 3.2.3
+  plan_node_hash: 69880d77739602c824cab92a9c09dac55ad02f79db0a1dd49b3ecffae9ed2342
+  status: covered
+  leaves:
+  - leaf_task_ref: '#375'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki temp_files_cleaned_asset_survives
+      Acceptance artifacts: - 3.2.1: file: `crates/gwiki/src/media.rs` - 3.2.2: test:
+      `crates/gwiki/src/me...'
+    matched_artifact_ref: crates/gwiki/src/lib.rs
+  deferral_target: null
+  evidence: []
+- section_id: '3.3'
+  item_id: 3.3.1
+  plan_node_hash: e2d239dc1ba2048b3c957c41c935d39ce1513d957ceaed2f1c10d2c2a9748c81
+  status: covered
+  leaves:
+  - leaf_task_ref: '#376'
+    validation_criteria_snippet: 'cargo test -p gobby-core capability_status_routes
+      Acceptance artifacts: - 3.3.1: test: `crates/gcore/src/ai/probe.rs::tests::capability_status_routes`
+      - 3.3.2:...'
+    matched_artifact_ref: crates/gcore/src/ai/probe.rs::tests::capability_status_routes
+  deferral_target: null
+  evidence: []
+- section_id: '3.3'
+  item_id: 3.3.2
+  plan_node_hash: 910d38146c9f371f3585dfab98a3ceccab900496dfbff6ac789c9b19dcade1df
+  status: covered
+  leaves:
+  - leaf_task_ref: '#376'
+    validation_criteria_snippet: 'cargo test -p gobby-core capability_status_routes
+      Acceptance artifacts: - 3.3.1: test: `crates/gcore/src/ai/probe.rs::tests::capability_status_routes`
+      - 3.3.2:...'
+    matched_artifact_ref: crates/gcore/src/ai/probe.rs::tests::attachments_not_vision_extraction
+  deferral_target: null
+  evidence: []
+- section_id: '3.3'
+  item_id: 3.3.3
+  plan_node_hash: 576dc3336facfcebf23df5d99ff4531eaa2dc6fd2b9db60e39bc7f272eb0d798
+  status: covered
+  leaves:
+  - leaf_task_ref: '#376'
+    validation_criteria_snippet: 'cargo test -p gobby-core capability_status_routes
+      Acceptance artifacts: - 3.3.1: test: `crates/gcore/src/ai/probe.rs::tests::capability_status_routes`
+      - 3.3.2:...'
+    matched_artifact_ref: crates/gcore/src/ai/probe.rs::tests::status_body_capability_truth
+  deferral_target: null
+  evidence: []
+- section_id: '3.3'
+  item_id: 3.3.4
+  plan_node_hash: d6fd95d56cc18d4094d8b3ba6c4484df92fab76db89ef3fd48cda64bc5c3838e
+  status: covered
+  leaves:
+  - leaf_task_ref: '#376'
+    validation_criteria_snippet: 'cargo test -p gobby-core capability_status_routes
+      Acceptance artifacts: - 3.3.1: test: `crates/gcore/src/ai/probe.rs::tests::capability_status_routes`
+      - 3.3.2:...'
+    matched_artifact_ref: crates/gcore/src/ai/probe.rs::tests::status_route_is_availability_truth
+  deferral_target: null
+  evidence: []
+- section_id: '3.3'
+  item_id: 3.3.5
+  plan_node_hash: a6619f9834626739ed158bb0a1a06b80c4876df94c047828a12c93bf6c57ecc2
+  status: covered
+  leaves:
+  - leaf_task_ref: '#376'
+    validation_criteria_snippet: 'cargo test -p gobby-core capability_status_routes
+      Acceptance artifacts: - 3.3.1: test: `crates/gcore/src/ai/probe.rs::tests::capability_status_routes`
+      - 3.3.2:...'
+    matched_artifact_ref: crates/gcore/src/ai/mod.rs
+  deferral_target: null
+  evidence: []
+- section_id: '3.3'
+  item_id: 3.3.6
+  plan_node_hash: 19aa58e7d58a3615ff8435a8e1787e5b4f325988fc399f7c31763c467e9defea
+  status: covered
+  leaves:
+  - leaf_task_ref: '#376'
+    validation_criteria_snippet: 'cargo test -p gobby-core capability_status_routes
+      Acceptance artifacts: - 3.3.1: test: `crates/gcore/src/ai/probe.rs::tests::capability_status_routes`
+      - 3.3.2:...'
+    matched_artifact_ref: crates/gcore/src/ai/mod.rs::tests::effective_route_auto_falls_through_per_capability
+  deferral_target: null
+  evidence: []
+- section_id: '4.1'
+  item_id: 4.1.1
+  plan_node_hash: 1f481a962e2aa211b3a9847a8e1ea9722965e6f2268f17c38f5a7f8753f34af4
+  status: covered
+  leaves:
+  - leaf_task_ref: '#377'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki production_transcription_writes_fields
+      Acceptance artifacts: - 4.1.1: test: `crates/gwiki/src/ingest/audio.rs::tests::production_trans...'
+    matched_artifact_ref: crates/gwiki/src/ingest/audio.rs::tests::production_transcription_writes_fields
+  deferral_target: null
+  evidence: []
+- section_id: '4.1'
+  item_id: 4.1.2
+  plan_node_hash: 70960d67bff0a0d78b06660dbc0491b47a17bdcc1a4cf246bced1b536587c124
+  status: covered
+  leaves:
+  - leaf_task_ref: '#377'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki production_transcription_writes_fields
+      Acceptance artifacts: - 4.1.1: test: `crates/gwiki/src/ingest/audio.rs::tests::production_trans...'
+    matched_artifact_ref: crates/gwiki/src/ingest/audio.rs::tests::off_routing_degrades
+  deferral_target: null
+  evidence: []
+- section_id: '4.1'
+  item_id: 4.1.3
+  plan_node_hash: e84a47020559660658df43ea950140907939b22f6820c6ccf67d30ddef8895ec
+  status: covered
+  leaves:
+  - leaf_task_ref: '#377'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki production_transcription_writes_fields
+      Acceptance artifacts: - 4.1.1: test: `crates/gwiki/src/ingest/audio.rs::tests::production_trans...'
+    matched_artifact_ref: crates/gwiki/src/transcribe.rs
+  deferral_target: null
+  evidence: []
+- section_id: '4.2'
+  item_id: 4.2.1
+  plan_node_hash: ac3b90e1b0b45e1c79ea71d548405e9519212597e502013ac5755fb97d389585
+  status: covered
+  leaves:
+  - leaf_task_ref: '#378'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki precedence_and_segment_wise
+      Acceptance artifacts: - 4.2.1: test: `crates/gwiki/src/ai/translate.rs::tests::precedence_and_segment_wise...'
+    matched_artifact_ref: crates/gwiki/src/ai/translate.rs::tests::precedence_and_segment_wise
+  deferral_target: null
+  evidence: []
+- section_id: '4.2'
+  item_id: 4.2.2
+  plan_node_hash: 072d8fb4efacf67676cc0824445b3c071856a31b9732df27ab05ab2cf051c3d7
+  status: covered
+  leaves:
+  - leaf_task_ref: '#378'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki precedence_and_segment_wise
+      Acceptance artifacts: - 4.2.1: test: `crates/gwiki/src/ai/translate.rs::tests::precedence_and_segment_wise...'
+    matched_artifact_ref: crates/gwiki/src/ai/translate.rs::tests::translations_unsupported_fallback
+  deferral_target: null
+  evidence: []
+- section_id: '4.2'
+  item_id: 4.2.3
+  plan_node_hash: 0f3eb68b6ecde83976682a8228860975350d9386e2e712b8daf04c50ee268dcf
+  status: covered
+  leaves:
+  - leaf_task_ref: '#378'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki precedence_and_segment_wise
+      Acceptance artifacts: - 4.2.1: test: `crates/gwiki/src/ai/translate.rs::tests::precedence_and_segment_wise...'
+    matched_artifact_ref: crates/gwiki/src/ai/translate.rs::tests::english_one_pass_vs_target_first
+  deferral_target: null
+  evidence: []
+- section_id: '4.2'
+  item_id: 4.2.4
+  plan_node_hash: 00f0f77ce18be9a2bd8114801b43d304db1030a6130455d61a0429de59020ca0
+  status: covered
+  leaves:
+  - leaf_task_ref: '#378'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki precedence_and_segment_wise
+      Acceptance artifacts: - 4.2.1: test: `crates/gwiki/src/ai/translate.rs::tests::precedence_and_segment_wise...'
+    matched_artifact_ref: crates/gwiki/src/ai/mod.rs
+  deferral_target: null
+  evidence: []
+- section_id: '4.2'
+  item_id: 4.2.5
+  plan_node_hash: 71b2dba79fdf81b664924605dfc522322a10da01377d195100d25ecd9e1f2f5b
+  status: covered
+  leaves:
+  - leaf_task_ref: '#378'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki precedence_and_segment_wise
+      Acceptance artifacts: - 4.2.1: test: `crates/gwiki/src/ai/translate.rs::tests::precedence_and_segment_wise...'
+    matched_artifact_ref: crates/gwiki/src/ingest/audio.rs
+  deferral_target: null
+  evidence: []
+- section_id: '4.3'
+  item_id: 4.3.1
+  plan_node_hash: a7ef779b3571c7b48c9574c381e92772ac748c1cd88bbcf5b592c6733e65cc55
+  status: covered
+  leaves:
+  - leaf_task_ref: '#379'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki chunks_under_limit_fixed_codec
+      Acceptance artifacts: - 4.3.1: test: `crates/gwiki/src/ai/chunk.rs::tests::chunks_under_limit_fixed_cod...'
+    matched_artifact_ref: crates/gwiki/src/ai/chunk.rs::tests::chunks_under_limit_fixed_codec
+  deferral_target: null
+  evidence: []
+- section_id: '4.3'
+  item_id: 4.3.2
+  plan_node_hash: 8a0d84e66192da8bfc7d124c3bf8453b8b4f8995df89d5904c487128ce9a2178
+  status: covered
+  leaves:
+  - leaf_task_ref: '#379'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki chunks_under_limit_fixed_codec
+      Acceptance artifacts: - 4.3.1: test: `crates/gwiki/src/ai/chunk.rs::tests::chunks_under_limit_fixed_cod...'
+    matched_artifact_ref: crates/gwiki/src/ai/chunk.rs::tests::offsets_and_dedups
+  deferral_target: null
+  evidence: []
+- section_id: '4.3'
+  item_id: 4.3.3
+  plan_node_hash: 4721de724fcd837cf329d8b081431cc362c44d3bafd9650035920f538cbf4999
+  status: covered
+  leaves:
+  - leaf_task_ref: '#379'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki chunks_under_limit_fixed_codec
+      Acceptance artifacts: - 4.3.1: test: `crates/gwiki/src/ai/chunk.rs::tests::chunks_under_limit_fixed_cod...'
+    matched_artifact_ref: crates/gwiki/src/ai/chunk.rs::tests::short_audio_bypasses_ffmpeg
+  deferral_target: null
+  evidence: []
+- section_id: '4.3'
+  item_id: 4.3.4
+  plan_node_hash: 2f27994327658dd79f223bf78441e9e250419892088eb91f985a305f6b430eb7
+  status: covered
+  leaves:
+  - leaf_task_ref: '#379'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki chunks_under_limit_fixed_codec
+      Acceptance artifacts: - 4.3.1: test: `crates/gwiki/src/ai/chunk.rs::tests::chunks_under_limit_fixed_cod...'
+    matched_artifact_ref: crates/gwiki/src/ai/chunk.rs::tests::partial_chunk_outcome
+  deferral_target: null
+  evidence: []
+- section_id: '4.3'
+  item_id: 4.3.5
+  plan_node_hash: 20e7ea4092ba3fbdab45a7781583e8be0a5a216fb3ae04afcf73bc554b529685
+  status: covered
+  leaves:
+  - leaf_task_ref: '#379'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki chunks_under_limit_fixed_codec
+      Acceptance artifacts: - 4.3.1: test: `crates/gwiki/src/ai/chunk.rs::tests::chunks_under_limit_fixed_cod...'
+    matched_artifact_ref: crates/gwiki/src/ai/mod.rs
+  deferral_target: null
+  evidence: []
+- section_id: '4.3'
+  item_id: 4.3.6
+  plan_node_hash: 038fc1754710bf20771ceebb795308c707c94cc77316ac7d01f1fa5c25d43c61
+  status: covered
+  leaves:
+  - leaf_task_ref: '#379'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki chunks_under_limit_fixed_codec
+      Acceptance artifacts: - 4.3.1: test: `crates/gwiki/src/ai/chunk.rs::tests::chunks_under_limit_fixed_cod...'
+    matched_artifact_ref: crates/gwiki/src/ingest/audio.rs
+  deferral_target: null
+  evidence: []
+- section_id: '4.3'
+  item_id: 4.3.7
+  plan_node_hash: 4846e1fbcb9db2bafab09817ae5544dea132c89b1378880fd8000e6d8880aef3
+  status: covered
+  leaves:
+  - leaf_task_ref: '#379'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki chunks_under_limit_fixed_codec
+      Acceptance artifacts: - 4.3.1: test: `crates/gwiki/src/ai/chunk.rs::tests::chunks_under_limit_fixed_cod...'
+    matched_artifact_ref: crates/gwiki/src/ingest/audio.rs::tests::long_english_translation_per_chunk
+  deferral_target: null
+  evidence: []
+- section_id: '5.1'
+  item_id: 5.1.1
+  plan_node_hash: 718512a5ee818259f3acecf8de37d64a287812ccb36c761a00d975ae794f850e
+  status: covered
+  leaves:
+  - leaf_task_ref: '#380'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki production_vision_writes_description_and_ocr
+      Acceptance artifacts: - 5.1.1: test: `crates/gwiki/src/ingest/image.rs::tests::production...'
+    matched_artifact_ref: crates/gwiki/src/ingest/image.rs::tests::production_vision_writes_description_and_ocr
+  deferral_target: null
+  evidence: []
+- section_id: '5.2'
+  item_id: 5.2.1
+  plan_node_hash: e2eb70cf4e08a3f14529291f1fde69d93de7fe83092da1a5d17736bcb99af44e
+  status: covered
+  leaves:
+  - leaf_task_ref: '#381'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki video_produces_transcript_and_frames
+      Acceptance artifacts: - 5.2.1: test: `crates/gwiki/src/ingest/video.rs::tests::video_produces_tra...'
+    matched_artifact_ref: crates/gwiki/src/ingest/video.rs::tests::video_produces_transcript_and_frames
+  deferral_target: null
+  evidence: []
+- section_id: '5.2'
+  item_id: 5.2.2
+  plan_node_hash: 1ee5f82820a4f0379fe874b647660b5f2082e4b2360eabccd2c53194fdff20d2
+  status: covered
+  leaves:
+  - leaf_task_ref: '#381'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki video_produces_transcript_and_frames
+      Acceptance artifacts: - 5.2.1: test: `crates/gwiki/src/ingest/video.rs::tests::video_produces_tra...'
+    matched_artifact_ref: crates/gwiki/src/ingest/video.rs::tests::frame_interval_zero_disables_frames
+  deferral_target: null
+  evidence: []
+- section_id: '5.2'
+  item_id: 5.2.3
+  plan_node_hash: fe236aa2c31d17de313acae116eedce1d0591cf6e88cfbc2cf4b40dba10397b2
+  status: covered
+  leaves:
+  - leaf_task_ref: '#381'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki video_produces_transcript_and_frames
+      Acceptance artifacts: - 5.2.1: test: `crates/gwiki/src/ingest/video.rs::tests::video_produces_tra...'
+    matched_artifact_ref: crates/gwiki/src/ingest/video.rs::tests::video_long_english_translation_reuses_chunk_branch
+  deferral_target: null
+  evidence: []
+- section_id: '5.3'
+  item_id: 5.3.1
+  plan_node_hash: 0cf0d51da9e9b8a3e1a0ae196d32bc0a5726d6e068145a6d7583b3fdb6c162bc
+  status: covered
+  leaves:
+  - leaf_task_ref: '#382'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki partial_failure_matrix
+      Acceptance artifacts: - 5.3.1: test: `crates/gwiki/src/video.rs::tests::partial_failure_matrix`
+      - 5.3.2: test: ...'
+    matched_artifact_ref: crates/gwiki/src/video.rs::tests::partial_failure_matrix
+  deferral_target: null
+  evidence: []
+- section_id: '5.3'
+  item_id: 5.3.2
+  plan_node_hash: ef1a7810b5e6c145a88c11cf9145e31422e66b26f40aa1f43eea4de55aad0404
+  status: covered
+  leaves:
+  - leaf_task_ref: '#382'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki partial_failure_matrix
+      Acceptance artifacts: - 5.3.1: test: `crates/gwiki/src/video.rs::tests::partial_failure_matrix`
+      - 5.3.2: test: ...'
+    matched_artifact_ref: crates/gwiki/src/video.rs::tests::degradation_metadata_has_size_and_duration
+  deferral_target: null
+  evidence: []
+- section_id: '5.3'
+  item_id: 5.3.3
+  plan_node_hash: f8abce255d52e03ab26cc66a9f89d61c3df234da72a466fd90fe143649bfd332
+  status: covered
+  leaves:
+  - leaf_task_ref: '#382'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki partial_failure_matrix
+      Acceptance artifacts: - 5.3.1: test: `crates/gwiki/src/video.rs::tests::partial_failure_matrix`
+      - 5.3.2: test: ...'
+    matched_artifact_ref: crates/gwiki/src/ingest/video.rs::tests::production_ingest_applies_degradation_matrix
+  deferral_target: null
+  evidence: []
+- section_id: '5.4'
+  item_id: 5.4.1
+  plan_node_hash: cf3ae19af2e87c3f8912e94d95f2baa29cba1ff6532f687a23b5704ef95f5749
+  status: covered
+  leaves:
+  - leaf_task_ref: '#383'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki extracts_office_html_and_degrades
+      Acceptance artifacts: - 5.4.1: test: `crates/gwiki/src/ingest/document.rs::tests::extracts_office_ht...'
+    matched_artifact_ref: crates/gwiki/src/ingest/document.rs::tests::extracts_office_html_and_degrades
+  deferral_target: null
+  evidence: []
+- section_id: '5.4'
+  item_id: 5.4.2
+  plan_node_hash: a955b22465f85d1d26f20647b8a4b047f7431307d52168bc86977a6b41fd55cd
+  status: covered
+  leaves:
+  - leaf_task_ref: '#383'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki extracts_office_html_and_degrades
+      Acceptance artifacts: - 5.4.1: test: `crates/gwiki/src/ingest/document.rs::tests::extracts_office_ht...'
+    matched_artifact_ref: crates/gwiki/src/ingest/mod.rs
+  deferral_target: null
+  evidence: []
+- section_id: '5.4'
+  item_id: 5.4.3
+  plan_node_hash: 024728cce37c68bd23c98fa61071cb5adc7cfd8604125c30f7af2bae11d409b5
+  status: covered
+  leaves:
+  - leaf_task_ref: '#383'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki extracts_office_html_and_degrades
+      Acceptance artifacts: - 5.4.1: test: `crates/gwiki/src/ingest/document.rs::tests::extracts_office_ht...'
+    matched_artifact_ref: crates/gwiki/src/ingest/file.rs::tests::dispatches_office_html_to_document
+  deferral_target: null
+  evidence: []
+- section_id: '5.5'
+  item_id: 5.5.1
+  plan_node_hash: f395f40a0d38dd5ba783e130bafd078fecdb66808211aa08f0e9734ee37143fa
+  status: covered
+  leaves:
+  - leaf_task_ref: '#384'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki combines_text_layer_and_vision
+      Acceptance artifacts: - 5.5.1: test: `crates/gwiki/src/ingest/pdf.rs::tests::combines_text_layer_and_vi...'
+    matched_artifact_ref: crates/gwiki/src/ingest/pdf.rs::tests::combines_text_layer_and_vision
+  deferral_target: null
+  evidence: []
+- section_id: '5.5'
+  item_id: 5.5.2
+  plan_node_hash: 03a794ee66d1aa69337d8c5c976f28000a2a227cadba1b7f11f10e7313a90d90
+  status: covered
+  leaves:
+  - leaf_task_ref: '#384'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki combines_text_layer_and_vision
+      Acceptance artifacts: - 5.5.1: test: `crates/gwiki/src/ingest/pdf.rs::tests::combines_text_layer_and_vi...'
+    matched_artifact_ref: crates/gwiki/Cargo.toml
+  deferral_target: null
+  evidence: []
+- section_id: '5.5'
+  item_id: 5.5.3
+  plan_node_hash: 9bb90f0aec19789778942a3faba3199fb6a6b5261b53d7388a587c861b11d746
+  status: covered
+  leaves:
+  - leaf_task_ref: '#384'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki combines_text_layer_and_vision
+      Acceptance artifacts: - 5.5.1: test: `crates/gwiki/src/ingest/pdf.rs::tests::combines_text_layer_and_vi...'
+    matched_artifact_ref: crates/gwiki/src/ingest/file.rs::tests::dispatches_pdf_to_combined_path
+  deferral_target: null
+  evidence: []
+- section_id: '5.6'
+  item_id: 5.6.1
+  plan_node_hash: a983f59c315dd4fa25cd5ff4d59060f271143a8ef4d35fd01fbaa214772cc19f
+  status: covered
+  leaves:
+  - leaf_task_ref: '#385'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki document_degradation_matrix
+      Acceptance artifacts: - 5.6.1: test: `crates/gwiki/src/document.rs::tests::document_degradation_matrix`
+      - ...'
+    matched_artifact_ref: crates/gwiki/src/document.rs::tests::document_degradation_matrix
+  deferral_target: null
+  evidence: []
+- section_id: '5.6'
+  item_id: 5.6.2
+  plan_node_hash: 1d35bab8a15d97881394a2ec92ed4b22a4b9c60e97086570e99879204cf72863
+  status: covered
+  leaves:
+  - leaf_task_ref: '#385'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki document_degradation_matrix
+      Acceptance artifacts: - 5.6.1: test: `crates/gwiki/src/document.rs::tests::document_degradation_matrix`
+      - ...'
+    matched_artifact_ref: crates/gwiki/src/lib.rs
+  deferral_target: null
+  evidence: []
+- section_id: '5.6'
+  item_id: 5.6.3
+  plan_node_hash: 6ef1a412ab38f73db31e93183b307482df075fb99473a19c0466c1843fccc029
+  status: covered
+  leaves:
+  - leaf_task_ref: '#385'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki document_degradation_matrix
+      Acceptance artifacts: - 5.6.1: test: `crates/gwiki/src/document.rs::tests::document_degradation_matrix`
+      - ...'
+    matched_artifact_ref: crates/gwiki/src/ingest/document.rs::tests::office_html_degradation_uses_uniform_metadata
+  deferral_target: null
+  evidence: []
+- section_id: '6.1'
+  item_id: 6.1.1
+  plan_node_hash: 2c086aba0ffe9a7fe3e91c68fc6fcb1de14eb9ef9ce9e9469a248c5c35e923ab
+  status: covered
+  leaves:
+  - leaf_task_ref: '#386'
+    validation_criteria_snippet: 'Author the daemon capability contract (CLI side):
+      target docs written, reviewed, and consistent with the cited routes/contract
+      Acceptance artifacts: - 6.1.1: f...'
+    matched_artifact_ref: docs/guides/ai-daemon-contract.md
+  deferral_target: null
+  evidence: []
+- section_id: '6.1'
+  item_id: 6.1.2
+  plan_node_hash: 1565763f66021a98b115e317519b181edbd722d8e17414569643725e182d26af
+  status: covered
+  leaves:
+  - leaf_task_ref: '#386'
+    validation_criteria_snippet: 'Author the daemon capability contract (CLI side):
+      target docs written, reviewed, and consistent with the cited routes/contract
+      Acceptance artifacts: - 6.1.1: f...'
+    matched_artifact_ref: '"probe routes match the contract" in `docs/guides/ai-daemon-contract.md`'
+  deferral_target: null
+  evidence: []
+- section_id: '6.1'
+  item_id: 6.1.3
+  plan_node_hash: 0ab9094a6f2792995bbc144065fc165ce9362af605ee2f049ff41f9ca9390e5d
+  status: covered
+  leaves:
+  - leaf_task_ref: '#386'
+    validation_criteria_snippet: 'Author the daemon capability contract (CLI side):
+      target docs written, reviewed, and consistent with the cited routes/contract
+      Acceptance artifacts: - 6.1.1: f...'
+    matched_artifact_ref: docs/guides/hub-install-contract.md
+  deferral_target: null
+  evidence: []
+- section_id: '6.1'
+  item_id: 6.1.4
+  plan_node_hash: 240ef852f300a94cb69f5a36bae7ad0594968eeedcd9e18eeb6bb7588c7e06e0
+  status: covered
+  leaves:
+  - leaf_task_ref: '#386'
+    validation_criteria_snippet: 'Author the daemon capability contract (CLI side):
+      target docs written, reviewed, and consistent with the cited routes/contract
+      Acceptance artifacts: - 6.1.1: f...'
+    matched_artifact_ref: docs/guides/ai-daemon-contract.md
+  deferral_target: null
+  evidence: []
+- section_id: '7.1'
+  item_id: 7.1.1
+  plan_node_hash: ff7e6c3c510a42f1b73449c9e3c5bd89647713ec63c721f642637ed0d66cab2c
+  status: covered
+  leaves:
+  - leaf_task_ref: '#387'
+    validation_criteria_snippet: 'Add gwiki and the gcore ai feature to CI: workflow
+      YAML parses (actionlint) and the added CI/release jobs run green Acceptance
+      artifacts: - 7.1.1: file: `.gith...'
+    matched_artifact_ref: .github/workflows/ci.yml
+  deferral_target: null
+  evidence: []
+- section_id: '7.2'
+  item_id: 7.2.1
+  plan_node_hash: d1e1e064e74fab48714713e1e07af95a2f09aa8ecdde8c92e1f95263ea266d5a
+  status: covered
+  leaves:
+  - leaf_task_ref: '#388'
+    validation_criteria_snippet: 'Add the gwiki release workflow: workflow YAML parses
+      (actionlint) and the added CI/release jobs run green Acceptance artifacts: -
+      7.2.1: file: `.github/workflo...'
+    matched_artifact_ref: .github/workflows/release-gwiki.yml
+  deferral_target: null
+  evidence: []
+- section_id: '7.2'
+  item_id: 7.2.2
+  plan_node_hash: 50ad7e0e3199fd03d7a882339d06e4df17519e07c6d84a8f5658e44e76879204
+  status: covered
+  leaves:
+  - leaf_task_ref: '#388'
+    validation_criteria_snippet: 'Add the gwiki release workflow: workflow YAML parses
+      (actionlint) and the added CI/release jobs run green Acceptance artifacts: -
+      7.2.1: file: `.github/workflo...'
+    matched_artifact_ref: .github/workflows/release-gwiki.yml
+  deferral_target: null
+  evidence: []
+- section_id: '7.3'
+  item_id: 7.3.1
+  plan_node_hash: 2a9369d47971022d3010b02568206e844b35a0bbe84700035b11773659c9bcaf
+  status: covered
+  leaves:
+  - leaf_task_ref: '#389'
+    validation_criteria_snippet: 'Document the AI configuration matrix: target docs
+      written, reviewed, and consistent with the cited routes/contract Acceptance
+      artifacts: - 7.3.1: file: `docs/g...'
+    matched_artifact_ref: docs/guides/ai-configuration.md
+  deferral_target: null
+  evidence: []
+- section_id: '8.1'
+  item_id: 8.1.1
+  plan_node_hash: 0a308c08e8ecdf2bfe144a38573e412772d9af4672cbf7b665be6db82a411f7a
+  status: covered
+  leaves:
+  - leaf_task_ref: '#390'
+    validation_criteria_snippet: 'cargo test -p gobby-core detects_first_reachable
+      Acceptance artifacts: - 8.1.1: test: `crates/gcore/src/local_backend.rs::tests::detects_first_reachable`
+      - 8.1...'
+    matched_artifact_ref: crates/gcore/src/local_backend.rs::tests::detects_first_reachable
+  deferral_target: null
+  evidence: []
+- section_id: '8.1'
+  item_id: 8.1.1a
+  plan_node_hash: 7e0bc8b984dbbc52fdb31aef5cc6886bb79e100a239295e10566fd5a47625819
+  status: covered
+  leaves:
+  - leaf_task_ref: '#390'
+    validation_criteria_snippet: 'cargo test -p gobby-core detects_first_reachable
+      Acceptance artifacts: - 8.1.1: test: `crates/gcore/src/local_backend.rs::tests::detects_first_reachable`
+      - 8.1...'
+    matched_artifact_ref: crates/gcore/tests/public_boundary.rs::cargo_features_define_public_boundary
+  deferral_target: null
+  evidence: []
+- section_id: '8.1'
+  item_id: 8.1.2
+  plan_node_hash: ab73d1de6ddcd213267cee3e0c68fc437ad62459002cc948e14f7589fa40e5a1
+  status: covered
+  leaves:
+  - leaf_task_ref: '#390'
+    validation_criteria_snippet: 'cargo test -p gobby-core detects_first_reachable
+      Acceptance artifacts: - 8.1.1: test: `crates/gcore/src/local_backend.rs::tests::detects_first_reachable`
+      - 8.1...'
+    matched_artifact_ref: crates/gcore/src/ai/mod.rs::tests::direct_autodiscovers_local_endpoint
+  deferral_target: null
+  evidence: []
+- section_id: '8.1'
+  item_id: 8.1.3
+  plan_node_hash: 3f2eddb91117bb8754c8eca93cb3e34a68affd4d0ea6068129289093c7bce79e
+  status: covered
+  leaves:
+  - leaf_task_ref: '#390'
+    validation_criteria_snippet: 'cargo test -p gobby-core detects_first_reachable
+      Acceptance artifacts: - 8.1.1: test: `crates/gcore/src/local_backend.rs::tests::detects_first_reachable`
+      - 8.1...'
+    matched_artifact_ref: crates/gcore/src/ai_context.rs::tests::stt_not_autodiscovered_to_chat_backend
+  deferral_target: null
+  evidence: []
+- section_id: '8.1'
+  item_id: 8.1.4
+  plan_node_hash: 7ca5954291256104dc43bf896ba3b5142e9ee7a146a1aeeeee5c603e690bbccb
+  status: covered
+  leaves:
+  - leaf_task_ref: '#390'
+    validation_criteria_snippet: 'cargo test -p gobby-core detects_first_reachable
+      Acceptance artifacts: - 8.1.1: test: `crates/gcore/src/local_backend.rs::tests::detects_first_reachable`
+      - 8.1...'
+    matched_artifact_ref: crates/gcore/src/lib.rs
+  deferral_target: null
+  evidence: []
+- section_id: '8.2'
+  item_id: 8.2.1
+  plan_node_hash: 463bc0ae4b09076b7b7b058d4723158441bb3ccfeeb979c1a99f10ec39e7dd53
+  status: covered
+  leaves:
+  - leaf_task_ref: '#391'
+    validation_criteria_snippet: 'cargo test -p gobby-code resolves_via_shared_routing
+      Acceptance artifacts: - 8.2.1: test: `crates/gcode/src/vector/code_symbols/embedding.rs::tests::resolves_v...'
+    matched_artifact_ref: crates/gcode/src/vector/code_symbols/embedding.rs::tests::resolves_via_shared_routing
+  deferral_target: null
+  evidence: []
+- section_id: '8.2'
+  item_id: 8.2.2
+  plan_node_hash: e0af1dfbbb33abacc3cfb665023cab5b41c303abb7c873a411d78080c2ea638f
+  status: covered
+  leaves:
+  - leaf_task_ref: '#391'
+    validation_criteria_snippet: 'cargo test -p gobby-code resolves_via_shared_routing
+      Acceptance artifacts: - 8.2.1: test: `crates/gcode/src/vector/code_symbols/embedding.rs::tests::resolves_v...'
+    matched_artifact_ref: crates/gcode/src/vector/code_symbols/embedding.rs::tests::reads_endpoint_from_shared_binding
+  deferral_target: null
+  evidence: []
+- section_id: '8.2'
+  item_id: 8.2.3
+  plan_node_hash: 4c7a81ad72a4ddd54cca61b79f8220ba30bd5825b6c2e836ead9423fd5f73e8d
+  status: covered
+  leaves:
+  - leaf_task_ref: '#391'
+    validation_criteria_snippet: 'cargo test -p gobby-code resolves_via_shared_routing
+      Acceptance artifacts: - 8.2.1: test: `crates/gcode/src/vector/code_symbols/embedding.rs::tests::resolves_v...'
+    matched_artifact_ref: crates/gcode/Cargo.toml
+  deferral_target: null
+  evidence: []
+- section_id: '8.3'
+  item_id: 8.3.1
+  plan_node_hash: f408555ed9c30164e8f56aabb716da89676dbab2d2ebdabac83588d4b8057fb9
+  status: covered
+  leaves:
+  - leaf_task_ref: '#392'
+    validation_criteria_snippet: 'cargo test -p gobby-code summarizes_when_configured
+      Acceptance artifacts: - 8.3.1: test: `crates/gcode/src/commands/symbols.rs::tests::summarizes_when_configur...'
+    matched_artifact_ref: crates/gcode/src/commands/symbols.rs::tests::summarizes_when_configured
+  deferral_target: null
+  evidence: []
+- section_id: '8.3'
+  item_id: 8.3.2
+  plan_node_hash: e17a7fc98523b585db58062775a2212fb8b72e752f0d333550780c051a9a2cc7
+  status: covered
+  leaves:
+  - leaf_task_ref: '#392'
+    validation_criteria_snippet: 'cargo test -p gobby-code summarizes_when_configured
+      Acceptance artifacts: - 8.3.1: test: `crates/gcode/src/commands/symbols.rs::tests::summarizes_when_configur...'
+    matched_artifact_ref: crates/gcode/src/commands/symbols.rs::tests::degrades_to_ast
+  deferral_target: null
+  evidence: []
+- section_id: '8.3'
+  item_id: 8.3.3
+  plan_node_hash: 9cac4bfd7ac73cad9b8293d26a7a89b8cc608254147696d9ecedf72d670d99f3
+  status: covered
+  leaves:
+  - leaf_task_ref: '#392'
+    validation_criteria_snippet: 'cargo test -p gobby-code summarizes_when_configured
+      Acceptance artifacts: - 8.3.1: test: `crates/gcode/src/commands/symbols.rs::tests::summarizes_when_configur...'
+    matched_artifact_ref: crates/gcode/src/dispatch.rs
+  deferral_target: null
+  evidence: []
+- section_id: '8.3'
+  item_id: 8.3.4
+  plan_node_hash: 1f6bf110fb1c129989e3d8daab918a24b1cddca8438d3e101520466e8f984ff6
+  status: covered
+  leaves:
+  - leaf_task_ref: '#392'
+    validation_criteria_snippet: 'cargo test -p gobby-code summarizes_when_configured
+      Acceptance artifacts: - 8.3.1: test: `crates/gcode/src/commands/symbols.rs::tests::summarizes_when_configur...'
+    matched_artifact_ref: crates/gcode/Cargo.toml
+  deferral_target: null
+  evidence: []
+- section_id: '8.4'
+  item_id: 8.4.0
+  plan_node_hash: 6c29242ff11c0c1a28b1d36ec6c517d24c8dec881c44fbbc53bdc401a62636e8
+  status: covered
+  leaves:
+  - leaf_task_ref: '#393'
+    validation_criteria_snippet: 'cargo test -p gobby-core --test public_boundary
+      Acceptance artifacts: - 8.4.0: test: `crates/gcore/tests/public_boundary.rs::cargo_features_define_public_bound...'
+    matched_artifact_ref: crates/gcore/tests/public_boundary.rs::cargo_features_define_public_boundary
+  deferral_target: null
+  evidence: []
+- section_id: '8.4'
+  item_id: 8.4.1
+  plan_node_hash: 5a511a12f9d38bfc27b7b435d8935741885f50c74ef49d34d396079d7839996e
+  status: covered
+  leaves:
+  - leaf_task_ref: '#393'
+    validation_criteria_snippet: 'cargo test -p gobby-core --test public_boundary
+      Acceptance artifacts: - 8.4.0: test: `crates/gcore/tests/public_boundary.rs::cargo_features_define_public_bound...'
+    matched_artifact_ref: crates/gcore/src/provisioning.rs::tests::ensure_hub_reuses_then_provisions
+  deferral_target: null
+  evidence: []
+- section_id: '8.4'
+  item_id: 8.4.2
+  plan_node_hash: d688bc19325a3364064895899133592f92e2c299a454efea36279bf7af629525
+  status: covered
+  leaves:
+  - leaf_task_ref: '#393'
+    validation_criteria_snippet: 'cargo test -p gobby-core --test public_boundary
+      Acceptance artifacts: - 8.4.0: test: `crates/gcore/tests/public_boundary.rs::cargo_features_define_public_bound...'
+    matched_artifact_ref: crates/gwiki/src/commands/setup.rs::tests::standalone_provisions_and_merges_config
+  deferral_target: null
+  evidence: []
+- section_id: '8.4'
+  item_id: 8.4.3
+  plan_node_hash: 7c174307a1500e289d916659f9e61b94b1845a8cb50cfc748bd595fdefc1dbc0
+  status: covered
+  leaves:
+  - leaf_task_ref: '#393'
+    validation_criteria_snippet: 'cargo test -p gobby-core --test public_boundary
+      Acceptance artifacts: - 8.4.0: test: `crates/gcore/tests/public_boundary.rs::cargo_features_define_public_bound...'
+    matched_artifact_ref: crates/gwiki/src/commands/setup.rs::tests::reuses_existing_gcode_hub
+  deferral_target: null
+  evidence: []
+- section_id: '8.4'
+  item_id: 8.4.4
+  plan_node_hash: bfa53cb9430528272e71eab1875907abc0705ec8d09de5b0e9dc15493e477386
+  status: covered
+  leaves:
+  - leaf_task_ref: '#393'
+    validation_criteria_snippet: 'cargo test -p gobby-core --test public_boundary
+      Acceptance artifacts: - 8.4.0: test: `crates/gcore/tests/public_boundary.rs::cargo_features_define_public_bound...'
+    matched_artifact_ref: crates/gwiki/src/api.rs
+  deferral_target: null
+  evidence: []
+- section_id: '8.5'
+  item_id: 8.5.1
+  plan_node_hash: db1e63de7824f467d272c2e3bdebe974bd15d2d08e0ee3686af6e9f71737bcb6
+  status: covered
+  leaves:
+  - leaf_task_ref: '#394'
+    validation_criteria_snippet: 'cargo test -p gobby-core no_double_provision_when_reachable
+      Acceptance artifacts: - 8.5.1: test: `crates/gcore/src/provisioning.rs::tests::no_double_provision_...'
+    matched_artifact_ref: crates/gcore/src/provisioning.rs::tests::no_double_provision_when_reachable
+  deferral_target: null
+  evidence: []
+- section_id: '8.5'
+  item_id: 8.5.2
+  plan_node_hash: 956ee2e42debf74f4d2a704607ae779a18683730019d4b92c8370dcc8bd362fc
+  status: covered
+  leaves:
+  - leaf_task_ref: '#394'
+    validation_criteria_snippet: 'cargo test -p gobby-core no_double_provision_when_reachable
+      Acceptance artifacts: - 8.5.1: test: `crates/gcore/src/provisioning.rs::tests::no_double_provision_...'
+    matched_artifact_ref: crates/gcore/src/provisioning.rs::tests::divergent_hubs_surface_conflict
+  deferral_target: null
+  evidence: []
+- section_id: '8.5'
+  item_id: 8.5.3
+  plan_node_hash: 5bcb94f8aaebfdb495b5d69fe56073528aa2b082d85ba5b898f9d58c8e5e3a75
+  status: covered
+  leaves:
+  - leaf_task_ref: '#394'
+    validation_criteria_snippet: 'cargo test -p gobby-core no_double_provision_when_reachable
+      Acceptance artifacts: - 8.5.1: test: `crates/gcore/src/provisioning.rs::tests::no_double_provision_...'
+    matched_artifact_ref: crates/gcode/src/db.rs::tests::adopted_hub_resolves_without_conflict
+  deferral_target: null
+  evidence: []
+- section_id: '8.5'
+  item_id: 8.5.4
+  plan_node_hash: 1d638c33f9ad76305d6069d9ef3f3560000efdb43583915415d5a600254e3cce
+  status: covered
+  leaves:
+  - leaf_task_ref: '#394'
+    validation_criteria_snippet: 'cargo test -p gobby-core no_double_provision_when_reachable
+      Acceptance artifacts: - 8.5.1: test: `crates/gcore/src/provisioning.rs::tests::no_double_provision_...'
+    matched_artifact_ref: crates/gcore/src/provisioning.rs::tests::insufficient_identity_privilege_preserves_hub
+  deferral_target: null
+  evidence: []
+- section_id: '9.1'
+  item_id: 9.1.1
+  plan_node_hash: 0d6d86b09a17cc516963658db0816b5ac0cd34335ca36efc2e6266509ec3e3ad
+  status: covered
+  leaves:
+  - leaf_task_ref: '#395'
+    validation_criteria_snippet: 'cargo test -p gobby-code generates_hierarchical_docs
+      Acceptance artifacts: - 9.1.1: test: `crates/gcode/src/commands/codewiki.rs::tests::generates_hierarchical...'
+    matched_artifact_ref: crates/gcode/src/commands/codewiki.rs::tests::generates_hierarchical_docs
+  deferral_target: null
+  evidence: []
+- section_id: '9.1'
+  item_id: 9.1.2
+  plan_node_hash: c65586e32fe930b042a811bff94a7936cd3b6610be9010854a2ef8381a0d671e
+  status: covered
+  leaves:
+  - leaf_task_ref: '#395'
+    validation_criteria_snippet: 'cargo test -p gobby-code generates_hierarchical_docs
+      Acceptance artifacts: - 9.1.1: test: `crates/gcode/src/commands/codewiki.rs::tests::generates_hierarchical...'
+    matched_artifact_ref: crates/gcode/src/cli.rs
+  deferral_target: null
+  evidence: []
+- section_id: '9.1'
+  item_id: 9.1.3
+  plan_node_hash: f7556903c4260588331c9c564dc5e10325d9f3936148f9b133604f22e41c04e8
+  status: covered
+  leaves:
+  - leaf_task_ref: '#395'
+    validation_criteria_snippet: 'cargo test -p gobby-code generates_hierarchical_docs
+      Acceptance artifacts: - 9.1.1: test: `crates/gcode/src/commands/codewiki.rs::tests::generates_hierarchical...'
+    matched_artifact_ref: crates/gcode/src/commands/mod.rs
+  deferral_target: null
+  evidence: []
+- section_id: '9.2'
+  item_id: 9.2.1
+  plan_node_hash: 5d838b7e6a31dafafac9b0c395ee4b550fb8342fc1abe3f0286e1766cea5e13e
+  status: covered
+  leaves:
+  - leaf_task_ref: '#396'
+    validation_criteria_snippet: 'cargo test -p gobby-code clusters_modules_from_graph
+      Acceptance artifacts: - 9.2.1: test: `crates/gcode/src/commands/codewiki.rs::tests::clusters_modules_from_...'
+    matched_artifact_ref: crates/gcode/src/commands/codewiki.rs::tests::clusters_modules_from_graph
+  deferral_target: null
+  evidence: []
+- section_id: '9.2'
+  item_id: 9.2.2
+  plan_node_hash: 2d9b4bc080d62d575f2b5a3cf28edb60cdf13f8604e5804ae473e9a555fe9f7a
+  status: covered
+  leaves:
+  - leaf_task_ref: '#396'
+    validation_criteria_snippet: 'cargo test -p gobby-code clusters_modules_from_graph
+      Acceptance artifacts: - 9.2.1: test: `crates/gcode/src/commands/codewiki.rs::tests::clusters_modules_from_...'
+    matched_artifact_ref: crates/gcode/src/commands/codewiki.rs::tests::clusters_without_falkordb
+  deferral_target: null
+  evidence: []
+- section_id: '9.3'
+  item_id: 9.3.1
+  plan_node_hash: e2dca6249efd1883a3b7df9a755f3ac6d7fd4a1528e687f8d455a319f1a79fdd
+  status: covered
+  leaves:
+  - leaf_task_ref: '#397'
+    validation_criteria_snippet: 'cargo test -p gobby-code emits_bounded_mermaid Acceptance
+      artifacts: - 9.3.1: test: `crates/gcode/src/commands/codewiki.rs::tests::emits_bounded_mermaid`
+      - 9.3...'
+    matched_artifact_ref: crates/gcode/src/commands/codewiki.rs::tests::emits_bounded_mermaid
+  deferral_target: null
+  evidence: []
+- section_id: '9.3'
+  item_id: 9.3.2
+  plan_node_hash: 7abdfb629d0494750027dfefe8927fc2ad1506945c0078108c262d9d5d42b120
+  status: covered
+  leaves:
+  - leaf_task_ref: '#397'
+    validation_criteria_snippet: 'cargo test -p gobby-code emits_bounded_mermaid Acceptance
+      artifacts: - 9.3.1: test: `crates/gcode/src/commands/codewiki.rs::tests::emits_bounded_mermaid`
+      - 9.3...'
+    matched_artifact_ref: crates/gcode/src/commands/codewiki.rs::tests::mermaid_degrades_without_falkordb
+  deferral_target: null
+  evidence: []
+- section_id: '9.4'
+  item_id: 9.4.1
+  plan_node_hash: 17f7a03afd73956780cd26acd1b47022febab156fcb9efbd528441bcd9f71920
+  status: covered
+  leaves:
+  - leaf_task_ref: '#398'
+    validation_criteria_snippet: 'cargo test -p gobby-code citations_validated_against_spans
+      Acceptance artifacts: - 9.4.1: file: `line` citations validated against real
+      symbol spans, with a `s...'
+    matched_artifact_ref: line` citations validated against real symbol spans, with
+      a `source_files` frontmatter list, and invalid citations are rejected
+  deferral_target: null
+  evidence: []
+- section_id: '9.5'
+  item_id: 9.5.1
+  plan_node_hash: 135c202b8f0776d9f31c21a422f1fbbc97bc45065c7e9ca6f3879593fc938dab
+  status: covered
+  leaves:
+  - leaf_task_ref: '#399'
+    validation_criteria_snippet: 'cargo test -p gobby-code incremental_regenerates_only_changed
+      Acceptance artifacts: - 9.5.1: test: `crates/gcode/src/commands/codewiki.rs::tests::incremental_r...'
+    matched_artifact_ref: crates/gcode/src/commands/codewiki.rs::tests::incremental_regenerates_only_changed
+  deferral_target: null
+  evidence: []
+- section_id: '9.6'
+  item_id: 9.6.1
+  plan_node_hash: 5051d5679f925aa3a82779d1413756d0c452d3a2fe5eac4abd442ccc65e74a9d
+  status: covered
+  leaves:
+  - leaf_task_ref: '#400'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki indexes_codedocs_with_provenance
+      Acceptance artifacts: - 9.6.1: test: `crates/gwiki/src/indexer.rs::tests::indexes_codedocs_with_prove...'
+    matched_artifact_ref: crates/gwiki/src/indexer.rs::tests::indexes_codedocs_with_provenance
+  deferral_target: null
+  evidence: []
+- section_id: '9.6'
+  item_id: 9.6.2
+  plan_node_hash: 7f4784c2895ba689024855962398ea98d873422072ba2e5bb07072b01cd87ec5
+  status: covered
+  leaves:
+  - leaf_task_ref: '#400'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki indexes_codedocs_with_provenance
+      Acceptance artifacts: - 9.6.1: test: `crates/gwiki/src/indexer.rs::tests::indexes_codedocs_with_prove...'
+    matched_artifact_ref: crates/gwiki/src/indexer.rs::tests::codedoc_tree_indexes_idempotently
+  deferral_target: null
+  evidence: []
+- section_id: '9.6'
+  item_id: 9.6.3
+  plan_node_hash: 5ac038a521cd11a35f5b902a8cf1fc625a5944d3a0fca7fca8a121c17546cd46
+  status: covered
+  leaves:
+  - leaf_task_ref: '#400'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki indexes_codedocs_with_provenance
+      Acceptance artifacts: - 9.6.1: test: `crates/gwiki/src/indexer.rs::tests::indexes_codedocs_with_prove...'
+    matched_artifact_ref: crates/gwiki/src/store.rs
+  deferral_target: null
+  evidence: []
+- section_id: '9.6'
+  item_id: 9.6.4
+  plan_node_hash: 473c56c78a108a9f91a661dfa77b243aaaf77d072170ac3f680e1ca36aa6e909
+  status: covered
+  leaves:
+  - leaf_task_ref: '#400'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki indexes_codedocs_with_provenance
+      Acceptance artifacts: - 9.6.1: test: `crates/gwiki/src/indexer.rs::tests::indexes_codedocs_with_prove...'
+    matched_artifact_ref: crates/gwiki/src/indexer.rs
+  deferral_target: null
+  evidence: []
+- section_id: '9.6'
+  item_id: 9.6.5
+  plan_node_hash: 98b9ef533950d4a2ec0ff0ef839ca74e6bc6cad859d897a5d0b5f30cccb51895
+  status: covered
+  leaves:
+  - leaf_task_ref: '#400'
+    validation_criteria_snippet: 'cargo test -p gobby-wiki indexes_codedocs_with_provenance
+      Acceptance artifacts: - 9.6.1: test: `crates/gwiki/src/indexer.rs::tests::indexes_codedocs_with_prove...'
+    matched_artifact_ref: crates/gwiki/src/support/text.rs
+  deferral_target: null
+  evidence: []
+- section_id: '9.7'
+  item_id: 9.7.1
+  plan_node_hash: 3dd112f21efa5b0c8da039cc33cc41445e1d3952f0681c2f52c407c555d7edca
+  status: covered
+  leaves:
+  - leaf_task_ref: '#401'
+    validation_criteria_snippet: 'codewiki CI and documentation: workflow YAML parses
+      (actionlint) and the added CI/release jobs run green Acceptance artifacts: -
+      9.7.1: file: `.github/workflow...'
+    matched_artifact_ref: .github/workflows/ci.yml
+  deferral_target: null
+  evidence: []
+- section_id: '9.7'
+  item_id: 9.7.2
+  plan_node_hash: 807582949e8587082e26781e18e79bc92b36baab5f68de97e60c8974a4ef9f41
+  status: covered
+  leaves:
+  - leaf_task_ref: '#401'
+    validation_criteria_snippet: 'codewiki CI and documentation: workflow YAML parses
+      (actionlint) and the added CI/release jobs run green Acceptance artifacts: -
+      9.7.1: file: `.github/workflow...'
+    matched_artifact_ref: docs/guides/codewiki.md
+  deferral_target: null
+  evidence: []

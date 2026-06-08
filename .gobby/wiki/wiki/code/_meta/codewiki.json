@@ -1,0 +1,139 @@
+{
+  "docs": {
+    "files/crates/gcode/src/commands/codewiki/build.rs.md": {
+      "source_hashes": {
+        "crates/gcode/src/commands/codewiki/build.rs": "e3714b67828f94f7c2a101b844d30cf5f69a3812c9b6528d2ff1d00f39fcbbad"
+      }
+    },
+    "files/crates/gcode/src/commands/codewiki/cluster.rs.md": {
+      "source_hashes": {
+        "crates/gcode/src/commands/codewiki/cluster.rs": "0f3fea58bf6478e84b49380fcd15986939c7624bbf44e6f9d698b4bc21dfe0f9"
+      }
+    },
+    "files/crates/gcode/src/commands/codewiki/graph.rs.md": {
+      "source_hashes": {
+        "crates/gcode/src/commands/codewiki/graph.rs": "67dbaf60d22262222d8849aafa6574c9fff637f3a69b09b21f2add3f9275ebb0"
+      }
+    },
+    "files/crates/gcode/src/commands/codewiki/io.rs.md": {
+      "source_hashes": {
+        "crates/gcode/src/commands/codewiki/io.rs": "7e71df70b621afbf8cf5bef9fb90e36057eee51c26786a5dfb2ee6bb9ee4989d"
+      }
+    },
+    "files/crates/gcode/src/commands/codewiki/mod.rs.md": {
+      "source_hashes": {
+        "crates/gcode/src/commands/codewiki/mod.rs": "4242ebae97da140ea41974118133adbad56e6923743030bdb6f5a1b44a1f9cc1"
+      }
+    },
+    "files/crates/gcode/src/commands/codewiki/paths.rs.md": {
+      "source_hashes": {
+        "crates/gcode/src/commands/codewiki/paths.rs": "436e7b198457be44c4ecaf52b80adca7f1ee5f6c05488ffab68dbd81b6e1d9d2"
+      }
+    },
+    "files/crates/gcode/src/commands/codewiki/prompts.rs.md": {
+      "source_hashes": {
+        "crates/gcode/src/commands/codewiki/prompts.rs": "93e63d38061c580d0929d23c51f7f8f08b5e58f1fb3670f077070d31fde4a9a8"
+      }
+    },
+    "files/crates/gcode/src/commands/codewiki/render.rs.md": {
+      "source_hashes": {
+        "crates/gcode/src/commands/codewiki/render.rs": "5fefde1c4be651a99011b2e48d25f20ac41dce75068fd4f2a21df3cb9e79fb0b"
+      }
+    },
+    "files/crates/gcode/src/commands/codewiki/tests.rs.md": {
+      "source_hashes": {
+        "crates/gcode/src/commands/codewiki/tests.rs": "ef816d4da78a8448c5f3a5cd8d9e47ff885332ca3325fbffc9578da0fe3bb2db"
+      }
+    },
+    "files/crates/gcode/src/commands/codewiki/text.rs.md": {
+      "source_hashes": {
+        "crates/gcode/src/commands/codewiki/text.rs": "aa1908bb5149b169622aa5cec7f6b8718d27859d89335ce1a333ddb8c44348b1"
+      }
+    },
+    "modules/crates.md": {
+      "source_hashes": {
+        "crates/gcode/src/commands/codewiki/build.rs": "e3714b67828f94f7c2a101b844d30cf5f69a3812c9b6528d2ff1d00f39fcbbad",
+        "crates/gcode/src/commands/codewiki/cluster.rs": "0f3fea58bf6478e84b49380fcd15986939c7624bbf44e6f9d698b4bc21dfe0f9",
+        "crates/gcode/src/commands/codewiki/graph.rs": "67dbaf60d22262222d8849aafa6574c9fff637f3a69b09b21f2add3f9275ebb0",
+        "crates/gcode/src/commands/codewiki/io.rs": "7e71df70b621afbf8cf5bef9fb90e36057eee51c26786a5dfb2ee6bb9ee4989d",
+        "crates/gcode/src/commands/codewiki/mod.rs": "4242ebae97da140ea41974118133adbad56e6923743030bdb6f5a1b44a1f9cc1",
+        "crates/gcode/src/commands/codewiki/paths.rs": "436e7b198457be44c4ecaf52b80adca7f1ee5f6c05488ffab68dbd81b6e1d9d2",
+        "crates/gcode/src/commands/codewiki/prompts.rs": "93e63d38061c580d0929d23c51f7f8f08b5e58f1fb3670f077070d31fde4a9a8",
+        "crates/gcode/src/commands/codewiki/render.rs": "5fefde1c4be651a99011b2e48d25f20ac41dce75068fd4f2a21df3cb9e79fb0b",
+        "crates/gcode/src/commands/codewiki/tests.rs": "ef816d4da78a8448c5f3a5cd8d9e47ff885332ca3325fbffc9578da0fe3bb2db",
+        "crates/gcode/src/commands/codewiki/text.rs": "aa1908bb5149b169622aa5cec7f6b8718d27859d89335ce1a333ddb8c44348b1"
+      }
+    },
+    "modules/crates/gcode.md": {
+      "source_hashes": {
+        "crates/gcode/src/commands/codewiki/build.rs": "e3714b67828f94f7c2a101b844d30cf5f69a3812c9b6528d2ff1d00f39fcbbad",
+        "crates/gcode/src/commands/codewiki/cluster.rs": "0f3fea58bf6478e84b49380fcd15986939c7624bbf44e6f9d698b4bc21dfe0f9",
+        "crates/gcode/src/commands/codewiki/graph.rs": "67dbaf60d22262222d8849aafa6574c9fff637f3a69b09b21f2add3f9275ebb0",
+        "crates/gcode/src/commands/codewiki/io.rs": "7e71df70b621afbf8cf5bef9fb90e36057eee51c26786a5dfb2ee6bb9ee4989d",
+        "crates/gcode/src/commands/codewiki/mod.rs": "4242ebae97da140ea41974118133adbad56e6923743030bdb6f5a1b44a1f9cc1",
+        "crates/gcode/src/commands/codewiki/paths.rs": "436e7b198457be44c4ecaf52b80adca7f1ee5f6c05488ffab68dbd81b6e1d9d2",
+        "crates/gcode/src/commands/codewiki/prompts.rs": "93e63d38061c580d0929d23c51f7f8f08b5e58f1fb3670f077070d31fde4a9a8",
+        "crates/gcode/src/commands/codewiki/render.rs": "5fefde1c4be651a99011b2e48d25f20ac41dce75068fd4f2a21df3cb9e79fb0b",
+        "crates/gcode/src/commands/codewiki/tests.rs": "ef816d4da78a8448c5f3a5cd8d9e47ff885332ca3325fbffc9578da0fe3bb2db",
+        "crates/gcode/src/commands/codewiki/text.rs": "aa1908bb5149b169622aa5cec7f6b8718d27859d89335ce1a333ddb8c44348b1"
+      }
+    },
+    "modules/crates/gcode/src.md": {
+      "source_hashes": {
+        "crates/gcode/src/commands/codewiki/build.rs": "e3714b67828f94f7c2a101b844d30cf5f69a3812c9b6528d2ff1d00f39fcbbad",
+        "crates/gcode/src/commands/codewiki/cluster.rs": "0f3fea58bf6478e84b49380fcd15986939c7624bbf44e6f9d698b4bc21dfe0f9",
+        "crates/gcode/src/commands/codewiki/graph.rs": "67dbaf60d22262222d8849aafa6574c9fff637f3a69b09b21f2add3f9275ebb0",
+        "crates/gcode/src/commands/codewiki/io.rs": "7e71df70b621afbf8cf5bef9fb90e36057eee51c26786a5dfb2ee6bb9ee4989d",
+        "crates/gcode/src/commands/codewiki/mod.rs": "4242ebae97da140ea41974118133adbad56e6923743030bdb6f5a1b44a1f9cc1",
+        "crates/gcode/src/commands/codewiki/paths.rs": "436e7b198457be44c4ecaf52b80adca7f1ee5f6c05488ffab68dbd81b6e1d9d2",
+        "crates/gcode/src/commands/codewiki/prompts.rs": "93e63d38061c580d0929d23c51f7f8f08b5e58f1fb3670f077070d31fde4a9a8",
+        "crates/gcode/src/commands/codewiki/render.rs": "5fefde1c4be651a99011b2e48d25f20ac41dce75068fd4f2a21df3cb9e79fb0b",
+        "crates/gcode/src/commands/codewiki/tests.rs": "ef816d4da78a8448c5f3a5cd8d9e47ff885332ca3325fbffc9578da0fe3bb2db",
+        "crates/gcode/src/commands/codewiki/text.rs": "aa1908bb5149b169622aa5cec7f6b8718d27859d89335ce1a333ddb8c44348b1"
+      }
+    },
+    "modules/crates/gcode/src/commands.md": {
+      "source_hashes": {
+        "crates/gcode/src/commands/codewiki/build.rs": "e3714b67828f94f7c2a101b844d30cf5f69a3812c9b6528d2ff1d00f39fcbbad",
+        "crates/gcode/src/commands/codewiki/cluster.rs": "0f3fea58bf6478e84b49380fcd15986939c7624bbf44e6f9d698b4bc21dfe0f9",
+        "crates/gcode/src/commands/codewiki/graph.rs": "67dbaf60d22262222d8849aafa6574c9fff637f3a69b09b21f2add3f9275ebb0",
+        "crates/gcode/src/commands/codewiki/io.rs": "7e71df70b621afbf8cf5bef9fb90e36057eee51c26786a5dfb2ee6bb9ee4989d",
+        "crates/gcode/src/commands/codewiki/mod.rs": "4242ebae97da140ea41974118133adbad56e6923743030bdb6f5a1b44a1f9cc1",
+        "crates/gcode/src/commands/codewiki/paths.rs": "436e7b198457be44c4ecaf52b80adca7f1ee5f6c05488ffab68dbd81b6e1d9d2",
+        "crates/gcode/src/commands/codewiki/prompts.rs": "93e63d38061c580d0929d23c51f7f8f08b5e58f1fb3670f077070d31fde4a9a8",
+        "crates/gcode/src/commands/codewiki/render.rs": "5fefde1c4be651a99011b2e48d25f20ac41dce75068fd4f2a21df3cb9e79fb0b",
+        "crates/gcode/src/commands/codewiki/tests.rs": "ef816d4da78a8448c5f3a5cd8d9e47ff885332ca3325fbffc9578da0fe3bb2db",
+        "crates/gcode/src/commands/codewiki/text.rs": "aa1908bb5149b169622aa5cec7f6b8718d27859d89335ce1a333ddb8c44348b1"
+      }
+    },
+    "modules/crates/gcode/src/commands/codewiki.md": {
+      "source_hashes": {
+        "crates/gcode/src/commands/codewiki/build.rs": "e3714b67828f94f7c2a101b844d30cf5f69a3812c9b6528d2ff1d00f39fcbbad",
+        "crates/gcode/src/commands/codewiki/cluster.rs": "0f3fea58bf6478e84b49380fcd15986939c7624bbf44e6f9d698b4bc21dfe0f9",
+        "crates/gcode/src/commands/codewiki/graph.rs": "67dbaf60d22262222d8849aafa6574c9fff637f3a69b09b21f2add3f9275ebb0",
+        "crates/gcode/src/commands/codewiki/io.rs": "7e71df70b621afbf8cf5bef9fb90e36057eee51c26786a5dfb2ee6bb9ee4989d",
+        "crates/gcode/src/commands/codewiki/mod.rs": "4242ebae97da140ea41974118133adbad56e6923743030bdb6f5a1b44a1f9cc1",
+        "crates/gcode/src/commands/codewiki/paths.rs": "436e7b198457be44c4ecaf52b80adca7f1ee5f6c05488ffab68dbd81b6e1d9d2",
+        "crates/gcode/src/commands/codewiki/prompts.rs": "93e63d38061c580d0929d23c51f7f8f08b5e58f1fb3670f077070d31fde4a9a8",
+        "crates/gcode/src/commands/codewiki/render.rs": "5fefde1c4be651a99011b2e48d25f20ac41dce75068fd4f2a21df3cb9e79fb0b",
+        "crates/gcode/src/commands/codewiki/tests.rs": "ef816d4da78a8448c5f3a5cd8d9e47ff885332ca3325fbffc9578da0fe3bb2db",
+        "crates/gcode/src/commands/codewiki/text.rs": "aa1908bb5149b169622aa5cec7f6b8718d27859d89335ce1a333ddb8c44348b1"
+      }
+    },
+    "repo.md": {
+      "source_hashes": {
+        "crates/gcode/src/commands/codewiki/build.rs": "e3714b67828f94f7c2a101b844d30cf5f69a3812c9b6528d2ff1d00f39fcbbad",
+        "crates/gcode/src/commands/codewiki/cluster.rs": "0f3fea58bf6478e84b49380fcd15986939c7624bbf44e6f9d698b4bc21dfe0f9",
+        "crates/gcode/src/commands/codewiki/graph.rs": "67dbaf60d22262222d8849aafa6574c9fff637f3a69b09b21f2add3f9275ebb0",
+        "crates/gcode/src/commands/codewiki/io.rs": "7e71df70b621afbf8cf5bef9fb90e36057eee51c26786a5dfb2ee6bb9ee4989d",
+        "crates/gcode/src/commands/codewiki/mod.rs": "4242ebae97da140ea41974118133adbad56e6923743030bdb6f5a1b44a1f9cc1",
+        "crates/gcode/src/commands/codewiki/paths.rs": "436e7b198457be44c4ecaf52b80adca7f1ee5f6c05488ffab68dbd81b6e1d9d2",
+        "crates/gcode/src/commands/codewiki/prompts.rs": "93e63d38061c580d0929d23c51f7f8f08b5e58f1fb3670f077070d31fde4a9a8",
+        "crates/gcode/src/commands/codewiki/render.rs": "5fefde1c4be651a99011b2e48d25f20ac41dce75068fd4f2a21df3cb9e79fb0b",
+        "crates/gcode/src/commands/codewiki/tests.rs": "ef816d4da78a8448c5f3a5cd8d9e47ff885332ca3325fbffc9578da0fe3bb2db",
+        "crates/gcode/src/commands/codewiki/text.rs": "aa1908bb5149b169622aa5cec7f6b8718d27859d89335ce1a333ddb8c44348b1"
+      }
+    }
+  },
+  "generated_docs": []
+}
