@@ -1,4 +1,6 @@
- Act as the Gobby build coordinator for the gwiki/gcode Parity+ epic, using `.gobby/plans/gwiki-parity-plus.md` as
+# Gobby Build Coordinator - gwiki/gcode Parity+ Epic
+
+Act as the Gobby build coordinator for the gwiki/gcode Parity+ epic, using `.gobby/plans/gwiki-parity-plus.md` as
   the build plan and root epic `#513`.
 
   This prompt is for Codex. Use Gobby skills through `gobby-skills` MCP only. Start with progressive discovery:
