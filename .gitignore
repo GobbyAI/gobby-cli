@@ -11,5 +11,5 @@
 .gobby/wiki/_meta/**
 .gobby/wiki/**/*.json.lock
 !.gobby/plans/
-!.gobby/plans/**
+.gobby/plans/**
 .playwright/
