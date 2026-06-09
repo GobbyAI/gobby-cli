@@ -64,6 +64,10 @@ fires no event.
 workflows verify binary crate tag/version alignment where the installer expects
 GitHub assets. `gobby-core` has no binary artifact matrix.
 
+The `gwiki` crates.io publish uses Trusted Publishing in the GitHub environment
+`crates-io`. The workflow obtains an OIDC token during the publish job, so no
+crates.io API token secret is needed for that release.
+
 ## Local Install Check
 
 Build release binaries locally before tagging and copy the released binaries
