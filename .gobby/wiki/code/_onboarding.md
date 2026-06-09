@@ -8,16 +8,16 @@ source:
   - 11-17
 - file: crates/gcode/src/commands/codewiki/mod.rs
   ranges:
-  - 78-83
-  - 86-90
-  - 93-102
-  - 104-113
-  - 117-120
-  - 152-156
-  - 275-287
-  - '327'
-  - 351-445
-  - 454-459
+  - 79-84
+  - 87-91
+  - 94-103
+  - 105-114
+  - 118-121
+  - 153-157
+  - 276-288
+  - '328'
+  - 352-446
+  - 455-460
 - file: crates/gcode/src/commands/codewiki/prompts.rs
   ranges:
   - 11-33
@@ -27,6 +27,10 @@ source:
   - 115-148
   - 151-159
   - 162-165
+- file: crates/gcode/src/commands/codewiki/tests.rs
+  ranges:
+  - 925-933
+  - 935-937
 provenance:
 - file: crates/gcode/src/commands/codewiki/io.rs
   ranges:
@@ -34,16 +38,16 @@ provenance:
   - 11-17
 - file: crates/gcode/src/commands/codewiki/mod.rs
   ranges:
-  - 78-83
-  - 86-90
-  - 93-102
-  - 104-113
-  - 117-120
-  - 152-156
-  - 275-287
-  - '327'
-  - 351-445
-  - 454-459
+  - 79-84
+  - 87-91
+  - 94-103
+  - 105-114
+  - 118-121
+  - 153-157
+  - 276-288
+  - '328'
+  - 352-446
+  - 455-460
 - file: crates/gcode/src/commands/codewiki/prompts.rs
   ranges:
   - 11-33
@@ -53,6 +57,10 @@ provenance:
   - 115-148
   - 151-159
   - 162-165
+- file: crates/gcode/src/commands/codewiki/tests.rs
+  ranges:
+  - 925-933
+  - 935-937
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -81,6 +89,8 @@ freshness: indexed
 - [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - architecture_prompt public API `pub fn architecture_prompt(`
 - [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - SymbolSummary public API `pub struct SymbolSummary {`
 - [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - ChildSummary public API `pub struct ChildSummary {`
+- [[code/files/crates/gcode/src/commands/codewiki/tests.rs|crates/gcode/src/commands/codewiki/tests.rs]] - test_symbol public API `pub fn test_symbol(`
+- [[code/files/crates/gcode/src/commands/codewiki/tests.rs|crates/gcode/src/commands/codewiki/tests.rs]] - test_component_id public API `pub fn test_component_id(file_path: &str, name: &str, kind: &str) -> String {`
 
 ## Structural Start Points
 
@@ -103,4 +113,6 @@ freshness: indexed
 - [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - architecture_prompt public API `pub fn architecture_prompt(`
 - [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - SymbolSummary public API `pub struct SymbolSummary {`
 - [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - ChildSummary public API `pub struct ChildSummary {`
+- [[code/files/crates/gcode/src/commands/codewiki/tests.rs|crates/gcode/src/commands/codewiki/tests.rs]] - test_symbol public API `pub fn test_symbol(`
+- [[code/files/crates/gcode/src/commands/codewiki/tests.rs|crates/gcode/src/commands/codewiki/tests.rs]] - test_component_id public API `pub fn test_component_id(file_path: &str, name: &str, kind: &str) -> String {`
 

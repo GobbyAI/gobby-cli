@@ -5,42 +5,44 @@ source:
 - file: crates/gcode/src/commands/codewiki/render.rs
   ranges:
   - 5-33
-  - 35-57
-  - 59-82
-  - 84-172
-  - 174-203
-  - 205-255
-  - 257-270
-  - 272-282
-  - 284-299
-  - 301-349
-  - 351-380
-  - 382-408
-  - 410-452
-  - 454-482
-  - 484-526
-  - 528-587
-  - 589-627
+  - 35-67
+  - 69-83
+  - 85-108
+  - 110-198
+  - 200-229
+  - 231-281
+  - 283-296
+  - 298-308
+  - 310-325
+  - 327-375
+  - 377-405
+  - 407-433
+  - 435-477
+  - 479-507
+  - 509-551
+  - 553-612
+  - 614-652
 provenance:
 - file: crates/gcode/src/commands/codewiki/render.rs
   ranges:
   - 5-33
-  - 35-57
-  - 59-82
-  - 84-172
-  - 174-203
-  - 205-255
-  - 257-270
-  - 272-282
-  - 284-299
-  - 301-349
-  - 351-380
-  - 382-408
-  - 410-452
-  - 454-482
-  - 484-526
-  - 528-587
-  - 589-627
+  - 35-67
+  - 69-83
+  - 85-108
+  - 110-198
+  - 200-229
+  - 231-281
+  - 283-296
+  - 298-308
+  - 310-325
+  - 327-375
+  - 377-405
+  - 407-433
+  - 435-477
+  - 479-507
+  - 509-551
+  - 553-612
+  - 614-652
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -52,64 +54,71 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Purpose
 
-`crates/gcode/src/commands/codewiki/render.rs` exposes 17 indexed API symbols.
-[crates/gcode/src/commands/codewiki/render.rs:5-33] [crates/gcode/src/commands/codewiki/render.rs:35-57] [crates/gcode/src/commands/codewiki/render.rs:59-82] [crates/gcode/src/commands/codewiki/render.rs:84-172]
-[crates/gcode/src/commands/codewiki/render.rs:174-203] [crates/gcode/src/commands/codewiki/render.rs:205-255] [crates/gcode/src/commands/codewiki/render.rs:257-270] [crates/gcode/src/commands/codewiki/render.rs:272-282]
-[crates/gcode/src/commands/codewiki/render.rs:284-299] [crates/gcode/src/commands/codewiki/render.rs:301-349] [crates/gcode/src/commands/codewiki/render.rs:351-380] [crates/gcode/src/commands/codewiki/render.rs:382-408]
-[crates/gcode/src/commands/codewiki/render.rs:410-452] [crates/gcode/src/commands/codewiki/render.rs:454-482] [crates/gcode/src/commands/codewiki/render.rs:484-526] [crates/gcode/src/commands/codewiki/render.rs:528-587]
-[crates/gcode/src/commands/codewiki/render.rs:589-627]
+`crates/gcode/src/commands/codewiki/render.rs` exposes 18 indexed API symbols.
+[crates/gcode/src/commands/codewiki/render.rs:5-33] [crates/gcode/src/commands/codewiki/render.rs:35-67] [crates/gcode/src/commands/codewiki/render.rs:69-83] [crates/gcode/src/commands/codewiki/render.rs:85-108]
+[crates/gcode/src/commands/codewiki/render.rs:110-198] [crates/gcode/src/commands/codewiki/render.rs:200-229] [crates/gcode/src/commands/codewiki/render.rs:231-281] [crates/gcode/src/commands/codewiki/render.rs:283-296]
+[crates/gcode/src/commands/codewiki/render.rs:298-308] [crates/gcode/src/commands/codewiki/render.rs:310-325] [crates/gcode/src/commands/codewiki/render.rs:327-375] [crates/gcode/src/commands/codewiki/render.rs:377-405]
+[crates/gcode/src/commands/codewiki/render.rs:407-433] [crates/gcode/src/commands/codewiki/render.rs:435-477] [crates/gcode/src/commands/codewiki/render.rs:479-507] [crates/gcode/src/commands/codewiki/render.rs:509-551]
+[crates/gcode/src/commands/codewiki/render.rs:553-612] [crates/gcode/src/commands/codewiki/render.rs:614-652]
 
 ## API Symbols
 
 - `render_module_dependency_mermaid` (function) component `render_module_dependency_mermaid [function]` (`b7b35534-a8ba-5c4b-a97d-2c70814ae8bd`) lines 5-33 [crates/gcode/src/commands/codewiki/render.rs:5-33]
   - Signature: `pub(crate) fn render_module_dependency_mermaid(`
-  - Purpose: Indexed function `render_module_dependency_mermaid` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:5-33]
-- `render_architecture_dependency_mermaid` (function) component `render_architecture_dependency_mermaid [function]` (`838dfd5f-c9ac-5214-846b-f6bd9cb1e54a`) lines 35-57 [crates/gcode/src/commands/codewiki/render.rs:35-57]
+  - Purpose: Generates a Mermaid left-to-right directed graph diagram visualizing module import dependencies for a specified module, bounded by maximum hops, or returns None if no dependencies exist. [crates/gcode/src/commands/codewiki/render.rs:5-33]
+- `render_architecture_dependency_mermaid` (function) component `render_architecture_dependency_mermaid [function]` (`838dfd5f-c9ac-5214-846b-f6bd9cb1e54a`) lines 35-67 [crates/gcode/src/commands/codewiki/render.rs:35-67]
   - Signature: `pub(crate) fn render_architecture_dependency_mermaid(`
-  - Purpose: Indexed function `render_architecture_dependency_mermaid` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:35-57]
-- `collect_import_module_edges` (function) component `collect_import_module_edges [function]` (`c5d1a081-9ca8-5be1-89ef-f99a488284ad`) lines 59-82 [crates/gcode/src/commands/codewiki/render.rs:59-82]
+  - Purpose: Generates a bounded Mermaid left-to-right dependency graph from code import edges, returning markdown-formatted diagram or None if no edges exist. [crates/gcode/src/commands/codewiki/render.rs:35-67]
+- `repo_mermaid_seed_modules` (function) component `repo_mermaid_seed_modules [function]` (`981b3e96-566a-5c60-930f-493f9de8bbe8`) lines 69-83 [crates/gcode/src/commands/codewiki/render.rs:69-83]
+  - Signature: `fn repo_mermaid_seed_modules(edges: &BTreeSet<(String, String)>) -> BTreeSet<String> {`
+  - Purpose: This function extracts root-level modules (those with no parent module) from a set of dependency edges for mermaid diagram seeding, falling back to all modules from the edges if no root modules are found. [crates/gcode/src/commands/codewiki/render.rs:69-83]
+- `collect_import_module_edges` (function) component `collect_import_module_edges [function]` (`ed9c2fd0-a610-5f3a-afd8-3827206f1e06`) lines 85-108 [crates/gcode/src/commands/codewiki/render.rs:85-108]
   - Signature: `fn collect_import_module_edges(`
-  - Purpose: Indexed function `collect_import_module_edges` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:59-82]
-- `render_module_call_mermaid` (function) component `render_module_call_mermaid [function]` (`a96326b6-c4ea-5610-b568-f4fdb448a8ba`) lines 84-172 [crates/gcode/src/commands/codewiki/render.rs:84-172]
+  - Purpose: Extracts inter-module import dependencies from a component-level code graph by mapping components to their modules and filtering out intra-module imports, returning a deduplicated sorted set of cross-module import relationships. [crates/gcode/src/commands/codewiki/render.rs:85-108]
+- `render_module_call_mermaid` (function) component `render_module_call_mermaid [function]` (`c2042344-0373-58bd-adb2-9e2623eaa652`) lines 110-198 [crates/gcode/src/commands/codewiki/render.rs:110-198]
   - Signature: `pub(crate) fn render_module_call_mermaid(`
-  - Purpose: Indexed function `render_module_call_mermaid` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:84-172]
-- `bounded_module_dependency_edges` (function) component `bounded_module_dependency_edges [function]` (`a4869ee3-9d84-52ec-ad59-0195145a5dc7`) lines 174-203 [crates/gcode/src/commands/codewiki/render.rs:174-203]
+  - Purpose: Generates a Mermaid diagram visualizing bounded inter-component function call relationships involving a specified module by filtering call graph edges and constraining hop distance and edge count. [crates/gcode/src/commands/codewiki/render.rs:110-198]
+- `bounded_module_dependency_edges` (function) component `bounded_module_dependency_edges [function]` (`a6e1f308-eade-51eb-9869-248fac1b8dde`) lines 200-229 [crates/gcode/src/commands/codewiki/render.rs:200-229]
   - Signature: `pub(crate) fn bounded_module_dependency_edges(`
-  - Purpose: Indexed function `bounded_module_dependency_edges` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:174-203]
-- `bounded_component_edges` (function) component `bounded_component_edges [function]` (`89540036-c83a-50bb-a8e5-a4f86cb8f930`) lines 205-255 [crates/gcode/src/commands/codewiki/render.rs:205-255]
+  - Purpose: Returns dependency edges where both the source and target nodes are reachable within `max_hops` distance from a starting module via breadth-first search. [crates/gcode/src/commands/codewiki/render.rs:200-229]
+- `bounded_component_edges` (function) component `bounded_component_edges [function]` (`eabba8b1-1928-5986-bb71-2caa6b0375e6`) lines 231-281 [crates/gcode/src/commands/codewiki/render.rs:231-281]
   - Signature: `pub(crate) fn bounded_component_edges(`
-  - Purpose: Indexed function `bounded_component_edges` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:205-255]
-- `dependency_neighbors` (function) component `dependency_neighbors [function]` (`9c29ac37-9332-5782-b1fb-5aa39903e8c3`) lines 257-270 [crates/gcode/src/commands/codewiki/render.rs:257-270]
+  - Purpose: Returns up to `max_edges` dependency edges whose both endpoints are reachable within `max_hops` from seed components, prioritized by proximity to the seeds. [crates/gcode/src/commands/codewiki/render.rs:231-281]
+- `dependency_neighbors` (function) component `dependency_neighbors [function]` (`67f904ce-e09a-5c42-a79d-103cf4d5405f`) lines 283-296 [crates/gcode/src/commands/codewiki/render.rs:283-296]
   - Signature: `pub(crate) fn dependency_neighbors<'a>(`
-  - Purpose: Indexed function `dependency_neighbors` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:257-270]
-- `mermaid_node_id` (function) component `mermaid_node_id [function]` (`58e906f0-e3ee-5201-b4bf-804a2dbeaee9`) lines 272-282 [crates/gcode/src/commands/codewiki/render.rs:272-282]
+  - Purpose: Extracts the neighboring module(s) in a dependency graph by returning the opposite endpoint of a directed dependency edge when the module appears as either source or target. [crates/gcode/src/commands/codewiki/render.rs:283-296]
+- `mermaid_node_id` (function) component `mermaid_node_id [function]` (`98ac6b3b-aa18-582c-a4af-d949abec6296`) lines 298-308 [crates/gcode/src/commands/codewiki/render.rs:298-308]
   - Signature: `pub(crate) fn mermaid_node_id(module: &str) -> String {`
-  - Purpose: Indexed function `mermaid_node_id` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:272-282]
-- `mermaid_label` (function) component `mermaid_label [function]` (`4b8d509f-a2f2-5a68-8bed-da733b82a7d0`) lines 284-299 [crates/gcode/src/commands/codewiki/render.rs:284-299]
+  - Purpose: Converts a module name into a Mermaid-compatible node identifier by prefixing with `m_` and replacing all non-ASCII-alphanumeric characters with underscores. [crates/gcode/src/commands/codewiki/render.rs:298-308]
+- `mermaid_label` (function) component `mermaid_label [function]` (`4e13e14a-df53-52a7-81b2-70a3c0a92a84`) lines 310-325 [crates/gcode/src/commands/codewiki/render.rs:310-325]
   - Signature: `pub(crate) fn mermaid_label(module: &str) -> String {`
-  - Purpose: Indexed function `mermaid_label` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:284-299]
-- `build_repo_doc` (function) component `build_repo_doc [function]` (`79ff9b30-d1e7-5ff1-b267-da818bc66910`) lines 301-349 [crates/gcode/src/commands/codewiki/render.rs:301-349]
+  - Purpose: Encodes a module name for safe use in Mermaid diagrams by escaping special characters with backslash and HTML entities, returning "repo" for empty input. [crates/gcode/src/commands/codewiki/render.rs:310-325]
+- `build_repo_doc` (function) component `build_repo_doc [function]` (`93c90c64-d9e2-5a16-97b7-d07c84b8292c`) lines 327-375 [crates/gcode/src/commands/codewiki/render.rs:327-375]
   - Signature: `pub(crate) fn build_repo_doc(`
-  - Purpose: Indexed function `build_repo_doc` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:301-349]
-- `render_repo_doc` (function) component `render_repo_doc [function]` (`5947fbcc-c36f-5ce3-9d26-8274f83be407`) lines 351-380 [crates/gcode/src/commands/codewiki/render.rs:351-380]
+  - Purpose: Generates repository-level documentation by filtering top-level modules and root files, optionally synthesizing a summary via LLM, and rendering it with source span citations. [crates/gcode/src/commands/codewiki/render.rs:327-375]
+- `render_repo_doc` (function) component `render_repo_doc [function]` (`672d2c89-f629-5a6c-85ed-13b27b8d583e`) lines 377-405 [crates/gcode/src/commands/codewiki/render.rs:377-405]
   - Signature: `pub(crate) fn render_repo_doc(`
-  - Purpose: Indexed function `render_repo_doc` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:351-380]
-- `render_architecture_doc` (function) component `render_architecture_doc [function]` (`0568d01e-72cd-59a8-9c74-29f171aa1cc5`) lines 382-408 [crates/gcode/src/commands/codewiki/render.rs:382-408]
+  - Purpose: Generates a markdown-formatted repository overview document with frontmatter, module and file sections, and citation-to-marker replacements from the provided source spans. [crates/gcode/src/commands/codewiki/render.rs:377-405]
+- `render_architecture_doc` (function) component `render_architecture_doc [function]` (`1aa7d949-cfcc-5f2e-b5f5-ba2f5feb45c3`) lines 407-433 [crates/gcode/src/commands/codewiki/render.rs:407-433]
   - Signature: `pub(crate) fn render_architecture_doc(architecture: &ArchitectureDoc) -> String {`
-  - Purpose: Indexed function `render_architecture_doc` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:382-408]
-- `render_onboarding_doc` (function) component `render_onboarding_doc [function]` (`9f4f2460-dcdd-5ad8-89b9-b34c599d6b6f`) lines 410-452 [crates/gcode/src/commands/codewiki/render.rs:410-452]
+  - Purpose: Renders a markdown-formatted architecture document containing frontmatter metadata, an optional dependency diagram section, and enumerated subsystems with module wikilinks and responsibility descriptions. [crates/gcode/src/commands/codewiki/render.rs:407-433]
+- `render_onboarding_doc` (function) component `render_onboarding_doc [function]` (`d4236b41-943c-5175-862e-382972d09ec6`) lines 435-477 [crates/gcode/src/commands/codewiki/render.rs:435-477]
   - Signature: `pub(crate) fn render_onboarding_doc(onboarding: &OnboardingDoc) -> String {`
-  - Purpose: Indexed function `render_onboarding_doc` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:410-452]
-- `render_hotspots_doc` (function) component `render_hotspots_doc [function]` (`2599b388-c570-5275-b44a-b0aa8ce03ceb`) lines 454-482 [crates/gcode/src/commands/codewiki/render.rs:454-482]
+  - Purpose: This function generates a markdown-formatted onboarding document string from an `OnboardingDoc`, organizing entry points and a weighted reading order sorted by module centrality degree and relevance score. [crates/gcode/src/commands/codewiki/render.rs:435-477]
+- `render_hotspots_doc` (function) component `render_hotspots_doc [function]` (`9a3c2056-3902-5562-96f1-1f2c65916569`) lines 479-507 [crates/gcode/src/commands/codewiki/render.rs:479-507]
   - Signature: `pub(crate) fn render_hotspots_doc(hotspots: &HotspotsDoc) -> String {`
-  - Purpose: Indexed function `render_hotspots_doc` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:454-482]
-- `write_hotspot_section` (function) component `write_hotspot_section [function]` (`e32666f6-c221-5ffe-a273-ae4269a794b5`) lines 484-526 [crates/gcode/src/commands/codewiki/render.rs:484-526]
+  - Purpose: Renders a `HotspotsDoc` into markdown-formatted documentation of code hotspots, god nodes, and bridges with fallback messaging for unavailable graph analytics. [crates/gcode/src/commands/codewiki/render.rs:479-507]
+- `write_hotspot_section` (function) component `write_hotspot_section [function]` (`1f9359c9-1aac-51bc-b862-7ff4c5ef5f17`) lines 509-551 [crates/gcode/src/commands/codewiki/render.rs:509-551]
   - Signature: `fn write_hotspot_section(doc: &mut String, title: &str, findings: &[HotspotFinding]) {`
-  - Purpose: Indexed function `write_hotspot_section` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:484-526]
-- `render_module_doc` (function) component `render_module_doc [function]` (`ef56be25-16dd-5d41-a54f-1442f282ed06`) lines 528-587 [crates/gcode/src/commands/codewiki/render.rs:528-587]
+  - Purpose: # Summary
+
+Writes a markdown section to a mutable string documenting a list of hotspot findings with their associated node properties (kind, component, label, file, source span) and optional metrics (degree, score, frequency, weight). [crates/gcode/src/commands/codewiki/render.rs:509-551]
+- `render_module_doc` (function) component `render_module_doc [function]` (`bb8b09da-3f39-52b7-b725-62d67b1c9b03`) lines 553-612 [crates/gcode/src/commands/codewiki/render.rs:553-612]
   - Signature: `pub(crate) fn render_module_doc(module: &ModuleDoc) -> String {`
-  - Purpose: Indexed function `render_module_doc` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:528-587]
-- `render_file_doc` (function) component `render_file_doc [function]` (`42f68801-ae50-5a1a-a741-91654c2cfa11`) lines 589-627 [crates/gcode/src/commands/codewiki/render.rs:589-627]
+  - Purpose: # Summary
+
+Renders a `ModuleDoc` structure into a Markdown-formatted string containing YAML frontmatter, module hierarchy, dependency/call diagrams, and child module/file listings. [crates/gcode/src/commands/codewiki/render.rs:553-612]
+- `render_file_doc` (function) component `render_file_doc [function]` (`5c7e11b5-44b5-51e1-862e-348aa0d2961f`) lines 614-652 [crates/gcode/src/commands/codewiki/render.rs:614-652]
   - Signature: `pub(crate) fn render_file_doc(file: &FileDoc) -> String {`
-  - Purpose: Indexed function `render_file_doc` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:589-627]
+  - Purpose: Generates a markdown documentation string from a source file's metadata, module reference, purpose summary, and indexed API symbols with their kinds, signatures, and line ranges. [crates/gcode/src/commands/codewiki/render.rs:614-652]
 

@@ -62,49 +62,49 @@ source:
   - 252-262
 - file: crates/gcode/src/commands/codewiki/mod.rs
   ranges:
-  - 78-83
-  - 86-90
-  - 92-114
-  - 93-102
-  - 104-113
-  - 117-120
-  - 123-126
-  - 128-149
-  - 129-134
-  - 136-141
-  - 143-148
-  - 152-156
-  - 159-166
-  - 169-175
-  - 178-188
-  - 191-196
-  - 199-203
-  - 205-210
-  - 212-216
-  - 218-223
-  - 226-232
-  - 235-241
-  - 244-251
-  - 254-258
-  - 261-265
-  - 268-272
-  - 275-287
-  - 290-295
-  - 298-300
-  - 303-310
-  - 313-316
-  - 319-325
-  - '327'
-  - 329-349
-  - 330-336
-  - 338-344
-  - 346-348
-  - 351-445
-  - 447-452
-  - 454-459
-  - 461-472
-  - 474-481
-  - 483-586
+  - 79-84
+  - 87-91
+  - 93-115
+  - 94-103
+  - 105-114
+  - 118-121
+  - 124-127
+  - 129-150
+  - 130-135
+  - 137-142
+  - 144-149
+  - 153-157
+  - 160-167
+  - 170-176
+  - 179-189
+  - 192-197
+  - 200-204
+  - 206-211
+  - 213-217
+  - 219-224
+  - 227-233
+  - 236-242
+  - 245-252
+  - 255-259
+  - 262-266
+  - 269-273
+  - 276-288
+  - 291-296
+  - 299-301
+  - 304-311
+  - 314-317
+  - 320-326
+  - '328'
+  - 330-350
+  - 331-337
+  - 339-345
+  - 347-349
+  - 352-446
+  - 448-453
+  - 455-460
+  - 462-473
+  - 475-482
+  - 484-587
 - file: crates/gcode/src/commands/codewiki/ownership.rs
   ranges:
   - 13-16
@@ -121,30 +121,30 @@ source:
   - 118-128
   - 130-148
   - 150-169
-  - 171-196
-  - 198-243
-  - 245-247
-  - 249-280
-  - 282-303
-  - 305-339
-  - 307-322
-  - 341-343
-  - 345-371
-  - 373-385
-  - 387-397
-  - 399-421
-  - 423-429
-  - 431-453
-  - 464-491
-  - 494-514
-  - 517-538
-  - 541-564
-  - 567-586
-  - 588-593
-  - 595-614
-  - 616-625
-  - 627-643
-  - 645-653
+  - 171-206
+  - 208-253
+  - 255-257
+  - 259-290
+  - 292-313
+  - 315-349
+  - 317-332
+  - 351-353
+  - 355-381
+  - 383-395
+  - 397-407
+  - 409-431
+  - 433-439
+  - 441-463
+  - 474-501
+  - 504-524
+  - 527-548
+  - 551-574
+  - 577-596
+  - 598-603
+  - 605-624
+  - 626-635
+  - 637-653
+  - 655-663
 - file: crates/gcode/src/commands/codewiki/paths.rs
   ranges:
   - 3-14
@@ -175,22 +175,23 @@ source:
 - file: crates/gcode/src/commands/codewiki/render.rs
   ranges:
   - 5-33
-  - 35-57
-  - 59-82
-  - 84-172
-  - 174-203
-  - 205-255
-  - 257-270
-  - 272-282
-  - 284-299
-  - 301-349
-  - 351-380
-  - 382-408
-  - 410-452
-  - 454-482
-  - 484-526
-  - 528-587
-  - 589-627
+  - 35-67
+  - 69-83
+  - 85-108
+  - 110-198
+  - 200-229
+  - 231-281
+  - 283-296
+  - 298-308
+  - 310-325
+  - 327-375
+  - 377-405
+  - 407-433
+  - 435-477
+  - 479-507
+  - 509-551
+  - 553-612
+  - 614-652
 - file: crates/gcode/src/commands/codewiki/tests.rs
   ranges:
   - 11-45
@@ -241,12 +242,16 @@ source:
   - 143-145
   - 147-156
   - 158-170
-  - 172-185
-  - 187-213
-  - 215-232
-  - 234-247
-  - 249-251
-  - 253-305
+  - 172-178
+  - 180-186
+  - 188-198
+  - 200-209
+  - 211-224
+  - 226-252
+  - 254-271
+  - 273-286
+  - 288-290
+  - 292-344
 provenance:
 - file: crates/gcode/src/commands/codewiki/build.rs
   ranges:
@@ -308,49 +313,49 @@ provenance:
   - 252-262
 - file: crates/gcode/src/commands/codewiki/mod.rs
   ranges:
-  - 78-83
-  - 86-90
-  - 92-114
-  - 93-102
-  - 104-113
-  - 117-120
-  - 123-126
-  - 128-149
-  - 129-134
-  - 136-141
-  - 143-148
-  - 152-156
-  - 159-166
-  - 169-175
-  - 178-188
-  - 191-196
-  - 199-203
-  - 205-210
-  - 212-216
-  - 218-223
-  - 226-232
-  - 235-241
-  - 244-251
-  - 254-258
-  - 261-265
-  - 268-272
-  - 275-287
-  - 290-295
-  - 298-300
-  - 303-310
-  - 313-316
-  - 319-325
-  - '327'
-  - 329-349
-  - 330-336
-  - 338-344
-  - 346-348
-  - 351-445
-  - 447-452
-  - 454-459
-  - 461-472
-  - 474-481
-  - 483-586
+  - 79-84
+  - 87-91
+  - 93-115
+  - 94-103
+  - 105-114
+  - 118-121
+  - 124-127
+  - 129-150
+  - 130-135
+  - 137-142
+  - 144-149
+  - 153-157
+  - 160-167
+  - 170-176
+  - 179-189
+  - 192-197
+  - 200-204
+  - 206-211
+  - 213-217
+  - 219-224
+  - 227-233
+  - 236-242
+  - 245-252
+  - 255-259
+  - 262-266
+  - 269-273
+  - 276-288
+  - 291-296
+  - 299-301
+  - 304-311
+  - 314-317
+  - 320-326
+  - '328'
+  - 330-350
+  - 331-337
+  - 339-345
+  - 347-349
+  - 352-446
+  - 448-453
+  - 455-460
+  - 462-473
+  - 475-482
+  - 484-587
 - file: crates/gcode/src/commands/codewiki/ownership.rs
   ranges:
   - 13-16
@@ -367,30 +372,30 @@ provenance:
   - 118-128
   - 130-148
   - 150-169
-  - 171-196
-  - 198-243
-  - 245-247
-  - 249-280
-  - 282-303
-  - 305-339
-  - 307-322
-  - 341-343
-  - 345-371
-  - 373-385
-  - 387-397
-  - 399-421
-  - 423-429
-  - 431-453
-  - 464-491
-  - 494-514
-  - 517-538
-  - 541-564
-  - 567-586
-  - 588-593
-  - 595-614
-  - 616-625
-  - 627-643
-  - 645-653
+  - 171-206
+  - 208-253
+  - 255-257
+  - 259-290
+  - 292-313
+  - 315-349
+  - 317-332
+  - 351-353
+  - 355-381
+  - 383-395
+  - 397-407
+  - 409-431
+  - 433-439
+  - 441-463
+  - 474-501
+  - 504-524
+  - 527-548
+  - 551-574
+  - 577-596
+  - 598-603
+  - 605-624
+  - 626-635
+  - 637-653
+  - 655-663
 - file: crates/gcode/src/commands/codewiki/paths.rs
   ranges:
   - 3-14
@@ -421,22 +426,23 @@ provenance:
 - file: crates/gcode/src/commands/codewiki/render.rs
   ranges:
   - 5-33
-  - 35-57
-  - 59-82
-  - 84-172
-  - 174-203
-  - 205-255
-  - 257-270
-  - 272-282
-  - 284-299
-  - 301-349
-  - 351-380
-  - 382-408
-  - 410-452
-  - 454-482
-  - 484-526
-  - 528-587
-  - 589-627
+  - 35-67
+  - 69-83
+  - 85-108
+  - 110-198
+  - 200-229
+  - 231-281
+  - 283-296
+  - 298-308
+  - 310-325
+  - 327-375
+  - 377-405
+  - 407-433
+  - 435-477
+  - 479-507
+  - 509-551
+  - 553-612
+  - 614-652
 - file: crates/gcode/src/commands/codewiki/tests.rs
   ranges:
   - 11-45
@@ -487,12 +493,16 @@ provenance:
   - 143-145
   - 147-156
   - 158-170
-  - 172-185
-  - 187-213
-  - 215-232
-  - 234-247
-  - 249-251
-  - 253-305
+  - 172-178
+  - 180-186
+  - 188-198
+  - 200-209
+  - 211-224
+  - 226-252
+  - 254-271
+  - 273-286
+  - 288-290
+  - 292-344
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -517,50 +527,51 @@ Parent: [[code/repo|Repository Overview]]
 [crates/gcode/src/commands/codewiki/io.rs:11-17] [crates/gcode/src/commands/codewiki/io.rs:19-69] [crates/gcode/src/commands/codewiki/io.rs:71-79] [crates/gcode/src/commands/codewiki/io.rs:81-99]
 [crates/gcode/src/commands/codewiki/io.rs:101-121] [crates/gcode/src/commands/codewiki/io.rs:123-130] [crates/gcode/src/commands/codewiki/io.rs:132-135] [crates/gcode/src/commands/codewiki/io.rs:137-144]
 [crates/gcode/src/commands/codewiki/io.rs:146-149] [crates/gcode/src/commands/codewiki/io.rs:151-172] [crates/gcode/src/commands/codewiki/io.rs:174-207] [crates/gcode/src/commands/codewiki/io.rs:210-240]
-[crates/gcode/src/commands/codewiki/io.rs:243-250] [crates/gcode/src/commands/codewiki/io.rs:252-262] [crates/gcode/src/commands/codewiki/mod.rs:78-83] [crates/gcode/src/commands/codewiki/mod.rs:86-90]
-[crates/gcode/src/commands/codewiki/mod.rs:92-114] [crates/gcode/src/commands/codewiki/mod.rs:93-102] [crates/gcode/src/commands/codewiki/mod.rs:104-113] [crates/gcode/src/commands/codewiki/mod.rs:117-120]
-[crates/gcode/src/commands/codewiki/mod.rs:123-126] [crates/gcode/src/commands/codewiki/mod.rs:128-149] [crates/gcode/src/commands/codewiki/mod.rs:129-134] [crates/gcode/src/commands/codewiki/mod.rs:136-141]
-[crates/gcode/src/commands/codewiki/mod.rs:143-148] [crates/gcode/src/commands/codewiki/mod.rs:152-156] [crates/gcode/src/commands/codewiki/mod.rs:159-166] [crates/gcode/src/commands/codewiki/mod.rs:169-175]
-[crates/gcode/src/commands/codewiki/mod.rs:178-188] [crates/gcode/src/commands/codewiki/mod.rs:191-196] [crates/gcode/src/commands/codewiki/mod.rs:199-203] [crates/gcode/src/commands/codewiki/mod.rs:205-210]
-[crates/gcode/src/commands/codewiki/mod.rs:212-216] [crates/gcode/src/commands/codewiki/mod.rs:218-223] [crates/gcode/src/commands/codewiki/mod.rs:226-232] [crates/gcode/src/commands/codewiki/mod.rs:235-241]
-[crates/gcode/src/commands/codewiki/mod.rs:244-251] [crates/gcode/src/commands/codewiki/mod.rs:254-258] [crates/gcode/src/commands/codewiki/mod.rs:261-265] [crates/gcode/src/commands/codewiki/mod.rs:268-272]
-[crates/gcode/src/commands/codewiki/mod.rs:275-287] [crates/gcode/src/commands/codewiki/mod.rs:290-295] [crates/gcode/src/commands/codewiki/mod.rs:298-300] [crates/gcode/src/commands/codewiki/mod.rs:303-310]
-[crates/gcode/src/commands/codewiki/mod.rs:313-316] [crates/gcode/src/commands/codewiki/mod.rs:319-325] [crates/gcode/src/commands/codewiki/mod.rs:327] [crates/gcode/src/commands/codewiki/mod.rs:329-349]
-[crates/gcode/src/commands/codewiki/mod.rs:330-336] [crates/gcode/src/commands/codewiki/mod.rs:338-344] [crates/gcode/src/commands/codewiki/mod.rs:346-348] [crates/gcode/src/commands/codewiki/mod.rs:351-445]
-[crates/gcode/src/commands/codewiki/mod.rs:447-452] [crates/gcode/src/commands/codewiki/mod.rs:454-459] [crates/gcode/src/commands/codewiki/mod.rs:461-472] [crates/gcode/src/commands/codewiki/mod.rs:474-481]
-[crates/gcode/src/commands/codewiki/mod.rs:483-586] [crates/gcode/src/commands/codewiki/ownership.rs:13-16] [crates/gcode/src/commands/codewiki/ownership.rs:18-25] [crates/gcode/src/commands/codewiki/ownership.rs:19-24]
+[crates/gcode/src/commands/codewiki/io.rs:243-250] [crates/gcode/src/commands/codewiki/io.rs:252-262] [crates/gcode/src/commands/codewiki/mod.rs:79-84] [crates/gcode/src/commands/codewiki/mod.rs:87-91]
+[crates/gcode/src/commands/codewiki/mod.rs:93-115] [crates/gcode/src/commands/codewiki/mod.rs:94-103] [crates/gcode/src/commands/codewiki/mod.rs:105-114] [crates/gcode/src/commands/codewiki/mod.rs:118-121]
+[crates/gcode/src/commands/codewiki/mod.rs:124-127] [crates/gcode/src/commands/codewiki/mod.rs:129-150] [crates/gcode/src/commands/codewiki/mod.rs:130-135] [crates/gcode/src/commands/codewiki/mod.rs:137-142]
+[crates/gcode/src/commands/codewiki/mod.rs:144-149] [crates/gcode/src/commands/codewiki/mod.rs:153-157] [crates/gcode/src/commands/codewiki/mod.rs:160-167] [crates/gcode/src/commands/codewiki/mod.rs:170-176]
+[crates/gcode/src/commands/codewiki/mod.rs:179-189] [crates/gcode/src/commands/codewiki/mod.rs:192-197] [crates/gcode/src/commands/codewiki/mod.rs:200-204] [crates/gcode/src/commands/codewiki/mod.rs:206-211]
+[crates/gcode/src/commands/codewiki/mod.rs:213-217] [crates/gcode/src/commands/codewiki/mod.rs:219-224] [crates/gcode/src/commands/codewiki/mod.rs:227-233] [crates/gcode/src/commands/codewiki/mod.rs:236-242]
+[crates/gcode/src/commands/codewiki/mod.rs:245-252] [crates/gcode/src/commands/codewiki/mod.rs:255-259] [crates/gcode/src/commands/codewiki/mod.rs:262-266] [crates/gcode/src/commands/codewiki/mod.rs:269-273]
+[crates/gcode/src/commands/codewiki/mod.rs:276-288] [crates/gcode/src/commands/codewiki/mod.rs:291-296] [crates/gcode/src/commands/codewiki/mod.rs:299-301] [crates/gcode/src/commands/codewiki/mod.rs:304-311]
+[crates/gcode/src/commands/codewiki/mod.rs:314-317] [crates/gcode/src/commands/codewiki/mod.rs:320-326] [crates/gcode/src/commands/codewiki/mod.rs:328] [crates/gcode/src/commands/codewiki/mod.rs:330-350]
+[crates/gcode/src/commands/codewiki/mod.rs:331-337] [crates/gcode/src/commands/codewiki/mod.rs:339-345] [crates/gcode/src/commands/codewiki/mod.rs:347-349] [crates/gcode/src/commands/codewiki/mod.rs:352-446]
+[crates/gcode/src/commands/codewiki/mod.rs:448-453] [crates/gcode/src/commands/codewiki/mod.rs:455-460] [crates/gcode/src/commands/codewiki/mod.rs:462-473] [crates/gcode/src/commands/codewiki/mod.rs:475-482]
+[crates/gcode/src/commands/codewiki/mod.rs:484-587] [crates/gcode/src/commands/codewiki/ownership.rs:13-16] [crates/gcode/src/commands/codewiki/ownership.rs:18-25] [crates/gcode/src/commands/codewiki/ownership.rs:19-24]
 [crates/gcode/src/commands/codewiki/ownership.rs:28-31] [crates/gcode/src/commands/codewiki/ownership.rs:34-37] [crates/gcode/src/commands/codewiki/ownership.rs:40-45] [crates/gcode/src/commands/codewiki/ownership.rs:48-50]
 [crates/gcode/src/commands/codewiki/ownership.rs:53-56] [crates/gcode/src/commands/codewiki/ownership.rs:59-63] [crates/gcode/src/commands/codewiki/ownership.rs:66-69] [crates/gcode/src/commands/codewiki/ownership.rs:71-116]
-[crates/gcode/src/commands/codewiki/ownership.rs:118-128] [crates/gcode/src/commands/codewiki/ownership.rs:130-148] [crates/gcode/src/commands/codewiki/ownership.rs:150-169] [crates/gcode/src/commands/codewiki/ownership.rs:171-196]
-[crates/gcode/src/commands/codewiki/ownership.rs:198-243] [crates/gcode/src/commands/codewiki/ownership.rs:245-247] [crates/gcode/src/commands/codewiki/ownership.rs:249-280] [crates/gcode/src/commands/codewiki/ownership.rs:282-303]
-[crates/gcode/src/commands/codewiki/ownership.rs:305-339] [crates/gcode/src/commands/codewiki/ownership.rs:307-322] [crates/gcode/src/commands/codewiki/ownership.rs:341-343] [crates/gcode/src/commands/codewiki/ownership.rs:345-371]
-[crates/gcode/src/commands/codewiki/ownership.rs:373-385] [crates/gcode/src/commands/codewiki/ownership.rs:387-397] [crates/gcode/src/commands/codewiki/ownership.rs:399-421] [crates/gcode/src/commands/codewiki/ownership.rs:423-429]
-[crates/gcode/src/commands/codewiki/ownership.rs:431-453] [crates/gcode/src/commands/codewiki/ownership.rs:464-491] [crates/gcode/src/commands/codewiki/ownership.rs:494-514] [crates/gcode/src/commands/codewiki/ownership.rs:517-538]
-[crates/gcode/src/commands/codewiki/ownership.rs:541-564] [crates/gcode/src/commands/codewiki/ownership.rs:567-586] [crates/gcode/src/commands/codewiki/ownership.rs:588-593] [crates/gcode/src/commands/codewiki/ownership.rs:595-614]
-[crates/gcode/src/commands/codewiki/ownership.rs:616-625] [crates/gcode/src/commands/codewiki/ownership.rs:627-643] [crates/gcode/src/commands/codewiki/ownership.rs:645-653] [crates/gcode/src/commands/codewiki/paths.rs:3-14]
+[crates/gcode/src/commands/codewiki/ownership.rs:118-128] [crates/gcode/src/commands/codewiki/ownership.rs:130-148] [crates/gcode/src/commands/codewiki/ownership.rs:150-169] [crates/gcode/src/commands/codewiki/ownership.rs:171-206]
+[crates/gcode/src/commands/codewiki/ownership.rs:208-253] [crates/gcode/src/commands/codewiki/ownership.rs:255-257] [crates/gcode/src/commands/codewiki/ownership.rs:259-290] [crates/gcode/src/commands/codewiki/ownership.rs:292-313]
+[crates/gcode/src/commands/codewiki/ownership.rs:315-349] [crates/gcode/src/commands/codewiki/ownership.rs:317-332] [crates/gcode/src/commands/codewiki/ownership.rs:351-353] [crates/gcode/src/commands/codewiki/ownership.rs:355-381]
+[crates/gcode/src/commands/codewiki/ownership.rs:383-395] [crates/gcode/src/commands/codewiki/ownership.rs:397-407] [crates/gcode/src/commands/codewiki/ownership.rs:409-431] [crates/gcode/src/commands/codewiki/ownership.rs:433-439]
+[crates/gcode/src/commands/codewiki/ownership.rs:441-463] [crates/gcode/src/commands/codewiki/ownership.rs:474-501] [crates/gcode/src/commands/codewiki/ownership.rs:504-524] [crates/gcode/src/commands/codewiki/ownership.rs:527-548]
+[crates/gcode/src/commands/codewiki/ownership.rs:551-574] [crates/gcode/src/commands/codewiki/ownership.rs:577-596] [crates/gcode/src/commands/codewiki/ownership.rs:598-603] [crates/gcode/src/commands/codewiki/ownership.rs:605-624]
+[crates/gcode/src/commands/codewiki/ownership.rs:626-635] [crates/gcode/src/commands/codewiki/ownership.rs:637-653] [crates/gcode/src/commands/codewiki/ownership.rs:655-663] [crates/gcode/src/commands/codewiki/paths.rs:3-14]
 [crates/gcode/src/commands/codewiki/paths.rs:16-28] [crates/gcode/src/commands/codewiki/paths.rs:30-32] [crates/gcode/src/commands/codewiki/paths.rs:34-41] [crates/gcode/src/commands/codewiki/paths.rs:43-88]
 [crates/gcode/src/commands/codewiki/paths.rs:93-101] [crates/gcode/src/commands/codewiki/paths.rs:103-109] [crates/gcode/src/commands/codewiki/paths.rs:111-119] [crates/gcode/src/commands/codewiki/paths.rs:121-123]
 [crates/gcode/src/commands/codewiki/paths.rs:125-127] [crates/gcode/src/commands/codewiki/paths.rs:129-137] [crates/gcode/src/commands/codewiki/paths.rs:139-141] [crates/gcode/src/commands/codewiki/paths.rs:143-145]
 [crates/gcode/src/commands/codewiki/paths.rs:147-149] [crates/gcode/src/commands/codewiki/paths.rs:151-153] [crates/gcode/src/commands/codewiki/paths.rs:155-157] [crates/gcode/src/commands/codewiki/prompts.rs:11-33]
 [crates/gcode/src/commands/codewiki/prompts.rs:35-56] [crates/gcode/src/commands/codewiki/prompts.rs:58-91] [crates/gcode/src/commands/codewiki/prompts.rs:93-113] [crates/gcode/src/commands/codewiki/prompts.rs:115-148]
-[crates/gcode/src/commands/codewiki/prompts.rs:151-159] [crates/gcode/src/commands/codewiki/prompts.rs:162-165] [crates/gcode/src/commands/codewiki/render.rs:5-33] [crates/gcode/src/commands/codewiki/render.rs:35-57]
-[crates/gcode/src/commands/codewiki/render.rs:59-82] [crates/gcode/src/commands/codewiki/render.rs:84-172] [crates/gcode/src/commands/codewiki/render.rs:174-203] [crates/gcode/src/commands/codewiki/render.rs:205-255]
-[crates/gcode/src/commands/codewiki/render.rs:257-270] [crates/gcode/src/commands/codewiki/render.rs:272-282] [crates/gcode/src/commands/codewiki/render.rs:284-299] [crates/gcode/src/commands/codewiki/render.rs:301-349]
-[crates/gcode/src/commands/codewiki/render.rs:351-380] [crates/gcode/src/commands/codewiki/render.rs:382-408] [crates/gcode/src/commands/codewiki/render.rs:410-452] [crates/gcode/src/commands/codewiki/render.rs:454-482]
-[crates/gcode/src/commands/codewiki/render.rs:484-526] [crates/gcode/src/commands/codewiki/render.rs:528-587] [crates/gcode/src/commands/codewiki/render.rs:589-627] [crates/gcode/src/commands/codewiki/tests.rs:11-45]
-[crates/gcode/src/commands/codewiki/tests.rs:48-110] [crates/gcode/src/commands/codewiki/tests.rs:113-120] [crates/gcode/src/commands/codewiki/tests.rs:123-196] [crates/gcode/src/commands/codewiki/tests.rs:199-212]
-[crates/gcode/src/commands/codewiki/tests.rs:215-217] [crates/gcode/src/commands/codewiki/tests.rs:220-225] [crates/gcode/src/commands/codewiki/tests.rs:228-240] [crates/gcode/src/commands/codewiki/tests.rs:243-265]
-[crates/gcode/src/commands/codewiki/tests.rs:268-295] [crates/gcode/src/commands/codewiki/tests.rs:298-307] [crates/gcode/src/commands/codewiki/tests.rs:310-317] [crates/gcode/src/commands/codewiki/tests.rs:320-404]
-[crates/gcode/src/commands/codewiki/tests.rs:407-475] [crates/gcode/src/commands/codewiki/tests.rs:478-492] [crates/gcode/src/commands/codewiki/tests.rs:495-525] [crates/gcode/src/commands/codewiki/tests.rs:528-549]
-[crates/gcode/src/commands/codewiki/tests.rs:552-590] [crates/gcode/src/commands/codewiki/tests.rs:593-605] [crates/gcode/src/commands/codewiki/tests.rs:608-624] [crates/gcode/src/commands/codewiki/tests.rs:627-644]
-[crates/gcode/src/commands/codewiki/tests.rs:647-661] [crates/gcode/src/commands/codewiki/tests.rs:664-697] [crates/gcode/src/commands/codewiki/tests.rs:700-750] [crates/gcode/src/commands/codewiki/tests.rs:753-854]
-[crates/gcode/src/commands/codewiki/tests.rs:857-880] [crates/gcode/src/commands/codewiki/tests.rs:883-887] [crates/gcode/src/commands/codewiki/tests.rs:891-905] [crates/gcode/src/commands/codewiki/tests.rs:909-923]
-[crates/gcode/src/commands/codewiki/tests.rs:925-933] [crates/gcode/src/commands/codewiki/tests.rs:935-937] [crates/gcode/src/commands/codewiki/tests.rs:939-967] [crates/gcode/src/commands/codewiki/tests.rs:969-997]
-[crates/gcode/src/commands/codewiki/text.rs:6-19] [crates/gcode/src/commands/codewiki/text.rs:22-25] [crates/gcode/src/commands/codewiki/text.rs:27-58] [crates/gcode/src/commands/codewiki/text.rs:60-76]
-[crates/gcode/src/commands/codewiki/text.rs:78-86] [crates/gcode/src/commands/codewiki/text.rs:88-91] [crates/gcode/src/commands/codewiki/text.rs:93-108] [crates/gcode/src/commands/codewiki/text.rs:110-119]
-[crates/gcode/src/commands/codewiki/text.rs:121-133] [crates/gcode/src/commands/codewiki/text.rs:135-141] [crates/gcode/src/commands/codewiki/text.rs:143-145] [crates/gcode/src/commands/codewiki/text.rs:147-156]
-[crates/gcode/src/commands/codewiki/text.rs:158-170] [crates/gcode/src/commands/codewiki/text.rs:172-185] [crates/gcode/src/commands/codewiki/text.rs:187-213] [crates/gcode/src/commands/codewiki/text.rs:215-232]
-[crates/gcode/src/commands/codewiki/text.rs:234-247] [crates/gcode/src/commands/codewiki/text.rs:249-251] [crates/gcode/src/commands/codewiki/text.rs:253-305]
+[crates/gcode/src/commands/codewiki/prompts.rs:151-159] [crates/gcode/src/commands/codewiki/prompts.rs:162-165] [crates/gcode/src/commands/codewiki/render.rs:5-33] [crates/gcode/src/commands/codewiki/render.rs:35-67]
+[crates/gcode/src/commands/codewiki/render.rs:69-83] [crates/gcode/src/commands/codewiki/render.rs:85-108] [crates/gcode/src/commands/codewiki/render.rs:110-198] [crates/gcode/src/commands/codewiki/render.rs:200-229]
+[crates/gcode/src/commands/codewiki/render.rs:231-281] [crates/gcode/src/commands/codewiki/render.rs:283-296] [crates/gcode/src/commands/codewiki/render.rs:298-308] [crates/gcode/src/commands/codewiki/render.rs:310-325]
+[crates/gcode/src/commands/codewiki/render.rs:327-375] [crates/gcode/src/commands/codewiki/render.rs:377-405] [crates/gcode/src/commands/codewiki/render.rs:407-433] [crates/gcode/src/commands/codewiki/render.rs:435-477]
+[crates/gcode/src/commands/codewiki/render.rs:479-507] [crates/gcode/src/commands/codewiki/render.rs:509-551] [crates/gcode/src/commands/codewiki/render.rs:553-612] [crates/gcode/src/commands/codewiki/render.rs:614-652]
+[crates/gcode/src/commands/codewiki/tests.rs:11-45] [crates/gcode/src/commands/codewiki/tests.rs:48-110] [crates/gcode/src/commands/codewiki/tests.rs:113-120] [crates/gcode/src/commands/codewiki/tests.rs:123-196]
+[crates/gcode/src/commands/codewiki/tests.rs:199-212] [crates/gcode/src/commands/codewiki/tests.rs:215-217] [crates/gcode/src/commands/codewiki/tests.rs:220-225] [crates/gcode/src/commands/codewiki/tests.rs:228-240]
+[crates/gcode/src/commands/codewiki/tests.rs:243-265] [crates/gcode/src/commands/codewiki/tests.rs:268-295] [crates/gcode/src/commands/codewiki/tests.rs:298-307] [crates/gcode/src/commands/codewiki/tests.rs:310-317]
+[crates/gcode/src/commands/codewiki/tests.rs:320-404] [crates/gcode/src/commands/codewiki/tests.rs:407-475] [crates/gcode/src/commands/codewiki/tests.rs:478-492] [crates/gcode/src/commands/codewiki/tests.rs:495-525]
+[crates/gcode/src/commands/codewiki/tests.rs:528-549] [crates/gcode/src/commands/codewiki/tests.rs:552-590] [crates/gcode/src/commands/codewiki/tests.rs:593-605] [crates/gcode/src/commands/codewiki/tests.rs:608-624]
+[crates/gcode/src/commands/codewiki/tests.rs:627-644] [crates/gcode/src/commands/codewiki/tests.rs:647-661] [crates/gcode/src/commands/codewiki/tests.rs:664-697] [crates/gcode/src/commands/codewiki/tests.rs:700-750]
+[crates/gcode/src/commands/codewiki/tests.rs:753-854] [crates/gcode/src/commands/codewiki/tests.rs:857-880] [crates/gcode/src/commands/codewiki/tests.rs:883-887] [crates/gcode/src/commands/codewiki/tests.rs:891-905]
+[crates/gcode/src/commands/codewiki/tests.rs:909-923] [crates/gcode/src/commands/codewiki/tests.rs:925-933] [crates/gcode/src/commands/codewiki/tests.rs:935-937] [crates/gcode/src/commands/codewiki/tests.rs:939-967]
+[crates/gcode/src/commands/codewiki/tests.rs:969-997] [crates/gcode/src/commands/codewiki/text.rs:6-19] [crates/gcode/src/commands/codewiki/text.rs:22-25] [crates/gcode/src/commands/codewiki/text.rs:27-58]
+[crates/gcode/src/commands/codewiki/text.rs:60-76] [crates/gcode/src/commands/codewiki/text.rs:78-86] [crates/gcode/src/commands/codewiki/text.rs:88-91] [crates/gcode/src/commands/codewiki/text.rs:93-108]
+[crates/gcode/src/commands/codewiki/text.rs:110-119] [crates/gcode/src/commands/codewiki/text.rs:121-133] [crates/gcode/src/commands/codewiki/text.rs:135-141] [crates/gcode/src/commands/codewiki/text.rs:143-145]
+[crates/gcode/src/commands/codewiki/text.rs:147-156] [crates/gcode/src/commands/codewiki/text.rs:158-170] [crates/gcode/src/commands/codewiki/text.rs:172-178] [crates/gcode/src/commands/codewiki/text.rs:180-186]
+[crates/gcode/src/commands/codewiki/text.rs:188-198] [crates/gcode/src/commands/codewiki/text.rs:200-209] [crates/gcode/src/commands/codewiki/text.rs:211-224] [crates/gcode/src/commands/codewiki/text.rs:226-252]
+[crates/gcode/src/commands/codewiki/text.rs:254-271] [crates/gcode/src/commands/codewiki/text.rs:273-286] [crates/gcode/src/commands/codewiki/text.rs:288-290] [crates/gcode/src/commands/codewiki/text.rs:292-344]
 
 ## Child Modules
 
@@ -577,50 +588,51 @@ Parent: [[code/repo|Repository Overview]]
 [crates/gcode/src/commands/codewiki/io.rs:11-17] [crates/gcode/src/commands/codewiki/io.rs:19-69] [crates/gcode/src/commands/codewiki/io.rs:71-79] [crates/gcode/src/commands/codewiki/io.rs:81-99]
 [crates/gcode/src/commands/codewiki/io.rs:101-121] [crates/gcode/src/commands/codewiki/io.rs:123-130] [crates/gcode/src/commands/codewiki/io.rs:132-135] [crates/gcode/src/commands/codewiki/io.rs:137-144]
 [crates/gcode/src/commands/codewiki/io.rs:146-149] [crates/gcode/src/commands/codewiki/io.rs:151-172] [crates/gcode/src/commands/codewiki/io.rs:174-207] [crates/gcode/src/commands/codewiki/io.rs:210-240]
-[crates/gcode/src/commands/codewiki/io.rs:243-250] [crates/gcode/src/commands/codewiki/io.rs:252-262] [crates/gcode/src/commands/codewiki/mod.rs:78-83] [crates/gcode/src/commands/codewiki/mod.rs:86-90]
-[crates/gcode/src/commands/codewiki/mod.rs:92-114] [crates/gcode/src/commands/codewiki/mod.rs:93-102] [crates/gcode/src/commands/codewiki/mod.rs:104-113] [crates/gcode/src/commands/codewiki/mod.rs:117-120]
-[crates/gcode/src/commands/codewiki/mod.rs:123-126] [crates/gcode/src/commands/codewiki/mod.rs:128-149] [crates/gcode/src/commands/codewiki/mod.rs:129-134] [crates/gcode/src/commands/codewiki/mod.rs:136-141]
-[crates/gcode/src/commands/codewiki/mod.rs:143-148] [crates/gcode/src/commands/codewiki/mod.rs:152-156] [crates/gcode/src/commands/codewiki/mod.rs:159-166] [crates/gcode/src/commands/codewiki/mod.rs:169-175]
-[crates/gcode/src/commands/codewiki/mod.rs:178-188] [crates/gcode/src/commands/codewiki/mod.rs:191-196] [crates/gcode/src/commands/codewiki/mod.rs:199-203] [crates/gcode/src/commands/codewiki/mod.rs:205-210]
-[crates/gcode/src/commands/codewiki/mod.rs:212-216] [crates/gcode/src/commands/codewiki/mod.rs:218-223] [crates/gcode/src/commands/codewiki/mod.rs:226-232] [crates/gcode/src/commands/codewiki/mod.rs:235-241]
-[crates/gcode/src/commands/codewiki/mod.rs:244-251] [crates/gcode/src/commands/codewiki/mod.rs:254-258] [crates/gcode/src/commands/codewiki/mod.rs:261-265] [crates/gcode/src/commands/codewiki/mod.rs:268-272]
-[crates/gcode/src/commands/codewiki/mod.rs:275-287] [crates/gcode/src/commands/codewiki/mod.rs:290-295] [crates/gcode/src/commands/codewiki/mod.rs:298-300] [crates/gcode/src/commands/codewiki/mod.rs:303-310]
-[crates/gcode/src/commands/codewiki/mod.rs:313-316] [crates/gcode/src/commands/codewiki/mod.rs:319-325] [crates/gcode/src/commands/codewiki/mod.rs:327] [crates/gcode/src/commands/codewiki/mod.rs:329-349]
-[crates/gcode/src/commands/codewiki/mod.rs:330-336] [crates/gcode/src/commands/codewiki/mod.rs:338-344] [crates/gcode/src/commands/codewiki/mod.rs:346-348] [crates/gcode/src/commands/codewiki/mod.rs:351-445]
-[crates/gcode/src/commands/codewiki/mod.rs:447-452] [crates/gcode/src/commands/codewiki/mod.rs:454-459] [crates/gcode/src/commands/codewiki/mod.rs:461-472] [crates/gcode/src/commands/codewiki/mod.rs:474-481]
-[crates/gcode/src/commands/codewiki/mod.rs:483-586] [crates/gcode/src/commands/codewiki/ownership.rs:13-16] [crates/gcode/src/commands/codewiki/ownership.rs:18-25] [crates/gcode/src/commands/codewiki/ownership.rs:19-24]
+[crates/gcode/src/commands/codewiki/io.rs:243-250] [crates/gcode/src/commands/codewiki/io.rs:252-262] [crates/gcode/src/commands/codewiki/mod.rs:79-84] [crates/gcode/src/commands/codewiki/mod.rs:87-91]
+[crates/gcode/src/commands/codewiki/mod.rs:93-115] [crates/gcode/src/commands/codewiki/mod.rs:94-103] [crates/gcode/src/commands/codewiki/mod.rs:105-114] [crates/gcode/src/commands/codewiki/mod.rs:118-121]
+[crates/gcode/src/commands/codewiki/mod.rs:124-127] [crates/gcode/src/commands/codewiki/mod.rs:129-150] [crates/gcode/src/commands/codewiki/mod.rs:130-135] [crates/gcode/src/commands/codewiki/mod.rs:137-142]
+[crates/gcode/src/commands/codewiki/mod.rs:144-149] [crates/gcode/src/commands/codewiki/mod.rs:153-157] [crates/gcode/src/commands/codewiki/mod.rs:160-167] [crates/gcode/src/commands/codewiki/mod.rs:170-176]
+[crates/gcode/src/commands/codewiki/mod.rs:179-189] [crates/gcode/src/commands/codewiki/mod.rs:192-197] [crates/gcode/src/commands/codewiki/mod.rs:200-204] [crates/gcode/src/commands/codewiki/mod.rs:206-211]
+[crates/gcode/src/commands/codewiki/mod.rs:213-217] [crates/gcode/src/commands/codewiki/mod.rs:219-224] [crates/gcode/src/commands/codewiki/mod.rs:227-233] [crates/gcode/src/commands/codewiki/mod.rs:236-242]
+[crates/gcode/src/commands/codewiki/mod.rs:245-252] [crates/gcode/src/commands/codewiki/mod.rs:255-259] [crates/gcode/src/commands/codewiki/mod.rs:262-266] [crates/gcode/src/commands/codewiki/mod.rs:269-273]
+[crates/gcode/src/commands/codewiki/mod.rs:276-288] [crates/gcode/src/commands/codewiki/mod.rs:291-296] [crates/gcode/src/commands/codewiki/mod.rs:299-301] [crates/gcode/src/commands/codewiki/mod.rs:304-311]
+[crates/gcode/src/commands/codewiki/mod.rs:314-317] [crates/gcode/src/commands/codewiki/mod.rs:320-326] [crates/gcode/src/commands/codewiki/mod.rs:328] [crates/gcode/src/commands/codewiki/mod.rs:330-350]
+[crates/gcode/src/commands/codewiki/mod.rs:331-337] [crates/gcode/src/commands/codewiki/mod.rs:339-345] [crates/gcode/src/commands/codewiki/mod.rs:347-349] [crates/gcode/src/commands/codewiki/mod.rs:352-446]
+[crates/gcode/src/commands/codewiki/mod.rs:448-453] [crates/gcode/src/commands/codewiki/mod.rs:455-460] [crates/gcode/src/commands/codewiki/mod.rs:462-473] [crates/gcode/src/commands/codewiki/mod.rs:475-482]
+[crates/gcode/src/commands/codewiki/mod.rs:484-587] [crates/gcode/src/commands/codewiki/ownership.rs:13-16] [crates/gcode/src/commands/codewiki/ownership.rs:18-25] [crates/gcode/src/commands/codewiki/ownership.rs:19-24]
 [crates/gcode/src/commands/codewiki/ownership.rs:28-31] [crates/gcode/src/commands/codewiki/ownership.rs:34-37] [crates/gcode/src/commands/codewiki/ownership.rs:40-45] [crates/gcode/src/commands/codewiki/ownership.rs:48-50]
 [crates/gcode/src/commands/codewiki/ownership.rs:53-56] [crates/gcode/src/commands/codewiki/ownership.rs:59-63] [crates/gcode/src/commands/codewiki/ownership.rs:66-69] [crates/gcode/src/commands/codewiki/ownership.rs:71-116]
-[crates/gcode/src/commands/codewiki/ownership.rs:118-128] [crates/gcode/src/commands/codewiki/ownership.rs:130-148] [crates/gcode/src/commands/codewiki/ownership.rs:150-169] [crates/gcode/src/commands/codewiki/ownership.rs:171-196]
-[crates/gcode/src/commands/codewiki/ownership.rs:198-243] [crates/gcode/src/commands/codewiki/ownership.rs:245-247] [crates/gcode/src/commands/codewiki/ownership.rs:249-280] [crates/gcode/src/commands/codewiki/ownership.rs:282-303]
-[crates/gcode/src/commands/codewiki/ownership.rs:305-339] [crates/gcode/src/commands/codewiki/ownership.rs:307-322] [crates/gcode/src/commands/codewiki/ownership.rs:341-343] [crates/gcode/src/commands/codewiki/ownership.rs:345-371]
-[crates/gcode/src/commands/codewiki/ownership.rs:373-385] [crates/gcode/src/commands/codewiki/ownership.rs:387-397] [crates/gcode/src/commands/codewiki/ownership.rs:399-421] [crates/gcode/src/commands/codewiki/ownership.rs:423-429]
-[crates/gcode/src/commands/codewiki/ownership.rs:431-453] [crates/gcode/src/commands/codewiki/ownership.rs:464-491] [crates/gcode/src/commands/codewiki/ownership.rs:494-514] [crates/gcode/src/commands/codewiki/ownership.rs:517-538]
-[crates/gcode/src/commands/codewiki/ownership.rs:541-564] [crates/gcode/src/commands/codewiki/ownership.rs:567-586] [crates/gcode/src/commands/codewiki/ownership.rs:588-593] [crates/gcode/src/commands/codewiki/ownership.rs:595-614]
-[crates/gcode/src/commands/codewiki/ownership.rs:616-625] [crates/gcode/src/commands/codewiki/ownership.rs:627-643] [crates/gcode/src/commands/codewiki/ownership.rs:645-653] [crates/gcode/src/commands/codewiki/paths.rs:3-14]
+[crates/gcode/src/commands/codewiki/ownership.rs:118-128] [crates/gcode/src/commands/codewiki/ownership.rs:130-148] [crates/gcode/src/commands/codewiki/ownership.rs:150-169] [crates/gcode/src/commands/codewiki/ownership.rs:171-206]
+[crates/gcode/src/commands/codewiki/ownership.rs:208-253] [crates/gcode/src/commands/codewiki/ownership.rs:255-257] [crates/gcode/src/commands/codewiki/ownership.rs:259-290] [crates/gcode/src/commands/codewiki/ownership.rs:292-313]
+[crates/gcode/src/commands/codewiki/ownership.rs:315-349] [crates/gcode/src/commands/codewiki/ownership.rs:317-332] [crates/gcode/src/commands/codewiki/ownership.rs:351-353] [crates/gcode/src/commands/codewiki/ownership.rs:355-381]
+[crates/gcode/src/commands/codewiki/ownership.rs:383-395] [crates/gcode/src/commands/codewiki/ownership.rs:397-407] [crates/gcode/src/commands/codewiki/ownership.rs:409-431] [crates/gcode/src/commands/codewiki/ownership.rs:433-439]
+[crates/gcode/src/commands/codewiki/ownership.rs:441-463] [crates/gcode/src/commands/codewiki/ownership.rs:474-501] [crates/gcode/src/commands/codewiki/ownership.rs:504-524] [crates/gcode/src/commands/codewiki/ownership.rs:527-548]
+[crates/gcode/src/commands/codewiki/ownership.rs:551-574] [crates/gcode/src/commands/codewiki/ownership.rs:577-596] [crates/gcode/src/commands/codewiki/ownership.rs:598-603] [crates/gcode/src/commands/codewiki/ownership.rs:605-624]
+[crates/gcode/src/commands/codewiki/ownership.rs:626-635] [crates/gcode/src/commands/codewiki/ownership.rs:637-653] [crates/gcode/src/commands/codewiki/ownership.rs:655-663] [crates/gcode/src/commands/codewiki/paths.rs:3-14]
 [crates/gcode/src/commands/codewiki/paths.rs:16-28] [crates/gcode/src/commands/codewiki/paths.rs:30-32] [crates/gcode/src/commands/codewiki/paths.rs:34-41] [crates/gcode/src/commands/codewiki/paths.rs:43-88]
 [crates/gcode/src/commands/codewiki/paths.rs:93-101] [crates/gcode/src/commands/codewiki/paths.rs:103-109] [crates/gcode/src/commands/codewiki/paths.rs:111-119] [crates/gcode/src/commands/codewiki/paths.rs:121-123]
 [crates/gcode/src/commands/codewiki/paths.rs:125-127] [crates/gcode/src/commands/codewiki/paths.rs:129-137] [crates/gcode/src/commands/codewiki/paths.rs:139-141] [crates/gcode/src/commands/codewiki/paths.rs:143-145]
 [crates/gcode/src/commands/codewiki/paths.rs:147-149] [crates/gcode/src/commands/codewiki/paths.rs:151-153] [crates/gcode/src/commands/codewiki/paths.rs:155-157] [crates/gcode/src/commands/codewiki/prompts.rs:11-33]
 [crates/gcode/src/commands/codewiki/prompts.rs:35-56] [crates/gcode/src/commands/codewiki/prompts.rs:58-91] [crates/gcode/src/commands/codewiki/prompts.rs:93-113] [crates/gcode/src/commands/codewiki/prompts.rs:115-148]
-[crates/gcode/src/commands/codewiki/prompts.rs:151-159] [crates/gcode/src/commands/codewiki/prompts.rs:162-165] [crates/gcode/src/commands/codewiki/render.rs:5-33] [crates/gcode/src/commands/codewiki/render.rs:35-57]
-[crates/gcode/src/commands/codewiki/render.rs:59-82] [crates/gcode/src/commands/codewiki/render.rs:84-172] [crates/gcode/src/commands/codewiki/render.rs:174-203] [crates/gcode/src/commands/codewiki/render.rs:205-255]
-[crates/gcode/src/commands/codewiki/render.rs:257-270] [crates/gcode/src/commands/codewiki/render.rs:272-282] [crates/gcode/src/commands/codewiki/render.rs:284-299] [crates/gcode/src/commands/codewiki/render.rs:301-349]
-[crates/gcode/src/commands/codewiki/render.rs:351-380] [crates/gcode/src/commands/codewiki/render.rs:382-408] [crates/gcode/src/commands/codewiki/render.rs:410-452] [crates/gcode/src/commands/codewiki/render.rs:454-482]
-[crates/gcode/src/commands/codewiki/render.rs:484-526] [crates/gcode/src/commands/codewiki/render.rs:528-587] [crates/gcode/src/commands/codewiki/render.rs:589-627] [crates/gcode/src/commands/codewiki/tests.rs:11-45]
-[crates/gcode/src/commands/codewiki/tests.rs:48-110] [crates/gcode/src/commands/codewiki/tests.rs:113-120] [crates/gcode/src/commands/codewiki/tests.rs:123-196] [crates/gcode/src/commands/codewiki/tests.rs:199-212]
-[crates/gcode/src/commands/codewiki/tests.rs:215-217] [crates/gcode/src/commands/codewiki/tests.rs:220-225] [crates/gcode/src/commands/codewiki/tests.rs:228-240] [crates/gcode/src/commands/codewiki/tests.rs:243-265]
-[crates/gcode/src/commands/codewiki/tests.rs:268-295] [crates/gcode/src/commands/codewiki/tests.rs:298-307] [crates/gcode/src/commands/codewiki/tests.rs:310-317] [crates/gcode/src/commands/codewiki/tests.rs:320-404]
-[crates/gcode/src/commands/codewiki/tests.rs:407-475] [crates/gcode/src/commands/codewiki/tests.rs:478-492] [crates/gcode/src/commands/codewiki/tests.rs:495-525] [crates/gcode/src/commands/codewiki/tests.rs:528-549]
-[crates/gcode/src/commands/codewiki/tests.rs:552-590] [crates/gcode/src/commands/codewiki/tests.rs:593-605] [crates/gcode/src/commands/codewiki/tests.rs:608-624] [crates/gcode/src/commands/codewiki/tests.rs:627-644]
-[crates/gcode/src/commands/codewiki/tests.rs:647-661] [crates/gcode/src/commands/codewiki/tests.rs:664-697] [crates/gcode/src/commands/codewiki/tests.rs:700-750] [crates/gcode/src/commands/codewiki/tests.rs:753-854]
-[crates/gcode/src/commands/codewiki/tests.rs:857-880] [crates/gcode/src/commands/codewiki/tests.rs:883-887] [crates/gcode/src/commands/codewiki/tests.rs:891-905] [crates/gcode/src/commands/codewiki/tests.rs:909-923]
-[crates/gcode/src/commands/codewiki/tests.rs:925-933] [crates/gcode/src/commands/codewiki/tests.rs:935-937] [crates/gcode/src/commands/codewiki/tests.rs:939-967] [crates/gcode/src/commands/codewiki/tests.rs:969-997]
-[crates/gcode/src/commands/codewiki/text.rs:6-19] [crates/gcode/src/commands/codewiki/text.rs:22-25] [crates/gcode/src/commands/codewiki/text.rs:27-58] [crates/gcode/src/commands/codewiki/text.rs:60-76]
-[crates/gcode/src/commands/codewiki/text.rs:78-86] [crates/gcode/src/commands/codewiki/text.rs:88-91] [crates/gcode/src/commands/codewiki/text.rs:93-108] [crates/gcode/src/commands/codewiki/text.rs:110-119]
-[crates/gcode/src/commands/codewiki/text.rs:121-133] [crates/gcode/src/commands/codewiki/text.rs:135-141] [crates/gcode/src/commands/codewiki/text.rs:143-145] [crates/gcode/src/commands/codewiki/text.rs:147-156]
-[crates/gcode/src/commands/codewiki/text.rs:158-170] [crates/gcode/src/commands/codewiki/text.rs:172-185] [crates/gcode/src/commands/codewiki/text.rs:187-213] [crates/gcode/src/commands/codewiki/text.rs:215-232]
-[crates/gcode/src/commands/codewiki/text.rs:234-247] [crates/gcode/src/commands/codewiki/text.rs:249-251] [crates/gcode/src/commands/codewiki/text.rs:253-305]
+[crates/gcode/src/commands/codewiki/prompts.rs:151-159] [crates/gcode/src/commands/codewiki/prompts.rs:162-165] [crates/gcode/src/commands/codewiki/render.rs:5-33] [crates/gcode/src/commands/codewiki/render.rs:35-67]
+[crates/gcode/src/commands/codewiki/render.rs:69-83] [crates/gcode/src/commands/codewiki/render.rs:85-108] [crates/gcode/src/commands/codewiki/render.rs:110-198] [crates/gcode/src/commands/codewiki/render.rs:200-229]
+[crates/gcode/src/commands/codewiki/render.rs:231-281] [crates/gcode/src/commands/codewiki/render.rs:283-296] [crates/gcode/src/commands/codewiki/render.rs:298-308] [crates/gcode/src/commands/codewiki/render.rs:310-325]
+[crates/gcode/src/commands/codewiki/render.rs:327-375] [crates/gcode/src/commands/codewiki/render.rs:377-405] [crates/gcode/src/commands/codewiki/render.rs:407-433] [crates/gcode/src/commands/codewiki/render.rs:435-477]
+[crates/gcode/src/commands/codewiki/render.rs:479-507] [crates/gcode/src/commands/codewiki/render.rs:509-551] [crates/gcode/src/commands/codewiki/render.rs:553-612] [crates/gcode/src/commands/codewiki/render.rs:614-652]
+[crates/gcode/src/commands/codewiki/tests.rs:11-45] [crates/gcode/src/commands/codewiki/tests.rs:48-110] [crates/gcode/src/commands/codewiki/tests.rs:113-120] [crates/gcode/src/commands/codewiki/tests.rs:123-196]
+[crates/gcode/src/commands/codewiki/tests.rs:199-212] [crates/gcode/src/commands/codewiki/tests.rs:215-217] [crates/gcode/src/commands/codewiki/tests.rs:220-225] [crates/gcode/src/commands/codewiki/tests.rs:228-240]
+[crates/gcode/src/commands/codewiki/tests.rs:243-265] [crates/gcode/src/commands/codewiki/tests.rs:268-295] [crates/gcode/src/commands/codewiki/tests.rs:298-307] [crates/gcode/src/commands/codewiki/tests.rs:310-317]
+[crates/gcode/src/commands/codewiki/tests.rs:320-404] [crates/gcode/src/commands/codewiki/tests.rs:407-475] [crates/gcode/src/commands/codewiki/tests.rs:478-492] [crates/gcode/src/commands/codewiki/tests.rs:495-525]
+[crates/gcode/src/commands/codewiki/tests.rs:528-549] [crates/gcode/src/commands/codewiki/tests.rs:552-590] [crates/gcode/src/commands/codewiki/tests.rs:593-605] [crates/gcode/src/commands/codewiki/tests.rs:608-624]
+[crates/gcode/src/commands/codewiki/tests.rs:627-644] [crates/gcode/src/commands/codewiki/tests.rs:647-661] [crates/gcode/src/commands/codewiki/tests.rs:664-697] [crates/gcode/src/commands/codewiki/tests.rs:700-750]
+[crates/gcode/src/commands/codewiki/tests.rs:753-854] [crates/gcode/src/commands/codewiki/tests.rs:857-880] [crates/gcode/src/commands/codewiki/tests.rs:883-887] [crates/gcode/src/commands/codewiki/tests.rs:891-905]
+[crates/gcode/src/commands/codewiki/tests.rs:909-923] [crates/gcode/src/commands/codewiki/tests.rs:925-933] [crates/gcode/src/commands/codewiki/tests.rs:935-937] [crates/gcode/src/commands/codewiki/tests.rs:939-967]
+[crates/gcode/src/commands/codewiki/tests.rs:969-997] [crates/gcode/src/commands/codewiki/text.rs:6-19] [crates/gcode/src/commands/codewiki/text.rs:22-25] [crates/gcode/src/commands/codewiki/text.rs:27-58]
+[crates/gcode/src/commands/codewiki/text.rs:60-76] [crates/gcode/src/commands/codewiki/text.rs:78-86] [crates/gcode/src/commands/codewiki/text.rs:88-91] [crates/gcode/src/commands/codewiki/text.rs:93-108]
+[crates/gcode/src/commands/codewiki/text.rs:110-119] [crates/gcode/src/commands/codewiki/text.rs:121-133] [crates/gcode/src/commands/codewiki/text.rs:135-141] [crates/gcode/src/commands/codewiki/text.rs:143-145]
+[crates/gcode/src/commands/codewiki/text.rs:147-156] [crates/gcode/src/commands/codewiki/text.rs:158-170] [crates/gcode/src/commands/codewiki/text.rs:172-178] [crates/gcode/src/commands/codewiki/text.rs:180-186]
+[crates/gcode/src/commands/codewiki/text.rs:188-198] [crates/gcode/src/commands/codewiki/text.rs:200-209] [crates/gcode/src/commands/codewiki/text.rs:211-224] [crates/gcode/src/commands/codewiki/text.rs:226-252]
+[crates/gcode/src/commands/codewiki/text.rs:254-271] [crates/gcode/src/commands/codewiki/text.rs:273-286] [crates/gcode/src/commands/codewiki/text.rs:288-290] [crates/gcode/src/commands/codewiki/text.rs:292-344]
 
 ## Components
 
@@ -674,49 +686,49 @@ Parent: [[code/repo|Repository Overview]]
 - `unquote_yaml_string [function] (e512eb82-9038-5f80-aa8d-a9613bb0fb0a)`
 - `decode_hex_escape [function] (5e0efc18-c809-51a9-9c38-9ee1aee6e7f0)`
 - `safe_doc_path [function] (fa013068-fbcc-5b18-a6c3-414603085e2d)`
-- `CodewikiInput [class] (23011137-cf5d-5f9d-882f-d202d5dcdad2)`
-- `CodewikiGraphEdge [class] (134829eb-ade3-5305-9772-152a8cc20d71)`
-- `CodewikiGraphEdge [class] (f85ab208-f38f-53d8-92e5-d12e0138fc0b)`
-- `CodewikiGraphEdge.call [method] (2f61cd26-8015-53f8-ab9f-b928729fdd2e)`
-- `CodewikiGraphEdge.import [method] (35452761-b09c-55ee-9efe-fd7702411d47)`
-- `CodewikiGraphEdgeKind [type] (f33b80c3-68bf-5e84-a731-ca7cdac001be)`
-- `CodewikiGraph [class] (facb4cae-e647-53b0-baca-428aa9e7325f)`
-- `CodewikiGraph [class] (4129331f-3a5e-529a-9ba4-c84e74ab7535)`
-- `CodewikiGraph.available [method] (562ea5bd-2bc3-50de-96a6-8202bfc1114e)`
-- `CodewikiGraph.truncated [method] (e380627c-7504-5103-84cb-52cf6d934e0a)`
-- `CodewikiGraph.unavailable [method] (c7fdba15-9c79-5134-b91f-b4e2e9f4aa64)`
-- `CodewikiGraphAvailability [type] (983b52c5-6d42-5c51-b9c1-e0ce72eedd09)`
-- `FileDoc [class] (43826e94-a31d-5d20-b988-39d5f48b6961)`
-- `SymbolDoc [class] (085992b3-21b9-57c6-bc57-1aa015fbc314)`
-- `ModuleDoc [class] (602375e1-4812-55a5-8841-e659b5b30d55)`
-- `ArchitectureDoc [class] (5d1e148d-f5c9-522e-9152-f12387453647)`
-- `ArchitectureSubsystem [class] (596b94ae-f090-531b-9c1f-6535ebc30ea0)`
-- `OnboardingDoc [class] (71d17eee-d6cc-5667-b371-efc6486525d4)`
-- `OnboardingEntryPoint [class] (17fca0c4-5469-5231-8358-c7477299a9c8)`
-- `OnboardingStep [class] (2e8dd8ea-1c23-5fb8-ad0d-136741750eb8)`
-- `HotspotsDoc [class] (21ab1832-fad7-5a7b-adaa-3ecc0fe657d1)`
-- `HotspotFinding [class] (df09adfa-9442-5651-9447-2bb829c63eca)`
-- `HotspotNode [class] (ce80135c-ed3f-50dc-a514-d6efe16205f4)`
-- `FileLink [class] (ebc50268-2899-5953-9ca5-975c56162dab)`
-- `ModuleLink [class] (ef91a470-fbfa-5d5c-9ce5-b042c00e9295)`
-- `SourceSpan [class] (8d31f63a-b267-5bb1-adf5-95e361004995)`
-- `CodewikiRunSummary [class] (d641797a-e511-5345-823c-d9617e6220ee)`
-- `CodewikiMeta [class] (16c10d1d-6d3b-52bc-a1fa-f5232c9fbcb2)`
-- `CodewikiDocMeta [class] (f6bb7ad4-a92f-5cd1-a4f3-c3db047d5bae)`
-- `CodewikiIndexSnapshot [class] (27f30667-849d-505d-b417-865920242445)`
-- `CodewikiFileSnapshot [class] (0f4817f7-b8ed-59bb-9071-626f74b79742)`
-- `CodewikiSymbolSnapshot [class] (284d050f-9106-5bc1-b002-2072c6d2df98)`
-- `TextGenerator [type] (08227c30-806a-5c23-acf1-f652208091c3)`
-- `SourceSpan [class] (3d091635-8aba-53a7-ad0b-e24364df84b2)`
-- `SourceSpan.from_symbol [method] (141275a2-f0c4-57ab-8fa6-0cca88ff56ab)`
-- `SourceSpan.citation [method] (b515cd72-010a-599c-9f23-597cbac4c9d9)`
-- `SourceSpan.contains [method] (1d88eff1-2098-5597-9a01-3d545481c57a)`
-- `run [function] (d48f3691-5620-5bfb-9ab3-ad6546f956e8)`
-- `validate_edge_limit [function] (f101dc20-edf8-5d35-bd28-db003819786f)`
-- `generate_hierarchical_docs [function] (4104a376-f626-5986-a84e-03ffde136d90)`
-- `generate_hierarchical_docs_with_graph_availability [function] (ca427459-3fab-5239-99e7-83d928a89089)`
-- `generate_hierarchical_docs_with_ownership [function] (58f299e8-7620-5988-bcfb-b03ad164adcb)`
-- `generate_hierarchical_docs_core [function] (53816bc6-6dae-5c78-b266-bd6dcc2f51ae)`
+- `CodewikiInput [class] (4d3c3199-f0e5-5f59-b2cd-01ccb870533c)`
+- `CodewikiGraphEdge [class] (f4e4186c-a169-5c18-b381-b3fe0d608c8b)`
+- `CodewikiGraphEdge [class] (cd653fa5-0464-5bdc-9e28-5dd0109bdcd9)`
+- `CodewikiGraphEdge.call [method] (dcc7aff2-6e6e-5f55-a22f-601116dbc686)`
+- `CodewikiGraphEdge.import [method] (3e9f6ac3-5a86-5430-8af9-ab540f106ba2)`
+- `CodewikiGraphEdgeKind [type] (bbe5e7ce-87ac-59cd-b863-8bdbe419e608)`
+- `CodewikiGraph [class] (1e979e24-1d93-5647-af8c-c7f70ac11eea)`
+- `CodewikiGraph [class] (be4355c2-5c8c-5949-a035-26d2994031b1)`
+- `CodewikiGraph.available [method] (c64d5011-266e-5051-ac6b-95d3fc59ffe4)`
+- `CodewikiGraph.truncated [method] (d99e3527-a6dd-545d-8153-ec600ccf993e)`
+- `CodewikiGraph.unavailable [method] (5756a735-7f7b-5e52-9023-7d59b0316f36)`
+- `CodewikiGraphAvailability [type] (00cc6c85-c05d-5902-a376-c9bfe71811e6)`
+- `FileDoc [class] (9771e85b-a36f-5f46-a95c-1bced69c03e0)`
+- `SymbolDoc [class] (d2a22e26-6bfb-5694-a32a-0648d7c6e62e)`
+- `ModuleDoc [class] (916ab758-e2b9-5a05-b413-2926c3748fca)`
+- `ArchitectureDoc [class] (3df495a5-f3e9-55cd-bb48-e3e707af1523)`
+- `ArchitectureSubsystem [class] (858be08b-3323-584a-9313-7900da4e8754)`
+- `OnboardingDoc [class] (d072b3f1-06ba-570c-81d6-8011b5f4ef7a)`
+- `OnboardingEntryPoint [class] (714763f7-edaf-54d7-bba9-4f448627ca17)`
+- `OnboardingStep [class] (819182a0-2c32-58a2-8ef2-e93073edc832)`
+- `HotspotsDoc [class] (7faf03ed-48ee-5625-9e91-ab547fafaecc)`
+- `HotspotFinding [class] (df99d457-6981-5bf6-a0ab-e20feed634cf)`
+- `HotspotNode [class] (93bb88eb-c6ba-5fb6-b0ea-b7f18e9a893f)`
+- `FileLink [class] (fe082100-23d9-532e-abb8-42e811cb2493)`
+- `ModuleLink [class] (c9cdece1-32f2-544d-8ee3-41a5e67071d6)`
+- `SourceSpan [class] (0e45cc41-cd3e-5811-be40-9f42358170a3)`
+- `CodewikiRunSummary [class] (01347f12-b0bf-5504-a07a-23e0233b4169)`
+- `CodewikiMeta [class] (44d57ff8-2098-5700-b3ea-fcb547609a45)`
+- `CodewikiDocMeta [class] (e2dfbb25-c43d-5040-9c18-7ef94c322f20)`
+- `CodewikiIndexSnapshot [class] (3e9f1131-d503-5275-8193-005bfeec31f2)`
+- `CodewikiFileSnapshot [class] (b0eba544-7128-5476-868b-a41551a34d17)`
+- `CodewikiSymbolSnapshot [class] (099903bf-eaa4-5213-a265-c3be387d8469)`
+- `TextGenerator [type] (3fda102d-27d1-59e5-a63f-81de6dae60a1)`
+- `SourceSpan [class] (521d52f2-3c95-5220-a4a0-4a4e8f5ed051)`
+- `SourceSpan.from_symbol [method] (80d29415-ff65-5cc1-b96e-8a1f3eb42341)`
+- `SourceSpan.citation [method] (e9003a4d-e9e7-5596-95a8-42033df1d8ac)`
+- `SourceSpan.contains [method] (acdd8337-ce60-515e-80f9-551db18797a8)`
+- `run [function] (c1698559-2061-5227-ac8f-265071e1b1b0)`
+- `validate_edge_limit [function] (db9bfac5-6855-5a66-bb29-872369429730)`
+- `generate_hierarchical_docs [function] (df6c6130-c0fe-54a3-bb34-12e7c9152f42)`
+- `generate_hierarchical_docs_with_graph_availability [function] (93227c9e-953e-5732-863b-cdc688bacd1d)`
+- `generate_hierarchical_docs_with_ownership [function] (b14e1be0-85bf-5d5b-8ba6-aef319024d72)`
+- `generate_hierarchical_docs_core [function] (0d01ef1d-22c5-5fbf-ac58-c6b5ab7f0cc1)`
 - `OwnershipOptions [class] (1a412fa9-ffc9-5eab-9e91-b90e886ab286)`
 - `OwnershipOptions [class] (fd470077-3483-5806-88fd-eb87dd55dc0b)`
 - `OwnershipOptions.default [method] (e652c60e-08d1-511e-9ab7-ef87f35db83e)`
@@ -732,29 +744,29 @@ Parent: [[code/repo|Repository Overview]]
 - `parse_codeowners [function] (8f44a134-477a-5025-b3b4-f0b53992a09d)`
 - `declared_owners_for_files [function] (a80586f6-12c1-5d4d-a4fe-095348149298)`
 - `codeowners_pattern_matches [function] (16380659-8199-5345-8239-8262b27258a0)`
-- `derived_owners_for_files [function] (d8f4b0fb-7c06-51b3-9108-88f62eec16a1)`
-- `content_hash [function] (73020b57-8262-56fc-a32f-167b42bac26b)`
-- `blame_file_contributors [function] (a4620f28-afee-5fba-a5d0-8fe5148fe893)`
-- `degraded_sources [function] (5bc744c8-59c9-5b7b-bfb6-70e4078112a3)`
-- `ownership_frontmatter [function] (58a5e201-7b0d-5dcb-b616-f915b9383335)`
-- `Frontmatter [class] (ca082da0-d1d6-5a0b-b62b-68848e9213b7)`
-- `is_false [function] (87851973-3388-5e07-98a9-d39ceaf45f04)`
-- `write_modules [function] (f6ca5087-f87d-5cb4-8d51-65ba9dfa47be)`
-- `write_files [function] (b66b849c-fde7-5470-a558-399a383bb261)`
-- `aggregate_primary [function] (f7bb8be3-3dea-5005-9f34-f242bc889788)`
-- `aggregate_contributors [function] (291bc225-1c4c-5343-8bc7-0a3e7a7fa0c7)`
-- `write_owner_line [function] (d857744a-7d59-5910-8b5b-03abee37771d)`
-- `write_contributor_line [function] (9e74b9ff-1a2a-544d-97ad-9aeea79429c7)`
-- `codewiki_ownership_codeowners_only_maps_declared_owners [function] (396dbe67-3b75-5b7b-8e2e-8a96243d2269)`
-- `codewiki_ownership_derives_top_committers_from_gix_blame [function] (336dede6-56eb-591c-b2b2-bbbaf3b8e106)`
-- `codewiki_ownership_declared_owners_take_primary_precedence [function] (0bd61aca-c99e-5b46-aa6e-c50007e4bcdd)`
-- `codewiki_ownership_without_sources_degrades_to_unknown [function] (b073a8a4-a30b-5885-a92c-fe3680002fdc)`
-- `codewiki_ownership_file_cap_marks_partial [function] (153bba6b-3c40-52b0-985e-1bab0ec0b872)`
-- `modules [function] (90890558-f2cb-58ca-aa73-c5a8db55ed59)`
-- `git_project_with_history [function] (331e6ded-bbaf-549d-92e6-db67432ff715)`
-- `git_project_with_two_files [function] (e1c89552-06a3-5893-9de8-7fa78c8b80fd)`
-- `git_author [function] (7ea608a9-235e-506e-b72a-53d652f528b0)`
-- `git [function] (16d6f495-24c5-55db-81d3-dcd5717d5c52)`
+- `derived_owners_for_files [function] (440d8976-0ef5-5d57-ac85-b94354607fcb)`
+- `content_hash [function] (8273b13c-705c-586b-a7bd-4b08c1e00599)`
+- `blame_file_contributors [function] (f3c5cfea-551f-5218-9a33-d4f69fca40be)`
+- `degraded_sources [function] (6f204b45-c613-5e32-9a7e-f8ffbff4306f)`
+- `ownership_frontmatter [function] (a62cf571-1081-5e28-9632-f9319c3e1393)`
+- `Frontmatter [class] (6c766f92-52b4-54cb-a18f-2b15e0485f9e)`
+- `is_false [function] (2bf49954-92e7-562d-8e40-7e8fda6b28a5)`
+- `write_modules [function] (c76ec4d2-e3a3-5af9-bb69-a4e7b0216ebd)`
+- `write_files [function] (1de9889e-babb-56ba-a8b0-bf56b54a7b8e)`
+- `aggregate_primary [function] (b4ebf07f-4df2-5a4b-86d1-ee814f385c57)`
+- `aggregate_contributors [function] (c7cc0b35-e4ab-5cc6-bd60-9acfe9200427)`
+- `write_owner_line [function] (8f1872b4-20b9-5cea-bb00-7bf461cac854)`
+- `write_contributor_line [function] (890368f6-00dd-5477-b0a7-b16e3c4cb25b)`
+- `codewiki_ownership_codeowners_only_maps_declared_owners [function] (9db352b3-4c52-5f9e-a28f-c01f407612b5)`
+- `codewiki_ownership_derives_top_committers_from_gix_blame [function] (3b3080d8-81db-5b3d-b5a7-d2a2d2bcccaa)`
+- `codewiki_ownership_declared_owners_take_primary_precedence [function] (90d2a40b-94ff-5ec9-a567-80ad9dd153a5)`
+- `codewiki_ownership_without_sources_degrades_to_unknown [function] (fba1e7c8-a580-5700-8611-54de86d42267)`
+- `codewiki_ownership_file_cap_marks_partial [function] (07b3ea08-4c1c-5303-a7d4-ca5e4f7f0a87)`
+- `modules [function] (53f6781b-60b1-59de-bc42-a775056e31a5)`
+- `git_project_with_history [function] (5633aa61-d42e-5c04-a19b-511b80f65dc6)`
+- `git_project_with_two_files [function] (1825a373-fc69-5c96-a04a-54a5295f61c3)`
+- `git_author [function] (5961933e-9d02-55c5-9c45-471a1ef147ed)`
+- `git [function] (ba6c63ac-2506-53db-866d-024c7e86271a)`
 - `inline_code [function] (2482ea17-b327-536d-96d8-3904bc42d195)`
 - `max_backtick_run [function] (486922ed-7bb3-57b1-b8f2-acaceaef8a1a)`
 - `plural [function] (8d64f358-8e09-57a3-a913-ff04cbc92b4d)`
@@ -780,21 +792,22 @@ Parent: [[code/repo|Repository Overview]]
 - `ChildSummary [class] (b2465604-5974-50b2-858a-554978c2ac1e)`
 - `render_module_dependency_mermaid [function] (b7b35534-a8ba-5c4b-a97d-2c70814ae8bd)`
 - `render_architecture_dependency_mermaid [function] (838dfd5f-c9ac-5214-846b-f6bd9cb1e54a)`
-- `collect_import_module_edges [function] (c5d1a081-9ca8-5be1-89ef-f99a488284ad)`
-- `render_module_call_mermaid [function] (a96326b6-c4ea-5610-b568-f4fdb448a8ba)`
-- `bounded_module_dependency_edges [function] (a4869ee3-9d84-52ec-ad59-0195145a5dc7)`
-- `bounded_component_edges [function] (89540036-c83a-50bb-a8e5-a4f86cb8f930)`
-- `dependency_neighbors [function] (9c29ac37-9332-5782-b1fb-5aa39903e8c3)`
-- `mermaid_node_id [function] (58e906f0-e3ee-5201-b4bf-804a2dbeaee9)`
-- `mermaid_label [function] (4b8d509f-a2f2-5a68-8bed-da733b82a7d0)`
-- `build_repo_doc [function] (79ff9b30-d1e7-5ff1-b267-da818bc66910)`
-- `render_repo_doc [function] (5947fbcc-c36f-5ce3-9d26-8274f83be407)`
-- `render_architecture_doc [function] (0568d01e-72cd-59a8-9c74-29f171aa1cc5)`
-- `render_onboarding_doc [function] (9f4f2460-dcdd-5ad8-89b9-b34c599d6b6f)`
-- `render_hotspots_doc [function] (2599b388-c570-5275-b44a-b0aa8ce03ceb)`
-- `write_hotspot_section [function] (e32666f6-c221-5ffe-a273-ae4269a794b5)`
-- `render_module_doc [function] (ef56be25-16dd-5d41-a54f-1442f282ed06)`
-- `render_file_doc [function] (42f68801-ae50-5a1a-a741-91654c2cfa11)`
+- `repo_mermaid_seed_modules [function] (981b3e96-566a-5c60-930f-493f9de8bbe8)`
+- `collect_import_module_edges [function] (ed9c2fd0-a610-5f3a-afd8-3827206f1e06)`
+- `render_module_call_mermaid [function] (c2042344-0373-58bd-adb2-9e2623eaa652)`
+- `bounded_module_dependency_edges [function] (a6e1f308-eade-51eb-9869-248fac1b8dde)`
+- `bounded_component_edges [function] (eabba8b1-1928-5986-bb71-2caa6b0375e6)`
+- `dependency_neighbors [function] (67f904ce-e09a-5c42-a79d-103cf4d5405f)`
+- `mermaid_node_id [function] (98ac6b3b-aa18-582c-a4af-d949abec6296)`
+- `mermaid_label [function] (4e13e14a-df53-52a7-81b2-70a3c0a92a84)`
+- `build_repo_doc [function] (93c90c64-d9e2-5a16-97b7-d07c84b8292c)`
+- `render_repo_doc [function] (672d2c89-f629-5a6c-85ed-13b27b8d583e)`
+- `render_architecture_doc [function] (1aa7d949-cfcc-5f2e-b5f5-ba2f5feb45c3)`
+- `render_onboarding_doc [function] (d4236b41-943c-5175-862e-382972d09ec6)`
+- `render_hotspots_doc [function] (9a3c2056-3902-5562-96f1-1f2c65916569)`
+- `write_hotspot_section [function] (1f9359c9-1aac-51bc-b862-7ff4c5ef5f17)`
+- `render_module_doc [function] (bb8b09da-3f39-52b7-b725-62d67b1c9b03)`
+- `render_file_doc [function] (5c7e11b5-44b5-51e1-862e-348aa0d2961f)`
 - `generates_hierarchical_docs [function] (01538df9-7c01-54a1-8060-052c7bdf6ed2)`
 - `codewiki_unified_vault_emits_code_paths_frontmatter_and_wikilinks [function] (e56e4ba0-1933-5422-925c-d7ddf0c6fef8)`
 - `inline_code_uses_commonmark_backtick_delimiters [function] (eb6df6af-383b-5c9c-8049-ee0a821575ac)`
@@ -825,9 +838,9 @@ Parent: [[code/repo|Repository Overview]]
 - `write_doc_rejects_symlinked_parent [function] (8d2f0ad3-95d5-5060-a0ff-b1218f7ffd37)`
 - `write_doc_rejects_symlinked_target [function] (5da67239-f403-5518-869b-05470d96b2ad)`
 - `test_symbol [function] (64fd385c-8e96-53a1-a765-824643006be7)`
-- `test_component_id [function] (dfba132b-ce93-5bbe-bf19-acb3a8c25a8e)`
-- `test_symbol_with_qualified [function] (9ab823f6-4d8b-58b8-84bb-b9bb8759ba4f)`
-- `test_symbol_range [function] (6d153b33-6511-5ca1-9977-1234080b8b6a)`
+- `test_component_id [function] (99cc5be8-0851-5bc2-b52e-f1b3e41cc94e)`
+- `test_symbol_with_qualified [function] (31582839-c08e-58fb-a9e9-8b6592cb93a4)`
+- `test_symbol_range [function] (77dc2561-03c6-5ce3-8cde-84ed13609525)`
 - `Frontmatter [class] (08461f06-3472-5506-9d7d-453cb4ac9c44)`
 - `FrontmatterSourceFile [class] (718932b0-dac9-5dd9-8f7a-898c30879624)`
 - `resolve_text_generator [function] (ce082b39-6685-5c97-b07e-d8064cad3d9d)`
@@ -841,10 +854,14 @@ Parent: [[code/repo|Repository Overview]]
 - `write_section [function] (d4aa1057-636d-5a6d-8fc3-938d770ca6cb)`
 - `collect_link_spans [function] (c5eb1720-78dd-58ca-920e-fdc837cb8d15)`
 - `citation_list [function] (10d7021f-7cdc-5701-9ad6-1f53a089d29e)`
-- `ground_text [function] (468fa3a7-b6be-5f2a-98e3-146cebb57999)`
-- `strip_invalid_citations [function] (ba01f7ae-bbe2-52e9-a8bb-6b7580b374f2)`
-- `contains_valid_citation [function] (507d3704-84c2-52e9-b903-e845c925fa8d)`
-- `citation_parts [function] (ce4c322d-799b-5028-a58b-e87e934e2ea2)`
-- `frontmatter [function] (d5ecfd84-071b-5464-938f-c1fbb543400b)`
-- `frontmatter_with_degradation [function] (9766f883-4e9f-51b6-88ba-8024bb827da4)`
+- `citation_markers [function] (86926645-1b0d-5b83-85d0-9a96bc0d42d3)`
+- `replace_citations_with_markers [function] (c496ed8a-a21e-5cce-9dcd-8ab9d540b9fa)`
+- `write_references [function] (98f33839-97a5-5271-ae3c-dea936e7fe3c)`
+- `citation_references [function] (568913c6-e6a8-5221-8f45-cbcb40937e34)`
+- `ground_text [function] (b0c5f0f1-84eb-5589-8ea8-89f94262f036)`
+- `strip_invalid_citations [function] (e675ce57-6486-5873-8fa9-39bd72e1f25c)`
+- `contains_valid_citation [function] (fb674767-361e-51a7-944a-6fd3549a6d32)`
+- `citation_parts [function] (f7193077-b026-5e36-a2f2-0685e1ed6321)`
+- `frontmatter [function] (f3d6a072-303f-542c-b2f4-24558486120e)`
+- `frontmatter_with_degradation [function] (f147e2a1-1d81-5a3f-b6db-de0d87c3b926)`
 

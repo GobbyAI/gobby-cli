@@ -17,12 +17,16 @@ source:
   - 143-145
   - 147-156
   - 158-170
-  - 172-185
-  - 187-213
-  - 215-232
-  - 234-247
-  - 249-251
-  - 253-305
+  - 172-178
+  - 180-186
+  - 188-198
+  - 200-209
+  - 211-224
+  - 226-252
+  - 254-271
+  - 273-286
+  - 288-290
+  - 292-344
 provenance:
 - file: crates/gcode/src/commands/codewiki/text.rs
   ranges:
@@ -39,12 +43,16 @@ provenance:
   - 143-145
   - 147-156
   - 158-170
-  - 172-185
-  - 187-213
-  - 215-232
-  - 234-247
-  - 249-251
-  - 253-305
+  - 172-178
+  - 180-186
+  - 188-198
+  - 200-209
+  - 211-224
+  - 226-252
+  - 254-271
+  - 273-286
+  - 288-290
+  - 292-344
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -56,12 +64,13 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Purpose
 
-`crates/gcode/src/commands/codewiki/text.rs` exposes 19 indexed API symbols.
+`crates/gcode/src/commands/codewiki/text.rs` exposes 23 indexed API symbols.
 [crates/gcode/src/commands/codewiki/text.rs:6-19] [crates/gcode/src/commands/codewiki/text.rs:22-25] [crates/gcode/src/commands/codewiki/text.rs:27-58] [crates/gcode/src/commands/codewiki/text.rs:60-76]
 [crates/gcode/src/commands/codewiki/text.rs:78-86] [crates/gcode/src/commands/codewiki/text.rs:88-91] [crates/gcode/src/commands/codewiki/text.rs:93-108] [crates/gcode/src/commands/codewiki/text.rs:110-119]
 [crates/gcode/src/commands/codewiki/text.rs:121-133] [crates/gcode/src/commands/codewiki/text.rs:135-141] [crates/gcode/src/commands/codewiki/text.rs:143-145] [crates/gcode/src/commands/codewiki/text.rs:147-156]
-[crates/gcode/src/commands/codewiki/text.rs:158-170] [crates/gcode/src/commands/codewiki/text.rs:172-185] [crates/gcode/src/commands/codewiki/text.rs:187-213] [crates/gcode/src/commands/codewiki/text.rs:215-232]
-[crates/gcode/src/commands/codewiki/text.rs:234-247] [crates/gcode/src/commands/codewiki/text.rs:249-251] [crates/gcode/src/commands/codewiki/text.rs:253-305]
+[crates/gcode/src/commands/codewiki/text.rs:158-170] [crates/gcode/src/commands/codewiki/text.rs:172-178] [crates/gcode/src/commands/codewiki/text.rs:180-186] [crates/gcode/src/commands/codewiki/text.rs:188-198]
+[crates/gcode/src/commands/codewiki/text.rs:200-209] [crates/gcode/src/commands/codewiki/text.rs:211-224] [crates/gcode/src/commands/codewiki/text.rs:226-252] [crates/gcode/src/commands/codewiki/text.rs:254-271]
+[crates/gcode/src/commands/codewiki/text.rs:273-286] [crates/gcode/src/commands/codewiki/text.rs:288-290] [crates/gcode/src/commands/codewiki/text.rs:292-344]
 
 ## API Symbols
 
@@ -104,22 +113,34 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 - `citation_list` (function) component `citation_list [function]` (`10d7021f-7cdc-5701-9ad6-1f53a089d29e`) lines 158-170 [crates/gcode/src/commands/codewiki/text.rs:158-170]
   - Signature: `pub(crate) fn citation_list(spans: &[SourceSpan]) -> String {`
   - Purpose: Indexed function `citation_list` in `crates/gcode/src/commands/codewiki/text.rs`. [crates/gcode/src/commands/codewiki/text.rs:158-170]
-- `ground_text` (function) component `ground_text [function]` (`468fa3a7-b6be-5f2a-98e3-146cebb57999`) lines 172-185 [crates/gcode/src/commands/codewiki/text.rs:172-185]
+- `citation_markers` (function) component `citation_markers [function]` (`86926645-1b0d-5b83-85d0-9a96bc0d42d3`) lines 172-178 [crates/gcode/src/commands/codewiki/text.rs:172-178]
+  - Signature: `pub(crate) fn citation_markers(spans: &[SourceSpan]) -> String {`
+  - Purpose: Indexed function `citation_markers` in `crates/gcode/src/commands/codewiki/text.rs`. [crates/gcode/src/commands/codewiki/text.rs:172-178]
+- `replace_citations_with_markers` (function) component `replace_citations_with_markers [function]` (`c496ed8a-a21e-5cce-9dcd-8ab9d540b9fa`) lines 180-186 [crates/gcode/src/commands/codewiki/text.rs:180-186]
+  - Signature: `pub(crate) fn replace_citations_with_markers(text: &str, spans: &[SourceSpan]) -> String {`
+  - Purpose: Indexed function `replace_citations_with_markers` in `crates/gcode/src/commands/codewiki/text.rs`. [crates/gcode/src/commands/codewiki/text.rs:180-186]
+- `write_references` (function) component `write_references [function]` (`98f33839-97a5-5271-ae3c-dea936e7fe3c`) lines 188-198 [crates/gcode/src/commands/codewiki/text.rs:188-198]
+  - Signature: `pub(crate) fn write_references(doc: &mut String, spans: &[SourceSpan]) {`
+  - Purpose: Indexed function `write_references` in `crates/gcode/src/commands/codewiki/text.rs`. [crates/gcode/src/commands/codewiki/text.rs:188-198]
+- `citation_references` (function) component `citation_references [function]` (`568913c6-e6a8-5221-8f45-cbcb40937e34`) lines 200-209 [crates/gcode/src/commands/codewiki/text.rs:200-209]
+  - Signature: `fn citation_references(spans: &[SourceSpan]) -> Vec<(usize, String)> {`
+  - Purpose: Indexed function `citation_references` in `crates/gcode/src/commands/codewiki/text.rs`. [crates/gcode/src/commands/codewiki/text.rs:200-209]
+- `ground_text` (function) component `ground_text [function]` (`b0c5f0f1-84eb-5589-8ea8-89f94262f036`) lines 211-224 [crates/gcode/src/commands/codewiki/text.rs:211-224]
   - Signature: `pub(crate) fn ground_text(`
-  - Purpose: Indexed function `ground_text` in `crates/gcode/src/commands/codewiki/text.rs`. [crates/gcode/src/commands/codewiki/text.rs:172-185]
-- `strip_invalid_citations` (function) component `strip_invalid_citations [function]` (`ba01f7ae-bbe2-52e9-a8bb-6b7580b374f2`) lines 187-213 [crates/gcode/src/commands/codewiki/text.rs:187-213]
+  - Purpose: Indexed function `ground_text` in `crates/gcode/src/commands/codewiki/text.rs`. [crates/gcode/src/commands/codewiki/text.rs:211-224]
+- `strip_invalid_citations` (function) component `strip_invalid_citations [function]` (`e675ce57-6486-5873-8fa9-39bd72e1f25c`) lines 226-252 [crates/gcode/src/commands/codewiki/text.rs:226-252]
   - Signature: `pub(crate) fn strip_invalid_citations(text: &str, valid_spans: &[SourceSpan]) -> String {`
-  - Purpose: Indexed function `strip_invalid_citations` in `crates/gcode/src/commands/codewiki/text.rs`. [crates/gcode/src/commands/codewiki/text.rs:187-213]
-- `contains_valid_citation` (function) component `contains_valid_citation [function]` (`507d3704-84c2-52e9-b903-e845c925fa8d`) lines 215-232 [crates/gcode/src/commands/codewiki/text.rs:215-232]
+  - Purpose: Indexed function `strip_invalid_citations` in `crates/gcode/src/commands/codewiki/text.rs`. [crates/gcode/src/commands/codewiki/text.rs:226-252]
+- `contains_valid_citation` (function) component `contains_valid_citation [function]` (`fb674767-361e-51a7-944a-6fd3549a6d32`) lines 254-271 [crates/gcode/src/commands/codewiki/text.rs:254-271]
   - Signature: `pub(crate) fn contains_valid_citation(text: &str, valid_spans: &[SourceSpan]) -> bool {`
-  - Purpose: Indexed function `contains_valid_citation` in `crates/gcode/src/commands/codewiki/text.rs`. [crates/gcode/src/commands/codewiki/text.rs:215-232]
-- `citation_parts` (function) component `citation_parts [function]` (`ce4c322d-799b-5028-a58b-e87e934e2ea2`) lines 234-247 [crates/gcode/src/commands/codewiki/text.rs:234-247]
+  - Purpose: Indexed function `contains_valid_citation` in `crates/gcode/src/commands/codewiki/text.rs`. [crates/gcode/src/commands/codewiki/text.rs:254-271]
+- `citation_parts` (function) component `citation_parts [function]` (`f7193077-b026-5e36-a2f2-0685e1ed6321`) lines 273-286 [crates/gcode/src/commands/codewiki/text.rs:273-286]
   - Signature: `pub(crate) fn citation_parts(value: &str) -> Option<(&str, usize, usize)> {`
-  - Purpose: Indexed function `citation_parts` in `crates/gcode/src/commands/codewiki/text.rs`. [crates/gcode/src/commands/codewiki/text.rs:234-247]
-- `frontmatter` (function) component `frontmatter [function]` (`d5ecfd84-071b-5464-938f-c1fbb543400b`) lines 249-251 [crates/gcode/src/commands/codewiki/text.rs:249-251]
+  - Purpose: Indexed function `citation_parts` in `crates/gcode/src/commands/codewiki/text.rs`. [crates/gcode/src/commands/codewiki/text.rs:273-286]
+- `frontmatter` (function) component `frontmatter [function]` (`f3d6a072-303f-542c-b2f4-24558486120e`) lines 288-290 [crates/gcode/src/commands/codewiki/text.rs:288-290]
   - Signature: `pub(crate) fn frontmatter(title: &str, kind: &str, source_spans: &[SourceSpan]) -> String {`
-  - Purpose: Indexed function `frontmatter` in `crates/gcode/src/commands/codewiki/text.rs`. [crates/gcode/src/commands/codewiki/text.rs:249-251]
-- `frontmatter_with_degradation` (function) component `frontmatter_with_degradation [function]` (`9766f883-4e9f-51b6-88ba-8024bb827da4`) lines 253-305 [crates/gcode/src/commands/codewiki/text.rs:253-305]
+  - Purpose: Indexed function `frontmatter` in `crates/gcode/src/commands/codewiki/text.rs`. [crates/gcode/src/commands/codewiki/text.rs:288-290]
+- `frontmatter_with_degradation` (function) component `frontmatter_with_degradation [function]` (`f147e2a1-1d81-5a3f-b6db-de0d87c3b926`) lines 292-344 [crates/gcode/src/commands/codewiki/text.rs:292-344]
   - Signature: `pub(crate) fn frontmatter_with_degradation(`
-  - Purpose: Indexed function `frontmatter_with_degradation` in `crates/gcode/src/commands/codewiki/text.rs`. [crates/gcode/src/commands/codewiki/text.rs:253-305]
+  - Purpose: Indexed function `frontmatter_with_degradation` in `crates/gcode/src/commands/codewiki/text.rs`. [crates/gcode/src/commands/codewiki/text.rs:292-344]
 

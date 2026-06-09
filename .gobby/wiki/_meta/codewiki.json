@@ -6,13 +6,13 @@
         "crates/gcode/src/commands/codewiki/cluster.rs": "0f3fea58bf6478e84b49380fcd15986939c7624bbf44e6f9d698b4bc21dfe0f9",
         "crates/gcode/src/commands/codewiki/graph.rs": "67dbaf60d22262222d8849aafa6574c9fff637f3a69b09b21f2add3f9275ebb0",
         "crates/gcode/src/commands/codewiki/io.rs": "5e6678703e17ac33a1898bbbc0c29d120ab834f626dd0477b767bf90ffdee2ec",
-        "crates/gcode/src/commands/codewiki/mod.rs": "8a08cc6a5150a132ef52039e8f71bd49782cf14be406400631b48a341e6eac9e",
-        "crates/gcode/src/commands/codewiki/ownership.rs": "a6e4ec4845b0c7cfa7cae179c4a41ec37339c223fead0105a3fae538e12bf225",
+        "crates/gcode/src/commands/codewiki/mod.rs": "d04920401f15e85f880becf868f38f2547c4a934604791ef3cfdc1e02b072764",
+        "crates/gcode/src/commands/codewiki/ownership.rs": "715c4a0bafc34c2f15515d393c408df6fffeee94d2dea3456c44110cef50bf50",
         "crates/gcode/src/commands/codewiki/paths.rs": "1c49ba1a37d0b6aaeb9351b2c6863ec5cfafde6bcf784e3e6204743843cb6173",
         "crates/gcode/src/commands/codewiki/prompts.rs": "11f3d9f4438a13f93c4c14d1b0fc79b01cb2a9be0f2cdeebf33292945a92b3b4",
-        "crates/gcode/src/commands/codewiki/render.rs": "36f54d4bf713d2d03f72ea478f3ee50cd84f7eb95c2e999d1f153aaa26e87a11",
-        "crates/gcode/src/commands/codewiki/tests.rs": "1fdf62d24474d8ccf1daf189bffd22e80f46f2acfa68407eafe52b8b10d6d043",
-        "crates/gcode/src/commands/codewiki/text.rs": "b752e090e6f457a6617da72035d23c1c612aa7443a5326a32c9364238b55e671"
+        "crates/gcode/src/commands/codewiki/render.rs": "989151f6f4b0954d4d13985cc0e85de7ee23197984d9a0820eb253706156341d",
+        "crates/gcode/src/commands/codewiki/tests.rs": "d6c401f122cc02b4eeb1b9a16419351c7c7bb6a3717f7c7f7e19480ad197c714",
+        "crates/gcode/src/commands/codewiki/text.rs": "2711208d6038810ed92f031babc67a75718c9139a2176153af8218519fa0dd44"
       }
     },
     "code/_changes.md": {
@@ -24,19 +24,20 @@
         "crates/gcode/src/commands/codewiki/cluster.rs": "0f3fea58bf6478e84b49380fcd15986939c7624bbf44e6f9d698b4bc21dfe0f9",
         "crates/gcode/src/commands/codewiki/graph.rs": "67dbaf60d22262222d8849aafa6574c9fff637f3a69b09b21f2add3f9275ebb0",
         "crates/gcode/src/commands/codewiki/io.rs": "5e6678703e17ac33a1898bbbc0c29d120ab834f626dd0477b767bf90ffdee2ec",
-        "crates/gcode/src/commands/codewiki/mod.rs": "8a08cc6a5150a132ef52039e8f71bd49782cf14be406400631b48a341e6eac9e",
-        "crates/gcode/src/commands/codewiki/ownership.rs": "a6e4ec4845b0c7cfa7cae179c4a41ec37339c223fead0105a3fae538e12bf225",
+        "crates/gcode/src/commands/codewiki/mod.rs": "d04920401f15e85f880becf868f38f2547c4a934604791ef3cfdc1e02b072764",
+        "crates/gcode/src/commands/codewiki/ownership.rs": "715c4a0bafc34c2f15515d393c408df6fffeee94d2dea3456c44110cef50bf50",
         "crates/gcode/src/commands/codewiki/paths.rs": "1c49ba1a37d0b6aaeb9351b2c6863ec5cfafde6bcf784e3e6204743843cb6173",
-        "crates/gcode/src/commands/codewiki/render.rs": "36f54d4bf713d2d03f72ea478f3ee50cd84f7eb95c2e999d1f153aaa26e87a11",
-        "crates/gcode/src/commands/codewiki/tests.rs": "1fdf62d24474d8ccf1daf189bffd22e80f46f2acfa68407eafe52b8b10d6d043",
-        "crates/gcode/src/commands/codewiki/text.rs": "b752e090e6f457a6617da72035d23c1c612aa7443a5326a32c9364238b55e671"
+        "crates/gcode/src/commands/codewiki/render.rs": "989151f6f4b0954d4d13985cc0e85de7ee23197984d9a0820eb253706156341d",
+        "crates/gcode/src/commands/codewiki/tests.rs": "d6c401f122cc02b4eeb1b9a16419351c7c7bb6a3717f7c7f7e19480ad197c714",
+        "crates/gcode/src/commands/codewiki/text.rs": "2711208d6038810ed92f031babc67a75718c9139a2176153af8218519fa0dd44"
       }
     },
     "code/_onboarding.md": {
       "source_hashes": {
         "crates/gcode/src/commands/codewiki/io.rs": "5e6678703e17ac33a1898bbbc0c29d120ab834f626dd0477b767bf90ffdee2ec",
-        "crates/gcode/src/commands/codewiki/mod.rs": "8a08cc6a5150a132ef52039e8f71bd49782cf14be406400631b48a341e6eac9e",
-        "crates/gcode/src/commands/codewiki/prompts.rs": "11f3d9f4438a13f93c4c14d1b0fc79b01cb2a9be0f2cdeebf33292945a92b3b4"
+        "crates/gcode/src/commands/codewiki/mod.rs": "d04920401f15e85f880becf868f38f2547c4a934604791ef3cfdc1e02b072764",
+        "crates/gcode/src/commands/codewiki/prompts.rs": "11f3d9f4438a13f93c4c14d1b0fc79b01cb2a9be0f2cdeebf33292945a92b3b4",
+        "crates/gcode/src/commands/codewiki/tests.rs": "d6c401f122cc02b4eeb1b9a16419351c7c7bb6a3717f7c7f7e19480ad197c714"
       }
     },
     "code/_ownership.md": {
@@ -64,12 +65,12 @@
     },
     "code/files/crates/gcode/src/commands/codewiki/mod.rs.md": {
       "source_hashes": {
-        "crates/gcode/src/commands/codewiki/mod.rs": "8a08cc6a5150a132ef52039e8f71bd49782cf14be406400631b48a341e6eac9e"
+        "crates/gcode/src/commands/codewiki/mod.rs": "d04920401f15e85f880becf868f38f2547c4a934604791ef3cfdc1e02b072764"
       }
     },
     "code/files/crates/gcode/src/commands/codewiki/ownership.rs.md": {
       "source_hashes": {
-        "crates/gcode/src/commands/codewiki/ownership.rs": "a6e4ec4845b0c7cfa7cae179c4a41ec37339c223fead0105a3fae538e12bf225"
+        "crates/gcode/src/commands/codewiki/ownership.rs": "715c4a0bafc34c2f15515d393c408df6fffeee94d2dea3456c44110cef50bf50"
       }
     },
     "code/files/crates/gcode/src/commands/codewiki/paths.rs.md": {
@@ -84,17 +85,17 @@
     },
     "code/files/crates/gcode/src/commands/codewiki/render.rs.md": {
       "source_hashes": {
-        "crates/gcode/src/commands/codewiki/render.rs": "36f54d4bf713d2d03f72ea478f3ee50cd84f7eb95c2e999d1f153aaa26e87a11"
+        "crates/gcode/src/commands/codewiki/render.rs": "989151f6f4b0954d4d13985cc0e85de7ee23197984d9a0820eb253706156341d"
       }
     },
     "code/files/crates/gcode/src/commands/codewiki/tests.rs.md": {
       "source_hashes": {
-        "crates/gcode/src/commands/codewiki/tests.rs": "1fdf62d24474d8ccf1daf189bffd22e80f46f2acfa68407eafe52b8b10d6d043"
+        "crates/gcode/src/commands/codewiki/tests.rs": "d6c401f122cc02b4eeb1b9a16419351c7c7bb6a3717f7c7f7e19480ad197c714"
       }
     },
     "code/files/crates/gcode/src/commands/codewiki/text.rs.md": {
       "source_hashes": {
-        "crates/gcode/src/commands/codewiki/text.rs": "b752e090e6f457a6617da72035d23c1c612aa7443a5326a32c9364238b55e671"
+        "crates/gcode/src/commands/codewiki/text.rs": "2711208d6038810ed92f031babc67a75718c9139a2176153af8218519fa0dd44"
       }
     },
     "code/modules/crates.md": {
@@ -103,13 +104,13 @@
         "crates/gcode/src/commands/codewiki/cluster.rs": "0f3fea58bf6478e84b49380fcd15986939c7624bbf44e6f9d698b4bc21dfe0f9",
         "crates/gcode/src/commands/codewiki/graph.rs": "67dbaf60d22262222d8849aafa6574c9fff637f3a69b09b21f2add3f9275ebb0",
         "crates/gcode/src/commands/codewiki/io.rs": "5e6678703e17ac33a1898bbbc0c29d120ab834f626dd0477b767bf90ffdee2ec",
-        "crates/gcode/src/commands/codewiki/mod.rs": "8a08cc6a5150a132ef52039e8f71bd49782cf14be406400631b48a341e6eac9e",
-        "crates/gcode/src/commands/codewiki/ownership.rs": "a6e4ec4845b0c7cfa7cae179c4a41ec37339c223fead0105a3fae538e12bf225",
+        "crates/gcode/src/commands/codewiki/mod.rs": "d04920401f15e85f880becf868f38f2547c4a934604791ef3cfdc1e02b072764",
+        "crates/gcode/src/commands/codewiki/ownership.rs": "715c4a0bafc34c2f15515d393c408df6fffeee94d2dea3456c44110cef50bf50",
         "crates/gcode/src/commands/codewiki/paths.rs": "1c49ba1a37d0b6aaeb9351b2c6863ec5cfafde6bcf784e3e6204743843cb6173",
         "crates/gcode/src/commands/codewiki/prompts.rs": "11f3d9f4438a13f93c4c14d1b0fc79b01cb2a9be0f2cdeebf33292945a92b3b4",
-        "crates/gcode/src/commands/codewiki/render.rs": "36f54d4bf713d2d03f72ea478f3ee50cd84f7eb95c2e999d1f153aaa26e87a11",
-        "crates/gcode/src/commands/codewiki/tests.rs": "1fdf62d24474d8ccf1daf189bffd22e80f46f2acfa68407eafe52b8b10d6d043",
-        "crates/gcode/src/commands/codewiki/text.rs": "b752e090e6f457a6617da72035d23c1c612aa7443a5326a32c9364238b55e671"
+        "crates/gcode/src/commands/codewiki/render.rs": "989151f6f4b0954d4d13985cc0e85de7ee23197984d9a0820eb253706156341d",
+        "crates/gcode/src/commands/codewiki/tests.rs": "d6c401f122cc02b4eeb1b9a16419351c7c7bb6a3717f7c7f7e19480ad197c714",
+        "crates/gcode/src/commands/codewiki/text.rs": "2711208d6038810ed92f031babc67a75718c9139a2176153af8218519fa0dd44"
       }
     },
     "code/modules/crates/gcode.md": {
@@ -118,13 +119,13 @@
         "crates/gcode/src/commands/codewiki/cluster.rs": "0f3fea58bf6478e84b49380fcd15986939c7624bbf44e6f9d698b4bc21dfe0f9",
         "crates/gcode/src/commands/codewiki/graph.rs": "67dbaf60d22262222d8849aafa6574c9fff637f3a69b09b21f2add3f9275ebb0",
         "crates/gcode/src/commands/codewiki/io.rs": "5e6678703e17ac33a1898bbbc0c29d120ab834f626dd0477b767bf90ffdee2ec",
-        "crates/gcode/src/commands/codewiki/mod.rs": "8a08cc6a5150a132ef52039e8f71bd49782cf14be406400631b48a341e6eac9e",
-        "crates/gcode/src/commands/codewiki/ownership.rs": "a6e4ec4845b0c7cfa7cae179c4a41ec37339c223fead0105a3fae538e12bf225",
+        "crates/gcode/src/commands/codewiki/mod.rs": "d04920401f15e85f880becf868f38f2547c4a934604791ef3cfdc1e02b072764",
+        "crates/gcode/src/commands/codewiki/ownership.rs": "715c4a0bafc34c2f15515d393c408df6fffeee94d2dea3456c44110cef50bf50",
         "crates/gcode/src/commands/codewiki/paths.rs": "1c49ba1a37d0b6aaeb9351b2c6863ec5cfafde6bcf784e3e6204743843cb6173",
         "crates/gcode/src/commands/codewiki/prompts.rs": "11f3d9f4438a13f93c4c14d1b0fc79b01cb2a9be0f2cdeebf33292945a92b3b4",
-        "crates/gcode/src/commands/codewiki/render.rs": "36f54d4bf713d2d03f72ea478f3ee50cd84f7eb95c2e999d1f153aaa26e87a11",
-        "crates/gcode/src/commands/codewiki/tests.rs": "1fdf62d24474d8ccf1daf189bffd22e80f46f2acfa68407eafe52b8b10d6d043",
-        "crates/gcode/src/commands/codewiki/text.rs": "b752e090e6f457a6617da72035d23c1c612aa7443a5326a32c9364238b55e671"
+        "crates/gcode/src/commands/codewiki/render.rs": "989151f6f4b0954d4d13985cc0e85de7ee23197984d9a0820eb253706156341d",
+        "crates/gcode/src/commands/codewiki/tests.rs": "d6c401f122cc02b4eeb1b9a16419351c7c7bb6a3717f7c7f7e19480ad197c714",
+        "crates/gcode/src/commands/codewiki/text.rs": "2711208d6038810ed92f031babc67a75718c9139a2176153af8218519fa0dd44"
       }
     },
     "code/modules/crates/gcode/src.md": {
@@ -133,13 +134,13 @@
         "crates/gcode/src/commands/codewiki/cluster.rs": "0f3fea58bf6478e84b49380fcd15986939c7624bbf44e6f9d698b4bc21dfe0f9",
         "crates/gcode/src/commands/codewiki/graph.rs": "67dbaf60d22262222d8849aafa6574c9fff637f3a69b09b21f2add3f9275ebb0",
         "crates/gcode/src/commands/codewiki/io.rs": "5e6678703e17ac33a1898bbbc0c29d120ab834f626dd0477b767bf90ffdee2ec",
-        "crates/gcode/src/commands/codewiki/mod.rs": "8a08cc6a5150a132ef52039e8f71bd49782cf14be406400631b48a341e6eac9e",
-        "crates/gcode/src/commands/codewiki/ownership.rs": "a6e4ec4845b0c7cfa7cae179c4a41ec37339c223fead0105a3fae538e12bf225",
+        "crates/gcode/src/commands/codewiki/mod.rs": "d04920401f15e85f880becf868f38f2547c4a934604791ef3cfdc1e02b072764",
+        "crates/gcode/src/commands/codewiki/ownership.rs": "715c4a0bafc34c2f15515d393c408df6fffeee94d2dea3456c44110cef50bf50",
         "crates/gcode/src/commands/codewiki/paths.rs": "1c49ba1a37d0b6aaeb9351b2c6863ec5cfafde6bcf784e3e6204743843cb6173",
         "crates/gcode/src/commands/codewiki/prompts.rs": "11f3d9f4438a13f93c4c14d1b0fc79b01cb2a9be0f2cdeebf33292945a92b3b4",
-        "crates/gcode/src/commands/codewiki/render.rs": "36f54d4bf713d2d03f72ea478f3ee50cd84f7eb95c2e999d1f153aaa26e87a11",
-        "crates/gcode/src/commands/codewiki/tests.rs": "1fdf62d24474d8ccf1daf189bffd22e80f46f2acfa68407eafe52b8b10d6d043",
-        "crates/gcode/src/commands/codewiki/text.rs": "b752e090e6f457a6617da72035d23c1c612aa7443a5326a32c9364238b55e671"
+        "crates/gcode/src/commands/codewiki/render.rs": "989151f6f4b0954d4d13985cc0e85de7ee23197984d9a0820eb253706156341d",
+        "crates/gcode/src/commands/codewiki/tests.rs": "d6c401f122cc02b4eeb1b9a16419351c7c7bb6a3717f7c7f7e19480ad197c714",
+        "crates/gcode/src/commands/codewiki/text.rs": "2711208d6038810ed92f031babc67a75718c9139a2176153af8218519fa0dd44"
       }
     },
     "code/modules/crates/gcode/src/commands.md": {
@@ -148,13 +149,13 @@
         "crates/gcode/src/commands/codewiki/cluster.rs": "0f3fea58bf6478e84b49380fcd15986939c7624bbf44e6f9d698b4bc21dfe0f9",
         "crates/gcode/src/commands/codewiki/graph.rs": "67dbaf60d22262222d8849aafa6574c9fff637f3a69b09b21f2add3f9275ebb0",
         "crates/gcode/src/commands/codewiki/io.rs": "5e6678703e17ac33a1898bbbc0c29d120ab834f626dd0477b767bf90ffdee2ec",
-        "crates/gcode/src/commands/codewiki/mod.rs": "8a08cc6a5150a132ef52039e8f71bd49782cf14be406400631b48a341e6eac9e",
-        "crates/gcode/src/commands/codewiki/ownership.rs": "a6e4ec4845b0c7cfa7cae179c4a41ec37339c223fead0105a3fae538e12bf225",
+        "crates/gcode/src/commands/codewiki/mod.rs": "d04920401f15e85f880becf868f38f2547c4a934604791ef3cfdc1e02b072764",
+        "crates/gcode/src/commands/codewiki/ownership.rs": "715c4a0bafc34c2f15515d393c408df6fffeee94d2dea3456c44110cef50bf50",
         "crates/gcode/src/commands/codewiki/paths.rs": "1c49ba1a37d0b6aaeb9351b2c6863ec5cfafde6bcf784e3e6204743843cb6173",
         "crates/gcode/src/commands/codewiki/prompts.rs": "11f3d9f4438a13f93c4c14d1b0fc79b01cb2a9be0f2cdeebf33292945a92b3b4",
-        "crates/gcode/src/commands/codewiki/render.rs": "36f54d4bf713d2d03f72ea478f3ee50cd84f7eb95c2e999d1f153aaa26e87a11",
-        "crates/gcode/src/commands/codewiki/tests.rs": "1fdf62d24474d8ccf1daf189bffd22e80f46f2acfa68407eafe52b8b10d6d043",
-        "crates/gcode/src/commands/codewiki/text.rs": "b752e090e6f457a6617da72035d23c1c612aa7443a5326a32c9364238b55e671"
+        "crates/gcode/src/commands/codewiki/render.rs": "989151f6f4b0954d4d13985cc0e85de7ee23197984d9a0820eb253706156341d",
+        "crates/gcode/src/commands/codewiki/tests.rs": "d6c401f122cc02b4eeb1b9a16419351c7c7bb6a3717f7c7f7e19480ad197c714",
+        "crates/gcode/src/commands/codewiki/text.rs": "2711208d6038810ed92f031babc67a75718c9139a2176153af8218519fa0dd44"
       }
     },
     "code/modules/crates/gcode/src/commands/codewiki.md": {
@@ -163,13 +164,13 @@
         "crates/gcode/src/commands/codewiki/cluster.rs": "0f3fea58bf6478e84b49380fcd15986939c7624bbf44e6f9d698b4bc21dfe0f9",
         "crates/gcode/src/commands/codewiki/graph.rs": "67dbaf60d22262222d8849aafa6574c9fff637f3a69b09b21f2add3f9275ebb0",
         "crates/gcode/src/commands/codewiki/io.rs": "5e6678703e17ac33a1898bbbc0c29d120ab834f626dd0477b767bf90ffdee2ec",
-        "crates/gcode/src/commands/codewiki/mod.rs": "8a08cc6a5150a132ef52039e8f71bd49782cf14be406400631b48a341e6eac9e",
-        "crates/gcode/src/commands/codewiki/ownership.rs": "a6e4ec4845b0c7cfa7cae179c4a41ec37339c223fead0105a3fae538e12bf225",
+        "crates/gcode/src/commands/codewiki/mod.rs": "d04920401f15e85f880becf868f38f2547c4a934604791ef3cfdc1e02b072764",
+        "crates/gcode/src/commands/codewiki/ownership.rs": "715c4a0bafc34c2f15515d393c408df6fffeee94d2dea3456c44110cef50bf50",
         "crates/gcode/src/commands/codewiki/paths.rs": "1c49ba1a37d0b6aaeb9351b2c6863ec5cfafde6bcf784e3e6204743843cb6173",
         "crates/gcode/src/commands/codewiki/prompts.rs": "11f3d9f4438a13f93c4c14d1b0fc79b01cb2a9be0f2cdeebf33292945a92b3b4",
-        "crates/gcode/src/commands/codewiki/render.rs": "36f54d4bf713d2d03f72ea478f3ee50cd84f7eb95c2e999d1f153aaa26e87a11",
-        "crates/gcode/src/commands/codewiki/tests.rs": "1fdf62d24474d8ccf1daf189bffd22e80f46f2acfa68407eafe52b8b10d6d043",
-        "crates/gcode/src/commands/codewiki/text.rs": "b752e090e6f457a6617da72035d23c1c612aa7443a5326a32c9364238b55e671"
+        "crates/gcode/src/commands/codewiki/render.rs": "989151f6f4b0954d4d13985cc0e85de7ee23197984d9a0820eb253706156341d",
+        "crates/gcode/src/commands/codewiki/tests.rs": "d6c401f122cc02b4eeb1b9a16419351c7c7bb6a3717f7c7f7e19480ad197c714",
+        "crates/gcode/src/commands/codewiki/text.rs": "2711208d6038810ed92f031babc67a75718c9139a2176153af8218519fa0dd44"
       }
     },
     "code/repo.md": {
@@ -178,13 +179,13 @@
         "crates/gcode/src/commands/codewiki/cluster.rs": "0f3fea58bf6478e84b49380fcd15986939c7624bbf44e6f9d698b4bc21dfe0f9",
         "crates/gcode/src/commands/codewiki/graph.rs": "67dbaf60d22262222d8849aafa6574c9fff637f3a69b09b21f2add3f9275ebb0",
         "crates/gcode/src/commands/codewiki/io.rs": "5e6678703e17ac33a1898bbbc0c29d120ab834f626dd0477b767bf90ffdee2ec",
-        "crates/gcode/src/commands/codewiki/mod.rs": "8a08cc6a5150a132ef52039e8f71bd49782cf14be406400631b48a341e6eac9e",
-        "crates/gcode/src/commands/codewiki/ownership.rs": "a6e4ec4845b0c7cfa7cae179c4a41ec37339c223fead0105a3fae538e12bf225",
+        "crates/gcode/src/commands/codewiki/mod.rs": "d04920401f15e85f880becf868f38f2547c4a934604791ef3cfdc1e02b072764",
+        "crates/gcode/src/commands/codewiki/ownership.rs": "715c4a0bafc34c2f15515d393c408df6fffeee94d2dea3456c44110cef50bf50",
         "crates/gcode/src/commands/codewiki/paths.rs": "1c49ba1a37d0b6aaeb9351b2c6863ec5cfafde6bcf784e3e6204743843cb6173",
         "crates/gcode/src/commands/codewiki/prompts.rs": "11f3d9f4438a13f93c4c14d1b0fc79b01cb2a9be0f2cdeebf33292945a92b3b4",
-        "crates/gcode/src/commands/codewiki/render.rs": "36f54d4bf713d2d03f72ea478f3ee50cd84f7eb95c2e999d1f153aaa26e87a11",
-        "crates/gcode/src/commands/codewiki/tests.rs": "1fdf62d24474d8ccf1daf189bffd22e80f46f2acfa68407eafe52b8b10d6d043",
-        "crates/gcode/src/commands/codewiki/text.rs": "b752e090e6f457a6617da72035d23c1c612aa7443a5326a32c9364238b55e671"
+        "crates/gcode/src/commands/codewiki/render.rs": "989151f6f4b0954d4d13985cc0e85de7ee23197984d9a0820eb253706156341d",
+        "crates/gcode/src/commands/codewiki/tests.rs": "d6c401f122cc02b4eeb1b9a16419351c7c7bb6a3717f7c7f7e19480ad197c714",
+        "crates/gcode/src/commands/codewiki/text.rs": "2711208d6038810ed92f031babc67a75718c9139a2176153af8218519fa0dd44"
       }
     }
   },
@@ -193,24 +194,16 @@
     "code/_onboarding.md",
     "code/_architecture.md",
     "code/_hotspots.md",
-    "code/_ownership.md",
     "code/modules/crates.md",
     "code/modules/crates/gcode.md",
     "code/modules/crates/gcode/src.md",
     "code/modules/crates/gcode/src/commands.md",
     "code/modules/crates/gcode/src/commands/codewiki.md",
-    "code/files/crates/gcode/src/commands/codewiki/build.rs.md",
-    "code/files/crates/gcode/src/commands/codewiki/cluster.rs.md",
-    "code/files/crates/gcode/src/commands/codewiki/graph.rs.md",
-    "code/files/crates/gcode/src/commands/codewiki/io.rs.md",
     "code/files/crates/gcode/src/commands/codewiki/mod.rs.md",
     "code/files/crates/gcode/src/commands/codewiki/ownership.rs.md",
-    "code/files/crates/gcode/src/commands/codewiki/paths.rs.md",
-    "code/files/crates/gcode/src/commands/codewiki/prompts.rs.md",
     "code/files/crates/gcode/src/commands/codewiki/render.rs.md",
     "code/files/crates/gcode/src/commands/codewiki/tests.rs.md",
-    "code/files/crates/gcode/src/commands/codewiki/text.rs.md",
-    "code/_changes.md"
+    "code/files/crates/gcode/src/commands/codewiki/text.rs.md"
   ],
   "index_snapshot": {
     "files": {
@@ -231,11 +224,11 @@
         "symbol_count": 15
       },
       "crates/gcode/src/commands/codewiki/mod.rs": {
-        "content_hash": "8a08cc6a5150a132ef52039e8f71bd49782cf14be406400631b48a341e6eac9e",
+        "content_hash": "d04920401f15e85f880becf868f38f2547c4a934604791ef3cfdc1e02b072764",
         "symbol_count": 43
       },
       "crates/gcode/src/commands/codewiki/ownership.rs": {
-        "content_hash": "a6e4ec4845b0c7cfa7cae179c4a41ec37339c223fead0105a3fae538e12bf225",
+        "content_hash": "715c4a0bafc34c2f15515d393c408df6fffeee94d2dea3456c44110cef50bf50",
         "symbol_count": 38
       },
       "crates/gcode/src/commands/codewiki/paths.rs": {
@@ -247,25 +240,39 @@
         "symbol_count": 7
       },
       "crates/gcode/src/commands/codewiki/render.rs": {
-        "content_hash": "36f54d4bf713d2d03f72ea478f3ee50cd84f7eb95c2e999d1f153aaa26e87a11",
-        "symbol_count": 17
+        "content_hash": "989151f6f4b0954d4d13985cc0e85de7ee23197984d9a0820eb253706156341d",
+        "symbol_count": 18
       },
       "crates/gcode/src/commands/codewiki/tests.rs": {
-        "content_hash": "1fdf62d24474d8ccf1daf189bffd22e80f46f2acfa68407eafe52b8b10d6d043",
+        "content_hash": "d6c401f122cc02b4eeb1b9a16419351c7c7bb6a3717f7c7f7e19480ad197c714",
         "symbol_count": 33
       },
       "crates/gcode/src/commands/codewiki/text.rs": {
-        "content_hash": "b752e090e6f457a6617da72035d23c1c612aa7443a5326a32c9364238b55e671",
-        "symbol_count": 19
+        "content_hash": "2711208d6038810ed92f031babc67a75718c9139a2176153af8218519fa0dd44",
+        "symbol_count": 23
       }
     },
     "symbols": {
+      "00cc6c85-c05d-5902-a376-c9bfe71811e6": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "CodewikiGraphAvailability",
+        "qualified_name": "CodewikiGraphAvailability",
+        "kind": "type",
+        "line_start": 153
+      },
       "01008a3c-04b6-51f2-9537-5c36f33cc748": {
         "file_path": "crates/gcode/src/commands/codewiki/text.rs",
         "name": "clean_generated",
         "qualified_name": "clean_generated",
         "kind": "function",
         "line_start": 88
+      },
+      "01347f12-b0bf-5504-a07a-23e0233b4169": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "CodewikiRunSummary",
+        "qualified_name": "CodewikiRunSummary",
+        "kind": "class",
+        "line_start": 276
       },
       "01538df9-7c01-54a1-8060-052c7bdf6ed2": {
         "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
@@ -281,13 +288,6 @@
         "kind": "function",
         "line_start": 129
       },
-      "0568d01e-72cd-59a8-9c74-29f171aa1cc5": {
-        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
-        "name": "render_architecture_doc",
-        "qualified_name": "render_architecture_doc",
-        "kind": "function",
-        "line_start": 382
-      },
       "06106795-9bb9-5bef-b008-7709b56a5988": {
         "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
         "name": "bounded_component_edges_prefers_edges_nearest_seed",
@@ -302,12 +302,12 @@
         "kind": "function",
         "line_start": 920
       },
-      "08227c30-806a-5c23-acf1-f652208091c3": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "TextGenerator",
-        "qualified_name": "TextGenerator",
-        "kind": "type",
-        "line_start": 327
+      "07b3ea08-4c1c-5303-a7d4-ca5e4f7f0a87": {
+        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
+        "name": "codewiki_ownership_file_cap_marks_partial",
+        "qualified_name": "codewiki_ownership_file_cap_marks_partial",
+        "kind": "function",
+        "line_start": 577
       },
       "08461f06-3472-5506-9d7d-453cb4ac9c44": {
         "file_path": "crates/gcode/src/commands/codewiki/text.rs",
@@ -316,19 +316,19 @@
         "kind": "class",
         "line_start": 6
       },
-      "085992b3-21b9-57c6-bc57-1aa015fbc314": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "SymbolDoc",
-        "qualified_name": "SymbolDoc",
-        "kind": "class",
-        "line_start": 169
-      },
       "08942093-d69a-5300-89f7-dc57bfc8f4d5": {
         "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
         "name": "source_hashes_reject_frontmatter_paths_outside_project_root",
         "qualified_name": "source_hashes_reject_frontmatter_paths_outside_project_root",
         "kind": "function",
         "line_start": 627
+      },
+      "099903bf-eaa4-5213-a265-c3be387d8469": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "CodewikiSymbolSnapshot",
+        "qualified_name": "CodewikiSymbolSnapshot",
+        "kind": "class",
+        "line_start": 320
       },
       "0bcbe4fd-2f53-54ba-8464-1b2f9ecfc029": {
         "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
@@ -337,19 +337,19 @@
         "kind": "function",
         "line_start": 268
       },
-      "0bd61aca-c99e-5b46-aa6e-c50007e4bcdd": {
-        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "codewiki_ownership_declared_owners_take_primary_precedence",
-        "qualified_name": "codewiki_ownership_declared_owners_take_primary_precedence",
-        "kind": "function",
-        "line_start": 517
-      },
       "0c6bff98-f535-535b-b04c-5bc1873f8bfb": {
         "file_path": "crates/gcode/src/commands/codewiki/cluster.rs",
         "name": "path_components",
         "qualified_name": "path_components",
         "kind": "function",
         "line_start": 208
+      },
+      "0d01ef1d-22c5-5fbf-ac58-c6b5ab7f0cc1": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "generate_hierarchical_docs_core",
+        "qualified_name": "generate_hierarchical_docs_core",
+        "kind": "function",
+        "line_start": 484
       },
       "0db7980a-63e6-57ab-90a5-8848a79307da": {
         "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
@@ -358,12 +358,12 @@
         "kind": "class",
         "line_start": 28
       },
-      "0f4817f7-b8ed-59bb-9071-626f74b79742": {
+      "0e45cc41-cd3e-5811-be40-9f42358170a3": {
         "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "CodewikiFileSnapshot",
-        "qualified_name": "CodewikiFileSnapshot",
+        "name": "SourceSpan",
+        "qualified_name": "SourceSpan",
         "kind": "class",
-        "line_start": 313
+        "line_start": 269
       },
       "1058ad2a-9df7-5417-9e58-91859748dcac": {
         "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
@@ -378,27 +378,6 @@
         "qualified_name": "citation_list",
         "kind": "function",
         "line_start": 158
-      },
-      "134829eb-ade3-5305-9772-152a8cc20d71": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "CodewikiGraphEdge",
-        "qualified_name": "CodewikiGraphEdge",
-        "kind": "class",
-        "line_start": 86
-      },
-      "141275a2-f0c4-57ab-8fa6-0cca88ff56ab": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "from_symbol",
-        "qualified_name": "SourceSpan.from_symbol",
-        "kind": "method",
-        "line_start": 330
-      },
-      "153bba6b-3c40-52b0-985e-1bab0ec0b872": {
-        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "codewiki_ownership_file_cap_marks_partial",
-        "qualified_name": "codewiki_ownership_file_cap_marks_partial",
-        "kind": "function",
-        "line_start": 567
       },
       "159ac265-551e-5c95-8d36-b65b7fb85eb2": {
         "file_path": "crates/gcode/src/commands/codewiki/io.rs",
@@ -435,26 +414,12 @@
         "kind": "function",
         "line_start": 4
       },
-      "16c10d1d-6d3b-52bc-a1fa-f5232c9fbcb2": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "CodewikiMeta",
-        "qualified_name": "CodewikiMeta",
-        "kind": "class",
-        "line_start": 290
-      },
-      "16d6f495-24c5-55db-81d3-dcd5717d5c52": {
+      "1825a373-fc69-5c96-a04a-54a5295f61c3": {
         "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "git",
-        "qualified_name": "git",
+        "name": "git_project_with_two_files",
+        "qualified_name": "git_project_with_two_files",
         "kind": "function",
-        "line_start": 645
-      },
-      "17fca0c4-5469-5231-8358-c7477299a9c8": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "OnboardingEntryPoint",
-        "qualified_name": "OnboardingEntryPoint",
-        "kind": "class",
-        "line_start": 212
+        "line_start": 626
       },
       "1a412fa9-ffc9-5eab-9e91-b90e886ab286": {
         "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
@@ -463,6 +428,13 @@
         "kind": "class",
         "line_start": 13
       },
+      "1aa7d949-cfcc-5f2e-b5f5-ba2f5feb45c3": {
+        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
+        "name": "render_architecture_doc",
+        "qualified_name": "render_architecture_doc",
+        "kind": "function",
+        "line_start": 407
+      },
       "1b365924-d750-5b1d-a235-38f3e337c259": {
         "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
         "name": "file_root_detection_breaks_parent_cycles",
@@ -470,12 +442,26 @@
         "kind": "function",
         "line_start": 199
       },
-      "1d88eff1-2098-5597-9a01-3d545481c57a": {
+      "1de9889e-babb-56ba-a8b0-bf56b54a7b8e": {
+        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
+        "name": "write_files",
+        "qualified_name": "write_files",
+        "kind": "function",
+        "line_start": 383
+      },
+      "1e979e24-1d93-5647-af8c-c7f70ac11eea": {
         "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "contains",
-        "qualified_name": "SourceSpan.contains",
-        "kind": "method",
-        "line_start": 346
+        "name": "CodewikiGraph",
+        "qualified_name": "CodewikiGraph",
+        "kind": "class",
+        "line_start": 124
+      },
+      "1f9359c9-1aac-51bc-b862-7ff4c5ef5f17": {
+        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
+        "name": "write_hotspot_section",
+        "qualified_name": "write_hotspot_section",
+        "kind": "function",
+        "line_start": 509
       },
       "2182266f-82fa-5c68-a9de-f21a035733ee": {
         "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
@@ -483,20 +469,6 @@
         "qualified_name": "Codeowners",
         "kind": "class",
         "line_start": 48
-      },
-      "21ab1832-fad7-5a7b-adaa-3ecc0fe657d1": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "HotspotsDoc",
-        "qualified_name": "HotspotsDoc",
-        "kind": "class",
-        "line_start": 226
-      },
-      "23011137-cf5d-5f9d-882f-d202d5dcdad2": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "CodewikiInput",
-        "qualified_name": "CodewikiInput",
-        "kind": "class",
-        "line_start": 78
       },
       "23797dbc-db9c-5de9-8b8a-49a776d92da2": {
         "file_path": "crates/gcode/src/commands/codewiki/io.rs",
@@ -533,20 +505,6 @@
         "kind": "function",
         "line_start": 93
       },
-      "2599b388-c570-5275-b44a-b0aa8ce03ceb": {
-        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
-        "name": "render_hotspots_doc",
-        "qualified_name": "render_hotspots_doc",
-        "kind": "function",
-        "line_start": 454
-      },
-      "27f30667-849d-505d-b417-865920242445": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "CodewikiIndexSnapshot",
-        "qualified_name": "CodewikiIndexSnapshot",
-        "kind": "class",
-        "line_start": 303
-      },
       "280ba82f-3568-59af-a971-370c2c8a6132": {
         "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
         "name": "citations_validated_against_spans",
@@ -554,26 +512,19 @@
         "kind": "function",
         "line_start": 700
       },
-      "284d050f-9106-5bc1-b002-2072c6d2df98": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "CodewikiSymbolSnapshot",
-        "qualified_name": "CodewikiSymbolSnapshot",
-        "kind": "class",
-        "line_start": 319
-      },
-      "291bc225-1c4c-5343-8bc7-0a3e7a7fa0c7": {
-        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "aggregate_contributors",
-        "qualified_name": "aggregate_contributors",
-        "kind": "function",
-        "line_start": 399
-      },
       "2a66d8af-c33f-5163-a4ce-df42be815f1e": {
         "file_path": "crates/gcode/src/commands/codewiki/paths.rs",
         "name": "is_core_file",
         "qualified_name": "is_core_file",
         "kind": "function",
         "line_start": 43
+      },
+      "2bf49954-92e7-562d-8e40-7e8fda6b28a5": {
+        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
+        "name": "is_false",
+        "qualified_name": "is_false",
+        "kind": "function",
+        "line_start": 351
       },
       "2cf219a4-ccdc-5833-af4a-e0b6a1985105": {
         "file_path": "crates/gcode/src/commands/codewiki/cluster.rs",
@@ -589,26 +540,19 @@
         "kind": "function",
         "line_start": 407
       },
-      "2e8dd8ea-1c23-5fb8-ad0d-136741750eb8": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "OnboardingStep",
-        "qualified_name": "OnboardingStep",
-        "kind": "class",
-        "line_start": 218
-      },
-      "2f61cd26-8015-53f8-ab9f-b928729fdd2e": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "call",
-        "qualified_name": "CodewikiGraphEdge.call",
-        "kind": "method",
-        "line_start": 93
-      },
       "30693c91-fff2-55a4-a38e-50352ced59af": {
         "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
         "name": "edge_limit_validation_rejects_zero_and_excessive_limits",
         "qualified_name": "edge_limit_validation_rejects_zero_and_excessive_limits",
         "kind": "function",
         "line_start": 310
+      },
+      "31582839-c08e-58fb-a9e9-8b6592cb93a4": {
+        "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
+        "name": "test_symbol_with_qualified",
+        "qualified_name": "test_symbol_with_qualified",
+        "kind": "function",
+        "line_start": 939
       },
       "322902f3-e510-5ab1-a083-ba0449074ba8": {
         "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
@@ -617,33 +561,12 @@
         "kind": "class",
         "line_start": 53
       },
-      "331e6ded-bbaf-549d-92e6-db67432ff715": {
-        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "git_project_with_history",
-        "qualified_name": "git_project_with_history",
-        "kind": "function",
-        "line_start": 595
-      },
-      "336dede6-56eb-591c-b2b2-bbbaf3b8e106": {
-        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "codewiki_ownership_derives_top_committers_from_gix_blame",
-        "qualified_name": "codewiki_ownership_derives_top_committers_from_gix_blame",
-        "kind": "function",
-        "line_start": 494
-      },
       "34363a23-f683-5bb5-aa67-65e268a2248a": {
         "file_path": "crates/gcode/src/commands/codewiki/build.rs",
         "name": "build_architecture_doc",
         "qualified_name": "build_architecture_doc",
         "kind": "function",
         "line_start": 456
-      },
-      "35452761-b09c-55ee-9efe-fd7702411d47": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "import",
-        "qualified_name": "CodewikiGraphEdge.import",
-        "kind": "method",
-        "line_start": 104
       },
       "35654fc1-e915-5bb5-9ed8-37e151c43428": {
         "file_path": "crates/gcode/src/commands/codewiki/text.rs",
@@ -666,13 +589,6 @@
         "kind": "function",
         "line_start": 903
       },
-      "396dbe67-3b75-5b7b-8e2e-8a96243d2269": {
-        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "codewiki_ownership_codeowners_only_maps_declared_owners",
-        "qualified_name": "codewiki_ownership_codeowners_only_maps_declared_owners",
-        "kind": "function",
-        "line_start": 464
-      },
       "3a4759d0-90f4-5e0d-88a9-2439c772d51f": {
         "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
         "name": "frontmatter_serializes_scalars_with_serde_yaml",
@@ -680,12 +596,12 @@
         "kind": "function",
         "line_start": 664
       },
-      "3d091635-8aba-53a7-ad0b-e24364df84b2": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "SourceSpan",
-        "qualified_name": "SourceSpan",
-        "kind": "class",
-        "line_start": 329
+      "3b3080d8-81db-5b3d-b5a7-d2a2d2bcccaa": {
+        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
+        "name": "codewiki_ownership_derives_top_committers_from_gix_blame",
+        "qualified_name": "codewiki_ownership_derives_top_committers_from_gix_blame",
+        "kind": "function",
+        "line_start": 504
       },
       "3db6cdd0-a12d-5c54-8d4b-c4bab07b1880": {
         "file_path": "crates/gcode/src/commands/codewiki/io.rs",
@@ -694,33 +610,47 @@
         "kind": "function",
         "line_start": 123
       },
-      "4104a376-f626-5986-a84e-03ffde136d90": {
+      "3df495a5-f3e9-55cd-bb48-e3e707af1523": {
         "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "generate_hierarchical_docs",
-        "qualified_name": "generate_hierarchical_docs",
-        "kind": "function",
-        "line_start": 454
-      },
-      "4129331f-3a5e-529a-9ba4-c84e74ab7535": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "CodewikiGraph",
-        "qualified_name": "CodewikiGraph",
+        "name": "ArchitectureDoc",
+        "qualified_name": "ArchitectureDoc",
         "kind": "class",
-        "line_start": 128
+        "line_start": 192
       },
-      "42f68801-ae50-5a1a-a741-91654c2cfa11": {
-        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
-        "name": "render_file_doc",
-        "qualified_name": "render_file_doc",
-        "kind": "function",
-        "line_start": 589
-      },
-      "43826e94-a31d-5d20-b988-39d5f48b6961": {
+      "3e9f1131-d503-5275-8193-005bfeec31f2": {
         "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "FileDoc",
-        "qualified_name": "FileDoc",
+        "name": "CodewikiIndexSnapshot",
+        "qualified_name": "CodewikiIndexSnapshot",
         "kind": "class",
-        "line_start": 159
+        "line_start": 304
+      },
+      "3e9f6ac3-5a86-5430-8af9-ab540f106ba2": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "import",
+        "qualified_name": "CodewikiGraphEdge.import",
+        "kind": "method",
+        "line_start": 105
+      },
+      "3fda102d-27d1-59e5-a63f-81de6dae60a1": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "TextGenerator",
+        "qualified_name": "TextGenerator",
+        "kind": "type",
+        "line_start": 328
+      },
+      "440d8976-0ef5-5d57-ac85-b94354607fcb": {
+        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
+        "name": "derived_owners_for_files",
+        "qualified_name": "derived_owners_for_files",
+        "kind": "function",
+        "line_start": 208
+      },
+      "44d57ff8-2098-5700-b3ea-fcb547609a45": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "CodewikiMeta",
+        "qualified_name": "CodewikiMeta",
+        "kind": "class",
+        "line_start": 291
       },
       "459f2a74-d6fd-5df9-afa2-2d6e02257948": {
         "file_path": "crates/gcode/src/commands/codewiki/io.rs",
@@ -728,13 +658,6 @@
         "qualified_name": "prune_empty_doc_dirs",
         "kind": "function",
         "line_start": 101
-      },
-      "468fa3a7-b6be-5f2a-98e3-146cebb57999": {
-        "file_path": "crates/gcode/src/commands/codewiki/text.rs",
-        "name": "ground_text",
-        "qualified_name": "ground_text",
-        "kind": "function",
-        "line_start": 172
       },
       "46d31134-dcff-5512-93f2-1cb6d080f5c5": {
         "file_path": "crates/gcode/src/commands/codewiki/build.rs",
@@ -757,13 +680,6 @@
         "kind": "function",
         "line_start": 170
       },
-      "4b8d509f-a2f2-5a68-8bed-da733b82a7d0": {
-        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
-        "name": "mermaid_label",
-        "qualified_name": "mermaid_label",
-        "kind": "function",
-        "line_start": 284
-      },
       "4c9ad7d1-1c67-5486-865d-635fb1638dbe": {
         "file_path": "crates/gcode/src/commands/codewiki/paths.rs",
         "name": "module_doc_path",
@@ -771,12 +687,26 @@
         "kind": "function",
         "line_start": 147
       },
+      "4d3c3199-f0e5-5f59-b2cd-01ccb870533c": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "CodewikiInput",
+        "qualified_name": "CodewikiInput",
+        "kind": "class",
+        "line_start": 79
+      },
       "4dfb9dd3-d878-5252-993a-f006dcf8a065": {
         "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
         "name": "OwnershipContributor",
         "qualified_name": "OwnershipContributor",
         "kind": "class",
         "line_start": 40
+      },
+      "4e13e14a-df53-52a7-81b2-70a3c0a92a84": {
+        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
+        "name": "mermaid_label",
+        "qualified_name": "mermaid_label",
+        "kind": "function",
+        "line_start": 310
       },
       "4e1a85d1-35a2-51ef-8b39-17035639dbbe": {
         "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
@@ -799,13 +729,6 @@
         "kind": "function",
         "line_start": 358
       },
-      "507d3704-84c2-52e9-b903-e845c925fa8d": {
-        "file_path": "crates/gcode/src/commands/codewiki/text.rs",
-        "name": "contains_valid_citation",
-        "qualified_name": "contains_valid_citation",
-        "kind": "function",
-        "line_start": 215
-      },
       "51f659ce-4619-5cda-9b2a-38305efd5557": {
         "file_path": "crates/gcode/src/commands/codewiki/io.rs",
         "name": "write_ownership_meta",
@@ -813,12 +736,19 @@
         "kind": "function",
         "line_start": 146
       },
-      "53816bc6-6dae-5c78-b266-bd6dcc2f51ae": {
+      "521d52f2-3c95-5220-a4a0-4a4e8f5ed051": {
         "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "generate_hierarchical_docs_core",
-        "qualified_name": "generate_hierarchical_docs_core",
+        "name": "SourceSpan",
+        "qualified_name": "SourceSpan",
+        "kind": "class",
+        "line_start": 330
+      },
+      "53f6781b-60b1-59de-bc42-a775056e31a5": {
+        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
+        "name": "modules",
+        "qualified_name": "modules",
         "kind": "function",
-        "line_start": 483
+        "line_start": 598
       },
       "544abd88-cfbe-53ee-8f94-79488de3d5c0": {
         "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
@@ -827,47 +757,33 @@
         "kind": "class",
         "line_start": 34
       },
-      "562ea5bd-2bc3-50de-96a6-8202bfc1114e": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "available",
-        "qualified_name": "CodewikiGraph.available",
-        "kind": "method",
-        "line_start": 129
-      },
-      "58a5e201-7b0d-5dcb-b616-f915b9383335": {
+      "5633aa61-d42e-5c04-a19b-511b80f65dc6": {
         "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "ownership_frontmatter",
-        "qualified_name": "ownership_frontmatter",
+        "name": "git_project_with_history",
+        "qualified_name": "git_project_with_history",
         "kind": "function",
-        "line_start": 305
+        "line_start": 605
       },
-      "58e906f0-e3ee-5201-b4bf-804a2dbeaee9": {
-        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
-        "name": "mermaid_node_id",
-        "qualified_name": "mermaid_node_id",
+      "568913c6-e6a8-5221-8f45-cbcb40937e34": {
+        "file_path": "crates/gcode/src/commands/codewiki/text.rs",
+        "name": "citation_references",
+        "qualified_name": "citation_references",
         "kind": "function",
-        "line_start": 272
+        "line_start": 200
       },
-      "58f299e8-7620-5988-bcfb-b03ad164adcb": {
+      "5756a735-7f7b-5e52-9023-7d59b0316f36": {
         "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "generate_hierarchical_docs_with_ownership",
-        "qualified_name": "generate_hierarchical_docs_with_ownership",
-        "kind": "function",
-        "line_start": 474
+        "name": "unavailable",
+        "qualified_name": "CodewikiGraph.unavailable",
+        "kind": "method",
+        "line_start": 144
       },
-      "5947fbcc-c36f-5ce3-9d26-8274f83be407": {
-        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
-        "name": "render_repo_doc",
-        "qualified_name": "render_repo_doc",
+      "5961933e-9d02-55c5-9c45-471a1ef147ed": {
+        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
+        "name": "git_author",
+        "qualified_name": "git_author",
         "kind": "function",
-        "line_start": 351
-      },
-      "596b94ae-f090-531b-9c1f-6535ebc30ea0": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "ArchitectureSubsystem",
-        "qualified_name": "ArchitectureSubsystem",
-        "kind": "class",
-        "line_start": 199
+        "line_start": 637
       },
       "5a65fb56-e981-5cfb-8db9-cd7603f94ad6": {
         "file_path": "crates/gcode/src/commands/codewiki/prompts.rs",
@@ -883,19 +799,12 @@
         "kind": "function",
         "line_start": 198
       },
-      "5bc744c8-59c9-5b7b-bfb6-70e4078112a3": {
-        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "degraded_sources",
-        "qualified_name": "degraded_sources",
+      "5c7e11b5-44b5-51e1-862e-348aa0d2961f": {
+        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
+        "name": "render_file_doc",
+        "qualified_name": "render_file_doc",
         "kind": "function",
-        "line_start": 282
-      },
-      "5d1e148d-f5c9-522e-9152-f12387453647": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "ArchitectureDoc",
-        "qualified_name": "ArchitectureDoc",
-        "kind": "class",
-        "line_start": 191
+        "line_start": 614
       },
       "5da67239-f403-5518-869b-05470d96b2ad": {
         "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
@@ -917,13 +826,6 @@
         "qualified_name": "empty_available_graph_does_not_emit_degradation_marker",
         "kind": "function",
         "line_start": 528
-      },
-      "602375e1-4812-55a5-8841-e659b5b30d55": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "ModuleDoc",
-        "qualified_name": "ModuleDoc",
-        "kind": "class",
-        "line_start": 178
       },
       "60cf7d2d-8445-5eff-ad59-05eaa686fdf7": {
         "file_path": "crates/gcode/src/commands/codewiki/build.rs",
@@ -953,6 +855,20 @@
         "kind": "function",
         "line_start": 647
       },
+      "672d2c89-f629-5a6c-85ed-13b27b8d583e": {
+        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
+        "name": "render_repo_doc",
+        "qualified_name": "render_repo_doc",
+        "kind": "function",
+        "line_start": 377
+      },
+      "67f904ce-e09a-5c42-a79d-103cf4d5405f": {
+        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
+        "name": "dependency_neighbors",
+        "qualified_name": "dependency_neighbors",
+        "kind": "function",
+        "line_start": 283
+      },
       "681d05b7-5419-50cf-b769-23846871f627": {
         "file_path": "crates/gcode/src/commands/codewiki/text.rs",
         "name": "structural_symbol_purpose",
@@ -974,12 +890,12 @@
         "kind": "function",
         "line_start": 980
       },
-      "6d153b33-6511-5ca1-9977-1234080b8b6a": {
-        "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
-        "name": "test_symbol_range",
-        "qualified_name": "test_symbol_range",
-        "kind": "function",
-        "line_start": 969
+      "6c766f92-52b4-54cb-a18f-2b15e0485f9e": {
+        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
+        "name": "Frontmatter",
+        "qualified_name": "Frontmatter",
+        "kind": "class",
+        "line_start": 317
       },
       "6e0c56eb-74e0-5ba5-851a-6ba437c3ff84": {
         "file_path": "crates/gcode/src/commands/codewiki/paths.rs",
@@ -1002,6 +918,13 @@
         "kind": "function",
         "line_start": 93
       },
+      "6f204b45-c613-5e32-9a7e-f8ffbff4306f": {
+        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
+        "name": "degraded_sources",
+        "qualified_name": "degraded_sources",
+        "kind": "function",
+        "line_start": 292
+      },
       "70693de8-2f1f-5f94-badb-65a92aec433d": {
         "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
         "name": "module_depth_counts_only_non_empty_segments",
@@ -1009,26 +932,19 @@
         "kind": "function",
         "line_start": 220
       },
+      "714763f7-edaf-54d7-bba9-4f448627ca17": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "OnboardingEntryPoint",
+        "qualified_name": "OnboardingEntryPoint",
+        "kind": "class",
+        "line_start": 213
+      },
       "718932b0-dac9-5dd9-8f7a-898c30879624": {
         "file_path": "crates/gcode/src/commands/codewiki/text.rs",
         "name": "FrontmatterSourceFile",
         "qualified_name": "FrontmatterSourceFile",
         "kind": "class",
         "line_start": 22
-      },
-      "71d17eee-d6cc-5667-b371-efc6486525d4": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "OnboardingDoc",
-        "qualified_name": "OnboardingDoc",
-        "kind": "class",
-        "line_start": 205
-      },
-      "73020b57-8262-56fc-a32f-167b42bac26b": {
-        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "content_hash",
-        "qualified_name": "content_hash",
-        "kind": "function",
-        "line_start": 245
       },
       "731f2c21-b8ef-5b43-a961-72daf4bf1d5a": {
         "file_path": "crates/gcode/src/commands/codewiki/cluster.rs",
@@ -1044,12 +960,12 @@
         "kind": "function",
         "line_start": 608
       },
-      "79ff9b30-d1e7-5ff1-b267-da818bc66910": {
-        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
-        "name": "build_repo_doc",
-        "qualified_name": "build_repo_doc",
+      "77dc2561-03c6-5ce3-8cde-84ed13609525": {
+        "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
+        "name": "test_symbol_range",
+        "qualified_name": "test_symbol_range",
         "kind": "function",
-        "line_start": 301
+        "line_start": 969
       },
       "7bac5d99-3bba-5e1a-ba6d-aa71c94ed209": {
         "file_path": "crates/gcode/src/commands/codewiki/build.rs",
@@ -1065,12 +981,19 @@
         "kind": "function",
         "line_start": 132
       },
-      "7ea608a9-235e-506e-b72a-53d652f528b0": {
-        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "git_author",
-        "qualified_name": "git_author",
-        "kind": "function",
-        "line_start": 627
+      "7faf03ed-48ee-5625-9e91-ab547fafaecc": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "HotspotsDoc",
+        "qualified_name": "HotspotsDoc",
+        "kind": "class",
+        "line_start": 227
+      },
+      "80d29415-ff65-5cc1-b96e-8a1f3eb42341": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "from_symbol",
+        "qualified_name": "SourceSpan.from_symbol",
+        "kind": "method",
+        "line_start": 331
       },
       "8172fd89-840d-518e-bd70-7935e6143748": {
         "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
@@ -1078,6 +1001,20 @@
         "qualified_name": "graph_queries_use_requested_edge_limit",
         "kind": "function",
         "line_start": 298
+      },
+      "819182a0-2c32-58a2-8ef2-e93073edc832": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "OnboardingStep",
+        "qualified_name": "OnboardingStep",
+        "kind": "class",
+        "line_start": 219
+      },
+      "8273b13c-705c-586b-a7bd-4b08c1e00599": {
+        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
+        "name": "content_hash",
+        "qualified_name": "content_hash",
+        "kind": "function",
+        "line_start": 255
       },
       "828f1212-e891-5727-919a-e88466bdee70": {
         "file_path": "crates/gcode/src/commands/codewiki/text.rs",
@@ -1093,12 +1030,19 @@
         "kind": "function",
         "line_start": 35
       },
-      "87851973-3388-5e07-98a9-d39ceaf45f04": {
-        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "is_false",
-        "qualified_name": "is_false",
+      "858be08b-3323-584a-9313-7900da4e8754": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "ArchitectureSubsystem",
+        "qualified_name": "ArchitectureSubsystem",
+        "kind": "class",
+        "line_start": 200
+      },
+      "86926645-1b0d-5b83-85d0-9a96bc0d42d3": {
+        "file_path": "crates/gcode/src/commands/codewiki/text.rs",
+        "name": "citation_markers",
+        "qualified_name": "citation_markers",
         "kind": "function",
-        "line_start": 341
+        "line_start": 172
       },
       "88f91a38-40a2-556e-bd70-1feec6294da0": {
         "file_path": "crates/gcode/src/commands/codewiki/build.rs",
@@ -1107,12 +1051,12 @@
         "kind": "function",
         "line_start": 972
       },
-      "89540036-c83a-50bb-a8e5-a4f86cb8f930": {
-        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
-        "name": "bounded_component_edges",
-        "qualified_name": "bounded_component_edges",
+      "890368f6-00dd-5477-b0a7-b16e3c4cb25b": {
+        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
+        "name": "write_contributor_line",
+        "qualified_name": "write_contributor_line",
         "kind": "function",
-        "line_start": 205
+        "line_start": 441
       },
       "8d2f0ad3-95d5-5060-a0ff-b1218f7ffd37": {
         "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
@@ -1121,19 +1065,19 @@
         "kind": "function",
         "line_start": 891
       },
-      "8d31f63a-b267-5bb1-adf5-95e361004995": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "SourceSpan",
-        "qualified_name": "SourceSpan",
-        "kind": "class",
-        "line_start": 268
-      },
       "8d64f358-8e09-57a3-a913-ff04cbc92b4d": {
         "file_path": "crates/gcode/src/commands/codewiki/paths.rs",
         "name": "plural",
         "qualified_name": "plural",
         "kind": "function",
         "line_start": 30
+      },
+      "8f1872b4-20b9-5cea-bb00-7bf461cac854": {
+        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
+        "name": "write_owner_line",
+        "qualified_name": "write_owner_line",
+        "kind": "function",
+        "line_start": 433
       },
       "8f44a134-477a-5025-b3b4-f0b53992a09d": {
         "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
@@ -1142,12 +1086,19 @@
         "kind": "function",
         "line_start": 130
       },
-      "90890558-f2cb-58ca-aa73-c5a8db55ed59": {
+      "90d2a40b-94ff-5ec9-a567-80ad9dd153a5": {
         "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "modules",
-        "qualified_name": "modules",
+        "name": "codewiki_ownership_declared_owners_take_primary_precedence",
+        "qualified_name": "codewiki_ownership_declared_owners_take_primary_precedence",
         "kind": "function",
-        "line_start": 588
+        "line_start": 527
+      },
+      "916ab758-e2b9-5a05-b413-2926c3748fca": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "ModuleDoc",
+        "qualified_name": "ModuleDoc",
+        "kind": "class",
+        "line_start": 179
       },
       "920c0a56-db4a-5ecb-83af-d844587be9a3": {
         "file_path": "crates/gcode/src/commands/codewiki/build.rs",
@@ -1163,6 +1114,27 @@
         "kind": "function",
         "line_start": 155
       },
+      "93227c9e-953e-5732-863b-cdc688bacd1d": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "generate_hierarchical_docs_with_graph_availability",
+        "qualified_name": "generate_hierarchical_docs_with_graph_availability",
+        "kind": "function",
+        "line_start": 462
+      },
+      "93bb88eb-c6ba-5fb6-b0ea-b7f18e9a893f": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "HotspotNode",
+        "qualified_name": "HotspotNode",
+        "kind": "class",
+        "line_start": 245
+      },
+      "93c90c64-d9e2-5a16-97b7-d07c84b8292c": {
+        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
+        "name": "build_repo_doc",
+        "qualified_name": "build_repo_doc",
+        "kind": "function",
+        "line_start": 327
+      },
       "95f0b3d9-cc4e-545a-b041-51dd5eed9a90": {
         "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
         "name": "clusters_without_falkordb",
@@ -1170,19 +1142,33 @@
         "kind": "function",
         "line_start": 320
       },
-      "9766f883-4e9f-51b6-88ba-8024bb827da4": {
-        "file_path": "crates/gcode/src/commands/codewiki/text.rs",
-        "name": "frontmatter_with_degradation",
-        "qualified_name": "frontmatter_with_degradation",
-        "kind": "function",
-        "line_start": 253
-      },
-      "983b52c5-6d42-5c51-b9c1-e0ce72eedd09": {
+      "9771e85b-a36f-5f46-a95c-1bced69c03e0": {
         "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "CodewikiGraphAvailability",
-        "qualified_name": "CodewikiGraphAvailability",
-        "kind": "type",
-        "line_start": 152
+        "name": "FileDoc",
+        "qualified_name": "FileDoc",
+        "kind": "class",
+        "line_start": 160
+      },
+      "981b3e96-566a-5c60-930f-493f9de8bbe8": {
+        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
+        "name": "repo_mermaid_seed_modules",
+        "qualified_name": "repo_mermaid_seed_modules",
+        "kind": "function",
+        "line_start": 69
+      },
+      "98ac6b3b-aa18-582c-a4af-d949abec6296": {
+        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
+        "name": "mermaid_node_id",
+        "qualified_name": "mermaid_node_id",
+        "kind": "function",
+        "line_start": 298
+      },
+      "98f33839-97a5-5271-ae3c-dea936e7fe3c": {
+        "file_path": "crates/gcode/src/commands/codewiki/text.rs",
+        "name": "write_references",
+        "qualified_name": "write_references",
+        "kind": "function",
+        "line_start": 188
       },
       "99961a57-d75e-5273-b955-c8f109980c62": {
         "file_path": "crates/gcode/src/commands/codewiki/paths.rs",
@@ -1191,19 +1177,26 @@
         "kind": "function",
         "line_start": 139
       },
-      "9ab823f6-4d8b-58b8-84bb-b9bb8759ba4f": {
+      "99cc5be8-0851-5bc2-b52e-f1b3e41cc94e": {
         "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
-        "name": "test_symbol_with_qualified",
-        "qualified_name": "test_symbol_with_qualified",
+        "name": "test_component_id",
+        "qualified_name": "test_component_id",
         "kind": "function",
-        "line_start": 939
+        "line_start": 935
       },
-      "9c29ac37-9332-5782-b1fb-5aa39903e8c3": {
+      "9a3c2056-3902-5562-96f1-1f2c65916569": {
         "file_path": "crates/gcode/src/commands/codewiki/render.rs",
-        "name": "dependency_neighbors",
-        "qualified_name": "dependency_neighbors",
+        "name": "render_hotspots_doc",
+        "qualified_name": "render_hotspots_doc",
         "kind": "function",
-        "line_start": 257
+        "line_start": 479
+      },
+      "9db352b3-4c52-5f9e-a28f-c01f407612b5": {
+        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
+        "name": "codewiki_ownership_codeowners_only_maps_declared_owners",
+        "qualified_name": "codewiki_ownership_codeowners_only_maps_declared_owners",
+        "kind": "function",
+        "line_start": 474
       },
       "9dcf41a0-ef09-5f86-be61-df3ec6c3115b": {
         "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
@@ -1212,26 +1205,12 @@
         "kind": "function",
         "line_start": 118
       },
-      "9e74b9ff-1a2a-544d-97ad-9aeea79429c7": {
-        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "write_contributor_line",
-        "qualified_name": "write_contributor_line",
-        "kind": "function",
-        "line_start": 431
-      },
       "9ef662f4-12d6-539a-828f-3e518abea1e0": {
         "file_path": "crates/gcode/src/commands/codewiki/build.rs",
         "name": "build_module_docs",
         "qualified_name": "build_module_docs",
         "kind": "function",
         "line_start": 365
-      },
-      "9f4f2460-dcdd-5ad8-89b9-b34c599d6b6f": {
-        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
-        "name": "render_onboarding_doc",
-        "qualified_name": "render_onboarding_doc",
-        "kind": "function",
-        "line_start": 410
       },
       "a26b893f-a0d9-5f5e-82e3-08b0f1e03e26": {
         "file_path": "crates/gcode/src/commands/codewiki/io.rs",
@@ -1247,19 +1226,19 @@
         "kind": "function",
         "line_start": 228
       },
-      "a4620f28-afee-5fba-a5d0-8fe5148fe893": {
+      "a62cf571-1081-5e28-9632-f9319c3e1393": {
         "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "blame_file_contributors",
-        "qualified_name": "blame_file_contributors",
+        "name": "ownership_frontmatter",
+        "qualified_name": "ownership_frontmatter",
         "kind": "function",
-        "line_start": 249
+        "line_start": 315
       },
-      "a4869ee3-9d84-52ec-ad59-0195145a5dc7": {
+      "a6e1f308-eade-51eb-9869-248fac1b8dde": {
         "file_path": "crates/gcode/src/commands/codewiki/render.rs",
         "name": "bounded_module_dependency_edges",
         "qualified_name": "bounded_module_dependency_edges",
         "kind": "function",
-        "line_start": 174
+        "line_start": 200
       },
       "a80586f6-12c1-5d4d-a4fe-095348149298": {
         "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
@@ -1268,19 +1247,19 @@
         "kind": "function",
         "line_start": 150
       },
-      "a96326b6-c4ea-5610-b568-f4fdb448a8ba": {
-        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
-        "name": "render_module_call_mermaid",
-        "qualified_name": "render_module_call_mermaid",
-        "kind": "function",
-        "line_start": 84
-      },
       "aa11fac8-2a20-5585-83fa-1f777b63a709": {
         "file_path": "crates/gcode/src/commands/codewiki/paths.rs",
         "name": "file_doc_path",
         "qualified_name": "file_doc_path",
         "kind": "function",
         "line_start": 143
+      },
+      "acdd8337-ce60-515e-80f9-551db18797a8": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "contains",
+        "qualified_name": "SourceSpan.contains",
+        "kind": "method",
+        "line_start": 347
       },
       "ad7bc592-5e0f-5b9a-8343-88f1503468c3": {
         "file_path": "crates/gcode/src/commands/codewiki/paths.rs",
@@ -1296,12 +1275,26 @@
         "kind": "function",
         "line_start": 243
       },
-      "b073a8a4-a30b-5885-a92c-fe3680002fdc": {
-        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "codewiki_ownership_without_sources_degrades_to_unknown",
-        "qualified_name": "codewiki_ownership_without_sources_degrades_to_unknown",
+      "b0c5f0f1-84eb-5589-8ea8-89f94262f036": {
+        "file_path": "crates/gcode/src/commands/codewiki/text.rs",
+        "name": "ground_text",
+        "qualified_name": "ground_text",
         "kind": "function",
-        "line_start": 541
+        "line_start": 211
+      },
+      "b0eba544-7128-5476-868b-a41551a34d17": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "CodewikiFileSnapshot",
+        "qualified_name": "CodewikiFileSnapshot",
+        "kind": "class",
+        "line_start": 314
+      },
+      "b14e1be0-85bf-5d5b-8ba6-aef319024d72": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "generate_hierarchical_docs_with_ownership",
+        "qualified_name": "generate_hierarchical_docs_with_ownership",
+        "kind": "function",
+        "line_start": 475
       },
       "b214e5ab-4f69-5aaf-b156-b02260be38b5": {
         "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
@@ -1324,6 +1317,13 @@
         "kind": "function",
         "line_start": 593
       },
+      "b4ebf07f-4df2-5a4b-86d1-ee814f385c57": {
+        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
+        "name": "aggregate_primary",
+        "qualified_name": "aggregate_primary",
+        "kind": "function",
+        "line_start": 397
+      },
       "b51414a5-90eb-5efb-8c4d-9b57722a63da": {
         "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
         "name": "clusters_modules_from_graph",
@@ -1331,26 +1331,12 @@
         "kind": "function",
         "line_start": 123
       },
-      "b515cd72-010a-599c-9f23-597cbac4c9d9": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "citation",
-        "qualified_name": "SourceSpan.citation",
-        "kind": "method",
-        "line_start": 338
-      },
       "b5f7a087-cd7f-5e27-823b-79664f1a5646": {
         "file_path": "crates/gcode/src/commands/codewiki/cluster.rs",
         "name": "cluster_file_modules",
         "qualified_name": "cluster_file_modules",
         "kind": "function",
         "line_start": 3
-      },
-      "b66b849c-fde7-5470-a558-399a383bb261": {
-        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "write_files",
-        "qualified_name": "write_files",
-        "kind": "function",
-        "line_start": 373
       },
       "b7b35534-a8ba-5c4b-a97d-2c70814ae8bd": {
         "file_path": "crates/gcode/src/commands/codewiki/render.rs",
@@ -1366,12 +1352,33 @@
         "kind": "function",
         "line_start": 35
       },
-      "ba01f7ae-bbe2-52e9-a8bb-6b7580b374f2": {
-        "file_path": "crates/gcode/src/commands/codewiki/text.rs",
-        "name": "strip_invalid_citations",
-        "qualified_name": "strip_invalid_citations",
+      "ba6c63ac-2506-53db-866d-024c7e86271a": {
+        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
+        "name": "git",
+        "qualified_name": "git",
         "kind": "function",
-        "line_start": 187
+        "line_start": 655
+      },
+      "bb8b09da-3f39-52b7-b725-62d67b1c9b03": {
+        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
+        "name": "render_module_doc",
+        "qualified_name": "render_module_doc",
+        "kind": "function",
+        "line_start": 553
+      },
+      "bbe5e7ce-87ac-59cd-b863-8bdbe419e608": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "CodewikiGraphEdgeKind",
+        "qualified_name": "CodewikiGraphEdgeKind",
+        "kind": "type",
+        "line_start": 118
+      },
+      "be4355c2-5c8c-5949-a035-26d2994031b1": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "CodewikiGraph",
+        "qualified_name": "CodewikiGraph",
+        "kind": "class",
+        "line_start": 129
       },
       "bf0e4e18-e0c4-5300-b1bd-ea69e9c727ee": {
         "file_path": "crates/gcode/src/commands/codewiki/prompts.rs",
@@ -1379,6 +1386,13 @@
         "qualified_name": "module_prompt",
         "kind": "function",
         "line_start": 58
+      },
+      "c1698559-2061-5227-ac8f-265071e1b1b0": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "run",
+        "qualified_name": "run",
+        "kind": "function",
+        "line_start": 352
       },
       "c18ccd08-ac4e-5484-bc7a-aa1c82e4fead": {
         "file_path": "crates/gcode/src/commands/codewiki/io.rs",
@@ -1394,6 +1408,13 @@
         "kind": "function",
         "line_start": 755
       },
+      "c2042344-0373-58bd-adb2-9e2623eaa652": {
+        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
+        "name": "render_module_call_mermaid",
+        "qualified_name": "render_module_call_mermaid",
+        "kind": "function",
+        "line_start": 110
+      },
       "c2474b4a-3816-5e4d-9f13-a1a296986eb3": {
         "file_path": "crates/gcode/src/commands/codewiki/graph.rs",
         "name": "query_or_unavailable",
@@ -1408,12 +1429,12 @@
         "kind": "function",
         "line_start": 115
       },
-      "c5d1a081-9ca8-5be1-89ef-f99a488284ad": {
-        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
-        "name": "collect_import_module_edges",
-        "qualified_name": "collect_import_module_edges",
+      "c496ed8a-a21e-5cce-9dcd-8ab9d540b9fa": {
+        "file_path": "crates/gcode/src/commands/codewiki/text.rs",
+        "name": "replace_citations_with_markers",
+        "qualified_name": "replace_citations_with_markers",
         "kind": "function",
-        "line_start": 59
+        "line_start": 180
       },
       "c5eb1720-78dd-58ca-920e-fdc837cb8d15": {
         "file_path": "crates/gcode/src/commands/codewiki/text.rs",
@@ -1429,12 +1450,26 @@
         "kind": "function",
         "line_start": 183
       },
-      "c7fdba15-9c79-5134-b91f-b4e2e9f4aa64": {
+      "c64d5011-266e-5051-ac6b-95d3fc59ffe4": {
         "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "unavailable",
-        "qualified_name": "CodewikiGraph.unavailable",
+        "name": "available",
+        "qualified_name": "CodewikiGraph.available",
         "kind": "method",
-        "line_start": 143
+        "line_start": 130
+      },
+      "c76ec4d2-e3a3-5af9-bb69-a4e7b0216ebd": {
+        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
+        "name": "write_modules",
+        "qualified_name": "write_modules",
+        "kind": "function",
+        "line_start": 355
+      },
+      "c7cc0b35-e4ab-5cc6-bd60-9acfe9200427": {
+        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
+        "name": "aggregate_contributors",
+        "qualified_name": "aggregate_contributors",
+        "kind": "function",
+        "line_start": 409
       },
       "c821f8e3-5898-5178-83d4-5154f524a736": {
         "file_path": "crates/gcode/src/commands/codewiki/paths.rs",
@@ -1443,12 +1478,12 @@
         "kind": "function",
         "line_start": 125
       },
-      "ca082da0-d1d6-5a0b-b62b-68848e9213b7": {
-        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "Frontmatter",
-        "qualified_name": "Frontmatter",
+      "c9cdece1-32f2-544d-8ee3-41a5e67071d6": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "ModuleLink",
+        "qualified_name": "ModuleLink",
         "kind": "class",
-        "line_start": 307
+        "line_start": 262
       },
       "ca1169c3-95ea-505c-899d-080138093c48": {
         "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
@@ -1457,12 +1492,12 @@
         "kind": "function",
         "line_start": 857
       },
-      "ca427459-3fab-5239-99e7-83d928a89089": {
+      "cd653fa5-0464-5bdc-9e28-5dd0109bdcd9": {
         "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "generate_hierarchical_docs_with_graph_availability",
-        "qualified_name": "generate_hierarchical_docs_with_graph_availability",
-        "kind": "function",
-        "line_start": 461
+        "name": "CodewikiGraphEdge",
+        "qualified_name": "CodewikiGraphEdge",
+        "kind": "class",
+        "line_start": 93
       },
       "ce082b39-6685-5c97-b07e-d8064cad3d9d": {
         "file_path": "crates/gcode/src/commands/codewiki/text.rs",
@@ -1471,20 +1506,6 @@
         "kind": "function",
         "line_start": 27
       },
-      "ce4c322d-799b-5028-a58b-e87e934e2ea2": {
-        "file_path": "crates/gcode/src/commands/codewiki/text.rs",
-        "name": "citation_parts",
-        "qualified_name": "citation_parts",
-        "kind": "function",
-        "line_start": 234
-      },
-      "ce80135c-ed3f-50dc-a514-d6efe16205f4": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "HotspotNode",
-        "qualified_name": "HotspotNode",
-        "kind": "class",
-        "line_start": 244
-      },
       "cf3285e1-b460-5737-b120-3b222951f89c": {
         "file_path": "crates/gcode/src/commands/codewiki/build.rs",
         "name": "build_codewiki_changes_doc",
@@ -1492,12 +1513,26 @@
         "kind": "function",
         "line_start": 85
       },
-      "d48f3691-5620-5bfb-9ab3-ad6546f956e8": {
+      "d072b3f1-06ba-570c-81d6-8011b5f4ef7a": {
         "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "run",
-        "qualified_name": "run",
+        "name": "OnboardingDoc",
+        "qualified_name": "OnboardingDoc",
+        "kind": "class",
+        "line_start": 206
+      },
+      "d2a22e26-6bfb-5694-a32a-0648d7c6e62e": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "SymbolDoc",
+        "qualified_name": "SymbolDoc",
+        "kind": "class",
+        "line_start": 170
+      },
+      "d4236b41-943c-5175-862e-382972d09ec6": {
+        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
+        "name": "render_onboarding_doc",
+        "qualified_name": "render_onboarding_doc",
         "kind": "function",
-        "line_start": 351
+        "line_start": 435
       },
       "d4aa1057-636d-5a6d-8fc3-938d770ca6cb": {
         "file_path": "crates/gcode/src/commands/codewiki/text.rs",
@@ -1520,33 +1555,12 @@
         "kind": "function",
         "line_start": 34
       },
-      "d5ecfd84-071b-5464-938f-c1fbb543400b": {
-        "file_path": "crates/gcode/src/commands/codewiki/text.rs",
-        "name": "frontmatter",
-        "qualified_name": "frontmatter",
-        "kind": "function",
-        "line_start": 249
-      },
-      "d641797a-e511-5345-823c-d9617e6220ee": {
+      "d99e3527-a6dd-545d-8153-ec600ccf993e": {
         "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "CodewikiRunSummary",
-        "qualified_name": "CodewikiRunSummary",
-        "kind": "class",
-        "line_start": 275
-      },
-      "d857744a-7d59-5910-8b5b-03abee37771d": {
-        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "write_owner_line",
-        "qualified_name": "write_owner_line",
-        "kind": "function",
-        "line_start": 423
-      },
-      "d8f4b0fb-7c06-51b3-9108-88f62eec16a1": {
-        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "derived_owners_for_files",
-        "qualified_name": "derived_owners_for_files",
-        "kind": "function",
-        "line_start": 198
+        "name": "truncated",
+        "qualified_name": "CodewikiGraph.truncated",
+        "kind": "method",
+        "line_start": 137
       },
       "da03a0d9-08a1-5f2c-848f-855e55517a86": {
         "file_path": "crates/gcode/src/commands/codewiki/io.rs",
@@ -1562,40 +1576,40 @@
         "kind": "function",
         "line_start": 71
       },
-      "df09adfa-9442-5651-9447-2bb829c63eca": {
+      "db9bfac5-6855-5a66-bb29-872369429730": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "validate_edge_limit",
+        "qualified_name": "validate_edge_limit",
+        "kind": "function",
+        "line_start": 448
+      },
+      "dcc7aff2-6e6e-5f55-a22f-601116dbc686": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "call",
+        "qualified_name": "CodewikiGraphEdge.call",
+        "kind": "method",
+        "line_start": 94
+      },
+      "df6c6130-c0fe-54a3-bb34-12e7c9152f42": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "generate_hierarchical_docs",
+        "qualified_name": "generate_hierarchical_docs",
+        "kind": "function",
+        "line_start": 455
+      },
+      "df99d457-6981-5bf6-a0ab-e20feed634cf": {
         "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
         "name": "HotspotFinding",
         "qualified_name": "HotspotFinding",
         "kind": "class",
-        "line_start": 235
+        "line_start": 236
       },
-      "dfba132b-ce93-5bbe-bf19-acb3a8c25a8e": {
-        "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
-        "name": "test_component_id",
-        "qualified_name": "test_component_id",
-        "kind": "function",
-        "line_start": 935
-      },
-      "e1c89552-06a3-5893-9de8-7fa78c8b80fd": {
-        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "git_project_with_two_files",
-        "qualified_name": "git_project_with_two_files",
-        "kind": "function",
-        "line_start": 616
-      },
-      "e32666f6-c221-5ffe-a273-ae4269a794b5": {
-        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
-        "name": "write_hotspot_section",
-        "qualified_name": "write_hotspot_section",
-        "kind": "function",
-        "line_start": 484
-      },
-      "e380627c-7504-5103-84cb-52cf6d934e0a": {
+      "e2dfbb25-c43d-5040-9c18-7ef94c322f20": {
         "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "truncated",
-        "qualified_name": "CodewikiGraph.truncated",
-        "kind": "method",
-        "line_start": 136
+        "name": "CodewikiDocMeta",
+        "qualified_name": "CodewikiDocMeta",
+        "kind": "class",
+        "line_start": 299
       },
       "e512eb82-9038-5f80-aa8d-a9613bb0fb0a": {
         "file_path": "crates/gcode/src/commands/codewiki/io.rs",
@@ -1632,12 +1646,33 @@
         "kind": "method",
         "line_start": 19
       },
+      "e675ce57-6486-5873-8fa9-39bd72e1f25c": {
+        "file_path": "crates/gcode/src/commands/codewiki/text.rs",
+        "name": "strip_invalid_citations",
+        "qualified_name": "strip_invalid_citations",
+        "kind": "function",
+        "line_start": 226
+      },
       "e7519bc0-f758-5d62-885b-56ccf85cc427": {
         "file_path": "crates/gcode/src/commands/codewiki/io.rs",
         "name": "write_incremental_doc_set_with_snapshot",
         "qualified_name": "write_incremental_doc_set_with_snapshot",
         "kind": "function",
         "line_start": 19
+      },
+      "e9003a4d-e9e7-5596-95a8-42033df1d8ac": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "citation",
+        "qualified_name": "SourceSpan.citation",
+        "kind": "method",
+        "line_start": 339
+      },
+      "eabba8b1-1928-5986-bb71-2caa6b0375e6": {
+        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
+        "name": "bounded_component_edges",
+        "qualified_name": "bounded_component_edges",
+        "kind": "function",
+        "line_start": 231
       },
       "eb6df6af-383b-5c9c-8049-ee0a821575ac": {
         "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
@@ -1646,19 +1681,19 @@
         "kind": "function",
         "line_start": 113
       },
-      "ebc50268-2899-5953-9ca5-975c56162dab": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "FileLink",
-        "qualified_name": "FileLink",
-        "kind": "class",
-        "line_start": 254
-      },
       "ed951bc9-26a2-5d63-bd9a-ef46aaf13216": {
         "file_path": "crates/gcode/src/commands/codewiki/text.rs",
         "name": "structural_module_summary",
         "qualified_name": "structural_module_summary",
         "kind": "function",
         "line_start": 121
+      },
+      "ed9c2fd0-a610-5f3a-afd8-3827206f1e06": {
+        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
+        "name": "collect_import_module_edges",
+        "qualified_name": "collect_import_module_edges",
+        "kind": "function",
+        "line_start": 85
       },
       "ee231216-e5f6-510d-8256-a877c2108869": {
         "file_path": "crates/gcode/src/commands/codewiki/tests.rs",
@@ -1674,20 +1709,6 @@
         "kind": "function",
         "line_start": 78
       },
-      "ef56be25-16dd-5d41-a54f-1442f282ed06": {
-        "file_path": "crates/gcode/src/commands/codewiki/render.rs",
-        "name": "render_module_doc",
-        "qualified_name": "render_module_doc",
-        "kind": "function",
-        "line_start": 528
-      },
-      "ef91a470-fbfa-5d5c-9ce5-b042c00e9295": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "ModuleLink",
-        "qualified_name": "ModuleLink",
-        "kind": "class",
-        "line_start": 261
-      },
       "efbeb594-fe2b-5fdf-a445-f1f52bb4d1b1": {
         "file_path": "crates/gcode/src/commands/codewiki/build.rs",
         "name": "is_public_api_symbol",
@@ -1702,12 +1723,12 @@
         "kind": "function",
         "line_start": 729
       },
-      "f101dc20-edf8-5d35-bd28-db003819786f": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "validate_edge_limit",
-        "qualified_name": "validate_edge_limit",
+      "f147e2a1-1d81-5a3f-b6db-de0d87c3b926": {
+        "file_path": "crates/gcode/src/commands/codewiki/text.rs",
+        "name": "frontmatter_with_degradation",
+        "qualified_name": "frontmatter_with_degradation",
         "kind": "function",
-        "line_start": 447
+        "line_start": 292
       },
       "f24c62ab-dfa9-57f2-aede-7b84478262c7": {
         "file_path": "crates/gcode/src/commands/codewiki/cluster.rs",
@@ -1716,19 +1737,26 @@
         "kind": "function",
         "line_start": 180
       },
-      "f33b80c3-68bf-5e84-a731-ca7cdac001be": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "CodewikiGraphEdgeKind",
-        "qualified_name": "CodewikiGraphEdgeKind",
-        "kind": "type",
-        "line_start": 117
-      },
       "f35f2a23-4469-530d-b9ba-6a9c5a83d9b5": {
         "file_path": "crates/gcode/src/commands/codewiki/paths.rs",
         "name": "module_ancestors",
         "qualified_name": "module_ancestors",
         "kind": "function",
         "line_start": 111
+      },
+      "f3c5cfea-551f-5218-9a33-d4f69fca40be": {
+        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
+        "name": "blame_file_contributors",
+        "qualified_name": "blame_file_contributors",
+        "kind": "function",
+        "line_start": 259
+      },
+      "f3d6a072-303f-542c-b2f4-24558486120e": {
+        "file_path": "crates/gcode/src/commands/codewiki/text.rs",
+        "name": "frontmatter",
+        "qualified_name": "frontmatter",
+        "kind": "function",
+        "line_start": 288
       },
       "f49c3c64-b3e7-5a95-8f0f-4848c16324dc": {
         "file_path": "crates/gcode/src/commands/codewiki/cluster.rs",
@@ -1737,26 +1765,19 @@
         "kind": "function",
         "line_start": 158
       },
-      "f6bb7ad4-a92f-5cd1-a4f3-c3db047d5bae": {
+      "f4e4186c-a169-5c18-b381-b3fe0d608c8b": {
         "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "CodewikiDocMeta",
-        "qualified_name": "CodewikiDocMeta",
+        "name": "CodewikiGraphEdge",
+        "qualified_name": "CodewikiGraphEdge",
         "kind": "class",
-        "line_start": 298
+        "line_start": 87
       },
-      "f6ca5087-f87d-5cb4-8d51-65ba9dfa47be": {
-        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "write_modules",
-        "qualified_name": "write_modules",
+      "f7193077-b026-5e36-a2f2-0685e1ed6321": {
+        "file_path": "crates/gcode/src/commands/codewiki/text.rs",
+        "name": "citation_parts",
+        "qualified_name": "citation_parts",
         "kind": "function",
-        "line_start": 345
-      },
-      "f7bb8be3-3dea-5005-9f34-f242bc889788": {
-        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
-        "name": "aggregate_primary",
-        "qualified_name": "aggregate_primary",
-        "kind": "function",
-        "line_start": 387
+        "line_start": 273
       },
       "f7c4038e-ef0e-55b5-a450-91cfd5a57cf2": {
         "file_path": "crates/gcode/src/commands/codewiki/graph.rs",
@@ -1772,13 +1793,6 @@
         "kind": "function",
         "line_start": 601
       },
-      "f85ab208-f38f-53d8-92e5-d12e0138fc0b": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "CodewikiGraphEdge",
-        "qualified_name": "CodewikiGraphEdge",
-        "kind": "class",
-        "line_start": 92
-      },
       "fa013068-fbcc-5b18-a6c3-414603085e2d": {
         "file_path": "crates/gcode/src/commands/codewiki/io.rs",
         "name": "safe_doc_path",
@@ -1793,12 +1807,19 @@
         "kind": "function",
         "line_start": 11
       },
-      "facb4cae-e647-53b0-baca-428aa9e7325f": {
-        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
-        "name": "CodewikiGraph",
-        "qualified_name": "CodewikiGraph",
-        "kind": "class",
-        "line_start": 123
+      "fb674767-361e-51a7-944a-6fd3549a6d32": {
+        "file_path": "crates/gcode/src/commands/codewiki/text.rs",
+        "name": "contains_valid_citation",
+        "qualified_name": "contains_valid_citation",
+        "kind": "function",
+        "line_start": 254
+      },
+      "fba1e7c8-a580-5700-8611-54de86d42267": {
+        "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
+        "name": "codewiki_ownership_without_sources_degrades_to_unknown",
+        "qualified_name": "codewiki_ownership_without_sources_degrades_to_unknown",
+        "kind": "function",
+        "line_start": 551
       },
       "fd470077-3483-5806-88fd-eb87dd55dc0b": {
         "file_path": "crates/gcode/src/commands/codewiki/ownership.rs",
@@ -1806,6 +1827,13 @@
         "qualified_name": "OwnershipOptions",
         "kind": "class",
         "line_start": 18
+      },
+      "fe082100-23d9-532e-abb8-42e811cb2493": {
+        "file_path": "crates/gcode/src/commands/codewiki/mod.rs",
+        "name": "FileLink",
+        "qualified_name": "FileLink",
+        "kind": "class",
+        "line_start": 255
       },
       "feae17c3-26b9-503d-bc74-9618eb11d334": {
         "file_path": "crates/gcode/src/commands/codewiki/text.rs",
@@ -1823,227 +1851,232 @@
       }
     },
     "graph_neighborhoods": {
+      "00cc6c85-c05d-5902-a376-c9bfe71811e6": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "01008a3c-04b6-51f2-9537-5c36f33cc748": "5823fe1a3785a51e868efc757184cdc9c62bc8643c3917b8d6f2f9e829d003b7",
+      "01347f12-b0bf-5504-a07a-23e0233b4169": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "01538df9-7c01-54a1-8060-052c7bdf6ed2": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "054c7865-0233-57bd-947b-ef296f0b98cf": "cf8825320d1aaf76ce2cb76b43bc2d5c3fb892a3dff3e39fe1160505650e8724",
-      "0568d01e-72cd-59a8-9c74-29f171aa1cc5": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "06106795-9bb9-5bef-b008-7709b56a5988": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "07391ea9-fa65-53e5-9fda-25f9c024fc2a": "a7cb9753d401c3a00c43a0e54c11b3f9ae538eafacb5eae10d1b9d377d935f8c",
-      "08227c30-806a-5c23-acf1-f652208091c3": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "07b3ea08-4c1c-5303-a7d4-ca5e4f7f0a87": "9b2345cb453513954c0b26b6de59359322f027b9126253c6bc3a165c4f249c34",
       "08461f06-3472-5506-9d7d-453cb4ac9c44": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "085992b3-21b9-57c6-bc57-1aa015fbc314": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "08942093-d69a-5300-89f7-dc57bfc8f4d5": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "099903bf-eaa4-5213-a265-c3be387d8469": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "0bcbe4fd-2f53-54ba-8464-1b2f9ecfc029": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "0bd61aca-c99e-5b46-aa6e-c50007e4bcdd": "9d4768be1780c8761641f53b0ab6b038520bb2a034b2d85e2438e00d92d1d19a",
       "0c6bff98-f535-535b-b04c-5bc1873f8bfb": "06f1e856bdf7f66553df26c9447a4698fd558ee31223131b98f70d11b523ae38",
+      "0d01ef1d-22c5-5fbf-ac58-c6b5ab7f0cc1": "d647c021d28ac5c299001dfde4e177ae88f9745f2261c1e262412ae5a448f8ab",
       "0db7980a-63e6-57ab-90a5-8848a79307da": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "0f4817f7-b8ed-59bb-9071-626f74b79742": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "0e45cc41-cd3e-5811-be40-9f42358170a3": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "1058ad2a-9df7-5417-9e58-91859748dcac": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "10d7021f-7cdc-5701-9ad6-1f53a089d29e": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "134829eb-ade3-5305-9772-152a8cc20d71": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "141275a2-f0c4-57ab-8fa6-0cca88ff56ab": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "153bba6b-3c40-52b0-985e-1bab0ec0b872": "9d71b4dc883b8a6718ae6b7f9b8efd587928b00d2b2360f671af37c18ef865c0",
       "159ac265-551e-5c95-8d36-b65b7fb85eb2": "736276176f7bf231dea5c53adea24fc586b45681e60e78e690d5d61bf9f7c582",
       "15d2a1e8-8c4b-55bf-8c72-8b6736273637": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "16380659-8199-5345-8239-8262b27258a0": "7b80f468372760d07fcb718ace54a34e959fa55ce66bd311e782f5c13899062e",
       "163dec0a-9b40-5418-8563-cd87e87e6030": "786e4913d4d73081094cb7c573149e3bdc0458575712f25ef5206d28f341ec0c",
       "1653d1e5-3ac6-5f4e-96de-bb46fd727b1f": "c88e3b2c76525a47e1e2727d9319202dc61db2a15162287e7e19b6ce54fb3526",
-      "16c10d1d-6d3b-52bc-a1fa-f5232c9fbcb2": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "16d6f495-24c5-55db-81d3-dcd5717d5c52": "7fe5acf23c7b006fd449e20c9560c452e621fbf45fe3702e827c3851b0ee7820",
-      "17fca0c4-5469-5231-8358-c7477299a9c8": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "1825a373-fc69-5c96-a04a-54a5295f61c3": "00a01b9fe38e1b561e96e766809f0a283296c77179883c871317103da6275049",
       "1a412fa9-ffc9-5eab-9e91-b90e886ab286": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "1aa7d949-cfcc-5f2e-b5f5-ba2f5feb45c3": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "1b365924-d750-5b1d-a235-38f3e337c259": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "1d88eff1-2098-5597-9a01-3d545481c57a": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "1de9889e-babb-56ba-a8b0-bf56b54a7b8e": "55ef7fb6a8efcddef5e45b9c15ab38d6d25d501aae10a678b2342a1c1d8446d3",
+      "1e979e24-1d93-5647-af8c-c7f70ac11eea": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "1f9359c9-1aac-51bc-b862-7ff4c5ef5f17": "790491276427ecb1acefa2e33a5d1602ccec4cf89e9af620ec78bd394476920b",
       "2182266f-82fa-5c68-a9de-f21a035733ee": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "21ab1832-fad7-5a7b-adaa-3ecc0fe657d1": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "23011137-cf5d-5f9d-882f-d202d5dcdad2": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "23797dbc-db9c-5de9-8b8a-49a776d92da2": "f665b235c76f9afd475fc758fa90515dad560abf0ebc18377d342bff025accca",
       "23e63664-9d01-514e-b8a5-f351bc339c96": "a23ab7490d1a7f50ccc7dea17e2f9fe33d211637a1086279394181e6edef16da",
       "2482ea17-b327-536d-96d8-3904bc42d195": "2d959272744883aa7bf6cda32af71924597b0b17eb14230ef90dc1ef9f720ccc",
       "24c0fb5f-4d2d-5b2c-9616-02ec01f005c3": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "24ea8db7-737a-589e-878f-8d1059e1645d": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "2599b388-c570-5275-b44a-b0aa8ce03ceb": "d46c9c7658f8bcd3da051a67294a82f747169978e0f07daf0b95d9ca2f3ead03",
-      "27f30667-849d-505d-b417-865920242445": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "280ba82f-3568-59af-a971-370c2c8a6132": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "284d050f-9106-5bc1-b002-2072c6d2df98": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "291bc225-1c4c-5343-8bc7-0a3e7a7fa0c7": "4487e1c5e5dbd9e1107afd12dc719069a9ecb9c608da497249137ee58457f20b",
       "2a66d8af-c33f-5163-a4ce-df42be815f1e": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "2bf49954-92e7-562d-8e40-7e8fda6b28a5": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "2cf219a4-ccdc-5833-af4a-e0b6a1985105": "34c68ba412c358adb4ac6eba95881936229586152ba3bbbd26025b0205f48193",
       "2d01efde-b192-5c64-a652-4de39ad68a7c": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "2e8dd8ea-1c23-5fb8-ad0d-136741750eb8": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "2f61cd26-8015-53f8-ab9f-b928729fdd2e": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "30693c91-fff2-55a4-a38e-50352ced59af": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "31582839-c08e-58fb-a9e9-8b6592cb93a4": "67396e472974ec46d2038992c374de2d1dbd00ed197e7f1ae1ff31bbe2ddfe88",
       "322902f3-e510-5ab1-a083-ba0449074ba8": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "331e6ded-bbaf-549d-92e6-db67432ff715": "2312654ac87c0dcf8ab4041673d2ad641d3cc37a438d730bec0ad89bf7699cd2",
-      "336dede6-56eb-591c-b2b2-bbbaf3b8e106": "5c553a18e813dbb981d2ee1a8494526129cc7e211fb5702ae89ec4be5c94fa8e",
       "34363a23-f683-5bb5-aa67-65e268a2248a": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "35452761-b09c-55ee-9efe-fd7702411d47": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "35654fc1-e915-5bb5-9ed8-37e151c43428": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "375c30f2-681b-56a1-bb8c-3a87f1b45bb1": "5b8c418ddda8bccbf537d8ebd2eb5bc4b2f49b4bdcaa685330901532485ba475",
       "38f5abdf-bd5d-5bee-9448-fe0fbc4adfdd": "bb57de0cc893b7f54b189fceeff452427f3c466fc3386abc61daeeafb31c09f1",
-      "396dbe67-3b75-5b7b-8e2e-8a96243d2269": "35131458aded826f55d5828b1e371c97e32630933567f8fc052ef9dbb9091347",
       "3a4759d0-90f4-5e0d-88a9-2439c772d51f": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "3d091635-8aba-53a7-ad0b-e24364df84b2": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "3b3080d8-81db-5b3d-b5a7-d2a2d2bcccaa": "45f5c180a373817198b6a01f847d31b7d0016e8612e41c081d78869d87b2299e",
       "3db6cdd0-a12d-5c54-8d4b-c4bab07b1880": "0be1709d1bdf16e4fb037ef2c5ef6d61b21ca9b567b7e581a64bac45f1d6502a",
-      "4104a376-f626-5986-a84e-03ffde136d90": "a5bb1ddb9fa2081760da8de1ec492d90e20f48d7bb2ba1fe301727609c58ccc0",
-      "4129331f-3a5e-529a-9ba4-c84e74ab7535": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "42f68801-ae50-5a1a-a741-91654c2cfa11": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "43826e94-a31d-5d20-b988-39d5f48b6961": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "3df495a5-f3e9-55cd-bb48-e3e707af1523": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "3e9f1131-d503-5275-8193-005bfeec31f2": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "3e9f6ac3-5a86-5430-8af9-ab540f106ba2": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "3fda102d-27d1-59e5-a63f-81de6dae60a1": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "440d8976-0ef5-5d57-ac85-b94354607fcb": "8a865ec19926342d89df00d3b923e497f7fac32fbdfa1b110e4059031f1e3dde",
+      "44d57ff8-2098-5700-b3ea-fcb547609a45": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "459f2a74-d6fd-5df9-afa2-2d6e02257948": "3f4932e5b9c64300f677f05bd5ec60fa47dae7d234db166fd5006b6b4b7356b9",
-      "468fa3a7-b6be-5f2a-98e3-146cebb57999": "4c8b8e08c1bffb696ec7a96cc4b04e650ba54873b3c487c516f7119b23f75dcf",
       "46d31134-dcff-5512-93f2-1cb6d080f5c5": "652c1b924f515686722d082f0868099677d10b45b42a6536003ac2782c6494b8",
       "486922ed-7bb3-57b1-b8f2-acaceaef8a1a": "2d959272744883aa7bf6cda32af71924597b0b17eb14230ef90dc1ef9f720ccc",
       "4a29bdf1-f7ab-5254-a2cf-cddacc17f47c": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "4b8d509f-a2f2-5a68-8bed-da733b82a7d0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "4c9ad7d1-1c67-5486-865d-635fb1638dbe": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "4d3c3199-f0e5-5f59-b2cd-01ccb870533c": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "4dfb9dd3-d878-5252-993a-f006dcf8a065": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "4e13e14a-df53-52a7-81b2-70a3c0a92a84": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "4e1a85d1-35a2-51ef-8b39-17035639dbbe": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "4f028770-666c-55e4-bc7f-690ff3862291": "2fb1e5fbe9ea5e82d2cbda56245a58ad7283442a1773b1f9ad70f1a3960aef29",
       "50188f0c-4048-5742-9a42-3e69dc1a2fb1": "5cf691b5561e023d954c28c476ac87d9ac9e0c88d2824afd315693b896a4f13f",
-      "507d3704-84c2-52e9-b903-e845c925fa8d": "492e77392ca6a186b835bf398379008589e655f91730920db3890fbd3401301e",
       "51f659ce-4619-5cda-9b2a-38305efd5557": "5127f58d72bef1b0c39aa06cff7d955fb3b1260e9e05880a0141b3972f5ddef9",
-      "53816bc6-6dae-5c78-b266-bd6dcc2f51ae": "60d8db1d12edc1d47624c779e9e3fec94bd5acfa69df39e266d536695e1e5c1c",
+      "521d52f2-3c95-5220-a4a0-4a4e8f5ed051": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "53f6781b-60b1-59de-bc42-a775056e31a5": "553fc016debbf97e118ff8c8ae5e70b46556d0ec6c9e3d754ce9ede0e6c36a56",
       "544abd88-cfbe-53ee-8f94-79488de3d5c0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "562ea5bd-2bc3-50de-96a6-8202bfc1114e": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "58a5e201-7b0d-5dcb-b616-f915b9383335": "ac7ed35320eb1502a75dc6f56fd2d136766a110fd51c2f6e4f46db1253da8c14",
-      "58e906f0-e3ee-5201-b4bf-804a2dbeaee9": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "58f299e8-7620-5988-bcfb-b03ad164adcb": "c2bf3adcb91e236adc2623f981f84bc5d56645a502466d46c4e94fe008e6711b",
-      "5947fbcc-c36f-5ce3-9d26-8274f83be407": "b73f0502c1e3843d45fe5723c492d869e7643597097e6066602ffe984253ea3c",
-      "596b94ae-f090-531b-9c1f-6535ebc30ea0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "5633aa61-d42e-5c04-a19b-511b80f65dc6": "b4faaf61cb2177595a343e5fe1eb9ca272e171b0abed9615a82e3400f6be5d71",
+      "568913c6-e6a8-5221-8f45-cbcb40937e34": "8a37b14e301186d8b791fb07e622030f4fee5beae4d50e4aec31d32baa9798cf",
+      "5756a735-7f7b-5e52-9023-7d59b0316f36": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "5961933e-9d02-55c5-9c45-471a1ef147ed": "8d2574f377743b9c8a6a6f531d6b5c62194d93beff830dc0d08b10668bee40f9",
       "5a65fb56-e981-5cfb-8db9-cd7603f94ad6": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "5b87f590-cc00-51f2-a9b3-705b4fdb4048": "087dd0aebfea7ec1a5d609a9629ef4d225ed8e88006557f86826c2b3fffec5c6",
-      "5bc744c8-59c9-5b7b-bfb6-70e4078112a3": "6c3b2f6d2fe585ddd4e03e45bcc7b7be5b9c6ddbad1f1d1e8ba44f8f27474ef9",
-      "5d1e148d-f5c9-522e-9152-f12387453647": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "5c7e11b5-44b5-51e1-862e-348aa0d2961f": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "5da67239-f403-5518-869b-05470d96b2ad": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "5e0efc18-c809-51a9-9c38-9ee1aee6e7f0": "9f76f7ab72d5c1783b4b5c812d749f88a8f80b7ae8879e0051c4e17c2b27c829",
       "5fb7d3fa-b6ef-5c48-9029-d351668affa7": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "602375e1-4812-55a5-8841-e659b5b30d55": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "60cf7d2d-8445-5eff-ad59-05eaa686fdf7": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "64da2255-b49a-510b-8efd-9e8da203da38": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "64fd385c-8e96-53a1-a765-824643006be7": "6533c88d2354fe40780119c8a832c14400367e697c48b3829048324c79dec8e7",
+      "64fd385c-8e96-53a1-a765-824643006be7": "7bafa4bc5ab5b20249ed2fed430739ff0ed3d8121a221148a3ad36a0f1b38934",
       "66466d92-7d89-57c3-8dff-91525ec970fd": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "672d2c89-f629-5a6c-85ed-13b27b8d583e": "a113d113798c5388c28d869f771f6405ea8a7a4756002f7195c7356f2a9f239d",
+      "67f904ce-e09a-5c42-a79d-103cf4d5405f": "83ee9a71e52b4918da44bc4957fdd2bddfcb2c7f20c175a88b565078fcbffa24",
       "681d05b7-5419-50cf-b769-23846871f627": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "69b83ce2-4de5-54ce-807a-3988863e31d7": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "6b4e7d21-5b24-562f-b897-4cffdfa51c68": "d2769db9ee7ae76172ddfc7ffe294494eedc592b3985632c124e593a29fa6988",
-      "6d153b33-6511-5ca1-9977-1234080b8b6a": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "6c766f92-52b4-54cb-a18f-2b15e0485f9e": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "6e0c56eb-74e0-5ba5-851a-6ba437c3ff84": "7166b7c1e2ee1b80585ce81185b494921dba289a2ef02f52e357086dc6fe429f",
       "6eb9acb7-cf07-5299-b5ed-1637d921cb7d": "569f25bdd8ea636124455bcb313df77aedb3a4fdc9ed557efa6365a8b585fce0",
       "6efdf593-ef1c-5df4-b49f-31b9034cef81": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "6f204b45-c613-5e32-9a7e-f8ffbff4306f": "92f347e5b1876c1d88ac27c873fe06ec90f7c45f4b6879e88cb6b63c9c2264e5",
       "70693de8-2f1f-5f94-badb-65a92aec433d": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "714763f7-edaf-54d7-bba9-4f448627ca17": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "718932b0-dac9-5dd9-8f7a-898c30879624": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "71d17eee-d6cc-5667-b371-efc6486525d4": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "73020b57-8262-56fc-a32f-167b42bac26b": "cc10d8fdb6b9aa4e19d1d8a6f9024831038062d919e0b1fbc3911ff0803fa495",
       "731f2c21-b8ef-5b43-a961-72daf4bf1d5a": "ffe69acf2c50f9f012d02c019c812f514dfecde82832dd9622ca906e040c8aa4",
       "744db4b3-95d1-5f98-9876-7febb22e4271": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "79ff9b30-d1e7-5ff1-b267-da818bc66910": "b73f0502c1e3843d45fe5723c492d869e7643597097e6066602ffe984253ea3c",
+      "77dc2561-03c6-5ce3-8cde-84ed13609525": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "7bac5d99-3bba-5e1a-ba6d-aa71c94ed209": "47fc2601ad8a96d249d2ad0dc38e78c32f5930560860b86c01ec6a495070d099",
       "7c34bf5c-55e3-513d-aa43-326a859ca342": "ae56fac117d8ff23f5ca706ec293b7a163092da1d807c8ae714b91fc0e23c0d6",
-      "7ea608a9-235e-506e-b72a-53d652f528b0": "aeeca360bb8872693ffcc751f65f588c783c185912b5f37dc541f81db4f805e0",
+      "7faf03ed-48ee-5625-9e91-ab547fafaecc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "80d29415-ff65-5cc1-b96e-8a1f3eb42341": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "8172fd89-840d-518e-bd70-7935e6143748": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "819182a0-2c32-58a2-8ef2-e93073edc832": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "8273b13c-705c-586b-a7bd-4b08c1e00599": "1af2174c543edb8f5cf032393d97587f5a9129f7618f929914d26bd8051d861f",
       "828f1212-e891-5727-919a-e88466bdee70": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "838dfd5f-c9ac-5214-846b-f6bd9cb1e54a": "198c716486dc9c038e43dd5620512b7d79fa26cbfbc36f15b1753c638ee4261e",
-      "87851973-3388-5e07-98a9-d39ceaf45f04": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "838dfd5f-c9ac-5214-846b-f6bd9cb1e54a": "0a9d39c6c7b980e11fe3f7b5572ebcb3ed6023b356d97e1b1e9c112e7ed6963d",
+      "858be08b-3323-584a-9313-7900da4e8754": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "86926645-1b0d-5b83-85d0-9a96bc0d42d3": "10d0c2b3c597aa0aa34924346c02b8f1c0d9997cc1d7a474020e02295a836f8e",
       "88f91a38-40a2-556e-bd70-1feec6294da0": "06455ace99f7f454cc6b156fc7becd39dbd6e0d978bec4c71957e15fd54e00db",
-      "89540036-c83a-50bb-a8e5-a4f86cb8f930": "251cf77451ac77660a1a2178f89ff81bcd90535cbd008d930f2c513d272fa2ee",
+      "890368f6-00dd-5477-b0a7-b16e3c4cb25b": "fc1fbee3eba990e38a4e5bc76b29b71204109b47a0d306f42c46f0d6749b0a87",
       "8d2f0ad3-95d5-5060-a0ff-b1218f7ffd37": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "8d31f63a-b267-5bb1-adf5-95e361004995": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "8d64f358-8e09-57a3-a913-ff04cbc92b4d": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "8f1872b4-20b9-5cea-bb00-7bf461cac854": "41a49143fd9a9c8e134eb471b4fedcfca216bf915d7e61e0630daefb3f7a4fd7",
       "8f44a134-477a-5025-b3b4-f0b53992a09d": "5f122e754d8107429e5326825c9f66b3b43c1be46d5b22c5cc5895af0036916e",
-      "90890558-f2cb-58ca-aa73-c5a8db55ed59": "4edc6c1d5defbe8332dceb70d343e946c6740a0bb361a132cd33651533766f45",
+      "90d2a40b-94ff-5ec9-a567-80ad9dd153a5": "0aca61a33116c183a516a44e6aa88261e25f55d9c8bbcc32ee8024430f6d18dc",
+      "916ab758-e2b9-5a05-b413-2926c3748fca": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "920c0a56-db4a-5ecb-83af-d844587be9a3": "3f3a556dcb7a5e02fe5577ed2d1482b0d50ff2308b101c7633a516d5e08de61a",
       "923953c3-cd3c-54bd-ab13-e0cccf3d1d46": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "93227c9e-953e-5732-863b-cdc688bacd1d": "f8a37ae879156b6476876ff4154e3501cbafdda0fa83124a5ac24e5876d7e263",
+      "93bb88eb-c6ba-5fb6-b0ea-b7f18e9a893f": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "93c90c64-d9e2-5a16-97b7-d07c84b8292c": "a113d113798c5388c28d869f771f6405ea8a7a4756002f7195c7356f2a9f239d",
       "95f0b3d9-cc4e-545a-b041-51dd5eed9a90": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "9766f883-4e9f-51b6-88ba-8024bb827da4": "96e8aed653facb76258146eaae2a103ba59090f796a13fddcc52359fbf0a560d",
-      "983b52c5-6d42-5c51-b9c1-e0ce72eedd09": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "9771e85b-a36f-5f46-a95c-1bced69c03e0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "981b3e96-566a-5c60-930f-493f9de8bbe8": "fd0e4583983410cfde546fbf53a36d6a051ae5406fb04c7d1d8661e0bcb4c440",
+      "98ac6b3b-aa18-582c-a4af-d949abec6296": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "98f33839-97a5-5271-ae3c-dea936e7fe3c": "f85f69e6def6c2a16757aea1dd846ed604a4c071c7c09017c8b71a47d3d2fa94",
       "99961a57-d75e-5273-b955-c8f109980c62": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "9ab823f6-4d8b-58b8-84bb-b9bb8759ba4f": "05f618462901e7171207eb4b70f92bf798a76dc3b779048dd3fa87e3dce58f90",
-      "9c29ac37-9332-5782-b1fb-5aa39903e8c3": "c9dc95ca3c3b0df8288f1d41210d1f67c936b509fb639c49a3d747ff70771247",
+      "99cc5be8-0851-5bc2-b52e-f1b3e41cc94e": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "9a3c2056-3902-5562-96f1-1f2c65916569": "790491276427ecb1acefa2e33a5d1602ccec4cf89e9af620ec78bd394476920b",
+      "9db352b3-4c52-5f9e-a28f-c01f407612b5": "b4ccf79e73c83c86f8b37d1741d7e5bb369b2c1bf3e9e2204f7327937116496e",
       "9dcf41a0-ef09-5f86-be61-df3ec6c3115b": "3139f91fa2c3ab9f737ca1442a7d564b5d57b787a235f0f484b447f7f4e2353a",
-      "9e74b9ff-1a2a-544d-97ad-9aeea79429c7": "50d30ab674da10ca86c866dcc45635f895108f2e595e627a51ca5d4a7d719df5",
       "9ef662f4-12d6-539a-828f-3e518abea1e0": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "9f4f2460-dcdd-5ad8-89b9-b34c599d6b6f": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "a26b893f-a0d9-5f5e-82e3-08b0f1e03e26": "3894d4eb521f1106d7601171918407d5197549ba586a105311a199a5a1678e0b",
       "a2788420-9cd4-55d3-925d-8765093224a7": "1c314bb1a07acdf8caf78aec2fecf0756e74c3ce6fedb58af1d549651595da6b",
-      "a4620f28-afee-5fba-a5d0-8fe5148fe893": "0e286c0c3c5a22e04f2fe17b9ff6d791a939c23b667947ed66510722ee3e741e",
-      "a4869ee3-9d84-52ec-ad59-0195145a5dc7": "620fb4077cd54246fe2a9fd5d653af8bf9b4a0b94493098d167c1707ef40eaa8",
+      "a62cf571-1081-5e28-9632-f9319c3e1393": "bda798631fa489571d43c05260144bce4204bbb9bc86a6ae770598a29f6a8f4e",
+      "a6e1f308-eade-51eb-9869-248fac1b8dde": "85c18efaa0f31380e94408d2124c023a27d82ec29aac0c944e0c8f0bf6445d32",
       "a80586f6-12c1-5d4d-a4fe-095348149298": "8d9467237d62484ac2027ebc04d295804d1db01f96e0b8bd6904494e1b2ced39",
-      "a96326b6-c4ea-5610-b568-f4fdb448a8ba": "fe71cced8faceaad33da73570f02aaf86fa6a9b1ba8bf7466273736b7dbfc5dc",
       "aa11fac8-2a20-5585-83fa-1f777b63a709": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "acdd8337-ce60-515e-80f9-551db18797a8": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "ad7bc592-5e0f-5b9a-8343-88f1503468c3": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "afcca8ff-4edb-59af-9bab-8ddaa008a7ef": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "b073a8a4-a30b-5885-a92c-fe3680002fdc": "daad1749a4c5e740950d849fcc75ddc889d9e95d3ede72b9cc35aff4e389c3cd",
+      "b0c5f0f1-84eb-5589-8ea8-89f94262f036": "fb35dd8ae62c2aaba9f439ce8730fa8a37df3c77af8464cab23e574f8084a0a3",
+      "b0eba544-7128-5476-868b-a41551a34d17": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "b14e1be0-85bf-5d5b-8ba6-aef319024d72": "eeecb430c5af92c25acf422e0a3f3c149cd190a2e7b7fa101c2a30ab807c7e41",
       "b214e5ab-4f69-5aaf-b156-b02260be38b5": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "b2465604-5974-50b2-858a-554978c2ac1e": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "b3f4d644-ea4a-5b47-8b20-6ac72f9fde06": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "b4ebf07f-4df2-5a4b-86d1-ee814f385c57": "7441e494ff8fd1815f7497165f2b0e446c4e825e4d7fae282bc1b4789d0a27e2",
       "b51414a5-90eb-5efb-8c4d-9b57722a63da": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "b515cd72-010a-599c-9f23-597cbac4c9d9": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "b5f7a087-cd7f-5e27-823b-79664f1a5646": "1102248e24444b4dfa9d7d1f700e79b160be38a335a235993e1542216a196d05",
-      "b66b849c-fde7-5470-a558-399a383bb261": "9d95c7d52231b049c093df4192f4297ec42aae3895cdc390b2b017ae4eddb045",
-      "b7b35534-a8ba-5c4b-a97d-2c70814ae8bd": "c009286e7b30214ed5e94b727a0b6605448466be2cde4fd89a05473ed2020400",
+      "b7b35534-a8ba-5c4b-a97d-2c70814ae8bd": "fe5fac7a395ea02f56c6e7ca19c75077beaf177254eb65f08b57b5a0d0613e60",
       "b981c250-dd67-5629-abce-4ec63966c980": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "ba01f7ae-bbe2-52e9-a8bb-6b7580b374f2": "8c3588111dbfd3378421195d7c639f7ae6172642ab752c197e4b52436019ede4",
+      "ba6c63ac-2506-53db-866d-024c7e86271a": "d5c394bb1fefb37b7bd41c6b2a1dd86716684058b2ed1cbee201c9ae843c6615",
+      "bb8b09da-3f39-52b7-b725-62d67b1c9b03": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bbe5e7ce-87ac-59cd-b863-8bdbe419e608": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "be4355c2-5c8c-5949-a035-26d2994031b1": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "bf0e4e18-e0c4-5300-b1bd-ea69e9c727ee": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "c1698559-2061-5227-ac8f-265071e1b1b0": "0caec561c4fe9c0b446fae850b8705e5634a0dae60937c9659359cbdd11b6d05",
       "c18ccd08-ac4e-5484-bc7a-aa1c82e4fead": "d41eef4d05893c86dfb5c161b8e24f3c1cc8a8c54c7e32025c41654a223e8124",
       "c1a5448f-0391-5681-b172-3f987651f355": "0a729dcdab0e14c3e90398fdedf5e84f5e977b43f1c46f1ec7fef08876026d46",
+      "c2042344-0373-58bd-adb2-9e2623eaa652": "c9b00364f3240c1d343783fc80ed41e3afb0439ee5a89d5c3e6990fa787129ce",
       "c2474b4a-3816-5e4d-9f13-a1a296986eb3": "d3a6b4c6bc1450676e4fec8cbaa8d1ead9d480451c26a4bd1d53c5181bc7ebe1",
       "c37d6914-a52b-5bc3-9c28-4b89baef68d4": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "c5d1a081-9ca8-5be1-89ef-f99a488284ad": "c210ceb539bf8486b198d085faa329f85fe237c364e302770dafbfaf76ed8978",
+      "c496ed8a-a21e-5cce-9dcd-8ab9d540b9fa": "d0bac8697e994593cc322d17dd0f93694b31403c8c8e7063a6be937263b7cf9d",
       "c5eb1720-78dd-58ca-920e-fdc837cb8d15": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "c6366caa-bae9-55c0-8edd-b0c1fd1ea2b2": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "c7fdba15-9c79-5134-b91f-b4e2e9f4aa64": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "c64d5011-266e-5051-ac6b-95d3fc59ffe4": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "c76ec4d2-e3a3-5af9-bb69-a4e7b0216ebd": "ff7a97f109ec629458a49de42aa21dffe0487fa54a949e9272023a6cb2b113a0",
+      "c7cc0b35-e4ab-5cc6-bd60-9acfe9200427": "656b6f7a9d1e13550025b92d60cd94b8d36144bffe213c9cd7777231399fcece",
       "c821f8e3-5898-5178-83d4-5154f524a736": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "ca082da0-d1d6-5a0b-b62b-68848e9213b7": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "c9cdece1-32f2-544d-8ee3-41a5e67071d6": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "ca1169c3-95ea-505c-899d-080138093c48": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "ca427459-3fab-5239-99e7-83d928a89089": "d6dd8019630a9e39d845dc61c7ab531253df4b5f163b451c47cfd16b2b832761",
+      "cd653fa5-0464-5bdc-9e28-5dd0109bdcd9": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "ce082b39-6685-5c97-b07e-d8064cad3d9d": "e90340ab380044b701134094f023f2c1bc536eef179772a023d1d6202ea5c960",
-      "ce4c322d-799b-5028-a58b-e87e934e2ea2": "c143be2f38a04e6ba79d94e30db17a60d869a2fee7ede84ab4de25768c03a1e3",
-      "ce80135c-ed3f-50dc-a514-d6efe16205f4": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "cf3285e1-b460-5737-b120-3b222951f89c": "63355784713f38c7c81979a06d91be174fa38ada055d49eae470d00fe5278243",
-      "d48f3691-5620-5bfb-9ab3-ad6546f956e8": "7dd29bc36e1d68bb94223f38ca500b6200b9b76072533b83c7d6a5ff90121228",
+      "d072b3f1-06ba-570c-81d6-8011b5f4ef7a": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "d2a22e26-6bfb-5694-a32a-0648d7c6e62e": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "d4236b41-943c-5175-862e-382972d09ec6": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "d4aa1057-636d-5a6d-8fc3-938d770ca6cb": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "d552e1fa-b58b-5166-a9bc-46e47a7fc83a": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "d55b1cdc-aa9a-567f-b831-3741fd4d646e": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "d5ecfd84-071b-5464-938f-c1fbb543400b": "96e8aed653facb76258146eaae2a103ba59090f796a13fddcc52359fbf0a560d",
-      "d641797a-e511-5345-823c-d9617e6220ee": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "d857744a-7d59-5910-8b5b-03abee37771d": "50f5cef61b6f398eedea0c1f6630206e989a81da287df7441f9ee57fde52ee4a",
-      "d8f4b0fb-7c06-51b3-9108-88f62eec16a1": "57ecf502ecb1a56a732a39cd5a9425f2b8061cd66f6679a8cd12dd6cf7c1c51a",
+      "d99e3527-a6dd-545d-8153-ec600ccf993e": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "da03a0d9-08a1-5f2c-848f-855e55517a86": "277b33ff1d9b335aa5fa9fafc8b9f1c07cad8b2b330360e5fd87289220a4386a",
-      "dac79f42-a25f-5a0a-be06-680dce7aeb45": "fde31c69760cd53b590a0a51ed9dd12c7857497b387c8be31d4425d65483ffd7",
-      "df09adfa-9442-5651-9447-2bb829c63eca": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "dfba132b-ce93-5bbe-bf19-acb3a8c25a8e": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "e1c89552-06a3-5893-9de8-7fa78c8b80fd": "3fdbf24d1278b5b5b86e3a943642a21fca0eeb2e9af80805e9fdeefc37337a8d",
-      "e32666f6-c221-5ffe-a273-ae4269a794b5": "d46c9c7658f8bcd3da051a67294a82f747169978e0f07daf0b95d9ca2f3ead03",
-      "e380627c-7504-5103-84cb-52cf6d934e0a": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dac79f42-a25f-5a0a-be06-680dce7aeb45": "2e5e3133d5c1b29e8235030f80546025e29deab677521b97fee99bc0de1f2758",
+      "db9bfac5-6855-5a66-bb29-872369429730": "8f8aa30a76f4bfeaedf0205e64fe7eaec6095b33d956fed6527af9c90adc022b",
+      "dcc7aff2-6e6e-5f55-a22f-601116dbc686": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "df6c6130-c0fe-54a3-bb34-12e7c9152f42": "83a8e6b9230681f1120407baf0056434178c4a7703ff09cfabf3dccb1fccb773",
+      "df99d457-6981-5bf6-a0ab-e20feed634cf": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "e2dfbb25-c43d-5040-9c18-7ef94c322f20": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "e512eb82-9038-5f80-aa8d-a9613bb0fb0a": "9f76f7ab72d5c1783b4b5c812d749f88a8f80b7ae8879e0051c4e17c2b27c829",
       "e518ade6-5b00-5e50-b940-ac6581a71ee8": "70f04208f49a2711e9062e94d776f8d693766951bd73bb5dc542daeec4006aef",
       "e56e4ba0-1933-5422-925c-d7ddf0c6fef8": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "e641ded9-0eec-53fc-839e-20df7fed572f": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "e652c60e-08d1-511e-9ab7-ef87f35db83e": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "e675ce57-6486-5873-8fa9-39bd72e1f25c": "705e2cffb389f146413cf94fa71ba562a932028f5bcc1770f9570dce5b4851e3",
       "e7519bc0-f758-5d62-885b-56ccf85cc427": "2988ce8b216cd3d687644d079936ce0a8085c7666dbf97aedb333cb251ce8246",
+      "e9003a4d-e9e7-5596-95a8-42033df1d8ac": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "eabba8b1-1928-5986-bb71-2caa6b0375e6": "44ef6c946b029e4f4e68ffbc4f8f80f26d0196306255e7396a0bc2c281995373",
       "eb6df6af-383b-5c9c-8049-ee0a821575ac": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "ebc50268-2899-5953-9ca5-975c56162dab": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "ed951bc9-26a2-5d63-bd9a-ef46aaf13216": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "ed9c2fd0-a610-5f3a-afd8-3827206f1e06": "d9227ef06301afb2999b385b7e2dd849b030fd8be6ba5c21b9a683370abab34c",
       "ee231216-e5f6-510d-8256-a877c2108869": "2ee9234a48a9dde5afc935235f388b4930374fb9ebeb70b1d1cb63da0dbc4baf",
       "ee7271fb-6218-5f67-9402-309bfdaa4ecb": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "ef56be25-16dd-5d41-a54f-1442f282ed06": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "ef91a470-fbfa-5d5c-9ce5-b042c00e9295": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "efbeb594-fe2b-5fdf-a445-f1f52bb4d1b1": "36aa3d4444d2d0f1b77b165fe61a0185cedd2f8b743dea8956b197158f44ee06",
       "f0d98230-97aa-5b1f-a70f-f391ad93206c": "421a6870848bb07caa8803556b0fd09e6d88a3c1a49a90449f5b3f9a7edde667",
-      "f101dc20-edf8-5d35-bd28-db003819786f": "1238a47a231fbad10fe2ec8c599cf59295174dbf4392cda38ca41c1888f96ea3",
+      "f147e2a1-1d81-5a3f-b6db-de0d87c3b926": "fd488f5a1af07bec4272a1c545984881411adf68ca946813363a1447cf07c9b2",
       "f24c62ab-dfa9-57f2-aede-7b84478262c7": "abcf0827f94cdf6c9a55be7ebeed4b4f7464392c9eeaebf21ddfbc0df2483935",
-      "f33b80c3-68bf-5e84-a731-ca7cdac001be": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "f35f2a23-4469-530d-b9ba-6a9c5a83d9b5": "e85b904115cb730e1c344a079d87d6f75835ab144fb6085e67890e399532415e",
+      "f3c5cfea-551f-5218-9a33-d4f69fca40be": "44a2e1e821596e5f9a4d8b202526b0b0ef76b3304f67ed9c85881aa5120a7170",
+      "f3d6a072-303f-542c-b2f4-24558486120e": "fd488f5a1af07bec4272a1c545984881411adf68ca946813363a1447cf07c9b2",
       "f49c3c64-b3e7-5a95-8f0f-4848c16324dc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "f6bb7ad4-a92f-5cd1-a4f3-c3db047d5bae": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "f6ca5087-f87d-5cb4-8d51-65ba9dfa47be": "843805f90072ea8e9e9e3a560099bea580dc728f98b442fa1ea71554f0cfade0",
-      "f7bb8be3-3dea-5005-9f34-f242bc889788": "845a8bda806e93312fe64570a51aac041d710e6738ff977a6e21409b4a9fa120",
+      "f4e4186c-a169-5c18-b381-b3fe0d608c8b": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "f7193077-b026-5e36-a2f2-0685e1ed6321": "e7aab1c09ee25cac398066bbb0f4ee89e95ac672989ddfdd81d9889931b70328",
       "f7c4038e-ef0e-55b5-a450-91cfd5a57cf2": "55d9d016904bcf10fb8bfc5be64e0f97ab45c88dfe245ff39f0cba042806e335",
       "f7e7a4c2-5948-5cac-83b1-2ebcbde5733b": "421a6870848bb07caa8803556b0fd09e6d88a3c1a49a90449f5b3f9a7edde667",
-      "f85ab208-f38f-53d8-92e5-d12e0138fc0b": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "fa013068-fbcc-5b18-a6c3-414603085e2d": "88511596062ec3985e2fdf1fc770d148f88fc3e67c434cd62bd63e6b20ce7391",
       "fa8a9d60-b906-5015-bfaa-0440a7025e2d": "dccdedbfcdac780624dd6bc73bc089cfe7ca21b947b2d110b84be4f37441111f",
-      "facb4cae-e647-53b0-baca-428aa9e7325f": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fb674767-361e-51a7-944a-6fd3549a6d32": "7a0674f44666b536b5399dbf6fa74924a59a9d10f2afe013cd4ed2ac85b273eb",
+      "fba1e7c8-a580-5700-8611-54de86d42267": "f766057c622b654f40aceca639ebd2f985ed85273909a934dd11bba35df391f3",
       "fd470077-3483-5806-88fd-eb87dd55dc0b": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fe082100-23d9-532e-abb8-42e811cb2493": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "feae17c3-26b9-503d-bc74-9618eb11d334": "11c9728cfca27af8257df9d5b37fc228a5693ddd3ccaa5df4eebbd6208ab9fbc",
       "ff1b10dc-bdd0-5d09-8282-eb9da14656b2": "014ce5f4d2337f4e603c28f1da0246285d19203a90909a70c2f26ae72ffe1305"
     }
