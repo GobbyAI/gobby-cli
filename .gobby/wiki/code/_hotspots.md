@@ -67,7 +67,7 @@ freshness: indexed
 
 ## God Nodes
 
-- [[code/files/crates/gcode/src/commands/codewiki/io.rs|write_incremental_doc_set_with_snapshot]] (`write_incremental_doc_set_with_snapshot`) - kind `function`, component `e7519bc0-f758-5d62-885b-56ccf85cc427`, degree 8, score 0.035, file [[code/files/crates/gcode/src/commands/codewiki/io.rs|crates/gcode/src/commands/codewiki/io.rs]], [crates/gcode/src/commands/codewiki/io.rs:19-69]
+- [[code/files/crates/gcode/src/commands/codewiki/io.rs|write_incremental_doc_set_with_snapshot]] (`write_incremental_doc_set_with_snapshot`) - also listed under Hotspots; see that entry for full details.
 
 ## Bridges
 
@@ -97,4 +97,3 @@ freshness: indexed
 - [[code/files/crates/gcode/src/commands/codewiki/cluster.rs|files_for_import_target]] (`files_for_import_target`) - kind `function`, component `f24c62ab-dfa9-57f2-aede-7b84478262c7`, degree 3, score 0.013, file [[code/files/crates/gcode/src/commands/codewiki/cluster.rs|crates/gcode/src/commands/codewiki/cluster.rs]], [crates/gcode/src/commands/codewiki/cluster.rs:180-196]
 - [[code/files/crates/gcode/src/commands/codewiki/text.rs|resolve_text_generator]] (`resolve_text_generator`) - kind `function`, component `f337b7e9-9139-5431-994f-e7f9f9edc922`, degree 2, score 0.009, file [[code/files/crates/gcode/src/commands/codewiki/text.rs|crates/gcode/src/commands/codewiki/text.rs]], [crates/gcode/src/commands/codewiki/text.rs:26-57]
 - [[code/files/crates/gcode/src/commands/codewiki/io.rs|safe_doc_path]] (`safe_doc_path`) - kind `function`, component `fa013068-fbcc-5b18-a6c3-414603085e2d`, degree 4, score 0.018, file [[code/files/crates/gcode/src/commands/codewiki/io.rs|crates/gcode/src/commands/codewiki/io.rs]], [crates/gcode/src/commands/codewiki/io.rs:252-262]
-
