@@ -1,13 +1,6 @@
 ---
 title: crates/gcode/src/commands/codewiki/graph.rs
 type: code_file
-source:
-- file: crates/gcode/src/commands/codewiki/graph.rs
-  ranges:
-  - 4-124
-  - 34-49
-  - 126-145
-  - 147-165
 provenance:
 - file: crates/gcode/src/commands/codewiki/graph.rs
   ranges:

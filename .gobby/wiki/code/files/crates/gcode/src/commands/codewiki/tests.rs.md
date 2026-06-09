@@ -1,42 +1,6 @@
 ---
 title: crates/gcode/src/commands/codewiki/tests.rs
 type: code_file
-source:
-- file: crates/gcode/src/commands/codewiki/tests.rs
-  ranges:
-  - 11-45
-  - 48-110
-  - 113-120
-  - 123-196
-  - 199-212
-  - 215-217
-  - 220-225
-  - 228-240
-  - 243-265
-  - 268-295
-  - 298-307
-  - 310-317
-  - 320-404
-  - 407-475
-  - 478-492
-  - 495-525
-  - 528-549
-  - 552-590
-  - 593-605
-  - 608-624
-  - 627-644
-  - 647-661
-  - 664-697
-  - 700-750
-  - 753-854
-  - 857-880
-  - 883-887
-  - 891-905
-  - 909-923
-  - 925-933
-  - 935-937
-  - 939-967
-  - 969-997
 provenance:
 - file: crates/gcode/src/commands/codewiki/tests.rs
   ranges:

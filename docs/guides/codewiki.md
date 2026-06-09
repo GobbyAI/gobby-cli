@@ -37,7 +37,7 @@ The generated tree is hierarchical:
   incremental regeneration.
 
 Documents use `[[wikilink]]` references between repo, module, and file pages.
-Each page includes `source_files:` frontmatter with file paths and line ranges
+Each page includes `provenance:` frontmatter with file paths and line ranges
 derived from indexed symbol spans.
 
 ## Generation Pipeline
@@ -110,7 +110,7 @@ The intended handoff is a file workflow, not a crate dependency:
 1. Run `gcode codewiki --out <vault>`.
 2. Run `gwiki --project <project-root> index`.
 3. gwiki's vault index walk discovers `code/**/*.md`, preserves
-   `source_files:` frontmatter, extracts `[[wikilinks]]`, and indexes changed
+`provenance:` frontmatter, extracts `[[wikilinks]]`, and indexes changed
    docs incrementally.
 
 Because gcode writes vault-ready Markdown, gwiki only needs to classify and

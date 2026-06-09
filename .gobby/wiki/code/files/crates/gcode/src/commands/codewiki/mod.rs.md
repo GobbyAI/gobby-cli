@@ -1,52 +1,6 @@
 ---
 title: crates/gcode/src/commands/codewiki/mod.rs
 type: code_file
-source:
-- file: crates/gcode/src/commands/codewiki/mod.rs
-  ranges:
-  - 79-84
-  - 87-91
-  - 93-115
-  - 94-103
-  - 105-114
-  - 118-121
-  - 124-127
-  - 129-150
-  - 130-135
-  - 137-142
-  - 144-149
-  - 153-157
-  - 160-167
-  - 170-176
-  - 179-189
-  - 192-197
-  - 200-204
-  - 206-211
-  - 213-217
-  - 219-224
-  - 227-233
-  - 236-242
-  - 245-252
-  - 255-259
-  - 262-266
-  - 269-273
-  - 276-288
-  - 291-296
-  - 299-301
-  - 304-311
-  - 314-317
-  - 320-326
-  - '328'
-  - 330-350
-  - 331-337
-  - 339-345
-  - 347-349
-  - 352-446
-  - 448-453
-  - 455-460
-  - 462-473
-  - 475-482
-  - 484-587
 provenance:
 - file: crates/gcode/src/commands/codewiki/mod.rs
   ranges:
@@ -67,32 +21,32 @@ provenance:
   - 179-189
   - 192-197
   - 200-204
-  - 206-211
-  - 213-217
-  - 219-224
-  - 227-233
-  - 236-242
-  - 245-252
-  - 255-259
-  - 262-266
-  - 269-273
-  - 276-288
-  - 291-296
-  - 299-301
-  - 304-311
-  - 314-317
-  - 320-326
-  - '328'
-  - 330-350
-  - 331-337
-  - 339-345
-  - 347-349
-  - 352-446
-  - 448-453
-  - 455-460
-  - 462-473
-  - 475-482
-  - 484-587
+  - 207-212
+  - 215-219
+  - 222-227
+  - 230-236
+  - 239-245
+  - 248-255
+  - 258-262
+  - 265-269
+  - 272-276
+  - 279-291
+  - 294-299
+  - 302-304
+  - 307-314
+  - 317-320
+  - 323-329
+  - '331'
+  - 333-353
+  - 334-340
+  - 342-348
+  - 350-352
+  - 355-449
+  - 451-456
+  - 458-463
+  - 465-476
+  - 478-485
+  - 487-590
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -109,13 +63,13 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 [crates/gcode/src/commands/codewiki/mod.rs:105-114] [crates/gcode/src/commands/codewiki/mod.rs:118-121] [crates/gcode/src/commands/codewiki/mod.rs:124-127] [crates/gcode/src/commands/codewiki/mod.rs:129-150]
 [crates/gcode/src/commands/codewiki/mod.rs:130-135] [crates/gcode/src/commands/codewiki/mod.rs:137-142] [crates/gcode/src/commands/codewiki/mod.rs:144-149] [crates/gcode/src/commands/codewiki/mod.rs:153-157]
 [crates/gcode/src/commands/codewiki/mod.rs:160-167] [crates/gcode/src/commands/codewiki/mod.rs:170-176] [crates/gcode/src/commands/codewiki/mod.rs:179-189] [crates/gcode/src/commands/codewiki/mod.rs:192-197]
-[crates/gcode/src/commands/codewiki/mod.rs:200-204] [crates/gcode/src/commands/codewiki/mod.rs:206-211] [crates/gcode/src/commands/codewiki/mod.rs:213-217] [crates/gcode/src/commands/codewiki/mod.rs:219-224]
-[crates/gcode/src/commands/codewiki/mod.rs:227-233] [crates/gcode/src/commands/codewiki/mod.rs:236-242] [crates/gcode/src/commands/codewiki/mod.rs:245-252] [crates/gcode/src/commands/codewiki/mod.rs:255-259]
-[crates/gcode/src/commands/codewiki/mod.rs:262-266] [crates/gcode/src/commands/codewiki/mod.rs:269-273] [crates/gcode/src/commands/codewiki/mod.rs:276-288] [crates/gcode/src/commands/codewiki/mod.rs:291-296]
-[crates/gcode/src/commands/codewiki/mod.rs:299-301] [crates/gcode/src/commands/codewiki/mod.rs:304-311] [crates/gcode/src/commands/codewiki/mod.rs:314-317] [crates/gcode/src/commands/codewiki/mod.rs:320-326]
-[crates/gcode/src/commands/codewiki/mod.rs:328] [crates/gcode/src/commands/codewiki/mod.rs:330-350] [crates/gcode/src/commands/codewiki/mod.rs:331-337] [crates/gcode/src/commands/codewiki/mod.rs:339-345]
-[crates/gcode/src/commands/codewiki/mod.rs:347-349] [crates/gcode/src/commands/codewiki/mod.rs:352-446] [crates/gcode/src/commands/codewiki/mod.rs:448-453] [crates/gcode/src/commands/codewiki/mod.rs:455-460]
-[crates/gcode/src/commands/codewiki/mod.rs:462-473] [crates/gcode/src/commands/codewiki/mod.rs:475-482] [crates/gcode/src/commands/codewiki/mod.rs:484-587]
+[crates/gcode/src/commands/codewiki/mod.rs:200-204] [crates/gcode/src/commands/codewiki/mod.rs:207-212] [crates/gcode/src/commands/codewiki/mod.rs:215-219] [crates/gcode/src/commands/codewiki/mod.rs:222-227]
+[crates/gcode/src/commands/codewiki/mod.rs:230-236] [crates/gcode/src/commands/codewiki/mod.rs:239-245] [crates/gcode/src/commands/codewiki/mod.rs:248-255] [crates/gcode/src/commands/codewiki/mod.rs:258-262]
+[crates/gcode/src/commands/codewiki/mod.rs:265-269] [crates/gcode/src/commands/codewiki/mod.rs:272-276] [crates/gcode/src/commands/codewiki/mod.rs:279-291] [crates/gcode/src/commands/codewiki/mod.rs:294-299]
+[crates/gcode/src/commands/codewiki/mod.rs:302-304] [crates/gcode/src/commands/codewiki/mod.rs:307-314] [crates/gcode/src/commands/codewiki/mod.rs:317-320] [crates/gcode/src/commands/codewiki/mod.rs:323-329]
+[crates/gcode/src/commands/codewiki/mod.rs:331] [crates/gcode/src/commands/codewiki/mod.rs:333-353] [crates/gcode/src/commands/codewiki/mod.rs:334-340] [crates/gcode/src/commands/codewiki/mod.rs:342-348]
+[crates/gcode/src/commands/codewiki/mod.rs:350-352] [crates/gcode/src/commands/codewiki/mod.rs:355-449] [crates/gcode/src/commands/codewiki/mod.rs:451-456] [crates/gcode/src/commands/codewiki/mod.rs:458-463]
+[crates/gcode/src/commands/codewiki/mod.rs:465-476] [crates/gcode/src/commands/codewiki/mod.rs:478-485] [crates/gcode/src/commands/codewiki/mod.rs:487-590]
 
 ## API Symbols
 
@@ -170,82 +124,82 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 - `ArchitectureSubsystem` (class) component `ArchitectureSubsystem [class]` (`858be08b-3323-584a-9313-7900da4e8754`) lines 200-204 [crates/gcode/src/commands/codewiki/mod.rs:200-204]
   - Signature: `pub(crate) struct ArchitectureSubsystem {`
   - Purpose: Indexed class `ArchitectureSubsystem` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:200-204]
-- `OnboardingDoc` (class) component `OnboardingDoc [class]` (`d072b3f1-06ba-570c-81d6-8011b5f4ef7a`) lines 206-211 [crates/gcode/src/commands/codewiki/mod.rs:206-211]
+- `OnboardingDoc` (class) component `OnboardingDoc [class]` (`a9c8437f-5c90-52f4-a3a7-27bbea641801`) lines 207-212 [crates/gcode/src/commands/codewiki/mod.rs:207-212]
   - Signature: `pub(crate) struct OnboardingDoc {`
-  - Purpose: Indexed class `OnboardingDoc` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:206-211]
-- `OnboardingEntryPoint` (class) component `OnboardingEntryPoint [class]` (`714763f7-edaf-54d7-bba9-4f448627ca17`) lines 213-217 [crates/gcode/src/commands/codewiki/mod.rs:213-217]
+  - Purpose: Indexed class `OnboardingDoc` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:207-212]
+- `OnboardingEntryPoint` (class) component `OnboardingEntryPoint [class]` (`2961b036-b633-5af8-ac4f-ccfbd3f907ba`) lines 215-219 [crates/gcode/src/commands/codewiki/mod.rs:215-219]
   - Signature: `pub(crate) struct OnboardingEntryPoint {`
-  - Purpose: Indexed class `OnboardingEntryPoint` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:213-217]
-- `OnboardingStep` (class) component `OnboardingStep [class]` (`819182a0-2c32-58a2-8ef2-e93073edc832`) lines 219-224 [crates/gcode/src/commands/codewiki/mod.rs:219-224]
+  - Purpose: Indexed class `OnboardingEntryPoint` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:215-219]
+- `OnboardingStep` (class) component `OnboardingStep [class]` (`e84d6280-b560-534f-9da5-a014224ae82d`) lines 222-227 [crates/gcode/src/commands/codewiki/mod.rs:222-227]
   - Signature: `pub(crate) struct OnboardingStep {`
-  - Purpose: Indexed class `OnboardingStep` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:219-224]
-- `HotspotsDoc` (class) component `HotspotsDoc [class]` (`7faf03ed-48ee-5625-9e91-ab547fafaecc`) lines 227-233 [crates/gcode/src/commands/codewiki/mod.rs:227-233]
+  - Purpose: Indexed class `OnboardingStep` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:222-227]
+- `HotspotsDoc` (class) component `HotspotsDoc [class]` (`dc5bc04a-b291-53a8-87cb-2e590aac5c1b`) lines 230-236 [crates/gcode/src/commands/codewiki/mod.rs:230-236]
   - Signature: `pub(crate) struct HotspotsDoc {`
-  - Purpose: Indexed class `HotspotsDoc` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:227-233]
-- `HotspotFinding` (class) component `HotspotFinding [class]` (`df99d457-6981-5bf6-a0ab-e20feed634cf`) lines 236-242 [crates/gcode/src/commands/codewiki/mod.rs:236-242]
+  - Purpose: Indexed class `HotspotsDoc` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:230-236]
+- `HotspotFinding` (class) component `HotspotFinding [class]` (`bf0ea98d-f2f6-5418-b558-f9ddcd0bd98a`) lines 239-245 [crates/gcode/src/commands/codewiki/mod.rs:239-245]
   - Signature: `pub(crate) struct HotspotFinding {`
-  - Purpose: Indexed class `HotspotFinding` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:236-242]
-- `HotspotNode` (class) component `HotspotNode [class]` (`93bb88eb-c6ba-5fb6-b0ea-b7f18e9a893f`) lines 245-252 [crates/gcode/src/commands/codewiki/mod.rs:245-252]
+  - Purpose: Indexed class `HotspotFinding` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:239-245]
+- `HotspotNode` (class) component `HotspotNode [class]` (`10fa9616-de97-51ab-a431-f71084fc9423`) lines 248-255 [crates/gcode/src/commands/codewiki/mod.rs:248-255]
   - Signature: `pub(crate) struct HotspotNode {`
-  - Purpose: Indexed class `HotspotNode` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:245-252]
-- `FileLink` (class) component `FileLink [class]` (`fe082100-23d9-532e-abb8-42e811cb2493`) lines 255-259 [crates/gcode/src/commands/codewiki/mod.rs:255-259]
+  - Purpose: Indexed class `HotspotNode` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:248-255]
+- `FileLink` (class) component `FileLink [class]` (`4538b9b5-d3a9-5265-ba21-ed49e6282658`) lines 258-262 [crates/gcode/src/commands/codewiki/mod.rs:258-262]
   - Signature: `pub(crate) struct FileLink {`
-  - Purpose: Indexed class `FileLink` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:255-259]
-- `ModuleLink` (class) component `ModuleLink [class]` (`c9cdece1-32f2-544d-8ee3-41a5e67071d6`) lines 262-266 [crates/gcode/src/commands/codewiki/mod.rs:262-266]
+  - Purpose: Indexed class `FileLink` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:258-262]
+- `ModuleLink` (class) component `ModuleLink [class]` (`df364b90-8a2e-5be2-8de6-0333222f8b6b`) lines 265-269 [crates/gcode/src/commands/codewiki/mod.rs:265-269]
   - Signature: `pub(crate) struct ModuleLink {`
-  - Purpose: Indexed class `ModuleLink` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:262-266]
-- `SourceSpan` (class) component `SourceSpan [class]` (`0e45cc41-cd3e-5811-be40-9f42358170a3`) lines 269-273 [crates/gcode/src/commands/codewiki/mod.rs:269-273]
+  - Purpose: Indexed class `ModuleLink` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:265-269]
+- `SourceSpan` (class) component `SourceSpan [class]` (`8278f413-6580-58c1-afab-be750bfda970`) lines 272-276 [crates/gcode/src/commands/codewiki/mod.rs:272-276]
   - Signature: `pub(crate) struct SourceSpan {`
-  - Purpose: Indexed class `SourceSpan` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:269-273]
-- `CodewikiRunSummary` (class) component `CodewikiRunSummary [class]` (`01347f12-b0bf-5504-a07a-23e0233b4169`) lines 276-288 [crates/gcode/src/commands/codewiki/mod.rs:276-288]
+  - Purpose: Indexed class `SourceSpan` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:272-276]
+- `CodewikiRunSummary` (class) component `CodewikiRunSummary [class]` (`c2c1ff5e-affd-58b1-bf6f-7b752440feae`) lines 279-291 [crates/gcode/src/commands/codewiki/mod.rs:279-291]
   - Signature: `pub struct CodewikiRunSummary {`
-  - Purpose: Indexed class `CodewikiRunSummary` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:276-288]
-- `CodewikiMeta` (class) component `CodewikiMeta [class]` (`44d57ff8-2098-5700-b3ea-fcb547609a45`) lines 291-296 [crates/gcode/src/commands/codewiki/mod.rs:291-296]
+  - Purpose: Indexed class `CodewikiRunSummary` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:279-291]
+- `CodewikiMeta` (class) component `CodewikiMeta [class]` (`a4446827-f80e-562b-9c57-a083ec0d43bf`) lines 294-299 [crates/gcode/src/commands/codewiki/mod.rs:294-299]
   - Signature: `pub(crate) struct CodewikiMeta {`
-  - Purpose: Indexed class `CodewikiMeta` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:291-296]
-- `CodewikiDocMeta` (class) component `CodewikiDocMeta [class]` (`e2dfbb25-c43d-5040-9c18-7ef94c322f20`) lines 299-301 [crates/gcode/src/commands/codewiki/mod.rs:299-301]
+  - Purpose: Indexed class `CodewikiMeta` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:294-299]
+- `CodewikiDocMeta` (class) component `CodewikiDocMeta [class]` (`577db6b5-27a1-5c60-8a66-5c3bd0dc7c29`) lines 302-304 [crates/gcode/src/commands/codewiki/mod.rs:302-304]
   - Signature: `pub(crate) struct CodewikiDocMeta {`
-  - Purpose: Indexed class `CodewikiDocMeta` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:299-301]
-- `CodewikiIndexSnapshot` (class) component `CodewikiIndexSnapshot [class]` (`3e9f1131-d503-5275-8193-005bfeec31f2`) lines 304-311 [crates/gcode/src/commands/codewiki/mod.rs:304-311]
+  - Purpose: Indexed class `CodewikiDocMeta` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:302-304]
+- `CodewikiIndexSnapshot` (class) component `CodewikiIndexSnapshot [class]` (`025883ef-75dc-54d1-87f9-24b3feb62a77`) lines 307-314 [crates/gcode/src/commands/codewiki/mod.rs:307-314]
   - Signature: `pub(crate) struct CodewikiIndexSnapshot {`
-  - Purpose: Indexed class `CodewikiIndexSnapshot` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:304-311]
-- `CodewikiFileSnapshot` (class) component `CodewikiFileSnapshot [class]` (`b0eba544-7128-5476-868b-a41551a34d17`) lines 314-317 [crates/gcode/src/commands/codewiki/mod.rs:314-317]
+  - Purpose: Indexed class `CodewikiIndexSnapshot` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:307-314]
+- `CodewikiFileSnapshot` (class) component `CodewikiFileSnapshot [class]` (`2c9d0a49-1d14-5993-893d-e29fd38bc1cb`) lines 317-320 [crates/gcode/src/commands/codewiki/mod.rs:317-320]
   - Signature: `pub(crate) struct CodewikiFileSnapshot {`
-  - Purpose: Indexed class `CodewikiFileSnapshot` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:314-317]
-- `CodewikiSymbolSnapshot` (class) component `CodewikiSymbolSnapshot [class]` (`099903bf-eaa4-5213-a265-c3be387d8469`) lines 320-326 [crates/gcode/src/commands/codewiki/mod.rs:320-326]
+  - Purpose: Indexed class `CodewikiFileSnapshot` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:317-320]
+- `CodewikiSymbolSnapshot` (class) component `CodewikiSymbolSnapshot [class]` (`1fb57f01-0ff5-5cb9-834a-3253235af352`) lines 323-329 [crates/gcode/src/commands/codewiki/mod.rs:323-329]
   - Signature: `pub(crate) struct CodewikiSymbolSnapshot {`
-  - Purpose: Indexed class `CodewikiSymbolSnapshot` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:320-326]
-- `TextGenerator` (type) component `TextGenerator [type]` (`3fda102d-27d1-59e5-a63f-81de6dae60a1`) lines 328-328 [crates/gcode/src/commands/codewiki/mod.rs:328]
+  - Purpose: Indexed class `CodewikiSymbolSnapshot` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:323-329]
+- `TextGenerator` (type) component `TextGenerator [type]` (`87ff5d0c-5a5e-5d19-b0b7-aa3e9b9246d1`) lines 331-331 [crates/gcode/src/commands/codewiki/mod.rs:331]
   - Signature: `pub type TextGenerator<'a> = dyn FnMut(&str, &str) -> Option<String> + 'a;`
-  - Purpose: Indexed type `TextGenerator` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:328]
-- `SourceSpan` (class) component `SourceSpan [class]` (`521d52f2-3c95-5220-a4a0-4a4e8f5ed051`) lines 330-350 [crates/gcode/src/commands/codewiki/mod.rs:330-350]
+  - Purpose: Indexed type `TextGenerator` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:331]
+- `SourceSpan` (class) component `SourceSpan [class]` (`02c23049-0b55-56c7-a88b-3df280bda827`) lines 333-353 [crates/gcode/src/commands/codewiki/mod.rs:333-353]
   - Signature: `impl SourceSpan {`
-  - Purpose: Indexed class `SourceSpan` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:330-350]
-- `SourceSpan.from_symbol` (method) component `SourceSpan.from_symbol [method]` (`80d29415-ff65-5cc1-b96e-8a1f3eb42341`) lines 331-337 [crates/gcode/src/commands/codewiki/mod.rs:331-337]
+  - Purpose: Indexed class `SourceSpan` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:333-353]
+- `SourceSpan.from_symbol` (method) component `SourceSpan.from_symbol [method]` (`18f2c5bc-2bfc-537d-a7b1-2973b8d98acd`) lines 334-340 [crates/gcode/src/commands/codewiki/mod.rs:334-340]
   - Signature: `fn from_symbol(symbol: &Symbol) -> Self {`
-  - Purpose: Indexed method `SourceSpan.from_symbol` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:331-337]
-- `SourceSpan.citation` (method) component `SourceSpan.citation [method]` (`e9003a4d-e9e7-5596-95a8-42033df1d8ac`) lines 339-345 [crates/gcode/src/commands/codewiki/mod.rs:339-345]
+  - Purpose: Indexed method `SourceSpan.from_symbol` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:334-340]
+- `SourceSpan.citation` (method) component `SourceSpan.citation [method]` (`7844582c-d609-5365-a16a-6a337218dd02`) lines 342-348 [crates/gcode/src/commands/codewiki/mod.rs:342-348]
   - Signature: `fn citation(&self) -> String {`
-  - Purpose: Indexed method `SourceSpan.citation` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:339-345]
-- `SourceSpan.contains` (method) component `SourceSpan.contains [method]` (`acdd8337-ce60-515e-80f9-551db18797a8`) lines 347-349 [crates/gcode/src/commands/codewiki/mod.rs:347-349]
+  - Purpose: Indexed method `SourceSpan.citation` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:342-348]
+- `SourceSpan.contains` (method) component `SourceSpan.contains [method]` (`eab8ad55-7dac-5d99-994d-9ed19b8fab0d`) lines 350-352 [crates/gcode/src/commands/codewiki/mod.rs:350-352]
   - Signature: `fn contains(&self, file: &str, line_start: usize, line_end: usize) -> bool {`
-  - Purpose: Indexed method `SourceSpan.contains` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:347-349]
-- `run` (function) component `run [function]` (`c1698559-2061-5227-ac8f-265071e1b1b0`) lines 352-446 [crates/gcode/src/commands/codewiki/mod.rs:352-446]
+  - Purpose: Indexed method `SourceSpan.contains` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:350-352]
+- `run` (function) component `run [function]` (`d1c231cf-dad6-52c0-ab59-f2e3c8d7da32`) lines 355-449 [crates/gcode/src/commands/codewiki/mod.rs:355-449]
   - Signature: `pub fn run(`
-  - Purpose: Indexed function `run` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:352-446]
-- `validate_edge_limit` (function) component `validate_edge_limit [function]` (`db9bfac5-6855-5a66-bb29-872369429730`) lines 448-453 [crates/gcode/src/commands/codewiki/mod.rs:448-453]
+  - Purpose: Indexed function `run` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:355-449]
+- `validate_edge_limit` (function) component `validate_edge_limit [function]` (`64180ac4-7af1-50d5-b112-5a5e7e837078`) lines 451-456 [crates/gcode/src/commands/codewiki/mod.rs:451-456]
   - Signature: `fn validate_edge_limit(edge_limit: usize) -> anyhow::Result<()> {`
-  - Purpose: Indexed function `validate_edge_limit` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:448-453]
-- `generate_hierarchical_docs` (function) component `generate_hierarchical_docs [function]` (`df6c6130-c0fe-54a3-bb34-12e7c9152f42`) lines 455-460 [crates/gcode/src/commands/codewiki/mod.rs:455-460]
+  - Purpose: Indexed function `validate_edge_limit` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:451-456]
+- `generate_hierarchical_docs` (function) component `generate_hierarchical_docs [function]` (`6c953aaf-a777-5432-be42-4dab92673503`) lines 458-463 [crates/gcode/src/commands/codewiki/mod.rs:458-463]
   - Signature: `pub fn generate_hierarchical_docs(`
-  - Purpose: Indexed function `generate_hierarchical_docs` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:455-460]
-- `generate_hierarchical_docs_with_graph_availability` (function) component `generate_hierarchical_docs_with_graph_availability [function]` (`93227c9e-953e-5732-863b-cdc688bacd1d`) lines 462-473 [crates/gcode/src/commands/codewiki/mod.rs:462-473]
+  - Purpose: Indexed function `generate_hierarchical_docs` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:458-463]
+- `generate_hierarchical_docs_with_graph_availability` (function) component `generate_hierarchical_docs_with_graph_availability [function]` (`1377cfff-3fb2-5488-8df5-41566beb6fa4`) lines 465-476 [crates/gcode/src/commands/codewiki/mod.rs:465-476]
   - Signature: `fn generate_hierarchical_docs_with_graph_availability(`
-  - Purpose: Indexed function `generate_hierarchical_docs_with_graph_availability` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:462-473]
-- `generate_hierarchical_docs_with_ownership` (function) component `generate_hierarchical_docs_with_ownership [function]` (`b14e1be0-85bf-5d5b-8ba6-aef319024d72`) lines 475-482 [crates/gcode/src/commands/codewiki/mod.rs:475-482]
+  - Purpose: Indexed function `generate_hierarchical_docs_with_graph_availability` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:465-476]
+- `generate_hierarchical_docs_with_ownership` (function) component `generate_hierarchical_docs_with_ownership [function]` (`bbd4b075-13cb-5c38-be13-bafd2a3fdab8`) lines 478-485 [crates/gcode/src/commands/codewiki/mod.rs:478-485]
   - Signature: `fn generate_hierarchical_docs_with_ownership(`
-  - Purpose: Indexed function `generate_hierarchical_docs_with_ownership` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:475-482]
-- `generate_hierarchical_docs_core` (function) component `generate_hierarchical_docs_core [function]` (`0d01ef1d-22c5-5fbf-ac58-c6b5ab7f0cc1`) lines 484-587 [crates/gcode/src/commands/codewiki/mod.rs:484-587]
+  - Purpose: Indexed function `generate_hierarchical_docs_with_ownership` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:478-485]
+- `generate_hierarchical_docs_core` (function) component `generate_hierarchical_docs_core [function]` (`86593983-d079-556e-ac06-a94938a75be7`) lines 487-590 [crates/gcode/src/commands/codewiki/mod.rs:487-590]
   - Signature: `fn generate_hierarchical_docs_core(`
-  - Purpose: Indexed function `generate_hierarchical_docs_core` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:484-587]
+  - Purpose: Indexed function `generate_hierarchical_docs_core` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:487-590]
 

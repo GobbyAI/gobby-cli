@@ -1,24 +1,6 @@
 ---
 title: crates/gcode/src/commands/codewiki/io.rs
 type: code_file
-source:
-- file: crates/gcode/src/commands/codewiki/io.rs
-  ranges:
-  - 3-9
-  - 11-17
-  - 19-69
-  - 71-79
-  - 81-99
-  - 101-121
-  - 123-130
-  - 132-135
-  - 137-144
-  - 146-149
-  - 151-172
-  - 174-207
-  - 210-240
-  - 243-250
-  - 252-262
 provenance:
 - file: crates/gcode/src/commands/codewiki/io.rs
   ranges:

@@ -1,7 +1,7 @@
 {
   "files": {
     "crates/gcode/src/commands/codewiki/build.rs": {
-      "content_hash": "6defc3b9b2c6381104a6a5ad2c2477b25adede82b5fedd0da7e17a2eefc32def",
+      "content_hash": "6eb3eabc41444b926ec94e8b74bf46047a4f5c65dc6c4e936eeb57c98efd3146",
       "contributors": [
         {
           "name": "Josh Wilhelmi",
@@ -9,6 +9,34 @@
           "lines": 989
         }
       ]
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/architecture.rs": {
+      "content_hash": "0b84920b8ad2ee13b439541c548ef046d16baebfe4dc471e19541af0a9be5137",
+      "contributors": []
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/changes.rs": {
+      "content_hash": "f4ce852fef71d537e2ac97893d1dbb84e316552c76fc4fbbef3837121f0c0ad8",
+      "contributors": []
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/file.rs": {
+      "content_hash": "2897d37514f66ef2a649643ffc100d182ae47a776788d96881477e3a8465ccf0",
+      "contributors": []
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/hotspots.rs": {
+      "content_hash": "b848bd56334beec3d1165e9bbecef30cdd4a6d577247c1afd8470e471751853d",
+      "contributors": []
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/modules.rs": {
+      "content_hash": "339ff86f6cd281d75e29e111daa5d4ed83e2ace41fc6f22b27f2bd297b0b1eb3",
+      "contributors": []
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/onboarding.rs": {
+      "content_hash": "400af351cf5085f57bfcf0e32352183c0744d2b3ae11dd2329b282543ae11dbe",
+      "contributors": []
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/snapshot.rs": {
+      "content_hash": "1e6713e37aa3ad7f0c5abc0d2de9242d20a936526d68b71051ea350be66097a4",
+      "contributors": []
     },
     "crates/gcode/src/commands/codewiki/cluster.rs": {
       "content_hash": "0f3fea58bf6478e84b49380fcd15986939c7624bbf44e6f9d698b4bc21dfe0f9",
@@ -41,17 +69,17 @@
       ]
     },
     "crates/gcode/src/commands/codewiki/mod.rs": {
-      "content_hash": "d04920401f15e85f880becf868f38f2547c4a934604791ef3cfdc1e02b072764",
+      "content_hash": "0b27d8636eac163a087dd429863dbe2064c7f759de00d70281cdb89da1d10abb",
       "contributors": [
         {
           "name": "Josh Wilhelmi",
           "email": "josh@gobby.ai",
-          "lines": 593
+          "lines": 594
         }
       ]
     },
     "crates/gcode/src/commands/codewiki/ownership.rs": {
-      "content_hash": "715c4a0bafc34c2f15515d393c408df6fffeee94d2dea3456c44110cef50bf50",
+      "content_hash": "c75f99050c6921bbbaca79de177db7dc60699840d2950c89541bcf668b03d1d2",
       "contributors": [
         {
           "name": "Josh Wilhelmi",
@@ -71,7 +99,7 @@
       ]
     },
     "crates/gcode/src/commands/codewiki/prompts.rs": {
-      "content_hash": "11f3d9f4438a13f93c4c14d1b0fc79b01cb2a9be0f2cdeebf33292945a92b3b4",
+      "content_hash": "f5ba1b2484a82f1a8e773dbda4fac0e2e164f924ed69fea9334e0eca16a9e29e",
       "contributors": [
         {
           "name": "Josh Wilhelmi",
@@ -81,12 +109,12 @@
       ]
     },
     "crates/gcode/src/commands/codewiki/render.rs": {
-      "content_hash": "989151f6f4b0954d4d13985cc0e85de7ee23197984d9a0820eb253706156341d",
+      "content_hash": "f7e69a436d6ff973dcc013fbcfb5bababaeac1a8bcedeb00dccc9d6e42ff7728",
       "contributors": [
         {
           "name": "Josh Wilhelmi",
           "email": "josh@gobby.ai",
-          "lines": 627
+          "lines": 652
         }
       ]
     },
@@ -101,12 +129,12 @@
       ]
     },
     "crates/gcode/src/commands/codewiki/text.rs": {
-      "content_hash": "2711208d6038810ed92f031babc67a75718c9139a2176153af8218519fa0dd44",
+      "content_hash": "efae03f9277a861c33bee1475899320e86880696ff8705bfd6961e29c466484c",
       "contributors": [
         {
           "name": "Josh Wilhelmi",
           "email": "josh@gobby.ai",
-          "lines": 305
+          "lines": 344
         }
       ]
     }

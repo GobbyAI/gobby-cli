@@ -13,9 +13,9 @@ degraded_sources: []
 
 ## Current Snapshot
 
-- Files: 11
-- Symbols: 223
-- Graph neighborhoods: 223
+- Files: 18
+- Symbols: 229
+- Graph neighborhoods: 229
 
 No previous index snapshot was available.
 This page is the baseline for future index changes.

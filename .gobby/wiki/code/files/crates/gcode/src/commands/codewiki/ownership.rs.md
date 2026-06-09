@@ -1,47 +1,6 @@
 ---
 title: crates/gcode/src/commands/codewiki/ownership.rs
 type: code_file
-source:
-- file: crates/gcode/src/commands/codewiki/ownership.rs
-  ranges:
-  - 13-16
-  - 18-25
-  - 19-24
-  - 28-31
-  - 34-37
-  - 40-45
-  - 48-50
-  - 53-56
-  - 59-63
-  - 66-69
-  - 71-116
-  - 118-128
-  - 130-148
-  - 150-169
-  - 171-206
-  - 208-253
-  - 255-257
-  - 259-290
-  - 292-313
-  - 315-349
-  - 317-332
-  - 351-353
-  - 355-381
-  - 383-395
-  - 397-407
-  - 409-431
-  - 433-439
-  - 441-463
-  - 474-501
-  - 504-524
-  - 527-548
-  - 551-574
-  - 577-596
-  - 598-603
-  - 605-624
-  - 626-635
-  - 637-653
-  - 655-663
 provenance:
 - file: crates/gcode/src/commands/codewiki/ownership.rs
   ranges:
@@ -64,25 +23,25 @@ provenance:
   - 255-257
   - 259-290
   - 292-313
-  - 315-349
-  - 317-332
-  - 351-353
-  - 355-381
-  - 383-395
-  - 397-407
-  - 409-431
-  - 433-439
-  - 441-463
-  - 474-501
-  - 504-524
-  - 527-548
-  - 551-574
-  - 577-596
-  - 598-603
-  - 605-624
-  - 626-635
-  - 637-653
-  - 655-663
+  - 315-347
+  - 317-331
+  - 349-351
+  - 353-379
+  - 381-393
+  - 395-405
+  - 407-429
+  - 431-437
+  - 439-461
+  - 472-499
+  - 502-522
+  - 525-546
+  - 549-572
+  - 575-594
+  - 596-601
+  - 603-622
+  - 624-633
+  - 635-651
+  - 653-661
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -99,21 +58,21 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 [crates/gcode/src/commands/codewiki/ownership.rs:34-37] [crates/gcode/src/commands/codewiki/ownership.rs:40-45] [crates/gcode/src/commands/codewiki/ownership.rs:48-50] [crates/gcode/src/commands/codewiki/ownership.rs:53-56]
 [crates/gcode/src/commands/codewiki/ownership.rs:59-63] [crates/gcode/src/commands/codewiki/ownership.rs:66-69] [crates/gcode/src/commands/codewiki/ownership.rs:71-116] [crates/gcode/src/commands/codewiki/ownership.rs:118-128]
 [crates/gcode/src/commands/codewiki/ownership.rs:130-148] [crates/gcode/src/commands/codewiki/ownership.rs:150-169] [crates/gcode/src/commands/codewiki/ownership.rs:171-206] [crates/gcode/src/commands/codewiki/ownership.rs:208-253]
-[crates/gcode/src/commands/codewiki/ownership.rs:255-257] [crates/gcode/src/commands/codewiki/ownership.rs:259-290] [crates/gcode/src/commands/codewiki/ownership.rs:292-313] [crates/gcode/src/commands/codewiki/ownership.rs:315-349]
-[crates/gcode/src/commands/codewiki/ownership.rs:317-332] [crates/gcode/src/commands/codewiki/ownership.rs:351-353] [crates/gcode/src/commands/codewiki/ownership.rs:355-381] [crates/gcode/src/commands/codewiki/ownership.rs:383-395]
-[crates/gcode/src/commands/codewiki/ownership.rs:397-407] [crates/gcode/src/commands/codewiki/ownership.rs:409-431] [crates/gcode/src/commands/codewiki/ownership.rs:433-439] [crates/gcode/src/commands/codewiki/ownership.rs:441-463]
-[crates/gcode/src/commands/codewiki/ownership.rs:474-501] [crates/gcode/src/commands/codewiki/ownership.rs:504-524] [crates/gcode/src/commands/codewiki/ownership.rs:527-548] [crates/gcode/src/commands/codewiki/ownership.rs:551-574]
-[crates/gcode/src/commands/codewiki/ownership.rs:577-596] [crates/gcode/src/commands/codewiki/ownership.rs:598-603] [crates/gcode/src/commands/codewiki/ownership.rs:605-624] [crates/gcode/src/commands/codewiki/ownership.rs:626-635]
-[crates/gcode/src/commands/codewiki/ownership.rs:637-653] [crates/gcode/src/commands/codewiki/ownership.rs:655-663]
+[crates/gcode/src/commands/codewiki/ownership.rs:255-257] [crates/gcode/src/commands/codewiki/ownership.rs:259-290] [crates/gcode/src/commands/codewiki/ownership.rs:292-313] [crates/gcode/src/commands/codewiki/ownership.rs:315-347]
+[crates/gcode/src/commands/codewiki/ownership.rs:317-331] [crates/gcode/src/commands/codewiki/ownership.rs:349-351] [crates/gcode/src/commands/codewiki/ownership.rs:353-379] [crates/gcode/src/commands/codewiki/ownership.rs:381-393]
+[crates/gcode/src/commands/codewiki/ownership.rs:395-405] [crates/gcode/src/commands/codewiki/ownership.rs:407-429] [crates/gcode/src/commands/codewiki/ownership.rs:431-437] [crates/gcode/src/commands/codewiki/ownership.rs:439-461]
+[crates/gcode/src/commands/codewiki/ownership.rs:472-499] [crates/gcode/src/commands/codewiki/ownership.rs:502-522] [crates/gcode/src/commands/codewiki/ownership.rs:525-546] [crates/gcode/src/commands/codewiki/ownership.rs:549-572]
+[crates/gcode/src/commands/codewiki/ownership.rs:575-594] [crates/gcode/src/commands/codewiki/ownership.rs:596-601] [crates/gcode/src/commands/codewiki/ownership.rs:603-622] [crates/gcode/src/commands/codewiki/ownership.rs:624-633]
+[crates/gcode/src/commands/codewiki/ownership.rs:635-651] [crates/gcode/src/commands/codewiki/ownership.rs:653-661]
 
 ## API Symbols
 
 - `OwnershipOptions` (class) component `OwnershipOptions [class]` (`1a412fa9-ffc9-5eab-9e91-b90e886ab286`) lines 13-16 [crates/gcode/src/commands/codewiki/ownership.rs:13-16]
   - Signature: `pub(crate) struct OwnershipOptions {`
-  - Purpose: `OwnershipOptions` is a crate-private struct that encapsulates configuration parameters for blame operations, comprising a file capacity limit (`usize`) and an operation timeout (`Duration`). [crates/gcode/src/commands/codewiki/ownership.rs:13-16]
+  - Purpose: Indexed class `OwnershipOptions` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:13-16]
 - `OwnershipOptions` (class) component `OwnershipOptions [class]` (`fd470077-3483-5806-88fd-eb87dd55dc0b`) lines 18-25 [crates/gcode/src/commands/codewiki/ownership.rs:18-25]
   - Signature: `impl Default for OwnershipOptions {`
-  - Purpose: The `Default` trait implementation for `OwnershipOptions` initializes `blame_file_cap` to 200 and `blame_timeout` to a 20-second duration. [crates/gcode/src/commands/codewiki/ownership.rs:18-25]
+  - Purpose: Indexed class `OwnershipOptions` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:18-25]
 - `OwnershipOptions.default` (method) component `OwnershipOptions.default [method]` (`e652c60e-08d1-511e-9ab7-ef87f35db83e`) lines 19-24 [crates/gcode/src/commands/codewiki/ownership.rs:19-24]
   - Signature: `fn default() -> Self {`
   - Purpose: Indexed method `OwnershipOptions.default` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:19-24]
@@ -152,78 +111,74 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
   - Purpose: Indexed function `declared_owners_for_files` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:150-169]
 - `codeowners_pattern_matches` (function) component `codeowners_pattern_matches [function]` (`16380659-8199-5345-8239-8262b27258a0`) lines 171-206 [crates/gcode/src/commands/codewiki/ownership.rs:171-206]
   - Signature: `fn codeowners_pattern_matches(pattern: &str, file: &str) -> bool {`
-  - Purpose: Determines if a file path matches a CODEOWNERS pattern by applying glob or literal matching, scoped to full path or basename depending on pattern syntax. [crates/gcode/src/commands/codewiki/ownership.rs:171-206]
+  - Purpose: Indexed function `codeowners_pattern_matches` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:171-206]
 - `derived_owners_for_files` (function) component `derived_owners_for_files [function]` (`440d8976-0ef5-5d57-ac85-b94354607fcb`) lines 208-253 [crates/gcode/src/commands/codewiki/ownership.rs:208-253]
   - Signature: `fn derived_owners_for_files(`
-  - Purpose: # Summary
-
-Returns a map of file paths to ownership contributors by computing git blame results with content-hash-based caching, subject to configurable file count and timeout limits. [crates/gcode/src/commands/codewiki/ownership.rs:208-253]
+  - Purpose: Indexed function `derived_owners_for_files` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:208-253]
 - `content_hash` (function) component `content_hash [function]` (`8273b13c-705c-586b-a7bd-4b08c1e00599`) lines 255-257 [crates/gcode/src/commands/codewiki/ownership.rs:255-257]
   - Signature: `fn content_hash(project_root: &Path, file: &str) -> Option<String> {`
-  - Purpose: Returns the content hash of a file located at the path formed by joining the project root with a relative file path, or None if hashing fails. [crates/gcode/src/commands/codewiki/ownership.rs:255-257]
+  - Purpose: Indexed function `content_hash` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:255-257]
 - `blame_file_contributors` (function) component `blame_file_contributors [function]` (`f3c5cfea-551f-5218-9a33-d4f69fca40be`) lines 259-290 [crates/gcode/src/commands/codewiki/ownership.rs:259-290]
   - Signature: `fn blame_file_contributors(`
-  - Purpose: Executes git blame on a specified file, aggregates line counts by commit author, and returns the top 5 contributors ranked by lines of code modified. [crates/gcode/src/commands/codewiki/ownership.rs:259-290]
+  - Purpose: Indexed function `blame_file_contributors` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:259-290]
 - `degraded_sources` (function) component `degraded_sources [function]` (`6f204b45-c613-5e32-9a7e-f8ffbff4306f`) lines 292-313 [crates/gcode/src/commands/codewiki/ownership.rs:292-313]
   - Signature: `fn degraded_sources(`
-  - Purpose: # Summary
-
-Returns a vector of strings identifying degraded or unavailable code ownership data sources by checking CODEOWNERS availability, git blame availability/completeness, and universal file ownership coverage. [crates/gcode/src/commands/codewiki/ownership.rs:292-313]
-- `ownership_frontmatter` (function) component `ownership_frontmatter [function]` (`a62cf571-1081-5e28-9632-f9319c3e1393`) lines 315-349 [crates/gcode/src/commands/codewiki/ownership.rs:315-349]
+  - Purpose: Indexed function `degraded_sources` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:292-313]
+- `ownership_frontmatter` (function) component `ownership_frontmatter [function]` (`a62cf571-1081-5e28-9632-f9319c3e1393`) lines 315-347 [crates/gcode/src/commands/codewiki/ownership.rs:315-347]
   - Signature: `fn ownership_frontmatter(partial: bool, degraded_sources: &[String]) -> String {`
-  - Purpose: Indexed function `ownership_frontmatter` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:315-349]
-- `Frontmatter` (class) component `Frontmatter [class]` (`6c766f92-52b4-54cb-a18f-2b15e0485f9e`) lines 317-332 [crates/gcode/src/commands/codewiki/ownership.rs:317-332]
+  - Purpose: Indexed function `ownership_frontmatter` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:315-347]
+- `Frontmatter` (class) component `Frontmatter [class]` (`6c766f92-52b4-54cb-a18f-2b15e0485f9e`) lines 317-331 [crates/gcode/src/commands/codewiki/ownership.rs:317-331]
   - Signature: `struct Frontmatter<'a> {`
-  - Purpose: Indexed class `Frontmatter` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:317-332]
-- `is_false` (function) component `is_false [function]` (`2bf49954-92e7-562d-8e40-7e8fda6b28a5`) lines 351-353 [crates/gcode/src/commands/codewiki/ownership.rs:351-353]
+  - Purpose: Indexed class `Frontmatter` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:317-331]
+- `is_false` (function) component `is_false [function]` (`aba401f4-3135-5823-8f33-00d618b5574e`) lines 349-351 [crates/gcode/src/commands/codewiki/ownership.rs:349-351]
   - Signature: `fn is_false(value: &bool) -> bool {`
-  - Purpose: Indexed function `is_false` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:351-353]
-- `write_modules` (function) component `write_modules [function]` (`c76ec4d2-e3a3-5af9-bb69-a4e7b0216ebd`) lines 355-381 [crates/gcode/src/commands/codewiki/ownership.rs:355-381]
+  - Purpose: Indexed function `is_false` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:349-351]
+- `write_modules` (function) component `write_modules [function]` (`c0f2d16e-a9fd-5bdf-97ad-82900dae280b`) lines 353-379 [crates/gcode/src/commands/codewiki/ownership.rs:353-379]
   - Signature: `fn write_modules(`
-  - Purpose: Indexed function `write_modules` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:355-381]
-- `write_files` (function) component `write_files [function]` (`1de9889e-babb-56ba-a8b0-bf56b54a7b8e`) lines 383-395 [crates/gcode/src/commands/codewiki/ownership.rs:383-395]
+  - Purpose: Indexed function `write_modules` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:353-379]
+- `write_files` (function) component `write_files [function]` (`b1f9a7de-bc5a-5249-8ce2-3afb736f026f`) lines 381-393 [crates/gcode/src/commands/codewiki/ownership.rs:381-393]
   - Signature: `fn write_files(doc: &mut String, by_file: &BTreeMap<String, FileOwnership>) {`
-  - Purpose: Indexed function `write_files` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:383-395]
-- `aggregate_primary` (function) component `aggregate_primary [function]` (`b4ebf07f-4df2-5a4b-86d1-ee814f385c57`) lines 397-407 [crates/gcode/src/commands/codewiki/ownership.rs:397-407]
+  - Purpose: Indexed function `write_files` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:381-393]
+- `aggregate_primary` (function) component `aggregate_primary [function]` (`96e4ea9d-086e-57f9-a05b-7c9344531f0b`) lines 395-405 [crates/gcode/src/commands/codewiki/ownership.rs:395-405]
   - Signature: `fn aggregate_primary(files: &[(&String, &FileOwnership)]) -> Vec<String> {`
-  - Purpose: Indexed function `aggregate_primary` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:397-407]
-- `aggregate_contributors` (function) component `aggregate_contributors [function]` (`c7cc0b35-e4ab-5cc6-bd60-9acfe9200427`) lines 409-431 [crates/gcode/src/commands/codewiki/ownership.rs:409-431]
+  - Purpose: Indexed function `aggregate_primary` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:395-405]
+- `aggregate_contributors` (function) component `aggregate_contributors [function]` (`06554667-4efb-5b0f-a54d-3785df15ddee`) lines 407-429 [crates/gcode/src/commands/codewiki/ownership.rs:407-429]
   - Signature: `fn aggregate_contributors(files: &[(&String, &FileOwnership)]) -> Vec<OwnershipContributor> {`
-  - Purpose: Indexed function `aggregate_contributors` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:409-431]
-- `write_owner_line` (function) component `write_owner_line [function]` (`8f1872b4-20b9-5cea-bb00-7bf461cac854`) lines 433-439 [crates/gcode/src/commands/codewiki/ownership.rs:433-439]
+  - Purpose: Indexed function `aggregate_contributors` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:407-429]
+- `write_owner_line` (function) component `write_owner_line [function]` (`8450390a-9a0b-5f27-a1e8-dab1f62c2f68`) lines 431-437 [crates/gcode/src/commands/codewiki/ownership.rs:431-437]
   - Signature: `fn write_owner_line(doc: &mut String, label: &str, owners: &[String]) {`
-  - Purpose: Indexed function `write_owner_line` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:433-439]
-- `write_contributor_line` (function) component `write_contributor_line [function]` (`890368f6-00dd-5477-b0a7-b16e3c4cb25b`) lines 441-463 [crates/gcode/src/commands/codewiki/ownership.rs:441-463]
+  - Purpose: Indexed function `write_owner_line` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:431-437]
+- `write_contributor_line` (function) component `write_contributor_line [function]` (`f7abe4ad-a328-5229-be77-a90daf59bd05`) lines 439-461 [crates/gcode/src/commands/codewiki/ownership.rs:439-461]
   - Signature: `fn write_contributor_line(doc: &mut String, contributors: &[OwnershipContributor]) {`
-  - Purpose: Indexed function `write_contributor_line` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:441-463]
-- `codewiki_ownership_codeowners_only_maps_declared_owners` (function) component `codewiki_ownership_codeowners_only_maps_declared_owners [function]` (`9db352b3-4c52-5f9e-a28f-c01f407612b5`) lines 474-501 [crates/gcode/src/commands/codewiki/ownership.rs:474-501]
+  - Purpose: Indexed function `write_contributor_line` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:439-461]
+- `codewiki_ownership_codeowners_only_maps_declared_owners` (function) component `codewiki_ownership_codeowners_only_maps_declared_owners [function]` (`232ac197-8cba-5ed0-b72a-46eb5bf5c74f`) lines 472-499 [crates/gcode/src/commands/codewiki/ownership.rs:472-499]
   - Signature: `fn codewiki_ownership_codeowners_only_maps_declared_owners() {`
-  - Purpose: Indexed function `codewiki_ownership_codeowners_only_maps_declared_owners` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:474-501]
-- `codewiki_ownership_derives_top_committers_from_gix_blame` (function) component `codewiki_ownership_derives_top_committers_from_gix_blame [function]` (`3b3080d8-81db-5b3d-b5a7-d2a2d2bcccaa`) lines 504-524 [crates/gcode/src/commands/codewiki/ownership.rs:504-524]
+  - Purpose: Indexed function `codewiki_ownership_codeowners_only_maps_declared_owners` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:472-499]
+- `codewiki_ownership_derives_top_committers_from_gix_blame` (function) component `codewiki_ownership_derives_top_committers_from_gix_blame [function]` (`59cefabd-eca4-53db-a780-2d3c39f9d78b`) lines 502-522 [crates/gcode/src/commands/codewiki/ownership.rs:502-522]
   - Signature: `fn codewiki_ownership_derives_top_committers_from_gix_blame() {`
-  - Purpose: Indexed function `codewiki_ownership_derives_top_committers_from_gix_blame` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:504-524]
-- `codewiki_ownership_declared_owners_take_primary_precedence` (function) component `codewiki_ownership_declared_owners_take_primary_precedence [function]` (`90d2a40b-94ff-5ec9-a567-80ad9dd153a5`) lines 527-548 [crates/gcode/src/commands/codewiki/ownership.rs:527-548]
+  - Purpose: Indexed function `codewiki_ownership_derives_top_committers_from_gix_blame` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:502-522]
+- `codewiki_ownership_declared_owners_take_primary_precedence` (function) component `codewiki_ownership_declared_owners_take_primary_precedence [function]` (`1d89e6c5-f04e-5df0-a374-8a65e2929d44`) lines 525-546 [crates/gcode/src/commands/codewiki/ownership.rs:525-546]
   - Signature: `fn codewiki_ownership_declared_owners_take_primary_precedence() {`
-  - Purpose: Indexed function `codewiki_ownership_declared_owners_take_primary_precedence` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:527-548]
-- `codewiki_ownership_without_sources_degrades_to_unknown` (function) component `codewiki_ownership_without_sources_degrades_to_unknown [function]` (`fba1e7c8-a580-5700-8611-54de86d42267`) lines 551-574 [crates/gcode/src/commands/codewiki/ownership.rs:551-574]
+  - Purpose: Indexed function `codewiki_ownership_declared_owners_take_primary_precedence` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:525-546]
+- `codewiki_ownership_without_sources_degrades_to_unknown` (function) component `codewiki_ownership_without_sources_degrades_to_unknown [function]` (`aba9a1bc-e449-56bb-a8c1-50c6df0c2137`) lines 549-572 [crates/gcode/src/commands/codewiki/ownership.rs:549-572]
   - Signature: `fn codewiki_ownership_without_sources_degrades_to_unknown() {`
-  - Purpose: Indexed function `codewiki_ownership_without_sources_degrades_to_unknown` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:551-574]
-- `codewiki_ownership_file_cap_marks_partial` (function) component `codewiki_ownership_file_cap_marks_partial [function]` (`07b3ea08-4c1c-5303-a7d4-ca5e4f7f0a87`) lines 577-596 [crates/gcode/src/commands/codewiki/ownership.rs:577-596]
+  - Purpose: Indexed function `codewiki_ownership_without_sources_degrades_to_unknown` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:549-572]
+- `codewiki_ownership_file_cap_marks_partial` (function) component `codewiki_ownership_file_cap_marks_partial [function]` (`4335951c-20ec-5c45-a19f-f2f3a77b256b`) lines 575-594 [crates/gcode/src/commands/codewiki/ownership.rs:575-594]
   - Signature: `fn codewiki_ownership_file_cap_marks_partial() {`
-  - Purpose: Indexed function `codewiki_ownership_file_cap_marks_partial` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:577-596]
-- `modules` (function) component `modules [function]` (`53f6781b-60b1-59de-bc42-a775056e31a5`) lines 598-603 [crates/gcode/src/commands/codewiki/ownership.rs:598-603]
+  - Purpose: Indexed function `codewiki_ownership_file_cap_marks_partial` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:575-594]
+- `modules` (function) component `modules [function]` (`4a478bad-f34a-54a9-8ea9-4dfa27bf300e`) lines 596-601 [crates/gcode/src/commands/codewiki/ownership.rs:596-601]
   - Signature: `fn modules<const N: usize>(items: [(&str, &str); N]) -> HashMap<String, String> {`
-  - Purpose: Indexed function `modules` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:598-603]
-- `git_project_with_history` (function) component `git_project_with_history [function]` (`5633aa61-d42e-5c04-a19b-511b80f65dc6`) lines 605-624 [crates/gcode/src/commands/codewiki/ownership.rs:605-624]
+  - Purpose: Indexed function `modules` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:596-601]
+- `git_project_with_history` (function) component `git_project_with_history [function]` (`3739c9af-6274-5103-bc04-3ce40c7490b0`) lines 603-622 [crates/gcode/src/commands/codewiki/ownership.rs:603-622]
   - Signature: `fn git_project_with_history() -> tempfile::TempDir {`
-  - Purpose: Indexed function `git_project_with_history` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:605-624]
-- `git_project_with_two_files` (function) component `git_project_with_two_files [function]` (`1825a373-fc69-5c96-a04a-54a5295f61c3`) lines 626-635 [crates/gcode/src/commands/codewiki/ownership.rs:626-635]
+  - Purpose: Indexed function `git_project_with_history` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:603-622]
+- `git_project_with_two_files` (function) component `git_project_with_two_files [function]` (`1611f5d8-2c55-5c79-a746-8be9ae9417a5`) lines 624-633 [crates/gcode/src/commands/codewiki/ownership.rs:624-633]
   - Signature: `fn git_project_with_two_files() -> tempfile::TempDir {`
-  - Purpose: Indexed function `git_project_with_two_files` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:626-635]
-- `git_author` (function) component `git_author [function]` (`5961933e-9d02-55c5-9c45-471a1ef147ed`) lines 637-653 [crates/gcode/src/commands/codewiki/ownership.rs:637-653]
+  - Purpose: Indexed function `git_project_with_two_files` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:624-633]
+- `git_author` (function) component `git_author [function]` (`492a51fd-dce8-5c4b-9708-b01bb46e3733`) lines 635-651 [crates/gcode/src/commands/codewiki/ownership.rs:635-651]
   - Signature: `fn git_author(repo: &Path, name: &str, email: &str, message: &str) {`
-  - Purpose: Indexed function `git_author` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:637-653]
-- `git` (function) component `git [function]` (`ba6c63ac-2506-53db-866d-024c7e86271a`) lines 655-663 [crates/gcode/src/commands/codewiki/ownership.rs:655-663]
+  - Purpose: Indexed function `git_author` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:635-651]
+- `git` (function) component `git [function]` (`850c5067-cc8f-53ca-bb0e-263cd0c10413`) lines 653-661 [crates/gcode/src/commands/codewiki/ownership.rs:653-661]
   - Signature: `fn git(repo: &Path, args: &[&str]) {`
-  - Purpose: Indexed function `git` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:655-663]
+  - Purpose: Indexed function `git` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:653-661]
 
