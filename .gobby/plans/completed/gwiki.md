@@ -22,10 +22,10 @@ Current workspace facts as of 2026-05-28:
 
 - **Foundation dependency**: `gobby-wiki` consumes `gobby-core = { path = "../gcore", version = "0.2.2", features = ["postgres", "falkor", "qdrant", "indexing", "search"] }` primitives for context/config, setup, PostgreSQL, FalkorDB, Qdrant, generic indexing/search, and degradation handling.
 - **Workspace integration**: the crate lives at `crates/gwiki/`, has `package.name = "gobby-wiki"`, and exposes binary `gwiki`.
-- **Dual scopes**: global topics and project-local wiki scopes both work. Global topics default under `~/wiki/topics/<topic>/`; project scope defaults under `<project-root>/.gobby/wiki/`.
-- **Vault UX**: each scope preserves a file-first llm-wiki and funes-style layout: `raw/`, `raw/INDEX.md`, `raw/assets/`, `wiki/sources/`, `wiki/concepts/`, `wiki/topics/`, `inbox/`, `outputs/`, `meta/health/`, `_index.md`, `log.md`, frontmatter, and `[[wikilinks]]`.
+- **Dual scopes**: global topics and project-local wiki scopes both work. Global topics default under the configured wiki hub topic directory; project scope defaults under `<project-root>/.gobby/wiki/`.
+- **Vault UX**: each scope preserves a file-first llm-wiki and funes-style layout: `raw/`, `raw/INDEX.md`, `raw/assets/`, `knowledge/sources/`, `knowledge/concepts/`, `knowledge/topics/`, `inbox/`, `outputs/`, `meta/health/`, `_index.md`, `log.md`, frontmatter, and `[[wikilinks]]`.
 - **Filesystem source of truth**: `gwiki` writes user-facing markdown through explicit vault operations. Index rows, graph nodes, and vectors are derived state.
-- **Namespaced data**: PostgreSQL tables use `gwiki_*`; FalkorDB labels use wiki-owned labels such as `WikiDoc`, `WikiSource`, and `WikiTopic`; Qdrant collections use `gwiki:project:<id>` and `gwiki:topic:<name>`.
+- **Namespaced data**: PostgreSQL tables use `gwiki_*`; FalkorDB labels use wiki-owned labels such as `WikiDoc`, `WikiSource`, and `WikiTopic`; Qdrant collections use `gwiki_project_<id>` and `gwiki_topic_<name>`.
 - **No daemon schema ownership assumption**: the Gobby daemon does not own `gwiki` schema. `gwiki setup` may create only `gwiki`-owned resources after explicit opt-in; runtime commands validate prerequisites and never create schema implicitly.
 - **No gcode ownership leakage**: `gwiki` must not create or mutate gcode tables, gcode graph labels, code symbols, `.gobby/project.json`, or `config_store`.
 - **Daemon services are integrations**: LLM completions, embeddings, vision, transcription, and agent dispatch use configured Gobby daemon endpoints when available. Missing optional services degrade honestly.
@@ -35,7 +35,7 @@ Current workspace facts as of 2026-05-28:
 
 Global topic scope:
 
-- Default root: `~/wiki/topics/<topic>/`.
+- Default root: configured wiki hub topic directory.
 - Registry: `~/wiki/wikis.json`.
 - Shared global log: `~/wiki/log.md`.
 - Use case: durable personal or team knowledge not tied to one code project.
@@ -53,9 +53,9 @@ Canonical vault shape:
 
 - `raw/INDEX.md` catalogs immutable sources, canonical identity, source kind, content hash, citations, and compile status.
 - `raw/assets/` stores copied binary or original source artifacts such as PDFs, images, audio, video, and fetched attachments.
-- `wiki/sources/` stores source notes and source-specific extracted summaries.
-- `wiki/concepts/` stores concept pages and duplicate-concept candidates.
-- `wiki/topics/` stores topic articles and topic indexes.
+- `knowledge/sources/` stores source notes and source-specific extracted summaries.
+- `knowledge/concepts/` stores concept pages and duplicate-concept candidates.
+- `knowledge/topics/` stores topic articles and topic indexes.
 - `outputs/` stores explicit exports and generated bundles, never canonical wiki state.
 - `meta/health/` stores machine-readable and human-readable health reports for stale pages, uncited sources, broken links, duplicate concepts, and uncompiled sources.
 
@@ -97,13 +97,13 @@ Add `crates/gwiki/` to the workspace with package name `gobby-wiki` and binary `
 ### 1.2 Implement scope and vault resolution [category: code] (depends: 1.1)
 `kind: deliverable`
 
-Targets: `crates/gwiki/src/scope.rs`, `crates/gwiki/src/vault.rs`, `crates/gwiki/src/registry.rs`, `raw/INDEX.md`, `raw/assets/`, `wiki/sources/`, `wiki/concepts/`, `wiki/topics/`, `outputs/`, `meta/health/`, `_index.md`, `log.md`
+Targets: `crates/gwiki/src/scope.rs`, `crates/gwiki/src/vault.rs`, `crates/gwiki/src/registry.rs`, `raw/INDEX.md`, `raw/assets/`, `knowledge/sources/`, `knowledge/concepts/`, `knowledge/topics/`, `outputs/`, `meta/health/`, `_index.md`, `log.md`
 
 Implement explicit scope resolution for global topics and project-local wikis:
 
-- `--topic <name>` resolves to a global topic under the configured wiki hub path, defaulting to `~/wiki/topics/<name>/`.
+- `--topic <name>` resolves to a global topic under the configured wiki hub path.
 - `--project` or project-root context resolves to `<project-root>/.gobby/wiki/`.
-- Both scopes create or validate `raw/`, `raw/INDEX.md`, `raw/assets/`, `wiki/sources/`, `wiki/concepts/`, `wiki/topics/`, `inbox/`, `outputs/`, `meta/health/`, `_index.md`, `log.md`, and `.gwiki/` metadata on explicit init.
+- Both scopes create or validate `raw/`, `raw/INDEX.md`, `raw/assets/`, `knowledge/sources/`, `knowledge/concepts/`, `knowledge/topics/`, `inbox/`, `outputs/`, `meta/health/`, `_index.md`, `log.md`, and `.gwiki/` metadata on explicit init.
 - `wikis.json` stores registered topics/scopes without clobbering existing entries.
 - Scope identity is carried in command context, datastore rows, graph nodes, and vector payloads.
 - Reuse `gobby_core::project` for project-root detection and `gobby_core::context`/`gobby_core::config` for shared context and config resolution instead of reimplementing the `.gobby` walk-up.
@@ -112,7 +112,7 @@ Implement explicit scope resolution for global topics and project-local wikis:
 
 - 1.2.1 - Global topic resolution honors configured hub path and `--topic`. test: `crates/gwiki/src/scope.rs::tests::resolves_global_topic`.
 - 1.2.2 - Project scope resolves under `<project-root>/.gobby/wiki/` without writing `.gobby/project.json`. test: `crates/gwiki/src/scope.rs::tests::resolves_project_scope_read_only`.
-- 1.2.3 - `gwiki init` creates the llm-wiki/funes vault shape for both scopes, including `raw/INDEX.md`, `raw/assets/`, `wiki/sources/`, `wiki/concepts/`, `wiki/topics/`, `outputs/`, and `meta/health/`. test: `crates/gwiki/tests/cli_init.rs::init_creates_vault_shape`.
+- 1.2.3 - `gwiki init` creates the llm-wiki/funes vault shape for both scopes, including `raw/INDEX.md`, `raw/assets/`, `knowledge/sources/`, `knowledge/concepts/`, `knowledge/topics/`, `outputs/`, and `meta/health/`. test: `crates/gwiki/tests/cli_init.rs::init_creates_vault_shape`.
 - 1.2.4 - `wikis.json` registration preserves existing topics and project entries. test: `crates/gwiki/src/registry.rs::tests::register_preserves_existing_entries`.
 
 ### 1.3 Define gwiki-owned setup and datastore schema [category: code] (depends: 1.2)
@@ -126,7 +126,7 @@ Define `gwiki`-owned derived storage through `gobby-core` setup contracts:
 - `gwiki setup` is an explicit opt-in operation that may create only `gwiki`-owned PostgreSQL tables and indexes.
 - PostgreSQL rows include scope, project/topic identity, path, source kind, content hash, frontmatter, and provenance.
 - FalkorDB nodes use wiki-owned labels such as `WikiDoc`, `WikiSource`, and `WikiTopic`.
-- Qdrant collection names are namespaced as `gwiki:project:<id>` and `gwiki:topic:<name>`.
+- Qdrant collection names are namespaced as `gwiki_project_<id>` and `gwiki_topic_<name>`.
 
 The daemon is not the schema owner. No task in this plan edits a daemon schema file to add `gwiki` tables.
 
@@ -173,9 +173,9 @@ Use `gobby-core` indexing primitives to discover markdown/source files, hash con
 
 - Upsert documents, chunks, links, sources, and ingestion records.
 - Delete stale derived rows when vault files are removed.
-- Preserve immutable `raw/` sources and user-authored `wiki/` pages.
+- Preserve immutable `raw/` sources and user-authored `knowledge/` pages.
 - Track source file hashes for incremental indexing.
-- Index `raw/INDEX.md`, `wiki/sources/`, `wiki/concepts/`, and `wiki/topics/` so generated wiki pages and source catalogs are searchable.
+- Index `raw/INDEX.md`, `knowledge/sources/`, `knowledge/concepts/`, and `knowledge/topics/` so generated wiki pages and source catalogs are searchable.
 
 **Acceptance:**
 
@@ -192,7 +192,7 @@ Targets: `crates/gwiki/src/search/bm25.rs`, `crates/gwiki/src/search/semantic.rs
 Implement search over wiki documents and chunks:
 
 - BM25 queries target `gwiki` document/chunk tables using PostgreSQL `pg_search`.
-- Keyword search covers generated pages under `wiki/sources/`, `wiki/concepts/`, and `wiki/topics/` as well as source catalogs and raw-derived notes.
+- Keyword search covers generated pages under `knowledge/sources/`, `knowledge/concepts/`, and `knowledge/topics/` as well as source catalogs and raw-derived notes.
 - Semantic search uses `gobby-core` Qdrant and embedding config adapters with wiki-owned payload filters.
 - Queries are scoped to the selected topic or project.
 - Missing embeddings/Qdrant degrade to BM25-only results with structured degradation metadata.
@@ -203,7 +203,7 @@ Implement search over wiki documents and chunks:
 - 2.2.2 - Semantic search uses wiki collection names and payload filters. test: `crates/gwiki/src/search/semantic.rs::tests::semantic_search_is_scope_filtered`.
 - 2.2.3 - Missing vector services degrade to BM25-only search without fake semantic hits. test: `crates/gwiki/src/search/mod.rs::tests::semantic_unavailable_degrades`.
 - 2.2.4 - Search result structs include provenance and source path. file: `crates/gwiki/src/search/mod.rs`.
-- 2.2.5 - Keyword search covers generated wiki pages under `wiki/sources/`, `wiki/concepts/`, and `wiki/topics/`. test: `crates/gwiki/src/search/bm25.rs::tests::keyword_search_covers_generated_wiki_pages`.
+- 2.2.5 - Keyword search covers generated wiki pages under `knowledge/sources/`, `knowledge/concepts/`, and `knowledge/topics/`. test: `crates/gwiki/src/search/bm25.rs::tests::keyword_search_covers_generated_wiki_pages`.
 
 ### 2.3 Add wiki graph, backlinks, and fusion [category: code] (depends: 2.2)
 `kind: deliverable`
@@ -411,13 +411,13 @@ Targets: `crates/gwiki/src/compile.rs`, `crates/gwiki/src/synthesis.rs`, `crates
 Implement `gwiki compile`:
 
 - Build prompts from compile bundles and daemon completion endpoint availability.
-- Generate or update `wiki/sources/`, `wiki/concepts/`, and `wiki/topics/` markdown with frontmatter, citations, backlinks, and `_index.md` updates.
+- Generate or update `knowledge/sources/`, `knowledge/concepts/`, and `knowledge/topics/` markdown with frontmatter, citations, backlinks, and `_index.md` updates.
 - Preserve existing user edits by requiring merge/diff handling before overwrite.
 - Write source-to-section provenance for audit.
 
 **Acceptance:**
 
-- 5.1.1 - Compile writes Obsidian-compatible markdown under `wiki/sources/`, `wiki/concepts/`, or `wiki/topics/` with frontmatter and wikilinks. test: `crates/gwiki/src/compile.rs::tests::compile_writes_obsidian_markdown`.
+- 5.1.1 - Compile writes Obsidian-compatible markdown under `knowledge/sources/`, `knowledge/concepts/`, or `knowledge/topics/` with frontmatter and wikilinks. test: `crates/gwiki/src/compile.rs::tests::compile_writes_obsidian_markdown`.
 - 5.1.2 - Citations are rendered from source manifest metadata. test: `crates/gwiki/src/citations.rs::tests::renders_source_citations`.
 - 5.1.3 - Existing pages require merge/diff handling before overwrite. test: `crates/gwiki/src/synthesis.rs::tests::existing_page_requires_merge_intent`.
 - 5.1.4 - Compile updates `_index.md` without removing unrelated entries. test: `crates/gwiki/src/compile.rs::tests::index_update_preserves_unrelated_entries`.
@@ -546,7 +546,7 @@ Implementation validation after expansion:
 `kind: verification`
 
 - `gobby-wiki` is a Rust workspace crate and binary that consumes `gobby-core` foundation primitives.
-- Global topic and project-local scopes both preserve the file-first vault layout, including `raw/INDEX.md`, `raw/assets/`, `wiki/sources/`, `wiki/concepts/`, `wiki/topics/`, `outputs/`, and `meta/health/`.
+- Global topic and project-local scopes both preserve the file-first vault layout, including `raw/INDEX.md`, `raw/assets/`, `knowledge/sources/`, `knowledge/concepts/`, `knowledge/topics/`, `outputs/`, and `meta/health/`.
 - Filesystem markdown remains the source of truth; databases and vectors are rebuildable derived indexes.
 - `gwiki` data is namespaced in PostgreSQL, FalkorDB, and Qdrant without touching gcode-owned objects.
 - Schema creation belongs to explicit `gwiki setup`, not daemon schema ownership or runtime side effects.
@@ -558,7 +558,8 @@ Implementation validation after expansion:
 `kind: verification`
 
 - **R1 (2026-05-26)**: Reframed the gwiki plan around `gobby-core` shared primitives plus `gobby-wiki` domain behavior. Preserved llm-wiki vault UX, dual scopes, namespaced data, filesystem source of truth, ingestion/research/compile/audit roadmap, and multimodal extensions. Removed copied-gcode-pipeline and daemon-schema-owner assumptions.
-- **R2 (2026-05-28)**: Updated foundation references for landed `gobby-core` 0.2.1 and current workspace membership. Folded in file-first vault lessons: `raw/INDEX.md`, `raw/assets/`, `wiki/sources/`, `wiki/concepts/`, `wiki/topics/`, `outputs/`, and `meta/health/`. Added keyword search over generated wiki pages and health checks for stale pages, uncited sources, broken links, duplicate concepts, and uncompiled sources. Added the M1 task manifest with `covers:gwiki:<section>:<acceptance>` labels and recorded the sibling daemon/web plan validation plus dry-run build command.
+- **R2 (2026-05-28)**: Updated foundation references for landed `gobby-core` 0.2.1 and current workspace membership. Folded in file-first vault lessons: `raw/INDEX.md`, `raw/assets/`, `knowledge/sources/`, `knowledge/concepts/`, `knowledge/topics/`, `outputs/`, and `meta/health/`. Added keyword search over generated wiki pages and health checks for stale pages, uncited sources, broken links, duplicate concepts, and uncompiled sources. Added the M1 task manifest with `covers:gwiki:<section>:<acceptance>` labels and recorded the sibling daemon/web plan validation plus dry-run build command.
+- **R4 (2026-06-09)**: Updated generated-page layout notes from `wiki/*` to `knowledge/*`. Existing vaults using the older generated-page folders should move those pages into the matching `knowledge/` directories before rebuilding indexes; Qdrant lookup now prefers underscore collection names and falls back to legacy colon collections during migration.
 - **R3 (2026-05-29)**: First autonomous planning pass. Corrected the foundation version from `gobby-core` 0.2.1 to the landed 0.2.2 in the Overview, the Constraints dependency spec, and task 1.1, completed the gcore module inventory (added always-on `project`, `daemon_url`, `bootstrap`, and `provisioning`), and pointed scope resolution (1.2) and daemon endpoints (3.1) at the matching `gobby_core::project`/`gobby_core::daemon_url` primitives. Aligned the §5.2 deliverable title with its manifest entry and health-check acceptance. Re-validated against the Plan-Coverage Contract: valid, 6 phases, 21 deliverables.
 
 ## M1 Task Manifest

@@ -896,9 +896,9 @@ pub enum CollectionScope<'a> {
 ///
 /// Examples:
 ///   collection_name("gwiki", CollectionScope::Project("abc-123"))
-///       → "gwiki:project:abc-123"
+///       → "gwiki_project_abc-123"
 ///   collection_name("gwiki", CollectionScope::Topic("rust-async"))
-///       → "gwiki:topic:rust-async"
+///       → "gwiki_topic_rust-async"
 ///   collection_name("gcode", CollectionScope::Custom("code_symbols_abc-123"))
 ///       → "code_symbols_abc-123"
 pub fn collection_name(namespace: &str, scope: CollectionScope<'_>) -> String {
