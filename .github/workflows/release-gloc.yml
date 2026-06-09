@@ -183,7 +183,7 @@ jobs:
           set -euo pipefail
           shopt -s nullglob
           tag="${GITHUB_REF#refs/tags/}"
-          assets=(gloc-*.tar.gz gloc-*.zip gloc-*.sha256)
+          assets=(gloc-*.tar.gz gloc-*.zip gloc-*.tar.gz.sha256 gloc-*.zip.sha256)
           if [ "${#assets[@]}" -eq 0 ]; then
             echo "::error::No gloc release assets found." >&2
             exit 1

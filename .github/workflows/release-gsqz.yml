@@ -189,7 +189,7 @@ jobs:
           set -euo pipefail
           shopt -s nullglob
           tag="${GITHUB_REF#refs/tags/}"
-          assets=(gsqz-*.tar.gz gsqz-*.zip gsqz-*.sha256)
+          assets=(gsqz-*.tar.gz gsqz-*.zip gsqz-*.tar.gz.sha256 gsqz-*.zip.sha256)
           if [ "${#assets[@]}" -eq 0 ]; then
             echo "::error::No gsqz release assets found." >&2
             exit 1

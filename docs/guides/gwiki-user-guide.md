@@ -107,6 +107,10 @@ Docker services when no reachable hub is configured. Setup preflights
 - `--qdrant-url <URL>` — Qdrant vector store.
 - `--embedding-provider`, `--embedding-api-base <URL>`, `--embedding-model`, `--embedding-query-prefix`, `--embedding-vector-dim <DIM>`, `--embedding-api-key <KEY>` — Embedding endpoint for semantic search.
 
+Valid embedding provider values are `lmstudio`, `ollama`,
+`openai-compatible`, and `none`. `gwiki` is pre-release, so removed aliases are
+rejected instead of translated.
+
 See [AI Configuration](./ai-configuration.md) for the canonical embedding and
 routing matrix.
 
