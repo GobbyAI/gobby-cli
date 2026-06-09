@@ -270,7 +270,7 @@ The compile JSON result contains these stable keys:
   "target_kind": "concept",
   "outline": ["Overview", "Tradeoffs"],
   "daemon_synthesis_available": true,
-  "article_path": "wiki/concepts/borrow-checker.md",
+  "article_path": "knowledge/concepts/borrow-checker.md",
   "source_paths": ["raw/research/research-1.md"],
   "index_path": "wiki/index.md",
   "handoff_id": "handoff-...",

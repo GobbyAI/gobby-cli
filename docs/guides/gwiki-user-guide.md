@@ -76,7 +76,8 @@ gwiki --topic rust-async init
 | Path | Purpose |
 |------|---------|
 | `raw/` (+ `raw/assets/`) | Captured source bytes and the raw manifest |
-| `wiki/` (+ `wiki/sources/`, `wiki/concepts/`, `wiki/topics/`) | Compiled article pages |
+| `knowledge/` (+ `knowledge/sources/`, `knowledge/concepts/`, `knowledge/topics/`) | Compiled article pages |
+| `code/` | Generated code documentation |
 | `inbox/` | Drop zone for files awaiting `collect` |
 | `outputs/` | Exported bundles and reports |
 | `meta/` (+ `meta/health/`) | Health snapshots and vault metadata |
@@ -84,8 +85,8 @@ gwiki --topic rust-async init
 | `raw/INDEX.md` | Manifest of raw sources (drives `refresh`) |
 | `log.md` | Vault activity log |
 
-The `wiki/sources`, `wiki/concepts`, and `wiki/topics` subdirectories line up
-with the three `compile --kind` values.
+The `knowledge/sources`, `knowledge/concepts`, and `knowledge/topics`
+subdirectories line up with the three `compile --kind` values.
 
 ### Set Up Storage
 
@@ -309,7 +310,7 @@ Without `--llm`, `ask` is a pure retrieval command and runs without any AI route
 ### Read (`read`)
 
 ```bash
-gwiki --topic rust-async read --path wiki/topics/borrow-checker.md
+gwiki --topic rust-async read --path knowledge/topics/borrow-checker.md
 gwiki --topic rust-async read --title "Borrow Checker"
 ```
 
@@ -320,8 +321,8 @@ Reads a wiki page or document in the selected scope. Exactly one of `--path` or
 - `--path <PATH>` — Vault-relative wiki path to read.
 - `--title <TITLE>` — First-heading title to resolve inside the selected scope.
 
-Read targets are restricted to canonical wiki documents: `raw/INDEX.md`,
-`_index.md`, `log.md`, or paths under `wiki/`.
+Read targets are restricted to canonical vault documents: `raw/INDEX.md`,
+`_index.md`, `log.md`, or paths under `knowledge/` and `code/`.
 
 ### Backlinks (`backlinks`)
 
@@ -399,7 +400,7 @@ gwiki --topic rust-async compile "Borrow Checker"
 gwiki --topic rust-async compile "Borrow Checker" --kind concept
 gwiki --topic rust-async compile "Borrow Checker" \
   --outline "Overview" --outline "Reborrows" --outline "Common errors"
-gwiki --topic rust-async compile "Borrow Checker" --target wiki/topics/borrow.md --write-intent
+gwiki --topic rust-async compile "Borrow Checker" --target knowledge/topics/borrow.md --write-intent
 ```
 
 Compiles accepted research notes into a wiki article. With no positional, it
@@ -408,7 +409,7 @@ compiles from the current accepted-note set; pass `[TOPIC]` to scope the article
 **Options:**
 - `[TOPIC]` — Optional positional naming the article topic.
 - `--outline <HEADING>` — Seed an article heading. Repeatable to set the section order.
-- `--kind <source|concept|topic>` — Article kind (default: `topic`). Determines which `wiki/` subdirectory the page lands in (`wiki/sources`, `wiki/concepts`, or `wiki/topics`).
+- `--kind <source|concept|topic>` — Article kind (default: `topic`). Determines which `knowledge/` subdirectory the page lands in (`knowledge/sources`, `knowledge/concepts`, or `knowledge/topics`).
 - `--target <PAGE>` — Explicit vault-relative target page path.
 - `--write-intent` — Authorize overwriting an existing target page. By default `compile` **refuses** to overwrite an existing page and returns an `invalid_input` error asking for merge/diff handling; `--write-intent` opts into overwrite-after-merge.
 
@@ -472,8 +473,9 @@ between captured material and synthesized articles:
 - `raw/` — Captured source bytes (`raw/assets/`) and the source manifest
   (`raw/INDEX.md`). Everything ingested lands here first.
 - `inbox/` — Staging area for files dropped out of band, promoted by `collect`.
-- `wiki/` — Compiled article pages, split into `wiki/sources/`,
-  `wiki/concepts/`, and `wiki/topics/` to mirror the `compile --kind` values.
+- `knowledge/` — Compiled article pages, split into `knowledge/sources/`,
+  `knowledge/concepts/`, and `knowledge/topics/` to mirror the `compile --kind` values.
+- `code/` — Generated code documentation from `gcode codewiki`.
 - `outputs/` — Exported bundles and reports.
 - `meta/` — Vault metadata and `meta/health/` snapshots.
 

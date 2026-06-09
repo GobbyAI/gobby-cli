@@ -4,9 +4,9 @@ This contract defines the live FalkorDB code graph produced by `gcode` and consu
 
 ## Graph
 
-The shared code graph is the FalkorDB graph named `gobby_code`. Rust consumers use
-`gobby_core::config::CODE_GRAPH_NAME` so producers and consumers do not duplicate
-the graph name.
+The shared code graph is the FalkorDB graph named `gobby_code`. Graph name
+selection remains consumer-owned; `gcore` only carries FalkorDB connection
+configuration.
 
 Every node that belongs to a Gobby project carries a `project` property. Consumers
 must include `project` in reads, and producers must include `project` in node

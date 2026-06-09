@@ -16,7 +16,7 @@ gcode codewiki
 Write directly into a gwiki vault code-doc subtree:
 
 ```bash
-gcode codewiki --out /path/to/vault/wiki/code
+gcode codewiki --out /path/to/vault
 gwiki --project /path/to/project index
 ```
 
@@ -30,9 +30,9 @@ gcode codewiki --scope crates/gcode src
 
 The generated tree is hierarchical:
 
-- `repo.md` is the repository overview.
-- `modules/<module>.md` documents directory/module groups.
-- `files/<path>.md` documents individual source files.
+- `code/repo.md` is the repository overview.
+- `code/modules/<module>.md` documents directory/module groups.
+- `code/files/<path>.md` documents individual source files.
 - `_meta/codewiki.json` records the docs written in the last run for
   incremental regeneration.
 
@@ -107,9 +107,9 @@ PostgreSQL code-index data but no graph service.
 
 The intended handoff is a file workflow, not a crate dependency:
 
-1. Run `gcode codewiki --out <vault>/wiki/code`.
+1. Run `gcode codewiki --out <vault>`.
 2. Run `gwiki --project <project-root> index`.
-3. gwiki's vault index walk discovers `wiki/code/**/*.md`, preserves
+3. gwiki's vault index walk discovers `code/**/*.md`, preserves
    `source_files:` frontmatter, extracts `[[wikilinks]]`, and indexes changed
    docs incrementally.
 

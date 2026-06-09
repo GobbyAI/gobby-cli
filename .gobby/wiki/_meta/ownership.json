@@ -1,0 +1,114 @@
+{
+  "files": {
+    "crates/gcode/src/commands/codewiki/build.rs": {
+      "content_hash": "6defc3b9b2c6381104a6a5ad2c2477b25adede82b5fedd0da7e17a2eefc32def",
+      "contributors": [
+        {
+          "name": "Josh Wilhelmi",
+          "email": "josh@gobby.ai",
+          "lines": 989
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/cluster.rs": {
+      "content_hash": "0f3fea58bf6478e84b49380fcd15986939c7624bbf44e6f9d698b4bc21dfe0f9",
+      "contributors": [
+        {
+          "name": "Josh Wilhelmi",
+          "email": "josh@gobby.ai",
+          "lines": 233
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/graph.rs": {
+      "content_hash": "67dbaf60d22262222d8849aafa6574c9fff637f3a69b09b21f2add3f9275ebb0",
+      "contributors": [
+        {
+          "name": "Josh Wilhelmi",
+          "email": "josh@gobby.ai",
+          "lines": 165
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/io.rs": {
+      "content_hash": "5e6678703e17ac33a1898bbbc0c29d120ab834f626dd0477b767bf90ffdee2ec",
+      "contributors": [
+        {
+          "name": "Josh Wilhelmi",
+          "email": "josh@gobby.ai",
+          "lines": 262
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/mod.rs": {
+      "content_hash": "8a08cc6a5150a132ef52039e8f71bd49782cf14be406400631b48a341e6eac9e",
+      "contributors": [
+        {
+          "name": "Josh Wilhelmi",
+          "email": "josh@gobby.ai",
+          "lines": 587
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/ownership.rs": {
+      "content_hash": "a6e4ec4845b0c7cfa7cae179c4a41ec37339c223fead0105a3fae538e12bf225",
+      "contributors": [
+        {
+          "name": "Josh Wilhelmi",
+          "email": "josh@gobby.ai",
+          "lines": 654
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/paths.rs": {
+      "content_hash": "1c49ba1a37d0b6aaeb9351b2c6863ec5cfafde6bcf784e3e6204743843cb6173",
+      "contributors": [
+        {
+          "name": "Josh Wilhelmi",
+          "email": "josh@gobby.ai",
+          "lines": 157
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/prompts.rs": {
+      "content_hash": "11f3d9f4438a13f93c4c14d1b0fc79b01cb2a9be0f2cdeebf33292945a92b3b4",
+      "contributors": [
+        {
+          "name": "Josh Wilhelmi",
+          "email": "josh@gobby.ai",
+          "lines": 165
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/render.rs": {
+      "content_hash": "36f54d4bf713d2d03f72ea478f3ee50cd84f7eb95c2e999d1f153aaa26e87a11",
+      "contributors": [
+        {
+          "name": "Josh Wilhelmi",
+          "email": "josh@gobby.ai",
+          "lines": 627
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/tests.rs": {
+      "content_hash": "1fdf62d24474d8ccf1daf189bffd22e80f46f2acfa68407eafe52b8b10d6d043",
+      "contributors": [
+        {
+          "name": "Josh Wilhelmi",
+          "email": "josh@gobby.ai",
+          "lines": 997
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/text.rs": {
+      "content_hash": "b752e090e6f457a6617da72035d23c1c612aa7443a5326a32c9364238b55e671",
+      "contributors": [
+        {
+          "name": "Josh Wilhelmi",
+          "email": "josh@gobby.ai",
+          "lines": 305
+        }
+      ]
+    }
+  }
+}
