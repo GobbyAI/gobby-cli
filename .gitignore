@@ -8,6 +8,8 @@
 !.gobby/project.jsonl
 !.gobby/wiki/
 !.gobby/wiki/**
+.gobby/wiki/_meta/**
+.gobby/wiki/**/*.json.lock
 !.gobby/plans/
 !.gobby/plans/**
 .playwright/
