@@ -65,22 +65,22 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 - `read_ownership_meta` (function) component `read_ownership_meta [function]` (`a26b893f-a0d9-5f5e-82e3-08b0f1e03e26`) lines 137-144 [crates/gcode/src/commands/codewiki/io.rs:137-144]
   - Signature: `pub(crate) fn read_ownership_meta(out_dir: &Path) -> anyhow::Result<OwnershipMeta> {`
   - Purpose: Indexed function `read_ownership_meta` in `crates/gcode/src/commands/codewiki/io.rs`. [crates/gcode/src/commands/codewiki/io.rs:137-144]
-- `write_ownership_meta` (function) component `write_ownership_meta [function]` (`51f659ce-4619-5cda-9b2a-38305efd5557`) lines 146-149 [crates/gcode/src/commands/codewiki/io.rs:146-149]
+- `write_ownership_meta` (function) component `write_ownership_meta [function]` (`d82ab49b-4aa8-59cc-838b-65151b4cc898`) lines 146-149 [crates/gcode/src/commands/codewiki/io.rs:146-149]
   - Signature: `pub(crate) fn write_ownership_meta(out_dir: &Path, meta: &OwnershipMeta) -> anyhow::Result<()> {`
   - Purpose: Indexed function `write_ownership_meta` in `crates/gcode/src/commands/codewiki/io.rs`. [crates/gcode/src/commands/codewiki/io.rs:146-149]
-- `source_hashes_for_doc` (function) component `source_hashes_for_doc [function]` (`163dec0a-9b40-5418-8563-cd87e87e6030`) lines 151-172 [crates/gcode/src/commands/codewiki/io.rs:151-172]
+- `source_hashes_for_doc` (function) component `source_hashes_for_doc [function]` (`9de18ac6-b61b-5c36-91f0-8982fd20c2b8`) lines 151-172 [crates/gcode/src/commands/codewiki/io.rs:151-172]
   - Signature: `pub(crate) fn source_hashes_for_doc(`
   - Purpose: Indexed function `source_hashes_for_doc` in `crates/gcode/src/commands/codewiki/io.rs`. [crates/gcode/src/commands/codewiki/io.rs:151-172]
-- `source_files_from_frontmatter` (function) component `source_files_from_frontmatter [function]` (`c18ccd08-ac4e-5484-bc7a-aa1c82e4fead`) lines 174-207 [crates/gcode/src/commands/codewiki/io.rs:174-207]
+- `source_files_from_frontmatter` (function) component `source_files_from_frontmatter [function]` (`24f25131-b3d8-5439-8d1b-efbcd24cbcd2`) lines 174-207 [crates/gcode/src/commands/codewiki/io.rs:174-207]
   - Signature: `pub(crate) fn source_files_from_frontmatter(content: &str) -> BTreeSet<String> {`
   - Purpose: Indexed function `source_files_from_frontmatter` in `crates/gcode/src/commands/codewiki/io.rs`. [crates/gcode/src/commands/codewiki/io.rs:174-207]
-- `unquote_yaml_string` (function) component `unquote_yaml_string [function]` (`e512eb82-9038-5f80-aa8d-a9613bb0fb0a`) lines 210-240 [crates/gcode/src/commands/codewiki/io.rs:210-240]
+- `unquote_yaml_string` (function) component `unquote_yaml_string [function]` (`958d12c2-64df-56e2-8b50-8fe1d86771c2`) lines 210-240 [crates/gcode/src/commands/codewiki/io.rs:210-240]
   - Signature: `pub(crate) fn unquote_yaml_string(value: &str) -> Option<String> {`
   - Purpose: Indexed function `unquote_yaml_string` in `crates/gcode/src/commands/codewiki/io.rs`. [crates/gcode/src/commands/codewiki/io.rs:210-240]
-- `decode_hex_escape` (function) component `decode_hex_escape [function]` (`5e0efc18-c809-51a9-9c38-9ee1aee6e7f0`) lines 243-250 [crates/gcode/src/commands/codewiki/io.rs:243-250]
+- `decode_hex_escape` (function) component `decode_hex_escape [function]` (`dd4bdb09-46b4-5a8c-b68e-b958a2e04b6c`) lines 243-250 [crates/gcode/src/commands/codewiki/io.rs:243-250]
   - Signature: `fn decode_hex_escape(chars: &mut std::str::Chars<'_>, digits: usize) -> Option<char> {`
   - Purpose: Indexed function `decode_hex_escape` in `crates/gcode/src/commands/codewiki/io.rs`. [crates/gcode/src/commands/codewiki/io.rs:243-250]
-- `safe_doc_path` (function) component `safe_doc_path [function]` (`fa013068-fbcc-5b18-a6c3-414603085e2d`) lines 252-262 [crates/gcode/src/commands/codewiki/io.rs:252-262]
+- `safe_doc_path` (function) component `safe_doc_path [function]` (`fcce327e-0b99-5e68-8045-6ead848668b0`) lines 252-262 [crates/gcode/src/commands/codewiki/io.rs:252-262]
   - Signature: `pub(crate) fn safe_doc_path(out_dir: &Path, relative_path: &str) -> anyhow::Result<PathBuf> {`
   - Purpose: Indexed function `safe_doc_path` in `crates/gcode/src/commands/codewiki/io.rs`. [crates/gcode/src/commands/codewiki/io.rs:252-262]
 

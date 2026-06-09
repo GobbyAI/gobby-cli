@@ -73,7 +73,6 @@ The original Python `hook_dispatcher.py` ran inside the daemon process. That mad
 |------|----------------------|
 | `inbox-envelope.v1.schema.json` | `envelope::tests::envelope_validates_against_v1_schema` |
 | `diagnose-output.v2.schema.json` | `diagnose::tests::diagnose_output_validates_against_v2_schema` |
-| `diagnose-output.v1.schema.json` | *(frozen, no longer validated against the live struct — kept for tools that pinned to v1)* |
 
 ## Envelope Schema (v1)
 
@@ -359,7 +358,7 @@ ghook is at `0.4.6`. The envelope `SCHEMA_VERSION` is `1`; the diagnose-output s
 
 - **Crate version** bumps for any code change (binary behavior, dependencies, perf, etc.).
 - **Envelope `SCHEMA_VERSION`** bumps only when the inbox envelope shape changes in a way the daemon must explicitly handle.
-- **Diagnose-output schema version** bumps when `--diagnose`'s JSON output adds, removes, or changes fields. v1 → v2 added `install_method` and `install_source_url`; the v1 file is kept as a frozen historical schema.
+- **Diagnose-output schema version** bumps when `--diagnose`'s JSON output adds, removes, or changes fields.
 
 `--version` writes `~/.gobby/bin/.ghook-runtime.json` with the crate and envelope-schema numbers, so the daemon can detect mismatches at startup and refuse to drain envelopes from a future envelope schema it doesn't understand.
 

@@ -235,7 +235,7 @@ Look for:
 - **`project_root` / `project_id`** — did ghook correctly walk up from cwd to the project? `null` means no `.gobby/project.json` was found — daemon will receive the envelope without an `X-Gobby-Project-Id` header.
 - **`install_method` / `install_source_url`** — how this `ghook` binary got installed (e.g. `github-release`, `crates-binstall`, `cargo-install`). Both are `null` when the binary was installed without a sidecar-writing installer (e.g. plain `cargo install gobby-hooks`). Useful in bug reports — it tells maintainers exactly which install path a user is on.
 
-The diagnose JSON is validated against `crates/ghook/schemas/diagnose-output.v2.schema.json` in tests, so the schema is stable. `diagnose-output.v1.schema.json` remains in the repository as a frozen historical schema for tools that pinned to v1.
+The diagnose JSON is validated against `crates/ghook/schemas/diagnose-output.v2.schema.json` in tests, so the schema is stable.
 
 ## Inbox & Replay
 

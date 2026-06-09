@@ -478,7 +478,7 @@ Both cases are reported by `gcode init`'s status line (`isolated`, `linked-workt
 gcode resolves graph/vector infrastructure configuration in this order:
 
 1. **Environment variables** — `GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, `GOBBY_FALKORDB_PASSWORD`, `GOBBY_QDRANT_URL`
-2. **config_store table** — Key-value pairs in the PostgreSQL hub (`databases.falkordb.host`, `databases.falkordb.port`, `databases.falkordb.requirepass`, `databases.qdrant.*`)
+2. **config_store table** — Key-value pairs in the PostgreSQL hub (`databases.falkordb.host`, `databases.falkordb.port`, `databases.falkordb.password`, `databases.qdrant.*`)
 3. **Hardcoded defaults** — FalkorDB port `16379` and graph name `gobby_code` once a host is configured; no default FalkorDB host is assumed
 
 Semantic search embedding config resolves from:

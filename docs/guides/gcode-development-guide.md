@@ -96,7 +96,7 @@ Resolution order for infrastructure services (FalkorDB, Qdrant):
 | Priority | Source | Example |
 |----------|--------|---------|
 | 1 (highest) | Environment variables | `GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, `GOBBY_FALKORDB_PASSWORD`, `GOBBY_QDRANT_URL` |
-| 2 | `config_store` table in PostgreSQL | `databases.falkordb.host`, `databases.falkordb.port`, `databases.falkordb.requirepass`, `databases.qdrant.url` |
+| 2 | `config_store` table in PostgreSQL | `databases.falkordb.host`, `databases.falkordb.port`, `databases.falkordb.password`, `databases.qdrant.url` |
 | 3 (lowest) | Hardcoded defaults | FalkorDB port `16379` and graph name `gobby_code` once a host is configured |
 
 AI capability config, including embeddings, resolves from `config_store` first,

@@ -8,29 +8,25 @@ provenance:
   - 11-17
 - file: crates/gcode/src/commands/codewiki/mod.rs
   ranges:
-  - 79-84
-  - 87-91
-  - 94-103
-  - 105-114
-  - 118-121
-  - 153-157
-  - 279-291
-  - '331'
-  - 355-449
-  - 458-463
+  - 81-86
+  - 89-93
+  - 96-105
+  - 107-116
+  - 120-123
+  - 155-159
+  - 281-293
+  - '333'
+  - 357-472
+  - 500-505
 - file: crates/gcode/src/commands/codewiki/prompts.rs
   ranges:
   - 11-33
   - 35-56
-  - 58-69
-  - 71-91
-  - 93-104
-  - 138-146
-  - 149-152
-- file: crates/gcode/src/commands/codewiki/tests.rs
-  ranges:
-  - 925-933
-  - 935-937
+  - 58-72
+  - 74-94
+  - 96-110
+  - 157-165
+  - 168-171
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -59,6 +55,4 @@ freshness: indexed
 - [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - architecture_prompt public API `pub fn architecture_prompt(`
 - [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - SymbolSummary public API `pub struct SymbolSummary {`
 - [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - ChildSummary public API `pub struct ChildSummary {`
-- [[code/files/crates/gcode/src/commands/codewiki/tests.rs|crates/gcode/src/commands/codewiki/tests.rs]] - test_symbol public API `pub fn test_symbol(`
-- [[code/files/crates/gcode/src/commands/codewiki/tests.rs|crates/gcode/src/commands/codewiki/tests.rs]] - test_component_id public API `pub fn test_component_id(file_path: &str, name: &str, kind: &str) -> String {`
 
