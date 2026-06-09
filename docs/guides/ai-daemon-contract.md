@@ -141,14 +141,23 @@ Request body:
 ```json
 {
   "prompt": "Write a concise title.",
-  "system": "Use project terminology.",
+  "system_prompt": "Use project terminology.",
   "provider": "openai-compatible",
   "model": "qwen2.5-coder",
+  "profile": "feature_low",
+  "candidates": ["codex/gpt-5.3-codex-spark", "claude/haiku"],
+  "max_tokens": 128,
+  "cwd": "/repo",
   "project_id": "3bf57fe7-2a0c-4074-8912-a83d9cd4df01"
 }
 ```
 
-The CLI emits the field name `system`. It omits `system_prompt`, `max_tokens`, and `caller`.
+Supported request fields are `prompt`, `system_prompt` or legacy `system`,
+`provider`, `model`, `profile`, `candidates`, `max_tokens`, `project_id`, and
+`cwd`. When `provider`, `model`, `profile`, and `candidates` are all omitted,
+the daemon resolves `/api/llm/generate` through the `feature_low` default
+candidates. Explicit `candidates` take precedence over `provider` and `model`;
+explicit `provider` or `model` takes precedence over profile defaults.
 
 Response:
 
