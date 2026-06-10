@@ -13,7 +13,7 @@ Parent: [[code/modules/docs|docs]]
 
 ## Overview
 
-The `docs/spikes` module contains documentation for technical spikes investigating external callees across various programming languages. Individual files detail interop and call patterns for Bash, C/C++, Dart/Elixir, Kotlin, Lua, Ruby, and Scala. The module comprises purely informational documentation with no indexed API symbols, child modules, or stable components.
+The docs/spikes module contains research documentation and analysis of external callees across multiple programming languages, including Bash, C/C++, Dart/Elixir, Kotlin, Lua, Ruby, and Scala. It serves as a collection of language-specific spike investigations and contains no indexed API symbols or stable components.
 
 ## Files
 

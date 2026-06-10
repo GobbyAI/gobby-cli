@@ -13,7 +13,7 @@ Parent: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Overview
 
-This module contains snapshot test files for the GCode commands subsystem, covering indexing outcomes, unsupported file type handling, and synchronization projection payloads and text. The snapshots document test results where no indexed API symbols are present.
+Contains snapshot test files for Gcode commands, specifically verifying indexing and sync projection behaviors. All recorded snapshots indicate an absence of indexed API symbols in the corresponding test outcomes.
 
 ## Files
 

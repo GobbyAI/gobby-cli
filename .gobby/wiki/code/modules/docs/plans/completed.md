@@ -13,7 +13,7 @@ Parent: [[code/modules/docs/plans|docs/plans]]
 
 ## Overview
 
-This module archives completed technical planning documents and design specifications for various project features, including G-code skill targets, hook statuslines, sandbox-tolerant hooks, and standalone schemas. It serves as a reference for finished planning phases and contains no indexed code APIs.
+This module archives completed development plans and specifications for various features and version updates. It contains reference documentation covering G-code skill targets, statusline hook phases, sandbox-tolerant hooks, and a standalone schema. As a documentation archive, it contains no executable code or indexed API symbols, serving solely to preserve past design decisions and implementation roadmaps.
 
 ## Files
 

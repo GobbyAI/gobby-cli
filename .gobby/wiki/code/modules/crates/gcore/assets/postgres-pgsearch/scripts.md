@@ -13,7 +13,7 @@ Parent: [[code/modules/crates/gcore/assets/postgres-pgsearch|crates/gcore/assets
 
 ## Overview
 
-This module provides shell scripts for PostgreSQL database operations, specifically managing audit data export. It contains the pg_audit_export.sh script and does not expose indexed API symbols or child modules.
+Contains shell scripts for PostgreSQL search and audit operations, including utilities for exporting audit data. Provides operational tooling without formal API interfaces.
 
 ## Files
 

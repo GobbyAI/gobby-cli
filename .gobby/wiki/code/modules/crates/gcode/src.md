@@ -73,7 +73,7 @@ provenance:
 - file: crates/gcode/src/commands/codewiki/build_parts/file.rs
   ranges:
   - 10-13
-  - 15-110
+  - 15-115
 - file: crates/gcode/src/commands/codewiki/build_parts/hotspots.rs
   ranges:
   - 5-131
@@ -186,7 +186,7 @@ provenance:
   - 563-581
   - 583-598
   - 601-614
-  - 616-737
+  - 616-742
 - file: crates/gcode/src/commands/codewiki/ownership.rs
   ranges:
   - 20-23
@@ -2569,7 +2569,7 @@ Parent: [[code/modules/crates/gcode|crates/gcode]]
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:140-156]
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:158-163]
 [crates/gcode/src/commands/codewiki/build_parts/file.rs:10-13]
-[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-110]
+[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-115]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-131]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:133-157]
 [crates/gcode/src/commands/codewiki/build_parts/modules.rs:4-114]
@@ -2666,7 +2666,7 @@ Parent: [[code/modules/crates/gcode|crates/gcode]]
 [crates/gcode/src/commands/codewiki/mod.rs:563-581]
 [crates/gcode/src/commands/codewiki/mod.rs:583-598]
 [crates/gcode/src/commands/codewiki/mod.rs:601-614]
-[crates/gcode/src/commands/codewiki/mod.rs:616-737]
+[crates/gcode/src/commands/codewiki/mod.rs:616-742]
 [crates/gcode/src/commands/codewiki/ownership.rs:20-23]
 [crates/gcode/src/commands/codewiki/ownership.rs:25-32]
 [crates/gcode/src/commands/codewiki/ownership.rs:26-31]
@@ -4801,7 +4801,7 @@ sequenceDiagram
 
 ## Child Modules
 
-- [[code/modules/crates/gcode/src/cli|crates/gcode/src/cli]] - This module implements the command-line interface (CLI) argument parsing and validation for the gcode tool. It handles command routing and option processing for code search, graph analysis, grep operations, and configuration tasks, while enforcing strict validation for flags, paths, and output formats. A comprehensive test suite verifies parsing logic, flag interactions, help routing, and default format behavior across all supported commands.
+- [[code/modules/crates/gcode/src/cli|crates/gcode/src/cli]] - The `crates/gcode/src/cli` module contains unit tests for CLI argument parsing, validation, and help generation across `gcode` subcommands. It verifies flag handling, positional arguments, global options, and error rejection for `grep`, `search`, `index`, `graph`, `codewiki`, `setup`, and `projection`. Tests also cover help text routing, command-specific behaviors, and output format defaults.
 [crates/gcode/src/cli/tests.rs:5-213]
 [crates/gcode/src/cli/tests.rs:216-234]
 [crates/gcode/src/cli/tests.rs:237-252]
@@ -4839,7 +4839,7 @@ sequenceDiagram
 [crates/gcode/src/cli/tests.rs:890-899]
 [crates/gcode/src/cli/tests.rs:902-913]
 [crates/gcode/src/cli/tests.rs:916-924]
-- [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]] - This module implements the core command execution layer for the `gcode` tool. It provides a unified interface for code analysis, search, and documentation generation, featuring AI-assisted hierarchical documentation creation, code graph synchronization and dependency querying, advanced text and symbol search with context filtering, and indexing projections. The module also handles project initialization, configuration setup, status monitoring, embedding/vector lifecycle management, and symbol-at-location resolution, orchestrating interactions between indexed codebases, external graph services, and AI providers.
+- [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]] - The commands module serves as the core execution layer for the G-code CLI, orchestrating a comprehensive suite of code analysis, search, and documentation commands. It exposes functionality for generating hierarchical repository documentation and architecture overviews via the codewiki subsystem, querying and managing source code dependency graphs through the graph subsystem, and performing fast indexed text and pattern matching via grep and search. The module also handles code indexing and symbol resolution (index, symbol_at, symbols), manages project configuration and embedding lifecycle (setup, vector), and provides diagnostics for vector consistency through embeddings_doctor. Together, these components provide a unified interface for programmatically navigating, analyzing, and documenting codebases.
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-110]
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:112-127]
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:130-180]
@@ -4849,7 +4849,7 @@ sequenceDiagram
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:140-156]
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:158-163]
 [crates/gcode/src/commands/codewiki/build_parts/file.rs:10-13]
-[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-110]
+[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-115]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-131]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:133-157]
 [crates/gcode/src/commands/codewiki/build_parts/modules.rs:4-114]
@@ -4946,7 +4946,7 @@ sequenceDiagram
 [crates/gcode/src/commands/codewiki/mod.rs:563-581]
 [crates/gcode/src/commands/codewiki/mod.rs:583-598]
 [crates/gcode/src/commands/codewiki/mod.rs:601-614]
-[crates/gcode/src/commands/codewiki/mod.rs:616-737]
+[crates/gcode/src/commands/codewiki/mod.rs:616-742]
 [crates/gcode/src/commands/codewiki/ownership.rs:20-23]
 [crates/gcode/src/commands/codewiki/ownership.rs:25-32]
 [crates/gcode/src/commands/codewiki/ownership.rs:26-31]
@@ -5466,7 +5466,7 @@ sequenceDiagram
 [crates/gcode/src/commands/vector.rs:168-184]
 [crates/gcode/src/commands/vector.rs:187-207]
 [crates/gcode/src/commands/vector.rs:210-268]
-- [[code/modules/crates/gcode/src/config|crates/gcode/src/config]] - This module manages configuration resolution and project context for the GCode system. It provides a Context abstraction to resolve project identities, scopes, and daemon URLs across isolated and parent environments. Configuration for external services—including FalkorDB, Qdrant, embedding models, and code vector settings—is centralized using a flexible source system that supports environment variables, JSON files, fallbacks, and closures. Comprehensive tests validate identity resolution, isolation handling, service precedence, and configuration parsing.
+- [[code/modules/crates/gcode/src/config|crates/gcode/src/config]] - This module handles configuration resolution, validation, and management for the GCode system. It provides abstractions for multiple configuration sources, resolves service-specific settings (FalkorDB, Qdrant, embeddings, and code vector indexing), and manages project identity and scope resolution. The `context.rs` file focuses on project identity and runtime context, `services.rs` implements service configuration resolution and environment binding, and `tests.rs` validates resolution logic, isolation handling, and linked worktree scenarios.
 [crates/gcode/src/config/context.rs:26-31]
 [crates/gcode/src/config/context.rs:34]
 [crates/gcode/src/config/context.rs:37]
@@ -5585,7 +5585,7 @@ sequenceDiagram
 [crates/gcode/src/config/tests.rs:454-485]
 [crates/gcode/src/config/tests.rs:488-500]
 [crates/gcode/src/config/tests.rs:503-510]
-- [[code/modules/crates/gcode/src/db|crates/gcode/src/db]] - The db module manages PostgreSQL connectivity, configuration resolution, and persistent storage for the Gcode graph and symbol system. It handles resolving database URLs from environment variables, bootstrap files, and daemon brokers, while providing read-only and read-write connection managers. The module also orchestrates bootstrap initialization, daemon authentication, and sync state tracking. Additionally, it exposes query utilities and persistence functions for file indexing, graph fact storage, and retrieving language server data such as imports, symbols, and call hierarchies.
+- [[code/modules/crates/gcode/src/db|crates/gcode/src/db]] - The db module manages database connectivity, data synchronization, and configuration resolution for G-code projects. It provides functions to establish read/write and read-only database connections, resolve database URLs from environment variables, bootstrap files, and local daemon brokers, and initialize database schemas. The module tracks synchronization states for graph facts and vector data, offering utilities to mark and reset sync progress across projects and files. It also includes safe SQL query helpers, readers for file imports/symbols/calls, and robust daemon broker communication with comprehensive timeout, authentication, and validation logic.
 [crates/gcode/src/db/mod.rs:16-20]
 [crates/gcode/src/db/mod.rs:27-31]
 [crates/gcode/src/db/mod.rs:33-35]
@@ -5665,12 +5665,12 @@ sequenceDiagram
 [crates/gcode/src/db/resolution.rs:756-761]
 [crates/gcode/src/db/resolution.rs:763-765]
 [crates/gcode/src/db/resolution.rs:767-794]
-- [[code/modules/crates/gcode/src/dispatch|crates/gcode/src/dispatch]] - The dispatch module orchestrates the routing and initialization of G-code command execution. It supports early dispatch setup using parsed requests without requiring full context, enables command lookup that can bypass service configuration resolution, and manages service dependency resolution specifically for graph and AI commands. The module includes tests verifying the correctness of these dispatch, lookup, and service selection mechanisms.
+- [[code/modules/crates/gcode/src/dispatch|crates/gcode/src/dispatch]] - This module implements the dispatch routing logic for G-code commands, managing service resolution and command lookup. It includes tests that verify early dispatch behavior without context, optimized service configuration resolution, and efficient service allocation specifically for graph and AI command requests.
 [crates/gcode/src/dispatch/tests.rs:5-9]
 [crates/gcode/src/dispatch/tests.rs:12-52]
 [crates/gcode/src/dispatch/tests.rs:55-69]
 [crates/gcode/src/dispatch/tests.rs:72-89]
-- [[code/modules/crates/gcode/src/graph|crates/gcode/src/graph]] - The graph module provides a complete system for managing, querying, mutating, and analyzing code dependency graphs. It centers on the CodeGraph core, which handles graph lifecycle, database connectivity, and payload structures, exposing comprehensive read APIs for callers, usages, imports, and blast radius calculations, alongside write operations for file synchronization, definition/call injection, and cleanup. Type-safe graph operations are enforced through a dedicated typed_query subsystem that handles parameter validation and safe Cypher rendering. Additionally, the module includes a full reporting pipeline that generates, loads, and renders project analysis reports, featuring hotspot ranking, target frequency tracking, bridge edge hypothesis analysis, and formatted Markdown output. Together, these components deliver a performant, type-safe foundation for codebase structure analysis and visualization.
+- [[code/modules/crates/gcode/src/graph|crates/gcode/src/graph]] - The `graph` module provides a comprehensive system for managing, querying, and analyzing code dependency graphs. It is structured around three core capabilities: graph lifecycle management, type-safe query construction, and analytical reporting. The `code_graph` submodule handles the storage, synchronization, and mutation of code relationships, along with extensive read operations for tracing callers, usages, and blast radius. The `typed_query` submodule exposes a strongly-typed API for safely building and validating graph queries, ensuring consistent Cypher generation and parameter safety. Finally, the `report` submodule implements an end-to-end pipeline for processing graph data, computing metrics like hotspots and bridge edges, and rendering structured Markdown summaries. Together, these components deliver a robust foundation for tracking and analyzing codebase dependencies.
 [crates/gcode/src/graph/code_graph/connection.rs:7-12]
 [crates/gcode/src/graph/code_graph/connection.rs:14-40]
 [crates/gcode/src/graph/code_graph/connection.rs:42-68]
@@ -5983,7 +5983,7 @@ sequenceDiagram
 [crates/gcode/src/graph/typed_query.rs:300-315]
 [crates/gcode/src/graph/typed_query.rs:318-341]
 [crates/gcode/src/graph/typed_query.rs:344-350]
-- [[code/modules/crates/gcode/src/index|crates/gcode/src/index]] - The `index` module provides the core infrastructure for cross-language static code analysis and indexing. It coordinates a comprehensive pipeline that handles file discovery, freshness tracking, and semantic fact extraction, routing processed data through configurable storage sinks while managing lifecycle operations like invalidation and overlay reconciliation. Import resolution is delegated to a dedicated subsystem that collects, normalizes, and resolves import statements across numerous languages, maintaining contexts to distinguish local from external bindings. Additionally, the module includes a call parser that extracts and resolves function call sites using a hybrid AST and textual scanning approach, with robust support for variable shadowing, member qualifiers, and language-specific state machines. Together, these components generate and persist the semantic metadata required for downstream code navigation and analysis.
+- [[code/modules/crates/gcode/src/index|crates/gcode/src/index]] - The `index` module provides a comprehensive, language-agnostic indexing pipeline for G-code projects. It orchestrates file discovery, change detection, and semantic fact extraction across diverse programming languages. The system routes files through a multi-stage workflow that combines git-integrated freshness probes, language-specific AST parsing, and textual scanning to extract symbols, imports, and call sites. Import resolution handles cross-language binding tracking and external module detection, while semantic resolution integrates with external toolchains like Clangd for definition lookups. Extracted facts are normalized, hashed, and persisted to pluggable sinks, enabling efficient, incremental indexing of large, multi-language codebases.
 [crates/gcode/src/index/api.rs:16-23]
 [crates/gcode/src/index/api.rs:26-34]
 [crates/gcode/src/index/api.rs:36-48]
@@ -6436,7 +6436,7 @@ sequenceDiagram
 [crates/gcode/src/index/walker.rs:881-895]
 [crates/gcode/src/index/walker.rs:898-908]
 [crates/gcode/src/index/walker.rs:911-918]
-- [[code/modules/crates/gcode/src/projection|crates/gcode/src/projection]] - This module manages the synchronization, state tracking, and error handling for projection operations. It provides utilities for syncing vector and graph files, coordinating synchronization requests and statuses, and maintaining projection state across lifecycle events. The module defines comprehensive types for projection targets, sync reports, and typed errors, ensuring robust state coordination and reliable file synchronization between source data and projected outputs.
+- [[code/modules/crates/gcode/src/projection|crates/gcode/src/projection]] - This module manages synchronization workflows and state tracking for projection operations. It defines core types for sync requests, status, and reports, alongside utility functions to coordinate file, graph, and vector synchronization. The module maintains projection state, handles lifecycle context, and provides structured error classification for graph and vector operations, ensuring reliable tracking of sync progress and outcomes.
 [crates/gcode/src/projection/sync.rs:11-14]
 [crates/gcode/src/projection/sync.rs:17-21]
 [crates/gcode/src/projection/sync.rs:24-29]
@@ -6463,7 +6463,7 @@ sequenceDiagram
 [crates/gcode/src/projection/sync.rs:337-348]
 [crates/gcode/src/projection/sync.rs:355-390]
 [crates/gcode/src/projection/sync.rs:358-361]
-- [[code/modules/crates/gcode/src/search|crates/gcode/src/search]] - Provides comprehensive search functionality for the GCode crate, leveraging PostgreSQL for full-text search (FTS) with BM25 relevance scoring, snippet generation, and advanced path/glob filtering. The module orchestrates result ranking and merging through graph-aware boosting and Reciprocal Rank Fusion (RRF). It exposes utilities for query construction, visibility predicate management, graph symbol resolution, and path expansion, alongside extensive test fixtures for validating search behavior, scoring, and database interactions.
+- [[code/modules/crates/gcode/src/search|crates/gcode/src/search]] - The search module provides a comprehensive full-text search system for indexing and querying GCode symbols and file contents. It implements BM25-based relevance scoring, visibility and path filtering, and snippet generation through dedicated full-text search logic. Search results are enhanced via graph-based expansion and boosting to surface related definitions, then unified using Reciprocal Rank Fusion (RRF) for consistent ranking across multiple data sources. The module includes extensive test fixtures and validation utilities to verify search accuracy, visibility constraints, and scoring behavior across supported database backends.
 [crates/gcode/src/search/fts/common.rs:16]
 [crates/gcode/src/search/fts/common.rs:19-22]
 [crates/gcode/src/search/fts/common.rs:25-29]
@@ -6590,7 +6590,7 @@ sequenceDiagram
 [crates/gcode/src/search/rrf.rs:78-81]
 [crates/gcode/src/search/rrf.rs:84-87]
 [crates/gcode/src/search/rrf.rs:90-113]
-- [[code/modules/crates/gcode/src/setup|crates/gcode/src/setup]] - This module manages the setup and initialization of G-code-related PostgreSQL database structures for standalone environments. It defines validation contracts for tables and indexes, generates and executes DDL statements, handles SQL identifier quoting, and configures PostgreSQL connections. Core types encapsulate setup requests, status reporting, and credential redaction. A comprehensive test suite ensures contract compliance, DDL correctness, status serialization, and secure handling of database URLs and passwords.
+- [[code/modules/crates/gcode/src/setup|crates/gcode/src/setup]] - This module manages the setup, DDL generation, and execution workflows for a PostgreSQL-backed code indexing system. It defines schema contracts for tables and indexes, generates and executes PostgreSQL DDL statements through the GcodeStandaloneSetup builder, and handles SQL identifier quoting and relation naming. Core types cover setup requests, status tracking, and secure redaction. The module also includes comprehensive test utilities for validating DDL compatibility, enforcing destructive operation guards, and verifying serialization behavior.
 [crates/gcode/src/setup/contracts.rs:5-8]
 [crates/gcode/src/setup/contracts.rs:10-14]
 [crates/gcode/src/setup/contracts.rs:191-193]
@@ -6666,7 +6666,7 @@ sequenceDiagram
 [crates/gcode/src/setup/types.rs:121-129]
 [crates/gcode/src/setup/types.rs:132-135]
 [crates/gcode/src/setup/types.rs:138-147]
-- [[code/modules/crates/gcode/src/vector|crates/gcode/src/vector]] - The vector module provides infrastructure for managing vector embeddings and semantic search for G-code symbols. It orchestrates embedding generation, dimension probing, and integration with external embedding backends. A core lifecycle interface handles Qdrant collection management, including creation, synchronization, cleanup, and schema validation. The module also exposes a repository and search layer for fetching G-code symbols, executing semantic queries, and managing vector payloads, supported by dedicated error types and Qdrant HTTP utilities.
+- [[code/modules/crates/gcode/src/vector|crates/gcode/src/vector]] - The `vector` module manages the lifecycle of vector embeddings for code symbols using Qdrant. It orchestrates collection creation, synchronization, schema validation, and cleanup, while handling embedding generation and batch processing. The module provides core types for payloads, search requests, and lifecycle states, along with utilities for fetching symbols and performing semantic searches. A robust test suite validates the embedding pipelines, collection management, and search operations.
 [crates/gcode/src/vector/code_symbols/embedding.rs:21-23]
 [crates/gcode/src/vector/code_symbols/embedding.rs:26-29]
 [crates/gcode/src/vector/code_symbols/embedding.rs:31-35]

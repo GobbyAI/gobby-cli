@@ -13,7 +13,7 @@ Parent: [[code/repo|Repository Overview]]
 
 ## Overview
 
-The `scripts` module provides utility shell scripts for project automation and verification, primarily `verify.sh`. It does not expose any indexed API symbols, child modules, or stable components.
+The `scripts` module contains shell utilities for project automation, primarily featuring `verify.sh` for running verification checks. It does not expose any indexed API symbols or child components.
 
 ## Files
 

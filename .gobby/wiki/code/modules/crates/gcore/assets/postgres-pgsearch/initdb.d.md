@@ -13,7 +13,7 @@ Parent: [[code/modules/crates/gcore/assets/postgres-pgsearch|crates/gcore/assets
 
 ## Overview
 
-This module contains PostgreSQL initialization SQL scripts for configuring the pg_search and pgaudit extensions. It consists of two sequential database setup files that execute during bootstrapping. The module contains no application-level APIs, stable components, or nested submodules.
+This module contains SQL initialization scripts for configuring PostgreSQL extensions. It provides setup routines for `pg_search` and `pgaudit`, executed during database initialization to enable full-text search indexing and comprehensive audit logging capabilities. The module serves as infrastructure configuration without exposing application-level APIs or stable components.
 
 ## Files
 

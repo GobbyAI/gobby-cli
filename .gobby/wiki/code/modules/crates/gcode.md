@@ -568,7 +568,7 @@ provenance:
 - file: crates/gcode/src/commands/codewiki/build_parts/file.rs
   ranges:
   - 10-13
-  - 15-110
+  - 15-115
 - file: crates/gcode/src/commands/codewiki/build_parts/hotspots.rs
   ranges:
   - 5-131
@@ -681,7 +681,7 @@ provenance:
   - 563-581
   - 583-598
   - 601-614
-  - 616-737
+  - 616-742
 - file: crates/gcode/src/commands/codewiki/ownership.rs
   ranges:
   - 20-23
@@ -3553,7 +3553,7 @@ Parent: [[code/modules/crates|crates]]
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:140-156]
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:158-163]
 [crates/gcode/src/commands/codewiki/build_parts/file.rs:10-13]
-[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-110]
+[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-115]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-131]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:133-157]
 [crates/gcode/src/commands/codewiki/build_parts/modules.rs:4-114]
@@ -3650,7 +3650,7 @@ Parent: [[code/modules/crates|crates]]
 [crates/gcode/src/commands/codewiki/mod.rs:563-581]
 [crates/gcode/src/commands/codewiki/mod.rs:583-598]
 [crates/gcode/src/commands/codewiki/mod.rs:601-614]
-[crates/gcode/src/commands/codewiki/mod.rs:616-737]
+[crates/gcode/src/commands/codewiki/mod.rs:616-742]
 [crates/gcode/src/commands/codewiki/ownership.rs:20-23]
 [crates/gcode/src/commands/codewiki/ownership.rs:25-32]
 [crates/gcode/src/commands/codewiki/ownership.rs:26-31]
@@ -5731,7 +5731,7 @@ Parent: [[code/modules/crates|crates]]
 
 ## Child Modules
 
-- [[code/modules/crates/gcode/assets|crates/gcode/assets]] - The crates/gcode/assets module supplies static configuration assets for resolving and importing dependencies across Elixir and Ruby ecosystems. It contains structured JSON lookup tables that map popular libraries, such as Jason, HTTPoison, Ecto, Phoenix, Faraday, and RSpec, to their respective root import paths. These files serve as a centralized registry for dependency resolution within the gcode crate, with no runtime API symbols exposed.
+- [[code/modules/crates/gcode/assets|crates/gcode/assets]] - The crates/gcode/assets module provides static JSON configuration files that map common dependency roots and library paths for the Elixir and Ruby ecosystems. Through its import_roots subdirectory, it maintains curated lists of stable component identifiers for widely used frameworks and utilities. These assets serve as a centralized reference for resolving imports and analyzing cross-language dependency structures.
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:3]
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:4]
@@ -5758,7 +5758,7 @@ Parent: [[code/modules/crates|crates]]
 [crates/gcode/assets/import_roots/ruby_require_roots.json:9]
 [crates/gcode/assets/import_roots/ruby_require_roots.json:10]
 [crates/gcode/assets/import_roots/ruby_require_roots.json:11]
-- [[code/modules/crates/gcode/contract|crates/gcode/contract]] - This module contains the JSON contract definition for the gcode CLI tool, formally specifying its commands, flags, positional arguments, and output keys. It exposes 463 indexed API symbols to serve as a comprehensive reference for interface validation, documentation, and programmatic inspection of the tool's structure.
+- [[code/modules/crates/gcode/contract|crates/gcode/contract]] - The crates/gcode/contract module defines the formal schema for G-code CLI commands and daemon interactions. Centered on gcode.contract.json, it exposes a comprehensive API surface that standardizes the definition of commands, positional arguments, flags, and execution metadata. The contract enforces consistent argument constraints (required, repeatable, allowed values), specifies JSON output key mappings, and catalogs error codes, serving as the authoritative source for CLI parsing, validation, and documentation generation within the G-code toolchain.
 [crates/gcode/contract/gcode.contract.json:2]
 [crates/gcode/contract/gcode.contract.json:3]
 [crates/gcode/contract/gcode.contract.json:4]
@@ -6284,7 +6284,7 @@ Parent: [[code/modules/crates|crates]]
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:140-156]
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:158-163]
 [crates/gcode/src/commands/codewiki/build_parts/file.rs:10-13]
-[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-110]
+[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-115]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-131]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:133-157]
 [crates/gcode/src/commands/codewiki/build_parts/modules.rs:4-114]
@@ -6381,7 +6381,7 @@ Parent: [[code/modules/crates|crates]]
 [crates/gcode/src/commands/codewiki/mod.rs:563-581]
 [crates/gcode/src/commands/codewiki/mod.rs:583-598]
 [crates/gcode/src/commands/codewiki/mod.rs:601-614]
-[crates/gcode/src/commands/codewiki/mod.rs:616-737]
+[crates/gcode/src/commands/codewiki/mod.rs:616-742]
 [crates/gcode/src/commands/codewiki/ownership.rs:20-23]
 [crates/gcode/src/commands/codewiki/ownership.rs:25-32]
 [crates/gcode/src/commands/codewiki/ownership.rs:26-31]

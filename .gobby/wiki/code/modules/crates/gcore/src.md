@@ -49,45 +49,46 @@ provenance:
   - 775-789
 - file: crates/gcore/src/ai/mod.rs
   ranges:
-  - 26-30
-  - 32-43
-  - 45-57
-  - 59-71
-  - 74-77
-  - 80-84
-  - 86-103
-  - 105-130
-  - 132-137
-  - 139-141
+  - 30-34
+  - 36-47
+  - 49-61
+  - 63-75
+  - 78-81
+  - 84-88
+  - 90-107
+  - 109-134
+  - 136-141
   - 143-145
-  - 147-164
-  - 166-196
-  - 199-204
-  - 206-212
-  - 214-229
-  - 231-242
-  - 244-252
-  - 254-256
-  - 258-291
-  - 293-304
-  - 306-312
-  - 314-316
-  - 318-336
-  - 338-341
-  - 343-353
-  - 355-361
-  - 364-368
-  - 370-387
-  - 396-412
-  - 415-437
-  - 440-453
-  - 456-460
-  - 463-476
-  - 479-499
-  - 502-541
-  - 544-579
-  - 582-612
-  - 614-626
+  - 147-149
+  - 151-168
+  - 170-200
+  - 203-208
+  - 210-217
+  - 219-234
+  - 236-247
+  - 249-257
+  - 259-261
+  - 263-296
+  - 298-309
+  - 311-317
+  - 319-321
+  - 323-341
+  - 343-346
+  - 348-358
+  - 360-366
+  - 369-373
+  - 375-392
+  - 401-417
+  - 420-442
+  - 445-458
+  - 461-465
+  - 468-475
+  - 478-491
+  - 494-514
+  - 517-556
+  - 559-594
+  - 597-627
+  - 629-641
 - file: crates/gcore/src/ai/probe.rs
   ranges:
   - 20-23
@@ -955,7 +956,7 @@ Parent: [[code/modules/crates/gcore|crates/gcore]]
 
 ## Overview
 
-`crates/gcore/src` contains 18 direct files and 4 child modules.
+The `gcore` module serves as the application's foundational runtime core, orchestrating configuration resolution, service provisioning, and backend integrations. It manages a layered configuration system that merges environment variables, YAML files, and remote stores while enforcing secret detection and validation. The module handles service lifecycle orchestration through Docker Compose, including health checks, hub identity verification, and bootstrap file management. It provides unified interfaces for AI backend communication with capability-aware routing, transport abstraction, and health probing for transcription, vision, and text generation. Additionally, it integrates vector search via Qdrant for collection management and payload schema validation, connects to graph databases (FalkorDB/Postgres) for query execution and indexing, and implements hybrid search ranking (RRF). Core utilities include CLI command contracts, degradation status tracking, environment-aware context construction, and content chunking for indexing.
 [crates/gcore/src/ai/daemon.rs:19-24]
 [crates/gcore/src/ai/daemon.rs:27-31]
 [crates/gcore/src/ai/daemon.rs:34-41]
@@ -999,45 +1000,46 @@ Parent: [[code/modules/crates/gcore|crates/gcore]]
 [crates/gcore/src/ai/daemon.rs:755-771]
 [crates/gcore/src/ai/daemon.rs:774-790]
 [crates/gcore/src/ai/daemon.rs:775-789]
-[crates/gcore/src/ai/mod.rs:26-30]
-[crates/gcore/src/ai/mod.rs:32-43]
-[crates/gcore/src/ai/mod.rs:45-57]
-[crates/gcore/src/ai/mod.rs:59-71]
-[crates/gcore/src/ai/mod.rs:74-77]
-[crates/gcore/src/ai/mod.rs:80-84]
-[crates/gcore/src/ai/mod.rs:86-103]
-[crates/gcore/src/ai/mod.rs:105-130]
-[crates/gcore/src/ai/mod.rs:132-137]
-[crates/gcore/src/ai/mod.rs:139-141]
+[crates/gcore/src/ai/mod.rs:30-34]
+[crates/gcore/src/ai/mod.rs:36-47]
+[crates/gcore/src/ai/mod.rs:49-61]
+[crates/gcore/src/ai/mod.rs:63-75]
+[crates/gcore/src/ai/mod.rs:78-81]
+[crates/gcore/src/ai/mod.rs:84-88]
+[crates/gcore/src/ai/mod.rs:90-107]
+[crates/gcore/src/ai/mod.rs:109-134]
+[crates/gcore/src/ai/mod.rs:136-141]
 [crates/gcore/src/ai/mod.rs:143-145]
-[crates/gcore/src/ai/mod.rs:147-164]
-[crates/gcore/src/ai/mod.rs:166-196]
-[crates/gcore/src/ai/mod.rs:199-204]
-[crates/gcore/src/ai/mod.rs:206-212]
-[crates/gcore/src/ai/mod.rs:214-229]
-[crates/gcore/src/ai/mod.rs:231-242]
-[crates/gcore/src/ai/mod.rs:244-252]
-[crates/gcore/src/ai/mod.rs:254-256]
-[crates/gcore/src/ai/mod.rs:258-291]
-[crates/gcore/src/ai/mod.rs:293-304]
-[crates/gcore/src/ai/mod.rs:306-312]
-[crates/gcore/src/ai/mod.rs:314-316]
-[crates/gcore/src/ai/mod.rs:318-336]
-[crates/gcore/src/ai/mod.rs:338-341]
-[crates/gcore/src/ai/mod.rs:343-353]
-[crates/gcore/src/ai/mod.rs:355-361]
-[crates/gcore/src/ai/mod.rs:364-368]
-[crates/gcore/src/ai/mod.rs:370-387]
-[crates/gcore/src/ai/mod.rs:396-412]
-[crates/gcore/src/ai/mod.rs:415-437]
-[crates/gcore/src/ai/mod.rs:440-453]
-[crates/gcore/src/ai/mod.rs:456-460]
-[crates/gcore/src/ai/mod.rs:463-476]
-[crates/gcore/src/ai/mod.rs:479-499]
-[crates/gcore/src/ai/mod.rs:502-541]
-[crates/gcore/src/ai/mod.rs:544-579]
-[crates/gcore/src/ai/mod.rs:582-612]
-[crates/gcore/src/ai/mod.rs:614-626]
+[crates/gcore/src/ai/mod.rs:147-149]
+[crates/gcore/src/ai/mod.rs:151-168]
+[crates/gcore/src/ai/mod.rs:170-200]
+[crates/gcore/src/ai/mod.rs:203-208]
+[crates/gcore/src/ai/mod.rs:210-217]
+[crates/gcore/src/ai/mod.rs:219-234]
+[crates/gcore/src/ai/mod.rs:236-247]
+[crates/gcore/src/ai/mod.rs:249-257]
+[crates/gcore/src/ai/mod.rs:259-261]
+[crates/gcore/src/ai/mod.rs:263-296]
+[crates/gcore/src/ai/mod.rs:298-309]
+[crates/gcore/src/ai/mod.rs:311-317]
+[crates/gcore/src/ai/mod.rs:319-321]
+[crates/gcore/src/ai/mod.rs:323-341]
+[crates/gcore/src/ai/mod.rs:343-346]
+[crates/gcore/src/ai/mod.rs:348-358]
+[crates/gcore/src/ai/mod.rs:360-366]
+[crates/gcore/src/ai/mod.rs:369-373]
+[crates/gcore/src/ai/mod.rs:375-392]
+[crates/gcore/src/ai/mod.rs:401-417]
+[crates/gcore/src/ai/mod.rs:420-442]
+[crates/gcore/src/ai/mod.rs:445-458]
+[crates/gcore/src/ai/mod.rs:461-465]
+[crates/gcore/src/ai/mod.rs:468-475]
+[crates/gcore/src/ai/mod.rs:478-491]
+[crates/gcore/src/ai/mod.rs:494-514]
+[crates/gcore/src/ai/mod.rs:517-556]
+[crates/gcore/src/ai/mod.rs:559-594]
+[crates/gcore/src/ai/mod.rs:597-627]
+[crates/gcore/src/ai/mod.rs:629-641]
 [crates/gcore/src/ai/probe.rs:20-23]
 [crates/gcore/src/ai/probe.rs:26-34]
 [crates/gcore/src/ai/probe.rs:37-42]
@@ -1890,7 +1892,7 @@ sequenceDiagram
 
 ## Child Modules
 
-- [[code/modules/crates/gcore/src/ai|crates/gcore/src/ai]] - The ai module provides a unified interface for interacting with artificial intelligence capabilities, including text generation, embeddings, audio transcription, and image analysis. It centralizes communication with a local AI daemon through a robust HTTP transport layer that handles multipart requests, authentication, and automatic retry logic with exponential backoff. The module features automatic capability probing and intelligent routing to direct requests to the appropriate backend based on real-time availability. Additionally, it includes utilities for payload construction, response parsing, daemon lifecycle management, and comprehensive testing fixtures like FakeTransport and EnvGuard.
+- [[code/modules/crates/gcore/src/ai|crates/gcore/src/ai]] - The ai module provides a unified, capability-aware interface for interacting with AI backends, primarily a local daemon. It abstracts network communication through AiTransport, which handles JSON and multipart request construction, API key injection, automatic retries with exponential backoff, and dynamic routing between direct API calls and the local daemon. The module is organized by capability: transcription.rs handles audio-to-text conversion, vision.rs manages image description and analysis, text.rs covers generative text and embeddings, and daemon.rs implements the core client logic for request routing and response parsing. probe.rs supplies backend health and capability detection via LocalBackendProbe and CapabilityProbeReport. Public APIs expose high-level functions like generate_via_daemon, transcribe_via_daemon, and describe_image_via_daemon, while test utilities such as FakeTransport, EnvGuard, and test_context ensure reliable integration testing.
 [crates/gcore/src/ai/daemon.rs:19-24]
 [crates/gcore/src/ai/daemon.rs:27-31]
 [crates/gcore/src/ai/daemon.rs:34-41]
@@ -1934,45 +1936,46 @@ sequenceDiagram
 [crates/gcore/src/ai/daemon.rs:755-771]
 [crates/gcore/src/ai/daemon.rs:774-790]
 [crates/gcore/src/ai/daemon.rs:775-789]
-[crates/gcore/src/ai/mod.rs:26-30]
-[crates/gcore/src/ai/mod.rs:32-43]
-[crates/gcore/src/ai/mod.rs:45-57]
-[crates/gcore/src/ai/mod.rs:59-71]
-[crates/gcore/src/ai/mod.rs:74-77]
-[crates/gcore/src/ai/mod.rs:80-84]
-[crates/gcore/src/ai/mod.rs:86-103]
-[crates/gcore/src/ai/mod.rs:105-130]
-[crates/gcore/src/ai/mod.rs:132-137]
-[crates/gcore/src/ai/mod.rs:139-141]
+[crates/gcore/src/ai/mod.rs:30-34]
+[crates/gcore/src/ai/mod.rs:36-47]
+[crates/gcore/src/ai/mod.rs:49-61]
+[crates/gcore/src/ai/mod.rs:63-75]
+[crates/gcore/src/ai/mod.rs:78-81]
+[crates/gcore/src/ai/mod.rs:84-88]
+[crates/gcore/src/ai/mod.rs:90-107]
+[crates/gcore/src/ai/mod.rs:109-134]
+[crates/gcore/src/ai/mod.rs:136-141]
 [crates/gcore/src/ai/mod.rs:143-145]
-[crates/gcore/src/ai/mod.rs:147-164]
-[crates/gcore/src/ai/mod.rs:166-196]
-[crates/gcore/src/ai/mod.rs:199-204]
-[crates/gcore/src/ai/mod.rs:206-212]
-[crates/gcore/src/ai/mod.rs:214-229]
-[crates/gcore/src/ai/mod.rs:231-242]
-[crates/gcore/src/ai/mod.rs:244-252]
-[crates/gcore/src/ai/mod.rs:254-256]
-[crates/gcore/src/ai/mod.rs:258-291]
-[crates/gcore/src/ai/mod.rs:293-304]
-[crates/gcore/src/ai/mod.rs:306-312]
-[crates/gcore/src/ai/mod.rs:314-316]
-[crates/gcore/src/ai/mod.rs:318-336]
-[crates/gcore/src/ai/mod.rs:338-341]
-[crates/gcore/src/ai/mod.rs:343-353]
-[crates/gcore/src/ai/mod.rs:355-361]
-[crates/gcore/src/ai/mod.rs:364-368]
-[crates/gcore/src/ai/mod.rs:370-387]
-[crates/gcore/src/ai/mod.rs:396-412]
-[crates/gcore/src/ai/mod.rs:415-437]
-[crates/gcore/src/ai/mod.rs:440-453]
-[crates/gcore/src/ai/mod.rs:456-460]
-[crates/gcore/src/ai/mod.rs:463-476]
-[crates/gcore/src/ai/mod.rs:479-499]
-[crates/gcore/src/ai/mod.rs:502-541]
-[crates/gcore/src/ai/mod.rs:544-579]
-[crates/gcore/src/ai/mod.rs:582-612]
-[crates/gcore/src/ai/mod.rs:614-626]
+[crates/gcore/src/ai/mod.rs:147-149]
+[crates/gcore/src/ai/mod.rs:151-168]
+[crates/gcore/src/ai/mod.rs:170-200]
+[crates/gcore/src/ai/mod.rs:203-208]
+[crates/gcore/src/ai/mod.rs:210-217]
+[crates/gcore/src/ai/mod.rs:219-234]
+[crates/gcore/src/ai/mod.rs:236-247]
+[crates/gcore/src/ai/mod.rs:249-257]
+[crates/gcore/src/ai/mod.rs:259-261]
+[crates/gcore/src/ai/mod.rs:263-296]
+[crates/gcore/src/ai/mod.rs:298-309]
+[crates/gcore/src/ai/mod.rs:311-317]
+[crates/gcore/src/ai/mod.rs:319-321]
+[crates/gcore/src/ai/mod.rs:323-341]
+[crates/gcore/src/ai/mod.rs:343-346]
+[crates/gcore/src/ai/mod.rs:348-358]
+[crates/gcore/src/ai/mod.rs:360-366]
+[crates/gcore/src/ai/mod.rs:369-373]
+[crates/gcore/src/ai/mod.rs:375-392]
+[crates/gcore/src/ai/mod.rs:401-417]
+[crates/gcore/src/ai/mod.rs:420-442]
+[crates/gcore/src/ai/mod.rs:445-458]
+[crates/gcore/src/ai/mod.rs:461-465]
+[crates/gcore/src/ai/mod.rs:468-475]
+[crates/gcore/src/ai/mod.rs:478-491]
+[crates/gcore/src/ai/mod.rs:494-514]
+[crates/gcore/src/ai/mod.rs:517-556]
+[crates/gcore/src/ai/mod.rs:559-594]
+[crates/gcore/src/ai/mod.rs:597-627]
+[crates/gcore/src/ai/mod.rs:629-641]
 [crates/gcore/src/ai/probe.rs:20-23]
 [crates/gcore/src/ai/probe.rs:26-34]
 [crates/gcore/src/ai/probe.rs:37-42]
@@ -2050,7 +2053,7 @@ sequenceDiagram
 [crates/gcore/src/ai/vision.rs:257-264]
 [crates/gcore/src/ai/vision.rs:266-283]
 [crates/gcore/src/ai/vision.rs:285-297]
-- [[code/modules/crates/gcore/src/config|crates/gcore/src/config]] - This module provides a unified configuration resolution and type system for the application, specializing in AI infrastructure, vector databases, and indexing settings. It defines strongly-typed configuration structs for FalkorDB, Qdrant, embeddings, indexing, and AI routing/capabilities. The resolution layer enables multi-source configuration merging through `ConfigSource` and `LayeredConfigSource` abstractions, with built-in environment variable handling, secret pattern detection, and deterministic precedence rules. Utility functions and guards manage parsing, validation, and environment state, while dedicated resolvers transform raw inputs into domain-specific configuration objects. Comprehensive testing utilities like `TestSource` and `LayeredTestSource` ensure reliable validation of resolution order and fallback behavior.
+- [[code/modules/crates/gcore/src/config|crates/gcore/src/config]] - This module provides the configuration management and resolution infrastructure for the application. It defines structured configuration types for core subsystems including FalkorDB, Qdrant, embedding services, indexing, and AI routing capabilities. The resolution logic implements a layered source system that merges configurations from environment variables, config stores, and YAML files, while handling secret detection, environment variable substitution, and type parsing. Abstract source traits and test utilities like EnvGuard and TestSource enable flexible configuration loading and reliable unit testing. Specialized resolvers enforce precedence rules and validation for AI routing, capability bindings, and service-specific settings.
 [crates/gcore/src/config/resolve.rs:11-21]
 [crates/gcore/src/config/resolve.rs:24-75]
 [crates/gcore/src/config/resolve.rs:78-84]
@@ -2175,7 +2178,7 @@ sequenceDiagram
 [crates/gcore/src/config/types.rs:221-224]
 [crates/gcore/src/config/types.rs:333-335]
 [crates/gcore/src/config/types.rs:339-342]
-- [[code/modules/crates/gcore/src/provisioning|crates/gcore/src/provisioning]] - This module manages the initialization, configuration, and lifecycle of local runtime services and database connections. It provides YAML-based configuration parsing and writing utilities, safe environment variable management, and orchestration for Docker Compose stacks hosting PostgreSQL, Qdrant, and FalkorDB. The module includes robust health checkers, command execution abstractions, and mock runners to facilitate reliable testing. It also handles Hub database provisioning, covering identity resolution, credential validation, and conflict detection to ensure safe startup. Additionally, it offers bootstrap mechanisms for standalone services and AI embedding providers.
+- [[code/modules/crates/gcore/src/provisioning|crates/gcore/src/provisioning]] - This module manages the initialization, configuration, and orchestration of backend services. The bootstrap submodule handles YAML-based configuration parsing, standalone setup, and environment variable isolation. The docker submodule orchestrates container lifecycles via Compose, manages command execution, and performs health checks for PostgreSQL, Qdrant, and FalkorDB. The hub submodule provides utilities for hub identity verification, database URL resolution, and PostgreSQL connectivity probing. Together, they expose provisioning reports, configuration guards, and command runners to standardize service startup, with extensive tests validating configuration parsing, container provisioning, and hub resolution logic.
 [crates/gcore/src/provisioning/bootstrap.rs:8-15]
 [crates/gcore/src/provisioning/bootstrap.rs:17-39]
 [crates/gcore/src/provisioning/bootstrap.rs:18-27]
@@ -2308,7 +2311,7 @@ sequenceDiagram
 [crates/gcore/src/provisioning/tests.rs:712-716]
 [crates/gcore/src/provisioning/tests.rs:718-722]
 [crates/gcore/src/provisioning/tests.rs:724-728]
-- [[code/modules/crates/gcore/src/qdrant|crates/gcore/src/qdrant]] - This module provides core utilities, validation rules, and integration helpers for Qdrant vector database interactions within gcore. It enforces strict naming conventions and scoping rules, validates payload schemas, and manages collection lifecycle operations including batched upserts, filtered point deletions, and state synchronization. The module also implements typed HTTP error handling for Qdrant network calls and supplies concurrency testing utilities, degradation contracts, and async spawn helpers to support robust integration testing and CLI synchronization. Implementation is organized into dedicated naming validation logic and comprehensive integration tests.
+- [[code/modules/crates/gcore/src/qdrant|crates/gcore/src/qdrant]] - The `qdrant` module provides integration utilities and validation logic for Qdrant vector search collections. It manages collection naming conventions, scoping rules, and schema validation, ensuring payload opacity and rejecting invalid vector configurations. Core operations include batched upserts, state boundary enforcement, and lifecycle management for point filtering and metrics retrieval. The module maps HTTP interactions to typed errors and includes comprehensive test suites verifying naming constraints, schema validity, upsert behavior, and error handling.
 [crates/gcore/src/qdrant/naming.rs:3-10]
 [crates/gcore/src/qdrant/naming.rs:13-22]
 [crates/gcore/src/qdrant/naming.rs:25-43]
@@ -2834,45 +2837,46 @@ sequenceDiagram
 - `2f2c7d00-f02d-54c9-81ee-055a895b99f8`
 - `43309968-dd25-5d9a-b0dc-c2513386d1a7`
 - `7201fe37-20de-54a7-b273-e5bb33b032c2`
-- `fd18e8f6-8ca8-55ce-afa0-8e80d97160e6`
-- `b33cfcb9-5338-57b9-81b6-18086d4195c0`
-- `39fd8dff-50bb-5c9b-9363-a1e7337d82bd`
-- `c51842d9-0e85-51ee-9620-3604dc740254`
-- `1b90b36d-bf0d-539a-8e7c-a9be8659f88f`
-- `36e134c2-abbe-565f-93cd-be7ece2a2d70`
-- `e16f753b-cf76-5124-91ff-68789a9c8451`
-- `00b7e2c2-a976-569d-ae62-8d9397c8d528`
-- `7dda0313-d33d-5142-b0d7-89a54ce6553e`
-- `8b114ce9-028c-5fca-b68e-b4061323903d`
-- `7a18e1e6-3cfb-5aa9-8810-328bf3b76784`
-- `d67a3cee-1742-5437-8b1c-207bf7c3a267`
-- `08eb1ac1-2c5d-5b1b-85c7-6b0beeb3cc28`
-- `5b575d6f-8650-5e4f-9991-d0590dbc8913`
-- `ed9aacab-cc4b-5c75-9828-4a60a503074e`
-- `5fdb4a5f-fa52-5c01-86be-574bca317324`
-- `11c11e1f-7e43-549e-9fd2-3ff035c9dc5d`
-- `a4d1ef4a-1332-5a91-a3dd-e12680f25498`
-- `c25e45e9-52f3-5b83-8b28-183a5525f038`
-- `deb71d50-da13-558c-bbf0-4f243ab2d8b1`
-- `0cad887f-5768-51d4-b8e8-ccc91a2b2f82`
-- `6a785960-3b5c-5a30-b792-6f4a3f8a341f`
-- `09ae9823-97b5-5c40-8762-5d692ee8a16d`
-- `46dd96ed-13f8-561c-851f-d85ceb155ae9`
-- `eaa03480-83bc-5e31-a481-4403ad2506a8`
-- `6c3eaa9e-df86-523d-a52c-74379c9c98c6`
-- `2e8aacca-e650-56fd-bb68-44c22ae4af7e`
-- `15351bf6-ea55-536d-a66d-529a2e7c21e9`
-- `393d3832-f82d-5c24-87b3-f30935fd35d6`
-- `071af6b9-8f23-5f10-8a6d-d3497f8ab5e9`
-- `92bfdb8e-22c1-5cff-ab73-c966fc054887`
-- `4da35601-b766-516f-93bf-c45456afa521`
-- `661cd0e6-6902-54cc-9ec7-f91b1376f9d1`
-- `ddaee463-31c0-5562-97fd-91eaa8cd3174`
-- `20442fc0-f1f1-5e59-8f13-e94f5b7b28db`
-- `091b8105-73e2-511d-9ea2-e39522ebf5bd`
-- `83418144-4d48-56df-8e85-fb76ee42ec5a`
-- `986a14c0-407a-559c-b6cc-0314d5e88e56`
-- `8b40854a-bfac-57bf-a297-f5c392f59b9c`
+- `1d1d0d89-a9c1-582f-ab80-915b25aefa53`
+- `b34e7711-5869-55b9-9575-b7d62dbeb638`
+- `7ac3caa0-64bd-538f-8655-a126bcd11d99`
+- `4fe7c3e2-223b-50d7-868c-4bf6f663463c`
+- `d26b891b-cc06-5b8e-a3f5-e5d84ef97d54`
+- `53688775-43ae-55f0-9379-44144f5a3e94`
+- `55fbf56f-d8bf-52eb-b025-9c2029036720`
+- `0018671e-1bf6-5f64-84e3-f7bb31b64397`
+- `d8d288d4-ac54-592b-b459-e12733229ca5`
+- `a9b615d0-68d2-5f7d-b273-bd171f254ad9`
+- `31ac76f5-4048-5ca7-9c40-dc4a762b811c`
+- `7f405bcf-9303-57e0-8b4b-22d3b7063db7`
+- `5ad14028-eee9-5187-89d7-98bbd4d0e30b`
+- `a434752b-eb5e-5871-9705-8047e358b820`
+- `0b788c42-cd46-5e53-8d5c-0b0373e3225a`
+- `2ececf02-86d2-579e-b67f-be87fe34be70`
+- `5c0027dc-e773-510c-bec6-1de51bd6ce96`
+- `549f2359-b022-5a51-a0ab-e035a28c2c36`
+- `cfc58b79-32d9-579f-8e5e-8840dbb4bfce`
+- `d666aa1a-0c17-5bfd-9dd4-6edb842360e5`
+- `61e1ad83-2dfc-58ad-a003-8329aafadb01`
+- `fdc7c636-2564-53dd-b089-69877ef97366`
+- `6e566e2d-75e8-5a93-b76b-12a99507dffb`
+- `69420957-e9b4-548b-b149-3316b92e9d97`
+- `08c141ca-1096-56e0-b4de-4f51ca7190d0`
+- `874e9aed-f4e4-5dc3-9867-e66130320bc9`
+- `05de862b-e895-5ee5-8bd7-675205da4d77`
+- `35f30b57-9fc0-5191-8c8f-7d924d51b9d7`
+- `0b7b4c60-9dbe-535b-b313-6855a30cf7aa`
+- `fd54f973-0ccf-5052-8bb7-13ec1b0e427d`
+- `e2312c8c-82f5-59f1-ad18-47afef870497`
+- `55f30a2a-202b-5b93-bb53-b330f90b6f81`
+- `fc1cad30-445e-5c46-a8a5-d40f72b2032a`
+- `cee3a472-d975-5a4f-81ac-4ca2bd989ce6`
+- `2323068f-992f-5061-95b0-59abc52266be`
+- `315ab23c-ff83-542a-9b02-0656f56433e5`
+- `d2217cf5-e110-5896-aaf9-b1149f3596d9`
+- `1011bfa8-deef-5104-ae3c-083e282f55a3`
+- `10fd6471-8d82-556b-8c85-9ddf3ce3e87a`
+- `2b002f39-70c7-5bf2-add4-86a4bd0e9fcc`
 - `a6fd6091-6989-5495-bbf4-ee3bbfb68060`
 - `26985c38-c0bb-55ac-9844-7f8dfa3af22b`
 - `da7befb9-65bc-521f-af9a-28f36d32ff24`

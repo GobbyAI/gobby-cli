@@ -17,7 +17,7 @@ provenance:
 - file: crates/gcode/src/commands/codewiki/build_parts/file.rs
   ranges:
   - 10-13
-  - 15-110
+  - 15-115
 - file: crates/gcode/src/commands/codewiki/build_parts/hotspots.rs
   ranges:
   - 5-131
@@ -53,7 +53,7 @@ Parent: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-This module provides the builders and utility functions for assembling individual sections of the CodeWiki documentation index. It handles the generation of architecture overviews, file change logs, source file and module documentation, dependency hotspots, onboarding guides, and index snapshots. Additionally, it includes helpers for processing Rust symbols, visibility rules, source spans, and graph fingerprints to ensure accurate documentation output.
+This module implements the builders and utilities for generating distinct sections of a CodeWiki documentation index. It provides specialized functions for constructing architecture overviews, change logs, file-level documentation, hotspot analyses, module summaries, and onboarding guides. The module handles dependency topology extraction, public API symbol filtering, frontmatter formatting, and the generation of cryptographic snapshots to ensure documentation integrity and reproducibility.
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-110]
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:112-127]
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:130-180]
@@ -63,7 +63,7 @@ This module provides the builders and utility functions for assembling individua
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:140-156]
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:158-163]
 [crates/gcode/src/commands/codewiki/build_parts/file.rs:10-13]
-[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-110]
+[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-115]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-131]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:133-157]
 [crates/gcode/src/commands/codewiki/build_parts/modules.rs:4-114]
@@ -130,7 +130,7 @@ sequenceDiagram
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:158-163]
 - [[code/files/crates/gcode/src/commands/codewiki/build_parts/file.rs|crates/gcode/src/commands/codewiki/build_parts/file.rs]] - `crates/gcode/src/commands/codewiki/build_parts/file.rs` exposes 2 indexed API symbols.
 [crates/gcode/src/commands/codewiki/build_parts/file.rs:10-13]
-[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-110]
+[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-115]
 - [[code/files/crates/gcode/src/commands/codewiki/build_parts/hotspots.rs|crates/gcode/src/commands/codewiki/build_parts/hotspots.rs]] - `crates/gcode/src/commands/codewiki/build_parts/hotspots.rs` exposes 2 indexed API symbols.
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-131]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:133-157]

@@ -31,21 +31,20 @@ provenance:
   - 381-387
   - 389-391
   - 393-422
-  - 424-431
-  - 433-445
-  - 447-460
-  - 462-482
-  - 484-516
-  - 518-557
-  - 559-561
-  - 563-573
-  - 575-618
-  - 620-627
-  - 643-685
-  - 688-739
-  - 742-844
-  - 847-865
-  - 868-882
+  - 424-436
+  - 438-451
+  - 453-473
+  - 475-507
+  - 509-548
+  - 550-552
+  - 554-564
+  - 566-609
+  - 611-618
+  - 634-676
+  - 679-730
+  - 733-835
+  - 838-856
+  - 859-873
 - file: crates/gwiki/src/commands/audit.rs
   ranges:
   - 3-13
@@ -65,49 +64,48 @@ provenance:
   - 83-121
 - file: crates/gwiki/src/commands/citation_quality.rs
   ranges:
-  - 21-28
-  - 31-35
-  - 38-44
-  - 47-51
-  - 54-59
-  - 62-65
-  - 68-71
-  - 74-78
-  - 81-84
-  - 87-90
-  - 93-96
-  - 99-102
-  - 105-109
-  - 111-141
-  - 143-157
-  - 159-166
-  - 168-208
-  - 210-250
-  - 252-262
-  - 264-271
-  - 273-288
-  - 290-321
-  - 323-352
-  - 354-366
-  - 368-400
-  - 402-412
-  - 414-420
-  - 422-433
-  - 435-445
-  - 447-471
-  - 473-487
-  - 489-500
-  - 502-521
-  - 523-534
-  - 536-549
-  - 551-565
-  - 579-589
-  - 592-656
-  - 659-703
-  - 706-735
-  - 739-758
-  - 760-764
-  - 766-781
+  - 20-27
+  - 30-34
+  - 37-43
+  - 46-50
+  - 53-58
+  - 61-64
+  - 67-70
+  - 73-77
+  - 80-83
+  - 86-89
+  - 92-95
+  - 98-101
+  - 104-108
+  - 110-140
+  - 142-156
+  - 158-198
+  - 200-240
+  - 242-252
+  - 254-261
+  - 263-278
+  - 280-311
+  - 313-342
+  - 344-356
+  - 358-390
+  - 392-402
+  - 404-410
+  - 412-423
+  - 425-435
+  - 437-461
+  - 463-477
+  - 479-490
+  - 492-511
+  - 513-524
+  - 526-539
+  - 541-555
+  - 569-579
+  - 582-646
+  - 649-693
+  - 696-725
+  - 729-748
+  - 750-754
+  - 756-771
 - file: crates/gwiki/src/commands/collect.rs
   ranges:
   - 10-20
@@ -483,7 +481,7 @@ Parent: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-The `commands` module serves as the central execution layer for the gwiki system, orchestrating content management, analysis, and maintenance operations. It provides structured execution pipelines for source ingestion, indexing, refresh, and safe removal, while powering AI-driven Q&A, semantic search, and citation quality assessment. The module integrates with vector and graph backends to enable dependency tracking, trust scoring, and system health monitoring, and includes dedicated submodules for content rendering, review analysis, and environment setup. All workflows emphasize idempotency, path safety, and graceful degradation to ensure reliable and secure wiki interactions.
+The commands module serves as the execution and orchestration layer for the GWiki CLI, providing a comprehensive suite of operations for content management, indexing, search, and analytical workflows. It coordinates core functionalities including source ingestion and synchronization, which is delegated to the refresh child module, alongside semantic and full-text search, AI-assisted querying with graph context enrichment, and citation quality auditing. Additional commands handle system health monitoring, trust and audit reporting, graph neighborhood analysis, change review generation, and service configuration. Each command exposes structured execution functions, rendering utilities, and status reporting mechanisms to ensure consistent, observable interaction with the wiki data and external services.
 [crates/gwiki/src/commands/ask.rs:25-46]
 [crates/gwiki/src/commands/ask.rs:48-88]
 [crates/gwiki/src/commands/ask.rs:90-99]
@@ -511,21 +509,20 @@ The `commands` module serves as the central execution layer for the gwiki system
 [crates/gwiki/src/commands/ask.rs:381-387]
 [crates/gwiki/src/commands/ask.rs:389-391]
 [crates/gwiki/src/commands/ask.rs:393-422]
-[crates/gwiki/src/commands/ask.rs:424-431]
-[crates/gwiki/src/commands/ask.rs:433-445]
-[crates/gwiki/src/commands/ask.rs:447-460]
-[crates/gwiki/src/commands/ask.rs:462-482]
-[crates/gwiki/src/commands/ask.rs:484-516]
-[crates/gwiki/src/commands/ask.rs:518-557]
-[crates/gwiki/src/commands/ask.rs:559-561]
-[crates/gwiki/src/commands/ask.rs:563-573]
-[crates/gwiki/src/commands/ask.rs:575-618]
-[crates/gwiki/src/commands/ask.rs:620-627]
-[crates/gwiki/src/commands/ask.rs:643-685]
-[crates/gwiki/src/commands/ask.rs:688-739]
-[crates/gwiki/src/commands/ask.rs:742-844]
-[crates/gwiki/src/commands/ask.rs:847-865]
-[crates/gwiki/src/commands/ask.rs:868-882]
+[crates/gwiki/src/commands/ask.rs:424-436]
+[crates/gwiki/src/commands/ask.rs:438-451]
+[crates/gwiki/src/commands/ask.rs:453-473]
+[crates/gwiki/src/commands/ask.rs:475-507]
+[crates/gwiki/src/commands/ask.rs:509-548]
+[crates/gwiki/src/commands/ask.rs:550-552]
+[crates/gwiki/src/commands/ask.rs:554-564]
+[crates/gwiki/src/commands/ask.rs:566-609]
+[crates/gwiki/src/commands/ask.rs:611-618]
+[crates/gwiki/src/commands/ask.rs:634-676]
+[crates/gwiki/src/commands/ask.rs:679-730]
+[crates/gwiki/src/commands/ask.rs:733-835]
+[crates/gwiki/src/commands/ask.rs:838-856]
+[crates/gwiki/src/commands/ask.rs:859-873]
 [crates/gwiki/src/commands/audit.rs:3-13]
 [crates/gwiki/src/commands/backlinks.rs:10-18]
 [crates/gwiki/src/commands/backlinks.rs:20-28]
@@ -537,49 +534,48 @@ The `commands` module serves as the central execution layer for the gwiki system
 [crates/gwiki/src/commands/benchmark.rs:46-73]
 [crates/gwiki/src/commands/benchmark.rs:75-81]
 [crates/gwiki/src/commands/benchmark.rs:83-121]
-[crates/gwiki/src/commands/citation_quality.rs:21-28]
-[crates/gwiki/src/commands/citation_quality.rs:31-35]
-[crates/gwiki/src/commands/citation_quality.rs:38-44]
-[crates/gwiki/src/commands/citation_quality.rs:47-51]
-[crates/gwiki/src/commands/citation_quality.rs:54-59]
-[crates/gwiki/src/commands/citation_quality.rs:62-65]
-[crates/gwiki/src/commands/citation_quality.rs:68-71]
-[crates/gwiki/src/commands/citation_quality.rs:74-78]
-[crates/gwiki/src/commands/citation_quality.rs:81-84]
-[crates/gwiki/src/commands/citation_quality.rs:87-90]
-[crates/gwiki/src/commands/citation_quality.rs:93-96]
-[crates/gwiki/src/commands/citation_quality.rs:99-102]
-[crates/gwiki/src/commands/citation_quality.rs:105-109]
-[crates/gwiki/src/commands/citation_quality.rs:111-141]
-[crates/gwiki/src/commands/citation_quality.rs:143-157]
-[crates/gwiki/src/commands/citation_quality.rs:159-166]
-[crates/gwiki/src/commands/citation_quality.rs:168-208]
-[crates/gwiki/src/commands/citation_quality.rs:210-250]
-[crates/gwiki/src/commands/citation_quality.rs:252-262]
-[crates/gwiki/src/commands/citation_quality.rs:264-271]
-[crates/gwiki/src/commands/citation_quality.rs:273-288]
-[crates/gwiki/src/commands/citation_quality.rs:290-321]
-[crates/gwiki/src/commands/citation_quality.rs:323-352]
-[crates/gwiki/src/commands/citation_quality.rs:354-366]
-[crates/gwiki/src/commands/citation_quality.rs:368-400]
-[crates/gwiki/src/commands/citation_quality.rs:402-412]
-[crates/gwiki/src/commands/citation_quality.rs:414-420]
-[crates/gwiki/src/commands/citation_quality.rs:422-433]
-[crates/gwiki/src/commands/citation_quality.rs:435-445]
-[crates/gwiki/src/commands/citation_quality.rs:447-471]
-[crates/gwiki/src/commands/citation_quality.rs:473-487]
-[crates/gwiki/src/commands/citation_quality.rs:489-500]
-[crates/gwiki/src/commands/citation_quality.rs:502-521]
-[crates/gwiki/src/commands/citation_quality.rs:523-534]
-[crates/gwiki/src/commands/citation_quality.rs:536-549]
-[crates/gwiki/src/commands/citation_quality.rs:551-565]
-[crates/gwiki/src/commands/citation_quality.rs:579-589]
-[crates/gwiki/src/commands/citation_quality.rs:592-656]
-[crates/gwiki/src/commands/citation_quality.rs:659-703]
-[crates/gwiki/src/commands/citation_quality.rs:706-735]
-[crates/gwiki/src/commands/citation_quality.rs:739-758]
-[crates/gwiki/src/commands/citation_quality.rs:760-764]
-[crates/gwiki/src/commands/citation_quality.rs:766-781]
+[crates/gwiki/src/commands/citation_quality.rs:20-27]
+[crates/gwiki/src/commands/citation_quality.rs:30-34]
+[crates/gwiki/src/commands/citation_quality.rs:37-43]
+[crates/gwiki/src/commands/citation_quality.rs:46-50]
+[crates/gwiki/src/commands/citation_quality.rs:53-58]
+[crates/gwiki/src/commands/citation_quality.rs:61-64]
+[crates/gwiki/src/commands/citation_quality.rs:67-70]
+[crates/gwiki/src/commands/citation_quality.rs:73-77]
+[crates/gwiki/src/commands/citation_quality.rs:80-83]
+[crates/gwiki/src/commands/citation_quality.rs:86-89]
+[crates/gwiki/src/commands/citation_quality.rs:92-95]
+[crates/gwiki/src/commands/citation_quality.rs:98-101]
+[crates/gwiki/src/commands/citation_quality.rs:104-108]
+[crates/gwiki/src/commands/citation_quality.rs:110-140]
+[crates/gwiki/src/commands/citation_quality.rs:142-156]
+[crates/gwiki/src/commands/citation_quality.rs:158-198]
+[crates/gwiki/src/commands/citation_quality.rs:200-240]
+[crates/gwiki/src/commands/citation_quality.rs:242-252]
+[crates/gwiki/src/commands/citation_quality.rs:254-261]
+[crates/gwiki/src/commands/citation_quality.rs:263-278]
+[crates/gwiki/src/commands/citation_quality.rs:280-311]
+[crates/gwiki/src/commands/citation_quality.rs:313-342]
+[crates/gwiki/src/commands/citation_quality.rs:344-356]
+[crates/gwiki/src/commands/citation_quality.rs:358-390]
+[crates/gwiki/src/commands/citation_quality.rs:392-402]
+[crates/gwiki/src/commands/citation_quality.rs:404-410]
+[crates/gwiki/src/commands/citation_quality.rs:412-423]
+[crates/gwiki/src/commands/citation_quality.rs:425-435]
+[crates/gwiki/src/commands/citation_quality.rs:437-461]
+[crates/gwiki/src/commands/citation_quality.rs:463-477]
+[crates/gwiki/src/commands/citation_quality.rs:479-490]
+[crates/gwiki/src/commands/citation_quality.rs:492-511]
+[crates/gwiki/src/commands/citation_quality.rs:513-524]
+[crates/gwiki/src/commands/citation_quality.rs:526-539]
+[crates/gwiki/src/commands/citation_quality.rs:541-555]
+[crates/gwiki/src/commands/citation_quality.rs:569-579]
+[crates/gwiki/src/commands/citation_quality.rs:582-646]
+[crates/gwiki/src/commands/citation_quality.rs:649-693]
+[crates/gwiki/src/commands/citation_quality.rs:696-725]
+[crates/gwiki/src/commands/citation_quality.rs:729-748]
+[crates/gwiki/src/commands/citation_quality.rs:750-754]
+[crates/gwiki/src/commands/citation_quality.rs:756-771]
 [crates/gwiki/src/commands/collect.rs:10-20]
 [crates/gwiki/src/commands/collect.rs:22-43]
 [crates/gwiki/src/commands/compile.rs:8-67]
@@ -898,39 +894,44 @@ The `commands` module serves as the central execution layer for the gwiki system
 ```mermaid
 sequenceDiagram
     participant m_02aaa023_9823_59d2_a2de_ce768058bbe1 as AskOutputDedup.push_degraded_source &#91;method&#93;
+    participant m_0310bf76_3847_5c02_aaa3_b12186eede5c as ask_unified_graph_output_carries_code_citations_and_degradation &#91;function&#93;
     participant m_04a320e4_7c1f_538b_b5f1_cecdbc496e5c as stage_source_asset &#91;function&#93;
-    participant m_0919d05f_e276_5b52_89d9_53a6ef23fc67 as coverage_gap_section &#91;function&#93;
     participant m_09260527_fdfb_5094_bbff_ca7a329574b4 as graph_backend_from_falkor_config &#91;function&#93;
+    participant m_0990c152_2b93_596f_87c6_2ef0a3ed9e1d as build_report &#91;function&#93;
     participant m_0a5764ea_fd4a_5845_be2c_12402c7c056a as source_entry &#91;function&#93;
     participant m_0a8d327d_259c_51be_ade0_98eb40c069a4 as rollback_removed_source_reports_manifest_race &#91;function&#93;
     participant m_0b06c2d1_c120_56d0_8829_f758f34c943b as missing_falkor_config_degrades_graph_search &#91;function&#93;
     participant m_0cc5aa25_3130_5ed1_999b_4d1a0ffcadaa as parse_unified_diff_files &#91;function&#93;
     participant m_0d0ab174_357e_54b8_9491_e34fe1ad5bb2 as manifest_remove_deletes_only_matching_source_record &#91;function&#93;
     participant m_0dd091dc_5f5d_58c8_8964_215b56eb2d33 as enrich_with_attached_unified_graph_context &#91;function&#93;
-    participant m_0f88ff18_df85_58bb_97e3_1c0e2d39f36b as citation_quality_requires_configured_postgres_index &#91;function&#93;
-    participant m_10c09de1_bf0b_56d8_9fc6_770d1316814d as execute &#91;function&#93;
     participant m_14a85748_a5cf_54cf_b83c_3a68ad9b9bc1 as ask_output_from_search &#91;function&#93;
     participant m_1d3a56df_c8f1_535d_82ad_63bcc3577694 as raw_source_path &#91;function&#93;
+    participant m_24ded5e4_8e5b_5063_9134_6e7a0d0d3f50 as render_markdown &#91;function&#93;
+    participant m_29a3503d_7ef2_560f_ae80_ff22017c0f92 as contradiction_section &#91;function&#93;
     participant m_2db59a9d_6f61_5685_828d_27626cb26cc3 as read_source_asset &#91;function&#93;
-    participant m_36c9d4fb_c501_507e_ab93_997171517a0d as execute &#91;function&#93;
     participant m_379f6256_1fc9_586d_9383_6ca5fb30b562 as seed_manifest_source &#91;function&#93;
     participant m_402ecd2a_7a1f_5e0c_bccd_2c8e631658ed as mark_degraded_source &#91;function&#93;
-    participant m_55167441_f46a_5e00_af7f_93ba393155e1 as optional_falkor_config &#91;function&#93;
     participant m_5a0dbaf2_0496_5b78_9356_7118cb325d49 as AskOutputDedup.push_warning &#91;method&#93;
     participant m_5f8b3c2f_05cc_54c1_942f_7ec0b0943520 as display_path &#91;function&#93;
-    participant m_67134d96_1ea6_5248_977c_aea66306af85 as section_id_for &#91;function&#93;
-    participant m_6d18b8e4_7105_5ab3_8caa_d683cdd5f6b2 as ordered_unique_strings &#91;function&#93;
+    participant m_7495ed1e_7c43_5061_a611_12726bd63bba as synthesis_prompt &#91;function&#93;
     participant m_9c58c938_e5bf_52bb_89c3_12635742da40 as stage_source_removal &#91;function&#93;
-    participant m_9fa3d9f3_cae0_5baa_a69e_b4a5c3115926 as load_index_counts &#91;function&#93;
-    participant m_9fbb6318_bd03_56da_a82f_09207c863935 as enrich_with_unified_graph_context &#91;function&#93;
+    participant m_9da63a7d_cfb0_5b78_89c4_d7196be2fd57 as coverage_gap_section &#91;function&#93;
     participant m_a4856219_1bda_59b4_9ea5_3232c19f0316 as rollback_removed_source &#91;function&#93;
-    participant m_b1024d5e_48d6_5ade_b322_dbc73619edd5 as unique_sources &#91;function&#93;
-    participant m_d033754f_6f13_575c_9bef_1be62b55acb6 as render_text &#91;function&#93;
+    participant m_c897a3f9_4a94_5875_b486_7e6a712abbfa as credibility_section &#91;function&#93;
+    participant m_cd112861_f84d_5fa7_a6c6_f27d2ed2259e as confidence_section &#91;function&#93;
     participant m_eaa08a75_1975_5102_bb09_a178f2efdf4e as trim_diff_path &#91;function&#93;
+    participant m_eb5a04cf_4496_5e9e_b530_02d5362fc11c as stale_source_section &#91;function&#93;
     m_02aaa023_9823_59d2_a2de_ce768058bbe1->>m_5a0dbaf2_0496_5b78_9356_7118cb325d49: calls
+    m_0310bf76_3847_5c02_aaa3_b12186eede5c->>m_14a85748_a5cf_54cf_b83c_3a68ad9b9bc1: calls
+    m_0310bf76_3847_5c02_aaa3_b12186eede5c->>m_7495ed1e_7c43_5061_a611_12726bd63bba: calls
     m_04a320e4_7c1f_538b_b5f1_cecdbc496e5c->>m_5f8b3c2f_05cc_54c1_942f_7ec0b0943520: calls
     m_04a320e4_7c1f_538b_b5f1_cecdbc496e5c->>m_9c58c938_e5bf_52bb_89c3_12635742da40: calls
-    m_0919d05f_e276_5b52_89d9_53a6ef23fc67->>m_67134d96_1ea6_5248_977c_aea66306af85: calls
+    m_0990c152_2b93_596f_87c6_2ef0a3ed9e1d->>m_24ded5e4_8e5b_5063_9134_6e7a0d0d3f50: calls
+    m_0990c152_2b93_596f_87c6_2ef0a3ed9e1d->>m_29a3503d_7ef2_560f_ae80_ff22017c0f92: calls
+    m_0990c152_2b93_596f_87c6_2ef0a3ed9e1d->>m_9da63a7d_cfb0_5b78_89c4_d7196be2fd57: calls
+    m_0990c152_2b93_596f_87c6_2ef0a3ed9e1d->>m_c897a3f9_4a94_5875_b486_7e6a712abbfa: calls
+    m_0990c152_2b93_596f_87c6_2ef0a3ed9e1d->>m_cd112861_f84d_5fa7_a6c6_f27d2ed2259e: calls
+    m_0990c152_2b93_596f_87c6_2ef0a3ed9e1d->>m_eb5a04cf_4496_5e9e_b530_02d5362fc11c: calls
     m_0a5764ea_fd4a_5845_be2c_12402c7c056a->>m_1d3a56df_c8f1_535d_82ad_63bcc3577694: calls
     m_0a5764ea_fd4a_5845_be2c_12402c7c056a->>m_2db59a9d_6f61_5685_828d_27626cb26cc3: calls
     m_0a5764ea_fd4a_5845_be2c_12402c7c056a->>m_5f8b3c2f_05cc_54c1_942f_7ec0b0943520: calls
@@ -940,18 +941,11 @@ sequenceDiagram
     m_0cc5aa25_3130_5ed1_999b_4d1a0ffcadaa->>m_eaa08a75_1975_5102_bb09_a178f2efdf4e: calls
     m_0d0ab174_357e_54b8_9491_e34fe1ad5bb2->>m_379f6256_1fc9_586d_9383_6ca5fb30b562: calls
     m_0dd091dc_5f5d_58c8_8964_215b56eb2d33->>m_402ecd2a_7a1f_5e0c_bccd_2c8e631658ed: calls
-    m_0dd091dc_5f5d_58c8_8964_215b56eb2d33->>m_55167441_f46a_5e00_af7f_93ba393155e1: calls
-    m_0dd091dc_5f5d_58c8_8964_215b56eb2d33->>m_9fbb6318_bd03_56da_a82f_09207c863935: calls
-    m_0f88ff18_df85_58bb_97e3_1c0e2d39f36b->>m_36c9d4fb_c501_507e_ab93_997171517a0d: calls
-    m_10c09de1_bf0b_56d8_9fc6_770d1316814d->>m_9fa3d9f3_cae0_5baa_a69e_b4a5c3115926: calls
-    m_10c09de1_bf0b_56d8_9fc6_770d1316814d->>m_d033754f_6f13_575c_9bef_1be62b55acb6: calls
-    m_14a85748_a5cf_54cf_b83c_3a68ad9b9bc1->>m_6d18b8e4_7105_5ab3_8caa_d683cdd5f6b2: calls
-    m_14a85748_a5cf_54cf_b83c_3a68ad9b9bc1->>m_b1024d5e_48d6_5ade_b322_dbc73619edd5: calls
 ```
 
 ## Child Modules
 
-- [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/commands/refresh]] - This module implements the core refresh pipeline for the wiki system, orchestrating the detection, selection, and update of source content from remote URLs and local files. It manages the complete lifecycle of a refresh operation, including candidate evaluation, fetch planning, content rendering, vault persistence, and indexing status tracking. The module provides structured data models and utilities for source filtering, replay handling, path validation, and change reporting, ensuring safe and idempotent updates. Comprehensive test coverage validates behavior across unchanged and modified states, unsupported formats, and security edge cases such as path traversal prevention and scheme normalization.
+- [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/commands/refresh]] - The `refresh` module implements the command logic for updating wiki content from various sources. It orchestrates the selection of refresh candidates, including URL and local file sources, and manages change-triggered updates and replay mechanisms. The module handles the construction of refresh plans, execution of fetch and render operations, and the management of index status. It provides data models for plans, selections, and results, along with utilities for safe path handling and status reporting to ensure reliable content synchronization.
 [crates/gwiki/src/commands/refresh/candidate.rs:15-74]
 [crates/gwiki/src/commands/refresh/candidate.rs:76-173]
 [crates/gwiki/src/commands/refresh/candidate.rs:175-214]
@@ -1029,7 +1023,7 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gwiki/src/commands/ask.rs|crates/gwiki/src/commands/ask.rs]] - `crates/gwiki/src/commands/ask.rs` exposes 42 indexed API symbols.
+- [[code/files/crates/gwiki/src/commands/ask.rs|crates/gwiki/src/commands/ask.rs]] - `crates/gwiki/src/commands/ask.rs` exposes 41 indexed API symbols.
 [crates/gwiki/src/commands/ask.rs:25-46]
 [crates/gwiki/src/commands/ask.rs:48-88]
 [crates/gwiki/src/commands/ask.rs:90-99]
@@ -1057,21 +1051,20 @@ sequenceDiagram
 [crates/gwiki/src/commands/ask.rs:381-387]
 [crates/gwiki/src/commands/ask.rs:389-391]
 [crates/gwiki/src/commands/ask.rs:393-422]
-[crates/gwiki/src/commands/ask.rs:424-431]
-[crates/gwiki/src/commands/ask.rs:433-445]
-[crates/gwiki/src/commands/ask.rs:447-460]
-[crates/gwiki/src/commands/ask.rs:462-482]
-[crates/gwiki/src/commands/ask.rs:484-516]
-[crates/gwiki/src/commands/ask.rs:518-557]
-[crates/gwiki/src/commands/ask.rs:559-561]
-[crates/gwiki/src/commands/ask.rs:563-573]
-[crates/gwiki/src/commands/ask.rs:575-618]
-[crates/gwiki/src/commands/ask.rs:620-627]
-[crates/gwiki/src/commands/ask.rs:643-685]
-[crates/gwiki/src/commands/ask.rs:688-739]
-[crates/gwiki/src/commands/ask.rs:742-844]
-[crates/gwiki/src/commands/ask.rs:847-865]
-[crates/gwiki/src/commands/ask.rs:868-882]
+[crates/gwiki/src/commands/ask.rs:424-436]
+[crates/gwiki/src/commands/ask.rs:438-451]
+[crates/gwiki/src/commands/ask.rs:453-473]
+[crates/gwiki/src/commands/ask.rs:475-507]
+[crates/gwiki/src/commands/ask.rs:509-548]
+[crates/gwiki/src/commands/ask.rs:550-552]
+[crates/gwiki/src/commands/ask.rs:554-564]
+[crates/gwiki/src/commands/ask.rs:566-609]
+[crates/gwiki/src/commands/ask.rs:611-618]
+[crates/gwiki/src/commands/ask.rs:634-676]
+[crates/gwiki/src/commands/ask.rs:679-730]
+[crates/gwiki/src/commands/ask.rs:733-835]
+[crates/gwiki/src/commands/ask.rs:838-856]
+[crates/gwiki/src/commands/ask.rs:859-873]
 - [[code/files/crates/gwiki/src/commands/audit.rs|crates/gwiki/src/commands/audit.rs]] - `crates/gwiki/src/commands/audit.rs` exposes 1 indexed API symbol. [crates/gwiki/src/commands/audit.rs:3-13]
 - [[code/files/crates/gwiki/src/commands/backlinks.rs|crates/gwiki/src/commands/backlinks.rs]] - `crates/gwiki/src/commands/backlinks.rs` exposes 6 indexed API symbols.
 [crates/gwiki/src/commands/backlinks.rs:10-18]
@@ -1085,50 +1078,49 @@ sequenceDiagram
 [crates/gwiki/src/commands/benchmark.rs:46-73]
 [crates/gwiki/src/commands/benchmark.rs:75-81]
 [crates/gwiki/src/commands/benchmark.rs:83-121]
-- [[code/files/crates/gwiki/src/commands/citation_quality.rs|crates/gwiki/src/commands/citation_quality.rs]] - `crates/gwiki/src/commands/citation_quality.rs` exposes 43 indexed API symbols.
-[crates/gwiki/src/commands/citation_quality.rs:21-28]
-[crates/gwiki/src/commands/citation_quality.rs:31-35]
-[crates/gwiki/src/commands/citation_quality.rs:38-44]
-[crates/gwiki/src/commands/citation_quality.rs:47-51]
-[crates/gwiki/src/commands/citation_quality.rs:54-59]
-[crates/gwiki/src/commands/citation_quality.rs:62-65]
-[crates/gwiki/src/commands/citation_quality.rs:68-71]
-[crates/gwiki/src/commands/citation_quality.rs:74-78]
-[crates/gwiki/src/commands/citation_quality.rs:81-84]
-[crates/gwiki/src/commands/citation_quality.rs:87-90]
-[crates/gwiki/src/commands/citation_quality.rs:93-96]
-[crates/gwiki/src/commands/citation_quality.rs:99-102]
-[crates/gwiki/src/commands/citation_quality.rs:105-109]
-[crates/gwiki/src/commands/citation_quality.rs:111-141]
-[crates/gwiki/src/commands/citation_quality.rs:143-157]
-[crates/gwiki/src/commands/citation_quality.rs:159-166]
-[crates/gwiki/src/commands/citation_quality.rs:168-208]
-[crates/gwiki/src/commands/citation_quality.rs:210-250]
-[crates/gwiki/src/commands/citation_quality.rs:252-262]
-[crates/gwiki/src/commands/citation_quality.rs:264-271]
-[crates/gwiki/src/commands/citation_quality.rs:273-288]
-[crates/gwiki/src/commands/citation_quality.rs:290-321]
-[crates/gwiki/src/commands/citation_quality.rs:323-352]
-[crates/gwiki/src/commands/citation_quality.rs:354-366]
-[crates/gwiki/src/commands/citation_quality.rs:368-400]
-[crates/gwiki/src/commands/citation_quality.rs:402-412]
-[crates/gwiki/src/commands/citation_quality.rs:414-420]
-[crates/gwiki/src/commands/citation_quality.rs:422-433]
-[crates/gwiki/src/commands/citation_quality.rs:435-445]
-[crates/gwiki/src/commands/citation_quality.rs:447-471]
-[crates/gwiki/src/commands/citation_quality.rs:473-487]
-[crates/gwiki/src/commands/citation_quality.rs:489-500]
-[crates/gwiki/src/commands/citation_quality.rs:502-521]
-[crates/gwiki/src/commands/citation_quality.rs:523-534]
-[crates/gwiki/src/commands/citation_quality.rs:536-549]
-[crates/gwiki/src/commands/citation_quality.rs:551-565]
-[crates/gwiki/src/commands/citation_quality.rs:579-589]
-[crates/gwiki/src/commands/citation_quality.rs:592-656]
-[crates/gwiki/src/commands/citation_quality.rs:659-703]
-[crates/gwiki/src/commands/citation_quality.rs:706-735]
-[crates/gwiki/src/commands/citation_quality.rs:739-758]
-[crates/gwiki/src/commands/citation_quality.rs:760-764]
-[crates/gwiki/src/commands/citation_quality.rs:766-781]
+- [[code/files/crates/gwiki/src/commands/citation_quality.rs|crates/gwiki/src/commands/citation_quality.rs]] - `crates/gwiki/src/commands/citation_quality.rs` exposes 42 indexed API symbols.
+[crates/gwiki/src/commands/citation_quality.rs:20-27]
+[crates/gwiki/src/commands/citation_quality.rs:30-34]
+[crates/gwiki/src/commands/citation_quality.rs:37-43]
+[crates/gwiki/src/commands/citation_quality.rs:46-50]
+[crates/gwiki/src/commands/citation_quality.rs:53-58]
+[crates/gwiki/src/commands/citation_quality.rs:61-64]
+[crates/gwiki/src/commands/citation_quality.rs:67-70]
+[crates/gwiki/src/commands/citation_quality.rs:73-77]
+[crates/gwiki/src/commands/citation_quality.rs:80-83]
+[crates/gwiki/src/commands/citation_quality.rs:86-89]
+[crates/gwiki/src/commands/citation_quality.rs:92-95]
+[crates/gwiki/src/commands/citation_quality.rs:98-101]
+[crates/gwiki/src/commands/citation_quality.rs:104-108]
+[crates/gwiki/src/commands/citation_quality.rs:110-140]
+[crates/gwiki/src/commands/citation_quality.rs:142-156]
+[crates/gwiki/src/commands/citation_quality.rs:158-198]
+[crates/gwiki/src/commands/citation_quality.rs:200-240]
+[crates/gwiki/src/commands/citation_quality.rs:242-252]
+[crates/gwiki/src/commands/citation_quality.rs:254-261]
+[crates/gwiki/src/commands/citation_quality.rs:263-278]
+[crates/gwiki/src/commands/citation_quality.rs:280-311]
+[crates/gwiki/src/commands/citation_quality.rs:313-342]
+[crates/gwiki/src/commands/citation_quality.rs:344-356]
+[crates/gwiki/src/commands/citation_quality.rs:358-390]
+[crates/gwiki/src/commands/citation_quality.rs:392-402]
+[crates/gwiki/src/commands/citation_quality.rs:404-410]
+[crates/gwiki/src/commands/citation_quality.rs:412-423]
+[crates/gwiki/src/commands/citation_quality.rs:425-435]
+[crates/gwiki/src/commands/citation_quality.rs:437-461]
+[crates/gwiki/src/commands/citation_quality.rs:463-477]
+[crates/gwiki/src/commands/citation_quality.rs:479-490]
+[crates/gwiki/src/commands/citation_quality.rs:492-511]
+[crates/gwiki/src/commands/citation_quality.rs:513-524]
+[crates/gwiki/src/commands/citation_quality.rs:526-539]
+[crates/gwiki/src/commands/citation_quality.rs:541-555]
+[crates/gwiki/src/commands/citation_quality.rs:569-579]
+[crates/gwiki/src/commands/citation_quality.rs:582-646]
+[crates/gwiki/src/commands/citation_quality.rs:649-693]
+[crates/gwiki/src/commands/citation_quality.rs:696-725]
+[crates/gwiki/src/commands/citation_quality.rs:729-748]
+[crates/gwiki/src/commands/citation_quality.rs:750-754]
+[crates/gwiki/src/commands/citation_quality.rs:756-771]
 - [[code/files/crates/gwiki/src/commands/collect.rs|crates/gwiki/src/commands/collect.rs]] - `crates/gwiki/src/commands/collect.rs` exposes 2 indexed API symbols.
 [crates/gwiki/src/commands/collect.rs:10-20]
 [crates/gwiki/src/commands/collect.rs:22-43]
@@ -1411,21 +1403,20 @@ sequenceDiagram
 - `6ad85944-9afa-5653-870f-e9b5d5e1ec1f`
 - `b2631415-1303-5ddd-acab-4cea51a2b91f`
 - `a93d90b9-e54d-535b-965a-8cbd911a6c95`
-- `af4f21e4-a26e-51bc-9b54-aae1ffdcb677`
-- `895b1dd7-6a57-5825-b966-4354ecde7795`
-- `91418d21-b876-5063-bb64-e3a76ab27a5f`
-- `881e8a89-2906-5647-be46-6d491ee0f0aa`
-- `58edb50a-5435-5b3c-a090-e1976fe735a0`
-- `27590bad-a4ac-583e-8e0f-4af1a6fd6af6`
-- `89ebd68a-5b81-54d6-96dc-456b2d292a14`
-- `6d2f8a80-d119-5c10-b3e8-eabf72f90a2c`
-- `b2d07726-da4c-505f-9226-549828d24a14`
-- `cd78904b-4bd2-55db-b3f2-5e65a2ac4f6c`
-- `7e25140c-cf39-5491-99dd-833aea35ec4f`
-- `d6c941d3-ca2c-5a9b-8e6e-5a55eb63664f`
-- `a4430198-951e-5003-9e5e-2986c59626c4`
-- `f12bf83f-54ad-5c19-9667-62ffe75de27a`
-- `403ff745-c666-5b9e-912a-428dd94395da`
+- `71607693-b19f-5daf-a4bb-0adb83857735`
+- `c5726362-dd79-5f95-a88d-bfda26e1804c`
+- `b1504580-3e65-54de-a976-aeef3224bee5`
+- `c723890d-4338-5db8-89c9-1afcc5368371`
+- `7495ed1e-7c43-5061-a611-12726bd63bba`
+- `a981b604-1625-536d-9267-f230d0ee2841`
+- `45949a04-86ac-5ec6-a3a9-ea65018a366f`
+- `02220be1-52c1-5a2d-8add-4441dc5e37a6`
+- `fef977e1-5462-5c7e-b458-2c646b483ad2`
+- `667a24a4-1620-56a4-94cf-10fcd4994c62`
+- `0310bf76-3847-5c02-aaa3-b12186eede5c`
+- `5aadfa7d-9f29-5286-9987-99f2582c3546`
+- `2502c0aa-8f2b-5460-a270-50d27a695900`
+- `0f732658-6a41-59c8-bf1b-b568f8141736`
 - `120069a4-7de5-57d0-8c26-8107d8dc8144`
 - `9221ea26-3d62-54ec-a050-21b36b815b78`
 - `586b2147-ca79-5c2d-891a-3ac1a13a3d54`
@@ -1437,49 +1428,48 @@ sequenceDiagram
 - `3c7f7188-f600-57c0-8608-e946c8dd7210`
 - `147862a7-e4ad-5a29-bcf5-28ef1c506b95`
 - `5ffc67db-8128-5a37-8622-d1a397a94dd6`
-- `fd988efa-b9fe-53c5-a584-c5b70409acbb`
-- `aeaad740-5cb9-573a-9e5f-9b0d313a320c`
-- `4f8f4a1a-91bd-5617-af03-5708274ed8dd`
-- `f7446ac5-4c0b-5cc9-9c0e-e307f4c07fd4`
-- `f0d812a0-ad9d-5bb6-858f-eb367e3081df`
-- `43272030-5c55-593e-b624-5e9bc0969b2c`
-- `f846ba57-312a-5bc7-b360-5955974bd6ea`
-- `bbab831c-aed7-53fd-9950-9760dc7bfc82`
-- `bd73451b-e452-5fe6-8e1c-c66f5ce3149e`
-- `0ab93dfd-f556-5e0a-8b64-c8ed1be23d60`
-- `01d2d4a8-da52-56bc-84d9-9b17bdda768b`
-- `b7e6f5c1-5f86-5064-9f8a-3cea589d2cef`
-- `e403e421-3a7f-5b20-921b-4de0bf79310c`
-- `36c9d4fb-c501-507e-ab93-997171517a0d`
-- `751fab1a-0e6e-563d-9dcd-b5cb0364b3ba`
-- `ccedc16e-5ba6-53ce-a865-f1e68ccc057c`
-- `a06c3260-ef89-5859-a243-3ebb85042cf1`
-- `68d5e810-5f3c-5e46-a0aa-92784b25583d`
-- `9bca91c0-3665-584e-8aba-613c47f8b85e`
-- `64eac7cd-2201-5c1c-b41b-615aeab8d64b`
-- `95973233-3bdc-5723-b35b-2f8d32739c87`
-- `0919d05f-e276-5b52-89d9-53a6ef23fc67`
-- `f7b9fa82-ef9c-5049-b50a-5a3a7e6af241`
-- `b9072af5-1e5a-562c-be6f-99c0b29773d2`
-- `e3b22fac-93c6-5f9c-9567-8c89c1b99367`
-- `484cb811-50ae-5406-afc0-d88d98eb7798`
-- `d2124b75-08ea-524f-bd0b-60e1d48a27b7`
-- `67134d96-1ea6-5248-977c-aea66306af85`
-- `7f5b0262-1762-5cf2-9839-7c229d852831`
-- `369753ac-e078-50c0-9952-a61473076b8f`
-- `f54d0ea2-6eb7-5bb2-b4d9-088fa5faf5a3`
-- `44010c54-3dd6-5647-94fc-caa2951c3c3f`
-- `fba8db4f-f0e8-520d-83c6-458a48a88f0f`
-- `f991266e-cbc2-5f17-84b0-f86ca0885e4f`
-- `ffc2f223-f4f6-57a5-a54a-e74c95c2a7b0`
-- `26ee8e97-854f-5017-8b17-0bd87cb01c20`
-- `df7e53d4-f3c0-54e3-9b31-d02a5b5769e7`
-- `61218269-2f86-5583-a18f-144b344683f2`
-- `f7e31ac3-e72a-5246-87d3-a1b906409197`
-- `f86f2e65-04aa-5c94-81f5-b70fe2bdd7ad`
-- `0f88ff18-df85-58bb-97e3-1c0e2d39f36b`
-- `e2c50d29-9d47-564e-9c50-408b0175dada`
-- `6bf59a92-13f9-5f29-b8c8-ef50a24b07aa`
+- `0626884e-2a39-5b13-b8be-fe2a57a323b5`
+- `4d6ab4f4-97a7-5bbf-90a5-02351c47012a`
+- `b6893647-b28f-52f7-b4cb-e8b387a066d1`
+- `eab22ee9-b78f-5362-8512-c02750d592ed`
+- `41de8c78-cd5c-5125-b118-36c75c4a16cd`
+- `8842ec53-618e-537f-8190-dfcdc6b6320e`
+- `ed3d3b65-5f63-5cd4-8b36-f0a86463f567`
+- `5e572abe-a3f9-54a3-a16f-19d452378a59`
+- `8e617206-485c-50ee-92ce-fa8a8677d58b`
+- `70df4638-9e5b-5f9f-a13d-e015e7271c66`
+- `83031209-71fe-54c0-bb2e-ea5a5564f899`
+- `0f069f69-41dd-59c9-a031-239e2cc75c1d`
+- `a195ed81-8b38-5a14-bd6b-dcfd0b301a29`
+- `1e42fbe5-22cc-5759-830d-ebf26d9a3e21`
+- `7596b9e5-83f6-531d-9ce2-018430bcc015`
+- `0990c152-2b93-596f-87c6-2ef0a3ed9e1d`
+- `c897a3f9-4a94-5875-b486-7e6a712abbfa`
+- `fc6d3878-6985-56ee-ad0b-3e03a1cbe250`
+- `90944aa9-9f86-53d6-b27c-2831af608c9d`
+- `78069b76-6b5d-5b35-a827-b621bf7ad99c`
+- `9da63a7d-cfb0-5b78-89c4-d7196be2fd57`
+- `29a3503d-7ef2-560f-ae80-ff22017c0f92`
+- `eb5a04cf-4496-5e9e-b530-02d5362fc11c`
+- `cd112861-f84d-5fa7-a6c6-f27d2ed2259e`
+- `edc9c408-4130-5875-b270-bb9922b14a4d`
+- `c5a784e1-5b36-5340-9262-9cb2d4707c7d`
+- `268b404c-fc69-5458-aa32-ad59a5d166b3`
+- `1d19baa0-950a-58e5-8bda-1fe3b3eab775`
+- `24ded5e4-8e5b-5063-9134-6e7a0d0d3f50`
+- `ae2cd9ba-0679-5081-8da5-934c8579a7fa`
+- `94402ab5-5e26-51eb-86b6-12e5d1b1b9e5`
+- `db583e89-4c59-55ae-b707-af3e2f6dd28b`
+- `c160fbdf-7ede-5730-8983-cce3fc53cc6b`
+- `c2c5650f-3299-571d-bec8-dad5ca48fd93`
+- `da0c555c-8859-59fb-b9c6-f5f25ec9fa67`
+- `55fc8cf0-0de7-5e3f-96f5-2aabfc861b4d`
+- `65cdbf4d-9d36-570b-91d4-215fe2b39a9f`
+- `335de342-e361-5101-b6bd-999ede97b45e`
+- `d5f96ff7-6caf-58d8-8806-2a69dc1b40b8`
+- `488c0e48-0dcd-5b75-a9c9-a017830605e1`
+- `45b73007-069d-5f30-99a3-e54b7d25c8a7`
+- `9ab7d097-37d1-5c7b-a280-c27d993aa85a`
 - `b82f162e-63a4-5a97-b033-94faa99f166d`
 - `e6c80f4c-f0f7-5dfc-b6f6-1903106e80b6`
 - `10d88a12-3854-56bf-a151-bf57696ae5b8`

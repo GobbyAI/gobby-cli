@@ -13,7 +13,7 @@ Parent: [[code/modules/docs|docs]]
 
 ## Overview
 
-This module provides comprehensive documentation and guides for the platform's core components and development workflows. It covers AI configuration, daemon contracts, and CodeWiki integration, alongside detailed user and developer instructions for subsystems including GCode, GCore, GHook, GLoc, GSQZ, and GWiki. The collection also includes setup instructions for hub installation and standardized procedures for managing software releases.
+The docs/guides module serves as a centralized documentation hub for the project ecosystem. It provides comprehensive developer and user guides for core subsystems including gcode, gcore, ghook, gloc, gsqz, and gwiki. The directory also covers configuration and contract specifications for AI and hub components, alongside a release process guide and project onboarding materials to support setup, development workflows, and maintenance.
 
 ## Files
 

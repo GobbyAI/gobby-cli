@@ -9,27 +9,22 @@ provenance:
   - 27-32
   - 35-96
   - 36-95
-  - 103-105
-  - 107-129
-  - 108-114
-  - 116-128
-  - 131-142
-  - 144-146
-  - 148-159
-  - 149-158
-  - 161-163
-  - 165-181
-  - 166-180
-  - 183-204
-  - 206-208
-  - 210-218
-  - 211-217
-  - 220-222
-  - 224-254
-  - 225-233
-  - 235-253
-  - 256-259
-  - 262-269
+  - 98-100
+  - 102-113
+  - 103-112
+  - 115-117
+  - 119-135
+  - 120-134
+  - 137-158
+  - 160-162
+  - 164-172
+  - 165-171
+  - 174-176
+  - 178-208
+  - 179-187
+  - 189-207
+  - 210-213
+  - 216-223
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -41,114 +36,92 @@ Module: [[code/modules/crates/gwiki/src/research|crates/gwiki/src/research]]
 
 ## Purpose
 
-`crates/gwiki/src/research/model.rs` exposes 26 indexed API symbols.
+`crates/gwiki/src/research/model.rs` exposes 21 indexed API symbols.
 [crates/gwiki/src/research/model.rs:21-24]
 [crates/gwiki/src/research/model.rs:26-33]
 [crates/gwiki/src/research/model.rs:27-32]
 [crates/gwiki/src/research/model.rs:35-96]
 [crates/gwiki/src/research/model.rs:36-95]
-[crates/gwiki/src/research/model.rs:103-105]
-[crates/gwiki/src/research/model.rs:107-129]
-[crates/gwiki/src/research/model.rs:108-114]
-[crates/gwiki/src/research/model.rs:116-128]
-[crates/gwiki/src/research/model.rs:131-142]
-[crates/gwiki/src/research/model.rs:144-146]
-[crates/gwiki/src/research/model.rs:148-159]
-[crates/gwiki/src/research/model.rs:149-158]
-[crates/gwiki/src/research/model.rs:161-163]
-[crates/gwiki/src/research/model.rs:165-181]
-[crates/gwiki/src/research/model.rs:166-180]
-[crates/gwiki/src/research/model.rs:183-204]
-[crates/gwiki/src/research/model.rs:206-208]
-[crates/gwiki/src/research/model.rs:210-218]
-[crates/gwiki/src/research/model.rs:211-217]
-[crates/gwiki/src/research/model.rs:220-222]
-[crates/gwiki/src/research/model.rs:224-254]
-[crates/gwiki/src/research/model.rs:225-233]
-[crates/gwiki/src/research/model.rs:235-253]
-[crates/gwiki/src/research/model.rs:256-259]
-[crates/gwiki/src/research/model.rs:262-269]
+[crates/gwiki/src/research/model.rs:98-100]
+[crates/gwiki/src/research/model.rs:102-113]
+[crates/gwiki/src/research/model.rs:103-112]
+[crates/gwiki/src/research/model.rs:115-117]
+[crates/gwiki/src/research/model.rs:119-135]
+[crates/gwiki/src/research/model.rs:120-134]
+[crates/gwiki/src/research/model.rs:137-158]
+[crates/gwiki/src/research/model.rs:160-162]
+[crates/gwiki/src/research/model.rs:164-172]
+[crates/gwiki/src/research/model.rs:165-171]
+[crates/gwiki/src/research/model.rs:174-176]
+[crates/gwiki/src/research/model.rs:178-208]
+[crates/gwiki/src/research/model.rs:179-187]
+[crates/gwiki/src/research/model.rs:189-207]
+[crates/gwiki/src/research/model.rs:210-213]
+[crates/gwiki/src/research/model.rs:216-223]
 
 ## API Symbols
 
-- `GcoreResearchModel` (class) component `GcoreResearchModel [class]` (`b1dfc6dd-5168-54a2-afa3-49c24d5147c8`) lines 21-24 [crates/gwiki/src/research/model.rs:21-24]
+- `GcoreResearchModel` (class) component `GcoreResearchModel [class]` (`caf20e91-0840-562e-ac35-5058d3ecad26`) lines 21-24 [crates/gwiki/src/research/model.rs:21-24]
   - Signature: `pub(crate) struct GcoreResearchModel {`
-  - Purpose: `GcoreResearchModel` is a crate-scoped struct that encapsulates an AI routing selection and a boolean flag indicating whether AI processing is required. [crates/gwiki/src/research/model.rs:21-24]
-- `GcoreResearchModel` (class) component `GcoreResearchModel [class]` (`3ee55bc7-7354-547e-ba42-a0cc7cf5f563`) lines 26-33 [crates/gwiki/src/research/model.rs:26-33]
+  - Purpose: GcoreResearchModel is a crate-internal struct that pairs an AI routing strategy with a boolean flag indicating whether AI processing is mandatory. [crates/gwiki/src/research/model.rs:21-24]
+- `GcoreResearchModel` (class) component `GcoreResearchModel [class]` (`7b6646f4-1914-51e3-9377-2fa387936279`) lines 26-33 [crates/gwiki/src/research/model.rs:26-33]
   - Signature: `impl GcoreResearchModel {`
-  - Purpose: `GcoreResearchModel` implements the `ai_unavailable` method, a generic error handler that returns a `WikiError::Config` when AI is required, or a `ResearchModelError::AiUnavailable` error otherwise. [crates/gwiki/src/research/model.rs:26-33]
-- `GcoreResearchModel.ai_unavailable` (method) component `GcoreResearchModel.ai_unavailable [method]` (`3e30be16-a998-5e22-ba40-a8bc4e7daeb9`) lines 27-32 [crates/gwiki/src/research/model.rs:27-32]
+  - Purpose: `GcoreResearchModel` implements a generic error handler method that conditionally returns a configuration error if AI is required, otherwise returns an `AiUnavailable` error based on the `require_ai` flag. [crates/gwiki/src/research/model.rs:26-33]
+- `GcoreResearchModel.ai_unavailable` (method) component `GcoreResearchModel.ai_unavailable [method]` (`18f3ae85-60d6-590f-b07e-8fae11641408`) lines 27-32 [crates/gwiki/src/research/model.rs:27-32]
   - Signature: `fn ai_unavailable<T>(&self, message: String) -> Result<T, ResearchModelError> {`
-  - Purpose: Returns a `ResearchModelError` representing AI unavailability as a `WikiError::Config` if AI is required, or as an `AiUnavailable` variant otherwise, both carrying the provided message. [crates/gwiki/src/research/model.rs:27-32]
-- `GcoreResearchModel` (class) component `GcoreResearchModel [class]` (`cfca1604-d73b-54b7-b92d-82ed622e3acf`) lines 35-96 [crates/gwiki/src/research/model.rs:35-96]
+  - Purpose: Returns a `ResearchModelError` that is either a converted `WikiError::Config` (if `require_ai` is true) or `ResearchModelError::AiUnavailable` (otherwise). [crates/gwiki/src/research/model.rs:27-32]
+- `GcoreResearchModel` (class) component `GcoreResearchModel [class]` (`32d9f475-2599-5454-acdc-0ced8e80fb47`) lines 35-96 [crates/gwiki/src/research/model.rs:35-96]
   - Signature: `impl ResearchModel for GcoreResearchModel {`
-  - Purpose: GcoreResearchModel implements ResearchModel::next_action to route text generation requests through configurable AI backends (Direct or Daemon) with token budget validation and parses responses into model decisions. [crates/gwiki/src/research/model.rs:35-96]
-- `GcoreResearchModel.next_action` (method) component `GcoreResearchModel.next_action [method]` (`b732a8bd-725c-5999-a9c3-d4f4b5d6c512`) lines 36-95 [crates/gwiki/src/research/model.rs:36-95]
+  - Purpose: `GcoreResearchModel` implements the `ResearchModel` trait to orchestrate text generation through configurable AI routing (Direct/Daemon), enforce token budget constraints, and parse responses into structured `ModelDecision` outputs. [crates/gwiki/src/research/model.rs:35-96]
+- `GcoreResearchModel.next_action` (method) component `GcoreResearchModel.next_action [method]` (`68c822f1-60d4-50a5-95ee-6c55eb050e06`) lines 36-95 [crates/gwiki/src/research/model.rs:36-95]
   - Signature: `fn next_action(`
-  - Purpose: # Summary
-
-This method routes a text generation request through a configured AI backend (Direct or Daemon), enforces token budget constraints, and parses the generated response into a `ModelAction`. [crates/gwiki/src/research/model.rs:36-95]
-- `ResearchHubPrimary` (class) component `ResearchHubPrimary [class]` (`64ba9cc6-80e9-5a27-9a57-330fb449554a`) lines 103-105 [crates/gwiki/src/research/model.rs:103-105]
-  - Signature: `pub(crate) struct ResearchHubPrimary {`
-  - Purpose: ResearchHubPrimary is a crate-scoped struct that encapsulates an optional PostgreSQL client connection. [crates/gwiki/src/research/model.rs:103-105]
-- `ResearchHubPrimary` (class) component `ResearchHubPrimary [class]` (`75e47f3c-8b22-57e6-8940-19f53300c15a`) lines 107-129 [crates/gwiki/src/research/model.rs:107-129]
-  - Signature: `impl gobby_core::config::ConfigSource for ResearchHubPrimary {`
-  - Purpose: `ResearchHubPrimary` implements the `ConfigSource` trait to fetch configuration values from PostgreSQL and resolve secrets, with fallback handling for non-secret literal values when the database connection is unavailable. [crates/gwiki/src/research/model.rs:107-129]
-- `ResearchHubPrimary.config_value` (method) component `ResearchHubPrimary.config_value [method]` (`d88e1e01-7d30-5d3b-b183-885529b5e9c1`) lines 108-114 [crates/gwiki/src/research/model.rs:108-114]
-  - Signature: `fn config_value(&mut self, key: &str) -> Option<String> {`
-  - Purpose: Retrieves a configuration value from PostgreSQL by key, decodes the raw value, and returns the decoded string or None if the connection is unavailable, the query fails, or decoding fails. [crates/gwiki/src/research/model.rs:108-114]
-- `ResearchHubPrimary.resolve_value` (method) component `ResearchHubPrimary.resolve_value [method]` (`bbb0f800-11ca-5198-b641-da93f5ab2e64`) lines 116-128 [crates/gwiki/src/research/model.rs:116-128]
-  - Signature: `fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {`
-  - Purpose: Resolves configuration values through a database-backed secret resolver if a connection exists, or returns the literal value if no secret prefix is present, raising an error if secret resolution is required without a connection. [crates/gwiki/src/research/model.rs:116-128]
-- `research_ai_config_source` (function) component `research_ai_config_source [function]` (`87ca6721-3c00-52c5-82a7-2e59d7d17529`) lines 131-142 [crates/gwiki/src/research/model.rs:131-142]
-  - Signature: `pub(crate) fn research_ai_config_source() -> Result<AiConfigSource<ResearchHubPrimary>, WikiError> {`
-  - Purpose: Initializes an `AiConfigSource` for the `ResearchHubPrimary` research hub by resolving the Gobby home directory and establishing an optional read-write database connection. [crates/gwiki/src/research/model.rs:131-142]
-- `CommandAsk` (class) component `CommandAsk [class]` (`ffd5be04-2b79-5830-b991-a7777464b837`) lines 144-146 [crates/gwiki/src/research/model.rs:144-146]
+  - Purpose: Resolves AI context with routing preferences, generates text through the appropriate backend (Direct or Daemon) within token budget constraints, parses the response into a ModelAction, and returns the result as a ModelDecision. [crates/gwiki/src/research/model.rs:36-95]
+- `CommandAsk` (class) component `CommandAsk [class]` (`51c8007e-a780-5511-bff3-ce109d377c0d`) lines 98-100 [crates/gwiki/src/research/model.rs:98-100]
   - Signature: `pub(crate) struct CommandAsk {`
-  - Purpose: `CommandAsk` is a crate-private struct that wraps a `ScopeSelection` to encapsulate a scoped command query. [crates/gwiki/src/research/model.rs:144-146]
-- `CommandAsk` (class) component `CommandAsk [class]` (`50174e5a-60d9-5ba2-b6a4-e17d2d94c959`) lines 148-159 [crates/gwiki/src/research/model.rs:148-159]
+  - Purpose: CommandAsk is a crate-private struct that wraps a ScopeSelection to represent a scoped command query. [crates/gwiki/src/research/model.rs:98-100]
+- `CommandAsk` (class) component `CommandAsk [class]` (`ea4ba7a4-ff71-5e49-a588-baa3e0ac52cd`) lines 102-113 [crates/gwiki/src/research/model.rs:102-113]
   - Signature: `impl WikiAsk for CommandAsk {`
-  - Purpose: `CommandAsk` implements the `WikiAsk` trait by executing queries through the `ask` module with AI routing disabled, converting the outcomes to `ResearchObservation` results. [crates/gwiki/src/research/model.rs:148-159]
-- `CommandAsk.ask` (method) component `CommandAsk.ask [method]` (`410da895-6404-58a3-b146-11bb37b8b5ef`) lines 149-158 [crates/gwiki/src/research/model.rs:149-158]
+  - Purpose: `CommandAsk` is a `WikiAsk` trait implementation that executes queries through `ask::execute` with AI routing disabled and converts the outcome to a `ResearchObservation`. [crates/gwiki/src/research/model.rs:102-113]
+- `CommandAsk.ask` (method) component `CommandAsk.ask [method]` (`3ae8308d-6b4c-5864-a07e-7176ddd2cc4c`) lines 103-112 [crates/gwiki/src/research/model.rs:103-112]
   - Signature: `fn ask(&mut self, query: &str) -> Result<ResearchObservation, WikiError> {`
-  - Purpose: This method executes a query through the `ask::execute` function with the current selection state and transforms the outcome into a `ResearchObservation`. [crates/gwiki/src/research/model.rs:149-158]
-- `CommandSearch` (class) component `CommandSearch [class]` (`c1ff3510-efe1-5dc6-bbf3-5bfb1891a02d`) lines 161-163 [crates/gwiki/src/research/model.rs:161-163]
+  - Purpose: Executes a query against the current selection with AI routing disabled, converting the outcome to a ResearchObservation. [crates/gwiki/src/research/model.rs:103-112]
+- `CommandSearch` (class) component `CommandSearch [class]` (`87e28c91-5cea-5a3a-b1d8-cba85094a3d0`) lines 115-117 [crates/gwiki/src/research/model.rs:115-117]
   - Signature: `pub(crate) struct CommandSearch {`
-  - Purpose: `CommandSearch` is a crate-internal struct that encapsulates a `ScopeSelection` to represent the scope context for a command search operation. [crates/gwiki/src/research/model.rs:161-163]
-- `CommandSearch` (class) component `CommandSearch [class]` (`234865bd-d25d-5fb5-bc01-b37a5ec218d4`) lines 165-181 [crates/gwiki/src/research/model.rs:165-181]
+  - Purpose: `CommandSearch` is a crate-private struct that encapsulates a `ScopeSelection` field to define the scope parameters for a command search operation. [crates/gwiki/src/research/model.rs:115-117]
+- `CommandSearch` (class) component `CommandSearch [class]` (`19bfaf22-ce62-5423-8bd0-012c5ced6749`) lines 119-135 [crates/gwiki/src/research/model.rs:119-135]
   - Signature: `impl WikiSearch for CommandSearch {`
-  - Purpose: CommandSearch is a WikiSearch implementation that executes searches, aggregates and deduplicates source paths with extracted code citations, and returns the results wrapped in a ResearchObservation. [crates/gwiki/src/research/model.rs:165-181]
-- `CommandSearch.search` (method) component `CommandSearch.search [method]` (`9170e976-9638-53ea-aa9c-988a1e590b4e`) lines 166-180 [crates/gwiki/src/research/model.rs:166-180]
+  - Purpose: `CommandSearch` implements the `WikiSearch` trait to execute codebase searches via a retrieve function, aggregating results with deduplicated sources and code citations into a `ResearchObservation`. [crates/gwiki/src/research/model.rs:119-135]
+- `CommandSearch.search` (method) component `CommandSearch.search [method]` (`10d9d236-11f8-5b81-b13b-bfd163b6a4ca`) lines 120-134 [crates/gwiki/src/research/model.rs:120-134]
   - Signature: `fn search(&mut self, query: &str, limit: usize) -> Result<ResearchObservation, WikiError> {`
-  - Purpose: Executes a parameterized search query, aggregates and deduplicates source paths and citations from results, and returns a `ResearchObservation` containing hit count, sources, code citations, and degradation metadata. [crates/gwiki/src/research/model.rs:166-180]
-- `code_citations_from_search_results` (function) component `code_citations_from_search_results [function]` (`bfb54443-4e66-57d4-8134-96488a726413`) lines 183-204 [crates/gwiki/src/research/model.rs:183-204]
+  - Purpose: Executes a codebase search query and returns a `ResearchObservation` containing deduplicated source paths, code citations extracted from search results, and any search degradations. [crates/gwiki/src/research/model.rs:120-134]
+- `code_citations_from_search_results` (function) component `code_citations_from_search_results [function]` (`9974413e-c409-5639-a61a-6e66b1966abf`) lines 137-158 [crates/gwiki/src/research/model.rs:137-158]
   - Signature: `fn code_citations_from_search_results(`
-  - Purpose: Transforms code-type search results into deduplicated `ResearchCodeCitation` objects by extracting and mapping source path, title, and provenance metadata (defaulting to "search" when sources are empty). [crates/gwiki/src/research/model.rs:183-204]
-- `CommandRead` (class) component `CommandRead [class]` (`ad2c4899-e097-58b1-99f9-909c76105ede`) lines 206-208 [crates/gwiki/src/research/model.rs:206-208]
+  - Purpose: Filters search results by code type and transforms them into a deduplicated collection of `ResearchCodeCitation` objects, extracting source paths, titles, and provenance metadata (defaulting to "search" when sources are absent). [crates/gwiki/src/research/model.rs:137-158]
+- `CommandRead` (class) component `CommandRead [class]` (`ab2d7649-3151-51de-94fd-c8db5e5f2494`) lines 160-162 [crates/gwiki/src/research/model.rs:160-162]
   - Signature: `pub(crate) struct CommandRead {`
-  - Purpose: `CommandRead` is a crate-internal struct that encapsulates a `ScopeSelection` to represent a read command targeting a specific scope. [crates/gwiki/src/research/model.rs:206-208]
-- `CommandRead` (class) component `CommandRead [class]` (`f1affbbb-7143-519e-af0b-daf6e5edeed7`) lines 210-218 [crates/gwiki/src/research/model.rs:210-218]
+  - Purpose: `CommandRead` is a crate-scoped struct that encapsulates a `ScopeSelection` to specify the scope for a read command operation. [crates/gwiki/src/research/model.rs:160-162]
+- `CommandRead` (class) component `CommandRead [class]` (`ee3a9edd-b18a-58d6-8217-eb91f44e0e15`) lines 164-172 [crates/gwiki/src/research/model.rs:164-172]
   - Signature: `impl WikiRead for CommandRead {`
-  - Purpose: CommandRead implements WikiRead by executing a path-targeted read operation and returning a deduplicated ResearchObservation containing the read outcome and source path. [crates/gwiki/src/research/model.rs:210-218]
-- `CommandRead.read` (method) component `CommandRead.read [method]` (`6ece662b-3dd0-58e5-9577-70edc92245b1`) lines 211-217 [crates/gwiki/src/research/model.rs:211-217]
+  - Purpose: CommandRead implements WikiRead to execute a read command at a specified path, convert the outcome to a ResearchObservation, and return it with deduplicated source tracking. [crates/gwiki/src/research/model.rs:164-172]
+- `CommandRead.read` (method) component `CommandRead.read [method]` (`152b8b41-0c68-577b-89a3-af7309587791`) lines 165-171 [crates/gwiki/src/research/model.rs:165-171]
   - Signature: `fn read(&mut self, path: &Path) -> Result<ResearchObservation, WikiError> {`
-  - Purpose: Executes a read operation on the specified file path with the current selection state, converts the outcome to a `ResearchObservation`, tracks the source path, and deduplicates it before returning. [crates/gwiki/src/research/model.rs:211-217]
-- `CommandIngestor` (class) component `CommandIngestor [class]` (`822e30b8-608e-58f1-bb26-7ce8289b5520`) lines 220-222 [crates/gwiki/src/research/model.rs:220-222]
+  - Purpose: Executes a read operation on the specified file path using the stored selection, converts the outcome to a ResearchObservation, appends and deduplicates the source path, then returns the result. [crates/gwiki/src/research/model.rs:165-171]
+- `CommandIngestor` (class) component `CommandIngestor [class]` (`a7c6c81e-8a80-5912-acf2-fff3e1a06e27`) lines 174-176 [crates/gwiki/src/research/model.rs:174-176]
   - Signature: `pub(crate) struct CommandIngestor {`
-  - Purpose: CommandIngestor is a crate-internal struct that wraps a ScopeSelection field to manage scope-aware command input processing. [crates/gwiki/src/research/model.rs:220-222]
-- `CommandIngestor` (class) component `CommandIngestor [class]` (`f9476f6f-462f-580f-9d87-e67a4aba1c05`) lines 224-254 [crates/gwiki/src/research/model.rs:224-254]
+  - Purpose: `CommandIngestor` is a crate-private struct that wraps a `ScopeSelection` to manage scoped command intake and processing. [crates/gwiki/src/research/model.rs:174-176]
+- `CommandIngestor` (class) component `CommandIngestor [class]` (`212117c5-e034-5e04-86ef-a84ff11576df`) lines 178-208 [crates/gwiki/src/research/model.rs:178-208]
   - Signature: `impl SourceIngestor for CommandIngestor {`
-  - Purpose: CommandIngestor implements SourceIngestor to ingest URLs and files through delegated index operations, conditionally appending sources to deduplicated ResearchObservations upon successful execution. [crates/gwiki/src/research/model.rs:224-254]
-- `CommandIngestor.ingest_url` (method) component `CommandIngestor.ingest_url [method]` (`a7e137f4-8613-542f-a902-d5cd8d1df29d`) lines 225-233 [crates/gwiki/src/research/model.rs:225-233]
+  - Purpose: CommandIngestor implements SourceIngestor by delegating URL and file ingestion to index commands, converting execution outcomes to research observations, and maintaining deduplicated source lists. [crates/gwiki/src/research/model.rs:178-208]
+- `CommandIngestor.ingest_url` (method) component `CommandIngestor.ingest_url [method]` (`c45898e3-f1d7-58a1-bbb5-29f14eb06693`) lines 179-187 [crates/gwiki/src/research/model.rs:179-187]
   - Signature: `fn ingest_url(&mut self, url: &str) -> Result<ResearchObservation, WikiError> {`
-  - Purpose: Ingests a URL through the index module, appends it to the observation's sources if the operation succeeds and the URL is not already present, deduplicates the sources list, and returns the resulting `ResearchObservation`. [crates/gwiki/src/research/model.rs:225-233]
-- `CommandIngestor.ingest_file` (method) component `CommandIngestor.ingest_file [method]` (`a37a0133-d303-5e31-b6b6-091941ee99a9`) lines 235-253 [crates/gwiki/src/research/model.rs:235-253]
+  - Purpose: Executes URL ingestion via `index::execute_ingest_url`, converts the outcome to a ResearchObservation, conditionally appends the URL to de-duplicated sources if execution succeeds and the URL is not already present, and returns the observation. [crates/gwiki/src/research/model.rs:179-187]
+- `CommandIngestor.ingest_file` (method) component `CommandIngestor.ingest_file [method]` (`11803cdc-dabc-5405-a22c-344e76cc57f5`) lines 189-207 [crates/gwiki/src/research/model.rs:189-207]
   - Signature: `fn ingest_file(&mut self, path: &Path) -> Result<ResearchObservation, WikiError> {`
-  - Purpose: Delegates file ingestion to the index module and conditionally appends the file path to the resulting observation's deduplicated sources list if the operation succeeds. [crates/gwiki/src/research/model.rs:235-253]
-- `AcceptedNoteWriter` (class) component `AcceptedNoteWriter [class]` (`80cb32ae-b2e5-5539-bbad-de692b503db3`) lines 256-259 [crates/gwiki/src/research/model.rs:256-259]
+  - Purpose: Ingests a file via index operation and returns a research observation with the input path conditionally appended to its deduplicated sources if execution succeeds. [crates/gwiki/src/research/model.rs:189-207]
+- `AcceptedNoteWriter` (class) component `AcceptedNoteWriter [class]` (`577432b1-8f0d-5185-9c43-d5456bf7f2c8`) lines 210-213 [crates/gwiki/src/research/model.rs:210-213]
   - Signature: `pub(crate) struct AcceptedNoteWriter<'a> {`
-  - Purpose: `AcceptedNoteWriter<'a>` is a crate-private struct that holds borrowed references to a root filesystem path and session identifier with a shared lifetime `'a`. [crates/gwiki/src/research/model.rs:256-259]
-- `write_note` (function) component `write_note [function]` (`47d24729-4808-5a0e-b215-87e2f82ead30`) lines 262-269 [crates/gwiki/src/research/model.rs:262-269]
+  - Purpose: `AcceptedNoteWriter` is a crate-internal struct that holds borrowed references to a filesystem root path and session identifier for writing accepted notes. [crates/gwiki/src/research/model.rs:210-213]
+- `write_note` (function) component `write_note [function]` (`6087992c-db7e-5a6b-9c28-5d123d9b5517`) lines 216-223 [crates/gwiki/src/research/model.rs:216-223]
   - Signature: `fn write_note(&mut self, note: &AcceptedNoteDraft) -> Result<NoteWriteOutcome, WikiError> {`
-  - Purpose: Writes an accepted note draft to storage and returns a NoteWriteOutcome containing the persisted note, creation status, and write conflict information, or a WikiError on failure. [crates/gwiki/src/research/model.rs:262-269]
+  - Purpose: Persists an accepted note draft to storage via the session context and returns the resulting note with creation timestamp and write-conflict metadata, or a WikiError. [crates/gwiki/src/research/model.rs:216-223]
 

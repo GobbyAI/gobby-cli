@@ -17,7 +17,7 @@ provenance:
 - file: crates/gcode/src/commands/codewiki/build_parts/file.rs
   ranges:
   - 10-13
-  - 15-110
+  - 15-115
 - file: crates/gcode/src/commands/codewiki/build_parts/hotspots.rs
   ranges:
   - 5-131
@@ -130,7 +130,7 @@ provenance:
   - 563-581
   - 583-598
   - 601-614
-  - 616-737
+  - 616-742
 - file: crates/gcode/src/commands/codewiki/ownership.rs
   ranges:
   - 20-23
@@ -326,7 +326,7 @@ Parent: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Overview
 
-This module implements the `codewiki` command, which generates comprehensive, hierarchical documentation for Rust codebases. It orchestrates the analysis of project structure, module dependencies, and file ownership to produce structured Markdown output. Core generation logic is delegated to the `build_parts` child module, which assembles architecture overviews, change logs, file and module documentation, hotspot reports, onboarding guides, and index snapshots. Graph and clustering utilities analyze import and call dependencies, optionally leveraging Falkordb for scalable queries, and render dependency maps as Mermaid diagrams. Ownership tracking aggregates declared `.codeowners` entries and git blame contributors with caching and timeout safeguards. I/O and path utilities manage safe document writing, metadata persistence, and symlink protection. Rendering and text processing handle Markdown formatting, citation validation, frontmatter serialization, and AI-assisted content generation. Progress tracking and prompt builders support CLI feedback and structured AI queries, while extensive tests verify all components. The module serves as the central orchestrator for incremental, depth-aware documentation generation.
+The `codewiki` module generates structured, hierarchical documentation for a codebase by analyzing dependency graphs, ownership metadata, and module topology. It orchestrates the creation of architecture overviews, change logs, hotspot analyses, onboarding guides, and granular file and module summaries through its `build_parts` submodules. The module integrates Git blame and CODEOWNERS data for contributor tracking, constructs dependency graphs for Mermaid visualization, and supports AI-assisted text generation with configurable depth. It manages incremental documentation updates, cryptographic snapshots for reproducibility, progress reporting, and safe I/O operations to ensure consistent, verifiable, and maintainable code documentation.
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-110]
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:112-127]
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:130-180]
@@ -336,7 +336,7 @@ This module implements the `codewiki` command, which generates comprehensive, hi
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:140-156]
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:158-163]
 [crates/gcode/src/commands/codewiki/build_parts/file.rs:10-13]
-[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-110]
+[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-115]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-131]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:133-157]
 [crates/gcode/src/commands/codewiki/build_parts/modules.rs:4-114]
@@ -433,7 +433,7 @@ This module implements the `codewiki` command, which generates comprehensive, hi
 [crates/gcode/src/commands/codewiki/mod.rs:563-581]
 [crates/gcode/src/commands/codewiki/mod.rs:583-598]
 [crates/gcode/src/commands/codewiki/mod.rs:601-614]
-[crates/gcode/src/commands/codewiki/mod.rs:616-737]
+[crates/gcode/src/commands/codewiki/mod.rs:616-742]
 [crates/gcode/src/commands/codewiki/ownership.rs:20-23]
 [crates/gcode/src/commands/codewiki/ownership.rs:25-32]
 [crates/gcode/src/commands/codewiki/ownership.rs:26-31]
@@ -610,9 +610,9 @@ This module implements the `codewiki` command, which generates comprehensive, hi
 ```mermaid
 sequenceDiagram
     participant m_0115e211_6a65_5f0a_b171_aa210619a4a6 as declared_owners_for_files &#91;function&#93;
-    participant m_041a35eb_6074_5bbd_9f1a_fcb5d8e6c025 as contributor_id &#91;function&#93;
     participant m_0b0512fa_8e9b_5441_b0f1_58420bc96497 as citation_markers &#91;function&#93;
     participant m_0f035ad9_181a_5243_9851_6b7b54ac25a9 as aggregate_contributors &#91;function&#93;
+    participant m_10664074_5376_5290_ac6a_6179f145d854 as ai_depth_files_skips_symbol_generation_only &#91;function&#93;
     participant m_145ba7e3_1427_52d7_8cb4_e0d669063f45 as run &#91;function&#93;
     participant m_15933aa0_c92e_503d_ba3d_8e4f091870e3 as contains_valid_citation &#91;function&#93;
     participant m_1653d1e5_3ac6_5f4e_96de_bb46fd727b1f as fetch_codewiki_graph_edges &#91;function&#93;
@@ -620,21 +620,21 @@ sequenceDiagram
     participant m_18207b0a_bc23_53ec_9eab_5a0574ffdea1 as dependency_neighbors &#91;function&#93;
     participant m_1aa33a46_a03c_5222_8d23_5be1393b2ad1 as bounded_module_dependency_edges &#91;function&#93;
     participant m_1aec054a_f201_5b6e_8019_79e42648b3e5 as write_codewiki_docs &#91;function&#93;
+    participant m_20f9bddc_eda0_5a39_b491_f5a2f66b1157 as ai_depth_symbols_generates_symbol_purposes &#91;function&#93;
     participant m_2482ea17_b327_536d_96d8_3904bc42d195 as inline_code &#91;function&#93;
     participant m_2910b38e_2b56_506b_a8a8_34716bd898b9 as derived_owners_for_files &#91;function&#93;
-    participant m_2ce30059_52f4_5119_aaa8_ef9b827adaa7 as blame_file_contributors &#91;function&#93;
-    participant m_2cf219a4_ccdc_5833_af4a_e0b6a1985105 as union_files &#91;function&#93;
     participant m_394a92b1_a8d3_5d04_a09d_4186fd357389 as validate_edge_limit &#91;function&#93;
     participant m_3b2ba538_4872_5a6e_a356_2b10c85ed023 as content_hash &#91;function&#93;
+    participant m_4912a584_cc76_5735_80de_0cb286e853c4 as codewiki_call_edges_query &#91;function&#93;
     participant m_4e862278_2391_5e0a_8b76_f04cf8df3287 as import_edges_from_pairs &#91;function&#93;
-    participant m_5ed2d6c2_57cf_5500_9256_2900f0437dbb as blame_file_contributors_with_timeout &#91;function&#93;
     participant m_6598383a_5be8_5914_be8a_b305bf5d74cb as git_project_with_history &#91;function&#93;
-    participant m_731f2c21_b8ef_5b43_a961_72daf4bf1d5a as find_file_root &#91;function&#93;
     participant m_863f17b8_6b40_5012_a727_852af745ba08 as wrap_citation_items &#91;function&#93;
     participant m_9ae4a3d2_39de_52be_8d75_e7073ccdab20 as generate_hierarchical_docs_with_ownership &#91;function&#93;
     participant m_b28e0707_ccda_5afe_a06c_f93b1e5a2729 as modules &#91;function&#93;
     participant m_c2474b4a_3816_5e4d_9f13_a1a296986eb3 as query_or_unavailable &#91;function&#93;
     participant m_c636d715_1dba_57c2_a3c9_da9b3c5fb19d as citation_references &#91;function&#93;
+    participant m_d4b28d3f_7259_56fe_9ccf_bdf9fd4cc517 as generation_systems_at_depth &#91;function&#93;
+    participant m_d515c347_b86d_5297_9803_cc692b841646 as codewiki_import_edges_query &#91;function&#93;
     participant m_d88408ad_346a_5e73_8b55_d48ed0ce9504 as codeowners_pattern_matches &#91;function&#93;
     participant m_e532aa21_35c5_5bf3_be9c_ec5af9db1ba0 as retain_deterministic_identity &#91;function&#93;
     participant m_e7609374_0fb8_517c_9bde_4e0ca5cf4907 as citation_parts &#91;function&#93;
@@ -644,27 +644,27 @@ sequenceDiagram
     m_0b0512fa_8e9b_5441_b0f1_58420bc96497->>m_863f17b8_6b40_5012_a727_852af745ba08: calls
     m_0b0512fa_8e9b_5441_b0f1_58420bc96497->>m_c636d715_1dba_57c2_a3c9_da9b3c5fb19d: calls
     m_0f035ad9_181a_5243_9851_6b7b54ac25a9->>m_e532aa21_35c5_5bf3_be9c_ec5af9db1ba0: calls
+    m_10664074_5376_5290_ac6a_6179f145d854->>m_d4b28d3f_7259_56fe_9ccf_bdf9fd4cc517: calls
     m_145ba7e3_1427_52d7_8cb4_e0d669063f45->>m_1aec054a_f201_5b6e_8019_79e42648b3e5: calls
     m_145ba7e3_1427_52d7_8cb4_e0d669063f45->>m_394a92b1_a8d3_5d04_a09d_4186fd357389: calls
     m_145ba7e3_1427_52d7_8cb4_e0d669063f45->>m_9ae4a3d2_39de_52be_8d75_e7073ccdab20: calls
     m_15933aa0_c92e_503d_ba3d_8e4f091870e3->>m_e7609374_0fb8_517c_9bde_4e0ca5cf4907: calls
+    m_1653d1e5_3ac6_5f4e_96de_bb46fd727b1f->>m_4912a584_cc76_5735_80de_0cb286e853c4: calls
     m_1653d1e5_3ac6_5f4e_96de_bb46fd727b1f->>m_4e862278_2391_5e0a_8b76_f04cf8df3287: calls
     m_1653d1e5_3ac6_5f4e_96de_bb46fd727b1f->>m_c2474b4a_3816_5e4d_9f13_a1a296986eb3: calls
+    m_1653d1e5_3ac6_5f4e_96de_bb46fd727b1f->>m_d515c347_b86d_5297_9803_cc692b841646: calls
     m_17fc0587_76cd_55cd_b7aa_d6488b225396->>m_6598383a_5be8_5914_be8a_b305bf5d74cb: calls
     m_17fc0587_76cd_55cd_b7aa_d6488b225396->>m_b28e0707_ccda_5afe_a06c_f93b1e5a2729: calls
     m_17fc0587_76cd_55cd_b7aa_d6488b225396->>m_eef21fe9_1184_5062_8f7d_91439c57f939: calls
     m_1aa33a46_a03c_5222_8d23_5be1393b2ad1->>m_18207b0a_bc23_53ec_9eab_5a0574ffdea1: calls
+    m_20f9bddc_eda0_5a39_b491_f5a2f66b1157->>m_d4b28d3f_7259_56fe_9ccf_bdf9fd4cc517: calls
     m_2482ea17_b327_536d_96d8_3904bc42d195->>m_ec4098a0_25ed_5493_b157_ed20fa7aeb45: calls
     m_2910b38e_2b56_506b_a8a8_34716bd898b9->>m_3b2ba538_4872_5a6e_a356_2b10c85ed023: calls
-    m_2910b38e_2b56_506b_a8a8_34716bd898b9->>m_5ed2d6c2_57cf_5500_9256_2900f0437dbb: calls
-    m_2ce30059_52f4_5119_aaa8_ef9b827adaa7->>m_041a35eb_6074_5bbd_9f1a_fcb5d8e6c025: calls
-    m_2ce30059_52f4_5119_aaa8_ef9b827adaa7->>m_e532aa21_35c5_5bf3_be9c_ec5af9db1ba0: calls
-    m_2cf219a4_ccdc_5833_af4a_e0b6a1985105->>m_731f2c21_b8ef_5b43_a961_72daf4bf1d5a: calls
 ```
 
 ## Child Modules
 
-- [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gcode/src/commands/codewiki/build_parts]] - This module provides the builders and utility functions for assembling individual sections of the CodeWiki documentation index. It handles the generation of architecture overviews, file change logs, source file and module documentation, dependency hotspots, onboarding guides, and index snapshots. Additionally, it includes helpers for processing Rust symbols, visibility rules, source spans, and graph fingerprints to ensure accurate documentation output.
+- [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gcode/src/commands/codewiki/build_parts]] - This module implements the builders and utilities for generating distinct sections of a CodeWiki documentation index. It provides specialized functions for constructing architecture overviews, change logs, file-level documentation, hotspot analyses, module summaries, and onboarding guides. The module handles dependency topology extraction, public API symbol filtering, frontmatter formatting, and the generation of cryptographic snapshots to ensure documentation integrity and reproducibility.
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-110]
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:112-127]
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:130-180]
@@ -674,7 +674,7 @@ sequenceDiagram
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:140-156]
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:158-163]
 [crates/gcode/src/commands/codewiki/build_parts/file.rs:10-13]
-[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-110]
+[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-115]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-131]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:133-157]
 [crates/gcode/src/commands/codewiki/build_parts/modules.rs:4-114]
@@ -779,7 +779,7 @@ sequenceDiagram
 [crates/gcode/src/commands/codewiki/mod.rs:563-581]
 [crates/gcode/src/commands/codewiki/mod.rs:583-598]
 [crates/gcode/src/commands/codewiki/mod.rs:601-614]
-[crates/gcode/src/commands/codewiki/mod.rs:616-737]
+[crates/gcode/src/commands/codewiki/mod.rs:616-742]
 - [[code/files/crates/gcode/src/commands/codewiki/ownership.rs|crates/gcode/src/commands/codewiki/ownership.rs]] - `crates/gcode/src/commands/codewiki/ownership.rs` exposes 50 indexed API symbols.
 [crates/gcode/src/commands/codewiki/ownership.rs:20-23]
 [crates/gcode/src/commands/codewiki/ownership.rs:25-32]

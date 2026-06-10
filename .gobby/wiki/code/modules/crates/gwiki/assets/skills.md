@@ -13,7 +13,7 @@ Parent: [[code/modules/crates/gwiki/assets|crates/gwiki/assets]]
 
 ## Overview
 
-Contains assets related to skills such as audit, compile, query, and research.
+This module contains documentation and asset references for core wiki skills, specifically covering audit, compile, query, and research operations. It serves as a descriptive guide without exposing any indexed API symbols or code components.
 
 ## Files
 

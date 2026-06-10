@@ -824,21 +824,20 @@ provenance:
   - 381-387
   - 389-391
   - 393-422
-  - 424-431
-  - 433-445
-  - 447-460
-  - 462-482
-  - 484-516
-  - 518-557
-  - 559-561
-  - 563-573
-  - 575-618
-  - 620-627
-  - 643-685
-  - 688-739
-  - 742-844
-  - 847-865
-  - 868-882
+  - 424-436
+  - 438-451
+  - 453-473
+  - 475-507
+  - 509-548
+  - 550-552
+  - 554-564
+  - 566-609
+  - 611-618
+  - 634-676
+  - 679-730
+  - 733-835
+  - 838-856
+  - 859-873
 - file: crates/gwiki/src/commands/audit.rs
   ranges:
   - 3-13
@@ -858,49 +857,48 @@ provenance:
   - 83-121
 - file: crates/gwiki/src/commands/citation_quality.rs
   ranges:
-  - 21-28
-  - 31-35
-  - 38-44
-  - 47-51
-  - 54-59
-  - 62-65
-  - 68-71
-  - 74-78
-  - 81-84
-  - 87-90
-  - 93-96
-  - 99-102
-  - 105-109
-  - 111-141
-  - 143-157
-  - 159-166
-  - 168-208
-  - 210-250
-  - 252-262
-  - 264-271
-  - 273-288
-  - 290-321
-  - 323-352
-  - 354-366
-  - 368-400
-  - 402-412
-  - 414-420
-  - 422-433
-  - 435-445
-  - 447-471
-  - 473-487
-  - 489-500
-  - 502-521
-  - 523-534
-  - 536-549
-  - 551-565
-  - 579-589
-  - 592-656
-  - 659-703
-  - 706-735
-  - 739-758
-  - 760-764
-  - 766-781
+  - 20-27
+  - 30-34
+  - 37-43
+  - 46-50
+  - 53-58
+  - 61-64
+  - 67-70
+  - 73-77
+  - 80-83
+  - 86-89
+  - 92-95
+  - 98-101
+  - 104-108
+  - 110-140
+  - 142-156
+  - 158-198
+  - 200-240
+  - 242-252
+  - 254-261
+  - 263-278
+  - 280-311
+  - 313-342
+  - 344-356
+  - 358-390
+  - 392-402
+  - 404-410
+  - 412-423
+  - 425-435
+  - 437-461
+  - 463-477
+  - 479-490
+  - 492-511
+  - 513-524
+  - 526-539
+  - 541-555
+  - 569-579
+  - 582-646
+  - 649-693
+  - 696-725
+  - 729-748
+  - 750-754
+  - 756-771
 - file: crates/gwiki/src/commands/collect.rs
   ranges:
   - 10-20
@@ -2726,27 +2724,22 @@ provenance:
   - 27-32
   - 35-96
   - 36-95
-  - 103-105
-  - 107-129
-  - 108-114
-  - 116-128
-  - 131-142
-  - 144-146
-  - 148-159
-  - 149-158
-  - 161-163
-  - 165-181
-  - 166-180
-  - 183-204
-  - 206-208
-  - 210-218
-  - 211-217
-  - 220-222
-  - 224-254
-  - 225-233
-  - 235-253
-  - 256-259
-  - 262-269
+  - 98-100
+  - 102-113
+  - 103-112
+  - 115-117
+  - 119-135
+  - 120-134
+  - 137-158
+  - 160-162
+  - 164-172
+  - 165-171
+  - 174-176
+  - 178-208
+  - 179-187
+  - 189-207
+  - 210-213
+  - 216-223
 - file: crates/gwiki/src/research/notes.rs
   ranges:
   - 5-16
@@ -3435,37 +3428,42 @@ provenance:
   - 925-939
 - file: crates/gwiki/src/support/config.rs
   ranges:
-  - 17-20
-  - 22-29
-  - 23-28
-  - 31-35
-  - 37-42
-  - 45-51
-  - 53-60
-  - 62-67
-  - 69-76
-  - 78-85
-  - 87-91
-  - 93-100
-  - 102-117
-  - 131-134
-  - 136-150
-  - 137-149
-  - 152-161
-  - 153-160
-  - 163-169
-  - 172-174
-  - 176-181
-  - 177-180
-  - 183-191
-  - 184-186
-  - 188-190
-  - 194-206
-  - 209-228
-  - 232-250
-  - 253-265
-  - 269-281
-  - 285-312
+  - 18-20
+  - 22-44
+  - 23-29
+  - 31-43
+  - 46-61
+  - 68-71
+  - 73-80
+  - 74-79
+  - 82-86
+  - 88-93
+  - 96-102
+  - 104-111
+  - 113-118
+  - 120-127
+  - 129-136
+  - 138-142
+  - 144-151
+  - 153-168
+  - 182-185
+  - 187-201
+  - 188-200
+  - 203-212
+  - 204-211
+  - 214-220
+  - 223-225
+  - 227-232
+  - 228-231
+  - 234-242
+  - 235-237
+  - 239-241
+  - 245-257
+  - 260-279
+  - 283-301
+  - 304-316
+  - 320-332
+  - 336-363
 - file: crates/gwiki/src/support/counts.rs
   ranges:
   - 4-10
@@ -4585,21 +4583,20 @@ Parent: [[code/modules/crates|crates]]
 [crates/gwiki/src/commands/ask.rs:381-387]
 [crates/gwiki/src/commands/ask.rs:389-391]
 [crates/gwiki/src/commands/ask.rs:393-422]
-[crates/gwiki/src/commands/ask.rs:424-431]
-[crates/gwiki/src/commands/ask.rs:433-445]
-[crates/gwiki/src/commands/ask.rs:447-460]
-[crates/gwiki/src/commands/ask.rs:462-482]
-[crates/gwiki/src/commands/ask.rs:484-516]
-[crates/gwiki/src/commands/ask.rs:518-557]
-[crates/gwiki/src/commands/ask.rs:559-561]
-[crates/gwiki/src/commands/ask.rs:563-573]
-[crates/gwiki/src/commands/ask.rs:575-618]
-[crates/gwiki/src/commands/ask.rs:620-627]
-[crates/gwiki/src/commands/ask.rs:643-685]
-[crates/gwiki/src/commands/ask.rs:688-739]
-[crates/gwiki/src/commands/ask.rs:742-844]
-[crates/gwiki/src/commands/ask.rs:847-865]
-[crates/gwiki/src/commands/ask.rs:868-882]
+[crates/gwiki/src/commands/ask.rs:424-436]
+[crates/gwiki/src/commands/ask.rs:438-451]
+[crates/gwiki/src/commands/ask.rs:453-473]
+[crates/gwiki/src/commands/ask.rs:475-507]
+[crates/gwiki/src/commands/ask.rs:509-548]
+[crates/gwiki/src/commands/ask.rs:550-552]
+[crates/gwiki/src/commands/ask.rs:554-564]
+[crates/gwiki/src/commands/ask.rs:566-609]
+[crates/gwiki/src/commands/ask.rs:611-618]
+[crates/gwiki/src/commands/ask.rs:634-676]
+[crates/gwiki/src/commands/ask.rs:679-730]
+[crates/gwiki/src/commands/ask.rs:733-835]
+[crates/gwiki/src/commands/ask.rs:838-856]
+[crates/gwiki/src/commands/ask.rs:859-873]
 [crates/gwiki/src/commands/audit.rs:3-13]
 [crates/gwiki/src/commands/backlinks.rs:10-18]
 [crates/gwiki/src/commands/backlinks.rs:20-28]
@@ -4611,49 +4608,48 @@ Parent: [[code/modules/crates|crates]]
 [crates/gwiki/src/commands/benchmark.rs:46-73]
 [crates/gwiki/src/commands/benchmark.rs:75-81]
 [crates/gwiki/src/commands/benchmark.rs:83-121]
-[crates/gwiki/src/commands/citation_quality.rs:21-28]
-[crates/gwiki/src/commands/citation_quality.rs:31-35]
-[crates/gwiki/src/commands/citation_quality.rs:38-44]
-[crates/gwiki/src/commands/citation_quality.rs:47-51]
-[crates/gwiki/src/commands/citation_quality.rs:54-59]
-[crates/gwiki/src/commands/citation_quality.rs:62-65]
-[crates/gwiki/src/commands/citation_quality.rs:68-71]
-[crates/gwiki/src/commands/citation_quality.rs:74-78]
-[crates/gwiki/src/commands/citation_quality.rs:81-84]
-[crates/gwiki/src/commands/citation_quality.rs:87-90]
-[crates/gwiki/src/commands/citation_quality.rs:93-96]
-[crates/gwiki/src/commands/citation_quality.rs:99-102]
-[crates/gwiki/src/commands/citation_quality.rs:105-109]
-[crates/gwiki/src/commands/citation_quality.rs:111-141]
-[crates/gwiki/src/commands/citation_quality.rs:143-157]
-[crates/gwiki/src/commands/citation_quality.rs:159-166]
-[crates/gwiki/src/commands/citation_quality.rs:168-208]
-[crates/gwiki/src/commands/citation_quality.rs:210-250]
-[crates/gwiki/src/commands/citation_quality.rs:252-262]
-[crates/gwiki/src/commands/citation_quality.rs:264-271]
-[crates/gwiki/src/commands/citation_quality.rs:273-288]
-[crates/gwiki/src/commands/citation_quality.rs:290-321]
-[crates/gwiki/src/commands/citation_quality.rs:323-352]
-[crates/gwiki/src/commands/citation_quality.rs:354-366]
-[crates/gwiki/src/commands/citation_quality.rs:368-400]
-[crates/gwiki/src/commands/citation_quality.rs:402-412]
-[crates/gwiki/src/commands/citation_quality.rs:414-420]
-[crates/gwiki/src/commands/citation_quality.rs:422-433]
-[crates/gwiki/src/commands/citation_quality.rs:435-445]
-[crates/gwiki/src/commands/citation_quality.rs:447-471]
-[crates/gwiki/src/commands/citation_quality.rs:473-487]
-[crates/gwiki/src/commands/citation_quality.rs:489-500]
-[crates/gwiki/src/commands/citation_quality.rs:502-521]
-[crates/gwiki/src/commands/citation_quality.rs:523-534]
-[crates/gwiki/src/commands/citation_quality.rs:536-549]
-[crates/gwiki/src/commands/citation_quality.rs:551-565]
-[crates/gwiki/src/commands/citation_quality.rs:579-589]
-[crates/gwiki/src/commands/citation_quality.rs:592-656]
-[crates/gwiki/src/commands/citation_quality.rs:659-703]
-[crates/gwiki/src/commands/citation_quality.rs:706-735]
-[crates/gwiki/src/commands/citation_quality.rs:739-758]
-[crates/gwiki/src/commands/citation_quality.rs:760-764]
-[crates/gwiki/src/commands/citation_quality.rs:766-781]
+[crates/gwiki/src/commands/citation_quality.rs:20-27]
+[crates/gwiki/src/commands/citation_quality.rs:30-34]
+[crates/gwiki/src/commands/citation_quality.rs:37-43]
+[crates/gwiki/src/commands/citation_quality.rs:46-50]
+[crates/gwiki/src/commands/citation_quality.rs:53-58]
+[crates/gwiki/src/commands/citation_quality.rs:61-64]
+[crates/gwiki/src/commands/citation_quality.rs:67-70]
+[crates/gwiki/src/commands/citation_quality.rs:73-77]
+[crates/gwiki/src/commands/citation_quality.rs:80-83]
+[crates/gwiki/src/commands/citation_quality.rs:86-89]
+[crates/gwiki/src/commands/citation_quality.rs:92-95]
+[crates/gwiki/src/commands/citation_quality.rs:98-101]
+[crates/gwiki/src/commands/citation_quality.rs:104-108]
+[crates/gwiki/src/commands/citation_quality.rs:110-140]
+[crates/gwiki/src/commands/citation_quality.rs:142-156]
+[crates/gwiki/src/commands/citation_quality.rs:158-198]
+[crates/gwiki/src/commands/citation_quality.rs:200-240]
+[crates/gwiki/src/commands/citation_quality.rs:242-252]
+[crates/gwiki/src/commands/citation_quality.rs:254-261]
+[crates/gwiki/src/commands/citation_quality.rs:263-278]
+[crates/gwiki/src/commands/citation_quality.rs:280-311]
+[crates/gwiki/src/commands/citation_quality.rs:313-342]
+[crates/gwiki/src/commands/citation_quality.rs:344-356]
+[crates/gwiki/src/commands/citation_quality.rs:358-390]
+[crates/gwiki/src/commands/citation_quality.rs:392-402]
+[crates/gwiki/src/commands/citation_quality.rs:404-410]
+[crates/gwiki/src/commands/citation_quality.rs:412-423]
+[crates/gwiki/src/commands/citation_quality.rs:425-435]
+[crates/gwiki/src/commands/citation_quality.rs:437-461]
+[crates/gwiki/src/commands/citation_quality.rs:463-477]
+[crates/gwiki/src/commands/citation_quality.rs:479-490]
+[crates/gwiki/src/commands/citation_quality.rs:492-511]
+[crates/gwiki/src/commands/citation_quality.rs:513-524]
+[crates/gwiki/src/commands/citation_quality.rs:526-539]
+[crates/gwiki/src/commands/citation_quality.rs:541-555]
+[crates/gwiki/src/commands/citation_quality.rs:569-579]
+[crates/gwiki/src/commands/citation_quality.rs:582-646]
+[crates/gwiki/src/commands/citation_quality.rs:649-693]
+[crates/gwiki/src/commands/citation_quality.rs:696-725]
+[crates/gwiki/src/commands/citation_quality.rs:729-748]
+[crates/gwiki/src/commands/citation_quality.rs:750-754]
+[crates/gwiki/src/commands/citation_quality.rs:756-771]
 [crates/gwiki/src/commands/collect.rs:10-20]
 [crates/gwiki/src/commands/collect.rs:22-43]
 [crates/gwiki/src/commands/compile.rs:8-67]
@@ -6309,27 +6305,22 @@ Parent: [[code/modules/crates|crates]]
 [crates/gwiki/src/research/model.rs:27-32]
 [crates/gwiki/src/research/model.rs:35-96]
 [crates/gwiki/src/research/model.rs:36-95]
-[crates/gwiki/src/research/model.rs:103-105]
-[crates/gwiki/src/research/model.rs:107-129]
-[crates/gwiki/src/research/model.rs:108-114]
-[crates/gwiki/src/research/model.rs:116-128]
-[crates/gwiki/src/research/model.rs:131-142]
-[crates/gwiki/src/research/model.rs:144-146]
-[crates/gwiki/src/research/model.rs:148-159]
-[crates/gwiki/src/research/model.rs:149-158]
-[crates/gwiki/src/research/model.rs:161-163]
-[crates/gwiki/src/research/model.rs:165-181]
-[crates/gwiki/src/research/model.rs:166-180]
-[crates/gwiki/src/research/model.rs:183-204]
-[crates/gwiki/src/research/model.rs:206-208]
-[crates/gwiki/src/research/model.rs:210-218]
-[crates/gwiki/src/research/model.rs:211-217]
-[crates/gwiki/src/research/model.rs:220-222]
-[crates/gwiki/src/research/model.rs:224-254]
-[crates/gwiki/src/research/model.rs:225-233]
-[crates/gwiki/src/research/model.rs:235-253]
-[crates/gwiki/src/research/model.rs:256-259]
-[crates/gwiki/src/research/model.rs:262-269]
+[crates/gwiki/src/research/model.rs:98-100]
+[crates/gwiki/src/research/model.rs:102-113]
+[crates/gwiki/src/research/model.rs:103-112]
+[crates/gwiki/src/research/model.rs:115-117]
+[crates/gwiki/src/research/model.rs:119-135]
+[crates/gwiki/src/research/model.rs:120-134]
+[crates/gwiki/src/research/model.rs:137-158]
+[crates/gwiki/src/research/model.rs:160-162]
+[crates/gwiki/src/research/model.rs:164-172]
+[crates/gwiki/src/research/model.rs:165-171]
+[crates/gwiki/src/research/model.rs:174-176]
+[crates/gwiki/src/research/model.rs:178-208]
+[crates/gwiki/src/research/model.rs:179-187]
+[crates/gwiki/src/research/model.rs:189-207]
+[crates/gwiki/src/research/model.rs:210-213]
+[crates/gwiki/src/research/model.rs:216-223]
 [crates/gwiki/src/research/notes.rs:5-16]
 [crates/gwiki/src/research/notes.rs:18-20]
 [crates/gwiki/src/research/notes.rs:22-26]
@@ -6968,37 +6959,42 @@ Parent: [[code/modules/crates|crates]]
 [crates/gwiki/src/store.rs:870-875]
 [crates/gwiki/src/store.rs:878-922]
 [crates/gwiki/src/store.rs:925-939]
-[crates/gwiki/src/support/config.rs:17-20]
-[crates/gwiki/src/support/config.rs:22-29]
-[crates/gwiki/src/support/config.rs:23-28]
-[crates/gwiki/src/support/config.rs:31-35]
-[crates/gwiki/src/support/config.rs:37-42]
-[crates/gwiki/src/support/config.rs:45-51]
-[crates/gwiki/src/support/config.rs:53-60]
-[crates/gwiki/src/support/config.rs:62-67]
-[crates/gwiki/src/support/config.rs:69-76]
-[crates/gwiki/src/support/config.rs:78-85]
-[crates/gwiki/src/support/config.rs:87-91]
-[crates/gwiki/src/support/config.rs:93-100]
-[crates/gwiki/src/support/config.rs:102-117]
-[crates/gwiki/src/support/config.rs:131-134]
-[crates/gwiki/src/support/config.rs:136-150]
-[crates/gwiki/src/support/config.rs:137-149]
-[crates/gwiki/src/support/config.rs:152-161]
-[crates/gwiki/src/support/config.rs:153-160]
-[crates/gwiki/src/support/config.rs:163-169]
-[crates/gwiki/src/support/config.rs:172-174]
-[crates/gwiki/src/support/config.rs:176-181]
-[crates/gwiki/src/support/config.rs:177-180]
-[crates/gwiki/src/support/config.rs:183-191]
-[crates/gwiki/src/support/config.rs:184-186]
-[crates/gwiki/src/support/config.rs:188-190]
-[crates/gwiki/src/support/config.rs:194-206]
-[crates/gwiki/src/support/config.rs:209-228]
-[crates/gwiki/src/support/config.rs:232-250]
-[crates/gwiki/src/support/config.rs:253-265]
-[crates/gwiki/src/support/config.rs:269-281]
-[crates/gwiki/src/support/config.rs:285-312]
+[crates/gwiki/src/support/config.rs:18-20]
+[crates/gwiki/src/support/config.rs:22-44]
+[crates/gwiki/src/support/config.rs:23-29]
+[crates/gwiki/src/support/config.rs:31-43]
+[crates/gwiki/src/support/config.rs:46-61]
+[crates/gwiki/src/support/config.rs:68-71]
+[crates/gwiki/src/support/config.rs:73-80]
+[crates/gwiki/src/support/config.rs:74-79]
+[crates/gwiki/src/support/config.rs:82-86]
+[crates/gwiki/src/support/config.rs:88-93]
+[crates/gwiki/src/support/config.rs:96-102]
+[crates/gwiki/src/support/config.rs:104-111]
+[crates/gwiki/src/support/config.rs:113-118]
+[crates/gwiki/src/support/config.rs:120-127]
+[crates/gwiki/src/support/config.rs:129-136]
+[crates/gwiki/src/support/config.rs:138-142]
+[crates/gwiki/src/support/config.rs:144-151]
+[crates/gwiki/src/support/config.rs:153-168]
+[crates/gwiki/src/support/config.rs:182-185]
+[crates/gwiki/src/support/config.rs:187-201]
+[crates/gwiki/src/support/config.rs:188-200]
+[crates/gwiki/src/support/config.rs:203-212]
+[crates/gwiki/src/support/config.rs:204-211]
+[crates/gwiki/src/support/config.rs:214-220]
+[crates/gwiki/src/support/config.rs:223-225]
+[crates/gwiki/src/support/config.rs:227-232]
+[crates/gwiki/src/support/config.rs:228-231]
+[crates/gwiki/src/support/config.rs:234-242]
+[crates/gwiki/src/support/config.rs:235-237]
+[crates/gwiki/src/support/config.rs:239-241]
+[crates/gwiki/src/support/config.rs:245-257]
+[crates/gwiki/src/support/config.rs:260-279]
+[crates/gwiki/src/support/config.rs:283-301]
+[crates/gwiki/src/support/config.rs:304-316]
+[crates/gwiki/src/support/config.rs:320-332]
+[crates/gwiki/src/support/config.rs:336-363]
 [crates/gwiki/src/support/counts.rs:4-10]
 [crates/gwiki/src/support/counts.rs:12-20]
 [crates/gwiki/src/support/counts.rs:22-33]
@@ -7281,8 +7277,8 @@ Parent: [[code/modules/crates|crates]]
 
 ## Child Modules
 
-- [[code/modules/crates/gwiki/assets|crates/gwiki/assets]] - The `crates/gwiki/assets` module organizes assets for the gwiki crate. It contains the `skills` sub-module, which provides resources for skills such as audit, compile, query, and research.
-- [[code/modules/crates/gwiki/contract|crates/gwiki/contract]] - This module defines the authoritative contract specification for the `gwiki` tool via `gwiki.contract.json`. It exposes 448 indexed symbols that collectively outline the complete API surface, including command hierarchies, positional arguments, configurable flags, output schemas, dependency graphs, and error codes. The contract serves as the foundational configuration for argument parsing, runtime execution, and interface documentation.
+- [[code/modules/crates/gwiki/assets|crates/gwiki/assets]] - Provides documentation and asset references for core wiki skills, including audit, compile, query, and research operations. This module serves as a descriptive reference and does not expose any indexed API symbols or code components.
+- [[code/modules/crates/gwiki/contract|crates/gwiki/contract]] - The gwiki/contract module defines the authoritative CLI and API schema for the gwiki tool, exposing 448 indexed symbols. It details the complete command architecture, including names, summaries, positional arguments, flags, and validation constraints such as required and repeatable attributes. Additionally, it specifies output schemas, JSON serialization keys, hard and optional dependencies, degradation paths, and error codes, serving as the foundational contract for command execution, validation, and tool interoperability.
 [crates/gwiki/contract/gwiki.contract.json:2]
 [crates/gwiki/contract/gwiki.contract.json:3]
 [crates/gwiki/contract/gwiki.contract.json:4]
@@ -8084,21 +8080,20 @@ Parent: [[code/modules/crates|crates]]
 [crates/gwiki/src/commands/ask.rs:381-387]
 [crates/gwiki/src/commands/ask.rs:389-391]
 [crates/gwiki/src/commands/ask.rs:393-422]
-[crates/gwiki/src/commands/ask.rs:424-431]
-[crates/gwiki/src/commands/ask.rs:433-445]
-[crates/gwiki/src/commands/ask.rs:447-460]
-[crates/gwiki/src/commands/ask.rs:462-482]
-[crates/gwiki/src/commands/ask.rs:484-516]
-[crates/gwiki/src/commands/ask.rs:518-557]
-[crates/gwiki/src/commands/ask.rs:559-561]
-[crates/gwiki/src/commands/ask.rs:563-573]
-[crates/gwiki/src/commands/ask.rs:575-618]
-[crates/gwiki/src/commands/ask.rs:620-627]
-[crates/gwiki/src/commands/ask.rs:643-685]
-[crates/gwiki/src/commands/ask.rs:688-739]
-[crates/gwiki/src/commands/ask.rs:742-844]
-[crates/gwiki/src/commands/ask.rs:847-865]
-[crates/gwiki/src/commands/ask.rs:868-882]
+[crates/gwiki/src/commands/ask.rs:424-436]
+[crates/gwiki/src/commands/ask.rs:438-451]
+[crates/gwiki/src/commands/ask.rs:453-473]
+[crates/gwiki/src/commands/ask.rs:475-507]
+[crates/gwiki/src/commands/ask.rs:509-548]
+[crates/gwiki/src/commands/ask.rs:550-552]
+[crates/gwiki/src/commands/ask.rs:554-564]
+[crates/gwiki/src/commands/ask.rs:566-609]
+[crates/gwiki/src/commands/ask.rs:611-618]
+[crates/gwiki/src/commands/ask.rs:634-676]
+[crates/gwiki/src/commands/ask.rs:679-730]
+[crates/gwiki/src/commands/ask.rs:733-835]
+[crates/gwiki/src/commands/ask.rs:838-856]
+[crates/gwiki/src/commands/ask.rs:859-873]
 [crates/gwiki/src/commands/audit.rs:3-13]
 [crates/gwiki/src/commands/backlinks.rs:10-18]
 [crates/gwiki/src/commands/backlinks.rs:20-28]
@@ -8110,49 +8105,48 @@ Parent: [[code/modules/crates|crates]]
 [crates/gwiki/src/commands/benchmark.rs:46-73]
 [crates/gwiki/src/commands/benchmark.rs:75-81]
 [crates/gwiki/src/commands/benchmark.rs:83-121]
-[crates/gwiki/src/commands/citation_quality.rs:21-28]
-[crates/gwiki/src/commands/citation_quality.rs:31-35]
-[crates/gwiki/src/commands/citation_quality.rs:38-44]
-[crates/gwiki/src/commands/citation_quality.rs:47-51]
-[crates/gwiki/src/commands/citation_quality.rs:54-59]
-[crates/gwiki/src/commands/citation_quality.rs:62-65]
-[crates/gwiki/src/commands/citation_quality.rs:68-71]
-[crates/gwiki/src/commands/citation_quality.rs:74-78]
-[crates/gwiki/src/commands/citation_quality.rs:81-84]
-[crates/gwiki/src/commands/citation_quality.rs:87-90]
-[crates/gwiki/src/commands/citation_quality.rs:93-96]
-[crates/gwiki/src/commands/citation_quality.rs:99-102]
-[crates/gwiki/src/commands/citation_quality.rs:105-109]
-[crates/gwiki/src/commands/citation_quality.rs:111-141]
-[crates/gwiki/src/commands/citation_quality.rs:143-157]
-[crates/gwiki/src/commands/citation_quality.rs:159-166]
-[crates/gwiki/src/commands/citation_quality.rs:168-208]
-[crates/gwiki/src/commands/citation_quality.rs:210-250]
-[crates/gwiki/src/commands/citation_quality.rs:252-262]
-[crates/gwiki/src/commands/citation_quality.rs:264-271]
-[crates/gwiki/src/commands/citation_quality.rs:273-288]
-[crates/gwiki/src/commands/citation_quality.rs:290-321]
-[crates/gwiki/src/commands/citation_quality.rs:323-352]
-[crates/gwiki/src/commands/citation_quality.rs:354-366]
-[crates/gwiki/src/commands/citation_quality.rs:368-400]
-[crates/gwiki/src/commands/citation_quality.rs:402-412]
-[crates/gwiki/src/commands/citation_quality.rs:414-420]
-[crates/gwiki/src/commands/citation_quality.rs:422-433]
-[crates/gwiki/src/commands/citation_quality.rs:435-445]
-[crates/gwiki/src/commands/citation_quality.rs:447-471]
-[crates/gwiki/src/commands/citation_quality.rs:473-487]
-[crates/gwiki/src/commands/citation_quality.rs:489-500]
-[crates/gwiki/src/commands/citation_quality.rs:502-521]
-[crates/gwiki/src/commands/citation_quality.rs:523-534]
-[crates/gwiki/src/commands/citation_quality.rs:536-549]
-[crates/gwiki/src/commands/citation_quality.rs:551-565]
-[crates/gwiki/src/commands/citation_quality.rs:579-589]
-[crates/gwiki/src/commands/citation_quality.rs:592-656]
-[crates/gwiki/src/commands/citation_quality.rs:659-703]
-[crates/gwiki/src/commands/citation_quality.rs:706-735]
-[crates/gwiki/src/commands/citation_quality.rs:739-758]
-[crates/gwiki/src/commands/citation_quality.rs:760-764]
-[crates/gwiki/src/commands/citation_quality.rs:766-781]
+[crates/gwiki/src/commands/citation_quality.rs:20-27]
+[crates/gwiki/src/commands/citation_quality.rs:30-34]
+[crates/gwiki/src/commands/citation_quality.rs:37-43]
+[crates/gwiki/src/commands/citation_quality.rs:46-50]
+[crates/gwiki/src/commands/citation_quality.rs:53-58]
+[crates/gwiki/src/commands/citation_quality.rs:61-64]
+[crates/gwiki/src/commands/citation_quality.rs:67-70]
+[crates/gwiki/src/commands/citation_quality.rs:73-77]
+[crates/gwiki/src/commands/citation_quality.rs:80-83]
+[crates/gwiki/src/commands/citation_quality.rs:86-89]
+[crates/gwiki/src/commands/citation_quality.rs:92-95]
+[crates/gwiki/src/commands/citation_quality.rs:98-101]
+[crates/gwiki/src/commands/citation_quality.rs:104-108]
+[crates/gwiki/src/commands/citation_quality.rs:110-140]
+[crates/gwiki/src/commands/citation_quality.rs:142-156]
+[crates/gwiki/src/commands/citation_quality.rs:158-198]
+[crates/gwiki/src/commands/citation_quality.rs:200-240]
+[crates/gwiki/src/commands/citation_quality.rs:242-252]
+[crates/gwiki/src/commands/citation_quality.rs:254-261]
+[crates/gwiki/src/commands/citation_quality.rs:263-278]
+[crates/gwiki/src/commands/citation_quality.rs:280-311]
+[crates/gwiki/src/commands/citation_quality.rs:313-342]
+[crates/gwiki/src/commands/citation_quality.rs:344-356]
+[crates/gwiki/src/commands/citation_quality.rs:358-390]
+[crates/gwiki/src/commands/citation_quality.rs:392-402]
+[crates/gwiki/src/commands/citation_quality.rs:404-410]
+[crates/gwiki/src/commands/citation_quality.rs:412-423]
+[crates/gwiki/src/commands/citation_quality.rs:425-435]
+[crates/gwiki/src/commands/citation_quality.rs:437-461]
+[crates/gwiki/src/commands/citation_quality.rs:463-477]
+[crates/gwiki/src/commands/citation_quality.rs:479-490]
+[crates/gwiki/src/commands/citation_quality.rs:492-511]
+[crates/gwiki/src/commands/citation_quality.rs:513-524]
+[crates/gwiki/src/commands/citation_quality.rs:526-539]
+[crates/gwiki/src/commands/citation_quality.rs:541-555]
+[crates/gwiki/src/commands/citation_quality.rs:569-579]
+[crates/gwiki/src/commands/citation_quality.rs:582-646]
+[crates/gwiki/src/commands/citation_quality.rs:649-693]
+[crates/gwiki/src/commands/citation_quality.rs:696-725]
+[crates/gwiki/src/commands/citation_quality.rs:729-748]
+[crates/gwiki/src/commands/citation_quality.rs:750-754]
+[crates/gwiki/src/commands/citation_quality.rs:756-771]
 [crates/gwiki/src/commands/collect.rs:10-20]
 [crates/gwiki/src/commands/collect.rs:22-43]
 [crates/gwiki/src/commands/compile.rs:8-67]
@@ -9808,27 +9802,22 @@ Parent: [[code/modules/crates|crates]]
 [crates/gwiki/src/research/model.rs:27-32]
 [crates/gwiki/src/research/model.rs:35-96]
 [crates/gwiki/src/research/model.rs:36-95]
-[crates/gwiki/src/research/model.rs:103-105]
-[crates/gwiki/src/research/model.rs:107-129]
-[crates/gwiki/src/research/model.rs:108-114]
-[crates/gwiki/src/research/model.rs:116-128]
-[crates/gwiki/src/research/model.rs:131-142]
-[crates/gwiki/src/research/model.rs:144-146]
-[crates/gwiki/src/research/model.rs:148-159]
-[crates/gwiki/src/research/model.rs:149-158]
-[crates/gwiki/src/research/model.rs:161-163]
-[crates/gwiki/src/research/model.rs:165-181]
-[crates/gwiki/src/research/model.rs:166-180]
-[crates/gwiki/src/research/model.rs:183-204]
-[crates/gwiki/src/research/model.rs:206-208]
-[crates/gwiki/src/research/model.rs:210-218]
-[crates/gwiki/src/research/model.rs:211-217]
-[crates/gwiki/src/research/model.rs:220-222]
-[crates/gwiki/src/research/model.rs:224-254]
-[crates/gwiki/src/research/model.rs:225-233]
-[crates/gwiki/src/research/model.rs:235-253]
-[crates/gwiki/src/research/model.rs:256-259]
-[crates/gwiki/src/research/model.rs:262-269]
+[crates/gwiki/src/research/model.rs:98-100]
+[crates/gwiki/src/research/model.rs:102-113]
+[crates/gwiki/src/research/model.rs:103-112]
+[crates/gwiki/src/research/model.rs:115-117]
+[crates/gwiki/src/research/model.rs:119-135]
+[crates/gwiki/src/research/model.rs:120-134]
+[crates/gwiki/src/research/model.rs:137-158]
+[crates/gwiki/src/research/model.rs:160-162]
+[crates/gwiki/src/research/model.rs:164-172]
+[crates/gwiki/src/research/model.rs:165-171]
+[crates/gwiki/src/research/model.rs:174-176]
+[crates/gwiki/src/research/model.rs:178-208]
+[crates/gwiki/src/research/model.rs:179-187]
+[crates/gwiki/src/research/model.rs:189-207]
+[crates/gwiki/src/research/model.rs:210-213]
+[crates/gwiki/src/research/model.rs:216-223]
 [crates/gwiki/src/research/notes.rs:5-16]
 [crates/gwiki/src/research/notes.rs:18-20]
 [crates/gwiki/src/research/notes.rs:22-26]
@@ -10467,37 +10456,42 @@ Parent: [[code/modules/crates|crates]]
 [crates/gwiki/src/store.rs:870-875]
 [crates/gwiki/src/store.rs:878-922]
 [crates/gwiki/src/store.rs:925-939]
-[crates/gwiki/src/support/config.rs:17-20]
-[crates/gwiki/src/support/config.rs:22-29]
-[crates/gwiki/src/support/config.rs:23-28]
-[crates/gwiki/src/support/config.rs:31-35]
-[crates/gwiki/src/support/config.rs:37-42]
-[crates/gwiki/src/support/config.rs:45-51]
-[crates/gwiki/src/support/config.rs:53-60]
-[crates/gwiki/src/support/config.rs:62-67]
-[crates/gwiki/src/support/config.rs:69-76]
-[crates/gwiki/src/support/config.rs:78-85]
-[crates/gwiki/src/support/config.rs:87-91]
-[crates/gwiki/src/support/config.rs:93-100]
-[crates/gwiki/src/support/config.rs:102-117]
-[crates/gwiki/src/support/config.rs:131-134]
-[crates/gwiki/src/support/config.rs:136-150]
-[crates/gwiki/src/support/config.rs:137-149]
-[crates/gwiki/src/support/config.rs:152-161]
-[crates/gwiki/src/support/config.rs:153-160]
-[crates/gwiki/src/support/config.rs:163-169]
-[crates/gwiki/src/support/config.rs:172-174]
-[crates/gwiki/src/support/config.rs:176-181]
-[crates/gwiki/src/support/config.rs:177-180]
-[crates/gwiki/src/support/config.rs:183-191]
-[crates/gwiki/src/support/config.rs:184-186]
-[crates/gwiki/src/support/config.rs:188-190]
-[crates/gwiki/src/support/config.rs:194-206]
-[crates/gwiki/src/support/config.rs:209-228]
-[crates/gwiki/src/support/config.rs:232-250]
-[crates/gwiki/src/support/config.rs:253-265]
-[crates/gwiki/src/support/config.rs:269-281]
-[crates/gwiki/src/support/config.rs:285-312]
+[crates/gwiki/src/support/config.rs:18-20]
+[crates/gwiki/src/support/config.rs:22-44]
+[crates/gwiki/src/support/config.rs:23-29]
+[crates/gwiki/src/support/config.rs:31-43]
+[crates/gwiki/src/support/config.rs:46-61]
+[crates/gwiki/src/support/config.rs:68-71]
+[crates/gwiki/src/support/config.rs:73-80]
+[crates/gwiki/src/support/config.rs:74-79]
+[crates/gwiki/src/support/config.rs:82-86]
+[crates/gwiki/src/support/config.rs:88-93]
+[crates/gwiki/src/support/config.rs:96-102]
+[crates/gwiki/src/support/config.rs:104-111]
+[crates/gwiki/src/support/config.rs:113-118]
+[crates/gwiki/src/support/config.rs:120-127]
+[crates/gwiki/src/support/config.rs:129-136]
+[crates/gwiki/src/support/config.rs:138-142]
+[crates/gwiki/src/support/config.rs:144-151]
+[crates/gwiki/src/support/config.rs:153-168]
+[crates/gwiki/src/support/config.rs:182-185]
+[crates/gwiki/src/support/config.rs:187-201]
+[crates/gwiki/src/support/config.rs:188-200]
+[crates/gwiki/src/support/config.rs:203-212]
+[crates/gwiki/src/support/config.rs:204-211]
+[crates/gwiki/src/support/config.rs:214-220]
+[crates/gwiki/src/support/config.rs:223-225]
+[crates/gwiki/src/support/config.rs:227-232]
+[crates/gwiki/src/support/config.rs:228-231]
+[crates/gwiki/src/support/config.rs:234-242]
+[crates/gwiki/src/support/config.rs:235-237]
+[crates/gwiki/src/support/config.rs:239-241]
+[crates/gwiki/src/support/config.rs:245-257]
+[crates/gwiki/src/support/config.rs:260-279]
+[crates/gwiki/src/support/config.rs:283-301]
+[crates/gwiki/src/support/config.rs:304-316]
+[crates/gwiki/src/support/config.rs:320-332]
+[crates/gwiki/src/support/config.rs:336-363]
 [crates/gwiki/src/support/counts.rs:4-10]
 [crates/gwiki/src/support/counts.rs:12-20]
 [crates/gwiki/src/support/counts.rs:22-33]
@@ -11585,21 +11579,20 @@ Parent: [[code/modules/crates|crates]]
 - `6ad85944-9afa-5653-870f-e9b5d5e1ec1f`
 - `b2631415-1303-5ddd-acab-4cea51a2b91f`
 - `a93d90b9-e54d-535b-965a-8cbd911a6c95`
-- `af4f21e4-a26e-51bc-9b54-aae1ffdcb677`
-- `895b1dd7-6a57-5825-b966-4354ecde7795`
-- `91418d21-b876-5063-bb64-e3a76ab27a5f`
-- `881e8a89-2906-5647-be46-6d491ee0f0aa`
-- `58edb50a-5435-5b3c-a090-e1976fe735a0`
-- `27590bad-a4ac-583e-8e0f-4af1a6fd6af6`
-- `89ebd68a-5b81-54d6-96dc-456b2d292a14`
-- `6d2f8a80-d119-5c10-b3e8-eabf72f90a2c`
-- `b2d07726-da4c-505f-9226-549828d24a14`
-- `cd78904b-4bd2-55db-b3f2-5e65a2ac4f6c`
-- `7e25140c-cf39-5491-99dd-833aea35ec4f`
-- `d6c941d3-ca2c-5a9b-8e6e-5a55eb63664f`
-- `a4430198-951e-5003-9e5e-2986c59626c4`
-- `f12bf83f-54ad-5c19-9667-62ffe75de27a`
-- `403ff745-c666-5b9e-912a-428dd94395da`
+- `71607693-b19f-5daf-a4bb-0adb83857735`
+- `c5726362-dd79-5f95-a88d-bfda26e1804c`
+- `b1504580-3e65-54de-a976-aeef3224bee5`
+- `c723890d-4338-5db8-89c9-1afcc5368371`
+- `7495ed1e-7c43-5061-a611-12726bd63bba`
+- `a981b604-1625-536d-9267-f230d0ee2841`
+- `45949a04-86ac-5ec6-a3a9-ea65018a366f`
+- `02220be1-52c1-5a2d-8add-4441dc5e37a6`
+- `fef977e1-5462-5c7e-b458-2c646b483ad2`
+- `667a24a4-1620-56a4-94cf-10fcd4994c62`
+- `0310bf76-3847-5c02-aaa3-b12186eede5c`
+- `5aadfa7d-9f29-5286-9987-99f2582c3546`
+- `2502c0aa-8f2b-5460-a270-50d27a695900`
+- `0f732658-6a41-59c8-bf1b-b568f8141736`
 - `120069a4-7de5-57d0-8c26-8107d8dc8144`
 - `9221ea26-3d62-54ec-a050-21b36b815b78`
 - `586b2147-ca79-5c2d-891a-3ac1a13a3d54`
@@ -11611,49 +11604,48 @@ Parent: [[code/modules/crates|crates]]
 - `3c7f7188-f600-57c0-8608-e946c8dd7210`
 - `147862a7-e4ad-5a29-bcf5-28ef1c506b95`
 - `5ffc67db-8128-5a37-8622-d1a397a94dd6`
-- `fd988efa-b9fe-53c5-a584-c5b70409acbb`
-- `aeaad740-5cb9-573a-9e5f-9b0d313a320c`
-- `4f8f4a1a-91bd-5617-af03-5708274ed8dd`
-- `f7446ac5-4c0b-5cc9-9c0e-e307f4c07fd4`
-- `f0d812a0-ad9d-5bb6-858f-eb367e3081df`
-- `43272030-5c55-593e-b624-5e9bc0969b2c`
-- `f846ba57-312a-5bc7-b360-5955974bd6ea`
-- `bbab831c-aed7-53fd-9950-9760dc7bfc82`
-- `bd73451b-e452-5fe6-8e1c-c66f5ce3149e`
-- `0ab93dfd-f556-5e0a-8b64-c8ed1be23d60`
-- `01d2d4a8-da52-56bc-84d9-9b17bdda768b`
-- `b7e6f5c1-5f86-5064-9f8a-3cea589d2cef`
-- `e403e421-3a7f-5b20-921b-4de0bf79310c`
-- `36c9d4fb-c501-507e-ab93-997171517a0d`
-- `751fab1a-0e6e-563d-9dcd-b5cb0364b3ba`
-- `ccedc16e-5ba6-53ce-a865-f1e68ccc057c`
-- `a06c3260-ef89-5859-a243-3ebb85042cf1`
-- `68d5e810-5f3c-5e46-a0aa-92784b25583d`
-- `9bca91c0-3665-584e-8aba-613c47f8b85e`
-- `64eac7cd-2201-5c1c-b41b-615aeab8d64b`
-- `95973233-3bdc-5723-b35b-2f8d32739c87`
-- `0919d05f-e276-5b52-89d9-53a6ef23fc67`
-- `f7b9fa82-ef9c-5049-b50a-5a3a7e6af241`
-- `b9072af5-1e5a-562c-be6f-99c0b29773d2`
-- `e3b22fac-93c6-5f9c-9567-8c89c1b99367`
-- `484cb811-50ae-5406-afc0-d88d98eb7798`
-- `d2124b75-08ea-524f-bd0b-60e1d48a27b7`
-- `67134d96-1ea6-5248-977c-aea66306af85`
-- `7f5b0262-1762-5cf2-9839-7c229d852831`
-- `369753ac-e078-50c0-9952-a61473076b8f`
-- `f54d0ea2-6eb7-5bb2-b4d9-088fa5faf5a3`
-- `44010c54-3dd6-5647-94fc-caa2951c3c3f`
-- `fba8db4f-f0e8-520d-83c6-458a48a88f0f`
-- `f991266e-cbc2-5f17-84b0-f86ca0885e4f`
-- `ffc2f223-f4f6-57a5-a54a-e74c95c2a7b0`
-- `26ee8e97-854f-5017-8b17-0bd87cb01c20`
-- `df7e53d4-f3c0-54e3-9b31-d02a5b5769e7`
-- `61218269-2f86-5583-a18f-144b344683f2`
-- `f7e31ac3-e72a-5246-87d3-a1b906409197`
-- `f86f2e65-04aa-5c94-81f5-b70fe2bdd7ad`
-- `0f88ff18-df85-58bb-97e3-1c0e2d39f36b`
-- `e2c50d29-9d47-564e-9c50-408b0175dada`
-- `6bf59a92-13f9-5f29-b8c8-ef50a24b07aa`
+- `0626884e-2a39-5b13-b8be-fe2a57a323b5`
+- `4d6ab4f4-97a7-5bbf-90a5-02351c47012a`
+- `b6893647-b28f-52f7-b4cb-e8b387a066d1`
+- `eab22ee9-b78f-5362-8512-c02750d592ed`
+- `41de8c78-cd5c-5125-b118-36c75c4a16cd`
+- `8842ec53-618e-537f-8190-dfcdc6b6320e`
+- `ed3d3b65-5f63-5cd4-8b36-f0a86463f567`
+- `5e572abe-a3f9-54a3-a16f-19d452378a59`
+- `8e617206-485c-50ee-92ce-fa8a8677d58b`
+- `70df4638-9e5b-5f9f-a13d-e015e7271c66`
+- `83031209-71fe-54c0-bb2e-ea5a5564f899`
+- `0f069f69-41dd-59c9-a031-239e2cc75c1d`
+- `a195ed81-8b38-5a14-bd6b-dcfd0b301a29`
+- `1e42fbe5-22cc-5759-830d-ebf26d9a3e21`
+- `7596b9e5-83f6-531d-9ce2-018430bcc015`
+- `0990c152-2b93-596f-87c6-2ef0a3ed9e1d`
+- `c897a3f9-4a94-5875-b486-7e6a712abbfa`
+- `fc6d3878-6985-56ee-ad0b-3e03a1cbe250`
+- `90944aa9-9f86-53d6-b27c-2831af608c9d`
+- `78069b76-6b5d-5b35-a827-b621bf7ad99c`
+- `9da63a7d-cfb0-5b78-89c4-d7196be2fd57`
+- `29a3503d-7ef2-560f-ae80-ff22017c0f92`
+- `eb5a04cf-4496-5e9e-b530-02d5362fc11c`
+- `cd112861-f84d-5fa7-a6c6-f27d2ed2259e`
+- `edc9c408-4130-5875-b270-bb9922b14a4d`
+- `c5a784e1-5b36-5340-9262-9cb2d4707c7d`
+- `268b404c-fc69-5458-aa32-ad59a5d166b3`
+- `1d19baa0-950a-58e5-8bda-1fe3b3eab775`
+- `24ded5e4-8e5b-5063-9134-6e7a0d0d3f50`
+- `ae2cd9ba-0679-5081-8da5-934c8579a7fa`
+- `94402ab5-5e26-51eb-86b6-12e5d1b1b9e5`
+- `db583e89-4c59-55ae-b707-af3e2f6dd28b`
+- `c160fbdf-7ede-5730-8983-cce3fc53cc6b`
+- `c2c5650f-3299-571d-bec8-dad5ca48fd93`
+- `da0c555c-8859-59fb-b9c6-f5f25ec9fa67`
+- `55fc8cf0-0de7-5e3f-96f5-2aabfc861b4d`
+- `65cdbf4d-9d36-570b-91d4-215fe2b39a9f`
+- `335de342-e361-5101-b6bd-999ede97b45e`
+- `d5f96ff7-6caf-58d8-8806-2a69dc1b40b8`
+- `488c0e48-0dcd-5b75-a9c9-a017830605e1`
+- `45b73007-069d-5f30-99a3-e54b7d25c8a7`
+- `9ab7d097-37d1-5c7b-a280-c27d993aa85a`
 - `b82f162e-63a4-5a97-b033-94faa99f166d`
 - `e6c80f4c-f0f7-5dfc-b6f6-1903106e80b6`
 - `10d88a12-3854-56bf-a151-bf57696ae5b8`
@@ -12163,50 +12155,50 @@ Parent: [[code/modules/crates|crates]]
 - `8e5ef180-3f2c-5637-867c-53a04f2ce546`
 - `cc910344-3638-5610-9542-35621556eee5`
 - `7531ab0d-8c04-5d4c-a2d7-d7497abe1d2f`
-- `d7c0ba60-6a15-5c75-8ea5-30393f847a02`
-- `dac2d5e9-6cf0-5128-b60e-099c92d89f86`
-- `a4ee429f-cef2-57d2-834a-baf7af6fd3a3`
-- `561c608f-576b-56a5-bb27-3ad756327ed9`
-- `2948ec58-9396-5d23-834c-5d4e007d369b`
-- `05e70971-8735-5cc7-b31c-121e9bf55526`
-- `7eeea5e9-dd55-5011-a1ae-374403a187b3`
-- `bd249107-e3b0-52f2-aa69-2bdd3c410013`
-- `c56b5746-9214-54bd-9829-4cab5b701d3f`
-- `6f7a4115-4be0-5ee3-8816-69a82d2404f8`
-- `71f12a12-2336-58bf-a02d-8df16f816f6b`
-- `48fa7739-b1a1-5d6c-b73c-ec75067aa0ae`
-- `a37adf07-2cef-5ee1-bd7e-82c1ff46c475`
-- `d27d3350-3293-5a16-9ff7-88e166b862f2`
-- `f489da9a-0a73-50b1-bc6d-badf19cb5e88`
-- `9f7a9c12-cdb1-5aa4-bc52-a080a96ab669`
-- `d2afe17e-b7e9-5a08-b42f-02b510d9e290`
-- `43b51f74-a07f-5880-b686-dd64494561de`
-- `436a1305-13b0-590f-87ff-c4319c4830e5`
-- `28dd9a97-8d0c-59d6-8a29-df95d3265805`
-- `49ef6a0d-a00b-519a-85fe-96ebed09cd80`
-- `aa972abe-5b67-5b84-8cd4-53c72b0357ee`
-- `fc37e9ac-eaf6-5074-96eb-64debbbcddeb`
-- `4dbc8b06-2c0a-5321-94d1-b311cf304ba2`
-- `a6968a60-4f47-59c1-b2f7-bbaca6625e82`
-- `99634529-f1c5-5945-89f9-d20d05504a5e`
-- `a6ead3a4-1fea-5f58-8036-e10fdfd45be4`
-- `e735c901-a231-50e7-90bc-6cee3f1ffbb5`
-- `b59baf89-9507-58d1-9804-8b2b5cb2ef89`
-- `0bc3b22f-dee2-54aa-a3d6-04610311bc3e`
-- `491b9d3c-c2a6-530e-a535-1ddd1b62394d`
-- `2351cf34-e277-55e4-9bdc-0cda1955aad4`
-- `32653c7d-15fc-5edf-8c7a-e5d65bce7739`
-- `927ce41a-7d19-5ceb-84b6-0f7be00c23ea`
-- `8e2bad04-6782-545a-809e-f18af9e0bd8b`
-- `0f624a1e-7a01-5aa9-8bf2-e1739fd6cb5b`
-- `532dad87-4248-5008-b3e6-371a9f0adccf`
-- `b3373679-8575-5a38-bd43-b69a41738810`
-- `cca0d811-012f-580f-9f0d-2329a7a47da0`
-- `8cfb0b01-6f42-5562-98cb-2e88f8b87903`
-- `b6611b48-2c70-5cd6-982e-d8f6e14223f0`
-- `127eacff-e184-5896-b6d6-7e4528801f7b`
-- `4d355e8e-9ca0-57c6-9f44-6c27f7528302`
-- `ada32c91-f508-561d-89c7-a24b6836dd58`
+- `37c8b381-055b-50da-8e60-1bce3861752a`
+- `fbe9714e-66a0-576b-b329-b881451641e3`
+- `5949c735-f368-552a-9179-0f89a140d327`
+- `c803ed80-3d42-5e5b-a563-93204e1a04ed`
+- `7b01def8-5288-56cc-a301-d15e5de5a62b`
+- `124b1407-f7a4-58c3-970a-71fd4f7363a6`
+- `99474ed0-9f15-5798-a7d9-935bd802409a`
+- `73986137-22f1-5eb0-9b44-bdcf3fb01416`
+- `876468d0-6666-5ecd-bc9e-152fb394f62e`
+- `a135d49e-1ee8-5e61-a7f6-88454e434184`
+- `b49bc1b0-eb12-549b-ae29-f3ec54db3f98`
+- `e154fc8c-c0f3-57e6-81bd-1ac738be31a5`
+- `047e5fad-9a50-5f8f-ba46-27b6ada0b762`
+- `b24b8c59-e0a6-54b4-a62a-ced84bebb8c5`
+- `a884a7f2-a962-5f02-bda3-c868392b389f`
+- `391d7b3f-7e8a-58cb-80b9-c02c331c99d0`
+- `72f0064f-d5bf-5e6e-a03e-4245dbd56609`
+- `7b7ba0ac-0c26-5730-911c-9830ff1fff39`
+- `69fe9a26-e786-51dd-be61-5c7ccd05d188`
+- `9e22ee27-856d-5636-82b6-e44e8d989c4f`
+- `d4a38969-fe7d-5829-b62d-55da64b6f49f`
+- `a2fb716d-c983-53b0-8c79-4f0d19c4d825`
+- `922f15fd-1267-589f-a066-76db372f589d`
+- `576e25d8-cf55-5bc5-8ae8-6ef7cd391b57`
+- `4c19e976-3a5a-51d6-9e66-bd049b75cdea`
+- `a60b910d-6a37-5ead-99c0-41c76ddf38bd`
+- `51ab7fad-ad2f-58ec-a36e-14338f20e119`
+- `24089d0c-03f3-552a-b116-1e992cb3260b`
+- `1ce14acf-427e-51f8-b12f-4f3fad2fe9f6`
+- `8b4a9cac-352b-590b-9742-34c9e50dcf85`
+- `1ea7fde2-76b0-59b8-8ea6-faa3075d1b03`
+- `183433d6-60e6-5508-b0a4-d5784158831f`
+- `3c3c5114-7cea-5537-8479-efa867d5256b`
+- `30b708f3-2338-5a44-94fb-5fb80193f3ef`
+- `e381b8ed-cbaa-5266-858c-81d20215a7af`
+- `5d974222-e6fe-5bfb-8e99-b71ceb0f0114`
+- `a4361bcc-55b6-5c76-b719-9c291a3c833d`
+- `2f877716-2825-59bb-82f5-33b897035530`
+- `07d8082a-b9f2-5b67-a6c4-dcb496472f9d`
+- `c3a2d43a-83ba-59fa-82e0-3ce6b20e5f21`
+- `00263a8c-4fba-5775-8ac6-5285148853a5`
+- `255e1e3b-14b6-550a-826a-cc1bf49a1e89`
+- `2abbd0b3-22d8-55df-a006-665245a40d7e`
+- `bb1a8622-bcd5-59c0-aebb-8d9e84e9ac2f`
 - `7d7d2878-4616-50b7-b364-5d25d085c2ff`
 - `862372eb-ec1d-56e0-9087-7b29b27353b9`
 - `23ca6438-a0eb-5b47-93a0-09260ef6a965`
@@ -13304,32 +13296,27 @@ Parent: [[code/modules/crates|crates]]
 - `a1097965-374c-5feb-a5fc-344fcbeff697`
 - `3dfd2008-9791-50f8-aa2d-49429cba735d`
 - `1df0202d-d5e8-5355-91dc-9019a02c104b`
-- `b1dfc6dd-5168-54a2-afa3-49c24d5147c8`
-- `3ee55bc7-7354-547e-ba42-a0cc7cf5f563`
-- `3e30be16-a998-5e22-ba40-a8bc4e7daeb9`
-- `cfca1604-d73b-54b7-b92d-82ed622e3acf`
-- `b732a8bd-725c-5999-a9c3-d4f4b5d6c512`
-- `64ba9cc6-80e9-5a27-9a57-330fb449554a`
-- `75e47f3c-8b22-57e6-8940-19f53300c15a`
-- `d88e1e01-7d30-5d3b-b183-885529b5e9c1`
-- `bbb0f800-11ca-5198-b641-da93f5ab2e64`
-- `87ca6721-3c00-52c5-82a7-2e59d7d17529`
-- `ffd5be04-2b79-5830-b991-a7777464b837`
-- `50174e5a-60d9-5ba2-b6a4-e17d2d94c959`
-- `410da895-6404-58a3-b146-11bb37b8b5ef`
-- `c1ff3510-efe1-5dc6-bbf3-5bfb1891a02d`
-- `234865bd-d25d-5fb5-bc01-b37a5ec218d4`
-- `9170e976-9638-53ea-aa9c-988a1e590b4e`
-- `bfb54443-4e66-57d4-8134-96488a726413`
-- `ad2c4899-e097-58b1-99f9-909c76105ede`
-- `f1affbbb-7143-519e-af0b-daf6e5edeed7`
-- `6ece662b-3dd0-58e5-9577-70edc92245b1`
-- `822e30b8-608e-58f1-bb26-7ce8289b5520`
-- `f9476f6f-462f-580f-9d87-e67a4aba1c05`
-- `a7e137f4-8613-542f-a902-d5cd8d1df29d`
-- `a37a0133-d303-5e31-b6b6-091941ee99a9`
-- `80cb32ae-b2e5-5539-bbad-de692b503db3`
-- `47d24729-4808-5a0e-b215-87e2f82ead30`
+- `caf20e91-0840-562e-ac35-5058d3ecad26`
+- `7b6646f4-1914-51e3-9377-2fa387936279`
+- `18f3ae85-60d6-590f-b07e-8fae11641408`
+- `32d9f475-2599-5454-acdc-0ced8e80fb47`
+- `68c822f1-60d4-50a5-95ee-6c55eb050e06`
+- `51c8007e-a780-5511-bff3-ce109d377c0d`
+- `ea4ba7a4-ff71-5e49-a588-baa3e0ac52cd`
+- `3ae8308d-6b4c-5864-a07e-7176ddd2cc4c`
+- `87e28c91-5cea-5a3a-b1d8-cba85094a3d0`
+- `19bfaf22-ce62-5423-8bd0-012c5ced6749`
+- `10d9d236-11f8-5b81-b13b-bfd163b6a4ca`
+- `9974413e-c409-5639-a61a-6e66b1966abf`
+- `ab2d7649-3151-51de-94fd-c8db5e5f2494`
+- `ee3a9edd-b18a-58d6-8217-eb91f44e0e15`
+- `152b8b41-0c68-577b-89a3-af7309587791`
+- `a7c6c81e-8a80-5912-acf2-fff3e1a06e27`
+- `212117c5-e034-5e04-86ef-a84ff11576df`
+- `c45898e3-f1d7-58a1-bbb5-29f14eb06693`
+- `11803cdc-dabc-5405-a22c-344e76cc57f5`
+- `577432b1-8f0d-5185-9c43-d5456bf7f2c8`
+- `6087992c-db7e-5a6b-9c28-5d123d9b5517`
 - `39fa6fba-c484-583a-af7a-cf12213274fd`
 - `f2a4ecb5-d3c3-5e2a-8a80-fd9e113b9871`
 - `d88dad28-77b4-551b-83c4-95f8f83c8e7a`
@@ -13968,37 +13955,42 @@ Parent: [[code/modules/crates|crates]]
 - `b5a36516-209a-582c-8b23-747fa2a8ef39`
 - `cdf0d778-392a-5aca-95a6-31c7c241c591`
 - `52508373-e4f6-59e0-a8ad-a3bd4dbebcf2`
-- `ffa5899d-d273-54b0-ab38-79ab6532b2bb`
-- `0bd6c9e6-097c-568f-9caf-6f5f4a2d0def`
-- `b04c09ab-89c5-594d-8c4b-672c97a634ce`
-- `1eda6d02-1fa5-5d69-bb27-294bdeaf70aa`
-- `16b3f22a-23f0-5158-98f3-80f02cbac55f`
-- `42d8a2cb-4641-518e-84b0-13e45e109d00`
-- `40e90727-f9fd-5938-8725-0f6d40857f33`
-- `307d488c-ba74-5142-82de-5eb320757836`
-- `ba7c38b2-b16d-50f8-8bf4-b0d23da13040`
-- `a8d3e8cc-b064-53c2-a44a-64e7c4b1ab9a`
-- `3d512a94-9084-5a93-b054-bbc87aed52fe`
-- `26d2526d-de98-529b-ae5f-cc41756e4559`
-- `bdc6ce54-eaaf-5226-9a52-7533273b5c01`
-- `96ae673e-6ab4-5b9f-8c52-17ecc16afb54`
-- `b676767d-cd66-5192-b811-b4395817b540`
-- `52957757-34e4-56a1-bafc-229d38e5c270`
-- `bc79dfe7-405e-547d-9eb5-20121a8530c3`
-- `27b360ae-de7c-5ec0-9eb7-4067b6f812c5`
-- `d38c4257-cc17-581c-9bb9-29c06576b003`
-- `7fe5bc6b-cb98-5a58-9154-bfe1cf811c79`
-- `3d2d321f-1dc1-537e-a37a-38200b0453b7`
-- `53c3b772-1a31-5f18-b743-dc9e98f7e983`
-- `0e534a0e-443c-5651-8918-0389d26e259f`
-- `6bc1c131-6a60-5ef3-9128-3215cac5d99f`
-- `11e8d499-3944-5b44-928f-63f38d739bb4`
-- `57b47df4-03f5-5a87-9df3-301bd01d1dc7`
-- `e99c6416-d8ea-5df3-b5cf-35b987c417b1`
-- `afd70b74-3ab9-55bb-af01-3b64da8800f0`
-- `20f16aa6-97ae-5411-971b-177524a2cebd`
-- `129019ee-da8b-544a-9574-38e8d372f45c`
-- `a49ec97f-8978-5704-a4a5-a2613b3f1052`
+- `bf09877f-8772-5b79-a0ea-177a058fea73`
+- `89604c04-2512-5bfc-a00c-5b62cdbbab09`
+- `46a3fb54-b9ad-5717-be8e-31b1ea45da5f`
+- `7e81b3d9-3fd8-5dce-b466-5aa424f98ba2`
+- `03673ec0-e042-5ecb-8465-83e2e29b50c4`
+- `faa4c6ea-6b38-5a26-b2f0-43a0a74136be`
+- `2d122f90-2cec-5b9b-844c-c2bcf3f3085a`
+- `fe650e09-8172-5b62-82ad-66fb771a5059`
+- `410c7d5e-0ab7-5e59-965c-ebac3fe2d0a2`
+- `f55cd370-a57f-5a75-a653-96990fbd8c19`
+- `60853d35-bf82-58e6-ad93-cc1f079f8d0d`
+- `d61deee2-96f4-5fde-ace0-2f4e6cd04042`
+- `d63925a8-cd8e-5d7e-82ab-f08e1213999a`
+- `fbc1bd41-cbfc-577a-aabe-3bcc8801eb76`
+- `c35262bf-e907-56e5-a22b-192bcc35ddcf`
+- `8f6696ea-2c91-51c7-8c27-d72238555df6`
+- `d0057609-80cc-5913-9b05-63a231f0a13e`
+- `fef1c01e-4e64-5064-9a84-fedd43d43c67`
+- `9b254d32-ba5e-511e-933d-54eb161a4d0d`
+- `283bd840-f436-58f3-8b06-2b559813f06b`
+- `7d7aa43d-75b2-5e0a-8631-f66e995e198d`
+- `56b415b4-f4df-5b29-9ed6-2b9a7db3c254`
+- `562394c7-f0b4-5683-a08e-78c1833110e3`
+- `162348de-8b35-5292-872d-aae9d34f1e6a`
+- `6ce590b9-9982-5fc5-bba7-38ce4f07de55`
+- `63949847-1b7f-59b8-91ba-5616e9444d69`
+- `bbe05f32-4c07-5393-aa0e-c64985500da8`
+- `e900ddd4-6107-5fce-8250-6eed86c8b7c5`
+- `a3921349-05db-58ca-aaf4-ca8caa1c947f`
+- `18816624-9bb0-5bf6-92ae-cca2b4841b3e`
+- `f1646dc9-8c4c-58f1-9150-c0f8cce540f5`
+- `cc49d970-fc85-595f-aae5-63d7e1050965`
+- `78da5e83-3767-5309-8c31-229eca2daee8`
+- `7bd819cf-723b-5c97-a07b-5e6035272491`
+- `97fc85e9-83df-5235-9cd4-56db6ab3aba5`
+- `eaf58024-bf53-5d32-bbf3-478b8b17238d`
 - `656f145d-38f1-5e5f-8d2f-3e5b9e20e1e1`
 - `fc6bcd38-24d5-5898-abd8-f7cccb038630`
 - `b479c64e-4fae-51b0-92fe-d60f7c9f9d94`

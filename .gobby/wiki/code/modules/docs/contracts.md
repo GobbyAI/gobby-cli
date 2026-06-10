@@ -13,7 +13,7 @@ Parent: [[code/modules/docs|docs]]
 
 ## Overview
 
-This module contains documentation for interface contracts and schemas, covering CLI specifications for gcode and gwiki, gwiki research, and a shared graph schema.
+This module contains documentation and specification files for the project's CLI tools and shared graph architecture. It covers usage contracts for gcode-cli and gwiki-cli, provides research context for gwiki, and defines the shared graph schema used across components. As a documentation-only collection, it serves as a reference for interfaces, data structures, and tool specifications without containing executable code or indexed API symbols.
 
 ## Files
 

@@ -29,27 +29,22 @@ provenance:
   - 27-32
   - 35-96
   - 36-95
-  - 103-105
-  - 107-129
-  - 108-114
-  - 116-128
-  - 131-142
-  - 144-146
-  - 148-159
-  - 149-158
-  - 161-163
-  - 165-181
-  - 166-180
-  - 183-204
-  - 206-208
-  - 210-218
-  - 211-217
-  - 220-222
-  - 224-254
-  - 225-233
-  - 235-253
-  - 256-259
-  - 262-269
+  - 98-100
+  - 102-113
+  - 103-112
+  - 115-117
+  - 119-135
+  - 120-134
+  - 137-158
+  - 160-162
+  - 164-172
+  - 165-171
+  - 174-176
+  - 178-208
+  - 179-187
+  - 189-207
+  - 210-213
+  - 216-223
 - file: crates/gwiki/src/research/notes.rs
   ranges:
   - 5-16
@@ -138,7 +133,7 @@ Parent: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-The `research` module orchestrates AI-assisted research workflows within the gwiki system, managing the complete lifecycle from initialization and scope resolution to enrichment execution and state tracking. It defines core domain models for research configuration, status, and audit findings, while providing utilities to process outcomes, extract and deduplicate code citations, sanitize paths, and estimate token usage. The module handles the creation, materialization, and acceptance of research notes, including frontmatter parsing, body rendering, and idempotent write strategies backed by atomic file operations and synchronization primitives. Comprehensive logic and test coverage validates enrichment behavior, note collision handling, path safety, and checkpoint-based state recovery.
+The `research` module orchestrates AI-assisted research workflows within the wiki system. It defines the core domain model and command execution engine for tasks such as searching, reading, and ingesting external content. The module manages the full lifecycle of accepted notes, handling draft creation, YAML frontmatter parsing, and materialization into finalized wiki entries. It processes research outcomes by generating audit findings, extracting and sanitizing code citations, and applying deduplication logic. Reliable, atomic file I/O and raw index management ensure safe storage operations, while a comprehensive test suite validates session management, scope resolution, token estimation, concurrency controls, and idempotent note handling.
 [crates/gwiki/src/research/mod.rs:41]
 [crates/gwiki/src/research/mod.rs:44-50]
 [crates/gwiki/src/research/mod.rs:45-49]
@@ -162,27 +157,22 @@ The `research` module orchestrates AI-assisted research workflows within the gwi
 [crates/gwiki/src/research/model.rs:27-32]
 [crates/gwiki/src/research/model.rs:35-96]
 [crates/gwiki/src/research/model.rs:36-95]
-[crates/gwiki/src/research/model.rs:103-105]
-[crates/gwiki/src/research/model.rs:107-129]
-[crates/gwiki/src/research/model.rs:108-114]
-[crates/gwiki/src/research/model.rs:116-128]
-[crates/gwiki/src/research/model.rs:131-142]
-[crates/gwiki/src/research/model.rs:144-146]
-[crates/gwiki/src/research/model.rs:148-159]
-[crates/gwiki/src/research/model.rs:149-158]
-[crates/gwiki/src/research/model.rs:161-163]
-[crates/gwiki/src/research/model.rs:165-181]
-[crates/gwiki/src/research/model.rs:166-180]
-[crates/gwiki/src/research/model.rs:183-204]
-[crates/gwiki/src/research/model.rs:206-208]
-[crates/gwiki/src/research/model.rs:210-218]
-[crates/gwiki/src/research/model.rs:211-217]
-[crates/gwiki/src/research/model.rs:220-222]
-[crates/gwiki/src/research/model.rs:224-254]
-[crates/gwiki/src/research/model.rs:225-233]
-[crates/gwiki/src/research/model.rs:235-253]
-[crates/gwiki/src/research/model.rs:256-259]
-[crates/gwiki/src/research/model.rs:262-269]
+[crates/gwiki/src/research/model.rs:98-100]
+[crates/gwiki/src/research/model.rs:102-113]
+[crates/gwiki/src/research/model.rs:103-112]
+[crates/gwiki/src/research/model.rs:115-117]
+[crates/gwiki/src/research/model.rs:119-135]
+[crates/gwiki/src/research/model.rs:120-134]
+[crates/gwiki/src/research/model.rs:137-158]
+[crates/gwiki/src/research/model.rs:160-162]
+[crates/gwiki/src/research/model.rs:164-172]
+[crates/gwiki/src/research/model.rs:165-171]
+[crates/gwiki/src/research/model.rs:174-176]
+[crates/gwiki/src/research/model.rs:178-208]
+[crates/gwiki/src/research/model.rs:179-187]
+[crates/gwiki/src/research/model.rs:189-207]
+[crates/gwiki/src/research/model.rs:210-213]
+[crates/gwiki/src/research/model.rs:216-223]
 [crates/gwiki/src/research/notes.rs:5-16]
 [crates/gwiki/src/research/notes.rs:18-20]
 [crates/gwiki/src/research/notes.rs:22-26]
@@ -259,6 +249,7 @@ The `research` module orchestrates AI-assisted research workflows within the gwi
 sequenceDiagram
     participant m_056d29d3_15b2_524f_806f_4036adacd1ef as deterministic_audit_uses_checkpoint_inventory &#91;function&#93;
     participant m_0de40973_2b45_5ccb_94c4_a204d4782919 as outcome_degradations &#91;function&#93;
+    participant m_10d9d236_11f8_5b81_b13b_bfd163b6a4ca as CommandSearch.search &#91;method&#93;
     participant m_13b5734b_5766_58af_81ec_d3c9db0e3828 as default_options &#91;function&#93;
     participant m_179e1b62_c5b0_51b3_8b10_d38374ed5943 as outcome_code_citations_skip_empty_provenance &#91;function&#93;
     participant m_1e6f5c3a_eb65_5d14_b4a5_64c0ec372c80 as wait_for_materializing_research_note &#91;function&#93;
@@ -275,6 +266,7 @@ sequenceDiagram
     participant m_4a1fc371_011e_5a69_93d7_de14237c1c58 as accepted_note_draft_id &#91;function&#93;
     participant m_81ffca0c_119d_5a66_ace4_8391f76fd9b4 as dedup_code_citations &#91;function&#93;
     participant m_9684dbeb_e9a5_5f74_a6fb_58d4afcb9dcd as render_accepted_note_body &#91;function&#93;
+    participant m_9974413e_c409_5639_a61a_6e66b1966abf as code_citations_from_search_results &#91;function&#93;
     participant m_b0ffd1cb_2a0a_56b8_9d66_36231fe1560a as collect_keyed_strings &#91;function&#93;
     participant m_b12680e4_8e3f_59ad_a57e_ee6f35c02c20 as write_test_source &#91;function&#93;
     participant m_e6ab371c_3250_54e2_8e61_4c5d7f0113da as research_note_file_state &#91;function&#93;
@@ -283,6 +275,7 @@ sequenceDiagram
     m_056d29d3_15b2_524f_806f_4036adacd1ef->>m_b12680e4_8e3f_59ad_a57e_ee6f35c02c20: calls
     m_0de40973_2b45_5ccb_94c4_a204d4782919->>m_2e751191_f2fe_5fa7_bf0e_8177b8228116: calls
     m_0de40973_2b45_5ccb_94c4_a204d4782919->>m_b0ffd1cb_2a0a_56b8_9d66_36231fe1560a: calls
+    m_10d9d236_11f8_5b81_b13b_bfd163b6a4ca->>m_9974413e_c409_5639_a61a_6e66b1966abf: calls
     m_179e1b62_c5b0_51b3_8b10_d38374ed5943->>m_267a61df_4660_57e7_8002_45bafb2a723c: calls
     m_1e6f5c3a_eb65_5d14_b4a5_64c0ec372c80->>m_e6ab371c_3250_54e2_8e61_4c5d7f0113da: calls
     m_21ac680c_12b4_5efe_aafd_805eddbdc1de->>m_2cff8301_37b0_50ca_9c64_9d1cc6ca3bba: calls
@@ -298,7 +291,6 @@ sequenceDiagram
     m_2cff8301_37b0_50ca_9c64_9d1cc6ca3bba->>m_9684dbeb_e9a5_5f74_a6fb_58d4afcb9dcd: calls
     m_2cff8301_37b0_50ca_9c64_9d1cc6ca3bba->>m_e6ab371c_3250_54e2_8e61_4c5d7f0113da: calls
     m_30524709_0f53_567d_97f0_27432eb4f00f->>m_2e751191_f2fe_5fa7_bf0e_8177b8228116: calls
-    m_30524709_0f53_567d_97f0_27432eb4f00f->>m_b0ffd1cb_2a0a_56b8_9d66_36231fe1560a: calls
 ```
 
 ## Files
@@ -322,33 +314,28 @@ sequenceDiagram
 [crates/gwiki/src/research/mod.rs:289-336]
 [crates/gwiki/src/research/mod.rs:338-353]
 [crates/gwiki/src/research/mod.rs:355-366]
-- [[code/files/crates/gwiki/src/research/model.rs|crates/gwiki/src/research/model.rs]] - `crates/gwiki/src/research/model.rs` exposes 26 indexed API symbols.
+- [[code/files/crates/gwiki/src/research/model.rs|crates/gwiki/src/research/model.rs]] - `crates/gwiki/src/research/model.rs` exposes 21 indexed API symbols.
 [crates/gwiki/src/research/model.rs:21-24]
 [crates/gwiki/src/research/model.rs:26-33]
 [crates/gwiki/src/research/model.rs:27-32]
 [crates/gwiki/src/research/model.rs:35-96]
 [crates/gwiki/src/research/model.rs:36-95]
-[crates/gwiki/src/research/model.rs:103-105]
-[crates/gwiki/src/research/model.rs:107-129]
-[crates/gwiki/src/research/model.rs:108-114]
-[crates/gwiki/src/research/model.rs:116-128]
-[crates/gwiki/src/research/model.rs:131-142]
-[crates/gwiki/src/research/model.rs:144-146]
-[crates/gwiki/src/research/model.rs:148-159]
-[crates/gwiki/src/research/model.rs:149-158]
-[crates/gwiki/src/research/model.rs:161-163]
-[crates/gwiki/src/research/model.rs:165-181]
-[crates/gwiki/src/research/model.rs:166-180]
-[crates/gwiki/src/research/model.rs:183-204]
-[crates/gwiki/src/research/model.rs:206-208]
-[crates/gwiki/src/research/model.rs:210-218]
-[crates/gwiki/src/research/model.rs:211-217]
-[crates/gwiki/src/research/model.rs:220-222]
-[crates/gwiki/src/research/model.rs:224-254]
-[crates/gwiki/src/research/model.rs:225-233]
-[crates/gwiki/src/research/model.rs:235-253]
-[crates/gwiki/src/research/model.rs:256-259]
-[crates/gwiki/src/research/model.rs:262-269]
+[crates/gwiki/src/research/model.rs:98-100]
+[crates/gwiki/src/research/model.rs:102-113]
+[crates/gwiki/src/research/model.rs:103-112]
+[crates/gwiki/src/research/model.rs:115-117]
+[crates/gwiki/src/research/model.rs:119-135]
+[crates/gwiki/src/research/model.rs:120-134]
+[crates/gwiki/src/research/model.rs:137-158]
+[crates/gwiki/src/research/model.rs:160-162]
+[crates/gwiki/src/research/model.rs:164-172]
+[crates/gwiki/src/research/model.rs:165-171]
+[crates/gwiki/src/research/model.rs:174-176]
+[crates/gwiki/src/research/model.rs:178-208]
+[crates/gwiki/src/research/model.rs:179-187]
+[crates/gwiki/src/research/model.rs:189-207]
+[crates/gwiki/src/research/model.rs:210-213]
+[crates/gwiki/src/research/model.rs:216-223]
 - [[code/files/crates/gwiki/src/research/notes.rs|crates/gwiki/src/research/notes.rs]] - `crates/gwiki/src/research/notes.rs` exposes 20 indexed API symbols.
 [crates/gwiki/src/research/notes.rs:5-16]
 [crates/gwiki/src/research/notes.rs:18-20]
@@ -443,32 +430,27 @@ sequenceDiagram
 - `a1097965-374c-5feb-a5fc-344fcbeff697`
 - `3dfd2008-9791-50f8-aa2d-49429cba735d`
 - `1df0202d-d5e8-5355-91dc-9019a02c104b`
-- `b1dfc6dd-5168-54a2-afa3-49c24d5147c8`
-- `3ee55bc7-7354-547e-ba42-a0cc7cf5f563`
-- `3e30be16-a998-5e22-ba40-a8bc4e7daeb9`
-- `cfca1604-d73b-54b7-b92d-82ed622e3acf`
-- `b732a8bd-725c-5999-a9c3-d4f4b5d6c512`
-- `64ba9cc6-80e9-5a27-9a57-330fb449554a`
-- `75e47f3c-8b22-57e6-8940-19f53300c15a`
-- `d88e1e01-7d30-5d3b-b183-885529b5e9c1`
-- `bbb0f800-11ca-5198-b641-da93f5ab2e64`
-- `87ca6721-3c00-52c5-82a7-2e59d7d17529`
-- `ffd5be04-2b79-5830-b991-a7777464b837`
-- `50174e5a-60d9-5ba2-b6a4-e17d2d94c959`
-- `410da895-6404-58a3-b146-11bb37b8b5ef`
-- `c1ff3510-efe1-5dc6-bbf3-5bfb1891a02d`
-- `234865bd-d25d-5fb5-bc01-b37a5ec218d4`
-- `9170e976-9638-53ea-aa9c-988a1e590b4e`
-- `bfb54443-4e66-57d4-8134-96488a726413`
-- `ad2c4899-e097-58b1-99f9-909c76105ede`
-- `f1affbbb-7143-519e-af0b-daf6e5edeed7`
-- `6ece662b-3dd0-58e5-9577-70edc92245b1`
-- `822e30b8-608e-58f1-bb26-7ce8289b5520`
-- `f9476f6f-462f-580f-9d87-e67a4aba1c05`
-- `a7e137f4-8613-542f-a902-d5cd8d1df29d`
-- `a37a0133-d303-5e31-b6b6-091941ee99a9`
-- `80cb32ae-b2e5-5539-bbad-de692b503db3`
-- `47d24729-4808-5a0e-b215-87e2f82ead30`
+- `caf20e91-0840-562e-ac35-5058d3ecad26`
+- `7b6646f4-1914-51e3-9377-2fa387936279`
+- `18f3ae85-60d6-590f-b07e-8fae11641408`
+- `32d9f475-2599-5454-acdc-0ced8e80fb47`
+- `68c822f1-60d4-50a5-95ee-6c55eb050e06`
+- `51c8007e-a780-5511-bff3-ce109d377c0d`
+- `ea4ba7a4-ff71-5e49-a588-baa3e0ac52cd`
+- `3ae8308d-6b4c-5864-a07e-7176ddd2cc4c`
+- `87e28c91-5cea-5a3a-b1d8-cba85094a3d0`
+- `19bfaf22-ce62-5423-8bd0-012c5ced6749`
+- `10d9d236-11f8-5b81-b13b-bfd163b6a4ca`
+- `9974413e-c409-5639-a61a-6e66b1966abf`
+- `ab2d7649-3151-51de-94fd-c8db5e5f2494`
+- `ee3a9edd-b18a-58d6-8217-eb91f44e0e15`
+- `152b8b41-0c68-577b-89a3-af7309587791`
+- `a7c6c81e-8a80-5912-acf2-fff3e1a06e27`
+- `212117c5-e034-5e04-86ef-a84ff11576df`
+- `c45898e3-f1d7-58a1-bbb5-29f14eb06693`
+- `11803cdc-dabc-5405-a22c-344e76cc57f5`
+- `577432b1-8f0d-5185-9c43-d5456bf7f2c8`
+- `6087992c-db7e-5a6b-9c28-5d123d9b5517`
 - `39fa6fba-c484-583a-af7a-cf12213274fd`
 - `f2a4ecb5-d3c3-5e2a-8a80-fd9e113b9871`
 - `d88dad28-77b4-551b-83c4-95f8f83c8e7a`

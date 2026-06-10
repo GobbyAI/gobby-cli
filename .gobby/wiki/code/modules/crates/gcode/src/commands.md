@@ -17,7 +17,7 @@ provenance:
 - file: crates/gcode/src/commands/codewiki/build_parts/file.rs
   ranges:
   - 10-13
-  - 15-110
+  - 15-115
 - file: crates/gcode/src/commands/codewiki/build_parts/hotspots.rs
   ranges:
   - 5-131
@@ -130,7 +130,7 @@ provenance:
   - 563-581
   - 583-598
   - 601-614
-  - 616-737
+  - 616-742
 - file: crates/gcode/src/commands/codewiki/ownership.rs
   ranges:
   - 20-23
@@ -707,7 +707,7 @@ Parent: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-This module implements the core command execution layer for the `gcode` tool. It provides a unified interface for code analysis, search, and documentation generation, featuring AI-assisted hierarchical documentation creation, code graph synchronization and dependency querying, advanced text and symbol search with context filtering, and indexing projections. The module also handles project initialization, configuration setup, status monitoring, embedding/vector lifecycle management, and symbol-at-location resolution, orchestrating interactions between indexed codebases, external graph services, and AI providers.
+The commands module serves as the core execution layer for the G-code CLI, orchestrating a comprehensive suite of code analysis, search, and documentation commands. It exposes functionality for generating hierarchical repository documentation and architecture overviews via the codewiki subsystem, querying and managing source code dependency graphs through the graph subsystem, and performing fast indexed text and pattern matching via grep and search. The module also handles code indexing and symbol resolution (index, symbol_at, symbols), manages project configuration and embedding lifecycle (setup, vector), and provides diagnostics for vector consistency through embeddings_doctor. Together, these components provide a unified interface for programmatically navigating, analyzing, and documenting codebases.
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-110]
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:112-127]
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:130-180]
@@ -717,7 +717,7 @@ This module implements the core command execution layer for the `gcode` tool. It
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:140-156]
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:158-163]
 [crates/gcode/src/commands/codewiki/build_parts/file.rs:10-13]
-[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-110]
+[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-115]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-131]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:133-157]
 [crates/gcode/src/commands/codewiki/build_parts/modules.rs:4-114]
@@ -814,7 +814,7 @@ This module implements the core command execution layer for the `gcode` tool. It
 [crates/gcode/src/commands/codewiki/mod.rs:563-581]
 [crates/gcode/src/commands/codewiki/mod.rs:583-598]
 [crates/gcode/src/commands/codewiki/mod.rs:601-614]
-[crates/gcode/src/commands/codewiki/mod.rs:616-737]
+[crates/gcode/src/commands/codewiki/mod.rs:616-742]
 [crates/gcode/src/commands/codewiki/ownership.rs:20-23]
 [crates/gcode/src/commands/codewiki/ownership.rs:25-32]
 [crates/gcode/src/commands/codewiki/ownership.rs:26-31]
@@ -1391,7 +1391,7 @@ sequenceDiagram
 
 ## Child Modules
 
-- [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/commands/codewiki]] - This module implements the `codewiki` command, which generates comprehensive, hierarchical documentation for Rust codebases. It orchestrates the analysis of project structure, module dependencies, and file ownership to produce structured Markdown output. Core generation logic is delegated to the `build_parts` child module, which assembles architecture overviews, change logs, file and module documentation, hotspot reports, onboarding guides, and index snapshots. Graph and clustering utilities analyze import and call dependencies, optionally leveraging Falkordb for scalable queries, and render dependency maps as Mermaid diagrams. Ownership tracking aggregates declared `.codeowners` entries and git blame contributors with caching and timeout safeguards. I/O and path utilities manage safe document writing, metadata persistence, and symlink protection. Rendering and text processing handle Markdown formatting, citation validation, frontmatter serialization, and AI-assisted content generation. Progress tracking and prompt builders support CLI feedback and structured AI queries, while extensive tests verify all components. The module serves as the central orchestrator for incremental, depth-aware documentation generation.
+- [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/commands/codewiki]] - The `codewiki` module generates structured, hierarchical documentation for a codebase by analyzing dependency graphs, ownership metadata, and module topology. It orchestrates the creation of architecture overviews, change logs, hotspot analyses, onboarding guides, and granular file and module summaries through its `build_parts` submodules. The module integrates Git blame and CODEOWNERS data for contributor tracking, constructs dependency graphs for Mermaid visualization, and supports AI-assisted text generation with configurable depth. It manages incremental documentation updates, cryptographic snapshots for reproducibility, progress reporting, and safe I/O operations to ensure consistent, verifiable, and maintainable code documentation.
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-110]
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:112-127]
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:130-180]
@@ -1401,7 +1401,7 @@ sequenceDiagram
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:140-156]
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:158-163]
 [crates/gcode/src/commands/codewiki/build_parts/file.rs:10-13]
-[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-110]
+[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-115]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-131]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:133-157]
 [crates/gcode/src/commands/codewiki/build_parts/modules.rs:4-114]
@@ -1498,7 +1498,7 @@ sequenceDiagram
 [crates/gcode/src/commands/codewiki/mod.rs:563-581]
 [crates/gcode/src/commands/codewiki/mod.rs:583-598]
 [crates/gcode/src/commands/codewiki/mod.rs:601-614]
-[crates/gcode/src/commands/codewiki/mod.rs:616-737]
+[crates/gcode/src/commands/codewiki/mod.rs:616-742]
 [crates/gcode/src/commands/codewiki/ownership.rs:20-23]
 [crates/gcode/src/commands/codewiki/ownership.rs:25-32]
 [crates/gcode/src/commands/codewiki/ownership.rs:26-31]
@@ -1669,7 +1669,7 @@ sequenceDiagram
 [crates/gcode/src/commands/codewiki/text.rs:372-378]
 [crates/gcode/src/commands/codewiki/text.rs:381-401]
 [crates/gcode/src/commands/codewiki/text.rs:404-418]
-- [[code/modules/crates/gcode/src/commands/graph|crates/gcode/src/commands/graph]] - This module implements G-code commands for managing and querying a project's code graph. It coordinates graph synchronization, clearing, and rebuilding through lifecycle backends, defines structured payloads and response formatters for command execution, and provides read operations to resolve symbols, retrieve callers, usages, imports, and calculate blast radius. The module also handles database connectivity, project cleanup, and includes comprehensive tests covering lifecycle dispatch, payload parsing, resolution logic, and error handling.
+- [[code/modules/crates/gcode/src/commands/graph|crates/gcode/src/commands/graph]] - This module provides G-code commands for managing and querying source code dependency graphs. It orchestrates graph lifecycle operations—including synchronization, clearing, and rebuilding—via a pluggable LifecycleBackend interface. The reads submodule exposes commands for symbol resolution and relationship queries such as callers, usages, imports, and blast radius, while the payload submodule handles formatting and printing of query results and status reports. Comprehensive tests verify lifecycle dispatch, symbol resolution, database cleanup, and output formatting under both normal and degraded service conditions.
 [crates/gcode/src/commands/graph/lifecycle.rs:11-13]
 [crates/gcode/src/commands/graph/lifecycle.rs:15-53]
 [crates/gcode/src/commands/graph/lifecycle.rs:16-27]
@@ -1753,7 +1753,7 @@ sequenceDiagram
 [crates/gcode/src/commands/graph/tests.rs:275-292]
 [crates/gcode/src/commands/graph/tests.rs:295-312]
 [crates/gcode/src/commands/graph/tests.rs:315-373]
-- [[code/modules/crates/gcode/src/commands/grep|crates/gcode/src/commands/grep]] - This module implements the core matching logic for the grep command. It centers on the GrepMatcher class, which handles pattern initialization and span detection via the find_spans method. Supporting utilities manage identifier boundaries, word-matching rules, regex word boundary behavior, and input validation for invalid or empty search patterns, enabling precise text search within G-code.
+- [[code/modules/crates/gcode/src/commands/grep|crates/gcode/src/commands/grep]] - This module provides a pattern matching engine for G-code commands, built around the GrepMatcher class. It exposes methods for initializing search patterns and locating matching text spans, alongside utilities for managing word boundaries, identifier characters, and Unicode handling. The module also includes validation functions to enforce proper error reporting for invalid regular expressions or empty patterns.
 [crates/gcode/src/commands/grep/grep_matcher.rs:6-9]
 [crates/gcode/src/commands/grep/grep_matcher.rs:11-44]
 [crates/gcode/src/commands/grep/grep_matcher.rs:12-31]
@@ -1769,7 +1769,7 @@ sequenceDiagram
 [crates/gcode/src/commands/grep/grep_matcher.rs:139-146]
 [crates/gcode/src/commands/grep/grep_matcher.rs:149-156]
 [crates/gcode/src/commands/grep/grep_matcher.rs:159-163]
-- [[code/modules/crates/gcode/src/commands/snapshots|crates/gcode/src/commands/snapshots]] - This module contains snapshot test files for the GCode commands subsystem, covering indexing outcomes, unsupported file type handling, and synchronization projection payloads and text. The snapshots document test results where no indexed API symbols are present.
+- [[code/modules/crates/gcode/src/commands/snapshots|crates/gcode/src/commands/snapshots]] - Contains snapshot test files for Gcode commands, specifically verifying indexing and sync projection behaviors. All recorded snapshots indicate an absence of indexed API symbols in the corresponding test outcomes.
 
 ## Files
 
