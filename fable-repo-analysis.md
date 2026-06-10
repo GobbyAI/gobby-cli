@@ -424,8 +424,9 @@ Progress log (2026-06-09, continued):
   `failed`, per the documented contract).
 - New findings filed: #674 (repo.md is a 637KB landing page with per-line provenance entries
   instead of coalesced ranges), #675 (audit attributes generated code-doc claims to unrelated
-  raw sources), #669 (daemon config_store rejects the ai.text_generate keys the CLIs read —
-  configured via gcore.yaml + `$secret:` as the documented workaround).
+  raw sources), #669 (resolved as a daemon contract clarification: `ai.text_generate.*`
+  stays the CLI standalone/direct namespace, while daemon text generation uses
+  `ai.generation.local.endpoints.<name>` and request-level provider/model selection).
 - **Process note:** three of the four live-breaking bugs this phase were regressions introduced
   by CodeRabbit batch-fix commits (6a9bc97 jsonb params → #612, 2afd51f secret rejection and
   6757743 param de-quoting → #670) that "simplified" deliberate workarounds without live

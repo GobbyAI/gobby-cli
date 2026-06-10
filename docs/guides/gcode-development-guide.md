@@ -99,9 +99,12 @@ Resolution order for infrastructure services (FalkorDB, Qdrant):
 | 2 | `config_store` table in PostgreSQL | `databases.falkordb.host`, `databases.falkordb.port`, `databases.falkordb.password`, `databases.qdrant.url` |
 | 3 (lowest) | Hardcoded defaults | FalkorDB port `16379` and graph name `gobby_code` once a host is configured |
 
-AI capability config, including embeddings, resolves from `config_store` first,
+AI capability config resolves from daemon-supported `config_store` keys first,
 then standalone `~/.gobby/gcore.yaml`, then defaults. Embedding keys use the
-canonical `ai.embeddings.*` namespace.
+canonical `ai.embeddings.*` namespace. `ai.text_generate.*` is a CLI
+standalone/direct namespace; daemon text generation uses daemon provider config
+such as `ai.generation.local.endpoints.<name>` and request-level provider/model
+selection.
 
 Config values are JSON-encoded in `config_store` — strings have surrounding quotes stripped. Secret patterns like `$secret:NAME` are resolved via `secrets.rs` (Fernet decryption using machine_id + salt, 600K PBKDF2 iterations).
 

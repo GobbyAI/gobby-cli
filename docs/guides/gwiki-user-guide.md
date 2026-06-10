@@ -511,9 +511,11 @@ OpenAI-compatible HTTP endpoint, or stay off:
 
 Routing values are `auto`, `daemon`, `direct`, and `off`. `direct` means any
 OpenAI-compatible endpoint, local or remote — there is no `local` route. AI
-settings resolve from `config_store` when the daemon database is available, then
-`~/.gobby/gcore.yaml`, then defaults; `GOBBY_*` environment variables are not an
-AI configuration layer.
+settings resolve from daemon-supported `config_store` keys when the daemon
+database is available, then `~/.gobby/gcore.yaml`, then defaults; `GOBBY_*`
+environment variables are not an AI configuration layer. `ai.text_generate.*`
+is the CLI standalone/direct namespace; daemon text generation uses daemon
+provider config such as `ai.generation.local.endpoints.<name>`.
 
 Indexing respects `.gitignore`, `.git/info/exclude`, and global git excludes by
 default. The shared setting resolves from `config_store`, then

@@ -21,7 +21,9 @@ Routing is selected per capability with `auto`, `daemon`, `direct`, or `off`.
 - `auto` probes daemon capability status first, then uses configured direct fallback if the capability is not advertised.
 - `off` reports the capability unavailable.
 
-AI capability config resolves from `config_store` first, then standalone `~/.gobby/gcore.yaml`, then defaults. There is no `GOBBY_*` environment layer for AI capability config. Command flags may still override routing, provider, or model for one invocation.
+CLI AI capability config resolves from daemon-supported `config_store` keys first, then standalone `~/.gobby/gcore.yaml`, then defaults. There is no `GOBBY_*` environment layer for AI capability config. Command flags may still override routing, provider, or model for one invocation.
+
+`ai.text_generate.*` is the CLI standalone/direct namespace. The daemon does not accept `ai.text_generate.*` writes in `config_store`; daemon text generation resolves providers from the daemon runtime config instead. Named local daemon endpoints live under `ai.generation.local.endpoints.<name>` and are selected with providers such as `local:lm-studio`.
 
 Daemon-side transports are implementation details behind a capability binding. `openai_compatible_http` means the daemon proxies to an OpenAI-compatible endpoint. `daemon_native` is reserved for daemon-native implementations. For audio, the daemon binding is `voice.openai_compatible_audio` with `provider`, `url`, `model`, optional `api_key`, `timeout_seconds`, `transcription_enabled`, and `translation_enabled`.
 
@@ -162,6 +164,10 @@ explicit `provider` or `model` takes precedence over profile defaults.
 Named local daemon generation endpoints use `local:<endpoint>` as the provider.
 Candidate strings use `local:<endpoint>/<model>`. Bare `local` is reserved for
 the daemon-owned local provider family and is unavailable for text generation.
+Endpoint config is daemon-owned and shaped as
+`ai.generation.local.endpoints.<name> = { api_base, model, api_key? }`; the
+CLIs keep `ai.text_generate.*` for standalone/direct operation and pass
+`provider`, `model`, `profile`, or `candidates` to daemon requests.
 
 Response:
 
@@ -181,9 +187,11 @@ Response:
 {
   "providers": [
     {
-      "provider": "local:ollama",
+      "provider": "local:lm-studio",
       "available": true,
-      "models": ["llava", "qwen2.5-coder"],
+      "models": [
+        { "value": "qwen/qwen3.6-35b-a3b", "label": "qwen/qwen3.6-35b-a3b" }
+      ],
       "source": "config"
     }
   ]

@@ -5,10 +5,13 @@ a direct OpenAI-compatible HTTP endpoint, or stay off. Direct endpoints can be
 cloud OpenAI-compatible APIs, a faster-whisper server, or a local text/vision
 server such as LM Studio or Ollama.
 
-AI settings resolve from `config_store` when the daemon database is available,
-then `~/.gobby/gcore.yaml`, then defaults. `GOBBY_*` environment variables are
-not an AI configuration layer. CLI flags still override routing for one
-invocation.
+AI settings resolve from daemon-supported `config_store` keys when the daemon
+database is available, then `~/.gobby/gcore.yaml`, then defaults. `GOBBY_*`
+environment variables are not an AI configuration layer. CLI flags still
+override routing for one invocation. `ai.text_generate.*` remains the
+CLI standalone/direct namespace; daemon text generation uses daemon provider
+config such as `ai.generation.local.endpoints.<name>` plus request-level
+`provider`, `model`, `profile`, or `candidates`.
 
 For daemon route and probe semantics, see the
 [AI Daemon Capability Contract](./ai-daemon-contract.md).
@@ -64,7 +67,7 @@ key is set. `ai.audio_translate.target_lang` remains translate-specific.
 
 For direct authenticated endpoints, store the token in user-local
 `~/.gobby/gcore.yaml` as `api_key`. Daemon-backed `config_store` values may use
-`$secret:` references.
+`$secret:` references where the daemon runtime config supports them.
 
 ## Mixed Routing Example
 
