@@ -322,6 +322,35 @@ weighs DeepWiki, OpenDeepWiki, CodeWiki, and Graphify as the real comparators.
 - **Unique-to-one:** CodeWiki's published benchmark + Mermaid validation gate; Graphify's query-first agent hooks, confidence tags, graph merge driver; OpenDeepWiki's per-stage model binding + IM chatbots; Pratiyush's llms.txt/JSON-LD machine-readable exports. Subscription-mode LLM via `claude`/`codex` binaries appears in two (CodeWiki, Graphify) and is spreading.
 - **Maintenance flags:** deepwiki-open mid-pivot to closed source; Pratiyush/llm-wiki quiet since May 22.
 
+### Output inspection (cloned, 2026-06-09)
+
+deepwiki-open (pre-pivot 43ed8a2) and FSoft CodeWiki (HEAD 972dba9) were cloned and inspected
+(features/output only, no code review). Key evidence for the parity matrix:
+
+- **Citations are theater across the field.** deepwiki-open's page prompt demands
+  `Sources: [file.ext:start-end]()` but feeds the model line-number-free 350-word RAG chunks
+  (chunk metadata carries only `file_path`) and never validates a citation — line references
+  are structurally hallucinated. CodeWiki has no file:line citation convention at all (its
+  sample `docs/*.md` contain zero `Sources:` citations); provenance exists only at pipeline
+  level (component IDs, commit_id in metadata.json). Neither has post-generation grounding.
+  gcode's `ground_text` (strip-invalid + repair-with-valid-span against indexed byte offsets)
+  has no counterpart in any of the four tools.
+- **Diagrams are drawn from memory, not data.** Both prompt the model to invent Mermaid;
+  CodeWiki validates *syntax* with the real JS Mermaid parser fed back into an agent edit loop
+  (the one mechanical quality gate worth copying), but neither derives edges from the
+  dependency graph they computed. gcode emits Mermaid from actual FalkorDB call/import edges.
+- **Incrementality:** deepwiki-open is full-regen-or-cache (stale embeddings reused without
+  change detection). CodeWiki has real git-diff invalidation (changed files → modules →
+  parents → overview) but fuzzy substring matching of component IDs and no per-symbol diffing.
+- **Wiki-level search exists nowhere.** deepwiki's ask/Deep-Research RAG searches code
+  embeddings, not the generated wiki; CodeWiki has no search at all. gwiki's hybrid
+  BM25+semantic+graph over the generated vault has no counterpart.
+- **What they do better:** deepwiki's editorial prose scaffolding (mandated page anatomy,
+  40-line Mermaid style guide, forced source-file header) and LLM-decided topic taxonomy
+  (pages read as concepts, not directory listings); CodeWiki's bottom-up hierarchical
+  synthesis (leaf docs from full source, parent docs from child docs) and closed-loop Mermaid
+  validation; deepwiki's multi-turn Deep-Research UX.
+
 ### Parity matrix & verdict
 
 _Pending — produced after Phase 3 (fresh wiki + codewiki build) so our side of each dimension is
@@ -355,5 +384,42 @@ Progress log (2026-06-09):
   `_meta/ownership.json` — none documented in the guide's Output Tree. To confirm against a
   fresh run.
 
-Remaining: `gcode index` → `gcode codewiki` with AI prose → ingest → `gwiki index` → search /
-ask / compile → doc fixes → citation-checked e2e verification.
+Progress log (2026-06-09, continued):
+
+- `ingest-url` / `ingest-file` / `collect` ✅ — Wikipedia URL, README.md, and an inbox drop all
+  captured with manifest entries; ingest auto-indexes the vault.
+- `gwiki index` + hybrid `search` ✅ — but graph boost reported `gwiki_graph_unreachable`.
+  Root-caused to **three stacked breaks** (fixed directly, #670): a CodeRabbit batch (2afd51f)
+  added a guard rejecting leading `$secret:` references before the shared resolver (the
+  FalkorDB password is stored as exactly that); another CodeRabbit batch (6757743) removed
+  `escape_string` quoting from Cypher params (falkordb 0.2 interpolates `CYPHER k=v` raw text);
+  and the WikiSource SUPPORTS statement ran MATCH after MERGE without WITH. After the fixes the
+  wiki graph syncs fully (552 docs / 552 sources / 1185 targets) and search runs with
+  **zero degradations**.
+- **Wiki inception found and fixed (#671):** the walker deliberately allowlists
+  `.gobby/wiki/**/*.md` into the content index, and the daemon watcher indexes codewiki output —
+  so the next codewiki run documented its own previous output (observed live: AI prompts for
+  `.gobby/wiki/code/files/**.rs.md`), compounding AI cost every cycle. `is_core_file` now
+  excludes hidden path components.
+- **Stale specials fixed (#672):** docs without provenance frontmatter (`_ownership.md`,
+  `_hotspots.md`) hash to an empty source set, which always compared equal — they were never
+  rewritten after generator changes. Empty hash sets no longer count as "unchanged".
+- **Wikilink resolution fixed (#673):** gwiki stripped `.md` from wikilink targets, breaking
+  all 102 codewiki links to markdown-source docs (`[[code/files/AGENTS.md]]` →
+  `code/files/AGENTS.md.md`). Wikilinks now keep `.md` as part of the page name.
+  `gwiki lint`: **Broken links: none**.
+- `ask` (retrieval), `read`, `backlinks`, `link-suggest`, `lint`, `audit`, `health`,
+  `refresh --dry-run` ✅ all exercised (refresh correctly reports the no-replay inbox note in
+  `failed`, per the documented contract).
+- New findings filed: #674 (repo.md is a 637KB landing page with per-line provenance entries
+  instead of coalesced ranges), #675 (audit attributes generated code-doc claims to unrelated
+  raw sources), #669 (daemon config_store rejects the ai.text_generate keys the CLIs read —
+  configured via gcore.yaml + `$secret:` as the documented workaround).
+- **Process note:** three of the four live-breaking bugs this phase were regressions introduced
+  by CodeRabbit batch-fix commits (6a9bc97 jsonb params → #612, 2afd51f secret rejection and
+  6757743 param de-quoting → #670) that "simplified" deliberate workarounds without live
+  verification. CodeRabbit suggestions touching DB params, query encoding, or secret handling
+  deserve a live-pipeline check before merging.
+
+Remaining: AI-prose codewiki run (in flight) → `gwiki index` → verify citation-checked AI prose
+e2e (search / ask --llm / research / compile) → final doc fixes → parity matrix + verdict.
