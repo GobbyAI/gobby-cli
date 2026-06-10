@@ -142,10 +142,10 @@ Request body:
 {
   "prompt": "Write a concise title.",
   "system_prompt": "Use project terminology.",
-  "provider": "openai-compatible",
-  "model": "qwen2.5-coder",
+  "provider": "local:lm-studio",
+  "model": "Qwen3-Coder-30B-A3B-Instruct",
   "profile": "feature_low",
-  "candidates": ["codex/gpt-5.3-codex-spark", "claude/haiku"],
+  "candidates": ["local:lm-studio/Qwen3-Coder-30B-A3B-Instruct", "claude/haiku"],
   "max_tokens": 128,
   "cwd": "/repo",
   "project_id": "3bf57fe7-2a0c-4074-8912-a83d9cd4df01"
@@ -159,13 +159,17 @@ the daemon resolves `/api/llm/generate` through the `feature_low` default
 candidates. Explicit `candidates` take precedence over `provider` and `model`;
 explicit `provider` or `model` takes precedence over profile defaults.
 
+Named local daemon generation endpoints use `local:<endpoint>` as the provider.
+Candidate strings use `local:<endpoint>/<model>`. Bare `local` is reserved for
+the daemon-owned local provider family and is unavailable for text generation.
+
 Response:
 
 ```json
 {
   "text": "Index Pipeline Overview",
-  "model": "qwen2.5-coder",
-  "provider": "openai-compatible"
+  "model": "Qwen3-Coder-30B-A3B-Instruct",
+  "provider": "local:lm-studio"
 }
 ```
 
@@ -177,10 +181,10 @@ Response:
 {
   "providers": [
     {
-      "provider": "ollama",
+      "provider": "local:ollama",
       "available": true,
       "models": ["llava", "qwen2.5-coder"],
-      "source": "daemon"
+      "source": "config"
     }
   ]
 }
