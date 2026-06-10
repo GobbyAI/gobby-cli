@@ -11,14 +11,14 @@ Status legend: ✅ done · 🔄 in progress · ⬜ pending
 |---|---|---|
 | 0 | Build & deploy (gcode 1.0.0, gwiki 0.3.0, gsqz 0.4.6, gloc 0.1.4, ghook 0.4.6 → `~/.gobby/bin`) | ✅ |
 | 1 | gobby-core review (#591) | ✅ |
-| 1 | gobby-code review (#592) | ⬜ |
-| 1 | gobby-wiki review (#593) | ⬜ |
-| 1 | gsqz review (#594) | ⬜ |
-| 1 | gloc review (#595) | ⬜ |
-| 1 | ghook review (#596) | ⬜ |
+| 1 | gobby-code review (#592) | ✅ |
+| 1 | gobby-wiki review (#593) | ✅ |
+| 1 | gsqz review (#594) | ✅ |
+| 1 | gloc review (#595) | ✅ |
+| 1 | ghook review (#596) | ✅ |
 | 2 | Competitor verification & feature inventory | ✅ |
 | 2 | Parity matrix + per-dimension verdict | ⬜ |
-| 3 | Fresh wiki + codewiki by the book | ⬜ |
+| 3 | Fresh wiki + codewiki by the book (#611) | 🔄 |
 
 ---
 
@@ -69,15 +69,172 @@ versions) and does not check the actual exported API surface.
 
 ### gobby-code (gcode) — task #592
 
-_Pending (blocked on #591 — now unblocked)._
+**Verdict: SOLID-WITH-ISSUES.**
+
+Cleanly layered (thin `main.rs` → `dispatch.rs` → `commands/` over `index/`, `search/`, `graph/`,
+`vector/`, `visibility`, `freshness`, `projection`). Consolidation discipline against gcore is
+strong and test-guarded: `hasher`/`secrets` are pure re-exports, RRF delegates to
+`gobby_core::search::rrf_merge`, FTS uses gcore's `TrustedRowId`/`bm25_score_expr`, and the
+chunker documents and asserts why it stays gcode-owned. UUID5 parity is correct with Python
+golden vectors; runtime schema is validate-only with creation confined to `gcode setup`
+(touches only `code_*` relations). 602 tests pass; clippy clean.
+
+The two big holes are both in the codewiki path: scoped runs (`--scope`) delete every
+out-of-scope generated doc (io.rs prunes anything absent from the current run), and daemon-written
+symbol summaries are wiped on every reindex because delete-then-insert makes the ON CONFLICT
+summary-preservation clause dead code — silently degrading wiki prose to bland structural lines
+over time. "Incremental regeneration" only skips disk writes, not AI generation cost. Also: no
+logger is initialized so every `log::*` diagnostic is dropped, and PG-gated tests vacuously pass
+when the test DSN is absent.
+
+**Codewiki readiness:** nothing blocks a fresh by-the-book run. Citation handling is real
+(`ground_text` strips citations not matching indexed source spans and appends a valid fallback
+span); provenance frontmatter and `[[wikilinks]]` follow the gwiki contract; graph-degraded mode
+produces valid docs exactly as documented. Fix-before-production-use: #614 (scope deletion) and
+#616 (unbounded AI regeneration cost).
+
+#### Findings → tasks
+
+| Finding | Sev | Category | Task | Title |
+|---|---|---|---|---|
+| GCODE-01 | high | correctness | #613 | Preserve unchanged-symbol summaries across file reindex |
+| GCODE-02 | high | correctness | #614 | Make scoped codewiki runs preserve out-of-scope docs |
+| GCODE-03 | medium | error-handling | #615 | Initialize a logger or route log calls to stderr |
+| GCODE-04 | medium | correctness | #616 | Skip AI prose regeneration for unchanged files |
+| GCODE-05 | medium | correctness | #617 | Reconcile stale facts for discovered files that fail AST indexing |
+| GCODE-06 | medium | test-gap | #618 | Postgres-backed tests for code-fact upsert SQL semantics |
+| GCODE-07 | medium | error-handling | #619 | Propagate DB errors in embedding/AI config resolution |
+| GCODE-08 | medium | architecture | #620 | Batch codewiki symbol loading (N+1) |
+| GCODE-09 | low | straggler | #621 | Replace leaked blame worker threads |
+| GCODE-10 | low | straggler | #622 | Update CLAUDE.md re: standalone projection sync ownership |
+| GCODE-11 | low | error-handling | #623 | Actual affected-row counts; dedupe MAX_FILE_SIZE |
+| GCODE-12 | low | consolidation | #624 | Pin codewiki→gwiki frontmatter contract with shared fixture |
 
 ### gobby-wiki (gwiki) — task #593
 
-_Pending._
+**Verdict: SOLID-WITH-ISSUES.**
 
-### gsqz — task #594 · gloc — task #595 · ghook — task #596
+Cleanly layered: `Command` enum → `commands::run` dispatch, trait-based search backends fused via
+gcore's shared `rrf_merge`, modality orchestrators returning explicit degradation envelopes, and a
+vault model with durable atomic writes and a locked provenance graph. The hybrid search stack is
+already largely consolidated into gcore (RRF, BM25 sanitization, Qdrant client, Falkor
+`GraphClient`) — the remaining gcode/gwiki duplication is the direct OpenAI-compatible embeddings
+HTTP client (#625). 522/522 tests pass with default features; clippy clean.
 
-_Pending._
+Seam-level issues: one legacy compat shim in session checkpoints (policy violation → removal task
+#626), `gwiki index` swallows Qdrant/Falkor sync failures and reports success (#628),
+`citation-quality`'s contradiction detection is a permanent placeholder (#627), and `ask --llm`
+prose is grounded by prompt only — no post-generation citation check (#629), the one real gap
+against the "AI prose must be citation-checked" constraint. Persisted content (research → compile
+→ audit) is sound: uncited claims are rejected at note validation, compiled pages carry
+provenance links with byte offsets, and audit checks pages against the provenance graph.
+
+**Live regression found during Phase 3 (fixed directly, #612):** commit 6a9bc97's CodeRabbit
+batch reverted the deliberate `::text::jsonb` casts in `store.rs`, breaking every PostgreSQL
+wiki index write (`error serializing parameter 9`). Fixed type-correctly with
+`serde_json::Value` params (postgres `with-serde_json-1`); also surfaced DbError detail in
+`StoreError` and made `gwiki_ingestions.content_hash` nullable to match the indexer's
+Deleted/Skipped event model. No unit test could have caught it — store.rs Postgres writes have
+no live-DB coverage (same shape as GCODE-06/GCORE-14).
+
+#### Findings → tasks
+
+| Finding | Sev | Category | Task | Title |
+|---|---|---|---|---|
+| GWIKI-01 | medium | consolidation | #625 | Move direct embeddings client into gobby_core::ai |
+| GWIKI-02 | medium | straggler | #626 | Remove legacy checkpoint scope-root migration |
+| GWIKI-03 | medium | placeholder | #627 | Implement contradiction detection in citation-quality |
+| GWIKI-04 | medium | error-handling | #628 | Surface Qdrant/Falkor sync degradations in index output |
+| GWIKI-05 | medium | correctness | #629 | Citation-check or mark unverified ask --llm output |
+| GWIKI-06 | low | error-handling | #630 | Unify modality/daemon-probe degradation reasons |
+| GWIKI-07 | low | correctness | #631 | Accurate degradation kind for global semantic fan-out |
+| GWIKI-08 | low | test-gap | #632 | Run feature-gated tests in canonical invocation |
+| GWIKI-09 | low | straggler | #633 | Fix stale 'sync flags for daemon' in CLAUDE.md |
+| GWIKI-10 | low | straggler | #634 | Narrow lib.rs blanket dead_code allowances (#357) |
+| GWIKI-11 | low | docs | #635 | Document or gate undocumented subcommands |
+| GWIKI-12 | low | consolidation | #636 | Consolidate vision/transcription degradation constructors |
+| GWIKI-13 | low | correctness | #637 | Per-section provenance links during compile |
+
+### gsqz — task #594
+
+**Verdict: SOLID-WITH-ISSUES** (one blocker).
+
+Clean seams (`main.rs` → `compressor` → pure `primitives/*`), daemon HTTP correctly
+feature-gated, primitives panic-free on dynamic input (156 tests, clippy clean) — the exit-0
+contract cannot be broken by a panic in the wrapped-command path. But the blocker is bad:
+`group_test_failures`' uppercase-anchored markers miss lowercase rustc/cargo errors and the
+fallback **fabricates "All tests passed."** on compile failures (empirically reproduced) — with
+exit-0, the LLM is told the opposite of the truth (#638). "First match wins" is actually
+alphabetical (BTreeMap discards YAML order, #639), and README/SKILL.md teach the removed bare
+`gsqz --` form which exits 2 (#640 — SKILL.md is served to agents).
+
+| Finding | Sev | Category | Task | Title |
+|---|---|---|---|---|
+| GSQZ-01 | **blocker** | correctness | #638 | test_failures fabricates "All tests passed." on compile errors |
+| GSQZ-02 | high | correctness | #639 | Pipeline matching order is alphabetical, not config order |
+| GSQZ-03 | high | straggler/docs | #640 | README/SKILL.md document removed bare `gsqz --` form |
+| GSQZ-04 | medium | error-handling | #641 | Malformed config makes every wrapped command exit 1 |
+| GSQZ-05 | medium | correctness | #642 | Surface nonzero exit code in content |
+| GSQZ-06 | medium | straggler | #643 | git_status/git_diff group modes are unreachable dead code |
+| GSQZ-07 | medium | test-gap | #644 | Binary-level integration tests for exit-0 contract |
+| GSQZ-08 | low | error-handling | #645 | Warn when config regexes fail to compile |
+| GSQZ-09 | low | correctness | #646 | ANSI stripping misses OSC/non-CSI sequences |
+| GSQZ-10 | low | consolidation | #647 | Consolidate group-by-key and head/tail scaffolding |
+| GSQZ-11 | low | consolidation | #648 | Route input-mode stats through CompressionResult |
+| GSQZ-12 | low | architecture | #649 | Resolve layered-docs vs first-found-wins; frozen auto-export |
+
+### gloc — task #595
+
+**Verdict: SOLID-WITH-ISSUES.**
+
+Clean four-module binary; re-exports gcore's `Backend` and delegates all probe logic to
+`gobby_core::local_backend` (no duplication — its own `backend.rs` is exclusively Ollama model
+lifecycle). 35 tests pass, clippy clean. Issues: the documented `--backend X --url Y` escape
+hatch is broken because `--url` is applied after validation (#650); the shipped codex client
+defaults target the retired TS codex CLI's `--provider` flag so `gloc --client codex` fails at
+launch (#653); the Ollama lifecycle HTTP paths have zero test coverage (#655); and the first-run
+auto-export freezes built-in defaults forever (#656, same pattern as gsqz #649).
+
+| Finding | Sev | Category | Task | Title |
+|---|---|---|---|---|
+| GLOC-01 | high | correctness | #650 | Apply --url override before backend validation |
+| GLOC-02 | medium | correctness | #651 | Stream Ollama pull progress; remove 600s cap |
+| GLOC-03 | low | correctness | #652 | Stop flooring probe_timeout_ms to 5s |
+| GLOC-04 | medium | straggler | #653 | Update codex client defaults for Rust codex CLI |
+| GLOC-05 | low | correctness | #654 | Explicit default_client instead of alphabetical-first |
+| GLOC-06 | medium | test-gap | #655 | Mock-server tests for Ollama lifecycle |
+| GLOC-07 | low | architecture | #656 | Rethink first-run auto-export of built-in config |
+| GLOC-08 | low | error-handling | #657 | Distinguish unreadable config from missing |
+| GLOC-09 | low | nitpick | #658 | Redundant match arm, hand-rolled dump, dup gcore tests |
+| GLOC-10 | low | correctness | #659 | Env injection hygiene + token redaction in --status |
+
+### ghook — task #596
+
+**Verdict: SOLID-WITH-ISSUES.**
+
+Well-factored small binary with deliberate enqueue-first sequencing and thoroughly golden-tested
+per-CLI action mapping (82 tests, clippy clean). `.ghook-compatibility` is fully retired from
+source. The seam problems: an inbox-write failure aborts dispatch without ever attempting the
+daemon POST — enqueue-first leaking into the observable contract on exactly the sandboxed-FS
+paths ghook exists to tolerate (#660); home-dir/daemon-URL resolution is split-brained across
+three implementations (`gobby_core::gobby_home` vs `dirs::home_dir` vs local `marker_home`,
+#665 + GHOOK-07 folded into #603); at-least-once delivery has no idempotency key for drain
+dedupe (#661, cross-repo); and the statusline write→wait→read sequencing deadlocks on
+>pipe-buffer traffic (#662). The hard per-CLI stdout/stderr/exit contract has no binary-level
+test (#666).
+
+| Finding | Sev | Category | Task | Title |
+|---|---|---|---|---|
+| GHOOK-01 | high | correctness | #660 | Fall back to direct daemon POST when enqueue fails |
+| GHOOK-02 | medium | correctness | #661 | Envelope/idempotency ID on live POST (cross-repo) |
+| GHOOK-03 | medium | correctness | #662 | Statusline concurrent stdout read (pipe deadlock) |
+| GHOOK-04 | low | error-handling | #663 | EPIPE-tolerant emit_action for detached survivors |
+| GHOOK-05 | low | straggler | #664 | Remove dead sdk-py branch in detect_source |
+| GHOOK-06 | medium | consolidation | #665 | Consolidate Gobby-home resolution on gobby_core |
+| GHOOK-07 | low | consolidation | → #603 | Statusline daemon-URL override (folded into #603) |
+| GHOOK-08 | medium | test-gap | #666 | Binary-level integration tests for per-CLI contract |
+| GHOOK-09 | low | consolidation | #667 | Dedupe HTTP test helper + truthiness predicate |
+| GHOOK-10 | low | correctness | #668 | fsync inbox directory after envelope rename |
 
 ---
 
@@ -174,4 +331,29 @@ evidence-backed, not spec-backed._
 
 ## Phase 3 — Fresh wiki + codewiki, by the book
 
-_Pending._
+_In progress (task #611). Vault wiped and re-initialized from scratch._
+
+Progress log (2026-06-09):
+
+- `gwiki --project init` ✅ — scaffolds the documented tree, **plus** `knowledge/INDEX.md`,
+  `code/INDEX.md`, `_meta/`, and `.gwiki/scope.json`, which the user guide's init table omits
+  (doc fix queued for this task).
+- `gwiki --project setup --standalone` ✅ — created gwiki tables + BM25 indexes,
+  `status: created`.
+- `gwiki --project status` ✅ — `datastore-ready` (PostgreSQL, FalkorDB :16379, Qdrant :6333,
+  embeddings LM Studio `nomic-embed-text`).
+- `gwiki --project trust` ⚠️ — on a freshly wiped vault it reported the **old** hub rows
+  (17 documents) with `fresh: true`; hub state is per-scope and survives a file wipe. Honest
+  once `index` prunes, but trust-on-stale-hub is misleading.
+- `gwiki --project index` ❌→✅ — failed with the #612 jsonb regression (fixed directly;
+  see gwiki section). After the fix, indexing succeeds and **stale-row pruning works**: old
+  codewiki rows were pruned via `deleted` ingestion events (which exposed a second bug — the
+  gwiki-owned `gwiki_ingestions.content_hash` NOT NULL constraint contradicted the indexer's
+  `Option<String>` model; fixed in #612 too).
+- Doc-gap candidate for `docs/guides/codewiki.md`: the previous real output contained
+  `_architecture.md`, `_changes.md`, `_hotspots.md`, `_onboarding.md`, `_ownership.md`, and
+  `_meta/ownership.json` — none documented in the guide's Output Tree. To confirm against a
+  fresh run.
+
+Remaining: `gcode index` → `gcode codewiki` with AI prose → ingest → `gwiki index` → search /
+ask / compile → doc fixes → citation-checked e2e verification.
