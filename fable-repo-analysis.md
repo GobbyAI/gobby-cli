@@ -353,8 +353,19 @@ deepwiki-open (pre-pivot 43ed8a2) and FSoft CodeWiki (HEAD 972dba9) were cloned 
 
 ### Parity matrix & verdict
 
-_Pending — produced after Phase 3 (fresh wiki + codewiki build) so our side of each dimension is
-evidence-backed, not spec-backed._
+Our-side evidence is from the Phase 3 fresh build of this repo (1,029 core files, 75 modules,
+8,913 symbols; vault wiped and rebuilt by the book). Competitor evidence is from the feature
+inventory + cloned-output inspection above.
+
+| Dimension | Best competitor showing | gcode/gwiki (Phase 3 evidence) | Verdict |
+| --- | --- | --- | --- |
+| Coverage | CodeWiki: module-level docs from dep-graph decomposition; deepwiki: ~dozens of LLM-chosen topic pages, no per-file coverage guarantee | Deterministic full coverage: repo.md + 75 module docs + 1,029 file docs + per-symbol tables, plus `_architecture`/`_onboarding`/`_hotspots`/`_changes`/`_ownership` section pages | **Parity-plus** — coverage is structural, not model-discretionary |
+| Structure & navigation | deepwiki: LLM topic taxonomy (concept pages); CodeWiki: bottom-up hierarchy, cross-linked | Hierarchical repo→module→file with `[[wikilinks]]` (102 links, `gwiki lint`: broken links none), INDEX pages, `gwiki backlinks` over the vault | **Parity** — our navigation is denser and verifiable; their concept-level taxonomy reads better editorially (noted as future direction, no task) |
+| Diagram/graph quality | CodeWiki: LLM-invented Mermaid, syntax-validated via real JS parser in an agent loop; nobody derives edges from their own graph | Mermaid dependency/call-sequence diagrams emitted from actual FalkorDB call/import edges (4,786 CALLS / 2,369 IMPORTS project-scoped), bounded per module | **Parity-plus** — data-derived vs. hallucinated; their syntax-validation loop is the one idea worth copying (#616 family) |
+| AI prose quality | deepwiki: strong editorial scaffolding (mandated page anatomy, style guide) over ungrounded RAG | Sections-depth prose (architecture/modules/repo) through local LLM with structural fallbacks; per-file/per-symbol tiers opt-in via `--ai-depth` (#677) | **Pending** — sections AI run in flight; cell updated on completion |
+| Citations/provenance | None real: deepwiki prompts for `file:line` but feeds line-number-free chunks (structurally hallucinated); CodeWiki has no citation convention | `ground_text` strips invalid citations and repairs with valid indexed spans; provenance frontmatter with file paths + line ranges on every page; audit/credibility tracking in gwiki | **Parity-plus** — only tool with post-generation grounding against indexed byte offsets |
+| Incremental updates | CodeWiki: git-diff invalidation (file→module→parent chain), fuzzy component matching; deepwiki: cache-or-full-regen | Source-hash invalidation per doc + index snapshot diffing (`_changes.md`) + AI-mode invalidation (#677); daemon watcher auto-reindexes vault output | **Parity-plus** — finer-grained than git-diff (per-source-hash), discloses truncation/degradation in frontmatter |
+| Search over generated wiki | Nonexistent: deepwiki RAG searches code embeddings (not the wiki); CodeWiki ships no search | gwiki hybrid BM25 + semantic + graph-boost over the vault, verified live (zero degradations); `ask`, `research` loop, `compile` consume it | **Parity-plus** — uncontested; no competitor searches its own output |
 
 ---
 
@@ -429,6 +440,20 @@ Progress log (2026-06-09, continued):
   `$secret:` api_key could never resolve. Research now layers a hub-backed primary like
   search/index. Live: model loop executes (steps_used=2, degradation=null, structured
   stop_reason).
+
+- **AI cost model fixed (#677, two coupled defects):** the first AI codewiki run issued one
+  LLM call per symbol (7,891 on this repo) plus one per file — at the observed local pace
+  (2.5 generations/min through qwen3.6-35b, a reasoning model) a full run projected to >2 days;
+  killed after 7h17m/~1,092 calls. Worse, it would have written **nothing**: incremental writes
+  compared only source hashes, so enabling AI after a structural run marked every provenance doc
+  "unchanged". Fix: `--ai-depth <sections|files|symbols>` (default `files`) gates the per-symbol
+  and per-file prompts behind opt-in tiers with the existing structural fallbacks, and
+  `_meta/codewiki.json` now records the run's AI mode — a mode change invalidates all docs.
+  Competitor context: every comparator generates page-level prose only; per-symbol prose is a
+  parity-plus tier that must stay opt-in.
+- **Operational note:** parking large analysis artifacts (4.5MB `graph.json`) inside the watched
+  vault made the daemon sync worker time out on `gcode graph sync-file` for that file repeatedly;
+  moved out of the vault. Filed as a finding on large content-only file sync behavior.
 
 Remaining: AI-prose codewiki run (in flight) → `gwiki index` → verify citation-checked AI prose
 e2e (search / ask --llm / research / compile) → final doc fixes → parity matrix + verdict.

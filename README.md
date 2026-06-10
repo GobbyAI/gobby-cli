@@ -48,6 +48,13 @@ search, opt-in graph expansion for exact symbol lookup
 `gcode graph clear --project-id <PROJECT_ID>` is available for daemon
 stale-project graph cleanup without cwd project resolution.
 
+`gcode codewiki` generates vault-ready hierarchical code documentation
+(repo → modules → files, plus architecture/onboarding/hotspots/changes/ownership
+pages) from the index, with Mermaid diagrams derived from real FalkorDB
+call/import edges, optional AI prose tiers (`--ai-depth`), and citation-checked
+grounding against indexed source spans. gwiki indexes the output as normal
+vault documents.
+
 For non-Gobby-managed projects, `gcode init` installs the bundled `gcode` skill
 for Claude Code, Codex, Droid, Grok, Qwen, and Antigravity CLI. Gobby-managed
 projects skip those project-local skill writes because Gobby owns CLI wiring.
@@ -82,9 +89,11 @@ contracts, and datastore client adapters. It is not a standalone tool.
 ## Documentation
 
 - [gcode User Guide](docs/guides/gcode-user-guide.md) — search, symbols, dependency graphs, project management
+- [Codewiki Guide](docs/guides/codewiki.md) — generated code documentation, AI prose depth, citations, incremental runs
 - [gsqz User Guide](docs/guides/gsqz-user-guide.md) — pipelines, step types, configuration, debugging
 - [gloc User Guide](docs/guides/gloc-user-guide.md) — backends, clients, model management, configuration
 - [ghook User Guide](docs/guides/ghook-user-guide.md) — hook wiring, diagnose mode, inbox/replay, troubleshooting
+- [gwiki User Guide](docs/guides/gwiki-user-guide.md) — vault setup, ingest, search, ask, research, compile
 - [gwiki Development Guide](docs/guides/gwiki-development-guide.md) — research vault ingest, indexing, and hybrid search
 - [Release Guide](docs/guides/release-guide.md) — crate versions, tag order, and local binary installation
 - [Changelog](CHANGELOG.md) — release history
