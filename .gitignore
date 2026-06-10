@@ -12,4 +12,9 @@
 .gobby/wiki/**/*.json.lock
 !.gobby/plans/
 .gobby/plans/**
+!.gobby/plans/completed/
+!.gobby/plans/completed/**
+!.gobby/plans/coverage/
+!.gobby/plans/coverage/**
+!.gobby/plans/gwiki-parity-plus.md
 .playwright/

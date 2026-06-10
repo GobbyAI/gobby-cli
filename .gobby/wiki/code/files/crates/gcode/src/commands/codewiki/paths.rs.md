@@ -41,7 +41,7 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 - `inline_code` (function) component `inline_code [function]` (`2482ea17-b327-536d-96d8-3904bc42d195`) lines 3-14 [crates/gcode/src/commands/codewiki/paths.rs:3-14]
   - Signature: `pub(crate) fn inline_code(value: &str) -> String {`
-  - Purpose: Formats a string as markdown inline code by collapsing newlines to spaces and wrapping it with a backtick delimiter sized to exceed the longest consecutive backtick sequence in the value. [crates/gcode/src/commands/codewiki/paths.rs:3-14]
+  - Purpose: Formats a string as markdown inline code by collapsing whitespace and wrapping it with a backtick delimiter sized to exceed the longest consecutive backtick sequence in the value. [crates/gcode/src/commands/codewiki/paths.rs:3-14]
 - `max_backtick_run` (function) component `max_backtick_run [function]` (`486922ed-7bb3-57b1-b8f2-acaceaef8a1a`) lines 16-28 [crates/gcode/src/commands/codewiki/paths.rs:16-28]
   - Signature: `pub(crate) fn max_backtick_run(value: &str) -> usize {`
   - Purpose: This function computes and returns the length of the longest consecutive sequence of backtick characters in the input string. [crates/gcode/src/commands/codewiki/paths.rs:16-28]
@@ -87,4 +87,3 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 - `module_wikilink` (function) component `module_wikilink [function]` (`923953c3-cd3c-54bd-ab13-e0cccf3d1d46`) lines 155-157 [crates/gcode/src/commands/codewiki/paths.rs:155-157]
   - Signature: `pub(crate) fn module_wikilink(module: &str) -> String {`
   - Purpose: Constructs a wiki-link string in the format `[[code/modules/{module}|{module}]]` that links to a module's documentation path with the module name as display text. [crates/gcode/src/commands/codewiki/paths.rs:155-157]
-
