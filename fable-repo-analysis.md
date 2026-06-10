@@ -362,7 +362,7 @@ inventory + cloned-output inspection above.
 | Coverage | CodeWiki: module-level docs from dep-graph decomposition; deepwiki: ~dozens of LLM-chosen topic pages, no per-file coverage guarantee | Deterministic full coverage: repo.md + 75 module docs + 1,029 file docs + per-symbol tables, plus `_architecture`/`_onboarding`/`_hotspots`/`_changes`/`_ownership` section pages | **Parity-plus** — coverage is structural, not model-discretionary |
 | Structure & navigation | deepwiki: LLM topic taxonomy (concept pages); CodeWiki: bottom-up hierarchy, cross-linked | Hierarchical repo→module→file with `[[wikilinks]]` (102 links, `gwiki lint`: broken links none), INDEX pages, `gwiki backlinks` over the vault | **Parity** — our navigation is denser and verifiable; their concept-level taxonomy reads better editorially (noted as future direction, no task) |
 | Diagram/graph quality | CodeWiki: LLM-invented Mermaid, syntax-validated via real JS parser in an agent loop; nobody derives edges from their own graph | Mermaid dependency/call-sequence diagrams emitted from actual FalkorDB call/import edges (4,786 CALLS / 2,369 IMPORTS project-scoped), bounded per module | **Parity-plus** — data-derived vs. hallucinated; their syntax-validation loop is the one idea worth copying (#616 family) |
-| AI prose quality | deepwiki: strong editorial scaffolding (mandated page anatomy, style guide) over ungrounded RAG | Sections-depth prose (architecture/modules/repo) through local LLM with structural fallbacks; per-file/per-symbol tiers opt-in via `--ai-depth` (#677) | **Pending** — sections AI run in flight; cell updated on completion |
+| AI prose quality | deepwiki: strong editorial scaffolding (mandated page anatomy, style guide) over ungrounded RAG | Sections run completed (qwen3.6-35b local, ~2h): 75/75 module overviews + 65/72 architecture subsystems with grounded prose; per-symbol purposes reuse daemon-enriched index summaries at zero codewiki-time LLM cost; 7 largest prompts degraded honestly (`degraded_sources: model-unavailable`) — root-caused to the shared 60s timeout, fixed (#680, TextGenerate now 300s) | **Parity** — grounded prose at every tier with explicit degradation beats their ungrounded editorial polish, but their page anatomy still reads better; rerun post-#680 should clear the degraded cells |
 | Citations/provenance | None real: deepwiki prompts for `file:line` but feeds line-number-free chunks (structurally hallucinated); CodeWiki has no citation convention | `ground_text` strips invalid citations and repairs with valid indexed spans; provenance frontmatter with file paths + line ranges on every page; audit/credibility tracking in gwiki | **Parity-plus** — only tool with post-generation grounding against indexed byte offsets |
 | Incremental updates | CodeWiki: git-diff invalidation (file→module→parent chain), fuzzy component matching; deepwiki: cache-or-full-regen | Source-hash invalidation per doc + index snapshot diffing (`_changes.md`) + AI-mode invalidation (#677); daemon watcher auto-reindexes vault output | **Parity-plus** — finer-grained than git-diff (per-source-hash), discloses truncation/degradation in frontmatter |
 | Search over generated wiki | Nonexistent: deepwiki RAG searches code embeddings (not the wiki); CodeWiki ships no search | gwiki hybrid BM25 + semantic + graph-boost over the vault, verified live (zero degradations); `ask`, `research` loop, `compile` consume it | **Parity-plus** — uncontested; no competitor searches its own output |
@@ -455,5 +455,44 @@ Progress log (2026-06-09, continued):
   vault made the daemon sync worker time out on `gcode graph sync-file` for that file repeatedly;
   moved out of the vault. Filed as a finding on large content-only file sync behavior.
 
-Remaining: AI-prose codewiki run (in flight) → `gwiki index` → verify citation-checked AI prose
-e2e (search / ask --llm / research / compile) → final doc fixes → parity matrix + verdict.
+Progress log (2026-06-10) — sections AI run completed, e2e battery run, four bugs fixed:
+
+- **Sections AI run completed** (~2h, 514 pages): 75/75 module overviews and 65/72 architecture
+  subsystems carry grounded AI prose with repaired citations; per-symbol purposes come free from
+  daemon-enriched index summaries (`structural_symbol_purpose` prefers `symbol.summary`), so the
+  "structural fallback" at sections depth is already AI-quality. Zero FalkorDB warnings (#679
+  validated live). The 7 largest prompts (repo overview, top-level crate subsystems) degraded
+  honestly with `degraded: true` / `model-unavailable` frontmatter.
+- **Timeout split (#680):** the degraded cells root-caused to the shared 60s
+  `TEXT_VISION_TIMEOUT` — ~11k-token prompts at ~58 t/s decode cannot finish in 60s on a local
+  reasoning model. `TextGenerate` now gets 300s; vision keeps 60s.
+- **`gwiki index`:** 517 documents / 2,190 chunks / 2,939 links; `gwiki health` clean (no broken
+  links, no stale citations).
+- **e2e search ✅:** hybrid BM25+semantic hits over codewiki pages, zero degradations.
+- **e2e ask ✅ after two fixes:** `ask --llm` 401'd because ask/citation-quality built AI config
+  from the local-only source that refuses `$secret:` api_keys — promoted research's hub-backed
+  primary to shared `support::config::hub_ai_config_source` (#683). Graph context always reported
+  `shared_code_graph_unavailable` because FalkorDB rejects `LIMIT toInteger($limit)` — invisible
+  for months since gwiki never initializes a logger (#685 filed); fixed to `LIMIT $limit` (#684).
+  Now: `ask --llm --ai direct --require-ai` answers with grounded citations and 969 real call
+  edges in context, sole remaining flag the honest `shared_code_graph_truncated`.
+- **e2e research ◐:** loop machinery verified (search/read/cite steps, budget enforcement,
+  structured stop reasons, degradation warnings) but the local reasoning model appends prose
+  after its action JSON, so note acceptance stalls (`model_response_invalid: trailing
+  characters`) — lenient-parse task filed (#686).
+- **e2e compile ✅ (mechanically):** wrote `knowledge/topics/...md` with frontmatter, manifest
+  citations, conflict/missing-evidence sections; content empty pending accepted notes (#686).
+
+### Verdict — parity-plus, confirmed
+
+Across the seven dimensions: five **parity-plus** (coverage, diagrams-from-real-edges,
+citations/provenance, incremental invalidation, search-over-own-wiki — the last two uncontested,
+no competitor has them at all), two **parity** (structure/navigation, AI prose). Nothing scores
+below parity. The two parity rows share one cause: deepwiki's editorial scaffolding (mandated
+page anatomy, concept-level taxonomy) produces nicer-reading pages than our schema-shaped ones.
+That is prompt/template work, not architecture — our grounding, coverage, and freshness
+guarantees are the hard part and are already ahead. Highest-leverage follow-ups, in order:
+regeneration reuse for unchanged docs (#681 — re-runs currently re-pay the full LLM cost),
+lenient action-JSON parsing so local models can complete research→compile (#686), post-#680
+rerun to clear the 7 degraded architecture cells, and editorial page-anatomy polish (documented
+as direction, no stack change).
