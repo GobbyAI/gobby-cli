@@ -9,7 +9,7 @@
 !.gobby/wiki/
 !.gobby/wiki/**
 .gobby/wiki/_meta/**
-.gobby/wiki/**/*.json.lock
+.gobby/wiki/**/*.lock
 !.gobby/plans/
 .gobby/plans/**
 !.gobby/plans/completed/

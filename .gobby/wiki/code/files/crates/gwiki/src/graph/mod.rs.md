@@ -1,0 +1,332 @@
+---
+title: crates/gwiki/src/graph/mod.rs
+type: code_file
+provenance:
+- file: crates/gwiki/src/graph/mod.rs
+  ranges:
+  - 22-26
+  - 29-33
+  - 36-39
+  - 42-47
+  - 50-59
+  - 62-67
+  - 70-72
+  - 74-82
+  - 75-77
+  - 79-81
+  - 85-92
+  - 95-103
+  - 106-113
+  - 116-122
+  - 125-127
+  - 130-135
+  - 138-143
+  - 146-148
+  - 150-156
+  - 151-155
+  - 158-239
+  - 242-244
+  - 246-414
+  - 247-249
+  - 252-254
+  - 256-290
+  - 292-334
+  - 298-301
+  - 336-343
+  - 345-405
+  - 407-413
+  - 416-418
+  - 420-422
+  - 424-426
+  - 428-430
+  - 432-440
+  - 442-449
+  - 451-453
+  - 455-464
+  - 466-475
+  - 477-486
+  - 488-497
+  - 499-501
+  - 503-505
+  - 507-513
+  - 515-517
+  - 519-521
+  - 523-532
+  - 534-554
+  - 556-565
+  - 567-593
+  - 595-599
+  - 601-606
+  - 613-679
+  - 682-715
+  - 718-725
+  - 728-771
+  - 774-817
+  - 820-862
+  - 864-870
+  - 872-884
+  - 886-893
+generated_by: gcode-codewiki
+trust: generated
+freshness: indexed
+---
+
+# crates/gwiki/src/graph/mod.rs
+
+Module: [[code/modules/crates/gwiki/src/graph|crates/gwiki/src/graph]]
+
+## Purpose
+
+`crates/gwiki/src/graph/mod.rs` exposes 62 indexed API symbols.
+[crates/gwiki/src/graph/mod.rs:22-26]
+[crates/gwiki/src/graph/mod.rs:29-33]
+[crates/gwiki/src/graph/mod.rs:36-39]
+[crates/gwiki/src/graph/mod.rs:42-47]
+[crates/gwiki/src/graph/mod.rs:50-59]
+[crates/gwiki/src/graph/mod.rs:62-67]
+[crates/gwiki/src/graph/mod.rs:70-72]
+[crates/gwiki/src/graph/mod.rs:74-82]
+[crates/gwiki/src/graph/mod.rs:75-77]
+[crates/gwiki/src/graph/mod.rs:79-81]
+[crates/gwiki/src/graph/mod.rs:85-92]
+[crates/gwiki/src/graph/mod.rs:95-103]
+[crates/gwiki/src/graph/mod.rs:106-113]
+[crates/gwiki/src/graph/mod.rs:116-122]
+[crates/gwiki/src/graph/mod.rs:125-127]
+[crates/gwiki/src/graph/mod.rs:130-135]
+[crates/gwiki/src/graph/mod.rs:138-143]
+[crates/gwiki/src/graph/mod.rs:146-148]
+[crates/gwiki/src/graph/mod.rs:150-156]
+[crates/gwiki/src/graph/mod.rs:151-155]
+[crates/gwiki/src/graph/mod.rs:158-239]
+[crates/gwiki/src/graph/mod.rs:242-244]
+[crates/gwiki/src/graph/mod.rs:246-414]
+[crates/gwiki/src/graph/mod.rs:247-249]
+[crates/gwiki/src/graph/mod.rs:252-254]
+[crates/gwiki/src/graph/mod.rs:256-290]
+[crates/gwiki/src/graph/mod.rs:292-334]
+[crates/gwiki/src/graph/mod.rs:298-301]
+[crates/gwiki/src/graph/mod.rs:336-343]
+[crates/gwiki/src/graph/mod.rs:345-405]
+[crates/gwiki/src/graph/mod.rs:407-413]
+[crates/gwiki/src/graph/mod.rs:416-418]
+[crates/gwiki/src/graph/mod.rs:420-422]
+[crates/gwiki/src/graph/mod.rs:424-426]
+[crates/gwiki/src/graph/mod.rs:428-430]
+[crates/gwiki/src/graph/mod.rs:432-440]
+[crates/gwiki/src/graph/mod.rs:442-449]
+[crates/gwiki/src/graph/mod.rs:451-453]
+[crates/gwiki/src/graph/mod.rs:455-464]
+[crates/gwiki/src/graph/mod.rs:466-475]
+[crates/gwiki/src/graph/mod.rs:477-486]
+[crates/gwiki/src/graph/mod.rs:488-497]
+[crates/gwiki/src/graph/mod.rs:499-501]
+[crates/gwiki/src/graph/mod.rs:503-505]
+[crates/gwiki/src/graph/mod.rs:507-513]
+[crates/gwiki/src/graph/mod.rs:515-517]
+[crates/gwiki/src/graph/mod.rs:519-521]
+[crates/gwiki/src/graph/mod.rs:523-532]
+[crates/gwiki/src/graph/mod.rs:534-554]
+[crates/gwiki/src/graph/mod.rs:556-565]
+[crates/gwiki/src/graph/mod.rs:567-593]
+[crates/gwiki/src/graph/mod.rs:595-599]
+[crates/gwiki/src/graph/mod.rs:601-606]
+[crates/gwiki/src/graph/mod.rs:613-679]
+[crates/gwiki/src/graph/mod.rs:682-715]
+[crates/gwiki/src/graph/mod.rs:718-725]
+[crates/gwiki/src/graph/mod.rs:728-771]
+[crates/gwiki/src/graph/mod.rs:774-817]
+[crates/gwiki/src/graph/mod.rs:820-862]
+[crates/gwiki/src/graph/mod.rs:864-870]
+[crates/gwiki/src/graph/mod.rs:872-884]
+[crates/gwiki/src/graph/mod.rs:886-893]
+
+## API Symbols
+
+- `WikiGraphDocument` (class) component `WikiGraphDocument [class]` (`ae3abb0d-9d89-53d0-9f77-bd19629bbd71`) lines 22-26 [crates/gwiki/src/graph/mod.rs:22-26]
+  - Signature: `pub struct WikiGraphDocument {`
+  - Purpose: `WikiGraphDocument` is a metadata record for a wiki graph document, storing its `SearchScope`, filesystem `PathBuf`, and an optional `title`. [crates/gwiki/src/graph/mod.rs:22-26]
+- `WikiGraphSource` (class) component `WikiGraphSource [class]` (`23ac1c98-2c08-572e-b5b7-a14206627c82`) lines 29-33 [crates/gwiki/src/graph/mod.rs:29-33]
+  - Signature: `pub struct WikiGraphSource {`
+  - Purpose: `WikiGraphSource` is a simple Rust data container that associates a `SearchScope` with the filesystem `source_path` and `document_path` for a wiki graph source. [crates/gwiki/src/graph/mod.rs:29-33]
+- `WikiGraphLinkTarget` (type) component `WikiGraphLinkTarget [type]` (`fe3f6a2f-b7a2-56c0-b7c9-fe9775f112f0`) lines 36-39 [crates/gwiki/src/graph/mod.rs:36-39]
+  - Signature: `pub enum WikiGraphLinkTarget {`
+  - Purpose: Indexed type `WikiGraphLinkTarget` in `crates/gwiki/src/graph/mod.rs`. [crates/gwiki/src/graph/mod.rs:36-39]
+- `WikiGraphLink` (class) component `WikiGraphLink [class]` (`6b8d5203-ecb9-5370-9a9c-05284911f23c`) lines 42-47 [crates/gwiki/src/graph/mod.rs:42-47]
+  - Signature: `pub struct WikiGraphLink {`
+  - Purpose: `WikiGraphLink` is a data structure that models a wiki graph link by storing the search scope, the originating path, the raw target text, and the resolved `WikiGraphLinkTarget` variant. [crates/gwiki/src/graph/mod.rs:42-47]
+- `WikiGraphCodeEdge` (class) component `WikiGraphCodeEdge [class]` (`98827567-d658-5c0c-b1c9-264af462d85e`) lines 50-59 [crates/gwiki/src/graph/mod.rs:50-59]
+  - Signature: `pub struct WikiGraphCodeEdge {`
+  - Purpose: `WikiGraphCodeEdge` is a Rust record describing a directed, typed graph edge derived from a code/wiki source, capturing its search scope, originating document path, endpoint identifiers (`source`/`target`), edge metadata (`kind`, `direction`), optional line number, and provenance. [crates/gwiki/src/graph/mod.rs:50-59]
+- `WikiGraphFacts` (class) component `WikiGraphFacts [class]` (`a5370d6c-9459-5382-bdd5-152a94de302e`) lines 62-67 [crates/gwiki/src/graph/mod.rs:62-67]
+  - Signature: `pub struct WikiGraphFacts {`
+  - Purpose: `WikiGraphFacts` is an aggregate data container that stores the wiki graph’s documents, links, source records, and code edges as four typed `Vec` collections. [crates/gwiki/src/graph/mod.rs:62-67]
+- `GraphExportOptions` (class) component `GraphExportOptions [class]` (`e44cdaf1-94de-54c4-9d08-5b270d746a8b`) lines 70-72 [crates/gwiki/src/graph/mod.rs:70-72]
+  - Signature: `pub struct GraphExportOptions {`
+  - Purpose: `GraphExportOptions` is a configuration struct for graph export that carries a `Vec<String>` of degraded source identifiers. [crates/gwiki/src/graph/mod.rs:70-72]
+- `GraphExportOptions` (class) component `GraphExportOptions [class]` (`2432e1bc-4bad-50f3-a313-4270cb375444`) lines 74-82 [crates/gwiki/src/graph/mod.rs:74-82]
+  - Signature: `impl GraphExportOptions {`
+  - Purpose: `GraphExportOptions` is a configuration/constructor wrapper for graph export state that can be created either in the default available mode or with an explicit `degraded_sources: Vec<String>` list to mark sources as degraded. [crates/gwiki/src/graph/mod.rs:74-82]
+- `GraphExportOptions.available` (method) component `GraphExportOptions.available [method]` (`2cc9cd06-73db-572c-a36e-eb8ba2c81965`) lines 75-77 [crates/gwiki/src/graph/mod.rs:75-77]
+  - Signature: `pub fn available() -> Self {`
+  - Purpose: Constructs and returns a `Self` value by delegating directly to `Self::default()`, making `available()` a convenience constructor for the type’s default instance. [crates/gwiki/src/graph/mod.rs:75-77]
+- `GraphExportOptions.degraded` (method) component `GraphExportOptions.degraded [method]` (`ccd5801a-c85d-5474-801c-b3f54d6bd654`) lines 79-81 [crates/gwiki/src/graph/mod.rs:79-81]
+  - Signature: `pub fn degraded(degraded_sources: Vec<String>) -> Self {`
+  - Purpose: Constructs and returns a `Self` value with its `degraded_sources` field initialized directly from the provided `Vec<String>` argument. [crates/gwiki/src/graph/mod.rs:79-81]
+- `GraphExport` (class) component `GraphExport [class]` (`f0f5a353-0a96-566e-bff2-f5c41eaf0684`) lines 85-92 [crates/gwiki/src/graph/mod.rs:85-92]
+  - Signature: `pub struct GraphExport {`
+  - Purpose: `GraphExport` is a Rust struct that packages a graph export payload, including the originating command, degradation status and sources, analytics metadata, node list, and edge collection. [crates/gwiki/src/graph/mod.rs:85-92]
+- `GraphExportNode` (class) component `GraphExportNode [class]` (`22e6ba9d-3a8d-5fb5-b566-4b9d3046aefa`) lines 95-103 [crates/gwiki/src/graph/mod.rs:95-103]
+  - Signature: `pub struct GraphExportNode {`
+  - Purpose: `GraphExportNode` is a serializable export DTO representing a graph node with its stable `id`, static `kind`, enclosing scope identifiers (`scope_kind`/`scope_id`), `path`, and optional `title`. [crates/gwiki/src/graph/mod.rs:95-103]
+- `GraphExportEdges` (class) component `GraphExportEdges [class]` (`08ac016d-d912-5509-a0a9-a85565487bc7`) lines 106-113 [crates/gwiki/src/graph/mod.rs:106-113]
+  - Signature: `pub struct GraphExportEdges {`
+  - Purpose: `GraphExportEdges` is a struct that aggregates separate `Vec<GraphExportEdge>` collections for the exported graph’s `links`, `imports`, `calls`, `callers`, `trust`, and `audit` edge categories. [crates/gwiki/src/graph/mod.rs:106-113]
+- `GraphExportEdge` (class) component `GraphExportEdge [class]` (`a5ef95bb-bac2-5680-974c-7f7587e82138`) lines 116-122 [crates/gwiki/src/graph/mod.rs:116-122]
+  - Signature: `pub struct GraphExportEdge {`
+  - Purpose: `GraphExportEdge` is a serializable graph edge record that links `source` to `target`, tags the relationship with a static `kind`, and optionally preserves an unnormalized `raw_target` when present. [crates/gwiki/src/graph/mod.rs:116-122]
+- `GraphStatement` (class) component `GraphStatement [class]` (`b81e41d4-1540-5197-a578-04aff61df132`) lines 125-127 [crates/gwiki/src/graph/mod.rs:125-127]
+  - Signature: `pub struct GraphStatement {`
+  - Purpose: `GraphStatement` is a Rust struct that encapsulates a single Cypher query string in its `cypher` field for representing a graph database statement. [crates/gwiki/src/graph/mod.rs:125-127]
+- `WikiBacklink` (class) component `WikiBacklink [class]` (`3c471dab-f9fe-5d01-95d3-e849ada407f6`) lines 130-135 [crates/gwiki/src/graph/mod.rs:130-135]
+  - Signature: `pub struct WikiBacklink {`
+  - Purpose: `WikiBacklink` is a data record representing a backlink lookup result, containing the search `scope`, the backlink’s `source_path`, the resolved `target_path`, and the original unresolved `raw_target` text. [crates/gwiki/src/graph/mod.rs:130-135]
+- `LinkSuggestion` (class) component `LinkSuggestion [class]` (`9d7ae669-dfd8-5790-b926-27175f6077a6`) lines 138-143 [crates/gwiki/src/graph/mod.rs:138-143]
+  - Signature: `pub struct LinkSuggestion {`
+  - Purpose: `LinkSuggestion` is a structured proposal for a link target within a specific `SearchScope`, carrying the target string, the number of times it was mentioned, and the set of source `PathBuf`s where those mentions were found. [crates/gwiki/src/graph/mod.rs:138-143]
+- `RelatedPathOptions` (class) component `RelatedPathOptions [class]` (`5ef1a36d-9f7f-59e0-87bd-1571c4abd7cb`) lines 146-148 [crates/gwiki/src/graph/mod.rs:146-148]
+  - Signature: `pub struct RelatedPathOptions {`
+  - Purpose: `RelatedPathOptions` is a configuration struct that currently exposes a single `f64` parameter, `backward_link_weight`, for tuning backward-link weighting in related-path computation. [crates/gwiki/src/graph/mod.rs:146-148]
+- `RelatedPathOptions` (class) component `RelatedPathOptions [class]` (`5b96336c-9994-5d02-9867-1f7b35d45792`) lines 150-156 [crates/gwiki/src/graph/mod.rs:150-156]
+  - Signature: `impl Default for RelatedPathOptions {`
+  - Purpose: `RelatedPathOptions` implements `Default` by constructing a value whose `backward_link_weight` field is initialized to `BACKWARD_LINK_WEIGHT`. [crates/gwiki/src/graph/mod.rs:150-156]
+- `RelatedPathOptions.default` (method) component `RelatedPathOptions.default [method]` (`b103dac5-1f0d-5835-82c6-78550850f358`) lines 151-155 [crates/gwiki/src/graph/mod.rs:151-155]
+  - Signature: `fn default() -> Self {`
+  - Purpose: Constructs and returns a `Self` instance with `backward_link_weight` initialized to `BACKWARD_LINK_WEIGHT`. [crates/gwiki/src/graph/mod.rs:151-155]
+- `graph_write_statements` (function) component `graph_write_statements [function]` (`e7fb4b80-5bd1-536c-9ed8-18ad5c3b536c`) lines 158-239 [crates/gwiki/src/graph/mod.rs:158-239]
+  - Signature: `pub fn graph_write_statements(facts: &WikiGraphFacts) -> Vec<GraphStatement> {`
+  - Purpose: I’m locating the full function so the summary is exact, then I’ll compress it to one technical sentence.The direct symbol search didn’t hit; I’m widening the search to find the definition and its surrounding module.It builds a `Vec<GraphStatement>` of Cypher upserts that `MERGE` each wiki document node with scoped path properties and an optional title, then emit link relationship `MERGE`s only when the source exists and, for resolved links, the target document also exists, preserving the raw target string on the relationship. [crates/gwiki/src/graph/mod.rs:158-239]
+- `MemoryWikiGraph` (class) component `MemoryWikiGraph [class]` (`0ed3333f-6cb2-5f58-9fc4-1ce345e396c3`) lines 242-244 [crates/gwiki/src/graph/mod.rs:242-244]
+  - Signature: `pub struct MemoryWikiGraph {`
+  - Purpose: `MemoryWikiGraph` is a Rust wrapper struct that stores a `WikiGraphFacts` instance as its sole internal field, representing the graph-backed fact state for memory. [crates/gwiki/src/graph/mod.rs:242-244]
+- `MemoryWikiGraph` (class) component `MemoryWikiGraph [class]` (`f24794df-8455-54c8-bbb2-f61785fc78c4`) lines 246-414 [crates/gwiki/src/graph/mod.rs:246-414]
+  - Signature: `impl MemoryWikiGraph {`
+  - Purpose: `MemoryWikiGraph` is an in-memory `WikiGraphFacts` store that lets you replace the fact set and query scope-filtered backlinks and ranked link suggestions from the wiki graph. [crates/gwiki/src/graph/mod.rs:246-414]
+- `MemoryWikiGraph.replace_facts` (method) component `MemoryWikiGraph.replace_facts [method]` (`b30def02-4991-528d-b788-f1cef3b98edf`) lines 247-249 [crates/gwiki/src/graph/mod.rs:247-249]
+  - Signature: `pub fn replace_facts(&mut self, facts: WikiGraphFacts) {`
+  - Purpose: Replaces the current `facts` field on the graph with the supplied `WikiGraphFacts` value, overwriting any previously stored facts. [crates/gwiki/src/graph/mod.rs:247-249]
+- `MemoryWikiGraph.graph_facts_for_tests` (method) component `MemoryWikiGraph.graph_facts_for_tests [method]` (`d83faf5b-dce0-5a3e-a62a-4a8bf97da070`) lines 252-254 [crates/gwiki/src/graph/mod.rs:252-254]
+  - Signature: `pub(crate) fn graph_facts_for_tests(&self) -> &WikiGraphFacts {`
+  - Purpose: Returns an immutable reference to the instance’s internal `WikiGraphFacts` stored in `self.facts`, exposing it for test access without allowing mutation. [crates/gwiki/src/graph/mod.rs:252-254]
+- `MemoryWikiGraph.backlinks` (method) component `MemoryWikiGraph.backlinks [method]` (`3d858d66-f687-552c-bcaf-7c0de1ed61ed`) lines 256-290 [crates/gwiki/src/graph/mod.rs:256-290]
+  - Signature: `pub fn backlinks(`
+  - Purpose: Returns all `WikiBacklink` entries in the given `scope` whose resolved target equals `target_path` and whose source and target are both present in `document_keys()`, then sorts the results by `source_path` before returning them. [crates/gwiki/src/graph/mod.rs:256-290]
+- `MemoryWikiGraph.link_suggestions` (method) component `MemoryWikiGraph.link_suggestions [method]` (`fb9fbf25-409d-52c4-a646-ca4240fe89fc`) lines 292-334 [crates/gwiki/src/graph/mod.rs:292-334]
+  - Signature: `pub fn link_suggestions(&self, scope: &SearchScope, limit: usize) -> Vec<LinkSuggestion> {`
+  - Purpose: Returns up to `limit` `LinkSuggestion`s for unresolved links in the given `scope`, aggregating by target to count mentions and collect unique source paths, then sorting by descending mention count and ascending target before truncating the result. [crates/gwiki/src/graph/mod.rs:292-334]
+- `MemoryWikiGraph.Accumulator` (class) component `MemoryWikiGraph.Accumulator [class]` (`34bbc1c2-a884-5aa9-9c57-4fc5db3608a8`) lines 298-301 [crates/gwiki/src/graph/mod.rs:298-301]
+  - Signature: `struct Accumulator {`
+  - Purpose: `Accumulator` is a small aggregate state struct that records a `count` and the unique, ordered set of contributing `source_paths` as a `BTreeSet<PathBuf>`. [crates/gwiki/src/graph/mod.rs:298-301]
+- `MemoryWikiGraph.related_paths` (method) component `MemoryWikiGraph.related_paths [method]` (`87577f54-820d-5073-9fa8-74921f0ec1a2`) lines 336-343 [crates/gwiki/src/graph/mod.rs:336-343]
+  - Signature: `pub fn related_paths(`
+  - Purpose: Returns up to `limit` related paths for the given `scope` and `seed_paths` by delegating to `related_paths_with_options` with `RelatedPathOptions::default()`, producing a `Vec<(PathBuf, f64)>` of path-score pairs. [crates/gwiki/src/graph/mod.rs:336-343]
+- `MemoryWikiGraph.related_paths_with_options` (method) component `MemoryWikiGraph.related_paths_with_options [method]` (`21bb4330-85ee-5c20-b5e2-f5f52c922695`) lines 345-405 [crates/gwiki/src/graph/mod.rs:345-405]
+  - Signature: `pub fn related_paths_with_options(`
+  - Purpose: It ranks document paths in the given `scope` by aggregating weighted scores from resolved graph links originating from or pointing to each `seed_path` (forward links get the seed’s inverse-rank weight, backward links are scaled by `options.backward_link_weight`), then excludes seeds/non-documents/non-finite scores and returns the top `limit` `(PathBuf, f64)` pairs. [crates/gwiki/src/graph/mod.rs:345-405]
+- `MemoryWikiGraph.document_keys` (method) component `MemoryWikiGraph.document_keys [method]` (`f2ecf981-f9fe-5b89-ae3c-624c772c387e`) lines 407-413 [crates/gwiki/src/graph/mod.rs:407-413]
+  - Signature: `fn document_keys(&self) -> BTreeSet<(SearchScope, PathBuf)> {`
+  - Purpose: It returns a lexicographically ordered `BTreeSet` of unique `(SearchScope, PathBuf)` document identifiers by cloning the `scope` and `path` from every entry in `self.facts.documents`. [crates/gwiki/src/graph/mod.rs:407-413]
+- `label` (function) component `label [function]` (`8ebce724-afcb-555d-ab2c-b44b37028d6d`) lines 416-418 [crates/gwiki/src/graph/mod.rs:416-418]
+  - Signature: `fn label(value: &str) -> String {`
+  - Purpose: Returns a `String` containing `value` escaped for use as a Falkor label by directly delegating to `gobby_core::falkor::escape_label`. [crates/gwiki/src/graph/mod.rs:416-418]
+- `rel` (function) component `rel [function]` (`0c9536ff-594d-5897-b36f-d5a8370c0a07`) lines 420-422 [crates/gwiki/src/graph/mod.rs:420-422]
+  - Signature: `fn rel(value: &str) -> String {`
+  - Purpose: Returns the FalkorDB-safe escaped relationship type string for `value` by delegating directly to `gobby_core::falkor::escape_rel_type`. [crates/gwiki/src/graph/mod.rs:420-422]
+- `property` (function) component `property [function]` (`384294d3-bfb3-5c56-8294-61a1e0f335e8`) lines 424-426 [crates/gwiki/src/graph/mod.rs:424-426]
+  - Signature: `fn property(value: &str) -> String {`
+  - Purpose: Returns an owned `String` containing the Falkor-escaped form of the input `&str` by delegating directly to `gobby_core::falkor::escape_property`. [crates/gwiki/src/graph/mod.rs:424-426]
+- `string` (function) component `string [function]` (`6ea5885d-0c8f-5bb0-bbb3-a2b573ee67c8`) lines 428-430 [crates/gwiki/src/graph/mod.rs:428-430]
+  - Signature: `fn string(value: &str) -> String {`
+  - Purpose: Returns the `gobby_core::falkor::escape_string`-escaped form of the input `&str` as an owned `String`. [crates/gwiki/src/graph/mod.rs:428-430]
+- `scope_properties` (function) component `scope_properties [function]` (`2a80359d-8836-5099-b790-24b620889645`) lines 432-440 [crates/gwiki/src/graph/mod.rs:432-440]
+  - Signature: `fn scope_properties(scope: &SearchScope) -> String {`
+  - Purpose: Formats a `SearchScope` into a `String` containing `scope_kind` and `scope_id` key-value pairs derived from `scope.scope_kind()` and `scope.scope_value()`. [crates/gwiki/src/graph/mod.rs:432-440]
+- `scoped_path_properties` (function) component `scoped_path_properties [function]` (`12d8cd19-262d-587e-8cd3-17b2818f3a07`) lines 442-449 [crates/gwiki/src/graph/mod.rs:442-449]
+  - Signature: `fn scoped_path_properties(scope: &SearchScope, path: &Path) -> String {`
+  - Purpose: It returns a formatted string that concatenates `scope_properties(scope)`, the `"path"` property label, and the graph-serialized `path` value from `graph_path(path)`. [crates/gwiki/src/graph/mod.rs:442-449]
+- `graph_path` (function) component `graph_path [function]` (`1ae31f01-1c99-55c7-af0c-0e0807245c97`) lines 451-453 [crates/gwiki/src/graph/mod.rs:451-453]
+  - Signature: `fn graph_path(path: &Path) -> String {`
+  - Purpose: Converts a `Path` to a lossy string and normalizes it to a slash-separated form by replacing all `\` characters with `/`. [crates/gwiki/src/graph/mod.rs:451-453]
+- `document_node` (function) component `document_node [function]` (`f47d6394-06c6-5a86-8292-ed612ea5a5f0`) lines 455-464 [crates/gwiki/src/graph/mod.rs:455-464]
+  - Signature: `fn document_node(document: &WikiGraphDocument) -> GraphExportNode {`
+  - Purpose: Constructs and returns a `GraphExportNode` for a `WikiGraphDocument` by deriving its `id`, `kind`, `scope_kind`, `scope_id`, and graph path from the document’s scope and path, and copying its `title`. [crates/gwiki/src/graph/mod.rs:455-464]
+- `source_node` (function) component `source_node [function]` (`b07698c6-990b-55a1-a75a-7739b8dd3f33`) lines 466-475 [crates/gwiki/src/graph/mod.rs:466-475]
+  - Signature: `fn source_node(source: &WikiGraphSource) -> GraphExportNode {`
+  - Purpose: Builds and returns a `GraphExportNode` for a `WikiGraphSource` by deriving its `id` from the scope and source path, setting `kind` to `"source"`, copying the scope kind and value as strings, converting the source path with `graph_path`, and leaving `title` unset (`None`). [crates/gwiki/src/graph/mod.rs:466-475]
+- `citation_node` (function) component `citation_node [function]` (`631a8fb3-e4b5-5c5d-9788-941aac064976`) lines 477-486 [crates/gwiki/src/graph/mod.rs:477-486]
+  - Signature: `fn citation_node(source: &WikiGraphSource) -> GraphExportNode {`
+  - Purpose: `citation_node` builds and returns a `GraphExportNode` for a `WikiGraphSource`, setting its `id` from the source scope and paths, `kind` to `"citation"`, `scope_kind` and `scope_id` from the source’s scope, `path` from `source_path`, and `title` to `None`. [crates/gwiki/src/graph/mod.rs:477-486]
+- `unresolved_target_node` (function) component `unresolved_target_node [function]` (`24dce42f-d268-57bf-a2fd-b868e9457c5f`) lines 488-497 [crates/gwiki/src/graph/mod.rs:488-497]
+  - Signature: `fn unresolved_target_node(scope: &SearchScope, target: &str) -> GraphExportNode {`
+  - Purpose: Constructs and returns a `GraphExportNode` representing an unresolved target by deriving its `id` from `scope` and `target`, setting `kind` to `"unresolved_target"`, copying the scope kind/value into string fields, and using `target` for both `path` and `title`. [crates/gwiki/src/graph/mod.rs:488-497]
+- `document_id` (function) component `document_id [function]` (`3c0afb87-6378-5d56-9459-8fa2b6d22aff`) lines 499-501 [crates/gwiki/src/graph/mod.rs:499-501]
+  - Signature: `fn document_id(scope: &SearchScope, path: &Path) -> String {`
+  - Purpose: Returns a scope-qualified document identifier by delegating to `scoped_id(scope, "document", &graph_path(path))` for the given path. [crates/gwiki/src/graph/mod.rs:499-501]
+- `source_node_id` (function) component `source_node_id [function]` (`8505e829-a76a-53ee-bc0b-508940f9bc39`) lines 503-505 [crates/gwiki/src/graph/mod.rs:503-505]
+  - Signature: `fn source_node_id(scope: &SearchScope, path: &Path) -> String {`
+  - Purpose: Returns the scoped graph node identifier for a source file by calling `scoped_id` with the `"source"` kind and the normalized `graph_path(path)`. [crates/gwiki/src/graph/mod.rs:503-505]
+- `citation_node_id` (function) component `citation_node_id [function]` (`6bee331e-0220-53b2-9bdc-fee7ff6a4983`) lines 507-513 [crates/gwiki/src/graph/mod.rs:507-513]
+  - Signature: `fn citation_node_id(scope: &SearchScope, source_path: &Path, document_path: &Path) -> String {`
+  - Purpose: `citation_node_id` returns a scope-qualified citation node identifier by calling `scoped_id` with the `"citation"` type and a NUL-delimited key built from the graph paths of `source_path` and `document_path`. [crates/gwiki/src/graph/mod.rs:507-513]
+- `unresolved_target_id` (function) component `unresolved_target_id [function]` (`3045da76-83ae-5e87-be99-9a644230d5de`) lines 515-517 [crates/gwiki/src/graph/mod.rs:515-517]
+  - Signature: `fn unresolved_target_id(scope: &SearchScope, target: &str) -> String {`
+  - Purpose: Returns the scoped identifier for a target in the `"unresolved"` namespace by delegating to `scoped_id(scope, "unresolved", target)`. [crates/gwiki/src/graph/mod.rs:515-517]
+- `code_endpoint_id` (function) component `code_endpoint_id [function]` (`974a41df-d9c8-578d-8254-b86b9b623780`) lines 519-521 [crates/gwiki/src/graph/mod.rs:519-521]
+  - Signature: `fn code_endpoint_id(scope: &SearchScope, endpoint: &str) -> String {`
+  - Purpose: It returns a scoped string identifier for a code endpoint by calling `scoped_id(scope, "code", endpoint)`. [crates/gwiki/src/graph/mod.rs:519-521]
+- `scoped_id` (function) component `scoped_id [function]` (`550ceffc-d141-565f-9c7f-538e7664f092`) lines 523-532 [crates/gwiki/src/graph/mod.rs:523-532]
+  - Signature: `fn scoped_id(scope: &SearchScope, kind: &str, value: &str) -> String {`
+  - Purpose: `scoped_id` deterministically builds a human-readable, scope-qualified identifier by hashing `kind`, `scope` kind/value, and `value` into a UUID v5, then formatting it as `"{kind}-{readable_prefix}-{uuid}"`. [crates/gwiki/src/graph/mod.rs:523-532]
+- `readable_id_prefix` (function) component `readable_id_prefix [function]` (`b0dd8401-9883-5733-9e2d-875c444ff232`) lines 534-554 [crates/gwiki/src/graph/mod.rs:534-554]
+  - Signature: `fn readable_id_prefix(value: &str) -> String {`
+  - Purpose: Normalizes `value` into a lowercase ASCII slug by replacing non-alphanumeric characters with `-`, collapsing duplicate hyphens, trimming leading/trailing hyphens, returning `"id"` if the result is empty, and otherwise truncating it to 48 characters. [crates/gwiki/src/graph/mod.rs:534-554]
+- `document_kind` (function) component `document_kind [function]` (`3b8f3ab9-33d9-56c4-9b70-e8d86d5b83f1`) lines 556-565 [crates/gwiki/src/graph/mod.rs:556-565]
+  - Signature: `fn document_kind(path: &Path) -> &'static str {`
+  - Purpose: Returns a static kind string by classifying the path as `"wiki_page"` if its derived graph path starts with `knowledge/`, `"code"` if the graph path starts with `code/` or `is_code_path(path)` is true, and `"document"` otherwise. [crates/gwiki/src/graph/mod.rs:556-565]
+- `is_code_path` (function) component `is_code_path [function]` (`3fdfe00d-0f4e-537e-8995-3598676a192e`) lines 567-593 [crates/gwiki/src/graph/mod.rs:567-593]
+  - Signature: `fn is_code_path(path: &Path) -> bool {`
+  - Purpose: Returns `true` when `path` has a UTF-8 extension equal to one of the recognized code-file suffixes (`c`, `cc`, `cpp`, `cs`, `go`, `h`, `hpp`, `java`, `js`, `jsx`, `kt`, `php`, `py`, `rb`, `rs`, `scala`, `sh`, `sql`, `swift`, `ts`, or `tsx`), and `false` otherwise. [crates/gwiki/src/graph/mod.rs:567-593]
+- `mermaid_node_id` (function) component `mermaid_node_id [function]` (`c51b8f74-b8a7-536c-b3c6-fc074dbc9bad`) lines 595-599 [crates/gwiki/src/graph/mod.rs:595-599]
+  - Signature: `fn mermaid_node_id(id: &str) -> String {`
+  - Purpose: `mermaid_node_id` returns a new `String` by mapping each character in `id` to itself if it is ASCII alphanumeric, or to `_` otherwise, producing a Mermaid-safe node identifier. [crates/gwiki/src/graph/mod.rs:595-599]
+- `mermaid_label` (function) component `mermaid_label [function]` (`e5b9d33c-9cd5-5bfd-8cc9-830d118d25d4`) lines 601-606 [crates/gwiki/src/graph/mod.rs:601-606]
+  - Signature: `fn mermaid_label(node: &GraphExportNode) -> String {`
+  - Purpose: Returns the node’s `title` when present, otherwise its `path`, and escapes all double quotes (`"`) as `\"` for Mermaid label output. [crates/gwiki/src/graph/mod.rs:601-606]
+- `graph_labels_are_wiki_owned` (function) component `graph_labels_are_wiki_owned [function]` (`ea8b41f6-61d3-5f14-a251-f0fe3fe8ae30`) lines 613-679 [crates/gwiki/src/graph/mod.rs:613-679]
+  - Signature: `fn graph_labels_are_wiki_owned() {`
+  - Purpose: I’m checking the surrounding test intent so I can summarize the function accurately rather than paraphrasing the name.`gcode` can’t connect in this sandbox, so I’m falling back to a direct source search to confirm the assertion pattern.This test builds a sample `WikiGraphFacts` graph with wiki documents, links, and sources, serializes it via `graph_write_statements`, and asserts that the generated Cypher uses the wiki-owned labels/relationships (`WIKI_DOC_LABEL`, `WIKI_SOURCE_LABEL`, `WIKI_TARGET_LABEL`, `WIKI_LINKS_TO_REL`, `MENTIONS_TARGET_REL`, `SUPPORTS_REL`). [crates/gwiki/src/graph/mod.rs:613-679]
+- `graph_write_skips_relationships_to_missing_documents` (function) component `graph_write_skips_relationships_to_missing_documents [function]` (`ce0fbd0b-2b64-573f-b428-92d87c66590c`) lines 682-715 [crates/gwiki/src/graph/mod.rs:682-715]
+  - Signature: `fn graph_write_skips_relationships_to_missing_documents() {`
+  - Purpose: Verifies that `graph_write_statements` skips emitting `WIKI_LINKS_TO_REL` and `SUPPORTS_REL` for links whose target document is missing, while still producing one `MENTIONS_TARGET_REL` and the `WIKI_TARGET_LABEL`. [crates/gwiki/src/graph/mod.rs:682-715]
+- `scoped_graph_ids_hash_structured_values` (function) component `scoped_graph_ids_hash_structured_values [function]` (`3bb5f40e-4065-5517-a19b-e2221a3834cd`) lines 718-725 [crates/gwiki/src/graph/mod.rs:718-725]
+  - Signature: `fn scoped_graph_ids_hash_structured_values() {`
+  - Purpose: Verifies that `scoped_id` produces a deterministic, scope-specific hash suffix for structured values while normalizing the human-readable prefix and avoiding the raw unescaped `document:project:...` form. [crates/gwiki/src/graph/mod.rs:718-725]
+- `backlinks_are_scope_filtered` (function) component `backlinks_are_scope_filtered [function]` (`c3a548e7-f1ea-521c-903c-698bddf9ed2e`) lines 728-771 [crates/gwiki/src/graph/mod.rs:728-771]
+  - Signature: `fn backlinks_are_scope_filtered() {`
+  - Purpose: Verifies that `MemoryWikiGraph::backlinks` filters backlinks by the requested `SearchScope`, returning only the backlink from `project-1` for `knowledge/concepts/ownership.md` and excluding the same-path backlink from the `topic("rust")` scope. [crates/gwiki/src/graph/mod.rs:728-771]
+- `link_suggest_is_read_only` (function) component `link_suggest_is_read_only [function]` (`09b5d54f-729b-5869-a4b0-09277b078d16`) lines 774-817 [crates/gwiki/src/graph/mod.rs:774-817]
+  - Signature: `fn link_suggest_is_read_only() {`
+  - Purpose: This test verifies that `MemoryWikiGraph::link_suggestions` is read-only with respect to the input markdown and that it aggregates unresolved links across facts, ranking suggestions by mention count (`Ownership` first, then `Borrow checker`). [crates/gwiki/src/graph/mod.rs:774-817]
+- `related_paths_support_weight_options_and_skip_non_finite_scores` (function) component `related_paths_support_weight_options_and_skip_non_finite_scores [function]` (`b10d9cc3-44ac-55cd-b08f-9ace8ccba07b`) lines 820-862 [crates/gwiki/src/graph/mod.rs:820-862]
+  - Signature: `fn related_paths_support_weight_options_and_skip_non_finite_scores() {`
+  - Purpose: Verifies that `related_paths_with_options` applies the configured `backward_link_weight` when ranking related wiki paths and excludes candidates whose computed scores are non-finite, such as `NaN`. [crates/gwiki/src/graph/mod.rs:820-862]
+- `doc` (function) component `doc [function]` (`37f4fe95-ae89-55cc-b264-f944c92007cc`) lines 864-870 [crates/gwiki/src/graph/mod.rs:864-870]
+  - Signature: `fn doc(scope: SearchScope, path: &str) -> WikiGraphDocument {`
+  - Purpose: Constructs and returns a `WikiGraphDocument` with the given `scope`, `path` converted into an owned `String`, and `title` initialized to `None`. [crates/gwiki/src/graph/mod.rs:864-870]
+- `resolved_link` (function) component `resolved_link [function]` (`8321713e-3c32-5398-9ae2-bf5895be5554`) lines 872-884 [crates/gwiki/src/graph/mod.rs:872-884]
+  - Signature: `fn resolved_link(`
+  - Purpose: Constructs and returns a `WikiGraphLink` from the provided `scope`, `source_path`, and `raw_target`, setting `target` to `WikiGraphLinkTarget::Resolved(target_path)` . [crates/gwiki/src/graph/mod.rs:872-884]
+- `unresolved_link` (function) component `unresolved_link [function]` (`ac5e6d40-2304-507a-ade6-473ed49dede5`) lines 886-893 [crates/gwiki/src/graph/mod.rs:886-893]
+  - Signature: `fn unresolved_link(scope: SearchScope, source_path: &str, target: &str) -> WikiGraphLink {`
+  - Purpose: Constructs a `WikiGraphLink` with the given `scope` and `source_path`, storing `target` as `WikiGraphLinkTarget::Unresolved(target.to_string())` while preserving the original `target` string in `raw_target`. [crates/gwiki/src/graph/mod.rs:886-893]
+

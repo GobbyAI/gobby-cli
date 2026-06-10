@@ -1,0 +1,1613 @@
+---
+title: crates/gsqz
+type: code_module
+provenance:
+- file: crates/gsqz/config.yaml
+  ranges:
+  - 12-15
+  - '13'
+  - '14'
+  - '15'
+  - 17-204
+  - 19-40
+  - '20'
+  - 21-40
+  - 22-26
+  - 23-26
+  - '24'
+  - '25'
+  - '26'
+  - 27-38
+  - 28-38
+  - 39-40
+  - '40'
+  - 42-58
+  - '43'
+  - 44-58
+  - 45-49
+  - 46-49
+  - '47'
+  - '48'
+  - '49'
+  - 50-56
+  - 51-56
+  - 57-58
+  - '58'
+  - 60-77
+  - '61'
+  - 62-77
+  - 63-67
+  - 64-67
+  - '65'
+  - '66'
+  - '67'
+  - 68-73
+  - 69-73
+  - 74-77
+  - '75'
+  - 78-86
+  - '79'
+  - 80-86
+  - '81'
+  - 82-83
+  - '83'
+  - 84-86
+  - '85'
+  - '86'
+  - 88-96
+  - '89'
+  - 90-96
+  - '91'
+  - 92-93
+  - '93'
+  - 94-96
+  - '95'
+  - '96'
+  - 98-108
+  - '99'
+  - 100-108
+  - '101'
+  - 102-103
+  - '103'
+  - 104-108
+  - '105'
+  - '106'
+  - 109-116
+  - '110'
+  - 111-116
+  - 112-113
+  - '113'
+  - 114-116
+  - '115'
+  - '116'
+  - 118-125
+  - '119'
+  - 120-125
+  - 121-122
+  - '122'
+  - 123-125
+  - '124'
+  - '125'
+  - 127-136
+  - '128'
+  - 129-136
+  - 130-131
+  - '131'
+  - 132-136
+  - '133'
+  - '134'
+  - 137-158
+  - '138'
+  - 139-158
+  - 140-143
+  - 141-143
+  - '142'
+  - '143'
+  - 144-151
+  - 145-151
+  - 152-153
+  - '153'
+  - 154-158
+  - '155'
+  - '156'
+  - 159-175
+  - '160'
+  - 161-175
+  - 162-170
+  - 163-170
+  - 171-175
+  - '172'
+  - '173'
+  - 176-181
+  - '177'
+  - 178-181
+  - 179-181
+  - '180'
+  - '181'
+  - 183-191
+  - '184'
+  - 185-191
+  - '186'
+  - 187-191
+  - '188'
+  - '189'
+  - 192-204
+  - '193'
+  - 194-204
+  - 195-201
+  - 196-201
+  - 202-204
+  - '203'
+  - '204'
+  - 206-213
+  - 207-213
+  - 208-213
+  - '209'
+  - '210'
+  - '214'
+- file: crates/gsqz/src/command_split.rs
+  ranges:
+  - 5-85
+  - 92-94
+  - 97-102
+  - 105-107
+  - 110-112
+  - 115-120
+  - 123-128
+  - 131-136
+  - 139-144
+  - 147-152
+  - 155-157
+  - 160-162
+  - 165-167
+- file: crates/gsqz/src/compressor.rs
+  ranges:
+  - 7-12
+  - 14-34
+  - 15-20
+  - 29-33
+  - 36-40
+  - 42-52
+  - 54-60
+  - 62-67
+  - 69-76
+  - 78-233
+  - 79-109
+  - 118-125
+  - 127-232
+  - 235-266
+  - 272-274
+  - 277-282
+  - 285-293
+  - 296-304
+  - 307-315
+  - 318-327
+  - 330-345
+  - 348-358
+  - 361-377
+  - 380-402
+  - 405-410
+  - 413-424
+  - 427-431
+  - 434-455
+  - 458-468
+  - 471-481
+  - 484-493
+  - 496-507
+  - 510-523
+  - 526-548
+  - 551-571
+  - 574-583
+  - 586-618
+  - 621-646
+  - 649-666
+  - 669-678
+  - 681-691
+  - 694-702
+  - 705-715
+- file: crates/gsqz/src/config.rs
+  ranges:
+  - 26-35
+  - 38-47
+  - 49-58
+  - 50-57
+  - 60-62
+  - 64-66
+  - 69-76
+  - 79-87
+  - 91-166
+  - 92-165
+  - '96'
+  - 98-162
+  - '99'
+  - 101-105
+  - 107-161
+  - 169-172
+  - 175-177
+  - 180-189
+  - 191-193
+  - 195-197
+  - '200'
+  - 203-205
+  - 208-211
+  - 214-216
+  - 219-224
+  - 227-230
+  - 232-234
+  - 237-240
+  - 242-248
+  - 243-247
+  - 250-257
+  - 259-361
+  - 262-264
+  - 268-290
+  - 294-304
+  - 307-322
+  - 325-360
+  - 368-373
+  - 376-380
+  - 383-388
+  - 391-394
+  - 397-403
+  - 406-409
+  - 412-416
+  - 419-423
+  - 426-433
+  - 436-443
+  - 446-458
+  - 461-471
+  - 474-478
+  - 481-492
+  - 495-508
+  - 511-515
+  - 518-525
+  - 528-538
+  - 541-548
+  - 551-561
+- file: crates/gsqz/src/daemon.rs
+  ranges:
+  - 11-23
+  - 26-28
+  - 32-43
+  - 46-53
+  - 60-80
+- file: crates/gsqz/src/main.rs
+  ranges:
+  - 25-48
+  - 50-65
+  - 67-140
+  - 142-185
+  - 187-277
+- file: crates/gsqz/src/primitives/dedup.rs
+  ranges:
+  - 9-45
+  - 52-58
+  - 61-70
+  - 73-77
+  - 80-83
+  - 86-89
+  - 92-97
+  - 100-118
+  - 121-126
+- file: crates/gsqz/src/primitives/filter.rs
+  ranges:
+  - 4-15
+  - 22-32
+  - 35-39
+  - 42-45
+  - 48-52
+  - 55-59
+  - 62-72
+  - 75-80
+- file: crates/gsqz/src/primitives/group.rs
+  ranges:
+  - 8-21
+  - 28-79
+  - 99-183
+  - 187-243
+  - 247-296
+  - 304-344
+  - 348-387
+  - 391-428
+  - 434-475
+  - 482-525
+  - 532-543
+  - 546-556
+  - 559-567
+  - 570-574
+  - 577-581
+  - 584-587
+  - 590-595
+  - 598-606
+  - 609-623
+  - 626-634
+  - 637-650
+  - 653-665
+  - 668-681
+  - 684-709
+  - 712-716
+  - 719-734
+  - 737-750
+  - 753-770
+  - 773-781
+  - 784-793
+  - 796-805
+  - 808-812
+  - 815-822
+  - 825-834
+  - 837-840
+  - 843-849
+  - 852-861
+  - 864-868
+  - 871-880
+  - 883-887
+  - 890-901
+  - 904-908
+  - 911-921
+  - 924-929
+  - 932-940
+- file: crates/gsqz/src/primitives/match_output.rs
+  ranges:
+  - 8-33
+  - 39-45
+  - 47-49
+  - 52-56
+  - 59-63
+  - 66-70
+  - 73-77
+  - 80-87
+  - 90-94
+  - 97-101
+  - 104-107
+  - 110-115
+- file: crates/gsqz/src/primitives/prose.rs
+  ranges:
+  - 5-9
+  - 11-20
+  - 12-19
+  - 23-34
+  - 50-100
+  - 102-109
+  - 116-124
+  - 187-211
+  - 218-278
+  - 280-303
+  - 310-314
+  - 317-321
+  - 324-328
+  - 331-335
+  - 338-343
+  - 346-350
+  - 353-363
+  - 366-370
+  - 373-378
+  - 381-386
+  - 389-393
+  - 396-399
+  - 402-407
+  - 410-418
+  - 421-425
+  - 428-432
+  - 435-439
+  - 442-446
+- file: crates/gsqz/src/primitives/replace.rs
+  ranges:
+  - 7-30
+  - 36-41
+  - 44-48
+  - 51-55
+  - 58-63
+  - 66-70
+  - 73-77
+  - 80-84
+  - 87-90
+  - 93-97
+- file: crates/gsqz/src/primitives/truncate.rs
+  ranges:
+  - 5-27
+  - 29-67
+  - 74-78
+  - 81-88
+  - 91-106
+  - 109-112
+  - 115-120
+  - 123-128
+  - 131-136
+  - 139-145
+  - 148-157
+  - 160-165
+  - 168-178
+generated_by: gcode-codewiki
+trust: generated
+freshness: indexed
+---
+
+# crates/gsqz
+
+Parent: [[code/modules/crates|crates]]
+
+## Overview
+
+gsqz implements a configurable compression pipeline designed to reduce the size of CLI command output. It orchestrates sequential text transformations—including filtering, deduplication, contextual grouping, truncation, regex replacement, and prose compression—through a Compressor and Pipeline architecture. Configuration is managed by a Config struct that loads pipeline rules, fallback strategies, and global settings from local files or a remote daemon. The module handles compound shell command splitting, exposes the primary CLI entry point, and synchronizes configuration via a background daemon. Low-level text manipulation is abstracted into the primitives submodule, with extensive tests validating pipeline matching, step execution, and compression metrics.
+[crates/gsqz/config.yaml:12-15]
+[crates/gsqz/config.yaml:13]
+[crates/gsqz/config.yaml:14]
+[crates/gsqz/config.yaml:15]
+[crates/gsqz/config.yaml:17-204]
+[crates/gsqz/config.yaml:19-40]
+[crates/gsqz/config.yaml:20]
+[crates/gsqz/config.yaml:21-40]
+[crates/gsqz/config.yaml:22-26]
+[crates/gsqz/config.yaml:23-26]
+[crates/gsqz/config.yaml:24]
+[crates/gsqz/config.yaml:25]
+[crates/gsqz/config.yaml:26]
+[crates/gsqz/config.yaml:27-38]
+[crates/gsqz/config.yaml:28-38]
+[crates/gsqz/config.yaml:39-40]
+[crates/gsqz/config.yaml:40]
+[crates/gsqz/config.yaml:42-58]
+[crates/gsqz/config.yaml:43]
+[crates/gsqz/config.yaml:44-58]
+[crates/gsqz/config.yaml:45-49]
+[crates/gsqz/config.yaml:46-49]
+[crates/gsqz/config.yaml:47]
+[crates/gsqz/config.yaml:48]
+[crates/gsqz/config.yaml:49]
+[crates/gsqz/config.yaml:50-56]
+[crates/gsqz/config.yaml:51-56]
+[crates/gsqz/config.yaml:57-58]
+[crates/gsqz/config.yaml:58]
+[crates/gsqz/config.yaml:60-77]
+[crates/gsqz/config.yaml:61]
+[crates/gsqz/config.yaml:62-77]
+[crates/gsqz/config.yaml:63-67]
+[crates/gsqz/config.yaml:64-67]
+[crates/gsqz/config.yaml:65]
+[crates/gsqz/config.yaml:66]
+[crates/gsqz/config.yaml:67]
+[crates/gsqz/config.yaml:68-73]
+[crates/gsqz/config.yaml:69-73]
+[crates/gsqz/config.yaml:74-77]
+[crates/gsqz/config.yaml:75]
+[crates/gsqz/config.yaml:78-86]
+[crates/gsqz/config.yaml:79]
+[crates/gsqz/config.yaml:80-86]
+[crates/gsqz/config.yaml:81]
+[crates/gsqz/config.yaml:82-83]
+[crates/gsqz/config.yaml:83]
+[crates/gsqz/config.yaml:84-86]
+[crates/gsqz/config.yaml:85]
+[crates/gsqz/config.yaml:86]
+[crates/gsqz/config.yaml:88-96]
+[crates/gsqz/config.yaml:89]
+[crates/gsqz/config.yaml:90-96]
+[crates/gsqz/config.yaml:91]
+[crates/gsqz/config.yaml:92-93]
+[crates/gsqz/config.yaml:93]
+[crates/gsqz/config.yaml:94-96]
+[crates/gsqz/config.yaml:95]
+[crates/gsqz/config.yaml:96]
+[crates/gsqz/config.yaml:98-108]
+[crates/gsqz/config.yaml:99]
+[crates/gsqz/config.yaml:100-108]
+[crates/gsqz/config.yaml:101]
+[crates/gsqz/config.yaml:102-103]
+[crates/gsqz/config.yaml:103]
+[crates/gsqz/config.yaml:104-108]
+[crates/gsqz/config.yaml:105]
+[crates/gsqz/config.yaml:106]
+[crates/gsqz/config.yaml:109-116]
+[crates/gsqz/config.yaml:110]
+[crates/gsqz/config.yaml:111-116]
+[crates/gsqz/config.yaml:112-113]
+[crates/gsqz/config.yaml:113]
+[crates/gsqz/config.yaml:114-116]
+[crates/gsqz/config.yaml:115]
+[crates/gsqz/config.yaml:116]
+[crates/gsqz/config.yaml:118-125]
+[crates/gsqz/config.yaml:119]
+[crates/gsqz/config.yaml:120-125]
+[crates/gsqz/config.yaml:121-122]
+[crates/gsqz/config.yaml:122]
+[crates/gsqz/config.yaml:123-125]
+[crates/gsqz/config.yaml:124]
+[crates/gsqz/config.yaml:125]
+[crates/gsqz/config.yaml:127-136]
+[crates/gsqz/config.yaml:128]
+[crates/gsqz/config.yaml:129-136]
+[crates/gsqz/config.yaml:130-131]
+[crates/gsqz/config.yaml:131]
+[crates/gsqz/config.yaml:132-136]
+[crates/gsqz/config.yaml:133]
+[crates/gsqz/config.yaml:134]
+[crates/gsqz/config.yaml:137-158]
+[crates/gsqz/config.yaml:138]
+[crates/gsqz/config.yaml:139-158]
+[crates/gsqz/config.yaml:140-143]
+[crates/gsqz/config.yaml:141-143]
+[crates/gsqz/config.yaml:142]
+[crates/gsqz/config.yaml:143]
+[crates/gsqz/config.yaml:144-151]
+[crates/gsqz/config.yaml:145-151]
+[crates/gsqz/config.yaml:152-153]
+[crates/gsqz/config.yaml:153]
+[crates/gsqz/config.yaml:154-158]
+[crates/gsqz/config.yaml:155]
+[crates/gsqz/config.yaml:156]
+[crates/gsqz/config.yaml:159-175]
+[crates/gsqz/config.yaml:160]
+[crates/gsqz/config.yaml:161-175]
+[crates/gsqz/config.yaml:162-170]
+[crates/gsqz/config.yaml:163-170]
+[crates/gsqz/config.yaml:171-175]
+[crates/gsqz/config.yaml:172]
+[crates/gsqz/config.yaml:173]
+[crates/gsqz/config.yaml:176-181]
+[crates/gsqz/config.yaml:177]
+[crates/gsqz/config.yaml:178-181]
+[crates/gsqz/config.yaml:179-181]
+[crates/gsqz/config.yaml:180]
+[crates/gsqz/config.yaml:181]
+[crates/gsqz/config.yaml:183-191]
+[crates/gsqz/config.yaml:184]
+[crates/gsqz/config.yaml:185-191]
+[crates/gsqz/config.yaml:186]
+[crates/gsqz/config.yaml:187-191]
+[crates/gsqz/config.yaml:188]
+[crates/gsqz/config.yaml:189]
+[crates/gsqz/config.yaml:192-204]
+[crates/gsqz/config.yaml:193]
+[crates/gsqz/config.yaml:194-204]
+[crates/gsqz/config.yaml:195-201]
+[crates/gsqz/config.yaml:196-201]
+[crates/gsqz/config.yaml:202-204]
+[crates/gsqz/config.yaml:203]
+[crates/gsqz/config.yaml:204]
+[crates/gsqz/config.yaml:206-213]
+[crates/gsqz/config.yaml:207-213]
+[crates/gsqz/config.yaml:208-213]
+[crates/gsqz/config.yaml:209]
+[crates/gsqz/config.yaml:210]
+[crates/gsqz/config.yaml:214]
+[crates/gsqz/src/command_split.rs:5-85]
+[crates/gsqz/src/command_split.rs:92-94]
+[crates/gsqz/src/command_split.rs:97-102]
+[crates/gsqz/src/command_split.rs:105-107]
+[crates/gsqz/src/command_split.rs:110-112]
+[crates/gsqz/src/command_split.rs:115-120]
+[crates/gsqz/src/command_split.rs:123-128]
+[crates/gsqz/src/command_split.rs:131-136]
+[crates/gsqz/src/command_split.rs:139-144]
+[crates/gsqz/src/command_split.rs:147-152]
+[crates/gsqz/src/command_split.rs:155-157]
+[crates/gsqz/src/command_split.rs:160-162]
+[crates/gsqz/src/command_split.rs:165-167]
+[crates/gsqz/src/compressor.rs:7-12]
+[crates/gsqz/src/compressor.rs:14-34]
+[crates/gsqz/src/compressor.rs:15-20]
+[crates/gsqz/src/compressor.rs:29-33]
+[crates/gsqz/src/compressor.rs:36-40]
+[crates/gsqz/src/compressor.rs:42-52]
+[crates/gsqz/src/compressor.rs:54-60]
+[crates/gsqz/src/compressor.rs:62-67]
+[crates/gsqz/src/compressor.rs:69-76]
+[crates/gsqz/src/compressor.rs:78-233]
+[crates/gsqz/src/compressor.rs:79-109]
+[crates/gsqz/src/compressor.rs:118-125]
+[crates/gsqz/src/compressor.rs:127-232]
+[crates/gsqz/src/compressor.rs:235-266]
+[crates/gsqz/src/compressor.rs:272-274]
+[crates/gsqz/src/compressor.rs:277-282]
+[crates/gsqz/src/compressor.rs:285-293]
+[crates/gsqz/src/compressor.rs:296-304]
+[crates/gsqz/src/compressor.rs:307-315]
+[crates/gsqz/src/compressor.rs:318-327]
+[crates/gsqz/src/compressor.rs:330-345]
+[crates/gsqz/src/compressor.rs:348-358]
+[crates/gsqz/src/compressor.rs:361-377]
+[crates/gsqz/src/compressor.rs:380-402]
+[crates/gsqz/src/compressor.rs:405-410]
+[crates/gsqz/src/compressor.rs:413-424]
+[crates/gsqz/src/compressor.rs:427-431]
+[crates/gsqz/src/compressor.rs:434-455]
+[crates/gsqz/src/compressor.rs:458-468]
+[crates/gsqz/src/compressor.rs:471-481]
+[crates/gsqz/src/compressor.rs:484-493]
+[crates/gsqz/src/compressor.rs:496-507]
+[crates/gsqz/src/compressor.rs:510-523]
+[crates/gsqz/src/compressor.rs:526-548]
+[crates/gsqz/src/compressor.rs:551-571]
+[crates/gsqz/src/compressor.rs:574-583]
+[crates/gsqz/src/compressor.rs:586-618]
+[crates/gsqz/src/compressor.rs:621-646]
+[crates/gsqz/src/compressor.rs:649-666]
+[crates/gsqz/src/compressor.rs:669-678]
+[crates/gsqz/src/compressor.rs:681-691]
+[crates/gsqz/src/compressor.rs:694-702]
+[crates/gsqz/src/compressor.rs:705-715]
+[crates/gsqz/src/config.rs:26-35]
+[crates/gsqz/src/config.rs:38-47]
+[crates/gsqz/src/config.rs:49-58]
+[crates/gsqz/src/config.rs:50-57]
+[crates/gsqz/src/config.rs:60-62]
+[crates/gsqz/src/config.rs:64-66]
+[crates/gsqz/src/config.rs:69-76]
+[crates/gsqz/src/config.rs:79-87]
+[crates/gsqz/src/config.rs:91-166]
+[crates/gsqz/src/config.rs:92-165]
+[crates/gsqz/src/config.rs:96]
+[crates/gsqz/src/config.rs:98-162]
+[crates/gsqz/src/config.rs:99]
+[crates/gsqz/src/config.rs:101-105]
+[crates/gsqz/src/config.rs:107-161]
+[crates/gsqz/src/config.rs:169-172]
+[crates/gsqz/src/config.rs:175-177]
+[crates/gsqz/src/config.rs:180-189]
+[crates/gsqz/src/config.rs:191-193]
+[crates/gsqz/src/config.rs:195-197]
+[crates/gsqz/src/config.rs:200]
+[crates/gsqz/src/config.rs:203-205]
+[crates/gsqz/src/config.rs:208-211]
+[crates/gsqz/src/config.rs:214-216]
+[crates/gsqz/src/config.rs:219-224]
+[crates/gsqz/src/config.rs:227-230]
+[crates/gsqz/src/config.rs:232-234]
+[crates/gsqz/src/config.rs:237-240]
+[crates/gsqz/src/config.rs:242-248]
+[crates/gsqz/src/config.rs:243-247]
+[crates/gsqz/src/config.rs:250-257]
+[crates/gsqz/src/config.rs:259-361]
+[crates/gsqz/src/config.rs:262-264]
+[crates/gsqz/src/config.rs:268-290]
+[crates/gsqz/src/config.rs:294-304]
+[crates/gsqz/src/config.rs:307-322]
+[crates/gsqz/src/config.rs:325-360]
+[crates/gsqz/src/config.rs:368-373]
+[crates/gsqz/src/config.rs:376-380]
+[crates/gsqz/src/config.rs:383-388]
+[crates/gsqz/src/config.rs:391-394]
+[crates/gsqz/src/config.rs:397-403]
+[crates/gsqz/src/config.rs:406-409]
+[crates/gsqz/src/config.rs:412-416]
+[crates/gsqz/src/config.rs:419-423]
+[crates/gsqz/src/config.rs:426-433]
+[crates/gsqz/src/config.rs:436-443]
+[crates/gsqz/src/config.rs:446-458]
+[crates/gsqz/src/config.rs:461-471]
+[crates/gsqz/src/config.rs:474-478]
+[crates/gsqz/src/config.rs:481-492]
+[crates/gsqz/src/config.rs:495-508]
+[crates/gsqz/src/config.rs:511-515]
+[crates/gsqz/src/config.rs:518-525]
+[crates/gsqz/src/config.rs:528-538]
+[crates/gsqz/src/config.rs:541-548]
+[crates/gsqz/src/config.rs:551-561]
+[crates/gsqz/src/daemon.rs:11-23]
+[crates/gsqz/src/daemon.rs:26-28]
+[crates/gsqz/src/daemon.rs:32-43]
+[crates/gsqz/src/daemon.rs:46-53]
+[crates/gsqz/src/daemon.rs:60-80]
+[crates/gsqz/src/main.rs:25-48]
+[crates/gsqz/src/main.rs:50-65]
+[crates/gsqz/src/main.rs:67-140]
+[crates/gsqz/src/main.rs:142-185]
+[crates/gsqz/src/main.rs:187-277]
+[crates/gsqz/src/primitives/dedup.rs:9-45]
+[crates/gsqz/src/primitives/dedup.rs:52-58]
+[crates/gsqz/src/primitives/dedup.rs:61-70]
+[crates/gsqz/src/primitives/dedup.rs:73-77]
+[crates/gsqz/src/primitives/dedup.rs:80-83]
+[crates/gsqz/src/primitives/dedup.rs:86-89]
+[crates/gsqz/src/primitives/dedup.rs:92-97]
+[crates/gsqz/src/primitives/dedup.rs:100-118]
+[crates/gsqz/src/primitives/dedup.rs:121-126]
+[crates/gsqz/src/primitives/filter.rs:4-15]
+[crates/gsqz/src/primitives/filter.rs:22-32]
+[crates/gsqz/src/primitives/filter.rs:35-39]
+[crates/gsqz/src/primitives/filter.rs:42-45]
+[crates/gsqz/src/primitives/filter.rs:48-52]
+[crates/gsqz/src/primitives/filter.rs:55-59]
+[crates/gsqz/src/primitives/filter.rs:62-72]
+[crates/gsqz/src/primitives/filter.rs:75-80]
+[crates/gsqz/src/primitives/group.rs:8-21]
+[crates/gsqz/src/primitives/group.rs:28-79]
+[crates/gsqz/src/primitives/group.rs:99-183]
+[crates/gsqz/src/primitives/group.rs:187-243]
+[crates/gsqz/src/primitives/group.rs:247-296]
+[crates/gsqz/src/primitives/group.rs:304-344]
+[crates/gsqz/src/primitives/group.rs:348-387]
+[crates/gsqz/src/primitives/group.rs:391-428]
+[crates/gsqz/src/primitives/group.rs:434-475]
+[crates/gsqz/src/primitives/group.rs:482-525]
+[crates/gsqz/src/primitives/group.rs:532-543]
+[crates/gsqz/src/primitives/group.rs:546-556]
+[crates/gsqz/src/primitives/group.rs:559-567]
+[crates/gsqz/src/primitives/group.rs:570-574]
+[crates/gsqz/src/primitives/group.rs:577-581]
+[crates/gsqz/src/primitives/group.rs:584-587]
+[crates/gsqz/src/primitives/group.rs:590-595]
+[crates/gsqz/src/primitives/group.rs:598-606]
+[crates/gsqz/src/primitives/group.rs:609-623]
+[crates/gsqz/src/primitives/group.rs:626-634]
+[crates/gsqz/src/primitives/group.rs:637-650]
+[crates/gsqz/src/primitives/group.rs:653-665]
+[crates/gsqz/src/primitives/group.rs:668-681]
+[crates/gsqz/src/primitives/group.rs:684-709]
+[crates/gsqz/src/primitives/group.rs:712-716]
+[crates/gsqz/src/primitives/group.rs:719-734]
+[crates/gsqz/src/primitives/group.rs:737-750]
+[crates/gsqz/src/primitives/group.rs:753-770]
+[crates/gsqz/src/primitives/group.rs:773-781]
+[crates/gsqz/src/primitives/group.rs:784-793]
+[crates/gsqz/src/primitives/group.rs:796-805]
+[crates/gsqz/src/primitives/group.rs:808-812]
+[crates/gsqz/src/primitives/group.rs:815-822]
+[crates/gsqz/src/primitives/group.rs:825-834]
+[crates/gsqz/src/primitives/group.rs:837-840]
+[crates/gsqz/src/primitives/group.rs:843-849]
+[crates/gsqz/src/primitives/group.rs:852-861]
+[crates/gsqz/src/primitives/group.rs:864-868]
+[crates/gsqz/src/primitives/group.rs:871-880]
+[crates/gsqz/src/primitives/group.rs:883-887]
+[crates/gsqz/src/primitives/group.rs:890-901]
+[crates/gsqz/src/primitives/group.rs:904-908]
+[crates/gsqz/src/primitives/group.rs:911-921]
+[crates/gsqz/src/primitives/group.rs:924-929]
+[crates/gsqz/src/primitives/group.rs:932-940]
+[crates/gsqz/src/primitives/match_output.rs:8-33]
+[crates/gsqz/src/primitives/match_output.rs:39-45]
+[crates/gsqz/src/primitives/match_output.rs:47-49]
+[crates/gsqz/src/primitives/match_output.rs:52-56]
+[crates/gsqz/src/primitives/match_output.rs:59-63]
+[crates/gsqz/src/primitives/match_output.rs:66-70]
+[crates/gsqz/src/primitives/match_output.rs:73-77]
+[crates/gsqz/src/primitives/match_output.rs:80-87]
+[crates/gsqz/src/primitives/match_output.rs:90-94]
+[crates/gsqz/src/primitives/match_output.rs:97-101]
+[crates/gsqz/src/primitives/match_output.rs:104-107]
+[crates/gsqz/src/primitives/match_output.rs:110-115]
+[crates/gsqz/src/primitives/prose.rs:5-9]
+[crates/gsqz/src/primitives/prose.rs:11-20]
+[crates/gsqz/src/primitives/prose.rs:12-19]
+[crates/gsqz/src/primitives/prose.rs:23-34]
+[crates/gsqz/src/primitives/prose.rs:50-100]
+[crates/gsqz/src/primitives/prose.rs:102-109]
+[crates/gsqz/src/primitives/prose.rs:116-124]
+[crates/gsqz/src/primitives/prose.rs:187-211]
+[crates/gsqz/src/primitives/prose.rs:218-278]
+[crates/gsqz/src/primitives/prose.rs:280-303]
+[crates/gsqz/src/primitives/prose.rs:310-314]
+[crates/gsqz/src/primitives/prose.rs:317-321]
+[crates/gsqz/src/primitives/prose.rs:324-328]
+[crates/gsqz/src/primitives/prose.rs:331-335]
+[crates/gsqz/src/primitives/prose.rs:338-343]
+[crates/gsqz/src/primitives/prose.rs:346-350]
+[crates/gsqz/src/primitives/prose.rs:353-363]
+[crates/gsqz/src/primitives/prose.rs:366-370]
+[crates/gsqz/src/primitives/prose.rs:373-378]
+[crates/gsqz/src/primitives/prose.rs:381-386]
+[crates/gsqz/src/primitives/prose.rs:389-393]
+[crates/gsqz/src/primitives/prose.rs:396-399]
+[crates/gsqz/src/primitives/prose.rs:402-407]
+[crates/gsqz/src/primitives/prose.rs:410-418]
+[crates/gsqz/src/primitives/prose.rs:421-425]
+[crates/gsqz/src/primitives/prose.rs:428-432]
+[crates/gsqz/src/primitives/prose.rs:435-439]
+[crates/gsqz/src/primitives/prose.rs:442-446]
+[crates/gsqz/src/primitives/replace.rs:7-30]
+[crates/gsqz/src/primitives/replace.rs:36-41]
+[crates/gsqz/src/primitives/replace.rs:44-48]
+[crates/gsqz/src/primitives/replace.rs:51-55]
+[crates/gsqz/src/primitives/replace.rs:58-63]
+[crates/gsqz/src/primitives/replace.rs:66-70]
+[crates/gsqz/src/primitives/replace.rs:73-77]
+[crates/gsqz/src/primitives/replace.rs:80-84]
+[crates/gsqz/src/primitives/replace.rs:87-90]
+[crates/gsqz/src/primitives/replace.rs:93-97]
+[crates/gsqz/src/primitives/truncate.rs:5-27]
+[crates/gsqz/src/primitives/truncate.rs:29-67]
+[crates/gsqz/src/primitives/truncate.rs:74-78]
+[crates/gsqz/src/primitives/truncate.rs:81-88]
+[crates/gsqz/src/primitives/truncate.rs:91-106]
+[crates/gsqz/src/primitives/truncate.rs:109-112]
+[crates/gsqz/src/primitives/truncate.rs:115-120]
+[crates/gsqz/src/primitives/truncate.rs:123-128]
+[crates/gsqz/src/primitives/truncate.rs:131-136]
+[crates/gsqz/src/primitives/truncate.rs:139-145]
+[crates/gsqz/src/primitives/truncate.rs:148-157]
+[crates/gsqz/src/primitives/truncate.rs:160-165]
+[crates/gsqz/src/primitives/truncate.rs:168-178]
+
+## Child Modules
+
+- [[code/modules/crates/gsqz/src|crates/gsqz/src]] - This module implements the core compression pipeline for the gsqz tool, providing a configurable system to process and compress CLI command output. It defines the Compressor and Pipeline architecture that orchestrates a sequence of text transformation Steps, including filtering, deduplication, contextual grouping, truncation, regex replacement, and prose compression. Configuration is managed through a Config struct that loads pipeline rules, fallback strategies, and global Settings from local files or a remote daemon. The module also handles shell command splitting for compound commands, exposes the primary CLI entry point, and integrates with a background daemon for configuration synchronization. Low-level text manipulation is delegated to the primitives submodule, while comprehensive tests validate pipeline matching, step execution, configuration deserialization, and compression metrics.
+[crates/gsqz/src/command_split.rs:5-85]
+[crates/gsqz/src/command_split.rs:92-94]
+[crates/gsqz/src/command_split.rs:97-102]
+[crates/gsqz/src/command_split.rs:105-107]
+[crates/gsqz/src/command_split.rs:110-112]
+[crates/gsqz/src/command_split.rs:115-120]
+[crates/gsqz/src/command_split.rs:123-128]
+[crates/gsqz/src/command_split.rs:131-136]
+[crates/gsqz/src/command_split.rs:139-144]
+[crates/gsqz/src/command_split.rs:147-152]
+[crates/gsqz/src/command_split.rs:155-157]
+[crates/gsqz/src/command_split.rs:160-162]
+[crates/gsqz/src/command_split.rs:165-167]
+[crates/gsqz/src/compressor.rs:7-12]
+[crates/gsqz/src/compressor.rs:14-34]
+[crates/gsqz/src/compressor.rs:15-20]
+[crates/gsqz/src/compressor.rs:29-33]
+[crates/gsqz/src/compressor.rs:36-40]
+[crates/gsqz/src/compressor.rs:42-52]
+[crates/gsqz/src/compressor.rs:54-60]
+[crates/gsqz/src/compressor.rs:62-67]
+[crates/gsqz/src/compressor.rs:69-76]
+[crates/gsqz/src/compressor.rs:78-233]
+[crates/gsqz/src/compressor.rs:79-109]
+[crates/gsqz/src/compressor.rs:118-125]
+[crates/gsqz/src/compressor.rs:127-232]
+[crates/gsqz/src/compressor.rs:235-266]
+[crates/gsqz/src/compressor.rs:272-274]
+[crates/gsqz/src/compressor.rs:277-282]
+[crates/gsqz/src/compressor.rs:285-293]
+[crates/gsqz/src/compressor.rs:296-304]
+[crates/gsqz/src/compressor.rs:307-315]
+[crates/gsqz/src/compressor.rs:318-327]
+[crates/gsqz/src/compressor.rs:330-345]
+[crates/gsqz/src/compressor.rs:348-358]
+[crates/gsqz/src/compressor.rs:361-377]
+[crates/gsqz/src/compressor.rs:380-402]
+[crates/gsqz/src/compressor.rs:405-410]
+[crates/gsqz/src/compressor.rs:413-424]
+[crates/gsqz/src/compressor.rs:427-431]
+[crates/gsqz/src/compressor.rs:434-455]
+[crates/gsqz/src/compressor.rs:458-468]
+[crates/gsqz/src/compressor.rs:471-481]
+[crates/gsqz/src/compressor.rs:484-493]
+[crates/gsqz/src/compressor.rs:496-507]
+[crates/gsqz/src/compressor.rs:510-523]
+[crates/gsqz/src/compressor.rs:526-548]
+[crates/gsqz/src/compressor.rs:551-571]
+[crates/gsqz/src/compressor.rs:574-583]
+[crates/gsqz/src/compressor.rs:586-618]
+[crates/gsqz/src/compressor.rs:621-646]
+[crates/gsqz/src/compressor.rs:649-666]
+[crates/gsqz/src/compressor.rs:669-678]
+[crates/gsqz/src/compressor.rs:681-691]
+[crates/gsqz/src/compressor.rs:694-702]
+[crates/gsqz/src/compressor.rs:705-715]
+[crates/gsqz/src/config.rs:26-35]
+[crates/gsqz/src/config.rs:38-47]
+[crates/gsqz/src/config.rs:49-58]
+[crates/gsqz/src/config.rs:50-57]
+[crates/gsqz/src/config.rs:60-62]
+[crates/gsqz/src/config.rs:64-66]
+[crates/gsqz/src/config.rs:69-76]
+[crates/gsqz/src/config.rs:79-87]
+[crates/gsqz/src/config.rs:91-166]
+[crates/gsqz/src/config.rs:92-165]
+[crates/gsqz/src/config.rs:96]
+[crates/gsqz/src/config.rs:98-162]
+[crates/gsqz/src/config.rs:99]
+[crates/gsqz/src/config.rs:101-105]
+[crates/gsqz/src/config.rs:107-161]
+[crates/gsqz/src/config.rs:169-172]
+[crates/gsqz/src/config.rs:175-177]
+[crates/gsqz/src/config.rs:180-189]
+[crates/gsqz/src/config.rs:191-193]
+[crates/gsqz/src/config.rs:195-197]
+[crates/gsqz/src/config.rs:200]
+[crates/gsqz/src/config.rs:203-205]
+[crates/gsqz/src/config.rs:208-211]
+[crates/gsqz/src/config.rs:214-216]
+[crates/gsqz/src/config.rs:219-224]
+[crates/gsqz/src/config.rs:227-230]
+[crates/gsqz/src/config.rs:232-234]
+[crates/gsqz/src/config.rs:237-240]
+[crates/gsqz/src/config.rs:242-248]
+[crates/gsqz/src/config.rs:243-247]
+[crates/gsqz/src/config.rs:250-257]
+[crates/gsqz/src/config.rs:259-361]
+[crates/gsqz/src/config.rs:262-264]
+[crates/gsqz/src/config.rs:268-290]
+[crates/gsqz/src/config.rs:294-304]
+[crates/gsqz/src/config.rs:307-322]
+[crates/gsqz/src/config.rs:325-360]
+[crates/gsqz/src/config.rs:368-373]
+[crates/gsqz/src/config.rs:376-380]
+[crates/gsqz/src/config.rs:383-388]
+[crates/gsqz/src/config.rs:391-394]
+[crates/gsqz/src/config.rs:397-403]
+[crates/gsqz/src/config.rs:406-409]
+[crates/gsqz/src/config.rs:412-416]
+[crates/gsqz/src/config.rs:419-423]
+[crates/gsqz/src/config.rs:426-433]
+[crates/gsqz/src/config.rs:436-443]
+[crates/gsqz/src/config.rs:446-458]
+[crates/gsqz/src/config.rs:461-471]
+[crates/gsqz/src/config.rs:474-478]
+[crates/gsqz/src/config.rs:481-492]
+[crates/gsqz/src/config.rs:495-508]
+[crates/gsqz/src/config.rs:511-515]
+[crates/gsqz/src/config.rs:518-525]
+[crates/gsqz/src/config.rs:528-538]
+[crates/gsqz/src/config.rs:541-548]
+[crates/gsqz/src/config.rs:551-561]
+[crates/gsqz/src/daemon.rs:11-23]
+[crates/gsqz/src/daemon.rs:26-28]
+[crates/gsqz/src/daemon.rs:32-43]
+[crates/gsqz/src/daemon.rs:46-53]
+[crates/gsqz/src/daemon.rs:60-80]
+[crates/gsqz/src/main.rs:25-48]
+[crates/gsqz/src/main.rs:50-65]
+[crates/gsqz/src/main.rs:67-140]
+[crates/gsqz/src/main.rs:142-185]
+[crates/gsqz/src/main.rs:187-277]
+[crates/gsqz/src/primitives/dedup.rs:9-45]
+[crates/gsqz/src/primitives/dedup.rs:52-58]
+[crates/gsqz/src/primitives/dedup.rs:61-70]
+[crates/gsqz/src/primitives/dedup.rs:73-77]
+[crates/gsqz/src/primitives/dedup.rs:80-83]
+[crates/gsqz/src/primitives/dedup.rs:86-89]
+[crates/gsqz/src/primitives/dedup.rs:92-97]
+[crates/gsqz/src/primitives/dedup.rs:100-118]
+[crates/gsqz/src/primitives/dedup.rs:121-126]
+[crates/gsqz/src/primitives/filter.rs:4-15]
+[crates/gsqz/src/primitives/filter.rs:22-32]
+[crates/gsqz/src/primitives/filter.rs:35-39]
+[crates/gsqz/src/primitives/filter.rs:42-45]
+[crates/gsqz/src/primitives/filter.rs:48-52]
+[crates/gsqz/src/primitives/filter.rs:55-59]
+[crates/gsqz/src/primitives/filter.rs:62-72]
+[crates/gsqz/src/primitives/filter.rs:75-80]
+[crates/gsqz/src/primitives/group.rs:8-21]
+[crates/gsqz/src/primitives/group.rs:28-79]
+[crates/gsqz/src/primitives/group.rs:99-183]
+[crates/gsqz/src/primitives/group.rs:187-243]
+[crates/gsqz/src/primitives/group.rs:247-296]
+[crates/gsqz/src/primitives/group.rs:304-344]
+[crates/gsqz/src/primitives/group.rs:348-387]
+[crates/gsqz/src/primitives/group.rs:391-428]
+[crates/gsqz/src/primitives/group.rs:434-475]
+[crates/gsqz/src/primitives/group.rs:482-525]
+[crates/gsqz/src/primitives/group.rs:532-543]
+[crates/gsqz/src/primitives/group.rs:546-556]
+[crates/gsqz/src/primitives/group.rs:559-567]
+[crates/gsqz/src/primitives/group.rs:570-574]
+[crates/gsqz/src/primitives/group.rs:577-581]
+[crates/gsqz/src/primitives/group.rs:584-587]
+[crates/gsqz/src/primitives/group.rs:590-595]
+[crates/gsqz/src/primitives/group.rs:598-606]
+[crates/gsqz/src/primitives/group.rs:609-623]
+[crates/gsqz/src/primitives/group.rs:626-634]
+[crates/gsqz/src/primitives/group.rs:637-650]
+[crates/gsqz/src/primitives/group.rs:653-665]
+[crates/gsqz/src/primitives/group.rs:668-681]
+[crates/gsqz/src/primitives/group.rs:684-709]
+[crates/gsqz/src/primitives/group.rs:712-716]
+[crates/gsqz/src/primitives/group.rs:719-734]
+[crates/gsqz/src/primitives/group.rs:737-750]
+[crates/gsqz/src/primitives/group.rs:753-770]
+[crates/gsqz/src/primitives/group.rs:773-781]
+[crates/gsqz/src/primitives/group.rs:784-793]
+[crates/gsqz/src/primitives/group.rs:796-805]
+[crates/gsqz/src/primitives/group.rs:808-812]
+[crates/gsqz/src/primitives/group.rs:815-822]
+[crates/gsqz/src/primitives/group.rs:825-834]
+[crates/gsqz/src/primitives/group.rs:837-840]
+[crates/gsqz/src/primitives/group.rs:843-849]
+[crates/gsqz/src/primitives/group.rs:852-861]
+[crates/gsqz/src/primitives/group.rs:864-868]
+[crates/gsqz/src/primitives/group.rs:871-880]
+[crates/gsqz/src/primitives/group.rs:883-887]
+[crates/gsqz/src/primitives/group.rs:890-901]
+[crates/gsqz/src/primitives/group.rs:904-908]
+[crates/gsqz/src/primitives/group.rs:911-921]
+[crates/gsqz/src/primitives/group.rs:924-929]
+[crates/gsqz/src/primitives/group.rs:932-940]
+[crates/gsqz/src/primitives/match_output.rs:8-33]
+[crates/gsqz/src/primitives/match_output.rs:39-45]
+[crates/gsqz/src/primitives/match_output.rs:47-49]
+[crates/gsqz/src/primitives/match_output.rs:52-56]
+[crates/gsqz/src/primitives/match_output.rs:59-63]
+[crates/gsqz/src/primitives/match_output.rs:66-70]
+[crates/gsqz/src/primitives/match_output.rs:73-77]
+[crates/gsqz/src/primitives/match_output.rs:80-87]
+[crates/gsqz/src/primitives/match_output.rs:90-94]
+[crates/gsqz/src/primitives/match_output.rs:97-101]
+[crates/gsqz/src/primitives/match_output.rs:104-107]
+[crates/gsqz/src/primitives/match_output.rs:110-115]
+[crates/gsqz/src/primitives/prose.rs:5-9]
+[crates/gsqz/src/primitives/prose.rs:11-20]
+[crates/gsqz/src/primitives/prose.rs:12-19]
+[crates/gsqz/src/primitives/prose.rs:23-34]
+[crates/gsqz/src/primitives/prose.rs:50-100]
+[crates/gsqz/src/primitives/prose.rs:102-109]
+[crates/gsqz/src/primitives/prose.rs:116-124]
+[crates/gsqz/src/primitives/prose.rs:187-211]
+[crates/gsqz/src/primitives/prose.rs:218-278]
+[crates/gsqz/src/primitives/prose.rs:280-303]
+[crates/gsqz/src/primitives/prose.rs:310-314]
+[crates/gsqz/src/primitives/prose.rs:317-321]
+[crates/gsqz/src/primitives/prose.rs:324-328]
+[crates/gsqz/src/primitives/prose.rs:331-335]
+[crates/gsqz/src/primitives/prose.rs:338-343]
+[crates/gsqz/src/primitives/prose.rs:346-350]
+[crates/gsqz/src/primitives/prose.rs:353-363]
+[crates/gsqz/src/primitives/prose.rs:366-370]
+[crates/gsqz/src/primitives/prose.rs:373-378]
+[crates/gsqz/src/primitives/prose.rs:381-386]
+[crates/gsqz/src/primitives/prose.rs:389-393]
+[crates/gsqz/src/primitives/prose.rs:396-399]
+[crates/gsqz/src/primitives/prose.rs:402-407]
+[crates/gsqz/src/primitives/prose.rs:410-418]
+[crates/gsqz/src/primitives/prose.rs:421-425]
+[crates/gsqz/src/primitives/prose.rs:428-432]
+[crates/gsqz/src/primitives/prose.rs:435-439]
+[crates/gsqz/src/primitives/prose.rs:442-446]
+[crates/gsqz/src/primitives/replace.rs:7-30]
+[crates/gsqz/src/primitives/replace.rs:36-41]
+[crates/gsqz/src/primitives/replace.rs:44-48]
+[crates/gsqz/src/primitives/replace.rs:51-55]
+[crates/gsqz/src/primitives/replace.rs:58-63]
+[crates/gsqz/src/primitives/replace.rs:66-70]
+[crates/gsqz/src/primitives/replace.rs:73-77]
+[crates/gsqz/src/primitives/replace.rs:80-84]
+[crates/gsqz/src/primitives/replace.rs:87-90]
+[crates/gsqz/src/primitives/replace.rs:93-97]
+[crates/gsqz/src/primitives/truncate.rs:5-27]
+[crates/gsqz/src/primitives/truncate.rs:29-67]
+[crates/gsqz/src/primitives/truncate.rs:74-78]
+[crates/gsqz/src/primitives/truncate.rs:81-88]
+[crates/gsqz/src/primitives/truncate.rs:91-106]
+[crates/gsqz/src/primitives/truncate.rs:109-112]
+[crates/gsqz/src/primitives/truncate.rs:115-120]
+[crates/gsqz/src/primitives/truncate.rs:123-128]
+[crates/gsqz/src/primitives/truncate.rs:131-136]
+[crates/gsqz/src/primitives/truncate.rs:139-145]
+[crates/gsqz/src/primitives/truncate.rs:148-157]
+[crates/gsqz/src/primitives/truncate.rs:160-165]
+[crates/gsqz/src/primitives/truncate.rs:168-178]
+
+## Files
+
+- [[code/files/crates/gsqz/Cargo.toml|crates/gsqz/Cargo.toml]] - `crates/gsqz/Cargo.toml` has no indexed API symbols.
+- [[code/files/crates/gsqz/README.md|crates/gsqz/README.md]] - `crates/gsqz/README.md` has no indexed API symbols.
+- [[code/files/crates/gsqz/SKILL.md|crates/gsqz/SKILL.md]] - `crates/gsqz/SKILL.md` has no indexed API symbols.
+- [[code/files/crates/gsqz/config.yaml|crates/gsqz/config.yaml]] - `crates/gsqz/config.yaml` exposes 141 indexed API symbols.
+[crates/gsqz/config.yaml:12-15]
+[crates/gsqz/config.yaml:13]
+[crates/gsqz/config.yaml:14]
+[crates/gsqz/config.yaml:15]
+[crates/gsqz/config.yaml:17-204]
+[crates/gsqz/config.yaml:19-40]
+[crates/gsqz/config.yaml:20]
+[crates/gsqz/config.yaml:21-40]
+[crates/gsqz/config.yaml:22-26]
+[crates/gsqz/config.yaml:23-26]
+[crates/gsqz/config.yaml:24]
+[crates/gsqz/config.yaml:25]
+[crates/gsqz/config.yaml:26]
+[crates/gsqz/config.yaml:27-38]
+[crates/gsqz/config.yaml:28-38]
+[crates/gsqz/config.yaml:39-40]
+[crates/gsqz/config.yaml:40]
+[crates/gsqz/config.yaml:42-58]
+[crates/gsqz/config.yaml:43]
+[crates/gsqz/config.yaml:44-58]
+[crates/gsqz/config.yaml:45-49]
+[crates/gsqz/config.yaml:46-49]
+[crates/gsqz/config.yaml:47]
+[crates/gsqz/config.yaml:48]
+[crates/gsqz/config.yaml:49]
+[crates/gsqz/config.yaml:50-56]
+[crates/gsqz/config.yaml:51-56]
+[crates/gsqz/config.yaml:57-58]
+[crates/gsqz/config.yaml:58]
+[crates/gsqz/config.yaml:60-77]
+[crates/gsqz/config.yaml:61]
+[crates/gsqz/config.yaml:62-77]
+[crates/gsqz/config.yaml:63-67]
+[crates/gsqz/config.yaml:64-67]
+[crates/gsqz/config.yaml:65]
+[crates/gsqz/config.yaml:66]
+[crates/gsqz/config.yaml:67]
+[crates/gsqz/config.yaml:68-73]
+[crates/gsqz/config.yaml:69-73]
+[crates/gsqz/config.yaml:74-77]
+[crates/gsqz/config.yaml:75]
+[crates/gsqz/config.yaml:78-86]
+[crates/gsqz/config.yaml:79]
+[crates/gsqz/config.yaml:80-86]
+[crates/gsqz/config.yaml:81]
+[crates/gsqz/config.yaml:82-83]
+[crates/gsqz/config.yaml:83]
+[crates/gsqz/config.yaml:84-86]
+[crates/gsqz/config.yaml:85]
+[crates/gsqz/config.yaml:86]
+[crates/gsqz/config.yaml:88-96]
+[crates/gsqz/config.yaml:89]
+[crates/gsqz/config.yaml:90-96]
+[crates/gsqz/config.yaml:91]
+[crates/gsqz/config.yaml:92-93]
+[crates/gsqz/config.yaml:93]
+[crates/gsqz/config.yaml:94-96]
+[crates/gsqz/config.yaml:95]
+[crates/gsqz/config.yaml:96]
+[crates/gsqz/config.yaml:98-108]
+[crates/gsqz/config.yaml:99]
+[crates/gsqz/config.yaml:100-108]
+[crates/gsqz/config.yaml:101]
+[crates/gsqz/config.yaml:102-103]
+[crates/gsqz/config.yaml:103]
+[crates/gsqz/config.yaml:104-108]
+[crates/gsqz/config.yaml:105]
+[crates/gsqz/config.yaml:106]
+[crates/gsqz/config.yaml:109-116]
+[crates/gsqz/config.yaml:110]
+[crates/gsqz/config.yaml:111-116]
+[crates/gsqz/config.yaml:112-113]
+[crates/gsqz/config.yaml:113]
+[crates/gsqz/config.yaml:114-116]
+[crates/gsqz/config.yaml:115]
+[crates/gsqz/config.yaml:116]
+[crates/gsqz/config.yaml:118-125]
+[crates/gsqz/config.yaml:119]
+[crates/gsqz/config.yaml:120-125]
+[crates/gsqz/config.yaml:121-122]
+[crates/gsqz/config.yaml:122]
+[crates/gsqz/config.yaml:123-125]
+[crates/gsqz/config.yaml:124]
+[crates/gsqz/config.yaml:125]
+[crates/gsqz/config.yaml:127-136]
+[crates/gsqz/config.yaml:128]
+[crates/gsqz/config.yaml:129-136]
+[crates/gsqz/config.yaml:130-131]
+[crates/gsqz/config.yaml:131]
+[crates/gsqz/config.yaml:132-136]
+[crates/gsqz/config.yaml:133]
+[crates/gsqz/config.yaml:134]
+[crates/gsqz/config.yaml:137-158]
+[crates/gsqz/config.yaml:138]
+[crates/gsqz/config.yaml:139-158]
+[crates/gsqz/config.yaml:140-143]
+[crates/gsqz/config.yaml:141-143]
+[crates/gsqz/config.yaml:142]
+[crates/gsqz/config.yaml:143]
+[crates/gsqz/config.yaml:144-151]
+[crates/gsqz/config.yaml:145-151]
+[crates/gsqz/config.yaml:152-153]
+[crates/gsqz/config.yaml:153]
+[crates/gsqz/config.yaml:154-158]
+[crates/gsqz/config.yaml:155]
+[crates/gsqz/config.yaml:156]
+[crates/gsqz/config.yaml:159-175]
+[crates/gsqz/config.yaml:160]
+[crates/gsqz/config.yaml:161-175]
+[crates/gsqz/config.yaml:162-170]
+[crates/gsqz/config.yaml:163-170]
+[crates/gsqz/config.yaml:171-175]
+[crates/gsqz/config.yaml:172]
+[crates/gsqz/config.yaml:173]
+[crates/gsqz/config.yaml:176-181]
+[crates/gsqz/config.yaml:177]
+[crates/gsqz/config.yaml:178-181]
+[crates/gsqz/config.yaml:179-181]
+[crates/gsqz/config.yaml:180]
+[crates/gsqz/config.yaml:181]
+[crates/gsqz/config.yaml:183-191]
+[crates/gsqz/config.yaml:184]
+[crates/gsqz/config.yaml:185-191]
+[crates/gsqz/config.yaml:186]
+[crates/gsqz/config.yaml:187-191]
+[crates/gsqz/config.yaml:188]
+[crates/gsqz/config.yaml:189]
+[crates/gsqz/config.yaml:192-204]
+[crates/gsqz/config.yaml:193]
+[crates/gsqz/config.yaml:194-204]
+[crates/gsqz/config.yaml:195-201]
+[crates/gsqz/config.yaml:196-201]
+[crates/gsqz/config.yaml:202-204]
+[crates/gsqz/config.yaml:203]
+[crates/gsqz/config.yaml:204]
+[crates/gsqz/config.yaml:206-213]
+[crates/gsqz/config.yaml:207-213]
+[crates/gsqz/config.yaml:208-213]
+[crates/gsqz/config.yaml:209]
+[crates/gsqz/config.yaml:210]
+[crates/gsqz/config.yaml:214]
+
+## Components
+
+- `713476f5-da29-5cf3-8f5f-e73fcc243386`
+- `33fc0669-2397-5a12-9d25-bce2aec5d95d`
+- `5d12914d-9cc6-5b71-b87a-8aa06981586e`
+- `95590f17-31e0-5939-9994-86b6c9707dd5`
+- `0ec0b6ab-9ec1-5ddb-8b13-7823a17412e5`
+- `b36d304f-cdf3-59d3-a2b5-24c5b1c04a0e`
+- `b79b771e-8eb0-5e6a-8434-f402b4e55c8e`
+- `79708512-0b9e-5073-92d0-281e1fb7ce2c`
+- `af4b6a83-b974-5282-8fb9-749135f01e0f`
+- `26dd0bcb-b2dc-567f-a0a7-19cf74cc1f74`
+- `848bf657-5d0a-56ba-95e6-b0b1f1cfcd13`
+- `32f8057e-c668-50a1-8302-4f6ba6d1670b`
+- `48c35eab-92a1-5dbd-a43e-8ca0bdb69304`
+- `7b100d83-05b0-5ccc-b372-834f2fb3d3c4`
+- `823a0b93-5cc0-5456-bdd4-01ac4e2c7246`
+- `b384d393-fb8a-5dac-87a9-b2788d8210da`
+- `8abac81f-5e5d-5454-87db-13f0b1e49e37`
+- `432808e0-08ab-5833-acc8-5a32fc8796a4`
+- `35aba420-cac5-5ff4-9404-9bb0292b71ba`
+- `c327e359-6ee6-52e6-ba58-a2d03b7f5b46`
+- `55ec5c27-b836-57d6-9b18-43c49985a48b`
+- `3d167ffe-d1dd-552f-8922-4c46d7aca1c3`
+- `4b12dda4-885b-5f94-b62f-e19697cf5913`
+- `5ebf64c0-5833-5a5a-92f0-85f8f267f69a`
+- `2c7edb9a-c83c-5b6e-9658-2d4d94aa8f81`
+- `73b078e1-21b6-5c54-9c3b-e790e31b5463`
+- `c269fa14-e158-518e-a97c-0e8bf4cad501`
+- `8cf48d4e-6dd7-5ce9-84e4-9cade01ab4b5`
+- `15116bed-66e4-53a7-8b26-98625f408ba6`
+- `23597bc6-0f4c-5433-857d-2b5194eba698`
+- `d5be92dd-72c5-50e1-95b6-f636d06a8516`
+- `b1407540-bcaa-5862-8961-e85dd015e951`
+- `282e2b79-ae7c-522b-8c17-ddecd0a3801b`
+- `5a3a3f7f-8e7d-5cb3-b038-c47bffde0135`
+- `138b6249-4a30-5822-9b2c-8648239e9b3f`
+- `d8fb3c61-3ec1-5c28-b9a8-56405630a80c`
+- `7bc5c3d0-eaf3-582a-b91f-26aa744bde90`
+- `39e90a21-0086-57ae-9b0d-a5c7fb55086b`
+- `17b074d6-5eba-51fc-82fe-1fb5cf6061d8`
+- `a90d71b8-7cd8-5ff4-84ad-b75b841efbe7`
+- `f473e36b-0a10-518c-8867-916b8b7b562d`
+- `5921e8c8-7f97-5007-bb81-be1ee8f6b0f9`
+- `b68c12b8-34fe-5646-9267-09fb5bcc2a3b`
+- `42a1970b-7a09-51c7-afe1-f6e866474df1`
+- `adf7e213-d7ac-55bf-8541-76fdf1c43b86`
+- `f119b7ba-5024-5295-bad4-47e91888fc39`
+- `2e34c11b-7336-59d9-8c06-3282b03b31e5`
+- `e213d0ac-279d-5c6b-81ad-70e11312d609`
+- `32bcc911-f5df-51e4-959d-e2f2d32b438f`
+- `d5d145db-e06f-57fc-8d1a-0097657c9e60`
+- `9b3b3507-c5d4-558c-9ca3-2036092d0c9c`
+- `440f4254-faa7-5b2e-bda8-131e72085b57`
+- `13153b38-084f-5bb7-927f-cafaa6da9078`
+- `a2f36f1b-381c-551a-a2d0-e01136693988`
+- `32f39506-f4e1-5927-a42a-b1b0b16cac55`
+- `f3395051-05bb-5bbe-990b-4fdfa9d3fdf7`
+- `3f48750d-9b8d-5660-9aec-238ebf879313`
+- `225424f2-90fc-5132-8bdb-ec4af947f1c4`
+- `ab35ed6e-d8d1-5997-9bd3-ce6e599f8b6d`
+- `6485c710-40e1-5334-a475-d88265a14aa5`
+- `3b548fdd-1c6b-51f6-9c29-01a01c20302a`
+- `712da4f8-6633-5004-be70-0411f2b7523d`
+- `8df3dfb4-588d-5c4b-b16b-c91d008a3602`
+- `bb1432f5-ecc0-50b5-bbc6-b994be0817c9`
+- `e3d356b3-34ee-5ea7-930e-73ae1203d0a7`
+- `5f095f7b-760d-5ebf-83b8-252cd8520588`
+- `2a33eeff-489b-5216-a32b-73c9b3316f63`
+- `7c8877eb-5d85-518b-bff1-907c04fb7df7`
+- `93a4d6df-f900-5c6d-bcdd-ced7e60a6d39`
+- `6848869b-4df1-546b-927e-5fbe55caf02f`
+- `9bf0c218-645f-5419-b2c5-f367ecb2681e`
+- `df3b265a-805d-5b4f-b2b1-ca576c981e81`
+- `65c21475-f7d6-573b-86fa-7423c91d1492`
+- `df0feb1d-a6c7-5a9f-a822-cf55250590a3`
+- `c81aaeaf-ce2a-55f3-9076-9dbc8f14f6fd`
+- `6c805771-c56e-5a30-aef9-7ec17e72ea2e`
+- `f56a512e-763f-5bee-83ef-3de3a30e1cde`
+- `aa827c24-9bc5-5d56-8ad3-44fe52126150`
+- `b8d3d9b1-55a2-5cad-8ac0-d2c704c8a0f4`
+- `e5068cc3-f193-51ad-993c-eec87f0a9d98`
+- `fa8d3ce9-8744-5b9d-8414-deba69fabd04`
+- `7efabbd0-371d-5b8f-9ce3-9cbbbf72d665`
+- `3aee3876-8c6d-5693-b7c7-8db0c96ce154`
+- `624dd569-8e04-5fc6-89d1-6c55ae61a049`
+- `7ecec7d6-42bd-53f5-a8ad-a1d59f28c96b`
+- `00a70225-8a77-5a8f-b512-24822e867ee6`
+- `b3fe3b8b-b866-5d06-92b7-62ac1126bc88`
+- `713e29c3-f384-535e-ad65-d1bf3b83768d`
+- `aa2901b7-940c-5e30-93d5-f47825fe2b99`
+- `89a0efa3-1591-5dcb-bf5e-73db8ef5e97c`
+- `10383766-8eb8-5e93-8797-2b4eccca999c`
+- `e913a12d-0697-59a8-a154-168c6a08cf57`
+- `9ed17d4d-3145-518b-a183-9efcdb679726`
+- `e5fdb111-a260-5f0f-b0db-5db689366c73`
+- `e09d6d66-41bb-5cd4-8e1e-2206d99c5284`
+- `9ea45bc9-e233-5e51-9d4c-86c3bb29854c`
+- `b01703e9-2093-5d7f-95af-4f6b2aabb369`
+- `1e4ade45-ded3-5d09-8f15-9fe6c2e2dbe4`
+- `20a96029-261f-51c5-b8bf-01fcf789b783`
+- `fca78b0b-5fb7-5f71-9c72-c449339a5eb6`
+- `46df94f8-0356-58e2-8736-bb1a3181e6fd`
+- `4e7d9cef-3085-58f5-9852-d1ee6cc147d6`
+- `988fa3eb-ddd6-5a21-b96c-f8af38a9c598`
+- `a2214e06-6d26-59e4-b32c-03b58b048358`
+- `a921181d-748b-55e5-8127-40f3e09ad85a`
+- `456fde71-5016-53bf-a728-7f69fc706f8b`
+- `641ed4be-35f0-5cd2-a730-e7718e8b9d16`
+- `50aedbc1-fcff-525f-8489-1a42aa185ae9`
+- `2021f00f-d7e4-5adf-a887-47a41bde73a9`
+- `4f84ca6a-73a3-5fa7-a336-279368ecafcb`
+- `ad641c73-8272-5fc1-9ca7-d35bb7b944d0`
+- `1d03481a-b4c4-556d-aa1f-8a0b9122f2dc`
+- `34bde704-be04-5d67-bccb-7e5c931f297d`
+- `79ff21a2-6128-5ae6-adf7-96f4b4be5343`
+- `26fa0ac8-6ae6-51cb-b20b-98ac46c65ab8`
+- `77468b93-6563-5e54-9c2b-d835b4014bba`
+- `2b4d4021-c135-5f64-8a53-a292b6219685`
+- `386f97e8-78b6-5d39-8faa-9e0e6e65994d`
+- `a8ba2c23-1ac8-56b0-bcec-0a18a1868050`
+- `83f334d1-e2c9-5f5d-b05e-25663c1adc9a`
+- `1c4838d2-faf2-52b3-82a0-77a73a497587`
+- `95195ef4-0cda-5075-bf41-ed5c0fde1d76`
+- `ad315e7d-37ea-5b84-8385-8307bf89f639`
+- `3b304cd0-d33c-5a81-b6a2-3d9a75c1e989`
+- `0d1e1adf-ab66-55dc-99c5-5e396ce5eb46`
+- `cd8848ef-c579-53da-9088-6f37d447eb70`
+- `d3fa5527-d7e3-5140-983f-477c3475e3d2`
+- `3d71b4fb-b2bc-54b7-8e9a-dd15d7969fc6`
+- `4c04e5a6-e14b-5a34-aa92-3f4224f5559f`
+- `9da98587-f0da-5232-8be5-4111674e9ab9`
+- `966f4306-1a9a-5dee-8f39-d14b9039e569`
+- `2afc0f63-4f3c-5191-bfae-8ce9d75e5ed1`
+- `8ce93fb3-cadd-52e1-bfbf-09ea1f30e84f`
+- `cfdb5e8c-ea20-50ec-9570-0d6207e93155`
+- `c405bb07-ca6f-5b29-9d73-45d5698976c8`
+- `57ded2e2-454c-55a1-9d0a-b485041d9bb7`
+- `0beabbb1-145d-5f19-87cf-df16f00e5734`
+- `247542a1-27f6-5977-9955-e6efa43c0ed8`
+- `c97de81c-d6a3-57ff-91ec-f38bab5503e2`
+- `e5ddd6ec-fd15-5fe0-add2-7e837bbb3c0e`
+- `888ee2e6-03bb-5e75-a7df-dee42220d4fc`
+- `b05a5755-3822-5184-a05f-511f79a33790`
+- `45ba74bd-50f6-57a2-a576-1b3170eb97c3`
+- `656178ad-02d7-5b7c-b1f0-8f943bf97c38`
+- `d1136450-588e-5d0f-b375-4e045bb4afe1`
+- `c53d27cd-c4a3-56bc-9469-f247439d596b`
+- `6d44fdde-e21b-5d31-80a6-305aae293a20`
+- `fe8a10ef-6fc3-5e42-a152-493c66bbac0e`
+- `3ed46273-d30f-5730-a29c-b963fc40f853`
+- `1fe14273-a3f1-5af3-98a7-3be5d6777bf5`
+- `6789a3b7-180d-5c2e-b576-777993cb1662`
+- `d485a5b9-8ddf-557c-8e41-1099affcb842`
+- `7dca957d-80d4-543a-9b89-8ceaf07fa5a1`
+- `7d2016c1-ff23-50fd-905a-9cd16d8f98c5`
+- `72df8651-a364-5c4e-acc5-8c9cd21e9524`
+- `9854a28c-9b93-5d2b-9480-de05469fd68f`
+- `c33f4294-b3d8-5ddf-b3f1-1afff71934fe`
+- `3ac3f184-4da9-5e04-819c-f645ee0cfcad`
+- `d236570a-4711-5192-a192-5741d959fa0f`
+- `78816fa0-49b2-543c-845a-38a3286dd358`
+- `0cb8da5a-eea9-5dd4-921c-19f79ee3dd87`
+- `436c60a6-c1e8-5f2e-b449-55a94e08f6e4`
+- `880dadac-40a2-5d27-88d4-05b3cf9df5ed`
+- `aff9cb40-2d59-5dc4-b5fd-fdc80889ab74`
+- `a2c1c64c-462d-5f42-9dc8-5b35344a04b5`
+- `8efa0e8a-6b21-511c-a07f-6423de18fddc`
+- `788d8c50-5ed2-5301-a6df-1d0d5958e804`
+- `b9f4a498-1b46-5866-8057-03d7fd3db7a2`
+- `4d96cd0c-6125-510e-8a0c-be9ca181554f`
+- `82da9c95-f727-591e-9942-21c643550913`
+- `5d783255-271c-5a75-8deb-3ec862819af3`
+- `cfbb0621-7d91-5119-b162-b30dc3cd3e56`
+- `b8c1c8fa-0070-5933-9d6e-245777fa2bc3`
+- `266e5f64-482b-55c8-b7b5-9d67b90ef67a`
+- `f53ea6fe-88b5-545b-a75d-043b12fb3f0a`
+- `32305f32-7ea1-5474-9381-c4024de06ea4`
+- `3d78adca-c8bc-599e-b8b2-3f9e690b7473`
+- `c33da4f0-c953-5367-bae6-c676a18cee85`
+- `8d608421-dcf6-54b8-a137-75be748af06e`
+- `cf4732b9-64d1-5821-a2a4-3705327673a7`
+- `5731515f-0018-5229-abf5-d0843ad24b68`
+- `ee1f11f1-1d57-5a22-9afb-43f1ae8f1962`
+- `59d025ad-0262-587a-9492-2dd770574b58`
+- `cb63f364-22c4-592c-9f81-e08b5588698d`
+- `7c0e68a6-4150-5ff2-8eb2-77621155aeaf`
+- `eef9e1ad-e0fa-5e69-9a86-87d8e9d0bb86`
+- `80fb0fdb-a33d-5192-ae12-c2017805790b`
+- `d748924c-2414-5716-9e6e-7a635ba939dd`
+- `00260bd3-7b94-5050-87e1-8f9d438367cd`
+- `b197eca9-c3e2-5f6a-871d-972b88480059`
+- `42e7086f-b4c2-5a60-93c6-30c01c7dd3df`
+- `52ce9ccd-bfb7-54df-ad64-53574fb8f51d`
+- `244f4e2e-f09d-5630-be63-93e3c2b43aca`
+- `10e4d22b-0b39-5ef2-a0a7-d255fa00f24e`
+- `575ed30f-5095-58fa-812e-162379f98752`
+- `72a1f9c8-eee3-5eef-bc85-65940de1b80c`
+- `25be7ab4-68f7-58ee-b58b-f9777d5d464c`
+- `97e782d0-91b2-5fc2-b9e5-b17b655dd84d`
+- `c99f5df8-5e38-5b4f-909b-63b22890e986`
+- `f40bc0b3-9141-515d-99a6-24b2a8e5f706`
+- `61e2caff-30a4-5d81-a921-9ffb808d6a6d`
+- `d49a5c68-e3dc-538a-a368-f5567051b11a`
+- `8a691623-f9d1-5a58-bb36-73790de7f69c`
+- `1efb3c74-edf7-5ebc-a0b5-88669eac2e96`
+- `8bbf9a80-b14b-52bb-b973-f157dadfbc28`
+- `21c00c1b-e191-54b0-87c0-043b12afe344`
+- `56149edc-ee35-5f1b-8ace-271999a70383`
+- `3615d100-7c7a-545a-a5ff-e3338c872984`
+- `7499f4da-79c2-5ca6-a3e6-0a46b6bcde5e`
+- `a66c7e8b-a774-5f5a-8864-bab0e1b98432`
+- `a4fd98f4-1986-5a02-b40c-6fa089eb797b`
+- `fd3332ad-f1cf-55a7-8c3f-129c25d667ea`
+- `262c8a3c-1bc2-59f1-88cd-0025b942738d`
+- `70ff970c-0832-5f0b-a491-8780f58cd92b`
+- `4497fb46-154d-5e52-8fb2-13dedea16bf5`
+- `03348671-9439-5797-9091-294049237f7a`
+- `444f8690-64bf-57e2-ac6b-1fd0c0e92204`
+- `fa007958-7166-57a5-88ac-ba9d5880289b`
+- `0d26e39a-9792-5ae2-82ac-76b2e3d971d3`
+- `9a4e43d3-8796-56f0-945a-3d642416b95c`
+- `f82d75c2-99d3-5e8d-85e2-1cb8bc5e0ef9`
+- `6b0c3e07-cb4f-536a-98be-edf0805b978c`
+- `d03e6ca4-e5b8-5c55-87a2-40828e2078c8`
+- `0e60e410-df3d-5449-a753-ebb02a9ee4c9`
+- `4585eab8-fb22-5aeb-82e6-cac370b74d93`
+- `4265aaa4-a9f1-5b88-8a17-0d925919e3a5`
+- `814ddd9d-5afe-597d-87d8-99d41110c04b`
+- `fd118047-5041-5ca5-b03b-7431dc1ff002`
+- `8e92b8ec-67bd-5ae4-9ce9-3c993f1d5dfc`
+- `cf1061f8-a6c2-5d2f-9d5c-a8d6735f413e`
+- `2153d116-cbf9-593e-83fc-d3be9d884a83`
+- `b8703b73-7623-5d7b-93bf-cb0126aa836e`
+- `468aec69-4992-5013-9c83-670485634131`
+- `ce4f5f7f-188c-506c-ab6f-271b31b96735`
+- `3566454c-0dd2-50b3-903d-90d766fa0542`
+- `6026791f-3f1a-5536-b9b5-571b4c51fac1`
+- `75924ca7-53cf-50a2-9608-f0e7f879217e`
+- `b0dfd4d4-8fa9-5baa-8e2e-7c4c90fba8b8`
+- `008d9a5c-713d-55a9-bd5c-4b09f8713ce6`
+- `8d79bc4f-475e-5a1f-ad20-36d4dc184d09`
+- `2e682f33-4643-5d30-9451-cfd1cfbe2b49`
+- `d82728b6-636c-5230-92e2-bc0403befe1d`
+- `bad4fb02-9c79-5473-9fd3-8f014dee9f9d`
+- `3a98f9d8-e673-5974-a0c6-00b6fa0163e8`
+- `6c0664f7-cdd1-5456-855f-26b49490726a`
+- `ae84b4ff-8dad-5991-ba9b-a2c8eff5b6ba`
+- `4436b800-152a-51b6-a218-b4e8b4e3ea57`
+- `6d7b689e-d1a7-54b5-b42b-f1631accea06`
+- `02504c17-6ea3-581d-88a0-9d8b0a081e5f`
+- `d4d6aa7c-cd13-598e-8a71-61922875b1f5`
+- `6e598d07-c87b-531d-8cb1-326ad8d3292f`
+- `ab4a4658-16b4-5b65-b174-65c879565a88`
+- `bf464094-76be-5529-805d-af756541dbb6`
+- `238824a7-8147-5cdd-89c6-68a914b22123`
+- `0b8e338f-d1bc-5d06-b96c-33edf5fa41b8`
+- `4e16af20-55b1-5d02-82e2-d3287ca9a822`
+- `fd4f33a8-f75a-5dc4-b46a-0db4058614d4`
+- `da6d2d31-de6d-5a53-a862-624222237f42`
+- `9e68b30a-0806-52cd-bac9-4216c582b330`
+- `c7adc044-6efa-5afc-8862-690c339ee32c`
+- `7cfcfe2a-4b46-532c-ac5f-3feba564bde7`
+- `9eb0d9c5-2df1-5539-b212-9319fd97f9bb`
+- `46132549-d505-5d0d-ac43-7a229d7843d8`
+- `da43547e-8661-5766-8c99-ca35a6488b8f`
+- `4690ffe8-c1e2-5c70-9a9d-d5cb2ff5919b`
+- `6a862d29-6201-5383-9436-57ac995e1b8e`
+- `e83950d1-ed41-5d52-8fe0-872e65857061`
+- `035c2b73-fa04-5199-8c00-6aa232714c78`
+- `525eed98-3a8a-5393-aa0f-c88e76d459d8`
+- `27c68279-175d-5913-a390-a0b61a6c6fb4`
+- `dddc23f5-064d-50de-b318-d9902b3d0d27`
+- `00f6cfc1-fef1-593a-8493-dc9f7c660663`
+- `ab9b57c6-1308-587a-94a6-b897e4ead449`
+- `8faa2138-fa37-53b4-b21b-2dc80b2babf5`
+- `eaddf723-71da-548a-b3ef-a176c019c9b5`
+- `08ca6a31-4880-55be-9fb6-fb381b93f51b`
+- `75b8179f-e92b-5abd-b753-310773d5be2f`
+- `0ca60299-497e-512f-92c6-30cf0e95505d`
+- `0109c774-ada4-5242-9e1c-a990394e462a`
+- `45d3032d-4ceb-5a67-8300-8b7f408f9dd1`
+- `1e9421bd-6c46-5041-ad56-06265939d31e`
+- `95102c90-3c76-5929-9b47-25cda49173c9`
+- `3870c8ea-daae-5054-97ec-c28cb949a695`
+- `46a62353-d5f2-5d00-9101-be5762be5a46`
+- `66cb62e2-31a9-51ab-9093-71614885da97`
+- `efd37613-da20-5fbf-9c5d-1ab33c9053a6`
+- `71101fc0-db55-51a8-91df-d07e93649273`
+- `d3c60b51-d1f1-58ff-9372-db73d73b6e9f`
+- `1e2eeb86-7b54-58a8-9e75-9edb9e4f1d30`
+- `460b6fc4-fcd9-5560-93c9-d110e3325708`
+- `8918cfc8-ed39-5d2d-9338-b2c301df4d96`
+- `dec6ba3c-7af8-5082-947e-835cc0bf95a8`
+- `32b44318-1705-5255-851a-70fd9d140cb5`
+- `899f1756-faff-56c3-85b6-d79300f94cab`
+- `fbde926b-60ee-58cf-86c3-5bfc072d2693`
+- `a607594e-c9b4-5934-9af3-2c296bf5df18`
+- `6932038a-07bd-5b03-8be6-22913ed0ec6a`
+- `9a7fbd39-5751-5310-af99-f3bdc7ba7b4f`
+- `229484c2-5086-5772-b8fa-2bb9eee8dc2b`
+- `7ca0ed68-9605-579b-9e6d-408a3ba81d13`
+- `4213e21c-d950-5fba-9fb1-4b502a646071`
+- `7350c4a9-5eea-598d-adcd-50b463f41f2b`
+- `ff9d544e-c189-5753-9650-60b611d76675`
+- `83a6a86c-625c-58a7-945b-1bfbaf86de3f`
+- `ff964456-3531-5a93-ae45-36e05512b4e3`
+- `96c3be23-93fc-589f-b716-22b935973eb1`
+- `64330604-ba12-5581-b56e-966e832fd592`
+- `8f585076-379a-5d19-aa6e-8a306ba24da4`
+- `f9ab04ea-1b43-551c-aa67-5374bf2b94cb`
+- `4defbe90-0372-54ee-930d-e20f4b9bc88c`
+- `08488e18-4735-5d3a-82ee-5bf7d5f46d2e`
+- `4414b78e-2214-5ab9-a3d7-f34c460e7d82`
+- `3e5399e7-8362-507e-b212-3deb4fd101b3`
+- `a9c6cb9d-1155-5777-9160-27329badc744`
+- `7360e1b1-073a-51de-aaf2-a2fa7975c08f`
+- `5a215062-b14d-51e0-ba2a-234f936ca139`
+- `5ecd8770-276f-5dc1-a5b0-605d48854279`
+- `93b1ca6a-64be-51dc-b99b-eafca72d4573`
+- `6e067005-787d-58f9-9839-beae65a43531`
+- `56c442da-f3c8-5e2c-8598-f4d0a151fb2f`
+- `f8f38ab6-42d4-5618-aa98-5379dc6748a9`
+- `9f0171d5-b442-5836-a689-79b0ce93e94a`
+- `e4a0a08c-e02e-5330-a736-38ed24a3d2f4`
+- `1d237b01-a52b-586f-8553-230e2304698f`
+- `d792296a-0110-5f9f-ad78-80c64330846f`
+- `b0293d67-8e6b-5527-b6ba-050851300fca`
+- `32efbce0-fa3f-56fe-bc0f-f835fc242381`
+- `c91cf302-b6ed-5dd2-bf34-22206d7b28c6`
+- `def86bb9-e734-5291-a0c0-043c8d384f39`
+- `7c3d538e-60b1-5dcc-aaef-3332d2e2ae35`
+- `8eb07c08-dccf-59ee-8776-36dd63c8dacd`
+- `fb441f43-6133-5423-aa9b-fde3dda81952`
+- `001e5557-abaf-5197-b5ac-897f6a6ad6bc`
+- `28637dfe-e848-5dd1-92f9-9d8d4f738053`
+- `f7cda631-4dec-5d05-b084-cf44fe958f6b`
+- `fb5f4a8f-6fb2-5f7a-9a99-d2a1d67b76c9`
+- `fa25f392-81f2-5794-9179-aac0139089eb`
+- `4e69c744-2191-55fe-9fbd-9a69144fd1fd`
+- `3ca658d6-488a-5acf-b927-891537b26e87`
+- `7c933687-ad7e-5051-8af0-8245e9894c42`
+- `dfcaf855-3e24-50d8-a6d5-6624c6be66ed`
+- `a5c1a010-6aec-52d0-a208-1448cd9c8227`
+- `8851a2f6-632a-526d-8b9d-9a31607b0085`
+- `e362714e-b998-55c2-8ea5-d97e45cfd471`
+- `3570fc24-aa31-543c-b1f8-f33c32b78779`
+- `cc17b08f-4d98-5910-a8a2-ee3a882f6d48`
+- `bc9da16f-e7d5-5851-b23a-c82209638496`
+- `8c88eaf1-c45f-5c89-85ed-37bc231c53db`
+- `d8c29844-440f-5abc-9c02-922103991024`
+- `7447b2b8-52eb-527f-8ccb-e165078936d0`
+- `87daea3a-eb20-56ed-b142-dd7bbe06f786`
+- `61bc4ff8-3bf6-5d90-8a8b-b93e94b18a4c`
+- `71d84431-22f3-5f78-853e-f6086597054e`
+- `94dfbc7f-5dc2-59c2-a040-a0f9d3452cfa`
+- `8eb4aa5c-88fa-595b-b57a-a98e8fb76bbf`
+- `5a190088-d6c2-5228-90e7-b705bc96eae4`
+- `ac07b82d-7d3a-5780-88d9-8cf9e7e8b088`
+- `932462bb-6f94-59cb-b91f-aa35a2965a94`
+- `c1d900e4-a469-587e-9518-489868679bf3`
+- `08ebd6f5-3cf3-5b20-91e6-5f7571d66a4e`
+- `9b162aa1-f0e9-54e9-9f8e-4194cea7f8d8`
+- `4aa2a455-8a2d-5bdc-a9a8-5f23a5e83d51`
+- `7abaefda-2fa9-5783-9433-2813efc0cf2f`
+- `ac7b454d-77b4-5b07-964b-2a84ed01c357`
+- `4e61b741-cad2-564f-b126-fabefc70b41f`
+- `52084e5e-5d60-56ed-b1a6-12bbff60d3be`
+- `0fd9af53-3342-5461-8496-8c5e90555988`
+- `51e5d958-0fc2-5f5a-99f8-d2dafac5d86a`
+- `3473bef7-fa16-5abe-a674-cf0d526f8f73`
+- `575d100b-e49e-5408-8760-af33dd8daf9c`
+- `d77cf346-4371-5c0d-aa94-30607d7f03f7`
+- `d1b449c5-6dde-52b1-a309-72f407a5d747`
+- `67cf9a86-71d0-5ff3-bff5-8db96daac94a`
+- `c9e220eb-1b65-54f4-9ba6-7966d620f19c`
+- `10e633e0-a676-5e67-9492-70f800426bca`
+- `09f3939e-f6f8-5881-841b-e008c8f8a527`
+- `8cd6bb3a-58d1-5cfa-a910-f01f982a5f2a`
+- `1315000b-404f-5f00-8460-61e0b8875e86`
+- `796ed8c2-2054-5086-ae8d-ee821eabf56c`
+- `d244924b-b83d-5e0a-a6c0-2422fa54a112`
+- `e68399f7-c7c1-5d2a-bc3d-05cc7b66a711`
+- `bed69c79-a5dd-5dde-a7bf-f7c7707421a6`
+- `8c5ec8cc-2fa4-5296-a13b-436ef85984fb`
+- `8f73d270-004b-548f-8b08-235210e8cb43`
+- `de708a17-35ca-5492-8cf4-42997a867b95`
+- `83863aa8-3901-59e1-85e5-0e40b2ca1ad7`
+- `f3070cc9-71c0-55d1-98ee-dbdf6a0165a5`
+- `6dce9471-bf26-5d9d-861e-ac39c7cbe54c`
+- `a6b18a74-dae8-5307-8fed-fe6870acbd8c`
+

@@ -1,0 +1,597 @@
+---
+title: crates/gsqz/src/primitives
+type: code_module
+provenance:
+- file: crates/gsqz/src/primitives/dedup.rs
+  ranges:
+  - 9-45
+  - 52-58
+  - 61-70
+  - 73-77
+  - 80-83
+  - 86-89
+  - 92-97
+  - 100-118
+  - 121-126
+- file: crates/gsqz/src/primitives/filter.rs
+  ranges:
+  - 4-15
+  - 22-32
+  - 35-39
+  - 42-45
+  - 48-52
+  - 55-59
+  - 62-72
+  - 75-80
+- file: crates/gsqz/src/primitives/group.rs
+  ranges:
+  - 8-21
+  - 28-79
+  - 99-183
+  - 187-243
+  - 247-296
+  - 304-344
+  - 348-387
+  - 391-428
+  - 434-475
+  - 482-525
+  - 532-543
+  - 546-556
+  - 559-567
+  - 570-574
+  - 577-581
+  - 584-587
+  - 590-595
+  - 598-606
+  - 609-623
+  - 626-634
+  - 637-650
+  - 653-665
+  - 668-681
+  - 684-709
+  - 712-716
+  - 719-734
+  - 737-750
+  - 753-770
+  - 773-781
+  - 784-793
+  - 796-805
+  - 808-812
+  - 815-822
+  - 825-834
+  - 837-840
+  - 843-849
+  - 852-861
+  - 864-868
+  - 871-880
+  - 883-887
+  - 890-901
+  - 904-908
+  - 911-921
+  - 924-929
+  - 932-940
+- file: crates/gsqz/src/primitives/match_output.rs
+  ranges:
+  - 8-33
+  - 39-45
+  - 47-49
+  - 52-56
+  - 59-63
+  - 66-70
+  - 73-77
+  - 80-87
+  - 90-94
+  - 97-101
+  - 104-107
+  - 110-115
+- file: crates/gsqz/src/primitives/prose.rs
+  ranges:
+  - 5-9
+  - 11-20
+  - 12-19
+  - 23-34
+  - 50-100
+  - 102-109
+  - 116-124
+  - 187-211
+  - 218-278
+  - 280-303
+  - 310-314
+  - 317-321
+  - 324-328
+  - 331-335
+  - 338-343
+  - 346-350
+  - 353-363
+  - 366-370
+  - 373-378
+  - 381-386
+  - 389-393
+  - 396-399
+  - 402-407
+  - 410-418
+  - 421-425
+  - 428-432
+  - 435-439
+  - 442-446
+- file: crates/gsqz/src/primitives/replace.rs
+  ranges:
+  - 7-30
+  - 36-41
+  - 44-48
+  - 51-55
+  - 58-63
+  - 66-70
+  - 73-77
+  - 80-84
+  - 87-90
+  - 93-97
+- file: crates/gsqz/src/primitives/truncate.rs
+  ranges:
+  - 5-27
+  - 29-67
+  - 74-78
+  - 81-88
+  - 91-106
+  - 109-112
+  - 115-120
+  - 123-128
+  - 131-136
+  - 139-145
+  - 148-157
+  - 160-165
+  - 168-178
+generated_by: gcode-codewiki
+trust: generated
+freshness: indexed
+---
+
+# crates/gsqz/src/primitives
+
+Parent: [[code/modules/crates/gsqz/src|crates/gsqz/src]]
+
+## Overview
+
+This module provides core text processing primitives for the gsqz compression pipeline. It exposes functions for filtering and deduplicating lines, grouping content by logical categories such as file extensions, directories, git status, or test and lint output, and applying rule-based pattern matching. Additionally, it includes utilities for transforming text through regex replacement, smart truncation, and multi-level prose compression while preserving code blocks, YAML frontmatter, and other protected structures.
+[crates/gsqz/src/primitives/dedup.rs:9-45]
+[crates/gsqz/src/primitives/dedup.rs:52-58]
+[crates/gsqz/src/primitives/dedup.rs:61-70]
+[crates/gsqz/src/primitives/dedup.rs:73-77]
+[crates/gsqz/src/primitives/dedup.rs:80-83]
+[crates/gsqz/src/primitives/dedup.rs:86-89]
+[crates/gsqz/src/primitives/dedup.rs:92-97]
+[crates/gsqz/src/primitives/dedup.rs:100-118]
+[crates/gsqz/src/primitives/dedup.rs:121-126]
+[crates/gsqz/src/primitives/filter.rs:4-15]
+[crates/gsqz/src/primitives/filter.rs:22-32]
+[crates/gsqz/src/primitives/filter.rs:35-39]
+[crates/gsqz/src/primitives/filter.rs:42-45]
+[crates/gsqz/src/primitives/filter.rs:48-52]
+[crates/gsqz/src/primitives/filter.rs:55-59]
+[crates/gsqz/src/primitives/filter.rs:62-72]
+[crates/gsqz/src/primitives/filter.rs:75-80]
+[crates/gsqz/src/primitives/group.rs:8-21]
+[crates/gsqz/src/primitives/group.rs:28-79]
+[crates/gsqz/src/primitives/group.rs:99-183]
+[crates/gsqz/src/primitives/group.rs:187-243]
+[crates/gsqz/src/primitives/group.rs:247-296]
+[crates/gsqz/src/primitives/group.rs:304-344]
+[crates/gsqz/src/primitives/group.rs:348-387]
+[crates/gsqz/src/primitives/group.rs:391-428]
+[crates/gsqz/src/primitives/group.rs:434-475]
+[crates/gsqz/src/primitives/group.rs:482-525]
+[crates/gsqz/src/primitives/group.rs:532-543]
+[crates/gsqz/src/primitives/group.rs:546-556]
+[crates/gsqz/src/primitives/group.rs:559-567]
+[crates/gsqz/src/primitives/group.rs:570-574]
+[crates/gsqz/src/primitives/group.rs:577-581]
+[crates/gsqz/src/primitives/group.rs:584-587]
+[crates/gsqz/src/primitives/group.rs:590-595]
+[crates/gsqz/src/primitives/group.rs:598-606]
+[crates/gsqz/src/primitives/group.rs:609-623]
+[crates/gsqz/src/primitives/group.rs:626-634]
+[crates/gsqz/src/primitives/group.rs:637-650]
+[crates/gsqz/src/primitives/group.rs:653-665]
+[crates/gsqz/src/primitives/group.rs:668-681]
+[crates/gsqz/src/primitives/group.rs:684-709]
+[crates/gsqz/src/primitives/group.rs:712-716]
+[crates/gsqz/src/primitives/group.rs:719-734]
+[crates/gsqz/src/primitives/group.rs:737-750]
+[crates/gsqz/src/primitives/group.rs:753-770]
+[crates/gsqz/src/primitives/group.rs:773-781]
+[crates/gsqz/src/primitives/group.rs:784-793]
+[crates/gsqz/src/primitives/group.rs:796-805]
+[crates/gsqz/src/primitives/group.rs:808-812]
+[crates/gsqz/src/primitives/group.rs:815-822]
+[crates/gsqz/src/primitives/group.rs:825-834]
+[crates/gsqz/src/primitives/group.rs:837-840]
+[crates/gsqz/src/primitives/group.rs:843-849]
+[crates/gsqz/src/primitives/group.rs:852-861]
+[crates/gsqz/src/primitives/group.rs:864-868]
+[crates/gsqz/src/primitives/group.rs:871-880]
+[crates/gsqz/src/primitives/group.rs:883-887]
+[crates/gsqz/src/primitives/group.rs:890-901]
+[crates/gsqz/src/primitives/group.rs:904-908]
+[crates/gsqz/src/primitives/group.rs:911-921]
+[crates/gsqz/src/primitives/group.rs:924-929]
+[crates/gsqz/src/primitives/group.rs:932-940]
+[crates/gsqz/src/primitives/match_output.rs:8-33]
+[crates/gsqz/src/primitives/match_output.rs:39-45]
+[crates/gsqz/src/primitives/match_output.rs:47-49]
+[crates/gsqz/src/primitives/match_output.rs:52-56]
+[crates/gsqz/src/primitives/match_output.rs:59-63]
+[crates/gsqz/src/primitives/match_output.rs:66-70]
+[crates/gsqz/src/primitives/match_output.rs:73-77]
+[crates/gsqz/src/primitives/match_output.rs:80-87]
+[crates/gsqz/src/primitives/match_output.rs:90-94]
+[crates/gsqz/src/primitives/match_output.rs:97-101]
+[crates/gsqz/src/primitives/match_output.rs:104-107]
+[crates/gsqz/src/primitives/match_output.rs:110-115]
+[crates/gsqz/src/primitives/prose.rs:5-9]
+[crates/gsqz/src/primitives/prose.rs:11-20]
+[crates/gsqz/src/primitives/prose.rs:12-19]
+[crates/gsqz/src/primitives/prose.rs:23-34]
+[crates/gsqz/src/primitives/prose.rs:50-100]
+[crates/gsqz/src/primitives/prose.rs:102-109]
+[crates/gsqz/src/primitives/prose.rs:116-124]
+[crates/gsqz/src/primitives/prose.rs:187-211]
+[crates/gsqz/src/primitives/prose.rs:218-278]
+[crates/gsqz/src/primitives/prose.rs:280-303]
+[crates/gsqz/src/primitives/prose.rs:310-314]
+[crates/gsqz/src/primitives/prose.rs:317-321]
+[crates/gsqz/src/primitives/prose.rs:324-328]
+[crates/gsqz/src/primitives/prose.rs:331-335]
+[crates/gsqz/src/primitives/prose.rs:338-343]
+[crates/gsqz/src/primitives/prose.rs:346-350]
+[crates/gsqz/src/primitives/prose.rs:353-363]
+[crates/gsqz/src/primitives/prose.rs:366-370]
+[crates/gsqz/src/primitives/prose.rs:373-378]
+[crates/gsqz/src/primitives/prose.rs:381-386]
+[crates/gsqz/src/primitives/prose.rs:389-393]
+[crates/gsqz/src/primitives/prose.rs:396-399]
+[crates/gsqz/src/primitives/prose.rs:402-407]
+[crates/gsqz/src/primitives/prose.rs:410-418]
+[crates/gsqz/src/primitives/prose.rs:421-425]
+[crates/gsqz/src/primitives/prose.rs:428-432]
+[crates/gsqz/src/primitives/prose.rs:435-439]
+[crates/gsqz/src/primitives/prose.rs:442-446]
+[crates/gsqz/src/primitives/replace.rs:7-30]
+[crates/gsqz/src/primitives/replace.rs:36-41]
+[crates/gsqz/src/primitives/replace.rs:44-48]
+[crates/gsqz/src/primitives/replace.rs:51-55]
+[crates/gsqz/src/primitives/replace.rs:58-63]
+[crates/gsqz/src/primitives/replace.rs:66-70]
+[crates/gsqz/src/primitives/replace.rs:73-77]
+[crates/gsqz/src/primitives/replace.rs:80-84]
+[crates/gsqz/src/primitives/replace.rs:87-90]
+[crates/gsqz/src/primitives/replace.rs:93-97]
+[crates/gsqz/src/primitives/truncate.rs:5-27]
+[crates/gsqz/src/primitives/truncate.rs:29-67]
+[crates/gsqz/src/primitives/truncate.rs:74-78]
+[crates/gsqz/src/primitives/truncate.rs:81-88]
+[crates/gsqz/src/primitives/truncate.rs:91-106]
+[crates/gsqz/src/primitives/truncate.rs:109-112]
+[crates/gsqz/src/primitives/truncate.rs:115-120]
+[crates/gsqz/src/primitives/truncate.rs:123-128]
+[crates/gsqz/src/primitives/truncate.rs:131-136]
+[crates/gsqz/src/primitives/truncate.rs:139-145]
+[crates/gsqz/src/primitives/truncate.rs:148-157]
+[crates/gsqz/src/primitives/truncate.rs:160-165]
+[crates/gsqz/src/primitives/truncate.rs:168-178]
+
+## Call Diagram
+
+```mermaid
+sequenceDiagram
+    participant m_001e5557_abaf_5197_b5ac_897f6a6ad6bc as test_no_match_returns_none &#91;function&#93;
+    participant m_08488e18_4735_5d3a_82ee_5bf7d5f46d2e as test_test_failures_captures_fail_lines &#91;function&#93;
+    participant m_1d237b01_a52b_586f_8553_230e2304698f as test_errors_warnings_only_errors &#91;function&#93;
+    participant m_229484c2_5086_5772_b8fa_2bb9eee8dc2b as test_git_status_many_files_truncated &#91;function&#93;
+    participant m_28637dfe_e848_5dd1_92f9_9d8d4f738053 as test_first_rule_wins &#91;function&#93;
+    participant m_32b44318_1705_5255_851a_70fd9d140cb5 as test_errors_warnings_grouping &#91;function&#93;
+    participant m_32efbce0_fa3f_56fe_bc0f_f835fc242381 as check &#91;function&#93;
+    participant m_3870c8ea_daae_5054_97ec_c28cb949a695 as group_git_status &#91;function&#93;
+    participant m_3e5399e7_8362_507e_b212_3deb4fd101b3 as test_lint_by_rule_no_rules &#91;function&#93;
+    participant m_4213e21c_d950_5fba_9fb1_4b502a646071 as test_git_diff_binary_collapsed &#91;function&#93;
+    participant m_4414b78e_2214_5ab9_a3d7_f34c460e7d82 as test_lint_by_rule_groups &#91;function&#93;
+    participant m_460b6fc4_fcd9_5560_93c9_d110e3325708 as group_by_file &#91;function&#93;
+    participant m_46a62353_d5f2_5d00_9101_be5762be5a46 as group_git_diff &#91;function&#93;
+    participant m_4defbe90_0372_54ee_930d_e20f4b9bc88c as test_pytest_failures_no_failures_delegates &#91;function&#93;
+    participant m_4e69c744_2191_55fe_9fbd_9a69144fd1fd as test_checks_full_blob_not_per_line &#91;function&#93;
+    participant m_56c442da_f3c8_5e2c_8598_f4d0a151fb2f as test_by_file_grep_style &#91;function&#93;
+    participant m_5a215062_b14d_51e0_ba2a_234f936ca139 as test_by_extension_empty &#91;function&#93;
+    participant m_5ecd8770_276f_5dc1_a5b0_605d48854279 as test_by_extension_no_extension &#91;function&#93;
+    participant m_64330604_ba12_5581_b56e_966e832fd592 as test_pytest_failures_extracts_sections &#91;function&#93;
+    participant m_66cb62e2_31a9_51ab_9093_71614885da97 as group_pytest_failures &#91;function&#93;
+    participant m_6932038a_07bd_5b03_8be6_22913ed0ec6a as test_git_status_empty &#91;function&#93;
+    participant m_71101fc0_db55_51a8_91df_d07e93649273 as group_lint_by_rule &#91;function&#93;
+    participant m_8918cfc8_ed39_5d2d_9338_b2c301df4d96 as group_errors_warnings &#91;function&#93;
+    participant m_d3c60b51_d1f1_58ff_9372_db73d73b6e9f as group_by_extension &#91;function&#93;
+    participant m_def86bb9_e734_5291_a0c0_043c8d384f39 as lines &#91;function&#93;
+    participant m_efd37613_da20_5fbf_9c5d_1ab33c9053a6 as group_test_failures &#91;function&#93;
+    m_001e5557_abaf_5197_b5ac_897f6a6ad6bc->>m_32efbce0_fa3f_56fe_bc0f_f835fc242381: calls
+    m_001e5557_abaf_5197_b5ac_897f6a6ad6bc->>m_def86bb9_e734_5291_a0c0_043c8d384f39: calls
+    m_08488e18_4735_5d3a_82ee_5bf7d5f46d2e->>m_efd37613_da20_5fbf_9c5d_1ab33c9053a6: calls
+    m_1d237b01_a52b_586f_8553_230e2304698f->>m_8918cfc8_ed39_5d2d_9338_b2c301df4d96: calls
+    m_229484c2_5086_5772_b8fa_2bb9eee8dc2b->>m_3870c8ea_daae_5054_97ec_c28cb949a695: calls
+    m_28637dfe_e848_5dd1_92f9_9d8d4f738053->>m_32efbce0_fa3f_56fe_bc0f_f835fc242381: calls
+    m_28637dfe_e848_5dd1_92f9_9d8d4f738053->>m_def86bb9_e734_5291_a0c0_043c8d384f39: calls
+    m_32b44318_1705_5255_851a_70fd9d140cb5->>m_8918cfc8_ed39_5d2d_9338_b2c301df4d96: calls
+    m_3e5399e7_8362_507e_b212_3deb4fd101b3->>m_71101fc0_db55_51a8_91df_d07e93649273: calls
+    m_4213e21c_d950_5fba_9fb1_4b502a646071->>m_46a62353_d5f2_5d00_9101_be5762be5a46: calls
+    m_4414b78e_2214_5ab9_a3d7_f34c460e7d82->>m_71101fc0_db55_51a8_91df_d07e93649273: calls
+    m_4defbe90_0372_54ee_930d_e20f4b9bc88c->>m_66cb62e2_31a9_51ab_9093_71614885da97: calls
+    m_4e69c744_2191_55fe_9fbd_9a69144fd1fd->>m_32efbce0_fa3f_56fe_bc0f_f835fc242381: calls
+    m_4e69c744_2191_55fe_9fbd_9a69144fd1fd->>m_def86bb9_e734_5291_a0c0_043c8d384f39: calls
+    m_56c442da_f3c8_5e2c_8598_f4d0a151fb2f->>m_460b6fc4_fcd9_5560_93c9_d110e3325708: calls
+    m_5a215062_b14d_51e0_ba2a_234f936ca139->>m_d3c60b51_d1f1_58ff_9372_db73d73b6e9f: calls
+    m_5ecd8770_276f_5dc1_a5b0_605d48854279->>m_d3c60b51_d1f1_58ff_9372_db73d73b6e9f: calls
+    m_64330604_ba12_5581_b56e_966e832fd592->>m_66cb62e2_31a9_51ab_9093_71614885da97: calls
+    m_66cb62e2_31a9_51ab_9093_71614885da97->>m_efd37613_da20_5fbf_9c5d_1ab33c9053a6: calls
+    m_6932038a_07bd_5b03_8be6_22913ed0ec6a->>m_3870c8ea_daae_5054_97ec_c28cb949a695: calls
+```
+
+## Files
+
+- [[code/files/crates/gsqz/src/primitives/dedup.rs|crates/gsqz/src/primitives/dedup.rs]] - `crates/gsqz/src/primitives/dedup.rs` exposes 9 indexed API symbols.
+[crates/gsqz/src/primitives/dedup.rs:9-45]
+[crates/gsqz/src/primitives/dedup.rs:52-58]
+[crates/gsqz/src/primitives/dedup.rs:61-70]
+[crates/gsqz/src/primitives/dedup.rs:73-77]
+[crates/gsqz/src/primitives/dedup.rs:80-83]
+[crates/gsqz/src/primitives/dedup.rs:86-89]
+[crates/gsqz/src/primitives/dedup.rs:92-97]
+[crates/gsqz/src/primitives/dedup.rs:100-118]
+[crates/gsqz/src/primitives/dedup.rs:121-126]
+- [[code/files/crates/gsqz/src/primitives/filter.rs|crates/gsqz/src/primitives/filter.rs]] - `crates/gsqz/src/primitives/filter.rs` exposes 8 indexed API symbols.
+[crates/gsqz/src/primitives/filter.rs:4-15]
+[crates/gsqz/src/primitives/filter.rs:22-32]
+[crates/gsqz/src/primitives/filter.rs:35-39]
+[crates/gsqz/src/primitives/filter.rs:42-45]
+[crates/gsqz/src/primitives/filter.rs:48-52]
+[crates/gsqz/src/primitives/filter.rs:55-59]
+[crates/gsqz/src/primitives/filter.rs:62-72]
+[crates/gsqz/src/primitives/filter.rs:75-80]
+- [[code/files/crates/gsqz/src/primitives/group.rs|crates/gsqz/src/primitives/group.rs]] - `crates/gsqz/src/primitives/group.rs` exposes 45 indexed API symbols.
+[crates/gsqz/src/primitives/group.rs:8-21]
+[crates/gsqz/src/primitives/group.rs:28-79]
+[crates/gsqz/src/primitives/group.rs:99-183]
+[crates/gsqz/src/primitives/group.rs:187-243]
+[crates/gsqz/src/primitives/group.rs:247-296]
+[crates/gsqz/src/primitives/group.rs:304-344]
+[crates/gsqz/src/primitives/group.rs:348-387]
+[crates/gsqz/src/primitives/group.rs:391-428]
+[crates/gsqz/src/primitives/group.rs:434-475]
+[crates/gsqz/src/primitives/group.rs:482-525]
+[crates/gsqz/src/primitives/group.rs:532-543]
+[crates/gsqz/src/primitives/group.rs:546-556]
+[crates/gsqz/src/primitives/group.rs:559-567]
+[crates/gsqz/src/primitives/group.rs:570-574]
+[crates/gsqz/src/primitives/group.rs:577-581]
+[crates/gsqz/src/primitives/group.rs:584-587]
+[crates/gsqz/src/primitives/group.rs:590-595]
+[crates/gsqz/src/primitives/group.rs:598-606]
+[crates/gsqz/src/primitives/group.rs:609-623]
+[crates/gsqz/src/primitives/group.rs:626-634]
+[crates/gsqz/src/primitives/group.rs:637-650]
+[crates/gsqz/src/primitives/group.rs:653-665]
+[crates/gsqz/src/primitives/group.rs:668-681]
+[crates/gsqz/src/primitives/group.rs:684-709]
+[crates/gsqz/src/primitives/group.rs:712-716]
+[crates/gsqz/src/primitives/group.rs:719-734]
+[crates/gsqz/src/primitives/group.rs:737-750]
+[crates/gsqz/src/primitives/group.rs:753-770]
+[crates/gsqz/src/primitives/group.rs:773-781]
+[crates/gsqz/src/primitives/group.rs:784-793]
+[crates/gsqz/src/primitives/group.rs:796-805]
+[crates/gsqz/src/primitives/group.rs:808-812]
+[crates/gsqz/src/primitives/group.rs:815-822]
+[crates/gsqz/src/primitives/group.rs:825-834]
+[crates/gsqz/src/primitives/group.rs:837-840]
+[crates/gsqz/src/primitives/group.rs:843-849]
+[crates/gsqz/src/primitives/group.rs:852-861]
+[crates/gsqz/src/primitives/group.rs:864-868]
+[crates/gsqz/src/primitives/group.rs:871-880]
+[crates/gsqz/src/primitives/group.rs:883-887]
+[crates/gsqz/src/primitives/group.rs:890-901]
+[crates/gsqz/src/primitives/group.rs:904-908]
+[crates/gsqz/src/primitives/group.rs:911-921]
+[crates/gsqz/src/primitives/group.rs:924-929]
+[crates/gsqz/src/primitives/group.rs:932-940]
+- [[code/files/crates/gsqz/src/primitives/match_output.rs|crates/gsqz/src/primitives/match_output.rs]] - `crates/gsqz/src/primitives/match_output.rs` exposes 12 indexed API symbols.
+[crates/gsqz/src/primitives/match_output.rs:8-33]
+[crates/gsqz/src/primitives/match_output.rs:39-45]
+[crates/gsqz/src/primitives/match_output.rs:47-49]
+[crates/gsqz/src/primitives/match_output.rs:52-56]
+[crates/gsqz/src/primitives/match_output.rs:59-63]
+[crates/gsqz/src/primitives/match_output.rs:66-70]
+[crates/gsqz/src/primitives/match_output.rs:73-77]
+[crates/gsqz/src/primitives/match_output.rs:80-87]
+[crates/gsqz/src/primitives/match_output.rs:90-94]
+[crates/gsqz/src/primitives/match_output.rs:97-101]
+[crates/gsqz/src/primitives/match_output.rs:104-107]
+[crates/gsqz/src/primitives/match_output.rs:110-115]
+- [[code/files/crates/gsqz/src/primitives/mod.rs|crates/gsqz/src/primitives/mod.rs]] - `crates/gsqz/src/primitives/mod.rs` has no indexed API symbols.
+- [[code/files/crates/gsqz/src/primitives/prose.rs|crates/gsqz/src/primitives/prose.rs]] - `crates/gsqz/src/primitives/prose.rs` exposes 28 indexed API symbols.
+[crates/gsqz/src/primitives/prose.rs:5-9]
+[crates/gsqz/src/primitives/prose.rs:11-20]
+[crates/gsqz/src/primitives/prose.rs:12-19]
+[crates/gsqz/src/primitives/prose.rs:23-34]
+[crates/gsqz/src/primitives/prose.rs:50-100]
+[crates/gsqz/src/primitives/prose.rs:102-109]
+[crates/gsqz/src/primitives/prose.rs:116-124]
+[crates/gsqz/src/primitives/prose.rs:187-211]
+[crates/gsqz/src/primitives/prose.rs:218-278]
+[crates/gsqz/src/primitives/prose.rs:280-303]
+[crates/gsqz/src/primitives/prose.rs:310-314]
+[crates/gsqz/src/primitives/prose.rs:317-321]
+[crates/gsqz/src/primitives/prose.rs:324-328]
+[crates/gsqz/src/primitives/prose.rs:331-335]
+[crates/gsqz/src/primitives/prose.rs:338-343]
+[crates/gsqz/src/primitives/prose.rs:346-350]
+[crates/gsqz/src/primitives/prose.rs:353-363]
+[crates/gsqz/src/primitives/prose.rs:366-370]
+[crates/gsqz/src/primitives/prose.rs:373-378]
+[crates/gsqz/src/primitives/prose.rs:381-386]
+[crates/gsqz/src/primitives/prose.rs:389-393]
+[crates/gsqz/src/primitives/prose.rs:396-399]
+[crates/gsqz/src/primitives/prose.rs:402-407]
+[crates/gsqz/src/primitives/prose.rs:410-418]
+[crates/gsqz/src/primitives/prose.rs:421-425]
+[crates/gsqz/src/primitives/prose.rs:428-432]
+[crates/gsqz/src/primitives/prose.rs:435-439]
+[crates/gsqz/src/primitives/prose.rs:442-446]
+- [[code/files/crates/gsqz/src/primitives/replace.rs|crates/gsqz/src/primitives/replace.rs]] - `crates/gsqz/src/primitives/replace.rs` exposes 10 indexed API symbols.
+[crates/gsqz/src/primitives/replace.rs:7-30]
+[crates/gsqz/src/primitives/replace.rs:36-41]
+[crates/gsqz/src/primitives/replace.rs:44-48]
+[crates/gsqz/src/primitives/replace.rs:51-55]
+[crates/gsqz/src/primitives/replace.rs:58-63]
+[crates/gsqz/src/primitives/replace.rs:66-70]
+[crates/gsqz/src/primitives/replace.rs:73-77]
+[crates/gsqz/src/primitives/replace.rs:80-84]
+[crates/gsqz/src/primitives/replace.rs:87-90]
+[crates/gsqz/src/primitives/replace.rs:93-97]
+- [[code/files/crates/gsqz/src/primitives/truncate.rs|crates/gsqz/src/primitives/truncate.rs]] - `crates/gsqz/src/primitives/truncate.rs` exposes 13 indexed API symbols.
+[crates/gsqz/src/primitives/truncate.rs:5-27]
+[crates/gsqz/src/primitives/truncate.rs:29-67]
+[crates/gsqz/src/primitives/truncate.rs:74-78]
+[crates/gsqz/src/primitives/truncate.rs:81-88]
+[crates/gsqz/src/primitives/truncate.rs:91-106]
+[crates/gsqz/src/primitives/truncate.rs:109-112]
+[crates/gsqz/src/primitives/truncate.rs:115-120]
+[crates/gsqz/src/primitives/truncate.rs:123-128]
+[crates/gsqz/src/primitives/truncate.rs:131-136]
+[crates/gsqz/src/primitives/truncate.rs:139-145]
+[crates/gsqz/src/primitives/truncate.rs:148-157]
+[crates/gsqz/src/primitives/truncate.rs:160-165]
+[crates/gsqz/src/primitives/truncate.rs:168-178]
+
+## Components
+
+- `4690ffe8-c1e2-5c70-9a9d-d5cb2ff5919b`
+- `6a862d29-6201-5383-9436-57ac995e1b8e`
+- `e83950d1-ed41-5d52-8fe0-872e65857061`
+- `035c2b73-fa04-5199-8c00-6aa232714c78`
+- `525eed98-3a8a-5393-aa0f-c88e76d459d8`
+- `27c68279-175d-5913-a390-a0b61a6c6fb4`
+- `dddc23f5-064d-50de-b318-d9902b3d0d27`
+- `00f6cfc1-fef1-593a-8493-dc9f7c660663`
+- `ab9b57c6-1308-587a-94a6-b897e4ead449`
+- `8faa2138-fa37-53b4-b21b-2dc80b2babf5`
+- `eaddf723-71da-548a-b3ef-a176c019c9b5`
+- `08ca6a31-4880-55be-9fb6-fb381b93f51b`
+- `75b8179f-e92b-5abd-b753-310773d5be2f`
+- `0ca60299-497e-512f-92c6-30cf0e95505d`
+- `0109c774-ada4-5242-9e1c-a990394e462a`
+- `45d3032d-4ceb-5a67-8300-8b7f408f9dd1`
+- `1e9421bd-6c46-5041-ad56-06265939d31e`
+- `95102c90-3c76-5929-9b47-25cda49173c9`
+- `3870c8ea-daae-5054-97ec-c28cb949a695`
+- `46a62353-d5f2-5d00-9101-be5762be5a46`
+- `66cb62e2-31a9-51ab-9093-71614885da97`
+- `efd37613-da20-5fbf-9c5d-1ab33c9053a6`
+- `71101fc0-db55-51a8-91df-d07e93649273`
+- `d3c60b51-d1f1-58ff-9372-db73d73b6e9f`
+- `1e2eeb86-7b54-58a8-9e75-9edb9e4f1d30`
+- `460b6fc4-fcd9-5560-93c9-d110e3325708`
+- `8918cfc8-ed39-5d2d-9338-b2c301df4d96`
+- `dec6ba3c-7af8-5082-947e-835cc0bf95a8`
+- `32b44318-1705-5255-851a-70fd9d140cb5`
+- `899f1756-faff-56c3-85b6-d79300f94cab`
+- `fbde926b-60ee-58cf-86c3-5bfc072d2693`
+- `a607594e-c9b4-5934-9af3-2c296bf5df18`
+- `6932038a-07bd-5b03-8be6-22913ed0ec6a`
+- `9a7fbd39-5751-5310-af99-f3bdc7ba7b4f`
+- `229484c2-5086-5772-b8fa-2bb9eee8dc2b`
+- `7ca0ed68-9605-579b-9e6d-408a3ba81d13`
+- `4213e21c-d950-5fba-9fb1-4b502a646071`
+- `7350c4a9-5eea-598d-adcd-50b463f41f2b`
+- `ff9d544e-c189-5753-9650-60b611d76675`
+- `83a6a86c-625c-58a7-945b-1bfbaf86de3f`
+- `ff964456-3531-5a93-ae45-36e05512b4e3`
+- `96c3be23-93fc-589f-b716-22b935973eb1`
+- `64330604-ba12-5581-b56e-966e832fd592`
+- `8f585076-379a-5d19-aa6e-8a306ba24da4`
+- `f9ab04ea-1b43-551c-aa67-5374bf2b94cb`
+- `4defbe90-0372-54ee-930d-e20f4b9bc88c`
+- `08488e18-4735-5d3a-82ee-5bf7d5f46d2e`
+- `4414b78e-2214-5ab9-a3d7-f34c460e7d82`
+- `3e5399e7-8362-507e-b212-3deb4fd101b3`
+- `a9c6cb9d-1155-5777-9160-27329badc744`
+- `7360e1b1-073a-51de-aaf2-a2fa7975c08f`
+- `5a215062-b14d-51e0-ba2a-234f936ca139`
+- `5ecd8770-276f-5dc1-a5b0-605d48854279`
+- `93b1ca6a-64be-51dc-b99b-eafca72d4573`
+- `6e067005-787d-58f9-9839-beae65a43531`
+- `56c442da-f3c8-5e2c-8598-f4d0a151fb2f`
+- `f8f38ab6-42d4-5618-aa98-5379dc6748a9`
+- `9f0171d5-b442-5836-a689-79b0ce93e94a`
+- `e4a0a08c-e02e-5330-a736-38ed24a3d2f4`
+- `1d237b01-a52b-586f-8553-230e2304698f`
+- `d792296a-0110-5f9f-ad78-80c64330846f`
+- `b0293d67-8e6b-5527-b6ba-050851300fca`
+- `32efbce0-fa3f-56fe-bc0f-f835fc242381`
+- `c91cf302-b6ed-5dd2-bf34-22206d7b28c6`
+- `def86bb9-e734-5291-a0c0-043c8d384f39`
+- `7c3d538e-60b1-5dcc-aaef-3332d2e2ae35`
+- `8eb07c08-dccf-59ee-8776-36dd63c8dacd`
+- `fb441f43-6133-5423-aa9b-fde3dda81952`
+- `001e5557-abaf-5197-b5ac-897f6a6ad6bc`
+- `28637dfe-e848-5dd1-92f9-9d8d4f738053`
+- `f7cda631-4dec-5d05-b084-cf44fe958f6b`
+- `fb5f4a8f-6fb2-5f7a-9a99-d2a1d67b76c9`
+- `fa25f392-81f2-5794-9179-aac0139089eb`
+- `4e69c744-2191-55fe-9fbd-9a69144fd1fd`
+- `3ca658d6-488a-5acf-b927-891537b26e87`
+- `7c933687-ad7e-5051-8af0-8245e9894c42`
+- `dfcaf855-3e24-50d8-a6d5-6624c6be66ed`
+- `a5c1a010-6aec-52d0-a208-1448cd9c8227`
+- `8851a2f6-632a-526d-8b9d-9a31607b0085`
+- `e362714e-b998-55c2-8ea5-d97e45cfd471`
+- `3570fc24-aa31-543c-b1f8-f33c32b78779`
+- `cc17b08f-4d98-5910-a8a2-ee3a882f6d48`
+- `bc9da16f-e7d5-5851-b23a-c82209638496`
+- `8c88eaf1-c45f-5c89-85ed-37bc231c53db`
+- `d8c29844-440f-5abc-9c02-922103991024`
+- `7447b2b8-52eb-527f-8ccb-e165078936d0`
+- `87daea3a-eb20-56ed-b142-dd7bbe06f786`
+- `61bc4ff8-3bf6-5d90-8a8b-b93e94b18a4c`
+- `71d84431-22f3-5f78-853e-f6086597054e`
+- `94dfbc7f-5dc2-59c2-a040-a0f9d3452cfa`
+- `8eb4aa5c-88fa-595b-b57a-a98e8fb76bbf`
+- `5a190088-d6c2-5228-90e7-b705bc96eae4`
+- `ac07b82d-7d3a-5780-88d9-8cf9e7e8b088`
+- `932462bb-6f94-59cb-b91f-aa35a2965a94`
+- `c1d900e4-a469-587e-9518-489868679bf3`
+- `08ebd6f5-3cf3-5b20-91e6-5f7571d66a4e`
+- `9b162aa1-f0e9-54e9-9f8e-4194cea7f8d8`
+- `4aa2a455-8a2d-5bdc-a9a8-5f23a5e83d51`
+- `7abaefda-2fa9-5783-9433-2813efc0cf2f`
+- `ac7b454d-77b4-5b07-964b-2a84ed01c357`
+- `4e61b741-cad2-564f-b126-fabefc70b41f`
+- `52084e5e-5d60-56ed-b1a6-12bbff60d3be`
+- `0fd9af53-3342-5461-8496-8c5e90555988`
+- `51e5d958-0fc2-5f5a-99f8-d2dafac5d86a`
+- `3473bef7-fa16-5abe-a674-cf0d526f8f73`
+- `575d100b-e49e-5408-8760-af33dd8daf9c`
+- `d77cf346-4371-5c0d-aa94-30607d7f03f7`
+- `d1b449c5-6dde-52b1-a309-72f407a5d747`
+- `67cf9a86-71d0-5ff3-bff5-8db96daac94a`
+- `c9e220eb-1b65-54f4-9ba6-7966d620f19c`
+- `10e633e0-a676-5e67-9492-70f800426bca`
+- `09f3939e-f6f8-5881-841b-e008c8f8a527`
+- `8cd6bb3a-58d1-5cfa-a910-f01f982a5f2a`
+- `1315000b-404f-5f00-8460-61e0b8875e86`
+- `796ed8c2-2054-5086-ae8d-ee821eabf56c`
+- `d244924b-b83d-5e0a-a6c0-2422fa54a112`
+- `e68399f7-c7c1-5d2a-bc3d-05cc7b66a711`
+- `bed69c79-a5dd-5dde-a7bf-f7c7707421a6`
+- `8c5ec8cc-2fa4-5296-a13b-436ef85984fb`
+- `8f73d270-004b-548f-8b08-235210e8cb43`
+- `de708a17-35ca-5492-8cf4-42997a867b95`
+- `83863aa8-3901-59e1-85e5-0e40b2ca1ad7`
+- `f3070cc9-71c0-55d1-98ee-dbdf6a0165a5`
+- `6dce9471-bf26-5d9d-861e-ac39c7cbe54c`
+- `a6b18a74-dae8-5307-8fed-fe6870acbd8c`
+

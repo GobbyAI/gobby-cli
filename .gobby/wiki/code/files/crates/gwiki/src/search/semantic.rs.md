@@ -1,0 +1,342 @@
+---
+title: crates/gwiki/src/search/semantic.rs
+type: code_file
+provenance:
+- file: crates/gwiki/src/search/semantic.rs
+  ranges:
+  - 20-24
+  - 27-30
+  - 32-37
+  - 39-56
+  - 46-55
+  - 59-63
+  - 65-72
+  - 74-164
+  - 166-171
+  - 173-175
+  - 177-183
+  - 185-205
+  - 207-212
+  - 215-227
+  - 235-246
+  - 251-253
+  - 256-262
+  - 257-261
+  - 265-269
+  - 266-268
+  - 272-307
+  - 273-289
+  - 291-306
+  - 310-368
+  - '372'
+  - 375-379
+  - 376-378
+  - 382-396
+  - 383-395
+  - 399-410
+  - 400-409
+  - 413-421
+  - '424'
+  - 426-435
+  - 427-434
+  - 437-441
+  - 443-456
+  - 458-502
+  - 504-506
+  - 508-513
+  - 515-523
+  - 525-554
+  - '557'
+  - 560-570
+  - 561-569
+  - 573-576
+  - 579-586
+  - 580-585
+  - 589-598
+  - 590-597
+  - 601-605
+  - 608-616
+  - 609-615
+  - 619-630
+  - 620-629
+  - '633'
+  - 636-644
+  - 637-643
+  - '647'
+  - 650-659
+  - 651-658
+  - 662-664
+  - 667-683
+  - 668-682
+generated_by: gcode-codewiki
+trust: generated
+freshness: indexed
+---
+
+# crates/gwiki/src/search/semantic.rs
+
+Module: [[code/modules/crates/gwiki/src/search|crates/gwiki/src/search]]
+
+## Purpose
+
+`crates/gwiki/src/search/semantic.rs` exposes 64 indexed API symbols.
+[crates/gwiki/src/search/semantic.rs:20-24]
+[crates/gwiki/src/search/semantic.rs:27-30]
+[crates/gwiki/src/search/semantic.rs:32-37]
+[crates/gwiki/src/search/semantic.rs:39-56]
+[crates/gwiki/src/search/semantic.rs:46-55]
+[crates/gwiki/src/search/semantic.rs:59-63]
+[crates/gwiki/src/search/semantic.rs:65-72]
+[crates/gwiki/src/search/semantic.rs:74-164]
+[crates/gwiki/src/search/semantic.rs:166-171]
+[crates/gwiki/src/search/semantic.rs:173-175]
+[crates/gwiki/src/search/semantic.rs:177-183]
+[crates/gwiki/src/search/semantic.rs:185-205]
+[crates/gwiki/src/search/semantic.rs:207-212]
+[crates/gwiki/src/search/semantic.rs:215-227]
+[crates/gwiki/src/search/semantic.rs:235-246]
+[crates/gwiki/src/search/semantic.rs:251-253]
+[crates/gwiki/src/search/semantic.rs:256-262]
+[crates/gwiki/src/search/semantic.rs:257-261]
+[crates/gwiki/src/search/semantic.rs:265-269]
+[crates/gwiki/src/search/semantic.rs:266-268]
+[crates/gwiki/src/search/semantic.rs:272-307]
+[crates/gwiki/src/search/semantic.rs:273-289]
+[crates/gwiki/src/search/semantic.rs:291-306]
+[crates/gwiki/src/search/semantic.rs:310-368]
+[crates/gwiki/src/search/semantic.rs:372]
+[crates/gwiki/src/search/semantic.rs:375-379]
+[crates/gwiki/src/search/semantic.rs:376-378]
+[crates/gwiki/src/search/semantic.rs:382-396]
+[crates/gwiki/src/search/semantic.rs:383-395]
+[crates/gwiki/src/search/semantic.rs:399-410]
+[crates/gwiki/src/search/semantic.rs:400-409]
+[crates/gwiki/src/search/semantic.rs:413-421]
+[crates/gwiki/src/search/semantic.rs:424]
+[crates/gwiki/src/search/semantic.rs:426-435]
+[crates/gwiki/src/search/semantic.rs:427-434]
+[crates/gwiki/src/search/semantic.rs:437-441]
+[crates/gwiki/src/search/semantic.rs:443-456]
+[crates/gwiki/src/search/semantic.rs:458-502]
+[crates/gwiki/src/search/semantic.rs:504-506]
+[crates/gwiki/src/search/semantic.rs:508-513]
+[crates/gwiki/src/search/semantic.rs:515-523]
+[crates/gwiki/src/search/semantic.rs:525-554]
+[crates/gwiki/src/search/semantic.rs:557]
+[crates/gwiki/src/search/semantic.rs:560-570]
+[crates/gwiki/src/search/semantic.rs:561-569]
+[crates/gwiki/src/search/semantic.rs:573-576]
+[crates/gwiki/src/search/semantic.rs:579-586]
+[crates/gwiki/src/search/semantic.rs:580-585]
+[crates/gwiki/src/search/semantic.rs:589-598]
+[crates/gwiki/src/search/semantic.rs:590-597]
+[crates/gwiki/src/search/semantic.rs:601-605]
+[crates/gwiki/src/search/semantic.rs:608-616]
+[crates/gwiki/src/search/semantic.rs:609-615]
+[crates/gwiki/src/search/semantic.rs:619-630]
+[crates/gwiki/src/search/semantic.rs:620-629]
+[crates/gwiki/src/search/semantic.rs:633]
+[crates/gwiki/src/search/semantic.rs:636-644]
+[crates/gwiki/src/search/semantic.rs:637-643]
+[crates/gwiki/src/search/semantic.rs:647]
+[crates/gwiki/src/search/semantic.rs:650-659]
+[crates/gwiki/src/search/semantic.rs:651-658]
+[crates/gwiki/src/search/semantic.rs:662-664]
+[crates/gwiki/src/search/semantic.rs:667-683]
+[crates/gwiki/src/search/semantic.rs:668-682]
+
+## API Symbols
+
+- `SemanticSearchRequest` (class) component `SemanticSearchRequest [class]` (`fcd76c39-3e6f-58e5-83c9-8d6b44c89c4a`) lines 20-24 [crates/gwiki/src/search/semantic.rs:20-24]
+  - Signature: `pub struct SemanticSearchRequest {`
+  - Purpose: Indexed class `SemanticSearchRequest` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:20-24]
+- `SemanticSearchOutcome` (class) component `SemanticSearchOutcome [class]` (`2162460d-2f39-5999-8395-7c3cea127ad1`) lines 27-30 [crates/gwiki/src/search/semantic.rs:27-30]
+  - Signature: `pub struct SemanticSearchOutcome {`
+  - Purpose: Indexed class `SemanticSearchOutcome` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:27-30]
+- `SemanticSearchBackend` (type) component `SemanticSearchBackend [type]` (`ad8ffe89-6885-5f12-92c6-0700415749a1`) lines 32-37 [crates/gwiki/src/search/semantic.rs:32-37]
+  - Signature: `pub trait SemanticSearchBackend {`
+  - Purpose: Indexed type `SemanticSearchBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:32-37]
+- `QueryEmbedder` (type) component `QueryEmbedder [type]` (`3d354977-ddb3-524a-8d05-d697067a14b9`) lines 39-56 [crates/gwiki/src/search/semantic.rs:39-56]
+  - Signature: `pub trait QueryEmbedder {`
+  - Purpose: Indexed type `QueryEmbedder` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:39-56]
+- `QueryEmbedder.embed_queries` (method) component `QueryEmbedder.embed_queries [method]` (`c9d4c932-902e-5088-9292-6fc4c7d5c6eb`) lines 46-55 [crates/gwiki/src/search/semantic.rs:46-55]
+  - Signature: `fn embed_queries(`
+  - Purpose: Indexed method `QueryEmbedder.embed_queries` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:46-55]
+- `SemanticEmbedding` (type) component `SemanticEmbedding [type]` (`b8d67927-68ec-5754-bbc0-6c250714074c`) lines 59-63 [crates/gwiki/src/search/semantic.rs:59-63]
+  - Signature: `pub enum SemanticEmbedding {`
+  - Purpose: Indexed type `SemanticEmbedding` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:59-63]
+- `VectorSearchBackend` (type) component `VectorSearchBackend [type]` (`3e5f3253-3b32-5395-b159-5f2631d400ef`) lines 65-72 [crates/gwiki/src/search/semantic.rs:65-72]
+  - Signature: `pub trait VectorSearchBackend {`
+  - Purpose: Indexed type `VectorSearchBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:65-72]
+- `search_semantic` (function) component `search_semantic [function]` (`b2338da4-812d-5c44-a95b-8c4b0c1ce91e`) lines 74-164 [crates/gwiki/src/search/semantic.rs:74-164]
+  - Signature: `pub fn search_semantic<E, V>(`
+  - Purpose: Indexed function `search_semantic` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:74-164]
+- `semantic_embedding_query` (function) component `semantic_embedding_query [function]` (`8ef0745f-f266-5417-8d85-8d6f9f901e36`) lines 166-171 [crates/gwiki/src/search/semantic.rs:166-171]
+  - Signature: `fn semantic_embedding_query(config: &EmbeddingConfig, query: &str) -> String {`
+  - Purpose: Indexed function `semantic_embedding_query` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:166-171]
+- `collection_for_scope` (function) component `collection_for_scope [function]` (`c797ac97-4466-5653-a4cb-e5b6f419b10d`) lines 173-175 [crates/gwiki/src/search/semantic.rs:173-175]
+  - Signature: `pub fn collection_for_scope(scope: &SearchScope) -> Option<String> {`
+  - Purpose: Indexed function `collection_for_scope` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:173-175]
+- `qdrant_collection_scope` (function) component `qdrant_collection_scope [function]` (`30c38949-5211-5fea-a8da-0dfd6842083a`) lines 177-183 [crates/gwiki/src/search/semantic.rs:177-183]
+  - Signature: `fn qdrant_collection_scope(scope: &SearchScope) -> Option<CollectionScope<'_>> {`
+  - Purpose: Indexed function `qdrant_collection_scope` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:177-183]
+- `payload_filter` (function) component `payload_filter [function]` (`221b8991-7faa-5066-9a86-8cc5d98c62ad`) lines 185-205 [crates/gwiki/src/search/semantic.rs:185-205]
+  - Signature: `pub fn payload_filter(scope: &SearchScope) -> Value {`
+  - Purpose: Indexed function `payload_filter` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:185-205]
+- `GobbySemanticBackend` (class) component `GobbySemanticBackend [class]` (`e9915e90-958b-549b-91b8-26249159abb9`) lines 207-212 [crates/gwiki/src/search/semantic.rs:207-212]
+  - Signature: `pub struct GobbySemanticBackend<E, V> {`
+  - Purpose: Indexed class `GobbySemanticBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:207-212]
+- `new` (function) component `new [function]` (`31a348da-0d89-5063-8ddd-27cfbe395da4`) lines 215-227 [crates/gwiki/src/search/semantic.rs:215-227]
+  - Signature: `pub fn new(`
+  - Purpose: Indexed function `new` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:215-227]
+- `search_semantic` (function) component `search_semantic [function]` (`5bdc32c0-dd91-5e4f-a91d-9b85584fd3ea`) lines 235-246 [crates/gwiki/src/search/semantic.rs:235-246]
+  - Signature: `fn search_semantic(`
+  - Purpose: Indexed function `search_semantic` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:235-246]
+- `OpenAiEmbeddingBackend` (class) component `OpenAiEmbeddingBackend [class]` (`36a6b340-2a5a-5d08-98a1-3a75cedf4423`) lines 251-253 [crates/gwiki/src/search/semantic.rs:251-253]
+  - Signature: `pub struct OpenAiEmbeddingBackend {`
+  - Purpose: Indexed class `OpenAiEmbeddingBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:251-253]
+- `OpenAiEmbeddingBackend` (class) component `OpenAiEmbeddingBackend [class]` (`6fa67f84-c282-5ac2-b62b-c95b8984b8ee`) lines 256-262 [crates/gwiki/src/search/semantic.rs:256-262]
+  - Signature: `impl Default for OpenAiEmbeddingBackend {`
+  - Purpose: Indexed class `OpenAiEmbeddingBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:256-262]
+- `OpenAiEmbeddingBackend.default` (method) component `OpenAiEmbeddingBackend.default [method]` (`1b21a71f-fe74-5eda-8bff-bb88ad5abebd`) lines 257-261 [crates/gwiki/src/search/semantic.rs:257-261]
+  - Signature: `fn default() -> Self {`
+  - Purpose: Indexed method `OpenAiEmbeddingBackend.default` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:257-261]
+- `OpenAiEmbeddingBackend` (class) component `OpenAiEmbeddingBackend [class]` (`42b8e2e5-293d-5e30-84af-abc26c784d81`) lines 265-269 [crates/gwiki/src/search/semantic.rs:265-269]
+  - Signature: `impl OpenAiEmbeddingBackend {`
+  - Purpose: Indexed class `OpenAiEmbeddingBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:265-269]
+- `OpenAiEmbeddingBackend.new` (method) component `OpenAiEmbeddingBackend.new [method]` (`812b500a-95f1-5bca-aacc-99f060ea9e98`) lines 266-268 [crates/gwiki/src/search/semantic.rs:266-268]
+  - Signature: `pub fn new() -> Self {`
+  - Purpose: Indexed method `OpenAiEmbeddingBackend.new` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:266-268]
+- `OpenAiEmbeddingBackend` (class) component `OpenAiEmbeddingBackend [class]` (`5e4f1d91-cdfa-5b68-8313-5612fa5bc3a0`) lines 272-307 [crates/gwiki/src/search/semantic.rs:272-307]
+  - Signature: `impl QueryEmbedder for OpenAiEmbeddingBackend {`
+  - Purpose: Indexed class `OpenAiEmbeddingBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:272-307]
+- `OpenAiEmbeddingBackend.embed_query` (method) component `OpenAiEmbeddingBackend.embed_query [method]` (`4948e0ad-1596-5012-9c69-7aabceec6ed0`) lines 273-289 [crates/gwiki/src/search/semantic.rs:273-289]
+  - Signature: `fn embed_query(`
+  - Purpose: Indexed method `OpenAiEmbeddingBackend.embed_query` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:273-289]
+- `OpenAiEmbeddingBackend.embed_queries` (method) component `OpenAiEmbeddingBackend.embed_queries [method]` (`a8ff22c7-01d8-5735-b903-10537b7da193`) lines 291-306 [crates/gwiki/src/search/semantic.rs:291-306]
+  - Signature: `fn embed_queries(`
+  - Purpose: Indexed method `OpenAiEmbeddingBackend.embed_queries` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:291-306]
+- `embed_direct_queries` (function) component `embed_direct_queries [function]` (`16dcccf0-03cf-5683-99a9-eb827eb5b241`) lines 310-368 [crates/gwiki/src/search/semantic.rs:310-368]
+  - Signature: `fn embed_direct_queries(`
+  - Purpose: Indexed function `embed_direct_queries` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:310-368]
+- `OpenAiEmbeddingBackend` (class) component `OpenAiEmbeddingBackend [class]` (`597f5328-6579-50f5-a980-1993d7fa5249`) lines 372-372 [crates/gwiki/src/search/semantic.rs:372]
+  - Signature: `pub struct OpenAiEmbeddingBackend;`
+  - Purpose: Indexed class `OpenAiEmbeddingBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:372]
+- `OpenAiEmbeddingBackend` (class) component `OpenAiEmbeddingBackend [class]` (`677c311a-d7d0-575c-a43d-f420b347fd7a`) lines 375-379 [crates/gwiki/src/search/semantic.rs:375-379]
+  - Signature: `impl OpenAiEmbeddingBackend {`
+  - Purpose: Indexed class `OpenAiEmbeddingBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:375-379]
+- `OpenAiEmbeddingBackend.new` (method) component `OpenAiEmbeddingBackend.new [method]` (`0607d207-4c71-5d2d-912e-1ac24ef085f2`) lines 376-378 [crates/gwiki/src/search/semantic.rs:376-378]
+  - Signature: `pub fn new() -> Self {`
+  - Purpose: Indexed method `OpenAiEmbeddingBackend.new` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:376-378]
+- `OpenAiEmbeddingBackend` (class) component `OpenAiEmbeddingBackend [class]` (`be7bbf3c-9d52-5e6e-a8e4-7e22b92fb306`) lines 382-396 [crates/gwiki/src/search/semantic.rs:382-396]
+  - Signature: `impl QueryEmbedder for OpenAiEmbeddingBackend {`
+  - Purpose: Indexed class `OpenAiEmbeddingBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:382-396]
+- `OpenAiEmbeddingBackend.embed_query` (method) component `OpenAiEmbeddingBackend.embed_query [method]` (`ad54fcff-e0bd-500b-bcca-ed34c0313959`) lines 383-395 [crates/gwiki/src/search/semantic.rs:383-395]
+  - Signature: `fn embed_query(`
+  - Purpose: Indexed method `OpenAiEmbeddingBackend.embed_query` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:383-395]
+- `OpenAiEmbeddingBackend` (class) component `OpenAiEmbeddingBackend [class]` (`d98d94aa-6803-5b0a-ab72-15c39cf3edf7`) lines 399-410 [crates/gwiki/src/search/semantic.rs:399-410]
+  - Signature: `impl QueryEmbedder for OpenAiEmbeddingBackend {`
+  - Purpose: Indexed class `OpenAiEmbeddingBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:399-410]
+- `OpenAiEmbeddingBackend.embed_query` (method) component `OpenAiEmbeddingBackend.embed_query [method]` (`9f8a06b3-04f2-57e6-9ccc-c9d0c42ef4d9`) lines 400-409 [crates/gwiki/src/search/semantic.rs:400-409]
+  - Signature: `fn embed_query(`
+  - Purpose: Indexed method `OpenAiEmbeddingBackend.embed_query` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:400-409]
+- `embed_daemon_query` (function) component `embed_daemon_query [function]` (`1d8614e1-270e-5465-97ad-ebf2bcb5c3e6`) lines 413-421 [crates/gwiki/src/search/semantic.rs:413-421]
+  - Signature: `fn embed_daemon_query(context: &AiContext, query: &str) -> Result<Vec<f32>, SearchError> {`
+  - Purpose: Indexed function `embed_daemon_query` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:413-421]
+- `GobbyQdrantBackend` (class) component `GobbyQdrantBackend [class]` (`efc70a08-3938-53b2-bc31-f7b96b4084e5`) lines 424-424 [crates/gwiki/src/search/semantic.rs:424]
+  - Signature: `pub struct GobbyQdrantBackend;`
+  - Purpose: Indexed class `GobbyQdrantBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:424]
+- `GobbyQdrantBackend` (class) component `GobbyQdrantBackend [class]` (`7ca7b586-4d5d-57d6-bb94-0361227a2803`) lines 426-435 [crates/gwiki/src/search/semantic.rs:426-435]
+  - Signature: `impl VectorSearchBackend for GobbyQdrantBackend {`
+  - Purpose: Indexed class `GobbyQdrantBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:426-435]
+- `GobbyQdrantBackend.search` (method) component `GobbyQdrantBackend.search [method]` (`22282fff-df93-56ba-af50-5662e330fbed`) lines 427-434 [crates/gwiki/src/search/semantic.rs:427-434]
+  - Signature: `fn search(`
+  - Purpose: Indexed method `GobbyQdrantBackend.search` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:427-434]
+- `required_service_error` (function) component `required_service_error [function]` (`9d68ab2d-0567-5000-94e9-231fea4b9fe9`) lines 437-441 [crates/gwiki/src/search/semantic.rs:437-441]
+  - Signature: `fn required_service_error(service: &str, detail: &str) -> SearchError {`
+  - Purpose: Indexed function `required_service_error` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:437-441]
+- `payload_matches_scope` (function) component `payload_matches_scope [function]` (`38001561-c03c-5ed3-b17a-1b424564adf5`) lines 443-456 [crates/gwiki/src/search/semantic.rs:443-456]
+  - Signature: `fn payload_matches_scope(payload: &Map<String, Value>, scope: &SearchScope) -> bool {`
+  - Purpose: Indexed function `payload_matches_scope` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:443-456]
+- `hit_to_result` (function) component `hit_to_result [function]` (`eacd4c35-2f28-57b7-85c2-c5854c228ea3`) lines 458-502 [crates/gwiki/src/search/semantic.rs:458-502]
+  - Signature: `fn hit_to_result(hit: SearchHit, scope: &SearchScope) -> Option<WikiSearchResult> {`
+  - Purpose: Indexed function `hit_to_result` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:458-502]
+- `payload_string` (function) component `payload_string [function]` (`6d3f0e17-61fd-5ec0-a022-a17967039563`) lines 504-506 [crates/gwiki/src/search/semantic.rs:504-506]
+  - Signature: `fn payload_string(payload: &Map<String, Value>, key: &str) -> Option<String> {`
+  - Purpose: Indexed function `payload_string` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:504-506]
+- `payload_usize` (function) component `payload_usize [function]` (`8de03126-5079-5c3e-aa52-c7aa8dd30d0e`) lines 508-513 [crates/gwiki/src/search/semantic.rs:508-513]
+  - Signature: `fn payload_usize(payload: &Map<String, Value>, key: &str) -> Option<usize> {`
+  - Purpose: Indexed function `payload_usize` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:508-513]
+- `degraded` (function) component `degraded [function]` (`42431d05-2d1e-5841-bf27-26de71369ce3`) lines 515-523 [crates/gwiki/src/search/semantic.rs:515-523]
+  - Signature: `fn degraded(service: &str, state: gobby_core::degradation::ServiceState) -> SemanticSearchOutcome {`
+  - Purpose: Indexed function `degraded` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:515-523]
+- `qdrant_degradation` (function) component `qdrant_degradation [function]` (`807b64c5-f8d2-5665-af55-c7b476f0acd6`) lines 525-554 [crates/gwiki/src/search/semantic.rs:525-554]
+  - Signature: `fn qdrant_degradation(error: anyhow::Error) -> SemanticSearchOutcome {`
+  - Purpose: Indexed function `qdrant_degradation` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:525-554]
+- `UnavailableSemanticBackend` (class) component `UnavailableSemanticBackend [class]` (`f9b8abfd-f29d-5b66-aa0c-251fd40a41dc`) lines 557-557 [crates/gwiki/src/search/semantic.rs:557]
+  - Signature: `pub struct UnavailableSemanticBackend;`
+  - Purpose: Indexed class `UnavailableSemanticBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:557]
+- `UnavailableSemanticBackend` (class) component `UnavailableSemanticBackend [class]` (`2846b98b-ec23-5ed9-b905-56af160669b6`) lines 560-570 [crates/gwiki/src/search/semantic.rs:560-570]
+  - Signature: `impl SemanticSearchBackend for UnavailableSemanticBackend {`
+  - Purpose: Indexed class `UnavailableSemanticBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:560-570]
+- `UnavailableSemanticBackend.search_semantic` (method) component `UnavailableSemanticBackend.search_semantic [method]` (`70031b06-b973-5c95-8021-203a877364f3`) lines 561-569 [crates/gwiki/src/search/semantic.rs:561-569]
+  - Signature: `fn search_semantic(`
+  - Purpose: Indexed method `UnavailableSemanticBackend.search_semantic` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:561-569]
+- `FixedEmbedder` (class) component `FixedEmbedder [class]` (`b6dc7f47-5f93-566d-976c-862d9a198bbe`) lines 573-576 [crates/gwiki/src/search/semantic.rs:573-576]
+  - Signature: `struct FixedEmbedder {`
+  - Purpose: Indexed class `FixedEmbedder` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:573-576]
+- `FixedEmbedder` (class) component `FixedEmbedder [class]` (`7ed8c002-cce2-5d21-a650-a57a9eb77226`) lines 579-586 [crates/gwiki/src/search/semantic.rs:579-586]
+  - Signature: `impl FixedEmbedder {`
+  - Purpose: Indexed class `FixedEmbedder` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:579-586]
+- `FixedEmbedder.new` (method) component `FixedEmbedder.new [method]` (`1091ef9f-f711-5cb1-8acc-95a60271d94d`) lines 580-585 [crates/gwiki/src/search/semantic.rs:580-585]
+  - Signature: `fn new(vector: Vec<f32>) -> Self {`
+  - Purpose: Indexed method `FixedEmbedder.new` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:580-585]
+- `FixedEmbedder` (class) component `FixedEmbedder [class]` (`604c3ca8-7095-5184-b081-b661a6c39f83`) lines 589-598 [crates/gwiki/src/search/semantic.rs:589-598]
+  - Signature: `impl QueryEmbedder for FixedEmbedder {`
+  - Purpose: Indexed class `FixedEmbedder` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:589-598]
+- `FixedEmbedder.embed_query` (method) component `FixedEmbedder.embed_query [method]` (`67f8cbe3-10fc-5114-8f21-384271dd989f`) lines 590-597 [crates/gwiki/src/search/semantic.rs:590-597]
+  - Signature: `fn embed_query(`
+  - Purpose: Indexed method `FixedEmbedder.embed_query` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:590-597]
+- `RecordingVectorBackend` (class) component `RecordingVectorBackend [class]` (`82b1bcfc-dc85-5528-9d29-e846ffcb2480`) lines 601-605 [crates/gwiki/src/search/semantic.rs:601-605]
+  - Signature: `struct RecordingVectorBackend {`
+  - Purpose: Indexed class `RecordingVectorBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:601-605]
+- `RecordingVectorBackend` (class) component `RecordingVectorBackend [class]` (`3d83ec20-4eb5-5ec3-ab75-9fae6ec1e6af`) lines 608-616 [crates/gwiki/src/search/semantic.rs:608-616]
+  - Signature: `impl RecordingVectorBackend {`
+  - Purpose: Indexed class `RecordingVectorBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:608-616]
+- `RecordingVectorBackend.new` (method) component `RecordingVectorBackend.new [method]` (`649a3ba8-28cd-5341-9dce-6d3403f57c32`) lines 609-615 [crates/gwiki/src/search/semantic.rs:609-615]
+  - Signature: `fn new(hits: Vec<SearchHit>) -> Self {`
+  - Purpose: Indexed method `RecordingVectorBackend.new` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:609-615]
+- `RecordingVectorBackend` (class) component `RecordingVectorBackend [class]` (`875ec055-c99f-54ca-b60a-77f23fcf13a7`) lines 619-630 [crates/gwiki/src/search/semantic.rs:619-630]
+  - Signature: `impl VectorSearchBackend for RecordingVectorBackend {`
+  - Purpose: Indexed class `RecordingVectorBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:619-630]
+- `RecordingVectorBackend.search` (method) component `RecordingVectorBackend.search [method]` (`66322308-54b7-5504-b147-615ee833035a`) lines 620-629 [crates/gwiki/src/search/semantic.rs:620-629]
+  - Signature: `fn search(`
+  - Purpose: Indexed method `RecordingVectorBackend.search` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:620-629]
+- `FailingEmbedder` (class) component `FailingEmbedder [class]` (`acbd9a29-e9fa-582c-8dcc-3d4e5cb285dc`) lines 633-633 [crates/gwiki/src/search/semantic.rs:633]
+  - Signature: `struct FailingEmbedder;`
+  - Purpose: Indexed class `FailingEmbedder` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:633]
+- `FailingEmbedder` (class) component `FailingEmbedder [class]` (`e3591953-48ed-5dc6-b50b-8f3586f9ba89`) lines 636-644 [crates/gwiki/src/search/semantic.rs:636-644]
+  - Signature: `impl QueryEmbedder for FailingEmbedder {`
+  - Purpose: Indexed class `FailingEmbedder` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:636-644]
+- `FailingEmbedder.embed_query` (method) component `FailingEmbedder.embed_query [method]` (`85ae84ae-d297-5e68-b00b-75cb1054311f`) lines 637-643 [crates/gwiki/src/search/semantic.rs:637-643]
+  - Signature: `fn embed_query(`
+  - Purpose: Indexed method `FailingEmbedder.embed_query` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:637-643]
+- `FailingVectorBackend` (class) component `FailingVectorBackend [class]` (`7d4f61bc-3e5b-5973-bd6e-183387a4a48f`) lines 647-647 [crates/gwiki/src/search/semantic.rs:647]
+  - Signature: `struct FailingVectorBackend;`
+  - Purpose: Indexed class `FailingVectorBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:647]
+- `FailingVectorBackend` (class) component `FailingVectorBackend [class]` (`f727a0f7-9a80-5b11-815b-9b965bba059d`) lines 650-659 [crates/gwiki/src/search/semantic.rs:650-659]
+  - Signature: `impl VectorSearchBackend for FailingVectorBackend {`
+  - Purpose: Indexed class `FailingVectorBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:650-659]
+- `FailingVectorBackend.search` (method) component `FailingVectorBackend.search [method]` (`2a04f31d-0afc-5289-a748-07fa3fe6ae45`) lines 651-658 [crates/gwiki/src/search/semantic.rs:651-658]
+  - Signature: `fn search(`
+  - Purpose: Indexed method `FailingVectorBackend.search` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:651-658]
+- `QdrantStatusVectorBackend` (class) component `QdrantStatusVectorBackend [class]` (`d034811c-113b-5ea2-b952-453dace8f3e6`) lines 662-664 [crates/gwiki/src/search/semantic.rs:662-664]
+  - Signature: `struct QdrantStatusVectorBackend {`
+  - Purpose: Indexed class `QdrantStatusVectorBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:662-664]
+- `QdrantStatusVectorBackend` (class) component `QdrantStatusVectorBackend [class]` (`83c99450-b698-5fc2-a9f9-0f2334c92ce4`) lines 667-683 [crates/gwiki/src/search/semantic.rs:667-683]
+  - Signature: `impl VectorSearchBackend for QdrantStatusVectorBackend {`
+  - Purpose: Indexed class `QdrantStatusVectorBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:667-683]
+- `QdrantStatusVectorBackend.search` (method) component `QdrantStatusVectorBackend.search [method]` (`bd7a6fd5-c7ab-5e2a-abda-5c94032147e0`) lines 668-682 [crates/gwiki/src/search/semantic.rs:668-682]
+  - Signature: `fn search(`
+  - Purpose: Indexed method `QdrantStatusVectorBackend.search` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:668-682]
+

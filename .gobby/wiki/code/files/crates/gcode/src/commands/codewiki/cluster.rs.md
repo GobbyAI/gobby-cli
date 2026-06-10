@@ -1,0 +1,72 @@
+---
+title: crates/gcode/src/commands/codewiki/cluster.rs
+type: code_file
+provenance:
+- file: crates/gcode/src/commands/codewiki/cluster.rs
+  ranges:
+  - 3-54
+  - 56-80
+  - 89-130
+  - 132-156
+  - 158-168
+  - 170-178
+  - 180-196
+  - 198-206
+  - 208-226
+  - 228-233
+generated_by: gcode-codewiki
+trust: generated
+freshness: indexed
+---
+
+# crates/gcode/src/commands/codewiki/cluster.rs
+
+Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/commands/codewiki]]
+
+## Purpose
+
+`crates/gcode/src/commands/codewiki/cluster.rs` exposes 10 indexed API symbols.
+[crates/gcode/src/commands/codewiki/cluster.rs:3-54]
+[crates/gcode/src/commands/codewiki/cluster.rs:56-80]
+[crates/gcode/src/commands/codewiki/cluster.rs:89-130]
+[crates/gcode/src/commands/codewiki/cluster.rs:132-156]
+[crates/gcode/src/commands/codewiki/cluster.rs:158-168]
+[crates/gcode/src/commands/codewiki/cluster.rs:170-178]
+[crates/gcode/src/commands/codewiki/cluster.rs:180-196]
+[crates/gcode/src/commands/codewiki/cluster.rs:198-206]
+[crates/gcode/src/commands/codewiki/cluster.rs:208-226]
+[crates/gcode/src/commands/codewiki/cluster.rs:228-233]
+
+## API Symbols
+
+- `cluster_file_modules` (function) component `cluster_file_modules [function]` (`b5f7a087-cd7f-5e27-823b-79664f1a5646`) lines 3-54 [crates/gcode/src/commands/codewiki/cluster.rs:3-54]
+  - Signature: `pub(crate) fn cluster_file_modules(`
+  - Purpose: Clusters the input files into connected components via `Call` edges between their symbols, then assigns each file the module path derived from either the common module of its component or its own file module when isolated. [crates/gcode/src/commands/codewiki/cluster.rs:3-54]
+- `union_files` (function) component `union_files [function]` (`2cf219a4-ccdc-5833-af4a-e0b6a1985105`) lines 56-80 [crates/gcode/src/commands/codewiki/cluster.rs:56-80]
+  - Signature: `pub(crate) fn union_files(`
+  - Purpose: `union_files` merges the disjoint-set components containing `left` and `right` by finding their roots, returning early if they are already unified, and otherwise performing a union-by-rank with a deterministic lexicographic tie-break on equal ranks while updating `parents` and incrementing the selected root’s rank when needed. [crates/gcode/src/commands/codewiki/cluster.rs:56-80]
+- `find_file_root` (function) component `find_file_root [function]` (`731f2c21-b8ef-5b43-a961-72daf4bf1d5a`) lines 89-130 [crates/gcode/src/commands/codewiki/cluster.rs:89-130]
+  - Signature: `pub(crate) fn find_file_root(parents: &mut HashMap<String, String>, file: &str) -> String {`
+  - Purpose: `find_file_root` walks the `parents` union-find chain from `file` to its canonical root, detects and resolves parent cycles by choosing the lexicographically smallest node in the cycle, and path-compresses every visited node to that root in `parents`. [crates/gcode/src/commands/codewiki/cluster.rs:89-130]
+- `common_module_for_files` (function) component `common_module_for_files [function]` (`375c30f2-681b-56a1-bb8c-3a87f1b45bb1`) lines 132-156 [crates/gcode/src/commands/codewiki/cluster.rs:132-156]
+  - Signature: `pub(crate) fn common_module_for_files(files: &[String]) -> String {`
+  - Purpose: Returns the longest shared slash-delimited module path prefix across all input files after transforming each path with `module_for_file`, or `""` when `files` is empty. [crates/gcode/src/commands/codewiki/cluster.rs:132-156]
+- `symbols_by_file_component` (function) component `symbols_by_file_component [function]` (`f49c3c64-b3e7-5a95-8f0f-4848c16324dc`) lines 158-168 [crates/gcode/src/commands/codewiki/cluster.rs:158-168]
+  - Signature: `pub(crate) fn symbols_by_file_component(symbols: &[Symbol]) -> BTreeMap<String, Vec<String>> {`
+  - Purpose: Builds a `BTreeMap` keyed by each core file path, collecting the `id` of every `Symbol` whose `file_path` passes `is_core_file` into the corresponding `Vec<String>`, with non-core symbols skipped. [crates/gcode/src/commands/codewiki/cluster.rs:158-168]
+- `first_component_for_file` (function) component `first_component_for_file [function]` (`4a29bdf1-f7ab-5254-a2cf-cddacc17f47c`) lines 170-178 [crates/gcode/src/commands/codewiki/cluster.rs:170-178]
+  - Signature: `pub(crate) fn first_component_for_file(`
+  - Purpose: Looks up `file` in `symbols_by_file` and returns a cloned `String` containing that file’s first component, or `None` if the file is absent or its component list is empty. [crates/gcode/src/commands/codewiki/cluster.rs:170-178]
+- `files_for_import_target` (function) component `files_for_import_target [function]` (`f24c62ab-dfa9-57f2-aede-7b84478262c7`) lines 180-196 [crates/gcode/src/commands/codewiki/cluster.rs:180-196]
+  - Signature: `pub(crate) fn files_for_import_target<'a>(`
+  - Purpose: Returns the subset of `files` as borrowed `&str` slices whose path components or derived module-name components contain the component sequence of `target_module`, or an empty `Vec` if `target_module` has no components. [crates/gcode/src/commands/codewiki/cluster.rs:180-196]
+- `module_components` (function) component `module_components [function]` (`5b87f590-cc00-51f2-a9b3-705b4fdb4048`) lines 198-206 [crates/gcode/src/commands/codewiki/cluster.rs:198-206]
+  - Signature: `fn module_components(value: &str) -> Vec<String> {`
+  - Purpose: It normalizes `::`, `.`, and `\` to `/`, splits the string on `/`, filters out empty segments, and returns the remaining path-like components as owned `String`s. [crates/gcode/src/commands/codewiki/cluster.rs:198-206]
+- `path_components` (function) component `path_components [function]` (`0c6bff98-f535-535b-b04c-5bc1873f8bfb`) lines 208-226 [crates/gcode/src/commands/codewiki/cluster.rs:208-226]
+  - Signature: `fn path_components(file: &str) -> Vec<String> {`
+  - Purpose: It returns a `Vec<String>` of the path’s normal components, skipping non-`Normal` segments and stripping each component’s extension to its file stem when one is present. [crates/gcode/src/commands/codewiki/cluster.rs:208-226]
+- `contains_component_sequence` (function) component `contains_component_sequence [function]` (`a2788420-9cd4-55d3-925d-8765093224a7`) lines 228-233 [crates/gcode/src/commands/codewiki/cluster.rs:228-233]
+  - Signature: `fn contains_component_sequence(components: &[String], target: &[String]) -> bool {`
+  - Purpose: Returns `true` when `target` exactly matches any contiguous slice of `components` of length `target.len()`, and `false` otherwise. [crates/gcode/src/commands/codewiki/cluster.rs:228-233]
+

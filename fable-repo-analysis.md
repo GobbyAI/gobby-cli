@@ -493,6 +493,7 @@ page anatomy, concept-level taxonomy) produces nicer-reading pages than our sche
 That is prompt/template work, not architecture — our grounding, coverage, and freshness
 guarantees are the hard part and are already ahead. Highest-leverage follow-ups, in order:
 regeneration reuse for unchanged docs (#681 — re-runs currently re-pay the full LLM cost),
-lenient action-JSON parsing so local models can complete research→compile (#686), post-#680
-rerun to clear the 7 degraded architecture cells, and editorial page-anatomy polish (documented
-as direction, no stack change).
+lenient action-JSON parsing so local models can complete research→compile (#686), degraded-doc
+healing (#687 — source-hash skip means a degraded page survives re-runs unless deleted first;
+the post-#680 healing rerun uses the delete-first workaround), and editorial page-anatomy
+polish (documented as direction, no stack change).

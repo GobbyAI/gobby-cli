@@ -1,0 +1,727 @@
+---
+title: crates/gsqz/config.yaml
+type: code_file
+provenance:
+- file: crates/gsqz/config.yaml
+  ranges:
+  - 12-15
+  - '13'
+  - '14'
+  - '15'
+  - 17-204
+  - 19-40
+  - '20'
+  - 21-40
+  - 22-26
+  - 23-26
+  - '24'
+  - '25'
+  - '26'
+  - 27-38
+  - 28-38
+  - 39-40
+  - '40'
+  - 42-58
+  - '43'
+  - 44-58
+  - 45-49
+  - 46-49
+  - '47'
+  - '48'
+  - '49'
+  - 50-56
+  - 51-56
+  - 57-58
+  - '58'
+  - 60-77
+  - '61'
+  - 62-77
+  - 63-67
+  - 64-67
+  - '65'
+  - '66'
+  - '67'
+  - 68-73
+  - 69-73
+  - 74-77
+  - '75'
+  - 78-86
+  - '79'
+  - 80-86
+  - '81'
+  - 82-83
+  - '83'
+  - 84-86
+  - '85'
+  - '86'
+  - 88-96
+  - '89'
+  - 90-96
+  - '91'
+  - 92-93
+  - '93'
+  - 94-96
+  - '95'
+  - '96'
+  - 98-108
+  - '99'
+  - 100-108
+  - '101'
+  - 102-103
+  - '103'
+  - 104-108
+  - '105'
+  - '106'
+  - 109-116
+  - '110'
+  - 111-116
+  - 112-113
+  - '113'
+  - 114-116
+  - '115'
+  - '116'
+  - 118-125
+  - '119'
+  - 120-125
+  - 121-122
+  - '122'
+  - 123-125
+  - '124'
+  - '125'
+  - 127-136
+  - '128'
+  - 129-136
+  - 130-131
+  - '131'
+  - 132-136
+  - '133'
+  - '134'
+  - 137-158
+  - '138'
+  - 139-158
+  - 140-143
+  - 141-143
+  - '142'
+  - '143'
+  - 144-151
+  - 145-151
+  - 152-153
+  - '153'
+  - 154-158
+  - '155'
+  - '156'
+  - 159-175
+  - '160'
+  - 161-175
+  - 162-170
+  - 163-170
+  - 171-175
+  - '172'
+  - '173'
+  - 176-181
+  - '177'
+  - 178-181
+  - 179-181
+  - '180'
+  - '181'
+  - 183-191
+  - '184'
+  - 185-191
+  - '186'
+  - 187-191
+  - '188'
+  - '189'
+  - 192-204
+  - '193'
+  - 194-204
+  - 195-201
+  - 196-201
+  - 202-204
+  - '203'
+  - '204'
+  - 206-213
+  - 207-213
+  - 208-213
+  - '209'
+  - '210'
+  - '214'
+generated_by: gcode-codewiki
+trust: generated
+freshness: indexed
+---
+
+# crates/gsqz/config.yaml
+
+Module: [[code/modules/crates/gsqz|crates/gsqz]]
+
+## Purpose
+
+`crates/gsqz/config.yaml` exposes 141 indexed API symbols.
+[crates/gsqz/config.yaml:12-15]
+[crates/gsqz/config.yaml:13]
+[crates/gsqz/config.yaml:14]
+[crates/gsqz/config.yaml:15]
+[crates/gsqz/config.yaml:17-204]
+[crates/gsqz/config.yaml:19-40]
+[crates/gsqz/config.yaml:20]
+[crates/gsqz/config.yaml:21-40]
+[crates/gsqz/config.yaml:22-26]
+[crates/gsqz/config.yaml:23-26]
+[crates/gsqz/config.yaml:24]
+[crates/gsqz/config.yaml:25]
+[crates/gsqz/config.yaml:26]
+[crates/gsqz/config.yaml:27-38]
+[crates/gsqz/config.yaml:28-38]
+[crates/gsqz/config.yaml:39-40]
+[crates/gsqz/config.yaml:40]
+[crates/gsqz/config.yaml:42-58]
+[crates/gsqz/config.yaml:43]
+[crates/gsqz/config.yaml:44-58]
+[crates/gsqz/config.yaml:45-49]
+[crates/gsqz/config.yaml:46-49]
+[crates/gsqz/config.yaml:47]
+[crates/gsqz/config.yaml:48]
+[crates/gsqz/config.yaml:49]
+[crates/gsqz/config.yaml:50-56]
+[crates/gsqz/config.yaml:51-56]
+[crates/gsqz/config.yaml:57-58]
+[crates/gsqz/config.yaml:58]
+[crates/gsqz/config.yaml:60-77]
+[crates/gsqz/config.yaml:61]
+[crates/gsqz/config.yaml:62-77]
+[crates/gsqz/config.yaml:63-67]
+[crates/gsqz/config.yaml:64-67]
+[crates/gsqz/config.yaml:65]
+[crates/gsqz/config.yaml:66]
+[crates/gsqz/config.yaml:67]
+[crates/gsqz/config.yaml:68-73]
+[crates/gsqz/config.yaml:69-73]
+[crates/gsqz/config.yaml:74-77]
+[crates/gsqz/config.yaml:75]
+[crates/gsqz/config.yaml:78-86]
+[crates/gsqz/config.yaml:79]
+[crates/gsqz/config.yaml:80-86]
+[crates/gsqz/config.yaml:81]
+[crates/gsqz/config.yaml:82-83]
+[crates/gsqz/config.yaml:83]
+[crates/gsqz/config.yaml:84-86]
+[crates/gsqz/config.yaml:85]
+[crates/gsqz/config.yaml:86]
+[crates/gsqz/config.yaml:88-96]
+[crates/gsqz/config.yaml:89]
+[crates/gsqz/config.yaml:90-96]
+[crates/gsqz/config.yaml:91]
+[crates/gsqz/config.yaml:92-93]
+[crates/gsqz/config.yaml:93]
+[crates/gsqz/config.yaml:94-96]
+[crates/gsqz/config.yaml:95]
+[crates/gsqz/config.yaml:96]
+[crates/gsqz/config.yaml:98-108]
+[crates/gsqz/config.yaml:99]
+[crates/gsqz/config.yaml:100-108]
+[crates/gsqz/config.yaml:101]
+[crates/gsqz/config.yaml:102-103]
+[crates/gsqz/config.yaml:103]
+[crates/gsqz/config.yaml:104-108]
+[crates/gsqz/config.yaml:105]
+[crates/gsqz/config.yaml:106]
+[crates/gsqz/config.yaml:109-116]
+[crates/gsqz/config.yaml:110]
+[crates/gsqz/config.yaml:111-116]
+[crates/gsqz/config.yaml:112-113]
+[crates/gsqz/config.yaml:113]
+[crates/gsqz/config.yaml:114-116]
+[crates/gsqz/config.yaml:115]
+[crates/gsqz/config.yaml:116]
+[crates/gsqz/config.yaml:118-125]
+[crates/gsqz/config.yaml:119]
+[crates/gsqz/config.yaml:120-125]
+[crates/gsqz/config.yaml:121-122]
+[crates/gsqz/config.yaml:122]
+[crates/gsqz/config.yaml:123-125]
+[crates/gsqz/config.yaml:124]
+[crates/gsqz/config.yaml:125]
+[crates/gsqz/config.yaml:127-136]
+[crates/gsqz/config.yaml:128]
+[crates/gsqz/config.yaml:129-136]
+[crates/gsqz/config.yaml:130-131]
+[crates/gsqz/config.yaml:131]
+[crates/gsqz/config.yaml:132-136]
+[crates/gsqz/config.yaml:133]
+[crates/gsqz/config.yaml:134]
+[crates/gsqz/config.yaml:137-158]
+[crates/gsqz/config.yaml:138]
+[crates/gsqz/config.yaml:139-158]
+[crates/gsqz/config.yaml:140-143]
+[crates/gsqz/config.yaml:141-143]
+[crates/gsqz/config.yaml:142]
+[crates/gsqz/config.yaml:143]
+[crates/gsqz/config.yaml:144-151]
+[crates/gsqz/config.yaml:145-151]
+[crates/gsqz/config.yaml:152-153]
+[crates/gsqz/config.yaml:153]
+[crates/gsqz/config.yaml:154-158]
+[crates/gsqz/config.yaml:155]
+[crates/gsqz/config.yaml:156]
+[crates/gsqz/config.yaml:159-175]
+[crates/gsqz/config.yaml:160]
+[crates/gsqz/config.yaml:161-175]
+[crates/gsqz/config.yaml:162-170]
+[crates/gsqz/config.yaml:163-170]
+[crates/gsqz/config.yaml:171-175]
+[crates/gsqz/config.yaml:172]
+[crates/gsqz/config.yaml:173]
+[crates/gsqz/config.yaml:176-181]
+[crates/gsqz/config.yaml:177]
+[crates/gsqz/config.yaml:178-181]
+[crates/gsqz/config.yaml:179-181]
+[crates/gsqz/config.yaml:180]
+[crates/gsqz/config.yaml:181]
+[crates/gsqz/config.yaml:183-191]
+[crates/gsqz/config.yaml:184]
+[crates/gsqz/config.yaml:185-191]
+[crates/gsqz/config.yaml:186]
+[crates/gsqz/config.yaml:187-191]
+[crates/gsqz/config.yaml:188]
+[crates/gsqz/config.yaml:189]
+[crates/gsqz/config.yaml:192-204]
+[crates/gsqz/config.yaml:193]
+[crates/gsqz/config.yaml:194-204]
+[crates/gsqz/config.yaml:195-201]
+[crates/gsqz/config.yaml:196-201]
+[crates/gsqz/config.yaml:202-204]
+[crates/gsqz/config.yaml:203]
+[crates/gsqz/config.yaml:204]
+[crates/gsqz/config.yaml:206-213]
+[crates/gsqz/config.yaml:207-213]
+[crates/gsqz/config.yaml:208-213]
+[crates/gsqz/config.yaml:209]
+[crates/gsqz/config.yaml:210]
+[crates/gsqz/config.yaml:214]
+
+## API Symbols
+
+- `settings` (property) component `settings [property]` (`713476f5-da29-5cf3-8f5f-e73fcc243386`) lines 12-15 [crates/gsqz/config.yaml:12-15]
+  - Signature: `settings:`
+  - Purpose: Indexed property `settings` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:12-15]
+- `min_output_length` (property) component `min_output_length [property]` (`33fc0669-2397-5a12-9d25-bce2aec5d95d`) lines 13-13 [crates/gsqz/config.yaml:13]
+  - Signature: `min_output_length: 1000`
+  - Purpose: Indexed property `min_output_length` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:13]
+- `max_compressed_lines` (property) component `max_compressed_lines [property]` (`5d12914d-9cc6-5b71-b87a-8aa06981586e`) lines 14-14 [crates/gsqz/config.yaml:14]
+  - Signature: `max_compressed_lines: 100`
+  - Purpose: Indexed property `max_compressed_lines` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:14]
+- `on_empty` (property) component `on_empty [property]` (`95590f17-31e0-5939-9994-86b6c9707dd5`) lines 15-15 [crates/gsqz/config.yaml:15]
+  - Signature: `on_empty: 'No output after compression.'`
+  - Purpose: Indexed property `on_empty` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:15]
+- `pipelines` (property) component `pipelines [property]` (`0ec0b6ab-9ec1-5ddb-8b13-7823a17412e5`) lines 17-204 [crates/gsqz/config.yaml:17-204]
+  - Signature: `pipelines:`
+  - Purpose: Indexed property `pipelines` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:17-204]
+- `pytest` (property) component `pytest [property]` (`b36d304f-cdf3-59d3-a2b5-24c5b1c04a0e`) lines 19-40 [crates/gsqz/config.yaml:19-40]
+  - Signature: `pytest:`
+  - Purpose: Indexed property `pytest` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:19-40]
+- `match` (property) component `match [property]` (`b79b771e-8eb0-5e6a-8434-f402b4e55c8e`) lines 20-20 [crates/gsqz/config.yaml:20]
+  - Signature: `match: '\b(?:pytest|py\.test)\b'`
+  - Purpose: Indexed property `match` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:20]
+- `steps` (property) component `steps [property]` (`79708512-0b9e-5073-92d0-281e1fb7ce2c`) lines 21-40 [crates/gsqz/config.yaml:21-40]
+  - Signature: `steps:`
+  - Purpose: Indexed property `steps` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:21-40]
+- `match_output` (property) component `match_output [property]` (`af4b6a83-b974-5282-8fb9-749135f01e0f`) lines 22-26 [crates/gsqz/config.yaml:22-26]
+  - Signature: `match_output:`
+  - Purpose: Indexed property `match_output` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:22-26]
+- `rules` (property) component `rules [property]` (`26dd0bcb-b2dc-567f-a0a7-19cf74cc1f74`) lines 23-26 [crates/gsqz/config.yaml:23-26]
+  - Signature: `rules:`
+  - Purpose: Indexed property `rules` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:23-26]
+- `pattern` (property) component `pattern [property]` (`848bf657-5d0a-56ba-95e6-b0b1f1cfcd13`) lines 24-24 [crates/gsqz/config.yaml:24]
+  - Signature: `pattern: 'passed'`
+  - Purpose: Indexed property `pattern` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:24]
+- `unless` (property) component `unless [property]` (`32f8057e-c668-50a1-8302-4f6ba6d1670b`) lines 25-25 [crates/gsqz/config.yaml:25]
+  - Signature: `unless: 'FAILED|ERROR|error'`
+  - Purpose: Indexed property `unless` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:25]
+- `message` (property) component `message [property]` (`48c35eab-92a1-5dbd-a43e-8ca0bdb69304`) lines 26-26 [crates/gsqz/config.yaml:26]
+  - Signature: `message: 'All tests passed.'`
+  - Purpose: Indexed property `message` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:26]
+- `filter_lines` (property) component `filter_lines [property]` (`7b100d83-05b0-5ccc-b372-834f2fb3d3c4`) lines 27-38 [crates/gsqz/config.yaml:27-38]
+  - Signature: `filter_lines:`
+  - Purpose: Indexed property `filter_lines` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:27-38]
+- `patterns` (property) component `patterns [property]` (`823a0b93-5cc0-5456-bdd4-01ac4e2c7246`) lines 28-38 [crates/gsqz/config.yaml:28-38]
+  - Signature: `patterns:`
+  - Purpose: Indexed property `patterns` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:28-38]
+- `group_lines` (property) component `group_lines [property]` (`b384d393-fb8a-5dac-87a9-b2788d8210da`) lines 39-40 [crates/gsqz/config.yaml:39-40]
+  - Signature: `group_lines:`
+  - Purpose: Indexed property `group_lines` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:39-40]
+- `mode` (property) component `mode [property]` (`8abac81f-5e5d-5454-87db-13f0b1e49e37`) lines 40-40 [crates/gsqz/config.yaml:40]
+  - Signature: `mode: pytest_failures`
+  - Purpose: Indexed property `mode` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:40]
+- `cargo-test` (property) component `cargo-test [property]` (`432808e0-08ab-5833-acc8-5a32fc8796a4`) lines 42-58 [crates/gsqz/config.yaml:42-58]
+  - Signature: `cargo-test:`
+  - Purpose: Indexed property `cargo-test` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:42-58]
+- `match` (property) component `match [property]` (`35aba420-cac5-5ff4-9404-9bb0292b71ba`) lines 43-43 [crates/gsqz/config.yaml:43]
+  - Signature: `match: '\bcargo\s+test\b'`
+  - Purpose: Indexed property `match` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:43]
+- `steps` (property) component `steps [property]` (`c327e359-6ee6-52e6-ba58-a2d03b7f5b46`) lines 44-58 [crates/gsqz/config.yaml:44-58]
+  - Signature: `steps:`
+  - Purpose: Indexed property `steps` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:44-58]
+- `match_output` (property) component `match_output [property]` (`55ec5c27-b836-57d6-9b18-43c49985a48b`) lines 45-49 [crates/gsqz/config.yaml:45-49]
+  - Signature: `match_output:`
+  - Purpose: Indexed property `match_output` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:45-49]
+- `rules` (property) component `rules [property]` (`3d167ffe-d1dd-552f-8922-4c46d7aca1c3`) lines 46-49 [crates/gsqz/config.yaml:46-49]
+  - Signature: `rules:`
+  - Purpose: Indexed property `rules` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:46-49]
+- `pattern` (property) component `pattern [property]` (`4b12dda4-885b-5f94-b62f-e19697cf5913`) lines 47-47 [crates/gsqz/config.yaml:47]
+  - Signature: `pattern: 'test result: ok\.'`
+  - Purpose: Indexed property `pattern` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:47]
+- `unless` (property) component `unless [property]` (`5ebf64c0-5833-5a5a-92f0-85f8f267f69a`) lines 48-48 [crates/gsqz/config.yaml:48]
+  - Signature: `unless: 'FAILED|panicked'`
+  - Purpose: Indexed property `unless` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:48]
+- `message` (property) component `message [property]` (`2c7edb9a-c83c-5b6e-9658-2d4d94aa8f81`) lines 49-49 [crates/gsqz/config.yaml:49]
+  - Signature: `message: 'All tests passed.'`
+  - Purpose: Indexed property `message` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:49]
+- `filter_lines` (property) component `filter_lines [property]` (`73b078e1-21b6-5c54-9c3b-e790e31b5463`) lines 50-56 [crates/gsqz/config.yaml:50-56]
+  - Signature: `filter_lines:`
+  - Purpose: Indexed property `filter_lines` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:50-56]
+- `patterns` (property) component `patterns [property]` (`c269fa14-e158-518e-a97c-0e8bf4cad501`) lines 51-56 [crates/gsqz/config.yaml:51-56]
+  - Signature: `patterns:`
+  - Purpose: Indexed property `patterns` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:51-56]
+- `group_lines` (property) component `group_lines [property]` (`8cf48d4e-6dd7-5ce9-84e4-9cade01ab4b5`) lines 57-58 [crates/gsqz/config.yaml:57-58]
+  - Signature: `group_lines:`
+  - Purpose: Indexed property `group_lines` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:57-58]
+- `mode` (property) component `mode [property]` (`15116bed-66e4-53a7-8b26-98625f408ba6`) lines 58-58 [crates/gsqz/config.yaml:58]
+  - Signature: `mode: test_failures`
+  - Purpose: Indexed property `mode` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:58]
+- `generic-test` (property) component `generic-test [property]` (`23597bc6-0f4c-5433-857d-2b5194eba698`) lines 60-77 [crates/gsqz/config.yaml:60-77]
+  - Signature: `generic-test:`
+  - Purpose: Indexed property `generic-test` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:60-77]
+- `match` (property) component `match [property]` (`d5be92dd-72c5-50e1-95b6-f636d06a8516`) lines 61-61 [crates/gsqz/config.yaml:61]
+  - Signature: `match: '\b(?:npm\s+test|vitest|jest|mocha|go\s+test)\b'`
+  - Purpose: Indexed property `match` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:61]
+- `steps` (property) component `steps [property]` (`b1407540-bcaa-5862-8961-e85dd015e951`) lines 62-77 [crates/gsqz/config.yaml:62-77]
+  - Signature: `steps:`
+  - Purpose: Indexed property `steps` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:62-77]
+- `match_output` (property) component `match_output [property]` (`282e2b79-ae7c-522b-8c17-ddecd0a3801b`) lines 63-67 [crates/gsqz/config.yaml:63-67]
+  - Signature: `match_output:`
+  - Purpose: Indexed property `match_output` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:63-67]
+- `rules` (property) component `rules [property]` (`5a3a3f7f-8e7d-5cb3-b038-c47bffde0135`) lines 64-67 [crates/gsqz/config.yaml:64-67]
+  - Signature: `rules:`
+  - Purpose: Indexed property `rules` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:64-67]
+- `pattern` (property) component `pattern [property]` (`138b6249-4a30-5822-9b2c-8648239e9b3f`) lines 65-65 [crates/gsqz/config.yaml:65]
+  - Signature: `pattern: '(?:Tests?:.*\d+ passed|PASS|ok\s+\d)'`
+  - Purpose: Indexed property `pattern` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:65]
+- `unless` (property) component `unless [property]` (`d8fb3c61-3ec1-5c28-b9a8-56405630a80c`) lines 66-66 [crates/gsqz/config.yaml:66]
+  - Signature: `unless: '(?:FAIL|ERROR|failed)'`
+  - Purpose: Indexed property `unless` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:66]
+- `message` (property) component `message [property]` (`7bc5c3d0-eaf3-582a-b91f-26aa744bde90`) lines 67-67 [crates/gsqz/config.yaml:67]
+  - Signature: `message: 'All tests passed.'`
+  - Purpose: Indexed property `message` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:67]
+- `filter_lines` (property) component `filter_lines [property]` (`39e90a21-0086-57ae-9b0d-a5c7fb55086b`) lines 68-73 [crates/gsqz/config.yaml:68-73]
+  - Signature: `filter_lines:`
+  - Purpose: Indexed property `filter_lines` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:68-73]
+- `patterns` (property) component `patterns [property]` (`17b074d6-5eba-51fc-82fe-1fb5cf6061d8`) lines 69-73 [crates/gsqz/config.yaml:69-73]
+  - Signature: `patterns:`
+  - Purpose: Indexed property `patterns` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:69-73]
+- `group_lines` (property) component `group_lines [property]` (`a90d71b8-7cd8-5ff4-84ad-b75b841efbe7`) lines 74-77 [crates/gsqz/config.yaml:74-77]
+  - Signature: `group_lines:`
+  - Purpose: Indexed property `group_lines` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:74-77]
+- `mode` (property) component `mode [property]` (`f473e36b-0a10-518c-8867-916b8b7b562d`) lines 75-75 [crates/gsqz/config.yaml:75]
+  - Signature: `mode: test_failures`
+  - Purpose: Indexed property `mode` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:75]
+- `python-lint` (property) component `python-lint [property]` (`5921e8c8-7f97-5007-bb81-be1ee8f6b0f9`) lines 78-86 [crates/gsqz/config.yaml:78-86]
+  - Signature: `python-lint:`
+  - Purpose: Indexed property `python-lint` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:78-86]
+- `match` (property) component `match [property]` (`b68c12b8-34fe-5646-9267-09fb5bcc2a3b`) lines 79-79 [crates/gsqz/config.yaml:79]
+  - Signature: `match: '\b(?:ruff|mypy|pylint)\b'`
+  - Purpose: Indexed property `match` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:79]
+- `steps` (property) component `steps [property]` (`42a1970b-7a09-51c7-afe1-f6e866474df1`) lines 80-86 [crates/gsqz/config.yaml:80-86]
+  - Signature: `steps:`
+  - Purpose: Indexed property `steps` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:80-86]
+- `dedup` (property) component `dedup [property]` (`adf7e213-d7ac-55bf-8541-76fdf1c43b86`) lines 81-81 [crates/gsqz/config.yaml:81]
+  - Signature: `dedup: {}`
+  - Purpose: Indexed property `dedup` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:81]
+- `group_lines` (property) component `group_lines [property]` (`f119b7ba-5024-5295-bad4-47e91888fc39`) lines 82-83 [crates/gsqz/config.yaml:82-83]
+  - Signature: `group_lines:`
+  - Purpose: Indexed property `group_lines` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:82-83]
+- `mode` (property) component `mode [property]` (`2e34c11b-7336-59d9-8c06-3282b03b31e5`) lines 83-83 [crates/gsqz/config.yaml:83]
+  - Signature: `mode: lint_by_rule`
+  - Purpose: Indexed property `mode` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:83]
+- `truncate` (property) component `truncate [property]` (`e213d0ac-279d-5c6b-81ad-70e11312d609`) lines 84-86 [crates/gsqz/config.yaml:84-86]
+  - Signature: `truncate:`
+  - Purpose: Indexed property `truncate` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:84-86]
+- `head` (property) component `head [property]` (`32bcc911-f5df-51e4-959d-e2f2d32b438f`) lines 85-85 [crates/gsqz/config.yaml:85]
+  - Signature: `head: 60`
+  - Purpose: Indexed property `head` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:85]
+- `tail` (property) component `tail [property]` (`d5d145db-e06f-57fc-8d1a-0097657c9e60`) lines 86-86 [crates/gsqz/config.yaml:86]
+  - Signature: `tail: 10`
+  - Purpose: Indexed property `tail` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:86]
+- `js-lint` (property) component `js-lint [property]` (`9b3b3507-c5d4-558c-9ca3-2036092d0c9c`) lines 88-96 [crates/gsqz/config.yaml:88-96]
+  - Signature: `js-lint:`
+  - Purpose: Indexed property `js-lint` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:88-96]
+- `match` (property) component `match [property]` (`440f4254-faa7-5b2e-bda8-131e72085b57`) lines 89-89 [crates/gsqz/config.yaml:89]
+  - Signature: `match: '\b(?:eslint|tsc|biome|oxlint)\b'`
+  - Purpose: Indexed property `match` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:89]
+- `steps` (property) component `steps [property]` (`13153b38-084f-5bb7-927f-cafaa6da9078`) lines 90-96 [crates/gsqz/config.yaml:90-96]
+  - Signature: `steps:`
+  - Purpose: Indexed property `steps` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:90-96]
+- `dedup` (property) component `dedup [property]` (`a2f36f1b-381c-551a-a2d0-e01136693988`) lines 91-91 [crates/gsqz/config.yaml:91]
+  - Signature: `dedup: {}`
+  - Purpose: Indexed property `dedup` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:91]
+- `group_lines` (property) component `group_lines [property]` (`32f39506-f4e1-5927-a42a-b1b0b16cac55`) lines 92-93 [crates/gsqz/config.yaml:92-93]
+  - Signature: `group_lines:`
+  - Purpose: Indexed property `group_lines` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:92-93]
+- `mode` (property) component `mode [property]` (`f3395051-05bb-5bbe-990b-4fdfa9d3fdf7`) lines 93-93 [crates/gsqz/config.yaml:93]
+  - Signature: `mode: lint_by_rule`
+  - Purpose: Indexed property `mode` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:93]
+- `truncate` (property) component `truncate [property]` (`3f48750d-9b8d-5660-9aec-238ebf879313`) lines 94-96 [crates/gsqz/config.yaml:94-96]
+  - Signature: `truncate:`
+  - Purpose: Indexed property `truncate` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:94-96]
+- `head` (property) component `head [property]` (`225424f2-90fc-5132-8bdb-ec4af947f1c4`) lines 95-95 [crates/gsqz/config.yaml:95]
+  - Signature: `head: 60`
+  - Purpose: Indexed property `head` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:95]
+- `tail` (property) component `tail [property]` (`ab35ed6e-d8d1-5997-9bd3-ce6e599f8b6d`) lines 96-96 [crates/gsqz/config.yaml:96]
+  - Signature: `tail: 10`
+  - Purpose: Indexed property `tail` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:96]
+- `go-lint` (property) component `go-lint [property]` (`6485c710-40e1-5334-a475-d88265a14aa5`) lines 98-108 [crates/gsqz/config.yaml:98-108]
+  - Signature: `go-lint:`
+  - Purpose: Indexed property `go-lint` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:98-108]
+- `match` (property) component `match [property]` (`3b548fdd-1c6b-51f6-9c29-01a01c20302a`) lines 99-99 [crates/gsqz/config.yaml:99]
+  - Signature: `match: '\b(?:golangci-lint|staticcheck)\b'`
+  - Purpose: Indexed property `match` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:99]
+- `steps` (property) component `steps [property]` (`712da4f8-6633-5004-be70-0411f2b7523d`) lines 100-108 [crates/gsqz/config.yaml:100-108]
+  - Signature: `steps:`
+  - Purpose: Indexed property `steps` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:100-108]
+- `dedup` (property) component `dedup [property]` (`8df3dfb4-588d-5c4b-b16b-c91d008a3602`) lines 101-101 [crates/gsqz/config.yaml:101]
+  - Signature: `dedup: {}`
+  - Purpose: Indexed property `dedup` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:101]
+- `group_lines` (property) component `group_lines [property]` (`bb1432f5-ecc0-50b5-bbc6-b994be0817c9`) lines 102-103 [crates/gsqz/config.yaml:102-103]
+  - Signature: `group_lines:`
+  - Purpose: Indexed property `group_lines` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:102-103]
+- `mode` (property) component `mode [property]` (`e3d356b3-34ee-5ea7-930e-73ae1203d0a7`) lines 103-103 [crates/gsqz/config.yaml:103]
+  - Signature: `mode: lint_by_rule`
+  - Purpose: Indexed property `mode` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:103]
+- `truncate` (property) component `truncate [property]` (`5f095f7b-760d-5ebf-83b8-252cd8520588`) lines 104-108 [crates/gsqz/config.yaml:104-108]
+  - Signature: `truncate:`
+  - Purpose: Indexed property `truncate` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:104-108]
+- `head` (property) component `head [property]` (`2a33eeff-489b-5216-a32b-73c9b3316f63`) lines 105-105 [crates/gsqz/config.yaml:105]
+  - Signature: `head: 60`
+  - Purpose: Indexed property `head` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:105]
+- `tail` (property) component `tail [property]` (`7c8877eb-5d85-518b-bff1-907c04fb7df7`) lines 106-106 [crates/gsqz/config.yaml:106]
+  - Signature: `tail: 10`
+  - Purpose: Indexed property `tail` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:106]
+- `ls-tree` (property) component `ls-tree [property]` (`93a4d6df-f900-5c6d-bcdd-ced7e60a6d39`) lines 109-116 [crates/gsqz/config.yaml:109-116]
+  - Signature: `ls-tree:`
+  - Purpose: Indexed property `ls-tree` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:109-116]
+- `match` (property) component `match [property]` (`6848869b-4df1-546b-927e-5fbe55caf02f`) lines 110-110 [crates/gsqz/config.yaml:110]
+  - Signature: `match: '\b(?:ls|tree)\b'`
+  - Purpose: Indexed property `match` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:110]
+- `steps` (property) component `steps [property]` (`9bf0c218-645f-5419-b2c5-f367ecb2681e`) lines 111-116 [crates/gsqz/config.yaml:111-116]
+  - Signature: `steps:`
+  - Purpose: Indexed property `steps` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:111-116]
+- `group_lines` (property) component `group_lines [property]` (`df3b265a-805d-5b4f-b2b1-ca576c981e81`) lines 112-113 [crates/gsqz/config.yaml:112-113]
+  - Signature: `group_lines:`
+  - Purpose: Indexed property `group_lines` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:112-113]
+- `mode` (property) component `mode [property]` (`65c21475-f7d6-573b-86fa-7423c91d1492`) lines 113-113 [crates/gsqz/config.yaml:113]
+  - Signature: `mode: by_extension`
+  - Purpose: Indexed property `mode` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:113]
+- `truncate` (property) component `truncate [property]` (`df0feb1d-a6c7-5a9f-a822-cf55250590a3`) lines 114-116 [crates/gsqz/config.yaml:114-116]
+  - Signature: `truncate:`
+  - Purpose: Indexed property `truncate` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:114-116]
+- `head` (property) component `head [property]` (`c81aaeaf-ce2a-55f3-9076-9dbc8f14f6fd`) lines 115-115 [crates/gsqz/config.yaml:115]
+  - Signature: `head: 40`
+  - Purpose: Indexed property `head` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:115]
+- `tail` (property) component `tail [property]` (`6c805771-c56e-5a30-aef9-7ec17e72ea2e`) lines 116-116 [crates/gsqz/config.yaml:116]
+  - Signature: `tail: 10`
+  - Purpose: Indexed property `tail` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:116]
+- `find` (property) component `find [property]` (`f56a512e-763f-5bee-83ef-3de3a30e1cde`) lines 118-125 [crates/gsqz/config.yaml:118-125]
+  - Signature: `find:`
+  - Purpose: Indexed property `find` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:118-125]
+- `match` (property) component `match [property]` (`aa827c24-9bc5-5d56-8ad3-44fe52126150`) lines 119-119 [crates/gsqz/config.yaml:119]
+  - Signature: `match: '\bfind\b'`
+  - Purpose: Indexed property `match` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:119]
+- `steps` (property) component `steps [property]` (`b8d3d9b1-55a2-5cad-8ac0-d2c704c8a0f4`) lines 120-125 [crates/gsqz/config.yaml:120-125]
+  - Signature: `steps:`
+  - Purpose: Indexed property `steps` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:120-125]
+- `group_lines` (property) component `group_lines [property]` (`e5068cc3-f193-51ad-993c-eec87f0a9d98`) lines 121-122 [crates/gsqz/config.yaml:121-122]
+  - Signature: `group_lines:`
+  - Purpose: Indexed property `group_lines` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:121-122]
+- `mode` (property) component `mode [property]` (`fa8d3ce9-8744-5b9d-8414-deba69fabd04`) lines 122-122 [crates/gsqz/config.yaml:122]
+  - Signature: `mode: by_directory`
+  - Purpose: Indexed property `mode` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:122]
+- `truncate` (property) component `truncate [property]` (`7efabbd0-371d-5b8f-9ce3-9cbbbf72d665`) lines 123-125 [crates/gsqz/config.yaml:123-125]
+  - Signature: `truncate:`
+  - Purpose: Indexed property `truncate` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:123-125]
+- `head` (property) component `head [property]` (`3aee3876-8c6d-5693-b7c7-8db0c96ce154`) lines 124-124 [crates/gsqz/config.yaml:124]
+  - Signature: `head: 40`
+  - Purpose: Indexed property `head` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:124]
+- `tail` (property) component `tail [property]` (`624dd569-8e04-5fc6-89d1-6c55ae61a049`) lines 125-125 [crates/gsqz/config.yaml:125]
+  - Signature: `tail: 10`
+  - Purpose: Indexed property `tail` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:125]
+- `grep` (property) component `grep [property]` (`7ecec7d6-42bd-53f5-a8ad-a1d59f28c96b`) lines 127-136 [crates/gsqz/config.yaml:127-136]
+  - Signature: `grep:`
+  - Purpose: Indexed property `grep` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:127-136]
+- `match` (property) component `match [property]` (`00a70225-8a77-5a8f-b512-24822e867ee6`) lines 128-128 [crates/gsqz/config.yaml:128]
+  - Signature: `match: '\b(?:grep|ripgrep)\b'`
+  - Purpose: Indexed property `match` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:128]
+- `steps` (property) component `steps [property]` (`b3fe3b8b-b866-5d06-92b7-62ac1126bc88`) lines 129-136 [crates/gsqz/config.yaml:129-136]
+  - Signature: `steps:`
+  - Purpose: Indexed property `steps` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:129-136]
+- `group_lines` (property) component `group_lines [property]` (`713e29c3-f384-535e-ad65-d1bf3b83768d`) lines 130-131 [crates/gsqz/config.yaml:130-131]
+  - Signature: `group_lines:`
+  - Purpose: Indexed property `group_lines` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:130-131]
+- `mode` (property) component `mode [property]` (`aa2901b7-940c-5e30-93d5-f47825fe2b99`) lines 131-131 [crates/gsqz/config.yaml:131]
+  - Signature: `mode: by_file`
+  - Purpose: Indexed property `mode` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:131]
+- `truncate` (property) component `truncate [property]` (`89a0efa3-1591-5dcb-bf5e-73db8ef5e97c`) lines 132-136 [crates/gsqz/config.yaml:132-136]
+  - Signature: `truncate:`
+  - Purpose: Indexed property `truncate` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:132-136]
+- `head` (property) component `head [property]` (`10383766-8eb8-5e93-8797-2b4eccca999c`) lines 133-133 [crates/gsqz/config.yaml:133]
+  - Signature: `head: 40`
+  - Purpose: Indexed property `head` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:133]
+- `tail` (property) component `tail [property]` (`e913a12d-0697-59a8-a154-168c6a08cf57`) lines 134-134 [crates/gsqz/config.yaml:134]
+  - Signature: `tail: 10`
+  - Purpose: Indexed property `tail` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:134]
+- `build` (property) component `build [property]` (`9ed17d4d-3145-518b-a183-9efcdb679726`) lines 137-158 [crates/gsqz/config.yaml:137-158]
+  - Signature: `build:`
+  - Purpose: Indexed property `build` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:137-158]
+- `match` (property) component `match [property]` (`e5fdb111-a260-5f0f-b0db-5db689366c73`) lines 138-138 [crates/gsqz/config.yaml:138]
+  - Signature: `match: '\b(?:cargo\s+build|go\s+build|next\s+build|webpack|make)\b'`
+  - Purpose: Indexed property `match` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:138]
+- `steps` (property) component `steps [property]` (`e09d6d66-41bb-5cd4-8e1e-2206d99c5284`) lines 139-158 [crates/gsqz/config.yaml:139-158]
+  - Signature: `steps:`
+  - Purpose: Indexed property `steps` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:139-158]
+- `replace` (property) component `replace [property]` (`9ea45bc9-e233-5e51-9d4c-86c3bb29854c`) lines 140-143 [crates/gsqz/config.yaml:140-143]
+  - Signature: `replace:`
+  - Purpose: Indexed property `replace` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:140-143]
+- `rules` (property) component `rules [property]` (`b01703e9-2093-5d7f-95af-4f6b2aabb369`) lines 141-143 [crates/gsqz/config.yaml:141-143]
+  - Signature: `rules:`
+  - Purpose: Indexed property `rules` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:141-143]
+- `pattern` (property) component `pattern [property]` (`1e4ade45-ded3-5d09-8f15-9fe6c2e2dbe4`) lines 142-142 [crates/gsqz/config.yaml:142]
+  - Signature: `pattern: '/[^\s]+/(\w+\.(?:rs|go|js|ts|c|cpp|java))'`
+  - Purpose: Indexed property `pattern` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:142]
+- `replacement` (property) component `replacement [property]` (`20a96029-261f-51c5-b8bf-01fcf789b783`) lines 143-143 [crates/gsqz/config.yaml:143]
+  - Signature: `replacement: '$1'`
+  - Purpose: Indexed property `replacement` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:143]
+- `filter_lines` (property) component `filter_lines [property]` (`fca78b0b-5fb7-5f71-9c72-c449339a5eb6`) lines 144-151 [crates/gsqz/config.yaml:144-151]
+  - Signature: `filter_lines:`
+  - Purpose: Indexed property `filter_lines` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:144-151]
+- `patterns` (property) component `patterns [property]` (`46df94f8-0356-58e2-8736-bb1a3181e6fd`) lines 145-151 [crates/gsqz/config.yaml:145-151]
+  - Signature: `patterns:`
+  - Purpose: Indexed property `patterns` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:145-151]
+- `group_lines` (property) component `group_lines [property]` (`4e7d9cef-3085-58f5-9852-d1ee6cc147d6`) lines 152-153 [crates/gsqz/config.yaml:152-153]
+  - Signature: `group_lines:`
+  - Purpose: Indexed property `group_lines` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:152-153]
+- `mode` (property) component `mode [property]` (`988fa3eb-ddd6-5a21-b96c-f8af38a9c598`) lines 153-153 [crates/gsqz/config.yaml:153]
+  - Signature: `mode: errors_warnings`
+  - Purpose: Indexed property `mode` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:153]
+- `truncate` (property) component `truncate [property]` (`a2214e06-6d26-59e4-b32c-03b58b048358`) lines 154-158 [crates/gsqz/config.yaml:154-158]
+  - Signature: `truncate:`
+  - Purpose: Indexed property `truncate` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:154-158]
+- `head` (property) component `head [property]` (`a921181d-748b-55e5-8127-40f3e09ad85a`) lines 155-155 [crates/gsqz/config.yaml:155]
+  - Signature: `head: 30`
+  - Purpose: Indexed property `head` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:155]
+- `tail` (property) component `tail [property]` (`456fde71-5016-53bf-a728-7f69fc706f8b`) lines 156-156 [crates/gsqz/config.yaml:156]
+  - Signature: `tail: 10`
+  - Purpose: Indexed property `tail` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:156]
+- `package-mgmt` (property) component `package-mgmt [property]` (`641ed4be-35f0-5cd2-a730-e7718e8b9d16`) lines 159-175 [crates/gsqz/config.yaml:159-175]
+  - Signature: `package-mgmt:`
+  - Purpose: Indexed property `package-mgmt` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:159-175]
+- `match` (property) component `match [property]` (`50aedbc1-fcff-525f-8489-1a42aa185ae9`) lines 160-160 [crates/gsqz/config.yaml:160]
+  - Signature: `match: '\b(?:pip\s+(?:install|list)|npm\s+(?:install|ls|list)|uv\s+(?:pip|sync|add))\b'`
+  - Purpose: Indexed property `match` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:160]
+- `steps` (property) component `steps [property]` (`2021f00f-d7e4-5adf-a887-47a41bde73a9`) lines 161-175 [crates/gsqz/config.yaml:161-175]
+  - Signature: `steps:`
+  - Purpose: Indexed property `steps` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:161-175]
+- `filter_lines` (property) component `filter_lines [property]` (`4f84ca6a-73a3-5fa7-a336-279368ecafcb`) lines 162-170 [crates/gsqz/config.yaml:162-170]
+  - Signature: `filter_lines:`
+  - Purpose: Indexed property `filter_lines` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:162-170]
+- `patterns` (property) component `patterns [property]` (`ad641c73-8272-5fc1-9ca7-d35bb7b944d0`) lines 163-170 [crates/gsqz/config.yaml:163-170]
+  - Signature: `patterns:`
+  - Purpose: Indexed property `patterns` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:163-170]
+- `truncate` (property) component `truncate [property]` (`1d03481a-b4c4-556d-aa1f-8a0b9122f2dc`) lines 171-175 [crates/gsqz/config.yaml:171-175]
+  - Signature: `truncate:`
+  - Purpose: Indexed property `truncate` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:171-175]
+- `head` (property) component `head [property]` (`34bde704-be04-5d67-bccb-7e5c931f297d`) lines 172-172 [crates/gsqz/config.yaml:172]
+  - Signature: `head: 10`
+  - Purpose: Indexed property `head` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:172]
+- `tail` (property) component `tail [property]` (`79ff21a2-6128-5ae6-adf7-96f4b4be5343`) lines 173-173 [crates/gsqz/config.yaml:173]
+  - Signature: `tail: 10`
+  - Purpose: Indexed property `tail` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:173]
+- `docker-list` (property) component `docker-list [property]` (`26fa0ac8-6ae6-51cb-b20b-98ac46c65ab8`) lines 176-181 [crates/gsqz/config.yaml:176-181]
+  - Signature: `docker-list:`
+  - Purpose: Indexed property `docker-list` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:176-181]
+- `match` (property) component `match [property]` (`77468b93-6563-5e54-9c2b-d835b4014bba`) lines 177-177 [crates/gsqz/config.yaml:177]
+  - Signature: `match: '\bdocker\s+(?:ps|images)\b'`
+  - Purpose: Indexed property `match` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:177]
+- `steps` (property) component `steps [property]` (`2b4d4021-c135-5f64-8a53-a292b6219685`) lines 178-181 [crates/gsqz/config.yaml:178-181]
+  - Signature: `steps:`
+  - Purpose: Indexed property `steps` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:178-181]
+- `truncate` (property) component `truncate [property]` (`386f97e8-78b6-5d39-8faa-9e0e6e65994d`) lines 179-181 [crates/gsqz/config.yaml:179-181]
+  - Signature: `truncate:`
+  - Purpose: Indexed property `truncate` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:179-181]
+- `head` (property) component `head [property]` (`a8ba2c23-1ac8-56b0-bcec-0a18a1868050`) lines 180-180 [crates/gsqz/config.yaml:180]
+  - Signature: `head: 30`
+  - Purpose: Indexed property `head` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:180]
+- `tail` (property) component `tail [property]` (`83f334d1-e2c9-5f5d-b05e-25663c1adc9a`) lines 181-181 [crates/gsqz/config.yaml:181]
+  - Signature: `tail: 5`
+  - Purpose: Indexed property `tail` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:181]
+- `container-logs` (property) component `container-logs [property]` (`1c4838d2-faf2-52b3-82a0-77a73a497587`) lines 183-191 [crates/gsqz/config.yaml:183-191]
+  - Signature: `container-logs:`
+  - Purpose: Indexed property `container-logs` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:183-191]
+- `match` (property) component `match [property]` (`95195ef4-0cda-5075-bf41-ed5c0fde1d76`) lines 184-184 [crates/gsqz/config.yaml:184]
+  - Signature: `match: '\b(?:docker\s+logs|kubectl\s+logs)\b'`
+  - Purpose: Indexed property `match` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:184]
+- `steps` (property) component `steps [property]` (`ad315e7d-37ea-5b84-8385-8307bf89f639`) lines 185-191 [crates/gsqz/config.yaml:185-191]
+  - Signature: `steps:`
+  - Purpose: Indexed property `steps` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:185-191]
+- `dedup` (property) component `dedup [property]` (`3b304cd0-d33c-5a81-b6a2-3d9a75c1e989`) lines 186-186 [crates/gsqz/config.yaml:186]
+  - Signature: `dedup: {}`
+  - Purpose: Indexed property `dedup` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:186]
+- `truncate` (property) component `truncate [property]` (`0d1e1adf-ab66-55dc-99c5-5e396ce5eb46`) lines 187-191 [crates/gsqz/config.yaml:187-191]
+  - Signature: `truncate:`
+  - Purpose: Indexed property `truncate` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:187-191]
+- `head` (property) component `head [property]` (`cd8848ef-c579-53da-9088-6f37d447eb70`) lines 188-188 [crates/gsqz/config.yaml:188]
+  - Signature: `head: 30`
+  - Purpose: Indexed property `head` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:188]
+- `tail` (property) component `tail [property]` (`d3fa5527-d7e3-5140-983f-477c3475e3d2`) lines 189-189 [crates/gsqz/config.yaml:189]
+  - Signature: `tail: 20`
+  - Purpose: Indexed property `tail` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:189]
+- `download` (property) component `download [property]` (`3d71b4fb-b2bc-54b7-8e9a-dd15d7969fc6`) lines 192-204 [crates/gsqz/config.yaml:192-204]
+  - Signature: `download:`
+  - Purpose: Indexed property `download` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:192-204]
+- `match` (property) component `match [property]` (`4c04e5a6-e14b-5a34-aa92-3f4224f5559f`) lines 193-193 [crates/gsqz/config.yaml:193]
+  - Signature: `match: '\b(?:wget|curl)\b'`
+  - Purpose: Indexed property `match` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:193]
+- `steps` (property) component `steps [property]` (`9da98587-f0da-5232-8be5-4111674e9ab9`) lines 194-204 [crates/gsqz/config.yaml:194-204]
+  - Signature: `steps:`
+  - Purpose: Indexed property `steps` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:194-204]
+- `filter_lines` (property) component `filter_lines [property]` (`966f4306-1a9a-5dee-8f39-d14b9039e569`) lines 195-201 [crates/gsqz/config.yaml:195-201]
+  - Signature: `filter_lines:`
+  - Purpose: Indexed property `filter_lines` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:195-201]
+- `patterns` (property) component `patterns [property]` (`2afc0f63-4f3c-5191-bfae-8ce9d75e5ed1`) lines 196-201 [crates/gsqz/config.yaml:196-201]
+  - Signature: `patterns:`
+  - Purpose: Indexed property `patterns` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:196-201]
+- `truncate` (property) component `truncate [property]` (`8ce93fb3-cadd-52e1-bfbf-09ea1f30e84f`) lines 202-204 [crates/gsqz/config.yaml:202-204]
+  - Signature: `truncate:`
+  - Purpose: Indexed property `truncate` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:202-204]
+- `head` (property) component `head [property]` (`cfdb5e8c-ea20-50ec-9570-0d6207e93155`) lines 203-203 [crates/gsqz/config.yaml:203]
+  - Signature: `head: 10`
+  - Purpose: Indexed property `head` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:203]
+- `tail` (property) component `tail [property]` (`c405bb07-ca6f-5b29-9d73-45d5698976c8`) lines 204-204 [crates/gsqz/config.yaml:204]
+  - Signature: `tail: 10`
+  - Purpose: Indexed property `tail` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:204]
+- `fallback` (property) component `fallback [property]` (`57ded2e2-454c-55a1-9d0a-b485041d9bb7`) lines 206-213 [crates/gsqz/config.yaml:206-213]
+  - Signature: `fallback:`
+  - Purpose: Indexed property `fallback` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:206-213]
+- `steps` (property) component `steps [property]` (`0beabbb1-145d-5f19-87cf-df16f00e5734`) lines 207-213 [crates/gsqz/config.yaml:207-213]
+  - Signature: `steps:`
+  - Purpose: Indexed property `steps` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:207-213]
+- `truncate` (property) component `truncate [property]` (`247542a1-27f6-5977-9955-e6efa43c0ed8`) lines 208-213 [crates/gsqz/config.yaml:208-213]
+  - Signature: `truncate:`
+  - Purpose: Indexed property `truncate` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:208-213]
+- `head` (property) component `head [property]` (`c97de81c-d6a3-57ff-91ec-f38bab5503e2`) lines 209-209 [crates/gsqz/config.yaml:209]
+  - Signature: `head: 20`
+  - Purpose: Indexed property `head` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:209]
+- `tail` (property) component `tail [property]` (`e5ddd6ec-fd15-5fe0-add2-7e837bbb3c0e`) lines 210-210 [crates/gsqz/config.yaml:210]
+  - Signature: `tail: 20`
+  - Purpose: Indexed property `tail` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:210]
+- `excluded_commands` (property) component `excluded_commands [property]` (`888ee2e6-03bb-5e75-a7df-dee42220d4fc`) lines 214-214 [crates/gsqz/config.yaml:214]
+  - Signature: `excluded_commands: []`
+  - Purpose: Indexed property `excluded_commands` in `crates/gsqz/config.yaml`. [crates/gsqz/config.yaml:214]
+
