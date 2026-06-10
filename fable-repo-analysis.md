@@ -28,21 +28,18 @@ Status legend: ✅ done · 🔄 in progress · ⬜ pending
 
 **Verdict: SOLID-WITH-ISSUES.**
 
-gcore is a genuinely well-built foundation crate: every feature gate compiles standalone
-(no-default-features plus each of postgres/falkor/qdrant/indexing/search/graph-analytics/
-local-backend/ai/full individually — all PASS), clippy is clean under `--all-features`, and the
-documented AI ownership split holds mechanically — no `reqwest`/`ureq` reachable from
-`ai_context`/`ai_types` or any always-compiled module; HTTP transport is confined to `ai/`
-(feature `ai`) and `qdrant.rs` (feature `qdrant`). Test density is high (99 tests no-default,
-189 all-features, all passing) with dependency-injected fakes in the right places. Consumers
-delegate properly for search/RRF, postgres, falkor, qdrant, indexing, secrets, and graph
-analytics.
+gcore is a genuinely well-built foundation crate: every remaining datastore/index feature gate
+compiles standalone, clippy is clean under `--all-features`, and the AI daemon-routing layer is
+now required core behavior rather than a hidden optional feature. That matters because the daemon
+probe contract is part of normal CLI routing: no-default-features tests now compile `gcore::ai`
+and cover the live `/api/llm/status` object-shaped `capabilities.text_generate.available`
+payload. Consumers delegate properly for search/RRF, postgres, falkor, qdrant, indexing,
+secrets, AI routing/probing, and graph analytics.
 
-The real problems: an inconsistent `GOBBY_HOME` contract that can make the AI daemon probe and
-the AI daemon POST resolve **different daemon URLs**; a cluster of dead/test-only public API;
-`ureq` wired to the wrong Cargo feature; and three divergent reimplementations of daemon-URL
-resolution in gcode/gsqz that bypass gcore entirely (gsqz never reads bootstrap.yaml at all, so
-a custom `daemon_port` silently breaks its daemon integration).
+The real problems: an inconsistent `GOBBY_HOME` contract can still make older daemon helpers split
+their URL source; a cluster of dead/test-only public API remains; and three divergent
+reimplementations of daemon-URL resolution in gcode/gsqz bypass gcore entirely (gsqz never reads
+bootstrap.yaml at all, so a custom `daemon_port` silently breaks its daemon integration).
 
 `tests/public_boundary.rs` is meaningful for locking feature wiring and gloc's
 `default-features = false` posture, but is string-snippet based (pins exact dep lines including
@@ -456,7 +453,7 @@ Progress log (2026-06-09, continued):
   vault made the daemon sync worker time out on `gcode graph sync-file` for that file repeatedly;
   moved out of the vault. Filed as a finding on large content-only file sync behavior.
 
-Progress log (2026-06-10) — sections AI run completed, e2e battery run, four bugs fixed:
+Progress log (2026-06-10) — sections AI run completed, e2e battery run, daemon route validated:
 
 - **Sections AI run completed** (~2h, 514 pages): 75/75 module overviews and 65/72 architecture
   subsystems carry grounded AI prose with repaired citations; per-symbol purposes come free from
@@ -477,6 +474,17 @@ Progress log (2026-06-10) — sections AI run completed, e2e battery run, four b
   for months since gwiki never initializes a logger (#685 filed); fixed to `LIMIT $limit` (#684).
   Now: `ask --llm --ai direct --require-ai` answers with grounded citations and 969 real call
   edges in context, sole remaining flag the honest `shared_code_graph_truncated`.
+- **Daemon text route ✅ (#694):** after flipping `~/.gobby/gcore.yaml` to `ai.text_generate.routing:
+  auto` with no direct `api_base`/`model`/`api_key`, `gwiki ask --llm --require-ai` resolves
+  `requested_mode: auto`, `route: daemon`, `model: gpt-5.4-mini`; explicit `--ai daemon` reports
+  the same route/model. The auto probe initially failed `config_error` because `gcore::ai` accepted
+  boolean capability fields but the daemon now returns object-shaped status
+  (`capabilities.text_generate.available`). `gcore::ai` is now required core behavior, so the
+  regression runs under `cargo test -p gobby-core --no-default-features`. A scoped
+  `gcode codewiki --out /tmp/codewiki-daemon-test.WAcwql --scope crates/gloc --ai daemon
+  --ai-depth files --verbose --format json` generated 15 pages with `ai_enabled: true`, grounded
+  prose, and citations; the only `degraded: true` marker was the expected non-AI ownership fallback
+  (`codeowners_unavailable`), while file/module/repo/architecture AI pages were non-degraded.
 - **e2e research ◐:** loop machinery verified (search/read/cite steps, budget enforcement,
   structured stop reasons, degradation warnings) but the local reasoning model appends prose
   after its action JSON, so note acceptance stalls (`model_response_invalid: trailing

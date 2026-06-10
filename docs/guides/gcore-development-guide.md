@@ -161,14 +161,15 @@ The crate's default feature set is empty:
 ```toml
 [features]
 default = []
-postgres = ["dep:postgres", "dep:postgres-types", "dep:postgres-openssl", "dep:openssl"]
+postgres = ["dep:postgres", "dep:postgres-types", "dep:postgres-openssl", "dep:openssl", "dep:pbkdf2", "dep:sha2"]
 falkor = ["dep:falkordb", "dep:urlencoding"]
-qdrant = ["dep:reqwest", "dep:urlencoding"]
+qdrant = ["dep:urlencoding"]
 indexing = ["dep:ignore", "dep:sha2"]
 search = []
-local-backend = ["dep:ureq"]
-ai = ["dep:reqwest", "dep:base64", "dep:bytes", "dep:httpdate", "dep:rand", "local-backend", "reqwest/multipart"]
-full = ["postgres", "falkor", "qdrant", "indexing", "search", "ai"]
+graph-analytics = []
+local-backend = []
+ai = []
+full = ["postgres", "falkor", "qdrant", "indexing", "search", "graph-analytics", "ai"]
 ```
 
 Feature rationale:
@@ -177,11 +178,12 @@ Feature rationale:
 |---------|---------|-----------|
 | `postgres` | `postgres`, `postgres-types`, `postgres-openssl`, `openssl` | Hub validation and adapter code are only needed by datastore consumers. Lightweight binaries should not inherit PostgreSQL. |
 | `falkor` | `falkordb`, `urlencoding` | Graph helpers need FalkorDB. `urlencoding` is included because FalkorDB connection URLs must encode passwords safely. |
-| `qdrant` | `reqwest` with `blocking` and `json` | Vector search/storage helpers need HTTP. Other consumers should not pull reqwest. |
+| `qdrant` | Qdrant vector helpers | Vector search/storage helpers use the required HTTP client. |
 | `indexing` | `ignore`, `sha2` | File walking and content hashing are useful for indexing consumers only. |
 | `search` | no extra dependency today | Search fusion contracts are lightweight, but still opt-in so the public surface remains explicit. |
-| `local-backend` | `ureq` | Lightweight HTTP probes for local backend discovery are only needed by consumers that call them. |
-| `ai` | `reqwest`, AI payload helpers, and `local-backend` | AI transport and routing helpers need HTTP clients, local backend discovery, and multipart payload support. |
+| `graph-analytics` | no extra dependency today | In-memory graph analytics remain opt-in so the public surface stays explicit. |
+| `local-backend` | local backend module exposure | Compatibility alias and module gate for consumers such as `gloc`; HTTP probe deps are required by core AI routing. |
+| `ai` | no extra dependency today | Compatibility alias. AI transport, daemon probing, and payload helpers are required core behavior. |
 | `full` | all feature modules | Convenience feature for development and consumers that need the whole foundation layer. |
 
 Every individual feature must compile in isolation. Do not rely on `--all-features` to hide missing feature dependencies.
@@ -223,7 +225,7 @@ Small binaries should keep the default empty feature set unless they directly us
 gobby-core = "0.4.0"
 ```
 
-Resolves against crates.io. The default crate has no datastore dependencies. It will not pull in PostgreSQL, FalkorDB, Qdrant, reqwest, ignore, sha2, tokio, tracing, or anything else heavy unless the consumer selects the matching feature.
+Resolves against crates.io. The default crate has no datastore dependencies. It includes the AI daemon-routing HTTP helpers because text generation is core behavior, but it will not pull in PostgreSQL, FalkorDB, Qdrant-specific surfaces, indexing, tokio, tracing, or datastore adapters unless the consumer selects the matching feature.
 
 ## Adding a New Helper
 
