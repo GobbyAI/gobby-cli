@@ -81,9 +81,12 @@ gwiki --topic rust-async init
 | `inbox/` | Drop zone for files awaiting `collect` |
 | `outputs/` | Exported bundles and reports |
 | `meta/` (+ `meta/health/`) | Health snapshots and vault metadata |
+| `_meta/` | Generator metadata (codewiki/ownership state) |
 | `_index.md` | Wiki index landing page |
 | `raw/INDEX.md` | Manifest of raw sources (drives `refresh`) |
+| `knowledge/INDEX.md`, `code/INDEX.md` | Section index pages |
 | `log.md` | Vault activity log |
+| `.gwiki/scope.json` | Resolved scope identity for the vault |
 
 The `knowledge/sources`, `knowledge/concepts`, and `knowledge/topics`
 subdirectories line up with the three `compile --kind` values.

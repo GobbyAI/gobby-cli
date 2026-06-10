@@ -33,8 +33,14 @@ The generated tree is hierarchical:
 - `code/repo.md` is the repository overview.
 - `code/modules/<module>.md` documents directory/module groups.
 - `code/files/<path>.md` documents individual source files.
+- `code/_architecture.md` is the architecture overview page.
+- `code/_onboarding.md` is the "Start Here" onboarding page.
+- `code/_hotspots.md` reports change hotspots.
+- `code/_changes.md` reports index changes since the previous run.
+- `code/_ownership.md` reports code ownership (git blame derived).
 - `_meta/codewiki.json` records the docs written in the last run for
   incremental regeneration.
+- `_meta/ownership.json` records ownership data for repeat runs.
 
 Documents use `[[wikilink]]` references between repo, module, and file pages.
 Each page includes `provenance:` frontmatter with file paths and line ranges
