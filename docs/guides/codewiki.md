@@ -64,9 +64,19 @@ The generator then builds docs bottom-up:
 4. `repo.md` summarizes the top-level modules and root files.
 
 When `ai.text_generate` is configured, gcode calls the shared
-`text_generate` route for symbol, file, module, and repo prose. Generated text
-is citation-checked before write. Empty or unavailable generation falls back to
-structural AST-only prose.
+`text_generate` route for generated prose. Generated text is citation-checked
+before write. Empty or unavailable generation falls back to structural AST-only
+prose.
+
+`--ai-depth` controls how deep AI prose generation reaches; gated tiers use
+structural fallbacks:
+
+- `sections` — architecture, module, and repo prose only (cheapest; a handful
+  of LLM calls).
+- `files` (default) — sections plus per-file summaries (one call per file).
+- `symbols` — files plus per-symbol purposes. This issues one LLM call per
+  indexed symbol and can take hours-to-days on large repos with local models;
+  reserve it for small repos or scoped runs.
 
 ## Diagrams
 
@@ -91,7 +101,10 @@ gcode has actually indexed.
 `gcode codewiki` hashes source files referenced by each generated document.
 On later runs, unchanged file docs are preserved; changed files cause their file
 doc, owning module doc, and `repo.md` to regenerate. `_meta/codewiki.json`
-records the generated set for audit and repeat runs.
+records the generated set for audit and repeat runs, along with the AI mode of
+the last run (`off`, `sections`, `files`, or `symbols`); changing the AI route
+or `--ai-depth` invalidates every doc, since prose content depends on the
+generation mode rather than source hashes alone.
 
 ## Graph-Degraded Output
 
