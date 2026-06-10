@@ -28,13 +28,15 @@ Status legend: ✅ done · 🔄 in progress · ⬜ pending
 
 **Verdict: SOLID-WITH-ISSUES.**
 
-gcore is a genuinely well-built foundation crate: every remaining datastore/index feature gate
-compiles standalone, clippy is clean under `--all-features`, and the AI daemon-routing layer is
-now required core behavior rather than a hidden optional feature. That matters because the daemon
-probe contract is part of normal CLI routing: no-default-features tests now compile `gcore::ai`
-and cover the live `/api/llm/status` object-shaped `capabilities.text_generate.available`
-payload. Consumers delegate properly for search/RRF, postgres, falkor, qdrant, indexing,
-secrets, AI routing/probing, and graph analytics.
+gcore is a genuinely well-built foundation crate: every feature gate compiles standalone
+(no-default-features plus each of postgres/falkor/qdrant/indexing/search/graph-analytics/
+local-backend/ai/full individually — all PASS), clippy is clean under `--all-features`, and the
+documented AI ownership split holds mechanically — no `reqwest`/`ureq` reachable from
+`ai_context`/`ai_types` or any always-compiled module; HTTP transport is confined to `ai/`
+(feature `ai`) and `qdrant.rs` (feature `qdrant`). The probe layer covers the live
+`/api/llm/status` object-shaped `capabilities.text_generate.available` payload (under feature
+`ai`). Consumers delegate properly for search/RRF, postgres, falkor, qdrant, indexing, secrets,
+AI routing/probing, and graph analytics.
 
 The real problems: an inconsistent `GOBBY_HOME` contract can still make older daemon helpers split
 their URL source; a cluster of dead/test-only public API remains; and three divergent
@@ -479,8 +481,9 @@ Progress log (2026-06-10) — sections AI run completed, e2e battery run, daemon
   `requested_mode: auto`, `route: daemon`, `model: gpt-5.4-mini`; explicit `--ai daemon` reports
   the same route/model. The auto probe initially failed `config_error` because `gcore::ai` accepted
   boolean capability fields but the daemon now returns object-shaped status
-  (`capabilities.text_generate.available`). `gcore::ai` is now required core behavior, so the
-  regression runs under `cargo test -p gobby-core --no-default-features`. A scoped
+  (`capabilities.text_generate.available`); the parsing fix lives in `gcore::ai::probe` with its
+  regression under `cargo nextest run -p gobby-core --features ai` (#695 restored the `ai`
+  feature gate after #694 had temporarily un-gated the module). A scoped
   `gcode codewiki --out /tmp/codewiki-daemon-test.WAcwql --scope crates/gloc --ai daemon
   --ai-depth files --verbose --format json` generated 15 pages with `ai_enabled: true`, grounded
   prose, and citations; the only `degraded: true` marker was the expected non-AI ownership fallback
