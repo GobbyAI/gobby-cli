@@ -421,5 +421,14 @@ Progress log (2026-06-09, continued):
   verification. CodeRabbit suggestions touching DB params, query encoding, or secret handling
   deserve a live-pipeline check before merging.
 
+- **Research path fixed (#676, two stacked bugs):** `gwiki --project research` failed instantly
+  with `invalid_scope` — `ResearchScope` stores the vault root for checkpoints, but the
+  selection round-trip passed it back as a `--project` root (looking for project identity
+  *inside* the vault). After that fix, every direct text call returned HTTP 401 —
+  `research_ai_config_source` was local-only (gcore.yaml, no hub primary) so the canonical
+  `$secret:` api_key could never resolve. Research now layers a hub-backed primary like
+  search/index. Live: model loop executes (steps_used=2, degradation=null, structured
+  stop_reason).
+
 Remaining: AI-prose codewiki run (in flight) → `gwiki index` → verify citation-checked AI prose
 e2e (search / ask --llm / research / compile) → final doc fixes → parity matrix + verdict.
