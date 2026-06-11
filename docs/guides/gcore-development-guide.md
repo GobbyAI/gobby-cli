@@ -190,7 +190,7 @@ Feature rationale:
 | `search` | no extra dependency today | Search fusion contracts are lightweight, but still opt-in so the public surface remains explicit. |
 | `graph-analytics` | no extra dependency today | In-memory graph analytics remain opt-in so the public surface stays explicit. |
 | `local-backend` | no extra dependency today | Local backend discovery uses a hand-rolled `TcpStream` probe so tiny consumers (gloc) link no HTTP client. |
-| `ai` | `reqwest`, `ureq`, AI payload helpers, and `local-backend` | AI transport, daemon probing, and routing helpers need HTTP clients, local backend discovery, and multipart payload support. |
+| `ai` | `reqwest`, `ureq`, AI payload helpers, and `local-backend` | AI transport, daemon probing, routing helpers, and the shared blocking OpenAI-compatible embeddings client (`ai::embeddings`, consumed by gcode and gwiki for direct embedding requests) need HTTP clients, local backend discovery, and multipart payload support. |
 | `full` | all feature modules | Convenience feature for development and consumers that need the whole foundation layer. |
 
 Every individual feature must compile in isolation. Do not rely on `--all-features` to hide missing feature dependencies.
