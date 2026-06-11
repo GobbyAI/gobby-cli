@@ -4,7 +4,7 @@ Technical internals for developers and agents working in the `gobby-core` crate 
 
 ## What gobby-core Is
 
-`gobby-core` is the shared Rust migration substrate for Gobby CLI crates and future Rust daemon work. It holds the boring, reusable platform layer: project discovery, bootstrap and daemon addressing, shared context/config contracts, setup boundaries, degradation vocabulary, feature-gated datastore adapters, and generic indexing/search primitives.
+`gobby-core` is the shared Rust foundation crate for Gobby CLI crates and future Rust daemon work. It holds the boring, reusable platform layer: project discovery, bootstrap and daemon addressing, shared context/config contracts, setup boundaries, degradation vocabulary, feature-gated datastore adapters, and generic indexing/search primitives.
 
 Domain behavior stays out of this crate. Code graph facts, symbol IDs, language parsing policy, wiki vault layout, task behavior, memory behavior, and CLI output formatting belong to consumer crates.
 
