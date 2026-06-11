@@ -7,23 +7,7 @@
   "root": "/Users/josh/Projects/gobby-cli/.gobby/wiki",
   "stale_pages": [],
   "stale_citations": [],
-  "uncited_sources": [
-    {
-      "source_id": "src-9171ba1efd048efb-https-en-wikipedia-org-wiki-mean-reciprocal-rank",
-      "path": "raw/src-9171ba1efd048efb-https-en-wikipedia-org-wiki-mean-reciprocal-rank.md",
-      "location": "https://en.wikipedia.org/wiki/Mean_reciprocal_rank"
-    },
-    {
-      "source_id": "src-d4ddc9797f438586-users-josh-projects-gobby-cli-readme-md",
-      "path": "raw/src-d4ddc9797f438586-users-josh-projects-gobby-cli-readme-md.md",
-      "location": "/Users/josh/Projects/gobby-cli/README.md"
-    },
-    {
-      "source_id": "src-df96b663b72e1f6a-inbox-rrf-note-txt",
-      "path": "raw/src-df96b663b72e1f6a-inbox-rrf-note-txt.md",
-      "location": "inbox/rrf-note.txt"
-    }
-  ],
+  "uncited_sources": [],
   "broken_links": [],
   "duplicate_concepts": [],
   "uncompiled_sources": [
