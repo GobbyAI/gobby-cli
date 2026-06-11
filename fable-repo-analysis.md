@@ -361,9 +361,9 @@ inventory + cloned-output inspection above.
 | Coverage | CodeWiki: module-level docs from dep-graph decomposition; deepwiki: ~dozens of LLM-chosen topic pages, no per-file coverage guarantee | Deterministic full coverage: repo.md + 75 module docs + 1,029 file docs + per-symbol tables, plus `_architecture`/`_onboarding`/`_hotspots`/`_changes`/`_ownership` section pages | **Parity-plus** — coverage is structural, not model-discretionary |
 | Structure & navigation | deepwiki: LLM topic taxonomy (concept pages); CodeWiki: bottom-up hierarchy, cross-linked | Hierarchical repo→module→file with `[[wikilinks]]` (102 links, `gwiki lint`: broken links none), INDEX pages, `gwiki backlinks` over the vault | **Parity** — our navigation is denser and verifiable; their concept-level taxonomy reads better editorially (noted as future direction, no task) |
 | Diagram/graph quality | CodeWiki: LLM-invented Mermaid, syntax-validated via real JS parser in an agent loop; nobody derives edges from their own graph | Mermaid dependency/call-sequence diagrams emitted from actual FalkorDB call/import edges (4,786 CALLS / 2,369 IMPORTS project-scoped), bounded per module | **Parity-plus** — data-derived vs. hallucinated; their syntax-validation loop is the one idea worth copying (#616 family) |
-| AI prose quality | deepwiki: strong editorial scaffolding (mandated page anatomy, style guide) over ungrounded RAG | Sections run completed (qwen3.6-35b local, ~2h): 75/75 module overviews + 65/72 architecture subsystems with grounded prose; per-symbol purposes reuse daemon-enriched index summaries at zero codewiki-time LLM cost; 7 largest prompts degraded honestly (`degraded_sources: model-unavailable`) — root-caused to the shared 60s timeout, fixed (#680, TextGenerate now 300s) | **Parity** — grounded prose at every tier with explicit degradation beats their ungrounded editorial polish, but their page anatomy still reads better; rerun post-#680 should clear the degraded cells |
-| Citations/provenance | None real: deepwiki prompts for `file:line` but feeds line-number-free chunks (structurally hallucinated); CodeWiki has no citation convention | `ground_text` strips invalid citations and repairs with valid indexed spans; provenance frontmatter with file paths + line ranges on every page; audit/credibility tracking in gwiki | **Parity-plus** — only tool with post-generation grounding against indexed byte offsets |
-| Incremental updates | CodeWiki: git-diff invalidation (file→module→parent chain), fuzzy component matching; deepwiki: cache-or-full-regen | Source-hash invalidation per doc + index snapshot diffing (`_changes.md`) + AI-mode invalidation (#677); daemon watcher auto-reindexes vault output | **Parity-plus** — finer-grained than git-diff (per-source-hash), discloses truncation/degradation in frontmatter |
+| AI prose quality | deepwiki: strong editorial scaffolding (mandated page anatomy, style guide) over ungrounded RAG | Daemon-routed re-heal (2026-06-10): 75/75 module overviews, 72/72 architecture subsystems, and repo.md carry grounded frontier-model prose (feature_high aggregates per #696's override; standard tiers on the daemon default), zero degraded meta entries, bounded citations (#699); bad generations cannot pass as prose — prompt echoes rejected (#698), every fallback recorded and repaired on re-run (#687) | **Parity** — grounded, honestly-degrading prose at every tier beats their ungrounded editorial polish, but their mandated page anatomy still reads better (direction noted; the remaining page-weight items are #674/#700 structural listings, not prose) |
+| Citations/provenance | None real: deepwiki prompts for `file:line` but feeds line-number-free chunks (structurally hallucinated); CodeWiki has no citation convention | `ground_text` strips invalid citations and repairs with a bounded set of representative indexed spans (#699 — fallback walls eliminated; repo.md References resolves exactly the markers used); provenance frontmatter with file paths + line ranges on every page; audit/credibility tracking in gwiki | **Parity-plus** — only tool with post-generation grounding against indexed byte offsets, now bounded so grounding never drowns the prose |
+| Incremental updates | CodeWiki: git-diff invalidation (file→module→parent chain), fuzzy component matching; deepwiki: cache-or-full-regen | Source-hash invalidation per doc + index snapshot diffing (`_changes.md`) + AI-mode invalidation (#677); unchanged docs reused with zero LLM calls, write-as-you-go persistence and disk resume verified live — interrupted at module 4/75, re-run reused 339 docs byte-identical and continued from the interrupt (#681); degraded docs repaired automatically on re-run instead of hash-skipped (#687); daemon watcher auto-reindexes vault output | **Parity-plus** — finer-grained than git-diff (per-source-hash), resumable mid-run, and self-healing; discloses truncation/degradation in frontmatter |
 | Search over generated wiki | Nonexistent: deepwiki RAG searches code embeddings (not the wiki); CodeWiki ships no search | gwiki hybrid BM25 + semantic + graph-boost over the vault, verified live (zero degradations); `ask`, `research` loop, `compile` consume it | **Parity-plus** — uncontested; no competitor searches its own output |
 
 ---
@@ -495,6 +495,67 @@ Progress log (2026-06-10) — sections AI run completed, e2e battery run, daemon
 - **e2e compile ✅ (mechanically):** wrote `knowledge/topics/...md` with frontmatter, manifest
   citations, conflict/missing-evidence sections; content empty pending accepted notes (#686).
 
+Progress log (2026-06-10, continued) — the "heal" that wasn't, and the re-heal:
+
+- **Correction: 52e837a's heal claim is superseded.** The post-#680 healing rerun
+  (committed 2026-06-10 14:25 as "feat: heal repo/architecture codewiki pages post-#680")
+  did not heal the 7 degraded pages — it silently replaced them with structural fallbacks
+  *without* degradation markers. `repo.md` shipped "Repository code documentation covers
+  433 files across 75 modules." plus a citation-marker wall as its Overview;
+  `modules/crates.md` shipped "`crates` contains 0 direct files and 6 child modules.";
+  `_meta/codewiki.json` recorded **zero** degraded entries. Three stacked causes:
+  1. **Silenced once-only warning** — `resolve_text_generator` prints the first generation
+     failure and sets `warned`; every subsequent failure in the run is silent, so a run
+     where the 7 heavyweight prompts all failed looked clean in scrollback.
+  2. **Unrecorded fallbacks** — pre-#687, not every fallback path set `degraded: true` in
+     frontmatter/meta, so the failed pages carried no machine-readable distress signal.
+  3. **Hash-skip preserving degraded pages** — pre-#687, source-hash comparison treated a
+     degraded page with unchanged sources as up-to-date, so re-runs never repaired it;
+     healing required deleting pages first (the workaround this very commit relied on, which
+     is how fallback output got committed as a heal).
+  The fixes landed as #687 (degradation recorded on every fallback path, degraded docs
+  repaired on re-run, bounded transport retry, failed runs never displace healthy prose),
+  #681 (unchanged docs reused with zero LLM calls, per-doc write-as-you-go persistence,
+  resume from disk), #694/#695 (daemon auto-routing validated; gcore HTTP stack re-gated),
+  and #696 (aggregate docs route to the `feature_mid` daemon profile — the 7 casualties are
+  exactly the heavyweight aggregate prompts that local qwen could not finish honestly).
+
+Progress log (2026-06-10, evening) — re-heal completed, two more bugs found by the attempt:
+
+- **The first daemon repair run degraded silently again — and the new guards caught it.**
+  With the casualty pages deleted and aggregates on the default `feature_mid` profile, every
+  aggregate generation "succeeded" at the daemon but failed client-side; the degraded set grew
+  to 15 entries, all honestly marked (#687 working as designed). The daemon log was clean
+  because successful generations never log at INFO — and the calls *were* succeeding. Root
+  cause: **`codex/gpt-5.3-codex-spark` (feature_mid's primary candidate) returns the entire
+  prompt verbatim as a successful response**; the same prompt through `feature_low`
+  (gpt-5.4-mini) and `feature_high` (claude/opus) produces real prose. The #698 echo guard
+  rejected every echo — pages degraded honestly instead of shipping prompt text as Overviews,
+  which is exactly the failure mode that poisoned the original "heal". Filed daemon-side as
+  gobby#15816: the daemon should treat an output identical to its input as a failed candidate
+  and fall through (claude/sonnet was never tried because spark "succeeded").
+- **Citation walls bounded (#699, commit a634457).** The re-run exposed the page-side half of
+  the wall pathology #698 had bounded prompt-side: when generated prose carries no valid inline
+  citation, `ground_text` appended the *full* span set — one citation line per deduped span —
+  and `write_references` dumped every span unconditionally. 347 of 516 pages carried walls
+  (crates.md 1.15MB, _architecture.md 1.13MB, repo.md ~8k reference lines), and the walls
+  re-entered downstream pages through stored summaries. Fix: fallback citations cap at 5
+  representative spans (one per distinct file preferred), `repo.md`'s References section lists
+  only `[N]` markers actually present in the page, and the guide's Citations section documents
+  the bounded contract. Post-fix: crates.md 444KB (the residue is #674 provenance frontmatter
+  plus a new finding, #700 — ~7,950 bare component-UUID bullets on top-level module pages),
+  repo.md 112KB with a real-prose Overview citing exactly 5 markers.
+- **Re-heal completed via `--ai-aggregate-profile feature_high`** (the #696 override doing its
+  job while gobby#15816 stands): all 347 wall pages deleted and regenerated, **zero degraded
+  meta entries**, no prompt echoes, no structural-fallback overviews; the only `degraded: true`
+  left in the tree is `_ownership.md`'s expected `codeowners_unavailable`.
+- **Resume verified live (#681):** the rebuild was deliberately interrupted at module 4/75;
+  the re-run reused 339 completed docs (the three finished module docs byte-identical, mtimes
+  unchanged) and continued generating from the interrupt point — write-as-you-go persistence
+  plus disk resume, exactly as designed.
+- **Vault re-indexed** (`gwiki index`: status indexed) and the healed tree committed as
+  ebd99f9 (371 files, +6,907/−107,522 — the walls leaving).
+
 ### Verdict — parity-plus, confirmed
 
 Across the seven dimensions: five **parity-plus** (coverage, diagrams-from-real-edges,
@@ -503,9 +564,17 @@ no competitor has them at all), two **parity** (structure/navigation, AI prose).
 below parity. The two parity rows share one cause: deepwiki's editorial scaffolding (mandated
 page anatomy, concept-level taxonomy) produces nicer-reading pages than our schema-shaped ones.
 That is prompt/template work, not architecture — our grounding, coverage, and freshness
-guarantees are the hard part and are already ahead. Highest-leverage follow-ups, in order:
-regeneration reuse for unchanged docs (#681 — re-runs currently re-pay the full LLM cost),
-lenient action-JSON parsing so local models can complete research→compile (#686), degraded-doc
-healing (#687 — source-hash skip means a degraded page survives re-runs unless deleted first;
-the post-#680 healing rerun uses the delete-first workaround), and editorial page-anatomy
-polish (documented as direction, no stack change).
+guarantees are the hard part and are already ahead.
+
+The verdict survived its hardest test this phase: the wiki on disk at the start of 2026-06-10
+contradicted it (silently-degraded overviews committed as a "heal", megabyte citation walls
+backing the citations row, reuse/healing claims untested live). Every gap is now closed with
+evidence rather than asserted: the heal-era regression is documented and superseded above, the
+re-heal carries frontier-model prose through the daemon on all 148 aggregate pages with zero
+degraded entries, the citations row's counter-evidence is fixed (#699) and swept clean, and the
+incremental row's reuse/resume/repair claims were exercised live (#681 interrupt/resume, #687
+degraded-repair, #698 echo rejection against a real echoing provider). What remains is tracked,
+not hidden: gobby#15816 (daemon must fail echoing candidates — until then `feature_mid`
+aggregates need the #696 override), #674/#700 (structural page-weight: provenance ranges,
+component-UUID listings), #686 (lenient action-JSON so local models complete research→compile),
+and editorial page-anatomy polish (direction, no stack change).
