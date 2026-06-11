@@ -410,8 +410,10 @@ gwiki --topic rust-async compile "Borrow Checker" \
 gwiki --topic rust-async compile "Borrow Checker" --target knowledge/topics/borrow.md --write-intent
 ```
 
-Compiles accepted research notes into a wiki article. With no positional, it
-compiles from the current accepted-note set; pass `[TOPIC]` to scope the article.
+Compiles accepted research notes into a wiki article. The positional `[TOPIC]`
+names the article topic — it never changes the scope (use `--topic`/`--project`
+for that). With no positional, the article topic defaults to the topic scope's
+own name, then to the research session's compile state or question.
 
 **Options:**
 - `[TOPIC]` — Optional positional naming the article topic.
