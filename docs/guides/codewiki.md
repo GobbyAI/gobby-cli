@@ -98,9 +98,13 @@ not full-graph dumps.
 ## Citations
 
 Every generated claim is grounded against indexed source spans. Invalid
-citations are stripped, and missing citations are repaired with a valid fallback
-span when one exists. This keeps prose tied to source files and line ranges that
-gcode has actually indexed.
+citations are stripped, and prose with no valid citation gets a bounded set of
+representative fallback citations (at most a handful, spread across distinct
+source files) rather than the full span list. `repo.md` resolves citations
+through numbered `[N]` markers, and its References section lists only the
+markers that actually appear in the page. This keeps prose tied to source
+files and line ranges that gcode has actually indexed without letting broad
+pages accumulate citation walls.
 
 ## Incremental Regeneration
 
