@@ -148,7 +148,7 @@ Shared foundation library (`gobby-core`), kept dependency-light so small binarie
 ### Always-compiled modules
 
 - **`bootstrap`** / **`daemon_url`** / **`project`** / **`provisioning`** — `~/.gobby/bootstrap.yaml` parsing, daemon URL resolution, project-root discovery (`.gobby/project.json`), and provisioning helpers.
-- **`config`** / **`setup`** — Shared config types and setup helpers reused across binaries.
+- **`config`** / **`setup`** / **`cli_contract`** — Shared config types, setup helpers, and serialized CLI contract shapes reused across binaries.
 - **`ai_context`** — AI config types, `AiContext` resolution, per-capability **routing decision** (daemon / direct / off), and an always-compiled concurrency limiter.
 - **`ai_types`** — Pure AI result/error data types (no transport deps), kept separate from `ai_context`.
 - **`degradation`** / **`local_backend`** — Shared degradation vocabulary plus local-backend type and probe helpers.
