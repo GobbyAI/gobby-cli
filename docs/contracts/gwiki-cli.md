@@ -97,6 +97,14 @@ command surfaces must pin the same classification in
 embed its row inline; generated-page degradation metadata lives in page YAML
 frontmatter rather than the CLI JSON contract.
 
+The machine-readable side of the generated-page frontmatter contract lives in
+`gobby_core::codewiki_contract`: the shared key/value constants (`provenance`,
+`generated_by: gcode-codewiki`, `trust: generated`, `freshness: indexed`,
+`degraded`/`degraded_sources`) and a golden page fixture. gcode pins its
+frontmatter emitter against the golden fixture and gwiki pins its
+frontmatter/audit parsers against it, so producer and consumer cannot drift
+silently.
+
 ### Command Surfaces
 
 | Command | Hard dependencies | Optional dependencies | Multimodal | Degraded output shape | Degradation metadata |
