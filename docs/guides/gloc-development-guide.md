@@ -6,7 +6,7 @@ Technical internals for developers and agents working in the gloc codebase.
 
 ```
 CLI (main.rs, clap)
-  → Config::load (--config → .gobby/gloc.yaml → ~/.gobby/gloc.yaml → compiled default)
+  → Config::load (--config → .gobby/gloc.yaml at CWD or project root → <gobby_home>/gloc.yaml → compiled default)
   → Handle special modes (--init, --dump-config) → exit
   → resolve_backend (--backend flag or auto-detect in config order)
   → apply --url override
@@ -30,16 +30,17 @@ gloc uses `std::os::unix::process::CommandExt::exec()` instead of spawning a chi
 
 ### Config Resolution
 
-First found wins entirely — no merging (same pattern as gsqz):
+First found wins entirely — no merging (same pattern as gsqz). Resolution is
+delegated to `gobby_core::layered_config::load_layered_yaml`:
 
 | Priority | Path | Purpose |
 |----------|------|---------|
 | 1 | `--config <PATH>` | Explicit CLI override |
-| 2 | `.gobby/gloc.yaml` | Project-level config |
-| 3 | `~/.gobby/gloc.yaml` | Global config (auto-created on first run) |
+| 2 | `.gobby/gloc.yaml` (current directory, then project root via `gobby_core::project::find_project_root`) | Project-level config — found from subdirectories too |
+| 3 | `<gobby_home>/gloc.yaml` (honors `GOBBY_HOME`, defaults to `~/.gobby`) | Global config (auto-created on first run) |
 | 4 | Compiled into binary (`config.yaml` via `include_str!`) | Built-in default |
 
-On first run with no config, the default is auto-exported to `~/.gobby/gloc.yaml`. The `--init` flag writes to `.gobby/gloc.yaml` (project-level), backing up any existing file to `gloc.yaml.bak`.
+On first run with no config, the default is auto-exported to `<gobby_home>/gloc.yaml`. The `--init` flag writes to `.gobby/gloc.yaml` (project-level), backing up any existing file to `gloc.yaml.bak`.
 
 ### Data Structures
 

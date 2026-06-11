@@ -10,7 +10,7 @@ CLI (main.rs, clap)
   ┌─ input mode:
   │  → Read stdin → compress_prose(text, level) → print → report savings
   └─ output mode:
-     → Config::load (CLI override → .gobby/gsqz.yaml → ~/.gobby/gsqz.yaml → compiled default)
+     → Config::load (CLI override → .gobby/gsqz.yaml at CWD or project root → <gobby_home>/gsqz.yaml → compiled default)
      → Execute shell command (sh -c / cmd /C)
      → Capture stdout + stderr
      → Strip ANSI escape codes
@@ -37,16 +37,17 @@ gsqz always exits with code 0 regardless of the subprocess exit code. This is in
 
 ### Config Resolution
 
-First found wins entirely — no merging:
+First found wins entirely — no merging. Resolution is delegated to
+`gobby_core::layered_config::load_layered_yaml`:
 
 | Priority | Path | Purpose |
 |----------|------|---------|
 | 1 | `--config <PATH>` | Explicit CLI override |
-| 2 | `.gobby/gsqz.yaml` | Project-level config |
-| 3 | `~/.gobby/gsqz.yaml` | Global config (auto-created on first run) |
+| 2 | `.gobby/gsqz.yaml` (current directory, then project root via `gobby_core::project::find_project_root`) | Project-level config — found from subdirectories too |
+| 3 | `<gobby_home>/gsqz.yaml` (honors `GOBBY_HOME`, defaults to `~/.gobby`) | Global config (auto-created on first run) |
 | 4 | Compiled into binary (`config.yaml` via `include_str!`) | Built-in default |
 
-On first run, the default is auto-exported to `~/.gobby/gsqz.yaml`. `--init` writes to `.gobby/gsqz.yaml` (project level), backing up existing to `gsqz.yaml.bak`. Malformed YAML exits with a parse error and suggests `gsqz --init`.
+On first run, the default is auto-exported to `<gobby_home>/gsqz.yaml`. `--init` writes to `.gobby/gsqz.yaml` (project level), backing up existing to `gsqz.yaml.bak`. Malformed YAML exits with a parse error and suggests `gsqz --init`.
 
 ### Data Structures
 

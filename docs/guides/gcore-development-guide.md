@@ -22,6 +22,7 @@ The baseline crate remains dependency-light. Consumers that only need project di
 | `config` | always | Shared configuration-resolution contracts. Environment variables, `config_store`, and defaults are represented here as the foundation expands. |
 | `context` | always | Shared runtime context contracts for project identity, daemon URL, and service configuration. Consumer-specific CLI state stays outside. |
 | `degradation` | always | Shared vocabulary for configured-service unavailability, explicit degraded paths, partial search, stale indexes, skipped artifacts, and fatal core errors. |
+| `layered_config` | always | Layered YAML config loading for tool binaries (gsqz, gloc): CLI override → `.gobby/<tool>.yaml` at the CWD or project root → `<gobby_home>/<tool>.yaml` → caller's built-in default. First found wins; parse failures error instead of falling through. |
 | `setup` | always | Attached and standalone setup contracts. Runtime commands validate externally managed resources and do not implicitly migrate them. |
 | `postgres` | `postgres` | PostgreSQL hub adapter boundary. Validates Gobby-owned schema and BM25 requirements without creating, altering, or dropping managed objects. |
 | `falkor` | `falkor` | FalkorDB adapter boundary. Graph connection helpers live here without making FalkorDB a baseline dependency. |

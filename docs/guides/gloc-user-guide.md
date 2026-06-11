@@ -44,7 +44,7 @@ gloc --status
 
 ## How It Works
 
-1. gloc loads its config (layered: `--config` > `.gobby/gloc.yaml` > `~/.gobby/gloc.yaml` > built-in default)
+1. gloc loads its config (layered: `--config` > `.gobby/gloc.yaml` at the current directory or project root > `~/.gobby/gloc.yaml` (honors `GOBBY_HOME`) > built-in default)
 2. Probes each backend in config order via HTTP GET (500ms timeout per probe)
 3. First responding backend wins — or use `--backend` to skip detection
 4. Resolves model aliases (e.g. `qwen` -> `qwen3-coder`)
@@ -110,8 +110,8 @@ Codex uses OpenAI-compatible env vars and gets `--provider openai` appended auto
 | Priority | Path | Purpose |
 |----------|------|---------|
 | 1 | `--config path/to/file.yaml` | Explicit CLI override |
-| 2 | `.gobby/gloc.yaml` | Project-level config |
-| 3 | `~/.gobby/gloc.yaml` | Global config (auto-created on first run) |
+| 2 | `.gobby/gloc.yaml` | Project-level config (found in the current directory or at the project root, so subdirectories work) |
+| 3 | `~/.gobby/gloc.yaml` (or `$GOBBY_HOME/gloc.yaml` when `GOBBY_HOME` is set) | Global config (auto-created on first run) |
 | 4 | Compiled into binary | Built-in default |
 
 First found wins — no merging between layers. Run `gloc --init` to write the default config to `.gobby/gloc.yaml` (backs up existing to `gloc.yaml.bak`).

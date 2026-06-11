@@ -93,7 +93,7 @@ CLI parses args → loads layered config → executes shell command → strips A
 
 ### Core Modules
 
-- **`config`** — Layered config system: built-in `config.yaml` → global (`~/.gobby/gsqz.yaml`) → project (`.gobby/gsqz.yaml`) → CLI override. Custom `Visitor` deserializer for the polymorphic `Step` enum.
+- **`config`** — Layered config via `gobby_core::layered_config`: built-in `config.yaml` → global (`<gobby_home>/gsqz.yaml`, honors `GOBBY_HOME`) → project (`.gobby/gsqz.yaml` at the CWD or project root) → CLI override. Custom `Visitor` deserializer for the polymorphic `Step` enum.
 - **`compressor`** — Orchestrator that compiles pipeline regexes, matches commands, applies steps, and enforces thresholds (min output length, max compressed lines, 95% savings threshold).
 - **`daemon`** — Feature-gated (`#[cfg(feature = "gobby")]`) HTTP integration with the gobby daemon for runtime config overrides and savings reporting. All HTTP calls are fire-and-forget with 1s timeouts.
 - **`primitives/`** — Four composable operations on line collections: `filter`, `group` (8 modes), `dedup`, `truncate`.
@@ -106,7 +106,7 @@ CLI parses args → loads layered config → auto-detects backend (probes LM Stu
 
 ### Core Modules
 
-- **`config`** — Layered config system (same pattern as gsqz): built-in `config.yaml` → global (`~/.gobby/gloc.yaml`) → project (`.gobby/gloc.yaml`) → CLI override. Template variable resolution (`{backend.url}`, `{backend.auth_token}`, `{backend.name}`, `{model}`).
+- **`config`** — Layered config via `gobby_core::layered_config` (same pattern as gsqz): built-in `config.yaml` → global (`<gobby_home>/gloc.yaml`, honors `GOBBY_HOME`) → project (`.gobby/gloc.yaml` at the CWD or project root) → CLI override. Template variable resolution (`{backend.url}`, `{backend.auth_token}`, `{backend.name}`, `{model}`).
 - **`backend`** — Backend probing via HTTP GET, Ollama model lifecycle management (check via `/api/tags`, pull via `/api/pull`, warmup via `/api/generate`). LM Studio uses JIT loading (no explicit management needed).
 - **`exec`** — Env var injection from client config templates, argument building, and `exec()` into the client binary (replaces process via `CommandExt::exec()`).
 
