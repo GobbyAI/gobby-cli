@@ -229,8 +229,9 @@ force. HTTP failures are treated as daemon responses and are never suppressed.
 
 Environment:
 
-- `GOBBY_DAEMON_URL` overrides `gobby_core::daemon_url::daemon_url()` for the
-  preflight and live POST.
+- `GOBBY_DAEMON_URL` overrides the daemon URL. The override is applied inside
+  `gobby_core::daemon_url::daemon_url()`, so it covers the preflight, live
+  POSTs, and the statusline POST uniformly.
 - `GOBBY_HOME` controls marker lookup.
 - `GOBBY_SHUTDOWN_HOOK_ALLOW_SECONDS` overrides the default 120-second marker
   window when positive and parseable.

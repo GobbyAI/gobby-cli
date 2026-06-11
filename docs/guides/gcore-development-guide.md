@@ -18,7 +18,7 @@ The baseline crate remains dependency-light. Consumers that only need project di
 |--------|---------|----------------|
 | `project` | always | Walk up from a starting directory to find a `.gobby/` directory containing `project.json` or `gcode.json`. Read the `id` field from the project identity file. |
 | `bootstrap` | always | Read `~/.gobby/bootstrap.yaml` to get the daemon's listen endpoint (`bind_host`, `daemon_port`). Falls back to `127.0.0.1:60887` when the file is missing or malformed. |
-| `daemon_url` | always | Compose a dial URL from a `DaemonEndpoint`, normalizing wildcard listen addresses (`0.0.0.0`, `::`, `::0`) to `127.0.0.1`. |
+| `daemon_url` | always | One daemon-URL resolver for all binaries: `GOBBY_DAEMON_URL` → `GOBBY_PORT` → bootstrap endpoint, normalizing wildcard listen addresses (`0.0.0.0`, `::`, `::0`) to `127.0.0.1` and bracketing bare IPv6 literals. |
 | `config` | always | Shared configuration-resolution contracts. Environment variables, `config_store`, and defaults are represented here as the foundation expands. |
 | `context` | always | Shared runtime context contracts for project identity, daemon URL, and service configuration. Consumer-specific CLI state stays outside. |
 | `degradation` | always | Shared vocabulary for configured-service unavailability, explicit degraded paths, partial search, stale indexes, skipped artifacts, and fatal core errors. |
@@ -76,17 +76,24 @@ pub fn daemon_url() -> String;
 pub fn daemon_url_at(path: &Path) -> String;
 ```
 
-Composes `http://{host}:{port}` from a bootstrap-derived endpoint, with one rewrite: wildcard listen hosts (`0.0.0.0`, `::`, `::0`) become `127.0.0.1`. Hostnames, named interfaces, and explicit IPv4/IPv6 literals pass through unchanged.
+The one daemon-URL resolver every Gobby binary shares. `daemon_url()` applies a single env-override contract before reading bootstrap:
+
+1. `GOBBY_DAEMON_URL` — full base-URL override; trailing slashes are trimmed, empty values ignored.
+2. `GOBBY_PORT` — port-only override, dialed as `http://127.0.0.1:{port}`; empty or unparseable values ignored.
+3. `bootstrap.yaml` endpoint, with dial normalization.
+
+`daemon_url_at(path)` reads a specific bootstrap file and never consults the env — an explicit path is already an override.
+
+Dial normalization rewrites wildcard listen hosts (`0.0.0.0`, `::`, `::0`, `[::]`) and empty hosts to `127.0.0.1`, and brackets bare IPv6 literals (`::1` → `[::1]`) for URL embedding. Hostnames, named interfaces, and explicit IPv4 literals pass through unchanged.
 
 ```rust
 let url = gobby_core::daemon_url::daemon_url();
 // "http://127.0.0.1:60887" for default bootstrap
 // "http://10.0.0.5:61234" if bootstrap has bind_host: 10.0.0.5
 // "http://127.0.0.1:60887" if bootstrap has bind_host: 0.0.0.0
+// GOBBY_DAEMON_URL / GOBBY_PORT win over all of the above
 ureq::post(&format!("{url}/api/hooks/execute")).send_string(body)?;
 ```
-
-Bracketing IPv6 literals for URL embedding is **not** handled here — in practice `bootstrap.yaml` is always `localhost`, an IPv4 literal, or a wildcard. If that ever stops being true, this is the place to add it.
 
 ### `falkor`
 
@@ -254,7 +261,7 @@ Behavioral modules use `#[cfg(test)] mod tests` with `tempfile::tempdir()` for f
 
 - **project**: implicitly tested via consumer binaries (`gcode`, `ghook`); the module mirrors `gcode/src/project.rs` line-for-line.
 - **bootstrap**: missing/malformed/empty files all return defaults; custom port/host parsing; out-of-range port falls back to default.
-- **daemon_url**: wildcard IPv4/IPv6 normalize to loopback; localhost passes through; custom host+port composes correctly.
+- **daemon_url**: wildcard IPv4/IPv6 normalize to loopback; localhost passes through; custom host+port composes correctly; bare IPv6 literals get bracketed; `GOBBY_DAEMON_URL`/`GOBBY_PORT` override precedence and garbage-value handling.
 - **public_boundary**: integration test that pins feature gates, `lib.rs` module guards, and this guide's boundary documentation.
 
 ```bash

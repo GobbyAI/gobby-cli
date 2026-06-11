@@ -435,8 +435,12 @@ Only reports for meaningful strategies — `passthrough` and `excluded` are skip
 ### Daemon URL Resolution
 
 1. Config file `daemon_url` with `${GOBBY_PORT}` expansion
-2. `GOBBY_PORT` env var → `http://localhost:{port}`
-3. Default: `http://localhost:60887`
+2. Shared `gobby_core::daemon_url` contract: `GOBBY_DAEMON_URL` env var →
+   `GOBBY_PORT` env var → `~/.gobby/bootstrap.yaml` `daemon_port`/`bind_host` →
+   default `http://127.0.0.1:60887`
+
+A custom `daemon_port` in `bootstrap.yaml` now reaches gsqz's config-override
+fetch and savings reporting without any env vars in the shell.
 
 ### Error Handling
 

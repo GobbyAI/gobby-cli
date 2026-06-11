@@ -503,10 +503,12 @@ The database connection is resolved in this order:
 
 Use the daemon broker path or an explicit fallback source for daemonless access.
 
-The daemon URL (used by `invalidate`) is resolved from:
-1. `GOBBY_PORT` environment variable (e.g. `60887`)
-2. `~/.gobby/bootstrap.yaml` `daemon_port` + `bind_host` keys
-3. Default: `http://localhost:60887`
+The daemon URL (used by `invalidate` and savings reporting) is resolved by the
+shared `gobby_core::daemon_url` contract:
+1. `GOBBY_DAEMON_URL` environment variable (full base URL)
+2. `GOBBY_PORT` environment variable → `http://127.0.0.1:{port}`
+3. `~/.gobby/bootstrap.yaml` `daemon_port` + `bind_host` keys
+4. Default: `http://127.0.0.1:60887`
 
 ## Output Formats
 

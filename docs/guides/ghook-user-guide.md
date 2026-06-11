@@ -67,8 +67,8 @@ HTTP errors, and non-Stop hooks keep the normal fail-closed behavior.
 
 Environment knobs:
 
-- `GOBBY_DAEMON_URL` overrides the daemon URL used for Stop preflight and live
-  POSTs.
+- `GOBBY_DAEMON_URL` overrides the daemon URL used for Stop preflight, live
+  POSTs, and statusline POSTs.
 - `GOBBY_HOME` controls marker lookup; default is `~/.gobby`.
 - `GOBBY_SHUTDOWN_HOOK_ALLOW_SECONDS` overrides freshness when it is a positive
   number; default is 120 seconds.
