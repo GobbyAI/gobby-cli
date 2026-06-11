@@ -22,9 +22,9 @@ A Cargo workspace with six members: five Gobby CLI binaries plus one shared foun
 ```bash
 cargo build --workspace                    # Build everything
 cargo build --workspace --release          # Release build (installed into ~/.gobby/bin)
-cargo nextest run --workspace --no-default-features # Test everything except doctests
-cargo test --doc --workspace --no-default-features  # Test doctests
-cargo nextest run -p gobby-code --no-default-features # Test gcode only
+cargo nextest run --workspace              # Test everything except doctests
+cargo test --doc --workspace               # Test doctests
+cargo nextest run -p gobby-code            # Test gcode only
 cargo nextest run -p gobby-squeeze         # Test gsqz only
 cargo nextest run -p gobby-local           # Test gloc only
 cargo nextest run -p gobby-wiki            # Test gwiki only
@@ -33,6 +33,8 @@ cargo nextest run -p gobby-core            # Test gcore only
 cargo clippy --workspace -- -D warnings    # Lint all
 cargo fmt --all --check                    # Check formatting
 ```
+
+During agent sessions, use default Cargo features for diagnosis and installs. Run `--no-default-features` only for CI-parity checks, release workflow validation, or explicit user requests.
 
 ## Workspace Layout
 
