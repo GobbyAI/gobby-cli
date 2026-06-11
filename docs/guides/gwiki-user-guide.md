@@ -470,6 +470,111 @@ Writes wiki health snapshots under `meta/health/` and reports the `text_path`
 and `json_path` it wrote. Use it to capture a point-in-time readiness snapshot
 for review or CI.
 
+### Benchmark (`benchmark`)
+
+```bash
+gwiki --topic rust-async benchmark
+gwiki --topic rust-async benchmark --retrieval-candidates 12
+```
+
+Reports diagnostic metrics for a seeded, indexed wiki: token compression, graph
+coverage, retrieval precision, source mix, and optional backend availability.
+The command requires PostgreSQL index configuration and returns a configuration
+error if no attached index is available.
+
+- `--retrieval-candidates <N>` — Number of seeded retrieval precision probes to
+  run. The value must be greater than zero.
+
+Optional graph, vector, embedding, and model-provider backends are reported as
+unavailable or listed under `degraded_sources`; their absence does not fabricate
+zero-valued metrics.
+
+### Graph (`graph`)
+
+```bash
+gwiki --topic rust-async graph
+```
+
+Exports unified wiki graph artifacts under `outputs/`: `graph.json` for
+machine-readable graph data and `GRAPH_REPORT.md` for a readable summary. The
+JSON includes document/source/citation/link nodes, trust and audit edges, graph
+analytics, and `degraded`/`degraded_sources` fields.
+
+`graph` requires PostgreSQL index configuration. Missing optional FalkorDB,
+Qdrant, or embedding support marks the exported graph degraded so consumers can
+distinguish a partial graph from a complete one.
+
+### Graph Context (`graph-context`)
+
+```bash
+gwiki --project graph-context
+gwiki --topic rust-async graph-context --format json
+```
+
+Builds a compact context pack for review and automation. Text output reports the
+scope, neighborhood count, and warning count; JSON output returns the context
+pack with `degradation`, `warnings`, `neighborhoods`, and `recommendations`.
+
+`graph-context` requires PostgreSQL index configuration. Project scopes can add
+shared code-graph edges when FalkorDB is configured; topic and global scopes, a
+missing FalkorDB config, query failures, or truncation add explicit degraded
+sources and warnings instead of hiding the limitation.
+
+### Librarian (`librarian`)
+
+```bash
+gwiki --topic rust-async librarian
+```
+
+Proposes wiki upkeep tasks and patch candidates without rewriting pages. Use it
+as a planning report before applying manual edits or opening follow-up work. The
+output is a normal scoped command result, so `--format json` is useful when a
+workflow needs to consume the proposals.
+
+The command is vault-backed and reports analysis errors through the normal
+`gwiki` error format; it does not require optional AI, graph, or vector services.
+
+### Review Report (`review-report`)
+
+```bash
+gwiki --project review-report --file crates/gwiki/src/main.rs
+gwiki --project review-report --symbol <SYMBOL_ID>
+gwiki --project review-report --diff /tmp/change.diff --output review.md
+```
+
+Exports a Markdown review report for proposed code changes. The report connects
+changed files or symbols to affected wiki pages, stale docs, code graph
+neighborhoods, and risky dependency shifts.
+
+- `--file <PATH>` — Include a changed file. Repeat the flag for multiple files.
+- `--symbol <SYMBOL_ID>` — Include a changed symbol ID. Repeat the flag for
+  multiple symbols.
+- `--diff <PATH>` — Read changed file paths from a unified diff.
+- `--output <FILE>` — Report filename under `outputs/` (default:
+  `review-report.md`).
+
+Pass at least one file, symbol, or diff. The command requires PostgreSQL index
+configuration. Missing FalkorDB, non-project scopes, graph query failures, or
+semantic partial-data conditions are surfaced in the report payload as
+`degraded=true` with `degraded_sources`.
+
+### Citation Quality (`citation-quality`)
+
+```bash
+gwiki --topic rust-async citation-quality
+gwiki --topic rust-async citation-quality --format json
+```
+
+Writes `outputs/reports/citation-quality.md` and returns the same report through
+the command output. The report covers dependency classification, source
+credibility, coverage gaps, contradiction findings, stale sources, and output
+confidence.
+
+`citation-quality` requires the attached PostgreSQL-backed gwiki index. AI text
+generation enables contradiction diagnostics; if AI availability cannot be
+resolved, the command logs a warning and continues without AI-backed
+contradiction findings.
+
 ### Export (`export`)
 
 ```bash
