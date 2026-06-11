@@ -37,7 +37,7 @@ Current Trust Layer limits:
 
 ## Source Lifecycle
 
-`gwiki index` rebuilds derived search rows from the vault files already present on disk. It must not re-fetch remote sources or mutate raw source records.
+`gwiki index` rebuilds derived search rows from the vault files already present on disk. It must not re-fetch remote sources or mutate raw source records. After PostgreSQL indexing, it synchronously updates Qdrant vectors and the FalkorDB graph for the same scope; do not add daemon sync flags or delayed daemon-owned index work.
 
 `gwiki refresh` is the source-maintenance path. It refreshes manifest records from `raw/INDEX.md`, using existing global scope flags (`--project` or `--topic <name>`), repeated `--id <SOURCE_ID>` selectors, and `--dry-run`. Do not add `--scope`.
 

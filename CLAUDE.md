@@ -114,7 +114,7 @@ CLI parses args → loads layered config → auto-detects backend (probes LM Stu
 
 ### Data Flow
 
-`main.rs` parses CLI args via clap → resolves a gwiki `Context` (project root, vault path, PostgreSQL hub, AI routing) → dispatches to a handler in `commands/`. Ingest path: `ingest/file.rs` routes a source by type → modality orchestrator (`ingest/{document,pdf,url,mediawiki,git,wayback,audio,image,video}.rs`) → derived Markdown written into the vault with frontmatter/provenance → `indexer` writes the Gobby hub + sync flags for the daemon.
+`main.rs` parses CLI args via clap → resolves a gwiki `Context` (project root, vault path, PostgreSQL hub, AI routing) → dispatches to a handler in `commands/`. Ingest path: `ingest/file.rs` routes a source by type → modality orchestrator (`ingest/{document,pdf,url,mediawiki,git,wayback,audio,image,video}.rs`) → derived Markdown written into the vault with frontmatter/provenance → `indexer` writes PostgreSQL hub rows → `commands/index.rs` synchronously updates Qdrant vectors and the FalkorDB graph for the same scope.
 
 ### Core Modules
 
