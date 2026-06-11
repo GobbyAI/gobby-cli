@@ -167,8 +167,8 @@ qdrant = ["dep:reqwest", "dep:urlencoding"]
 indexing = ["dep:ignore", "dep:sha2"]
 search = []
 graph-analytics = []
-local-backend = ["dep:ureq"]
-ai = ["dep:reqwest", "dep:base64", "dep:bytes", "dep:httpdate", "dep:rand", "local-backend", "reqwest/multipart"]
+local-backend = []
+ai = ["dep:reqwest", "dep:base64", "dep:bytes", "dep:httpdate", "dep:rand", "dep:ureq", "local-backend", "reqwest/multipart"]
 full = ["postgres", "falkor", "qdrant", "indexing", "search", "graph-analytics", "ai"]
 ```
 
@@ -182,8 +182,8 @@ Feature rationale:
 | `indexing` | `ignore`, `sha2` | File walking and content hashing are useful for indexing consumers only. |
 | `search` | no extra dependency today | Search fusion contracts are lightweight, but still opt-in so the public surface remains explicit. |
 | `graph-analytics` | no extra dependency today | In-memory graph analytics remain opt-in so the public surface stays explicit. |
-| `local-backend` | `ureq` | Lightweight HTTP probes for local backend discovery are only needed by consumers that call them. |
-| `ai` | `reqwest`, AI payload helpers, and `local-backend` | AI transport, daemon probing, and routing helpers need HTTP clients, local backend discovery, and multipart payload support. |
+| `local-backend` | no extra dependency today | Local backend discovery uses a hand-rolled `TcpStream` probe so tiny consumers (gloc) link no HTTP client. |
+| `ai` | `reqwest`, `ureq`, AI payload helpers, and `local-backend` | AI transport, daemon probing, and routing helpers need HTTP clients, local backend discovery, and multipart payload support. |
 | `full` | all feature modules | Convenience feature for development and consumers that need the whole foundation layer. |
 
 Every individual feature must compile in isolation. Do not rely on `--all-features` to hide missing feature dependencies.
