@@ -148,14 +148,14 @@ Shared foundation library (`gobby-core`), kept dependency-light so small binarie
 ### Always-compiled modules
 
 - **`bootstrap`** / **`daemon_url`** / **`project`** / **`provisioning`** — `~/.gobby/bootstrap.yaml` parsing, daemon URL resolution, project-root discovery (`.gobby/project.json`), and provisioning helpers.
-- **`config`** / **`context`** / **`setup`** — Shared config types and runtime context resolution reused across binaries.
+- **`config`** / **`setup`** / **`cli_contract`** — Shared config types, setup helpers, and serialized CLI contract shapes reused across binaries.
 - **`ai_context`** — AI config types, `AiContext` resolution, per-capability **routing decision** (daemon / direct / off), and an always-compiled concurrency limiter.
 - **`ai_types`** — Pure AI result/error data types (no transport deps), kept separate from `ai_context`.
-- **`degradation`** / **`local_backend`** — Shared degradation vocabulary and local-LLM backend descriptors.
+- **`degradation`** / **`local_backend`** — Shared degradation vocabulary plus local-backend type and probe helpers.
 
 ### Feature-gated adapters
 
-`ai` (HTTP transport via `reqwest`), `postgres`, `falkor`, `qdrant`, `indexing`, `search` — each behind its own Cargo feature so a consumer pulls in only the datastores/transport it uses. Local backend descriptors are always available from `gobby_core::local_backend`.
+`ai` (HTTP transport via `reqwest`), `postgres`, `falkor`, `qdrant`, `indexing`, `search` — each behind its own Cargo feature so a consumer pulls in only the datastores/transport it uses. `gobby_core::local_backend` exposes the shared `Backend` type unconditionally, with probe helpers gated behind `local-backend`.
 
 ## Key Constraints
 
