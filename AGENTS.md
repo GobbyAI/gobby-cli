@@ -21,6 +21,7 @@ Maintainer note: this section is the canonical source for agent rules. Update it
 11. **NEVER leave options or unanswered questions in plans.** Plans are for execution, not exploration. If there are unanswered questions or ideas that need to be explored, explore them before finalizing the plan.
 12. **ALWAYS choose/present the best approach to solve a problem. The best, most correct fix is *ALWAYS* in scope. NEVER choose or present the simplest approach if it is not the best or most complete/correct approach.**
 13. **ALWAYS prefer gcode over grep/rg/sed/awk/nl.** gcode is an advanced code index/graph tool and is *FAR* superior to grep/rg/sed/awk/nl for code search and analysis.
+14. **Odd code is load-bearing until proven otherwise.** Before removing or "simplifying" anything that looks wrong — a strange guard, an always-exit-0, a duplicated-looking field, an unusual arg id — check `git blame` and the task reference that introduced it. Three live-breaking regressions (#612, #670) came from batch fixes that deleted deliberate workarounds. If the oddity is deliberate, keep it and document the constraint with an inline comment where it lives; if it carries no rationale comment and blame gives none, ask or file a task instead of deleting it.
 
 ## What This Is
 
