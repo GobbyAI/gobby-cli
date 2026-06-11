@@ -312,6 +312,18 @@ list of pages.
 
 Without `--llm`, `ask` is a pure retrieval command and runs without any AI route.
 
+**Citation check.** Synthesized answers are checked after generation against the
+retrieved evidence (hit titles, snippets, paths, related pages, and code
+citations). The JSON output carries the verdict in
+`synthesis.citation_check` — `status` is `supported` when every extracted claim
+overlaps the evidence, or `unsupported_claims` with the offending claims listed
+in `unsupported_claims[]`; each ungrounded claim also adds a `warnings[]` entry.
+Text output appends an `[unverified]` note when any claim fails the check. The
+check is a deterministic token-overlap heuristic, not a semantic proof — treat
+flagged claims as unverified rather than wrong, and verify them against the
+cited pages. (Persisted prose is validated separately: research-note linting
+rejects uncited claims and `audit` checks pages against provenance.)
+
 ## Navigate the Vault
 
 ### Read (`read`)
