@@ -78,6 +78,12 @@ structural fallbacks:
   indexed symbol and can take hours-to-days on large repos with local models;
   reserve it for small repos or scoped runs.
 
+On the daemon route, aggregate docs (architecture, module, and repo prose)
+request the heavier `feature_mid` daemon profile because they synthesize many
+child summaries into one long grounded answer; file and symbol docs stay on
+the daemon default profile. Override the aggregate tier with
+`--ai-aggregate-profile <PROFILE>`.
+
 ## Diagrams
 
 When FalkorDB graph edges are available, module docs can include bounded Mermaid

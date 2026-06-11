@@ -65,6 +65,14 @@ Valid routing values are `auto`, `daemon`, `direct`, and `off`.
 `model`, and `provider` from `ai.audio_transcribe` unless a translate-specific
 key is set. `ai.audio_translate.target_lang` remains translate-specific.
 
+When text generation routes through the daemon without an explicit
+provider/model pair, requests carry a daemon feature profile (`feature_low`
+unless configured). Set `ai.text_generate.profile` to change that default;
+explicit `provider`/`model` keys take precedence and suppress the profile
+entirely. Call sites can override the profile per request — `gcode codewiki`
+sends a heavier profile for aggregate docs (see the
+[codewiki guide](./codewiki.md)).
+
 For direct authenticated endpoints, store the token in user-local
 `~/.gobby/gcore.yaml` as `api_key`. Daemon-backed `config_store` values may use
 `$secret:` references where the daemon runtime config supports them.
