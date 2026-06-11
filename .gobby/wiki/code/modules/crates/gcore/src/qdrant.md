@@ -39,29 +39,12 @@ Parent: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Overview
 
-This module provides core utilities, validation rules, and integration helpers for Qdrant vector database interactions within gcore. It enforces strict naming conventions and scoping rules, validates payload schemas, and manages collection lifecycle operations including batched upserts, filtered point deletions, and state synchronization. The module also implements typed HTTP error handling for Qdrant network calls and supplies concurrency testing utilities, degradation contracts, and async spawn helpers to support robust integration testing and CLI synchronization. Implementation is organized into dedicated naming validation logic and comprehensive integration tests.
+The qdrant module handles Qdrant vector database integration for gcore. It provides collection naming utilities (`naming.rs`) that generate and validate scoped collection names via `collection_name` and `validate_collection_name_component`, supporting multiple `CollectionScope` values and reporting issues through `CollectionNameError`. The accompanying test suite (`tests.rs`) verifies naming validation, collection lifecycle and schema enforcement, batched upserts that require completed operations, point-count reads, typed HTTP error handling and degradation contracts, and search composition from the CLI path.
 [crates/gcore/src/qdrant/naming.rs:3-10]
+[crates/gcore/src/qdrant/tests.rs:12-30]
 [crates/gcore/src/qdrant/naming.rs:13-22]
 [crates/gcore/src/qdrant/naming.rs:25-43]
 [crates/gcore/src/qdrant/naming.rs:45-70]
-[crates/gcore/src/qdrant/naming.rs:77-90]
-[crates/gcore/src/qdrant/naming.rs:93-110]
-[crates/gcore/src/qdrant/naming.rs:113-124]
-[crates/gcore/src/qdrant/tests.rs:12-30]
-[crates/gcore/src/qdrant/tests.rs:33-59]
-[crates/gcore/src/qdrant/tests.rs:62-99]
-[crates/gcore/src/qdrant/tests.rs:102-128]
-[crates/gcore/src/qdrant/tests.rs:131-161]
-[crates/gcore/src/qdrant/tests.rs:164-207]
-[crates/gcore/src/qdrant/tests.rs:210-250]
-[crates/gcore/src/qdrant/tests.rs:253-292]
-[crates/gcore/src/qdrant/tests.rs:295-376]
-[crates/gcore/src/qdrant/tests.rs:379-397]
-[crates/gcore/src/qdrant/tests.rs:400-414]
-[crates/gcore/src/qdrant/tests.rs:417-494]
-[crates/gcore/src/qdrant/tests.rs:497-523]
-[crates/gcore/src/qdrant/tests.rs:525-527]
-[crates/gcore/src/qdrant/tests.rs:529-556]
 
 ## Call Diagram
 
@@ -100,24 +83,12 @@ sequenceDiagram
 [crates/gcore/src/qdrant/naming.rs:25-43]
 [crates/gcore/src/qdrant/naming.rs:45-70]
 [crates/gcore/src/qdrant/naming.rs:77-90]
-[crates/gcore/src/qdrant/naming.rs:93-110]
-[crates/gcore/src/qdrant/naming.rs:113-124]
 - [[code/files/crates/gcore/src/qdrant/tests.rs|crates/gcore/src/qdrant/tests.rs]] - `crates/gcore/src/qdrant/tests.rs` exposes 15 indexed API symbols.
 [crates/gcore/src/qdrant/tests.rs:12-30]
 [crates/gcore/src/qdrant/tests.rs:33-59]
 [crates/gcore/src/qdrant/tests.rs:62-99]
 [crates/gcore/src/qdrant/tests.rs:102-128]
 [crates/gcore/src/qdrant/tests.rs:131-161]
-[crates/gcore/src/qdrant/tests.rs:164-207]
-[crates/gcore/src/qdrant/tests.rs:210-250]
-[crates/gcore/src/qdrant/tests.rs:253-292]
-[crates/gcore/src/qdrant/tests.rs:295-376]
-[crates/gcore/src/qdrant/tests.rs:379-397]
-[crates/gcore/src/qdrant/tests.rs:400-414]
-[crates/gcore/src/qdrant/tests.rs:417-494]
-[crates/gcore/src/qdrant/tests.rs:497-523]
-[crates/gcore/src/qdrant/tests.rs:525-527]
-[crates/gcore/src/qdrant/tests.rs:529-556]
 
 ## Components
 

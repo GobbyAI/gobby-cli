@@ -36,16 +36,6 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 [crates/gwiki/src/vault.rs:53-58]
 [crates/gwiki/src/vault.rs:60-97]
 [crates/gwiki/src/vault.rs:99-135]
-[crates/gwiki/src/vault.rs:138-141]
-[crates/gwiki/src/vault.rs:143-149]
-[crates/gwiki/src/vault.rs:151-178]
-[crates/gwiki/src/vault.rs:180-216]
-[crates/gwiki/src/vault.rs:218-228]
-[crates/gwiki/src/vault.rs:230-249]
-[crates/gwiki/src/vault.rs:256-273]
-[crates/gwiki/src/vault.rs:276-301]
-[crates/gwiki/src/vault.rs:304-322]
-[crates/gwiki/src/vault.rs:325-344]
 
 ## API Symbols
 

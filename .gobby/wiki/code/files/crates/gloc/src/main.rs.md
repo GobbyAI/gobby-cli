@@ -29,9 +29,6 @@ Module: [[code/modules/crates/gloc/src|crates/gloc/src]]
 [crates/gloc/src/main.rs:125-136]
 [crates/gloc/src/main.rs:138-161]
 [crates/gloc/src/main.rs:163-205]
-[crates/gloc/src/main.rs:207-232]
-[crates/gloc/src/main.rs:234-237]
-[crates/gloc/src/main.rs:239-270]
 
 ## API Symbols
 

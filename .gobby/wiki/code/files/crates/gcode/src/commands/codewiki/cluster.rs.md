@@ -31,11 +31,6 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 [crates/gcode/src/commands/codewiki/cluster.rs:89-130]
 [crates/gcode/src/commands/codewiki/cluster.rs:132-156]
 [crates/gcode/src/commands/codewiki/cluster.rs:158-168]
-[crates/gcode/src/commands/codewiki/cluster.rs:170-178]
-[crates/gcode/src/commands/codewiki/cluster.rs:180-196]
-[crates/gcode/src/commands/codewiki/cluster.rs:198-206]
-[crates/gcode/src/commands/codewiki/cluster.rs:208-226]
-[crates/gcode/src/commands/codewiki/cluster.rs:228-233]
 
 ## API Symbols
 

@@ -55,37 +55,12 @@ Parent: [[code/modules/crates/gcode/src/index/import_resolution|crates/gcode/src
 
 ## Overview
 
-This module provides language-specific parsers for extracting and normalizing import statements across multiple programming languages. It organizes parsing logic for Go, Rust, Java, C#, PHP, Kotlin, Python, JavaScript, Swift, Ruby, Dart, and Elixir into dedicated files, each exposing targeted functions for statement parsing, binding registration, and syntax normalization. The core mod.rs file defines shared interfaces and orchestration utilities, while rest.rs handles additional language parsers. Together, these components serve as the front-end for collecting and standardizing import metadata during index construction.
+This module implements language-specific import statement parsing for import resolution. The `mod.rs` entry point dispatches to per-language parsers via `parse_import_statement`, seeds import bindings, resolves external callees, and records unparsed imports. Dedicated files handle distinct language families: Go and Rust (including grouped/path imports), Java and C# (with global alias normalization), PHP and Kotlin (use groups, wildcards, import kinds), Python and JavaScript, and a `rest` module covering Swift, Ruby, Dart, and Elixir. Each parser extracts module paths and symbol bindings used downstream to map imports to resolved targets.
 [crates/gcode/src/index/import_resolution/parser/go_rust.rs:12-40]
-[crates/gcode/src/index/import_resolution/parser/go_rust.rs:42-77]
-[crates/gcode/src/index/import_resolution/parser/go_rust.rs:79-106]
-[crates/gcode/src/index/import_resolution/parser/go_rust.rs:108-136]
-[crates/gcode/src/index/import_resolution/parser/go_rust.rs:138-188]
-[crates/gcode/src/index/import_resolution/parser/go_rust.rs:195-206]
-[crates/gcode/src/index/import_resolution/parser/go_rust.rs:209-219]
 [crates/gcode/src/index/import_resolution/parser/java_csharp.rs:8-60]
-[crates/gcode/src/index/import_resolution/parser/java_csharp.rs:62-118]
-[crates/gcode/src/index/import_resolution/parser/java_csharp.rs:120-122]
-[crates/gcode/src/index/import_resolution/parser/java_csharp.rs:124-137]
 [crates/gcode/src/index/import_resolution/parser/mod.rs:29-54]
-[crates/gcode/src/index/import_resolution/parser/mod.rs:56-74]
-[crates/gcode/src/index/import_resolution/parser/mod.rs:76-126]
-[crates/gcode/src/index/import_resolution/parser/mod.rs:128-203]
 [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:7-14]
-[crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:16-59]
-[crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:62-66]
-[crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:68-104]
-[crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:106-147]
-[crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:149-168]
-[crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:170-183]
-[crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:185-191]
-[crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:193-213]
 [crates/gcode/src/index/import_resolution/parser/python_js.rs:11-98]
-[crates/gcode/src/index/import_resolution/parser/python_js.rs:100-194]
-[crates/gcode/src/index/import_resolution/parser/rest.rs:10-54]
-[crates/gcode/src/index/import_resolution/parser/rest.rs:56-92]
-[crates/gcode/src/index/import_resolution/parser/rest.rs:94-121]
-[crates/gcode/src/index/import_resolution/parser/rest.rs:123-176]
 
 ## Call Diagram
 
@@ -132,8 +107,6 @@ sequenceDiagram
 [crates/gcode/src/index/import_resolution/parser/go_rust.rs:79-106]
 [crates/gcode/src/index/import_resolution/parser/go_rust.rs:108-136]
 [crates/gcode/src/index/import_resolution/parser/go_rust.rs:138-188]
-[crates/gcode/src/index/import_resolution/parser/go_rust.rs:195-206]
-[crates/gcode/src/index/import_resolution/parser/go_rust.rs:209-219]
 - [[code/files/crates/gcode/src/index/import_resolution/parser/java_csharp.rs|crates/gcode/src/index/import_resolution/parser/java_csharp.rs]] - `crates/gcode/src/index/import_resolution/parser/java_csharp.rs` exposes 4 indexed API symbols.
 [crates/gcode/src/index/import_resolution/parser/java_csharp.rs:8-60]
 [crates/gcode/src/index/import_resolution/parser/java_csharp.rs:62-118]
@@ -150,10 +123,6 @@ sequenceDiagram
 [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:62-66]
 [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:68-104]
 [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:106-147]
-[crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:149-168]
-[crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:170-183]
-[crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:185-191]
-[crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:193-213]
 - [[code/files/crates/gcode/src/index/import_resolution/parser/python_js.rs|crates/gcode/src/index/import_resolution/parser/python_js.rs]] - `crates/gcode/src/index/import_resolution/parser/python_js.rs` exposes 2 indexed API symbols.
 [crates/gcode/src/index/import_resolution/parser/python_js.rs:11-98]
 [crates/gcode/src/index/import_resolution/parser/python_js.rs:100-194]

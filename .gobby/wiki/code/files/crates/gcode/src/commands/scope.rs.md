@@ -33,13 +33,6 @@ Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 [crates/gcode/src/commands/scope.rs:29-45]
 [crates/gcode/src/commands/scope.rs:47-60]
 [crates/gcode/src/commands/scope.rs:62-69]
-[crates/gcode/src/commands/scope.rs:71-109]
-[crates/gcode/src/commands/scope.rs:111-133]
-[crates/gcode/src/commands/scope.rs:135-146]
-[crates/gcode/src/commands/scope.rs:153-167]
-[crates/gcode/src/commands/scope.rs:170-182]
-[crates/gcode/src/commands/scope.rs:185-190]
-[crates/gcode/src/commands/scope.rs:193-208]
 
 ## API Symbols
 

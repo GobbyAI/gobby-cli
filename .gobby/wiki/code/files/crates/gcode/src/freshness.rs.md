@@ -45,25 +45,6 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 [crates/gcode/src/freshness.rs:24-83]
 [crates/gcode/src/freshness.rs:93-121]
 [crates/gcode/src/freshness.rs:123-144]
-[crates/gcode/src/freshness.rs:146-160]
-[crates/gcode/src/freshness.rs:162-182]
-[crates/gcode/src/freshness.rs:184]
-[crates/gcode/src/freshness.rs:186-193]
-[crates/gcode/src/freshness.rs:187-192]
-[crates/gcode/src/freshness.rs:195-200]
-[crates/gcode/src/freshness.rs:196-199]
-[crates/gcode/src/freshness.rs:208-222]
-[crates/gcode/src/freshness.rs:224-226]
-[crates/gcode/src/freshness.rs:228-249]
-[crates/gcode/src/freshness.rs:251-274]
-[crates/gcode/src/freshness.rs:276-283]
-[crates/gcode/src/freshness.rs:285-293]
-[crates/gcode/src/freshness.rs:295-300]
-[crates/gcode/src/freshness.rs:302-315]
-[crates/gcode/src/freshness.rs:322-330]
-[crates/gcode/src/freshness.rs:334-343]
-[crates/gcode/src/freshness.rs:347-388]
-[crates/gcode/src/freshness.rs:392-428]
 
 ## API Symbols
 
@@ -75,13 +56,13 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
   - Purpose: Indexed type `FreshnessStatus` in `crates/gcode/src/freshness.rs`. [crates/gcode/src/freshness.rs:19-22]
 - `ensure_fresh` (function) component `ensure_fresh [function]` (`c8af2110-ca73-5c67-932b-0c884dd653dd`) lines 24-83 [crates/gcode/src/freshness.rs:24-83]
   - Signature: `pub fn ensure_fresh(ctx: &Context, scope: FreshnessScope) -> anyhow::Result<FreshnessStatus> {`
-  - Purpose: Indexed function `ensure_fresh` in `crates/gcode/src/freshness.rs`. [crates/gcode/src/freshness.rs:24-83]
+  - Purpose: Ensures project file index freshness by conditionally reindexing either the entire project or specified files under an advisory lock, with lock-free pre-checks to skip unnecessary work. [crates/gcode/src/freshness.rs:24-83]
 - `project_needs_refresh` (function) component `project_needs_refresh [function]` (`6970c8cd-4aa3-51fa-832f-cc2a313fa9b0`) lines 93-121 [crates/gcode/src/freshness.rs:93-121]
   - Signature: `fn project_needs_refresh(ctx: &Context) -> anyhow::Result<bool> {`
-  - Purpose: Indexed function `project_needs_refresh` in `crates/gcode/src/freshness.rs`. [crates/gcode/src/freshness.rs:93-121]
+  - Purpose: Returns `true` if a project's code index has never been created or if any tracked file paths have changed since the last recorded indexing timestamp. [crates/gcode/src/freshness.rs:93-121]
 - `ensure_symbol_fresh` (function) component `ensure_symbol_fresh [function]` (`27e3bed4-eb80-526e-bb22-4465aa356e45`) lines 123-144 [crates/gcode/src/freshness.rs:123-144]
   - Signature: `pub fn ensure_symbol_fresh(ctx: &Context, id: &str) -> anyhow::Result<FreshnessStatus> {`
-  - Purpose: Indexed function `ensure_symbol_fresh` in `crates/gcode/src/freshness.rs`. [crates/gcode/src/freshness.rs:123-144]
+  - Purpose: Validates a symbol's freshness by checking if its file slice is current, and if not, ensures its source file is re-processed. [crates/gcode/src/freshness.rs:123-144]
 - `symbol_slice_is_current` (function) component `symbol_slice_is_current [function]` (`9f86c033-896a-53a7-8c17-44012ae81185`) lines 146-160 [crates/gcode/src/freshness.rs:146-160]
   - Signature: `fn symbol_slice_is_current(ctx: &Context, sym: &Symbol) -> bool {`
   - Purpose: Returns `true` only when `sym.content_hash` is non-empty, the symbol’s file can be read from `ctx.project_root.join(sym.file_path)`, and the hash computed over `sym.byte_start..sym.byte_end` exactly matches `sym.content_hash`. [crates/gcode/src/freshness.rs:146-160]
@@ -90,10 +71,10 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
   - Purpose: Resolves `path` against `root` when relative, canonicalizes both paths, returns the canonical path relative to the canonicalized `root` when it lies under that root, and otherwise falls back to the original `path`, converted lossily to a `String`. [crates/gcode/src/freshness.rs:162-182]
 - `FreshnessGuard` (class) component `FreshnessGuard [class]` (`4d8390fd-df77-5e9c-bcb0-c4afa141068e`) lines 184-184 [crates/gcode/src/freshness.rs:184]
   - Signature: `struct FreshnessGuard;`
-  - Purpose: Indexed class `FreshnessGuard` in `crates/gcode/src/freshness.rs`. [crates/gcode/src/freshness.rs:184]
+  - Purpose: `FreshnessGuard` is a zero-sized marker struct with no fields or methods visible in the provided declaration. [crates/gcode/src/freshness.rs:184]
 - `FreshnessGuard` (class) component `FreshnessGuard [class]` (`e46d16c8-6fb7-5d4e-8bbe-25c4d6d9a9ff`) lines 186-193 [crates/gcode/src/freshness.rs:186-193]
   - Signature: `impl FreshnessGuard {`
-  - Purpose: Indexed class `FreshnessGuard` in `crates/gcode/src/freshness.rs`. [crates/gcode/src/freshness.rs:186-193]
+  - Purpose: FreshnessGuard is an RAII guard that sets an environment variable to mark active freshness indexing within a CLI process. [crates/gcode/src/freshness.rs:186-193]
 - `FreshnessGuard.enter` (method) component `FreshnessGuard.enter [method]` (`71e65cf6-f900-5130-98c7-04dd8ed8ed40`) lines 187-192 [crates/gcode/src/freshness.rs:187-192]
   - Signature: `fn enter() -> Self {`
   - Purpose: Marks the current CLI process as in-flight by unsafely setting `INFLIGHT_ENV` to `"1"` and then returning `Self`. [crates/gcode/src/freshness.rs:187-192]
@@ -108,7 +89,7 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
   - Purpose: Creates and returns a `Context` for a test project rooted at `root`, using a fixed PostgreSQL test database URL and project ID, `quiet = true`, default code-vector and indexing settings, `Single` index scope, and all external service/daemon fields unset. [crates/gcode/src/freshness.rs:208-222]
 - `symbol_hash` (function) component `symbol_hash [function]` (`77932652-b9d3-5e58-aeac-0e74ca70877f`) lines 224-226 [crates/gcode/src/freshness.rs:224-226]
   - Signature: `fn symbol_hash(source: &[u8], start: usize, end: usize) -> String {`
-  - Purpose: Indexed function `symbol_hash` in `crates/gcode/src/freshness.rs`. [crates/gcode/src/freshness.rs:224-226]
+  - Purpose: Computes a hash of the byte content between the specified start and end indices, returning it as a String. [crates/gcode/src/freshness.rs:224-226]
 - `postgres_test_context` (function) component `postgres_test_context [function]` (`2525dc46-d85e-555e-8fe5-7b170c985f2d`) lines 228-249 [crates/gcode/src/freshness.rs:228-249]
   - Signature: `fn postgres_test_context(project_id: &str) -> Option<Context> {`
   - Purpose: Returns a test `Context` for the given `project_id` only when `GCODE_POSTGRES_TEST_DATABASE_URL` is set and `db::connect_readwrite` succeeds, otherwise it logs that the PostgreSQL hub is unavailable and returns `None`. [crates/gcode/src/freshness.rs:228-249]
@@ -132,11 +113,11 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
   - Purpose: Verifies that setting `INFLIGHT_ENV` short-circuits `ensure_fresh` for `FreshnessScope::Project`, causing it to return `FreshnessStatus::Checked` without performing a freshness refresh. [crates/gcode/src/freshness.rs:322-330]
 - `busy_project_lock_skips_freshness_refresh` (function) component `busy_project_lock_skips_freshness_refresh [function]` (`cb13391f-f830-5379-9017-7f0e180b499f`) lines 334-343 [crates/gcode/src/freshness.rs:334-343]
   - Signature: `fn busy_project_lock_skips_freshness_refresh() {`
-  - Purpose: Indexed function `busy_project_lock_skips_freshness_refresh` in `crates/gcode/src/freshness.rs`. [crates/gcode/src/freshness.rs:334-343]
+  - Purpose: This test verifies that `ensure_fresh` returns `FreshnessStatus::SkippedBusy` when invoked on a project scope while a project lock is actively held. [crates/gcode/src/freshness.rs:334-343]
 - `pre_gate_skips_lock_when_unchanged_and_trips_after_a_change` (function) component `pre_gate_skips_lock_when_unchanged_and_trips_after_a_change [function]` (`16703327-90f7-56c2-9f86-373a36770ed1`) lines 347-388 [crates/gcode/src/freshness.rs:347-388]
   - Signature: `fn pre_gate_skips_lock_when_unchanged_and_trips_after_a_change() {`
-  - Purpose: Indexed function `pre_gate_skips_lock_when_unchanged_and_trips_after_a_change` in `crates/gcode/src/freshness.rs`. [crates/gcode/src/freshness.rs:347-388]
+  - Purpose: Verifies that a pre-gate freshness check skips advisory lock acquisition when source files are unchanged, but acquires the lock and reports SkippedBusy upon file modification. [crates/gcode/src/freshness.rs:347-388]
 - `symbol_slice_check_uses_stored_byte_range_hash` (function) component `symbol_slice_check_uses_stored_byte_range_hash [function]` (`dd72a5da-6d0b-5f25-945e-39d1f67e6232`) lines 392-428 [crates/gcode/src/freshness.rs:392-428]
   - Signature: `fn symbol_slice_check_uses_stored_byte_range_hash() {`
-  - Purpose: Indexed function `symbol_slice_check_uses_stored_byte_range_hash` in `crates/gcode/src/freshness.rs`. [crates/gcode/src/freshness.rs:392-428]
+  - Purpose: This test validates that `symbol_slice_is_current` correctly uses the stored byte-range content hash to detect when a symbol's cached location becomes stale after file modifications. [crates/gcode/src/freshness.rs:392-428]
 

@@ -35,15 +35,6 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 [crates/gwiki/src/commands/search.rs:71-134]
 [crates/gwiki/src/commands/search.rs:136-154]
 [crates/gwiki/src/commands/search.rs:156-162]
-[crates/gwiki/src/commands/search.rs:164-199]
-[crates/gwiki/src/commands/search.rs:201-225]
-[crates/gwiki/src/commands/search.rs:227-231]
-[crates/gwiki/src/commands/search.rs:233-239]
-[crates/gwiki/src/commands/search.rs:241-302]
-[crates/gwiki/src/commands/search.rs:304-315]
-[crates/gwiki/src/commands/search.rs:317-336]
-[crates/gwiki/src/commands/search.rs:343-356]
-[crates/gwiki/src/commands/search.rs:359-376]
 
 ## API Symbols
 

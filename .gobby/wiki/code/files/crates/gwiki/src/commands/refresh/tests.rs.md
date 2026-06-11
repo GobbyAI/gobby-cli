@@ -41,21 +41,6 @@ Module: [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/comman
 [crates/gwiki/src/commands/refresh/tests.rs:33-49]
 [crates/gwiki/src/commands/refresh/tests.rs:51-103]
 [crates/gwiki/src/commands/refresh/tests.rs:105-121]
-[crates/gwiki/src/commands/refresh/tests.rs:123-131]
-[crates/gwiki/src/commands/refresh/tests.rs:134-160]
-[crates/gwiki/src/commands/refresh/tests.rs:163-185]
-[crates/gwiki/src/commands/refresh/tests.rs:188-214]
-[crates/gwiki/src/commands/refresh/tests.rs:217-250]
-[crates/gwiki/src/commands/refresh/tests.rs:253-316]
-[crates/gwiki/src/commands/refresh/tests.rs:319-342]
-[crates/gwiki/src/commands/refresh/tests.rs:345-362]
-[crates/gwiki/src/commands/refresh/tests.rs:365-370]
-[crates/gwiki/src/commands/refresh/tests.rs:373-386]
-[crates/gwiki/src/commands/refresh/tests.rs:389-406]
-[crates/gwiki/src/commands/refresh/tests.rs:409-420]
-[crates/gwiki/src/commands/refresh/tests.rs:423-434]
-[crates/gwiki/src/commands/refresh/tests.rs:437-445]
-[crates/gwiki/src/commands/refresh/tests.rs:448-464]
 
 ## API Symbols
 

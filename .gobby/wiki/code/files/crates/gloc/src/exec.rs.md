@@ -37,17 +37,6 @@ Module: [[code/modules/crates/gloc/src|crates/gloc/src]]
 [crates/gloc/src/exec.rs:39-45]
 [crates/gloc/src/exec.rs:51-80]
 [crates/gloc/src/exec.rs:87-94]
-[crates/gloc/src/exec.rs:96-109]
-[crates/gloc/src/exec.rs:111-123]
-[crates/gloc/src/exec.rs:126-134]
-[crates/gloc/src/exec.rs:137-144]
-[crates/gloc/src/exec.rs:147-150]
-[crates/gloc/src/exec.rs:153-156]
-[crates/gloc/src/exec.rs:159-163]
-[crates/gloc/src/exec.rs:166-171]
-[crates/gloc/src/exec.rs:174-188]
-[crates/gloc/src/exec.rs:191-194]
-[crates/gloc/src/exec.rs:197-199]
 
 ## API Symbols
 

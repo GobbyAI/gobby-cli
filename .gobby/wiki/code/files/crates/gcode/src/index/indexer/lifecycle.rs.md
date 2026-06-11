@@ -32,12 +32,6 @@ Module: [[code/modules/crates/gcode/src/index/indexer|crates/gcode/src/index/ind
 [crates/gcode/src/index/indexer/lifecycle.rs:71-81]
 [crates/gcode/src/index/indexer/lifecycle.rs:84-121]
 [crates/gcode/src/index/indexer/lifecycle.rs:125-152]
-[crates/gcode/src/index/indexer/lifecycle.rs:154-181]
-[crates/gcode/src/index/indexer/lifecycle.rs:183-229]
-[crates/gcode/src/index/indexer/lifecycle.rs:232-235]
-[crates/gcode/src/index/indexer/lifecycle.rs:237-260]
-[crates/gcode/src/index/indexer/lifecycle.rs:262-294]
-[crates/gcode/src/index/indexer/lifecycle.rs:296-305]
 
 ## API Symbols
 

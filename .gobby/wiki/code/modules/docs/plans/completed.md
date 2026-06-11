@@ -13,13 +13,13 @@ Parent: [[code/modules/docs/plans|docs/plans]]
 
 ## Overview
 
-This module archives completed development plans and specifications for various features and version updates. It contains reference documentation covering G-code skill targets, statusline hook phases, sandbox-tolerant hooks, and a standalone schema. As a documentation archive, it contains no executable code or indexed API symbols, serving solely to preserve past design decisions and implementation roadmaps.
+This module archives completed planning documents for the gobby project. It contains design and implementation plans for delivered features, including gcode 0.8.3 skill targets, ghook statusline (phase 1), sandbox-tolerant hooks (both Rust and general implementations), and standalone schema work. These markdown files serve as historical records of finished initiatives and contain no indexed API symbols.
 
 ## Files
 
-- [[code/files/docs/plans/completed/gcode-0.8.3-skill-targets.md|docs/plans/completed/gcode-0.8.3-skill-targets.md]] - `docs/plans/completed/gcode-0.8.3-skill-targets.md` has no indexed API symbols.
-- [[code/files/docs/plans/completed/ghook-statusline-phase1.md|docs/plans/completed/ghook-statusline-phase1.md]] - `docs/plans/completed/ghook-statusline-phase1.md` has no indexed API symbols.
-- [[code/files/docs/plans/completed/sandbox-tolerant-hooks-rust.md|docs/plans/completed/sandbox-tolerant-hooks-rust.md]] - `docs/plans/completed/sandbox-tolerant-hooks-rust.md` has no indexed API symbols.
-- [[code/files/docs/plans/completed/sandbox-tolerant-hooks.md|docs/plans/completed/sandbox-tolerant-hooks.md]] - `docs/plans/completed/sandbox-tolerant-hooks.md` has no indexed API symbols.
-- [[code/files/docs/plans/completed/standalone-schema.md|docs/plans/completed/standalone-schema.md]] - `docs/plans/completed/standalone-schema.md` has no indexed API symbols.
+- [[code/files/docs/plans/completed/gcode-0.8.3-skill-targets.md|docs/plans/completed/gcode-0.8.3-skill-targets.md]] - `docs/plans/completed/gcode-0.8.3-skill-targets.md` has no indexed API symbols. 
+- [[code/files/docs/plans/completed/ghook-statusline-phase1.md|docs/plans/completed/ghook-statusline-phase1.md]] - `docs/plans/completed/ghook-statusline-phase1.md` has no indexed API symbols. 
+- [[code/files/docs/plans/completed/sandbox-tolerant-hooks-rust.md|docs/plans/completed/sandbox-tolerant-hooks-rust.md]] - `docs/plans/completed/sandbox-tolerant-hooks-rust.md` has no indexed API symbols. 
+- [[code/files/docs/plans/completed/sandbox-tolerant-hooks.md|docs/plans/completed/sandbox-tolerant-hooks.md]] - `docs/plans/completed/sandbox-tolerant-hooks.md` has no indexed API symbols. 
+- [[code/files/docs/plans/completed/standalone-schema.md|docs/plans/completed/standalone-schema.md]] - `docs/plans/completed/standalone-schema.md` has no indexed API symbols. 
 

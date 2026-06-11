@@ -34,14 +34,6 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 [crates/gwiki/src/credibility.rs:25-30]
 [crates/gwiki/src/credibility.rs:33-36]
 [crates/gwiki/src/credibility.rs:38-58]
-[crates/gwiki/src/credibility.rs:39-57]
-[crates/gwiki/src/credibility.rs:60-89]
-[crates/gwiki/src/credibility.rs:91-118]
-[crates/gwiki/src/credibility.rs:120-135]
-[crates/gwiki/src/credibility.rs:137-152]
-[crates/gwiki/src/credibility.rs:154-175]
-[crates/gwiki/src/credibility.rs:177-189]
-[crates/gwiki/src/credibility.rs:196-223]
 
 ## API Symbols
 

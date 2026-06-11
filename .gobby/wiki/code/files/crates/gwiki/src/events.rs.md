@@ -28,8 +28,6 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 [crates/gwiki/src/events.rs:27-75]
 [crates/gwiki/src/events.rs:28-32]
 [crates/gwiki/src/events.rs:34-74]
-[crates/gwiki/src/events.rs:77-105]
-[crates/gwiki/src/events.rs:114-147]
 
 ## API Symbols
 

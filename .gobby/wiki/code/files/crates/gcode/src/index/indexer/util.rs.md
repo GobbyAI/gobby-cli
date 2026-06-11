@@ -35,15 +35,6 @@ Module: [[code/modules/crates/gcode/src/index/indexer|crates/gcode/src/index/ind
 [crates/gcode/src/index/indexer/util.rs:95-101]
 [crates/gcode/src/index/indexer/util.rs:103-111]
 [crates/gcode/src/index/indexer/util.rs:113-142]
-[crates/gcode/src/index/indexer/util.rs:144-154]
-[crates/gcode/src/index/indexer/util.rs:156-160]
-[crates/gcode/src/index/indexer/util.rs:162-169]
-[crates/gcode/src/index/indexer/util.rs:176-186]
-[crates/gcode/src/index/indexer/util.rs:189-194]
-[crates/gcode/src/index/indexer/util.rs:197-205]
-[crates/gcode/src/index/indexer/util.rs:209-214]
-[crates/gcode/src/index/indexer/util.rs:218-223]
-[crates/gcode/src/index/indexer/util.rs:227-232]
 
 ## API Symbols
 

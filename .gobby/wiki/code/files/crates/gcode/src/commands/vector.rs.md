@@ -35,15 +35,6 @@ Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 [crates/gcode/src/commands/vector.rs:26-41]
 [crates/gcode/src/commands/vector.rs:43-62]
 [crates/gcode/src/commands/vector.rs:64-71]
-[crates/gcode/src/commands/vector.rs:73-83]
-[crates/gcode/src/commands/vector.rs:85-95]
-[crates/gcode/src/commands/vector.rs:98-114]
-[crates/gcode/src/commands/vector.rs:116-136]
-[crates/gcode/src/commands/vector.rs:145-159]
-[crates/gcode/src/commands/vector.rs:161-166]
-[crates/gcode/src/commands/vector.rs:168-184]
-[crates/gcode/src/commands/vector.rs:187-207]
-[crates/gcode/src/commands/vector.rs:210-268]
 
 ## API Symbols
 

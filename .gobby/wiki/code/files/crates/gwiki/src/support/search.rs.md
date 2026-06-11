@@ -31,11 +31,6 @@ Module: [[code/modules/crates/gwiki/src/support|crates/gwiki/src/support]]
 [crates/gwiki/src/support/search.rs:16-21]
 [crates/gwiki/src/support/search.rs:24]
 [crates/gwiki/src/support/search.rs:26-39]
-[crates/gwiki/src/support/search.rs:27-38]
-[crates/gwiki/src/support/search.rs:41-43]
-[crates/gwiki/src/support/search.rs:46-51]
-[crates/gwiki/src/support/search.rs:53-57]
-[crates/gwiki/src/support/search.rs:60-161]
 
 ## API Symbols
 

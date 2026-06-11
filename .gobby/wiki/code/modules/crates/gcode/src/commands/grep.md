@@ -30,22 +30,12 @@ Parent: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Overview
 
-This module implements the core matching logic for the grep command. It centers on the GrepMatcher class, which handles pattern initialization and span detection via the find_spans method. Supporting utilities manage identifier boundaries, word-matching rules, regex word boundary behavior, and input validation for invalid or empty search patterns, enabling precise text search within G-code.
+The grep module provides pattern-matching support for the gcode grep command. Its core `GrepMatcher` compiles search patterns (with error reporting for invalid or empty patterns) and locates matching spans within text via `find_spans`. It implements word-boundary matching using identifier-character helpers (`is_identifier_char`, `has_identifier_boundaries`, `has_adjacent_identifier_boundaries`) that treat Unicode characters as non-identifier boundaries while preserving regex word-boundary semantics. The module includes an extensive test suite covering boundary acceptance/rejection, Unicode handling, and pattern error cases.
 [crates/gcode/src/commands/grep/grep_matcher.rs:6-9]
 [crates/gcode/src/commands/grep/grep_matcher.rs:11-44]
 [crates/gcode/src/commands/grep/grep_matcher.rs:12-31]
 [crates/gcode/src/commands/grep/grep_matcher.rs:33-43]
 [crates/gcode/src/commands/grep/grep_matcher.rs:46-65]
-[crates/gcode/src/commands/grep/grep_matcher.rs:67-75]
-[crates/gcode/src/commands/grep/grep_matcher.rs:78-80]
-[crates/gcode/src/commands/grep/grep_matcher.rs:86-92]
-[crates/gcode/src/commands/grep/grep_matcher.rs:95-105]
-[crates/gcode/src/commands/grep/grep_matcher.rs:108-116]
-[crates/gcode/src/commands/grep/grep_matcher.rs:119-126]
-[crates/gcode/src/commands/grep/grep_matcher.rs:129-136]
-[crates/gcode/src/commands/grep/grep_matcher.rs:139-146]
-[crates/gcode/src/commands/grep/grep_matcher.rs:149-156]
-[crates/gcode/src/commands/grep/grep_matcher.rs:159-163]
 
 ## Call Diagram
 
@@ -68,16 +58,6 @@ sequenceDiagram
 [crates/gcode/src/commands/grep/grep_matcher.rs:12-31]
 [crates/gcode/src/commands/grep/grep_matcher.rs:33-43]
 [crates/gcode/src/commands/grep/grep_matcher.rs:46-65]
-[crates/gcode/src/commands/grep/grep_matcher.rs:67-75]
-[crates/gcode/src/commands/grep/grep_matcher.rs:78-80]
-[crates/gcode/src/commands/grep/grep_matcher.rs:86-92]
-[crates/gcode/src/commands/grep/grep_matcher.rs:95-105]
-[crates/gcode/src/commands/grep/grep_matcher.rs:108-116]
-[crates/gcode/src/commands/grep/grep_matcher.rs:119-126]
-[crates/gcode/src/commands/grep/grep_matcher.rs:129-136]
-[crates/gcode/src/commands/grep/grep_matcher.rs:139-146]
-[crates/gcode/src/commands/grep/grep_matcher.rs:149-156]
-[crates/gcode/src/commands/grep/grep_matcher.rs:159-163]
 
 ## Components
 

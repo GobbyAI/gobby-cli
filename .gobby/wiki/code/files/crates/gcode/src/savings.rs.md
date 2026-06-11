@@ -31,11 +31,6 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 [crates/gcode/src/savings.rs:34-54]
 [crates/gcode/src/savings.rs:61-64]
 [crates/gcode/src/savings.rs:67-69]
-[crates/gcode/src/savings.rs:72-74]
-[crates/gcode/src/savings.rs:77-80]
-[crates/gcode/src/savings.rs:84-89]
-[crates/gcode/src/savings.rs:93-97]
-[crates/gcode/src/savings.rs:101-106]
 
 ## API Symbols
 

@@ -38,18 +38,6 @@ Module: [[code/modules/crates/gwiki/src/sources|crates/gwiki/src/sources]]
 [crates/gwiki/src/sources/render.rs:60-70]
 [crates/gwiki/src/sources/render.rs:72-75]
 [crates/gwiki/src/sources/render.rs:77-124]
-[crates/gwiki/src/sources/render.rs:126-133]
-[crates/gwiki/src/sources/render.rs:135-137]
-[crates/gwiki/src/sources/render.rs:139-145]
-[crates/gwiki/src/sources/render.rs:147-166]
-[crates/gwiki/src/sources/render.rs:168-183]
-[crates/gwiki/src/sources/render.rs:185-190]
-[crates/gwiki/src/sources/render.rs:192-197]
-[crates/gwiki/src/sources/render.rs:199-204]
-[crates/gwiki/src/sources/render.rs:206-208]
-[crates/gwiki/src/sources/render.rs:215-221]
-[crates/gwiki/src/sources/render.rs:224-229]
-[crates/gwiki/src/sources/render.rs:232-234]
 
 ## API Symbols
 

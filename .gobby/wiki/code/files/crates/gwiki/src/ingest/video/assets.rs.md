@@ -28,8 +28,6 @@ Module: [[code/modules/crates/gwiki/src/ingest/video|crates/gwiki/src/ingest/vid
 [crates/gwiki/src/ingest/video/assets.rs:117-121]
 [crates/gwiki/src/ingest/video/assets.rs:125-205]
 [crates/gwiki/src/ingest/video/assets.rs:207-211]
-[crates/gwiki/src/ingest/video/assets.rs:213-223]
-[crates/gwiki/src/ingest/video/assets.rs:225-241]
 
 ## API Symbols
 

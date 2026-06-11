@@ -34,14 +34,6 @@ Module: [[code/modules/crates/gsqz/src/primitives|crates/gsqz/src/primitives]]
 [crates/gsqz/src/primitives/truncate.rs:74-78]
 [crates/gsqz/src/primitives/truncate.rs:81-88]
 [crates/gsqz/src/primitives/truncate.rs:91-106]
-[crates/gsqz/src/primitives/truncate.rs:109-112]
-[crates/gsqz/src/primitives/truncate.rs:115-120]
-[crates/gsqz/src/primitives/truncate.rs:123-128]
-[crates/gsqz/src/primitives/truncate.rs:131-136]
-[crates/gsqz/src/primitives/truncate.rs:139-145]
-[crates/gsqz/src/primitives/truncate.rs:148-157]
-[crates/gsqz/src/primitives/truncate.rs:160-165]
-[crates/gsqz/src/primitives/truncate.rs:168-178]
 
 ## API Symbols
 

@@ -21,29 +21,29 @@ Parent: [[code/modules/crates/gcore/assets|crates/gcore/assets]]
 
 ## Overview
 
-This module provides PostgreSQL infrastructure and configuration assets for the pg_search and pgaudit extensions. It includes a Dockerfile, version metadata tracking build checksums and architecture-specific variants, initialization SQL scripts for extension bootstrapping, and shell scripts for audit data export management. The module contains no application-level APIs, serving exclusively as setup and operational tooling for PostgreSQL environments.
+This module packages a custom PostgreSQL container image with the `pg_search` (full-text search) and `pgaudit` (audit logging) extensions for the gcore crate.
+
+A Dockerfile defines the image build, while `version.json` pins extension versions and per-architecture (amd64/arm64) SHA256 checksums alongside the target PostgreSQL major version. The `initdb.d` directory holds ordered SQL scripts that enable the required extensions on database startup, and the `scripts` directory provides `pg_audit_export.sh` for exporting audit data.
 [crates/gcore/assets/postgres-pgsearch/version.json:2]
 [crates/gcore/assets/postgres-pgsearch/version.json:3]
 [crates/gcore/assets/postgres-pgsearch/version.json:4-7]
 [crates/gcore/assets/postgres-pgsearch/version.json:5]
 [crates/gcore/assets/postgres-pgsearch/version.json:6]
-[crates/gcore/assets/postgres-pgsearch/version.json:8]
 
 ## Child Modules
 
-- [[code/modules/crates/gcore/assets/postgres-pgsearch/initdb.d|crates/gcore/assets/postgres-pgsearch/initdb.d]] - This module contains PostgreSQL initialization SQL scripts for configuring the pg_search and pgaudit extensions. It consists of two sequential database setup files that execute during bootstrapping. The module contains no application-level APIs, stable components, or nested submodules.
-- [[code/modules/crates/gcore/assets/postgres-pgsearch/scripts|crates/gcore/assets/postgres-pgsearch/scripts]] - This module provides shell scripts for PostgreSQL database operations, specifically managing audit data export. It contains the pg_audit_export.sh script and does not expose indexed API symbols or child modules.
+- [[code/modules/crates/gcore/assets/postgres-pgsearch/initdb.d|crates/gcore/assets/postgres-pgsearch/initdb.d]] - PostgreSQL initialization scripts for the pgsearch container. Contains ordered SQL files that run on database startup to enable required extensions: `pg_search` (full-text search) and `pgaudit` (audit logging). 
+- [[code/modules/crates/gcore/assets/postgres-pgsearch/scripts|crates/gcore/assets/postgres-pgsearch/scripts]] - This module provides a shell script (`pg_audit_export.sh`) for exporting PostgreSQL audit data, supporting the postgres-pgsearch asset configuration within the gcore crate. The script contains no indexed API symbols. 
 
 ## Files
 
-- [[code/files/crates/gcore/assets/postgres-pgsearch/Dockerfile|crates/gcore/assets/postgres-pgsearch/Dockerfile]] - `crates/gcore/assets/postgres-pgsearch/Dockerfile` has no indexed API symbols.
+- [[code/files/crates/gcore/assets/postgres-pgsearch/Dockerfile|crates/gcore/assets/postgres-pgsearch/Dockerfile]] - `crates/gcore/assets/postgres-pgsearch/Dockerfile` has no indexed API symbols. 
 - [[code/files/crates/gcore/assets/postgres-pgsearch/version.json|crates/gcore/assets/postgres-pgsearch/version.json]] - `crates/gcore/assets/postgres-pgsearch/version.json` exposes 6 indexed API symbols.
 [crates/gcore/assets/postgres-pgsearch/version.json:2]
 [crates/gcore/assets/postgres-pgsearch/version.json:3]
 [crates/gcore/assets/postgres-pgsearch/version.json:4-7]
 [crates/gcore/assets/postgres-pgsearch/version.json:5]
 [crates/gcore/assets/postgres-pgsearch/version.json:6]
-[crates/gcore/assets/postgres-pgsearch/version.json:8]
 
 ## Components
 

@@ -27,7 +27,6 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 [crates/gcode/src/lib.rs:78-139]
 [crates/gcode/src/lib.rs:142-169]
 [crates/gcode/src/lib.rs:172-201]
-[crates/gcode/src/lib.rs:177-194]
 
 ## API Symbols
 

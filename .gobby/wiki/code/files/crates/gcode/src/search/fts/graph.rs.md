@@ -29,9 +29,6 @@ Module: [[code/modules/crates/gcode/src/search/fts|crates/gcode/src/search/fts]]
 [crates/gcode/src/search/fts/graph.rs:57-62]
 [crates/gcode/src/search/fts/graph.rs:64-69]
 [crates/gcode/src/search/fts/graph.rs:71-78]
-[crates/gcode/src/search/fts/graph.rs:80-96]
-[crates/gcode/src/search/fts/graph.rs:98-103]
-[crates/gcode/src/search/fts/graph.rs:108-147]
 
 ## API Symbols
 

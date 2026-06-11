@@ -29,9 +29,6 @@ Module: [[code/modules/crates/gcode/src/commands/graph|crates/gcode/src/commands
 [crates/gcode/src/commands/graph/payload.rs:46-48]
 [crates/gcode/src/commands/graph/payload.rs:50-59]
 [crates/gcode/src/commands/graph/payload.rs:61-64]
-[crates/gcode/src/commands/graph/payload.rs:66-69]
-[crates/gcode/src/commands/graph/payload.rs:71-79]
-[crates/gcode/src/commands/graph/payload.rs:81-96]
 
 ## API Symbols
 

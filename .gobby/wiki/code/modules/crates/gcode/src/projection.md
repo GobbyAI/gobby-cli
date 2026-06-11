@@ -41,33 +41,14 @@ Parent: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-This module manages the synchronization, state tracking, and error handling for projection operations. It provides utilities for syncing vector and graph files, coordinating synchronization requests and statuses, and maintaining projection state across lifecycle events. The module defines comprehensive types for projection targets, sync reports, and typed errors, ensuring robust state coordination and reliable file synchronization between source data and projected outputs.
+The `projection` module synchronizes indexed code data to downstream projection targets, primarily graph and vector stores. Its core logic lives in `sync.rs`, which defines projection target and status types (`ProjectionTarget`, `ProjectionStatus`, `VectorProjectionState`) alongside sync request and reporting structures (`ProjectionSyncRequest`, `ProjectionSyncReport`/`Reports`, `ProjectionSyncStatus`, `ProjectionSyncError`).
+
+It exposes sync entry points—`sync_after_index`, `sync_files_with_state`, `sync_graph_files`/`sync_graph_file`, `sync_vector_files`, and `sync_file`—that propagate code facts to graph and vector projections while tracking per-file synced state (`mark_synced`, `pending_after_code_fact_write`). Reports capture ok, degraded, and error outcomes, with helpers (`typed_projection_error`, `graph_error_kind`, `vector_error_kind`, `vector_lifecycle_from_context`) classifying failures by target.
 [crates/gcode/src/projection/sync.rs:11-14]
 [crates/gcode/src/projection/sync.rs:17-21]
 [crates/gcode/src/projection/sync.rs:24-29]
 [crates/gcode/src/projection/sync.rs:33-37]
 [crates/gcode/src/projection/sync.rs:40-43]
-[crates/gcode/src/projection/sync.rs:46-52]
-[crates/gcode/src/projection/sync.rs:54-97]
-[crates/gcode/src/projection/sync.rs:55-63]
-[crates/gcode/src/projection/sync.rs:65-81]
-[crates/gcode/src/projection/sync.rs:83-96]
-[crates/gcode/src/projection/sync.rs:100-103]
-[crates/gcode/src/projection/sync.rs:105-112]
-[crates/gcode/src/projection/sync.rs:114-122]
-[crates/gcode/src/projection/sync.rs:124-151]
-[crates/gcode/src/projection/sync.rs:153-205]
-[crates/gcode/src/projection/sync.rs:207-235]
-[crates/gcode/src/projection/sync.rs:237-264]
-[crates/gcode/src/projection/sync.rs:266-270]
-[crates/gcode/src/projection/sync.rs:273-285]
-[crates/gcode/src/projection/sync.rs:287-296]
-[crates/gcode/src/projection/sync.rs:299-314]
-[crates/gcode/src/projection/sync.rs:316-326]
-[crates/gcode/src/projection/sync.rs:328-335]
-[crates/gcode/src/projection/sync.rs:337-348]
-[crates/gcode/src/projection/sync.rs:355-390]
-[crates/gcode/src/projection/sync.rs:358-361]
 
 ## Call Diagram
 
@@ -97,34 +78,13 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gcode/src/projection/mod.rs|crates/gcode/src/projection/mod.rs]] - `crates/gcode/src/projection/mod.rs` has no indexed API symbols.
+- [[code/files/crates/gcode/src/projection/mod.rs|crates/gcode/src/projection/mod.rs]] - `crates/gcode/src/projection/mod.rs` has no indexed API symbols. 
 - [[code/files/crates/gcode/src/projection/sync.rs|crates/gcode/src/projection/sync.rs]] - `crates/gcode/src/projection/sync.rs` exposes 26 indexed API symbols.
 [crates/gcode/src/projection/sync.rs:11-14]
 [crates/gcode/src/projection/sync.rs:17-21]
 [crates/gcode/src/projection/sync.rs:24-29]
 [crates/gcode/src/projection/sync.rs:33-37]
 [crates/gcode/src/projection/sync.rs:40-43]
-[crates/gcode/src/projection/sync.rs:46-52]
-[crates/gcode/src/projection/sync.rs:54-97]
-[crates/gcode/src/projection/sync.rs:55-63]
-[crates/gcode/src/projection/sync.rs:65-81]
-[crates/gcode/src/projection/sync.rs:83-96]
-[crates/gcode/src/projection/sync.rs:100-103]
-[crates/gcode/src/projection/sync.rs:105-112]
-[crates/gcode/src/projection/sync.rs:114-122]
-[crates/gcode/src/projection/sync.rs:124-151]
-[crates/gcode/src/projection/sync.rs:153-205]
-[crates/gcode/src/projection/sync.rs:207-235]
-[crates/gcode/src/projection/sync.rs:237-264]
-[crates/gcode/src/projection/sync.rs:266-270]
-[crates/gcode/src/projection/sync.rs:273-285]
-[crates/gcode/src/projection/sync.rs:287-296]
-[crates/gcode/src/projection/sync.rs:299-314]
-[crates/gcode/src/projection/sync.rs:316-326]
-[crates/gcode/src/projection/sync.rs:328-335]
-[crates/gcode/src/projection/sync.rs:337-348]
-[crates/gcode/src/projection/sync.rs:355-390]
-[crates/gcode/src/projection/sync.rs:358-361]
 
 ## Components
 

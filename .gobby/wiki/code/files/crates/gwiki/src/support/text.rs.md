@@ -32,12 +32,6 @@ Module: [[code/modules/crates/gwiki/src/support|crates/gwiki/src/support]]
 [crates/gwiki/src/support/text.rs:24-35]
 [crates/gwiki/src/support/text.rs:37-49]
 [crates/gwiki/src/support/text.rs:51-59]
-[crates/gwiki/src/support/text.rs:61-67]
-[crates/gwiki/src/support/text.rs:69-71]
-[crates/gwiki/src/support/text.rs:73-75]
-[crates/gwiki/src/support/text.rs:77-102]
-[crates/gwiki/src/support/text.rs:109-114]
-[crates/gwiki/src/support/text.rs:117-127]
 
 ## API Symbols
 

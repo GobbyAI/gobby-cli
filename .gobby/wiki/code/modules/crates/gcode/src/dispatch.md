@@ -19,7 +19,14 @@ Parent: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-The dispatch module orchestrates the routing and initialization of G-code command execution. It supports early dispatch setup using parsed requests without requiring full context, enables command lookup that can bypass service configuration resolution, and manages service dependency resolution specifically for graph and AI commands. The module includes tests verifying the correctness of these dispatch, lookup, and service selection mechanisms.
+`crates/gcode/src/dispatch/tests.rs` is a focused test module for the dispatch layer’s service/command resolution logic.
+
+- `services_for` is the central helper/exposed symbol used in this module to derive the set of services involved in dispatch scenarios.
+- `setup_early_dispatch_uses_parsed_request_without_context` verifies early-dispatch setup can proceed from a parsed request alone, without requiring external context state.
+- `lookup_commands_skip_service_config_resolution` verifies command lookup behavior avoids unnecessary service-config resolution during lookup.
+- `graph_and_ai_commands_request_only_needed_services` verifies graph/AI command paths request only the services that are actually required.
+
+Overall, the module validates that dispatch uses minimal, request-driven service dependencies and avoids eager/extra service resolution.
 [crates/gcode/src/dispatch/tests.rs:5-9]
 [crates/gcode/src/dispatch/tests.rs:12-52]
 [crates/gcode/src/dispatch/tests.rs:55-69]

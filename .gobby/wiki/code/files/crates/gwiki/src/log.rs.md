@@ -35,15 +35,6 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 [crates/gwiki/src/log.rs:22-46]
 [crates/gwiki/src/log.rs:48-86]
 [crates/gwiki/src/log.rs:88-103]
-[crates/gwiki/src/log.rs:105-111]
-[crates/gwiki/src/log.rs:114-121]
-[crates/gwiki/src/log.rs:124-143]
-[crates/gwiki/src/log.rs:127-137]
-[crates/gwiki/src/log.rs:146-148]
-[crates/gwiki/src/log.rs:150-156]
-[crates/gwiki/src/log.rs:158-165]
-[crates/gwiki/src/log.rs:174-202]
-[crates/gwiki/src/log.rs:205-224]
 
 ## API Symbols
 

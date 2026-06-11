@@ -37,17 +37,6 @@ Module: [[code/modules/crates/gcode/src/vector/code_symbols|crates/gcode/src/vec
 [crates/gcode/src/vector/code_symbols/qdrant.rs:29-36]
 [crates/gcode/src/vector/code_symbols/qdrant.rs:38-46]
 [crates/gcode/src/vector/code_symbols/qdrant.rs:48-75]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:77-95]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:97-108]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:110-125]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:127-136]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:138-148]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:150-157]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:159-178]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:180-201]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:203-211]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:213-283]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:285-295]
 
 ## API Symbols
 

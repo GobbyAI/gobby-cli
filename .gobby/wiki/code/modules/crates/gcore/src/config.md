@@ -25,19 +25,19 @@ provenance:
   - 247-254
   - 257-265
   - 268-279
-  - 281-311
-  - 313-334
-  - 336-338
-  - 340-343
-  - 345-354
-  - 356-362
-  - 369-378
-  - 380-382
-  - 384-390
-  - 392-409
-  - 411-424
-  - 426-434
-  - 436-440
+  - 281-317
+  - 319-341
+  - 343-345
+  - 347-350
+  - 352-361
+  - 363-369
+  - 376-385
+  - 387-389
+  - 391-397
+  - 399-416
+  - 418-431
+  - 433-441
+  - 443-447
 - file: crates/gcore/src/config/tests.rs
   ranges:
   - 9-11
@@ -128,10 +128,10 @@ provenance:
   - 197-201
   - 198-200
   - '203'
-  - 207-217
-  - 221-224
-  - 333-335
-  - 339-342
+  - 207-220
+  - 224-227
+  - 338-340
+  - 344-347
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -143,131 +143,18 @@ Parent: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Overview
 
-This module provides a unified configuration resolution and type system for the application, specializing in AI infrastructure, vector databases, and indexing settings. It defines strongly-typed configuration structs for FalkorDB, Qdrant, embeddings, indexing, and AI routing/capabilities. The resolution layer enables multi-source configuration merging through `ConfigSource` and `LayeredConfigSource` abstractions, with built-in environment variable handling, secret pattern detection, and deterministic precedence rules. Utility functions and guards manage parsing, validation, and environment state, while dedicated resolvers transform raw inputs into domain-specific configuration objects. Comprehensive testing utilities like `TestSource` and `LayeredTestSource` ensure reliable validation of resolution order and fallback behavior.
+The `gcore::config` module provides layered configuration resolution for the application, combining values from config stores, YAML files, environment variables, and Postgres-backed sources with a defined precedence order (env overrides store, store overrides YAML).
+
+Core abstractions live in `types.rs`, which defines the `ConfigSource` trait and implementations (`LayeredConfigSource`, `EnvOnlySource`, `PostgresConfigSource`), along with strongly-typed config structs (`FalkorConfig`, `QdrantConfig`, `EmbeddingConfig`, `IndexingConfig`) and the AI routing model (`AiRouting`, `AiCapability`, `CapabilityBinding`, `AiTuning`) with their parsing logic and centralized key accessors.
+
+The `resolve.rs` file contains the resolution functions that turn raw config sources into typed configs—handling FalkorDB, Qdrant, embedding, indexing, and AI capability bindings/routing. It supports JSON-encoded values, environment-pattern expansion with defaults, secret handling, boolean/port parsing, and per-capability precedence (including audio-translate inheriting transcribe bindings).
+
+`tests.rs` provides extensive unit tests with helpers (`EnvGuard`, `TestSource`, `LayeredTestSource`) covering precedence ordering, secret resolution, JSON decoding, default fallbacks, invalid-value rejection, and a CI guard ensuring embedding config keys remain centralized rather than scattered as literals.
 [crates/gcore/src/config/resolve.rs:11-21]
+[crates/gcore/src/config/tests.rs:9-11]
+[crates/gcore/src/config/types.rs:5-9]
 [crates/gcore/src/config/resolve.rs:24-75]
 [crates/gcore/src/config/resolve.rs:78-84]
-[crates/gcore/src/config/resolve.rs:87-90]
-[crates/gcore/src/config/resolve.rs:93-95]
-[crates/gcore/src/config/resolve.rs:103-112]
-[crates/gcore/src/config/resolve.rs:114-126]
-[crates/gcore/src/config/resolve.rs:130]
-[crates/gcore/src/config/resolve.rs:132-143]
-[crates/gcore/src/config/resolve.rs:133-135]
-[crates/gcore/src/config/resolve.rs:137-142]
-[crates/gcore/src/config/resolve.rs:146-165]
-[crates/gcore/src/config/resolve.rs:168-174]
-[crates/gcore/src/config/resolve.rs:177-179]
-[crates/gcore/src/config/resolve.rs:182-189]
-[crates/gcore/src/config/resolve.rs:192-202]
-[crates/gcore/src/config/resolve.rs:205-240]
-[crates/gcore/src/config/resolve.rs:242-244]
-[crates/gcore/src/config/resolve.rs:247-254]
-[crates/gcore/src/config/resolve.rs:257-265]
-[crates/gcore/src/config/resolve.rs:268-279]
-[crates/gcore/src/config/resolve.rs:281-311]
-[crates/gcore/src/config/resolve.rs:313-334]
-[crates/gcore/src/config/resolve.rs:336-338]
-[crates/gcore/src/config/resolve.rs:340-343]
-[crates/gcore/src/config/resolve.rs:345-354]
-[crates/gcore/src/config/resolve.rs:356-362]
-[crates/gcore/src/config/resolve.rs:369-378]
-[crates/gcore/src/config/resolve.rs:380-382]
-[crates/gcore/src/config/resolve.rs:384-390]
-[crates/gcore/src/config/resolve.rs:392-409]
-[crates/gcore/src/config/resolve.rs:411-424]
-[crates/gcore/src/config/resolve.rs:426-434]
-[crates/gcore/src/config/resolve.rs:436-440]
-[crates/gcore/src/config/tests.rs:9-11]
-[crates/gcore/src/config/tests.rs:13-46]
-[crates/gcore/src/config/tests.rs:14-22]
-[crates/gcore/src/config/tests.rs:24-40]
-[crates/gcore/src/config/tests.rs:42-45]
-[crates/gcore/src/config/tests.rs:48-52]
-[crates/gcore/src/config/tests.rs:49-51]
-[crates/gcore/src/config/tests.rs:55-58]
-[crates/gcore/src/config/tests.rs:60-80]
-[crates/gcore/src/config/tests.rs:61-69]
-[crates/gcore/src/config/tests.rs:71-79]
-[crates/gcore/src/config/tests.rs:82-94]
-[crates/gcore/src/config/tests.rs:83-85]
-[crates/gcore/src/config/tests.rs:87-93]
-[crates/gcore/src/config/tests.rs:97-100]
-[crates/gcore/src/config/tests.rs:102-112]
-[crates/gcore/src/config/tests.rs:103-111]
-[crates/gcore/src/config/tests.rs:114-124]
-[crates/gcore/src/config/tests.rs:115-119]
-[crates/gcore/src/config/tests.rs:121-123]
-[crates/gcore/src/config/tests.rs:127-147]
-[crates/gcore/src/config/tests.rs:150-171]
-[crates/gcore/src/config/tests.rs:174-198]
-[crates/gcore/src/config/tests.rs:201-214]
-[crates/gcore/src/config/tests.rs:217-233]
-[crates/gcore/src/config/tests.rs:236-245]
-[crates/gcore/src/config/tests.rs:248-283]
-[crates/gcore/src/config/tests.rs:286-349]
-[crates/gcore/src/config/tests.rs:352-390]
-[crates/gcore/src/config/tests.rs:393-432]
-[crates/gcore/src/config/tests.rs:435-454]
-[crates/gcore/src/config/tests.rs:457-503]
-[crates/gcore/src/config/tests.rs:460-463]
-[crates/gcore/src/config/tests.rs:465-467]
-[crates/gcore/src/config/tests.rs:470-472]
-[crates/gcore/src/config/tests.rs:474-477]
-[crates/gcore/src/config/tests.rs:506-532]
-[crates/gcore/src/config/tests.rs:535-581]
-[crates/gcore/src/config/tests.rs:584-591]
-[crates/gcore/src/config/tests.rs:594-607]
-[crates/gcore/src/config/tests.rs:610-623]
-[crates/gcore/src/config/tests.rs:626-637]
-[crates/gcore/src/config/tests.rs:640-651]
-[crates/gcore/src/config/tests.rs:654-666]
-[crates/gcore/src/config/tests.rs:669-682]
-[crates/gcore/src/config/tests.rs:685-694]
-[crates/gcore/src/config/tests.rs:697-704]
-[crates/gcore/src/config/tests.rs:707-720]
-[crates/gcore/src/config/tests.rs:723-737]
-[crates/gcore/src/config/tests.rs:739-745]
-[crates/gcore/src/config/tests.rs:747-751]
-[crates/gcore/src/config/tests.rs:753-785]
-[crates/gcore/src/config/tests.rs:787-801]
-[crates/gcore/src/config/tests.rs:803-816]
-[crates/gcore/src/config/tests.rs:818-823]
-[crates/gcore/src/config/types.rs:5-9]
-[crates/gcore/src/config/types.rs:15-18]
-[crates/gcore/src/config/types.rs:22-28]
-[crates/gcore/src/config/types.rs:32-34]
-[crates/gcore/src/config/types.rs:36-42]
-[crates/gcore/src/config/types.rs:37-41]
-[crates/gcore/src/config/types.rs:46-52]
-[crates/gcore/src/config/types.rs:54-68]
-[crates/gcore/src/config/types.rs:55]
-[crates/gcore/src/config/types.rs:57-67]
-[crates/gcore/src/config/types.rs:71-73]
-[crates/gcore/src/config/types.rs:75-79]
-[crates/gcore/src/config/types.rs:76-78]
-[crates/gcore/src/config/types.rs:81]
-[crates/gcore/src/config/types.rs:85-91]
-[crates/gcore/src/config/types.rs:93-173]
-[crates/gcore/src/config/types.rs:94-102]
-[crates/gcore/src/config/types.rs:104-112]
-[crates/gcore/src/config/types.rs:114-122]
-[crates/gcore/src/config/types.rs:124-132]
-[crates/gcore/src/config/types.rs:134-142]
-[crates/gcore/src/config/types.rs:144-152]
-[crates/gcore/src/config/types.rs:154-162]
-[crates/gcore/src/config/types.rs:164-172]
-[crates/gcore/src/config/types.rs:175-190]
-[crates/gcore/src/config/types.rs:176]
-[crates/gcore/src/config/types.rs:178-189]
-[crates/gcore/src/config/types.rs:193-195]
-[crates/gcore/src/config/types.rs:197-201]
-[crates/gcore/src/config/types.rs:198-200]
-[crates/gcore/src/config/types.rs:203]
-[crates/gcore/src/config/types.rs:207-217]
-[crates/gcore/src/config/types.rs:221-224]
-[crates/gcore/src/config/types.rs:333-335]
-[crates/gcore/src/config/types.rs:339-342]
 
 ## Call Diagram
 
@@ -275,180 +162,70 @@ This module provides a unified configuration resolution and type system for the 
 sequenceDiagram
     participant m_06b30412_0b2e_5b9f_8660_a0444aa2310f as resolve_embedding_config_from_binding &#91;function&#93;
     participant m_0ac82da3_352e_529e_b72a_eafc3fe62b4f as LayeredTestSource.resolve_value &#91;method&#93;
-    participant m_0c1f7b1f_c5fc_5053_b5f3_ccabc3b20108 as env_value &#91;function&#93;
     participant m_0ea3610b_cac0_5a01_a4a0_27cd9bdc1b88 as embedding_keys_centralized &#91;function&#93;
-    participant m_0fefcdb8_95f2_5150_a95f_d30d7e78031e as resolve_setting &#91;function&#93;
-    participant m_12931e0c_462f_5095_bbc7_8fd2fda9dec9 as resolve_ai_routing_value &#91;function&#93;
     participant m_1d217bb5_9ac2_56de_bcab_a264e783cd63 as visit_embedding_key_literal_sources &#91;function&#93;
-    participant m_1f696bdf_92a9_545b_8c9a_5f000c04a75b as resolve_ai_non_empty &#91;function&#93;
     participant m_221e2b27_32cb_5904_9c9e_0e6dc8a55f48 as resolve_value &#91;function&#93;
     participant m_2eda9199_61a3_5764_9294_9e869157122f as resolve_env_pattern &#91;function&#93;
+    participant m_339c4ec7_135a_5dba_9255_25d0ecd92654 as resolve_ai_config_value &#91;function&#93;
+    participant m_378a6648_e1de_5793_a853_b8e8983288ba as env_value &#91;function&#93;
     participant m_3b0cfcc9_418e_5055_ae12_653fa5aa1cff as resolve_base_capability_binding &#91;function&#93;
-    participant m_3c66acc0_d9db_59f8_8af7_3ae03c40492e as resolve_ai_config_value &#91;function&#93;
     participant m_42dd7972_f22b_5f2a_a11a_66606aa1e7eb as embedding_key_literal_offenders &#91;function&#93;
-    participant m_5110e6d1_3413_58e8_9aee_637b5bed6fbc as parse_config_bool &#91;function&#93;
+    participant m_44993501_8a4a_50c0_8eb8_ca4f80f9278d as resolve_ai_routing_value &#91;function&#93;
+    participant m_48fa415c_3b76_5426_8445_f01934f17b86 as resolve_ai_non_empty &#91;function&#93;
     participant m_5206d024_3dbb_5113_b4af_df387497e91d as resolve_indexing_config &#91;function&#93;
-    participant m_57af8444_c204_5b4c_859d_deb4343c1417 as resolve_config_bool &#91;function&#93;
     participant m_63246edd_b9f1_5f9e_9678_b546fb24f84b as resolve_capability_routing &#91;function&#93;
+    participant m_634225c5_2f22_5f3e_8c8c_b08f33900b9a as resolve_audio_translate_binding &#91;function&#93;
     participant m_877c7430_b815_5bb2_974c_d977b7e21c34 as workspace_root &#91;function&#93;
+    participant m_912e0010_1a2d_53bd_8d5e_b9ac1ee4fd89 as parse_config_bool &#91;function&#93;
     participant m_a3232009_02b4_52e7_adcb_72013005173c as guarded_embedding_keys &#91;function&#93;
-    participant m_afbdd894_250e_5062_b969_fe6c296e3e6f as contains_unresolved_env_pattern &#91;function&#93;
     participant m_b4da3b77_7c97_51a8_83cd_2241a6be9a29 as embedding_key_literal_allowed_path &#91;function&#93;
     participant m_bd74d970_71d0_50ad_bf8d_8774f182ed4b as should_skip_embedding_key_scan_dir &#91;function&#93;
+    participant m_c3b16c9c_a11e_5794_9d69_b252278e7153 as resolve_config_bool &#91;function&#93;
+    participant m_eff70cd3_08b2_599f_b96d_619aa430f10d as contains_unresolved_env_pattern &#91;function&#93;
     participant m_f572b7cb_acd5_5a5d_8d3d_f503dfa2609f as resolve_embedding_setting &#91;function&#93;
-    participant m_f72d24ab_e4fc_5c74_ad8f_4a648deca386 as resolve_setting_from_keys &#91;function&#93;
     m_06b30412_0b2e_5b9f_8660_a0444aa2310f->>m_f572b7cb_acd5_5a5d_8d3d_f503dfa2609f: calls
     m_0ac82da3_352e_529e_b72a_eafc3fe62b4f->>m_0ac82da3_352e_529e_b72a_eafc3fe62b4f: calls
     m_0ea3610b_cac0_5a01_a4a0_27cd9bdc1b88->>m_42dd7972_f22b_5f2a_a11a_66606aa1e7eb: calls
     m_0ea3610b_cac0_5a01_a4a0_27cd9bdc1b88->>m_877c7430_b815_5bb2_974c_d977b7e21c34: calls
-    m_0fefcdb8_95f2_5150_a95f_d30d7e78031e->>m_f72d24ab_e4fc_5c74_ad8f_4a648deca386: calls
-    m_12931e0c_462f_5095_bbc7_8fd2fda9dec9->>m_3c66acc0_d9db_59f8_8af7_3ae03c40492e: calls
     m_1d217bb5_9ac2_56de_bcab_a264e783cd63->>m_1d217bb5_9ac2_56de_bcab_a264e783cd63: calls
     m_1d217bb5_9ac2_56de_bcab_a264e783cd63->>m_a3232009_02b4_52e7_adcb_72013005173c: calls
     m_1d217bb5_9ac2_56de_bcab_a264e783cd63->>m_b4da3b77_7c97_51a8_83cd_2241a6be9a29: calls
     m_1d217bb5_9ac2_56de_bcab_a264e783cd63->>m_bd74d970_71d0_50ad_bf8d_8774f182ed4b: calls
-    m_1f696bdf_92a9_545b_8c9a_5f000c04a75b->>m_afbdd894_250e_5062_b969_fe6c296e3e6f: calls
     m_221e2b27_32cb_5904_9c9e_0e6dc8a55f48->>m_2eda9199_61a3_5764_9294_9e869157122f: calls
-    m_3b0cfcc9_418e_5055_ae12_653fa5aa1cff->>m_3c66acc0_d9db_59f8_8af7_3ae03c40492e: calls
+    m_339c4ec7_135a_5dba_9255_25d0ecd92654->>m_48fa415c_3b76_5426_8445_f01934f17b86: calls
+    m_3b0cfcc9_418e_5055_ae12_653fa5aa1cff->>m_339c4ec7_135a_5dba_9255_25d0ecd92654: calls
     m_3b0cfcc9_418e_5055_ae12_653fa5aa1cff->>m_63246edd_b9f1_5f9e_9678_b546fb24f84b: calls
-    m_3c66acc0_d9db_59f8_8af7_3ae03c40492e->>m_1f696bdf_92a9_545b_8c9a_5f000c04a75b: calls
     m_42dd7972_f22b_5f2a_a11a_66606aa1e7eb->>m_1d217bb5_9ac2_56de_bcab_a264e783cd63: calls
-    m_5206d024_3dbb_5113_b4af_df387497e91d->>m_0c1f7b1f_c5fc_5053_b5f3_ccabc3b20108: calls
-    m_5206d024_3dbb_5113_b4af_df387497e91d->>m_5110e6d1_3413_58e8_9aee_637b5bed6fbc: calls
-    m_5206d024_3dbb_5113_b4af_df387497e91d->>m_57af8444_c204_5b4c_859d_deb4343c1417: calls
-    m_57af8444_c204_5b4c_859d_deb4343c1417->>m_5110e6d1_3413_58e8_9aee_637b5bed6fbc: calls
+    m_44993501_8a4a_50c0_8eb8_ca4f80f9278d->>m_339c4ec7_135a_5dba_9255_25d0ecd92654: calls
+    m_48fa415c_3b76_5426_8445_f01934f17b86->>m_eff70cd3_08b2_599f_b96d_619aa430f10d: calls
+    m_5206d024_3dbb_5113_b4af_df387497e91d->>m_378a6648_e1de_5793_a853_b8e8983288ba: calls
+    m_5206d024_3dbb_5113_b4af_df387497e91d->>m_912e0010_1a2d_53bd_8d5e_b9ac1ee4fd89: calls
+    m_5206d024_3dbb_5113_b4af_df387497e91d->>m_c3b16c9c_a11e_5794_9d69_b252278e7153: calls
+    m_63246edd_b9f1_5f9e_9678_b546fb24f84b->>m_44993501_8a4a_50c0_8eb8_ca4f80f9278d: calls
+    m_634225c5_2f22_5f3e_8c8c_b08f33900b9a->>m_339c4ec7_135a_5dba_9255_25d0ecd92654: calls
 ```
 
 ## Files
 
-- [[code/files/crates/gcore/src/config/mod.rs|crates/gcore/src/config/mod.rs]] - `crates/gcore/src/config/mod.rs` has no indexed API symbols.
+- [[code/files/crates/gcore/src/config/mod.rs|crates/gcore/src/config/mod.rs]] - `crates/gcore/src/config/mod.rs` has no indexed API symbols. 
 - [[code/files/crates/gcore/src/config/resolve.rs|crates/gcore/src/config/resolve.rs]] - `crates/gcore/src/config/resolve.rs` exposes 34 indexed API symbols.
 [crates/gcore/src/config/resolve.rs:11-21]
 [crates/gcore/src/config/resolve.rs:24-75]
 [crates/gcore/src/config/resolve.rs:78-84]
 [crates/gcore/src/config/resolve.rs:87-90]
 [crates/gcore/src/config/resolve.rs:93-95]
-[crates/gcore/src/config/resolve.rs:103-112]
-[crates/gcore/src/config/resolve.rs:114-126]
-[crates/gcore/src/config/resolve.rs:130]
-[crates/gcore/src/config/resolve.rs:132-143]
-[crates/gcore/src/config/resolve.rs:133-135]
-[crates/gcore/src/config/resolve.rs:137-142]
-[crates/gcore/src/config/resolve.rs:146-165]
-[crates/gcore/src/config/resolve.rs:168-174]
-[crates/gcore/src/config/resolve.rs:177-179]
-[crates/gcore/src/config/resolve.rs:182-189]
-[crates/gcore/src/config/resolve.rs:192-202]
-[crates/gcore/src/config/resolve.rs:205-240]
-[crates/gcore/src/config/resolve.rs:242-244]
-[crates/gcore/src/config/resolve.rs:247-254]
-[crates/gcore/src/config/resolve.rs:257-265]
-[crates/gcore/src/config/resolve.rs:268-279]
-[crates/gcore/src/config/resolve.rs:281-311]
-[crates/gcore/src/config/resolve.rs:313-334]
-[crates/gcore/src/config/resolve.rs:336-338]
-[crates/gcore/src/config/resolve.rs:340-343]
-[crates/gcore/src/config/resolve.rs:345-354]
-[crates/gcore/src/config/resolve.rs:356-362]
-[crates/gcore/src/config/resolve.rs:369-378]
-[crates/gcore/src/config/resolve.rs:380-382]
-[crates/gcore/src/config/resolve.rs:384-390]
-[crates/gcore/src/config/resolve.rs:392-409]
-[crates/gcore/src/config/resolve.rs:411-424]
-[crates/gcore/src/config/resolve.rs:426-434]
-[crates/gcore/src/config/resolve.rs:436-440]
 - [[code/files/crates/gcore/src/config/tests.rs|crates/gcore/src/config/tests.rs]] - `crates/gcore/src/config/tests.rs` exposes 55 indexed API symbols.
 [crates/gcore/src/config/tests.rs:9-11]
 [crates/gcore/src/config/tests.rs:13-46]
 [crates/gcore/src/config/tests.rs:14-22]
 [crates/gcore/src/config/tests.rs:24-40]
 [crates/gcore/src/config/tests.rs:42-45]
-[crates/gcore/src/config/tests.rs:48-52]
-[crates/gcore/src/config/tests.rs:49-51]
-[crates/gcore/src/config/tests.rs:55-58]
-[crates/gcore/src/config/tests.rs:60-80]
-[crates/gcore/src/config/tests.rs:61-69]
-[crates/gcore/src/config/tests.rs:71-79]
-[crates/gcore/src/config/tests.rs:82-94]
-[crates/gcore/src/config/tests.rs:83-85]
-[crates/gcore/src/config/tests.rs:87-93]
-[crates/gcore/src/config/tests.rs:97-100]
-[crates/gcore/src/config/tests.rs:102-112]
-[crates/gcore/src/config/tests.rs:103-111]
-[crates/gcore/src/config/tests.rs:114-124]
-[crates/gcore/src/config/tests.rs:115-119]
-[crates/gcore/src/config/tests.rs:121-123]
-[crates/gcore/src/config/tests.rs:127-147]
-[crates/gcore/src/config/tests.rs:150-171]
-[crates/gcore/src/config/tests.rs:174-198]
-[crates/gcore/src/config/tests.rs:201-214]
-[crates/gcore/src/config/tests.rs:217-233]
-[crates/gcore/src/config/tests.rs:236-245]
-[crates/gcore/src/config/tests.rs:248-283]
-[crates/gcore/src/config/tests.rs:286-349]
-[crates/gcore/src/config/tests.rs:352-390]
-[crates/gcore/src/config/tests.rs:393-432]
-[crates/gcore/src/config/tests.rs:435-454]
-[crates/gcore/src/config/tests.rs:457-503]
-[crates/gcore/src/config/tests.rs:460-463]
-[crates/gcore/src/config/tests.rs:465-467]
-[crates/gcore/src/config/tests.rs:470-472]
-[crates/gcore/src/config/tests.rs:474-477]
-[crates/gcore/src/config/tests.rs:506-532]
-[crates/gcore/src/config/tests.rs:535-581]
-[crates/gcore/src/config/tests.rs:584-591]
-[crates/gcore/src/config/tests.rs:594-607]
-[crates/gcore/src/config/tests.rs:610-623]
-[crates/gcore/src/config/tests.rs:626-637]
-[crates/gcore/src/config/tests.rs:640-651]
-[crates/gcore/src/config/tests.rs:654-666]
-[crates/gcore/src/config/tests.rs:669-682]
-[crates/gcore/src/config/tests.rs:685-694]
-[crates/gcore/src/config/tests.rs:697-704]
-[crates/gcore/src/config/tests.rs:707-720]
-[crates/gcore/src/config/tests.rs:723-737]
-[crates/gcore/src/config/tests.rs:739-745]
-[crates/gcore/src/config/tests.rs:747-751]
-[crates/gcore/src/config/tests.rs:753-785]
-[crates/gcore/src/config/tests.rs:787-801]
-[crates/gcore/src/config/tests.rs:803-816]
-[crates/gcore/src/config/tests.rs:818-823]
 - [[code/files/crates/gcore/src/config/types.rs|crates/gcore/src/config/types.rs]] - `crates/gcore/src/config/types.rs` exposes 35 indexed API symbols.
 [crates/gcore/src/config/types.rs:5-9]
 [crates/gcore/src/config/types.rs:15-18]
 [crates/gcore/src/config/types.rs:22-28]
 [crates/gcore/src/config/types.rs:32-34]
 [crates/gcore/src/config/types.rs:36-42]
-[crates/gcore/src/config/types.rs:37-41]
-[crates/gcore/src/config/types.rs:46-52]
-[crates/gcore/src/config/types.rs:54-68]
-[crates/gcore/src/config/types.rs:55]
-[crates/gcore/src/config/types.rs:57-67]
-[crates/gcore/src/config/types.rs:71-73]
-[crates/gcore/src/config/types.rs:75-79]
-[crates/gcore/src/config/types.rs:76-78]
-[crates/gcore/src/config/types.rs:81]
-[crates/gcore/src/config/types.rs:85-91]
-[crates/gcore/src/config/types.rs:93-173]
-[crates/gcore/src/config/types.rs:94-102]
-[crates/gcore/src/config/types.rs:104-112]
-[crates/gcore/src/config/types.rs:114-122]
-[crates/gcore/src/config/types.rs:124-132]
-[crates/gcore/src/config/types.rs:134-142]
-[crates/gcore/src/config/types.rs:144-152]
-[crates/gcore/src/config/types.rs:154-162]
-[crates/gcore/src/config/types.rs:164-172]
-[crates/gcore/src/config/types.rs:175-190]
-[crates/gcore/src/config/types.rs:176]
-[crates/gcore/src/config/types.rs:178-189]
-[crates/gcore/src/config/types.rs:193-195]
-[crates/gcore/src/config/types.rs:197-201]
-[crates/gcore/src/config/types.rs:198-200]
-[crates/gcore/src/config/types.rs:203]
-[crates/gcore/src/config/types.rs:207-217]
-[crates/gcore/src/config/types.rs:221-224]
-[crates/gcore/src/config/types.rs:333-335]
-[crates/gcore/src/config/types.rs:339-342]
 
 ## Components
 
@@ -474,18 +251,18 @@ sequenceDiagram
 - `e0d2b5dd-c7ad-55a9-b05d-bdd549988304`
 - `c6a274d4-e7d3-5445-a13a-9e70ee4bf709`
 - `3b0cfcc9-418e-5055-ae12-653fa5aa1cff`
-- `b82d91ed-83b2-5ace-b350-6ed0b8f4adb9`
-- `12931e0c-462f-5095-bbc7-8fd2fda9dec9`
-- `3c66acc0-d9db-59f8-8af7-3ae03c40492e`
-- `57af8444-c204-5b4c-859d-deb4343c1417`
-- `5110e6d1-3413-58e8-9aee-637b5bed6fbc`
-- `1f696bdf-92a9-545b-8c9a-5f000c04a75b`
-- `afbdd894-250e-5062-b969-fe6c296e3e6f`
-- `0fefcdb8-95f2-5150-a95f-d30d7e78031e`
-- `f72d24ab-e4fc-5c74-ad8f-4a648deca386`
-- `61e891a9-f25b-5ab1-b1af-924a75937a93`
-- `5d88a0e6-c857-5d5f-9d29-574d8ea33182`
-- `0c1f7b1f-c5fc-5053-b5f3-ccabc3b20108`
+- `634225c5-2f22-5f3e-8c8c-b08f33900b9a`
+- `44993501-8a4a-50c0-8eb8-ca4f80f9278d`
+- `339c4ec7-135a-5dba-9255-25d0ecd92654`
+- `c3b16c9c-a11e-5794-9d69-b252278e7153`
+- `912e0010-1a2d-53bd-8d5e-b9ac1ee4fd89`
+- `48fa415c-3b76-5426-8445-f01934f17b86`
+- `eff70cd3-08b2-599f-b96d-619aa430f10d`
+- `b279e2f3-e510-5653-a005-ca8577aa259d`
+- `97e5d1b0-bade-530f-a15f-80a2d2fbdf98`
+- `68387b83-61df-5b11-876c-54ae3f646279`
+- `56309949-ff75-5e67-aecb-4cccd97d8208`
+- `378a6648-e1de-5793-a853-b8e8983288ba`
 - `ef444484-34ea-5170-9692-eddddedf6460`
 - `b585f13b-f2ab-5999-bf55-7f529fbfafd8`
 - `b62a0a81-968e-5638-b37d-abde4cefa3f7`
@@ -573,7 +350,7 @@ sequenceDiagram
 - `f11d1a81-7818-55d1-bdff-af482ee4c29c`
 - `f00d9a1e-0c98-5942-a4d6-0efdd2365944`
 - `fb194676-f6c9-5a57-8e6a-1a97918a9f1e`
-- `5a5fea50-8a6f-512e-8f6e-eddda9c59729`
-- `fe99384d-d935-5080-8016-eaa02b31c6c0`
-- `a153795a-9d8a-5ee4-b397-8b8bf85d6a6d`
+- `70929152-450c-5c61-8d30-840f62da781c`
+- `b1442cb5-c8ef-5a26-ac20-09358ef34b57`
+- `3697426f-39d3-5a7a-9354-fd78aa859aa2`
 

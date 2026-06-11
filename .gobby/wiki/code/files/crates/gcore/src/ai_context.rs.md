@@ -64,15 +64,15 @@ provenance:
   - 485-489
   - 486-488
   - 491-495
-  - 497-509
-  - 512-565
-  - 568-588
-  - 591-619
-  - 622-646
-  - 649-660
-  - 663-722
-  - 725-747
-  - 750-781
+  - 497-510
+  - 513-566
+  - 569-589
+  - 592-620
+  - 623-647
+  - 650-661
+  - 664-723
+  - 726-748
+  - 751-782
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -90,70 +90,6 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 [crates/gcore/src/ai_context.rs:34-36]
 [crates/gcore/src/ai_context.rs:39-64]
 [crates/gcore/src/ai_context.rs:66-68]
-[crates/gcore/src/ai_context.rs:73-76]
-[crates/gcore/src/ai_context.rs:80-86]
-[crates/gcore/src/ai_context.rs:88-124]
-[crates/gcore/src/ai_context.rs:89-97]
-[crates/gcore/src/ai_context.rs:99-107]
-[crates/gcore/src/ai_context.rs:109-117]
-[crates/gcore/src/ai_context.rs:119-123]
-[crates/gcore/src/ai_context.rs:134-145]
-[crates/gcore/src/ai_context.rs:148-155]
-[crates/gcore/src/ai_context.rs:158-160]
-[crates/gcore/src/ai_context.rs:164-166]
-[crates/gcore/src/ai_context.rs:168-172]
-[crates/gcore/src/ai_context.rs:174-222]
-[crates/gcore/src/ai_context.rs:175-183]
-[crates/gcore/src/ai_context.rs:185-187]
-[crates/gcore/src/ai_context.rs:189-206]
-[crates/gcore/src/ai_context.rs:208-221]
-[crates/gcore/src/ai_context.rs:224-230]
-[crates/gcore/src/ai_context.rs:225-229]
-[crates/gcore/src/ai_context.rs:234-236]
-[crates/gcore/src/ai_context.rs:238-248]
-[crates/gcore/src/ai_context.rs:239-247]
-[crates/gcore/src/ai_context.rs:250-256]
-[crates/gcore/src/ai_context.rs:251-255]
-[crates/gcore/src/ai_context.rs:263-266]
-[crates/gcore/src/ai_context.rs:268]
-[crates/gcore/src/ai_context.rs:270-277]
-[crates/gcore/src/ai_context.rs:271-276]
-[crates/gcore/src/ai_context.rs:283-288]
-[crates/gcore/src/ai_context.rs:290-298]
-[crates/gcore/src/ai_context.rs:305-314]
-[crates/gcore/src/ai_context.rs:316-327]
-[crates/gcore/src/ai_context.rs:332]
-[crates/gcore/src/ai_context.rs:334-345]
-[crates/gcore/src/ai_context.rs:335-337]
-[crates/gcore/src/ai_context.rs:339-344]
-[crates/gcore/src/ai_context.rs:349-353]
-[crates/gcore/src/ai_context.rs:360-366]
-[crates/gcore/src/ai_context.rs:368-370]
-[crates/gcore/src/ai_context.rs:378-393]
-[crates/gcore/src/ai_context.rs:395-400]
-[crates/gcore/src/ai_context.rs:404-411]
-[crates/gcore/src/ai_context.rs:425-428]
-[crates/gcore/src/ai_context.rs:430-451]
-[crates/gcore/src/ai_context.rs:431-439]
-[crates/gcore/src/ai_context.rs:441-450]
-[crates/gcore/src/ai_context.rs:453-464]
-[crates/gcore/src/ai_context.rs:454-456]
-[crates/gcore/src/ai_context.rs:458-463]
-[crates/gcore/src/ai_context.rs:466-469]
-[crates/gcore/src/ai_context.rs:471-483]
-[crates/gcore/src/ai_context.rs:472-482]
-[crates/gcore/src/ai_context.rs:485-489]
-[crates/gcore/src/ai_context.rs:486-488]
-[crates/gcore/src/ai_context.rs:491-495]
-[crates/gcore/src/ai_context.rs:497-509]
-[crates/gcore/src/ai_context.rs:512-565]
-[crates/gcore/src/ai_context.rs:568-588]
-[crates/gcore/src/ai_context.rs:591-619]
-[crates/gcore/src/ai_context.rs:622-646]
-[crates/gcore/src/ai_context.rs:649-660]
-[crates/gcore/src/ai_context.rs:663-722]
-[crates/gcore/src/ai_context.rs:725-747]
-[crates/gcore/src/ai_context.rs:750-781]
 
 ## API Symbols
 
@@ -337,31 +273,31 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 - `write_gcore_yaml` (function) component `write_gcore_yaml [function]` (`af37d7c7-944e-549b-9294-cc8a6931d56e`) lines 491-495 [crates/gcore/src/ai_context.rs:491-495]
   - Signature: `fn write_gcore_yaml(home: &std::path::Path, contents: &str) {`
   - Purpose: Indexed function `write_gcore_yaml` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:491-495]
-- `binding` (function) component `binding [function]` (`77b37c92-dc33-51f8-a94a-af03e3bc93dc`) lines 497-509 [crates/gcore/src/ai_context.rs:497-509]
+- `binding` (function) component `binding [function]` (`77b37c92-dc33-51f8-a94a-af03e3bc93dc`) lines 497-510 [crates/gcore/src/ai_context.rs:497-510]
   - Signature: `fn binding(routing: AiRouting, api_base: Option<&str>) -> CapabilityBinding {`
-  - Purpose: Indexed function `binding` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:497-509]
-- `resolves_in_db_and_no_db_modes` (function) component `resolves_in_db_and_no_db_modes [function]` (`be8fba2e-a006-576b-a53e-e83444e3b1c7`) lines 512-565 [crates/gcore/src/ai_context.rs:512-565]
+  - Purpose: Indexed function `binding` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:497-510]
+- `resolves_in_db_and_no_db_modes` (function) component `resolves_in_db_and_no_db_modes [function]` (`c4ca2897-8969-5663-ba22-d2fcd6301819`) lines 513-566 [crates/gcore/src/ai_context.rs:513-566]
   - Signature: `fn resolves_in_db_and_no_db_modes() {`
-  - Purpose: Indexed function `resolves_in_db_and_no_db_modes` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:512-565]
-- `project_id_is_caller_supplied` (function) component `project_id_is_caller_supplied [function]` (`729f8e88-0846-5f37-ac07-e51fadea816c`) lines 568-588 [crates/gcore/src/ai_context.rs:568-588]
+  - Purpose: Indexed function `resolves_in_db_and_no_db_modes` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:513-566]
+- `project_id_is_caller_supplied` (function) component `project_id_is_caller_supplied [function]` (`a7a3ba29-0005-52df-92e7-274e42409584`) lines 569-589 [crates/gcore/src/ai_context.rs:569-589]
   - Signature: `fn project_id_is_caller_supplied() {`
-  - Purpose: Indexed function `project_id_is_caller_supplied` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:568-588]
-- `db_without_config_store_falls_through` (function) component `db_without_config_store_falls_through [function]` (`e3a9e81c-4774-5080-8af1-0bd7cb872c8c`) lines 591-619 [crates/gcore/src/ai_context.rs:591-619]
+  - Purpose: Indexed function `project_id_is_caller_supplied` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:569-589]
+- `db_without_config_store_falls_through` (function) component `db_without_config_store_falls_through [function]` (`6643617c-99f7-5916-a929-35e0c2843861`) lines 592-620 [crates/gcore/src/ai_context.rs:592-620]
   - Signature: `fn db_without_config_store_falls_through() {`
-  - Purpose: Indexed function `db_without_config_store_falls_through` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:591-619]
-- `standalone_values_expand_env_patterns_for_db_fallback` (function) component `standalone_values_expand_env_patterns_for_db_fallback [function]` (`fc31bca9-a390-5d65-a0cd-e2b20e1dc493`) lines 622-646 [crates/gcore/src/ai_context.rs:622-646]
+  - Purpose: Indexed function `db_without_config_store_falls_through` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:592-620]
+- `standalone_values_expand_env_patterns_for_db_fallback` (function) component `standalone_values_expand_env_patterns_for_db_fallback [function]` (`e093662b-a4b9-50f4-a2eb-8d84854bd767`) lines 623-647 [crates/gcore/src/ai_context.rs:623-647]
   - Signature: `fn standalone_values_expand_env_patterns_for_db_fallback() {`
-  - Purpose: Indexed function `standalone_values_expand_env_patterns_for_db_fallback` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:622-646]
-- `concurrency_cap_enforced` (function) component `concurrency_cap_enforced [function]` (`6e6cbf1d-49eb-5db6-b36d-3294b69635dc`) lines 649-660 [crates/gcore/src/ai_context.rs:649-660]
+  - Purpose: Indexed function `standalone_values_expand_env_patterns_for_db_fallback` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:623-647]
+- `concurrency_cap_enforced` (function) component `concurrency_cap_enforced [function]` (`caa625cf-9ced-5f67-8031-28058c177a52`) lines 650-661 [crates/gcore/src/ai_context.rs:650-661]
   - Signature: `fn concurrency_cap_enforced() {`
-  - Purpose: Indexed function `concurrency_cap_enforced` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:649-660]
-- `forced_routing_and_no_ai_override` (function) component `forced_routing_and_no_ai_override [function]` (`dbd3e3b8-34c9-528d-b2d7-8929352a1852`) lines 663-722 [crates/gcore/src/ai_context.rs:663-722]
+  - Purpose: Indexed function `concurrency_cap_enforced` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:650-661]
+- `forced_routing_and_no_ai_override` (function) component `forced_routing_and_no_ai_override [function]` (`462f0e05-0d69-5ea4-9874-57658169708a`) lines 664-723 [crates/gcore/src/ai_context.rs:664-723]
   - Signature: `fn forced_routing_and_no_ai_override() {`
-  - Purpose: Indexed function `forced_routing_and_no_ai_override` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:663-722]
-- `resolve_does_not_discover_local_backend_endpoints` (function) component `resolve_does_not_discover_local_backend_endpoints [function]` (`fb71760f-dd92-5a14-9e15-c850180d0aa7`) lines 725-747 [crates/gcore/src/ai_context.rs:725-747]
+  - Purpose: Indexed function `forced_routing_and_no_ai_override` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:664-723]
+- `resolve_does_not_discover_local_backend_endpoints` (function) component `resolve_does_not_discover_local_backend_endpoints [function]` (`a9716ee9-4a86-592b-ae73-036554c89964`) lines 726-748 [crates/gcore/src/ai_context.rs:726-748]
   - Signature: `fn resolve_does_not_discover_local_backend_endpoints() {`
-  - Purpose: Indexed function `resolve_does_not_discover_local_backend_endpoints` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:725-747]
-- `stt_not_autodiscovered_to_chat_backend` (function) component `stt_not_autodiscovered_to_chat_backend [function]` (`3847ffac-b9bc-5cc0-92b1-6886e1e6d092`) lines 750-781 [crates/gcore/src/ai_context.rs:750-781]
+  - Purpose: Indexed function `resolve_does_not_discover_local_backend_endpoints` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:726-748]
+- `stt_not_autodiscovered_to_chat_backend` (function) component `stt_not_autodiscovered_to_chat_backend [function]` (`b5abc5b1-8f77-5aa7-ad2e-261a68515e4d`) lines 751-782 [crates/gcore/src/ai_context.rs:751-782]
   - Signature: `fn stt_not_autodiscovered_to_chat_backend() {`
-  - Purpose: Indexed function `stt_not_autodiscovered_to_chat_backend` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:750-781]
+  - Purpose: Indexed function `stt_not_autodiscovered_to_chat_backend` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:751-782]
 

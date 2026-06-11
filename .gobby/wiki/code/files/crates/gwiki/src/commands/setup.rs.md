@@ -38,18 +38,6 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 [crates/gwiki/src/commands/setup.rs:94-111]
 [crates/gwiki/src/commands/setup.rs:113-123]
 [crates/gwiki/src/commands/setup.rs:125-127]
-[crates/gwiki/src/commands/setup.rs:129-180]
-[crates/gwiki/src/commands/setup.rs:182-198]
-[crates/gwiki/src/commands/setup.rs:200-233]
-[crates/gwiki/src/commands/setup.rs:235-242]
-[crates/gwiki/src/commands/setup.rs:244-248]
-[crates/gwiki/src/commands/setup.rs:250-276]
-[crates/gwiki/src/commands/setup.rs:278-292]
-[crates/gwiki/src/commands/setup.rs:302-310]
-[crates/gwiki/src/commands/setup.rs:313-355]
-[crates/gwiki/src/commands/setup.rs:358-386]
-[crates/gwiki/src/commands/setup.rs:389-412]
-[crates/gwiki/src/commands/setup.rs:415-434]
 
 ## API Symbols
 

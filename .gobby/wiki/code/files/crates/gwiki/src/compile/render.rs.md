@@ -28,8 +28,6 @@ Module: [[code/modules/crates/gwiki/src/compile|crates/gwiki/src/compile]]
 [crates/gwiki/src/compile/render.rs:65-105]
 [crates/gwiki/src/compile/render.rs:107-144]
 [crates/gwiki/src/compile/render.rs:146-182]
-[crates/gwiki/src/compile/render.rs:184-186]
-[crates/gwiki/src/compile/render.rs:188-190]
 
 ## API Symbols
 

@@ -28,8 +28,6 @@ Module: [[code/modules/crates/gcode/src/index/parser/calls|crates/gcode/src/inde
 [crates/gcode/src/index/parser/calls/ast.rs:142-154]
 [crates/gcode/src/index/parser/calls/ast.rs:157-166]
 [crates/gcode/src/index/parser/calls/ast.rs:169-178]
-[crates/gcode/src/index/parser/calls/ast.rs:181-196]
-[crates/gcode/src/index/parser/calls/ast.rs:199-213]
 
 ## API Symbols
 

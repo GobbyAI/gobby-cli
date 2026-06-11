@@ -13,12 +13,12 @@ Parent: [[code/modules/crates/gwiki/assets|crates/gwiki/assets]]
 
 ## Overview
 
-This module contains documentation and asset references for core wiki skills, specifically covering audit, compile, query, and research operations. It serves as a descriptive guide without exposing any indexed API symbols or code components.
+This module contains skill definition documents for the gwiki crate's assets. It includes four Markdown files describing distinct skills—audit, compile, query, and research—that guide wiki-related operations. These are content/documentation assets rather than code, containing no indexed API symbols.
 
 ## Files
 
-- [[code/files/crates/gwiki/assets/skills/audit.md|crates/gwiki/assets/skills/audit.md]] - `crates/gwiki/assets/skills/audit.md` has no indexed API symbols.
-- [[code/files/crates/gwiki/assets/skills/compile.md|crates/gwiki/assets/skills/compile.md]] - `crates/gwiki/assets/skills/compile.md` has no indexed API symbols.
-- [[code/files/crates/gwiki/assets/skills/query.md|crates/gwiki/assets/skills/query.md]] - `crates/gwiki/assets/skills/query.md` has no indexed API symbols.
-- [[code/files/crates/gwiki/assets/skills/research.md|crates/gwiki/assets/skills/research.md]] - `crates/gwiki/assets/skills/research.md` has no indexed API symbols.
+- [[code/files/crates/gwiki/assets/skills/audit.md|crates/gwiki/assets/skills/audit.md]] - `crates/gwiki/assets/skills/audit.md` has no indexed API symbols. 
+- [[code/files/crates/gwiki/assets/skills/compile.md|crates/gwiki/assets/skills/compile.md]] - `crates/gwiki/assets/skills/compile.md` has no indexed API symbols. 
+- [[code/files/crates/gwiki/assets/skills/query.md|crates/gwiki/assets/skills/query.md]] - `crates/gwiki/assets/skills/query.md` has no indexed API symbols. 
+- [[code/files/crates/gwiki/assets/skills/research.md|crates/gwiki/assets/skills/research.md]] - `crates/gwiki/assets/skills/research.md` has no indexed API symbols. 
 

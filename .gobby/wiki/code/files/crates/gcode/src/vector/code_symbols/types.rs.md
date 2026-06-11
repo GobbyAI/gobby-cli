@@ -40,20 +40,6 @@ Module: [[code/modules/crates/gcode/src/vector/code_symbols|crates/gcode/src/vec
 [crates/gcode/src/vector/code_symbols/types.rs:20-24]
 [crates/gcode/src/vector/code_symbols/types.rs:21-23]
 [crates/gcode/src/vector/code_symbols/types.rs:26]
-[crates/gcode/src/vector/code_symbols/types.rs:29-57]
-[crates/gcode/src/vector/code_symbols/types.rs:59-96]
-[crates/gcode/src/vector/code_symbols/types.rs:60-95]
-[crates/gcode/src/vector/code_symbols/types.rs:100-105]
-[crates/gcode/src/vector/code_symbols/types.rs:108-112]
-[crates/gcode/src/vector/code_symbols/types.rs:115-118]
-[crates/gcode/src/vector/code_symbols/types.rs:121-124]
-[crates/gcode/src/vector/code_symbols/types.rs:127-137]
-[crates/gcode/src/vector/code_symbols/types.rs:140-162]
-[crates/gcode/src/vector/code_symbols/types.rs:164-203]
-[crates/gcode/src/vector/code_symbols/types.rs:165-202]
-[crates/gcode/src/vector/code_symbols/types.rs:205-209]
-[crates/gcode/src/vector/code_symbols/types.rs:206-208]
-[crates/gcode/src/vector/code_symbols/types.rs:211]
 
 ## API Symbols
 

@@ -29,9 +29,6 @@ Module: [[code/modules/crates/gwiki/src/research|crates/gwiki/src/research]]
 [crates/gwiki/src/research/storage.rs:93-95]
 [crates/gwiki/src/research/storage.rs:97-135]
 [crates/gwiki/src/research/storage.rs:137-151]
-[crates/gwiki/src/research/storage.rs:153-155]
-[crates/gwiki/src/research/storage.rs:157-159]
-[crates/gwiki/src/research/storage.rs:168-177]
 
 ## API Symbols
 

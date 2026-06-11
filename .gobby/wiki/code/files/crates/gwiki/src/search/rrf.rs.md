@@ -28,8 +28,6 @@ Module: [[code/modules/crates/gwiki/src/search|crates/gwiki/src/search]]
 [crates/gwiki/src/search/rrf.rs:98-108]
 [crates/gwiki/src/search/rrf.rs:119-180]
 [crates/gwiki/src/search/rrf.rs:183-225]
-[crates/gwiki/src/search/rrf.rs:229-240]
-[crates/gwiki/src/search/rrf.rs:242-267]
 
 ## API Symbols
 

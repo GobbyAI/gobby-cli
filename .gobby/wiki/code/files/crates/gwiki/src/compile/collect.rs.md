@@ -33,13 +33,6 @@ Module: [[code/modules/crates/gwiki/src/compile|crates/gwiki/src/compile]]
 [crates/gwiki/src/compile/collect.rs:93-97]
 [crates/gwiki/src/compile/collect.rs:99-127]
 [crates/gwiki/src/compile/collect.rs:129-142]
-[crates/gwiki/src/compile/collect.rs:144-171]
-[crates/gwiki/src/compile/collect.rs:173-185]
-[crates/gwiki/src/compile/collect.rs:187-195]
-[crates/gwiki/src/compile/collect.rs:197-203]
-[crates/gwiki/src/compile/collect.rs:207-239]
-[crates/gwiki/src/compile/collect.rs:246-269]
-[crates/gwiki/src/compile/collect.rs:272-300]
 
 ## API Symbols
 

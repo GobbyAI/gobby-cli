@@ -27,7 +27,6 @@ Module: [[code/modules/crates/gwiki/src/sources|crates/gwiki/src/sources]]
 [crates/gwiki/src/sources/atomic.rs:58-83]
 [crates/gwiki/src/sources/atomic.rs:85-104]
 [crates/gwiki/src/sources/atomic.rs:111-116]
-[crates/gwiki/src/sources/atomic.rs:120-129]
 
 ## API Symbols
 

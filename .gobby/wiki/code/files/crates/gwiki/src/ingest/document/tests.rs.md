@@ -37,17 +37,6 @@ Module: [[code/modules/crates/gwiki/src/ingest/document|crates/gwiki/src/ingest/
 [crates/gwiki/src/ingest/document/tests.rs:27-38]
 [crates/gwiki/src/ingest/document/tests.rs:40-53]
 [crates/gwiki/src/ingest/document/tests.rs:55-59]
-[crates/gwiki/src/ingest/document/tests.rs:61-70]
-[crates/gwiki/src/ingest/document/tests.rs:72-96]
-[crates/gwiki/src/ingest/document/tests.rs:98-118]
-[crates/gwiki/src/ingest/document/tests.rs:121-200]
-[crates/gwiki/src/ingest/document/tests.rs:203-258]
-[crates/gwiki/src/ingest/document/tests.rs:261-263]
-[crates/gwiki/src/ingest/document/tests.rs:266-273]
-[crates/gwiki/src/ingest/document/tests.rs:276-294]
-[crates/gwiki/src/ingest/document/tests.rs:297-317]
-[crates/gwiki/src/ingest/document/tests.rs:320-327]
-[crates/gwiki/src/ingest/document/tests.rs:330-337]
 
 ## API Symbols
 

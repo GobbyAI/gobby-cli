@@ -35,15 +35,6 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 [crates/gwiki/src/registry.rs:29-33]
 [crates/gwiki/src/registry.rs:35-102]
 [crates/gwiki/src/registry.rs:104-136]
-[crates/gwiki/src/registry.rs:138-140]
-[crates/gwiki/src/registry.rs:142-144]
-[crates/gwiki/src/registry.rs:146-184]
-[crates/gwiki/src/registry.rs:186-203]
-[crates/gwiki/src/registry.rs:205-211]
-[crates/gwiki/src/registry.rs:213-225]
-[crates/gwiki/src/registry.rs:233-247]
-[crates/gwiki/src/registry.rs:250-322]
-[crates/gwiki/src/registry.rs:325-333]
 
 ## API Symbols
 

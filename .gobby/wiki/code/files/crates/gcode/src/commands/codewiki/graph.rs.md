@@ -31,17 +31,17 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 - `fetch_codewiki_graph_edges` (function) component `fetch_codewiki_graph_edges [function]` (`1653d1e5-3ac6-5f4e-96de-bb46fd727b1f`) lines 4-109 [crates/gcode/src/commands/codewiki/graph.rs:4-109]
   - Signature: `pub(crate) fn fetch_codewiki_graph_edges(`
-  - Purpose: Indexed function `fetch_codewiki_graph_edges` in `crates/gcode/src/commands/codewiki/graph.rs`. [crates/gcode/src/commands/codewiki/graph.rs:4-109]
+  - Purpose: Fetches code dependency graph edges from FalkorDB for symbols in core files, up to a specified limit, returning either an available `CodewikiGraph` with the queried edges or an unavailable graph on connection/query failure. [crates/gcode/src/commands/codewiki/graph.rs:4-109]
 - `query_or_unavailable` (function) component `query_or_unavailable [function]` (`c2474b4a-3816-5e4d-9f13-a1a296986eb3`) lines 34-49 [crates/gcode/src/commands/codewiki/graph.rs:34-49]
   - Signature: `fn query_or_unavailable(`
-  - Purpose: Indexed function `query_or_unavailable` in `crates/gcode/src/commands/codewiki/graph.rs`. [crates/gcode/src/commands/codewiki/graph.rs:34-49]
+  - Purpose: Executes a FalkorDB graph query via GraphClient, returning `Some(rows)` on success or `None` on failure with optional error logging to stderr. [crates/gcode/src/commands/codewiki/graph.rs:34-49]
 - `import_edges_from_pairs` (function) component `import_edges_from_pairs [function]` (`4e862278-2391-5e0a-8b76-f04cf8df3287`) lines 113-142 [crates/gcode/src/commands/codewiki/graph.rs:113-142]
   - Signature: `pub(crate) fn import_edges_from_pairs(`
-  - Purpose: Indexed function `import_edges_from_pairs` in `crates/gcode/src/commands/codewiki/graph.rs`. [crates/gcode/src/commands/codewiki/graph.rs:113-142]
+  - Purpose: Transforms file-module import pairs into `CodewikiGraphEdge` instances by resolving files to their first component IDs and filtering for imports originating from designated core files. [crates/gcode/src/commands/codewiki/graph.rs:113-142]
 - `codewiki_call_edges_query` (function) component `codewiki_call_edges_query [function]` (`4912a584-cc76-5735-80de-0cb286e853c4`) lines 148-163 [crates/gcode/src/commands/codewiki/graph.rs:148-163]
   - Signature: `pub(crate) fn codewiki_call_edges_query(`
-  - Purpose: Indexed function `codewiki_call_edges_query` in `crates/gcode/src/commands/codewiki/graph.rs`. [crates/gcode/src/commands/codewiki/graph.rs:148-163]
+  - Purpose: Generates a Cypher query string with parameters to fetch call graph edges (CALLS relationships) between CodeSymbols within a specified project, bounded by the given edge limit. [crates/gcode/src/commands/codewiki/graph.rs:148-163]
 - `codewiki_import_edges_query` (function) component `codewiki_import_edges_query [function]` (`d515c347-b86d-5297-9803-cc692b841646`) lines 165-180 [crates/gcode/src/commands/codewiki/graph.rs:165-180]
   - Signature: `pub(crate) fn codewiki_import_edges_query(`
-  - Purpose: Indexed function `codewiki_import_edges_query` in `crates/gcode/src/commands/codewiki/graph.rs`. [crates/gcode/src/commands/codewiki/graph.rs:165-180]
+  - Purpose: Generates a parameterized Cypher query that retrieves import edges (IMPORTS relationships) between CodeFile and CodeModule nodes for a specified project, with a configurable result limit. [crates/gcode/src/commands/codewiki/graph.rs:165-180]
 

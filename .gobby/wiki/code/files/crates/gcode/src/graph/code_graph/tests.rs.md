@@ -40,20 +40,6 @@ Module: [[code/modules/crates/gcode/src/graph/code_graph|crates/gcode/src/graph/
 [crates/gcode/src/graph/code_graph/tests.rs:36-65]
 [crates/gcode/src/graph/code_graph/tests.rs:68-151]
 [crates/gcode/src/graph/code_graph/tests.rs:154-159]
-[crates/gcode/src/graph/code_graph/tests.rs:162-189]
-[crates/gcode/src/graph/code_graph/tests.rs:192-198]
-[crates/gcode/src/graph/code_graph/tests.rs:201-218]
-[crates/gcode/src/graph/code_graph/tests.rs:221-237]
-[crates/gcode/src/graph/code_graph/tests.rs:240-245]
-[crates/gcode/src/graph/code_graph/tests.rs:248-252]
-[crates/gcode/src/graph/code_graph/tests.rs:255-269]
-[crates/gcode/src/graph/code_graph/tests.rs:272-282]
-[crates/gcode/src/graph/code_graph/tests.rs:285-324]
-[crates/gcode/src/graph/code_graph/tests.rs:327-374]
-[crates/gcode/src/graph/code_graph/tests.rs:377-396]
-[crates/gcode/src/graph/code_graph/tests.rs:399-409]
-[crates/gcode/src/graph/code_graph/tests.rs:412-439]
-[crates/gcode/src/graph/code_graph/tests.rs:442-454]
 
 ## API Symbols
 

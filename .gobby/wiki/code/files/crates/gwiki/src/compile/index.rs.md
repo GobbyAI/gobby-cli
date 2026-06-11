@@ -36,16 +36,6 @@ Module: [[code/modules/crates/gwiki/src/compile|crates/gwiki/src/compile]]
 [crates/gwiki/src/compile/index.rs:96-98]
 [crates/gwiki/src/compile/index.rs:100-102]
 [crates/gwiki/src/compile/index.rs:104-106]
-[crates/gwiki/src/compile/index.rs:108-117]
-[crates/gwiki/src/compile/index.rs:119-128]
-[crates/gwiki/src/compile/index.rs:130-132]
-[crates/gwiki/src/compile/index.rs:134-197]
-[crates/gwiki/src/compile/index.rs:199-221]
-[crates/gwiki/src/compile/index.rs:223-230]
-[crates/gwiki/src/compile/index.rs:232-250]
-[crates/gwiki/src/compile/index.rs:252-254]
-[crates/gwiki/src/compile/index.rs:256-290]
-[crates/gwiki/src/compile/index.rs:297-304]
 
 ## API Symbols
 

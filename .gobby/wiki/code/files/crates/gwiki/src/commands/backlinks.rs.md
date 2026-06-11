@@ -27,7 +27,6 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 [crates/gwiki/src/commands/backlinks.rs:30-53]
 [crates/gwiki/src/commands/backlinks.rs:55-78]
 [crates/gwiki/src/commands/backlinks.rs:80-99]
-[crates/gwiki/src/commands/backlinks.rs:101-126]
 
 ## API Symbols
 

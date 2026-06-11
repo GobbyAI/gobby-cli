@@ -38,18 +38,6 @@ Module: [[code/modules/crates/ghook/src|crates/ghook/src]]
 [crates/ghook/src/terminal_context.rs:34-65]
 [crates/ghook/src/terminal_context.rs:71-77]
 [crates/ghook/src/terminal_context.rs:79-84]
-[crates/ghook/src/terminal_context.rs:86-102]
-[crates/ghook/src/terminal_context.rs:104-126]
-[crates/ghook/src/terminal_context.rs:128-133]
-[crates/ghook/src/terminal_context.rs:138-145]
-[crates/ghook/src/terminal_context.rs:153-158]
-[crates/ghook/src/terminal_context.rs:161-164]
-[crates/ghook/src/terminal_context.rs:167-171]
-[crates/ghook/src/terminal_context.rs:174-187]
-[crates/ghook/src/terminal_context.rs:190-198]
-[crates/ghook/src/terminal_context.rs:201-209]
-[crates/ghook/src/terminal_context.rs:212-216]
-[crates/ghook/src/terminal_context.rs:219-237]
 
 ## API Symbols
 

@@ -35,15 +35,6 @@ Module: [[code/modules/crates/gcode/src/setup|crates/gcode/src/setup]]
 [crates/gcode/src/setup/ddl.rs:18-279]
 [crates/gcode/src/setup/ddl.rs:19-23]
 [crates/gcode/src/setup/ddl.rs:25-27]
-[crates/gcode/src/setup/ddl.rs:29-34]
-[crates/gcode/src/setup/ddl.rs:36-38]
-[crates/gcode/src/setup/ddl.rs:40-278]
-[crates/gcode/src/setup/ddl.rs:281-309]
-[crates/gcode/src/setup/ddl.rs:282-284]
-[crates/gcode/src/setup/ddl.rs:286-292]
-[crates/gcode/src/setup/ddl.rs:294-308]
-[crates/gcode/src/setup/ddl.rs:311-319]
-[crates/gcode/src/setup/ddl.rs:321-338]
 
 ## API Symbols
 

@@ -13,10 +13,10 @@ Parent: [[code/modules/crates/gcore/assets/postgres-pgsearch|crates/gcore/assets
 
 ## Overview
 
-This module contains SQL initialization scripts for configuring PostgreSQL extensions. It provides setup routines for `pg_search` and `pgaudit`, executed during database initialization to enable full-text search indexing and comprehensive audit logging capabilities. The module serves as infrastructure configuration without exposing application-level APIs or stable components.
+PostgreSQL initialization scripts for the pgsearch container. Contains ordered SQL files that run on database startup to enable required extensions: `pg_search` (full-text search) and `pgaudit` (audit logging).
 
 ## Files
 
-- [[code/files/crates/gcore/assets/postgres-pgsearch/initdb.d/01-pg_search.sql|crates/gcore/assets/postgres-pgsearch/initdb.d/01-pg_search.sql]] - `crates/gcore/assets/postgres-pgsearch/initdb.d/01-pg_search.sql` has no indexed API symbols.
-- [[code/files/crates/gcore/assets/postgres-pgsearch/initdb.d/02-pgaudit.sql|crates/gcore/assets/postgres-pgsearch/initdb.d/02-pgaudit.sql]] - `crates/gcore/assets/postgres-pgsearch/initdb.d/02-pgaudit.sql` has no indexed API symbols.
+- [[code/files/crates/gcore/assets/postgres-pgsearch/initdb.d/01-pg_search.sql|crates/gcore/assets/postgres-pgsearch/initdb.d/01-pg_search.sql]] - `crates/gcore/assets/postgres-pgsearch/initdb.d/01-pg_search.sql` has no indexed API symbols. 
+- [[code/files/crates/gcore/assets/postgres-pgsearch/initdb.d/02-pgaudit.sql|crates/gcore/assets/postgres-pgsearch/initdb.d/02-pgaudit.sql]] - `crates/gcore/assets/postgres-pgsearch/initdb.d/02-pgaudit.sql` has no indexed API symbols. 
 

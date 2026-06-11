@@ -34,14 +34,6 @@ Module: [[code/modules/crates/gsqz/src|crates/gsqz/src]]
 [crates/gsqz/src/command_split.rs:97-102]
 [crates/gsqz/src/command_split.rs:105-107]
 [crates/gsqz/src/command_split.rs:110-112]
-[crates/gsqz/src/command_split.rs:115-120]
-[crates/gsqz/src/command_split.rs:123-128]
-[crates/gsqz/src/command_split.rs:131-136]
-[crates/gsqz/src/command_split.rs:139-144]
-[crates/gsqz/src/command_split.rs:147-152]
-[crates/gsqz/src/command_split.rs:155-157]
-[crates/gsqz/src/command_split.rs:160-162]
-[crates/gsqz/src/command_split.rs:165-167]
 
 ## API Symbols
 

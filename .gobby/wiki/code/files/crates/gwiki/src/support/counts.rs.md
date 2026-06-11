@@ -29,9 +29,6 @@ Module: [[code/modules/crates/gwiki/src/support|crates/gwiki/src/support]]
 [crates/gwiki/src/support/counts.rs:22-33]
 [crates/gwiki/src/support/counts.rs:36-42]
 [crates/gwiki/src/support/counts.rs:44-54]
-[crates/gwiki/src/support/counts.rs:45-53]
-[crates/gwiki/src/support/counts.rs:56-72]
-[crates/gwiki/src/support/counts.rs:79-85]
 
 ## API Symbols
 

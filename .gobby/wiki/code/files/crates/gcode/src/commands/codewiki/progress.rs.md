@@ -29,9 +29,6 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 [crates/gcode/src/commands/codewiki/progress.rs:14-55]
 [crates/gcode/src/commands/codewiki/progress.rs:15-19]
 [crates/gcode/src/commands/codewiki/progress.rs:21-29]
-[crates/gcode/src/commands/codewiki/progress.rs:32-36]
-[crates/gcode/src/commands/codewiki/progress.rs:38-46]
-[crates/gcode/src/commands/codewiki/progress.rs:49-54]
 
 ## API Symbols
 

@@ -38,18 +38,6 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 [crates/gcore/src/cli_contract.rs:32-52]
 [crates/gcore/src/cli_contract.rs:33-51]
 [crates/gcore/src/cli_contract.rs:55-58]
-[crates/gcore/src/cli_contract.rs:61-68]
-[crates/gcore/src/cli_contract.rs:71-75]
-[crates/gcore/src/cli_contract.rs:78-82]
-[crates/gcore/src/cli_contract.rs:84-123]
-[crates/gcore/src/cli_contract.rs:85-94]
-[crates/gcore/src/cli_contract.rs:96-105]
-[crates/gcore/src/cli_contract.rs:107-112]
-[crates/gcore/src/cli_contract.rs:114-117]
-[crates/gcore/src/cli_contract.rs:119-122]
-[crates/gcore/src/cli_contract.rs:125-141]
-[crates/gcore/src/cli_contract.rs:126-132]
-[crates/gcore/src/cli_contract.rs:134-140]
 
 ## API Symbols
 

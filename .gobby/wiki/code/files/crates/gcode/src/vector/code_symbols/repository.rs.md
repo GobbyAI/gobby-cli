@@ -27,7 +27,6 @@ Module: [[code/modules/crates/gcode/src/vector/code_symbols|crates/gcode/src/vec
 [crates/gcode/src/vector/code_symbols/repository.rs:27-35]
 [crates/gcode/src/vector/code_symbols/repository.rs:38-43]
 [crates/gcode/src/vector/code_symbols/repository.rs:45-56]
-[crates/gcode/src/vector/code_symbols/repository.rs:59-77]
 
 ## API Symbols
 

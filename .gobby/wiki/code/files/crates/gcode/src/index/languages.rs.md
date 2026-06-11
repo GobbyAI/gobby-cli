@@ -33,13 +33,6 @@ Module: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 [crates/gcode/src/index/languages.rs:341-346]
 [crates/gcode/src/index/languages.rs:349-371]
 [crates/gcode/src/index/languages.rs:374-385]
-[crates/gcode/src/index/languages.rs:392-396]
-[crates/gcode/src/index/languages.rs:399-404]
-[crates/gcode/src/index/languages.rs:407-410]
-[crates/gcode/src/index/languages.rs:413-419]
-[crates/gcode/src/index/languages.rs:422-428]
-[crates/gcode/src/index/languages.rs:430-435]
-[crates/gcode/src/index/languages.rs:437-442]
 
 ## API Symbols
 

@@ -28,8 +28,6 @@ Module: [[code/modules/crates/gcore/src/qdrant|crates/gcore/src/qdrant]]
 [crates/gcore/src/qdrant/naming.rs:25-43]
 [crates/gcore/src/qdrant/naming.rs:45-70]
 [crates/gcore/src/qdrant/naming.rs:77-90]
-[crates/gcore/src/qdrant/naming.rs:93-110]
-[crates/gcore/src/qdrant/naming.rs:113-124]
 
 ## API Symbols
 

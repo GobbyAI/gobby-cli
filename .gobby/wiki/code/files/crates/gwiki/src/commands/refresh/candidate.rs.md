@@ -28,8 +28,6 @@ Module: [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/comman
 [crates/gwiki/src/commands/refresh/candidate.rs:175-214]
 [crates/gwiki/src/commands/refresh/candidate.rs:216-224]
 [crates/gwiki/src/commands/refresh/candidate.rs:226-245]
-[crates/gwiki/src/commands/refresh/candidate.rs:247-273]
-[crates/gwiki/src/commands/refresh/candidate.rs:275-310]
 
 ## API Symbols
 

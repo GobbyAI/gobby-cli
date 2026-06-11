@@ -28,8 +28,6 @@ Module: [[code/modules/crates/gcode/src/index/indexer|crates/gcode/src/index/ind
 [crates/gcode/src/index/indexer/pipeline.rs:47-164]
 [crates/gcode/src/index/indexer/pipeline.rs:166-293]
 [crates/gcode/src/index/indexer/pipeline.rs:295-299]
-[crates/gcode/src/index/indexer/pipeline.rs:301-315]
-[crates/gcode/src/index/indexer/pipeline.rs:317-331]
 
 ## API Symbols
 

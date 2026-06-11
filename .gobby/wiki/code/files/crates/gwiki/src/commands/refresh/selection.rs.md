@@ -37,17 +37,6 @@ Module: [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/comman
 [crates/gwiki/src/commands/refresh/selection.rs:83-110]
 [crates/gwiki/src/commands/refresh/selection.rs:113-116]
 [crates/gwiki/src/commands/refresh/selection.rs:119-122]
-[crates/gwiki/src/commands/refresh/selection.rs:124-136]
-[crates/gwiki/src/commands/refresh/selection.rs:138-144]
-[crates/gwiki/src/commands/refresh/selection.rs:146-150]
-[crates/gwiki/src/commands/refresh/selection.rs:152-166]
-[crates/gwiki/src/commands/refresh/selection.rs:168-181]
-[crates/gwiki/src/commands/refresh/selection.rs:183-206]
-[crates/gwiki/src/commands/refresh/selection.rs:208-216]
-[crates/gwiki/src/commands/refresh/selection.rs:218-220]
-[crates/gwiki/src/commands/refresh/selection.rs:222-228]
-[crates/gwiki/src/commands/refresh/selection.rs:230-235]
-[crates/gwiki/src/commands/refresh/selection.rs:244-290]
 
 ## API Symbols
 

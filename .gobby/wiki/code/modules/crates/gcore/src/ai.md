@@ -10,43 +10,46 @@ provenance:
   - 44-96
   - 98-136
   - 138-144
-  - 146-182
-  - 184-218
-  - 220-228
-  - 230-232
-  - 234-241
-  - 243-259
-  - 261-263
-  - 265-267
-  - 269-289
-  - 291-300
-  - 302-328
-  - 330-347
-  - 349-353
-  - 355-357
+  - 149-187
+  - 189-223
+  - 225-233
+  - 235-237
+  - 239-246
+  - 248-264
+  - 266-268
+  - 270-272
+  - 274-294
+  - 296-305
+  - 307-332
+  - 334-351
+  - 353-357
   - 359-361
-  - 363-399
-  - 401-420
-  - 434-476
-  - 479-498
-  - 501-524
-  - 527-557
-  - 560-575
-  - 578-613
-  - 616-669
-  - 671-680
-  - 682-685
-  - 687-694
-  - 696-698
-  - 700-702
-  - 704-713
-  - 715-732
-  - 734-746
-  - 748-752
-  - 754-772
-  - 755-771
-  - 774-790
-  - 775-789
+  - 363-365
+  - 367-403
+  - 405-424
+  - 438-489
+  - 492-511
+  - 514-531
+  - 534-556
+  - 559-580
+  - 583-606
+  - 609-639
+  - 642-657
+  - 660-695
+  - 698-751
+  - 753-762
+  - 764-767
+  - 769-776
+  - 778-780
+  - 782-784
+  - 786-795
+  - 797-814
+  - 816-829
+  - 831-835
+  - 837-855
+  - 838-854
+  - 857-873
+  - 858-872
 - file: crates/gcore/src/ai/mod.rs
   ranges:
   - 30-34
@@ -88,7 +91,7 @@ provenance:
   - 517-556
   - 559-594
   - 597-627
-  - 629-641
+  - 629-642
 - file: crates/gcore/src/ai/probe.rs
   ranges:
   - 20-23
@@ -106,25 +109,26 @@ provenance:
   - 99-110
   - 112-176
   - 178-241
-  - 243-247
-  - 249-267
-  - 270-273
-  - 275-277
-  - '279'
-  - 281-296
-  - 282-295
-  - 305-357
-  - 360-373
-  - 376-385
-  - 388-414
-  - 417-440
-  - 443-469
-  - 471-474
-  - 476-489
-  - 477-484
-  - 486-488
-  - 491-504
-  - 492-503
+  - 243-251
+  - 253-271
+  - 274-277
+  - 279-281
+  - '283'
+  - 285-300
+  - 286-299
+  - 309-361
+  - 364-377
+  - 380-389
+  - 392-418
+  - 421-444
+  - 447-466
+  - 469-495
+  - 497-500
+  - 502-515
+  - 503-510
+  - 512-514
+  - 517-530
+  - 518-529
 - file: crates/gcore/src/ai/text.rs
   ranges:
   - 9-15
@@ -137,7 +141,7 @@ provenance:
   - 140-143
   - 145-152
   - 154-171
-  - 173-185
+  - 173-186
 - file: crates/gcore/src/ai/transcription.rs
   ranges:
   - 11-14
@@ -153,7 +157,7 @@ provenance:
   - 203-205
   - 207-214
   - 216-233
-  - 235-247
+  - 235-248
 - file: crates/gcore/src/ai/vision.rs
   ranges:
   - 14-17
@@ -173,7 +177,7 @@ provenance:
   - 252-255
   - 257-264
   - 266-283
-  - 285-297
+  - 285-298
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -185,167 +189,18 @@ Parent: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Overview
 
-The ai module provides a unified, capability-aware interface for interacting with AI backends, primarily a local daemon. It abstracts network communication through AiTransport, which handles JSON and multipart request construction, API key injection, automatic retries with exponential backoff, and dynamic routing between direct API calls and the local daemon. The module is organized by capability: transcription.rs handles audio-to-text conversion, vision.rs manages image description and analysis, text.rs covers generative text and embeddings, and daemon.rs implements the core client logic for request routing and response parsing. probe.rs supplies backend health and capability detection via LocalBackendProbe and CapabilityProbeReport. Public APIs expose high-level functions like generate_via_daemon, transcribe_via_daemon, and describe_image_via_daemon, while test utilities such as FakeTransport, EnvGuard, and test_context ensure reliable integration testing.
+The `ai` module provides gcore's unified AI capability layer, supporting text generation, embeddings, vision/image description, and audio transcription across two execution paths: a local Gobby daemon and direct provider (OpenAI-compatible) endpoints.
+
+`mod.rs` defines the routing core, computing the effective route per capability based on configured routing modes (auto, daemon, direct, off) and live daemon availability, with fallback logic between daemon and direct backends. `daemon.rs` implements daemon-based calls—building multipart and JSON requests with local CLI token auth, resolving the daemon URL/home, and parsing transcription and embedding responses. `probe.rs` handles capability discovery, probing the daemon's status endpoint to determine which capabilities (text, vision, audio, embeddings) are available or degraded, abstracted over a pluggable probe transport.
+
+The remaining files implement the direct provider path: a shared `AiTransport` (in mod.rs) handles JSON/multipart POSTs with API-key auth, capability-specific timeouts, and exponential backoff retry honoring Retry-After headers. `text.rs`, `vision.rs`, and `transcription.rs` build chat-completion and multipart requests and parse responses, with vision supporting delimited/JSON-fenced structured section extraction and transcription distinguishing transcribe vs. translate tasks.
+
+The module is extensively unit-tested with fake transports, spawned test servers, and environment guards covering routing precedence, retry behavior, multipart wiring, token handling, and response parsing edge cases.
 [crates/gcore/src/ai/daemon.rs:19-24]
-[crates/gcore/src/ai/daemon.rs:27-31]
-[crates/gcore/src/ai/daemon.rs:34-41]
-[crates/gcore/src/ai/daemon.rs:44-96]
-[crates/gcore/src/ai/daemon.rs:98-136]
-[crates/gcore/src/ai/daemon.rs:138-144]
-[crates/gcore/src/ai/daemon.rs:146-182]
-[crates/gcore/src/ai/daemon.rs:184-218]
-[crates/gcore/src/ai/daemon.rs:220-228]
-[crates/gcore/src/ai/daemon.rs:230-232]
-[crates/gcore/src/ai/daemon.rs:234-241]
-[crates/gcore/src/ai/daemon.rs:243-259]
-[crates/gcore/src/ai/daemon.rs:261-263]
-[crates/gcore/src/ai/daemon.rs:265-267]
-[crates/gcore/src/ai/daemon.rs:269-289]
-[crates/gcore/src/ai/daemon.rs:291-300]
-[crates/gcore/src/ai/daemon.rs:302-328]
-[crates/gcore/src/ai/daemon.rs:330-347]
-[crates/gcore/src/ai/daemon.rs:349-353]
-[crates/gcore/src/ai/daemon.rs:355-357]
-[crates/gcore/src/ai/daemon.rs:359-361]
-[crates/gcore/src/ai/daemon.rs:363-399]
-[crates/gcore/src/ai/daemon.rs:401-420]
-[crates/gcore/src/ai/daemon.rs:434-476]
-[crates/gcore/src/ai/daemon.rs:479-498]
-[crates/gcore/src/ai/daemon.rs:501-524]
-[crates/gcore/src/ai/daemon.rs:527-557]
-[crates/gcore/src/ai/daemon.rs:560-575]
-[crates/gcore/src/ai/daemon.rs:578-613]
-[crates/gcore/src/ai/daemon.rs:616-669]
-[crates/gcore/src/ai/daemon.rs:671-680]
-[crates/gcore/src/ai/daemon.rs:682-685]
-[crates/gcore/src/ai/daemon.rs:687-694]
-[crates/gcore/src/ai/daemon.rs:696-698]
-[crates/gcore/src/ai/daemon.rs:700-702]
-[crates/gcore/src/ai/daemon.rs:704-713]
-[crates/gcore/src/ai/daemon.rs:715-732]
-[crates/gcore/src/ai/daemon.rs:734-746]
-[crates/gcore/src/ai/daemon.rs:748-752]
-[crates/gcore/src/ai/daemon.rs:754-772]
-[crates/gcore/src/ai/daemon.rs:755-771]
-[crates/gcore/src/ai/daemon.rs:774-790]
-[crates/gcore/src/ai/daemon.rs:775-789]
 [crates/gcore/src/ai/mod.rs:30-34]
-[crates/gcore/src/ai/mod.rs:36-47]
-[crates/gcore/src/ai/mod.rs:49-61]
-[crates/gcore/src/ai/mod.rs:63-75]
-[crates/gcore/src/ai/mod.rs:78-81]
-[crates/gcore/src/ai/mod.rs:84-88]
-[crates/gcore/src/ai/mod.rs:90-107]
-[crates/gcore/src/ai/mod.rs:109-134]
-[crates/gcore/src/ai/mod.rs:136-141]
-[crates/gcore/src/ai/mod.rs:143-145]
-[crates/gcore/src/ai/mod.rs:147-149]
-[crates/gcore/src/ai/mod.rs:151-168]
-[crates/gcore/src/ai/mod.rs:170-200]
-[crates/gcore/src/ai/mod.rs:203-208]
-[crates/gcore/src/ai/mod.rs:210-217]
-[crates/gcore/src/ai/mod.rs:219-234]
-[crates/gcore/src/ai/mod.rs:236-247]
-[crates/gcore/src/ai/mod.rs:249-257]
-[crates/gcore/src/ai/mod.rs:259-261]
-[crates/gcore/src/ai/mod.rs:263-296]
-[crates/gcore/src/ai/mod.rs:298-309]
-[crates/gcore/src/ai/mod.rs:311-317]
-[crates/gcore/src/ai/mod.rs:319-321]
-[crates/gcore/src/ai/mod.rs:323-341]
-[crates/gcore/src/ai/mod.rs:343-346]
-[crates/gcore/src/ai/mod.rs:348-358]
-[crates/gcore/src/ai/mod.rs:360-366]
-[crates/gcore/src/ai/mod.rs:369-373]
-[crates/gcore/src/ai/mod.rs:375-392]
-[crates/gcore/src/ai/mod.rs:401-417]
-[crates/gcore/src/ai/mod.rs:420-442]
-[crates/gcore/src/ai/mod.rs:445-458]
-[crates/gcore/src/ai/mod.rs:461-465]
-[crates/gcore/src/ai/mod.rs:468-475]
-[crates/gcore/src/ai/mod.rs:478-491]
-[crates/gcore/src/ai/mod.rs:494-514]
-[crates/gcore/src/ai/mod.rs:517-556]
-[crates/gcore/src/ai/mod.rs:559-594]
-[crates/gcore/src/ai/mod.rs:597-627]
-[crates/gcore/src/ai/mod.rs:629-641]
 [crates/gcore/src/ai/probe.rs:20-23]
-[crates/gcore/src/ai/probe.rs:26-34]
-[crates/gcore/src/ai/probe.rs:37-42]
-[crates/gcore/src/ai/probe.rs:45-50]
-[crates/gcore/src/ai/probe.rs:53-56]
-[crates/gcore/src/ai/probe.rs:58-64]
-[crates/gcore/src/ai/probe.rs:59-63]
-[crates/gcore/src/ai/probe.rs:66-78]
-[crates/gcore/src/ai/probe.rs:80-82]
-[crates/gcore/src/ai/probe.rs:84-89]
-[crates/gcore/src/ai/probe.rs:91-93]
-[crates/gcore/src/ai/probe.rs:95-97]
-[crates/gcore/src/ai/probe.rs:99-110]
-[crates/gcore/src/ai/probe.rs:112-176]
-[crates/gcore/src/ai/probe.rs:178-241]
-[crates/gcore/src/ai/probe.rs:243-247]
-[crates/gcore/src/ai/probe.rs:249-267]
-[crates/gcore/src/ai/probe.rs:270-273]
-[crates/gcore/src/ai/probe.rs:275-277]
-[crates/gcore/src/ai/probe.rs:279]
-[crates/gcore/src/ai/probe.rs:281-296]
-[crates/gcore/src/ai/probe.rs:282-295]
-[crates/gcore/src/ai/probe.rs:305-357]
-[crates/gcore/src/ai/probe.rs:360-373]
-[crates/gcore/src/ai/probe.rs:376-385]
-[crates/gcore/src/ai/probe.rs:388-414]
-[crates/gcore/src/ai/probe.rs:417-440]
-[crates/gcore/src/ai/probe.rs:443-469]
-[crates/gcore/src/ai/probe.rs:471-474]
-[crates/gcore/src/ai/probe.rs:476-489]
-[crates/gcore/src/ai/probe.rs:477-484]
-[crates/gcore/src/ai/probe.rs:486-488]
-[crates/gcore/src/ai/probe.rs:491-504]
-[crates/gcore/src/ai/probe.rs:492-503]
 [crates/gcore/src/ai/text.rs:9-15]
-[crates/gcore/src/ai/text.rs:17-35]
-[crates/gcore/src/ai/text.rs:37-67]
-[crates/gcore/src/ai/text.rs:69-87]
-[crates/gcore/src/ai/text.rs:98-120]
-[crates/gcore/src/ai/text.rs:123-134]
-[crates/gcore/src/ai/text.rs:136-138]
-[crates/gcore/src/ai/text.rs:140-143]
-[crates/gcore/src/ai/text.rs:145-152]
-[crates/gcore/src/ai/text.rs:154-171]
-[crates/gcore/src/ai/text.rs:173-185]
 [crates/gcore/src/ai/transcription.rs:11-14]
-[crates/gcore/src/ai/transcription.rs:16-37]
-[crates/gcore/src/ai/transcription.rs:17-22]
-[crates/gcore/src/ai/transcription.rs:24-29]
-[crates/gcore/src/ai/transcription.rs:31-36]
-[crates/gcore/src/ai/transcription.rs:39-73]
-[crates/gcore/src/ai/transcription.rs:75-99]
-[crates/gcore/src/ai/transcription.rs:101-142]
-[crates/gcore/src/ai/transcription.rs:152-178]
-[crates/gcore/src/ai/transcription.rs:181-201]
-[crates/gcore/src/ai/transcription.rs:203-205]
-[crates/gcore/src/ai/transcription.rs:207-214]
-[crates/gcore/src/ai/transcription.rs:216-233]
-[crates/gcore/src/ai/transcription.rs:235-247]
-[crates/gcore/src/ai/vision.rs:14-17]
-[crates/gcore/src/ai/vision.rs:19-35]
-[crates/gcore/src/ai/vision.rs:37-63]
-[crates/gcore/src/ai/vision.rs:65-90]
-[crates/gcore/src/ai/vision.rs:92-104]
-[crates/gcore/src/ai/vision.rs:94-98]
-[crates/gcore/src/ai/vision.rs:106-121]
-[crates/gcore/src/ai/vision.rs:123-156]
-[crates/gcore/src/ai/vision.rs:158-173]
-[crates/gcore/src/ai/vision.rs:175-179]
-[crates/gcore/src/ai/vision.rs:190-222]
-[crates/gcore/src/ai/vision.rs:225-234]
-[crates/gcore/src/ai/vision.rs:237-246]
-[crates/gcore/src/ai/vision.rs:248-250]
-[crates/gcore/src/ai/vision.rs:252-255]
-[crates/gcore/src/ai/vision.rs:257-264]
-[crates/gcore/src/ai/vision.rs:266-283]
-[crates/gcore/src/ai/vision.rs:285-297]
 
 ## Call Diagram
 
@@ -353,223 +208,85 @@ The ai module provides a unified, capability-aware interface for interacting wit
 sequenceDiagram
     participant m_0018671e_1bf6_5f64_84e3_f7bb31b64397 as post_multipart &#91;function&#93;
     participant m_03177fc3_a65a_553d_89df_cae5f70ccc6f as probe_daemon_capability_with &#91;function&#93;
-    participant m_0b7b4c60_9dbe_535b_b313_6855a30cf7aa as probe_local_backend &#91;function&#93;
+    participant m_06ae781a_755e_5cba_91c7_bc6d7f03b6f9 as forwards_provider_model_and_optional_project_id &#91;function&#93;
     participant m_0fcc2a50_b69d_5539_a83c_b340710a09d2 as capability_status_route &#91;function&#93;
     participant m_1011bfa8_deef_5104_ae3c_083e282f55a3 as effective_route_explicit_routing_modes_are_forced &#91;function&#93;
     participant m_10fd6471_8d82_556b_8c85_9ddf3ce3e87a as auto_uses_explicit_direct_config_when_daemon_unavailable &#91;function&#93;
-    participant m_1773b764_40c3_5031_bc41_8eec30a55647 as unavailable &#91;function&#93;
-    participant m_19efb58c_dd7a_55cc_83c9_b1e0384c6368 as status_route_is_availability_truth &#91;function&#93;
-    participant m_1d1d0d89_a9c1_582f_ab80_915b25aefa53 as effective_route &#91;function&#93;
-    participant m_2568d186_e75e_51e8_bb50_fec97cb2314e as attachments_not_vision_extraction &#91;function&#93;
-    participant m_2ad058a8_82bf_5c5c_beac_802c8ecb5b06 as wire_multipart_filename_and_auth &#91;function&#93;
+    participant m_13e8b8b5_4f2e_53a2_8766_fca00c5d8a3d as status_route_is_availability_truth &#91;function&#93;
+    participant m_1552c005_f9c6_5d08_8268_e85f725b3228 as explicit_provider_model_suppresses_profile_override &#91;function&#93;
+    participant m_1dee5433_2483_5385_b504_76e3e2db6cff as write_daemon_files &#91;function&#93;
     participant m_2b002f39_70c7_5bf2_add4_86a4bd0e9fcc as binding &#91;function&#93;
-    participant m_2bc2f797_0568_50c2_98cc_d7612ccd729d as probe_daemon_capability &#91;function&#93;
     participant m_2ececf02_86d2_579e_b67f_be87fe34be70 as retry_with_backoff &#91;function&#93;
-    participant m_315ab23c_ff83_542a_9b02_0656f56433e5 as probe_local_backend_returns_non_success_status &#91;function&#93;
-    participant m_34320345_b5bd_5cd4_9357_206596a243b5 as UreqProbeTransport.status &#91;method&#93;
-    participant m_3526895d_859c_5328_b6ef_569fef946184 as embed_via_daemon &#91;function&#93;
-    participant m_3a24eb1f_2505_5cff_ae38_1a88866babce as daemon_client &#91;function&#93;
-    participant m_4aafb767_2df1_5255_b317_edad37548cfa as parse_daemon_embeddings &#91;function&#93;
-    participant m_549f2359_b022_5a51_a0ab_e035a28c2c36 as retry_delay &#91;function&#93;
-    participant m_5c0027dc_e773_510c_bec6_1de51bd6ce96 as is_retryable &#91;function&#93;
-    participant m_67450992_5bcf_5e64_bd07_1d21ee408767 as probe_daemon_capability_at &#91;function&#93;
-    participant m_7cfc1bed_9dcb_5632_9987_bb6a565ab7b0 as test_context &#91;function&#93;
-    participant m_a229a57c_576d_5fb5_b2ef_097bdaa08ad7 as transcribe &#91;function&#93;
-    participant m_b34e7711_5869_55b9_9575_b7d62dbeb638 as effective_route_with_probe &#91;function&#93;
+    participant m_3ee0fb4d_cf88_5f67_8ee6_7afe5c56ce51 as spawn_server &#91;function&#93;
+    participant m_4a81b62f_3833_566d_81d1_43cf40f800c6 as test_context &#91;function&#93;
+    participant m_4b57ee25_c217_531b_912e_8d2fec0a4168 as unavailable &#91;function&#93;
+    participant m_79897c3c_a54c_5605_9155_ac311297092d as generate_via_daemon &#91;function&#93;
     participant m_cc963b53_c2ac_5943_8e93_686cbc5e9e52 as probe_daemon_capabilities_with &#91;function&#93;
+    participant m_d6439506_5ad9_5288_83c2_debaf42a28a3 as generate_via_daemon_with_max_tokens &#91;function&#93;
     participant m_d666aa1a_0c17_5bfd_9dd4_6edb842360e5 as parse_json_response &#91;function&#93;
-    participant m_e33b4635_422b_5e37_9fec_12eebb60586f as spawn_server &#91;function&#93;
+    participant m_e3dfbd16_cdf8_5be4_b660_24d14f42f06f as request_body_json &#91;function&#93;
+    participant m_f55ca630_86e7_5f15_9bd9_2bec3a37af6e as temp_home &#91;function&#93;
     participant m_f5b1ae31_d8ba_5980_98a9_a916753b17c8 as status_body_advertises &#91;function&#93;
     m_0018671e_1bf6_5f64_84e3_f7bb31b64397->>m_2ececf02_86d2_579e_b67f_be87fe34be70: calls
     m_0018671e_1bf6_5f64_84e3_f7bb31b64397->>m_d666aa1a_0c17_5bfd_9dd4_6edb842360e5: calls
     m_03177fc3_a65a_553d_89df_cae5f70ccc6f->>m_0fcc2a50_b69d_5539_a83c_b340710a09d2: calls
-    m_03177fc3_a65a_553d_89df_cae5f70ccc6f->>m_1773b764_40c3_5031_bc41_8eec30a55647: calls
+    m_03177fc3_a65a_553d_89df_cae5f70ccc6f->>m_4b57ee25_c217_531b_912e_8d2fec0a4168: calls
     m_03177fc3_a65a_553d_89df_cae5f70ccc6f->>m_f5b1ae31_d8ba_5980_98a9_a916753b17c8: calls
+    m_06ae781a_755e_5cba_91c7_bc6d7f03b6f9->>m_1dee5433_2483_5385_b504_76e3e2db6cff: calls
+    m_06ae781a_755e_5cba_91c7_bc6d7f03b6f9->>m_3ee0fb4d_cf88_5f67_8ee6_7afe5c56ce51: calls
+    m_06ae781a_755e_5cba_91c7_bc6d7f03b6f9->>m_4a81b62f_3833_566d_81d1_43cf40f800c6: calls
+    m_06ae781a_755e_5cba_91c7_bc6d7f03b6f9->>m_79897c3c_a54c_5605_9155_ac311297092d: calls
+    m_06ae781a_755e_5cba_91c7_bc6d7f03b6f9->>m_d6439506_5ad9_5288_83c2_debaf42a28a3: calls
+    m_06ae781a_755e_5cba_91c7_bc6d7f03b6f9->>m_e3dfbd16_cdf8_5be4_b660_24d14f42f06f: calls
+    m_06ae781a_755e_5cba_91c7_bc6d7f03b6f9->>m_f55ca630_86e7_5f15_9bd9_2bec3a37af6e: calls
     m_1011bfa8_deef_5104_ae3c_083e282f55a3->>m_2b002f39_70c7_5bf2_add4_86a4bd0e9fcc: calls
     m_10fd6471_8d82_556b_8c85_9ddf3ce3e87a->>m_2b002f39_70c7_5bf2_add4_86a4bd0e9fcc: calls
-    m_19efb58c_dd7a_55cc_83c9_b1e0384c6368->>m_cc963b53_c2ac_5943_8e93_686cbc5e9e52: calls
-    m_1d1d0d89_a9c1_582f_ab80_915b25aefa53->>m_b34e7711_5869_55b9_9575_b7d62dbeb638: calls
-    m_2568d186_e75e_51e8_bb50_fec97cb2314e->>m_cc963b53_c2ac_5943_8e93_686cbc5e9e52: calls
-    m_2ad058a8_82bf_5c5c_beac_802c8ecb5b06->>m_7cfc1bed_9dcb_5632_9987_bb6a565ab7b0: calls
-    m_2ad058a8_82bf_5c5c_beac_802c8ecb5b06->>m_a229a57c_576d_5fb5_b2ef_097bdaa08ad7: calls
-    m_2ad058a8_82bf_5c5c_beac_802c8ecb5b06->>m_e33b4635_422b_5e37_9fec_12eebb60586f: calls
-    m_2bc2f797_0568_50c2_98cc_d7612ccd729d->>m_67450992_5bcf_5e64_bd07_1d21ee408767: calls
-    m_2ececf02_86d2_579e_b67f_be87fe34be70->>m_549f2359_b022_5a51_a0ab_e035a28c2c36: calls
-    m_2ececf02_86d2_579e_b67f_be87fe34be70->>m_5c0027dc_e773_510c_bec6_1de51bd6ce96: calls
-    m_315ab23c_ff83_542a_9b02_0656f56433e5->>m_0b7b4c60_9dbe_535b_b313_6855a30cf7aa: calls
-    m_34320345_b5bd_5cd4_9357_206596a243b5->>m_34320345_b5bd_5cd4_9357_206596a243b5: calls
-    m_3526895d_859c_5328_b6ef_569fef946184->>m_3a24eb1f_2505_5cff_ae38_1a88866babce: calls
-    m_3526895d_859c_5328_b6ef_569fef946184->>m_4aafb767_2df1_5255_b317_edad37548cfa: calls
+    m_13e8b8b5_4f2e_53a2_8766_fca00c5d8a3d->>m_cc963b53_c2ac_5943_8e93_686cbc5e9e52: calls
+    m_1552c005_f9c6_5d08_8268_e85f725b3228->>m_1dee5433_2483_5385_b504_76e3e2db6cff: calls
+    m_1552c005_f9c6_5d08_8268_e85f725b3228->>m_3ee0fb4d_cf88_5f67_8ee6_7afe5c56ce51: calls
+    m_1552c005_f9c6_5d08_8268_e85f725b3228->>m_4a81b62f_3833_566d_81d1_43cf40f800c6: calls
+    m_1552c005_f9c6_5d08_8268_e85f725b3228->>m_d6439506_5ad9_5288_83c2_debaf42a28a3: calls
+    m_1552c005_f9c6_5d08_8268_e85f725b3228->>m_e3dfbd16_cdf8_5be4_b660_24d14f42f06f: calls
 ```
 
 ## Files
 
-- [[code/files/crates/gcore/src/ai/daemon.rs|crates/gcore/src/ai/daemon.rs]] - `crates/gcore/src/ai/daemon.rs` exposes 43 indexed API symbols.
+- [[code/files/crates/gcore/src/ai/daemon.rs|crates/gcore/src/ai/daemon.rs]] - `crates/gcore/src/ai/daemon.rs` exposes 46 indexed API symbols.
 [crates/gcore/src/ai/daemon.rs:19-24]
 [crates/gcore/src/ai/daemon.rs:27-31]
 [crates/gcore/src/ai/daemon.rs:34-41]
 [crates/gcore/src/ai/daemon.rs:44-96]
 [crates/gcore/src/ai/daemon.rs:98-136]
-[crates/gcore/src/ai/daemon.rs:138-144]
-[crates/gcore/src/ai/daemon.rs:146-182]
-[crates/gcore/src/ai/daemon.rs:184-218]
-[crates/gcore/src/ai/daemon.rs:220-228]
-[crates/gcore/src/ai/daemon.rs:230-232]
-[crates/gcore/src/ai/daemon.rs:234-241]
-[crates/gcore/src/ai/daemon.rs:243-259]
-[crates/gcore/src/ai/daemon.rs:261-263]
-[crates/gcore/src/ai/daemon.rs:265-267]
-[crates/gcore/src/ai/daemon.rs:269-289]
-[crates/gcore/src/ai/daemon.rs:291-300]
-[crates/gcore/src/ai/daemon.rs:302-328]
-[crates/gcore/src/ai/daemon.rs:330-347]
-[crates/gcore/src/ai/daemon.rs:349-353]
-[crates/gcore/src/ai/daemon.rs:355-357]
-[crates/gcore/src/ai/daemon.rs:359-361]
-[crates/gcore/src/ai/daemon.rs:363-399]
-[crates/gcore/src/ai/daemon.rs:401-420]
-[crates/gcore/src/ai/daemon.rs:434-476]
-[crates/gcore/src/ai/daemon.rs:479-498]
-[crates/gcore/src/ai/daemon.rs:501-524]
-[crates/gcore/src/ai/daemon.rs:527-557]
-[crates/gcore/src/ai/daemon.rs:560-575]
-[crates/gcore/src/ai/daemon.rs:578-613]
-[crates/gcore/src/ai/daemon.rs:616-669]
-[crates/gcore/src/ai/daemon.rs:671-680]
-[crates/gcore/src/ai/daemon.rs:682-685]
-[crates/gcore/src/ai/daemon.rs:687-694]
-[crates/gcore/src/ai/daemon.rs:696-698]
-[crates/gcore/src/ai/daemon.rs:700-702]
-[crates/gcore/src/ai/daemon.rs:704-713]
-[crates/gcore/src/ai/daemon.rs:715-732]
-[crates/gcore/src/ai/daemon.rs:734-746]
-[crates/gcore/src/ai/daemon.rs:748-752]
-[crates/gcore/src/ai/daemon.rs:754-772]
-[crates/gcore/src/ai/daemon.rs:755-771]
-[crates/gcore/src/ai/daemon.rs:774-790]
-[crates/gcore/src/ai/daemon.rs:775-789]
 - [[code/files/crates/gcore/src/ai/mod.rs|crates/gcore/src/ai/mod.rs]] - `crates/gcore/src/ai/mod.rs` exposes 40 indexed API symbols.
 [crates/gcore/src/ai/mod.rs:30-34]
 [crates/gcore/src/ai/mod.rs:36-47]
 [crates/gcore/src/ai/mod.rs:49-61]
 [crates/gcore/src/ai/mod.rs:63-75]
 [crates/gcore/src/ai/mod.rs:78-81]
-[crates/gcore/src/ai/mod.rs:84-88]
-[crates/gcore/src/ai/mod.rs:90-107]
-[crates/gcore/src/ai/mod.rs:109-134]
-[crates/gcore/src/ai/mod.rs:136-141]
-[crates/gcore/src/ai/mod.rs:143-145]
-[crates/gcore/src/ai/mod.rs:147-149]
-[crates/gcore/src/ai/mod.rs:151-168]
-[crates/gcore/src/ai/mod.rs:170-200]
-[crates/gcore/src/ai/mod.rs:203-208]
-[crates/gcore/src/ai/mod.rs:210-217]
-[crates/gcore/src/ai/mod.rs:219-234]
-[crates/gcore/src/ai/mod.rs:236-247]
-[crates/gcore/src/ai/mod.rs:249-257]
-[crates/gcore/src/ai/mod.rs:259-261]
-[crates/gcore/src/ai/mod.rs:263-296]
-[crates/gcore/src/ai/mod.rs:298-309]
-[crates/gcore/src/ai/mod.rs:311-317]
-[crates/gcore/src/ai/mod.rs:319-321]
-[crates/gcore/src/ai/mod.rs:323-341]
-[crates/gcore/src/ai/mod.rs:343-346]
-[crates/gcore/src/ai/mod.rs:348-358]
-[crates/gcore/src/ai/mod.rs:360-366]
-[crates/gcore/src/ai/mod.rs:369-373]
-[crates/gcore/src/ai/mod.rs:375-392]
-[crates/gcore/src/ai/mod.rs:401-417]
-[crates/gcore/src/ai/mod.rs:420-442]
-[crates/gcore/src/ai/mod.rs:445-458]
-[crates/gcore/src/ai/mod.rs:461-465]
-[crates/gcore/src/ai/mod.rs:468-475]
-[crates/gcore/src/ai/mod.rs:478-491]
-[crates/gcore/src/ai/mod.rs:494-514]
-[crates/gcore/src/ai/mod.rs:517-556]
-[crates/gcore/src/ai/mod.rs:559-594]
-[crates/gcore/src/ai/mod.rs:597-627]
-[crates/gcore/src/ai/mod.rs:629-641]
-- [[code/files/crates/gcore/src/ai/probe.rs|crates/gcore/src/ai/probe.rs]] - `crates/gcore/src/ai/probe.rs` exposes 34 indexed API symbols.
+- [[code/files/crates/gcore/src/ai/probe.rs|crates/gcore/src/ai/probe.rs]] - `crates/gcore/src/ai/probe.rs` exposes 35 indexed API symbols.
 [crates/gcore/src/ai/probe.rs:20-23]
 [crates/gcore/src/ai/probe.rs:26-34]
 [crates/gcore/src/ai/probe.rs:37-42]
 [crates/gcore/src/ai/probe.rs:45-50]
 [crates/gcore/src/ai/probe.rs:53-56]
-[crates/gcore/src/ai/probe.rs:58-64]
-[crates/gcore/src/ai/probe.rs:59-63]
-[crates/gcore/src/ai/probe.rs:66-78]
-[crates/gcore/src/ai/probe.rs:80-82]
-[crates/gcore/src/ai/probe.rs:84-89]
-[crates/gcore/src/ai/probe.rs:91-93]
-[crates/gcore/src/ai/probe.rs:95-97]
-[crates/gcore/src/ai/probe.rs:99-110]
-[crates/gcore/src/ai/probe.rs:112-176]
-[crates/gcore/src/ai/probe.rs:178-241]
-[crates/gcore/src/ai/probe.rs:243-247]
-[crates/gcore/src/ai/probe.rs:249-267]
-[crates/gcore/src/ai/probe.rs:270-273]
-[crates/gcore/src/ai/probe.rs:275-277]
-[crates/gcore/src/ai/probe.rs:279]
-[crates/gcore/src/ai/probe.rs:281-296]
-[crates/gcore/src/ai/probe.rs:282-295]
-[crates/gcore/src/ai/probe.rs:305-357]
-[crates/gcore/src/ai/probe.rs:360-373]
-[crates/gcore/src/ai/probe.rs:376-385]
-[crates/gcore/src/ai/probe.rs:388-414]
-[crates/gcore/src/ai/probe.rs:417-440]
-[crates/gcore/src/ai/probe.rs:443-469]
-[crates/gcore/src/ai/probe.rs:471-474]
-[crates/gcore/src/ai/probe.rs:476-489]
-[crates/gcore/src/ai/probe.rs:477-484]
-[crates/gcore/src/ai/probe.rs:486-488]
-[crates/gcore/src/ai/probe.rs:491-504]
-[crates/gcore/src/ai/probe.rs:492-503]
 - [[code/files/crates/gcore/src/ai/text.rs|crates/gcore/src/ai/text.rs]] - `crates/gcore/src/ai/text.rs` exposes 11 indexed API symbols.
 [crates/gcore/src/ai/text.rs:9-15]
 [crates/gcore/src/ai/text.rs:17-35]
 [crates/gcore/src/ai/text.rs:37-67]
 [crates/gcore/src/ai/text.rs:69-87]
 [crates/gcore/src/ai/text.rs:98-120]
-[crates/gcore/src/ai/text.rs:123-134]
-[crates/gcore/src/ai/text.rs:136-138]
-[crates/gcore/src/ai/text.rs:140-143]
-[crates/gcore/src/ai/text.rs:145-152]
-[crates/gcore/src/ai/text.rs:154-171]
-[crates/gcore/src/ai/text.rs:173-185]
 - [[code/files/crates/gcore/src/ai/transcription.rs|crates/gcore/src/ai/transcription.rs]] - `crates/gcore/src/ai/transcription.rs` exposes 14 indexed API symbols.
 [crates/gcore/src/ai/transcription.rs:11-14]
 [crates/gcore/src/ai/transcription.rs:16-37]
 [crates/gcore/src/ai/transcription.rs:17-22]
 [crates/gcore/src/ai/transcription.rs:24-29]
 [crates/gcore/src/ai/transcription.rs:31-36]
-[crates/gcore/src/ai/transcription.rs:39-73]
-[crates/gcore/src/ai/transcription.rs:75-99]
-[crates/gcore/src/ai/transcription.rs:101-142]
-[crates/gcore/src/ai/transcription.rs:152-178]
-[crates/gcore/src/ai/transcription.rs:181-201]
-[crates/gcore/src/ai/transcription.rs:203-205]
-[crates/gcore/src/ai/transcription.rs:207-214]
-[crates/gcore/src/ai/transcription.rs:216-233]
-[crates/gcore/src/ai/transcription.rs:235-247]
 - [[code/files/crates/gcore/src/ai/vision.rs|crates/gcore/src/ai/vision.rs]] - `crates/gcore/src/ai/vision.rs` exposes 18 indexed API symbols.
 [crates/gcore/src/ai/vision.rs:14-17]
 [crates/gcore/src/ai/vision.rs:19-35]
 [crates/gcore/src/ai/vision.rs:37-63]
 [crates/gcore/src/ai/vision.rs:65-90]
 [crates/gcore/src/ai/vision.rs:92-104]
-[crates/gcore/src/ai/vision.rs:94-98]
-[crates/gcore/src/ai/vision.rs:106-121]
-[crates/gcore/src/ai/vision.rs:123-156]
-[crates/gcore/src/ai/vision.rs:158-173]
-[crates/gcore/src/ai/vision.rs:175-179]
-[crates/gcore/src/ai/vision.rs:190-222]
-[crates/gcore/src/ai/vision.rs:225-234]
-[crates/gcore/src/ai/vision.rs:237-246]
-[crates/gcore/src/ai/vision.rs:248-250]
-[crates/gcore/src/ai/vision.rs:252-255]
-[crates/gcore/src/ai/vision.rs:257-264]
-[crates/gcore/src/ai/vision.rs:266-283]
-[crates/gcore/src/ai/vision.rs:285-297]
 
 ## Components
 
@@ -579,43 +296,46 @@ sequenceDiagram
 - `e9f2ba09-f1c6-5a87-8884-c48c0e955a54`
 - `3994d8af-6946-5c94-9d15-b13a669b4205`
 - `79897c3c-a54c-5605-9155-ac311297092d`
-- `3f45b81c-0951-5f57-8d45-9e4a1276ddf2`
-- `3526895d-859c-5328-b6ef-569fef946184`
-- `c3eba19e-42d0-5597-8d4c-644cb58cae9b`
-- `3a24eb1f-2505-5cff-ae38-1a88866babce`
-- `bc0aa047-7c5d-5e9a-9938-acadbfa97052`
-- `f6f0dbb6-a46b-5409-b0af-80fbc9103cec`
-- `328bc6eb-e69e-5474-9f95-7138431d1665`
-- `6c29c9c5-2279-5fc1-8fb0-e2500c002df1`
-- `6080a26b-883f-532b-9d65-b65b3be9d218`
-- `780a20b2-6f5b-5337-b7bf-72c071631734`
-- `8a588c16-d832-57de-9691-5816e93fae72`
-- `b65bdf95-a9ed-5b6a-a33b-4d99f9e4278f`
-- `a19f020c-d220-54da-99f9-afeeb54c1342`
-- `ad792195-1f0c-5559-9ebf-c769b243ae60`
-- `bafc93db-852a-587b-b31f-117952db8ccb`
-- `4aafb767-2df1-5255-b317-edad37548cfa`
-- `1362a5e4-16f5-5b00-a5a9-fd49ec6a33ad`
-- `515fde76-98f9-5ccc-8ded-8fc760dc28a7`
-- `752be597-f39c-5187-9000-d58905b8999d`
-- `82d933c1-771d-540c-bed3-6bcc72f65285`
-- `4570471a-1365-545e-8338-f96d03f70cdb`
-- `e845b126-23d0-5180-9f73-7582127824b8`
-- `519ac86b-b526-51df-b44e-13aa7ffc3a00`
-- `54747dea-6c1f-584c-9b75-989999d0464f`
-- `991056ae-0645-5186-8531-889917f3822b`
-- `8a44f93d-9168-534b-81ef-1b7e36a71c0e`
-- `0951ee8f-98e4-54fa-8548-9cf1ac9d5618`
-- `809125d7-a003-5136-a8e7-202b8df30bc6`
-- `0930b312-5e74-5f6b-8222-0e1c06508a09`
-- `06b7e826-cd57-5666-b3b1-d0e1a4446c66`
-- `a4682bde-8ea5-5d2a-992a-ac1e753ef63a`
-- `09f2f431-b6fb-5f13-937a-6c4bd6124f01`
-- `ef133a3a-d68c-5aa0-a1e0-12fbd5e81ab2`
-- `a09ba8aa-052f-579a-8e41-720d9e7dfb84`
-- `2f2c7d00-f02d-54c9-81ee-055a895b99f8`
-- `43309968-dd25-5d9a-b0dc-c2513386d1a7`
-- `7201fe37-20de-54a7-b273-e5bb33b032c2`
+- `d6439506-5ad9-5288-83c2-debaf42a28a3`
+- `1e34ffe6-d101-5f82-b5c5-984af336254c`
+- `49b51891-f2c1-5926-b509-c693f53b8a61`
+- `7237a9f5-0474-58d5-8bf0-2c5a05cc84c5`
+- `76288d26-6ac2-5efa-aa96-267bf0b370a8`
+- `2e8672fc-9c21-56b7-8c7d-e17398fda00c`
+- `e43a0c36-a77a-5ab1-a03e-9ba813eeffd0`
+- `a128c39c-e06a-5b0e-b5b3-1cbdff58789d`
+- `1075be87-707c-5178-bd57-2a28d62792b8`
+- `ee0128da-3cb5-5062-8ae1-42fbddb251a2`
+- `c7682195-e6b0-5b60-8d93-a0d95f733ade`
+- `663b2e9b-4244-5dde-9077-b046bff7b9a3`
+- `9f79bb23-320f-59e8-b1a6-eff4aa6975d3`
+- `d2a39e0d-8b83-54cc-8ace-34ac7bca077f`
+- `5e832e72-f128-522e-81c7-2de834bd28f7`
+- `59b84bce-b665-5e2a-8c1a-16d3c4f5c116`
+- `1fe73f28-18c0-5b8a-9efe-f34fc5195ca2`
+- `06ae781a-755e-5cba-91c7-bc6d7f03b6f9`
+- `25ace869-f350-5741-90d1-780bfbd4ebdb`
+- `60199882-318a-56a5-b95e-94c939721c74`
+- `f0317802-7c2c-501e-a32c-fae0e4ac4319`
+- `1552c005-f9c6-5d08-8268-e85f725b3228`
+- `efbe8daf-cbdb-565d-a7b4-803f757a246d`
+- `1f82c016-7c22-5126-b0da-eeaa124c98ce`
+- `c1572ec6-d65c-5f2e-ae7c-fcbaf5e91616`
+- `77dc010b-5748-5e32-97ac-8498c025bc45`
+- `45772243-03b3-5bbe-83f8-489df9b21bf3`
+- `3ee0fb4d-cf88-5f67-8ee6-7afe5c56ce51`
+- `e3dfbd16-cdf8-5be4-b660-24d14f42f06f`
+- `5f2f41f1-d0cd-59c0-aa0b-93c76d74e556`
+- `c30127c5-f3fb-50a8-941b-41db8bc5e751`
+- `f55ca630-86e7-5f15-9bd9-2bec3a37af6e`
+- `1dee5433-2483-5385-b504-76e3e2db6cff`
+- `4a81b62f-3833-566d-81d1-43cf40f800c6`
+- `a029f3b4-0b70-5089-8806-0d05dfc85f37`
+- `fe0cc51a-d67a-5ad6-9585-0b7fbd72902b`
+- `c7f9c022-d9dc-50e9-9c11-27a0c2d33317`
+- `c57a679a-8970-537f-9c79-8ece6cc60f43`
+- `73378adb-e8da-5688-a669-fe3364b7332d`
+- `d810ca29-9acb-5157-b0b6-dd1962a9c696`
 - `1d1d0d89-a9c1-582f-ab80-915b25aefa53`
 - `b34e7711-5869-55b9-9575-b7d62dbeb638`
 - `7ac3caa0-64bd-538f-8655-a126bcd11d99`
@@ -672,24 +392,25 @@ sequenceDiagram
 - `03177fc3-a65a-553d-89df-cae5f70ccc6f`
 - `f5b1ae31-d8ba-5980-98a9-a916753b17c8`
 - `e651da20-dce3-5f23-8047-6e4f41b1dd2b`
-- `1773b764-40c3-5031-bc41-8eec30a55647`
-- `b8503ae3-4511-5e9f-92c5-c40e78936c18`
-- `2e67506d-8aa0-5282-9a99-cafe0120aa32`
-- `6e6e06ef-5d21-59b5-98bb-8bf0e7c72299`
-- `4b122fbf-e5e0-5079-81b7-5c0b6e0a716c`
-- `34320345-b5bd-5cd4-9357-206596a243b5`
-- `9094e2f0-81d5-59c4-bec5-b6de50710418`
-- `17450391-4823-58da-b847-830179c792c7`
-- `c60e79a2-ddbc-5e01-97fc-78af67af3ff4`
-- `2568d186-e75e-51e8-bb50-fec97cb2314e`
-- `d57bfaef-f55f-52b5-9130-581d6a79473e`
-- `19efb58c-dd7a-55cc-83c9-b1e0384c6368`
-- `5aaa5543-44d1-553f-8e2f-0add59eb95b3`
-- `043ed49a-9ad6-5f7e-a66a-775b6f76d306`
-- `6accea45-f966-539e-8359-ec68f0d1cf55`
-- `ca1163f2-2a07-544b-a54e-82a12d0b3b7e`
-- `17bf429d-4020-5f53-b6a7-08543074c90c`
-- `cf0ef9f3-2bc8-5b8d-9507-f3c9a36a6e9e`
+- `4b57ee25-c217-531b-912e-8d2fec0a4168`
+- `58f0d3fc-0fc7-50cd-b064-27617a4f5433`
+- `219ed1ce-997d-57ba-95e4-c6e4c95a2190`
+- `59dbc989-926e-5cd4-847a-ecb79baf5046`
+- `2b1eb3a2-0cf5-5e23-ab32-f73ceb2693b4`
+- `d0b58e63-6901-5d95-9134-2178335f8a3c`
+- `c5eca7e7-9a74-504b-8447-f0c88b2290a4`
+- `3cb85e98-2b51-569e-a47d-a6a3871814f7`
+- `42a1d57f-97eb-5e5b-b52e-da0a2c5d568a`
+- `817339ec-ff78-5493-af0d-ceab2c6faea8`
+- `7f899121-46ec-53c4-9e93-48e13f5464a5`
+- `a82ce35f-4497-5861-b38e-82e45de66830`
+- `13e8b8b5-4f2e-53a2-8766-fca00c5d8a3d`
+- `f56b5cb2-c56f-5de2-a35a-83eac89520ea`
+- `686ee12e-8441-55d0-96d8-74c4e0d6f57f`
+- `4f66b2af-08b9-539e-9c65-0ed291a7e9ac`
+- `9354b95d-3554-5531-a95c-560505fe603d`
+- `9e6dc112-f5f8-5e7d-b310-e7497215dfc4`
+- `8a9f4c08-2405-5339-bdb0-a96c7d0e2ec8`
 - `f9a32cf9-4865-5138-a433-c0f172863579`
 - `7b004b07-cf59-5266-9ea7-80d74e487ca4`
 - `c387c64f-53bb-5033-b20e-064f3d54844e`

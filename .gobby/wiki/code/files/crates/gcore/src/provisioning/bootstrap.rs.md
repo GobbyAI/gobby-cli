@@ -35,15 +35,6 @@ Module: [[code/modules/crates/gcore/src/provisioning|crates/gcore/src/provisioni
 [crates/gcore/src/provisioning/bootstrap.rs:18-27]
 [crates/gcore/src/provisioning/bootstrap.rs:29-38]
 [crates/gcore/src/provisioning/bootstrap.rs:41-71]
-[crates/gcore/src/provisioning/bootstrap.rs:73-79]
-[crates/gcore/src/provisioning/bootstrap.rs:81-134]
-[crates/gcore/src/provisioning/bootstrap.rs:136-157]
-[crates/gcore/src/provisioning/bootstrap.rs:159-161]
-[crates/gcore/src/provisioning/bootstrap.rs:167-172]
-[crates/gcore/src/provisioning/bootstrap.rs:175-179]
-[crates/gcore/src/provisioning/bootstrap.rs:182-186]
-[crates/gcore/src/provisioning/bootstrap.rs:189-194]
-[crates/gcore/src/provisioning/bootstrap.rs:197-207]
 
 ## API Symbols
 

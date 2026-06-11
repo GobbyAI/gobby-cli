@@ -35,15 +35,6 @@ Module: [[code/modules/crates/gwiki/src/ingest/pdf|crates/gwiki/src/ingest/pdf]]
 [crates/gwiki/src/ingest/pdf/markdown.rs:107-132]
 [crates/gwiki/src/ingest/pdf/markdown.rs:134-152]
 [crates/gwiki/src/ingest/pdf/markdown.rs:154-234]
-[crates/gwiki/src/ingest/pdf/markdown.rs:236-258]
-[crates/gwiki/src/ingest/pdf/markdown.rs:260-265]
-[crates/gwiki/src/ingest/pdf/markdown.rs:267-287]
-[crates/gwiki/src/ingest/pdf/markdown.rs:289-310]
-[crates/gwiki/src/ingest/pdf/markdown.rs:312-318]
-[crates/gwiki/src/ingest/pdf/markdown.rs:320-324]
-[crates/gwiki/src/ingest/pdf/markdown.rs:326-332]
-[crates/gwiki/src/ingest/pdf/markdown.rs:339-348]
-[crates/gwiki/src/ingest/pdf/markdown.rs:351-363]
 
 ## API Symbols
 

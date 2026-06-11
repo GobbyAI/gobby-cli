@@ -34,14 +34,6 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 [crates/gcore/src/bootstrap.rs:39-44]
 [crates/gcore/src/bootstrap.rs:50-52]
 [crates/gcore/src/bootstrap.rs:58-63]
-[crates/gcore/src/bootstrap.rs:69-90]
-[crates/gcore/src/bootstrap.rs:99-103]
-[crates/gcore/src/bootstrap.rs:106-111]
-[crates/gcore/src/bootstrap.rs:114-119]
-[crates/gcore/src/bootstrap.rs:122-127]
-[crates/gcore/src/bootstrap.rs:130-137]
-[crates/gcore/src/bootstrap.rs:140-147]
-[crates/gcore/src/bootstrap.rs:150-155]
 
 ## API Symbols
 

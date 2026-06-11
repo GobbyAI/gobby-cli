@@ -34,14 +34,6 @@ Module: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 [crates/gcode/src/index/api.rs:36-48]
 [crates/gcode/src/index/api.rs:37-47]
 [crates/gcode/src/index/api.rs:50-76]
-[crates/gcode/src/index/api.rs:78-93]
-[crates/gcode/src/index/api.rs:95-209]
-[crates/gcode/src/index/api.rs:211-237]
-[crates/gcode/src/index/api.rs:239-266]
-[crates/gcode/src/index/api.rs:268-293]
-[crates/gcode/src/index/api.rs:295-314]
-[crates/gcode/src/index/api.rs:316-349]
-[crates/gcode/src/index/api.rs:351-353]
 
 ## API Symbols
 

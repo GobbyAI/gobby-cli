@@ -17,7 +17,7 @@ degraded_sources:
 ### Module: [[code/repo|Repository Overview]]
 
 Primary owners: Josh Wilhelmi, joshwilhelmi
-Top contributors: Josh Wilhelmi (8908 lines)
+Top contributors: Josh Wilhelmi (8920 lines)
 
 ### Module: [[code/modules/crates/gcode|crates/gcode]]
 
@@ -42,7 +42,7 @@ Top contributors: Josh Wilhelmi (851 lines)
 ### Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 Primary owners: Josh Wilhelmi
-Top contributors: Josh Wilhelmi (4622 lines)
+Top contributors: Josh Wilhelmi (4628 lines)
 
 ### Module: [[code/modules/crates/gcode/src/cli|crates/gcode/src/cli]]
 
@@ -57,12 +57,12 @@ Top contributors: Josh Wilhelmi (5464 lines)
 ### Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/commands/codewiki]]
 
 Primary owners: Josh Wilhelmi
-Top contributors: Josh Wilhelmi (3945 lines)
+Top contributors: Josh Wilhelmi (4742 lines)
 
 ### Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gcode/src/commands/codewiki/build_parts]]
 
 Primary owners: Josh Wilhelmi
-Top contributors: Josh Wilhelmi (1141 lines)
+Top contributors: Josh Wilhelmi (1206 lines)
 
 ### Module: [[code/modules/crates/gcode/src/commands/graph|crates/gcode/src/commands/graph]]
 
@@ -197,17 +197,17 @@ Top contributors: Josh Wilhelmi (152 lines)
 ### Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 Primary owners: Josh Wilhelmi
-Top contributors: Josh Wilhelmi (6145 lines)
+Top contributors: Josh Wilhelmi (6146 lines)
 
 ### Module: [[code/modules/crates/gcore/src/ai|crates/gcore/src/ai]]
 
 Primary owners: Josh Wilhelmi
-Top contributors: Josh Wilhelmi (2674 lines)
+Top contributors: Josh Wilhelmi (2783 lines)
 
 ### Module: [[code/modules/crates/gcore/src/config|crates/gcore/src/config]]
 
 Primary owners: Josh Wilhelmi
-Top contributors: Josh Wilhelmi (1635 lines)
+Top contributors: Josh Wilhelmi (1647 lines)
 
 ### Module: [[code/modules/crates/gcore/src/provisioning|crates/gcore/src/provisioning]]
 
@@ -282,7 +282,7 @@ Top contributors: Josh Wilhelmi (21146 lines)
 ### Module: [[code/modules/crates/gwiki/src/ai|crates/gwiki/src/ai]]
 
 Primary owners: Josh Wilhelmi
-Top contributors: Josh Wilhelmi (1450 lines)
+Top contributors: Josh Wilhelmi (1451 lines)
 
 ### Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
@@ -307,7 +307,7 @@ Top contributors: Josh Wilhelmi (2321 lines)
 ### Module: [[code/modules/crates/gwiki/src/ingest|crates/gwiki/src/ingest]]
 
 Primary owners: Josh Wilhelmi
-Top contributors: Josh Wilhelmi (4895 lines)
+Top contributors: Josh Wilhelmi (4897 lines)
 
 ### Module: [[code/modules/crates/gwiki/src/ingest/document|crates/gwiki/src/ingest/document]]
 
@@ -327,7 +327,7 @@ Top contributors: Josh Wilhelmi (1879 lines)
 ### Module: [[code/modules/crates/gwiki/src/research|crates/gwiki/src/research]]
 
 Primary owners: Josh Wilhelmi
-Top contributors: Josh Wilhelmi (2128 lines)
+Top contributors: Josh Wilhelmi (2129 lines)
 
 ### Module: [[code/modules/crates/gwiki/src/research_loop|crates/gwiki/src/research_loop]]
 
@@ -357,7 +357,7 @@ Top contributors: Josh Wilhelmi (522 lines)
 ### Module: [[code/modules/docs/guides|docs/guides]]
 
 Primary owners: Josh Wilhelmi
-Top contributors: Josh Wilhelmi (5170 lines)
+Top contributors: Josh Wilhelmi (5206 lines)
 
 ### Module: [[code/modules/docs/plans|docs/plans]]
 
@@ -459,7 +459,7 @@ Top contributors: Josh Wilhelmi (851 lines)
 ### [[code/files/crates/gcode/src/cli.rs|crates/gcode/src/cli.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (506 lines)
+Top contributors: Josh Wilhelmi (510 lines)
 
 ### [[code/files/crates/gcode/src/cli/tests.rs|crates/gcode/src/cli/tests.rs]]
 
@@ -474,7 +474,7 @@ Top contributors: Josh Wilhelmi (22 lines)
 ### [[code/files/crates/gcode/src/commands/codewiki/build_parts/architecture.rs|crates/gcode/src/commands/codewiki/build_parts/architecture.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (177 lines)
+Top contributors: Josh Wilhelmi (184 lines)
 
 ### [[code/files/crates/gcode/src/commands/codewiki/build_parts/changes.rs|crates/gcode/src/commands/codewiki/build_parts/changes.rs]]
 
@@ -484,7 +484,7 @@ Top contributors: Josh Wilhelmi (163 lines)
 ### [[code/files/crates/gcode/src/commands/codewiki/build_parts/file.rs|crates/gcode/src/commands/codewiki/build_parts/file.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (115 lines)
+Top contributors: Josh Wilhelmi (143 lines)
 
 ### [[code/files/crates/gcode/src/commands/codewiki/build_parts/hotspots.rs|crates/gcode/src/commands/codewiki/build_parts/hotspots.rs]]
 
@@ -494,7 +494,7 @@ Top contributors: Josh Wilhelmi (157 lines)
 ### [[code/files/crates/gcode/src/commands/codewiki/build_parts/modules.rs|crates/gcode/src/commands/codewiki/build_parts/modules.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (126 lines)
+Top contributors: Josh Wilhelmi (156 lines)
 
 ### [[code/files/crates/gcode/src/commands/codewiki/build_parts/onboarding.rs|crates/gcode/src/commands/codewiki/build_parts/onboarding.rs]]
 
@@ -519,12 +519,12 @@ Top contributors: Josh Wilhelmi (180 lines)
 ### [[code/files/crates/gcode/src/commands/codewiki/io.rs|crates/gcode/src/commands/codewiki/io.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (272 lines)
+Top contributors: Josh Wilhelmi (375 lines)
 
 ### [[code/files/crates/gcode/src/commands/codewiki/mod.rs|crates/gcode/src/commands/codewiki/mod.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (745 lines)
+Top contributors: Josh Wilhelmi (882 lines)
 
 ### [[code/files/crates/gcode/src/commands/codewiki/ownership.rs|crates/gcode/src/commands/codewiki/ownership.rs]]
 
@@ -544,22 +544,27 @@ Top contributors: Josh Wilhelmi (55 lines)
 ### [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (171 lines)
+Top contributors: Josh Wilhelmi (279 lines)
 
 ### [[code/files/crates/gcode/src/commands/codewiki/render.rs|crates/gcode/src/commands/codewiki/render.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (698 lines)
+Top contributors: Josh Wilhelmi (742 lines)
+
+### [[code/files/crates/gcode/src/commands/codewiki/reuse.rs|crates/gcode/src/commands/codewiki/reuse.rs]]
+
+Declared owners: unknown
+Top contributors: Josh Wilhelmi (102 lines)
 
 ### [[code/files/crates/gcode/src/commands/codewiki/tests.rs|crates/gcode/src/commands/codewiki/tests.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (20 lines)
+Top contributors: Josh Wilhelmi (21 lines)
 
 ### [[code/files/crates/gcode/src/commands/codewiki/text.rs|crates/gcode/src/commands/codewiki/text.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (419 lines)
+Top contributors: Josh Wilhelmi (721 lines)
 
 ### [[code/files/crates/gcode/src/commands/embeddings_doctor.rs|crates/gcode/src/commands/embeddings_doctor.rs]]
 
@@ -714,7 +719,7 @@ Top contributors: Josh Wilhelmi (795 lines)
 ### [[code/files/crates/gcode/src/dispatch.rs|crates/gcode/src/dispatch.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (523 lines)
+Top contributors: Josh Wilhelmi (525 lines)
 
 ### [[code/files/crates/gcode/src/dispatch/tests.rs|crates/gcode/src/dispatch/tests.rs]]
 
@@ -1254,37 +1259,37 @@ Top contributors: Josh Wilhelmi (9 lines)
 ### [[code/files/crates/gcore/src/ai/daemon.rs|crates/gcore/src/ai/daemon.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (795 lines)
+Top contributors: Josh Wilhelmi (874 lines)
 
 ### [[code/files/crates/gcore/src/ai/mod.rs|crates/gcore/src/ai/mod.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (642 lines)
+Top contributors: Josh Wilhelmi (643 lines)
 
 ### [[code/files/crates/gcore/src/ai/probe.rs|crates/gcore/src/ai/probe.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (505 lines)
+Top contributors: Josh Wilhelmi (531 lines)
 
 ### [[code/files/crates/gcore/src/ai/text.rs|crates/gcore/src/ai/text.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (186 lines)
+Top contributors: Josh Wilhelmi (187 lines)
 
 ### [[code/files/crates/gcore/src/ai/transcription.rs|crates/gcore/src/ai/transcription.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (248 lines)
+Top contributors: Josh Wilhelmi (249 lines)
 
 ### [[code/files/crates/gcore/src/ai/vision.rs|crates/gcore/src/ai/vision.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (298 lines)
+Top contributors: Josh Wilhelmi (299 lines)
 
 ### [[code/files/crates/gcore/src/ai_context.rs|crates/gcore/src/ai_context.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (782 lines)
+Top contributors: Josh Wilhelmi (783 lines)
 
 ### [[code/files/crates/gcore/src/ai_types.rs|crates/gcore/src/ai_types.rs]]
 
@@ -1309,7 +1314,7 @@ Top contributors: Josh Wilhelmi (30 lines)
 ### [[code/files/crates/gcore/src/config/resolve.rs|crates/gcore/src/config/resolve.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (440 lines)
+Top contributors: Josh Wilhelmi (447 lines)
 
 ### [[code/files/crates/gcore/src/config/tests.rs|crates/gcore/src/config/tests.rs]]
 
@@ -1319,7 +1324,7 @@ Top contributors: Josh Wilhelmi (823 lines)
 ### [[code/files/crates/gcore/src/config/types.rs|crates/gcore/src/config/types.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (342 lines)
+Top contributors: Josh Wilhelmi (347 lines)
 
 ### [[code/files/crates/gcore/src/context.rs|crates/gcore/src/context.rs]]
 
@@ -1649,7 +1654,7 @@ Top contributors: Josh Wilhelmi (613 lines)
 ### [[code/files/crates/gwiki/src/ai/clients.rs|crates/gwiki/src/ai/clients.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (484 lines)
+Top contributors: Josh Wilhelmi (485 lines)
 
 ### [[code/files/crates/gwiki/src/ai/mod.rs|crates/gwiki/src/ai/mod.rs]]
 
@@ -1949,7 +1954,7 @@ Top contributors: Josh Wilhelmi (703 lines)
 ### [[code/files/crates/gwiki/src/ingest/audio.rs|crates/gwiki/src/ingest/audio.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (875 lines)
+Top contributors: Josh Wilhelmi (876 lines)
 
 ### [[code/files/crates/gwiki/src/ingest/document/html.rs|crates/gwiki/src/ingest/document/html.rs]]
 
@@ -1989,7 +1994,7 @@ Top contributors: Josh Wilhelmi (252 lines)
 ### [[code/files/crates/gwiki/src/ingest/image.rs|crates/gwiki/src/ingest/image.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (379 lines)
+Top contributors: Josh Wilhelmi (380 lines)
 
 ### [[code/files/crates/gwiki/src/ingest/mediawiki.rs|crates/gwiki/src/ingest/mediawiki.rs]]
 
@@ -2144,7 +2149,7 @@ Top contributors: Josh Wilhelmi (379 lines)
 ### [[code/files/crates/gwiki/src/research/model.rs|crates/gwiki/src/research/model.rs]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (224 lines)
+Top contributors: Josh Wilhelmi (225 lines)
 
 ### [[code/files/crates/gwiki/src/research/notes.rs|crates/gwiki/src/research/notes.rs]]
 
@@ -2384,22 +2389,22 @@ Top contributors: Josh Wilhelmi (28 lines)
 ### [[code/files/docs/guides/ai-configuration.md|docs/guides/ai-configuration.md]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (135 lines)
+Top contributors: Josh Wilhelmi (146 lines)
 
 ### [[code/files/docs/guides/ai-daemon-contract.md|docs/guides/ai-daemon-contract.md]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (269 lines)
+Top contributors: Josh Wilhelmi (277 lines)
 
 ### [[code/files/docs/guides/codewiki.md|docs/guides/codewiki.md]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (139 lines)
+Top contributors: Josh Wilhelmi (149 lines)
 
 ### [[code/files/docs/guides/gcode-development-guide.md|docs/guides/gcode-development-guide.md]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (657 lines)
+Top contributors: Josh Wilhelmi (660 lines)
 
 ### [[code/files/docs/guides/gcode-graph-core.md|docs/guides/gcode-graph-core.md]]
 
@@ -2414,7 +2419,7 @@ Top contributors: Josh Wilhelmi (631 lines)
 ### [[code/files/docs/guides/gcore-development-guide.md|docs/guides/gcore-development-guide.md]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (283 lines)
+Top contributors: Josh Wilhelmi (285 lines)
 
 ### [[code/files/docs/guides/ghook-development-guide.md|docs/guides/ghook-development-guide.md]]
 
@@ -2454,7 +2459,7 @@ Top contributors: Josh Wilhelmi (78 lines)
 ### [[code/files/docs/guides/gwiki-user-guide.md|docs/guides/gwiki-user-guide.md]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (625 lines)
+Top contributors: Josh Wilhelmi (627 lines)
 
 ### [[code/files/docs/guides/hub-install-contract.md|docs/guides/hub-install-contract.md]]
 
@@ -2534,7 +2539,7 @@ Top contributors: Josh Wilhelmi (29 lines)
 ### [[code/files/fable-repo-analysis.md|fable-repo-analysis.md]]
 
 Declared owners: unknown
-Top contributors: Josh Wilhelmi (499 lines)
+Top contributors: Josh Wilhelmi (511 lines)
 
 ### [[code/files/rust-toolchain.toml|rust-toolchain.toml]]
 

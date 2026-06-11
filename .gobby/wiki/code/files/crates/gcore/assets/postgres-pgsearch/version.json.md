@@ -27,7 +27,6 @@ Module: [[code/modules/crates/gcore/assets/postgres-pgsearch|crates/gcore/assets
 [crates/gcore/assets/postgres-pgsearch/version.json:4-7]
 [crates/gcore/assets/postgres-pgsearch/version.json:5]
 [crates/gcore/assets/postgres-pgsearch/version.json:6]
-[crates/gcore/assets/postgres-pgsearch/version.json:8]
 
 ## API Symbols
 

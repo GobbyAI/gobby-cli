@@ -33,13 +33,6 @@ Module: [[code/modules/crates/gcode/src/index/parser/calls|crates/gcode/src/inde
 [crates/gcode/src/index/parser/calls/resolution.rs:23-46]
 [crates/gcode/src/index/parser/calls/resolution.rs:48-61]
 [crates/gcode/src/index/parser/calls/resolution.rs:63-65]
-[crates/gcode/src/index/parser/calls/resolution.rs:67-90]
-[crates/gcode/src/index/parser/calls/resolution.rs:92-105]
-[crates/gcode/src/index/parser/calls/resolution.rs:107-115]
-[crates/gcode/src/index/parser/calls/resolution.rs:117-155]
-[crates/gcode/src/index/parser/calls/resolution.rs:157-162]
-[crates/gcode/src/index/parser/calls/resolution.rs:164-175]
-[crates/gcode/src/index/parser/calls/resolution.rs:177-182]
 
 ## API Symbols
 

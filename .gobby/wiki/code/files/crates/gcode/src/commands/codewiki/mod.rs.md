@@ -4,57 +4,61 @@ type: code_file
 provenance:
 - file: crates/gcode/src/commands/codewiki/mod.rs
   ranges:
-  - 84-89
-  - 92-96
-  - 98-120
-  - 99-108
-  - 110-119
-  - 123-126
-  - 129-132
-  - 134-155
-  - 135-140
+  - 91-96
+  - 99-103
+  - 105-127
+  - 106-115
+  - 117-126
+  - 130-133
+  - 136-139
+  - 141-162
   - 142-147
   - 149-154
-  - 158-162
-  - 165-172
-  - 175-181
-  - 184-194
-  - 197-202
-  - 205-209
-  - 212-217
-  - 220-224
-  - 227-232
-  - 235-241
-  - 244-250
-  - 253-260
-  - 263-267
-  - 270-274
-  - 277-281
-  - 284-296
-  - 299-306
-  - 309-311
-  - 314-321
-  - 324-327
-  - 330-336
-  - '338'
-  - 343-351
-  - 353-369
-  - 354-356
-  - 358-360
-  - 362-368
-  - 372-375
-  - 377-397
-  - 378-384
-  - 386-392
-  - 394-396
-  - 399-522
-  - 524-529
-  - 531-554
-  - 556-561
-  - 563-581
-  - 583-598
-  - 601-614
-  - 616-742
+  - 156-161
+  - 165-169
+  - 172-184
+  - 187-193
+  - 196-211
+  - 214-219
+  - 222-226
+  - 229-234
+  - 237-241
+  - 244-249
+  - 252-258
+  - 261-267
+  - 270-277
+  - 280-284
+  - 287-291
+  - 294-298
+  - 301-313
+  - 316-323
+  - 326-342
+  - 347-354
+  - 356-365
+  - 357-364
+  - 368-375
+  - 378-381
+  - 384-390
+  - '392'
+  - 404-408
+  - 413-421
+  - 423-439
+  - 424-426
+  - 428-430
+  - 432-438
+  - 442-448
+  - 450-470
+  - 451-457
+  - 459-465
+  - 467-469
+  - 472-600
+  - 602-607
+  - 609-617
+  - 619-641
+  - 644-663
+  - 666-673
+  - 677-701
+  - 703-879
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -66,212 +70,178 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Purpose
 
-`crates/gcode/src/commands/codewiki/mod.rs` exposes 51 indexed API symbols.
-[crates/gcode/src/commands/codewiki/mod.rs:84-89]
-[crates/gcode/src/commands/codewiki/mod.rs:92-96]
-[crates/gcode/src/commands/codewiki/mod.rs:98-120]
-[crates/gcode/src/commands/codewiki/mod.rs:99-108]
-[crates/gcode/src/commands/codewiki/mod.rs:110-119]
-[crates/gcode/src/commands/codewiki/mod.rs:123-126]
-[crates/gcode/src/commands/codewiki/mod.rs:129-132]
-[crates/gcode/src/commands/codewiki/mod.rs:134-155]
-[crates/gcode/src/commands/codewiki/mod.rs:135-140]
-[crates/gcode/src/commands/codewiki/mod.rs:142-147]
-[crates/gcode/src/commands/codewiki/mod.rs:149-154]
-[crates/gcode/src/commands/codewiki/mod.rs:158-162]
-[crates/gcode/src/commands/codewiki/mod.rs:165-172]
-[crates/gcode/src/commands/codewiki/mod.rs:175-181]
-[crates/gcode/src/commands/codewiki/mod.rs:184-194]
-[crates/gcode/src/commands/codewiki/mod.rs:197-202]
-[crates/gcode/src/commands/codewiki/mod.rs:205-209]
-[crates/gcode/src/commands/codewiki/mod.rs:212-217]
-[crates/gcode/src/commands/codewiki/mod.rs:220-224]
-[crates/gcode/src/commands/codewiki/mod.rs:227-232]
-[crates/gcode/src/commands/codewiki/mod.rs:235-241]
-[crates/gcode/src/commands/codewiki/mod.rs:244-250]
-[crates/gcode/src/commands/codewiki/mod.rs:253-260]
-[crates/gcode/src/commands/codewiki/mod.rs:263-267]
-[crates/gcode/src/commands/codewiki/mod.rs:270-274]
-[crates/gcode/src/commands/codewiki/mod.rs:277-281]
-[crates/gcode/src/commands/codewiki/mod.rs:284-296]
-[crates/gcode/src/commands/codewiki/mod.rs:299-306]
-[crates/gcode/src/commands/codewiki/mod.rs:309-311]
-[crates/gcode/src/commands/codewiki/mod.rs:314-321]
-[crates/gcode/src/commands/codewiki/mod.rs:324-327]
-[crates/gcode/src/commands/codewiki/mod.rs:330-336]
-[crates/gcode/src/commands/codewiki/mod.rs:338]
-[crates/gcode/src/commands/codewiki/mod.rs:343-351]
-[crates/gcode/src/commands/codewiki/mod.rs:353-369]
-[crates/gcode/src/commands/codewiki/mod.rs:354-356]
-[crates/gcode/src/commands/codewiki/mod.rs:358-360]
-[crates/gcode/src/commands/codewiki/mod.rs:362-368]
-[crates/gcode/src/commands/codewiki/mod.rs:372-375]
-[crates/gcode/src/commands/codewiki/mod.rs:377-397]
-[crates/gcode/src/commands/codewiki/mod.rs:378-384]
-[crates/gcode/src/commands/codewiki/mod.rs:386-392]
-[crates/gcode/src/commands/codewiki/mod.rs:394-396]
-[crates/gcode/src/commands/codewiki/mod.rs:399-522]
-[crates/gcode/src/commands/codewiki/mod.rs:524-529]
-[crates/gcode/src/commands/codewiki/mod.rs:531-554]
-[crates/gcode/src/commands/codewiki/mod.rs:556-561]
-[crates/gcode/src/commands/codewiki/mod.rs:563-581]
-[crates/gcode/src/commands/codewiki/mod.rs:583-598]
-[crates/gcode/src/commands/codewiki/mod.rs:601-614]
-[crates/gcode/src/commands/codewiki/mod.rs:616-742]
+`crates/gcode/src/commands/codewiki/mod.rs` exposes 55 indexed API symbols.
+[crates/gcode/src/commands/codewiki/mod.rs:91-96]
+[crates/gcode/src/commands/codewiki/mod.rs:99-103]
+[crates/gcode/src/commands/codewiki/mod.rs:105-127]
+[crates/gcode/src/commands/codewiki/mod.rs:106-115]
+[crates/gcode/src/commands/codewiki/mod.rs:117-126]
 
 ## API Symbols
 
-- `CodewikiInput` (class) component `CodewikiInput [class]` (`264f0b1e-40af-5b4b-a308-2f2b158209d6`) lines 84-89 [crates/gcode/src/commands/codewiki/mod.rs:84-89]
+- `CodewikiInput` (class) component `CodewikiInput [class]` (`42158663-2012-504f-9a06-76ff0d3189d0`) lines 91-96 [crates/gcode/src/commands/codewiki/mod.rs:91-96]
   - Signature: `pub struct CodewikiInput {`
-  - Purpose: `CodewikiInput` is a struct that aggregates source files, their inter-dependency graph edges, graph availability metadata, and symbol definitions for code indexing and documentation purposes. [crates/gcode/src/commands/codewiki/mod.rs:84-89]
-- `CodewikiGraphEdge` (class) component `CodewikiGraphEdge [class]` (`71f20874-5e07-5cbd-9714-3d1a4ed6951c`) lines 92-96 [crates/gcode/src/commands/codewiki/mod.rs:92-96]
+  - Purpose: Indexed class `CodewikiInput` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:91-96]
+- `CodewikiGraphEdge` (class) component `CodewikiGraphEdge [class]` (`8f821118-09ce-576f-ab5a-c74a8a71781b`) lines 99-103 [crates/gcode/src/commands/codewiki/mod.rs:99-103]
   - Signature: `pub struct CodewikiGraphEdge {`
-  - Purpose: `CodewikiGraphEdge` represents a typed directed edge in a code graph that connects a source component to a target component via a specified edge kind. [crates/gcode/src/commands/codewiki/mod.rs:92-96]
-- `CodewikiGraphEdge` (class) component `CodewikiGraphEdge [class]` (`0c58bd7d-b2cd-579a-87d4-a370373ce37a`) lines 98-120 [crates/gcode/src/commands/codewiki/mod.rs:98-120]
+  - Purpose: Indexed class `CodewikiGraphEdge` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:99-103]
+- `CodewikiGraphEdge` (class) component `CodewikiGraphEdge [class]` (`0ba10697-2108-50f5-9ee4-0b41cd60c14c`) lines 105-127 [crates/gcode/src/commands/codewiki/mod.rs:105-127]
   - Signature: `impl CodewikiGraphEdge {`
-  - Purpose: CodewikiGraphEdge provides factory constructors for creating directed edges in a code dependency graph, with `call()` and `import()` methods that instantiate edges representing either function call or import relationships between source and target code components. [crates/gcode/src/commands/codewiki/mod.rs:98-120]
-- `CodewikiGraphEdge.call` (method) component `CodewikiGraphEdge.call [method]` (`5529f342-becb-5147-ab99-ac4b099fc241`) lines 99-108 [crates/gcode/src/commands/codewiki/mod.rs:99-108]
+  - Purpose: Indexed class `CodewikiGraphEdge` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:105-127]
+- `CodewikiGraphEdge.call` (method) component `CodewikiGraphEdge.call [method]` (`a6558c65-603a-5ebf-9190-f9509353e9e4`) lines 106-115 [crates/gcode/src/commands/codewiki/mod.rs:106-115]
   - Signature: `pub fn call(`
-  - Purpose: Constructs and returns a new graph edge of kind `Call` connecting two components by converting their provided IDs into strings. [crates/gcode/src/commands/codewiki/mod.rs:99-108]
-- `CodewikiGraphEdge.import` (method) component `CodewikiGraphEdge.import [method]` (`2231bc10-a53f-5c92-ad98-ebea2da95bd0`) lines 110-119 [crates/gcode/src/commands/codewiki/mod.rs:110-119]
+  - Purpose: Indexed method `CodewikiGraphEdge.call` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:106-115]
+- `CodewikiGraphEdge.import` (method) component `CodewikiGraphEdge.import [method]` (`5baef4b9-059f-5a9b-add3-c6bd55e128c9`) lines 117-126 [crates/gcode/src/commands/codewiki/mod.rs:117-126]
   - Signature: `pub fn import(`
-  - Purpose: Constructs an instance representing an import graph edge relationship between a source and target component. [crates/gcode/src/commands/codewiki/mod.rs:110-119]
-- `CodewikiGraphEdgeKind` (type) component `CodewikiGraphEdgeKind [type]` (`21b3a27e-d757-5cea-bf5d-8ba1b7d22a87`) lines 123-126 [crates/gcode/src/commands/codewiki/mod.rs:123-126]
+  - Purpose: Indexed method `CodewikiGraphEdge.import` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:117-126]
+- `CodewikiGraphEdgeKind` (type) component `CodewikiGraphEdgeKind [type]` (`7144b401-60f9-5973-a359-ce6d2c5c08a8`) lines 130-133 [crates/gcode/src/commands/codewiki/mod.rs:130-133]
   - Signature: `pub enum CodewikiGraphEdgeKind {`
-  - Purpose: Indexed type `CodewikiGraphEdgeKind` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:123-126]
-- `CodewikiGraph` (class) component `CodewikiGraph [class]` (`048edc83-3d56-5252-bbd9-51f11e1cdbde`) lines 129-132 [crates/gcode/src/commands/codewiki/mod.rs:129-132]
+  - Purpose: Indexed type `CodewikiGraphEdgeKind` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:130-133]
+- `CodewikiGraph` (class) component `CodewikiGraph [class]` (`d2c5a728-0637-5ab9-ab68-57567b9ef7aa`) lines 136-139 [crates/gcode/src/commands/codewiki/mod.rs:136-139]
   - Signature: `pub(crate) struct CodewikiGraph {`
-  - Purpose: CodewikiGraph is a crate-private struct that encapsulates a collection of directed graph edges and their associated availability metadata. [crates/gcode/src/commands/codewiki/mod.rs:129-132]
-- `CodewikiGraph` (class) component `CodewikiGraph [class]` (`1435f60d-ff63-5839-9108-e5012e17a14d`) lines 134-155 [crates/gcode/src/commands/codewiki/mod.rs:134-155]
+  - Purpose: Indexed class `CodewikiGraph` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:136-139]
+- `CodewikiGraph` (class) component `CodewikiGraph [class]` (`3cc3d2f6-07ed-579d-9178-370b76ac505c`) lines 141-162 [crates/gcode/src/commands/codewiki/mod.rs:141-162]
   - Signature: `impl CodewikiGraph {`
-  - Purpose: `CodewikiGraph` provides three factory constructors that instantiate instances with edge collections indexed by availability state (`Available`, `Truncated`, or `Unavailable`). [crates/gcode/src/commands/codewiki/mod.rs:134-155]
-- `CodewikiGraph.available` (method) component `CodewikiGraph.available [method]` (`2c0a806b-f18b-52cd-bf72-4e91a439afdb`) lines 135-140 [crates/gcode/src/commands/codewiki/mod.rs:135-140]
+  - Purpose: Indexed class `CodewikiGraph` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:141-162]
+- `CodewikiGraph.available` (method) component `CodewikiGraph.available [method]` (`76a2ac82-7914-5453-922c-c8af3ced6807`) lines 142-147 [crates/gcode/src/commands/codewiki/mod.rs:142-147]
   - Signature: `fn available(edges: Vec<CodewikiGraphEdge>) -> Self {`
-  - Purpose: This is a constructor method that instantiates `Self` with the provided `edges` vector and initializes its `availability` field to `CodewikiGraphAvailability::Available`. [crates/gcode/src/commands/codewiki/mod.rs:135-140]
-- `CodewikiGraph.truncated` (method) component `CodewikiGraph.truncated [method]` (`3ce657b8-ff40-50e1-851a-4ca259612b02`) lines 142-147 [crates/gcode/src/commands/codewiki/mod.rs:142-147]
+  - Purpose: Indexed method `CodewikiGraph.available` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:142-147]
+- `CodewikiGraph.truncated` (method) component `CodewikiGraph.truncated [method]` (`776184ee-fc08-5c14-b24b-79462892c12b`) lines 149-154 [crates/gcode/src/commands/codewiki/mod.rs:149-154]
   - Signature: `fn truncated(edges: Vec<CodewikiGraphEdge>) -> Self {`
-  - Purpose: Constructs a new instance with the provided edges vector and sets its availability status to `CodewikiGraphAvailability::Truncated`. [crates/gcode/src/commands/codewiki/mod.rs:142-147]
-- `CodewikiGraph.unavailable` (method) component `CodewikiGraph.unavailable [method]` (`e9961dcc-7a15-51b6-b5ad-b73cefc089a4`) lines 149-154 [crates/gcode/src/commands/codewiki/mod.rs:149-154]
+  - Purpose: Indexed method `CodewikiGraph.truncated` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:149-154]
+- `CodewikiGraph.unavailable` (method) component `CodewikiGraph.unavailable [method]` (`906ed2cc-d818-5b61-b523-6589206480be`) lines 156-161 [crates/gcode/src/commands/codewiki/mod.rs:156-161]
   - Signature: `fn unavailable() -> Self {`
-  - Purpose: This factory method creates a new instance of the struct with an empty edges vector and the availability status set to `Unavailable`. [crates/gcode/src/commands/codewiki/mod.rs:149-154]
-- `CodewikiGraphAvailability` (type) component `CodewikiGraphAvailability [type]` (`6c40a2eb-287a-577c-900e-765d3344c02d`) lines 158-162 [crates/gcode/src/commands/codewiki/mod.rs:158-162]
+  - Purpose: Indexed method `CodewikiGraph.unavailable` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:156-161]
+- `CodewikiGraphAvailability` (type) component `CodewikiGraphAvailability [type]` (`886483ac-72fc-59b3-963c-fafba996df91`) lines 165-169 [crates/gcode/src/commands/codewiki/mod.rs:165-169]
   - Signature: `pub enum CodewikiGraphAvailability {`
-  - Purpose: Indexed type `CodewikiGraphAvailability` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:158-162]
-- `FileDoc` (class) component `FileDoc [class]` (`cac9d777-2aaf-5018-a9fa-e63056a9671c`) lines 165-172 [crates/gcode/src/commands/codewiki/mod.rs:165-172]
+  - Purpose: Indexed type `CodewikiGraphAvailability` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:165-169]
+- `FileDoc` (class) component `FileDoc [class]` (`62fbaea7-1f68-5524-84c9-566ec812ec89`) lines 172-184 [crates/gcode/src/commands/codewiki/mod.rs:172-184]
   - Signature: `pub(crate) struct FileDoc {`
-  - Purpose: FileDoc is a crate-private struct that aggregates documentation metadata for a source file, including its path, module name, summary, source code spans, documented symbols, and component identifiers. [crates/gcode/src/commands/codewiki/mod.rs:165-172]
-- `SymbolDoc` (class) component `SymbolDoc [class]` (`255e196e-320b-51c7-a7d2-8ca302277c8f`) lines 175-181 [crates/gcode/src/commands/codewiki/mod.rs:175-181]
+  - Purpose: Indexed class `FileDoc` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:172-184]
+- `SymbolDoc` (class) component `SymbolDoc [class]` (`1c3f4ed6-5ad8-5136-bccf-9ff075fa96bf`) lines 187-193 [crates/gcode/src/commands/codewiki/mod.rs:187-193]
   - Signature: `pub(crate) struct SymbolDoc {`
-  - Purpose: SymbolDoc is a crate-private struct that binds a symbol to its documentation metadata, including its purpose, associated component context (id and label), and source code location. [crates/gcode/src/commands/codewiki/mod.rs:175-181]
-- `ModuleDoc` (class) component `ModuleDoc [class]` (`d4e1f871-115a-5f37-9af2-00ba8385b716`) lines 184-194 [crates/gcode/src/commands/codewiki/mod.rs:184-194]
+  - Purpose: Indexed class `SymbolDoc` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:187-193]
+- `ModuleDoc` (class) component `ModuleDoc [class]` (`ab9e48ec-5aa7-594a-aa3d-442a539f2fad`) lines 196-211 [crates/gcode/src/commands/codewiki/mod.rs:196-211]
   - Signature: `pub(crate) struct ModuleDoc {`
-  - Purpose: `ModuleDoc` is a crate-internal struct that aggregates module documentation metadata including source locations, file and child module references, component identifiers, and optional dependency/call diagrams with their availability status. [crates/gcode/src/commands/codewiki/mod.rs:184-194]
-- `ArchitectureDoc` (class) component `ArchitectureDoc [class]` (`52bf052a-8b7f-5204-929e-49c0178626dd`) lines 197-202 [crates/gcode/src/commands/codewiki/mod.rs:197-202]
+  - Purpose: Indexed class `ModuleDoc` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:196-211]
+- `ArchitectureDoc` (class) component `ArchitectureDoc [class]` (`8e07a8c5-be99-59a3-9534-245e12f61206`) lines 214-219 [crates/gcode/src/commands/codewiki/mod.rs:214-219]
   - Signature: `pub(crate) struct ArchitectureDoc {`
-  - Purpose: `ArchitectureDoc` is a crate-internal struct that aggregates source code spans, subsystem definitions, an optional dependency diagram, and a registry of degraded sources for architectural documentation. [crates/gcode/src/commands/codewiki/mod.rs:197-202]
-- `ArchitectureSubsystem` (class) component `ArchitectureSubsystem [class]` (`94bb24ac-d847-50b6-a6ad-b762f2d9e020`) lines 205-209 [crates/gcode/src/commands/codewiki/mod.rs:205-209]
+  - Purpose: Indexed class `ArchitectureDoc` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:214-219]
+- `ArchitectureSubsystem` (class) component `ArchitectureSubsystem [class]` (`1b7cef24-06f5-590d-a055-c17f0826730a`) lines 222-226 [crates/gcode/src/commands/codewiki/mod.rs:222-226]
   - Signature: `pub(crate) struct ArchitectureSubsystem {`
-  - Purpose: `ArchitectureSubsystem` is a crate-private struct that represents an architectural subsystem component, tracking its module name, responsibility description, and associated source code spans. [crates/gcode/src/commands/codewiki/mod.rs:205-209]
-- `OnboardingDoc` (class) component `OnboardingDoc [class]` (`182e85ce-704a-5c19-ae91-44258c2c69e2`) lines 212-217 [crates/gcode/src/commands/codewiki/mod.rs:212-217]
+  - Purpose: Indexed class `ArchitectureSubsystem` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:222-226]
+- `OnboardingDoc` (class) component `OnboardingDoc [class]` (`bb75d230-2cd1-5851-94e0-975f441a67d1`) lines 229-234 [crates/gcode/src/commands/codewiki/mod.rs:229-234]
   - Signature: `pub(crate) struct OnboardingDoc {`
-  - Purpose: `OnboardingDoc` is a crate-private struct that encapsulates an onboarding documentation structure containing source code spans, entry points, an ordered sequence of steps, and references to degraded sources. [crates/gcode/src/commands/codewiki/mod.rs:212-217]
-- `OnboardingEntryPoint` (class) component `OnboardingEntryPoint [class]` (`93439864-62c2-5ad7-a3fc-8c03a85e5283`) lines 220-224 [crates/gcode/src/commands/codewiki/mod.rs:220-224]
+  - Purpose: Indexed class `OnboardingDoc` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:229-234]
+- `OnboardingEntryPoint` (class) component `OnboardingEntryPoint [class]` (`9fa1be04-0abd-5308-b752-ed433cdb08ca`) lines 237-241 [crates/gcode/src/commands/codewiki/mod.rs:237-241]
   - Signature: `pub(crate) struct OnboardingEntryPoint {`
-  - Purpose: `OnboardingEntryPoint` is a crate-internal struct that encapsulates an onboarding navigation entry with a URL link, descriptive text, and source code span metadata. [crates/gcode/src/commands/codewiki/mod.rs:220-224]
-- `OnboardingStep` (class) component `OnboardingStep [class]` (`7db62319-de52-5826-b662-83e1b3fec011`) lines 227-232 [crates/gcode/src/commands/codewiki/mod.rs:227-232]
+  - Purpose: Indexed class `OnboardingEntryPoint` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:237-241]
+- `OnboardingStep` (class) component `OnboardingStep [class]` (`ccd76d11-a8bf-50cc-90df-446ba863ba3c`) lines 244-249 [crates/gcode/src/commands/codewiki/mod.rs:244-249]
   - Signature: `pub(crate) struct OnboardingStep {`
-  - Purpose: `OnboardingStep` is a crate-private struct that encapsulates metadata for an onboarding step, comprising a module identifier, summary description, numeric degree, and floating-point score. [crates/gcode/src/commands/codewiki/mod.rs:227-232]
-- `HotspotsDoc` (class) component `HotspotsDoc [class]` (`079e8393-56f3-58fe-bedc-1330c6dc08bb`) lines 235-241 [crates/gcode/src/commands/codewiki/mod.rs:235-241]
+  - Purpose: Indexed class `OnboardingStep` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:244-249]
+- `HotspotsDoc` (class) component `HotspotsDoc [class]` (`766d413d-3d7f-5192-a85a-94434a7637be`) lines 252-258 [crates/gcode/src/commands/codewiki/mod.rs:252-258]
   - Signature: `pub(crate) struct HotspotsDoc {`
-  - Purpose: HotspotsDoc is a crate-private struct that aggregates code quality analysis findings, combining source spans with categorized hotspot detections (hotspots, god nodes, bridges) and degraded source identifiers. [crates/gcode/src/commands/codewiki/mod.rs:235-241]
-- `HotspotFinding` (class) component `HotspotFinding [class]` (`bbe5ed19-ab16-5432-b8a6-af65f0540515`) lines 244-250 [crates/gcode/src/commands/codewiki/mod.rs:244-250]
+  - Purpose: Indexed class `HotspotsDoc` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:252-258]
+- `HotspotFinding` (class) component `HotspotFinding [class]` (`41c56e43-386f-58b3-8939-76d02507a20f`) lines 261-267 [crates/gcode/src/commands/codewiki/mod.rs:261-267]
   - Signature: `pub(crate) struct HotspotFinding {`
-  - Purpose: HotspotFinding is a crate-private struct that pairs a HotspotNode with optional graph metrics (degree, score, frequency, and weight). [crates/gcode/src/commands/codewiki/mod.rs:244-250]
-- `HotspotNode` (class) component `HotspotNode [class]` (`6ec3f131-8035-5a79-afca-35c20640e91b`) lines 253-260 [crates/gcode/src/commands/codewiki/mod.rs:253-260]
+  - Purpose: Indexed class `HotspotFinding` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:261-267]
+- `HotspotNode` (class) component `HotspotNode [class]` (`8eb8e4c8-4072-5838-aa70-7a22e7508fe9`) lines 270-277 [crates/gcode/src/commands/codewiki/mod.rs:270-277]
   - Signature: `pub(crate) struct HotspotNode {`
-  - Purpose: `HotspotNode` is a crate-internal struct that encapsulates a wiki node with an identifier, kind classifier, label, wikilinks, and optional source span information. [crates/gcode/src/commands/codewiki/mod.rs:253-260]
-- `FileLink` (class) component `FileLink [class]` (`91b99737-520d-53e1-90f6-ab3cd869a73d`) lines 263-267 [crates/gcode/src/commands/codewiki/mod.rs:263-267]
+  - Purpose: Indexed class `HotspotNode` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:270-277]
+- `FileLink` (class) component `FileLink [class]` (`a42534ae-a805-5b7f-b5b9-e40509c5d29e`) lines 280-284 [crates/gcode/src/commands/codewiki/mod.rs:280-284]
   - Signature: `pub(crate) struct FileLink {`
-  - Purpose: `FileLink` is a crate-private struct that associates a file path with a summary description and a collection of source code spans indicating specific locations within that file. [crates/gcode/src/commands/codewiki/mod.rs:263-267]
-- `ModuleLink` (class) component `ModuleLink [class]` (`3b999ec8-7f7b-5bb6-86d0-21cfe6ac773d`) lines 270-274 [crates/gcode/src/commands/codewiki/mod.rs:270-274]
+  - Purpose: Indexed class `FileLink` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:280-284]
+- `ModuleLink` (class) component `ModuleLink [class]` (`69a2e6c9-77e3-5903-aacd-798c3d8ef5da`) lines 287-291 [crates/gcode/src/commands/codewiki/mod.rs:287-291]
   - Signature: `pub(crate) struct ModuleLink {`
-  - Purpose: `ModuleLink` is a crate-private struct that associates a module identifier with a textual summary and a collection of source code spans. [crates/gcode/src/commands/codewiki/mod.rs:270-274]
-- `SourceSpan` (class) component `SourceSpan [class]` (`61b67532-22c6-5a7a-93d8-81e2fc73d73d`) lines 277-281 [crates/gcode/src/commands/codewiki/mod.rs:277-281]
+  - Purpose: Indexed class `ModuleLink` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:287-291]
+- `SourceSpan` (class) component `SourceSpan [class]` (`3482971e-9f50-5d1b-b22c-bf1396c05475`) lines 294-298 [crates/gcode/src/commands/codewiki/mod.rs:294-298]
   - Signature: `pub(crate) struct SourceSpan {`
-  - Purpose: `SourceSpan` is a crate-private struct that represents a contiguous line range within a source file, defined by a file path and inclusive start/end line numbers. [crates/gcode/src/commands/codewiki/mod.rs:277-281]
-- `CodewikiRunSummary` (class) component `CodewikiRunSummary [class]` (`b9de8627-2f91-588d-9268-cfa78d1079af`) lines 284-296 [crates/gcode/src/commands/codewiki/mod.rs:284-296]
+  - Purpose: Indexed class `SourceSpan` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:294-298]
+- `CodewikiRunSummary` (class) component `CodewikiRunSummary [class]` (`d5e5d2ce-0ddc-5bbf-9ba0-c654633ca1a5`) lines 301-313 [crates/gcode/src/commands/codewiki/mod.rs:301-313]
   - Signature: `pub struct CodewikiRunSummary {`
-  - Purpose: `CodewikiRunSummary` is a struct that captures execution metadata, project context, output configuration, and aggregate metrics (pages generated, files/modules/symbols processed, and skipped counts) from a code documentation generation run. [crates/gcode/src/commands/codewiki/mod.rs:284-296]
-- `CodewikiMeta` (class) component `CodewikiMeta [class]` (`46b7204e-129b-5e10-91a2-ff7270ac2d9a`) lines 299-306 [crates/gcode/src/commands/codewiki/mod.rs:299-306]
+  - Purpose: Indexed class `CodewikiRunSummary` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:301-313]
+- `CodewikiMeta` (class) component `CodewikiMeta [class]` (`8de45042-f257-5d77-a029-0b75f6ba6db0`) lines 316-323 [crates/gcode/src/commands/codewiki/mod.rs:316-323]
   - Signature: `pub(crate) struct CodewikiMeta {`
-  - Purpose: `CodewikiMeta` is a crate-private struct that maintains sorted documentation metadata, generated documentation references, an optional index snapshot, and AI mode configuration for a code wiki system. [crates/gcode/src/commands/codewiki/mod.rs:299-306]
-- `CodewikiDocMeta` (class) component `CodewikiDocMeta [class]` (`cf33d74b-6fae-5c35-9b43-63be94aef8b5`) lines 309-311 [crates/gcode/src/commands/codewiki/mod.rs:309-311]
+  - Purpose: Indexed class `CodewikiMeta` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:316-323]
+- `CodewikiDocMeta` (class) component `CodewikiDocMeta [class]` (`6dc2354c-4c92-510c-9113-dabc834f03e3`) lines 326-342 [crates/gcode/src/commands/codewiki/mod.rs:326-342]
   - Signature: `pub(crate) struct CodewikiDocMeta {`
-  - Purpose: CodewikiDocMeta is a crate-private struct that maintains an ordered mapping of source identifiers to their hash values via a BTreeMap. [crates/gcode/src/commands/codewiki/mod.rs:309-311]
-- `CodewikiIndexSnapshot` (class) component `CodewikiIndexSnapshot [class]` (`ac307735-3319-5a51-97f5-8b5d61b6f706`) lines 314-321 [crates/gcode/src/commands/codewiki/mod.rs:314-321]
+  - Purpose: Indexed class `CodewikiDocMeta` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:326-342]
+- `BuiltDoc` (class) component `BuiltDoc [class]` (`afe1215d-6465-57e7-8178-5011fd13c19f`) lines 347-354 [crates/gcode/src/commands/codewiki/mod.rs:347-354]
+  - Signature: `pub(crate) struct BuiltDoc {`
+  - Purpose: Indexed class `BuiltDoc` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:347-354]
+- `BuiltDoc` (class) component `BuiltDoc [class]` (`559c021c-3b69-5211-890f-55a7d99bb873`) lines 356-365 [crates/gcode/src/commands/codewiki/mod.rs:356-365]
+  - Signature: `impl BuiltDoc {`
+  - Purpose: Indexed class `BuiltDoc` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:356-365]
+- `BuiltDoc.healthy` (method) component `BuiltDoc.healthy [method]` (`827b4c28-3008-5896-b827-a5e38c2ca147`) lines 357-364 [crates/gcode/src/commands/codewiki/mod.rs:357-364]
+  - Signature: `pub(crate) fn healthy(path: impl Into<String>, content: String) -> Self {`
+  - Purpose: Indexed method `BuiltDoc.healthy` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:357-364]
+- `CodewikiIndexSnapshot` (class) component `CodewikiIndexSnapshot [class]` (`23a19a33-fa67-590b-a695-fc4b863582d7`) lines 368-375 [crates/gcode/src/commands/codewiki/mod.rs:368-375]
   - Signature: `pub(crate) struct CodewikiIndexSnapshot {`
-  - Purpose: CodewikiIndexSnapshot is a crate-private, serde-compatible struct that stores a snapshot of an indexed codebase with BTreeMap indices of files and symbols, optional graph neighborhoods, and a vector of degraded sources. [crates/gcode/src/commands/codewiki/mod.rs:314-321]
-- `CodewikiFileSnapshot` (class) component `CodewikiFileSnapshot [class]` (`01474d36-9553-5679-a37d-00ae4c431cd7`) lines 324-327 [crates/gcode/src/commands/codewiki/mod.rs:324-327]
+  - Purpose: Indexed class `CodewikiIndexSnapshot` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:368-375]
+- `CodewikiFileSnapshot` (class) component `CodewikiFileSnapshot [class]` (`c13e5643-4dfd-5e3d-8f38-8ef302143b90`) lines 378-381 [crates/gcode/src/commands/codewiki/mod.rs:378-381]
   - Signature: `pub(crate) struct CodewikiFileSnapshot {`
-  - Purpose: `CodewikiFileSnapshot` is a crate-private struct that stores a content hash and symbol count to represent the immutable state of a codewiki file. [crates/gcode/src/commands/codewiki/mod.rs:324-327]
-- `CodewikiSymbolSnapshot` (class) component `CodewikiSymbolSnapshot [class]` (`c53c9f78-9b53-5688-aa31-a1c0e7d6d1ab`) lines 330-336 [crates/gcode/src/commands/codewiki/mod.rs:330-336]
+  - Purpose: Indexed class `CodewikiFileSnapshot` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:378-381]
+- `CodewikiSymbolSnapshot` (class) component `CodewikiSymbolSnapshot [class]` (`49d6f54a-29dd-5807-a54e-32dadfb53a58`) lines 384-390 [crates/gcode/src/commands/codewiki/mod.rs:384-390]
   - Signature: `pub(crate) struct CodewikiSymbolSnapshot {`
-  - Purpose: `CodewikiSymbolSnapshot` is a crate-private struct that encapsulates metadata for a code symbol, capturing its file path, simple and qualified names, symbol classification, and starting line number. [crates/gcode/src/commands/codewiki/mod.rs:330-336]
-- `TextGenerator` (type) component `TextGenerator [type]` (`debd9316-3c45-5ec5-89b7-6f8a590725a0`) lines 338-338 [crates/gcode/src/commands/codewiki/mod.rs:338]
-  - Signature: `pub type TextGenerator<'a> = dyn FnMut(&str, &str) -> Option<String> + 'a;`
-  - Purpose: Indexed type `TextGenerator` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:338]
-- `AiDepth` (type) component `AiDepth [type]` (`f6e77c42-2835-5463-ad70-d94487b2da9f`) lines 343-351 [crates/gcode/src/commands/codewiki/mod.rs:343-351]
+  - Purpose: Indexed class `CodewikiSymbolSnapshot` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:384-390]
+- `TextGenerator` (type) component `TextGenerator [type]` (`0d064bca-b4d2-5d66-9c46-f72b42921900`) lines 392-392 [crates/gcode/src/commands/codewiki/mod.rs:392]
+  - Signature: `pub type TextGenerator<'a> = dyn FnMut(&str, &str, PromptTier) -> Option<String> + 'a;`
+  - Purpose: Indexed type `TextGenerator` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:392]
+- `PromptTier` (type) component `PromptTier [type]` (`89354bd1-3de7-5139-bf1c-ca5d1817c2f1`) lines 404-408 [crates/gcode/src/commands/codewiki/mod.rs:404-408]
+  - Signature: `pub enum PromptTier {`
+  - Purpose: Indexed type `PromptTier` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:404-408]
+- `AiDepth` (type) component `AiDepth [type]` (`d493b593-0166-5898-a1ca-921f8d4e8d01`) lines 413-421 [crates/gcode/src/commands/codewiki/mod.rs:413-421]
   - Signature: `pub enum AiDepth {`
-  - Purpose: Indexed type `AiDepth` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:343-351]
-- `AiDepth` (class) component `AiDepth [class]` (`8e7b891f-07cb-5fcf-9533-adde32746ff2`) lines 353-369 [crates/gcode/src/commands/codewiki/mod.rs:353-369]
+  - Purpose: Indexed type `AiDepth` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:413-421]
+- `AiDepth` (class) component `AiDepth [class]` (`adcb6f8d-ba8b-51a2-b9c5-93cbb4c72a65`) lines 423-439 [crates/gcode/src/commands/codewiki/mod.rs:423-439]
   - Signature: `impl AiDepth {`
-  - Purpose: AiDepth is an ordered enumeration of three AI analysis depth levels (Sections, Files, Symbols) that provides threshold-checking methods to query depth capabilities and retrieve string labels for each level. [crates/gcode/src/commands/codewiki/mod.rs:353-369]
-- `AiDepth.includes_files` (method) component `AiDepth.includes_files [method]` (`79fdaf99-3ed2-588b-b653-d082cbb4dcbf`) lines 354-356 [crates/gcode/src/commands/codewiki/mod.rs:354-356]
+  - Purpose: Indexed class `AiDepth` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:423-439]
+- `AiDepth.includes_files` (method) component `AiDepth.includes_files [method]` (`c60b6a91-96de-5789-8f44-72a38c964764`) lines 424-426 [crates/gcode/src/commands/codewiki/mod.rs:424-426]
   - Signature: `pub(crate) fn includes_files(self) -> bool {`
-  - Purpose: Returns true if the current `AiDepth` value is greater than or equal to `AiDepth::Files`, indicating that the depth level includes file-level access. [crates/gcode/src/commands/codewiki/mod.rs:354-356]
-- `AiDepth.includes_symbols` (method) component `AiDepth.includes_symbols [method]` (`2e8b7241-516b-53af-8bf3-acfb003292de`) lines 358-360 [crates/gcode/src/commands/codewiki/mod.rs:358-360]
+  - Purpose: Indexed method `AiDepth.includes_files` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:424-426]
+- `AiDepth.includes_symbols` (method) component `AiDepth.includes_symbols [method]` (`ef7a63d0-5200-5f82-b777-d70fddf6970b`) lines 428-430 [crates/gcode/src/commands/codewiki/mod.rs:428-430]
   - Signature: `pub(crate) fn includes_symbols(self) -> bool {`
-  - Purpose: Returns `true` if the current `AiDepth` value is greater than or equal to the `Symbols` variant, otherwise `false`. [crates/gcode/src/commands/codewiki/mod.rs:358-360]
-- `AiDepth.mode_label` (method) component `AiDepth.mode_label [method]` (`a8798aeb-dd2f-5d90-a33a-8c6104eda6fe`) lines 362-368 [crates/gcode/src/commands/codewiki/mod.rs:362-368]
+  - Purpose: Indexed method `AiDepth.includes_symbols` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:428-430]
+- `AiDepth.mode_label` (method) component `AiDepth.mode_label [method]` (`d623f783-50f1-5b05-ba50-204538c45a17`) lines 432-438 [crates/gcode/src/commands/codewiki/mod.rs:432-438]
   - Signature: `fn mode_label(self) -> &'static str {`
-  - Purpose: Returns a static string label corresponding to the `AiDepth` enum variant (either "sections", "files", or "symbols"). [crates/gcode/src/commands/codewiki/mod.rs:362-368]
-- `CodewikiAiOptions` (class) component `CodewikiAiOptions [class]` (`babbcb4c-ea6d-50e0-b152-f78e90452862`) lines 372-375 [crates/gcode/src/commands/codewiki/mod.rs:372-375]
+  - Purpose: Indexed method `AiDepth.mode_label` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:432-438]
+- `CodewikiAiOptions` (class) component `CodewikiAiOptions [class]` (`a2cf58ea-4dd8-5a2d-a612-70b12be45862`) lines 442-448 [crates/gcode/src/commands/codewiki/mod.rs:442-448]
   - Signature: `pub struct CodewikiAiOptions {`
-  - Purpose: `CodewikiAiOptions` is a configuration struct that specifies optional AI routing behavior and a required analysis depth level for codewiki AI operations. [crates/gcode/src/commands/codewiki/mod.rs:372-375]
-- `SourceSpan` (class) component `SourceSpan [class]` (`05adeece-93a0-57e9-8cd0-fea4e10cbfe1`) lines 377-397 [crates/gcode/src/commands/codewiki/mod.rs:377-397]
+  - Purpose: Indexed class `CodewikiAiOptions` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:442-448]
+- `SourceSpan` (class) component `SourceSpan [class]` (`b04b5269-fd48-5935-9a8e-8365cc161384`) lines 450-470 [crates/gcode/src/commands/codewiki/mod.rs:450-470]
   - Signature: `impl SourceSpan {`
-  - Purpose: SourceSpan implements symbol-to-span conversion, formatted source location citation generation, and spatial containment validation for tracking source code locations. [crates/gcode/src/commands/codewiki/mod.rs:377-397]
-- `SourceSpan.from_symbol` (method) component `SourceSpan.from_symbol [method]` (`5859004e-cb7f-559f-9eab-b19423977c3a`) lines 378-384 [crates/gcode/src/commands/codewiki/mod.rs:378-384]
+  - Purpose: Indexed class `SourceSpan` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:450-470]
+- `SourceSpan.from_symbol` (method) component `SourceSpan.from_symbol [method]` (`57646e55-fdf2-5ee9-8b68-78c8d9fcaceb`) lines 451-457 [crates/gcode/src/commands/codewiki/mod.rs:451-457]
   - Signature: `fn from_symbol(symbol: &Symbol) -> Self {`
-  - Purpose: Constructs a new instance of `Self` from a `Symbol` by cloning its file path and copying its line start and end fields. [crates/gcode/src/commands/codewiki/mod.rs:378-384]
-- `SourceSpan.citation` (method) component `SourceSpan.citation [method]` (`bd5a5ccf-fcf6-5275-8947-ab550a349ee2`) lines 386-392 [crates/gcode/src/commands/codewiki/mod.rs:386-392]
+  - Purpose: Indexed method `SourceSpan.from_symbol` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:451-457]
+- `SourceSpan.citation` (method) component `SourceSpan.citation [method]` (`c1eb3286-0327-58ce-be34-4b185987de7f`) lines 459-465 [crates/gcode/src/commands/codewiki/mod.rs:459-465]
   - Signature: `fn citation(&self) -> String {`
-  - Purpose: Returns a formatted citation string as `[file:line]` for single-line or `[file:start-end]` for multi-line ranges. [crates/gcode/src/commands/codewiki/mod.rs:386-392]
-- `SourceSpan.contains` (method) component `SourceSpan.contains [method]` (`fc44d1a9-6dd8-5774-8d07-475de91b81fa`) lines 394-396 [crates/gcode/src/commands/codewiki/mod.rs:394-396]
+  - Purpose: Indexed method `SourceSpan.citation` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:459-465]
+- `SourceSpan.contains` (method) component `SourceSpan.contains [method]` (`26fdc388-1fd9-5bd7-97d1-e2a8bfc2937c`) lines 467-469 [crates/gcode/src/commands/codewiki/mod.rs:467-469]
   - Signature: `fn contains(&self, file: &str, line_start: usize, line_end: usize) -> bool {`
-  - Purpose: Checks whether a specified file and line range [line_start, line_end] are completely contained within the span's boundaries. [crates/gcode/src/commands/codewiki/mod.rs:394-396]
-- `run` (function) component `run [function]` (`145ba7e3-1427-52d7-8cb4-e0d669063f45`) lines 399-522 [crates/gcode/src/commands/codewiki/mod.rs:399-522]
+  - Purpose: Indexed method `SourceSpan.contains` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:467-469]
+- `run` (function) component `run [function]` (`d956dedf-86d5-5282-a58c-dad8ed64587a`) lines 472-600 [crates/gcode/src/commands/codewiki/mod.rs:472-600]
   - Signature: `pub fn run(`
-  - Purpose: Queries a read-only database to extract scoped code files and symbols, constructs a bounded dependency graph with configurable edge limits, and prepares CodewikiInput with AI generation configuration for code analysis. [crates/gcode/src/commands/codewiki/mod.rs:399-522]
-- `validate_edge_limit` (function) component `validate_edge_limit [function]` (`394a92b1-a8d3-5d04-a09d-4186fd357389`) lines 524-529 [crates/gcode/src/commands/codewiki/mod.rs:524-529]
+  - Purpose: Indexed function `run` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:472-600]
+- `validate_edge_limit` (function) component `validate_edge_limit [function]` (`1e257628-eb5d-5a73-903c-fbcd617ac51e`) lines 602-607 [crates/gcode/src/commands/codewiki/mod.rs:602-607]
   - Signature: `fn validate_edge_limit(edge_limit: usize) -> anyhow::Result<()> {`
-  - Purpose: Validates that the `edge_limit` parameter falls within the inclusive range [1, MAX_EDGE_LIMIT], returning `Ok(())` on success or an `anyhow::Error` with a descriptive message on failure. [crates/gcode/src/commands/codewiki/mod.rs:524-529]
-- `write_codewiki_docs` (function) component `write_codewiki_docs [function]` (`1aec054a-f201-5b6e-8019-79e42648b3e5`) lines 531-554 [crates/gcode/src/commands/codewiki/mod.rs:531-554]
-  - Signature: `fn write_codewiki_docs(`
-  - Purpose: Writes codewiki documentation pages incrementally to disk with ownership metadata tracking, returning a list of modified file paths. [crates/gcode/src/commands/codewiki/mod.rs:531-554]
-- `generate_hierarchical_docs` (function) component `generate_hierarchical_docs [function]` (`e5f6e08c-3a3c-5d78-9e1c-5074bbfd84e7`) lines 556-561 [crates/gcode/src/commands/codewiki/mod.rs:556-561]
+  - Purpose: Indexed function `validate_edge_limit` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:602-607]
+- `generate_hierarchical_docs` (function) component `generate_hierarchical_docs [function]` (`a81ecadd-70bf-524b-84e0-9e5564cc29e0`) lines 609-617 [crates/gcode/src/commands/codewiki/mod.rs:609-617]
   - Signature: `pub fn generate_hierarchical_docs(`
-  - Purpose: This function is a wrapper that generates hierarchical documentation by delegating to `generate_hierarchical_docs_with_graph_availability`, accepting a CodewikiInput and optional TextGenerator reference, returning a vector of string tuples. [crates/gcode/src/commands/codewiki/mod.rs:556-561]
-- `generate_hierarchical_docs_with_graph_availability` (function) component `generate_hierarchical_docs_with_graph_availability [function]` (`7e4e152e-6079-5f65-8e99-7a7d708c3157`) lines 563-581 [crates/gcode/src/commands/codewiki/mod.rs:563-581]
+  - Purpose: Indexed function `generate_hierarchical_docs` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:609-617]
+- `generate_hierarchical_docs_with_graph_availability` (function) component `generate_hierarchical_docs_with_graph_availability [function]` (`705d8c89-b257-5759-b5a7-84bd3311c0f1`) lines 619-641 [crates/gcode/src/commands/codewiki/mod.rs:619-641]
   - Signature: `fn generate_hierarchical_docs_with_graph_availability(`
-  - Purpose: Generates hierarchical symbol-level documentation from code input via a core generation function, returning string pairs or an empty vector on failure. [crates/gcode/src/commands/codewiki/mod.rs:563-581]
-- `generate_hierarchical_docs_with_ownership` (function) component `generate_hierarchical_docs_with_ownership [function]` (`9ae4a3d2-39de-52be-8d75-e7073ccdab20`) lines 583-598 [crates/gcode/src/commands/codewiki/mod.rs:583-598]
+  - Purpose: Indexed function `generate_hierarchical_docs_with_graph_availability` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:619-641]
+- `generate_hierarchical_docs_with_ownership` (function) component `generate_hierarchical_docs_with_ownership [function]` (`1921a844-7580-551f-b318-191761669366`) lines 644-663 [crates/gcode/src/commands/codewiki/mod.rs:644-663]
   - Signature: `fn generate_hierarchical_docs_with_ownership(`
-  - Purpose: Generates hierarchical project documentation with integrated code ownership metadata by delegating to the core generation function with project context. [crates/gcode/src/commands/codewiki/mod.rs:583-598]
-- `generate_hierarchical_docs_with_progress` (function) component `generate_hierarchical_docs_with_progress [function]` (`690ec5ef-c1cb-57bd-89e4-2567a057ab6e`) lines 601-614 [crates/gcode/src/commands/codewiki/mod.rs:601-614]
+  - Purpose: Indexed function `generate_hierarchical_docs_with_ownership` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:644-663]
+- `generate_hierarchical_docs_with_progress` (function) component `generate_hierarchical_docs_with_progress [function]` (`854c2b1d-4195-5b83-94e9-00882489c7e0`) lines 666-673 [crates/gcode/src/commands/codewiki/mod.rs:666-673]
   - Signature: `fn generate_hierarchical_docs_with_progress(`
-  - Purpose: Generates a vector of string tuple pairs representing hierarchical documentation from CodewikiInput, delegating to a core function with optional text generation and specified AI depth while handling errors by logging and returning an empty vector. [crates/gcode/src/commands/codewiki/mod.rs:601-614]
-- `generate_hierarchical_docs_core` (function) component `generate_hierarchical_docs_core [function]` (`c8057477-4bbb-5509-962f-ac214ca07c21`) lines 616-742 [crates/gcode/src/commands/codewiki/mod.rs:616-742]
+  - Purpose: Indexed function `generate_hierarchical_docs_with_progress` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:666-673]
+- `generate_hierarchical_docs_with_reuse` (function) component `generate_hierarchical_docs_with_reuse [function]` (`99e2aa84-85e1-534c-8ef9-dc75987fc561`) lines 677-701 [crates/gcode/src/commands/codewiki/mod.rs:677-701]
+  - Signature: `fn generate_hierarchical_docs_with_reuse(`
+  - Purpose: Indexed function `generate_hierarchical_docs_with_reuse` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:677-701]
+- `generate_hierarchical_docs_core` (function) component `generate_hierarchical_docs_core [function]` (`2394d419-b371-5fbf-9f1c-3d3b54e449a5`) lines 703-879 [crates/gcode/src/commands/codewiki/mod.rs:703-879]
   - Signature: `fn generate_hierarchical_docs_core(`
-  - Purpose: Generates hierarchical documentation for core files by filtering and organizing input symbols by file, building file-level documentation with optional AI-powered generation, and returning a vector of (filepath, documentation) string pairs. [crates/gcode/src/commands/codewiki/mod.rs:616-742]
+  - Purpose: Indexed function `generate_hierarchical_docs_core` in `crates/gcode/src/commands/codewiki/mod.rs`. [crates/gcode/src/commands/codewiki/mod.rs:703-879]
 

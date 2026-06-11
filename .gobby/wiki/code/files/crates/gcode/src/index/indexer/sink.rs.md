@@ -30,10 +30,6 @@ Module: [[code/modules/crates/gcode/src/index/indexer|crates/gcode/src/index/ind
 [crates/gcode/src/index/indexer/sink.rs:30-32]
 [crates/gcode/src/index/indexer/sink.rs:39-41]
 [crates/gcode/src/index/indexer/sink.rs:43-45]
-[crates/gcode/src/index/indexer/sink.rs:47-49]
-[crates/gcode/src/index/indexer/sink.rs:51-58]
-[crates/gcode/src/index/indexer/sink.rs:60-67]
-[crates/gcode/src/index/indexer/sink.rs:69-71]
 
 ## API Symbols
 

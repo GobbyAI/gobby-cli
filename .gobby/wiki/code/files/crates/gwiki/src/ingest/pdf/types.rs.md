@@ -29,9 +29,6 @@ Module: [[code/modules/crates/gwiki/src/ingest/pdf|crates/gwiki/src/ingest/pdf]]
 [crates/gwiki/src/ingest/pdf/types.rs:24-29]
 [crates/gwiki/src/ingest/pdf/types.rs:32-38]
 [crates/gwiki/src/ingest/pdf/types.rs:41-43]
-[crates/gwiki/src/ingest/pdf/types.rs:45-51]
-[crates/gwiki/src/ingest/pdf/types.rs:46-50]
-[crates/gwiki/src/ingest/pdf/types.rs:54-75]
 
 ## API Symbols
 

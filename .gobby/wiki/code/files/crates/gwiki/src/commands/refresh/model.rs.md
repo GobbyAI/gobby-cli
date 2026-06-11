@@ -42,22 +42,6 @@ Module: [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/comman
 [crates/gwiki/src/commands/refresh/model.rs:19-24]
 [crates/gwiki/src/commands/refresh/model.rs:27-38]
 [crates/gwiki/src/commands/refresh/model.rs:41-43]
-[crates/gwiki/src/commands/refresh/model.rs:45-52]
-[crates/gwiki/src/commands/refresh/model.rs:46-51]
-[crates/gwiki/src/commands/refresh/model.rs:54-69]
-[crates/gwiki/src/commands/refresh/model.rs:55-68]
-[crates/gwiki/src/commands/refresh/model.rs:72-85]
-[crates/gwiki/src/commands/refresh/model.rs:88-98]
-[crates/gwiki/src/commands/refresh/model.rs:101-107]
-[crates/gwiki/src/commands/refresh/model.rs:110-116]
-[crates/gwiki/src/commands/refresh/model.rs:119-125]
-[crates/gwiki/src/commands/refresh/model.rs:127-137]
-[crates/gwiki/src/commands/refresh/model.rs:128-136]
-[crates/gwiki/src/commands/refresh/model.rs:140-144]
-[crates/gwiki/src/commands/refresh/model.rs:146-170]
-[crates/gwiki/src/commands/refresh/model.rs:147-153]
-[crates/gwiki/src/commands/refresh/model.rs:155-161]
-[crates/gwiki/src/commands/refresh/model.rs:163-169]
 
 ## API Symbols
 

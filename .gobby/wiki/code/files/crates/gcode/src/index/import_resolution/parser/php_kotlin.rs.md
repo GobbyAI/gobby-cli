@@ -30,10 +30,6 @@ Module: [[code/modules/crates/gcode/src/index/import_resolution/parser|crates/gc
 [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:62-66]
 [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:68-104]
 [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:106-147]
-[crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:149-168]
-[crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:170-183]
-[crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:185-191]
-[crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:193-213]
 
 ## API Symbols
 

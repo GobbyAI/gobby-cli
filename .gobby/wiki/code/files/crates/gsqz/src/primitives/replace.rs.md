@@ -31,11 +31,6 @@ Module: [[code/modules/crates/gsqz/src/primitives|crates/gsqz/src/primitives]]
 [crates/gsqz/src/primitives/replace.rs:44-48]
 [crates/gsqz/src/primitives/replace.rs:51-55]
 [crates/gsqz/src/primitives/replace.rs:58-63]
-[crates/gsqz/src/primitives/replace.rs:66-70]
-[crates/gsqz/src/primitives/replace.rs:73-77]
-[crates/gsqz/src/primitives/replace.rs:80-84]
-[crates/gsqz/src/primitives/replace.rs:87-90]
-[crates/gsqz/src/primitives/replace.rs:93-97]
 
 ## API Symbols
 

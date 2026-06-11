@@ -32,12 +32,6 @@ Module: [[code/modules/crates/gcode/src/index/indexer|crates/gcode/src/index/ind
 [crates/gcode/src/index/indexer/freshness_probe.rs:98-105]
 [crates/gcode/src/index/indexer/freshness_probe.rs:109-111]
 [crates/gcode/src/index/indexer/freshness_probe.rs:113-115]
-[crates/gcode/src/index/indexer/freshness_probe.rs:118-138]
-[crates/gcode/src/index/indexer/freshness_probe.rs:141-156]
-[crates/gcode/src/index/indexer/freshness_probe.rs:159-176]
-[crates/gcode/src/index/indexer/freshness_probe.rs:179-195]
-[crates/gcode/src/index/indexer/freshness_probe.rs:198-235]
-[crates/gcode/src/index/indexer/freshness_probe.rs:238-265]
 
 ## API Symbols
 

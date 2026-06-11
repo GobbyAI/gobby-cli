@@ -41,21 +41,6 @@ Module: [[code/modules/crates/gcode/src/index/import_resolution|crates/gcode/src
 [crates/gcode/src/index/import_resolution/predicates.rs:55-68]
 [crates/gcode/src/index/import_resolution/predicates.rs:70-77]
 [crates/gcode/src/index/import_resolution/predicates.rs:79-81]
-[crates/gcode/src/index/import_resolution/predicates.rs:83-88]
-[crates/gcode/src/index/import_resolution/predicates.rs:94-107]
-[crates/gcode/src/index/import_resolution/predicates.rs:109-179]
-[crates/gcode/src/index/import_resolution/predicates.rs:185-201]
-[crates/gcode/src/index/import_resolution/predicates.rs:203-210]
-[crates/gcode/src/index/import_resolution/predicates.rs:212-220]
-[crates/gcode/src/index/import_resolution/predicates.rs:222-231]
-[crates/gcode/src/index/import_resolution/predicates.rs:233-241]
-[crates/gcode/src/index/import_resolution/predicates.rs:243-251]
-[crates/gcode/src/index/import_resolution/predicates.rs:258-262]
-[crates/gcode/src/index/import_resolution/predicates.rs:264-276]
-[crates/gcode/src/index/import_resolution/predicates.rs:284-288]
-[crates/gcode/src/index/import_resolution/predicates.rs:290-302]
-[crates/gcode/src/index/import_resolution/predicates.rs:304-316]
-[crates/gcode/src/index/import_resolution/predicates.rs:318-328]
 
 ## API Symbols
 

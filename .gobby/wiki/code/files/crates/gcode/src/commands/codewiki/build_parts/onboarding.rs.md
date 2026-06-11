@@ -30,10 +30,6 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gco
 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:111-200]
 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:202-208]
 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:210-212]
-[crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:214-219]
-[crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:225-246]
-[crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:249-255]
-[crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:258-268]
 
 ## API Symbols
 

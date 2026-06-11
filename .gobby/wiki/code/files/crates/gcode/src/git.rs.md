@@ -32,12 +32,6 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 [crates/gcode/src/git.rs:19-51]
 [crates/gcode/src/git.rs:53-63]
 [crates/gcode/src/git.rs:65-77]
-[crates/gcode/src/git.rs:79-87]
-[crates/gcode/src/git.rs:93-101]
-[crates/gcode/src/git.rs:103-118]
-[crates/gcode/src/git.rs:121-132]
-[crates/gcode/src/git.rs:135-158]
-[crates/gcode/src/git.rs:161-181]
 
 ## API Symbols
 

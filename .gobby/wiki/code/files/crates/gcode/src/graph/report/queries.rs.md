@@ -30,10 +30,6 @@ Module: [[code/modules/crates/gcode/src/graph/report|crates/gcode/src/graph/repo
 [crates/gcode/src/graph/report/queries.rs:24-26]
 [crates/gcode/src/graph/report/queries.rs:28-38]
 [crates/gcode/src/graph/report/queries.rs:40-49]
-[crates/gcode/src/graph/report/queries.rs:51-85]
-[crates/gcode/src/graph/report/queries.rs:87-104]
-[crates/gcode/src/graph/report/queries.rs:106-126]
-[crates/gcode/src/graph/report/queries.rs:128-144]
 
 ## API Symbols
 

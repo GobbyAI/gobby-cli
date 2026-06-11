@@ -30,10 +30,6 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 [crates/gwiki/src/citations.rs:37-46]
 [crates/gwiki/src/citations.rs:48-69]
 [crates/gwiki/src/citations.rs:71-88]
-[crates/gwiki/src/citations.rs:90-92]
-[crates/gwiki/src/citations.rs:100-124]
-[crates/gwiki/src/citations.rs:127-148]
-[crates/gwiki/src/citations.rs:151-170]
 
 ## API Symbols
 

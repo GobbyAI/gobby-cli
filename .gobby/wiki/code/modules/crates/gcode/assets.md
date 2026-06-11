@@ -43,67 +43,25 @@ Parent: [[code/modules/crates/gcode|crates/gcode]]
 
 ## Overview
 
-The crates/gcode/assets module supplies static configuration assets for resolving and importing dependencies across Elixir and Ruby ecosystems. It contains structured JSON lookup tables that map popular libraries, such as Jason, HTTPoison, Ecto, Phoenix, Faraday, and RSpec, to their respective root import paths. These files serve as a centralized registry for dependency resolution within the gcode crate, with no runtime API symbols exposed.
+This module provides static JSON asset data supporting language-aware code indexing. It catalogs well-known dependency and import roots for Elixir (e.g. jason, phoenix, ecto, plug, oban, telemetry) and Ruby (e.g. json, net/http, faraday, nokogiri, rspec), allowing the indexer to recognize standard library and third-party package boundaries during import resolution. A companion SKILL.md document is also included.
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
+[crates/gcode/assets/import_roots/ruby_require_roots.json:2]
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:3]
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:4]
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:5]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:6]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:7]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:8]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:9]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:10]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:11]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:12]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:13]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:14]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:15]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:16]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:17]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:2]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:3]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:4]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:5]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:6]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:7]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:8]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:9]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:10]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:11]
 
 ## Child Modules
 
-- [[code/modules/crates/gcode/assets/import_roots|crates/gcode/assets/import_roots]] - This module provides static JSON configuration assets for resolving and importing dependencies in Elixir and Ruby ecosystems. `elixir_dependency_roots.json` defines root mappings for 16 indexed API symbols corresponding to common Elixir packages, while `ruby_require_roots.json` specifies equivalent roots for 10 Ruby libraries. These files serve as structured lookup tables for dependency resolution within the gcode crate.
+- [[code/modules/crates/gcode/assets/import_roots|crates/gcode/assets/import_roots]] - This module provides JSON asset files mapping well-known dependency and import roots for language-aware code indexing. It catalogs common Elixir dependencies (e.g. jason, phoenix, ecto, plug, oban, telemetry) and Ruby require roots (e.g. json, net/http, faraday, nokogiri, rspec), enabling the indexer to recognize standard library and third-party package boundaries during import resolution.
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
+[crates/gcode/assets/import_roots/ruby_require_roots.json:2]
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:3]
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:4]
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:5]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:6]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:7]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:8]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:9]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:10]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:11]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:12]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:13]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:14]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:15]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:16]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:17]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:2]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:3]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:4]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:5]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:6]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:7]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:8]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:9]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:10]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:11]
 
 ## Files
 
-- [[code/files/crates/gcode/assets/SKILL.md|crates/gcode/assets/SKILL.md]] - `crates/gcode/assets/SKILL.md` has no indexed API symbols.
+- [[code/files/crates/gcode/assets/SKILL.md|crates/gcode/assets/SKILL.md]] - `crates/gcode/assets/SKILL.md` has no indexed API symbols. 
 
 ## Components
 

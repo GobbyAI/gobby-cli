@@ -34,14 +34,6 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 [crates/gcode/src/skill.rs:61-63]
 [crates/gcode/src/skill.rs:67-72]
 [crates/gcode/src/skill.rs:75-85]
-[crates/gcode/src/skill.rs:88-94]
-[crates/gcode/src/skill.rs:100-107]
-[crates/gcode/src/skill.rs:109-114]
-[crates/gcode/src/skill.rs:117-128]
-[crates/gcode/src/skill.rs:131-148]
-[crates/gcode/src/skill.rs:151-164]
-[crates/gcode/src/skill.rs:167-188]
-[crates/gcode/src/skill.rs:191-220]
 
 ## API Symbols
 

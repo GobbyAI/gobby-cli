@@ -30,10 +30,6 @@ Module: [[code/modules/crates/gcode/src/search|crates/gcode/src/search]]
 [crates/gcode/src/search/rrf.rs:27-34]
 [crates/gcode/src/search/rrf.rs:37-49]
 [crates/gcode/src/search/rrf.rs:52-64]
-[crates/gcode/src/search/rrf.rs:67-75]
-[crates/gcode/src/search/rrf.rs:78-81]
-[crates/gcode/src/search/rrf.rs:84-87]
-[crates/gcode/src/search/rrf.rs:90-113]
 
 ## API Symbols
 

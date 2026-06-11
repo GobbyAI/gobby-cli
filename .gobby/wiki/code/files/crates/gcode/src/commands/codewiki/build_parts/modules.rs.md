@@ -4,8 +4,8 @@ type: code_file
 provenance:
 - file: crates/gcode/src/commands/codewiki/build_parts/modules.rs
   ranges:
-  - 4-114
-  - 116-126
+  - 4-144
+  - 146-156
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -18,17 +18,15 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gco
 ## Purpose
 
 `crates/gcode/src/commands/codewiki/build_parts/modules.rs` exposes 2 indexed API symbols.
-[crates/gcode/src/commands/codewiki/build_parts/modules.rs:4-114]
-[crates/gcode/src/commands/codewiki/build_parts/modules.rs:116-126]
+[crates/gcode/src/commands/codewiki/build_parts/modules.rs:4-144]
+[crates/gcode/src/commands/codewiki/build_parts/modules.rs:146-156]
 
 ## API Symbols
 
-- `build_module_docs` (function) component `build_module_docs [function]` (`40915297-eb8e-5839-abd6-a5e1ef5cdb2f`) lines 4-114 [crates/gcode/src/commands/codewiki/build_parts/modules.rs:4-114]
+- `build_module_docs` (function) component `build_module_docs [function]` (`40915297-eb8e-5839-abd6-a5e1ef5cdb2f`) lines 4-144 [crates/gcode/src/commands/codewiki/build_parts/modules.rs:4-144]
   - Signature: `pub(crate) fn build_module_docs(`
-  - Purpose: # Summary
-
-`build_module_docs` builds a hierarchical collection of module documentation by aggregating input files into their parent modules, identifying child module relationships, and constructing ModuleDoc structures for each module sorted by depth. [crates/gcode/src/commands/codewiki/build_parts/modules.rs:4-114]
-- `prompt_component_ids_for_module` (function) component `prompt_component_ids_for_module [function]` (`ca21e93d-eabf-56cd-8d68-9915e2d4e83b`) lines 116-126 [crates/gcode/src/commands/codewiki/build_parts/modules.rs:116-126]
+  - Purpose: Indexed function `build_module_docs` in `crates/gcode/src/commands/codewiki/build_parts/modules.rs`. [crates/gcode/src/commands/codewiki/build_parts/modules.rs:4-144]
+- `prompt_component_ids_for_module` (function) component `prompt_component_ids_for_module [function]` (`af5026cc-b5ab-5797-8658-1ea08c6a973b`) lines 146-156 [crates/gcode/src/commands/codewiki/build_parts/modules.rs:146-156]
   - Signature: `pub(super) fn prompt_component_ids_for_module(files: &[FileDoc], module: &str) -> Vec<String> {`
-  - Purpose: This function filters files matching a specified module (or its ancestors) and returns a vector of formatted strings pairing component labels with their IDs from the symbols in those files. [crates/gcode/src/commands/codewiki/build_parts/modules.rs:116-126]
+  - Purpose: Indexed function `prompt_component_ids_for_module` in `crates/gcode/src/commands/codewiki/build_parts/modules.rs`. [crates/gcode/src/commands/codewiki/build_parts/modules.rs:146-156]
 

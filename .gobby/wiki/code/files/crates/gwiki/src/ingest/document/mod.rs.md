@@ -40,20 +40,6 @@ Module: [[code/modules/crates/gwiki/src/ingest/document|crates/gwiki/src/ingest/
 [crates/gwiki/src/ingest/document/mod.rs:38-46]
 [crates/gwiki/src/ingest/document/mod.rs:39-45]
 [crates/gwiki/src/ingest/document/mod.rs:49-53]
-[crates/gwiki/src/ingest/document/mod.rs:56-62]
-[crates/gwiki/src/ingest/document/mod.rs:64-66]
-[crates/gwiki/src/ingest/document/mod.rs:68-71]
-[crates/gwiki/src/ingest/document/mod.rs:73]
-[crates/gwiki/src/ingest/document/mod.rs:75-84]
-[crates/gwiki/src/ingest/document/mod.rs:86-98]
-[crates/gwiki/src/ingest/document/mod.rs:100-111]
-[crates/gwiki/src/ingest/document/mod.rs:113-188]
-[crates/gwiki/src/ingest/document/mod.rs:190-198]
-[crates/gwiki/src/ingest/document/mod.rs:200-211]
-[crates/gwiki/src/ingest/document/mod.rs:201-210]
-[crates/gwiki/src/ingest/document/mod.rs:213-215]
-[crates/gwiki/src/ingest/document/mod.rs:217-219]
-[crates/gwiki/src/ingest/document/mod.rs:221-226]
 
 ## API Symbols
 

@@ -37,17 +37,6 @@ Module: [[code/modules/crates/gcode/assets/import_roots|crates/gcode/assets/impo
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:4]
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:5]
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:6]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:7]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:8]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:9]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:10]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:11]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:12]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:13]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:14]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:15]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:16]
-[crates/gcode/assets/import_roots/elixir_dependency_roots.json:17]
 
 ## API Symbols
 

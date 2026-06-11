@@ -34,14 +34,6 @@ Module: [[code/modules/crates/gwiki/src/compile|crates/gwiki/src/compile]]
 [crates/gwiki/src/compile/tests.rs:74-101]
 [crates/gwiki/src/compile/tests.rs:104-130]
 [crates/gwiki/src/compile/tests.rs:133-169]
-[crates/gwiki/src/compile/tests.rs:172-218]
-[crates/gwiki/src/compile/tests.rs:222-242]
-[crates/gwiki/src/compile/tests.rs:246-276]
-[crates/gwiki/src/compile/tests.rs:279-330]
-[crates/gwiki/src/compile/tests.rs:333-360]
-[crates/gwiki/src/compile/tests.rs:363-391]
-[crates/gwiki/src/compile/tests.rs:394-401]
-[crates/gwiki/src/compile/tests.rs:404-423]
 
 ## API Symbols
 

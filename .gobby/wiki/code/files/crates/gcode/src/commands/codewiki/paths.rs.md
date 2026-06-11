@@ -37,17 +37,6 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 [crates/gcode/src/commands/codewiki/paths.rs:30-32]
 [crates/gcode/src/commands/codewiki/paths.rs:34-41]
 [crates/gcode/src/commands/codewiki/paths.rs:43-98]
-[crates/gcode/src/commands/codewiki/paths.rs:103-111]
-[crates/gcode/src/commands/codewiki/paths.rs:113-119]
-[crates/gcode/src/commands/codewiki/paths.rs:121-129]
-[crates/gcode/src/commands/codewiki/paths.rs:131-133]
-[crates/gcode/src/commands/codewiki/paths.rs:135-137]
-[crates/gcode/src/commands/codewiki/paths.rs:139-147]
-[crates/gcode/src/commands/codewiki/paths.rs:149-151]
-[crates/gcode/src/commands/codewiki/paths.rs:153-155]
-[crates/gcode/src/commands/codewiki/paths.rs:157-159]
-[crates/gcode/src/commands/codewiki/paths.rs:161-163]
-[crates/gcode/src/commands/codewiki/paths.rs:165-167]
 
 ## API Symbols
 

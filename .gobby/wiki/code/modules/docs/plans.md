@@ -13,13 +13,13 @@ Parent: [[code/modules/docs|docs]]
 
 ## Overview
 
-The `docs/plans` module archives development plans and specifications, encompassing a new release plan and a sub-module of completed designs. It provides reference documentation for G-code skill targets, statusline hook phases, sandbox-tolerant hooks, and schemas. This module contains no executable code or indexed API symbols, serving solely to preserve historical design decisions and implementation roadmaps.
+This module holds planning documents for the gobby project. It contains active release planning (new-release.md) alongside a `completed/` subdirectory archiving finished initiative plans, such as gcode skill targets, ghook statusline, sandbox-tolerant hooks, and schema work. All files are markdown design and implementation records with no indexed API symbols.
 
 ## Child Modules
 
-- [[code/modules/docs/plans/completed|docs/plans/completed]] - This module archives completed development plans and specifications for various features and version updates. It contains reference documentation covering G-code skill targets, statusline hook phases, sandbox-tolerant hooks, and a standalone schema. As a documentation archive, it contains no executable code or indexed API symbols, serving solely to preserve past design decisions and implementation roadmaps.
+- [[code/modules/docs/plans/completed|docs/plans/completed]] - This module archives completed planning documents for the gobby project. It contains design and implementation plans for delivered features, including gcode 0.8.3 skill targets, ghook statusline (phase 1), sandbox-tolerant hooks (both Rust and general implementations), and standalone schema work. These markdown files serve as historical records of finished initiatives and contain no indexed API symbols. 
 
 ## Files
 
-- [[code/files/docs/plans/new-release.md|docs/plans/new-release.md]] - `docs/plans/new-release.md` has no indexed API symbols.
+- [[code/files/docs/plans/new-release.md|docs/plans/new-release.md]] - `docs/plans/new-release.md` has no indexed API symbols. 
 

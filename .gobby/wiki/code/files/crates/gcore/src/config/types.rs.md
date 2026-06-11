@@ -35,10 +35,10 @@ provenance:
   - 197-201
   - 198-200
   - '203'
-  - 207-217
-  - 221-224
-  - 333-335
-  - 339-342
+  - 207-220
+  - 224-227
+  - 338-340
+  - 344-347
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -56,36 +56,6 @@ Module: [[code/modules/crates/gcore/src/config|crates/gcore/src/config]]
 [crates/gcore/src/config/types.rs:22-28]
 [crates/gcore/src/config/types.rs:32-34]
 [crates/gcore/src/config/types.rs:36-42]
-[crates/gcore/src/config/types.rs:37-41]
-[crates/gcore/src/config/types.rs:46-52]
-[crates/gcore/src/config/types.rs:54-68]
-[crates/gcore/src/config/types.rs:55]
-[crates/gcore/src/config/types.rs:57-67]
-[crates/gcore/src/config/types.rs:71-73]
-[crates/gcore/src/config/types.rs:75-79]
-[crates/gcore/src/config/types.rs:76-78]
-[crates/gcore/src/config/types.rs:81]
-[crates/gcore/src/config/types.rs:85-91]
-[crates/gcore/src/config/types.rs:93-173]
-[crates/gcore/src/config/types.rs:94-102]
-[crates/gcore/src/config/types.rs:104-112]
-[crates/gcore/src/config/types.rs:114-122]
-[crates/gcore/src/config/types.rs:124-132]
-[crates/gcore/src/config/types.rs:134-142]
-[crates/gcore/src/config/types.rs:144-152]
-[crates/gcore/src/config/types.rs:154-162]
-[crates/gcore/src/config/types.rs:164-172]
-[crates/gcore/src/config/types.rs:175-190]
-[crates/gcore/src/config/types.rs:176]
-[crates/gcore/src/config/types.rs:178-189]
-[crates/gcore/src/config/types.rs:193-195]
-[crates/gcore/src/config/types.rs:197-201]
-[crates/gcore/src/config/types.rs:198-200]
-[crates/gcore/src/config/types.rs:203]
-[crates/gcore/src/config/types.rs:207-217]
-[crates/gcore/src/config/types.rs:221-224]
-[crates/gcore/src/config/types.rs:333-335]
-[crates/gcore/src/config/types.rs:339-342]
 
 ## API Symbols
 
@@ -182,16 +152,16 @@ Module: [[code/modules/crates/gcore/src/config|crates/gcore/src/config]]
 - `ParseAiCapabilityError` (class) component `ParseAiCapabilityError [class]` (`f00d9a1e-0c98-5942-a4d6-0efdd2365944`) lines 203-203 [crates/gcore/src/config/types.rs:203]
   - Signature: `impl std::error::Error for ParseAiCapabilityError {}`
   - Purpose: Indexed class `ParseAiCapabilityError` in `crates/gcore/src/config/types.rs`. [crates/gcore/src/config/types.rs:203]
-- `CapabilityBinding` (class) component `CapabilityBinding [class]` (`fb194676-f6c9-5a57-8e6a-1a97918a9f1e`) lines 207-217 [crates/gcore/src/config/types.rs:207-217]
+- `CapabilityBinding` (class) component `CapabilityBinding [class]` (`fb194676-f6c9-5a57-8e6a-1a97918a9f1e`) lines 207-220 [crates/gcore/src/config/types.rs:207-220]
   - Signature: `pub struct CapabilityBinding {`
-  - Purpose: Indexed class `CapabilityBinding` in `crates/gcore/src/config/types.rs`. [crates/gcore/src/config/types.rs:207-217]
-- `AiTuning` (class) component `AiTuning [class]` (`5a5fea50-8a6f-512e-8f6e-eddda9c59729`) lines 221-224 [crates/gcore/src/config/types.rs:221-224]
+  - Purpose: Indexed class `CapabilityBinding` in `crates/gcore/src/config/types.rs`. [crates/gcore/src/config/types.rs:207-220]
+- `AiTuning` (class) component `AiTuning [class]` (`70929152-450c-5c61-8d30-840f62da781c`) lines 224-227 [crates/gcore/src/config/types.rs:224-227]
   - Signature: `pub struct AiTuning {`
-  - Purpose: Indexed class `AiTuning` in `crates/gcore/src/config/types.rs`. [crates/gcore/src/config/types.rs:221-224]
-- `all` (function) component `all [function]` (`fe99384d-d935-5080-8016-eaa02b31c6c0`) lines 333-335 [crates/gcore/src/config/types.rs:333-335]
+  - Purpose: Indexed class `AiTuning` in `crates/gcore/src/config/types.rs`. [crates/gcore/src/config/types.rs:224-227]
+- `all` (function) component `all [function]` (`b1442cb5-c8ef-5a26-ac20-09358ef34b57`) lines 338-340 [crates/gcore/src/config/types.rs:338-340]
   - Signature: `pub fn all() -> &'static [&'static str] {`
-  - Purpose: Indexed function `all` in `crates/gcore/src/config/types.rs`. [crates/gcore/src/config/types.rs:333-335]
-- `EmbeddingConfigResolution` (class) component `EmbeddingConfigResolution [class]` (`a153795a-9d8a-5ee4-b397-8b8bf85d6a6d`) lines 339-342 [crates/gcore/src/config/types.rs:339-342]
+  - Purpose: Indexed function `all` in `crates/gcore/src/config/types.rs`. [crates/gcore/src/config/types.rs:338-340]
+- `EmbeddingConfigResolution` (class) component `EmbeddingConfigResolution [class]` (`3697426f-39d3-5a7a-9354-fd78aa859aa2`) lines 344-347 [crates/gcore/src/config/types.rs:344-347]
   - Signature: `pub struct EmbeddingConfigResolution {`
-  - Purpose: Indexed class `EmbeddingConfigResolution` in `crates/gcore/src/config/types.rs`. [crates/gcore/src/config/types.rs:339-342]
+  - Purpose: Indexed class `EmbeddingConfigResolution` in `crates/gcore/src/config/types.rs`. [crates/gcore/src/config/types.rs:344-347]
 

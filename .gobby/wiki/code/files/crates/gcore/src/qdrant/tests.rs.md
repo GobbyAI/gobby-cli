@@ -36,16 +36,6 @@ Module: [[code/modules/crates/gcore/src/qdrant|crates/gcore/src/qdrant]]
 [crates/gcore/src/qdrant/tests.rs:62-99]
 [crates/gcore/src/qdrant/tests.rs:102-128]
 [crates/gcore/src/qdrant/tests.rs:131-161]
-[crates/gcore/src/qdrant/tests.rs:164-207]
-[crates/gcore/src/qdrant/tests.rs:210-250]
-[crates/gcore/src/qdrant/tests.rs:253-292]
-[crates/gcore/src/qdrant/tests.rs:295-376]
-[crates/gcore/src/qdrant/tests.rs:379-397]
-[crates/gcore/src/qdrant/tests.rs:400-414]
-[crates/gcore/src/qdrant/tests.rs:417-494]
-[crates/gcore/src/qdrant/tests.rs:497-523]
-[crates/gcore/src/qdrant/tests.rs:525-527]
-[crates/gcore/src/qdrant/tests.rs:529-556]
 
 ## API Symbols
 

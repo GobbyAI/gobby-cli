@@ -31,19 +31,19 @@ provenance:
   - 613-630
 - file: crates/gwiki/src/research_loop/helpers.rs
   ranges:
-  - 8-11
-  - 13-72
-  - 74-77
-  - 79-100
-  - 102-104
-  - 106-117
-  - 119-135
-  - 137-173
-  - 175-185
-  - 187-201
-  - 203-207
-  - 209-219
-  - 226-235
+  - 8-19
+  - 21-80
+  - 82-85
+  - 90-102
+  - 104-106
+  - 108-119
+  - 121-137
+  - 139-175
+  - 177-187
+  - 189-203
+  - 205-209
+  - 211-221
+  - 228-237
 - file: crates/gwiki/src/research_loop/tests.rs
   ranges:
   - 12-14
@@ -93,8 +93,13 @@ provenance:
   - 506-561
   - 564-601
   - 604-614
-  - 617-634
-  - 638-652
+  - 617-628
+  - 631-642
+  - 645-656
+  - 659-662
+  - 665-668
+  - 671-688
+  - 692-706
 - file: crates/gwiki/src/research_loop/types.rs
   ranges:
   - 11-17
@@ -144,130 +149,20 @@ Parent: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-The research_loop module implements an iterative, AI-driven research workflow that systematically observes external sources, plans and writes validated notes, and tracks progress through a structured state machine. It orchestrates interactions with language models, search tools, and content ingestion services via a configurable dependency graph, while enforcing source reference validation, citation deduplication, and write conflict resolution. The module exposes a complete execution lifecycle from initialization through state transitions to final reporting, emitting structured events for monitoring. Comprehensive mock implementations and an extensive test suite ensure reliable behavior across real, budget-constrained, and simulated environments.
+The `research_loop` module implements an iterative, model-driven research engine for gwiki. It runs a loop where a research model plans actions (search, ask, read, ingest) against pluggable dependencies, records observations, and writes validated notes with source and code citations.
+
+Core pieces:
+- `engine.rs`: The `ResearchLoop` driver orchestrates the loop—executing actions, writing initial notes and retrieval scaffolds, validating notes against observed sources, and recording validation/source gaps and degradations.
+- `types.rs`: Defines the public contract—config and input types, the `ResearchModel`/`WikiSearch`/`WikiRead`/`WikiAsk`/`SourceIngestor`/`ResearchNoteWriter` dependency traits, observation/result/event types, and a `ResearchLoopDepsBuilder` for assembling dependencies.
+- `helpers.rs`: Internal `LoopState` plus utilities for action parsing/fingerprinting, prompt rendering, source normalization and path-scope validation, citation matching/dedup, and evidence handling.
+- `tests.rs`: Extensive fake implementations (model, search, ask, read, ingest, writer) and tests covering citation flow, degradation handling, source validation, action parsing, and budget/conflict behavior.
+
+Key invariants enforced: notes are only accepted when their sources have been observed, source references undergo path-scope validation (rejecting symlink escapes), and degradations (e.g. docs-only or code-graph-off) propagate onto emitted notes.
 [crates/gwiki/src/research_loop/engine.rs:19-28]
-[crates/gwiki/src/research_loop/engine.rs:31-46]
-[crates/gwiki/src/research_loop/engine.rs:48-160]
-[crates/gwiki/src/research_loop/engine.rs:162-183]
-[crates/gwiki/src/research_loop/engine.rs:185-278]
-[crates/gwiki/src/research_loop/engine.rs:280-292]
-[crates/gwiki/src/research_loop/engine.rs:294-331]
-[crates/gwiki/src/research_loop/engine.rs:333-374]
-[crates/gwiki/src/research_loop/engine.rs:376-407]
-[crates/gwiki/src/research_loop/engine.rs:410-416]
-[crates/gwiki/src/research_loop/engine.rs:419-435]
-[crates/gwiki/src/research_loop/engine.rs:437-538]
-[crates/gwiki/src/research_loop/engine.rs:438-477]
-[crates/gwiki/src/research_loop/engine.rs:479-489]
-[crates/gwiki/src/research_loop/engine.rs:491-502]
-[crates/gwiki/src/research_loop/engine.rs:504-516]
-[crates/gwiki/src/research_loop/engine.rs:518-537]
-[crates/gwiki/src/research_loop/engine.rs:540-554]
-[crates/gwiki/src/research_loop/engine.rs:556-566]
-[crates/gwiki/src/research_loop/engine.rs:568-573]
-[crates/gwiki/src/research_loop/engine.rs:575-588]
-[crates/gwiki/src/research_loop/engine.rs:590-593]
-[crates/gwiki/src/research_loop/engine.rs:598-601]
-[crates/gwiki/src/research_loop/engine.rs:607-610]
-[crates/gwiki/src/research_loop/engine.rs:613-630]
-[crates/gwiki/src/research_loop/helpers.rs:8-11]
-[crates/gwiki/src/research_loop/helpers.rs:13-72]
-[crates/gwiki/src/research_loop/helpers.rs:74-77]
-[crates/gwiki/src/research_loop/helpers.rs:79-100]
-[crates/gwiki/src/research_loop/helpers.rs:102-104]
-[crates/gwiki/src/research_loop/helpers.rs:106-117]
-[crates/gwiki/src/research_loop/helpers.rs:119-135]
-[crates/gwiki/src/research_loop/helpers.rs:137-173]
-[crates/gwiki/src/research_loop/helpers.rs:175-185]
-[crates/gwiki/src/research_loop/helpers.rs:187-201]
-[crates/gwiki/src/research_loop/helpers.rs:203-207]
-[crates/gwiki/src/research_loop/helpers.rs:209-219]
-[crates/gwiki/src/research_loop/helpers.rs:226-235]
+[crates/gwiki/src/research_loop/helpers.rs:8-19]
 [crates/gwiki/src/research_loop/tests.rs:12-14]
-[crates/gwiki/src/research_loop/tests.rs:16-22]
-[crates/gwiki/src/research_loop/tests.rs:17-21]
-[crates/gwiki/src/research_loop/tests.rs:24-33]
-[crates/gwiki/src/research_loop/tests.rs:25-32]
-[crates/gwiki/src/research_loop/tests.rs:35]
-[crates/gwiki/src/research_loop/tests.rs:37-44]
-[crates/gwiki/src/research_loop/tests.rs:38-43]
-[crates/gwiki/src/research_loop/tests.rs:46]
-[crates/gwiki/src/research_loop/tests.rs:48-57]
-[crates/gwiki/src/research_loop/tests.rs:49-56]
-[crates/gwiki/src/research_loop/tests.rs:59]
-[crates/gwiki/src/research_loop/tests.rs:61-68]
-[crates/gwiki/src/research_loop/tests.rs:62-67]
-[crates/gwiki/src/research_loop/tests.rs:70]
-[crates/gwiki/src/research_loop/tests.rs:72-76]
-[crates/gwiki/src/research_loop/tests.rs:73-75]
-[crates/gwiki/src/research_loop/tests.rs:78]
-[crates/gwiki/src/research_loop/tests.rs:80-85]
-[crates/gwiki/src/research_loop/tests.rs:81-84]
-[crates/gwiki/src/research_loop/tests.rs:87]
-[crates/gwiki/src/research_loop/tests.rs:89-100]
-[crates/gwiki/src/research_loop/tests.rs:90-92]
-[crates/gwiki/src/research_loop/tests.rs:94-99]
-[crates/gwiki/src/research_loop/tests.rs:103-106]
-[crates/gwiki/src/research_loop/tests.rs:108-122]
-[crates/gwiki/src/research_loop/tests.rs:109-121]
-[crates/gwiki/src/research_loop/tests.rs:124-141]
-[crates/gwiki/src/research_loop/tests.rs:144-168]
-[crates/gwiki/src/research_loop/tests.rs:171-200]
-[crates/gwiki/src/research_loop/tests.rs:202-210]
-[crates/gwiki/src/research_loop/tests.rs:213-299]
-[crates/gwiki/src/research_loop/tests.rs:214]
-[crates/gwiki/src/research_loop/tests.rs:216-234]
-[crates/gwiki/src/research_loop/tests.rs:217-233]
-[crates/gwiki/src/research_loop/tests.rs:302-363]
-[crates/gwiki/src/research_loop/tests.rs:303]
-[crates/gwiki/src/research_loop/tests.rs:305-323]
-[crates/gwiki/src/research_loop/tests.rs:306-322]
-[crates/gwiki/src/research_loop/tests.rs:366-444]
-[crates/gwiki/src/research_loop/tests.rs:367]
-[crates/gwiki/src/research_loop/tests.rs:369-379]
-[crates/gwiki/src/research_loop/tests.rs:370-378]
-[crates/gwiki/src/research_loop/tests.rs:447-503]
-[crates/gwiki/src/research_loop/tests.rs:506-561]
-[crates/gwiki/src/research_loop/tests.rs:564-601]
-[crates/gwiki/src/research_loop/tests.rs:604-614]
-[crates/gwiki/src/research_loop/tests.rs:617-634]
-[crates/gwiki/src/research_loop/tests.rs:638-652]
 [crates/gwiki/src/research_loop/types.rs:11-17]
-[crates/gwiki/src/research_loop/types.rs:20-24]
-[crates/gwiki/src/research_loop/types.rs:27-39]
-[crates/gwiki/src/research_loop/types.rs:42-45]
-[crates/gwiki/src/research_loop/types.rs:48-53]
-[crates/gwiki/src/research_loop/types.rs:55-59]
-[crates/gwiki/src/research_loop/types.rs:56-58]
-[crates/gwiki/src/research_loop/types.rs:61-66]
-[crates/gwiki/src/research_loop/types.rs:68-70]
-[crates/gwiki/src/research_loop/types.rs:72-74]
-[crates/gwiki/src/research_loop/types.rs:76-78]
-[crates/gwiki/src/research_loop/types.rs:80-84]
-[crates/gwiki/src/research_loop/types.rs:87-91]
-[crates/gwiki/src/research_loop/types.rs:93-95]
-[crates/gwiki/src/research_loop/types.rs:99-130]
-[crates/gwiki/src/research_loop/types.rs:133-140]
-[crates/gwiki/src/research_loop/types.rs:142-173]
-[crates/gwiki/src/research_loop/types.rs:143-152]
-[crates/gwiki/src/research_loop/types.rs:154-157]
-[crates/gwiki/src/research_loop/types.rs:159-162]
-[crates/gwiki/src/research_loop/types.rs:164-167]
-[crates/gwiki/src/research_loop/types.rs:169-172]
-[crates/gwiki/src/research_loop/types.rs:176-179]
-[crates/gwiki/src/research_loop/types.rs:182-197]
-[crates/gwiki/src/research_loop/types.rs:199-206]
-[crates/gwiki/src/research_loop/types.rs:200-205]
-[crates/gwiki/src/research_loop/types.rs:208-215]
-[crates/gwiki/src/research_loop/types.rs:219-226]
-[crates/gwiki/src/research_loop/types.rs:230-237]
-[crates/gwiki/src/research_loop/types.rs:241-244]
-[crates/gwiki/src/research_loop/types.rs:246-249]
-[crates/gwiki/src/research_loop/types.rs:251-254]
-[crates/gwiki/src/research_loop/types.rs:256-259]
-[crates/gwiki/src/research_loop/types.rs:261-264]
-[crates/gwiki/src/research_loop/types.rs:266-269]
-[crates/gwiki/src/research_loop/types.rs:271-282]
+[crates/gwiki/src/research_loop/engine.rs:31-46]
 
 ## Call Diagram
 
@@ -275,32 +170,32 @@ The research_loop module implements an iterative, AI-driven research workflow th
 sequenceDiagram
     participant m_0d3ed57c_5b8c_50bf_8163_57e5bceee1d1 as LoopState.record_observation &#91;method&#93;
     participant m_106ce7d0_abf8_546a_bdd2_eb877ce0fd2d as config &#91;function&#93;
-    participant m_27fa2776_7135_5b0b_8709_63775eb726c4 as validate_source_reference &#91;function&#93;
     participant m_2acb4760_1b7d_51bb_b586_6df99443a7e8 as write_initial_notes &#91;function&#93;
     participant m_2dfefff7_4946_5092_8a4a_6b3eed2a1c3f as dedup_code_citations &#91;function&#93;
     participant m_307c119d_afac_5f10_8c37_2d163445bb2a as LoopState.push_code_citation &#91;method&#93;
     participant m_3ca185e3_df7f_50b1_bc14_6511af0a7cd0 as citations_for_sources &#91;function&#93;
+    participant m_698e5060_8dfc_518a_a96f_a32a9b0cd55b as validate_source_reference &#91;function&#93;
     participant m_6a44acdd_db53_5bb3_bad9_85b534cb8981 as parse_model_action &#91;function&#93;
     participant m_6a519a8c_977f_5548_b811_a4c2dfc83ccb as write_conflict_stops_the_run_without_recording_the_note &#91;function&#93;
     participant m_809bda21_d0cd_5804_bdfe_06dce97ec745 as record_validation_gap &#91;function&#93;
-    participant m_82e4ad62_f703_5776_baa2_db16c16fd518 as validate_source_path &#91;function&#93;
+    participant m_8ac81616_4a1a_5f57_be45_314824f68b0c as validate_source_path &#91;function&#93;
     participant m_96c14abd_0064_56a2_8c55_024ea7d47511 as execute_action &#91;function&#93;
-    participant m_a456e449_d0c4_5c67_ab9a_1540cfb0481d as extract_json_object &#91;function&#93;
     participant m_b1de196c_7253_5f73_867e_62645df2cc68 as model_planned_note_is_written_after_source_is_observed &#91;function&#93;
     participant m_b739b691_6774_5c39_8db8_b3d87db5ad91 as research_code_citations_flow_into_accepted_notes &#91;function&#93;
     participant m_c36afe3f_2bc3_5e8e_9474_4a49b8f9241b as LoopState.record_degradation &#91;method&#93;
     participant m_c43c92aa_6a6b_567e_91ca_953de50aeddd as LoopState.prepare_note &#91;method&#93;
     participant m_c51135d7_0605_5286_aebe_9f9987e44780 as research_code_model_off_returns_retrieval_only_scaffold &#91;function&#93;
     participant m_c5f53028_e831_5797_b91a_b64979035d4b as test_deps &#91;function&#93;
+    participant m_c744ad37_b215_5d4f_84af_7311e854c216 as json_candidate &#91;function&#93;
     participant m_c7a44012_f433_5299_9ea3_2dd3e24d97a9 as model_budget_error_stops_as_budget_exhausted &#91;function&#93;
     participant m_d332a2f7_f637_546d_aa84_0597e1c43272 as citation_matches_source &#91;function&#93;
     m_0d3ed57c_5b8c_50bf_8163_57e5bceee1d1->>m_307c119d_afac_5f10_8c37_2d163445bb2a: calls
     m_0d3ed57c_5b8c_50bf_8163_57e5bceee1d1->>m_c36afe3f_2bc3_5e8e_9474_4a49b8f9241b: calls
-    m_27fa2776_7135_5b0b_8709_63775eb726c4->>m_82e4ad62_f703_5776_baa2_db16c16fd518: calls
     m_2acb4760_1b7d_51bb_b586_6df99443a7e8->>m_809bda21_d0cd_5804_bdfe_06dce97ec745: calls
     m_3ca185e3_df7f_50b1_bc14_6511af0a7cd0->>m_2dfefff7_4946_5092_8a4a_6b3eed2a1c3f: calls
     m_3ca185e3_df7f_50b1_bc14_6511af0a7cd0->>m_d332a2f7_f637_546d_aa84_0597e1c43272: calls
-    m_6a44acdd_db53_5bb3_bad9_85b534cb8981->>m_a456e449_d0c4_5c67_ab9a_1540cfb0481d: calls
+    m_698e5060_8dfc_518a_a96f_a32a9b0cd55b->>m_8ac81616_4a1a_5f57_be45_314824f68b0c: calls
+    m_6a44acdd_db53_5bb3_bad9_85b534cb8981->>m_c744ad37_b215_5d4f_84af_7311e854c216: calls
     m_6a519a8c_977f_5548_b811_a4c2dfc83ccb->>m_106ce7d0_abf8_546a_bdd2_eb877ce0fd2d: calls
     m_6a519a8c_977f_5548_b811_a4c2dfc83ccb->>m_c5f53028_e831_5797_b91a_b64979035d4b: calls
     m_96c14abd_0064_56a2_8c55_024ea7d47511->>m_809bda21_d0cd_5804_bdfe_06dce97ec745: calls
@@ -324,128 +219,25 @@ sequenceDiagram
 [crates/gwiki/src/research_loop/engine.rs:48-160]
 [crates/gwiki/src/research_loop/engine.rs:162-183]
 [crates/gwiki/src/research_loop/engine.rs:185-278]
-[crates/gwiki/src/research_loop/engine.rs:280-292]
-[crates/gwiki/src/research_loop/engine.rs:294-331]
-[crates/gwiki/src/research_loop/engine.rs:333-374]
-[crates/gwiki/src/research_loop/engine.rs:376-407]
-[crates/gwiki/src/research_loop/engine.rs:410-416]
-[crates/gwiki/src/research_loop/engine.rs:419-435]
-[crates/gwiki/src/research_loop/engine.rs:437-538]
-[crates/gwiki/src/research_loop/engine.rs:438-477]
-[crates/gwiki/src/research_loop/engine.rs:479-489]
-[crates/gwiki/src/research_loop/engine.rs:491-502]
-[crates/gwiki/src/research_loop/engine.rs:504-516]
-[crates/gwiki/src/research_loop/engine.rs:518-537]
-[crates/gwiki/src/research_loop/engine.rs:540-554]
-[crates/gwiki/src/research_loop/engine.rs:556-566]
-[crates/gwiki/src/research_loop/engine.rs:568-573]
-[crates/gwiki/src/research_loop/engine.rs:575-588]
-[crates/gwiki/src/research_loop/engine.rs:590-593]
-[crates/gwiki/src/research_loop/engine.rs:598-601]
-[crates/gwiki/src/research_loop/engine.rs:607-610]
-[crates/gwiki/src/research_loop/engine.rs:613-630]
 - [[code/files/crates/gwiki/src/research_loop/helpers.rs|crates/gwiki/src/research_loop/helpers.rs]] - `crates/gwiki/src/research_loop/helpers.rs` exposes 13 indexed API symbols.
-[crates/gwiki/src/research_loop/helpers.rs:8-11]
-[crates/gwiki/src/research_loop/helpers.rs:13-72]
-[crates/gwiki/src/research_loop/helpers.rs:74-77]
-[crates/gwiki/src/research_loop/helpers.rs:79-100]
-[crates/gwiki/src/research_loop/helpers.rs:102-104]
-[crates/gwiki/src/research_loop/helpers.rs:106-117]
-[crates/gwiki/src/research_loop/helpers.rs:119-135]
-[crates/gwiki/src/research_loop/helpers.rs:137-173]
-[crates/gwiki/src/research_loop/helpers.rs:175-185]
-[crates/gwiki/src/research_loop/helpers.rs:187-201]
-[crates/gwiki/src/research_loop/helpers.rs:203-207]
-[crates/gwiki/src/research_loop/helpers.rs:209-219]
-[crates/gwiki/src/research_loop/helpers.rs:226-235]
-- [[code/files/crates/gwiki/src/research_loop/mod.rs|crates/gwiki/src/research_loop/mod.rs]] - `crates/gwiki/src/research_loop/mod.rs` has no indexed API symbols.
-- [[code/files/crates/gwiki/src/research_loop/tests.rs|crates/gwiki/src/research_loop/tests.rs]] - `crates/gwiki/src/research_loop/tests.rs` exposes 49 indexed API symbols.
+[crates/gwiki/src/research_loop/helpers.rs:8-19]
+[crates/gwiki/src/research_loop/helpers.rs:21-80]
+[crates/gwiki/src/research_loop/helpers.rs:82-85]
+[crates/gwiki/src/research_loop/helpers.rs:90-102]
+[crates/gwiki/src/research_loop/helpers.rs:104-106]
+- [[code/files/crates/gwiki/src/research_loop/mod.rs|crates/gwiki/src/research_loop/mod.rs]] - `crates/gwiki/src/research_loop/mod.rs` has no indexed API symbols. 
+- [[code/files/crates/gwiki/src/research_loop/tests.rs|crates/gwiki/src/research_loop/tests.rs]] - `crates/gwiki/src/research_loop/tests.rs` exposes 54 indexed API symbols.
 [crates/gwiki/src/research_loop/tests.rs:12-14]
 [crates/gwiki/src/research_loop/tests.rs:16-22]
 [crates/gwiki/src/research_loop/tests.rs:17-21]
 [crates/gwiki/src/research_loop/tests.rs:24-33]
 [crates/gwiki/src/research_loop/tests.rs:25-32]
-[crates/gwiki/src/research_loop/tests.rs:35]
-[crates/gwiki/src/research_loop/tests.rs:37-44]
-[crates/gwiki/src/research_loop/tests.rs:38-43]
-[crates/gwiki/src/research_loop/tests.rs:46]
-[crates/gwiki/src/research_loop/tests.rs:48-57]
-[crates/gwiki/src/research_loop/tests.rs:49-56]
-[crates/gwiki/src/research_loop/tests.rs:59]
-[crates/gwiki/src/research_loop/tests.rs:61-68]
-[crates/gwiki/src/research_loop/tests.rs:62-67]
-[crates/gwiki/src/research_loop/tests.rs:70]
-[crates/gwiki/src/research_loop/tests.rs:72-76]
-[crates/gwiki/src/research_loop/tests.rs:73-75]
-[crates/gwiki/src/research_loop/tests.rs:78]
-[crates/gwiki/src/research_loop/tests.rs:80-85]
-[crates/gwiki/src/research_loop/tests.rs:81-84]
-[crates/gwiki/src/research_loop/tests.rs:87]
-[crates/gwiki/src/research_loop/tests.rs:89-100]
-[crates/gwiki/src/research_loop/tests.rs:90-92]
-[crates/gwiki/src/research_loop/tests.rs:94-99]
-[crates/gwiki/src/research_loop/tests.rs:103-106]
-[crates/gwiki/src/research_loop/tests.rs:108-122]
-[crates/gwiki/src/research_loop/tests.rs:109-121]
-[crates/gwiki/src/research_loop/tests.rs:124-141]
-[crates/gwiki/src/research_loop/tests.rs:144-168]
-[crates/gwiki/src/research_loop/tests.rs:171-200]
-[crates/gwiki/src/research_loop/tests.rs:202-210]
-[crates/gwiki/src/research_loop/tests.rs:213-299]
-[crates/gwiki/src/research_loop/tests.rs:214]
-[crates/gwiki/src/research_loop/tests.rs:216-234]
-[crates/gwiki/src/research_loop/tests.rs:217-233]
-[crates/gwiki/src/research_loop/tests.rs:302-363]
-[crates/gwiki/src/research_loop/tests.rs:303]
-[crates/gwiki/src/research_loop/tests.rs:305-323]
-[crates/gwiki/src/research_loop/tests.rs:306-322]
-[crates/gwiki/src/research_loop/tests.rs:366-444]
-[crates/gwiki/src/research_loop/tests.rs:367]
-[crates/gwiki/src/research_loop/tests.rs:369-379]
-[crates/gwiki/src/research_loop/tests.rs:370-378]
-[crates/gwiki/src/research_loop/tests.rs:447-503]
-[crates/gwiki/src/research_loop/tests.rs:506-561]
-[crates/gwiki/src/research_loop/tests.rs:564-601]
-[crates/gwiki/src/research_loop/tests.rs:604-614]
-[crates/gwiki/src/research_loop/tests.rs:617-634]
-[crates/gwiki/src/research_loop/tests.rs:638-652]
 - [[code/files/crates/gwiki/src/research_loop/types.rs|crates/gwiki/src/research_loop/types.rs]] - `crates/gwiki/src/research_loop/types.rs` exposes 36 indexed API symbols.
 [crates/gwiki/src/research_loop/types.rs:11-17]
 [crates/gwiki/src/research_loop/types.rs:20-24]
 [crates/gwiki/src/research_loop/types.rs:27-39]
 [crates/gwiki/src/research_loop/types.rs:42-45]
 [crates/gwiki/src/research_loop/types.rs:48-53]
-[crates/gwiki/src/research_loop/types.rs:55-59]
-[crates/gwiki/src/research_loop/types.rs:56-58]
-[crates/gwiki/src/research_loop/types.rs:61-66]
-[crates/gwiki/src/research_loop/types.rs:68-70]
-[crates/gwiki/src/research_loop/types.rs:72-74]
-[crates/gwiki/src/research_loop/types.rs:76-78]
-[crates/gwiki/src/research_loop/types.rs:80-84]
-[crates/gwiki/src/research_loop/types.rs:87-91]
-[crates/gwiki/src/research_loop/types.rs:93-95]
-[crates/gwiki/src/research_loop/types.rs:99-130]
-[crates/gwiki/src/research_loop/types.rs:133-140]
-[crates/gwiki/src/research_loop/types.rs:142-173]
-[crates/gwiki/src/research_loop/types.rs:143-152]
-[crates/gwiki/src/research_loop/types.rs:154-157]
-[crates/gwiki/src/research_loop/types.rs:159-162]
-[crates/gwiki/src/research_loop/types.rs:164-167]
-[crates/gwiki/src/research_loop/types.rs:169-172]
-[crates/gwiki/src/research_loop/types.rs:176-179]
-[crates/gwiki/src/research_loop/types.rs:182-197]
-[crates/gwiki/src/research_loop/types.rs:199-206]
-[crates/gwiki/src/research_loop/types.rs:200-205]
-[crates/gwiki/src/research_loop/types.rs:208-215]
-[crates/gwiki/src/research_loop/types.rs:219-226]
-[crates/gwiki/src/research_loop/types.rs:230-237]
-[crates/gwiki/src/research_loop/types.rs:241-244]
-[crates/gwiki/src/research_loop/types.rs:246-249]
-[crates/gwiki/src/research_loop/types.rs:251-254]
-[crates/gwiki/src/research_loop/types.rs:256-259]
-[crates/gwiki/src/research_loop/types.rs:261-264]
-[crates/gwiki/src/research_loop/types.rs:266-269]
-[crates/gwiki/src/research_loop/types.rs:271-282]
 
 ## Components
 
@@ -475,18 +267,18 @@ sequenceDiagram
 - `376a94b2-8c29-5f79-9791-697d3df9b158`
 - `4bc27a28-9591-5c36-8be1-84348b055851`
 - `6a44acdd-db53-5bb3-bad9-85b534cb8981`
-- `eea217db-9fa9-5223-9fba-f8e8a6d84d89`
-- `4fab27f1-63bc-5a58-99e6-b55632845b29`
-- `a456e449-d0c4-5c67-ab9a-1540cfb0481d`
-- `f8d80855-7a4b-541e-96af-847458631c1d`
-- `a1a889d9-ef6f-5646-be78-d36e17ca6017`
-- `27fa2776-7135-5b0b-8709-63775eb726c4`
-- `82e4ad62-f703-5776-baa2-db16c16fd518`
-- `bec1e788-79fa-58b9-86c7-4c86d60f5bd1`
-- `28821539-972d-5d73-a3ea-6053931cc288`
-- `3373af2e-e884-5e25-b6d4-73f176f73a6c`
-- `310135d3-8fb3-5473-9660-63d5bc925613`
-- `fcfcc0bb-9421-5dcf-861f-d0e01bb19d56`
+- `e4273117-46ef-56ad-a189-7431ea8d1dad`
+- `881eeb24-e30a-5007-9373-08f7ab8ab380`
+- `c744ad37-b215-5d4f-84af-7311e854c216`
+- `3996fea4-0cbb-5b44-99c2-c84758ee253c`
+- `b82a21c1-7bd9-5497-b9f8-28f2459aab03`
+- `698e5060-8dfc-518a-a96f-a32a9b0cd55b`
+- `8ac81616-4a1a-5f57-be45-314824f68b0c`
+- `561042f9-1d36-54eb-a083-57214fac1f12`
+- `ddffa667-26a2-5bf7-aa1b-00f0b6686471`
+- `0bb295d5-9fd7-56e2-a1ef-46f18f87196c`
+- `b681f955-8248-5ab3-82fc-a048627028a5`
+- `6118c832-ec29-54a3-bdbf-4ae18a9876f8`
 - `868b2217-5d95-55f7-8f85-ed8326e12078`
 - `dca03cfa-e89e-540b-aa6c-f9a7d92fc012`
 - `1cd24e1b-b512-5735-8f14-fe8e82fef050`
@@ -534,8 +326,13 @@ sequenceDiagram
 - `6a519a8c-977f-5548-b811-a4c2dfc83ccb`
 - `d2f0aa86-55b9-5724-8674-278f915ccaf6`
 - `18aa5282-ebee-51bd-a569-f12a92744ccf`
-- `ffae54c0-79ff-5e1f-a715-4426e7dcb8b6`
-- `b0578679-023b-5674-96f9-92eb878f6dbb`
+- `d978539f-baba-53a1-a593-84d1186246c0`
+- `84012a09-0fa6-5896-8ff0-6b43aab113d1`
+- `f9857900-1a90-5d26-9e63-c2ea4ef63188`
+- `3b63087c-f341-5d5d-affc-10340d6ac676`
+- `2254fc00-5a6b-5659-b918-17f6e2700072`
+- `ad08bc8c-cbbc-56cd-b278-1d29f938ac48`
+- `4356b79a-2866-56e4-9f8e-99902720f371`
 - `7d172678-1fd6-51a0-aba5-8fb4ef2c02e1`
 - `70c721fc-5701-58c3-8eb7-c99d3fceb0d6`
 - `fb643cf3-4a6c-5999-b80e-42ef621632c5`

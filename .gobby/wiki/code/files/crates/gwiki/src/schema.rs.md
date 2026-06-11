@@ -31,11 +31,6 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 [crates/gwiki/src/schema.rs:15-22]
 [crates/gwiki/src/schema.rs:25-27]
 [crates/gwiki/src/schema.rs:29-35]
-[crates/gwiki/src/schema.rs:37-56]
-[crates/gwiki/src/schema.rs:58-60]
-[crates/gwiki/src/schema.rs:62-74]
-[crates/gwiki/src/schema.rs:82-117]
-[crates/gwiki/src/schema.rs:120-125]
 
 ## API Symbols
 

@@ -32,12 +32,6 @@ Module: [[code/modules/crates/gwiki/src/support|crates/gwiki/src/support]]
 [crates/gwiki/src/support/graph.rs:92-103]
 [crates/gwiki/src/support/graph.rs:105-107]
 [crates/gwiki/src/support/graph.rs:109-122]
-[crates/gwiki/src/support/graph.rs:124-146]
-[crates/gwiki/src/support/graph.rs:148-154]
-[crates/gwiki/src/support/graph.rs:162-192]
-[crates/gwiki/src/support/graph.rs:195-208]
-[crates/gwiki/src/support/graph.rs:211-236]
-[crates/gwiki/src/support/graph.rs:239-272]
 
 ## API Symbols
 

@@ -33,13 +33,6 @@ Module: [[code/modules/crates/gwiki/src/ingest/document|crates/gwiki/src/ingest/
 [crates/gwiki/src/ingest/document/html.rs:53-76]
 [crates/gwiki/src/ingest/document/html.rs:78-96]
 [crates/gwiki/src/ingest/document/html.rs:98-110]
-[crates/gwiki/src/ingest/document/html.rs:112-140]
-[crates/gwiki/src/ingest/document/html.rs:142-148]
-[crates/gwiki/src/ingest/document/html.rs:150-199]
-[crates/gwiki/src/ingest/document/html.rs:201-213]
-[crates/gwiki/src/ingest/document/html.rs:215-223]
-[crates/gwiki/src/ingest/document/html.rs:230-235]
-[crates/gwiki/src/ingest/document/html.rs:238-242]
 
 ## API Symbols
 

@@ -39,19 +39,6 @@ Module: [[code/modules/crates/gcode/src/index/parser/calls|crates/gcode/src/inde
 [crates/gcode/src/index/parser/calls/shadowing.rs:45-84]
 [crates/gcode/src/index/parser/calls/shadowing.rs:86-96]
 [crates/gcode/src/index/parser/calls/shadowing.rs:98-113]
-[crates/gcode/src/index/parser/calls/shadowing.rs:115-129]
-[crates/gcode/src/index/parser/calls/shadowing.rs:131-153]
-[crates/gcode/src/index/parser/calls/shadowing.rs:155-218]
-[crates/gcode/src/index/parser/calls/shadowing.rs:220-224]
-[crates/gcode/src/index/parser/calls/shadowing.rs:226-235]
-[crates/gcode/src/index/parser/calls/shadowing.rs:237-260]
-[crates/gcode/src/index/parser/calls/shadowing.rs:262-273]
-[crates/gcode/src/index/parser/calls/shadowing.rs:283-299]
-[crates/gcode/src/index/parser/calls/shadowing.rs:302-315]
-[crates/gcode/src/index/parser/calls/shadowing.rs:318-327]
-[crates/gcode/src/index/parser/calls/shadowing.rs:330-339]
-[crates/gcode/src/index/parser/calls/shadowing.rs:342-351]
-[crates/gcode/src/index/parser/calls/shadowing.rs:354-363]
 
 ## API Symbols
 

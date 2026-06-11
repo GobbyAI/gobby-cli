@@ -28,8 +28,6 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 [crates/gwiki/src/contract.rs:505-515]
 [crates/gwiki/src/contract.rs:517-520]
 [crates/gwiki/src/contract.rs:522-528]
-[crates/gwiki/src/contract.rs:530-534]
-[crates/gwiki/src/contract.rs:536-546]
 
 ## API Symbols
 

@@ -28,8 +28,6 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 [crates/gwiki/src/paths.rs:29-34]
 [crates/gwiki/src/paths.rs:42-47]
 [crates/gwiki/src/paths.rs:50-55]
-[crates/gwiki/src/paths.rs:58-69]
-[crates/gwiki/src/paths.rs:71-86]
 
 ## API Symbols
 

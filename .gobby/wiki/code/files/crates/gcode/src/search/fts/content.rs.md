@@ -33,13 +33,6 @@ Module: [[code/modules/crates/gcode/src/search/fts|crates/gcode/src/search/fts]]
 [crates/gcode/src/search/fts/content.rs:83-138]
 [crates/gcode/src/search/fts/content.rs:140-178]
 [crates/gcode/src/search/fts/content.rs:180-196]
-[crates/gcode/src/search/fts/content.rs:199-202]
-[crates/gcode/src/search/fts/content.rs:204-210]
-[crates/gcode/src/search/fts/content.rs:212-227]
-[crates/gcode/src/search/fts/content.rs:229-244]
-[crates/gcode/src/search/fts/content.rs:250-253]
-[crates/gcode/src/search/fts/content.rs:256-261]
-[crates/gcode/src/search/fts/content.rs:264-269]
 
 ## API Symbols
 

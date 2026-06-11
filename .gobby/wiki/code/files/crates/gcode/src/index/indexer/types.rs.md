@@ -33,13 +33,6 @@ Module: [[code/modules/crates/gcode/src/index/indexer|crates/gcode/src/index/ind
 [crates/gcode/src/index/indexer/types.rs:29-42]
 [crates/gcode/src/index/indexer/types.rs:45-68]
 [crates/gcode/src/index/indexer/types.rs:71-76]
-[crates/gcode/src/index/indexer/types.rs:79-84]
-[crates/gcode/src/index/indexer/types.rs:86-109]
-[crates/gcode/src/index/indexer/types.rs:87-92]
-[crates/gcode/src/index/indexer/types.rs:94-104]
-[crates/gcode/src/index/indexer/types.rs:106-108]
-[crates/gcode/src/index/indexer/types.rs:111-113]
-[crates/gcode/src/index/indexer/types.rs:116-124]
 
 ## API Symbols
 

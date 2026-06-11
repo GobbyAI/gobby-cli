@@ -5,30 +5,31 @@ provenance:
 - file: crates/gcode/src/commands/codewiki/io.rs
   ranges:
   - 3-9
-  - 11-17
+  - 11-21
 - file: crates/gcode/src/commands/codewiki/mod.rs
   ranges:
-  - 84-89
-  - 92-96
-  - 99-108
-  - 110-119
-  - 123-126
-  - 158-162
-  - 284-296
-  - '338'
-  - 343-351
-  - 372-375
-  - 399-522
-  - 556-561
+  - 91-96
+  - 99-103
+  - 106-115
+  - 117-126
+  - 130-133
+  - 165-169
+  - 301-313
+  - '392'
+  - 404-408
+  - 413-421
+  - 442-448
+  - 472-600
+  - 609-617
 - file: crates/gcode/src/commands/codewiki/prompts.rs
   ranges:
   - 11-33
   - 35-56
   - 58-72
-  - 74-94
-  - 96-110
-  - 157-165
-  - 168-171
+  - 74-104
+  - 106-120
+  - 206-214
+  - 217-220
 - file: crates/gcode/src/commands/embeddings_doctor.rs
   ranges:
   - 19-22
@@ -583,8 +584,8 @@ provenance:
   - 44-96
   - 98-136
   - 138-144
-  - 146-182
-  - 184-218
+  - 149-187
+  - 189-223
 - file: crates/gcore/src/ai/mod.rs
   ranges:
   - 30-34
@@ -721,10 +722,10 @@ provenance:
   - 94-102
   - 104-112
   - 193-195
-  - 207-217
-  - 221-224
-  - 333-335
-  - 339-342
+  - 207-220
+  - 224-227
+  - 338-340
+  - 344-347
 - file: crates/gcore/src/context.rs
   ranges:
   - 16-31
@@ -1735,7 +1736,8 @@ freshness: indexed
 - [[code/files/crates/gcode/src/commands/codewiki/mod.rs|crates/gcode/src/commands/codewiki/mod.rs]] - CodewikiGraphEdgeKind public API `pub enum CodewikiGraphEdgeKind {`
 - [[code/files/crates/gcode/src/commands/codewiki/mod.rs|crates/gcode/src/commands/codewiki/mod.rs]] - CodewikiGraphAvailability public API `pub enum CodewikiGraphAvailability {`
 - [[code/files/crates/gcode/src/commands/codewiki/mod.rs|crates/gcode/src/commands/codewiki/mod.rs]] - CodewikiRunSummary public API `pub struct CodewikiRunSummary {`
-- [[code/files/crates/gcode/src/commands/codewiki/mod.rs|crates/gcode/src/commands/codewiki/mod.rs]] - TextGenerator public API `pub type TextGenerator<'a> = dyn FnMut(&str, &str) -> Option<String> + 'a;`
+- [[code/files/crates/gcode/src/commands/codewiki/mod.rs|crates/gcode/src/commands/codewiki/mod.rs]] - TextGenerator public API `pub type TextGenerator<'a> = dyn FnMut(&str, &str, PromptTier) -> Option<String> + 'a;`
+- [[code/files/crates/gcode/src/commands/codewiki/mod.rs|crates/gcode/src/commands/codewiki/mod.rs]] - PromptTier public API `pub enum PromptTier {`
 - [[code/files/crates/gcode/src/commands/codewiki/mod.rs|crates/gcode/src/commands/codewiki/mod.rs]] - AiDepth public API `pub enum AiDepth {`
 - [[code/files/crates/gcode/src/commands/codewiki/mod.rs|crates/gcode/src/commands/codewiki/mod.rs]] - CodewikiAiOptions public API `pub struct CodewikiAiOptions {`
 - [[code/files/crates/gcode/src/commands/codewiki/mod.rs|crates/gcode/src/commands/codewiki/mod.rs]] - run public API `pub fn run(`

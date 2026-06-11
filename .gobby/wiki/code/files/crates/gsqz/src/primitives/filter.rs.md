@@ -29,9 +29,6 @@ Module: [[code/modules/crates/gsqz/src/primitives|crates/gsqz/src/primitives]]
 [crates/gsqz/src/primitives/filter.rs:35-39]
 [crates/gsqz/src/primitives/filter.rs:42-45]
 [crates/gsqz/src/primitives/filter.rs:48-52]
-[crates/gsqz/src/primitives/filter.rs:55-59]
-[crates/gsqz/src/primitives/filter.rs:62-72]
-[crates/gsqz/src/primitives/filter.rs:75-80]
 
 ## API Symbols
 

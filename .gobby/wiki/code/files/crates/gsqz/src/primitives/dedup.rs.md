@@ -30,10 +30,6 @@ Module: [[code/modules/crates/gsqz/src/primitives|crates/gsqz/src/primitives]]
 [crates/gsqz/src/primitives/dedup.rs:61-70]
 [crates/gsqz/src/primitives/dedup.rs:73-77]
 [crates/gsqz/src/primitives/dedup.rs:80-83]
-[crates/gsqz/src/primitives/dedup.rs:86-89]
-[crates/gsqz/src/primitives/dedup.rs:92-97]
-[crates/gsqz/src/primitives/dedup.rs:100-118]
-[crates/gsqz/src/primitives/dedup.rs:121-126]
 
 ## API Symbols
 

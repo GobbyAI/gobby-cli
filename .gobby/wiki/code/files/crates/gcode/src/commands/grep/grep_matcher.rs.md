@@ -36,16 +36,6 @@ Module: [[code/modules/crates/gcode/src/commands/grep|crates/gcode/src/commands/
 [crates/gcode/src/commands/grep/grep_matcher.rs:12-31]
 [crates/gcode/src/commands/grep/grep_matcher.rs:33-43]
 [crates/gcode/src/commands/grep/grep_matcher.rs:46-65]
-[crates/gcode/src/commands/grep/grep_matcher.rs:67-75]
-[crates/gcode/src/commands/grep/grep_matcher.rs:78-80]
-[crates/gcode/src/commands/grep/grep_matcher.rs:86-92]
-[crates/gcode/src/commands/grep/grep_matcher.rs:95-105]
-[crates/gcode/src/commands/grep/grep_matcher.rs:108-116]
-[crates/gcode/src/commands/grep/grep_matcher.rs:119-126]
-[crates/gcode/src/commands/grep/grep_matcher.rs:129-136]
-[crates/gcode/src/commands/grep/grep_matcher.rs:139-146]
-[crates/gcode/src/commands/grep/grep_matcher.rs:149-156]
-[crates/gcode/src/commands/grep/grep_matcher.rs:159-163]
 
 ## API Symbols
 

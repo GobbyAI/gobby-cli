@@ -31,11 +31,6 @@ Module: [[code/modules/crates/gcode/src/index/parser/calls|crates/gcode/src/inde
 [crates/gcode/src/index/parser/calls/text.rs:32-49]
 [crates/gcode/src/index/parser/calls/text.rs:51-53]
 [crates/gcode/src/index/parser/calls/text.rs:55-57]
-[crates/gcode/src/index/parser/calls/text.rs:59-61]
-[crates/gcode/src/index/parser/calls/text.rs:63-65]
-[crates/gcode/src/index/parser/calls/text.rs:67-151]
-[crates/gcode/src/index/parser/calls/text.rs:158-163]
-[crates/gcode/src/index/parser/calls/text.rs:166-172]
 
 ## API Symbols
 

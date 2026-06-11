@@ -38,18 +38,6 @@ Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 [crates/gcode/src/commands/index.rs:96-104]
 [crates/gcode/src/commands/index.rs:107-117]
 [crates/gcode/src/commands/index.rs:119-132]
-[crates/gcode/src/commands/index.rs:134-138]
-[crates/gcode/src/commands/index.rs:140-195]
-[crates/gcode/src/commands/index.rs:197-216]
-[crates/gcode/src/commands/index.rs:218-240]
-[crates/gcode/src/commands/index.rs:252-257]
-[crates/gcode/src/commands/index.rs:260-262]
-[crates/gcode/src/commands/index.rs:264-272]
-[crates/gcode/src/commands/index.rs:274-294]
-[crates/gcode/src/commands/index.rs:297-301]
-[crates/gcode/src/commands/index.rs:304-309]
-[crates/gcode/src/commands/index.rs:312-338]
-[crates/gcode/src/commands/index.rs:341-364]
 
 ## API Symbols
 

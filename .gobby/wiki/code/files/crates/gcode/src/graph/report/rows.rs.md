@@ -32,12 +32,6 @@ Module: [[code/modules/crates/gcode/src/graph/report|crates/gcode/src/graph/repo
 [crates/gcode/src/graph/report/rows.rs:33-39]
 [crates/gcode/src/graph/report/rows.rs:41-66]
 [crates/gcode/src/graph/report/rows.rs:68-78]
-[crates/gcode/src/graph/report/rows.rs:80-106]
-[crates/gcode/src/graph/report/rows.rs:108-112]
-[crates/gcode/src/graph/report/rows.rs:119-128]
-[crates/gcode/src/graph/report/rows.rs:131-140]
-[crates/gcode/src/graph/report/rows.rs:143-154]
-[crates/gcode/src/graph/report/rows.rs:157-162]
 
 ## API Symbols
 

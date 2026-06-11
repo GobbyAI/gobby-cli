@@ -30,10 +30,6 @@ Module: [[code/modules/crates/gwiki/src/ingest/pdf|crates/gwiki/src/ingest/pdf]]
 [crates/gwiki/src/ingest/pdf/text.rs:38-48]
 [crates/gwiki/src/ingest/pdf/text.rs:51-53]
 [crates/gwiki/src/ingest/pdf/text.rs:56-58]
-[crates/gwiki/src/ingest/pdf/text.rs:61-63]
-[crates/gwiki/src/ingest/pdf/text.rs:66-68]
-[crates/gwiki/src/ingest/pdf/text.rs:71-73]
-[crates/gwiki/src/ingest/pdf/text.rs:76-81]
 
 ## API Symbols
 

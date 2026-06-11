@@ -4,8 +4,8 @@ type: code_file
 provenance:
 - file: crates/gcode/src/commands/codewiki/build_parts/file.rs
   ranges:
-  - 10-13
-  - 15-115
+  - 12-15
+  - 18-143
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -18,15 +18,15 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gco
 ## Purpose
 
 `crates/gcode/src/commands/codewiki/build_parts/file.rs` exposes 2 indexed API symbols.
-[crates/gcode/src/commands/codewiki/build_parts/file.rs:10-13]
-[crates/gcode/src/commands/codewiki/build_parts/file.rs:15-115]
+[crates/gcode/src/commands/codewiki/build_parts/file.rs:12-15]
+[crates/gcode/src/commands/codewiki/build_parts/file.rs:18-143]
 
 ## API Symbols
 
-- `FileDocPosition` (class) component `FileDocPosition [class]` (`aaa333ac-1941-55aa-a7e5-8e034478fef3`) lines 10-13 [crates/gcode/src/commands/codewiki/build_parts/file.rs:10-13]
+- `FileDocPosition` (class) component `FileDocPosition [class]` (`4e89b097-b322-534b-98b2-4166b24e6fda`) lines 12-15 [crates/gcode/src/commands/codewiki/build_parts/file.rs:12-15]
   - Signature: `pub(crate) struct FileDocPosition {`
-  - Purpose: `FileDocPosition` is a crate-private struct that tracks a document's position via an index and total count within a file or collection. [crates/gcode/src/commands/codewiki/build_parts/file.rs:10-13]
-- `build_file_doc` (function) component `build_file_doc [function]` (`118b1b7a-620e-5083-b760-42e6f9be9815`) lines 15-115 [crates/gcode/src/commands/codewiki/build_parts/file.rs:15-115]
+  - Purpose: Indexed class `FileDocPosition` in `crates/gcode/src/commands/codewiki/build_parts/file.rs`. [crates/gcode/src/commands/codewiki/build_parts/file.rs:12-15]
+- `build_file_doc` (function) component `build_file_doc [function]` (`1fdee7d7-975b-5f16-b39c-f9d94bc16c0a`) lines 18-143 [crates/gcode/src/commands/codewiki/build_parts/file.rs:18-143]
   - Signature: `pub(crate) fn build_file_doc(`
-  - Purpose: Constructs a FileDoc by converting input symbols to SymbolDoc entries with optionally AI-generated purposes grounded to source spans and citations, while emitting incremental progress updates. [crates/gcode/src/commands/codewiki/build_parts/file.rs:15-115]
+  - Purpose: Indexed function `build_file_doc` in `crates/gcode/src/commands/codewiki/build_parts/file.rs`. [crates/gcode/src/commands/codewiki/build_parts/file.rs:18-143]
 

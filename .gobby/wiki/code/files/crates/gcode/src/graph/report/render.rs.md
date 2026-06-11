@@ -29,9 +29,6 @@ Module: [[code/modules/crates/gcode/src/graph/report|crates/gcode/src/graph/repo
 [crates/gcode/src/graph/report/render.rs:101-121]
 [crates/gcode/src/graph/report/render.rs:123-141]
 [crates/gcode/src/graph/report/render.rs:143-150]
-[crates/gcode/src/graph/report/render.rs:152-164]
-[crates/gcode/src/graph/report/render.rs:166-177]
-[crates/gcode/src/graph/report/render.rs:179-185]
 
 ## API Symbols
 

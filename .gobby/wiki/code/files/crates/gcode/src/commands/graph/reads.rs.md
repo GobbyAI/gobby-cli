@@ -52,32 +52,6 @@ Module: [[code/modules/crates/gcode/src/commands/graph|crates/gcode/src/commands
 [crates/gcode/src/commands/graph/reads.rs:32-38]
 [crates/gcode/src/commands/graph/reads.rs:40-48]
 [crates/gcode/src/commands/graph/reads.rs:50-73]
-[crates/gcode/src/commands/graph/reads.rs:75-90]
-[crates/gcode/src/commands/graph/reads.rs:92-118]
-[crates/gcode/src/commands/graph/reads.rs:120-133]
-[crates/gcode/src/commands/graph/reads.rs:137-158]
-[crates/gcode/src/commands/graph/reads.rs:160-174]
-[crates/gcode/src/commands/graph/reads.rs:176-209]
-[crates/gcode/src/commands/graph/reads.rs:211-262]
-[crates/gcode/src/commands/graph/reads.rs:264-316]
-[crates/gcode/src/commands/graph/reads.rs:318-353]
-[crates/gcode/src/commands/graph/reads.rs:355-402]
-[crates/gcode/src/commands/graph/reads.rs:419-421]
-[crates/gcode/src/commands/graph/reads.rs:423-440]
-[crates/gcode/src/commands/graph/reads.rs:442-449]
-[crates/gcode/src/commands/graph/reads.rs:451-454]
-[crates/gcode/src/commands/graph/reads.rs:456-464]
-[crates/gcode/src/commands/graph/reads.rs:457-463]
-[crates/gcode/src/commands/graph/reads.rs:466-479]
-[crates/gcode/src/commands/graph/reads.rs:467-478]
-[crates/gcode/src/commands/graph/reads.rs:481-484]
-[crates/gcode/src/commands/graph/reads.rs:486-500]
-[crates/gcode/src/commands/graph/reads.rs:502-511]
-[crates/gcode/src/commands/graph/reads.rs:513-524]
-[crates/gcode/src/commands/graph/reads.rs:526-545]
-[crates/gcode/src/commands/graph/reads.rs:552-580]
-[crates/gcode/src/commands/graph/reads.rs:584-610]
-[crates/gcode/src/commands/graph/reads.rs:614-650]
 
 ## API Symbols
 
@@ -119,34 +93,36 @@ Module: [[code/modules/crates/gcode/src/commands/graph|crates/gcode/src/commands
   - Purpose: Indexed function `callers` in `crates/gcode/src/commands/graph/reads.rs`. [crates/gcode/src/commands/graph/reads.rs:211-262]
 - `usages` (function) component `usages [function]` (`d5a3ca78-49a4-50b1-b73d-3a95b85a7156`) lines 264-316 [crates/gcode/src/commands/graph/reads.rs:264-316]
   - Signature: `pub fn usages(`
-  - Purpose: Indexed function `usages` in `crates/gcode/src/commands/graph/reads.rs`. [crates/gcode/src/commands/graph/reads.rs:264-316]
+  - Purpose: Queries a code graph for all usages of a specified symbol and outputs paginated results in either JSON or formatted text format. [crates/gcode/src/commands/graph/reads.rs:264-316]
 - `imports` (function) component `imports [function]` (`514d6604-7a12-5269-b45a-dc77747a769d`) lines 318-353 [crates/gcode/src/commands/graph/reads.rs:318-353]
   - Signature: `pub fn imports(ctx: &Context, file: &str, format: Format) -> anyhow::Result<()> {`
-  - Purpose: Indexed function `imports` in `crates/gcode/src/commands/graph/reads.rs`. [crates/gcode/src/commands/graph/reads.rs:318-353]
+  - Purpose: # Summary
+
+Fetches imports for a specified file from a code graph and outputs the results as either a paginated JSON response or plaintext list. [crates/gcode/src/commands/graph/reads.rs:318-353]
 - `blast_radius` (function) component `blast_radius [function]` (`e51045af-1c30-504b-a711-b8ab64f08e03`) lines 355-402 [crates/gcode/src/commands/graph/reads.rs:355-402]
   - Signature: `pub fn blast_radius(`
-  - Purpose: Indexed function `blast_radius` in `crates/gcode/src/commands/graph/reads.rs`. [crates/gcode/src/commands/graph/reads.rs:355-402]
+  - Purpose: Resolves a target symbol in the code graph and outputs all code elements affected by changes to that symbol within a specified dependency depth, formatted as either JSON or annotated text with distance metrics. [crates/gcode/src/commands/graph/reads.rs:355-402]
 - `graph_resolution_database_url` (function) component `graph_resolution_database_url [function]` (`59948c24-5dfd-5eb7-a5a3-f9a57bf054b8`) lines 419-421 [crates/gcode/src/commands/graph/reads.rs:419-421]
   - Signature: `fn graph_resolution_database_url() -> Option<String> {`
-  - Purpose: Indexed function `graph_resolution_database_url` in `crates/gcode/src/commands/graph/reads.rs`. [crates/gcode/src/commands/graph/reads.rs:419-421]
+  - Purpose: Retrieves the `GCODE_POSTGRES_TEST_DATABASE_URL` environment variable and returns it as an `Option<String>`, or `None` if the variable is not set. [crates/gcode/src/commands/graph/reads.rs:419-421]
 - `connect_graph_resolution_test_db` (function) component `connect_graph_resolution_test_db [function]` (`f913e0e1-17df-5b79-89f6-7058a398ba5f`) lines 423-440 [crates/gcode/src/commands/graph/reads.rs:423-440]
   - Signature: `fn connect_graph_resolution_test_db() -> Option<Client> {`
-  - Purpose: Indexed function `connect_graph_resolution_test_db` in `crates/gcode/src/commands/graph/reads.rs`. [crates/gcode/src/commands/graph/reads.rs:423-440]
+  - Purpose: Connects to and validates a PostgreSQL read-write client for graph resolution testing, returning `Some(Client)` on success or `None` if connection or schema validation fails. [crates/gcode/src/commands/graph/reads.rs:423-440]
 - `unique_uuid` (function) component `unique_uuid [function]` (`3bb847cb-17df-57ca-947e-a3e2f0dbd974`) lines 442-449 [crates/gcode/src/commands/graph/reads.rs:442-449]
   - Signature: `fn unique_uuid(label: &str) -> String {`
-  - Purpose: Indexed function `unique_uuid` in `crates/gcode/src/commands/graph/reads.rs`. [crates/gcode/src/commands/graph/reads.rs:442-449]
+  - Purpose: Generates a deterministic UUID v5 from a composite key combining the provided label with the current nanosecond timestamp using the CODE_INDEX_UUID_NAMESPACE identifier. [crates/gcode/src/commands/graph/reads.rs:442-449]
 - `GraphResolutionProjectCleanup` (class) component `GraphResolutionProjectCleanup [class]` (`699c1131-ee3f-51eb-8dec-1d131af0e6f8`) lines 451-454 [crates/gcode/src/commands/graph/reads.rs:451-454]
   - Signature: `struct GraphResolutionProjectCleanup {`
   - Purpose: Indexed class `GraphResolutionProjectCleanup` in `crates/gcode/src/commands/graph/reads.rs`. [crates/gcode/src/commands/graph/reads.rs:451-454]
 - `GraphResolutionProjectCleanup` (class) component `GraphResolutionProjectCleanup [class]` (`88a90fed-bdab-5022-8a80-0e9aada1e621`) lines 456-464 [crates/gcode/src/commands/graph/reads.rs:456-464]
   - Signature: `impl GraphResolutionProjectCleanup {`
-  - Purpose: Indexed class `GraphResolutionProjectCleanup` in `crates/gcode/src/commands/graph/reads.rs`. [crates/gcode/src/commands/graph/reads.rs:456-464]
+  - Purpose: Implements a constructor for `GraphResolutionProjectCleanup` that initializes a graph resolution database connection URL and project identifier. [crates/gcode/src/commands/graph/reads.rs:456-464]
 - `GraphResolutionProjectCleanup.new` (method) component `GraphResolutionProjectCleanup.new [method]` (`b8a6659c-dee5-505b-b865-989603f26640`) lines 457-463 [crates/gcode/src/commands/graph/reads.rs:457-463]
   - Signature: `fn new(project_id: &str) -> Self {`
-  - Purpose: Indexed method `GraphResolutionProjectCleanup.new` in `crates/gcode/src/commands/graph/reads.rs`. [crates/gcode/src/commands/graph/reads.rs:457-463]
+  - Purpose: Constructs a new instance by resolving the graph resolution database URL from configuration (panicking if unavailable) and converting the provided project_id reference to an owned String. [crates/gcode/src/commands/graph/reads.rs:457-463]
 - `GraphResolutionProjectCleanup` (class) component `GraphResolutionProjectCleanup [class]` (`5bf38ccc-ca94-562a-9f95-023ee40d2626`) lines 466-479 [crates/gcode/src/commands/graph/reads.rs:466-479]
   - Signature: `impl Drop for GraphResolutionProjectCleanup {`
-  - Purpose: Indexed class `GraphResolutionProjectCleanup` in `crates/gcode/src/commands/graph/reads.rs`. [crates/gcode/src/commands/graph/reads.rs:466-479]
+  - Purpose: Implements Drop to attempt cleanup of a graph resolution project in PostgreSQL when the struct is deallocated, with non-fatal error logging to stderr for connection or cleanup failures. [crates/gcode/src/commands/graph/reads.rs:466-479]
 - `GraphResolutionProjectCleanup.drop` (method) component `GraphResolutionProjectCleanup.drop [method]` (`5ad02bec-dda6-56fd-a30c-2a5c0a3d7c42`) lines 467-478 [crates/gcode/src/commands/graph/reads.rs:467-478]
   - Signature: `fn drop(&mut self) {`
   - Purpose: Indexed method `GraphResolutionProjectCleanup.drop` in `crates/gcode/src/commands/graph/reads.rs`. [crates/gcode/src/commands/graph/reads.rs:467-478]

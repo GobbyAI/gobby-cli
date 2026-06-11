@@ -37,17 +37,6 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 [crates/gcode/src/project.rs:35-44]
 [crates/gcode/src/project.rs:47-70]
 [crates/gcode/src/project.rs:78-115]
-[crates/gcode/src/project.rs:118-121]
-[crates/gcode/src/project.rs:126-128]
-[crates/gcode/src/project.rs:130-138]
-[crates/gcode/src/project.rs:145-152]
-[crates/gcode/src/project.rs:155-161]
-[crates/gcode/src/project.rs:164-183]
-[crates/gcode/src/project.rs:186-201]
-[crates/gcode/src/project.rs:204-226]
-[crates/gcode/src/project.rs:229-245]
-[crates/gcode/src/project.rs:248-254]
-[crates/gcode/src/project.rs:257-265]
 
 ## API Symbols
 

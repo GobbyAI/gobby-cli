@@ -34,14 +34,6 @@ Module: [[code/modules/crates/gcode/src/search/fts|crates/gcode/src/search/fts]]
 [crates/gcode/src/search/fts/counts.rs:115-146]
 [crates/gcode/src/search/fts/counts.rs:148-164]
 [crates/gcode/src/search/fts/counts.rs:166-191]
-[crates/gcode/src/search/fts/counts.rs:193-243]
-[crates/gcode/src/search/fts/counts.rs:245-259]
-[crates/gcode/src/search/fts/counts.rs:261-273]
-[crates/gcode/src/search/fts/counts.rs:275-294]
-[crates/gcode/src/search/fts/counts.rs:296-307]
-[crates/gcode/src/search/fts/counts.rs:309-333]
-[crates/gcode/src/search/fts/counts.rs:335-359]
-[crates/gcode/src/search/fts/counts.rs:366-385]
 
 ## API Symbols
 

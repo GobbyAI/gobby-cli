@@ -33,13 +33,6 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 [crates/gcode/src/contract.rs:260-263]
 [crates/gcode/src/contract.rs:265-272]
 [crates/gcode/src/contract.rs:274-286]
-[crates/gcode/src/contract.rs:288-294]
-[crates/gcode/src/contract.rs:296-314]
-[crates/gcode/src/contract.rs:316-339]
-[crates/gcode/src/contract.rs:341-357]
-[crates/gcode/src/contract.rs:359-369]
-[crates/gcode/src/contract.rs:371-373]
-[crates/gcode/src/contract.rs:375-387]
 
 ## API Symbols
 

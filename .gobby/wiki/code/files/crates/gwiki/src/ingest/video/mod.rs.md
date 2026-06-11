@@ -30,10 +30,6 @@ Module: [[code/modules/crates/gwiki/src/ingest/video|crates/gwiki/src/ingest/vid
 [crates/gwiki/src/ingest/video/mod.rs:63-72]
 [crates/gwiki/src/ingest/video/mod.rs:74-92]
 [crates/gwiki/src/ingest/video/mod.rs:94-101]
-[crates/gwiki/src/ingest/video/mod.rs:103-122]
-[crates/gwiki/src/ingest/video/mod.rs:124-159]
-[crates/gwiki/src/ingest/video/mod.rs:161-174]
-[crates/gwiki/src/ingest/video/mod.rs:176-226]
 
 ## API Symbols
 

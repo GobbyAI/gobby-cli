@@ -37,17 +37,6 @@ Module: [[code/modules/crates/gcode/src/graph/report|crates/gcode/src/graph/repo
 [crates/gcode/src/graph/report/summary.rs:43-49]
 [crates/gcode/src/graph/report/summary.rs:51-91]
 [crates/gcode/src/graph/report/summary.rs:93-100]
-[crates/gcode/src/graph/report/summary.rs:102-156]
-[crates/gcode/src/graph/report/summary.rs:158-195]
-[crates/gcode/src/graph/report/summary.rs:197-231]
-[crates/gcode/src/graph/report/summary.rs:233-237]
-[crates/gcode/src/graph/report/summary.rs:239-275]
-[crates/gcode/src/graph/report/summary.rs:277-317]
-[crates/gcode/src/graph/report/summary.rs:319-329]
-[crates/gcode/src/graph/report/summary.rs:333-347]
-[crates/gcode/src/graph/report/summary.rs:349-378]
-[crates/gcode/src/graph/report/summary.rs:380-388]
-[crates/gcode/src/graph/report/summary.rs:390-395]
 
 ## API Symbols
 

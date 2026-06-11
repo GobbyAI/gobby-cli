@@ -31,11 +31,6 @@ Module: [[code/modules/crates/gcode/assets/import_roots|crates/gcode/assets/impo
 [crates/gcode/assets/import_roots/ruby_require_roots.json:4]
 [crates/gcode/assets/import_roots/ruby_require_roots.json:5]
 [crates/gcode/assets/import_roots/ruby_require_roots.json:6]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:7]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:8]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:9]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:10]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:11]
 
 ## API Symbols
 

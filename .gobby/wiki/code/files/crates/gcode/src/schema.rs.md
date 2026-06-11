@@ -30,10 +30,6 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 [crates/gcode/src/schema.rs:65-71]
 [crates/gcode/src/schema.rs:73-88]
 [crates/gcode/src/schema.rs:91-93]
-[crates/gcode/src/schema.rs:99-105]
-[crates/gcode/src/schema.rs:112-120]
-[crates/gcode/src/schema.rs:124-129]
-[crates/gcode/src/schema.rs:132-137]
 
 ## API Symbols
 

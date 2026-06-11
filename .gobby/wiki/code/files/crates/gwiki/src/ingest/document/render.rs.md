@@ -30,10 +30,6 @@ Module: [[code/modules/crates/gwiki/src/ingest/document|crates/gwiki/src/ingest/
 [crates/gwiki/src/ingest/document/render.rs:69-93]
 [crates/gwiki/src/ingest/document/render.rs:95-122]
 [crates/gwiki/src/ingest/document/render.rs:124-211]
-[crates/gwiki/src/ingest/document/render.rs:213-228]
-[crates/gwiki/src/ingest/document/render.rs:230-241]
-[crates/gwiki/src/ingest/document/render.rs:248-260]
-[crates/gwiki/src/ingest/document/render.rs:263-274]
 
 ## API Symbols
 

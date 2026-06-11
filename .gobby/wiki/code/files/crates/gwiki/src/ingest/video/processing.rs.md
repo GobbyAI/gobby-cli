@@ -35,15 +35,6 @@ Module: [[code/modules/crates/gwiki/src/ingest/video|crates/gwiki/src/ingest/vid
 [crates/gwiki/src/ingest/video/processing.rs:31-43]
 [crates/gwiki/src/ingest/video/processing.rs:32-34]
 [crates/gwiki/src/ingest/video/processing.rs:36-42]
-[crates/gwiki/src/ingest/video/processing.rs:45-64]
-[crates/gwiki/src/ingest/video/processing.rs:66-179]
-[crates/gwiki/src/ingest/video/processing.rs:181-197]
-[crates/gwiki/src/ingest/video/processing.rs:199-209]
-[crates/gwiki/src/ingest/video/processing.rs:212-216]
-[crates/gwiki/src/ingest/video/processing.rs:218-223]
-[crates/gwiki/src/ingest/video/processing.rs:225-329]
-[crates/gwiki/src/ingest/video/processing.rs:331-335]
-[crates/gwiki/src/ingest/video/processing.rs:337-346]
 
 ## API Symbols
 

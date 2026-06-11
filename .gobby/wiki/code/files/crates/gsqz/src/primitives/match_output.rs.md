@@ -33,13 +33,6 @@ Module: [[code/modules/crates/gsqz/src/primitives|crates/gsqz/src/primitives]]
 [crates/gsqz/src/primitives/match_output.rs:47-49]
 [crates/gsqz/src/primitives/match_output.rs:52-56]
 [crates/gsqz/src/primitives/match_output.rs:59-63]
-[crates/gsqz/src/primitives/match_output.rs:66-70]
-[crates/gsqz/src/primitives/match_output.rs:73-77]
-[crates/gsqz/src/primitives/match_output.rs:80-87]
-[crates/gsqz/src/primitives/match_output.rs:90-94]
-[crates/gsqz/src/primitives/match_output.rs:97-101]
-[crates/gsqz/src/primitives/match_output.rs:104-107]
-[crates/gsqz/src/primitives/match_output.rs:110-115]
 
 ## API Symbols
 

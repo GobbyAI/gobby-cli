@@ -28,8 +28,6 @@ Module: [[code/modules/crates/gcode/src/index/import_resolution/parser|crates/gc
 [crates/gcode/src/index/import_resolution/parser/go_rust.rs:79-106]
 [crates/gcode/src/index/import_resolution/parser/go_rust.rs:108-136]
 [crates/gcode/src/index/import_resolution/parser/go_rust.rs:138-188]
-[crates/gcode/src/index/import_resolution/parser/go_rust.rs:195-206]
-[crates/gcode/src/index/import_resolution/parser/go_rust.rs:209-219]
 
 ## API Symbols
 
