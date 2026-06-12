@@ -7,20 +7,13 @@ provenance:
   - 4-12
   - 15-30
   - 32-52
-  - 33-51
   - 55-58
   - 61-68
   - 71-75
   - 78-82
   - 84-123
-  - 85-94
-  - 96-105
-  - 107-112
-  - 114-117
-  - 119-122
   - 125-141
-  - 126-132
-  - 134-140
+  - 150-178
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -32,7 +25,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-`crates/gcore/src/cli_contract.rs` exposes 17 indexed API symbols.
+`crates/gcore/src/cli_contract.rs` exposes 18 indexed API symbols.
 [crates/gcore/src/cli_contract.rs:4-12]
 [crates/gcore/src/cli_contract.rs:15-30]
 [crates/gcore/src/cli_contract.rs:32-52]
@@ -92,4 +85,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 - `PositionalContract.repeatable` (method) component `PositionalContract.repeatable [method]` (`eac0dcf4-bc91-5b2b-8051-b45827c22cc4`) lines 134-140 [crates/gcore/src/cli_contract.rs:134-140]
   - Signature: `pub fn repeatable(name: &'static str) -> Self {`
   - Purpose: Indexed method `PositionalContract.repeatable` in `crates/gcore/src/cli_contract.rs`. [crates/gcore/src/cli_contract.rs:134-140]
+- `command_contract_serializes_builder_shape_and_skips_empty_optional_fields` (function) component `command_contract_serializes_builder_shape_and_skips_empty_optional_fields [function]` (`4b4280ad-68b4-539e-b649-a6aa4c237983`) lines 150-178 [crates/gcore/src/cli_contract.rs:150-178]
+  - Signature: `fn command_contract_serializes_builder_shape_and_skips_empty_optional_fields() {`
+  - Purpose: Indexed function `command_contract_serializes_builder_shape_and_skips_empty_optional_fields` in `crates/gcore/src/cli_contract.rs`. [crates/gcore/src/cli_contract.rs:150-178]
 

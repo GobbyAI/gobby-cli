@@ -6,7 +6,6 @@ provenance:
   ranges:
   - 14-22
   - 24-39
-  - 25-38
   - '41'
   - 44-51
   - 54-58
@@ -15,31 +14,22 @@ provenance:
   - 74-78
   - 81-85
   - 87-91
-  - 93-97
-  - 99-157
-  - 159-180
-  - 182-217
-  - 183-216
-  - 219-231
-  - 220-230
-  - 233-241
-  - 234-240
-  - 243-251
-  - 244-250
-  - 253-260
-  - 254-259
-  - 262-270
-  - 263-269
-  - 284-315
-  - 318-343
-  - 346-361
+  - 94-98
+  - 100-158
+  - 160-181
+  - 183-218
+  - 220-232
+  - 234-242
+  - 244-252
+  - 254-261
+  - 263-271
+  - 285-316
+  - 319-344
+  - 347-362
 - file: crates/gwiki/src/graph/context.rs
   ranges:
   - 8-11
   - 13-29
-  - 14-16
-  - 18-23
-  - 25-28
   - 32-39
   - 42-45
   - 48-53
@@ -74,7 +64,6 @@ provenance:
 - file: crates/gwiki/src/graph/export.rs
   ranges:
   - 11-112
-  - 12-111
   - 114-190
   - 204-317
   - 320-349
@@ -88,8 +77,6 @@ provenance:
   - 62-67
   - 70-72
   - 74-82
-  - 75-77
-  - 79-81
   - 85-92
   - 95-103
   - 106-113
@@ -99,18 +86,9 @@ provenance:
   - 138-143
   - 146-148
   - 150-156
-  - 151-155
   - 158-239
   - 242-244
   - 246-414
-  - 247-249
-  - 252-254
-  - 256-290
-  - 292-334
-  - 298-301
-  - 336-343
-  - 345-405
-  - 407-413
   - 416-418
   - 420-422
   - 424-426
@@ -153,17 +131,7 @@ Parent: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-The `gwiki::graph` module builds and analyzes a wiki knowledge graph linking documents, sources, citations, and code endpoints.
-
-`mod.rs` defines the core `MemoryWikiGraph` and `WikiGraphFacts` model—documents, sources, links, and code edges—with scoped, hashed node IDs and graph-write statement generation. It provides backlinks, link suggestions, and related-path traversal (weight-configurable via `RelatedPathOptions`).
-
-`analytics.rs` converts memory/fact graphs into a core analytics graph (`analytics_graph_from_memory`/`_from_facts`, `analyze_facts`), surfacing centrality, communities, and hotspots with `GraphAnalyticsError` handling.
-
-`context.rs` assembles `GraphContextPack` bundles for AI consumption, gathering neighborhoods, doc links, code call/import edges, citations, and recommendations, with graceful degradation and warnings (stale links, capped data, audits) governed by `GraphContextOptions`.
-
-`export.rs` serializes the graph to external formats via `WikiGraphFacts::export_graph` and `render_graph_report`, exposing scoped export node/edge refs, analytics, community, centrality, and hotspot DTOs plus Mermaid rendering helpers.
-
-Together these provide graph construction, querying, analytics, context-pack generation, and export/reporting for the wiki.
+The graph module provides a comprehensive graph-based representation, analytics, and context generation system for wiki documents and code-level relationships. It supports building graph models from facts or memory, performing structural analytics (including community detection, centrality, and hotspot calculations) for export, auditing context degradation or stale links, and maintaining the core in-memory wiki graph to compute bidirectional links, path recommendations, and inline link suggestions.
 [crates/gwiki/src/graph/analytics.rs:14-22]
 [crates/gwiki/src/graph/context.rs:8-11]
 [crates/gwiki/src/graph/export.rs:11-112]
@@ -174,10 +142,12 @@ Together these provide graph construction, querying, analytics, context-pack gen
 
 ```mermaid
 sequenceDiagram
+    participant m_01a9eb77_3fbf_517f_aa3d_46928229f6d9 as analytics_graph_from_memory &#91;function&#93;
     participant m_031478d6_2bba_5920_ac6a_ee17c2d497eb as context_scope &#91;function&#93;
+    participant m_102bc0bf_9d18_55e9_87b3_1d3dad628aa9 as insert_node &#91;function&#93;
     participant m_116bd1b0_a85d_5eb3_b701_758669e4d90a as neighbors_for_path &#91;function&#93;
     participant m_1ae31f01_1c99_55c7_af0c_0e0807245c97 as graph_path &#91;function&#93;
-    participant m_211026e7_9a62_5822_892f_cd6ff01d2f20 as analytics_graph_from_memory &#91;function&#93;
+    participant m_217cf5a9_6813_55b1_b35b_46a5f6686780 as graph_analytics_rejects_duplicate_node_metadata &#91;function&#93;
     participant m_21bb4330_85ee_5c20_b5e2_f5f52c922695 as MemoryWikiGraph.related_paths_with_options &#91;method&#93;
     participant m_2289f8d2_db5f_589b_9812_e444b861ebb4 as citations_by_document &#91;function&#93;
     participant m_24dce42f_d268_57bf_a2fd_b868e9457c5f as unresolved_target_node &#91;function&#93;
@@ -186,19 +156,19 @@ sequenceDiagram
     participant m_390af12e_a48d_51ee_a2c3_b48f854f1065 as build_context_pack &#91;function&#93;
     participant m_3b8f3ab9_33d9_56c4_9b70_e8d86d5b83f1 as document_kind &#91;function&#93;
     participant m_3c908a9e_7ec0_5316_ab44_9748bf8d4cf2 as audit_warnings &#91;function&#93;
-    participant m_3fdfe00d_0f4e_537e_8995_3598676a192e as is_code_path &#91;function&#93;
     participant m_44fb0018_7548_564f_8e8b_15854ccf489e as display_path &#91;function&#93;
     participant m_550ceffc_d141_565f_9c7f_538e7664f092 as scoped_id &#91;function&#93;
+    participant m_6bfcd22f_3c8b_56e6_950a_9a957044c969 as analytics_graph_from_facts &#91;function&#93;
     participant m_7cc6251b_6f6e_5110_8e0f_76e13187f226 as code_imports_for_path &#91;function&#93;
     participant m_927e84de_831c_546f_b888_34afec7daa35 as stale_link_warnings &#91;function&#93;
-    participant m_ad400428_b53a_547d_9885_7a61f075388b as analytics_graph_from_facts &#91;function&#93;
     participant m_c5de296b_0fa5_5040_9908_f12f668eeb58 as code_calls_for_path &#91;function&#93;
     participant m_c6d13b57_41a9_5bc9_80b8_7c9136cba20d as recommendations &#91;function&#93;
     participant m_daab9c99_4bfe_5408_a14d_a19d4058753a as capped_graph_warning &#91;function&#93;
     participant m_f2ecf981_f9fe_5b89_ae3c_624c772c387e as MemoryWikiGraph.document_keys &#91;method&#93;
     participant m_f9eca0d4_d6cd_593e_a78a_0def53a2921c as doc_links_for_path &#91;function&#93;
+    m_01a9eb77_3fbf_517f_aa3d_46928229f6d9->>m_6bfcd22f_3c8b_56e6_950a_9a957044c969: calls
     m_116bd1b0_a85d_5eb3_b701_758669e4d90a->>m_44fb0018_7548_564f_8e8b_15854ccf489e: calls
-    m_211026e7_9a62_5822_892f_cd6ff01d2f20->>m_ad400428_b53a_547d_9885_7a61f075388b: calls
+    m_217cf5a9_6813_55b1_b35b_46a5f6686780->>m_102bc0bf_9d18_55e9_87b3_1d3dad628aa9: calls
     m_21bb4330_85ee_5c20_b5e2_f5f52c922695->>m_f2ecf981_f9fe_5b89_ae3c_624c772c387e: calls
     m_2289f8d2_db5f_589b_9812_e444b861ebb4->>m_44fb0018_7548_564f_8e8b_15854ccf489e: calls
     m_24dce42f_d268_57bf_a2fd_b868e9457c5f->>m_3045da76_83ae_5e87_be99_9a644230d5de: calls
@@ -216,7 +186,6 @@ sequenceDiagram
     m_390af12e_a48d_51ee_a2c3_b48f854f1065->>m_c6d13b57_41a9_5bc9_80b8_7c9136cba20d: calls
     m_390af12e_a48d_51ee_a2c3_b48f854f1065->>m_f9eca0d4_d6cd_593e_a78a_0def53a2921c: calls
     m_3b8f3ab9_33d9_56c4_9b70_e8d86d5b83f1->>m_1ae31f01_1c99_55c7_af0c_0e0807245c97: calls
-    m_3b8f3ab9_33d9_56c4_9b70_e8d86d5b83f1->>m_3fdfe00d_0f4e_537e_8995_3598676a192e: calls
 ```
 
 ## Files
@@ -259,24 +228,24 @@ sequenceDiagram
 - `14c4080e-b636-5786-9c79-3d608d32fdf8`
 - `7d963b3a-a2d5-55bf-9770-844af4552c81`
 - `81bd7e8c-76a5-5eff-ac99-ad4d8c949520`
-- `211026e7-9a62-5822-892f-cd6ff01d2f20`
-- `ad400428-b53a-547d-9885-7a61f075388b`
-- `ff84f0d5-f8f4-5bea-a825-747831d0489c`
-- `16367347-4279-5326-bbdb-bca33ba9a386`
-- `7855ce5c-749e-5ccf-bf12-4d81103072cc`
-- `4a43c4c7-2e36-5586-8297-4e5999c73423`
-- `4c0cea5c-bea6-5448-b588-d3f96de5317f`
-- `1fd173de-9b05-523c-8149-b2f5be54da26`
-- `80e428bb-09d0-5c7d-88ec-0503e7eba829`
-- `16ae2977-2acc-53aa-a407-c5534b34359b`
-- `90054cab-e274-5d87-aa88-1c6f456aa702`
-- `dbac8fd7-ce31-5c7b-8e53-c1742db3c0bc`
-- `6b2e155c-91ad-50d1-9d9d-374a91983c4e`
-- `d2758d86-b9e5-5d12-9d9a-c3e01da6d7cc`
-- `2e6a901a-2cff-5716-8ec1-8e68f3cf173d`
-- `708b2dea-fa7f-5423-b9c0-eb57cbb6cc62`
-- `6f0489c7-742a-5fde-ab45-055a7389065f`
-- `7ab6c643-610b-5eb6-8b21-ed23165936f3`
+- `01a9eb77-3fbf-517f-aa3d-46928229f6d9`
+- `6bfcd22f-3c8b-56e6-950a-9a957044c969`
+- `102bc0bf-9d18-55e9-87b3-1d3dad628aa9`
+- `926583c7-81a0-5930-adf5-a8a625babaf9`
+- `b4bd5705-77b9-559f-8bc3-da82f1064630`
+- `c20b53e8-f9da-58c8-b215-4dfd9dea5aeb`
+- `ec6b1718-c5ad-5179-b877-0283bf99e3dc`
+- `07628a28-c41e-5e61-a1c9-fe99d8335a5d`
+- `34f1eacf-13e0-564d-8428-252f658c8a1f`
+- `b50ec85e-0543-59b4-b4e8-321a29de6178`
+- `f7d8de7d-d210-5f0c-826d-b715c13eebd6`
+- `ca7db1bc-4990-5dbd-aba0-de7feb45e635`
+- `4084c2c4-132e-5177-893a-a5928a3678ef`
+- `a1d3ce21-fe93-518e-b031-f01f30912261`
+- `723724ea-51cc-5a0b-ad14-631495df9808`
+- `6304b50b-efd9-55a7-92f3-989793e1b6b9`
+- `b2f36466-0ba7-54e1-8b93-b4e7591a55d2`
+- `217cf5a9-6813-55b1-b35b-46a5f6686780`
 - `ae429cf1-c77b-58be-bee2-630e1150849f`
 - `57bf3270-4dc6-5fed-b931-ce44e5a81668`
 - `ab54c7a8-455e-527e-82db-17c7e366cbd2`

@@ -12,11 +12,11 @@ provenance:
   - 172-218
   - 222-242
   - 246-276
-  - 279-330
-  - 333-360
-  - 363-391
-  - 394-401
-  - 404-423
+  - 279-348
+  - 351-378
+  - 381-409
+  - 412-419
+  - 422-441
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -61,19 +61,19 @@ Module: [[code/modules/crates/gwiki/src/compile|crates/gwiki/src/compile]]
 - `compile_rejects_target_page_through_symlinked_parent` (function) component `compile_rejects_target_page_through_symlinked_parent [function]` (`d734feb4-d0b2-5af6-917d-553b270eef56`) lines 246-276 [crates/gwiki/src/compile/tests.rs:246-276]
   - Signature: `fn compile_rejects_target_page_through_symlinked_parent() {`
   - Purpose: Indexed function `compile_rejects_target_page_through_symlinked_parent` in `crates/gwiki/src/compile/tests.rs`. [crates/gwiki/src/compile/tests.rs:246-276]
-- `compile_writes_obsidian_markdown` (function) component `compile_writes_obsidian_markdown [function]` (`d30a45f3-a17d-5087-8e5d-dbc8b7d128dc`) lines 279-330 [crates/gwiki/src/compile/tests.rs:279-330]
+- `compile_writes_obsidian_markdown` (function) component `compile_writes_obsidian_markdown [function]` (`d30a45f3-a17d-5087-8e5d-dbc8b7d128dc`) lines 279-348 [crates/gwiki/src/compile/tests.rs:279-348]
   - Signature: `fn compile_writes_obsidian_markdown() {`
-  - Purpose: Indexed function `compile_writes_obsidian_markdown` in `crates/gwiki/src/compile/tests.rs`. [crates/gwiki/src/compile/tests.rs:279-330]
-- `index_update_preserves_unrelated_entries` (function) component `index_update_preserves_unrelated_entries [function]` (`4a414ca2-8f8c-5066-bdf1-00e3a4fa1251`) lines 333-360 [crates/gwiki/src/compile/tests.rs:333-360]
+  - Purpose: Indexed function `compile_writes_obsidian_markdown` in `crates/gwiki/src/compile/tests.rs`. [crates/gwiki/src/compile/tests.rs:279-348]
+- `index_update_preserves_unrelated_entries` (function) component `index_update_preserves_unrelated_entries [function]` (`ac79e077-9733-52ff-8dc2-ce7524dd9e22`) lines 351-378 [crates/gwiki/src/compile/tests.rs:351-378]
   - Signature: `fn index_update_preserves_unrelated_entries() {`
-  - Purpose: Indexed function `index_update_preserves_unrelated_entries` in `crates/gwiki/src/compile/tests.rs`. [crates/gwiki/src/compile/tests.rs:333-360]
-- `index_update_uses_structural_heading_and_link_checks` (function) component `index_update_uses_structural_heading_and_link_checks [function]` (`620a1437-e143-598b-ba49-a4e3718b38af`) lines 363-391 [crates/gwiki/src/compile/tests.rs:363-391]
+  - Purpose: Indexed function `index_update_preserves_unrelated_entries` in `crates/gwiki/src/compile/tests.rs`. [crates/gwiki/src/compile/tests.rs:351-378]
+- `index_update_uses_structural_heading_and_link_checks` (function) component `index_update_uses_structural_heading_and_link_checks [function]` (`6a55bc46-9bf3-58e9-b9c7-cd53ae54ba91`) lines 381-409 [crates/gwiki/src/compile/tests.rs:381-409]
   - Signature: `fn index_update_uses_structural_heading_and_link_checks() {`
-  - Purpose: Indexed function `index_update_uses_structural_heading_and_link_checks` in `crates/gwiki/src/compile/tests.rs`. [crates/gwiki/src/compile/tests.rs:363-391]
-- `insert_compiled_page_link_creates_missing_compiled_heading` (function) component `insert_compiled_page_link_creates_missing_compiled_heading [function]` (`48f0721d-dda5-5909-b2de-7af2063d1ff2`) lines 394-401 [crates/gwiki/src/compile/tests.rs:394-401]
+  - Purpose: Indexed function `index_update_uses_structural_heading_and_link_checks` in `crates/gwiki/src/compile/tests.rs`. [crates/gwiki/src/compile/tests.rs:381-409]
+- `insert_compiled_page_link_creates_missing_compiled_heading` (function) component `insert_compiled_page_link_creates_missing_compiled_heading [function]` (`c2356878-d3c6-5343-b715-9658e084a4b3`) lines 412-419 [crates/gwiki/src/compile/tests.rs:412-419]
   - Signature: `fn insert_compiled_page_link_creates_missing_compiled_heading() {`
-  - Purpose: Indexed function `insert_compiled_page_link_creates_missing_compiled_heading` in `crates/gwiki/src/compile/tests.rs`. [crates/gwiki/src/compile/tests.rs:394-401]
-- `write_target_page_rejects_existing_page_without_overwrite_race` (function) component `write_target_page_rejects_existing_page_without_overwrite_race [function]` (`9021c487-bcfb-58a9-8839-51cd0072aec3`) lines 404-423 [crates/gwiki/src/compile/tests.rs:404-423]
+  - Purpose: Indexed function `insert_compiled_page_link_creates_missing_compiled_heading` in `crates/gwiki/src/compile/tests.rs`. [crates/gwiki/src/compile/tests.rs:412-419]
+- `write_target_page_rejects_existing_page_without_overwrite_race` (function) component `write_target_page_rejects_existing_page_without_overwrite_race [function]` (`1f0546d7-9a8a-518a-9bb0-ec7607854f4a`) lines 422-441 [crates/gwiki/src/compile/tests.rs:422-441]
   - Signature: `fn write_target_page_rejects_existing_page_without_overwrite_race() {`
-  - Purpose: Indexed function `write_target_page_rejects_existing_page_without_overwrite_race` in `crates/gwiki/src/compile/tests.rs`. [crates/gwiki/src/compile/tests.rs:404-423]
+  - Purpose: Indexed function `write_target_page_rejects_existing_page_without_overwrite_race` in `crates/gwiki/src/compile/tests.rs`. [crates/gwiki/src/compile/tests.rs:422-441]
 

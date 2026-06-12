@@ -4,63 +4,60 @@ type: code_file
 provenance:
 - file: crates/gwiki/src/health.rs
   ranges:
-  - 21-33
-  - 36-40
-  - 43-46
-  - 48-52
-  - 54-94
-  - 96-105
-  - 107-131
-  - 133-141
-  - 143-168
-  - 170-187
-  - 189-191
-  - 193-196
-  - 198-210
-  - 212-225
-  - 227-235
-  - 237-239
-  - 241-246
-  - 248-252
-  - 254-261
-  - 263-274
-  - 277-279
-  - 281-285
-  - 282-284
-  - 287-325
-  - 327-337
-  - 339-348
-  - 351-358
-  - 360-379
-  - 381-383
-  - 385-387
-  - 389-394
-  - 396-399
-  - 401-430
-  - 433-435
-  - 437-452
-  - 438-443
-  - 445-451
-  - 454-460
-  - 462-482
-  - 484-497
-  - 499-514
-  - 516-531
-  - 533-553
-  - 561-604
-  - 607-631
-  - 634-647
-  - 650-688
-  - 691-693
-  - 696-705
-  - 708-719
-  - 722-728
-  - 731-738
-  - 741-746
-  - 749-762
-  - 765-800
-  - 802-806
-  - 808-823
+  - 22-34
+  - 37-41
+  - 44-47
+  - 49-53
+  - 55-95
+  - 97-106
+  - 108-132
+  - 134-142
+  - 144-169
+  - 171-188
+  - 190-192
+  - 194-197
+  - 199-211
+  - 213-226
+  - 228-236
+  - 238-240
+  - 242-247
+  - 249-253
+  - 255-262
+  - 265-276
+  - 279-281
+  - 283-287
+  - 289-327
+  - 329-339
+  - 341-350
+  - 353-360
+  - 362-381
+  - 384-386
+  - 389-391
+  - 393-398
+  - 400-403
+  - 406-435
+  - 439-441
+  - 443-459
+  - 461-467
+  - 469-489
+  - 491-504
+  - 506-521
+  - 523-538
+  - 540-560
+  - 568-611
+  - 614-638
+  - 641-654
+  - 657-695
+  - 698-700
+  - 703-712
+  - 715-726
+  - 729-735
+  - 738-745
+  - 748-753
+  - 756-769
+  - 772-807
+  - 809-813
+  - 815-830
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -73,183 +70,183 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 ## Purpose
 
 `crates/gwiki/src/health.rs` exposes 57 indexed API symbols.
-[crates/gwiki/src/health.rs:21-33]
-[crates/gwiki/src/health.rs:36-40]
-[crates/gwiki/src/health.rs:43-46]
-[crates/gwiki/src/health.rs:48-52]
-[crates/gwiki/src/health.rs:54-94]
+[crates/gwiki/src/health.rs:22-34]
+[crates/gwiki/src/health.rs:37-41]
+[crates/gwiki/src/health.rs:44-47]
+[crates/gwiki/src/health.rs:49-53]
+[crates/gwiki/src/health.rs:55-95]
 
 ## API Symbols
 
-- `HealthReport` (class) component `HealthReport [class]` (`7392f0f9-7416-518c-8aa4-0b32be1b69d6`) lines 21-33 [crates/gwiki/src/health.rs:21-33]
+- `HealthReport` (class) component `HealthReport [class]` (`8e8faed1-9caa-5488-837a-6ca7884bacc4`) lines 22-34 [crates/gwiki/src/health.rs:22-34]
   - Signature: `pub struct HealthReport {`
-  - Purpose: Indexed class `HealthReport` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:21-33]
-- `HealthSourceIssue` (class) component `HealthSourceIssue [class]` (`b5d38537-8dc3-561d-b4c6-727c9b38648d`) lines 36-40 [crates/gwiki/src/health.rs:36-40]
+  - Purpose: Indexed class `HealthReport` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:22-34]
+- `HealthSourceIssue` (class) component `HealthSourceIssue [class]` (`521805b7-f9e9-5b99-b35b-023d10795e8c`) lines 37-41 [crates/gwiki/src/health.rs:37-41]
   - Signature: `pub struct HealthSourceIssue {`
-  - Purpose: Indexed class `HealthSourceIssue` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:36-40]
-- `DuplicateConcept` (class) component `DuplicateConcept [class]` (`1186c729-489c-5710-a453-f006492096e5`) lines 43-46 [crates/gwiki/src/health.rs:43-46]
+  - Purpose: Indexed class `HealthSourceIssue` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:37-41]
+- `DuplicateConcept` (class) component `DuplicateConcept [class]` (`c05ab9f9-742c-5cc4-bfc0-a61d45186b5c`) lines 44-47 [crates/gwiki/src/health.rs:44-47]
   - Signature: `pub struct DuplicateConcept {`
-  - Purpose: Indexed class `DuplicateConcept` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:43-46]
-- `run` (function) component `run [function]` (`fd4fae62-8c59-5095-afed-1c0679a6ac3c`) lines 48-52 [crates/gwiki/src/health.rs:48-52]
+  - Purpose: Indexed class `DuplicateConcept` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:44-47]
+- `run` (function) component `run [function]` (`80be6334-5f52-54f8-9c94-b13ad405a784`) lines 49-53 [crates/gwiki/src/health.rs:49-53]
   - Signature: `pub fn run(vault_root: &Path, scope: ScopeIdentity) -> Result<HealthReport, WikiError> {`
-  - Purpose: Indexed function `run` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:48-52]
-- `inspect` (function) component `inspect [function]` (`45fe1dbe-3694-58e2-8915-e8705592e00e`) lines 54-94 [crates/gwiki/src/health.rs:54-94]
+  - Purpose: Indexed function `run` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:49-53]
+- `inspect` (function) component `inspect [function]` (`05f06473-a4aa-53a4-8b35-6a24d2450262`) lines 55-95 [crates/gwiki/src/health.rs:55-95]
   - Signature: `pub fn inspect(vault_root: &Path, scope: ScopeIdentity) -> Result<HealthReport, WikiError> {`
-  - Purpose: Indexed function `inspect` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:54-94]
-- `render_text` (function) component `render_text [function]` (`1c4f46c0-e582-598f-bcba-c854ec0f814f`) lines 96-105 [crates/gwiki/src/health.rs:96-105]
+  - Purpose: Indexed function `inspect` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:55-95]
+- `render_text` (function) component `render_text [function]` (`18d0d482-352f-519d-8eb2-aed6698ec986`) lines 97-106 [crates/gwiki/src/health.rs:97-106]
   - Signature: `pub fn render_text(report: &HealthReport) -> String {`
-  - Purpose: Indexed function `render_text` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:96-105]
-- `persist_report` (function) component `persist_report [function]` (`c0211c84-7612-5ce1-b470-6c5a5ed7abf4`) lines 107-131 [crates/gwiki/src/health.rs:107-131]
+  - Purpose: Indexed function `render_text` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:97-106]
+- `persist_report` (function) component `persist_report [function]` (`bcdbef5c-719e-514a-b2cc-4674f57c2d16`) lines 108-132 [crates/gwiki/src/health.rs:108-132]
   - Signature: `fn persist_report(vault_root: &Path, report: &HealthReport) -> Result<(), WikiError> {`
-  - Purpose: Indexed function `persist_report` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:107-131]
-- `stale_pages` (function) component `stale_pages [function]` (`75a5d999-bcb1-5ef3-98b6-db691416efd6`) lines 133-141 [crates/gwiki/src/health.rs:133-141]
+  - Purpose: Indexed function `persist_report` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:108-132]
+- `stale_pages` (function) component `stale_pages [function]` (`5552f9eb-d607-5db4-8349-955789907b4e`) lines 134-142 [crates/gwiki/src/health.rs:134-142]
   - Signature: `fn stale_pages(pages: &[crate::lint::WikiPage]) -> Vec<PathBuf> {`
-  - Purpose: Indexed function `stale_pages` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:133-141]
-- `page_is_stale` (function) component `page_is_stale [function]` (`ea1930d0-780b-5e66-b8bc-26eab8fc1a4c`) lines 143-168 [crates/gwiki/src/health.rs:143-168]
+  - Purpose: Indexed function `stale_pages` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:134-142]
+- `page_is_stale` (function) component `page_is_stale [function]` (`4218ea4d-7759-59d8-be53-1f82315ce4bd`) lines 144-169 [crates/gwiki/src/health.rs:144-169]
   - Signature: `fn page_is_stale(page: &crate::lint::WikiPage) -> bool {`
-  - Purpose: Indexed function `page_is_stale` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:143-168]
-- `stale_after_is_due` (function) component `stale_after_is_due [function]` (`fe75cbf8-1666-5410-985a-c6391bf3e845`) lines 170-187 [crates/gwiki/src/health.rs:170-187]
+  - Purpose: Indexed function `page_is_stale` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:144-169]
+- `stale_after_is_due` (function) component `stale_after_is_due [function]` (`cac94c7c-7675-50dd-89e2-40d6999db5b7`) lines 171-188 [crates/gwiki/src/health.rs:171-188]
   - Signature: `fn stale_after_is_due(value: &str, now: DateTime<Utc>) -> bool {`
-  - Purpose: Indexed function `stale_after_is_due` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:170-187]
-- `source_citation_is_stale` (function) component `source_citation_is_stale [function]` (`aeb701b2-d6d6-5d9a-bf24-66987e6d0ecb`) lines 189-191 [crates/gwiki/src/health.rs:189-191]
+  - Purpose: Indexed function `stale_after_is_due` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:171-188]
+- `source_citation_is_stale` (function) component `source_citation_is_stale [function]` (`72c4c995-cc4a-52c2-8633-e9aabe865b5b`) lines 190-192 [crates/gwiki/src/health.rs:190-192]
   - Signature: `fn source_citation_is_stale(source: &SourceRecord) -> bool {`
-  - Purpose: Indexed function `source_citation_is_stale` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:189-191]
-- `source_citation_is_stale_at` (function) component `source_citation_is_stale_at [function]` (`4e9a7aae-3058-50b9-a950-6ba67a49233a`) lines 193-196 [crates/gwiki/src/health.rs:193-196]
+  - Purpose: Indexed function `source_citation_is_stale` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:190-192]
+- `source_citation_is_stale_at` (function) component `source_citation_is_stale_at [function]` (`15b50b69-1a32-5d63-952a-20abeed3b7e7`) lines 194-197 [crates/gwiki/src/health.rs:194-197]
   - Signature: `fn source_citation_is_stale_at(source: &SourceRecord, now: DateTime<Utc>) -> bool {`
-  - Purpose: Indexed function `source_citation_is_stale_at` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:193-196]
-- `fetched_at_is_stale` (function) component `fetched_at_is_stale [function]` (`d6f4aa01-4b81-5562-b1d4-ed8ca87e13d3`) lines 198-210 [crates/gwiki/src/health.rs:198-210]
+  - Purpose: Indexed function `source_citation_is_stale_at` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:194-197]
+- `fetched_at_is_stale` (function) component `fetched_at_is_stale [function]` (`7e131d91-760c-5c54-8655-8fd1af49e7b1`) lines 199-211 [crates/gwiki/src/health.rs:199-211]
   - Signature: `fn fetched_at_is_stale(value: &str, stale_years: u64, now: DateTime<Utc>) -> bool {`
-  - Purpose: Indexed function `fetched_at_is_stale` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:198-210]
-- `parse_fetched_at` (function) component `parse_fetched_at [function]` (`21c1ca9e-c224-54c9-a34f-38a5722c3542`) lines 212-225 [crates/gwiki/src/health.rs:212-225]
+  - Purpose: Indexed function `fetched_at_is_stale` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:199-211]
+- `parse_fetched_at` (function) component `parse_fetched_at [function]` (`62cd60df-837c-5e85-b5fb-da636385e40d`) lines 213-226 [crates/gwiki/src/health.rs:213-226]
   - Signature: `fn parse_fetched_at(value: &str) -> Option<DateTime<Utc>> {`
-  - Purpose: Indexed function `parse_fetched_at` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:212-225]
-- `stale_citation_years` (function) component `stale_citation_years [function]` (`b23143ec-fee9-559e-b5b0-31d86db2e3e9`) lines 227-235 [crates/gwiki/src/health.rs:227-235]
+  - Purpose: Indexed function `parse_fetched_at` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:213-226]
+- `stale_citation_years` (function) component `stale_citation_years [function]` (`93a1b2ea-8094-53e8-9508-c8135c3b9f5b`) lines 228-236 [crates/gwiki/src/health.rs:228-236]
   - Signature: `fn stale_citation_years() -> u64 {`
-  - Purpose: Indexed function `stale_citation_years` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:227-235]
-- `stale_citation_years_from_env` (function) component `stale_citation_years_from_env [function]` (`fd6db89f-aeef-5877-99bd-1a7361f57cd2`) lines 237-239 [crates/gwiki/src/health.rs:237-239]
+  - Purpose: Indexed function `stale_citation_years` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:228-236]
+- `stale_citation_years_from_env` (function) component `stale_citation_years_from_env [function]` (`851ac77a-561f-5a2e-80d2-62baf8dc0145`) lines 238-240 [crates/gwiki/src/health.rs:238-240]
   - Signature: `fn stale_citation_years_from_env(raw: &str) -> Option<u64> {`
-  - Purpose: Indexed function `stale_citation_years_from_env` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:237-239]
-- `fetched_year` (function) component `fetched_year [function]` (`0d0b21a8-1224-5060-92e1-1fd6d3cec6c3`) lines 241-246 [crates/gwiki/src/health.rs:241-246]
+  - Purpose: Indexed function `stale_citation_years_from_env` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:238-240]
+- `fetched_year` (function) component `fetched_year [function]` (`b33e6056-14ae-59c8-b906-4b9705bdaf9f`) lines 242-247 [crates/gwiki/src/health.rs:242-247]
   - Signature: `fn fetched_year(value: &str) -> Option<u64> {`
-  - Purpose: Indexed function `fetched_year` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:241-246]
-- `approximate_current_year_at` (function) component `approximate_current_year_at [function]` (`9bcdf516-936b-5a66-8a83-0bc94d2814f4`) lines 248-252 [crates/gwiki/src/health.rs:248-252]
+  - Purpose: Indexed function `fetched_year` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:242-247]
+- `approximate_current_year_at` (function) component `approximate_current_year_at [function]` (`e7d0fb1a-c7a7-5a58-b51c-08e736cd7db1`) lines 249-253 [crates/gwiki/src/health.rs:249-253]
   - Signature: `fn approximate_current_year_at(now: DateTime<Utc>) -> u64 {`
-  - Purpose: Indexed function `approximate_current_year_at` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:248-252]
-- `load_provenance` (function) component `load_provenance [function]` (`cf4f8b64-7546-5da6-991f-5fa840645048`) lines 254-261 [crates/gwiki/src/health.rs:254-261]
+  - Purpose: Indexed function `approximate_current_year_at` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:249-253]
+- `load_provenance` (function) component `load_provenance [function]` (`569e0759-f646-5d73-9b34-482e3047743c`) lines 255-262 [crates/gwiki/src/health.rs:255-262]
   - Signature: `fn load_provenance(vault_root: &Path) -> Result<ProvenanceGraph, WikiError> {`
-  - Purpose: Indexed function `load_provenance` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:254-261]
-- `change_triggered_affected_pages` (function) component `change_triggered_affected_pages [function]` (`acdf5f0f-0ceb-5a66-8f87-8e134314c4ef`) lines 263-274 [crates/gwiki/src/health.rs:263-274]
+  - Purpose: Indexed function `load_provenance` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:255-262]
+- `change_triggered_affected_pages` (function) component `change_triggered_affected_pages [function]` (`7674b329-2142-55d4-b76b-2b3b55de8840`) lines 265-276 [crates/gwiki/src/health.rs:265-276]
   - Signature: `pub fn change_triggered_affected_pages(`
-  - Purpose: Indexed function `change_triggered_affected_pages` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:263-274]
-- `SourceCitationIndex` (class) component `SourceCitationIndex [class]` (`8b321394-aa6e-50ec-b5b3-59affc1c422d`) lines 277-279 [crates/gwiki/src/health.rs:277-279]
+  - Purpose: Indexed function `change_triggered_affected_pages` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:265-276]
+- `SourceCitationIndex` (class) component `SourceCitationIndex [class]` (`98cfcc88-e62b-5af2-838f-c51e316b32b1`) lines 279-281 [crates/gwiki/src/health.rs:279-281]
   - Signature: `struct SourceCitationIndex {`
-  - Purpose: Indexed class `SourceCitationIndex` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:277-279]
-- `SourceCitationIndex` (class) component `SourceCitationIndex [class]` (`2845ef0e-e158-5cd6-8cbe-88b57caec553`) lines 281-285 [crates/gwiki/src/health.rs:281-285]
+  - Purpose: Indexed class `SourceCitationIndex` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:279-281]
+- `SourceCitationIndex` (class) component `SourceCitationIndex [class]` (`b9f57435-5b9c-5e3c-bcf9-24191f76501e`) lines 283-287 [crates/gwiki/src/health.rs:283-287]
   - Signature: `impl SourceCitationIndex {`
-  - Purpose: Indexed class `SourceCitationIndex` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:281-285]
-- `SourceCitationIndex.cites` (method) component `SourceCitationIndex.cites [method]` (`382d0098-f17c-56ba-9eae-e28ea0f3211d`) lines 282-284 [crates/gwiki/src/health.rs:282-284]
+  - Purpose: Indexed class `SourceCitationIndex` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:283-287]
+- `SourceCitationIndex.cites` (method) component `SourceCitationIndex.cites [method]` (`6d63b24b-db45-5793-a06f-4cced9996466`) lines 284-286 [crates/gwiki/src/health.rs:284-286]
   - Signature: `fn cites(&self, source_id: &str) -> bool {`
-  - Purpose: Indexed method `SourceCitationIndex.cites` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:282-284]
-- `build_citation_index` (function) component `build_citation_index [function]` (`59be8cef-b474-5a85-8d5e-589a5623d176`) lines 287-325 [crates/gwiki/src/health.rs:287-325]
+  - Purpose: Indexed method `SourceCitationIndex.cites` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:284-286]
+- `build_citation_index` (function) component `build_citation_index [function]` (`79b0445e-0ea3-5b18-9c04-290fe572affe`) lines 289-327 [crates/gwiki/src/health.rs:289-327]
   - Signature: `fn build_citation_index(`
-  - Purpose: Indexed function `build_citation_index` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:287-325]
-- `source_reference_needles` (function) component `source_reference_needles [function]` (`b54d6a40-6fd3-5a71-8dba-9a6edcf0e31a`) lines 327-337 [crates/gwiki/src/health.rs:327-337]
+  - Purpose: Indexed function `build_citation_index` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:289-327]
+- `source_reference_needles` (function) component `source_reference_needles [function]` (`5e89f9d0-847f-54c1-b6b8-13f29dffc77b`) lines 329-339 [crates/gwiki/src/health.rs:329-339]
   - Signature: `fn source_reference_needles(source: &SourceRecord) -> Vec<&str> {`
-  - Purpose: Indexed function `source_reference_needles` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:327-337]
-- `source_reference_patterns` (function) component `source_reference_patterns [function]` (`cd8405e3-7773-59f0-91b5-7eb935cf2850`) lines 339-348 [crates/gwiki/src/health.rs:339-348]
+  - Purpose: Indexed function `source_reference_needles` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:329-339]
+- `source_reference_patterns` (function) component `source_reference_patterns [function]` (`1d380cc7-1f43-5178-8698-4ed8a5e2feeb`) lines 341-350 [crates/gwiki/src/health.rs:341-350]
   - Signature: `fn source_reference_patterns(needle: &str) -> Vec<String> {`
-  - Purpose: Indexed function `source_reference_patterns` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:339-348]
-- `source_reference_is_present` (function) component `source_reference_is_present [function]` (`4d10a151-737b-555e-b75a-30e64cfcc1c1`) lines 351-358 [crates/gwiki/src/health.rs:351-358]
+  - Purpose: Indexed function `source_reference_patterns` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:341-350]
+- `source_reference_is_present` (function) component `source_reference_is_present [function]` (`bbe38d21-00ab-59b1-b4d3-08f2b0314783`) lines 353-360 [crates/gwiki/src/health.rs:353-360]
   - Signature: `fn source_reference_is_present(markdown: &str, needle: &str) -> bool {`
-  - Purpose: Indexed function `source_reference_is_present` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:351-358]
-- `markdown_without_fenced_code` (function) component `markdown_without_fenced_code [function]` (`89b06601-761b-5b2f-9dc1-a42cb9f530f6`) lines 360-379 [crates/gwiki/src/health.rs:360-379]
+  - Purpose: Indexed function `source_reference_is_present` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:353-360]
+- `markdown_without_fenced_code` (function) component `markdown_without_fenced_code [function]` (`8319fc90-d8cc-5663-a9e1-0dd0fceb0dbf`) lines 362-381 [crates/gwiki/src/health.rs:362-381]
   - Signature: `fn markdown_without_fenced_code(markdown: &str) -> String {`
-  - Purpose: Indexed function `markdown_without_fenced_code` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:360-379]
-- `markdown_link_target_matches` (function) component `markdown_link_target_matches [function]` (`bdceb7c7-7c7b-5b06-9c5a-9e23d577cf31`) lines 381-383 [crates/gwiki/src/health.rs:381-383]
+  - Purpose: Indexed function `markdown_without_fenced_code` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:362-381]
+- `markdown_link_target_matches` (function) component `markdown_link_target_matches [function]` (`79d4a86e-2724-5d68-a73b-7c5b0e229c37`) lines 384-386 [crates/gwiki/src/health.rs:384-386]
   - Signature: `fn markdown_link_target_matches(markdown: &str, needle: &str) -> bool {`
-  - Purpose: Indexed function `markdown_link_target_matches` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:381-383]
-- `bounded_text_matches` (function) component `bounded_text_matches [function]` (`77f7418d-ce79-55a7-8ec3-bf70250c4650`) lines 385-387 [crates/gwiki/src/health.rs:385-387]
+  - Purpose: Indexed function `markdown_link_target_matches` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:384-386]
+- `bounded_text_matches` (function) component `bounded_text_matches [function]` (`a14a9973-a1b8-5fc6-a1a8-453efb24e13e`) lines 389-391 [crates/gwiki/src/health.rs:389-391]
   - Signature: `fn bounded_text_matches(markdown: &str, needle: &str) -> bool {`
-  - Purpose: Indexed function `bounded_text_matches` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:385-387]
-- `markdown_link_target_pattern` (function) component `markdown_link_target_pattern [function]` (`ea8e279f-a2c2-54fe-90ba-5ee0cd17db45`) lines 389-394 [crates/gwiki/src/health.rs:389-394]
+  - Purpose: Indexed function `bounded_text_matches` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:389-391]
+- `markdown_link_target_pattern` (function) component `markdown_link_target_pattern [function]` (`95a1c367-800b-5fe9-8ee2-e21aee0fda96`) lines 393-398 [crates/gwiki/src/health.rs:393-398]
   - Signature: `fn markdown_link_target_pattern(needle: &str) -> String {`
-  - Purpose: Indexed function `markdown_link_target_pattern` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:389-394]
-- `bounded_text_pattern` (function) component `bounded_text_pattern [function]` (`cb437494-2940-5394-b9fe-e56e5bd05598`) lines 396-399 [crates/gwiki/src/health.rs:396-399]
+  - Purpose: Indexed function `markdown_link_target_pattern` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:393-398]
+- `bounded_text_pattern` (function) component `bounded_text_pattern [function]` (`d5b02fda-779e-549a-96bd-76b506af94fb`) lines 400-403 [crates/gwiki/src/health.rs:400-403]
   - Signature: `fn bounded_text_pattern(needle: &str) -> String {`
-  - Purpose: Indexed function `bounded_text_pattern` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:396-399]
-- `cached_regex_is_match` (function) component `cached_regex_is_match [function]` (`f813a129-7143-589f-bd09-5416f0b29f6f`) lines 401-430 [crates/gwiki/src/health.rs:401-430]
+  - Purpose: Indexed function `bounded_text_pattern` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:400-403]
+- `cached_regex_is_match` (function) component `cached_regex_is_match [function]` (`1940fe23-c47e-56c1-a6b6-d03171d115fe`) lines 406-435 [crates/gwiki/src/health.rs:406-435]
   - Signature: `fn cached_regex_is_match(pattern: String, haystack: &str) -> bool {`
-  - Purpose: Indexed function `cached_regex_is_match` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:401-430]
-- `RegexCache` (class) component `RegexCache [class]` (`c65b834a-7909-5c3b-b28b-22d39c3b6218`) lines 433-435 [crates/gwiki/src/health.rs:433-435]
+  - Purpose: Indexed function `cached_regex_is_match` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:406-435]
+- `RegexCache` (class) component `RegexCache [class]` (`3347362a-3f1a-5abc-bf67-d5c0100bd0be`) lines 439-441 [crates/gwiki/src/health.rs:439-441]
   - Signature: `struct RegexCache {`
-  - Purpose: Indexed class `RegexCache` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:433-435]
-- `RegexCache` (class) component `RegexCache [class]` (`876b7ed3-f0d3-51af-bdeb-9d2658c61e72`) lines 437-452 [crates/gwiki/src/health.rs:437-452]
+  - Purpose: Indexed class `RegexCache` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:439-441]
+- `RegexCache` (class) component `RegexCache [class]` (`0914f3c6-e74f-5160-a2cd-76e28e2cba2c`) lines 443-459 [crates/gwiki/src/health.rs:443-459]
   - Signature: `impl RegexCache {`
-  - Purpose: Indexed class `RegexCache` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:437-452]
-- `RegexCache.get` (method) component `RegexCache.get [method]` (`ad9bc9e3-2533-5547-ae77-eb69d3846f56`) lines 438-443 [crates/gwiki/src/health.rs:438-443]
+  - Purpose: Indexed class `RegexCache` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:443-459]
+- `RegexCache.get` (method) component `RegexCache.get [method]` (`a8d355a4-3204-557f-86c2-30fe85745901`) lines 445-450 [crates/gwiki/src/health.rs:445-450]
   - Signature: `fn get(&mut self, pattern: &str) -> Option<regex::Regex> {`
-  - Purpose: Indexed method `RegexCache.get` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:438-443]
-- `RegexCache.insert` (method) component `RegexCache.insert [method]` (`4119807f-e5e9-5fdf-be6e-0330f495f948`) lines 445-451 [crates/gwiki/src/health.rs:445-451]
+  - Purpose: Indexed method `RegexCache.get` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:445-450]
+- `RegexCache.insert` (method) component `RegexCache.insert [method]` (`72862afc-613d-51e1-9d39-87c77709fca4`) lines 452-458 [crates/gwiki/src/health.rs:452-458]
   - Signature: `fn insert(&mut self, pattern: String, regex: regex::Regex) {`
-  - Purpose: Indexed method `RegexCache.insert` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:445-451]
-- `source_issue` (function) component `source_issue [function]` (`abef3f2d-665b-581d-83da-dca1b2c1b293`) lines 454-460 [crates/gwiki/src/health.rs:454-460]
+  - Purpose: Indexed method `RegexCache.insert` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:452-458]
+- `source_issue` (function) component `source_issue [function]` (`addd0e03-5908-5e29-adae-11b87ea753be`) lines 461-467 [crates/gwiki/src/health.rs:461-467]
   - Signature: `fn source_issue(source: &SourceRecord) -> HealthSourceIssue {`
-  - Purpose: Indexed function `source_issue` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:454-460]
-- `duplicate_concepts` (function) component `duplicate_concepts [function]` (`08f82d1f-370e-5e6a-a02d-9fa3176a3bdb`) lines 462-482 [crates/gwiki/src/health.rs:462-482]
+  - Purpose: Indexed function `source_issue` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:461-467]
+- `duplicate_concepts` (function) component `duplicate_concepts [function]` (`aa127f22-26d8-5151-9b8e-1b53f96cedb6`) lines 469-489 [crates/gwiki/src/health.rs:469-489]
   - Signature: `fn duplicate_concepts(pages: &[crate::lint::WikiPage]) -> Vec<DuplicateConcept> {`
-  - Purpose: Indexed function `duplicate_concepts` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:462-482]
-- `render_paths` (function) component `render_paths [function]` (`ad88bab3-bfce-5f4c-8c15-7f9b731305a1`) lines 484-497 [crates/gwiki/src/health.rs:484-497]
+  - Purpose: Indexed function `duplicate_concepts` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:469-489]
+- `render_paths` (function) component `render_paths [function]` (`3915ed8d-cf6c-5da0-a73f-b118efa3f581`) lines 491-504 [crates/gwiki/src/health.rs:491-504]
   - Signature: `fn render_paths(text: &mut String, heading: &str, paths: &[PathBuf]) {`
-  - Purpose: Indexed function `render_paths` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:484-497]
-- `render_sources` (function) component `render_sources [function]` (`65ad9f71-ad8a-5f9b-8066-2c4c23103db3`) lines 499-514 [crates/gwiki/src/health.rs:499-514]
+  - Purpose: Indexed function `render_paths` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:491-504]
+- `render_sources` (function) component `render_sources [function]` (`0f343c25-8234-5046-a27e-72e786e0271f`) lines 506-521 [crates/gwiki/src/health.rs:506-521]
   - Signature: `fn render_sources(text: &mut String, heading: &str, sources: &[HealthSourceIssue]) {`
-  - Purpose: Indexed function `render_sources` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:499-514]
-- `render_broken_links` (function) component `render_broken_links [function]` (`85751241-4943-59ec-8e33-d71da21aa7e5`) lines 516-531 [crates/gwiki/src/health.rs:516-531]
+  - Purpose: Indexed function `render_sources` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:506-521]
+- `render_broken_links` (function) component `render_broken_links [function]` (`52a1766a-685d-533d-8c9d-36959e015f9c`) lines 523-538 [crates/gwiki/src/health.rs:523-538]
   - Signature: `fn render_broken_links(text: &mut String, issues: &[crate::lint::LinkIssue]) {`
-  - Purpose: Indexed function `render_broken_links` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:516-531]
-- `render_duplicate_concepts` (function) component `render_duplicate_concepts [function]` (`af01a55b-6cc7-57a0-b997-d906e6d6b40e`) lines 533-553 [crates/gwiki/src/health.rs:533-553]
+  - Purpose: Indexed function `render_broken_links` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:523-538]
+- `render_duplicate_concepts` (function) component `render_duplicate_concepts [function]` (`cb18da0f-5e4e-5b7d-8d13-ee44f5da9f5e`) lines 540-560 [crates/gwiki/src/health.rs:540-560]
   - Signature: `fn render_duplicate_concepts(text: &mut String, duplicates: &[DuplicateConcept]) {`
-  - Purpose: Indexed function `render_duplicate_concepts` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:533-553]
-- `health_checks_required_cases` (function) component `health_checks_required_cases [function]` (`07731515-dfb2-5b0a-8c41-1952f7cf1d47`) lines 561-604 [crates/gwiki/src/health.rs:561-604]
+  - Purpose: Indexed function `render_duplicate_concepts` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:540-560]
+- `health_checks_required_cases` (function) component `health_checks_required_cases [function]` (`7269f5b3-ec4a-573f-89f0-783909bec53f`) lines 568-611 [crates/gwiki/src/health.rs:568-611]
   - Signature: `fn health_checks_required_cases() {`
-  - Purpose: Indexed function `health_checks_required_cases` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:561-604]
-- `inspect_does_not_persist_health_snapshots` (function) component `inspect_does_not_persist_health_snapshots [function]` (`eba90ad8-d61b-5d88-bb2b-eff4190067d5`) lines 607-631 [crates/gwiki/src/health.rs:607-631]
+  - Purpose: Indexed function `health_checks_required_cases` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:568-611]
+- `inspect_does_not_persist_health_snapshots` (function) component `inspect_does_not_persist_health_snapshots [function]` (`ad2b78fd-4fa1-5265-a4a3-bcb804064ac3`) lines 614-638 [crates/gwiki/src/health.rs:614-638]
   - Signature: `fn inspect_does_not_persist_health_snapshots() {`
-  - Purpose: Indexed function `inspect_does_not_persist_health_snapshots` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:607-631]
-- `source_reference_matching_skips_code_fences_and_partial_words` (function) component `source_reference_matching_skips_code_fences_and_partial_words [function]` (`4d1fbd54-9e46-5fb5-a0fe-9c1a8a0e8893`) lines 634-647 [crates/gwiki/src/health.rs:634-647]
+  - Purpose: Indexed function `inspect_does_not_persist_health_snapshots` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:614-638]
+- `source_reference_matching_skips_code_fences_and_partial_words` (function) component `source_reference_matching_skips_code_fences_and_partial_words [function]` (`87a1399c-6487-5d9f-9e60-c3616113e8aa`) lines 641-654 [crates/gwiki/src/health.rs:641-654]
   - Signature: `fn source_reference_matching_skips_code_fences_and_partial_words() {`
-  - Purpose: Indexed function `source_reference_matching_skips_code_fences_and_partial_words` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:634-647]
-- `citation_index_marks_cited_sources_once_per_page` (function) component `citation_index_marks_cited_sources_once_per_page [function]` (`cab069d2-aa89-5d0e-a4fe-2d5ddd37243c`) lines 650-688 [crates/gwiki/src/health.rs:650-688]
+  - Purpose: Indexed function `source_reference_matching_skips_code_fences_and_partial_words` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:641-654]
+- `citation_index_marks_cited_sources_once_per_page` (function) component `citation_index_marks_cited_sources_once_per_page [function]` (`4689ee6f-ee25-58c0-a45c-0c00adbb4ca2`) lines 657-695 [crates/gwiki/src/health.rs:657-695]
   - Signature: `fn citation_index_marks_cited_sources_once_per_page() {`
-  - Purpose: Indexed function `citation_index_marks_cited_sources_once_per_page` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:650-688]
-- `cached_regex_returns_false_for_malformed_patterns` (function) component `cached_regex_returns_false_for_malformed_patterns [function]` (`6bc17c85-df8d-57db-8809-e58c14ddd6f8`) lines 691-693 [crates/gwiki/src/health.rs:691-693]
+  - Purpose: Indexed function `citation_index_marks_cited_sources_once_per_page` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:657-695]
+- `cached_regex_returns_false_for_malformed_patterns` (function) component `cached_regex_returns_false_for_malformed_patterns [function]` (`3c438f63-463b-5304-b523-315a9332e936`) lines 698-700 [crates/gwiki/src/health.rs:698-700]
   - Signature: `fn cached_regex_returns_false_for_malformed_patterns() {`
-  - Purpose: Indexed function `cached_regex_returns_false_for_malformed_patterns` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:691-693]
-- `stale_after_compares_dates_and_times_to_now` (function) component `stale_after_compares_dates_and_times_to_now [function]` (`05a469b7-ab7f-58f8-80f2-cf146aad87b4`) lines 696-705 [crates/gwiki/src/health.rs:696-705]
+  - Purpose: Indexed function `cached_regex_returns_false_for_malformed_patterns` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:698-700]
+- `stale_after_compares_dates_and_times_to_now` (function) component `stale_after_compares_dates_and_times_to_now [function]` (`c57b8b6a-a231-5476-bee2-eee435da290e`) lines 703-712 [crates/gwiki/src/health.rs:703-712]
   - Signature: `fn stale_after_compares_dates_and_times_to_now() {`
-  - Purpose: Indexed function `stale_after_compares_dates_and_times_to_now` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:696-705]
-- `regex_cache_touch_updates_lru_order` (function) component `regex_cache_touch_updates_lru_order [function]` (`2bf31d1c-1108-5926-a3aa-82d61f4cc079`) lines 708-719 [crates/gwiki/src/health.rs:708-719]
+  - Purpose: Indexed function `stale_after_compares_dates_and_times_to_now` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:703-712]
+- `regex_cache_touch_updates_lru_order` (function) component `regex_cache_touch_updates_lru_order [function]` (`7b8015d9-cf15-5a10-977f-d67cac60898f`) lines 715-726 [crates/gwiki/src/health.rs:715-726]
   - Signature: `fn regex_cache_touch_updates_lru_order() {`
-  - Purpose: Indexed function `regex_cache_touch_updates_lru_order` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:708-719]
-- `fenced_code_closes_only_on_matching_delimiter` (function) component `fenced_code_closes_only_on_matching_delimiter [function]` (`e58a2a7f-bf32-5772-bb12-875a60b5d5f3`) lines 722-728 [crates/gwiki/src/health.rs:722-728]
+  - Purpose: Indexed function `regex_cache_touch_updates_lru_order` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:715-726]
+- `fenced_code_closes_only_on_matching_delimiter` (function) component `fenced_code_closes_only_on_matching_delimiter [function]` (`de2bf799-c120-503f-ba2a-a610d0277e49`) lines 729-735 [crates/gwiki/src/health.rs:729-735]
   - Signature: `fn fenced_code_closes_only_on_matching_delimiter() {`
-  - Purpose: Indexed function `fenced_code_closes_only_on_matching_delimiter` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:722-728]
-- `fenced_code_requires_matching_marker_length` (function) component `fenced_code_requires_matching_marker_length [function]` (`c65223e9-c244-5085-bd36-76bd193e7e78`) lines 731-738 [crates/gwiki/src/health.rs:731-738]
+  - Purpose: Indexed function `fenced_code_closes_only_on_matching_delimiter` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:729-735]
+- `fenced_code_requires_matching_marker_length` (function) component `fenced_code_requires_matching_marker_length [function]` (`a1f83db7-a365-55c1-93a7-1892e919847e`) lines 738-745 [crates/gwiki/src/health.rs:738-745]
   - Signature: `fn fenced_code_requires_matching_marker_length() {`
-  - Purpose: Indexed function `fenced_code_requires_matching_marker_length` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:731-738]
-- `stale_citation_env_rejects_invalid_values` (function) component `stale_citation_env_rejects_invalid_values [function]` (`61487bea-8ba0-5532-aa2f-4fd320bd6de6`) lines 741-746 [crates/gwiki/src/health.rs:741-746]
+  - Purpose: Indexed function `fenced_code_requires_matching_marker_length` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:738-745]
+- `stale_citation_env_rejects_invalid_values` (function) component `stale_citation_env_rejects_invalid_values [function]` (`5abb0747-9e2f-5286-838a-f84ce15607c8`) lines 748-753 [crates/gwiki/src/health.rs:748-753]
   - Signature: `fn stale_citation_env_rejects_invalid_values() {`
-  - Purpose: Indexed function `stale_citation_env_rejects_invalid_values` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:741-746]
-- `stale_citation_uses_full_fetched_timestamp` (function) component `stale_citation_uses_full_fetched_timestamp [function]` (`c7dca869-78e0-5135-857c-753f93aeece4`) lines 749-762 [crates/gwiki/src/health.rs:749-762]
+  - Purpose: Indexed function `stale_citation_env_rejects_invalid_values` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:748-753]
+- `stale_citation_uses_full_fetched_timestamp` (function) component `stale_citation_uses_full_fetched_timestamp [function]` (`9db51653-7d4d-5c51-9716-2397299f42e6`) lines 756-769 [crates/gwiki/src/health.rs:756-769]
   - Signature: `fn stale_citation_uses_full_fetched_timestamp() {`
-  - Purpose: Indexed function `stale_citation_uses_full_fetched_timestamp` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:749-762]
-- `change_triggered_refresh_health_degrades_to_provenance_only_mapping` (function) component `change_triggered_refresh_health_degrades_to_provenance_only_mapping [function]` (`e8d0a0eb-779f-596c-b57e-5552ad58838f`) lines 765-800 [crates/gwiki/src/health.rs:765-800]
+  - Purpose: Indexed function `stale_citation_uses_full_fetched_timestamp` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:756-769]
+- `change_triggered_refresh_health_degrades_to_provenance_only_mapping` (function) component `change_triggered_refresh_health_degrades_to_provenance_only_mapping [function]` (`ffb0c270-15d1-5f51-951c-a858b98e55b3`) lines 772-807 [crates/gwiki/src/health.rs:772-807]
   - Signature: `fn change_triggered_refresh_health_degrades_to_provenance_only_mapping() {`
-  - Purpose: Indexed function `change_triggered_refresh_health_degrades_to_provenance_only_mapping` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:765-800]
-- `write_page` (function) component `write_page [function]` (`c9bbf141-18a9-540d-9f36-11a4493e48bc`) lines 802-806 [crates/gwiki/src/health.rs:802-806]
+  - Purpose: Indexed function `change_triggered_refresh_health_degrades_to_provenance_only_mapping` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:772-807]
+- `write_page` (function) component `write_page [function]` (`928a548c-07e6-59b8-addd-73f3f27be823`) lines 809-813 [crates/gwiki/src/health.rs:809-813]
   - Signature: `fn write_page(root: &Path, relative: &str, markdown: &str) {`
-  - Purpose: Indexed function `write_page` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:802-806]
-- `source_record` (function) component `source_record [function]` (`a11605d4-61a0-57bb-9dc3-701779bd5191`) lines 808-823 [crates/gwiki/src/health.rs:808-823]
+  - Purpose: Indexed function `write_page` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:809-813]
+- `source_record` (function) component `source_record [function]` (`a0aec9fa-bb33-5cba-9543-5facdbbc2c67`) lines 815-830 [crates/gwiki/src/health.rs:815-830]
   - Signature: `fn source_record(fetched_at: &str) -> SourceRecord {`
-  - Purpose: Indexed function `source_record` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:808-823]
+  - Purpose: Indexed function `source_record` in `crates/gwiki/src/health.rs`. [crates/gwiki/src/health.rs:815-830]
 

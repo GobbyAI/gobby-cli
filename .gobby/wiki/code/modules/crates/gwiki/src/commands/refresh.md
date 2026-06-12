@@ -24,21 +24,15 @@ provenance:
   - 27-38
   - 41-43
   - 45-52
-  - 46-51
   - 54-69
-  - 55-68
   - 72-85
   - 88-98
   - 101-107
   - 110-116
   - 119-125
   - 127-137
-  - 128-136
   - 140-144
   - 146-170
-  - 147-153
-  - 155-161
-  - 163-169
 - file: crates/gwiki/src/commands/refresh/render.rs
   ranges:
   - 3-49
@@ -46,21 +40,21 @@ provenance:
 - file: crates/gwiki/src/commands/refresh/selection.rs
   ranges:
   - 4-75
-  - 78-81
-  - 83-110
-  - 113-116
-  - 119-122
-  - 124-136
-  - 138-144
-  - 146-150
-  - 152-166
-  - 168-181
-  - 183-206
-  - 208-216
-  - 218-220
-  - 222-228
-  - 230-235
-  - 244-290
+  - 79-82
+  - 85-112
+  - 115-118
+  - 121-124
+  - 126-138
+  - 140-146
+  - 148-152
+  - 155-169
+  - 171-184
+  - 186-209
+  - 211-219
+  - 221-223
+  - 225-231
+  - 233-238
+  - 247-293
 - file: crates/gwiki/src/commands/refresh/tests.rs
   ranges:
   - 7-13
@@ -101,11 +95,7 @@ Parent: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Overview
 
-The `refresh` command module implements gwiki's source-refresh pipeline, which re-fetches previously indexed sources (HTTP URLs and local files), detects content changes via hashing, and updates the vault accordingly.
-
-Execution flows through `mod.rs` entry points (`execute`, `execute_with_fetcher`, `execute_resolved_with_fetcher`) that orchestrate selection, fetching, and finalization while supporting dry-run and injectable fetchers for testing. `selection.rs` resolves which sources to refresh—handling explicit IDs, all-source sweeps, and change-triggered selection—classifying URL vs. local-file sources, markdown replay kinds, and structural selection failures. `candidate.rs` performs the per-source work: building URL and local-file refresh candidates, hashing local files, and finalizing changed refreshes by replacing manifests and removing stale raw assets. `vault.rs` provides safe path handling for raw sources and assets, scope-root setup, and guarded relative-file removal that rejects unsafe paths. `model.rs` defines the shared data types (`RefreshPlan`, `RefreshResult`, `RefreshedSource`, `RefreshFailure`, `SkippedRefresh`, `IndexStatus`, `IndexedCounts`, etc.), and `render.rs` formats refresh results and status into user-facing output.
-
-`tests.rs` provides extensive coverage including dry-run planning, unchanged-content skips, changed-content replay/replacement, unsupported/missing source failures, path-safety guards, and case-insensitive HTTP scheme handling.
+The refresh command module manages the process of updating wiki content from local files and remote URLs. It handles source selection (including change-triggered detection), identifies stale or modified candidates via file hashing or URL fetching, constructs execution plans, safely writes updated content within the vault, and renders the refresh outcome and progress.
 [crates/gwiki/src/commands/refresh/candidate.rs:15-74]
 [crates/gwiki/src/commands/refresh/mod.rs:29-37]
 [crates/gwiki/src/commands/refresh/model.rs:5-9]
@@ -118,40 +108,40 @@ Execution flows through `mod.rs` entry points (`execute`, `execute_with_fetcher`
 sequenceDiagram
     participant m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add as all_source_refresh_skips_unsupported_records &#91;function&#93;
     participant m_0617c338_79c5_5ba3_8339_0cbf68291f33 as refresh_changed_url_source &#91;function&#93;
-    participant m_1da5a4a4_9ee2_5155_9f00_416c1fe4a381 as is_http_url &#91;function&#93;
-    participant m_27b7e1a4_7251_53e9_832a_a2437abc7cd2 as selection_failure &#91;function&#93;
+    participant m_0a582330_0595_5b2b_9522_47613d96a768 as refresh_url &#91;function&#93;
     participant m_3ad695f4_9565_51ea_9256_24cdf83998ea as seed_file_without_replay &#91;function&#93;
-    participant m_3f55b8fd_a8d5_590e_8eb4_63fef81b71a9 as is_url_source &#91;function&#93;
+    participant m_3ee83343_1ca7_5c10_b431_ada74ace7c65 as select_change_triggered_refresh &#91;function&#93;
     participant m_43829ce6_08fa_5a08_997b_2a8d28afae4d as invalid_http_like_locations_are_not_url_sources &#91;function&#93;
+    participant m_483ca9cb_9481_55df_839d_c197df1de45a as selection_failure &#91;function&#93;
     participant m_48af8e2b_650e_5dc6_bf51_9b4ed587c3f5 as refresh_local_candidate &#91;function&#93;
-    participant m_4ac2cdad_4ebf_5740_8ce9_02091e3f4f47 as local_file_replay &#91;function&#93;
     participant m_50a5bf4b_66b9_5619_be11_1ef651641bf0 as select_sources &#91;function&#93;
-    participant m_53628105_4d35_56b1_ace1_4b8071e44803 as is_markdown_replay &#91;function&#93;
+    participant m_528f535e_3cd4_5b50_b98c_cc875272b7ac as refresh_plan_failure &#91;function&#93;
     participant m_5a5a8b89_8f80_5e29_911d_0e57b4729095 as seed_unsupported_connector &#91;function&#93;
     participant m_5e442ff7_e6d7_5623_aa92_6f39de454509 as unchanged_content_does_not_rewrite_or_index &#91;function&#93;
     participant m_6ad1cf88_5527_56ac_8fee_0a7b0e5337da as explicit_unsupported_and_missing_sources_fail_structurally &#91;function&#93;
     participant m_72a0b3b7_9571_5c41_a72d_81e1dcfaa1ca as changed_content_replaces_manifest_and_removes_old_raw &#91;function&#93;
+    participant m_818c5d2b_a7d3_5207_b7a9_0982b93c00f0 as is_markdown_replay &#91;function&#93;
     participant m_83f8620d_bb18_5b19_a613_960b9176b15a as refresh_changed_local_source &#91;function&#93;
     participant m_89d5ac91_7ebb_524b_afcd_aef82ff7e4bd as seed_url &#91;function&#93;
     participant m_9c9623fa_6398_5989_ac54_83c7fee1fd7a as finalize_changed_refresh &#91;function&#93;
-    participant m_a15047df_bca9_539b_a3f8_7580205d6d79 as replay_kind &#91;function&#93;
     participant m_a40abd46_665f_5ed9_bf15_40147ac6ba9f as snapshot &#91;function&#93;
-    participant m_a73fe07b_22e6_570a_84e4_963bdce68f84 as refresh_plan_failure &#91;function&#93;
     participant m_c2499481_b616_52a5_b31f_4718867fc6f2 as local_file_hash &#91;function&#93;
+    participant m_d1173452_7f8a_564b_b4b2_92e8dc483b7d as replay_kind &#91;function&#93;
+    participant m_d7676da4_be25_5d7a_ac13_fb52966d8da1 as is_http_url &#91;function&#93;
     participant m_f0c37b2c_e586_5edd_83aa_ecf554126398 as test_scope &#91;function&#93;
     m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add->>m_5a5a8b89_8f80_5e29_911d_0e57b4729095: calls
     m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add->>m_89d5ac91_7ebb_524b_afcd_aef82ff7e4bd: calls
     m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add->>m_a40abd46_665f_5ed9_bf15_40147ac6ba9f: calls
     m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add->>m_f0c37b2c_e586_5edd_83aa_ecf554126398: calls
     m_0617c338_79c5_5ba3_8339_0cbf68291f33->>m_9c9623fa_6398_5989_ac54_83c7fee1fd7a: calls
-    m_3f55b8fd_a8d5_590e_8eb4_63fef81b71a9->>m_1da5a4a4_9ee2_5155_9f00_416c1fe4a381: calls
+    m_0a582330_0595_5b2b_9522_47613d96a768->>m_d7676da4_be25_5d7a_ac13_fb52966d8da1: calls
+    m_3ee83343_1ca7_5c10_b431_ada74ace7c65->>m_818c5d2b_a7d3_5207_b7a9_0982b93c00f0: calls
     m_43829ce6_08fa_5a08_997b_2a8d28afae4d->>m_89d5ac91_7ebb_524b_afcd_aef82ff7e4bd: calls
     m_48af8e2b_650e_5dc6_bf51_9b4ed587c3f5->>m_83f8620d_bb18_5b19_a613_960b9176b15a: calls
     m_48af8e2b_650e_5dc6_bf51_9b4ed587c3f5->>m_c2499481_b616_52a5_b31f_4718867fc6f2: calls
-    m_50a5bf4b_66b9_5619_be11_1ef651641bf0->>m_27b7e1a4_7251_53e9_832a_a2437abc7cd2: calls
-    m_50a5bf4b_66b9_5619_be11_1ef651641bf0->>m_a15047df_bca9_539b_a3f8_7580205d6d79: calls
-    m_50a5bf4b_66b9_5619_be11_1ef651641bf0->>m_a73fe07b_22e6_570a_84e4_963bdce68f84: calls
-    m_53628105_4d35_56b1_ace1_4b8071e44803->>m_4ac2cdad_4ebf_5740_8ce9_02091e3f4f47: calls
+    m_50a5bf4b_66b9_5619_be11_1ef651641bf0->>m_483ca9cb_9481_55df_839d_c197df1de45a: calls
+    m_50a5bf4b_66b9_5619_be11_1ef651641bf0->>m_528f535e_3cd4_5b50_b98c_cc875272b7ac: calls
+    m_50a5bf4b_66b9_5619_be11_1ef651641bf0->>m_d1173452_7f8a_564b_b4b2_92e8dc483b7d: calls
     m_5e442ff7_e6d7_5623_aa92_6f39de454509->>m_89d5ac91_7ebb_524b_afcd_aef82ff7e4bd: calls
     m_5e442ff7_e6d7_5623_aa92_6f39de454509->>m_a40abd46_665f_5ed9_bf15_40147ac6ba9f: calls
     m_5e442ff7_e6d7_5623_aa92_6f39de454509->>m_f0c37b2c_e586_5edd_83aa_ecf554126398: calls
@@ -184,10 +174,10 @@ sequenceDiagram
 [crates/gwiki/src/commands/refresh/render.rs:51-68]
 - [[code/files/crates/gwiki/src/commands/refresh/selection.rs|crates/gwiki/src/commands/refresh/selection.rs]] - `crates/gwiki/src/commands/refresh/selection.rs` exposes 16 indexed API symbols.
 [crates/gwiki/src/commands/refresh/selection.rs:4-75]
-[crates/gwiki/src/commands/refresh/selection.rs:78-81]
-[crates/gwiki/src/commands/refresh/selection.rs:83-110]
-[crates/gwiki/src/commands/refresh/selection.rs:113-116]
-[crates/gwiki/src/commands/refresh/selection.rs:119-122]
+[crates/gwiki/src/commands/refresh/selection.rs:79-82]
+[crates/gwiki/src/commands/refresh/selection.rs:85-112]
+[crates/gwiki/src/commands/refresh/selection.rs:115-118]
+[crates/gwiki/src/commands/refresh/selection.rs:121-124]
 - [[code/files/crates/gwiki/src/commands/refresh/tests.rs|crates/gwiki/src/commands/refresh/tests.rs]] - `crates/gwiki/src/commands/refresh/tests.rs` exposes 20 indexed API symbols.
 [crates/gwiki/src/commands/refresh/tests.rs:7-13]
 [crates/gwiki/src/commands/refresh/tests.rs:15-31]
@@ -237,21 +227,21 @@ sequenceDiagram
 - `7dd40a3d-6099-54f0-b0b3-9f8263f090ce`
 - `7e5a9b6f-d731-5e28-a03c-79bcbc382a6e`
 - `50a5bf4b-66b9-5619-be11-1ef651641bf0`
-- `64688b30-b3c6-51a1-abc7-ba361633771c`
-- `d2da1068-b915-51b4-89a1-7f2e2f3a487c`
-- `39997ebd-f2a3-51a9-959b-7d6a49c1d64f`
-- `cc9363af-a2c9-593c-ab6c-d8b5a5b8e851`
-- `a15047df-bca9-539b-a3f8-7580205d6d79`
-- `fe34ccee-568f-525d-a4ff-4add664c2e2b`
-- `4ac2cdad-4ebf-5740-8ce9-02091e3f4f47`
-- `53628105-4d35-56b1-ace1-4b8071e44803`
-- `d7268323-3e3c-55ce-adfa-ae6ec4b855fd`
-- `27b7e1a4-7251-53e9-832a-a2437abc7cd2`
-- `a73fe07b-22e6-570a-84e4-963bdce68f84`
-- `3f55b8fd-a8d5-590e-8eb4-63fef81b71a9`
-- `b3d2d10a-509c-5f0d-942e-c9a3e0ee7c6e`
-- `1da5a4a4-9ee2-5155-9f00-416c1fe4a381`
-- `f73f4006-211d-5a0f-807a-1c2b33bd3644`
+- `ee53c758-21ec-5506-a8d4-9b002f676ebc`
+- `3ee83343-1ca7-5c10-b431-ada74ace7c65`
+- `4bd59b49-c1f1-513b-9e8f-6554606220c9`
+- `13fe3d85-b3cc-5dac-903e-ebd3b410ea6d`
+- `d1173452-7f8a-564b-b4b2-92e8dc483b7d`
+- `e2feea7b-762e-5d7b-9c45-3cebbae3e155`
+- `1e76e1ca-3d5d-51f5-abee-1dc70c9dd7fd`
+- `818c5d2b-a7d3-5207-b7a9-0982b93c00f0`
+- `7a16b48f-42df-5dc6-b95e-b4c90b5826df`
+- `483ca9cb-9481-55df-839d-c197df1de45a`
+- `528f535e-3cd4-5b50-b98c-cc875272b7ac`
+- `e733c3aa-3b58-594e-8a62-037430ca201f`
+- `0a582330-0595-5b2b-9522-47613d96a768`
+- `d7676da4-be25-5d7a-ac13-fb52966d8da1`
+- `82c6cfa6-a432-5503-848a-1c92ea7b7008`
 - `f0c37b2c-e586-5edd-83aa-ecf554126398`
 - `89d5ac91-7ebb-524b-afcd-aef82ff7e4bd`
 - `3ad695f4-9565-51ea-9256-24cdf83998ea`

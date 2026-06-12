@@ -21,22 +21,20 @@ provenance:
   - 21-27
   - 30-36
   - 38-46
-  - 39-45
   - 49-53
   - 56-62
   - 64-66
-  - 68-71
-  - '73'
-  - 75-84
-  - 86-98
-  - 100-111
-  - 113-188
-  - 190-198
-  - 200-211
-  - 201-210
-  - 213-215
-  - 217-219
-  - 221-226
+  - 68-72
+  - '74'
+  - 77-86
+  - 88-100
+  - 103-114
+  - 116-191
+  - 193-201
+  - 203-214
+  - 216-218
+  - 220-222
+  - 224-229
 - file: crates/gwiki/src/ingest/document/office.rs
   ranges:
   - 39-52
@@ -105,13 +103,7 @@ Parent: [[code/modules/crates/gwiki/src/ingest|crates/gwiki/src/ingest]]
 
 ## Overview
 
-The `document` module handles ingestion of non-PDF document sources, converting HTML and Office files (DOCX, PPTX, XLSX/spreadsheets) into normalized Markdown for the gwiki pipeline.
-
-`mod.rs` defines the public contract—`DocumentRequest`, `DocumentExtraction`, `DocumentSnapshot`, the `DocumentExtractor`/`DocumentEndpoint` traits, and `LocalDocumentExtractor`—plus the orchestration entry points (`ingest_document`, `ingest_document_with_endpoint`, and their without-index/with-endpoint variants) and failure cleanup.
-
-`html.rs` extracts titles and visible/inline text from HTML, applying block-element awareness, whitespace normalization, and closing-punctuation handling. `office.rs` parses ZIP-based Office formats with bounded reads (entry size, slide, row, and column limits configurable via environment), decoding XML entities and emitting Markdown tables. `render.rs` renders and atomically writes derived Markdown, and maps extraction errors to degradation modes and unit counts.
-
-`tests.rs` validates the full pipeline using synthetic Office/HTML fixtures, covering text combination, table edge cases, bounding limits, and degradation metadata.
+The `document` module manages the ingestion and extraction of HTML and Office documents (DOCX, PPTX, and XLSX) into normalized Markdown. It defines core types for document requests and extraction results, parses visible text and tabular structures with safety limits, and implements rendering pathways with graceful error degradation.
 [crates/gwiki/src/ingest/document/html.rs:8-39]
 [crates/gwiki/src/ingest/document/mod.rs:21-27]
 [crates/gwiki/src/ingest/document/office.rs:39-52]
@@ -125,27 +117,26 @@ sequenceDiagram
     participant m_00bf0f7d_829e_5e70_b512_33f562274178 as warn_empty_office_paragraph &#91;function&#93;
     participant m_038959ea_6f68_51a7_b28d_9b857beca386 as extract_docx &#91;function&#93;
     participant m_1bf81aa4_071b_5672_b65a_288e5c3f154f as extract_html_document &#91;function&#93;
-    participant m_1eb62e82_d791_5f21_a742_6aa5d6bce9cf as ingest_document_with_endpoint_without_index &#91;function&#93;
     participant m_2052c6f8_a3c6_5375_83a2_ed7b4eeb350f as xml_paragraphs_ignore_text_outside_t_without_api_change &#91;function&#93;
-    participant m_28c79fc5_4d65_5581_aca8_e84794639b9b as LocalDocumentExtractor.extract &#91;method&#93;
     participant m_2c2e0154_4860_55af_837e_736858f6f3f0 as is_block_element &#91;function&#93;
+    participant m_31a4c0ea_3eb5_5480_b27e_96b19f488838 as ingest_document_without_index &#91;function&#93;
     participant m_3c09510a_fe5d_53e3_9cf1_861a3002dc5d as create_document_temp_file &#91;function&#93;
     participant m_3c268ad6_387c_5585_8bb8_97ecb9fde676 as write_document_derived_markdown &#91;function&#93;
-    participant m_3e2326a6_a30f_56cd_ac77_497defe48782 as ingest_document_with_endpoint &#91;function&#93;
+    participant m_3de3b955_3f02_5281_9dff_82378cff55f0 as LocalDocumentExtractor.extract &#91;method&#93;
     participant m_40f28995_bdf8_5e67_b4ad_2d17c3849718 as xlsx_with_sheet_data &#91;function&#93;
+    participant m_433322d9_00c7_5134_9d5b_514d879a9fc9 as ingest_document_with_endpoint &#91;function&#93;
     participant m_554261b9_ac01_5d3f_af7c_f6248e0a3034 as write_document_markdown_atomic &#91;function&#93;
     participant m_67b04ae9_5316_58ad_8c9e_4345e12cef0e as extract_xml_paragraphs &#91;function&#93;
-    participant m_680ced59_a597_5600_a6f1_c76a535f8112 as ingest_document &#91;function&#93;
     participant m_68d26b08_c2bc_5988_ac45_5cf8370577ff as collect_visible_text &#91;function&#93;
-    participant m_6f4cbd57_a915_5fed_a9fa_b99276f8d10b as remove_document_asset_after_failure &#91;function&#93;
-    participant m_74d50e7a_417e_5351_a83e_672ad2956497 as ingest_document_without_index &#91;function&#93;
     participant m_7de0872b_a2d7_554d_931c_3e6e462b823a as push_visible_part &#91;function&#93;
     participant m_9076381c_f935_5c44_bf48_257b15ba9c62 as read_zip_entry &#91;function&#93;
+    participant m_a037af27_493a_5edd_9284_72919842ba8b as document_error &#91;function&#93;
+    participant m_a2b12b47_340d_51ff_9881_88a88e72371d as ingest_document_with_endpoint_without_index &#91;function&#93;
     participant m_a3a6a5d5_1f3f_5fbd_b4f4_ad403beb4630 as render_document_derived_markdown &#91;function&#93;
     participant m_c6c02a87_4cc3_542e_bbc1_446e0185e8bc as extract_html_title &#91;function&#93;
-    participant m_d6e87f6e_13e8_52a9_a6d9_ddca9e0f8772 as document_error &#91;function&#93;
     participant m_da78855e_7ec0_5777_967c_41b0fe4c08d8 as warn_ignored_office_text &#91;function&#93;
     participant m_e159808c_c939_572e_a119_bfac3b926927 as zip_bytes &#91;function&#93;
+    participant m_e46717f1_1950_5c09_b743_54cefbefbdfe as collect_inline_text &#91;function&#93;
     participant m_eefaf173_938b_5db1_a098_edfcd7f52ba7 as normalize_markdown_text &#91;function&#93;
     participant m_fcee01ba_27b2_50fa_9897_5b5851c066da as local_name &#91;function&#93;
     m_038959ea_6f68_51a7_b28d_9b857beca386->>m_67b04ae9_5316_58ad_8c9e_4345e12cef0e: calls
@@ -153,21 +144,21 @@ sequenceDiagram
     m_1bf81aa4_071b_5672_b65a_288e5c3f154f->>m_68d26b08_c2bc_5988_ac45_5cf8370577ff: calls
     m_1bf81aa4_071b_5672_b65a_288e5c3f154f->>m_c6c02a87_4cc3_542e_bbc1_446e0185e8bc: calls
     m_1bf81aa4_071b_5672_b65a_288e5c3f154f->>m_eefaf173_938b_5db1_a098_edfcd7f52ba7: calls
-    m_1eb62e82_d791_5f21_a742_6aa5d6bce9cf->>m_6f4cbd57_a915_5fed_a9fa_b99276f8d10b: calls
     m_2052c6f8_a3c6_5375_83a2_ed7b4eeb350f->>m_67b04ae9_5316_58ad_8c9e_4345e12cef0e: calls
-    m_28c79fc5_4d65_5581_aca8_e84794639b9b->>m_d6e87f6e_13e8_52a9_a6d9_ddca9e0f8772: calls
+    m_31a4c0ea_3eb5_5480_b27e_96b19f488838->>m_a2b12b47_340d_51ff_9881_88a88e72371d: calls
     m_3c268ad6_387c_5585_8bb8_97ecb9fde676->>m_554261b9_ac01_5d3f_af7c_f6248e0a3034: calls
     m_3c268ad6_387c_5585_8bb8_97ecb9fde676->>m_a3a6a5d5_1f3f_5fbd_b4f4_ad403beb4630: calls
-    m_3e2326a6_a30f_56cd_ac77_497defe48782->>m_1eb62e82_d791_5f21_a742_6aa5d6bce9cf: calls
+    m_3de3b955_3f02_5281_9dff_82378cff55f0->>m_a037af27_493a_5edd_9284_72919842ba8b: calls
     m_40f28995_bdf8_5e67_b4ad_2d17c3849718->>m_e159808c_c939_572e_a119_bfac3b926927: calls
+    m_433322d9_00c7_5134_9d5b_514d879a9fc9->>m_a2b12b47_340d_51ff_9881_88a88e72371d: calls
     m_554261b9_ac01_5d3f_af7c_f6248e0a3034->>m_3c09510a_fe5d_53e3_9cf1_861a3002dc5d: calls
     m_67b04ae9_5316_58ad_8c9e_4345e12cef0e->>m_00bf0f7d_829e_5e70_b512_33f562274178: calls
     m_67b04ae9_5316_58ad_8c9e_4345e12cef0e->>m_da78855e_7ec0_5777_967c_41b0fe4c08d8: calls
     m_67b04ae9_5316_58ad_8c9e_4345e12cef0e->>m_fcee01ba_27b2_50fa_9897_5b5851c066da: calls
-    m_680ced59_a597_5600_a6f1_c76a535f8112->>m_74d50e7a_417e_5351_a83e_672ad2956497: calls
     m_68d26b08_c2bc_5988_ac45_5cf8370577ff->>m_2c2e0154_4860_55af_837e_736858f6f3f0: calls
     m_68d26b08_c2bc_5988_ac45_5cf8370577ff->>m_68d26b08_c2bc_5988_ac45_5cf8370577ff: calls
     m_68d26b08_c2bc_5988_ac45_5cf8370577ff->>m_7de0872b_a2d7_554d_931c_3e6e462b823a: calls
+    m_68d26b08_c2bc_5988_ac45_5cf8370577ff->>m_e46717f1_1950_5c09_b743_54cefbefbdfe: calls
 ```
 
 ## Files
@@ -225,17 +216,17 @@ sequenceDiagram
 - `155919ce-7fcf-5e47-a07c-36a4c3c0cd67`
 - `0504ad43-232f-5372-83f6-19f11aa1fd79`
 - `b711a19f-ca46-5c02-92fd-d658bdc13ee9`
-- `c414698f-396e-56ce-8131-734d5073562f`
-- `680ced59-a597-5600-a6f1-c76a535f8112`
-- `74d50e7a-417e-5351-a83e-672ad2956497`
-- `3e2326a6-a30f-56cd-ac77-497defe48782`
-- `1eb62e82-d791-5f21-a742-6aa5d6bce9cf`
-- `6f4cbd57-a915-5fed-a9fa-b99276f8d10b`
-- `50c77fe6-826b-5bfd-a089-0395b771c899`
-- `28c79fc5-4d65-5581-aca8-e84794639b9b`
-- `d57f24a6-a7d6-51ad-95c0-1e1573e96f73`
-- `f0f02b28-319c-5b90-8f45-f6305a2891e5`
-- `d6e87f6e-13e8-52a9-a6d9-ddca9e0f8772`
+- `00487aef-a03c-5717-9a3b-876c3f91922b`
+- `8395cafa-adba-570b-9a18-f0732ee176b7`
+- `31a4c0ea-3eb5-5480-b27e-96b19f488838`
+- `433322d9-00c7-5134-9d5b-514d879a9fc9`
+- `a2b12b47-340d-51ff-9881-88a88e72371d`
+- `a5d4a792-398c-5fe8-aae5-b5d9f9286b18`
+- `85439eaa-41ac-59b8-b33e-3f011823eead`
+- `3de3b955-3f02-5281-9dff-82378cff55f0`
+- `cd44aaaa-0a4f-5c89-82a7-ad7d80c518b4`
+- `beb66529-f429-5375-a6e6-f8e21382dd5f`
+- `a037af27-493a-5edd-9284-72919842ba8b`
 - `f6161534-7863-5f87-8c69-5e008789fad6`
 - `a92d90b8-571c-5a73-b884-4921f7826f7e`
 - `e4bce69a-0c0c-536d-a55d-c34139798481`

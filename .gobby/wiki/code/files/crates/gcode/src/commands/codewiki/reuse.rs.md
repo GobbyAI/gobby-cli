@@ -5,13 +5,8 @@ provenance:
 - file: crates/gcode/src/commands/codewiki/reuse.rs
   ranges:
   - 11-19
-  - 21-96
-  - 22-31
-  - 36-46
-  - 49-57
-  - 59-86
-  - 88-95
-  - 100-102
+  - 21-101
+  - 105-107
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -25,7 +20,7 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 `crates/gcode/src/commands/codewiki/reuse.rs` exposes 8 indexed API symbols.
 [crates/gcode/src/commands/codewiki/reuse.rs:11-19]
-[crates/gcode/src/commands/codewiki/reuse.rs:21-96]
+[crates/gcode/src/commands/codewiki/reuse.rs:21-101]
 [crates/gcode/src/commands/codewiki/reuse.rs:22-31]
 [crates/gcode/src/commands/codewiki/reuse.rs:36-46]
 [crates/gcode/src/commands/codewiki/reuse.rs:49-57]
@@ -34,26 +29,26 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 - `ReusePlan` (class) component `ReusePlan [class]` (`eec87db6-f257-5625-9121-33908d777619`) lines 11-19 [crates/gcode/src/commands/codewiki/reuse.rs:11-19]
   - Signature: `pub(crate) struct ReusePlan {`
-  - Purpose: ReusePlan caches documentation metadata and file-content hashes with lazy evaluation to enable incremental content reuse across a project, using `None` sentinel values to mark unhashable sources that should not be reprocessed. [crates/gcode/src/commands/codewiki/reuse.rs:11-19]
-- `ReusePlan` (class) component `ReusePlan [class]` (`cce1752d-eb6f-5274-b167-b70c61f01758`) lines 21-96 [crates/gcode/src/commands/codewiki/reuse.rs:21-96]
+  - Purpose: `ReusePlan` is an internal planning struct that records the project root, output directory, AI mode, document metadata, and lazily cached current-content hashes to determine which generated codewiki docs can be safely reused, while treating unhashable files as one-time-probed non-reusable inputs. [crates/gcode/src/commands/codewiki/reuse.rs:11-19]
+- `ReusePlan` (class) component `ReusePlan [class]` (`cce1752d-eb6f-5274-b167-b70c61f01758`) lines 21-101 [crates/gcode/src/commands/codewiki/reuse.rs:21-101]
   - Signature: `impl ReusePlan {`
-  - Purpose: ReusePlan is an incremental documentation cache that determines whether previously generated pages can be reused by validating that source file hashes, dependency sets, and AI mode remain unchanged. [crates/gcode/src/commands/codewiki/reuse.rs:21-96]
+  - Purpose: `ReusePlan` loads prior codewiki metadata for a project and uses the current `ai_mode`, output directory, and source-hash set to decide whether a documentation page and its recorded summary can be reused verbatim from disk or must be regenerated. [crates/gcode/src/commands/codewiki/reuse.rs:21-101]
 - `ReusePlan.load` (method) component `ReusePlan.load [method]` (`cce62242-a527-5177-9502-c73105dbc509`) lines 22-31 [crates/gcode/src/commands/codewiki/reuse.rs:22-31]
   - Signature: `pub(crate) fn load(project_root: &Path, out_dir: &Path, ai_mode: &str) -> anyhow::Result<Self> {`
-  - Purpose: Constructs a Self instance by reading persisted codewiki metadata from the output directory and initializing fields with the provided project root, output directory, AI mode, and an empty hash map. [crates/gcode/src/commands/codewiki/reuse.rs:22-31]
+  - Purpose: `load` reads the existing codewiki metadata from `out_dir` and returns a new instance initialized with the provided `project_root`, `out_dir`, and `ai_mode`, reusing the previously stored `docs` while resetting `current_hashes` to an empty `BTreeMap`. [crates/gcode/src/commands/codewiki/reuse.rs:22-31]
 - `ReusePlan.reusable_page` (method) component `ReusePlan.reusable_page [method]` (`c4fae48a-685c-593e-831c-dab9e872d3af`) lines 36-46 [crates/gcode/src/commands/codewiki/reuse.rs:36-46]
   - Signature: `pub(crate) fn reusable_page(`
-  - Purpose: Reads and returns the file contents of a document at a sanitized output path if the document is marked as reusable for the given sources, otherwise returns None. [crates/gcode/src/commands/codewiki/reuse.rs:36-46]
+  - Purpose: Returns `Some(contents)` by first verifying `doc_path` is reusable for the given `sources`, then resolving a safe output path under `out_dir` and reading that file as UTF-8 text, otherwise returns `None` on any check or I/O failure. [crates/gcode/src/commands/codewiki/reuse.rs:36-46]
 - `ReusePlan.reusable_page_with_summary` (method) component `ReusePlan.reusable_page_with_summary [method]` (`015125b2-7388-5621-8d0d-9cb2a00b81fb`) lines 49-57 [crates/gcode/src/commands/codewiki/reuse.rs:49-57]
   - Signature: `pub(crate) fn reusable_page_with_summary(`
-  - Purpose: Retrieves and returns an optional tuple containing a document's reusable page representation and cloned summary for a given path, or `None` if either resource is unavailable. [crates/gcode/src/commands/codewiki/reuse.rs:49-57]
-- `ReusePlan.reusable` (method) component `ReusePlan.reusable [method]` (`ef01acbe-dd9e-560c-b4b6-ff06c49ab56f`) lines 59-86 [crates/gcode/src/commands/codewiki/reuse.rs:59-86]
+  - Purpose: It clones the stored summary for `doc_path`, then returns it paired with `reusable_page(doc_path, sources)` as `Some((page, summary))`, or `None` if the document, summary, or reusable page cannot be retrieved. [crates/gcode/src/commands/codewiki/reuse.rs:49-57]
+- `ReusePlan.reusable` (method) component `ReusePlan.reusable [method]` (`ef01acbe-dd9e-560c-b4b6-ff06c49ab56f`) lines 59-91 [crates/gcode/src/commands/codewiki/reuse.rs:59-91]
   - Signature: `fn reusable(&mut self, doc_path: &str, sources: &BTreeSet<String>) -> bool {`
-  - Purpose: Validates whether a cached document entry is reusable by confirming it is non-degraded, has consistent AI mode, matching source file hashes, and an existing output document. [crates/gcode/src/commands/codewiki/reuse.rs:59-86]
-- `ReusePlan.current_hash` (method) component `ReusePlan.current_hash [method]` (`fdaca5c2-56ed-533e-9e35-f57fdf7045e1`) lines 88-95 [crates/gcode/src/commands/codewiki/reuse.rs:88-95]
+  - Purpose: Returns `true` only if the cached doc entry exists, is not degraded, was generated under the current `ai_mode`, has a non-empty source-hash snapshot whose file set exactly matches `sources`, every recorded source file still hashes to the stored value, and the output document still exists on disk. [crates/gcode/src/commands/codewiki/reuse.rs:59-91]
+- `ReusePlan.current_hash` (method) component `ReusePlan.current_hash [method]` (`4d7e3036-508e-5281-bd5a-1c49a210d308`) lines 93-100 [crates/gcode/src/commands/codewiki/reuse.rs:93-100]
   - Signature: `fn current_hash(&mut self, file: &str) -> Option<String> {`
-  - Purpose: Computes and caches the content hash of a file, returning the memoized result on subsequent accesses. [crates/gcode/src/commands/codewiki/reuse.rs:88-95]
-- `span_files` (function) component `span_files [function]` (`a7cc51b8-68bb-59e7-8c5a-8d02dc1e585a`) lines 100-102 [crates/gcode/src/commands/codewiki/reuse.rs:100-102]
+  - Purpose: Returns the cached content hash for `file` if available, otherwise computes `hasher::file_content_hash` for `project_root/file`, stores the resulting `Option<String>` in `current_hashes`, and returns it. [crates/gcode/src/commands/codewiki/reuse.rs:93-100]
+- `span_files` (function) component `span_files [function]` (`c68e20a4-c96a-58c0-9831-4973554fd9a8`) lines 105-107 [crates/gcode/src/commands/codewiki/reuse.rs:105-107]
   - Signature: `pub(crate) fn span_files(spans: &[SourceSpan]) -> BTreeSet<String> {`
-  - Purpose: Extracts the file paths from a slice of `SourceSpan` objects into a sorted, deduplicated set of strings via `BTreeSet`. [crates/gcode/src/commands/codewiki/reuse.rs:100-102]
+  - Purpose: Returns a `BTreeSet<String>` containing the distinct `file` values cloned from every `SourceSpan` in the input slice. [crates/gcode/src/commands/codewiki/reuse.rs:105-107]
 

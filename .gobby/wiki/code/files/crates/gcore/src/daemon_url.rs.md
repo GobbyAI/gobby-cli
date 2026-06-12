@@ -4,17 +4,26 @@ type: code_file
 provenance:
 - file: crates/gcore/src/daemon_url.rs
   ranges:
-  - 15-17
-  - 22-24
-  - 26-29
-  - 38-43
-  - 51-56
-  - 59-63
-  - 66-69
-  - 72-79
-  - 82-89
-  - 92-95
-  - 98-101
+  - 28-34
+  - 40-42
+  - 47-59
+  - 61-64
+  - 72-78
+  - 86-91
+  - 94-98
+  - 101-104
+  - 107-114
+  - 117-124
+  - 127-130
+  - 133-136
+  - 139-146
+  - 149-156
+  - 159-164
+  - 167-172
+  - 175-180
+  - 183-187
+  - 190-192
+  - 195-234
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -26,46 +35,73 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-`crates/gcore/src/daemon_url.rs` exposes 11 indexed API symbols.
-[crates/gcore/src/daemon_url.rs:15-17]
-[crates/gcore/src/daemon_url.rs:22-24]
-[crates/gcore/src/daemon_url.rs:26-29]
-[crates/gcore/src/daemon_url.rs:38-43]
-[crates/gcore/src/daemon_url.rs:51-56]
+`crates/gcore/src/daemon_url.rs` exposes 20 indexed API symbols.
+[crates/gcore/src/daemon_url.rs:28-34]
+[crates/gcore/src/daemon_url.rs:40-42]
+[crates/gcore/src/daemon_url.rs:47-59]
+[crates/gcore/src/daemon_url.rs:61-64]
+[crates/gcore/src/daemon_url.rs:72-78]
 
 ## API Symbols
 
-- `daemon_url` (function) component `daemon_url [function]` (`77c90aec-890d-55f3-8677-ef2dbedd1928`) lines 15-17 [crates/gcore/src/daemon_url.rs:15-17]
+- `daemon_url` (function) component `daemon_url [function]` (`326f3e81-0586-5929-9847-dea92091ab82`) lines 28-34 [crates/gcore/src/daemon_url.rs:28-34]
   - Signature: `pub fn daemon_url() -> String {`
-  - Purpose: This function reads the daemon endpoint from configuration and converts it to a URL string. [crates/gcore/src/daemon_url.rs:15-17]
-- `daemon_url_at` (function) component `daemon_url_at [function]` (`74c8f034-23be-57b0-8366-93d2f619b1c7`) lines 22-24 [crates/gcore/src/daemon_url.rs:22-24]
+  - Purpose: Indexed function `daemon_url` in `crates/gcore/src/daemon_url.rs`. [crates/gcore/src/daemon_url.rs:28-34]
+- `daemon_url_at` (function) component `daemon_url_at [function]` (`cfcb2d54-4c9f-567e-837e-c03378a2f53d`) lines 40-42 [crates/gcore/src/daemon_url.rs:40-42]
   - Signature: `pub fn daemon_url_at(path: &Path) -> String {`
-  - Purpose: Reads a daemon endpoint configuration from the specified file path and converts it to a URL string. [crates/gcore/src/daemon_url.rs:22-24]
-- `endpoint_to_url` (function) component `endpoint_to_url [function]` (`1d2e623e-69e7-5d6e-ab1b-5b70dcc154ea`) lines 26-29 [crates/gcore/src/daemon_url.rs:26-29]
+  - Purpose: Indexed function `daemon_url_at` in `crates/gcore/src/daemon_url.rs`. [crates/gcore/src/daemon_url.rs:40-42]
+- `env_override` (function) component `env_override [function]` (`4ace3e35-0f9e-51b8-8d62-264fbaac264d`) lines 47-59 [crates/gcore/src/daemon_url.rs:47-59]
+  - Signature: `fn env_override(url: Option<&str>, port: Option<&str>) -> Option<String> {`
+  - Purpose: Indexed function `env_override` in `crates/gcore/src/daemon_url.rs`. [crates/gcore/src/daemon_url.rs:47-59]
+- `endpoint_to_url` (function) component `endpoint_to_url [function]` (`121a4f74-0310-5cc0-9249-4d77f94eca97`) lines 61-64 [crates/gcore/src/daemon_url.rs:61-64]
   - Signature: `fn endpoint_to_url(endpoint: &DaemonEndpoint) -> String {`
-  - Purpose: Constructs an HTTP URL string from a `DaemonEndpoint` by resolving its host through `dial_host()` and combining it with its port number. [crates/gcore/src/daemon_url.rs:26-29]
-- `dial_host` (function) component `dial_host [function]` (`237dfb56-36e3-59b3-875f-945c6043f985`) lines 38-43 [crates/gcore/src/daemon_url.rs:38-43]
-  - Signature: `fn dial_host(host: &str) -> &str {`
-  - Purpose: Remaps wildcard addresses (0.0.0.0, ::, ::0) to the localhost address 127.0.0.1, passing through all other hosts unchanged. [crates/gcore/src/daemon_url.rs:38-43]
-- `write_bootstrap` (function) component `write_bootstrap [function]` (`d41c75f1-4154-5e9e-a244-da66b9573c65`) lines 51-56 [crates/gcore/src/daemon_url.rs:51-56]
+  - Purpose: Indexed function `endpoint_to_url` in `crates/gcore/src/daemon_url.rs`. [crates/gcore/src/daemon_url.rs:61-64]
+- `dial_host` (function) component `dial_host [function]` (`e6102bbd-d2ea-59e7-8b82-2b6273b47e29`) lines 72-78 [crates/gcore/src/daemon_url.rs:72-78]
+  - Signature: `fn dial_host(host: &str) -> Cow<'_, str> {`
+  - Purpose: Indexed function `dial_host` in `crates/gcore/src/daemon_url.rs`. [crates/gcore/src/daemon_url.rs:72-78]
+- `write_bootstrap` (function) component `write_bootstrap [function]` (`36ad539e-894c-5ed2-939b-1c78d64c3302`) lines 86-91 [crates/gcore/src/daemon_url.rs:86-91]
   - Signature: `fn write_bootstrap(contents: &str) -> (tempfile::TempDir, std::path::PathBuf) {`
-  - Purpose: Creates a temporary directory containing a `bootstrap.yaml` file with the provided contents and returns a tuple of the temporary directory and file path. [crates/gcore/src/daemon_url.rs:51-56]
-- `default_url_when_file_missing` (function) component `default_url_when_file_missing [function]` (`537dd631-5cf1-58fb-8d83-641e6669b34c`) lines 59-63 [crates/gcore/src/daemon_url.rs:59-63]
+  - Purpose: Indexed function `write_bootstrap` in `crates/gcore/src/daemon_url.rs`. [crates/gcore/src/daemon_url.rs:86-91]
+- `default_url_when_file_missing` (function) component `default_url_when_file_missing [function]` (`852e94ac-199c-5a57-a199-c97c9d5865f4`) lines 94-98 [crates/gcore/src/daemon_url.rs:94-98]
   - Signature: `fn default_url_when_file_missing() {`
-  - Purpose: Tests that `daemon_url_at()` returns the default daemon URL `"http://127.0.0.1:60887"` when called with a non-existent file path. [crates/gcore/src/daemon_url.rs:59-63]
-- `wildcard_ipv4_normalizes_to_loopback` (function) component `wildcard_ipv4_normalizes_to_loopback [function]` (`fe0c0b0b-f1ae-5151-83a9-fe2aae5931c7`) lines 66-69 [crates/gcore/src/daemon_url.rs:66-69]
+  - Purpose: Indexed function `default_url_when_file_missing` in `crates/gcore/src/daemon_url.rs`. [crates/gcore/src/daemon_url.rs:94-98]
+- `wildcard_ipv4_normalizes_to_loopback` (function) component `wildcard_ipv4_normalizes_to_loopback [function]` (`2dfaca7b-c395-5429-9c23-f68a9bc89d7f`) lines 101-104 [crates/gcore/src/daemon_url.rs:101-104]
   - Signature: `fn wildcard_ipv4_normalizes_to_loopback() {`
-  - Purpose: This test verifies that a wildcard IPv4 bind address (0.0.0.0) normalizes to the loopback address (127.0.0.1) when constructing the daemon URL. [crates/gcore/src/daemon_url.rs:66-69]
-- `wildcard_ipv6_normalizes_to_loopback` (function) component `wildcard_ipv6_normalizes_to_loopback [function]` (`a17ab5d0-b8e2-538b-85d9-da3ae06e235a`) lines 72-79 [crates/gcore/src/daemon_url.rs:72-79]
+  - Purpose: Indexed function `wildcard_ipv4_normalizes_to_loopback` in `crates/gcore/src/daemon_url.rs`. [crates/gcore/src/daemon_url.rs:101-104]
+- `wildcard_ipv6_normalizes_to_loopback` (function) component `wildcard_ipv6_normalizes_to_loopback [function]` (`9b0f11b9-b1d9-5abc-b3e0-f7c906b13ef7`) lines 107-114 [crates/gcore/src/daemon_url.rs:107-114]
   - Signature: `fn wildcard_ipv6_normalizes_to_loopback() {`
-  - Purpose: This function asserts that a daemon configured to bind to the IPv6 wildcard address `::` normalizes its URL to the IPv4 loopback address `http://127.0.0.1:60887`. [crates/gcore/src/daemon_url.rs:72-79]
-- `wildcard_ipv6_zero_normalizes_to_loopback` (function) component `wildcard_ipv6_zero_normalizes_to_loopback [function]` (`8e6649d6-4f18-5836-be2b-1d4a3bb4aa6d`) lines 82-89 [crates/gcore/src/daemon_url.rs:82-89]
+  - Purpose: Indexed function `wildcard_ipv6_normalizes_to_loopback` in `crates/gcore/src/daemon_url.rs`. [crates/gcore/src/daemon_url.rs:107-114]
+- `wildcard_ipv6_zero_normalizes_to_loopback` (function) component `wildcard_ipv6_zero_normalizes_to_loopback [function]` (`f319eed9-b5ef-512f-a08d-0beace3700db`) lines 117-124 [crates/gcore/src/daemon_url.rs:117-124]
   - Signature: `fn wildcard_ipv6_zero_normalizes_to_loopback() {`
-  - Purpose: This test verifies that a daemon configured with wildcard IPv6 bind address `::0` normalizes its URL to the IPv4 loopback address `127.0.0.1:60887`. [crates/gcore/src/daemon_url.rs:82-89]
-- `localhost_passes_through` (function) component `localhost_passes_through [function]` (`0c144c58-3159-5bdc-9dc2-515fb1483fd2`) lines 92-95 [crates/gcore/src/daemon_url.rs:92-95]
+  - Purpose: Indexed function `wildcard_ipv6_zero_normalizes_to_loopback` in `crates/gcore/src/daemon_url.rs`. [crates/gcore/src/daemon_url.rs:117-124]
+- `localhost_passes_through` (function) component `localhost_passes_through [function]` (`e1dee3b2-12bd-5639-980f-5619a68bbc06`) lines 127-130 [crates/gcore/src/daemon_url.rs:127-130]
   - Signature: `fn localhost_passes_through() {`
-  - Purpose: This function tests that `daemon_url_at()` correctly constructs the URL `http://localhost:60887` when parsing a bootstrap configuration with `daemon_port: 60887` and `bind_host: localhost`. [crates/gcore/src/daemon_url.rs:92-95]
-- `custom_port_and_host_compose` (function) component `custom_port_and_host_compose [function]` (`b11a8d54-a1e7-557e-88dc-03456a5e5a5d`) lines 98-101 [crates/gcore/src/daemon_url.rs:98-101]
+  - Purpose: Indexed function `localhost_passes_through` in `crates/gcore/src/daemon_url.rs`. [crates/gcore/src/daemon_url.rs:127-130]
+- `custom_port_and_host_compose` (function) component `custom_port_and_host_compose [function]` (`1e3f7ed5-12fb-507b-b07a-4517266efa47`) lines 133-136 [crates/gcore/src/daemon_url.rs:133-136]
   - Signature: `fn custom_port_and_host_compose() {`
-  - Purpose: Tests that `daemon_url_at()` correctly composes an HTTP daemon URL from custom port and bind host values specified in the bootstrap configuration. [crates/gcore/src/daemon_url.rs:98-101]
+  - Purpose: Indexed function `custom_port_and_host_compose` in `crates/gcore/src/daemon_url.rs`. [crates/gcore/src/daemon_url.rs:133-136]
+- `bare_ipv6_literal_is_bracketed` (function) component `bare_ipv6_literal_is_bracketed [function]` (`a116da61-3342-523d-ad1c-e4a7627ac8f5`) lines 139-146 [crates/gcore/src/daemon_url.rs:139-146]
+  - Signature: `fn bare_ipv6_literal_is_bracketed() {`
+  - Purpose: Indexed function `bare_ipv6_literal_is_bracketed` in `crates/gcore/src/daemon_url.rs`. [crates/gcore/src/daemon_url.rs:139-146]
+- `bracketed_ipv6_literal_passes_through` (function) component `bracketed_ipv6_literal_passes_through [function]` (`d54a7599-b7c1-5a37-8535-f76fbe9f75e1`) lines 149-156 [crates/gcore/src/daemon_url.rs:149-156]
+  - Signature: `fn bracketed_ipv6_literal_passes_through() {`
+  - Purpose: Indexed function `bracketed_ipv6_literal_passes_through` in `crates/gcore/src/daemon_url.rs`. [crates/gcore/src/daemon_url.rs:149-156]
+- `env_override_url_beats_port` (function) component `env_override_url_beats_port [function]` (`d081cffc-518e-5684-ab97-23ebb4152bee`) lines 159-164 [crates/gcore/src/daemon_url.rs:159-164]
+  - Signature: `fn env_override_url_beats_port() {`
+  - Purpose: Indexed function `env_override_url_beats_port` in `crates/gcore/src/daemon_url.rs`. [crates/gcore/src/daemon_url.rs:159-164]
+- `env_override_url_trims_trailing_slashes` (function) component `env_override_url_trims_trailing_slashes [function]` (`fd901039-e803-5509-9664-2392f6c61fbf`) lines 167-172 [crates/gcore/src/daemon_url.rs:167-172]
+  - Signature: `fn env_override_url_trims_trailing_slashes() {`
+  - Purpose: Indexed function `env_override_url_trims_trailing_slashes` in `crates/gcore/src/daemon_url.rs`. [crates/gcore/src/daemon_url.rs:167-172]
+- `env_override_empty_url_falls_back_to_port` (function) component `env_override_empty_url_falls_back_to_port [function]` (`421354aa-d3e4-5ebf-a8e7-e836d53d7653`) lines 175-180 [crates/gcore/src/daemon_url.rs:175-180]
+  - Signature: `fn env_override_empty_url_falls_back_to_port() {`
+  - Purpose: Indexed function `env_override_empty_url_falls_back_to_port` in `crates/gcore/src/daemon_url.rs`. [crates/gcore/src/daemon_url.rs:175-180]
+- `env_override_ignores_unparseable_or_empty_port` (function) component `env_override_ignores_unparseable_or_empty_port [function]` (`faad7146-3356-5d8c-8e49-a228d9fd4393`) lines 183-187 [crates/gcore/src/daemon_url.rs:183-187]
+  - Signature: `fn env_override_ignores_unparseable_or_empty_port() {`
+  - Purpose: Indexed function `env_override_ignores_unparseable_or_empty_port` in `crates/gcore/src/daemon_url.rs`. [crates/gcore/src/daemon_url.rs:183-187]
+- `env_override_absent_returns_none` (function) component `env_override_absent_returns_none [function]` (`4c0aa8b1-cbbf-57e9-a614-b07e61161cd3`) lines 190-192 [crates/gcore/src/daemon_url.rs:190-192]
+  - Signature: `fn env_override_absent_returns_none() {`
+  - Purpose: Indexed function `env_override_absent_returns_none` in `crates/gcore/src/daemon_url.rs`. [crates/gcore/src/daemon_url.rs:190-192]
+- `daemon_url_honors_env_contract_over_bootstrap` (function) component `daemon_url_honors_env_contract_over_bootstrap [function]` (`22349b45-d22c-5dd3-b804-8ed299221aed`) lines 195-234 [crates/gcore/src/daemon_url.rs:195-234]
+  - Signature: `fn daemon_url_honors_env_contract_over_bootstrap() {`
+  - Purpose: Indexed function `daemon_url_honors_env_contract_over_bootstrap` in `crates/gcore/src/daemon_url.rs`. [crates/gcore/src/daemon_url.rs:195-234]
 

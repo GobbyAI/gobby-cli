@@ -13,9 +13,9 @@ Parent: [[code/modules/crates/gwiki|crates/gwiki]]
 
 ## Overview
 
-The assets module for the gwiki crate holds content and documentation resources rather than code. Its sole subcomponent, `skills`, provides four Markdown skill definitions—audit, compile, query, and research—that guide wiki-related operations. The module exposes no indexed API symbols or components.
+The crates/gwiki/assets module acts as a container for static system resources and assets. It holds Markdown-based skill asset files under its skills submodule, which define core procedural and execution guidelines for auditing, compiling, querying, and researching capabilities.
 
 ## Child Modules
 
-- [[code/modules/crates/gwiki/assets/skills|crates/gwiki/assets/skills]] - This module contains skill definition documents for the gwiki crate's assets. It includes four Markdown files describing distinct skills—audit, compile, query, and research—that guide wiki-related operations. These are content/documentation assets rather than code, containing no indexed API symbols. 
+- [[code/modules/crates/gwiki/assets/skills|crates/gwiki/assets/skills]] - This module contains Markdown-based skill asset files defining core procedural and execution guidelines for audit, compile, query, and research capabilities. 
 

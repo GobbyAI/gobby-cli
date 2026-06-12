@@ -24,8 +24,10 @@ provenance:
   - 133-157
 - file: crates/gcode/src/commands/codewiki/build_parts/modules.rs
   ranges:
-  - 4-144
-  - 146-156
+  - 4-136
+  - 138-149
+  - 151-153
+  - 155-165
 - file: crates/gcode/src/commands/codewiki/build_parts/onboarding.rs
   ranges:
   - 7-52
@@ -57,141 +59,132 @@ provenance:
 - file: crates/gcode/src/commands/codewiki/graph.rs
   ranges:
   - 4-109
-  - 34-49
   - 113-142
   - 148-163
   - 165-180
 - file: crates/gcode/src/commands/codewiki/io.rs
   ranges:
   - 3-9
-  - 11-21
-  - 23-35
-  - 41-50
-  - 53-73
-  - 77-125
-  - 127-138
-  - 142-170
-  - 173-181
-  - 183-201
-  - 203-223
-  - 225-243
-  - 245-248
-  - 250-257
-  - 259-262
-  - 264-285
-  - 287-320
-  - 323-353
-  - 356-363
-  - 365-375
+  - 11-28
+  - 30-43
+  - 46-48
+  - 50-77
+  - 83-93
+  - 97-103
+  - 105-127
+  - 131-179
+  - 181-192
+  - 196-224
+  - 227-231
+  - 233-237
+  - 239-247
+  - 249-267
+  - 269-289
+  - 291-309
+  - 311-314
+  - 316-323
+  - 325-328
+  - 330-351
+  - 353-388
+  - 391-421
+  - 424-431
+  - 433-443
 - file: crates/gcode/src/commands/codewiki/mod.rs
   ranges:
-  - 91-96
-  - 99-103
-  - 105-127
-  - 106-115
-  - 117-126
-  - 130-133
-  - 136-139
-  - 141-162
-  - 142-147
-  - 149-154
-  - 156-161
-  - 165-169
-  - 172-184
-  - 187-193
-  - 196-211
-  - 214-219
-  - 222-226
-  - 229-234
-  - 237-241
-  - 244-249
-  - 252-258
-  - 261-267
-  - 270-277
-  - 280-284
-  - 287-291
-  - 294-298
-  - 301-313
-  - 316-323
-  - 326-342
-  - 347-354
-  - 356-365
-  - 357-364
-  - 368-375
-  - 378-381
-  - 384-390
-  - '392'
-  - 404-408
-  - 413-421
-  - 423-439
-  - 424-426
-  - 428-430
-  - 432-438
-  - 442-448
-  - 450-470
-  - 451-457
-  - 459-465
-  - 467-469
-  - 472-600
-  - 602-607
-  - 609-617
-  - 619-641
-  - 644-663
-  - 666-673
-  - 677-701
-  - 703-879
+  - 92-97
+  - 100-104
+  - 106-128
+  - 131-134
+  - 137-140
+  - 142-163
+  - 166-170
+  - 173-185
+  - 188-194
+  - 197-212
+  - 215-220
+  - 223-227
+  - 230-235
+  - 238-242
+  - 245-250
+  - 253-259
+  - 262-268
+  - 271-278
+  - 281-285
+  - 288-292
+  - 295-299
+  - 302-314
+  - 317-324
+  - 327-343
+  - 348-355
+  - 357-366
+  - 369-376
+  - 379-382
+  - 385-391
+  - '393'
+  - 405-409
+  - 414-422
+  - 424-440
+  - 443-449
+  - 451-471
+  - 473-598
+  - 600-605
+  - 607-614
+  - 616-624
+  - 626-648
+  - 651-670
+  - 673-680
+  - 684-708
+  - 710-886
 - file: crates/gcode/src/commands/codewiki/ownership.rs
   ranges:
-  - 20-23
-  - 25-32
-  - 26-31
-  - 35-38
-  - 41-44
-  - 47-53
-  - 56-60
-  - 62-66
-  - 69-71
-  - 74-77
-  - 80-85
-  - 88-91
-  - 93-138
-  - 140-150
-  - 152-170
-  - 172-191
-  - 193-228
-  - 230-297
-  - 299-301
-  - 303-328
-  - 330-367
-  - 369-382
-  - 384-433
-  - 435-444
-  - 446-460
-  - 462-486
-  - 488-520
-  - 490-504
-  - 522-524
-  - 526-552
-  - 554-566
-  - 568-578
-  - 580-624
-  - 626-632
-  - 634-656
-  - 667-694
-  - 697-721
-  - 724-741
-  - 744-765
-  - 768-791
-  - 794-813
-  - 816-851
-  - 854-878
-  - 881-888
-  - 891-895
-  - 897-902
-  - 904-923
-  - 925-934
-  - 936-952
-  - 954-962
+  - 17-20
+  - 22-29
+  - 32-35
+  - 38-41
+  - 44-50
+  - 53-57
+  - 60-62
+  - 65-68
+  - 71-76
+  - 79-82
+  - 84-129
+  - 131-141
+  - 143-161
+  - 163-182
+  - 184-219
+  - 221-285
+  - 287-289
+  - 291-302
+  - 304-308
+  - 310-331
+  - 333-363
+  - 365-370
+  - 372-425
+  - 427-434
+  - 436-445
+  - 447-461
+  - 463-487
+  - 489-521
+  - 523-525
+  - 527-553
+  - 555-567
+  - 569-579
+  - 581-625
+  - 627-633
+  - 635-657
+  - 672-699
+  - 702-726
+  - 729-746
+  - 749-770
+  - 773-796
+  - 799-818
+  - 821-856
+  - 859-883
+  - 885-890
+  - 892-911
+  - 913-922
+  - 924-940
+  - 942-950
 - file: crates/gcode/src/commands/codewiki/paths.rs
   ranges:
   - 3-14
@@ -215,11 +208,6 @@ provenance:
   - 2-7
   - 10-12
   - 14-55
-  - 15-19
-  - 21-29
-  - 32-36
-  - 38-46
-  - 49-54
 - file: crates/gcode/src/commands/codewiki/prompts.rs
   ranges:
   - 11-33
@@ -262,60 +250,57 @@ provenance:
 - file: crates/gcode/src/commands/codewiki/reuse.rs
   ranges:
   - 11-19
-  - 21-96
-  - 22-31
-  - 36-46
-  - 49-57
-  - 59-86
-  - 88-95
-  - 100-102
+  - 21-101
+  - 105-107
 - file: crates/gcode/src/commands/codewiki/text.rs
   ranges:
   - 15-27
-  - 30-33
-  - 35-83
-  - 88-102
-  - 104-112
-  - 114-130
-  - 137-141
-  - 143-160
-  - 144-146
-  - 150-159
-  - 162-176
-  - 185-195
-  - 197-200
-  - 202-217
-  - 219-228
-  - 230-242
-  - 244-250
-  - 252-254
-  - 256-265
-  - 276-297
-  - 299-305
-  - 307-327
-  - 329-341
-  - 343-352
-  - 354-360
-  - 365-378
-  - 380-396
-  - 398-424
-  - 426-443
-  - 445-458
-  - 461-463
-  - 467-518
-  - 524-530
-  - 533-553
-  - 556-568
-  - 571-584
-  - 587-600
-  - 603-618
-  - 621-628
-  - 631-663
-  - 666-669
-  - 671-677
-  - 680-693
-  - 696-705
-  - 708-720
+  - 30-34
+  - 36-84
+  - 89-103
+  - 105-113
+  - 115-131
+  - 138-142
+  - 144-161
+  - 163-177
+  - 186-196
+  - 198-201
+  - 203-218
+  - 220-229
+  - 231-243
+  - 245-251
+  - 253-255
+  - 257-266
+  - 277-298
+  - 300-306
+  - 308-328
+  - 330-342
+  - 344-353
+  - 355-361
+  - 366-379
+  - 381-397
+  - 399-425
+  - 427-444
+  - 446-459
+  - 462-464
+  - 468-475
+  - 477-484
+  - 486-533
+  - 535-559
+  - 565-571
+  - 574-593
+  - 596-616
+  - 619-631
+  - 634-647
+  - 650-663
+  - 666-681
+  - 684-691
+  - 694-726
+  - 729-732
+  - 734-740
+  - 743-756
+  - 759-768
+  - 771-783
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -327,86 +312,77 @@ Parent: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Overview
 
-The `codewiki` command generates hierarchical, citation-grounded documentation wikis from an indexed codebase. Its `run` entry point orchestrates the pipeline through `generate_hierarchical_docs` and its variants (with graph availability, ownership, progress, and incremental reuse), producing repo, architecture, module, file, onboarding, hotspot, change-log, and ownership pages.
-
-Key responsibilities are split across submodules:
-- **build / build_parts**: construct each document type from index data, dependency edges, hotspot nodes, onboarding entry points, and index snapshots for incremental rebuilds.
-- **cluster / paths / graph**: group files into modules, resolve module/file hierarchies and wikilink paths, and fetch/derive call and import edges (`CodewikiGraph`, `CodewikiGraphEdge`).
-- **text / prompts / render**: build AI prompts, invoke a `TextGenerator` with bounded retry and prompt-echo rejection, fall back to structural summaries, and render grounded Markdown with citation markers, references, and Mermaid dependency diagrams.
-- **io / reuse**: write document sets (incrementally via `DocSink` and snapshots), read/write `CodewikiMeta` and ownership metadata, enforce safe/symlink-free paths, and skip regeneration of unchanged pages via `ReusePlan` source-hash matching.
-- **ownership**: derive file/module ownership from CODEOWNERS and timed git-blame contributor analysis, with caching and graceful degradation.
-- **progress**: report build progress via configurable sinks.
-
-Core data types (`FileDoc`, `ModuleDoc`, `ArchitectureDoc`, `OnboardingDoc`, `HotspotsDoc`, `SourceSpan`, `AiDepth`, `CodewikiRunSummary`) and extensive tests cover citation capping, retry behavior, ownership degradation, and incremental reuse.
+The codewiki module implements an automated documentation system that analyzes codebase structure and metadata to generate hierarchical, citation-grounded Markdown reference wikis. It manages document rendering, incremental reuse through content hashing, call and import relationship graphing, and git blame/codeowners ownership analysis, while integrating subcomponents for architecture maps, onboarding flows, and hotspot detection.
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-114]
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:5-101]
 [crates/gcode/src/commands/codewiki/build_parts/file.rs:12-15]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-131]
-[crates/gcode/src/commands/codewiki/build_parts/modules.rs:4-144]
+[crates/gcode/src/commands/codewiki/build_parts/modules.rs:4-136]
 
 ## Call Diagram
 
 ```mermaid
 sequenceDiagram
-    participant m_0115e211_6a65_5f0a_b171_aa210619a4a6 as declared_owners_for_files &#91;function&#93;
+    participant m_002737f5_f8fe_5e56_8173_de1610984978 as blame_file_contributors_with_timeout &#91;function&#93;
     participant m_015125b2_7388_5621_8d0d_9cb2a00b81fb as ReusePlan.reusable_page_with_summary &#91;method&#93;
-    participant m_0644798e_c3f2_5a9f_be8e_1e81d392c04c as contains_valid_citation &#91;function&#93;
-    participant m_084d7fa0_7759_5c5a_8d74_6850060bb0d2 as finish &#91;function&#93;
-    participant m_0c0335fa_e3fc_51f5_b47d_f7ae99a39e42 as bounded_retry_fails_fast_on_non_transient_errors &#91;function&#93;
-    participant m_0f035ad9_181a_5243_9851_6b7b54ac25a9 as aggregate_contributors &#91;function&#93;
-    participant m_0fa1a27b_0c9a_5b2d_addb_540f3f746f0e as ground_text &#91;function&#93;
-    participant m_138df8dd_5300_5989_a3df_f581bf4df188 as generate_with_bounded_retry &#91;function&#93;
+    participant m_04624067_ddd4_5413_b34d_7ceb7854842f as declared_owners_for_files &#91;function&#93;
+    participant m_0b97ccce_57d6_507f_8dac_22de1d0dcec9 as render_hotspots_doc &#91;function&#93;
+    participant m_0e2358a2_d88c_5916_9165_cc23fe902135 as citation_list_caps_oversized_span_sets &#91;function&#93;
+    participant m_127d83b5_cb84_5d51_bfe3_3ad23ec6ea1f as frontmatter_coalesces_contiguous_provenance_ranges &#91;function&#93;
     participant m_1653d1e5_3ac6_5f4e_96de_bb46fd727b1f as fetch_codewiki_graph_edges &#91;function&#93;
-    participant m_17fc0587_76cd_55cd_b7aa_d6488b225396 as codewiki_ownership_blame_error_marks_partial_without_caching &#91;function&#93;
-    participant m_1921a844_7580_551f_b318_191761669366 as generate_hierarchical_docs_with_ownership &#91;function&#93;
-    participant m_1ac20481_259c_5583_9698_d6ba5ad11188 as prune_empty_doc_dirs &#91;function&#93;
-    participant m_1e48823c_c709_533e_93a7_10113f2cf147 as write_codewiki_meta &#91;function&#93;
-    participant m_2394d419_b371_5fbf_9f1c_3d3b54e449a5 as generate_hierarchical_docs_core &#91;function&#93;
+    participant m_18207b0a_bc23_53ec_9eab_5a0574ffdea1 as dependency_neighbors &#91;function&#93;
+    participant m_194dcb6e_9304_5441_98d7_8dc64ff210df as codewiki_ownership_derives_top_committers_from_git_blame &#91;function&#93;
+    participant m_1aa33a46_a03c_5222_8d23_5be1393b2ad1 as bounded_module_dependency_edges &#91;function&#93;
+    participant m_1ab7ed3d_0df5_57e0_9520_59134c434eed as build_entity_prompt &#91;function&#93;
+    participant m_1e9935b5_6cd1_5388_a4a4_4c8869534b9d as bounded_retry_gives_up_after_bounded_attempts &#91;function&#93;
+    participant m_1f969540_cb6b_5bf9_9112_d591b7a9bf40 as write_hotspot_section &#91;function&#93;
+    participant m_3a40a621_fc89_5847_992a_db3a44c4a833 as generate_with_bounded_retry &#91;function&#93;
+    participant m_467073f4_1af0_5125_b2b7_c563dc5d1700 as build_ownership_doc &#91;function&#93;
     participant m_4912a584_cc76_5735_80de_0cb286e853c4 as codewiki_call_edges_query &#91;function&#93;
     participant m_4e862278_2391_5e0a_8b76_f04cf8df3287 as import_edges_from_pairs &#91;function&#93;
-    participant m_6598383a_5be8_5914_be8a_b305bf5d74cb as git_project_with_history &#91;function&#93;
-    participant m_75d86435_692c_595e_acb3_bbf5fcecad51 as retryable_generation_error &#91;function&#93;
-    participant m_8bd10d41_b3d8_54b4_9a63_b3a37ab195b9 as strip_invalid_citations &#91;function&#93;
-    participant m_b28e0707_ccda_5afe_a06c_f93b1e5a2729 as modules &#91;function&#93;
-    participant m_b67fd401_e487_514e_ae91_4557fb67c28b as citation_parts &#91;function&#93;
-    participant m_c1699afd_0881_5b92_85b2_57cd73621c74 as reject_symlinked_doc_path &#91;function&#93;
+    participant m_5174e409_1ba4_54bf_ad57_c400c56202b4 as write_hotspot_section_with_cross_refs &#91;function&#93;
+    participant m_6096cf84_99e1_55a6_aa2e_03ea8f06b183 as transport_failure &#91;function&#93;
+    participant m_6aea097f_ce69_50e5_a917_bdbeeede369e as append_child_summary_sections &#91;function&#93;
+    participant m_7d2da148_f467_5773_afb5_eec86049cc13 as frontmatter &#91;function&#93;
+    participant m_bb0af3c7_701f_5b6f_b1aa_21eb069986be as modules &#91;function&#93;
+    participant m_c0f1027b_eb47_565d_baf4_8dbc40908eee as blame_file_contributors &#91;function&#93;
     participant m_c2474b4a_3816_5e4d_9f13_a1a296986eb3 as query_or_unavailable &#91;function&#93;
     participant m_c4fae48a_685c_593e_831c_dab9e872d3af as ReusePlan.reusable_page &#91;method&#93;
-    participant m_c8ac7390_7071_5975_8a05_60d3957ba6b0 as safe_doc_path &#91;function&#93;
     participant m_d515c347_b86d_5297_9803_cc692b841646 as codewiki_import_edges_query &#91;function&#93;
-    participant m_d88408ad_346a_5e73_8b55_d48ed0ce9504 as codeowners_pattern_matches &#91;function&#93;
-    participant m_e532aa21_35c5_5bf3_be9c_ec5af9db1ba0 as retain_deterministic_identity &#91;function&#93;
-    participant m_eef21fe9_1184_5062_8f7d_91439c57f939 as build_ownership_doc &#91;function&#93;
-    m_0115e211_6a65_5f0a_b171_aa210619a4a6->>m_d88408ad_346a_5e73_8b55_d48ed0ce9504: calls
+    participant m_d702d49a_2f11_571b_91d3_19e14a1112af as codeowners_pattern_matches &#91;function&#93;
+    participant m_e626342b_0d01_5252_94fe_7b1d1b674002 as git_project_with_history &#91;function&#93;
+    participant m_e7bb3861_6b73_567c_90bb_53d1399d95b7 as citation_list &#91;function&#93;
+    participant m_fb421126_f976_5b90_b348_fcb670268f8e as span &#91;function&#93;
+    m_002737f5_f8fe_5e56_8173_de1610984978->>m_c0f1027b_eb47_565d_baf4_8dbc40908eee: calls
     m_015125b2_7388_5621_8d0d_9cb2a00b81fb->>m_c4fae48a_685c_593e_831c_dab9e872d3af: calls
-    m_0644798e_c3f2_5a9f_be8e_1e81d392c04c->>m_b67fd401_e487_514e_ae91_4557fb67c28b: calls
-    m_084d7fa0_7759_5c5a_8d74_6850060bb0d2->>m_1ac20481_259c_5583_9698_d6ba5ad11188: calls
-    m_084d7fa0_7759_5c5a_8d74_6850060bb0d2->>m_1e48823c_c709_533e_93a7_10113f2cf147: calls
-    m_084d7fa0_7759_5c5a_8d74_6850060bb0d2->>m_c1699afd_0881_5b92_85b2_57cd73621c74: calls
-    m_084d7fa0_7759_5c5a_8d74_6850060bb0d2->>m_c8ac7390_7071_5975_8a05_60d3957ba6b0: calls
-    m_0c0335fa_e3fc_51f5_b47d_f7ae99a39e42->>m_138df8dd_5300_5989_a3df_f581bf4df188: calls
-    m_0f035ad9_181a_5243_9851_6b7b54ac25a9->>m_e532aa21_35c5_5bf3_be9c_ec5af9db1ba0: calls
-    m_0fa1a27b_0c9a_5b2d_addb_540f3f746f0e->>m_0644798e_c3f2_5a9f_be8e_1e81d392c04c: calls
-    m_0fa1a27b_0c9a_5b2d_addb_540f3f746f0e->>m_8bd10d41_b3d8_54b4_9a63_b3a37ab195b9: calls
-    m_138df8dd_5300_5989_a3df_f581bf4df188->>m_75d86435_692c_595e_acb3_bbf5fcecad51: calls
+    m_04624067_ddd4_5413_b34d_7ceb7854842f->>m_d702d49a_2f11_571b_91d3_19e14a1112af: calls
+    m_0b97ccce_57d6_507f_8dac_22de1d0dcec9->>m_1f969540_cb6b_5bf9_9112_d591b7a9bf40: calls
+    m_0b97ccce_57d6_507f_8dac_22de1d0dcec9->>m_5174e409_1ba4_54bf_ad57_c400c56202b4: calls
+    m_0e2358a2_d88c_5916_9165_cc23fe902135->>m_e7bb3861_6b73_567c_90bb_53d1399d95b7: calls
+    m_0e2358a2_d88c_5916_9165_cc23fe902135->>m_fb421126_f976_5b90_b348_fcb670268f8e: calls
+    m_127d83b5_cb84_5d51_bfe3_3ad23ec6ea1f->>m_7d2da148_f467_5773_afb5_eec86049cc13: calls
+    m_127d83b5_cb84_5d51_bfe3_3ad23ec6ea1f->>m_fb421126_f976_5b90_b348_fcb670268f8e: calls
     m_1653d1e5_3ac6_5f4e_96de_bb46fd727b1f->>m_4912a584_cc76_5735_80de_0cb286e853c4: calls
     m_1653d1e5_3ac6_5f4e_96de_bb46fd727b1f->>m_4e862278_2391_5e0a_8b76_f04cf8df3287: calls
     m_1653d1e5_3ac6_5f4e_96de_bb46fd727b1f->>m_c2474b4a_3816_5e4d_9f13_a1a296986eb3: calls
     m_1653d1e5_3ac6_5f4e_96de_bb46fd727b1f->>m_d515c347_b86d_5297_9803_cc692b841646: calls
-    m_17fc0587_76cd_55cd_b7aa_d6488b225396->>m_6598383a_5be8_5914_be8a_b305bf5d74cb: calls
-    m_17fc0587_76cd_55cd_b7aa_d6488b225396->>m_b28e0707_ccda_5afe_a06c_f93b1e5a2729: calls
-    m_17fc0587_76cd_55cd_b7aa_d6488b225396->>m_eef21fe9_1184_5062_8f7d_91439c57f939: calls
-    m_1921a844_7580_551f_b318_191761669366->>m_2394d419_b371_5fbf_9f1c_3d3b54e449a5: calls
+    m_194dcb6e_9304_5441_98d7_8dc64ff210df->>m_467073f4_1af0_5125_b2b7_c563dc5d1700: calls
+    m_194dcb6e_9304_5441_98d7_8dc64ff210df->>m_bb0af3c7_701f_5b6f_b1aa_21eb069986be: calls
+    m_194dcb6e_9304_5441_98d7_8dc64ff210df->>m_e626342b_0d01_5252_94fe_7b1d1b674002: calls
+    m_1aa33a46_a03c_5222_8d23_5be1393b2ad1->>m_18207b0a_bc23_53ec_9eab_5a0574ffdea1: calls
+    m_1ab7ed3d_0df5_57e0_9520_59134c434eed->>m_6aea097f_ce69_50e5_a917_bdbeeede369e: calls
+    m_1e9935b5_6cd1_5388_a4a4_4c8869534b9d->>m_3a40a621_fc89_5847_992a_db3a44c4a833: calls
+    m_1e9935b5_6cd1_5388_a4a4_4c8869534b9d->>m_6096cf84_99e1_55a6_aa2e_03ea8f06b183: calls
 ```
 
 ## Child Modules
 
-- [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gcode/src/commands/codewiki/build_parts]] - The build_parts module generates the individual document sections that compose a CodeWiki for a codebase. Each file builds one part of the wiki: architecture docs (with module dependency edges and topology), change logs (with frontmatter and bullet sections), per-file docs, hotspot reports, per-module docs (including prompt component ID resolution), onboarding guides (entry-point detection, ranked steps, and source spans), and index snapshots (with file hashing and graph-neighborhood fingerprints for incremental rebuilds). Shared helpers handle public-API symbol detection, signature formatting, and Rust entry-file recognition.
+- [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gcode/src/commands/codewiki/build_parts]] - The build_parts module generates the specialized components of the CodeWiki documentation system. It compiles structural and behavioral insights across the codebase into specific documentation outputs, including architecture maps, module dependency topologies, tracked code changes, file and module summaries, complexity hotspots, developer onboarding guides, and index/graph snapshots.
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-114]
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:5-101]
 [crates/gcode/src/commands/codewiki/build_parts/file.rs:12-15]
 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-131]
-[crates/gcode/src/commands/codewiki/build_parts/modules.rs:4-144]
+[crates/gcode/src/commands/codewiki/build_parts/modules.rs:4-136]
 
 ## Files
 
@@ -423,24 +399,24 @@ sequenceDiagram
 [crates/gcode/src/commands/codewiki/graph.rs:113-142]
 [crates/gcode/src/commands/codewiki/graph.rs:148-163]
 [crates/gcode/src/commands/codewiki/graph.rs:165-180]
-- [[code/files/crates/gcode/src/commands/codewiki/io.rs|crates/gcode/src/commands/codewiki/io.rs]] - `crates/gcode/src/commands/codewiki/io.rs` exposes 20 indexed API symbols.
+- [[code/files/crates/gcode/src/commands/codewiki/io.rs|crates/gcode/src/commands/codewiki/io.rs]] - `crates/gcode/src/commands/codewiki/io.rs` exposes 28 indexed API symbols.
 [crates/gcode/src/commands/codewiki/io.rs:3-9]
-[crates/gcode/src/commands/codewiki/io.rs:11-21]
-[crates/gcode/src/commands/codewiki/io.rs:23-35]
-[crates/gcode/src/commands/codewiki/io.rs:41-50]
-[crates/gcode/src/commands/codewiki/io.rs:53-73]
-- [[code/files/crates/gcode/src/commands/codewiki/mod.rs|crates/gcode/src/commands/codewiki/mod.rs]] - `crates/gcode/src/commands/codewiki/mod.rs` exposes 55 indexed API symbols.
-[crates/gcode/src/commands/codewiki/mod.rs:91-96]
-[crates/gcode/src/commands/codewiki/mod.rs:99-103]
-[crates/gcode/src/commands/codewiki/mod.rs:105-127]
-[crates/gcode/src/commands/codewiki/mod.rs:106-115]
-[crates/gcode/src/commands/codewiki/mod.rs:117-126]
+[crates/gcode/src/commands/codewiki/io.rs:11-28]
+[crates/gcode/src/commands/codewiki/io.rs:30-43]
+[crates/gcode/src/commands/codewiki/io.rs:46-48]
+[crates/gcode/src/commands/codewiki/io.rs:50-77]
+- [[code/files/crates/gcode/src/commands/codewiki/mod.rs|crates/gcode/src/commands/codewiki/mod.rs]] - `crates/gcode/src/commands/codewiki/mod.rs` exposes 56 indexed API symbols.
+[crates/gcode/src/commands/codewiki/mod.rs:92-97]
+[crates/gcode/src/commands/codewiki/mod.rs:100-104]
+[crates/gcode/src/commands/codewiki/mod.rs:106-128]
+[crates/gcode/src/commands/codewiki/mod.rs:107-116]
+[crates/gcode/src/commands/codewiki/mod.rs:118-127]
 - [[code/files/crates/gcode/src/commands/codewiki/ownership.rs|crates/gcode/src/commands/codewiki/ownership.rs]] - `crates/gcode/src/commands/codewiki/ownership.rs` exposes 50 indexed API symbols.
-[crates/gcode/src/commands/codewiki/ownership.rs:20-23]
-[crates/gcode/src/commands/codewiki/ownership.rs:25-32]
-[crates/gcode/src/commands/codewiki/ownership.rs:26-31]
-[crates/gcode/src/commands/codewiki/ownership.rs:35-38]
-[crates/gcode/src/commands/codewiki/ownership.rs:41-44]
+[crates/gcode/src/commands/codewiki/ownership.rs:17-20]
+[crates/gcode/src/commands/codewiki/ownership.rs:22-29]
+[crates/gcode/src/commands/codewiki/ownership.rs:23-28]
+[crates/gcode/src/commands/codewiki/ownership.rs:32-35]
+[crates/gcode/src/commands/codewiki/ownership.rs:38-41]
 - [[code/files/crates/gcode/src/commands/codewiki/paths.rs|crates/gcode/src/commands/codewiki/paths.rs]] - `crates/gcode/src/commands/codewiki/paths.rs` exposes 16 indexed API symbols.
 [crates/gcode/src/commands/codewiki/paths.rs:3-14]
 [crates/gcode/src/commands/codewiki/paths.rs:16-28]
@@ -467,46 +443,20 @@ sequenceDiagram
 [crates/gcode/src/commands/codewiki/render.rs:114-121]
 - [[code/files/crates/gcode/src/commands/codewiki/reuse.rs|crates/gcode/src/commands/codewiki/reuse.rs]] - `crates/gcode/src/commands/codewiki/reuse.rs` exposes 8 indexed API symbols.
 [crates/gcode/src/commands/codewiki/reuse.rs:11-19]
-[crates/gcode/src/commands/codewiki/reuse.rs:21-96]
+[crates/gcode/src/commands/codewiki/reuse.rs:21-101]
 [crates/gcode/src/commands/codewiki/reuse.rs:22-31]
 [crates/gcode/src/commands/codewiki/reuse.rs:36-46]
 [crates/gcode/src/commands/codewiki/reuse.rs:49-57]
 - [[code/files/crates/gcode/src/commands/codewiki/tests.rs|crates/gcode/src/commands/codewiki/tests.rs]] - `crates/gcode/src/commands/codewiki/tests.rs` has no indexed API symbols. 
-- [[code/files/crates/gcode/src/commands/codewiki/text.rs|crates/gcode/src/commands/codewiki/text.rs]] - `crates/gcode/src/commands/codewiki/text.rs` exposes 45 indexed API symbols.
+- [[code/files/crates/gcode/src/commands/codewiki/text.rs|crates/gcode/src/commands/codewiki/text.rs]] - `crates/gcode/src/commands/codewiki/text.rs` exposes 49 indexed API symbols.
 [crates/gcode/src/commands/codewiki/text.rs:15-27]
-[crates/gcode/src/commands/codewiki/text.rs:30-33]
-[crates/gcode/src/commands/codewiki/text.rs:35-83]
-[crates/gcode/src/commands/codewiki/text.rs:88-102]
-[crates/gcode/src/commands/codewiki/text.rs:104-112]
+[crates/gcode/src/commands/codewiki/text.rs:30-34]
+[crates/gcode/src/commands/codewiki/text.rs:36-84]
+[crates/gcode/src/commands/codewiki/text.rs:89-103]
+[crates/gcode/src/commands/codewiki/text.rs:105-113]
 
 ## Components
 
-- `729c6797-7c1f-54df-9e47-ac5f3dbaf7b3`
-- `a4417253-5f5d-5fca-809b-0c49ff210a66`
-- `d1b5c917-1edf-5961-8043-2030129876f0`
-- `83dd441f-f8ae-5caf-93ee-7fb58a33acb9`
-- `66b787f9-a6ca-5499-94e2-9743c2a99efe`
-- `4e4335db-4971-58c5-9017-670a914be229`
-- `ee63900d-2a0b-5282-96ab-a6253625e09b`
-- `0781ba0b-6bd0-58f6-bcf8-6ed87c515b81`
-- `4e89b097-b322-534b-98b2-4166b24e6fda`
-- `1fdee7d7-975b-5f16-b39c-f9d94bc16c0a`
-- `827f6d4e-76a7-54f7-ad22-c97eb3ead5a9`
-- `d5ea9924-4f7a-59fa-af46-01b397a81526`
-- `40915297-eb8e-5839-abd6-a5e1ef5cdb2f`
-- `af5026cc-b5ab-5797-8658-1ea08c6a973b`
-- `c2998ded-02bc-515a-a973-f9628d853a16`
-- `512b74da-d547-5cf0-85b9-f47e18a6abf8`
-- `4f8ee865-ff5d-5abc-83e5-4cb632aa0108`
-- `35d266e1-588c-5922-be7b-59c73aac0fe6`
-- `d18447d0-e856-5eee-8b40-6724ee638f03`
-- `84030109-023b-567c-ba3d-5f7793a04cd6`
-- `c329e461-dea4-5cd0-8053-478bd08fe594`
-- `05c77be0-fc54-5ebc-8aea-e4920a40c314`
-- `0e815d94-2c0b-56d5-b834-0d9d89a09442`
-- `8a4cda8e-8e1d-539a-a929-f7ec34f73d38`
-- `fc982987-7570-5095-b7df-450efceae8b5`
-- `a23d7e7d-f73e-5b17-a94f-daf542fd5cc7`
 - `b5f7a087-cd7f-5e27-823b-79664f1a5646`
 - `2cf219a4-ccdc-5833-af4a-e0b6a1985105`
 - `731f2c21-b8ef-5b43-a961-72daf4bf1d5a`
@@ -524,129 +474,138 @@ sequenceDiagram
 - `d515c347-b86d-5297-9803-cc692b841646`
 - `da03a0d9-08a1-5f2c-848f-855e55517a86`
 - `fa8a9d60-b906-5015-bfaa-0440a7025e2d`
-- `bed39b74-bd57-5d7d-bbc2-d28fb37bac95`
-- `8c07861c-4ab5-5726-b9c7-a2365e9481c7`
-- `79197c19-bd3a-5117-a027-0195fb337b6a`
-- `e711b819-26e6-539b-a569-15754698f4d7`
-- `471dbd1e-a1b9-5bc3-bdc4-efe74bb3d4c6`
-- `084d7fa0-7759-5c5a-8d74-6850060bb0d2`
-- `1dbe5302-ab02-5f60-92c5-9991824d1b05`
-- `c1699afd-0881-5b92-85b2-57cd73621c74`
-- `1ac20481-259c-5583-9698-d6ba5ad11188`
-- `e5a5f96f-9842-55d7-807f-014488cb0cb1`
-- `1e48823c-c709-533e-93a7-10113f2cf147`
-- `5c08026a-d8df-5913-8eeb-895b79f55880`
-- `c301e218-8c86-5be8-941a-bb23f1e0763a`
-- `4096ae6f-2c0f-589d-83c6-79f3ccabf2d0`
-- `c67ea37f-694f-588c-9765-cd6662fa9eb9`
-- `3459ee96-51de-5dd3-99db-08f0613fd131`
-- `e4186686-d79b-5f16-a4d0-269424cc4b4a`
-- `c8ac7390-7071-5975-8a05-60d3957ba6b0`
-- `42158663-2012-504f-9a06-76ff0d3189d0`
-- `8f821118-09ce-576f-ab5a-c74a8a71781b`
-- `0ba10697-2108-50f5-9ee4-0b41cd60c14c`
-- `a6558c65-603a-5ebf-9190-f9509353e9e4`
-- `5baef4b9-059f-5a9b-add3-c6bd55e128c9`
-- `7144b401-60f9-5973-a359-ce6d2c5c08a8`
-- `d2c5a728-0637-5ab9-ab68-57567b9ef7aa`
-- `3cc3d2f6-07ed-579d-9178-370b76ac505c`
-- `76a2ac82-7914-5453-922c-c8af3ced6807`
-- `776184ee-fc08-5c14-b24b-79462892c12b`
-- `906ed2cc-d818-5b61-b523-6589206480be`
-- `886483ac-72fc-59b3-963c-fafba996df91`
-- `62fbaea7-1f68-5524-84c9-566ec812ec89`
-- `1c3f4ed6-5ad8-5136-bccf-9ff075fa96bf`
-- `ab9e48ec-5aa7-594a-aa3d-442a539f2fad`
-- `8e07a8c5-be99-59a3-9534-245e12f61206`
-- `1b7cef24-06f5-590d-a055-c17f0826730a`
-- `bb75d230-2cd1-5851-94e0-975f441a67d1`
-- `9fa1be04-0abd-5308-b752-ed433cdb08ca`
-- `ccd76d11-a8bf-50cc-90df-446ba863ba3c`
-- `766d413d-3d7f-5192-a85a-94434a7637be`
-- `41c56e43-386f-58b3-8939-76d02507a20f`
-- `8eb8e4c8-4072-5838-aa70-7a22e7508fe9`
-- `a42534ae-a805-5b7f-b5b9-e40509c5d29e`
-- `69a2e6c9-77e3-5903-aacd-798c3d8ef5da`
-- `3482971e-9f50-5d1b-b22c-bf1396c05475`
-- `d5e5d2ce-0ddc-5bbf-9ba0-c654633ca1a5`
-- `8de45042-f257-5d77-a029-0b75f6ba6db0`
-- `6dc2354c-4c92-510c-9113-dabc834f03e3`
-- `afe1215d-6465-57e7-8178-5011fd13c19f`
-- `559c021c-3b69-5211-890f-55a7d99bb873`
-- `827b4c28-3008-5896-b827-a5e38c2ca147`
-- `23a19a33-fa67-590b-a695-fc4b863582d7`
-- `c13e5643-4dfd-5e3d-8f38-8ef302143b90`
-- `49d6f54a-29dd-5807-a54e-32dadfb53a58`
-- `0d064bca-b4d2-5d66-9c46-f72b42921900`
-- `89354bd1-3de7-5139-bf1c-ca5d1817c2f1`
-- `d493b593-0166-5898-a1ca-921f8d4e8d01`
-- `adcb6f8d-ba8b-51a2-b9c5-93cbb4c72a65`
-- `c60b6a91-96de-5789-8f44-72a38c964764`
-- `ef7a63d0-5200-5f82-b777-d70fddf6970b`
-- `d623f783-50f1-5b05-ba50-204538c45a17`
-- `a2cf58ea-4dd8-5a2d-a612-70b12be45862`
-- `b04b5269-fd48-5935-9a8e-8365cc161384`
-- `57646e55-fdf2-5ee9-8b68-78c8d9fcaceb`
-- `c1eb3286-0327-58ce-be34-4b185987de7f`
-- `26fdc388-1fd9-5bd7-97d1-e2a8bfc2937c`
-- `d956dedf-86d5-5282-a58c-dad8ed64587a`
-- `1e257628-eb5d-5a73-903c-fbcd617ac51e`
-- `a81ecadd-70bf-524b-84e0-9e5564cc29e0`
-- `705d8c89-b257-5759-b5a7-84bd3311c0f1`
-- `1921a844-7580-551f-b318-191761669366`
-- `854c2b1d-4195-5b83-94e9-00882489c7e0`
-- `99e2aa84-85e1-534c-8ef9-dc75987fc561`
-- `2394d419-b371-5fbf-9f1c-3d3b54e449a5`
-- `8f280098-b9b8-508a-becc-609396731c93`
-- `7efc9e5c-ad02-517a-babb-95b8942149c6`
-- `7f32b34a-9446-5689-b555-a320e4ebe03d`
-- `5a7b6d61-ddc7-54af-9946-09547d20011f`
-- `ea83fa2d-5dcd-51a0-94c3-755b0f651b1f`
-- `0ab029b7-1755-5719-af3d-e2aa36734580`
-- `bd1cd57e-21b0-5055-a805-c99836c6c962`
-- `726e920d-a812-5b7f-8200-d3bd52a8822f`
-- `ef3b09a3-deb0-529e-9cb4-d26142a24cdc`
-- `d3fc80d0-6df3-5b63-a532-9da10a634539`
-- `fee633a9-e021-5ea2-91c5-6b228642012d`
-- `844a061a-b235-55ae-a704-62635cd33769`
-- `eef21fe9-1184-5062-8f7d-91439c57f939`
-- `fb9b861c-0707-5036-8601-46aa11fa12d5`
-- `0d5cf1ca-65e5-5848-9eaf-2fe95c3684d0`
-- `0115e211-6a65-5f0a-b171-aa210619a4a6`
-- `d88408ad-346a-5e73-8b55-d48ed0ce9504`
-- `2910b38e-2b56-506b-a8a8-34716bd898b9`
-- `3b2ba538-4872-5a6e-a356-2b10c85ed023`
-- `5ed2d6c2-57cf-5500-9256-2900f0437dbb`
-- `89d264de-ab48-5fbc-8815-06666f80ac8b`
-- `7afedf5d-041e-5235-af24-7bdb8360f872`
-- `2ce30059-52f4-5119-aaa8-ef9b827adaa7`
-- `041a35eb-6074-5bbd-9f1a-fcb5d8e6c025`
-- `e532aa21-35c5-5bf3-be9c-ec5af9db1ba0`
-- `86bb4713-c702-5444-b5c5-458349d4e91a`
-- `b8861637-29bb-50af-98b4-29cbf273c783`
-- `ac9b20bd-cdd9-5524-bffe-49c5b3027076`
-- `f4a525ce-4f4f-5886-b778-010a84bb7651`
-- `6fbad978-4969-52ec-aaca-2ed93195469e`
-- `a1468119-20b9-54a5-b2b8-2a6d59d7c23e`
-- `6da9e452-23e0-543c-8511-124a27ec6ffa`
-- `0f035ad9-181a-5243-9851-6b7b54ac25a9`
-- `589f6b56-599a-51d0-81c2-d8670c0fa998`
-- `aa48b436-a0a9-589d-aeca-0508947ba775`
-- `eb808d24-78c5-565f-8356-beefc290ea09`
-- `ddbde373-06e7-59ae-b5ac-21373fc054e5`
-- `2d9c877c-a627-5968-8038-a4eaab8bcbc4`
-- `3c83aa1f-982a-5580-bb8c-ee93688207c9`
-- `957bdf76-4f3c-5a7c-a3a9-71b784e21eba`
-- `d5654fe6-86ea-5490-8e90-6c6ef7bca729`
-- `5d9374ef-98d0-5f4a-93c9-eb0d654a0206`
-- `17fc0587-76cd-55cd-b7aa-d6488b225396`
-- `5f52a679-b266-5153-8bfc-322472cfd114`
-- `413676ca-547d-53a4-9d6a-3b88efb4ce8d`
-- `b28e0707-ccda-5afe-a06c-f93b1e5a2729`
-- `6598383a-5be8-5914-be8a-b305bf5d74cb`
-- `2fdf80a5-b622-5049-89a9-f9c3c5fd01ef`
-- `18babbc7-aeaf-5025-a920-a9b86e389cc3`
-- `3b3d02e6-2b29-5f53-a2f7-6e2f3c60a19e`
+- `ee37fea1-7784-545c-95d5-aa8f3ba13aaf`
+- `5b8a74d4-7871-5772-8f41-fb83fe831ec4`
+- `1b2be36f-8693-5cdb-8f24-a8841e937158`
+- `cfe219c4-9b2a-5101-9d81-19b2e8e22632`
+- `45d7c8b7-e83d-5762-8282-21907063c7b0`
+- `51376235-a190-51d3-9615-b963c43e39ea`
+- `57b6130e-5922-50fc-9f65-f7f1c3818806`
+- `8a395671-584c-50c8-aa77-7263cb099b46`
+- `7fa4ab11-5317-55a5-bb8e-0bf08b6ae755`
+- `26a8b910-9567-5637-ace3-105c515669d8`
+- `2639b096-0526-56aa-88cc-a5a59e71eac3`
+- `c111480d-d8c1-596f-926f-e2aed2338a3e`
+- `e2916b5b-0b4c-5770-b18d-b524aada19ec`
+- `14a27cac-43be-5750-8cd3-ef5feab1d7e5`
+- `85c6c1d3-01eb-594f-b86b-597e806cddd8`
+- `d23a3f9b-2f1d-5917-ac5a-b4ca219ec0bd`
+- `eef73591-2c96-5cfa-adef-19637c997706`
+- `6ee34cee-aff3-5640-b231-3ce3716e6e10`
+- `c1a8f68c-9d9e-5e7d-bcf2-3c483350c382`
+- `26964249-ab6f-59e8-8b1f-bb2ce57a0e16`
+- `3a051d9f-1b2e-5ff8-b951-3e9a8affeead`
+- `5fdfee46-2038-5e4a-b331-1331fde3c8c5`
+- `dc22d336-14a8-56ff-90e5-2aaad0185c87`
+- `5468036a-fe54-534b-ba60-7d590c5a4508`
+- `092efb89-a58e-5d6d-aeeb-1c03a72c1578`
+- `ab3a0e4c-103f-53c2-b599-b1c175dd8001`
+- `09979a28-a596-520e-888f-fd82e5bc2f6e`
+- `b19fb571-d9e1-5c87-aa53-ae3715f7dcb6`
+- `1d10d127-fc13-5384-95ba-6ca217a70a46`
+- `6e94f2e3-ffe8-5d74-bbdb-a4977b13efb6`
+- `7dc2b188-2b4c-5514-83ea-e4b68b0d42df`
+- `1afbc5a7-f5cb-59e9-a22b-3cf3959537ce`
+- `892097f2-a976-5c6d-b342-5dedea6bf3b2`
+- `84fb6bcb-0176-5dae-b9c7-52a0e85afd04`
+- `a7b99571-882a-58eb-b59a-698b4d229f5d`
+- `c3e699ae-a8bd-5345-a2d8-5bf0cee862f5`
+- `0fb7c1a3-c4ef-52d2-909f-a76c39f9144d`
+- `8b2780cd-68f9-5c86-8227-8162cc13b2b5`
+- `35e70771-d5ca-52a2-8e09-85a71888c83b`
+- `b56f2f61-350d-5f8f-8dd8-b78a726b17f3`
+- `5425fae5-cc05-5912-95fb-2be54633ad8a`
+- `d52c4074-711d-5eb9-8250-bed18c6b8721`
+- `f5bc3a33-429a-5aa5-a647-a9b2ff8e1fc6`
+- `a90927ee-4da6-5e59-9ab1-e52eb0d7e40f`
+- `81682e25-0f1f-503f-8aa5-19c65fa576e1`
+- `0374efe2-6be1-507a-bd9b-edcf5a99a36d`
+- `7eb43706-91b3-5211-b8d6-ce853e32e55c`
+- `cf34fa47-5ec9-5053-94f8-572f5795df41`
+- `9eb891e9-8145-5cc8-8cb0-a8067bac17a3`
+- `e5d77f54-edab-5dc0-b844-0908f202b9ec`
+- `c8bb9e44-4397-530c-bc31-5fd206054e8b`
+- `25c3d6cf-d601-5339-bb2b-2e9893f11871`
+- `58e58ae6-3907-575f-85ad-37cad878f386`
+- `3cb0f646-6769-5abe-a66a-e6078031b3d6`
+- `fc4cbef0-bdde-5da4-876b-b3fed7f3e265`
+- `f1d067b7-d37b-5593-8cc4-21f94b3c6421`
+- `6397a14d-517b-5be0-ab2d-cc79e9188e56`
+- `a3d2fbc7-cabb-5c76-a9f9-8a189680c1bf`
+- `f67fd0dc-aa31-5296-9f9b-2193b8f8de67`
+- `a4802041-9713-504f-ab17-15683cd52ca8`
+- `a508392a-4204-5ecd-a755-cb332cc2e0a9`
+- `8fee9a4a-4f4c-549f-92c3-a8cae548b12b`
+- `a40a48e3-9d92-504c-b793-379ce8fcdef2`
+- `6fa5434a-1e24-5906-9eb3-39c05fd8ef87`
+- `ffd0db77-49da-5a68-b9f2-e0aad70b92b5`
+- `05603907-5163-524c-ba75-96bdb837aada`
+- `4e966af7-560d-546e-bb91-64f7b9bd9f90`
+- `c7b8a409-cb3b-542f-b531-95ba04d876d3`
+- `8ff9bcae-2994-5d6c-8d13-e2b3ad7fb9ea`
+- `93c0efdc-b23a-5b5e-b428-5f74d70568c1`
+- `b3d7483f-0548-50a8-aac1-e6b52f0d79c1`
+- `d2469372-3a8d-55f2-b7cb-cac3f5bfc9a4`
+- `87cb36da-1c68-59b3-89f4-2f60a679fee1`
+- `d831af1d-c30a-5a99-b8bd-73611217a68f`
+- `8c55de47-9cc3-5381-b034-732dcf16adaa`
+- `e5a26236-e098-5d8d-bf11-13d798e3b92e`
+- `2a8fe592-b781-5875-bde8-e47a14de13a2`
+- `578940af-8fc4-53ce-a88a-96cf6298ae4d`
+- `d4d7a649-ec45-5934-98d3-dfd26e3b4621`
+- `3e1d5cec-5c1a-506e-b068-60eebc98785b`
+- `f305e6d9-7954-516d-ab23-95941d777ecf`
+- `09ea14ff-d723-57c2-a52c-e34a20a1490d`
+- `f1c95e56-1717-5cfe-aa80-ad90615fcfb3`
+- `3e9985ef-2e8b-579d-a221-160fe0095481`
+- `0ef0c316-237b-5246-8059-e1bb3f01c7d4`
+- `a8f53471-a5ba-539b-94d0-e28a6ec53bc9`
+- `6e5136b8-a84b-5d66-b762-86232739f4e3`
+- `71238014-b946-5095-8472-57991498d611`
+- `63c0874a-c1ef-5d38-ae1d-f1dd3d329c55`
+- `200c3aa1-f85a-5886-bba7-b5b159e49355`
+- `ed949dd4-29c7-5a4d-8c3a-4fb5cb8d2c71`
+- `c2ad385c-fcc5-54fb-a950-71feb8e6cade`
+- `cb533d89-0ec9-54bc-b68b-b5c8ca6140a3`
+- `467073f4-1af0-5125-b2b7-c563dc5d1700`
+- `374463e0-f2e5-5d76-b896-ef93a2df4a24`
+- `e02b9ca5-7840-5218-ab73-a856c6ca50c1`
+- `04624067-ddd4-5413-b34d-7ceb7854842f`
+- `d702d49a-2f11-571b-91d3-19e14a1112af`
+- `646b6022-58a1-5ac1-a866-a631a6ab7908`
+- `7fea7799-93c5-5240-84f5-8a17dbf60dca`
+- `002737f5-f8fe-5e56-8173-de1610984978`
+- `f1eb451f-f91b-57c4-b0a8-c14351383c4f`
+- `c0f1027b-eb47-565d-baf4-8dbc40908eee`
+- `b0b9609f-c63a-5714-8aff-0fcf6e5ceb17`
+- `a3f7840a-b145-517b-a0f9-18df1be8f52c`
+- `2feb5f64-46d9-5b5a-b5ea-624cf030d080`
+- `014a522e-0e1c-557b-86f3-181c23820302`
+- `5fd2545a-0ba6-51f4-8578-ec8937b047d4`
+- `38a4f97f-d12d-5c0a-a190-6d05519f958f`
+- `6acd8c2b-fa20-5a0c-a4ce-2dbfc209b082`
+- `b05da78a-8d4f-51d4-b93a-412ef929302b`
+- `9fc527a4-2021-59e6-b821-d4488dac8ed2`
+- `f74a7a37-247b-5a68-acb6-8c7218131501`
+- `9c3f9c1c-6ae0-5fc0-b75d-1300d884f572`
+- `9834a64b-f291-505a-be28-06dfb74ce8a8`
+- `77270e0e-921e-5616-92ef-4442b3c23cc0`
+- `9acb73b3-dacc-5de1-b3c9-9d47a2f97893`
+- `be6602c5-e83f-5d57-8a08-d789aa445d1b`
+- `0d376088-be59-5b21-b76d-67c0cf9640ed`
+- `daff5bf8-3a9e-570a-98af-902db6682b3f`
+- `194dcb6e-9304-5441-98d7-8dc64ff210df`
+- `4f1c1f06-4627-50b0-9d6d-fc7948f2d185`
+- `26e55ee7-242d-5aa0-be88-0d38fef4bcf1`
+- `c2a5d05b-09a8-56bf-b92b-cea65845b304`
+- `97b73bdb-b610-5996-abb9-9a3616688fdb`
+- `7f0ac9f3-d476-5736-9272-1820340103ed`
+- `7c0cc8e0-8958-5da9-9416-901e3dfb17e5`
+- `bb0af3c7-701f-5b6f-b1aa-21eb069986be`
+- `e626342b-0d01-5252-94fe-7b1d1b674002`
+- `c8b798c2-1b51-5bfc-9bbc-9d859234e5e8`
+- `cc8b024c-a7d5-5111-905c-05355111cc58`
+- `0ff395e3-9676-5d64-8fb4-b4428157f7ef`
 - `2482ea17-b327-536d-96d8-3904bc42d195`
 - `ec4098a0-25ed-5493-b157-ed20fa7aeb45`
 - `316a2e47-3aca-54d4-b838-e50b108b9a97`
@@ -698,65 +657,69 @@ sequenceDiagram
 - `3b6bb0e5-2666-54e5-82c7-69818b1ab9b9`
 - `ec73f37c-6b87-5bca-8444-c27fa612fcf9`
 - `7477fd1e-0d0b-59f0-bf94-f68470575d0c`
-- `e82f70ce-4d96-5db8-8646-04d2c5164faa`
-- `22109196-3b67-5b13-89cc-9e6859a82a3a`
-- `74487b38-9883-56e2-acc1-0942ddfa2fb8`
-- `fc28d2df-5f0b-5a47-a2a1-3a6e9df3478e`
-- `2177a5e9-cb82-577e-961f-d4f857e295a5`
-- `3fc8e84a-e67d-510a-9130-398c2609cb21`
-- `533750d8-0d81-5f11-bf13-6a8c212eef94`
-- `aa70b8b6-ef5e-5352-973e-94f8b2a9b7c8`
+- `de64c8ea-5356-56bd-b7de-cb0a7ef02274`
+- `55de1aaa-0bcf-5bff-9acf-620a08e19ad8`
+- `0b97ccce-57d6-507f-8dac-22de1d0dcec9`
+- `1f969540-cb6b-5bf9-9112-d591b7a9bf40`
+- `5174e409-1ba4-54bf-ad57-c400c56202b4`
+- `a51651ca-a233-5219-8c9c-40a14d3a75ec`
+- `7acd0e7e-39bd-5f78-984a-a40bac388085`
+- `fa52790e-08c6-5ac1-90a9-b0f3df95323c`
 - `eec87db6-f257-5625-9121-33908d777619`
 - `cce1752d-eb6f-5274-b167-b70c61f01758`
 - `cce62242-a527-5177-9502-c73105dbc509`
 - `c4fae48a-685c-593e-831c-dab9e872d3af`
 - `015125b2-7388-5621-8d0d-9cb2a00b81fb`
 - `ef01acbe-dd9e-560c-b4b6-ff06c49ab56f`
-- `fdaca5c2-56ed-533e-9e35-f57fdf7045e1`
-- `a7cc51b8-68bb-59e7-8c5a-8d02dc1e585a`
+- `4d7e3036-508e-5281-bd5a-1c49a210d308`
+- `c68e20a4-c96a-58c0-9831-4973554fd9a8`
 - `eae0ca11-c8fa-584f-b3b2-e66838546e27`
 - `c1009587-d58e-5878-977d-ce6795a0e388`
-- `e9ad9673-1e08-554b-aaf6-c0c78aab209e`
-- `138df8dd-5300-5989-a3df-f581bf4df188`
-- `75d86435-692c-595e-acb3-bbf5fcecad51`
-- `249984a8-522d-5c7d-b5f7-df1dbb07c6d5`
-- `099f9834-1687-550f-88dc-d7924d0f08a4`
-- `aada1d46-2c07-55dd-b2cc-e8e1046d56a8`
-- `c0baa214-5d65-5c7d-9a87-1d3628be8672`
-- `7ef3ec93-f03b-5705-9e6e-1fa87393bd59`
-- `b51d9bf1-bef5-5f15-8fd0-0ee4e702df71`
-- `cb64ebc3-49b9-5264-8664-9350c69d626d`
-- `a2e82610-1662-504c-92c4-40dfd9e7cc1e`
-- `7eb4bf51-87f3-5167-aff7-e96f1a764a2e`
-- `03c5c769-a004-5bd6-bdde-054f7bc89ca4`
-- `290bba2b-63a2-5f6e-bee3-edb6d2298882`
-- `cc78ad52-51a2-5a13-959d-8b3d905a190f`
-- `125cf2c8-09cf-5e14-9f18-e315f6c382e0`
-- `0774440a-f6df-56f9-bd96-570928ef6657`
-- `4e79fcb8-c575-5773-9567-b3dd6b3ad877`
-- `40c4ed28-c0aa-5148-b4a6-e62c82174ef8`
-- `e6eb617b-872e-589f-bbeb-c5780c06ed6d`
-- `972ee894-54a7-51b6-af6d-11d71473953e`
-- `09baee22-3bd1-5013-8675-b87154a00379`
-- `1bc16305-c41f-56f9-948b-d62cfe3a18e1`
-- `4a017ef1-97e7-5a04-a7ee-512c9a0c2fbe`
-- `0fa1a27b-0c9a-5b2d-addb-540f3f746f0e`
-- `8bd10d41-b3d8-54b4-9a63-b3a37ab195b9`
-- `0644798e-c3f2-5a9f-be8e-1e81d392c04c`
-- `b67fd401-e487-514e-ae91-4557fb67c28b`
-- `69f4fe63-c10a-5121-a8d6-a232ba1be7ec`
-- `214e0be7-f57d-5472-b6ad-61ccef3b0788`
-- `900b7579-ff41-52ba-858e-6948ee59a980`
-- `37a7c69f-ebf7-5d23-9799-a644761d8661`
-- `afffc235-fc7f-52d0-a4d6-ea7cfe775618`
-- `80d12a0e-eb40-5c42-92bc-4cecaaec23f7`
-- `3be1e97d-74a8-5cab-9a27-963c7d575e50`
-- `7897d31f-5683-55ff-8a12-e07b0d42d40f`
-- `f576f0ea-b6cd-5027-83f0-acc2123d5b24`
-- `e0ab63e6-70d9-5dcd-b798-d7d9490d8bdd`
-- `71b3a9d5-2017-5d49-9774-c439dfdeecbd`
-- `c7d4109b-7136-57fc-bf3f-836d5ec9c494`
-- `b2cec2ca-54fc-5ba1-aa5d-36a03c9e5cd4`
-- `747851bf-ba82-534f-9de5-370a33d70668`
-- `0c0335fa-e3fc-51f5-b47d-f7ae99a39e42`
+- `bd896574-ba30-557f-8d30-9a987b8d334d`
+- `3a40a621-fc89-5847-992a-db3a44c4a833`
+- `c025b0ee-ca2a-5088-8f4c-591e66098fd7`
+- `828f374f-dad9-5af5-ab2c-74f2c1c4fa15`
+- `997e24bd-9868-58ff-9e0a-d7088a4be9ab`
+- `b8f063bb-ccfc-5732-81bf-d300725b94aa`
+- `980f3dba-ec93-555f-a209-0359d1755a6c`
+- `6fa87ff6-e6de-5a3c-99c7-a1431ba79109`
+- `f8243263-3dd9-5554-b108-5490661d618d`
+- `bfd4eba5-a8ea-5bf0-925f-1fb7836fbb6f`
+- `4e86bc23-b0ce-546d-94e9-a08c1a4d130f`
+- `3e8baba0-4bc2-5673-bfe3-0fd245d4bc5a`
+- `558b277f-e6c6-501d-82b7-64950c6cb87c`
+- `29b6e986-f1cc-5438-98af-0fda093bfa77`
+- `9d102d5a-70a7-5466-9930-b2598f414d8c`
+- `991e67bc-6202-5f08-bed4-d52481655e14`
+- `04af31e4-9e17-5e45-a33c-63d6a0fcd627`
+- `bfde9422-38d1-5a55-a282-a3dd86a0d9fb`
+- `e7bb3861-6b73-567c-90bb-53d1399d95b7`
+- `d738dc4a-3472-5654-a130-b4cfba2ec07f`
+- `ea1ad37a-03db-546a-aa70-7e053aa1c946`
+- `4299f052-fb38-5aab-aba1-29aff86117e3`
+- `5f746ac1-38ff-5630-bdb4-0dd2a24c189a`
+- `be457f9c-2602-56d0-9009-ae022206da6f`
+- `b6aba247-1602-542b-a457-d19ad4afe711`
+- `b1af5d54-f1c2-5d96-912f-78cb30fda211`
+- `489817c9-adcf-5987-a0e5-07821fab7daf`
+- `a790f62d-995b-5f97-aeda-5804f58f7fff`
+- `7d2da148-f467-5773-afb5-eec86049cc13`
+- `ea649be6-6fad-51d4-8acc-c33bb794ed3d`
+- `5aa4dbd8-1964-5628-b445-56ade0bc0bc1`
+- `e8eb7e21-1599-5d8d-b0e1-9b6b7b0a5d33`
+- `caeeca1d-857a-5612-b31a-e9a92181f47e`
+- `fb421126-f976-5b90-b348-fcb670268f8e`
+- `127d83b5-cb84-5d51-bfe3-3ad23ec6ea1f`
+- `9877a440-1a05-56b5-aa3f-edb13b3eeb61`
+- `0e2358a2-d88c-5916-9165-cc23fe902135`
+- `b3019623-9b78-5cbf-88dd-96e835a8636c`
+- `d31616d1-6eaa-56bb-b53b-bbbe5897ce10`
+- `c848b691-f5c6-55eb-ba1c-d515c2a0b46c`
+- `f18c59a2-fcd4-58d3-b989-de02c74043d8`
+- `454a782e-c838-5a44-98bf-7f9b19c6f587`
+- `40805f72-712b-59b5-85be-adcf06e21d03`
+- `6096cf84-99e1-55a6-aa2e-03ea8f06b183`
+- `5ecfe02d-d15e-5541-a00e-175cc38cb434`
+- `1e9935b5-6cd1-5388-a4a4-4c8869534b9d`
+- `d8d761e8-2797-5f10-9739-47c1b077d25d`
 

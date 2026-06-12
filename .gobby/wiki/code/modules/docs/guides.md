@@ -13,7 +13,7 @@ Parent: [[code/modules/docs|docs]]
 
 ## Overview
 
-Documentation guides covering user and development workflows for the project's tooling suite. Includes user and developer guides for individual tools (gcode, ghook, gloc, gsqz, gwiki, gcore), along with AI configuration, daemon and install contracts, codewiki, and release processes. These are Markdown reference docs with no indexed API symbols.
+This module contains comprehensive development and user documentation for Gobby's integrated ecosystem of tools and core components. It includes detailed guides, user manuals, and system contracts for key CLI utilities (such as gcode, gcore, ghook, gloc, gsqz, and gwiki), alongside operational runbooks for AI daemon configurations, repository installation contracts, and project release procedures.
 
 ## Files
 

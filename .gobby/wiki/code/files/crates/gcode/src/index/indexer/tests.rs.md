@@ -4,33 +4,37 @@ type: code_file
 provenance:
 - file: crates/gcode/src/index/indexer/tests.rs
   ranges:
-  - 22-28
-  - 30-38
-  - 41-60
-  - 63-82
-  - 85-103
-  - 106-150
-  - 153-161
-  - 163-212
-  - 164-167
-  - 169-173
-  - 175-179
-  - 181-190
-  - 192-205
-  - 207-211
-  - 215-282
-  - 285-307
-  - 310-346
-  - 349-385
-  - 388-418
-  - 421-447
-  - 450-472
-  - 475-490
-  - 493-542
-  - 545-573
-  - 576-626
-  - 629-666
-  - 669-695
+  - 24-30
+  - 32-40
+  - 43-62
+  - 65-84
+  - 87-105
+  - 108-152
+  - 155-164
+  - 166-235
+  - 238-314
+  - 318-391
+  - 393-402
+  - 404-410
+  - 412-415
+  - 417-423
+  - 425-456
+  - 458-485
+  - 487-514
+  - 516-524
+  - 526-536
+  - 539-561
+  - 564-600
+  - 603-639
+  - 642-672
+  - 675-701
+  - 704-726
+  - 729-744
+  - 747-796
+  - 799-827
+  - 830-880
+  - 883-920
+  - 923-949
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -42,94 +46,133 @@ Module: [[code/modules/crates/gcode/src/index/indexer|crates/gcode/src/index/ind
 
 ## Purpose
 
-`crates/gcode/src/index/indexer/tests.rs` exposes 27 indexed API symbols.
-[crates/gcode/src/index/indexer/tests.rs:22-28]
-[crates/gcode/src/index/indexer/tests.rs:30-38]
-[crates/gcode/src/index/indexer/tests.rs:41-60]
-[crates/gcode/src/index/indexer/tests.rs:63-82]
-[crates/gcode/src/index/indexer/tests.rs:85-103]
+`crates/gcode/src/index/indexer/tests.rs` exposes 40 indexed API symbols.
+[crates/gcode/src/index/indexer/tests.rs:24-30]
+[crates/gcode/src/index/indexer/tests.rs:32-40]
+[crates/gcode/src/index/indexer/tests.rs:43-62]
+[crates/gcode/src/index/indexer/tests.rs:65-84]
+[crates/gcode/src/index/indexer/tests.rs:87-105]
 
 ## API Symbols
 
-- `write_file` (function) component `write_file [function]` (`7ff9eba8-b8db-5bc6-bdb0-6efbb21c9347`) lines 22-28 [crates/gcode/src/index/indexer/tests.rs:22-28]
+- `write_file` (function) component `write_file [function]` (`93b52f75-55a1-5025-a3a4-7e3d067416a6`) lines 24-30 [crates/gcode/src/index/indexer/tests.rs:24-30]
   - Signature: `fn write_file(root: &Path, rel: &str, contents: &[u8]) {`
-  - Purpose: Joins `rel` onto `root`, creates any missing parent directories, and writes `contents` to the resulting path, panicking on any I/O failure. [crates/gcode/src/index/indexer/tests.rs:22-28]
-- `assert_cli_independent_contract` (function) component `assert_cli_independent_contract [function]` (`9a555508-69c1-5909-9d69-a1fb754b3296`) lines 30-38 [crates/gcode/src/index/indexer/tests.rs:30-38]
+  - Purpose: Indexed function `write_file` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:24-30]
+- `assert_cli_independent_contract` (function) component `assert_cli_independent_contract [function]` (`c9ca8599-c3b6-56f5-a793-8464d6dd688a`) lines 32-40 [crates/gcode/src/index/indexer/tests.rs:32-40]
   - Signature: `fn assert_cli_independent_contract<T>()`
-  - Purpose: Asserts at runtime that a serializable/deserializable generic type `T` is CLI-independent by rejecting any type whose fully qualified name contains `commands::`, `output::`, or `clap`. [crates/gcode/src/index/indexer/tests.rs:30-38]
-- `library_api_is_cli_independent` (function) component `library_api_is_cli_independent [function]` (`b1f8c304-eba0-5ff2-9f43-6400e08ce6dc`) lines 41-60 [crates/gcode/src/index/indexer/tests.rs:41-60]
+  - Purpose: Indexed function `assert_cli_independent_contract` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:32-40]
+- `library_api_is_cli_independent` (function) component `library_api_is_cli_independent [function]` (`a75050de-6e71-506b-b6d9-97a4765ea6b7`) lines 43-62 [crates/gcode/src/index/indexer/tests.rs:43-62]
   - Signature: `fn library_api_is_cli_independent() {`
-  - Purpose: Verifies that the indexing library API types are CLI-independent and that `IndexRequest` serializes its `PathBuf` fields to the expected JSON string values. [crates/gcode/src/index/indexer/tests.rs:41-60]
-- `invalidate_postgres_deletes_are_project_scoped` (function) component `invalidate_postgres_deletes_are_project_scoped [function]` (`978e1e00-800a-57c9-9b44-25220237960b`) lines 63-82 [crates/gcode/src/index/indexer/tests.rs:63-82]
+  - Purpose: Indexed function `library_api_is_cli_independent` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:43-62]
+- `invalidate_postgres_deletes_are_project_scoped` (function) component `invalidate_postgres_deletes_are_project_scoped [function]` (`b35c0484-ef88-5e10-bcc0-132cc5775747`) lines 65-84 [crates/gcode/src/index/indexer/tests.rs:65-84]
   - Signature: `fn invalidate_postgres_deletes_are_project_scoped() {`
-  - Purpose: It verifies that `lifecycle.rs` performs only project-scoped `DELETE` statements for the indexed code tables and `code_indexed_projects`, and that it does not contain any `TRUNCATE` or `DROP TABLE` operations. [crates/gcode/src/index/indexer/tests.rs:63-82]
-- `current_file_state_keeps_unhashable_paths_present` (function) component `current_file_state_keeps_unhashable_paths_present [function]` (`195a4b66-14f8-5543-b933-2ec31aaade71`) lines 85-103 [crates/gcode/src/index/indexer/tests.rs:85-103]
+  - Purpose: Indexed function `invalidate_postgres_deletes_are_project_scoped` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:65-84]
+- `current_file_state_keeps_unhashable_paths_present` (function) component `current_file_state_keeps_unhashable_paths_present [function]` (`bc26aaea-8070-5ffb-a5f3-5ffd1e0dddda`) lines 87-105 [crates/gcode/src/index/indexer/tests.rs:87-105]
   - Signature: `fn current_file_state_keeps_unhashable_paths_present() {`
-  - Purpose: Verifies that `current_file_state` records both a regular file and an unhashable directory as present, but only computes a content hash for the file path. [crates/gcode/src/index/indexer/tests.rs:85-103]
-- `unsupported_file_types_group_content_only_paths` (function) component `unsupported_file_types_group_content_only_paths [function]` (`2b40a5c0-fcbb-59a1-9d4c-b51da7c521ab`) lines 106-150 [crates/gcode/src/index/indexer/tests.rs:106-150]
+  - Purpose: Indexed function `current_file_state_keeps_unhashable_paths_present` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:87-105]
+- `unsupported_file_types_group_content_only_paths` (function) component `unsupported_file_types_group_content_only_paths [function]` (`b15fe3b0-af43-55b5-a6bf-e1a7641fa3c0`) lines 108-152 [crates/gcode/src/index/indexer/tests.rs:108-152]
   - Signature: `fn unsupported_file_types_group_content_only_paths() {`
-  - Purpose: This test creates a temporary directory with unsupported files of several types, then verifies that `unsupported_file_types` groups them by normalized extension (including case-insensitive `.txt` and `extensionless`) and reports the correct file counts and example paths for each group. [crates/gcode/src/index/indexer/tests.rs:106-150]
-- `RecordingCodeFactSink` (class) component `RecordingCodeFactSink [class]` (`21136c8d-da12-54b0-a33d-e0a769e092b4`) lines 153-161 [crates/gcode/src/index/indexer/tests.rs:153-161]
+  - Purpose: Indexed function `unsupported_file_types_group_content_only_paths` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:108-152]
+- `RecordingCodeFactSink` (class) component `RecordingCodeFactSink [class]` (`5227db9f-8954-5910-81bf-40152c3b2374`) lines 155-164 [crates/gcode/src/index/indexer/tests.rs:155-164]
   - Signature: `struct RecordingCodeFactSink {`
-  - Purpose: A recording sink for code-fact events that stores the emitted write labels and maintains counters for files, symbols, imports, calls, unresolved targets, and chunks. [crates/gcode/src/index/indexer/tests.rs:153-161]
-- `RecordingCodeFactSink` (class) component `RecordingCodeFactSink [class]` (`3d540223-37a6-583f-8847-1c21135796cf`) lines 163-212 [crates/gcode/src/index/indexer/tests.rs:163-212]
+  - Purpose: Indexed class `RecordingCodeFactSink` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:155-164]
+- `RecordingCodeFactSink` (class) component `RecordingCodeFactSink [class]` (`1ca5dd93-8369-586f-90a3-1b1f414fddef`) lines 166-235 [crates/gcode/src/index/indexer/tests.rs:166-235]
   - Signature: `impl CodeFactSink for RecordingCodeFactSink {`
-  - Purpose: `RecordingCodeFactSink` is an in-memory `CodeFactSink` test double that records each write operation type and accumulates counts for files, symbols, imports, calls, unresolved call targets, and content chunks while returning the number of items processed. [crates/gcode/src/index/indexer/tests.rs:163-212]
-- `RecordingCodeFactSink.delete_file_facts` (method) component `RecordingCodeFactSink.delete_file_facts [method]` (`418c8dbc-db4b-53d9-bf76-24589ec762b5`) lines 164-167 [crates/gcode/src/index/indexer/tests.rs:164-167]
+  - Purpose: Indexed class `RecordingCodeFactSink` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:166-235]
+- `RecordingCodeFactSink.delete_file_facts` (method) component `RecordingCodeFactSink.delete_file_facts [method]` (`2cbfe908-794d-506c-927c-a073cc7bb09d`) lines 167-170 [crates/gcode/src/index/indexer/tests.rs:167-170]
   - Signature: `fn delete_file_facts(&mut self, _project_id: &str, _file_path: &str) -> anyhow::Result<()> {`
-  - Purpose: Appends the string `"delete"` to `self.writes` and returns `Ok(())`, ignoring both input parameters. [crates/gcode/src/index/indexer/tests.rs:164-167]
-- `RecordingCodeFactSink.upsert_symbols` (method) component `RecordingCodeFactSink.upsert_symbols [method]` (`5eca98d9-75a0-586c-8cc4-7ae6518214aa`) lines 169-173 [crates/gcode/src/index/indexer/tests.rs:169-173]
+  - Purpose: Indexed method `RecordingCodeFactSink.delete_file_facts` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:167-170]
+- `RecordingCodeFactSink.delete_file_non_symbol_facts` (method) component `RecordingCodeFactSink.delete_file_non_symbol_facts [method]` (`57e95b23-33f2-56f1-9d50-18e93bae14a3`) lines 172-179 [crates/gcode/src/index/indexer/tests.rs:172-179]
+  - Signature: `fn delete_file_non_symbol_facts(`
+  - Purpose: Indexed method `RecordingCodeFactSink.delete_file_non_symbol_facts` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:172-179]
+- `RecordingCodeFactSink.delete_stale_file_symbols` (method) component `RecordingCodeFactSink.delete_stale_file_symbols [method]` (`0b0bf71f-fe23-500b-9d8a-3c9a2afc8c62`) lines 181-190 [crates/gcode/src/index/indexer/tests.rs:181-190]
+  - Signature: `fn delete_stale_file_symbols(`
+  - Purpose: Indexed method `RecordingCodeFactSink.delete_stale_file_symbols` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:181-190]
+- `RecordingCodeFactSink.upsert_symbols` (method) component `RecordingCodeFactSink.upsert_symbols [method]` (`90ed7a42-9cd0-5329-96ed-d6884fc38008`) lines 192-196 [crates/gcode/src/index/indexer/tests.rs:192-196]
   - Signature: `fn upsert_symbols(&mut self, symbols: &[Symbol]) -> anyhow::Result<usize> {`
-  - Purpose: Appends `"symbols"` to `self.writes`, increments `self.symbols` by `symbols.len()`, and returns `Ok(symbols.len())`. [crates/gcode/src/index/indexer/tests.rs:169-173]
-- `RecordingCodeFactSink.upsert_file` (method) component `RecordingCodeFactSink.upsert_file [method]` (`8ba21fb8-10fa-50ee-ac45-309ce60dcddb`) lines 175-179 [crates/gcode/src/index/indexer/tests.rs:175-179]
+  - Purpose: Indexed method `RecordingCodeFactSink.upsert_symbols` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:192-196]
+- `RecordingCodeFactSink.upsert_file` (method) component `RecordingCodeFactSink.upsert_file [method]` (`4b97fd8d-91c4-5de4-ba7c-1f29360ca45b`) lines 198-202 [crates/gcode/src/index/indexer/tests.rs:198-202]
   - Signature: `fn upsert_file(&mut self, _file: &IndexedFile) -> anyhow::Result<()> {`
-  - Purpose: `upsert_file` records a file write by pushing `"file"` onto `self.writes`, incrementing `self.files` by one, and returning `Ok(())`. [crates/gcode/src/index/indexer/tests.rs:175-179]
-- `RecordingCodeFactSink.upsert_imports` (method) component `RecordingCodeFactSink.upsert_imports [method]` (`317b60d8-7ae5-5a9b-acfd-2f38f150ed09`) lines 181-190 [crates/gcode/src/index/indexer/tests.rs:181-190]
+  - Purpose: Indexed method `RecordingCodeFactSink.upsert_file` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:198-202]
+- `RecordingCodeFactSink.upsert_imports` (method) component `RecordingCodeFactSink.upsert_imports [method]` (`d9cfd64d-fc55-5dfa-a38b-362fbc1f3114`) lines 204-213 [crates/gcode/src/index/indexer/tests.rs:204-213]
   - Signature: `fn upsert_imports(`
-  - Purpose: Appends an `"imports"` write marker, increments the internal `imports` counter by `imports.len()`, and returns that count as the number of upserted import relations. [crates/gcode/src/index/indexer/tests.rs:181-190]
-- `RecordingCodeFactSink.upsert_calls` (method) component `RecordingCodeFactSink.upsert_calls [method]` (`9c7a8695-2cc0-5d70-8773-f39d86f7c7a1`) lines 192-205 [crates/gcode/src/index/indexer/tests.rs:192-205]
+  - Purpose: Indexed method `RecordingCodeFactSink.upsert_imports` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:204-213]
+- `RecordingCodeFactSink.upsert_calls` (method) component `RecordingCodeFactSink.upsert_calls [method]` (`1f23c1ce-dc5f-5a3a-b7d7-6d0460aa821a`) lines 215-228 [crates/gcode/src/index/indexer/tests.rs:215-228]
   - Signature: `fn upsert_calls(`
-  - Purpose: `upsert_calls` records a `"calls"` write marker, increments the total call count by `calls.len()` and the unresolved-target counter by the number of `CallRelation`s whose `callee_target_kind` is `Unresolved`, then returns `Ok(calls.len())`, ignoring `project_id` and `file_path`. [crates/gcode/src/index/indexer/tests.rs:192-205]
-- `RecordingCodeFactSink.upsert_content_chunks` (method) component `RecordingCodeFactSink.upsert_content_chunks [method]` (`2ac82aa1-e5d8-5ee5-9451-67b51f527bf9`) lines 207-211 [crates/gcode/src/index/indexer/tests.rs:207-211]
+  - Purpose: Indexed method `RecordingCodeFactSink.upsert_calls` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:215-228]
+- `RecordingCodeFactSink.upsert_content_chunks` (method) component `RecordingCodeFactSink.upsert_content_chunks [method]` (`337e0088-4236-5a84-956d-8ef4e82ed3a6`) lines 230-234 [crates/gcode/src/index/indexer/tests.rs:230-234]
   - Signature: `fn upsert_content_chunks(&mut self, chunks: &[ContentChunk]) -> anyhow::Result<usize> {`
-  - Purpose: `upsert_content_chunks` logs a `"chunks"` write, increments the internal `chunks` counter by `chunks.len()`, and returns that count as `Ok(usize)`. [crates/gcode/src/index/indexer/tests.rs:207-211]
-- `library_writes_all_code_facts` (function) component `library_writes_all_code_facts [function]` (`c8d4bb7b-1791-543c-82e7-c90f678d6fac`) lines 215-282 [crates/gcode/src/index/indexer/tests.rs:215-282]
+  - Purpose: Indexed method `RecordingCodeFactSink.upsert_content_chunks` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:230-234]
+- `library_writes_all_code_facts` (function) component `library_writes_all_code_facts [function]` (`d345608e-3d2e-57d3-b30d-2559654276aa`) lines 238-314 [crates/gcode/src/index/indexer/tests.rs:238-314]
   - Signature: `fn library_writes_all_code_facts() {`
-  - Purpose: This test verifies that `write_parsed_file_facts` persists a parsed Rust file by emitting `delete`, `symbols`, `file`, `imports`, `calls`, and `chunks` writes and by returning the expected counts for one file, one symbol, one import, one call, one unresolved target, and one chunk. [crates/gcode/src/index/indexer/tests.rs:215-282]
-- `call_relation_contract_uses_empty_optional_storage_values` (function) component `call_relation_contract_uses_empty_optional_storage_values [function]` (`71433a86-3291-5004-9775-de0b34753ffe`) lines 285-307 [crates/gcode/src/index/indexer/tests.rs:285-307]
+  - Purpose: Indexed function `library_writes_all_code_facts` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:238-314]
+- `parsed_reindex_preserves_unchanged_symbol_summaries_and_clears_changed_symbols` (function) component `parsed_reindex_preserves_unchanged_symbol_summaries_and_clears_changed_symbols [function]` (`894d5e2d-a7da-580c-842c-13e50be5da5d`) lines 318-391 [crates/gcode/src/index/indexer/tests.rs:318-391]
+  - Signature: `fn parsed_reindex_preserves_unchanged_symbol_summaries_and_clears_changed_symbols() {`
+  - Purpose: Indexed function `parsed_reindex_preserves_unchanged_symbol_summaries_and_clears_changed_symbols` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:318-391]
+- `connect_summary_preservation_test_db` (function) component `connect_summary_preservation_test_db [function]` (`9e1a0adf-229d-5e34-abb2-f86683ad9418`) lines 393-402 [crates/gcode/src/index/indexer/tests.rs:393-402]
+  - Signature: `fn connect_summary_preservation_test_db() -> Option<(postgres::Client, String)> {`
+  - Purpose: Indexed function `connect_summary_preservation_test_db` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:393-402]
+- `unique_test_project_id` (function) component `unique_test_project_id [function]` (`113ea5cb-b5c7-53b5-93d9-d0f30984f2d3`) lines 404-410 [crates/gcode/src/index/indexer/tests.rs:404-410]
+  - Signature: `fn unique_test_project_id(prefix: &str) -> String {`
+  - Purpose: Indexed function `unique_test_project_id` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:404-410]
+- `SummaryPreservationCleanup` (class) component `SummaryPreservationCleanup [class]` (`4925aa95-6138-52b2-b41b-cdf6a7fb7a9a`) lines 412-415 [crates/gcode/src/index/indexer/tests.rs:412-415]
+  - Signature: `struct SummaryPreservationCleanup {`
+  - Purpose: Indexed class `SummaryPreservationCleanup` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:412-415]
+- `SummaryPreservationCleanup` (class) component `SummaryPreservationCleanup [class]` (`4a1039df-6e46-5825-b39e-40bf6d2df066`) lines 417-423 [crates/gcode/src/index/indexer/tests.rs:417-423]
+  - Signature: `impl Drop for SummaryPreservationCleanup {`
+  - Purpose: Indexed class `SummaryPreservationCleanup` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:417-423]
+- `SummaryPreservationCleanup.drop` (method) component `SummaryPreservationCleanup.drop [method]` (`1338b69e-01ae-51af-800c-39edd113f6fd`) lines 418-422 [crates/gcode/src/index/indexer/tests.rs:418-422]
+  - Signature: `fn drop(&mut self) {`
+  - Purpose: Indexed method `SummaryPreservationCleanup.drop` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:418-422]
+- `cleanup_summary_preservation_project` (function) component `cleanup_summary_preservation_project [function]` (`2d437509-ec07-545d-8636-48f4a49d61ce`) lines 425-456 [crates/gcode/src/index/indexer/tests.rs:425-456]
+  - Signature: `fn cleanup_summary_preservation_project(`
+  - Purpose: Indexed function `cleanup_summary_preservation_project` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:425-456]
+- `write_postgres_parsed_file_facts` (function) component `write_postgres_parsed_file_facts [function]` (`af4856e6-f5f1-5b04-a546-c239f80014bd`) lines 458-485 [crates/gcode/src/index/indexer/tests.rs:458-485]
+  - Signature: `fn write_postgres_parsed_file_facts(`
+  - Purpose: Indexed function `write_postgres_parsed_file_facts` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:458-485]
+- `test_symbol` (function) component `test_symbol [function]` (`271f35b2-97ab-56dc-9dfd-7d14c1eb86a7`) lines 487-514 [crates/gcode/src/index/indexer/tests.rs:487-514]
+  - Signature: `fn test_symbol(`
+  - Purpose: Indexed function `test_symbol` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:487-514]
+- `symbol_summary` (function) component `symbol_summary [function]` (`ad01f186-a9b3-58bd-b3e6-cf89a069c04c`) lines 516-524 [crates/gcode/src/index/indexer/tests.rs:516-524]
+  - Signature: `fn symbol_summary(conn: &mut postgres::Client, symbol_id: &str) -> Option<String> {`
+  - Purpose: Indexed function `symbol_summary` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:516-524]
+- `symbol_count` (function) component `symbol_count [function]` (`4ad66c05-518e-58ee-9787-9821aeed46be`) lines 526-536 [crates/gcode/src/index/indexer/tests.rs:526-536]
+  - Signature: `fn symbol_count(conn: &mut postgres::Client, project_id: &str, rel: &str, symbol_id: &str) -> i64 {`
+  - Purpose: Indexed function `symbol_count` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:526-536]
+- `call_relation_contract_uses_empty_optional_storage_values` (function) component `call_relation_contract_uses_empty_optional_storage_values [function]` (`62d2d834-f427-5750-9174-7e1e362a10ea`) lines 539-561 [crates/gcode/src/index/indexer/tests.rs:539-561]
   - Signature: `fn call_relation_contract_uses_empty_optional_storage_values() {`
-  - Purpose: Verifies that `CallRelation` stores a symbol-targeted callee ID when set, leaves `callee_symbol_id` empty for unresolved relations, and assigns `callee_target_kind` as `Symbol` versus `Unresolved` accordingly. [crates/gcode/src/index/indexer/tests.rs:285-307]
-- `explicit_file_route_sends_unsupported_text_to_content_only` (function) component `explicit_file_route_sends_unsupported_text_to_content_only [function]` (`c3f8ea7c-3223-52ae-9c2b-bad4d837a14d`) lines 310-346 [crates/gcode/src/index/indexer/tests.rs:310-346]
+  - Purpose: Indexed function `call_relation_contract_uses_empty_optional_storage_values` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:539-561]
+- `explicit_file_route_sends_unsupported_text_to_content_only` (function) component `explicit_file_route_sends_unsupported_text_to_content_only [function]` (`227a3a94-2cb5-5705-a228-e26c9bbab506`) lines 564-600 [crates/gcode/src/index/indexer/tests.rs:564-600]
   - Signature: `fn explicit_file_route_sends_unsupported_text_to_content_only() {`
-  - Purpose: Verifies that `explicit_file_route` returns `Ast` for a Rust source file, `ContentOnly` for supported plain-text files like `notes.txt` and `Dockerfile`, and `Skip` for excluded, secret-like, generated, or binary files under `DEFAULT_EXCLUDES`. [crates/gcode/src/index/indexer/tests.rs:310-346]
-- `explicit_file_routes_follow_respect_gitignore_setting` (function) component `explicit_file_routes_follow_respect_gitignore_setting [function]` (`89f71fe7-84ef-535c-94c8-5c133c4cca52`) lines 349-385 [crates/gcode/src/index/indexer/tests.rs:349-385]
+  - Purpose: Indexed function `explicit_file_route_sends_unsupported_text_to_content_only` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:564-600]
+- `explicit_file_routes_follow_respect_gitignore_setting` (function) component `explicit_file_routes_follow_respect_gitignore_setting [function]` (`bcd05110-747d-5ffa-9749-c33026443c53`) lines 603-639 [crates/gcode/src/index/indexer/tests.rs:603-639]
   - Signature: `fn explicit_file_routes_follow_respect_gitignore_setting() {`
-  - Purpose: This test verifies that `explicit_route_with_discovery_options` returns `ExplicitFileRoute::Skip` for a gitignored file and `ExplicitFileRoute::Ast` for a non-ignored file when `respect_gitignore` is `true`, but returns `ExplicitFileRoute::Ast` for the ignored file when `respect_gitignore` is `false`. [crates/gcode/src/index/indexer/tests.rs:349-385]
-- `explicit_file_route_applies_parent_gitignore_without_full_discovery` (function) component `explicit_file_route_applies_parent_gitignore_without_full_discovery [function]` (`8b64e2de-681b-5327-a65c-a6bf97ad0b68`) lines 388-418 [crates/gcode/src/index/indexer/tests.rs:388-418]
+  - Purpose: Indexed function `explicit_file_routes_follow_respect_gitignore_setting` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:603-639]
+- `explicit_file_route_applies_parent_gitignore_without_full_discovery` (function) component `explicit_file_route_applies_parent_gitignore_without_full_discovery [function]` (`e2e0c4ea-52ff-5e40-ab16-db3ba6f2a7e4`) lines 642-672 [crates/gcode/src/index/indexer/tests.rs:642-672]
   - Signature: `fn explicit_file_route_applies_parent_gitignore_without_full_discovery() {`
-  - Purpose: Verifies that `explicit_route_with_discovery_options` honors a parent `src/.gitignore` when evaluating explicit files, returning `ExplicitFileRoute::Skip` for `src/ignored.rs` and `ExplicitFileRoute::Ast` for `src/visible.rs` without requiring full directory discovery. [crates/gcode/src/index/indexer/tests.rs:388-418]
-- `explicit_file_route_indexes_mjs_and_routes_markdown_to_content_only` (function) component `explicit_file_route_indexes_mjs_and_routes_markdown_to_content_only [function]` (`7cd4e722-01fb-5699-b7db-3395adfd8335`) lines 421-447 [crates/gcode/src/index/indexer/tests.rs:421-447]
+  - Purpose: Indexed function `explicit_file_route_applies_parent_gitignore_without_full_discovery` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:642-672]
+- `explicit_file_route_indexes_mjs_and_routes_markdown_to_content_only` (function) component `explicit_file_route_indexes_mjs_and_routes_markdown_to_content_only [function]` (`0787f1d1-704a-51e3-826d-c429ef009eef`) lines 675-701 [crates/gcode/src/index/indexer/tests.rs:675-701]
   - Signature: `fn explicit_file_route_indexes_mjs_and_routes_markdown_to_content_only() {`
-  - Purpose: Creates a temporary project tree and asserts that `explicit_file_route` classifies `.mjs` files as `Ast` while routing `.md`, `.markdown`, and `.yml` files to `ContentOnly` under `DEFAULT_EXCLUDES`. [crates/gcode/src/index/indexer/tests.rs:421-447]
-- `discovered_hidden_workflows_survive_index_path_filter` (function) component `discovered_hidden_workflows_survive_index_path_filter [function]` (`5f2c8897-001b-5abc-8729-35fbd8cafb32`) lines 450-472 [crates/gcode/src/index/indexer/tests.rs:450-472]
+  - Purpose: Indexed function `explicit_file_route_indexes_mjs_and_routes_markdown_to_content_only` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:675-701]
+- `discovered_hidden_workflows_survive_index_path_filter` (function) component `discovered_hidden_workflows_survive_index_path_filter [function]` (`79356024-2ab3-5387-8ad2-b88db3ee902d`) lines 704-726 [crates/gcode/src/index/indexer/tests.rs:704-726]
   - Signature: `fn discovered_hidden_workflows_survive_index_path_filter() {`
-  - Purpose: This test verifies that `filter_discovered_paths` preserves discovered files under `.github/workflows` when filtering by that index path, while excluding other hidden paths such as `.gobby/plans/plan.md`. [crates/gcode/src/index/indexer/tests.rs:450-472]
-- `explicit_file_route_skips_generated_mjs` (function) component `explicit_file_route_skips_generated_mjs [function]` (`7d1e2cf0-4955-5953-bf5e-e477404bf78e`) lines 475-490 [crates/gcode/src/index/indexer/tests.rs:475-490]
+  - Purpose: Indexed function `discovered_hidden_workflows_survive_index_path_filter` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:704-726]
+- `explicit_file_route_skips_generated_mjs` (function) component `explicit_file_route_skips_generated_mjs [function]` (`52d63b8a-e778-516b-870a-b9864e279df4`) lines 729-744 [crates/gcode/src/index/indexer/tests.rs:729-744]
   - Signature: `fn explicit_file_route_skips_generated_mjs() {`
-  - Purpose: This test verifies that `explicit_file_route` returns `ExplicitFileRoute::Skip` for an explicit `src/setup.mjs` path containing the generated-file banner when checked against `DEFAULT_EXCLUDES`. [crates/gcode/src/index/indexer/tests.rs:475-490]
-- `explicit_skip_cleanup_deletes_stale_facts_and_projections` (function) component `explicit_skip_cleanup_deletes_stale_facts_and_projections [function]` (`34d856bd-9b99-5236-a485-b2e84f9ce053`) lines 493-542 [crates/gcode/src/index/indexer/tests.rs:493-542]
+  - Purpose: Indexed function `explicit_file_route_skips_generated_mjs` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:729-744]
+- `explicit_skip_cleanup_deletes_stale_facts_and_projections` (function) component `explicit_skip_cleanup_deletes_stale_facts_and_projections [function]` (`c90f37e8-2143-555b-93b3-afb981479de4`) lines 747-796 [crates/gcode/src/index/indexer/tests.rs:747-796]
   - Signature: `fn explicit_skip_cleanup_deletes_stale_facts_and_projections() {`
-  - Purpose: This test verifies that `cleanup_skipped_explicit_file_if_indexed` invokes the deletion callback for an explicitly skipped indexed file, increments `outcome.skipped_files`, and records two `IndexDegradation::ProjectionCleanupFailed` entries for the graph and vector targets. [crates/gcode/src/index/indexer/tests.rs:493-542]
-- `explicit_skip_cleanup_ignores_never_indexed_files` (function) component `explicit_skip_cleanup_ignores_never_indexed_files [function]` (`bf0534e8-aa11-5a70-b062-993812c9bfef`) lines 545-573 [crates/gcode/src/index/indexer/tests.rs:545-573]
+  - Purpose: Indexed function `explicit_skip_cleanup_deletes_stale_facts_and_projections` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:747-796]
+- `explicit_skip_cleanup_ignores_never_indexed_files` (function) component `explicit_skip_cleanup_ignores_never_indexed_files [function]` (`67751663-d09a-5b66-9770-29891765fc32`) lines 799-827 [crates/gcode/src/index/indexer/tests.rs:799-827]
   - Signature: `fn explicit_skip_cleanup_ignores_never_indexed_files() {`
-  - Purpose: Verifies that `cleanup_skipped_explicit_file_if_indexed` treats an explicitly skipped file marked as never indexed (`Some(false)`) as a no-op, does not invoke the delete callback, increments `outcome.skipped_files`, and leaves `outcome.degraded` empty. [crates/gcode/src/index/indexer/tests.rs:545-573]
-- `overlay_reconciliation_actions_cover_inherit_shadow_add_delete` (function) component `overlay_reconciliation_actions_cover_inherit_shadow_add_delete [function]` (`e7bad465-74e8-5d60-b4bd-ece2ef2aa94b`) lines 576-626 [crates/gcode/src/index/indexer/tests.rs:576-626]
+  - Purpose: Indexed function `explicit_skip_cleanup_ignores_never_indexed_files` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:799-827]
+- `overlay_reconciliation_actions_cover_inherit_shadow_add_delete` (function) component `overlay_reconciliation_actions_cover_inherit_shadow_add_delete [function]` (`e74aee9d-a324-59ae-ae81-d016a5986d89`) lines 830-880 [crates/gcode/src/index/indexer/tests.rs:830-880]
   - Signature: `fn overlay_reconciliation_actions_cover_inherit_shadow_add_delete() {`
-  - Purpose: This test verifies that `overlay_reconcile_action` returns the correct `OverlayReconcileAction` for overlay reconciliation scenarios spanning inherited unchanged content, re-indexing edited or newly added files, tombstoning missing parent entries, skipping already tombstoned entries, and deleting stray overlay-only entries. [crates/gcode/src/index/indexer/tests.rs:576-626]
-- `deleted_file_projection_cleanup_degrades_without_services` (function) component `deleted_file_projection_cleanup_degrades_without_services [function]` (`670ef2f6-c6c5-5e05-bb96-bdc788727c6d`) lines 629-666 [crates/gcode/src/index/indexer/tests.rs:629-666]
+  - Purpose: Indexed function `overlay_reconciliation_actions_cover_inherit_shadow_add_delete` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:830-880]
+- `deleted_file_projection_cleanup_degrades_without_services` (function) component `deleted_file_projection_cleanup_degrades_without_services [function]` (`caeb3605-e379-545b-9cb0-dfd7edf99b26`) lines 883-920 [crates/gcode/src/index/indexer/tests.rs:883-920]
   - Signature: `fn deleted_file_projection_cleanup_degrades_without_services() {`
-  - Purpose: Verifies that `cleanup_deleted_file_projections` degrades gracefully when graph and vector services are unconfigured by recording two `ProjectionCleanupFailed` degradations for the deleted file, one for `ProjectionTarget::Graph` and one for `ProjectionTarget::Vectors`, with the expected configuration error messages. [crates/gcode/src/index/indexer/tests.rs:629-666]
-- `deleted_file_projection_cleanup_skips_vectors_when_not_previously_synced` (function) component `deleted_file_projection_cleanup_skips_vectors_when_not_previously_synced [function]` (`8321812f-69ec-586f-a357-9db2017403ec`) lines 669-695 [crates/gcode/src/index/indexer/tests.rs:669-695]
+  - Purpose: Indexed function `deleted_file_projection_cleanup_degrades_without_services` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:883-920]
+- `deleted_file_projection_cleanup_skips_vectors_when_not_previously_synced` (function) component `deleted_file_projection_cleanup_skips_vectors_when_not_previously_synced [function]` (`69a88f91-a48b-5461-9f2d-37daa87902f2`) lines 923-949 [crates/gcode/src/index/indexer/tests.rs:923-949]
   - Signature: `fn deleted_file_projection_cleanup_skips_vectors_when_not_previously_synced() {`
-  - Purpose: Verifies that `cleanup_deleted_file_projections` treats a deleted file marked as not previously synced (`Some(false)`) as graph-only cleanup, recording exactly one `IndexDegradation::ProjectionCleanupFailed` for `ProjectionTarget::Graph` and not emitting any vector cleanup degradation. [crates/gcode/src/index/indexer/tests.rs:669-695]
+  - Purpose: Indexed function `deleted_file_projection_cleanup_skips_vectors_when_not_previously_synced` in `crates/gcode/src/index/indexer/tests.rs`. [crates/gcode/src/index/indexer/tests.rs:923-949]
 

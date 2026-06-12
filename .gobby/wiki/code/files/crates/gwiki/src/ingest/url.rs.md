@@ -9,68 +9,53 @@ provenance:
   - 38-42
   - 45-48
   - 50-62
-  - 51-57
-  - 59-61
-  - 64-73
-  - 75-109
-  - 111-144
-  - 146-156
-  - 158-163
-  - 165-204
-  - 207-209
-  - 211-220
-  - 212-219
-  - 222-295
-  - 223-294
-  - 297-301
-  - 303-317
-  - 319-325
-  - 327-354
-  - 328-334
-  - 336-338
-  - 340-353
-  - 356-362
-  - 364-376
-  - 378-411
-  - 413-417
-  - 419-440
-  - 442-444
-  - 446-448
-  - 450-459
-  - 461-486
-  - 488-515
-  - 517-523
-  - 525-537
-  - 539-546
-  - 548-554
-  - 556-572
-  - 574-584
-  - 586-595
-  - 597-631
-  - 633-648
-  - 650-656
-  - 658-660
-  - 662-682
-  - 684-693
-  - 711-751
-  - 754-784
-  - 787-798
-  - 801-843
-  - 846-866
-  - 869-884
-  - 887-907
-  - 910-915
-  - 917-933
-  - 936-939
-  - 941-982
-  - 942-945
-  - 947-949
-  - 951-957
-  - 959-961
-  - 963-965
-  - 967-969
-  - 971-977
-  - 979-981
+  - 65-74
+  - 76-110
+  - 112-145
+  - 147-157
+  - 159-164
+  - 166-205
+  - 208-210
+  - 212-221
+  - 223-296
+  - 298-302
+  - 304-318
+  - 320-326
+  - 328-355
+  - 357-363
+  - 365-377
+  - 379-412
+  - 414-418
+  - 420-441
+  - 443-445
+  - 447-449
+  - 451-460
+  - 462-487
+  - 489-516
+  - 518-524
+  - 526-538
+  - 540-547
+  - 549-555
+  - 557-573
+  - 575-585
+  - 587-596
+  - 598-632
+  - 634-649
+  - 651-657
+  - 659-661
+  - 663-683
+  - 685-694
+  - 712-752
+  - 755-785
+  - 788-799
+  - 802-844
+  - 847-867
+  - 870-885
+  - 888-908
+  - 911-916
+  - 918-934
+  - 937-940
+  - 942-983
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -93,207 +78,203 @@ Module: [[code/modules/crates/gwiki/src/ingest|crates/gwiki/src/ingest]]
 
 - `UrlSnapshot` (class) component `UrlSnapshot [class]` (`03b2d0d4-ab76-5a11-8532-57af80db8a1e`) lines 22-28 [crates/gwiki/src/ingest/url.rs:22-28]
   - Signature: `pub struct UrlSnapshot {`
-  - Purpose: `UrlSnapshot` is a struct that encapsulates a captured HTTP response, storing the requested URL, final URL (post-redirects), fetch timestamp, response body as raw bytes, and optional content type. [crates/gwiki/src/ingest/url.rs:22-28]
+  - Purpose: Indexed class `UrlSnapshot` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:22-28]
 - `AcceptedUrlIngest` (class) component `AcceptedUrlIngest [class]` (`495fcdca-758c-5ee5-a55b-10b5ab71d0b2`) lines 31-35 [crates/gwiki/src/ingest/url.rs:31-35]
   - Signature: `pub struct AcceptedUrlIngest {`
-  - Purpose: `AcceptedUrlIngest` is a struct that encapsulates a URL ingestion operation's outcome, storing the originally requested URL, the final resolved URL after any redirects, and the associated `IngestResult`. [crates/gwiki/src/ingest/url.rs:31-35]
+  - Purpose: Indexed class `AcceptedUrlIngest` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:31-35]
 - `UrlIngestFailure` (class) component `UrlIngestFailure [class]` (`feee58c1-9219-5b12-98d1-88fb472054f4`) lines 38-42 [crates/gwiki/src/ingest/url.rs:38-42]
   - Signature: `pub struct UrlIngestFailure {`
-  - Purpose: `UrlIngestFailure` is a public struct that represents a failed URL ingestion event, containing three String fields: the source URL, an error code, and a descriptive error message. [crates/gwiki/src/ingest/url.rs:38-42]
+  - Purpose: Indexed class `UrlIngestFailure` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:38-42]
 - `UrlBatchIngest` (class) component `UrlBatchIngest [class]` (`4597585d-3563-5049-9cd0-533d3fbc62ea`) lines 45-48 [crates/gwiki/src/ingest/url.rs:45-48]
   - Signature: `pub struct UrlBatchIngest {`
-  - Purpose: `UrlBatchIngest` is a struct that partitions the results of a batch URL ingestion operation into accepted entries and failures. [crates/gwiki/src/ingest/url.rs:45-48]
+  - Purpose: Indexed class `UrlBatchIngest` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:45-48]
 - `UrlBatchIngest` (class) component `UrlBatchIngest [class]` (`913a391b-32da-52fb-bbaf-283f4d9fe000`) lines 50-62 [crates/gwiki/src/ingest/url.rs:50-62]
   - Signature: `impl UrlBatchIngest {`
-  - Purpose: Determines ingestion completion status ("ingested", "partial", or "failed") and exit code (0/1) based on whether URLs were accepted and/or failed in the batch operation. [crates/gwiki/src/ingest/url.rs:50-62]
+  - Purpose: Indexed class `UrlBatchIngest` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:50-62]
 - `UrlBatchIngest.status` (method) component `UrlBatchIngest.status [method]` (`bbc15fa2-b711-5f9f-b250-7bad075ab341`) lines 51-57 [crates/gwiki/src/ingest/url.rs:51-57]
   - Signature: `pub fn status(&self) -> &'static str {`
-  - Purpose: This method returns a static status string that reflects ingestion outcome: "ingested" if items were accepted but none failed, "partial" if both accepted and failed collections contain items, or "failed" if the accepted collection is empty. [crates/gwiki/src/ingest/url.rs:51-57]
+  - Purpose: Indexed method `UrlBatchIngest.status` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:51-57]
 - `UrlBatchIngest.exit_code` (method) component `UrlBatchIngest.exit_code [method]` (`7e815a52-3ea1-5cd4-b2e4-fd597c2dc9f5`) lines 59-61 [crates/gwiki/src/ingest/url.rs:59-61]
   - Signature: `pub fn exit_code(&self) -> u8 {`
-  - Purpose: Returns a `u8` exit code that evaluates to 1 if `self.accepted` is empty and 0 if non-empty. [crates/gwiki/src/ingest/url.rs:59-61]
-- `ingest_snapshot` (function) component `ingest_snapshot [function]` (`d3389117-a875-5698-8383-5f1a0ac01337`) lines 64-73 [crates/gwiki/src/ingest/url.rs:64-73]
+  - Purpose: Indexed method `UrlBatchIngest.exit_code` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:59-61]
+- `ingest_snapshot` (function) component `ingest_snapshot [function]` (`0dd0e533-f57b-517a-80e8-096c27a5ab06`) lines 65-74 [crates/gwiki/src/ingest/url.rs:65-74]
   - Signature: `pub fn ingest_snapshot(`
-  - Purpose: Ingests a URL snapshot into a vault and reindexes the WikiIndexStore, returning the ingest result or a WikiError. [crates/gwiki/src/ingest/url.rs:64-73]
-- `ingest_snapshot_without_index` (function) component `ingest_snapshot_without_index [function]` (`e9eb0771-4164-55a2-aad0-0f7b06249da8`) lines 75-109 [crates/gwiki/src/ingest/url.rs:75-109]
+  - Purpose: Indexed function `ingest_snapshot` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:65-74]
+- `ingest_snapshot_without_index` (function) component `ingest_snapshot_without_index [function]` (`b77e439d-33bd-5784-b957-75c8d9bba4d1`) lines 76-110 [crates/gwiki/src/ingest/url.rs:76-110]
   - Signature: `pub(crate) fn ingest_snapshot_without_index(`
-  - Purpose: Parses an HTML URL snapshot, extracts metadata (title, content hash), registers it as a vault source without building a search index, and returns the registration record with the rendered Markdown file path. [crates/gwiki/src/ingest/url.rs:75-109]
-- `ingest_non_html_snapshot_without_index` (function) component `ingest_non_html_snapshot_without_index [function]` (`d357af5f-88dd-577f-9c3d-7f8632929ccd`) lines 111-144 [crates/gwiki/src/ingest/url.rs:111-144]
+  - Purpose: Indexed function `ingest_snapshot_without_index` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:76-110]
+- `ingest_non_html_snapshot_without_index` (function) component `ingest_non_html_snapshot_without_index [function]` (`9b3c35e2-b42e-5137-8cf2-bdcaeb3a5293`) lines 112-145 [crates/gwiki/src/ingest/url.rs:112-145]
   - Signature: `fn ingest_non_html_snapshot_without_index(`
-  - Purpose: Ingests a non-HTML URL snapshot by registering a source draft in the vault manifest, persisting the asset and markdown representation to disk, and returning the source record with associated file paths. [crates/gwiki/src/ingest/url.rs:111-144]
-- `ingest_urls` (function) component `ingest_urls [function]` (`7f46f0ac-271b-5210-b619-7b470e162d10`) lines 146-156 [crates/gwiki/src/ingest/url.rs:146-156]
+  - Purpose: Indexed function `ingest_non_html_snapshot_without_index` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:112-145]
+- `ingest_urls` (function) component `ingest_urls [function]` (`61e95718-2e6f-598c-90d0-bbb36036db89`) lines 147-157 [crates/gwiki/src/ingest/url.rs:147-157]
   - Signature: `pub(crate) fn ingest_urls(`
-  - Purpose: Ingests a batch of URLs into a wiki index store by instantiating a `BlockingUrlFetcher` and delegating to `ingest_urls_with_fetcher`. [crates/gwiki/src/ingest/url.rs:146-156]
-- `fetch_url_snapshot` (function) component `fetch_url_snapshot [function]` (`16c69c47-ff69-5b63-8090-b8c1fb016e92`) lines 158-163 [crates/gwiki/src/ingest/url.rs:158-163]
+  - Purpose: Indexed function `ingest_urls` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:147-157]
+- `fetch_url_snapshot` (function) component `fetch_url_snapshot [function]` (`46e96afb-5dd4-5076-a5c0-391604cba0b1`) lines 159-164 [crates/gwiki/src/ingest/url.rs:159-164]
   - Signature: `pub(crate) fn fetch_url_snapshot(`
-  - Purpose: This function invokes a blocking URL fetcher to retrieve a snapshot of a specified URL at a given timestamp, returning a `Result` containing either a `UrlSnapshot` on success or `UrlIngestFailure` on error. [crates/gwiki/src/ingest/url.rs:158-163]
-- `ingest_urls_with_fetcher` (function) component `ingest_urls_with_fetcher [function]` (`92158aea-4194-5837-9915-97f298e73f6b`) lines 165-204 [crates/gwiki/src/ingest/url.rs:165-204]
+  - Purpose: Indexed function `fetch_url_snapshot` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:159-164]
+- `ingest_urls_with_fetcher` (function) component `ingest_urls_with_fetcher [function]` (`cd22916a-d017-51c8-b7bf-d6756190a9b1`) lines 166-205 [crates/gwiki/src/ingest/url.rs:166-205]
   - Signature: `pub(crate) fn ingest_urls_with_fetcher(`
-  - Purpose: Ingests a batch of URLs using a provided fetcher closure, collecting accepted and failed results, then performs deferred bulk re-indexing if at least one ingestion succeeded. [crates/gwiki/src/ingest/url.rs:165-204]
-- `BlockingUrlFetcher` (class) component `BlockingUrlFetcher [class]` (`dd03a657-f30b-5e26-ad88-267ff261a443`) lines 207-209 [crates/gwiki/src/ingest/url.rs:207-209]
+  - Purpose: Indexed function `ingest_urls_with_fetcher` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:166-205]
+- `BlockingUrlFetcher` (class) component `BlockingUrlFetcher [class]` (`33e6a191-e793-5e0f-9218-22db2ae44f3d`) lines 208-210 [crates/gwiki/src/ingest/url.rs:208-210]
   - Signature: `struct BlockingUrlFetcher {`
-  - Purpose: `BlockingUrlFetcher` is a wrapper struct encapsulating a `ureq::Agent` for performing synchronous HTTP requests. [crates/gwiki/src/ingest/url.rs:207-209]
-- `BlockingUrlFetcher` (class) component `BlockingUrlFetcher [class]` (`c13352a9-d6f7-50a1-b2ff-5018db12ad17`) lines 211-220 [crates/gwiki/src/ingest/url.rs:211-220]
+  - Purpose: Indexed class `BlockingUrlFetcher` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:208-210]
+- `BlockingUrlFetcher` (class) component `BlockingUrlFetcher [class]` (`1e15e380-5453-539e-8c84-8480d672d4db`) lines 212-221 [crates/gwiki/src/ingest/url.rs:212-221]
   - Signature: `impl Default for BlockingUrlFetcher {`
-  - Purpose: `BlockingUrlFetcher`'s `Default` implementation constructs an instance with a `ureq::Agent` configured with a specified timeout and disabled automatic redirects. [crates/gwiki/src/ingest/url.rs:211-220]
-- `BlockingUrlFetcher.default` (method) component `BlockingUrlFetcher.default [method]` (`c1d6d351-9814-59be-90bc-efc8e8f52e9f`) lines 212-219 [crates/gwiki/src/ingest/url.rs:212-219]
+  - Purpose: Indexed class `BlockingUrlFetcher` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:212-221]
+- `BlockingUrlFetcher.default` (method) component `BlockingUrlFetcher.default [method]` (`ac287915-755c-5a7d-8464-e9b449418900`) lines 213-220 [crates/gwiki/src/ingest/url.rs:213-220]
   - Signature: `fn default() -> Self {`
-  - Purpose: Instantiates a default HTTP client agent configured with a timeout and redirect handling disabled. [crates/gwiki/src/ingest/url.rs:212-219]
-- `BlockingUrlFetcher` (class) component `BlockingUrlFetcher [class]` (`ca1bfe98-7aea-5c82-8393-6a83f0f9164a`) lines 222-295 [crates/gwiki/src/ingest/url.rs:222-295]
+  - Purpose: Indexed method `BlockingUrlFetcher.default` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:213-220]
+- `BlockingUrlFetcher` (class) component `BlockingUrlFetcher [class]` (`5fcefe6a-6e54-544f-a21d-148fcabc5f90`) lines 223-296 [crates/gwiki/src/ingest/url.rs:223-296]
   - Signature: `impl BlockingUrlFetcher {`
-  - Purpose: BlockingUrlFetcher implements synchronous HTTP GET requests with automatic redirect following (up to MAX_REDIRECTS) and pre/post-fetch URL validation, returning either a UrlSnapshot or UrlIngestFailure. [crates/gwiki/src/ingest/url.rs:222-295]
-- `BlockingUrlFetcher.fetch` (method) component `BlockingUrlFetcher.fetch [method]` (`7ba0c3fc-8633-51ef-a5b5-e94de0f5e710`) lines 223-294 [crates/gwiki/src/ingest/url.rs:223-294]
+  - Purpose: Indexed class `BlockingUrlFetcher` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:223-296]
+- `BlockingUrlFetcher.fetch` (method) component `BlockingUrlFetcher.fetch [method]` (`1c0206d8-2495-5958-aa6d-68d5ac8946e5`) lines 224-295 [crates/gwiki/src/ingest/url.rs:224-295]
   - Signature: `fn fetch(&self, url: &str, fetched_at: &str) -> Result<UrlSnapshot, UrlIngestFailure> {`
-  - Purpose: Fetches an HTTP resource at a given URL while automatically following redirects (up to `MAX_REDIRECTS` iterations) with URL validation at each stage, returning a `UrlSnapshot` on success or `UrlIngestFailure` on error. [crates/gwiki/src/ingest/url.rs:223-294]
-- `content_length_exceeds_limit` (function) component `content_length_exceeds_limit [function]` (`7036e186-f1fe-5af9-bfaa-b57a571c45de`) lines 297-301 [crates/gwiki/src/ingest/url.rs:297-301]
+  - Purpose: Indexed method `BlockingUrlFetcher.fetch` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:224-295]
+- `content_length_exceeds_limit` (function) component `content_length_exceeds_limit [function]` (`82366b7b-e3da-5b73-96ba-b76acb9779dc`) lines 298-302 [crates/gwiki/src/ingest/url.rs:298-302]
   - Signature: `fn content_length_exceeds_limit(content_length: Option<&str>, max_bytes: u64) -> bool {`
-  - Purpose: Parses the optional string as a u64 (after trimming whitespace) and returns true if the resulting value exceeds the max_bytes limit. [crates/gwiki/src/ingest/url.rs:297-301]
-- `read_limited_body` (function) component `read_limited_body [function]` (`f7bb5c50-3fc3-57b8-962a-e0b153edb1e6`) lines 303-317 [crates/gwiki/src/ingest/url.rs:303-317]
+  - Purpose: Indexed function `content_length_exceeds_limit` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:298-302]
+- `read_limited_body` (function) component `read_limited_body [function]` (`6ef88abf-ab84-584b-afa7-ec67e4e92abf`) lines 304-318 [crates/gwiki/src/ingest/url.rs:304-318]
   - Signature: `fn read_limited_body(`
-  - Purpose: Reads bytes from a Reader into a vector with a configurable maximum size limit, returning a `UrlIngestFailure` if the read operation fails or the payload exceeds `max_bytes`. [crates/gwiki/src/ingest/url.rs:303-317]
-- `response_too_large` (function) component `response_too_large [function]` (`e718a2a6-9970-58c9-ba09-2e5d8b395234`) lines 319-325 [crates/gwiki/src/ingest/url.rs:319-325]
+  - Purpose: Indexed function `read_limited_body` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:304-318]
+- `response_too_large` (function) component `response_too_large [function]` (`e99f0aa0-7e6b-58d7-a58e-596877ed9e6c`) lines 320-326 [crates/gwiki/src/ingest/url.rs:320-326]
   - Signature: `fn response_too_large(url: &str, max_bytes: u64) -> UrlIngestFailure {`
-  - Purpose: Constructs a `UrlIngestFailure` error indicating that a URL response exceeded the specified maximum byte limit. [crates/gwiki/src/ingest/url.rs:319-325]
-- `UrlIngestFailure` (class) component `UrlIngestFailure [class]` (`92218fb3-bc7e-55d7-9a40-ffdd4597f59c`) lines 327-354 [crates/gwiki/src/ingest/url.rs:327-354]
+  - Purpose: Indexed function `response_too_large` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:320-326]
+- `UrlIngestFailure` (class) component `UrlIngestFailure [class]` (`1e2bde6d-4e02-598d-922c-6646071a461a`) lines 328-355 [crates/gwiki/src/ingest/url.rs:328-355]
   - Signature: `impl UrlIngestFailure {`
-  - Purpose: `UrlIngestFailure` provides factory methods to construct error representations from URL ingestion failures originating from direct components, `WikiError` types, or HTTP status responses with response body extraction and message truncation. [crates/gwiki/src/ingest/url.rs:327-354]
-- `UrlIngestFailure.new` (method) component `UrlIngestFailure.new [method]` (`5ceae82e-366c-5efe-9045-05420b37e9f3`) lines 328-334 [crates/gwiki/src/ingest/url.rs:328-334]
+  - Purpose: Indexed class `UrlIngestFailure` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:328-355]
+- `UrlIngestFailure.new` (method) component `UrlIngestFailure.new [method]` (`54717e47-a33c-5bc9-9d56-8e5f99f4cd15`) lines 329-335 [crates/gwiki/src/ingest/url.rs:329-335]
   - Signature: `fn new(url: impl Into<String>, code: impl Into<String>, message: impl Into<String>) -> Self {`
-  - Purpose: Constructs a new instance by converting three generic `Into<String>` parameters into owned String fields for `url`, `code`, and `message`. [crates/gwiki/src/ingest/url.rs:328-334]
-- `UrlIngestFailure.from_wiki_error` (method) component `UrlIngestFailure.from_wiki_error [method]` (`f76f7db6-3a36-501e-a074-bc96dd1d8cea`) lines 336-338 [crates/gwiki/src/ingest/url.rs:336-338]
+  - Purpose: Indexed method `UrlIngestFailure.new` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:329-335]
+- `UrlIngestFailure.from_wiki_error` (method) component `UrlIngestFailure.from_wiki_error [method]` (`46304aa6-462e-5a76-85c0-3c4ef611653a`) lines 337-339 [crates/gwiki/src/ingest/url.rs:337-339]
   - Signature: `fn from_wiki_error(url: &str, error: WikiError) -> Self {`
-  - Purpose: Constructs an instance from a WikiError by delegating to `Self::new` with the provided URL, the error's code, and its string representation. [crates/gwiki/src/ingest/url.rs:336-338]
-- `UrlIngestFailure.http_status` (method) component `UrlIngestFailure.http_status [method]` (`a4ab1683-9da0-5f28-83b7-83987ebdf449`) lines 340-353 [crates/gwiki/src/ingest/url.rs:340-353]
+  - Purpose: Indexed method `UrlIngestFailure.from_wiki_error` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:337-339]
+- `UrlIngestFailure.http_status` (method) component `UrlIngestFailure.http_status [method]` (`bdc65750-32a9-539d-b33c-0c29ffca43b4`) lines 341-354 [crates/gwiki/src/ingest/url.rs:341-354]
   - Signature: `fn http_status(url: &str, status: u16, response: ureq::Response) -> Self {`
-  - Purpose: Constructs an error instance from an HTTP response by reading the limited and lossy-decoded response body, converting it to a single line, and formatting it alongside the status code into a detail message. [crates/gwiki/src/ingest/url.rs:340-353]
-- `resolve_redirect_url` (function) component `resolve_redirect_url [function]` (`f04f69f5-461d-5598-8f84-9940292f6eb7`) lines 356-362 [crates/gwiki/src/ingest/url.rs:356-362]
+  - Purpose: Indexed method `UrlIngestFailure.http_status` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:341-354]
+- `resolve_redirect_url` (function) component `resolve_redirect_url [function]` (`e1ad2580-7234-5d3e-8dda-1e2a1ef1626f`) lines 357-363 [crates/gwiki/src/ingest/url.rs:357-363]
   - Signature: `fn resolve_redirect_url(current_url: &str, location: &str) -> Result<String, UrlIngestFailure> {`
-  - Purpose: Resolves a redirect location URL relative to a base URL using RFC 3986 relative reference semantics, returning the absolute URL string or a `UrlIngestFailure` error. [crates/gwiki/src/ingest/url.rs:356-362]
-- `validate_fetch_url` (function) component `validate_fetch_url [function]` (`5e14582c-b75d-59bd-aa50-c69cc447537b`) lines 364-376 [crates/gwiki/src/ingest/url.rs:364-376]
+  - Purpose: Indexed function `resolve_redirect_url` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:357-363]
+- `validate_fetch_url` (function) component `validate_fetch_url [function]` (`2cb4ef6e-6b61-595d-9791-f40a34af5d4a`) lines 365-377 [crates/gwiki/src/ingest/url.rs:365-377]
   - Signature: `fn validate_fetch_url(raw_url: &str) -> Result<(), UrlIngestFailure> {`
-  - Purpose: Parses a URL string and validates it uses HTTP or HTTPS scheme, returning a `UrlIngestFailure` error if the URL is malformed or uses an unsupported scheme. [crates/gwiki/src/ingest/url.rs:364-376]
-- `validate_resolved_fetch_url` (function) component `validate_resolved_fetch_url [function]` (`fd33cb93-3d02-5907-8c7f-794bd5ad20e3`) lines 378-411 [crates/gwiki/src/ingest/url.rs:378-411]
+  - Purpose: Indexed function `validate_fetch_url` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:365-377]
+- `validate_resolved_fetch_url` (function) component `validate_resolved_fetch_url [function]` (`f606cc2d-ff27-5609-a3d1-bd2e555824f6`) lines 379-412 [crates/gwiki/src/ingest/url.rs:379-412]
   - Signature: `fn validate_resolved_fetch_url(raw_url: &str) -> Result<(), UrlIngestFailure> {`
-  - Purpose: Validates a fetch URL by resolving its hostname and port to socket addresses, ensuring resolution succeeds and no resolved addresses are disallowed. [crates/gwiki/src/ingest/url.rs:378-411]
-- `loopback_fetch_allowed_for_tests` (function) component `loopback_fetch_allowed_for_tests [function]` (`ea0b1583-5842-5507-a689-95e5c0815622`) lines 413-417 [crates/gwiki/src/ingest/url.rs:413-417]
+  - Purpose: Indexed function `validate_resolved_fetch_url` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:379-412]
+- `loopback_fetch_allowed_for_tests` (function) component `loopback_fetch_allowed_for_tests [function]` (`415dd21d-5a8e-5927-b784-a85f589ce66a`) lines 414-418 [crates/gwiki/src/ingest/url.rs:414-418]
   - Signature: `fn loopback_fetch_allowed_for_tests(ip: IpAddr) -> bool {`
-  - Purpose: Returns `true` if and only if the code is compiled in debug mode, the provided IP address is a loopback address, and the `GWIKI_ALLOW_LOOPBACK_URL_FETCH_FOR_TESTS` environment variable is set. [crates/gwiki/src/ingest/url.rs:413-417]
-- `is_disallowed_fetch_ip` (function) component `is_disallowed_fetch_ip [function]` (`ca4a3e79-6a5f-5adf-9dd2-957442db89a9`) lines 419-440 [crates/gwiki/src/ingest/url.rs:419-440]
+  - Purpose: Indexed function `loopback_fetch_allowed_for_tests` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:414-418]
+- `is_disallowed_fetch_ip` (function) component `is_disallowed_fetch_ip [function]` (`7ff4727b-9954-5246-8373-c7eae94fb46c`) lines 420-441 [crates/gwiki/src/ingest/url.rs:420-441]
   - Signature: `fn is_disallowed_fetch_ip(ip: IpAddr) -> bool {`
-  - Purpose: Determines whether an IP address should be blocked from fetch operations by checking if it belongs to private, loopback, link-local, multicast, unspecified, or special-use ranges, including IPv4-mapped IPv6 addresses and the AWS metadata endpoint (169.254.169.254). [crates/gwiki/src/ingest/url.rs:419-440]
-- `is_ipv6_unique_local` (function) component `is_ipv6_unique_local [function]` (`92898b67-3594-50d3-b602-3276a9f09f47`) lines 442-444 [crates/gwiki/src/ingest/url.rs:442-444]
+  - Purpose: Indexed function `is_disallowed_fetch_ip` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:420-441]
+- `is_ipv6_unique_local` (function) component `is_ipv6_unique_local [function]` (`78cb37f7-9767-50fb-8784-2d5e36987199`) lines 443-445 [crates/gwiki/src/ingest/url.rs:443-445]
   - Signature: `fn is_ipv6_unique_local(ip: Ipv6Addr) -> bool {`
-  - Purpose: Determines whether an IPv6 address is a Unique Local Address by checking if the upper 7 bits of the first segment match the `fc00::/7` prefix. [crates/gwiki/src/ingest/url.rs:442-444]
-- `is_ipv6_unicast_link_local` (function) component `is_ipv6_unicast_link_local [function]` (`fae004ef-a12c-513a-b07f-cdbe147a596b`) lines 446-448 [crates/gwiki/src/ingest/url.rs:446-448]
+  - Purpose: Indexed function `is_ipv6_unique_local` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:443-445]
+- `is_ipv6_unicast_link_local` (function) component `is_ipv6_unicast_link_local [function]` (`4d6cc2ff-b9dd-5a02-a72e-badc26cbefae`) lines 447-449 [crates/gwiki/src/ingest/url.rs:447-449]
   - Signature: `fn is_ipv6_unicast_link_local(ip: Ipv6Addr) -> bool {`
-  - Purpose: Checks if an IPv6 address is a unicast link-local address by verifying that the first 10 bits match the fe80::/10 prefix (via bitwise AND masking). [crates/gwiki/src/ingest/url.rs:446-448]
-- `truncate_message` (function) component `truncate_message [function]` (`d4470a38-0fcf-5dac-9bf9-35b08a67a89e`) lines 450-459 [crates/gwiki/src/ingest/url.rs:450-459]
+  - Purpose: Indexed function `is_ipv6_unicast_link_local` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:447-449]
+- `truncate_message` (function) component `truncate_message [function]` (`0fcc4a10-b739-5b55-9551-1b6e13f3b1c7`) lines 451-460 [crates/gwiki/src/ingest/url.rs:451-460]
   - Signature: `fn truncate_message(message: &str) -> String {`
-  - Purpose: Truncates a string to a maximum of 200 characters, appending "..." if the input exceeds that limit. [crates/gwiki/src/ingest/url.rs:450-459]
-- `render_url_markdown` (function) component `render_url_markdown [function]` (`9e4310a4-2573-52f5-9ac9-59b460a57b95`) lines 461-486 [crates/gwiki/src/ingest/url.rs:461-486]
+  - Purpose: Indexed function `truncate_message` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:451-460]
+- `render_url_markdown` (function) component `render_url_markdown [function]` (`14264205-377e-541a-811e-b66050cc0e40`) lines 462-487 [crates/gwiki/src/ingest/url.rs:462-487]
   - Signature: `fn render_url_markdown(`
-  - Purpose: Generates a markdown string from a URL snapshot by combining metadata frontmatter, a markdown title heading, and the HTML document converted to markdown-formatted text. [crates/gwiki/src/ingest/url.rs:461-486]
-- `render_non_html_url_markdown` (function) component `render_non_html_url_markdown [function]` (`8611488b-eaf2-5142-86e6-b1bf7cb82df4`) lines 488-515 [crates/gwiki/src/ingest/url.rs:488-515]
+  - Purpose: Indexed function `render_url_markdown` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:462-487]
+- `render_non_html_url_markdown` (function) component `render_non_html_url_markdown [function]` (`dc411e0e-0bdc-5dd8-ba92-52493e0460e1`) lines 489-516 [crates/gwiki/src/ingest/url.rs:489-516]
   - Signature: `fn render_non_html_url_markdown(`
-  - Purpose: Generates markdown documentation containing URL snapshot metadata, title, and asset reference for a non-HTML source response. [crates/gwiki/src/ingest/url.rs:488-515]
-- `snapshot_is_html` (function) component `snapshot_is_html [function]` (`79e6c54d-20d5-588f-919e-55794ef519be`) lines 517-523 [crates/gwiki/src/ingest/url.rs:517-523]
+  - Purpose: Indexed function `render_non_html_url_markdown` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:489-516]
+- `snapshot_is_html` (function) component `snapshot_is_html [function]` (`f8918254-2f30-538a-ae4f-47406a0ef656`) lines 518-524 [crates/gwiki/src/ingest/url.rs:518-524]
   - Signature: `fn snapshot_is_html(snapshot: &UrlSnapshot) -> bool {`
-  - Purpose: Determines whether a `UrlSnapshot` contains HTML by checking if its media type is `text/html` or `application/xhtml+xml`, or by heuristically inspecting the body content if the media type is absent. [crates/gwiki/src/ingest/url.rs:517-523]
-- `source_kind_for_url_response` (function) component `source_kind_for_url_response [function]` (`c6a91744-da4b-5e21-850d-4820ba14160b`) lines 525-537 [crates/gwiki/src/ingest/url.rs:525-537]
+  - Purpose: Indexed function `snapshot_is_html` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:518-524]
+- `source_kind_for_url_response` (function) component `source_kind_for_url_response [function]` (`014c2f03-e0e9-59cb-945c-7a8bb9c65a6b`) lines 526-538 [crates/gwiki/src/ingest/url.rs:526-538]
   - Signature: `fn source_kind_for_url_response(content_type: Option<&str>) -> SourceKind {`
-  - Purpose: Classifies HTTP response content by matching MIME types to specialized `SourceKind` variants (Pdf, Image, Audio, Video, Text) with a fallback to generic File. [crates/gwiki/src/ingest/url.rs:525-537]
-- `content_type_media_type` (function) component `content_type_media_type [function]` (`cf037f11-1642-5c3a-80d9-199475315e1f`) lines 539-546 [crates/gwiki/src/ingest/url.rs:539-546]
+  - Purpose: Indexed function `source_kind_for_url_response` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:526-538]
+- `content_type_media_type` (function) component `content_type_media_type [function]` (`38c2171b-952e-589f-a60c-c7c20cd5719d`) lines 540-547 [crates/gwiki/src/ingest/url.rs:540-547]
   - Signature: `fn content_type_media_type(content_type: Option<&str>) -> Option<String> {`
-  - Purpose: Extracts the MIME type from a Content-Type header by splitting on the semicolon parameter delimiter, trimming whitespace, and converting to lowercase. [crates/gwiki/src/ingest/url.rs:539-546]
-- `body_looks_like_html` (function) component `body_looks_like_html [function]` (`bb4aafec-872d-5e5c-ba02-4ec3a0496bc5`) lines 548-554 [crates/gwiki/src/ingest/url.rs:548-554]
+  - Purpose: Indexed function `content_type_media_type` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:540-547]
+- `body_looks_like_html` (function) component `body_looks_like_html [function]` (`06771242-1504-56d3-a3d3-64f8cca73fb8`) lines 549-555 [crates/gwiki/src/ingest/url.rs:549-555]
   - Signature: `fn body_looks_like_html(body: &[u8]) -> bool {`
-  - Purpose: Returns true if the first 512 bytes of the input, after lossy UTF-8 decoding and lowercasing, begin with an HTML doctype or `<html` tag, or contain a `<body` tag. [crates/gwiki/src/ingest/url.rs:548-554]
-- `file_name_for_url_response` (function) component `file_name_for_url_response [function]` (`cf1479e1-9a50-582e-a3a9-8fe37e60ad9c`) lines 556-572 [crates/gwiki/src/ingest/url.rs:556-572]
+  - Purpose: Indexed function `body_looks_like_html` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:549-555]
+- `file_name_for_url_response` (function) component `file_name_for_url_response [function]` (`b47071ed-62e4-503d-9415-6b66ecf0cbb7`) lines 557-573 [crates/gwiki/src/ingest/url.rs:557-573]
   - Signature: `fn file_name_for_url_response(snapshot: &UrlSnapshot, kind: &SourceKind) -> String {`
-  - Purpose: Extracts a filename from the last URL path segment, defaulting to a `SourceKind`-specific filename if extraction fails. [crates/gwiki/src/ingest/url.rs:556-572]
-- `extract_title` (function) component `extract_title [function]` (`73ac4fba-cfc7-5457-afe3-b26e34ce33d7`) lines 574-584 [crates/gwiki/src/ingest/url.rs:574-584]
+  - Purpose: Indexed function `file_name_for_url_response` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:557-573]
+- `extract_title` (function) component `extract_title [function]` (`693cce67-7f64-5570-8d74-a5cefd105d73`) lines 575-585 [crates/gwiki/src/ingest/url.rs:575-585]
   - Signature: `fn extract_title(document: &Html) -> Option<String> {`
-  - Purpose: Extracts and normalizes the text content from an HTML document's `<title>` element, returning `Some(String)` containing the single-line text if non-empty, otherwise `None`. [crates/gwiki/src/ingest/url.rs:574-584]
-- `html_to_markdownish_text` (function) component `html_to_markdownish_text [function]` (`864a2feb-567a-5c12-bc33-e8819505add5`) lines 586-595 [crates/gwiki/src/ingest/url.rs:586-595]
+  - Purpose: Indexed function `extract_title` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:575-585]
+- `html_to_markdownish_text` (function) component `html_to_markdownish_text [function]` (`8db5b920-f822-5a65-a246-aa0dc1b0d145`) lines 587-596 [crates/gwiki/src/ingest/url.rs:587-596]
   - Signature: `fn html_to_markdownish_text(document: &Html) -> String {`
-  - Purpose: Extracts visible text from an HTML document's body element, joins text parts with newlines, and returns normalized markdown-formatted text. [crates/gwiki/src/ingest/url.rs:586-595]
-- `collect_visible_text` (function) component `collect_visible_text [function]` (`80d86055-bc72-5a2d-8653-ce6b4cd21161`) lines 597-631 [crates/gwiki/src/ingest/url.rs:597-631]
+  - Purpose: Indexed function `html_to_markdownish_text` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:587-596]
+- `collect_visible_text` (function) component `collect_visible_text [function]` (`81db6949-de40-50ff-9c07-0d85a2c27dbf`) lines 598-632 [crates/gwiki/src/ingest/url.rs:598-632]
   - Signature: `fn collect_visible_text(element: ElementRef<'_>, parts: &mut Vec<String>) {`
-  - Purpose: Recursively traverses a DOM element tree to collect visible text content into a vector, with block-level elements separated as distinct entries, inline text aggregated within blocks, and hidden elements filtered out. [crates/gwiki/src/ingest/url.rs:597-631]
-- `collect_inline_text` (function) component `collect_inline_text [function]` (`c877b0c3-a988-5d90-8869-aae4941dd477`) lines 633-648 [crates/gwiki/src/ingest/url.rs:633-648]
+  - Purpose: Indexed function `collect_visible_text` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:598-632]
+- `collect_inline_text` (function) component `collect_inline_text [function]` (`4953e3a3-ec36-5dc2-ad03-e079045f2dee`) lines 634-649 [crates/gwiki/src/ingest/url.rs:634-649]
   - Signature: `fn collect_inline_text(element: ElementRef<'_>, output: &mut String) {`
-  - Purpose: Recursively collects and concatenates all text node content from an element and its descendants into a mutable string, skipping hidden elements. [crates/gwiki/src/ingest/url.rs:633-648]
-- `push_inline_part` (function) component `push_inline_part [function]` (`61c0d465-139c-5ec2-a3ff-ec60b6c855d0`) lines 650-656 [crates/gwiki/src/ingest/url.rs:650-656]
+  - Purpose: Indexed function `collect_inline_text` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:634-649]
+- `push_inline_part` (function) component `push_inline_part [function]` (`54c5ac60-a55b-5d2d-9126-18f13d077a0c`) lines 651-657 [crates/gwiki/src/ingest/url.rs:651-657]
   - Signature: `fn push_inline_part(inline: &mut String, parts: &mut Vec<String>) {`
-  - Purpose: Moves the `inline` string to the `parts` vector if `single_line(inline)` returns non-empty content; otherwise clears the string. [crates/gwiki/src/ingest/url.rs:650-656]
-- `is_hidden_element` (function) component `is_hidden_element [function]` (`89b7dfeb-dbd1-555d-8ee4-39c7febb7ce0`) lines 658-660 [crates/gwiki/src/ingest/url.rs:658-660]
+  - Purpose: Indexed function `push_inline_part` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:651-657]
+- `is_hidden_element` (function) component `is_hidden_element [function]` (`4cfd69c7-c2df-5368-b0c1-3eee11c96d1b`) lines 659-661 [crates/gwiki/src/ingest/url.rs:659-661]
   - Signature: `fn is_hidden_element(name: &str) -> bool {`
-  - Purpose: Returns `true` if the input string matches one of the hidden HTML elements ("head", "script", or "style"), otherwise `false`. [crates/gwiki/src/ingest/url.rs:658-660]
-- `is_text_block` (function) component `is_text_block [function]` (`8d30c726-0e4b-55d1-80fe-672c156b1291`) lines 662-682 [crates/gwiki/src/ingest/url.rs:662-682]
+  - Purpose: Indexed function `is_hidden_element` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:659-661]
+- `is_text_block` (function) component `is_text_block [function]` (`b50ba347-0695-5d4b-a583-00c0a1e5045f`) lines 663-683 [crates/gwiki/src/ingest/url.rs:663-683]
   - Signature: `fn is_text_block(name: &str) -> bool {`
-  - Purpose: This function returns `true` if the input string matches one of a predefined set of block-level and text-container HTML element tag names (address, blockquote, heading, list, paragraph, preformatted text, and table cell elements). [crates/gwiki/src/ingest/url.rs:662-682]
-- `normalize_markdown_text` (function) component `normalize_markdown_text [function]` (`2f8423a1-0cd9-5e29-8a76-b56aa03a05c6`) lines 684-693 [crates/gwiki/src/ingest/url.rs:684-693]
+  - Purpose: Indexed function `is_text_block` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:663-683]
+- `normalize_markdown_text` (function) component `normalize_markdown_text [function]` (`eec62052-08a4-575a-8601-3febcdcf749f`) lines 685-694 [crates/gwiki/src/ingest/url.rs:685-694]
   - Signature: `fn normalize_markdown_text(text: &str) -> String {`
-  - Purpose: Normalizes markdown text by processing each line through `single_line()`, deduplicating consecutive identical lines, and rejoining them with paragraph breaks. [crates/gwiki/src/ingest/url.rs:684-693]
-- `url_ingest_writes_raw_and_manifest` (function) component `url_ingest_writes_raw_and_manifest [function]` (`6fa3d962-e94a-5e3d-8698-f2e6b7c88855`) lines 711-751 [crates/gwiki/src/ingest/url.rs:711-751]
+  - Purpose: Indexed function `normalize_markdown_text` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:685-694]
+- `url_ingest_writes_raw_and_manifest` (function) component `url_ingest_writes_raw_and_manifest [function]` (`a83332af-8945-560d-80b9-3f8ab3bdc844`) lines 712-752 [crates/gwiki/src/ingest/url.rs:712-752]
   - Signature: `fn url_ingest_writes_raw_and_manifest() {`
-  - Purpose: Unit test verifying that `ingest_snapshot` correctly writes URL snapshots to both a raw markdown file with YAML metadata and a source manifest with entry records. [crates/gwiki/src/ingest/url.rs:711-751]
-- `url_ingest_preserves_non_html_as_typed_asset` (function) component `url_ingest_preserves_non_html_as_typed_asset [function]` (`48896e58-9bd4-5a9b-b1c3-447fa48a71b9`) lines 754-784 [crates/gwiki/src/ingest/url.rs:754-784]
+  - Purpose: Indexed function `url_ingest_writes_raw_and_manifest` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:712-752]
+- `url_ingest_preserves_non_html_as_typed_asset` (function) component `url_ingest_preserves_non_html_as_typed_asset [function]` (`be630435-6d36-55e8-bc75-2f92616304f1`) lines 755-785 [crates/gwiki/src/ingest/url.rs:755-785]
   - Signature: `fn url_ingest_preserves_non_html_as_typed_asset() {`
-  - Purpose: Tests that non-HTML assets (PDF) ingested from URLs are persisted as separate binary typed files with corresponding source metadata, media degradation tracking, and source manifest entries. [crates/gwiki/src/ingest/url.rs:754-784]
-- `html_parser_extracts_body_text_and_decodes_entities` (function) component `html_parser_extracts_body_text_and_decodes_entities [function]` (`4fb54bb2-734f-5ae2-bf7b-1ee27fde0d45`) lines 787-798 [crates/gwiki/src/ingest/url.rs:787-798]
+  - Purpose: Indexed function `url_ingest_preserves_non_html_as_typed_asset` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:755-785]
+- `html_parser_extracts_body_text_and_decodes_entities` (function) component `html_parser_extracts_body_text_and_decodes_entities [function]` (`dff623dc-bd97-5bf6-b9f3-ee39c5d0e8a0`) lines 788-799 [crates/gwiki/src/ingest/url.rs:788-799]
   - Signature: `fn html_parser_extracts_body_text_and_decodes_entities() {`
-  - Purpose: This test validates that an HTML parser correctly extracts the document title and body text content with HTML entity decoding while stripping non-content elements like script tags. [crates/gwiki/src/ingest/url.rs:787-798]
-- `batch_url_ingest_accepts_successes_and_records_failures` (function) component `batch_url_ingest_accepts_successes_and_records_failures [function]` (`0e7a3ead-0fe4-55a6-9abe-8fd80680f400`) lines 801-843 [crates/gwiki/src/ingest/url.rs:801-843]
+  - Purpose: Indexed function `html_parser_extracts_body_text_and_decodes_entities` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:788-799]
+- `batch_url_ingest_accepts_successes_and_records_failures` (function) component `batch_url_ingest_accepts_successes_and_records_failures [function]` (`83c41cf8-88db-587a-8eee-721c645834c6`) lines 802-844 [crates/gwiki/src/ingest/url.rs:802-844]
   - Signature: `fn batch_url_ingest_accepts_successes_and_records_failures() {`
-  - Purpose: This test verifies that batch URL ingestion correctly handles partial success scenarios by accepting valid URLs, recording failures with error codes, and persisting results to a source manifest. [crates/gwiki/src/ingest/url.rs:801-843]
-- `batch_url_ingest_indexes_once_after_accepted_batch` (function) component `batch_url_ingest_indexes_once_after_accepted_batch [function]` (`294fa262-f502-51e7-b0ef-203bfa568da4`) lines 846-866 [crates/gwiki/src/ingest/url.rs:846-866]
+  - Purpose: Indexed function `batch_url_ingest_accepts_successes_and_records_failures` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:802-844]
+- `batch_url_ingest_indexes_once_after_accepted_batch` (function) component `batch_url_ingest_indexes_once_after_accepted_batch [function]` (`815212f0-e244-5b04-a3b0-160f2e818bcb`) lines 847-867 [crates/gwiki/src/ingest/url.rs:847-867]
   - Signature: `fn batch_url_ingest_indexes_once_after_accepted_batch() {`
-  - Purpose: # Summary
-
-This test verifies that ingesting a batch of multiple URLs performs indexed hash lookups exactly once per batch rather than per individual URL. [crates/gwiki/src/ingest/url.rs:846-866]
-- `url_fetch_limits_content_length_and_stream_bytes` (function) component `url_fetch_limits_content_length_and_stream_bytes [function]` (`41dc9f56-d5e8-5a5a-9026-5f9eeb995075`) lines 869-884 [crates/gwiki/src/ingest/url.rs:869-884]
+  - Purpose: Indexed function `batch_url_ingest_indexes_once_after_accepted_batch` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:847-867]
+- `url_fetch_limits_content_length_and_stream_bytes` (function) component `url_fetch_limits_content_length_and_stream_bytes [function]` (`394aa041-d174-5283-bd17-1c272c9881c9`) lines 870-885 [crates/gwiki/src/ingest/url.rs:870-885]
   - Signature: `fn url_fetch_limits_content_length_and_stream_bytes() {`
-  - Purpose: This test validates that HTTP response fetching enforces size limits by verifying content-length header validation and actual stream byte limiting, rejecting responses that exceed the configured maximum. [crates/gwiki/src/ingest/url.rs:869-884]
-- `url_fetch_rejects_private_and_local_addresses` (function) component `url_fetch_rejects_private_and_local_addresses [function]` (`55923ea1-a789-55ac-b5f8-79ef2a4da582`) lines 887-907 [crates/gwiki/src/ingest/url.rs:887-907]
+  - Purpose: Indexed function `url_fetch_limits_content_length_and_stream_bytes` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:870-885]
+- `url_fetch_rejects_private_and_local_addresses` (function) component `url_fetch_rejects_private_and_local_addresses [function]` (`6bab79d4-c39f-5c26-ab71-1eb39c60a853`) lines 888-908 [crates/gwiki/src/ingest/url.rs:888-908]
   - Signature: `fn url_fetch_rejects_private_and_local_addresses() {`
-  - Purpose: Unit test verifying that `is_disallowed_fetch_ip` rejects all private, loopback, and link-local IP addresses across IPv4 and IPv6 while permitting public addresses. [crates/gwiki/src/ingest/url.rs:887-907]
-- `redirect_url_resolution_handles_relative_locations` (function) component `redirect_url_resolution_handles_relative_locations [function]` (`ed6359f0-c440-518d-85a5-70ab4919d097`) lines 910-915 [crates/gwiki/src/ingest/url.rs:910-915]
+  - Purpose: Indexed function `url_fetch_rejects_private_and_local_addresses` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:888-908]
+- `redirect_url_resolution_handles_relative_locations` (function) component `redirect_url_resolution_handles_relative_locations [function]` (`8140c8a0-2167-5cf2-a647-f974d1886b8f`) lines 911-916 [crates/gwiki/src/ingest/url.rs:911-916]
   - Signature: `fn redirect_url_resolution_handles_relative_locations() {`
-  - Purpose: Unit test asserting that `resolve_redirect_url` correctly resolves relative redirect URLs containing parent directory traversal (`..`) references. [crates/gwiki/src/ingest/url.rs:910-915]
-- `test_snapshot` (function) component `test_snapshot [function]` (`021a8b82-1a9b-50db-8c25-3d5a46468e02`) lines 917-933 [crates/gwiki/src/ingest/url.rs:917-933]
+  - Purpose: Indexed function `redirect_url_resolution_handles_relative_locations` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:911-916]
+- `test_snapshot` (function) component `test_snapshot [function]` (`b315db40-1e3b-557f-8a55-172a2bd436ca`) lines 918-934 [crates/gwiki/src/ingest/url.rs:918-934]
   - Signature: `fn test_snapshot(`
-  - Purpose: Creates a test `UrlSnapshot` from the provided URLs and metadata, generating a minimal HTML document body with the given title and converting it to bytes. [crates/gwiki/src/ingest/url.rs:917-933]
-- `CountingStore` (class) component `CountingStore [class]` (`7d6f9533-74f4-5865-9520-52ed61e87624`) lines 936-939 [crates/gwiki/src/ingest/url.rs:936-939]
+  - Purpose: Indexed function `test_snapshot` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:918-934]
+- `CountingStore` (class) component `CountingStore [class]` (`f84c3d19-229b-550a-a078-5ab39329b21a`) lines 937-940 [crates/gwiki/src/ingest/url.rs:937-940]
   - Signature: `struct CountingStore {`
-  - Purpose: `CountingStore` is a wrapper struct around `MemoryWikiStore` that tracks the number of indexed hash read operations via a `usize` counter. [crates/gwiki/src/ingest/url.rs:936-939]
-- `CountingStore` (class) component `CountingStore [class]` (`f10d1d64-28cc-554f-9cce-46cfe8dc53d0`) lines 941-982 [crates/gwiki/src/ingest/url.rs:941-982]
+  - Purpose: Indexed class `CountingStore` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:937-940]
+- `CountingStore` (class) component `CountingStore [class]` (`15b1ab32-7604-53ed-95a9-ad2d0bd7b763`) lines 942-983 [crates/gwiki/src/ingest/url.rs:942-983]
   - Signature: `impl WikiIndexStore for CountingStore {`
-  - Purpose: CountingStore is a proxy wrapper implementing WikiIndexStore that delegates all methods to an inner store while tracking invocations of indexed_hashes(). [crates/gwiki/src/ingest/url.rs:941-982]
-- `CountingStore.indexed_hashes` (method) component `CountingStore.indexed_hashes [method]` (`943f078d-0892-5f97-86cd-3d287115add2`) lines 942-945 [crates/gwiki/src/ingest/url.rs:942-945]
+  - Purpose: Indexed class `CountingStore` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:942-983]
+- `CountingStore.indexed_hashes` (method) component `CountingStore.indexed_hashes [method]` (`895caa0b-ba79-556a-a561-1b40daa184ce`) lines 943-946 [crates/gwiki/src/ingest/url.rs:943-946]
   - Signature: `fn indexed_hashes(&mut self) -> Result<BTreeMap<PathBuf, String>, StoreError> {`
-  - Purpose: # indexed_hashes
-
-Increments a read counter and delegates to the inner store to return a `BTreeMap` mapping file paths to their hash strings, or propagates a `StoreError`. [crates/gwiki/src/ingest/url.rs:942-945]
-- `CountingStore.upsert_document` (method) component `CountingStore.upsert_document [method]` (`e0a2b48c-b21a-5037-8f39-6dc6fa76cd4c`) lines 947-949 [crates/gwiki/src/ingest/url.rs:947-949]
+  - Purpose: Indexed method `CountingStore.indexed_hashes` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:943-946]
+- `CountingStore.upsert_document` (method) component `CountingStore.upsert_document [method]` (`680f32f9-7ede-5b12-809b-e9ec27f248c5`) lines 948-950 [crates/gwiki/src/ingest/url.rs:948-950]
   - Signature: `fn upsert_document(&mut self, document: WikiDocument) -> Result<(), StoreError> {`
-  - Purpose: This method delegates the insertion or update of a `WikiDocument` to an inner store instance, propagating its `Result<(), StoreError>`. [crates/gwiki/src/ingest/url.rs:947-949]
-- `CountingStore.replace_chunks` (method) component `CountingStore.replace_chunks [method]` (`728d5ae4-4501-56e5-a827-3f76bd1f8b44`) lines 951-957 [crates/gwiki/src/ingest/url.rs:951-957]
+  - Purpose: Indexed method `CountingStore.upsert_document` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:948-950]
+- `CountingStore.replace_chunks` (method) component `CountingStore.replace_chunks [method]` (`965766c0-64ce-5a8a-acd6-2f353ac02c48`) lines 952-958 [crates/gwiki/src/ingest/url.rs:952-958]
   - Signature: `fn replace_chunks(`
-  - Purpose: Replaces a collection of `WikiChunk` objects at the specified path by delegating to an inner store implementation, returning `Result<(), StoreError>`. [crates/gwiki/src/ingest/url.rs:951-957]
-- `CountingStore.replace_links` (method) component `CountingStore.replace_links [method]` (`83410f60-0a17-5d47-94bf-bb41abd5697f`) lines 959-961 [crates/gwiki/src/ingest/url.rs:959-961]
+  - Purpose: Indexed method `CountingStore.replace_chunks` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:952-958]
+- `CountingStore.replace_links` (method) component `CountingStore.replace_links [method]` (`95822980-f2ff-57d0-891c-4881afc0aa34`) lines 960-962 [crates/gwiki/src/ingest/url.rs:960-962]
   - Signature: `fn replace_links(&mut self, path: &Path, links: Vec<WikiLink>) -> Result<(), StoreError> {`
-  - Purpose: This method delegates to an inner store implementation to replace wiki links at a specified path, returning a `Result` that is either empty on success or contains a `StoreError` on failure. [crates/gwiki/src/ingest/url.rs:959-961]
-- `CountingStore.upsert_source` (method) component `CountingStore.upsert_source [method]` (`9957bb67-7b0b-5ce3-b4f6-cdf12af148cb`) lines 963-965 [crates/gwiki/src/ingest/url.rs:963-965]
+  - Purpose: Indexed method `CountingStore.replace_links` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:960-962]
+- `CountingStore.upsert_source` (method) component `CountingStore.upsert_source [method]` (`30496fee-d374-5e6c-ab47-ab30df603f10`) lines 964-966 [crates/gwiki/src/ingest/url.rs:964-966]
   - Signature: `fn upsert_source(&mut self, source: WikiSource) -> Result<(), StoreError> {`
-  - Purpose: This mutable method delegates insertion or updating of a `WikiSource` to the inner store, returning `Result<(), StoreError>`. [crates/gwiki/src/ingest/url.rs:963-965]
-- `CountingStore.record_ingestion` (method) component `CountingStore.record_ingestion [method]` (`3d073dfe-36bf-5960-a5e9-49ef9a3c3e91`) lines 967-969 [crates/gwiki/src/ingest/url.rs:967-969]
+  - Purpose: Indexed method `CountingStore.upsert_source` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:964-966]
+- `CountingStore.record_ingestion` (method) component `CountingStore.record_ingestion [method]` (`110bf979-ddf0-5b33-980b-1a8ba57a2bec`) lines 968-970 [crates/gwiki/src/ingest/url.rs:968-970]
   - Signature: `fn record_ingestion(&mut self, ingestion: WikiIngestion) -> Result<(), StoreError> {`
-  - Purpose: This method is a wrapper that delegates the recording of a `WikiIngestion` to an inner member, returning `Result<(), StoreError>` to indicate success or failure. [crates/gwiki/src/ingest/url.rs:967-969]
-- `CountingStore.record_file_hash` (method) component `CountingStore.record_file_hash [method]` (`8f5bf7c7-b45b-5e9d-b49f-e9cc4782dc57`) lines 971-977 [crates/gwiki/src/ingest/url.rs:971-977]
+  - Purpose: Indexed method `CountingStore.record_ingestion` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:968-970]
+- `CountingStore.record_file_hash` (method) component `CountingStore.record_file_hash [method]` (`8db88b64-d15a-5ea9-bf9c-e65bd9914846`) lines 972-978 [crates/gwiki/src/ingest/url.rs:972-978]
   - Signature: `fn record_file_hash(`
-  - Purpose: Records the content hash for a file at the specified path in the underlying store, delegating the operation and returning a Result indicating success or a StoreError. [crates/gwiki/src/ingest/url.rs:971-977]
-- `CountingStore.delete_derived_rows` (method) component `CountingStore.delete_derived_rows [method]` (`0f25086b-6a27-5462-8dc8-9c674ea723d3`) lines 979-981 [crates/gwiki/src/ingest/url.rs:979-981]
+  - Purpose: Indexed method `CountingStore.record_file_hash` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:972-978]
+- `CountingStore.delete_derived_rows` (method) component `CountingStore.delete_derived_rows [method]` (`506c2842-c79c-5682-ac7f-1590d9d033b5`) lines 980-982 [crates/gwiki/src/ingest/url.rs:980-982]
   - Signature: `fn delete_derived_rows(&mut self, path: &Path) -> Result<(), StoreError> {`
-  - Purpose: Delegates deletion of derived rows associated with a given filesystem path to the inner store instance, returning `Result<(), StoreError>`. [crates/gwiki/src/ingest/url.rs:979-981]
+  - Purpose: Indexed method `CountingStore.delete_derived_rows` in `crates/gwiki/src/ingest/url.rs`. [crates/gwiki/src/ingest/url.rs:980-982]
 

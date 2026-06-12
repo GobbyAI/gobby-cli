@@ -84,28 +84,28 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 - `render_repo_doc` (function) component `render_repo_doc [function]` (`7477fd1e-0d0b-59f0-bf94-f68470575d0c`) lines 412-446 [crates/gcode/src/commands/codewiki/render.rs:412-446]
   - Signature: `pub(crate) fn render_repo_doc(`
   - Purpose: Indexed function `render_repo_doc` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:412-446]
-- `render_architecture_doc` (function) component `render_architecture_doc [function]` (`e82f70ce-4d96-5db8-8646-04d2c5164faa`) lines 448-474 [crates/gcode/src/commands/codewiki/render.rs:448-474]
+- `render_architecture_doc` (function) component `render_architecture_doc [function]` (`de64c8ea-5356-56bd-b7de-cb0a7ef02274`) lines 448-474 [crates/gcode/src/commands/codewiki/render.rs:448-474]
   - Signature: `pub(crate) fn render_architecture_doc(architecture: &ArchitectureDoc) -> String {`
   - Purpose: Indexed function `render_architecture_doc` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:448-474]
-- `render_onboarding_doc` (function) component `render_onboarding_doc [function]` (`22109196-3b67-5b13-89cc-9e6859a82a3a`) lines 476-512 [crates/gcode/src/commands/codewiki/render.rs:476-512]
+- `render_onboarding_doc` (function) component `render_onboarding_doc [function]` (`55de1aaa-0bcf-5bff-9acf-620a08e19ad8`) lines 476-512 [crates/gcode/src/commands/codewiki/render.rs:476-512]
   - Signature: `pub(crate) fn render_onboarding_doc(onboarding: &OnboardingDoc) -> String {`
   - Purpose: Indexed function `render_onboarding_doc` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:476-512]
-- `render_hotspots_doc` (function) component `render_hotspots_doc [function]` (`74487b38-9883-56e2-acc1-0942ddfa2fb8`) lines 514-557 [crates/gcode/src/commands/codewiki/render.rs:514-557]
+- `render_hotspots_doc` (function) component `render_hotspots_doc [function]` (`0b97ccce-57d6-507f-8dac-22de1d0dcec9`) lines 514-557 [crates/gcode/src/commands/codewiki/render.rs:514-557]
   - Signature: `pub(crate) fn render_hotspots_doc(hotspots: &HotspotsDoc) -> String {`
   - Purpose: Indexed function `render_hotspots_doc` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:514-557]
-- `write_hotspot_section` (function) component `write_hotspot_section [function]` (`fc28d2df-5f0b-5a47-a2a1-3a6e9df3478e`) lines 559-561 [crates/gcode/src/commands/codewiki/render.rs:559-561]
+- `write_hotspot_section` (function) component `write_hotspot_section [function]` (`1f969540-cb6b-5bf9-9112-d591b7a9bf40`) lines 559-561 [crates/gcode/src/commands/codewiki/render.rs:559-561]
   - Signature: `fn write_hotspot_section(doc: &mut String, title: &str, findings: &[HotspotFinding]) {`
   - Purpose: Indexed function `write_hotspot_section` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:559-561]
-- `write_hotspot_section_with_cross_refs` (function) component `write_hotspot_section_with_cross_refs [function]` (`2177a5e9-cb82-577e-961f-d4f857e295a5`) lines 563-622 [crates/gcode/src/commands/codewiki/render.rs:563-622]
+- `write_hotspot_section_with_cross_refs` (function) component `write_hotspot_section_with_cross_refs [function]` (`5174e409-1ba4-54bf-ad57-c400c56202b4`) lines 563-622 [crates/gcode/src/commands/codewiki/render.rs:563-622]
   - Signature: `fn write_hotspot_section_with_cross_refs(`
   - Purpose: Indexed function `write_hotspot_section_with_cross_refs` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:563-622]
-- `model_degraded_sources` (function) component `model_degraded_sources [function]` (`3fc8e84a-e67d-510a-9130-398c2609cb21`) lines 625-631 [crates/gcode/src/commands/codewiki/render.rs:625-631]
+- `model_degraded_sources` (function) component `model_degraded_sources [function]` (`a51651ca-a233-5219-8c9c-40a14d3a75ec`) lines 625-631 [crates/gcode/src/commands/codewiki/render.rs:625-631]
   - Signature: `pub(crate) fn model_degraded_sources(degraded: bool) -> Vec<String> {`
   - Purpose: Indexed function `model_degraded_sources` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:625-631]
-- `render_module_doc` (function) component `render_module_doc [function]` (`533750d8-0d81-5f11-bf13-6a8c212eef94`) lines 633-697 [crates/gcode/src/commands/codewiki/render.rs:633-697]
+- `render_module_doc` (function) component `render_module_doc [function]` (`7acd0e7e-39bd-5f78-984a-a40bac388085`) lines 633-697 [crates/gcode/src/commands/codewiki/render.rs:633-697]
   - Signature: `pub(crate) fn render_module_doc(module: &ModuleDoc) -> String {`
   - Purpose: Indexed function `render_module_doc` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:633-697]
-- `render_file_doc` (function) component `render_file_doc [function]` (`aa70b8b6-ef5e-5352-973e-94f8b2a9b7c8`) lines 699-742 [crates/gcode/src/commands/codewiki/render.rs:699-742]
+- `render_file_doc` (function) component `render_file_doc [function]` (`fa52790e-08c6-5ac1-90a9-b0f3df95323c`) lines 699-742 [crates/gcode/src/commands/codewiki/render.rs:699-742]
   - Signature: `pub(crate) fn render_file_doc(file: &FileDoc) -> String {`
   - Purpose: Indexed function `render_file_doc` in `crates/gcode/src/commands/codewiki/render.rs`. [crates/gcode/src/commands/codewiki/render.rs:699-742]
 

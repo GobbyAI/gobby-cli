@@ -5,60 +5,55 @@ provenance:
 - file: crates/gcore/src/config/tests.rs
   ranges:
   - 9-11
-  - 13-46
-  - 14-22
-  - 24-40
-  - 42-45
-  - 48-52
-  - 49-51
-  - 55-58
-  - 60-80
-  - 61-69
-  - 71-79
-  - 82-94
-  - 83-85
-  - 87-93
-  - 97-100
-  - 102-112
-  - 103-111
-  - 114-124
-  - 115-119
-  - 121-123
-  - 127-147
-  - 150-171
-  - 174-198
-  - 201-214
-  - 217-233
-  - 236-245
-  - 248-283
-  - 286-349
-  - 352-390
-  - 393-432
-  - 435-454
-  - 457-503
-  - 460-463
-  - 465-467
-  - 470-472
-  - 474-477
-  - 506-532
-  - 535-581
-  - 584-591
-  - 594-607
-  - 610-623
-  - 626-637
-  - 640-651
-  - 654-666
-  - 669-682
-  - 685-694
-  - 697-704
-  - 707-720
-  - 723-737
-  - 739-745
-  - 747-751
-  - 753-785
-  - 787-801
-  - 803-816
-  - 818-823
+  - 18-32
+  - 34-47
+  - 49-57
+  - 61-63
+  - 65-98
+  - 100-104
+  - 107-110
+  - 112-132
+  - 134-146
+  - 149-152
+  - 154-167
+  - 169-180
+  - 183-186
+  - 188-198
+  - 200-210
+  - 213-233
+  - 236-257
+  - 260-284
+  - 288-307
+  - 310-323
+  - 326-342
+  - 345-354
+  - 357-392
+  - 395-458
+  - 462-480
+  - 484-505
+  - 508-546
+  - 549-588
+  - 591-610
+  - 613-659
+  - 662-688
+  - 691-737
+  - 740-747
+  - 750-763
+  - 766-779
+  - 783-799
+  - 802-813
+  - 817-834
+  - 837-850
+  - 853-862
+  - 865-872
+  - 875-888
+  - 891-905
+  - 907-913
+  - 915-919
+  - 921-953
+  - 955-969
+  - 971-984
+  - 986-991
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -70,178 +65,235 @@ Module: [[code/modules/crates/gcore/src/config|crates/gcore/src/config]]
 
 ## Purpose
 
-`crates/gcore/src/config/tests.rs` exposes 55 indexed API symbols.
+`crates/gcore/src/config/tests.rs` exposes 74 indexed API symbols.
 [crates/gcore/src/config/tests.rs:9-11]
-[crates/gcore/src/config/tests.rs:13-46]
-[crates/gcore/src/config/tests.rs:14-22]
-[crates/gcore/src/config/tests.rs:24-40]
-[crates/gcore/src/config/tests.rs:42-45]
+[crates/gcore/src/config/tests.rs:18-32]
+[crates/gcore/src/config/tests.rs:19-21]
+[crates/gcore/src/config/tests.rs:23-25]
+[crates/gcore/src/config/tests.rs:27-31]
 
 ## API Symbols
 
-- `EnvGuard` (class) component `EnvGuard [class]` (`ef444484-34ea-5170-9692-eddddedf6460`) lines 9-11 [crates/gcore/src/config/tests.rs:9-11]
-  - Signature: `struct EnvGuard {`
-  - Purpose: Indexed class `EnvGuard` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:9-11]
-- `EnvGuard` (class) component `EnvGuard [class]` (`b585f13b-f2ab-5999-bf55-7f529fbfafd8`) lines 13-46 [crates/gcore/src/config/tests.rs:13-46]
-  - Signature: `impl EnvGuard {`
-  - Purpose: Indexed class `EnvGuard` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:13-46]
-- `EnvGuard.new` (method) component `EnvGuard.new [method]` (`b62a0a81-968e-5638-b37d-abde4cefa3f7`) lines 14-22 [crates/gcore/src/config/tests.rs:14-22]
-  - Signature: `fn new() -> Self {`
-  - Purpose: Indexed method `EnvGuard.new` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:14-22]
-- `EnvGuard.clear` (method) component `EnvGuard.clear [method]` (`add3df9a-f8ed-52ea-b180-7b2faa014bc4`) lines 24-40 [crates/gcore/src/config/tests.rs:24-40]
+- `TestLogger` (class) component `TestLogger [class]` (`c6608879-91b7-59a8-b87f-393b1aca3409`) lines 9-11 [crates/gcore/src/config/tests.rs:9-11]
+  - Signature: `struct TestLogger {`
+  - Purpose: Indexed class `TestLogger` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:9-11]
+- `TestLogger` (class) component `TestLogger [class]` (`8c866678-f093-54ad-9f0a-523a56432fd0`) lines 18-32 [crates/gcore/src/config/tests.rs:18-32]
+  - Signature: `impl TestLogger {`
+  - Purpose: Indexed class `TestLogger` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:18-32]
+- `TestLogger.clear` (method) component `TestLogger.clear [method]` (`f76d8bf9-4941-5a68-b0be-dbfd82a0a280`) lines 19-21 [crates/gcore/src/config/tests.rs:19-21]
   - Signature: `fn clear(&self) {`
-  - Purpose: Indexed method `EnvGuard.clear` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:24-40]
-- `EnvGuard.set` (method) component `EnvGuard.set [method]` (`d382a718-822b-5e88-96eb-95611f34726d`) lines 42-45 [crates/gcore/src/config/tests.rs:42-45]
+  - Purpose: Indexed method `TestLogger.clear` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:19-21]
+- `TestLogger.records` (method) component `TestLogger.records [method]` (`88033199-9635-501a-b60b-41dbf139198a`) lines 23-25 [crates/gcore/src/config/tests.rs:23-25]
+  - Signature: `fn records(&self) -> Vec<String> {`
+  - Purpose: Indexed method `TestLogger.records` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:23-25]
+- `TestLogger.lock_records` (method) component `TestLogger.lock_records [method]` (`149d6f67-d154-522d-8e7a-5716aeeb1b5d`) lines 27-31 [crates/gcore/src/config/tests.rs:27-31]
+  - Signature: `fn lock_records(&self) -> std::sync::MutexGuard<'_, Vec<String>> {`
+  - Purpose: Indexed method `TestLogger.lock_records` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:27-31]
+- `TestLogger` (class) component `TestLogger [class]` (`eb0599f8-f1ff-528c-926f-9232d0d735cd`) lines 34-47 [crates/gcore/src/config/tests.rs:34-47]
+  - Signature: `impl log::Log for TestLogger {`
+  - Purpose: Indexed class `TestLogger` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:34-47]
+- `TestLogger.enabled` (method) component `TestLogger.enabled [method]` (`8ed6ecd6-f22c-580f-874b-e3bcf160ab8d`) lines 35-37 [crates/gcore/src/config/tests.rs:35-37]
+  - Signature: `fn enabled(&self, metadata: &log::Metadata<'_>) -> bool {`
+  - Purpose: Indexed method `TestLogger.enabled` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:35-37]
+- `TestLogger.log` (method) component `TestLogger.log [method]` (`aa2f610a-8798-5914-8718-4f62f0c4a2ed`) lines 39-44 [crates/gcore/src/config/tests.rs:39-44]
+  - Signature: `fn log(&self, record: &log::Record<'_>) {`
+  - Purpose: Indexed method `TestLogger.log` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:39-44]
+- `TestLogger.flush` (method) component `TestLogger.flush [method]` (`48b4c3ec-817f-57f3-9478-6501fde0e177`) lines 46-46 [crates/gcore/src/config/tests.rs:46]
+  - Signature: `fn flush(&self) {}`
+  - Purpose: Indexed method `TestLogger.flush` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:46]
+- `capture_warn_logs` (function) component `capture_warn_logs [function]` (`9afb3cb7-af9d-583f-8413-782bd5b6d27f`) lines 49-57 [crates/gcore/src/config/tests.rs:49-57]
+  - Signature: `fn capture_warn_logs<R>(f: impl FnOnce() -> R) -> (R, Vec<String>) {`
+  - Purpose: Indexed function `capture_warn_logs` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:49-57]
+- `EnvGuard` (class) component `EnvGuard [class]` (`5bfc5976-f0c7-5ca6-875b-2db4817aa0e8`) lines 61-63 [crates/gcore/src/config/tests.rs:61-63]
+  - Signature: `struct EnvGuard {`
+  - Purpose: Indexed class `EnvGuard` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:61-63]
+- `EnvGuard` (class) component `EnvGuard [class]` (`e9e71913-8b7b-5a96-a53d-fb7d98780fa5`) lines 65-98 [crates/gcore/src/config/tests.rs:65-98]
+  - Signature: `impl EnvGuard {`
+  - Purpose: Indexed class `EnvGuard` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:65-98]
+- `EnvGuard.new` (method) component `EnvGuard.new [method]` (`c1589b58-8ca9-5b48-89af-00cf741da03a`) lines 66-74 [crates/gcore/src/config/tests.rs:66-74]
+  - Signature: `fn new() -> Self {`
+  - Purpose: Indexed method `EnvGuard.new` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:66-74]
+- `EnvGuard.clear` (method) component `EnvGuard.clear [method]` (`053ca163-d04c-57f8-8413-3067c34a51bf`) lines 76-92 [crates/gcore/src/config/tests.rs:76-92]
+  - Signature: `fn clear(&self) {`
+  - Purpose: Indexed method `EnvGuard.clear` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:76-92]
+- `EnvGuard.set` (method) component `EnvGuard.set [method]` (`53b5b036-c780-525c-934b-d5edabf80ce1`) lines 94-97 [crates/gcore/src/config/tests.rs:94-97]
   - Signature: `fn set(&self, key: &str, value: &str) {`
-  - Purpose: Indexed method `EnvGuard.set` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:42-45]
-- `EnvGuard` (class) component `EnvGuard [class]` (`55a71c6c-a975-5a91-952f-fd7f1aa88758`) lines 48-52 [crates/gcore/src/config/tests.rs:48-52]
+  - Purpose: Indexed method `EnvGuard.set` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:94-97]
+- `EnvGuard` (class) component `EnvGuard [class]` (`7b9ba7d8-a3ac-56e8-a74f-332a78e426a7`) lines 100-104 [crates/gcore/src/config/tests.rs:100-104]
   - Signature: `impl Drop for EnvGuard {`
-  - Purpose: Indexed class `EnvGuard` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:48-52]
-- `EnvGuard.drop` (method) component `EnvGuard.drop [method]` (`3968e493-1d09-549a-83f6-957bbd60c116`) lines 49-51 [crates/gcore/src/config/tests.rs:49-51]
+  - Purpose: Indexed class `EnvGuard` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:100-104]
+- `EnvGuard.drop` (method) component `EnvGuard.drop [method]` (`6cd124f7-104b-525e-b91a-f252cc61b7fe`) lines 101-103 [crates/gcore/src/config/tests.rs:101-103]
   - Signature: `fn drop(&mut self) {`
-  - Purpose: Indexed method `EnvGuard.drop` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:49-51]
-- `TestSource` (class) component `TestSource [class]` (`e9879d69-8f78-5a07-869f-8c881f5bd36a`) lines 55-58 [crates/gcore/src/config/tests.rs:55-58]
+  - Purpose: Indexed method `EnvGuard.drop` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:101-103]
+- `TestSource` (class) component `TestSource [class]` (`1fa29209-71ea-59b1-8d6d-4f4fa2242cef`) lines 107-110 [crates/gcore/src/config/tests.rs:107-110]
   - Signature: `struct TestSource {`
-  - Purpose: Indexed class `TestSource` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:55-58]
-- `TestSource` (class) component `TestSource [class]` (`d46d5e44-781c-567f-b681-fe7059da3d52`) lines 60-80 [crates/gcore/src/config/tests.rs:60-80]
+  - Purpose: Indexed class `TestSource` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:107-110]
+- `TestSource` (class) component `TestSource [class]` (`efa6addc-f756-5ee6-b3b4-b4c13ecc74d3`) lines 112-132 [crates/gcore/src/config/tests.rs:112-132]
   - Signature: `impl TestSource {`
-  - Purpose: Indexed class `TestSource` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:60-80]
-- `TestSource.with_values` (method) component `TestSource.with_values [method]` (`7300b3ec-2393-5ea9-9cd5-f5beda7bf370`) lines 61-69 [crates/gcore/src/config/tests.rs:61-69]
+  - Purpose: Indexed class `TestSource` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:112-132]
+- `TestSource.with_values` (method) component `TestSource.with_values [method]` (`50a363f5-45f3-5d29-b556-0367a85e1291`) lines 113-121 [crates/gcore/src/config/tests.rs:113-121]
   - Signature: `fn with_values(values: impl IntoIterator<Item = (&'static str, &'static str)>) -> Self {`
-  - Purpose: Indexed method `TestSource.with_values` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:61-69]
-- `TestSource.with_raw_values` (method) component `TestSource.with_raw_values [method]` (`cce70d73-b73e-50da-9e17-9e0677ca4878`) lines 71-79 [crates/gcore/src/config/tests.rs:71-79]
+  - Purpose: Indexed method `TestSource.with_values` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:113-121]
+- `TestSource.with_raw_values` (method) component `TestSource.with_raw_values [method]` (`b87d2174-c756-5567-b199-72de5b523383`) lines 123-131 [crates/gcore/src/config/tests.rs:123-131]
   - Signature: `fn with_raw_values(values: impl IntoIterator<Item = (&'static str, &'static str)>) -> Self {`
-  - Purpose: Indexed method `TestSource.with_raw_values` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:71-79]
-- `TestSource` (class) component `TestSource [class]` (`879e0d30-2f80-56ff-8171-81f1dc5ccfa4`) lines 82-94 [crates/gcore/src/config/tests.rs:82-94]
+  - Purpose: Indexed method `TestSource.with_raw_values` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:123-131]
+- `TestSource` (class) component `TestSource [class]` (`3166418c-0383-5c9f-adca-152968296895`) lines 134-146 [crates/gcore/src/config/tests.rs:134-146]
   - Signature: `impl ConfigSource for TestSource {`
-  - Purpose: Indexed class `TestSource` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:82-94]
-- `TestSource.config_value` (method) component `TestSource.config_value [method]` (`39e3a968-6915-58f5-a405-993c48659131`) lines 83-85 [crates/gcore/src/config/tests.rs:83-85]
+  - Purpose: Indexed class `TestSource` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:134-146]
+- `TestSource.config_value` (method) component `TestSource.config_value [method]` (`280a02cd-9864-559c-a164-485b88c588f7`) lines 135-137 [crates/gcore/src/config/tests.rs:135-137]
   - Signature: `fn config_value(&mut self, key: &str) -> Option<String> {`
-  - Purpose: Indexed method `TestSource.config_value` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:83-85]
-- `TestSource.resolve_value` (method) component `TestSource.resolve_value [method]` (`e17af976-5e01-5716-91d2-776d87bd1337`) lines 87-93 [crates/gcore/src/config/tests.rs:87-93]
+  - Purpose: Indexed method `TestSource.config_value` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:135-137]
+- `TestSource.resolve_value` (method) component `TestSource.resolve_value [method]` (`fd5bfb0b-eb42-5975-a296-4a4542d87d2b`) lines 139-145 [crates/gcore/src/config/tests.rs:139-145]
   - Signature: `fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {`
-  - Purpose: Indexed method `TestSource.resolve_value` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:87-93]
-- `LayeredTestSource` (class) component `LayeredTestSource [class]` (`2bced4c3-5e99-53d1-b342-a752584f2761`) lines 97-100 [crates/gcore/src/config/tests.rs:97-100]
+  - Purpose: Indexed method `TestSource.resolve_value` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:139-145]
+- `FailingResolveSource` (class) component `FailingResolveSource [class]` (`1b794323-c871-5c2c-9437-f7199757e5b1`) lines 149-152 [crates/gcore/src/config/tests.rs:149-152]
+  - Signature: `struct FailingResolveSource {`
+  - Purpose: Indexed class `FailingResolveSource` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:149-152]
+- `FailingResolveSource` (class) component `FailingResolveSource [class]` (`99925ad4-d6e8-5583-bea0-5a99f17a5454`) lines 154-167 [crates/gcore/src/config/tests.rs:154-167]
+  - Signature: `impl FailingResolveSource {`
+  - Purpose: Indexed class `FailingResolveSource` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:154-167]
+- `FailingResolveSource.with_values_and_failures` (method) component `FailingResolveSource.with_values_and_failures [method]` (`c06a152a-b0f9-512f-bba0-2a036b32ed69`) lines 155-166 [crates/gcore/src/config/tests.rs:155-166]
+  - Signature: `fn with_values_and_failures(`
+  - Purpose: Indexed method `FailingResolveSource.with_values_and_failures` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:155-166]
+- `FailingResolveSource` (class) component `FailingResolveSource [class]` (`20997998-9323-569c-9adc-fa823ca57732`) lines 169-180 [crates/gcore/src/config/tests.rs:169-180]
+  - Signature: `impl ConfigSource for FailingResolveSource {`
+  - Purpose: Indexed class `FailingResolveSource` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:169-180]
+- `FailingResolveSource.config_value` (method) component `FailingResolveSource.config_value [method]` (`8ce8b1f3-aafb-54de-829f-8a7c4e255b18`) lines 170-172 [crates/gcore/src/config/tests.rs:170-172]
+  - Signature: `fn config_value(&mut self, key: &str) -> Option<String> {`
+  - Purpose: Indexed method `FailingResolveSource.config_value` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:170-172]
+- `FailingResolveSource.resolve_value` (method) component `FailingResolveSource.resolve_value [method]` (`b037e392-ea50-531e-8d6c-abedb3dbbf42`) lines 174-179 [crates/gcore/src/config/tests.rs:174-179]
+  - Signature: `fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {`
+  - Purpose: Indexed method `FailingResolveSource.resolve_value` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:174-179]
+- `LayeredTestSource` (class) component `LayeredTestSource [class]` (`0f1eb28f-f6bc-573c-ac58-930d1d42d772`) lines 183-186 [crates/gcore/src/config/tests.rs:183-186]
   - Signature: `struct LayeredTestSource {`
-  - Purpose: Indexed class `LayeredTestSource` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:97-100]
-- `LayeredTestSource` (class) component `LayeredTestSource [class]` (`c05d8ebc-2b28-5237-bcdc-1717935f00a2`) lines 102-112 [crates/gcore/src/config/tests.rs:102-112]
+  - Purpose: Indexed class `LayeredTestSource` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:183-186]
+- `LayeredTestSource` (class) component `LayeredTestSource [class]` (`6274565c-eea1-5e6b-91a9-95a5d7b3731d`) lines 188-198 [crates/gcore/src/config/tests.rs:188-198]
   - Signature: `impl LayeredTestSource {`
-  - Purpose: Indexed class `LayeredTestSource` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:102-112]
-- `LayeredTestSource.with_layers` (method) component `LayeredTestSource.with_layers [method]` (`8971caec-bdb9-5812-bde9-ad1e0256dfca`) lines 103-111 [crates/gcore/src/config/tests.rs:103-111]
+  - Purpose: Indexed class `LayeredTestSource` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:188-198]
+- `LayeredTestSource.with_layers` (method) component `LayeredTestSource.with_layers [method]` (`015bfb93-f08b-5f77-9d04-b072cc42870d`) lines 189-197 [crates/gcore/src/config/tests.rs:189-197]
   - Signature: `fn with_layers(`
-  - Purpose: Indexed method `LayeredTestSource.with_layers` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:103-111]
-- `LayeredTestSource` (class) component `LayeredTestSource [class]` (`2f2177f3-2ae6-5c42-97b2-1195eedd26e6`) lines 114-124 [crates/gcore/src/config/tests.rs:114-124]
+  - Purpose: Indexed method `LayeredTestSource.with_layers` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:189-197]
+- `LayeredTestSource` (class) component `LayeredTestSource [class]` (`9e46a021-5b82-58f8-a988-44a9747183b0`) lines 200-210 [crates/gcore/src/config/tests.rs:200-210]
   - Signature: `impl ConfigSource for LayeredTestSource {`
-  - Purpose: Indexed class `LayeredTestSource` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:114-124]
-- `LayeredTestSource.config_value` (method) component `LayeredTestSource.config_value [method]` (`d8219a4b-d03c-5a20-9ab6-be6466b6789f`) lines 115-119 [crates/gcore/src/config/tests.rs:115-119]
+  - Purpose: Indexed class `LayeredTestSource` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:200-210]
+- `LayeredTestSource.config_value` (method) component `LayeredTestSource.config_value [method]` (`6149a2e8-c16b-571f-b4c0-28b00184f091`) lines 201-205 [crates/gcore/src/config/tests.rs:201-205]
   - Signature: `fn config_value(&mut self, key: &str) -> Option<String> {`
-  - Purpose: Indexed method `LayeredTestSource.config_value` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:115-119]
-- `LayeredTestSource.resolve_value` (method) component `LayeredTestSource.resolve_value [method]` (`0ac82da3-352e-529e-b72a-eafc3fe62b4f`) lines 121-123 [crates/gcore/src/config/tests.rs:121-123]
+  - Purpose: Indexed method `LayeredTestSource.config_value` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:201-205]
+- `LayeredTestSource.resolve_value` (method) component `LayeredTestSource.resolve_value [method]` (`537799b6-2939-5c8a-b20f-a6708b34fb38`) lines 207-209 [crates/gcore/src/config/tests.rs:207-209]
   - Signature: `fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {`
-  - Purpose: Indexed method `LayeredTestSource.resolve_value` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:121-123]
-- `decode_config_value_handles_json_and_plain` (function) component `decode_config_value_handles_json_and_plain [function]` (`1f1a7ef1-c32d-5adb-81f0-d6c0a6f7b6c5`) lines 127-147 [crates/gcore/src/config/tests.rs:127-147]
+  - Purpose: Indexed method `LayeredTestSource.resolve_value` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:207-209]
+- `decode_config_value_handles_json_and_plain` (function) component `decode_config_value_handles_json_and_plain [function]` (`5caed760-45b7-5c79-941c-07aa657a42f5`) lines 213-233 [crates/gcore/src/config/tests.rs:213-233]
   - Signature: `fn decode_config_value_handles_json_and_plain() {`
-  - Purpose: Indexed function `decode_config_value_handles_json_and_plain` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:127-147]
-- `resolve_env_pattern_with_defaults` (function) component `resolve_env_pattern_with_defaults [function]` (`00b5b10e-5f0a-5867-bfe0-20cc21a1a70b`) lines 150-171 [crates/gcore/src/config/tests.rs:150-171]
+  - Purpose: Indexed function `decode_config_value_handles_json_and_plain` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:213-233]
+- `resolve_env_pattern_with_defaults` (function) component `resolve_env_pattern_with_defaults [function]` (`a8f2b3d9-622c-5aef-9e93-75eeab43d049`) lines 236-257 [crates/gcore/src/config/tests.rs:236-257]
   - Signature: `fn resolve_env_pattern_with_defaults() {`
-  - Purpose: Indexed function `resolve_env_pattern_with_defaults` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:150-171]
-- `env_overrides_config_store` (function) component `env_overrides_config_store [function]` (`05539274-fbce-5648-91ab-59b8775615ca`) lines 174-198 [crates/gcore/src/config/tests.rs:174-198]
+  - Purpose: Indexed function `resolve_env_pattern_with_defaults` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:236-257]
+- `env_overrides_config_store` (function) component `env_overrides_config_store [function]` (`5ac932a2-cfbd-5a7e-ad21-93f1c7741323`) lines 260-284 [crates/gcore/src/config/tests.rs:260-284]
   - Signature: `fn env_overrides_config_store() {`
-  - Purpose: Indexed function `env_overrides_config_store` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:174-198]
-- `falkordb_password_resolves_current_config_key` (function) component `falkordb_password_resolves_current_config_key [function]` (`80ae4828-86d5-5f88-87d0-6a75aa6115bd`) lines 201-214 [crates/gcore/src/config/tests.rs:201-214]
+  - Purpose: Indexed function `env_overrides_config_store` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:260-284]
+- `invalid_falkordb_env_port_warns_and_uses_default` (function) component `invalid_falkordb_env_port_warns_and_uses_default [function]` (`7bddeb55-9613-5bce-aea2-5d167790d438`) lines 288-307 [crates/gcore/src/config/tests.rs:288-307]
+  - Signature: `fn invalid_falkordb_env_port_warns_and_uses_default() {`
+  - Purpose: Indexed function `invalid_falkordb_env_port_warns_and_uses_default` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:288-307]
+- `falkordb_password_resolves_current_config_key` (function) component `falkordb_password_resolves_current_config_key [function]` (`b94499a7-5112-5a5c-b962-36bb65933d75`) lines 310-323 [crates/gcore/src/config/tests.rs:310-323]
   - Signature: `fn falkordb_password_resolves_current_config_key() {`
-  - Purpose: Indexed function `falkordb_password_resolves_current_config_key` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:201-214]
-- `config_source_handles_secrets` (function) component `config_source_handles_secrets [function]` (`42bbe21d-52aa-5c3b-800a-b1d17c635175`) lines 217-233 [crates/gcore/src/config/tests.rs:217-233]
+  - Purpose: Indexed function `falkordb_password_resolves_current_config_key` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:310-323]
+- `config_source_handles_secrets` (function) component `config_source_handles_secrets [function]` (`08a57d4d-55f9-5c69-ba6e-bb737a5659b6`) lines 326-342 [crates/gcore/src/config/tests.rs:326-342]
   - Signature: `fn config_source_handles_secrets() {`
-  - Purpose: Indexed function `config_source_handles_secrets` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:217-233]
-- `env_only_source_rejects_secret_patterns` (function) component `env_only_source_rejects_secret_patterns [function]` (`b0de14b9-7736-5faa-a8e3-c5f2359c0abb`) lines 236-245 [crates/gcore/src/config/tests.rs:236-245]
+  - Purpose: Indexed function `config_source_handles_secrets` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:326-342]
+- `env_only_source_rejects_secret_patterns` (function) component `env_only_source_rejects_secret_patterns [function]` (`7677ab5d-c8d3-5a3c-9d4b-daeaa8b8bac9`) lines 345-354 [crates/gcore/src/config/tests.rs:345-354]
   - Signature: `fn env_only_source_rejects_secret_patterns() {`
-  - Purpose: Indexed function `env_only_source_rejects_secret_patterns` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:236-245]
-- `ai_routing_per_capability_precedence` (function) component `ai_routing_per_capability_precedence [function]` (`5cae22b6-6918-5636-bfd6-5ec031b80b1d`) lines 248-283 [crates/gcore/src/config/tests.rs:248-283]
+  - Purpose: Indexed function `env_only_source_rejects_secret_patterns` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:345-354]
+- `ai_routing_per_capability_precedence` (function) component `ai_routing_per_capability_precedence [function]` (`dc57054c-f20b-5431-8218-e7c39be48d91`) lines 357-392 [crates/gcore/src/config/tests.rs:357-392]
   - Signature: `fn ai_routing_per_capability_precedence() {`
-  - Purpose: Indexed function `ai_routing_per_capability_precedence` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:248-283]
-- `ai_config_resolves_store_then_yaml_no_env` (function) component `ai_config_resolves_store_then_yaml_no_env [function]` (`718c8037-c4dd-5673-a6b2-ca416ec86251`) lines 286-349 [crates/gcore/src/config/tests.rs:286-349]
+  - Purpose: Indexed function `ai_routing_per_capability_precedence` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:357-392]
+- `ai_config_resolves_store_then_yaml_no_env` (function) component `ai_config_resolves_store_then_yaml_no_env [function]` (`e80715ea-108e-5ac6-8f07-830145d8dd2f`) lines 395-458 [crates/gcore/src/config/tests.rs:395-458]
   - Signature: `fn ai_config_resolves_store_then_yaml_no_env() {`
-  - Purpose: Indexed function `ai_config_resolves_store_then_yaml_no_env` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:286-349]
-- `provider_and_translation_fields_resolve` (function) component `provider_and_translation_fields_resolve [function]` (`6214eb88-4815-573b-af05-c325a972c13d`) lines 352-390 [crates/gcore/src/config/tests.rs:352-390]
+  - Purpose: Indexed function `ai_config_resolves_store_then_yaml_no_env` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:395-458]
+- `ai_binding_resolution_error_logs_config_key` (function) component `ai_binding_resolution_error_logs_config_key [function]` (`ba6e780c-c934-5c65-b773-529ae87498fc`) lines 462-480 [crates/gcore/src/config/tests.rs:462-480]
+  - Signature: `fn ai_binding_resolution_error_logs_config_key() {`
+  - Purpose: Indexed function `ai_binding_resolution_error_logs_config_key` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:462-480]
+- `env_override_resolution_error_logs_env_key` (function) component `env_override_resolution_error_logs_env_key [function]` (`fdf9ed99-fbe5-5b24-a905-c91d23f8d226`) lines 484-505 [crates/gcore/src/config/tests.rs:484-505]
+  - Signature: `fn env_override_resolution_error_logs_env_key() {`
+  - Purpose: Indexed function `env_override_resolution_error_logs_env_key` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:484-505]
+- `provider_and_translation_fields_resolve` (function) component `provider_and_translation_fields_resolve [function]` (`8cca7e89-f20c-5c27-bc0a-e47f450e8d85`) lines 508-546 [crates/gcore/src/config/tests.rs:508-546]
   - Signature: `fn provider_and_translation_fields_resolve() {`
-  - Purpose: Indexed function `provider_and_translation_fields_resolve` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:352-390]
-- `audio_translate_inherits_transcribe_binding` (function) component `audio_translate_inherits_transcribe_binding [function]` (`809be329-defb-593c-87e7-2ea2ab90e668`) lines 393-432 [crates/gcore/src/config/tests.rs:393-432]
+  - Purpose: Indexed function `provider_and_translation_fields_resolve` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:508-546]
+- `audio_translate_inherits_transcribe_binding` (function) component `audio_translate_inherits_transcribe_binding [function]` (`a1382c50-267b-5b59-9339-19bb690e9a2d`) lines 549-588 [crates/gcore/src/config/tests.rs:549-588]
   - Signature: `fn audio_translate_inherits_transcribe_binding() {`
-  - Purpose: Indexed function `audio_translate_inherits_transcribe_binding` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:393-432]
-- `embedding_config_uses_ai_namespace` (function) component `embedding_config_uses_ai_namespace [function]` (`3ac92eb8-44c5-552e-af0d-dac21b9ba243`) lines 435-454 [crates/gcore/src/config/tests.rs:435-454]
+  - Purpose: Indexed function `audio_translate_inherits_transcribe_binding` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:549-588]
+- `embedding_config_uses_ai_namespace` (function) component `embedding_config_uses_ai_namespace [function]` (`5731ad81-b70d-5ab1-a2dd-a5fdd68ba8b9`) lines 591-610 [crates/gcore/src/config/tests.rs:591-610]
   - Signature: `fn embedding_config_uses_ai_namespace() {`
-  - Purpose: Indexed function `embedding_config_uses_ai_namespace` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:435-454]
-- `postgres_config_source_resolves_secrets` (function) component `postgres_config_source_resolves_secrets [function]` (`6b26470f-54ec-587e-adc0-24a9ab08fce6`) lines 457-503 [crates/gcore/src/config/tests.rs:457-503]
+  - Purpose: Indexed function `embedding_config_uses_ai_namespace` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:591-610]
+- `postgres_config_source_resolves_secrets` (function) component `postgres_config_source_resolves_secrets [function]` (`91fd27d1-77eb-5a9f-a48f-8476086f6256`) lines 613-659 [crates/gcore/src/config/tests.rs:613-659]
   - Signature: `fn postgres_config_source_resolves_secrets() {`
-  - Purpose: Indexed function `postgres_config_source_resolves_secrets` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:457-503]
-- `ConnectionLike` (class) component `ConnectionLike [class]` (`3a7ef1e2-cb9e-5dea-8697-731a8044fa80`) lines 460-463 [crates/gcore/src/config/tests.rs:460-463]
+  - Purpose: Indexed function `postgres_config_source_resolves_secrets` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:613-659]
+- `ConnectionLike` (class) component `ConnectionLike [class]` (`19948084-6df7-5692-89e7-cff890714ea3`) lines 616-619 [crates/gcore/src/config/tests.rs:616-619]
   - Signature: `struct ConnectionLike {`
-  - Purpose: Indexed class `ConnectionLike` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:460-463]
-- `PostgresConfigSource` (class) component `PostgresConfigSource [class]` (`016ee5eb-6e8d-5b20-86d8-9a8fdf76b40e`) lines 465-467 [crates/gcore/src/config/tests.rs:465-467]
+  - Purpose: Indexed class `ConnectionLike` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:616-619]
+- `PostgresConfigSource` (class) component `PostgresConfigSource [class]` (`6e0a3ce1-8844-5fec-85f6-7f2af2da3621`) lines 621-623 [crates/gcore/src/config/tests.rs:621-623]
   - Signature: `struct PostgresConfigSource<'a> {`
-  - Purpose: Indexed class `PostgresConfigSource` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:465-467]
-- `config_value` (function) component `config_value [function]` (`89751ca0-43c0-50d4-a30d-8a3b8e357af1`) lines 470-472 [crates/gcore/src/config/tests.rs:470-472]
+  - Purpose: Indexed class `PostgresConfigSource` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:621-623]
+- `config_value` (function) component `config_value [function]` (`0b5d8a51-3dd4-5b2d-8fd0-25f6e5b23f49`) lines 626-628 [crates/gcore/src/config/tests.rs:626-628]
   - Signature: `fn config_value(&mut self, key: &str) -> Option<String> {`
-  - Purpose: Indexed function `config_value` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:470-472]
-- `resolve_value` (function) component `resolve_value [function]` (`0e4a7332-e185-5fdc-bd4f-21dc20706b51`) lines 474-477 [crates/gcore/src/config/tests.rs:474-477]
+  - Purpose: Indexed function `config_value` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:626-628]
+- `resolve_value` (function) component `resolve_value [function]` (`42484ead-2278-5c3a-9398-f7f301d589a1`) lines 630-633 [crates/gcore/src/config/tests.rs:630-633]
   - Signature: `fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {`
-  - Purpose: Indexed function `resolve_value` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:474-477]
-- `resolve_config_handles_json_encoded_store_values` (function) component `resolve_config_handles_json_encoded_store_values [function]` (`848bda4f-bb6d-5432-8ac7-10f3f8e03b82`) lines 506-532 [crates/gcore/src/config/tests.rs:506-532]
+  - Purpose: Indexed function `resolve_value` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:630-633]
+- `resolve_config_handles_json_encoded_store_values` (function) component `resolve_config_handles_json_encoded_store_values [function]` (`2aa42f07-6a21-5dda-91f2-7be940d955e8`) lines 662-688 [crates/gcore/src/config/tests.rs:662-688]
   - Signature: `fn resolve_config_handles_json_encoded_store_values() {`
-  - Purpose: Indexed function `resolve_config_handles_json_encoded_store_values` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:506-532]
-- `qdrant_and_embedding_resolution_order` (function) component `qdrant_and_embedding_resolution_order [function]` (`d7f87632-88d9-5a9a-a113-20d1af6eb783`) lines 535-581 [crates/gcore/src/config/tests.rs:535-581]
+  - Purpose: Indexed function `resolve_config_handles_json_encoded_store_values` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:662-688]
+- `qdrant_and_embedding_resolution_order` (function) component `qdrant_and_embedding_resolution_order [function]` (`31f2745b-f769-5a30-8d6e-a6e29f2fa6c7`) lines 691-737 [crates/gcore/src/config/tests.rs:691-737]
   - Signature: `fn qdrant_and_embedding_resolution_order() {`
-  - Purpose: Indexed function `qdrant_and_embedding_resolution_order` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:535-581]
-- `indexing_config_defaults_to_respecting_gitignore` (function) component `indexing_config_defaults_to_respecting_gitignore [function]` (`b7708c71-803e-5394-bc95-7b1def78bb54`) lines 584-591 [crates/gcore/src/config/tests.rs:584-591]
+  - Purpose: Indexed function `qdrant_and_embedding_resolution_order` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:691-737]
+- `indexing_config_defaults_to_respecting_gitignore` (function) component `indexing_config_defaults_to_respecting_gitignore [function]` (`8f1eb36d-3c95-587f-90e8-2d8e6c2ab410`) lines 740-747 [crates/gcore/src/config/tests.rs:740-747]
   - Signature: `fn indexing_config_defaults_to_respecting_gitignore() {`
-  - Purpose: Indexed function `indexing_config_defaults_to_respecting_gitignore` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:584-591]
-- `indexing_config_resolves_standalone_yaml_values` (function) component `indexing_config_resolves_standalone_yaml_values [function]` (`b4fa9117-df84-5e31-925e-a44fe837d0f3`) lines 594-607 [crates/gcore/src/config/tests.rs:594-607]
+  - Purpose: Indexed function `indexing_config_defaults_to_respecting_gitignore` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:740-747]
+- `indexing_config_resolves_standalone_yaml_values` (function) component `indexing_config_resolves_standalone_yaml_values [function]` (`c9f5316a-8809-5c0f-9e4b-baf241ed10aa`) lines 750-763 [crates/gcore/src/config/tests.rs:750-763]
   - Signature: `fn indexing_config_resolves_standalone_yaml_values() {`
-  - Purpose: Indexed function `indexing_config_resolves_standalone_yaml_values` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:594-607]
-- `indexing_config_resolves_config_store_values_before_yaml` (function) component `indexing_config_resolves_config_store_values_before_yaml [function]` (`adfd41c4-b829-5e8e-b1ae-13d96ace768d`) lines 610-623 [crates/gcore/src/config/tests.rs:610-623]
+  - Purpose: Indexed function `indexing_config_resolves_standalone_yaml_values` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:750-763]
+- `indexing_config_resolves_config_store_values_before_yaml` (function) component `indexing_config_resolves_config_store_values_before_yaml [function]` (`c3c5851c-4b46-5530-8a35-bbc45e33713f`) lines 766-779 [crates/gcore/src/config/tests.rs:766-779]
   - Signature: `fn indexing_config_resolves_config_store_values_before_yaml() {`
-  - Purpose: Indexed function `indexing_config_resolves_config_store_values_before_yaml` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:610-623]
-- `indexing_config_rejects_invalid_boolean` (function) component `indexing_config_rejects_invalid_boolean [function]` (`942160b4-160b-5e44-9a64-d372d8cd3663`) lines 626-637 [crates/gcore/src/config/tests.rs:626-637]
-  - Signature: `fn indexing_config_rejects_invalid_boolean() {`
-  - Purpose: Indexed function `indexing_config_rejects_invalid_boolean` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:626-637]
-- `indexing_config_env_overrides_config_sources` (function) component `indexing_config_env_overrides_config_sources [function]` (`6eded8c3-d320-5ff4-b7db-4c2f3040a9dc`) lines 640-651 [crates/gcore/src/config/tests.rs:640-651]
+  - Purpose: Indexed function `indexing_config_resolves_config_store_values_before_yaml` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:766-779]
+- `indexing_config_invalid_boolean_warns_and_uses_default` (function) component `indexing_config_invalid_boolean_warns_and_uses_default [function]` (`be20d032-4775-5051-b22b-1247033beeef`) lines 783-799 [crates/gcore/src/config/tests.rs:783-799]
+  - Signature: `fn indexing_config_invalid_boolean_warns_and_uses_default() {`
+  - Purpose: Indexed function `indexing_config_invalid_boolean_warns_and_uses_default` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:783-799]
+- `indexing_config_env_overrides_config_sources` (function) component `indexing_config_env_overrides_config_sources [function]` (`04de7a50-e8bc-5e3c-b712-312bc022ec3a`) lines 802-813 [crates/gcore/src/config/tests.rs:802-813]
   - Signature: `fn indexing_config_env_overrides_config_sources() {`
-  - Purpose: Indexed function `indexing_config_env_overrides_config_sources` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:640-651]
-- `indexing_config_rejects_invalid_environment_boolean` (function) component `indexing_config_rejects_invalid_environment_boolean [function]` (`83122745-0c10-58cb-8338-2bb63103fcd6`) lines 654-666 [crates/gcore/src/config/tests.rs:654-666]
-  - Signature: `fn indexing_config_rejects_invalid_environment_boolean() {`
-  - Purpose: Indexed function `indexing_config_rejects_invalid_environment_boolean` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:654-666]
-- `invalid_embedding_timeout_uses_default` (function) component `invalid_embedding_timeout_uses_default [function]` (`009f0543-6f3d-53bd-b217-d516483d1c71`) lines 669-682 [crates/gcore/src/config/tests.rs:669-682]
+  - Purpose: Indexed function `indexing_config_env_overrides_config_sources` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:802-813]
+- `indexing_config_invalid_environment_boolean_warns_and_uses_default` (function) component `indexing_config_invalid_environment_boolean_warns_and_uses_default [function]` (`a109f996-3d4b-5146-8ec0-026e602791a1`) lines 817-834 [crates/gcore/src/config/tests.rs:817-834]
+  - Signature: `fn indexing_config_invalid_environment_boolean_warns_and_uses_default() {`
+  - Purpose: Indexed function `indexing_config_invalid_environment_boolean_warns_and_uses_default` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:817-834]
+- `invalid_embedding_timeout_uses_default` (function) component `invalid_embedding_timeout_uses_default [function]` (`476b7034-a9e5-559b-9d16-d8dba1d97ccd`) lines 837-850 [crates/gcore/src/config/tests.rs:837-850]
   - Signature: `fn invalid_embedding_timeout_uses_default() {`
-  - Purpose: Indexed function `invalid_embedding_timeout_uses_default` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:669-682]
-- `falkordb_config_has_no_domain_graph_name` (function) component `falkordb_config_has_no_domain_graph_name [function]` (`c9868cd1-9065-54b8-a401-a1ae1ab25657`) lines 685-694 [crates/gcore/src/config/tests.rs:685-694]
+  - Purpose: Indexed function `invalid_embedding_timeout_uses_default` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:837-850]
+- `falkordb_config_has_no_domain_graph_name` (function) component `falkordb_config_has_no_domain_graph_name [function]` (`28942051-9200-5839-b0db-36d179763cf5`) lines 853-862 [crates/gcore/src/config/tests.rs:853-862]
   - Signature: `fn falkordb_config_has_no_domain_graph_name() {`
-  - Purpose: Indexed function `falkordb_config_has_no_domain_graph_name` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:685-694]
-- `qdrant_config_has_no_domain_collection_prefix` (function) component `qdrant_config_has_no_domain_collection_prefix [function]` (`c6934c2f-d645-5322-b938-1a32c95a4c19`) lines 697-704 [crates/gcore/src/config/tests.rs:697-704]
+  - Purpose: Indexed function `falkordb_config_has_no_domain_graph_name` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:853-862]
+- `qdrant_config_has_no_domain_collection_prefix` (function) component `qdrant_config_has_no_domain_collection_prefix [function]` (`f5e1695d-a5a6-50c3-ab24-c15ba49dea36`) lines 865-872 [crates/gcore/src/config/tests.rs:865-872]
   - Signature: `fn qdrant_config_has_no_domain_collection_prefix() {`
-  - Purpose: Indexed function `qdrant_config_has_no_domain_collection_prefix` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:697-704]
-- `embedding_keys_centralized` (function) component `embedding_keys_centralized [function]` (`0ea3610b-cac0-5a01-a4a0-27cd9bdc1b88`) lines 707-720 [crates/gcore/src/config/tests.rs:707-720]
+  - Purpose: Indexed function `qdrant_config_has_no_domain_collection_prefix` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:865-872]
+- `embedding_keys_centralized` (function) component `embedding_keys_centralized [function]` (`a4a84557-884f-51a0-ad4a-36e290b0919c`) lines 875-888 [crates/gcore/src/config/tests.rs:875-888]
   - Signature: `fn embedding_keys_centralized() {`
-  - Purpose: Indexed function `embedding_keys_centralized` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:707-720]
-- `ci_guard_rejects_stray_literal` (function) component `ci_guard_rejects_stray_literal [function]` (`fc5b0bbb-6978-5404-841d-738615745688`) lines 723-737 [crates/gcore/src/config/tests.rs:723-737]
+  - Purpose: Indexed function `embedding_keys_centralized` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:875-888]
+- `ci_guard_rejects_stray_literal` (function) component `ci_guard_rejects_stray_literal [function]` (`da0bc2cc-9af4-508e-bca4-f4d20d072a24`) lines 891-905 [crates/gcore/src/config/tests.rs:891-905]
   - Signature: `fn ci_guard_rejects_stray_literal() {`
-  - Purpose: Indexed function `ci_guard_rejects_stray_literal` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:723-737]
-- `workspace_root` (function) component `workspace_root [function]` (`877c7430-b815-5bb2-974c-d977b7e21c34`) lines 739-745 [crates/gcore/src/config/tests.rs:739-745]
+  - Purpose: Indexed function `ci_guard_rejects_stray_literal` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:891-905]
+- `workspace_root` (function) component `workspace_root [function]` (`b573aca6-59d7-5961-a3c0-ceeba62bad2d`) lines 907-913 [crates/gcore/src/config/tests.rs:907-913]
   - Signature: `fn workspace_root() -> std::path::PathBuf {`
-  - Purpose: Indexed function `workspace_root` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:739-745]
-- `embedding_key_literal_offenders` (function) component `embedding_key_literal_offenders [function]` (`42dd7972-f22b-5f2a-a11a-66606aa1e7eb`) lines 747-751 [crates/gcore/src/config/tests.rs:747-751]
+  - Purpose: Indexed function `workspace_root` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:907-913]
+- `embedding_key_literal_offenders` (function) component `embedding_key_literal_offenders [function]` (`5b30a7db-885c-5d9e-9b40-d2499f57be1b`) lines 915-919 [crates/gcore/src/config/tests.rs:915-919]
   - Signature: `fn embedding_key_literal_offenders(root: &std::path::Path) -> Vec<std::path::PathBuf> {`
-  - Purpose: Indexed function `embedding_key_literal_offenders` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:747-751]
-- `visit_embedding_key_literal_sources` (function) component `visit_embedding_key_literal_sources [function]` (`1d217bb5-9ac2-56de-bcab-a264e783cd63`) lines 753-785 [crates/gcore/src/config/tests.rs:753-785]
+  - Purpose: Indexed function `embedding_key_literal_offenders` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:915-919]
+- `visit_embedding_key_literal_sources` (function) component `visit_embedding_key_literal_sources [function]` (`f118dfcd-e0a9-5405-b69e-56a3521a2a85`) lines 921-953 [crates/gcore/src/config/tests.rs:921-953]
   - Signature: `fn visit_embedding_key_literal_sources(`
-  - Purpose: Indexed function `visit_embedding_key_literal_sources` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:753-785]
-- `should_skip_embedding_key_scan_dir` (function) component `should_skip_embedding_key_scan_dir [function]` (`bd74d970-71d0-50ad-bf8d-8774f182ed4b`) lines 787-801 [crates/gcore/src/config/tests.rs:787-801]
+  - Purpose: Indexed function `visit_embedding_key_literal_sources` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:921-953]
+- `should_skip_embedding_key_scan_dir` (function) component `should_skip_embedding_key_scan_dir [function]` (`7102c073-7bed-5102-a2ee-76313ec1db35`) lines 955-969 [crates/gcore/src/config/tests.rs:955-969]
   - Signature: `fn should_skip_embedding_key_scan_dir(path: &std::path::Path) -> bool {`
-  - Purpose: Indexed function `should_skip_embedding_key_scan_dir` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:787-801]
-- `guarded_embedding_keys` (function) component `guarded_embedding_keys [function]` (`a3232009-02b4-52e7-adcb-72013005173c`) lines 803-816 [crates/gcore/src/config/tests.rs:803-816]
+  - Purpose: Indexed function `should_skip_embedding_key_scan_dir` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:955-969]
+- `guarded_embedding_keys` (function) component `guarded_embedding_keys [function]` (`2ba4c6c2-3e29-50d2-810e-6b9a7bc29798`) lines 971-984 [crates/gcore/src/config/tests.rs:971-984]
   - Signature: `fn guarded_embedding_keys() -> Vec<String> {`
-  - Purpose: Indexed function `guarded_embedding_keys` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:803-816]
-- `embedding_key_literal_allowed_path` (function) component `embedding_key_literal_allowed_path [function]` (`b4da3b77-7c97-51a8-83cd-2241a6be9a29`) lines 818-823 [crates/gcore/src/config/tests.rs:818-823]
+  - Purpose: Indexed function `guarded_embedding_keys` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:971-984]
+- `embedding_key_literal_allowed_path` (function) component `embedding_key_literal_allowed_path [function]` (`520e62d1-44c7-5820-94fd-e8322cfa1450`) lines 986-991 [crates/gcore/src/config/tests.rs:986-991]
   - Signature: `fn embedding_key_literal_allowed_path(path: &std::path::Path) -> bool {`
-  - Purpose: Indexed function `embedding_key_literal_allowed_path` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:818-823]
+  - Purpose: Indexed function `embedding_key_literal_allowed_path` in `crates/gcore/src/config/tests.rs`. [crates/gcore/src/config/tests.rs:986-991]
 

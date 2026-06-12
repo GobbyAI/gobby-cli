@@ -22,9 +22,7 @@ provenance:
   - 301-303
   - 307-309
   - 312-316
-  - 313-315
   - 319-326
-  - 320-325
   - 335-374
   - 377-387
   - 390-395
@@ -41,74 +39,55 @@ provenance:
   ranges:
   - 21-24
   - 26-33
-  - 27-32
   - 35-39
   - 41-44
   - 46-51
-  - '53'
-  - 55-65
-  - 56-64
-  - 67-69
-  - 71-77
-  - 72-76
-  - 79-89
-  - 80-88
-  - 92-97
-  - 100-102
-  - 104-108
-  - 105-107
-  - 110-123
-  - 111-122
-  - 125-128
-  - 130-145
-  - 131-133
-  - 135-144
-  - 147-184
-  - 148-183
-  - 187-190
-  - 193-196
-  - 198-263
-  - 265-276
-  - 278-300
-  - 302-307
-  - 309-346
-  - 348-361
-  - 363-383
-  - 385-391
-  - 398-426
-  - 429-451
-  - 454-472
-  - 475-488
-  - 491-511
-  - 513-518
-  - 520-525
+  - '54'
+  - 56-66
+  - 68-70
+  - 72-78
+  - 80-90
+  - 93-98
+  - 101-103
+  - 105-109
+  - 111-124
+  - 126-129
+  - 131-146
+  - 148-185
+  - 188-191
+  - 194-197
+  - 199-264
+  - 266-277
+  - 279-301
+  - 303-308
+  - 310-347
+  - 349-362
+  - 364-384
+  - 386-392
+  - 399-427
+  - 430-452
+  - 455-473
+  - 476-489
+  - 492-512
+  - 514-519
+  - 521-526
 - file: crates/gwiki/src/search/mod.rs
   ranges:
   - 14-18
   - 20-60
-  - 21-23
-  - 25-29
-  - 31-35
-  - 37-43
-  - 45-51
-  - 53-59
   - 63-67
   - 69-86
-  - 70-76
-  - 78-85
   - 89-92
   - 95-100
   - 103-108
   - 111-115
   - 118-131
   - 133-142
-  - 134-141
   - 144-149
   - 152-157
   - 160-163
   - 166-169
   - 171-180
-  - 172-179
   - '182'
   - 186-266
   - 268-285
@@ -122,7 +101,6 @@ provenance:
   - 477-483
   - '485'
   - 487-502
-  - 488-501
 - file: crates/gwiki/src/search/rrf.rs
   ranges:
   - 8-92
@@ -134,70 +112,53 @@ provenance:
   - 242-267
 - file: crates/gwiki/src/search/semantic.rs
   ranges:
-  - 20-24
-  - 27-30
-  - 32-37
-  - 39-56
-  - 46-55
-  - 59-63
-  - 65-72
-  - 74-164
-  - 166-171
-  - 173-175
-  - 177-183
-  - 185-205
-  - 207-212
-  - 215-227
-  - 235-246
-  - 251-253
-  - 256-262
-  - 257-261
-  - 265-269
-  - 266-268
-  - 272-307
-  - 273-289
-  - 291-306
-  - 310-368
-  - '372'
-  - 375-379
-  - 376-378
-  - 382-396
-  - 383-395
-  - 399-410
-  - 400-409
-  - 413-421
-  - '424'
-  - 426-435
-  - 427-434
-  - 437-441
-  - 443-456
-  - 458-502
-  - 504-506
-  - 508-513
-  - 515-523
-  - 525-554
-  - '557'
-  - 560-570
-  - 561-569
-  - 573-576
-  - 579-586
-  - 580-585
-  - 589-598
-  - 590-597
-  - 601-605
-  - 608-616
-  - 609-615
-  - 619-630
-  - 620-629
-  - '633'
-  - 636-644
-  - 637-643
-  - '647'
-  - 650-659
-  - 651-658
-  - 662-664
-  - 667-683
-  - 668-682
+  - 18-22
+  - 25-28
+  - 30-35
+  - 37-54
+  - 57-61
+  - 63-70
+  - 72-163
+  - 165-170
+  - 172-174
+  - 176-182
+  - 184-204
+  - 206-211
+  - 214-226
+  - 234-245
+  - 250-252
+  - 255-261
+  - 264-268
+  - 271-306
+  - 309-323
+  - '327'
+  - 330-334
+  - 337-351
+  - 354-365
+  - 368-376
+  - '379'
+  - 381-390
+  - 392-396
+  - 398-411
+  - 413-457
+  - 459-461
+  - 463-468
+  - 470-478
+  - 480-509
+  - '512'
+  - 515-525
+  - 528-531
+  - 534-541
+  - 544-553
+  - 556-560
+  - 563-571
+  - 574-585
+  - '588'
+  - 591-599
+  - '602'
+  - 605-614
+  - 617-619
+  - 622-638
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -209,77 +170,65 @@ Parent: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-The `gwiki::search` module implements hybrid wiki search that fuses three retrieval backends and reconciles their results into a unified, scope-aware response.
-
-Core types in `mod.rs` define the public contract: `SearchRequest`/`WikiSearchResponse`, `SearchScope` (global/project/topic with SQL filter generation), `SearchSource`, `SearchHitKind`, `WikiSearchResult` with provenance metadata, and `SearchError`. The top-level `search` function orchestrates the backends, tracks unavailable sources, and degrades gracefully when individual services fail.
-
-The three retrieval strategies:
-- **bm25.rs** — keyword/full-text search over a managed Postgres (ParadeDB) schema, with SQL builders, query sanitization, searchable-path predicates, row-to-result mapping, plus a `PostgresBm25Backend` and in-memory test backend.
-- **semantic.rs** — vector similarity search via query embedders (`OpenAiEmbeddingBackend`, daemon/direct variants) and a Qdrant vector backend, with scope-based collection routing and payload filtering, plus unavailable/fixed/recording/failing test doubles.
-- **graph_boost.rs** — link-neighborhood ranking that boosts outbound links and backlinks via Falkor/in-memory graph backends, resolving and normalizing link targets relative to a source page.
-
-`rrf.rs` performs Reciprocal Rank Fusion (`fuse_sources`) to merge ranked results across sources under a canonical page key while preserving per-source provenance. Each backend reports service degradation independently so partial failures surface once without aborting the overall search.
+The crates/gwiki/src/search module implements a robust, multi-strategy search system for wiki documentation. It integrates traditional keyword-based search via BM25 (supporting PostgreSQL and in-memory backends) with vector-based semantic search (leveraging OpenAI embeddings and Qdrant). Additionally, a graph-boosting subsystem ranks documents based on link neighborhood structures using FalkorDB or local memory. The module leverages Reciprocal Rank Fusion (RRF) to combine and prioritize results from these diverse search strategies into a single ranked list, complete with graceful degradation handling when individual backend services are unavailable.
 [crates/gwiki/src/search/bm25.rs:13-17]
 [crates/gwiki/src/search/graph_boost.rs:21-24]
 [crates/gwiki/src/search/mod.rs:14-18]
 [crates/gwiki/src/search/rrf.rs:8-92]
-[crates/gwiki/src/search/semantic.rs:20-24]
+[crates/gwiki/src/search/semantic.rs:18-22]
 
 ## Call Diagram
 
 ```mermaid
 sequenceDiagram
-    participant m_07327f8f_1ee3_5f82_b528_c0825ff9eda9 as graph_boost_hits &#91;function&#93;
+    participant m_06b9608d_606c_5193_82e7_12263f23d17a as embed_daemon_query &#91;function&#93;
     participant m_075bf38b_fb30_5918_b746_c1c9254303ba as merge_hit_metadata &#91;function&#93;
+    participant m_07a0094a_ab99_575b_b481_334a769e52a4 as graph_boost_hits_marks_graph_source &#91;function&#93;
     participant m_0ee61cb5_e8a7_5723_8af3_1e294804f954 as is_keyword_searchable_path &#91;function&#93;
     participant m_110023b3_89ee_5be2_925e_e4d64a6705cc as fusion_preserves_sources &#91;function&#93;
     participant m_1212e8d2_a999_5c37_a45d_c14fda12be1d as parse_hit_kind_rejects_unknown_backend_values &#91;function&#93;
-    participant m_16dcccf0_03cf_5683_99a9_eb827eb5b241 as embed_direct_queries &#91;function&#93;
-    participant m_1c7467e0_e1dc_5305_88b8_95350229127b as rank_link_neighborhood_boosts_outbound_and_backlinks &#91;function&#93;
-    participant m_1d8614e1_270e_5465_97ad_ebf2bcb5c3e6 as embed_daemon_query &#91;function&#93;
+    participant m_1e6f24e6_88ef_533b_a262_90c856e9b2ee as OpenAiEmbeddingBackend.embed_query &#91;method&#93;
     participant m_282251c4_626e_523d_81ef_94eb2b0819b7 as graph_linked_pages_enter_search_results &#91;function&#93;
-    participant m_30c42656_3e15_598c_870b_eaab68f28588 as normalize_path &#91;function&#93;
-    participant m_38001561_c03c_5ed3_b17a_1b424564adf5 as payload_matches_scope &#91;function&#93;
-    participant m_38f6d167_e3ad_5dc7_bc6c_aed414e42259 as resolve_graph_target &#91;function&#93;
+    participant m_2e663a3b_96f6_5002_abfb_da5c0995391b as FalkorGraphBoostBackend.search_graph_boost &#91;method&#93;
+    participant m_399bea63_f61b_5125_b349_6fbb15c7749e as rank_link_neighborhood &#91;function&#93;
+    participant m_3bfa7530_6717_5406_bda1_f02eb1504763 as payload_usize &#91;function&#93;
+    participant m_3e5c6516_7d7b_5dfd_9c57_ea322f818b50 as OpenAiEmbeddingBackend.embed_queries &#91;method&#93;
     participant m_3e92ee08_dacc_56f4_9457_858523ae97f7 as search_bm25 &#91;function&#93;
     participant m_419738fe_3b7e_5097_8f51_40685e008784 as combined_partial_search_reports_all_unavailable_sources_once &#91;function&#93;
-    participant m_42431d05_2d1e_5841_bf27_26de71369ce3 as degraded &#91;function&#93;
-    participant m_4948e0ad_1596_5012_9c69_7aabceec6ed0 as OpenAiEmbeddingBackend.embed_query &#91;method&#93;
     participant m_4eca450f_d42b_5051_b76f_64bbcfd6a47a as fuse_sources &#91;function&#93;
-    participant m_6c04c67b_f714_5f35_b2d6_0c14b30fa25d as semantic_unavailable_degrades &#91;function&#93;
-    participant m_6d3f0e17_61fd_5ec0_a022_a17967039563 as payload_string &#91;function&#93;
-    participant m_70031b06_b973_5c95_8021_203a877364f3 as UnavailableSemanticBackend.search_semantic &#91;method&#93;
-    participant m_7a24decb_e0e0_5178_8e26_b78685014932 as bm25_filters_to_keyword_searchable_results &#91;function&#93;
-    participant m_807b64c5_f8d2_5665_af55_c7b476f0acd6 as qdrant_degradation &#91;function&#93;
-    participant m_829c8eba_b3bd_5a63_9496_a7d951bead2a as memory_hit &#91;function&#93;
+    participant m_5497cb79_b2bb_5b5d_943a_0f9d4af8d67e as slug_target_map &#91;function&#93;
+    participant m_63421599_fd6c_5332_8274_76b5bfbbfeb6 as hit_to_result &#91;function&#93;
+    participant m_6790f5e3_3bd0_52ab_a222_0c1734c084a1 as MemoryGraphBoostBackend.search_graph_boost &#91;method&#93;
     participant m_89d7bf9d_1935_59c5_9c76_38222176f2c7 as parse_hit_kind &#91;function&#93;
-    participant m_8bb5fcfc_9bfd_5192_95f3_5408b87e8e9f as graph_result &#91;function&#93;
+    participant m_9d290002_e63f_51b2_8789_20e00e994aeb as OpenAiEmbeddingBackend.embed_query &#91;method&#93;
     participant m_ad0392d9_ba55_585f_b864_5a7b751f2a7f as memory_graph &#91;function&#93;
-    participant m_ae3b3e24_8cf2_533d_bd30_e5c12b0c8e4e as build_bm25_sql &#91;function&#93;
     participant m_b4816375_18b6_5a61_99a2_8fed1ec25de2 as search &#91;function&#93;
-    participant m_b74b6fbe_cf70_5109_a481_8fbd0fd6348a as rank_link_neighborhood &#91;function&#93;
-    participant m_d7947f91_c709_58f8_8413_3f7b0d707c00 as is_external_target &#91;function&#93;
+    participant m_bca4e613_b421_596c_a803_b72bcfbe2d58 as payload_string &#91;function&#93;
+    participant m_c3c15f84_b5cf_5302_a3df_fbab1d14abad as graph_degradation &#91;function&#93;
+    participant m_c5b8b0c9_5895_5b22_b50d_9380acf8430d as graph_boost_hits &#91;function&#93;
+    participant m_c73a05c9_11de_5f55_bbc8_2d839c17768c as embed_direct_queries &#91;function&#93;
+    participant m_dc80325d_a260_5da1_b7e6_fb3ea37368a9 as resolve_graph_target &#91;function&#93;
     participant m_e622f5b9_e60b_5d5c_8c70_6991229b985a as ranked_keys &#91;function&#93;
-    m_07327f8f_1ee3_5f82_b528_c0825ff9eda9->>m_8bb5fcfc_9bfd_5192_95f3_5408b87e8e9f: calls
+    m_07a0094a_ab99_575b_b481_334a769e52a4->>m_c5b8b0c9_5895_5b22_b50d_9380acf8430d: calls
     m_110023b3_89ee_5be2_925e_e4d64a6705cc->>m_4eca450f_d42b_5051_b76f_64bbcfd6a47a: calls
     m_1212e8d2_a999_5c37_a45d_c14fda12be1d->>m_89d7bf9d_1935_59c5_9c76_38222176f2c7: calls
-    m_1c7467e0_e1dc_5305_88b8_95350229127b->>m_b74b6fbe_cf70_5109_a481_8fbd0fd6348a: calls
+    m_1e6f24e6_88ef_533b_a262_90c856e9b2ee->>m_06b9608d_606c_5193_82e7_12263f23d17a: calls
     m_282251c4_626e_523d_81ef_94eb2b0819b7->>m_ad0392d9_ba55_585f_b864_5a7b751f2a7f: calls
     m_282251c4_626e_523d_81ef_94eb2b0819b7->>m_b4816375_18b6_5a61_99a2_8fed1ec25de2: calls
-    m_38001561_c03c_5ed3_b17a_1b424564adf5->>m_6d3f0e17_61fd_5ec0_a022_a17967039563: calls
-    m_38f6d167_e3ad_5dc7_bc6c_aed414e42259->>m_30c42656_3e15_598c_870b_eaab68f28588: calls
-    m_38f6d167_e3ad_5dc7_bc6c_aed414e42259->>m_d7947f91_c709_58f8_8413_3f7b0d707c00: calls
+    m_2e663a3b_96f6_5002_abfb_da5c0995391b->>m_399bea63_f61b_5125_b349_6fbb15c7749e: calls
+    m_2e663a3b_96f6_5002_abfb_da5c0995391b->>m_c3c15f84_b5cf_5302_a3df_fbab1d14abad: calls
+    m_2e663a3b_96f6_5002_abfb_da5c0995391b->>m_c5b8b0c9_5895_5b22_b50d_9380acf8430d: calls
+    m_399bea63_f61b_5125_b349_6fbb15c7749e->>m_5497cb79_b2bb_5b5d_943a_0f9d4af8d67e: calls
+    m_399bea63_f61b_5125_b349_6fbb15c7749e->>m_dc80325d_a260_5da1_b7e6_fb3ea37368a9: calls
+    m_3e5c6516_7d7b_5dfd_9c57_ea322f818b50->>m_9d290002_e63f_51b2_8789_20e00e994aeb: calls
+    m_3e5c6516_7d7b_5dfd_9c57_ea322f818b50->>m_c73a05c9_11de_5f55_bbc8_2d839c17768c: calls
     m_3e92ee08_dacc_56f4_9457_858523ae97f7->>m_0ee61cb5_e8a7_5723_8af3_1e294804f954: calls
     m_419738fe_3b7e_5097_8f51_40685e008784->>m_b4816375_18b6_5a61_99a2_8fed1ec25de2: calls
-    m_4948e0ad_1596_5012_9c69_7aabceec6ed0->>m_16dcccf0_03cf_5683_99a9_eb827eb5b241: calls
-    m_4948e0ad_1596_5012_9c69_7aabceec6ed0->>m_1d8614e1_270e_5465_97ad_ebf2bcb5c3e6: calls
     m_4eca450f_d42b_5051_b76f_64bbcfd6a47a->>m_075bf38b_fb30_5918_b746_c1c9254303ba: calls
     m_4eca450f_d42b_5051_b76f_64bbcfd6a47a->>m_e622f5b9_e60b_5d5c_8c70_6991229b985a: calls
-    m_6c04c67b_f714_5f35_b2d6_0c14b30fa25d->>m_b4816375_18b6_5a61_99a2_8fed1ec25de2: calls
-    m_70031b06_b973_5c95_8021_203a877364f3->>m_42431d05_2d1e_5841_bf27_26de71369ce3: calls
-    m_7a24decb_e0e0_5178_8e26_b78685014932->>m_829c8eba_b3bd_5a63_9496_a7d951bead2a: calls
-    m_7a24decb_e0e0_5178_8e26_b78685014932->>m_ae3b3e24_8cf2_533d_bd30_e5c12b0c8e4e: calls
-    m_807b64c5_f8d2_5665_af55_c7b476f0acd6->>m_42431d05_2d1e_5841_bf27_26de71369ce3: calls
+    m_63421599_fd6c_5332_8274_76b5bfbbfeb6->>m_3bfa7530_6717_5406_bda1_f02eb1504763: calls
+    m_63421599_fd6c_5332_8274_76b5bfbbfeb6->>m_bca4e613_b421_596c_a803_b72bcfbe2d58: calls
+    m_6790f5e3_3bd0_52ab_a222_0c1734c084a1->>m_c5b8b0c9_5895_5b22_b50d_9380acf8430d: calls
 ```
 
 ## Files
@@ -309,11 +258,11 @@ sequenceDiagram
 [crates/gwiki/src/search/rrf.rs:119-180]
 [crates/gwiki/src/search/rrf.rs:183-225]
 - [[code/files/crates/gwiki/src/search/semantic.rs|crates/gwiki/src/search/semantic.rs]] - `crates/gwiki/src/search/semantic.rs` exposes 64 indexed API symbols.
-[crates/gwiki/src/search/semantic.rs:20-24]
-[crates/gwiki/src/search/semantic.rs:27-30]
-[crates/gwiki/src/search/semantic.rs:32-37]
-[crates/gwiki/src/search/semantic.rs:39-56]
-[crates/gwiki/src/search/semantic.rs:46-55]
+[crates/gwiki/src/search/semantic.rs:18-22]
+[crates/gwiki/src/search/semantic.rs:25-28]
+[crates/gwiki/src/search/semantic.rs:30-35]
+[crates/gwiki/src/search/semantic.rs:37-54]
+[crates/gwiki/src/search/semantic.rs:44-53]
 
 ## Components
 
@@ -356,43 +305,43 @@ sequenceDiagram
 - `8f5be825-7c2b-53eb-b02a-82f0654d2051`
 - `3a59b0b5-bc0e-5cd9-9b25-309e57f45d4b`
 - `79b9f5cf-8ade-5662-b3ca-60dc0207e563`
-- `e66a2440-b384-554a-a3e9-5d0384f9e039`
-- `44067d65-c431-55f4-834f-bd49bb29ed4b`
-- `32b6a519-80ca-5300-8ffa-7b57b7ee0d81`
-- `226b1b7c-2fe3-5863-bd9b-8ab9aee735e8`
-- `330f31f8-165b-5eb1-817d-3ab643bca26d`
-- `dec7de72-0db3-5547-89bf-ef0046732d37`
-- `6cb7473e-7c6c-594e-8cb8-0d4c9be0351a`
-- `006e9539-6463-5936-81a4-052222237a3a`
-- `6685cc89-2c3c-5645-9ea9-21b64dde8a72`
-- `c30cbebe-2767-59da-bc02-51f5f21f27b1`
-- `7e4f282c-89f1-5843-827a-318ce46923d2`
-- `5bb7cd22-8580-50ef-9f8d-d229fdb65034`
-- `aa90d159-1da5-5b91-be74-96a480a785cc`
-- `bbca9a54-385f-5ed5-b262-a1728d6e1f5a`
-- `26713af0-5f85-5d8e-bf4b-168cad1d36f0`
-- `4bd06c19-1dba-548c-bd16-d39a628681d7`
-- `3074e6a4-a582-5333-bf1d-5ddb443df364`
-- `c94f4149-23c3-5480-b613-ab216a5881c0`
-- `f6dda4c4-ba57-5cf4-aa15-27ef500996b9`
-- `cfe875d6-69be-5cc0-bbe5-f93566f20c85`
-- `2e3e4a4c-9ece-5a0a-ad49-8a300112da87`
-- `54b6cb11-c78c-5de5-9c2e-3ae920c1bd42`
-- `b74b6fbe-cf70-5109-a481-8fbd0fd6348a`
-- `07327f8f-1ee3-5f82-b528-c0825ff9eda9`
-- `8bb5fcfc-9bfd-5192-95f3-5408b87e8e9f`
-- `b57e7bb4-5b8a-570a-8708-6b1c71e52d1e`
-- `38f6d167-e3ad-5dc7-bc6c-aed414e42259`
-- `30c42656-3e15-598c-870b-eaab68f28588`
-- `03f40a7f-98c6-53fe-b0ee-5f89ab47e68d`
-- `d7947f91-c709-58f8-8413-3f7b0d707c00`
-- `1c7467e0-e1dc-5305-88b8-95350229127b`
-- `bc77a448-779e-577b-97e5-7933920336ea`
-- `d5e975cf-f240-54ab-bf58-a5c27a8bffa9`
-- `e673cda7-f20f-5753-81da-d305bc0fc023`
-- `e32fd87d-d63e-5855-9b99-57930c56b006`
-- `10606c7d-551a-5ce5-b5b5-ebaad55c4ac6`
-- `34862526-6253-5dfc-804b-2d97ed43d494`
+- `fdcf7e67-3ae8-5cd0-bbf5-cbf0b414835b`
+- `10a25239-1459-5946-89f1-9e0a51be5313`
+- `f32690f3-5a50-56d2-ba9a-9cbcfdecf2fe`
+- `40dcc694-d455-5d95-878f-28874a4b72f6`
+- `85b9c1ad-d53f-5860-b15d-eaa2f692e7b0`
+- `add1c616-c757-52e5-a5c1-55ee56ebaa9f`
+- `bc4ba5f4-1b2f-5625-9238-9c17078bff8f`
+- `0a53f15f-1efa-59fd-86e8-dbf219fb2520`
+- `70163a3f-43fe-5629-80aa-8c5df7226a57`
+- `1d246388-9a09-55e8-ac0a-d925bebd6cab`
+- `3f9bc16a-2c00-5675-9203-3f7e80cfb5d2`
+- `8c18633a-8ea1-5131-8d52-c333b9b42f3b`
+- `0bbd103a-f087-5b8b-b5fd-74d1be8652bc`
+- `6790f5e3-3bd0-52ab-a222-0c1734c084a1`
+- `712ab77e-617b-5fd8-9c07-592dc9d51642`
+- `d4cfaa9b-2244-5fa3-a8d4-556ad1602614`
+- `7cc7999d-089c-5f8c-937b-9857da600394`
+- `0bd13d2e-41a2-591a-a482-6b576bc6976b`
+- `1b495188-16e0-5626-9fe5-790990586a6c`
+- `2e663a3b-96f6-5002-abfb-da5c0995391b`
+- `fde38213-4994-52f6-af90-c7927cdbbb4d`
+- `2d5784f3-b5af-54db-9564-f1dfb698531a`
+- `399bea63-f61b-5125-b349-6fbb15c7749e`
+- `c5b8b0c9-5895-5b22-b50d-9380acf8430d`
+- `252c20c0-2879-5e9a-ace9-2c20b779f1bb`
+- `c3c15f84-b5cf-5302-a3df-fbab1d14abad`
+- `dc80325d-a260-5da1-b7e6-fb3ea37368a9`
+- `78122284-8a95-5c83-a110-878250ca0676`
+- `5497cb79-b2bb-5b5d-943a-0f9d4af8d67e`
+- `2a76763b-11aa-53db-a2c2-91355e88c41b`
+- `919d4929-726e-54d4-bfff-6d45ae422378`
+- `b5d596ff-a374-5d33-bbfd-6cc4cc9efee2`
+- `d6ed0fc2-a13e-5a0d-9cc3-57070804098c`
+- `07a0094a-ab99-575b-b481-334a769e52a4`
+- `5819796a-5e77-539e-9acd-1fbefbc7e2ec`
+- `17385d68-e8e9-5c02-94c9-eed3651bf547`
+- `276cff58-94f4-5748-bee9-4deb1a269a57`
 - `a63cb94e-d63c-58fd-af84-544dcd0bd720`
 - `9c0a1c25-8b03-5683-b905-c46d1f99bc1a`
 - `b27ef063-c0ad-59d0-9e50-be86046d0b3c`
@@ -439,68 +388,68 @@ sequenceDiagram
 - `dbf76817-ee41-55ac-a8cb-9ed7bb0c1559`
 - `92abeb5a-b0ae-58e1-8850-acb5b03c331a`
 - `c7c9774d-0fd0-51de-93df-b76b8da72b79`
-- `fcd76c39-3e6f-58e5-83c9-8d6b44c89c4a`
-- `2162460d-2f39-5999-8395-7c3cea127ad1`
-- `ad8ffe89-6885-5f12-92c6-0700415749a1`
-- `3d354977-ddb3-524a-8d05-d697067a14b9`
-- `c9d4c932-902e-5088-9292-6fc4c7d5c6eb`
-- `b8d67927-68ec-5754-bbc0-6c250714074c`
-- `3e5f3253-3b32-5395-b159-5f2631d400ef`
-- `b2338da4-812d-5c44-a95b-8c4b0c1ce91e`
-- `8ef0745f-f266-5417-8d85-8d6f9f901e36`
-- `c797ac97-4466-5653-a4cb-e5b6f419b10d`
-- `30c38949-5211-5fea-a8da-0dfd6842083a`
-- `221b8991-7faa-5066-9a86-8cc5d98c62ad`
-- `e9915e90-958b-549b-91b8-26249159abb9`
-- `31a348da-0d89-5063-8ddd-27cfbe395da4`
-- `5bdc32c0-dd91-5e4f-a91d-9b85584fd3ea`
-- `36a6b340-2a5a-5d08-98a1-3a75cedf4423`
-- `6fa67f84-c282-5ac2-b62b-c95b8984b8ee`
-- `1b21a71f-fe74-5eda-8bff-bb88ad5abebd`
-- `42b8e2e5-293d-5e30-84af-abc26c784d81`
-- `812b500a-95f1-5bca-aacc-99f060ea9e98`
-- `5e4f1d91-cdfa-5b68-8313-5612fa5bc3a0`
-- `4948e0ad-1596-5012-9c69-7aabceec6ed0`
-- `a8ff22c7-01d8-5735-b903-10537b7da193`
-- `16dcccf0-03cf-5683-99a9-eb827eb5b241`
-- `597f5328-6579-50f5-a980-1993d7fa5249`
-- `677c311a-d7d0-575c-a43d-f420b347fd7a`
-- `0607d207-4c71-5d2d-912e-1ac24ef085f2`
-- `be7bbf3c-9d52-5e6e-a8e4-7e22b92fb306`
-- `ad54fcff-e0bd-500b-bcca-ed34c0313959`
-- `d98d94aa-6803-5b0a-ab72-15c39cf3edf7`
-- `9f8a06b3-04f2-57e6-9ccc-c9d0c42ef4d9`
-- `1d8614e1-270e-5465-97ad-ebf2bcb5c3e6`
-- `efc70a08-3938-53b2-bc31-f7b96b4084e5`
-- `7ca7b586-4d5d-57d6-bb94-0361227a2803`
-- `22282fff-df93-56ba-af50-5662e330fbed`
-- `9d68ab2d-0567-5000-94e9-231fea4b9fe9`
-- `38001561-c03c-5ed3-b17a-1b424564adf5`
-- `eacd4c35-2f28-57b7-85c2-c5854c228ea3`
-- `6d3f0e17-61fd-5ec0-a022-a17967039563`
-- `8de03126-5079-5c3e-aa52-c7aa8dd30d0e`
-- `42431d05-2d1e-5841-bf27-26de71369ce3`
-- `807b64c5-f8d2-5665-af55-c7b476f0acd6`
-- `f9b8abfd-f29d-5b66-aa0c-251fd40a41dc`
-- `2846b98b-ec23-5ed9-b905-56af160669b6`
-- `70031b06-b973-5c95-8021-203a877364f3`
-- `b6dc7f47-5f93-566d-976c-862d9a198bbe`
-- `7ed8c002-cce2-5d21-a650-a57a9eb77226`
-- `1091ef9f-f711-5cb1-8acc-95a60271d94d`
-- `604c3ca8-7095-5184-b081-b661a6c39f83`
-- `67f8cbe3-10fc-5114-8f21-384271dd989f`
-- `82b1bcfc-dc85-5528-9d29-e846ffcb2480`
-- `3d83ec20-4eb5-5ec3-ab75-9fae6ec1e6af`
-- `649a3ba8-28cd-5341-9dce-6d3403f57c32`
-- `875ec055-c99f-54ca-b60a-77f23fcf13a7`
-- `66322308-54b7-5504-b147-615ee833035a`
-- `acbd9a29-e9fa-582c-8dcc-3d4e5cb285dc`
-- `e3591953-48ed-5dc6-b50b-8f3586f9ba89`
-- `85ae84ae-d297-5e68-b00b-75cb1054311f`
-- `7d4f61bc-3e5b-5973-bd6e-183387a4a48f`
-- `f727a0f7-9a80-5b11-815b-9b965bba059d`
-- `2a04f31d-0afc-5289-a748-07fa3fe6ae45`
-- `d034811c-113b-5ea2-b952-453dace8f3e6`
-- `83c99450-b698-5fc2-a9f9-0f2334c92ce4`
-- `bd7a6fd5-c7ab-5e2a-abda-5c94032147e0`
+- `d6edffdf-1297-5822-aae4-00a043fe8092`
+- `95ea6dda-0ac2-5969-8bce-57f6cf74dfa1`
+- `964f66d5-41d8-50a4-abe7-7e7cd382834e`
+- `aa0b0e5d-7e99-5107-9a5c-8cd065d8c67a`
+- `40da33c3-a2c0-517a-8b45-6baf6e17108e`
+- `ed766e3a-dee2-5c09-ae98-11b3cb1edb6c`
+- `77087767-c390-5ad9-8503-6415578f32aa`
+- `a15a29e6-9caf-5477-aca8-2159fa3bcd6c`
+- `e7e52f31-36dd-5f38-9fb3-4d877021128c`
+- `a80fcd6d-1997-54e8-bdda-b73358d8aae6`
+- `9b627ece-45a5-5290-90bb-f7c37255bba5`
+- `550c2c0b-2c44-513a-9092-6f7362d7091f`
+- `bd5626de-b898-5a11-b600-fecd2f33ef81`
+- `576d5cb0-9daa-517e-9bb5-63bef7cb4578`
+- `1bf478cc-b39f-5e99-995d-0ca75a1058d4`
+- `e1789e22-b2b0-500f-be70-197f0899b7cf`
+- `5bcebb6d-2258-560e-ab0f-6060664c7b9f`
+- `ece5a9f4-aa45-5237-86c8-87565ae31085`
+- `bffb1e91-65cc-5832-8342-93d894caa83e`
+- `2ab99996-d154-5f0a-905b-fcb5d2f9c62f`
+- `899e654c-7111-5016-8f48-7f8ad9698154`
+- `9d290002-e63f-51b2-8789-20e00e994aeb`
+- `3e5c6516-7d7b-5dfd-9c57-ea322f818b50`
+- `c73a05c9-11de-5f55-bbc8-2d839c17768c`
+- `b8dcdbdb-8eb6-5ec9-9ba7-bca1397c09fd`
+- `930b3c2f-fe61-50c7-8917-1b7131f6983c`
+- `4ac5fdda-2aa1-5559-8d05-dc3548bc63a1`
+- `1c0612c9-5641-553d-aafb-3f389b2e7329`
+- `1e6f24e6-88ef-533b-a262-90c856e9b2ee`
+- `f5926178-0040-56d9-a2fc-5c6784a15d72`
+- `6c12087d-e424-5a18-8c0c-2a1475e4e1a9`
+- `06b9608d-606c-5193-82e7-12263f23d17a`
+- `6570a6e4-6307-5af9-822e-3aafe8d5f53b`
+- `128319ef-f904-58e5-aa0f-2fdcc2e2767c`
+- `18be91b5-215c-57a8-a113-35143841770d`
+- `f7624e02-1bb3-50f0-af68-0d43e3cfc449`
+- `aafb800f-8717-594b-8248-becc9d6069af`
+- `63421599-fd6c-5332-8274-76b5bfbbfeb6`
+- `bca4e613-b421-596c-a803-b72bcfbe2d58`
+- `3bfa7530-6717-5406-bda1-f02eb1504763`
+- `81c916dd-6f47-5fa9-9ee6-d7984c403816`
+- `c3aadf88-0434-5ffe-91d1-6ec63067862f`
+- `ae502464-896d-59c6-ba4b-899972bb3249`
+- `6f2b91ca-05d5-587f-b87f-c7dd711f3e2b`
+- `d458326e-45fb-5c26-a721-378426725213`
+- `229359d9-b506-5b8f-8eab-e4689ccede18`
+- `cadc6bd5-c4a8-5e82-9f8f-2cae776e696c`
+- `e6979e46-22b9-56c8-bbaf-c1d887c0163c`
+- `21f4bbce-508b-5ae0-87f4-706f60a71387`
+- `6fd06202-1b73-5177-a670-361ded1747ce`
+- `563ea9bc-0313-5891-8548-976d54b55d6e`
+- `86e3218d-f18d-556a-910c-4893dd5f90f9`
+- `3a4d69a7-62d6-5a13-b911-68f919b80ac1`
+- `67f62072-3a2a-59f8-aa39-80b5e48ddec2`
+- `88d6660e-06a2-51a6-b984-6f95637a1eca`
+- `cd81caa4-39cf-5b20-83e2-4004551759fa`
+- `543f4619-deb6-565e-9dcd-36016fd1b751`
+- `381d678b-9362-5b15-8e55-4b5c283bcb02`
+- `dd201376-fadd-5fb9-94d2-b346649d3920`
+- `33c51ed1-d1e7-5928-b0ff-96b5acb58770`
+- `06c4c211-94cd-507d-bbe5-2988a585c0a6`
+- `9ae3231d-caad-585e-b9dd-7c91e4b62516`
+- `8676c06b-70ed-59ae-a490-bf0a11d7e87a`
+- `955afd6f-48c6-5a3c-8f9c-8e2985d66b7b`
 

@@ -13,7 +13,7 @@ Parent: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Overview
 
-This module contains insta snapshot files for the `commands::index` test suite. The snapshots capture expected output for index command tests, including index outcomes, handling of unsupported file types, and sync projection payloads (both structured and text formats). These files contain test fixture data only and expose no API symbols.
+This module contains Insta snapshot files used for validating the outcomes, file support, and projection behavior of the index and sync commands during testing.
 
 ## Files
 

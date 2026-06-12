@@ -4,15 +4,15 @@ type: code_file
 provenance:
 - file: crates/gwiki/src/ingest/pdf/text.rs
   ranges:
-  - 3-24
-  - 31-35
-  - 38-48
-  - 51-53
-  - 56-58
-  - 61-63
-  - 66-68
-  - 71-73
-  - 76-81
+  - 4-25
+  - 32-36
+  - 39-49
+  - 52-54
+  - 57-59
+  - 62-64
+  - 67-69
+  - 72-74
+  - 77-82
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -25,39 +25,39 @@ Module: [[code/modules/crates/gwiki/src/ingest/pdf|crates/gwiki/src/ingest/pdf]]
 ## Purpose
 
 `crates/gwiki/src/ingest/pdf/text.rs` exposes 9 indexed API symbols.
-[crates/gwiki/src/ingest/pdf/text.rs:3-24]
-[crates/gwiki/src/ingest/pdf/text.rs:31-35]
-[crates/gwiki/src/ingest/pdf/text.rs:38-48]
-[crates/gwiki/src/ingest/pdf/text.rs:51-53]
-[crates/gwiki/src/ingest/pdf/text.rs:56-58]
+[crates/gwiki/src/ingest/pdf/text.rs:4-25]
+[crates/gwiki/src/ingest/pdf/text.rs:32-36]
+[crates/gwiki/src/ingest/pdf/text.rs:39-49]
+[crates/gwiki/src/ingest/pdf/text.rs:52-54]
+[crates/gwiki/src/ingest/pdf/text.rs:57-59]
 
 ## API Symbols
 
-- `normalize_page_text` (function) component `normalize_page_text [function]` (`1f09a796-9445-5d76-8d68-016e82246539`) lines 3-24 [crates/gwiki/src/ingest/pdf/text.rs:3-24]
+- `normalize_page_text` (function) component `normalize_page_text [function]` (`4c7760f4-07a6-539a-a8d4-c84163b931ee`) lines 4-25 [crates/gwiki/src/ingest/pdf/text.rs:4-25]
   - Signature: `pub(crate) fn normalize_page_text(text: &str) -> String {`
-  - Purpose: Indexed function `normalize_page_text` in `crates/gwiki/src/ingest/pdf/text.rs`. [crates/gwiki/src/ingest/pdf/text.rs:3-24]
-- `normalize_page_text_preserves_paragraph_breaks` (function) component `normalize_page_text_preserves_paragraph_breaks [function]` (`4454cd3e-6383-5f56-8b1a-450dd5a9ce80`) lines 31-35 [crates/gwiki/src/ingest/pdf/text.rs:31-35]
+  - Purpose: Indexed function `normalize_page_text` in `crates/gwiki/src/ingest/pdf/text.rs`. [crates/gwiki/src/ingest/pdf/text.rs:4-25]
+- `normalize_page_text_preserves_paragraph_breaks` (function) component `normalize_page_text_preserves_paragraph_breaks [function]` (`41bdf075-e195-5fd6-ab33-a7552152d06a`) lines 32-36 [crates/gwiki/src/ingest/pdf/text.rs:32-36]
   - Signature: `fn normalize_page_text_preserves_paragraph_breaks() {`
-  - Purpose: Indexed function `normalize_page_text_preserves_paragraph_breaks` in `crates/gwiki/src/ingest/pdf/text.rs`. [crates/gwiki/src/ingest/pdf/text.rs:31-35]
-- `normalize_page_text_handles_whitespace_edges` (function) component `normalize_page_text_handles_whitespace_edges [function]` (`ec9b1991-f190-5f10-8a8a-444fbd050b36`) lines 38-48 [crates/gwiki/src/ingest/pdf/text.rs:38-48]
+  - Purpose: Indexed function `normalize_page_text_preserves_paragraph_breaks` in `crates/gwiki/src/ingest/pdf/text.rs`. [crates/gwiki/src/ingest/pdf/text.rs:32-36]
+- `normalize_page_text_handles_whitespace_edges` (function) component `normalize_page_text_handles_whitespace_edges [function]` (`ce04a893-c469-5583-8a35-fbd456b30c8a`) lines 39-49 [crates/gwiki/src/ingest/pdf/text.rs:39-49]
   - Signature: `fn normalize_page_text_handles_whitespace_edges() {`
-  - Purpose: Indexed function `normalize_page_text_handles_whitespace_edges` in `crates/gwiki/src/ingest/pdf/text.rs`. [crates/gwiki/src/ingest/pdf/text.rs:38-48]
-- `normalize_page_text_multiple_blank_lines` (function) component `normalize_page_text_multiple_blank_lines [function]` (`fe1fd048-98cd-5be9-baf5-650d48981875`) lines 51-53 [crates/gwiki/src/ingest/pdf/text.rs:51-53]
+  - Purpose: Indexed function `normalize_page_text_handles_whitespace_edges` in `crates/gwiki/src/ingest/pdf/text.rs`. [crates/gwiki/src/ingest/pdf/text.rs:39-49]
+- `normalize_page_text_multiple_blank_lines` (function) component `normalize_page_text_multiple_blank_lines [function]` (`78c8c579-da08-566d-a140-56b096072a6a`) lines 52-54 [crates/gwiki/src/ingest/pdf/text.rs:52-54]
   - Signature: `fn normalize_page_text_multiple_blank_lines() {`
-  - Purpose: Indexed function `normalize_page_text_multiple_blank_lines` in `crates/gwiki/src/ingest/pdf/text.rs`. [crates/gwiki/src/ingest/pdf/text.rs:51-53]
-- `normalize_page_text_trailing_blank_lines` (function) component `normalize_page_text_trailing_blank_lines [function]` (`d4a1110c-ba8c-5c74-9764-624ba549c306`) lines 56-58 [crates/gwiki/src/ingest/pdf/text.rs:56-58]
+  - Purpose: Indexed function `normalize_page_text_multiple_blank_lines` in `crates/gwiki/src/ingest/pdf/text.rs`. [crates/gwiki/src/ingest/pdf/text.rs:52-54]
+- `normalize_page_text_trailing_blank_lines` (function) component `normalize_page_text_trailing_blank_lines [function]` (`cec6e7cb-44d8-527c-ab1c-f6f346ccd518`) lines 57-59 [crates/gwiki/src/ingest/pdf/text.rs:57-59]
   - Signature: `fn normalize_page_text_trailing_blank_lines() {`
-  - Purpose: Indexed function `normalize_page_text_trailing_blank_lines` in `crates/gwiki/src/ingest/pdf/text.rs`. [crates/gwiki/src/ingest/pdf/text.rs:56-58]
-- `normalize_page_text_whitespace_only_lines` (function) component `normalize_page_text_whitespace_only_lines [function]` (`a2b6b035-554c-5751-a34f-967dd243174a`) lines 61-63 [crates/gwiki/src/ingest/pdf/text.rs:61-63]
+  - Purpose: Indexed function `normalize_page_text_trailing_blank_lines` in `crates/gwiki/src/ingest/pdf/text.rs`. [crates/gwiki/src/ingest/pdf/text.rs:57-59]
+- `normalize_page_text_whitespace_only_lines` (function) component `normalize_page_text_whitespace_only_lines [function]` (`580faa00-90fb-5bed-a4a7-2a41b7b9b9f3`) lines 62-64 [crates/gwiki/src/ingest/pdf/text.rs:62-64]
   - Signature: `fn normalize_page_text_whitespace_only_lines() {`
-  - Purpose: Indexed function `normalize_page_text_whitespace_only_lines` in `crates/gwiki/src/ingest/pdf/text.rs`. [crates/gwiki/src/ingest/pdf/text.rs:61-63]
-- `normalize_page_text_empty_input` (function) component `normalize_page_text_empty_input [function]` (`bc6d41fe-1c30-5a70-8479-1ba2acdbd553`) lines 66-68 [crates/gwiki/src/ingest/pdf/text.rs:66-68]
+  - Purpose: Indexed function `normalize_page_text_whitespace_only_lines` in `crates/gwiki/src/ingest/pdf/text.rs`. [crates/gwiki/src/ingest/pdf/text.rs:62-64]
+- `normalize_page_text_empty_input` (function) component `normalize_page_text_empty_input [function]` (`ae9d61ab-19d6-5116-a47e-126ab81e7268`) lines 67-69 [crates/gwiki/src/ingest/pdf/text.rs:67-69]
   - Signature: `fn normalize_page_text_empty_input() {`
-  - Purpose: Indexed function `normalize_page_text_empty_input` in `crates/gwiki/src/ingest/pdf/text.rs`. [crates/gwiki/src/ingest/pdf/text.rs:66-68]
-- `normalize_page_text_single_line` (function) component `normalize_page_text_single_line [function]` (`5749f63c-518e-5c46-b1ee-a57a54b66f9c`) lines 71-73 [crates/gwiki/src/ingest/pdf/text.rs:71-73]
+  - Purpose: Indexed function `normalize_page_text_empty_input` in `crates/gwiki/src/ingest/pdf/text.rs`. [crates/gwiki/src/ingest/pdf/text.rs:67-69]
+- `normalize_page_text_single_line` (function) component `normalize_page_text_single_line [function]` (`cf4b7879-61e4-58a7-a115-4565247d9046`) lines 72-74 [crates/gwiki/src/ingest/pdf/text.rs:72-74]
   - Signature: `fn normalize_page_text_single_line() {`
-  - Purpose: Indexed function `normalize_page_text_single_line` in `crates/gwiki/src/ingest/pdf/text.rs`. [crates/gwiki/src/ingest/pdf/text.rs:71-73]
-- `normalize_page_text_no_blank_lines` (function) component `normalize_page_text_no_blank_lines [function]` (`41bf171b-cf2e-584a-8cc1-6cdc4e916918`) lines 76-81 [crates/gwiki/src/ingest/pdf/text.rs:76-81]
+  - Purpose: Indexed function `normalize_page_text_single_line` in `crates/gwiki/src/ingest/pdf/text.rs`. [crates/gwiki/src/ingest/pdf/text.rs:72-74]
+- `normalize_page_text_no_blank_lines` (function) component `normalize_page_text_no_blank_lines [function]` (`42d5bcb1-e10e-570f-bfa9-b0010ac3cad9`) lines 77-82 [crates/gwiki/src/ingest/pdf/text.rs:77-82]
   - Signature: `fn normalize_page_text_no_blank_lines() {`
-  - Purpose: Indexed function `normalize_page_text_no_blank_lines` in `crates/gwiki/src/ingest/pdf/text.rs`. [crates/gwiki/src/ingest/pdf/text.rs:76-81]
+  - Purpose: Indexed function `normalize_page_text_no_blank_lines` in `crates/gwiki/src/ingest/pdf/text.rs`. [crates/gwiki/src/ingest/pdf/text.rs:77-82]
 

@@ -13,7 +13,7 @@ Parent: [[code/modules/docs|docs]]
 
 ## Overview
 
-Documentation module defining interface contracts for the project's tooling. Contains specifications for the gcode and gwiki command-line interfaces, gwiki research workflows, and a shared graph schema. These are prose/reference documents with no indexed API symbols.
+This module defines the canonical integration contracts, boundary specifications, and execution interfaces for Gobby and its companion tools. It outlines the CLI boundaries and operational responsibilities for the gcode and gwiki command-line interfaces, governs how research/audit tasks and daemon-routed model calls are handled, and documents the shared graph schemas used to represent structured data across the system.
 
 ## Files
 

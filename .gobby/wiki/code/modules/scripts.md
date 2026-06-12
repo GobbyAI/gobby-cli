@@ -13,7 +13,7 @@ Parent: [[code/repo|Repository Overview]]
 
 ## Overview
 
-The scripts module contains shell utilities for the project, currently consisting of a single verification script (`verify.sh`) with no indexed API symbols or components.
+The scripts module contains utility and shell scripts, such as verify.sh, used for project verification and validation.
 
 ## Files
 

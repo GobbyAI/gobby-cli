@@ -4,61 +4,56 @@ type: code_file
 provenance:
 - file: crates/gcode/src/index/walker.rs
   ranges:
-  - 36-39
-  - 42-44
-  - 46-52
-  - 47-51
-  - 56-61
-  - 63-108
-  - 111-135
-  - 139-149
-  - 152-161
-  - 164-176
-  - 178-196
-  - 198-214
-  - 216-220
-  - 223-225
-  - 227-274
-  - 228-235
-  - 237-245
-  - 247-263
-  - 265-273
-  - 276-290
-  - 292-304
-  - 306-312
-  - 314-317
-  - 319-327
-  - 329-359
-  - 361-386
-  - 388-396
-  - 398-423
-  - 425-445
-  - 447-452
-  - 454-464
-  - 466-472
-  - 474-499
-  - 505-511
-  - 513-525
-  - 528-567
-  - 570-591
-  - 594-605
-  - 608-618
-  - 621-630
-  - 633-653
-  - 656-675
-  - 678-699
-  - 702-717
-  - 720-753
-  - 756-778
-  - 781-792
-  - 795-813
-  - 816-830
-  - 833-846
-  - 849-862
-  - 865-878
-  - 881-895
-  - 898-908
-  - 911-918
+  - 35-38
+  - 41-43
+  - 45-51
+  - 55-60
+  - 62-107
+  - 110-134
+  - 138-148
+  - 151-160
+  - 163-175
+  - 177-195
+  - 197-213
+  - 215-219
+  - 222-224
+  - 226-273
+  - 275-289
+  - 291-303
+  - 305-311
+  - 313-316
+  - 318-326
+  - 328-358
+  - 360-385
+  - 387-395
+  - 397-422
+  - 424-444
+  - 446-451
+  - 453-463
+  - 465-471
+  - 473-498
+  - 504-510
+  - 512-524
+  - 527-566
+  - 569-590
+  - 593-604
+  - 607-617
+  - 620-629
+  - 632-652
+  - 655-674
+  - 677-698
+  - 701-716
+  - 719-752
+  - 755-777
+  - 780-791
+  - 794-812
+  - 815-829
+  - 832-845
+  - 848-861
+  - 864-877
+  - 880-894
+  - 897-907
+  - 910-917
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -71,179 +66,177 @@ Module: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 ## Purpose
 
 `crates/gcode/src/index/walker.rs` exposes 55 indexed API symbols.
-[crates/gcode/src/index/walker.rs:36-39]
-[crates/gcode/src/index/walker.rs:42-44]
-[crates/gcode/src/index/walker.rs:46-52]
-[crates/gcode/src/index/walker.rs:47-51]
-[crates/gcode/src/index/walker.rs:56-61]
+[crates/gcode/src/index/walker.rs:35-38]
+[crates/gcode/src/index/walker.rs:41-43]
+[crates/gcode/src/index/walker.rs:45-51]
+[crates/gcode/src/index/walker.rs:46-50]
+[crates/gcode/src/index/walker.rs:55-60]
 
 ## API Symbols
 
-- `FileClassification` (type) component `FileClassification [type]` (`b25813a1-8fbf-5784-81e4-2c07bb58f697`) lines 36-39 [crates/gcode/src/index/walker.rs:36-39]
+- `FileClassification` (type) component `FileClassification [type]` (`69cfe4a5-80d2-57f4-aa68-395d80cebfd4`) lines 35-38 [crates/gcode/src/index/walker.rs:35-38]
   - Signature: `pub enum FileClassification {`
-  - Purpose: Indexed type `FileClassification` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:36-39]
-- `DiscoveryOptions` (class) component `DiscoveryOptions [class]` (`7e8d19bd-8f08-5a8d-b354-4cabed849962`) lines 42-44 [crates/gcode/src/index/walker.rs:42-44]
+  - Purpose: Indexed type `FileClassification` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:35-38]
+- `DiscoveryOptions` (class) component `DiscoveryOptions [class]` (`4748de9d-5491-57eb-b326-b6ad2d11ba46`) lines 41-43 [crates/gcode/src/index/walker.rs:41-43]
   - Signature: `pub struct DiscoveryOptions {`
-  - Purpose: `DiscoveryOptions` is a configuration struct containing a boolean flag to control whether `.gitignore` files are honored during file system discovery operations. [crates/gcode/src/index/walker.rs:42-44]
-- `DiscoveryOptions` (class) component `DiscoveryOptions [class]` (`58ff72f6-7714-5570-9850-6a4c62d480c3`) lines 46-52 [crates/gcode/src/index/walker.rs:46-52]
+  - Purpose: Indexed class `DiscoveryOptions` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:41-43]
+- `DiscoveryOptions` (class) component `DiscoveryOptions [class]` (`da85b727-fa31-5519-8801-4f06e3d24f3b`) lines 45-51 [crates/gcode/src/index/walker.rs:45-51]
   - Signature: `impl Default for DiscoveryOptions {`
-  - Purpose: `DiscoveryOptions::default()` initializes an instance with `respect_gitignore` set to `true`. [crates/gcode/src/index/walker.rs:46-52]
-- `DiscoveryOptions.default` (method) component `DiscoveryOptions.default [method]` (`6fe17d6e-d8cc-5013-a83b-c65f70ee0f52`) lines 47-51 [crates/gcode/src/index/walker.rs:47-51]
+  - Purpose: Indexed class `DiscoveryOptions` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:45-51]
+- `DiscoveryOptions.default` (method) component `DiscoveryOptions.default [method]` (`3b285eea-d96e-5f35-9248-e17ad2f737bf`) lines 46-50 [crates/gcode/src/index/walker.rs:46-50]
   - Signature: `fn default() -> Self {`
-  - Purpose: The `default()` method implements the Default trait by returning a new instance of Self with the `respect_gitignore` field set to `true`. [crates/gcode/src/index/walker.rs:47-51]
-- `discover_files` (function) component `discover_files [function]` (`833b0edd-08fc-52b1-9aae-10e6e604d6f4`) lines 56-61 [crates/gcode/src/index/walker.rs:56-61]
+  - Purpose: Indexed method `DiscoveryOptions.default` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:46-50]
+- `discover_files` (function) component `discover_files [function]` (`47390851-742b-5eb0-b55e-5ef0abf1ed42`) lines 55-60 [crates/gcode/src/index/walker.rs:55-60]
   - Signature: `pub fn discover_files<S: AsRef<str>>(`
-  - Purpose: This function discovers files under a specified root directory with pattern-based exclusions, returning a tuple of PathBuf vectors via default discovery options. [crates/gcode/src/index/walker.rs:56-61]
-- `discover_files_with_options` (function) component `discover_files_with_options [function]` (`45d67eac-bdd7-5bad-8387-4608ca1ab802`) lines 63-108 [crates/gcode/src/index/walker.rs:63-108]
+  - Purpose: Indexed function `discover_files` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:55-60]
+- `discover_files_with_options` (function) component `discover_files_with_options [function]` (`ea8b8b11-3552-51c8-8938-c3cee3be607f`) lines 62-107 [crates/gcode/src/index/walker.rs:62-107]
   - Signature: `pub fn discover_files_with_options<S: AsRef<str>>(`
-  - Purpose: Recursively discovers and classifies files from a root directory into two vectors (candidates and content_only) while applying gitignore rules, file size constraints, exclusion patterns, and hidden file allowlists. [crates/gcode/src/index/walker.rs:63-108]
-- `classify_file` (function) component `classify_file [function]` (`8b586fbb-de6e-5c8c-8d40-6bef1f774618`) lines 111-135 [crates/gcode/src/index/walker.rs:111-135]
+  - Purpose: Indexed function `discover_files_with_options` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:62-107]
+- `classify_file` (function) component `classify_file [function]` (`26923437-8608-5cf9-bb59-cbfb4d927ddc`) lines 110-134 [crates/gcode/src/index/walker.rs:110-134]
   - Signature: `pub fn classify_file(`
-  - Purpose: Classifies safe text files into AST-parseable source code (if language-detected) or content-only variants, while filtering out generated and excluded files. [crates/gcode/src/index/walker.rs:111-135]
-- `classify_explicit_file_with_options` (function) component `classify_explicit_file_with_options [function]` (`05678993-c7b0-5ad7-9576-cef7df8433a7`) lines 139-149 [crates/gcode/src/index/walker.rs:139-149]
+  - Purpose: Indexed function `classify_file` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:110-134]
+- `classify_explicit_file_with_options` (function) component `classify_explicit_file_with_options [function]` (`a0063a2e-95ea-59c5-8f16-8356d37e46e2`) lines 138-148 [crates/gcode/src/index/walker.rs:138-148]
   - Signature: `pub fn classify_explicit_file_with_options(`
-  - Purpose: Classifies a file after optionally validating its visibility against gitignore rules when the `respect_gitignore` option is enabled. [crates/gcode/src/index/walker.rs:139-149]
-- `is_content_indexable` (function) component `is_content_indexable [function]` (`7acd22ea-c903-5c6a-b4dc-bbe6b33ccb86`) lines 152-161 [crates/gcode/src/index/walker.rs:152-161]
+  - Purpose: Indexed function `classify_explicit_file_with_options` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:138-148]
+- `is_content_indexable` (function) component `is_content_indexable [function]` (`0b88cb41-07fd-5a0a-a543-22790912c897`) lines 151-160 [crates/gcode/src/index/walker.rs:151-160]
   - Signature: `pub fn is_content_indexable(`
-  - Purpose: Returns true if the file at the given path is classified as `ContentOnly`, indicating it is eligible for content indexing after accounting for the root directory and exclusion patterns. [crates/gcode/src/index/walker.rs:152-161]
-- `content_language` (function) component `content_language [function]` (`6e62c8bd-cd0d-5992-92d0-ee332c792248`) lines 164-176 [crates/gcode/src/index/walker.rs:164-176]
+  - Purpose: Indexed function `is_content_indexable` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:151-160]
+- `content_language` (function) component `content_language [function]` (`3557648e-a019-57c9-a9e0-8b5bc7980d5e`) lines 163-175 [crates/gcode/src/index/walker.rs:163-175]
   - Signature: `pub fn content_language(path: &Path) -> String {`
-  - Purpose: Maps file extensions to normalized language identifiers, with special handling for Markdown and YAML variants, defaulting to 'text' for extensionless files. [crates/gcode/src/index/walker.rs:164-176]
-- `push_classified_file` (function) component `push_classified_file [function]` (`cebab3bb-c7e4-56c0-9ed2-38288be37978`) lines 178-196 [crates/gcode/src/index/walker.rs:178-196]
+  - Purpose: Indexed function `content_language` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:163-175]
+- `push_classified_file` (function) component `push_classified_file [function]` (`dc03a8f4-8f27-5898-a5d2-c99163111a4a`) lines 177-195 [crates/gcode/src/index/walker.rs:177-195]
   - Signature: `fn push_classified_file(`
-  - Purpose: Deduplicates and classifies a canonicalized file path, routing it to either an AST-candidates or content-only vector based on its classification result. [crates/gcode/src/index/walker.rs:178-196]
-- `explicit_path_visible` (function) component `explicit_path_visible [function]` (`8eb440e8-dd33-5696-9d86-814e991fa556`) lines 198-214 [crates/gcode/src/index/walker.rs:198-214]
+  - Purpose: Indexed function `push_classified_file` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:177-195]
+- `explicit_path_visible` (function) component `explicit_path_visible [function]` (`5ce009c8-0464-51ba-8c3f-a1e103137069`) lines 197-213 [crates/gcode/src/index/walker.rs:197-213]
   - Signature: `fn explicit_path_visible(root: &Path, path: &Path, options: DiscoveryOptions) -> bool {`
-  - Purpose: Determines whether a path is visible by checking that it is not hidden (or is allowlisted) and exists as a file discoverable in a shallow walk of its parent directory respecting gitignore rules. [crates/gcode/src/index/walker.rs:198-214]
-- `same_existing_path` (function) component `same_existing_path [function]` (`4055b0af-e2e4-5b87-aef3-84fbc4e951ae`) lines 216-220 [crates/gcode/src/index/walker.rs:216-220]
+  - Purpose: Indexed function `explicit_path_visible` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:197-213]
+- `same_existing_path` (function) component `same_existing_path [function]` (`1c829310-9ad1-5ff4-999a-144f4c068f94`) lines 215-219 [crates/gcode/src/index/walker.rs:215-219]
   - Signature: `fn same_existing_path(left: &Path, right: &Path) -> bool {`
-  - Purpose: Determines if two paths refer to the same location by comparing their canonicalized forms, with a fallback to raw path comparison if canonicalization fails. [crates/gcode/src/index/walker.rs:216-220]
-- `HiddenPathAllowlist` (class) component `HiddenPathAllowlist [class]` (`1c4278dd-826f-5993-be69-e6bdf3e40264`) lines 223-225 [crates/gcode/src/index/walker.rs:223-225]
+  - Purpose: Indexed function `same_existing_path` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:215-219]
+- `HiddenPathAllowlist` (class) component `HiddenPathAllowlist [class]` (`90bdece1-60bc-595d-939c-ed3b5adc18c6`) lines 222-224 [crates/gcode/src/index/walker.rs:222-224]
   - Signature: `struct HiddenPathAllowlist {`
-  - Purpose: `HiddenPathAllowlist` is a struct that encapsulates a vector of string patterns for matching and allowlisting hidden file paths. [crates/gcode/src/index/walker.rs:223-225]
-- `HiddenPathAllowlist` (class) component `HiddenPathAllowlist [class]` (`cbe63296-4596-50c8-9c39-aa2efe4be9f5`) lines 227-274 [crates/gcode/src/index/walker.rs:227-274]
+  - Purpose: Indexed class `HiddenPathAllowlist` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:222-224]
+- `HiddenPathAllowlist` (class) component `HiddenPathAllowlist [class]` (`a314e373-a29a-59a7-8a31-fd36d0ee77f5`) lines 226-273 [crates/gcode/src/index/walker.rs:226-273]
   - Signature: `impl HiddenPathAllowlist {`
-  - Purpose: A glob pattern allowlist that discovers and matches hidden files by combining default and project-specific patterns relative to a project root. [crates/gcode/src/index/walker.rs:227-274]
-- `HiddenPathAllowlist.load` (method) component `HiddenPathAllowlist.load [method]` (`daa2cd55-0874-5ff8-9158-53c5914c7988`) lines 228-235 [crates/gcode/src/index/walker.rs:228-235]
+  - Purpose: Indexed class `HiddenPathAllowlist` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:226-273]
+- `HiddenPathAllowlist.load` (method) component `HiddenPathAllowlist.load [method]` (`ddb1b68e-e813-5aae-8846-7dffd00a5dcf`) lines 227-234 [crates/gcode/src/index/walker.rs:227-234]
   - Signature: `fn load(root: &Path) -> Self {`
-  - Purpose: Constructs an instance by merging default hidden allowlist patterns with project-specific patterns read from the filesystem at the given root path. [crates/gcode/src/index/walker.rs:228-235]
-- `HiddenPathAllowlist.from_patterns` (method) component `HiddenPathAllowlist.from_patterns [method]` (`ab8d47e5-b813-5b0b-be52-a503d31cd91b`) lines 237-245 [crates/gcode/src/index/walker.rs:237-245]
+  - Purpose: Indexed method `HiddenPathAllowlist.load` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:227-234]
+- `HiddenPathAllowlist.from_patterns` (method) component `HiddenPathAllowlist.from_patterns [method]` (`c52093f3-c1cb-52d8-9a45-387fe3e92fcc`) lines 236-244 [crates/gcode/src/index/walker.rs:236-244]
   - Signature: `fn from_patterns(patterns: Vec<String>) -> Self {`
-  - Purpose: Constructs `Self` from patterns by normalizing whitespace and path separators, filtering against an allowlist pattern validator, and expanding zero-depth globstar patterns. [crates/gcode/src/index/walker.rs:237-245]
-- `HiddenPathAllowlist.discover` (method) component `HiddenPathAllowlist.discover [method]` (`7823b7f5-a678-5230-8fa3-6b29b6bc795c`) lines 247-263 [crates/gcode/src/index/walker.rs:247-263]
+  - Purpose: Indexed method `HiddenPathAllowlist.from_patterns` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:236-244]
+- `HiddenPathAllowlist.discover` (method) component `HiddenPathAllowlist.discover [method]` (`80b69712-5867-5225-9a42-ac488f266cc5`) lines 246-262 [crates/gcode/src/index/walker.rs:246-262]
   - Signature: `fn discover(&self, root: &Path) -> Vec<PathBuf> {`
-  - Purpose: Discovers and returns a vector of hidden file paths matching the configured glob patterns under a specified root directory. [crates/gcode/src/index/walker.rs:247-263]
-- `HiddenPathAllowlist.matches` (method) component `HiddenPathAllowlist.matches [method]` (`bdabd5a2-7d9b-5df5-af51-90257e7b6b5c`) lines 265-273 [crates/gcode/src/index/walker.rs:265-273]
+  - Purpose: Indexed method `HiddenPathAllowlist.discover` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:246-262]
+- `HiddenPathAllowlist.matches` (method) component `HiddenPathAllowlist.matches [method]` (`2bbcbe91-2491-594a-8b36-8f902927df29`) lines 264-272 [crates/gcode/src/index/walker.rs:264-272]
   - Signature: `fn matches(&self, root: &Path, path: &Path) -> bool {`
-  - Purpose: Tests whether a path matches any glob pattern in the collection by comparing against the relative path (with normalized forward slashes). [crates/gcode/src/index/walker.rs:265-273]
-- `read_project_hidden_allowlist` (function) component `read_project_hidden_allowlist [function]` (`c8f902ab-d83d-5516-ad7f-7503824778d0`) lines 276-290 [crates/gcode/src/index/walker.rs:276-290]
+  - Purpose: Indexed method `HiddenPathAllowlist.matches` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:264-272]
+- `read_project_hidden_allowlist` (function) component `read_project_hidden_allowlist [function]` (`69260939-f520-573f-8754-e62e11bc4d25`) lines 275-289 [crates/gcode/src/index/walker.rs:275-289]
   - Signature: `fn read_project_hidden_allowlist(root: &Path) -> Vec<String> {`
-  - Purpose: Parses the gcode configuration file from a project root directory and returns the `index.hidden_allowlist` JSON array as a Vec<String>, defaulting to an empty vector on I/O or parse errors. [crates/gcode/src/index/walker.rs:276-290]
-- `is_valid_allowlist_pattern` (function) component `is_valid_allowlist_pattern [function]` (`6ef5a3db-ac42-5128-906c-c525ff89b584`) lines 292-304 [crates/gcode/src/index/walker.rs:292-304]
+  - Purpose: Indexed function `read_project_hidden_allowlist` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:275-289]
+- `is_valid_allowlist_pattern` (function) component `is_valid_allowlist_pattern [function]` (`48a5999b-b3a6-564c-9f79-f619aad46f00`) lines 291-303 [crates/gcode/src/index/walker.rs:291-303]
   - Signature: `fn is_valid_allowlist_pattern(pattern: &str) -> bool {`
-  - Purpose: Validates that a pattern is a non-empty relative path without parent directory traversal (`..`), root, or absolute path components. [crates/gcode/src/index/walker.rs:292-304]
-- `expand_zero_depth_globstar` (function) component `expand_zero_depth_globstar [function]` (`eac99db7-9bf2-5834-8a6b-a3463a4fb782`) lines 306-312 [crates/gcode/src/index/walker.rs:306-312]
+  - Purpose: Indexed function `is_valid_allowlist_pattern` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:291-303]
+- `expand_zero_depth_globstar` (function) component `expand_zero_depth_globstar [function]` (`72ce852a-cd0b-58b3-a6a3-120e7b5ca487`) lines 305-311 [crates/gcode/src/index/walker.rs:305-311]
   - Signature: `fn expand_zero_depth_globstar(pattern: &str) -> Vec<String> {`
-  - Purpose: Expands a glob pattern containing the globstar operator `/**/` into two variants: the original pattern and a simplified form with `/**/` collapsed to `/`, enabling zero-depth directory matches. [crates/gcode/src/index/walker.rs:306-312]
-- `absolute_glob_pattern` (function) component `absolute_glob_pattern [function]` (`535beedd-f8d2-5d93-ae7b-5c6d62be73e4`) lines 314-317 [crates/gcode/src/index/walker.rs:314-317]
+  - Purpose: Indexed function `expand_zero_depth_globstar` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:305-311]
+- `absolute_glob_pattern` (function) component `absolute_glob_pattern [function]` (`8318bbb3-6948-5a2e-8bf2-77fa5a9106eb`) lines 313-316 [crates/gcode/src/index/walker.rs:313-316]
   - Signature: `fn absolute_glob_pattern(root: &Path, pattern: &str) -> Option<String> {`
-  - Purpose: Constructs an absolute glob pattern by concatenating an escaped root path with a glob pattern, returning `None` if the root path cannot be converted to UTF-8. [crates/gcode/src/index/walker.rs:314-317]
-- `is_hidden_path` (function) component `is_hidden_path [function]` (`9231f3a0-0ba7-5ae2-9390-cf93f660779f`) lines 319-327 [crates/gcode/src/index/walker.rs:319-327]
+  - Purpose: Indexed function `absolute_glob_pattern` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:313-316]
+- `is_hidden_path` (function) component `is_hidden_path [function]` (`6ffb19bb-2dd5-5e60-bc21-0ef673affe0d`) lines 318-326 [crates/gcode/src/index/walker.rs:318-326]
   - Signature: `fn is_hidden_path(root: &Path, path: &Path) -> bool {`
-  - Purpose: Returns true if the path contains any hidden components by checking whether any path segment starts with '.' while excluding the current ('.') and parent ('..') directory references. [crates/gcode/src/index/walker.rs:319-327]
-- `is_hidden_metadata_content_only` (function) component `is_hidden_metadata_content_only [function]` (`b64ecf51-c842-5048-858e-76a93ca600b6`) lines 329-359 [crates/gcode/src/index/walker.rs:329-359]
+  - Purpose: Indexed function `is_hidden_path` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:318-326]
+- `is_hidden_metadata_content_only` (function) component `is_hidden_metadata_content_only [function]` (`c48c8d73-4a4e-53ec-a431-0c4ab551fb08`) lines 328-358 [crates/gcode/src/index/walker.rs:328-358]
   - Signature: `fn is_hidden_metadata_content_only(root: &Path, path: &Path) -> bool {`
-  - Purpose: Determines whether a file is hidden metadata content by checking if it's a markdown file within `.gobby/plans/` or `.gobby/wiki/` directories, or a YAML file within `.github/workflows/`. [crates/gcode/src/index/walker.rs:329-359]
-- `is_generated_wiki_metadata` (function) component `is_generated_wiki_metadata [function]` (`53b36550-60a4-5c78-9b79-2f200c16c5d6`) lines 361-386 [crates/gcode/src/index/walker.rs:361-386]
+  - Purpose: Indexed function `is_hidden_metadata_content_only` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:328-358]
+- `is_generated_wiki_metadata` (function) component `is_generated_wiki_metadata [function]` (`6cfb259e-88fe-5cd5-8f07-9d1d937beafc`) lines 360-385 [crates/gcode/src/index/walker.rs:360-385]
   - Signature: `fn is_generated_wiki_metadata(root: &Path, path: &Path) -> bool {`
-  - Purpose: Determines whether a path represents generated wiki metadata by checking if it resides in the `.gobby/wiki/_meta/` directory or is a `.json.lock` file within `.gobby/wiki/`. [crates/gcode/src/index/walker.rs:361-386]
-- `path_has_extension` (function) component `path_has_extension [function]` (`1d5d3b0e-0f25-5d72-94a9-15f87db850a0`) lines 388-396 [crates/gcode/src/index/walker.rs:388-396]
+  - Purpose: Indexed function `is_generated_wiki_metadata` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:360-385]
+- `path_has_extension` (function) component `path_has_extension [function]` (`35a9da7f-ccf4-55b1-8420-1b81b750e70d`) lines 387-395 [crates/gcode/src/index/walker.rs:387-395]
   - Signature: `fn path_has_extension(path: &Path, extensions: &[&str]) -> bool {`
-  - Purpose: Returns whether a file path's case-insensitive extension is present in the provided slice of valid extensions, defaulting to false if the path lacks an extension or its extension cannot be decoded as valid UTF-8. [crates/gcode/src/index/walker.rs:388-396]
-- `is_safe_text_file` (function) component `is_safe_text_file [function]` (`d92f9ce4-5f41-596a-9b1c-19c4b9d13fdc`) lines 398-423 [crates/gcode/src/index/walker.rs:398-423]
+  - Purpose: Indexed function `path_has_extension` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:387-395]
+- `is_safe_text_file` (function) component `is_safe_text_file [function]` (`1290a317-e1b5-5ae1-9591-72bae183b995`) lines 397-422 [crates/gcode/src/index/walker.rs:397-422]
   - Signature: `fn is_safe_text_file(root: &Path, path: &Path, exclude_patterns: &[impl AsRef<str>]) -> bool {`
-  - Purpose: Returns true if a file is a safe, non-binary text file that passes path validation, symlink security checks, size constraints (non-zero and ≤ MAX_FILE_SIZE), exclusion pattern matching, and secret extension filtering. [crates/gcode/src/index/walker.rs:398-423]
-- `is_generated_js_bundle` (function) component `is_generated_js_bundle [function]` (`72540ac2-b7f7-5282-8e35-c7965ecc874a`) lines 425-445 [crates/gcode/src/index/walker.rs:425-445]
+  - Purpose: Indexed function `is_safe_text_file` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:397-422]
+- `is_generated_js_bundle` (function) component `is_generated_js_bundle [function]` (`9d2bd1ca-20e9-5109-8cc8-382095e793d9`) lines 424-444 [crates/gcode/src/index/walker.rs:424-444]
   - Signature: `fn is_generated_js_bundle(path: &Path) -> bool {`
-  - Purpose: Detects whether a file path is a generated JavaScript bundle by checking for explicit generated markers or inferring minification characteristics from file size and content patterns. [crates/gcode/src/index/walker.rs:425-445]
-- `read_file_prefix` (function) component `read_file_prefix [function]` (`d58fce29-aef1-57c9-ba70-30352c59c60e`) lines 447-452 [crates/gcode/src/index/walker.rs:447-452]
+  - Purpose: Indexed function `is_generated_js_bundle` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:424-444]
+- `read_file_prefix` (function) component `read_file_prefix [function]` (`1dfbfb1d-e01a-5383-955c-6b8d0ee22c03`) lines 446-451 [crates/gcode/src/index/walker.rs:446-451]
   - Signature: `fn read_file_prefix(path: &Path, max_bytes: u64) -> std::io::Result<Vec<u8>> {`
-  - Purpose: Reads at most `max_bytes` from the beginning of a file into a `Vec<u8>`, returning the byte vector or an IO error. [crates/gcode/src/index/walker.rs:447-452]
-- `is_js_family_file` (function) component `is_js_family_file [function]` (`53a45d19-c957-5ba2-ad91-fc365f6ce4eb`) lines 454-464 [crates/gcode/src/index/walker.rs:454-464]
+  - Purpose: Indexed function `read_file_prefix` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:446-451]
+- `is_js_family_file` (function) component `is_js_family_file [function]` (`05a0b07e-e66b-5235-9ef0-b08c23f899ca`) lines 453-463 [crates/gcode/src/index/walker.rs:453-463]
   - Signature: `fn is_js_family_file(path: &Path) -> bool {`
-  - Purpose: Checks whether a file path's extension matches a JavaScript-family format (js, jsx, cjs, or mjs) using case-insensitive comparison. [crates/gcode/src/index/walker.rs:454-464]
-- `contains_generated_js_marker` (function) component `contains_generated_js_marker [function]` (`09628716-17fd-51e0-a2b0-2e44a8d0ce48`) lines 466-472 [crates/gcode/src/index/walker.rs:466-472]
+  - Purpose: Indexed function `is_js_family_file` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:453-463]
+- `contains_generated_js_marker` (function) component `contains_generated_js_marker [function]` (`a5b9a7b6-31d4-5066-af8e-231447281a69`) lines 465-471 [crates/gcode/src/index/walker.rs:465-471]
   - Signature: `fn contains_generated_js_marker(bytes: &[u8]) -> bool {`
-  - Purpose: This function returns true if any case-insensitive match of predefined generated JavaScript markers is found within the first N bytes of the input byte slice. [crates/gcode/src/index/walker.rs:466-472]
-- `looks_minified_js_bundle` (function) component `looks_minified_js_bundle [function]` (`d2f5d5a9-efe0-5450-9b55-d5aa35666b5e`) lines 474-499 [crates/gcode/src/index/walker.rs:474-499]
+  - Purpose: Indexed function `contains_generated_js_marker` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:465-471]
+- `looks_minified_js_bundle` (function) component `looks_minified_js_bundle [function]` (`04b03c7b-c55e-5fb1-8b00-ca1d09b5d824`) lines 473-498 [crates/gcode/src/index/walker.rs:473-498]
   - Signature: `fn looks_minified_js_bundle(bytes: &[u8]) -> bool {`
-  - Purpose: Detects minified JavaScript bundles by checking minimum size and verifying either the presence of abnormally long lines or high average line length relative to total line count. [crates/gcode/src/index/walker.rs:474-499]
-- `write_file` (function) component `write_file [function]` (`9ae7a20b-739c-5e21-bb65-6196ca850285`) lines 505-511 [crates/gcode/src/index/walker.rs:505-511]
+  - Purpose: Indexed function `looks_minified_js_bundle` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:473-498]
+- `write_file` (function) component `write_file [function]` (`4f32cb32-3983-5e2e-a133-2621571d3454`) lines 504-510 [crates/gcode/src/index/walker.rs:504-510]
   - Signature: `fn write_file(root: &Path, rel: &str, contents: &[u8]) {`
-  - Purpose: Writes byte contents to a file at a specified root-relative path, creating all missing parent directories if necessary. [crates/gcode/src/index/walker.rs:505-511]
-- `rels` (function) component `rels [function]` (`6ddea6f7-14d1-541d-b587-6937a3fb5f4c`) lines 513-525 [crates/gcode/src/index/walker.rs:513-525]
+  - Purpose: Indexed function `write_file` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:504-510]
+- `rels` (function) component `rels [function]` (`7520b232-4ec2-551e-827c-1239b0bae576`) lines 512-524 [crates/gcode/src/index/walker.rs:512-524]
   - Signature: `fn rels(root: &Path, paths: Vec<PathBuf>) -> Vec<String> {`
-  - Purpose: Converts absolute paths to relative path strings by stripping a common root prefix, returning them sorted. [crates/gcode/src/index/walker.rs:513-525]
-- `discovers_ast_and_content_only_text_files` (function) component `discovers_ast_and_content_only_text_files [function]` (`5c1493f7-2905-5574-aace-24ae8e842cc5`) lines 528-567 [crates/gcode/src/index/walker.rs:528-567]
+  - Purpose: Indexed function `rels` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:512-524]
+- `discovers_ast_and_content_only_text_files` (function) component `discovers_ast_and_content_only_text_files [function]` (`e6505c73-f69d-5454-b519-3e819caaa4cf`) lines 527-566 [crates/gcode/src/index/walker.rs:527-566]
   - Signature: `fn discovers_ast_and_content_only_text_files() {`
-  - Purpose: Tests that `discover_files` correctly partitions text files into AST-parseable source code and content-only text files while filtering out binary files, secret-pattern-matched files, and excluded directories. [crates/gcode/src/index/walker.rs:528-567]
-- `discover_files_respects_gitignore_by_default_and_option` (function) component `discover_files_respects_gitignore_by_default_and_option [function]` (`e50b8164-7734-5be2-8dd1-10ccd719fe27`) lines 570-591 [crates/gcode/src/index/walker.rs:570-591]
+  - Purpose: Indexed function `discovers_ast_and_content_only_text_files` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:527-566]
+- `discover_files_respects_gitignore_by_default_and_option` (function) component `discover_files_respects_gitignore_by_default_and_option [function]` (`08d29d34-cb96-533b-8e47-3b058d4d4bf8`) lines 569-590 [crates/gcode/src/index/walker.rs:569-590]
   - Signature: `fn discover_files_respects_gitignore_by_default_and_option() {`
-  - Purpose: This test verifies that `discover_files` respects `.gitignore` exclusions by default and that the `respect_gitignore` option controls whether ignored files are included in file discovery results. [crates/gcode/src/index/walker.rs:570-591]
-- `classifies_extensionless_text_as_content_only` (function) component `classifies_extensionless_text_as_content_only [function]` (`acbefad2-21d2-5df7-a11d-593551ff9cab`) lines 594-605 [crates/gcode/src/index/walker.rs:594-605]
+  - Purpose: Indexed function `discover_files_respects_gitignore_by_default_and_option` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:569-590]
+- `classifies_extensionless_text_as_content_only` (function) component `classifies_extensionless_text_as_content_only [function]` (`4042cde5-4beb-5122-a590-7e48a43d09b5`) lines 593-604 [crates/gcode/src/index/walker.rs:593-604]
   - Signature: `fn classifies_extensionless_text_as_content_only() {`
-  - Purpose: This test verifies that the `classify_file` function categorizes an extensionless Makefile as `FileClassification::ContentOnly` with a detected content language of `"text"`. [crates/gcode/src/index/walker.rs:594-605]
-- `classifies_markdown_content_language_as_markdown` (function) component `classifies_markdown_content_language_as_markdown [function]` (`f55c853d-09c5-5136-b465-59f91cab8742`) lines 608-618 [crates/gcode/src/index/walker.rs:608-618]
+  - Purpose: Indexed function `classifies_extensionless_text_as_content_only` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:593-604]
+- `classifies_markdown_content_language_as_markdown` (function) component `classifies_markdown_content_language_as_markdown [function]` (`07a71ef5-4c54-5822-b4fb-2653002cec29`) lines 607-617 [crates/gcode/src/index/walker.rs:607-617]
   - Signature: `fn classifies_markdown_content_language_as_markdown() {`
-  - Purpose: This unit test verifies that the `content_language()` function correctly classifies files with `.md` and `.markdown` extensions as the `"markdown"` language type. [crates/gcode/src/index/walker.rs:608-618]
-- `classifies_yaml_content_language_as_yaml` (function) component `classifies_yaml_content_language_as_yaml [function]` (`0970873c-d800-5259-8bba-0f509d605add`) lines 621-630 [crates/gcode/src/index/walker.rs:621-630]
+  - Purpose: Indexed function `classifies_markdown_content_language_as_markdown` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:607-617]
+- `classifies_yaml_content_language_as_yaml` (function) component `classifies_yaml_content_language_as_yaml [function]` (`6c0f08de-e6c4-5b33-a8ca-002a4b4fe53f`) lines 620-629 [crates/gcode/src/index/walker.rs:620-629]
   - Signature: `fn classifies_yaml_content_language_as_yaml() {`
-  - Purpose: This test function verifies that the `content_language()` function correctly classifies files with `.yml` and `.yaml` extensions as the "yaml" language. [crates/gcode/src/index/walker.rs:621-630]
-- `classifies_mjs_as_ast_and_markdown_as_content_only` (function) component `classifies_mjs_as_ast_and_markdown_as_content_only [function]` (`8285f7a0-80ef-5633-88b2-f00ff985a034`) lines 633-653 [crates/gcode/src/index/walker.rs:633-653]
+  - Purpose: Indexed function `classifies_yaml_content_language_as_yaml` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:620-629]
+- `classifies_mjs_as_ast_and_markdown_as_content_only` (function) component `classifies_mjs_as_ast_and_markdown_as_content_only [function]` (`365abe5e-24c8-557d-97b7-4c01f4c3463a`) lines 632-652 [crates/gcode/src/index/walker.rs:632-652]
   - Signature: `fn classifies_mjs_as_ast_and_markdown_as_content_only() {`
-  - Purpose: This test verifies that the file classification function correctly categorizes ES module files (`.mjs`) as `Ast` and markdown files (`.md`, `.markdown`) as `ContentOnly`. [crates/gcode/src/index/walker.rs:633-653]
-- `classifies_github_workflow_yaml_as_content_only` (function) component `classifies_github_workflow_yaml_as_content_only [function]` (`49cf2e35-5f19-5679-bac3-7ee293f8617e`) lines 656-675 [crates/gcode/src/index/walker.rs:656-675]
+  - Purpose: Indexed function `classifies_mjs_as_ast_and_markdown_as_content_only` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:632-652]
+- `classifies_github_workflow_yaml_as_content_only` (function) component `classifies_github_workflow_yaml_as_content_only [function]` (`ecd69d6f-b2b0-5906-92de-344f4b5beca8`) lines 655-674 [crates/gcode/src/index/walker.rs:655-674]
   - Signature: `fn classifies_github_workflow_yaml_as_content_only() {`
-  - Purpose: This unit test verifies that the `classify_file` function correctly identifies GitHub Actions workflow YAML files in `.github/workflows/` as `FileClassification::ContentOnly`. [crates/gcode/src/index/walker.rs:656-675]
-- `discovers_default_hidden_metadata_allowlist` (function) component `discovers_default_hidden_metadata_allowlist [function]` (`e7ca9103-669e-5317-a024-14e31a1960a3`) lines 678-699 [crates/gcode/src/index/walker.rs:678-699]
+  - Purpose: Indexed function `classifies_github_workflow_yaml_as_content_only` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:655-674]
+- `discovers_default_hidden_metadata_allowlist` (function) component `discovers_default_hidden_metadata_allowlist [function]` (`25b2fd3e-3e6e-56f4-bd19-4b088b6c15e0`) lines 677-698 [crates/gcode/src/index/walker.rs:677-698]
   - Signature: `fn discovers_default_hidden_metadata_allowlist() {`
-  - Purpose: This test verifies that `discover_files()` with an empty allowlist segregates non-hidden source files into the AST result while relegating hidden dotfile directories (.gobby, .github) to the content_only result. [crates/gcode/src/index/walker.rs:678-699]
-- `skips_non_allowlisted_hidden_metadata_by_default` (function) component `skips_non_allowlisted_hidden_metadata_by_default [function]` (`bc41ec85-b650-5e65-a1f4-4f37f0590c0e`) lines 702-717 [crates/gcode/src/index/walker.rs:702-717]
+  - Purpose: Indexed function `discovers_default_hidden_metadata_allowlist` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:677-698]
+- `skips_non_allowlisted_hidden_metadata_by_default` (function) component `skips_non_allowlisted_hidden_metadata_by_default [function]` (`685ba7af-8a9b-52b9-ac48-362104f0e044`) lines 701-716 [crates/gcode/src/index/walker.rs:701-716]
   - Signature: `fn skips_non_allowlisted_hidden_metadata_by_default() {`
-  - Purpose: This test verifies that `discover_files` excludes non-allowlisted hidden metadata files by default, retaining only explicitly allowlisted content directories (e.g., `.gobby/wiki/`). [crates/gcode/src/index/walker.rs:702-717]
-- `discovers_wiki_markdown_and_skips_generated_wiki_metadata` (function) component `discovers_wiki_markdown_and_skips_generated_wiki_metadata [function]` (`95cdd1cc-310e-5db4-a6ba-5e65e2d5d747`) lines 720-753 [crates/gcode/src/index/walker.rs:720-753]
+  - Purpose: Indexed function `skips_non_allowlisted_hidden_metadata_by_default` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:701-716]
+- `discovers_wiki_markdown_and_skips_generated_wiki_metadata` (function) component `discovers_wiki_markdown_and_skips_generated_wiki_metadata [function]` (`c47755d6-e715-597e-94e8-8cdbb682a177`) lines 719-752 [crates/gcode/src/index/walker.rs:719-752]
   - Signature: `fn discovers_wiki_markdown_and_skips_generated_wiki_metadata() {`
-  - Purpose: This test verifies that `discover_files()` correctly identifies wiki markdown files in `.gobby/wiki/` while filtering out generated metadata files in `_meta/` subdirectories and `.lock` files. [crates/gcode/src/index/walker.rs:720-753]
-- `discovers_project_hidden_allowlist_from_gcode_json` (function) component `discovers_project_hidden_allowlist_from_gcode_json [function]` (`46aba99c-a60f-5f7b-8b9b-fb290230ba32`) lines 756-778 [crates/gcode/src/index/walker.rs:756-778]
+  - Purpose: Indexed function `discovers_wiki_markdown_and_skips_generated_wiki_metadata` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:719-752]
+- `discovers_project_hidden_allowlist_from_gcode_json` (function) component `discovers_project_hidden_allowlist_from_gcode_json [function]` (`f44731a2-d1c3-59f9-bd27-e7bea963361f`) lines 755-777 [crates/gcode/src/index/walker.rs:755-777]
   - Signature: `fn discovers_project_hidden_allowlist_from_gcode_json() {`
-  - Purpose: This test verifies that `discover_files()` correctly parses and applies a glob pattern-based `hidden_allowlist` from `.gobby/gcode.json` to filter discovered files, returning only matches in the content-only result set while leaving the AST result set empty. [crates/gcode/src/index/walker.rs:756-778]
-- `excludes_win_over_allowlisted_hidden_paths` (function) component `excludes_win_over_allowlisted_hidden_paths [function]` (`94e2a24b-49a0-5ca8-b386-c9e94644d1ed`) lines 781-792 [crates/gcode/src/index/walker.rs:781-792]
+  - Purpose: Indexed function `discovers_project_hidden_allowlist_from_gcode_json` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:755-777]
+- `excludes_win_over_allowlisted_hidden_paths` (function) component `excludes_win_over_allowlisted_hidden_paths [function]` (`3f5d47c8-48b1-51fa-8347-569529ec5d07`) lines 780-791 [crates/gcode/src/index/walker.rs:780-791]
   - Signature: `fn excludes_win_over_allowlisted_hidden_paths() {`
-  - Purpose: Verifies that explicit exclusion patterns prevent file discovery in hidden directories, taking precedence over any allowlist behavior. [crates/gcode/src/index/walker.rs:781-792]
-- `skips_js_family_files_with_generated_markers` (function) component `skips_js_family_files_with_generated_markers [function]` (`4e6c419f-ced2-5e69-832f-60210fbaa4a9`) lines 795-813 [crates/gcode/src/index/walker.rs:795-813]
+  - Purpose: Indexed function `excludes_win_over_allowlisted_hidden_paths` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:780-791]
+- `skips_js_family_files_with_generated_markers` (function) component `skips_js_family_files_with_generated_markers [function]` (`ed8fecda-00f7-5621-abfa-8817d9297112`) lines 794-812 [crates/gcode/src/index/walker.rs:794-812]
   - Signature: `fn skips_js_family_files_with_generated_markers() {`
-  - Purpose: This test verifies that `classify_file()` returns `None` for JavaScript-family files (`.mjs`, `.js`, `.jsx`, `.cjs`) containing common generated-code marker comments. [crates/gcode/src/index/walker.rs:795-813]
-- `keeps_ordinary_mjs_source_ast_indexable` (function) component `keeps_ordinary_mjs_source_ast_indexable [function]` (`0be0e413-4468-54b3-99d2-a36b61ec6467`) lines 816-830 [crates/gcode/src/index/walker.rs:816-830]
+  - Purpose: Indexed function `skips_js_family_files_with_generated_markers` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:794-812]
+- `keeps_ordinary_mjs_source_ast_indexable` (function) component `keeps_ordinary_mjs_source_ast_indexable [function]` (`d6c260a7-3e2b-5344-a333-f59672f1aa51`) lines 815-829 [crates/gcode/src/index/walker.rs:815-829]
   - Signature: `fn keeps_ordinary_mjs_source_ast_indexable() {`
-  - Purpose: This test verifies that `classify_file()` returns `FileClassification::Ast` for an ordinary .mjs ES module source file when no exclusion rules are applied. [crates/gcode/src/index/walker.rs:816-830]
-- `skips_large_minified_js_bundles` (function) component `skips_large_minified_js_bundles [function]` (`0edaf40d-be4f-52be-a7df-83af9bc3009d`) lines 833-846 [crates/gcode/src/index/walker.rs:833-846]
+  - Purpose: Indexed function `keeps_ordinary_mjs_source_ast_indexable` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:815-829]
+- `skips_large_minified_js_bundles` (function) component `skips_large_minified_js_bundles [function]` (`5e242768-9019-5c80-a76b-727f2584ea57`) lines 832-845 [crates/gcode/src/index/walker.rs:832-845]
   - Signature: `fn skips_large_minified_js_bundles() {`
-  - Purpose: Asserts that `classify_file` returns `None` when processing a JavaScript bundle file whose minified content exceeds `MINIFIED_JS_MIN_BYTES`, verifying the exclusion of large minified JS bundles. [crates/gcode/src/index/walker.rs:833-846]
-- `skips_single_line_minified_js_bundle_with_newline` (function) component `skips_single_line_minified_js_bundle_with_newline [function]` (`54e7273d-94c5-50cd-a15f-4a4824d1d887`) lines 849-862 [crates/gcode/src/index/walker.rs:849-862]
+  - Purpose: Indexed function `skips_large_minified_js_bundles` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:832-845]
+- `skips_single_line_minified_js_bundle_with_newline` (function) component `skips_single_line_minified_js_bundle_with_newline [function]` (`d3cbc94c-0d89-57a4-8b0a-797312c148e8`) lines 848-861 [crates/gcode/src/index/walker.rs:848-861]
   - Signature: `fn skips_single_line_minified_js_bundle_with_newline() {`
-  - Purpose: Verifies that `classify_file()` returns `None` when classifying a single-line minified JavaScript bundle with a trailing newline. [crates/gcode/src/index/walker.rs:849-862]
-- `skips_single_line_minified_js_bundle_without_newline` (function) component `skips_single_line_minified_js_bundle_without_newline [function]` (`bcd6f964-e4bb-5365-b4da-03cc9a7a0593`) lines 865-878 [crates/gcode/src/index/walker.rs:865-878]
+  - Purpose: Indexed function `skips_single_line_minified_js_bundle_with_newline` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:848-861]
+- `skips_single_line_minified_js_bundle_without_newline` (function) component `skips_single_line_minified_js_bundle_without_newline [function]` (`79191789-6434-53ff-814b-85d04c64d7ae`) lines 864-877 [crates/gcode/src/index/walker.rs:864-877]
   - Signature: `fn skips_single_line_minified_js_bundle_without_newline() {`
-  - Purpose: This test function verifies that a single-line minified JavaScript IIFE bundle without newlines is correctly classified as a skippable file (returns `None` from `classify_file`). [crates/gcode/src/index/walker.rs:865-878]
-- `classifies_source_build_directory_as_ast_indexable` (function) component `classifies_source_build_directory_as_ast_indexable [function]` (`80ba2aad-af63-59c6-b191-8fe2d49ff2ad`) lines 881-895 [crates/gcode/src/index/walker.rs:881-895]
+  - Purpose: Indexed function `skips_single_line_minified_js_bundle_without_newline` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:864-877]
+- `classifies_source_build_directory_as_ast_indexable` (function) component `classifies_source_build_directory_as_ast_indexable [function]` (`b90a4156-2aab-5583-910c-728f5cf0236c`) lines 880-894 [crates/gcode/src/index/walker.rs:880-894]
   - Signature: `fn classifies_source_build_directory_as_ast_indexable() {`
-  - Purpose: This test verifies that `classify_file()` returns `FileClassification::Ast` for a Python source file located in src/gobby/build/workspaces.py, demonstrating that the "build" exclude pattern does not prevent AST classification of files within nested build subdirectories. [crates/gcode/src/index/walker.rs:881-895]
-- `skips_root_build_directory` (function) component `skips_root_build_directory [function]` (`581a4300-81f3-5621-8f8e-57f43820b9fc`) lines 898-908 [crates/gcode/src/index/walker.rs:898-908]
+  - Purpose: Indexed function `classifies_source_build_directory_as_ast_indexable` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:880-894]
+- `skips_root_build_directory` (function) component `skips_root_build_directory [function]` (`028fe4bd-db40-553e-b5a7-ac83a4266eea`) lines 897-907 [crates/gcode/src/index/walker.rs:897-907]
   - Signature: `fn skips_root_build_directory() {`
-  - Purpose: This test verifies that `classify_file()` returns `None` when classifying a file located in a directory specified within the excludes list. [crates/gcode/src/index/walker.rs:898-908]
-- `walker_consumes_gobby_core_walker_settings` (function) component `walker_consumes_gobby_core_walker_settings [function]` (`05a6f71f-6a99-5879-a8f0-2d4ecb84dd33`) lines 911-918 [crates/gcode/src/index/walker.rs:911-918]
+  - Purpose: Indexed function `skips_root_build_directory` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:897-907]
+- `walker_consumes_gobby_core_walker_settings` (function) component `walker_consumes_gobby_core_walker_settings [function]` (`9ba94745-c010-5fd9-b1df-f5d86cf4f307`) lines 910-917 [crates/gcode/src/index/walker.rs:910-917]
   - Signature: `fn walker_consumes_gobby_core_walker_settings() {`
-  - Purpose: # Summary
-
-This test function asserts that `walker.rs` contains references to `gobby_core::indexing::WalkerSettings` while explicitly excluding any direct instantiation of `WalkBuilder::new(root)`, enforcing proper architectural dependency compliance. [crates/gcode/src/index/walker.rs:911-918]
+  - Purpose: Indexed function `walker_consumes_gobby_core_walker_settings` in `crates/gcode/src/index/walker.rs`. [crates/gcode/src/index/walker.rs:910-917]
 

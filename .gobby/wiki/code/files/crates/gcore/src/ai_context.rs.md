@@ -6,73 +6,49 @@ provenance:
   ranges:
   - 25-30
   - 32-69
-  - 34-36
-  - 39-64
-  - 66-68
   - 73-76
   - 80-86
   - 88-124
-  - 89-97
-  - 99-107
-  - 109-117
-  - 119-123
-  - 134-145
-  - 148-155
-  - 158-160
-  - 164-166
-  - 168-172
-  - 174-222
-  - 175-183
-  - 185-187
-  - 189-206
-  - 208-221
-  - 224-230
-  - 225-229
-  - 234-236
-  - 238-248
-  - 239-247
-  - 250-256
-  - 251-255
-  - 263-266
-  - '268'
-  - 270-277
-  - 271-276
-  - 283-288
-  - 290-298
-  - 305-314
-  - 316-327
-  - '332'
-  - 334-345
-  - 335-337
-  - 339-344
-  - 349-353
-  - 360-366
-  - 368-370
-  - 378-393
-  - 395-400
-  - 404-411
-  - 425-428
-  - 430-451
-  - 431-439
-  - 441-450
-  - 453-464
-  - 454-456
-  - 458-463
-  - 466-469
-  - 471-483
-  - 472-482
-  - 485-489
-  - 486-488
-  - 491-495
-  - 497-510
-  - 513-566
-  - 569-589
-  - 592-620
-  - 623-647
-  - 650-661
-  - 664-723
-  - 726-748
-  - 751-782
+  - 127-129
+  - 133-135
+  - 137-141
+  - 143-191
+  - 193-199
+  - 203-205
+  - 207-217
+  - 219-225
+  - 232-235
+  - '237'
+  - 239-246
+  - 252-257
+  - 259-267
+  - 274-283
+  - 285-296
+  - 299-302
+  - '306'
+  - 308-319
+  - 323-327
+  - 334-340
+  - 342-344
+  - 352-367
+  - 369-374
+  - 378-385
+  - 399-402
+  - 404-425
+  - 427-438
+  - 440-443
+  - 445-457
+  - 459-463
+  - 465-469
+  - 472-525
+  - 528-548
+  - 551-579
+  - 582-606
+  - 609-625
+  - 628-637
+  - 640-651
+  - 654-713
+  - 716-738
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -84,7 +60,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-`crates/gcore/src/ai_context.rs` exposes 69 indexed API symbols.
+`crates/gcore/src/ai_context.rs` exposes 68 indexed API symbols.
 [crates/gcore/src/ai_context.rs:25-30]
 [crates/gcore/src/ai_context.rs:32-69]
 [crates/gcore/src/ai_context.rs:34-36]
@@ -95,209 +71,206 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 - `AiContext` (class) component `AiContext [class]` (`9cb3af3a-c7c3-5ec7-b482-816bea1f7727`) lines 25-30 [crates/gcore/src/ai_context.rs:25-30]
   - Signature: `pub struct AiContext {`
-  - Purpose: Indexed class `AiContext` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:25-30]
+  - Purpose: `AiContext` is a data-holding struct that aggregates AI runtime configuration and state via `AiBindings`, `AiTuning`, and `AiLimiter`, with an optional `project_id` to scope the context to a specific project. [crates/gcore/src/ai_context.rs:25-30]
 - `AiContext` (class) component `AiContext [class]` (`147039af-17e6-5ed4-8147-8d24dfbf4f57`) lines 32-69 [crates/gcore/src/ai_context.rs:32-69]
   - Signature: `impl AiContext {`
-  - Purpose: Indexed class `AiContext` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:32-69]
+  - Purpose: `AiContext` is a resolved runtime container that loads AI capability bindings and tuning from a `ConfigSource`, applies optional routing overrides, normalizes concurrency to at least 1 by creating an `AiLimiter`, and retains the optional `project_id` for capability binding lookup. [crates/gcore/src/ai_context.rs:32-69]
 - `AiContext.resolve` (method) component `AiContext.resolve [method]` (`543c6e4c-5951-5f9d-810e-3c9ab1aa0fff`) lines 34-36 [crates/gcore/src/ai_context.rs:34-36]
   - Signature: `pub fn resolve(project_id: Option<String>, source: &mut impl ConfigSource) -> Self {`
-  - Purpose: Indexed method `AiContext.resolve` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:34-36]
+  - Purpose: `resolve` constructs and returns an `AiContext` by delegating to `Self::resolve_with_options` with the provided `project_id`, mutable `ConfigSource`, and `AiContextOptions::default()`. [crates/gcore/src/ai_context.rs:34-36]
 - `AiContext.resolve_with_options` (method) component `AiContext.resolve_with_options [method]` (`cc539a47-3f27-5fa5-a72a-f327d3a3ce93`) lines 39-64 [crates/gcore/src/ai_context.rs:39-64]
   - Signature: `pub fn resolve_with_options(`
-  - Purpose: Indexed method `AiContext.resolve_with_options` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:39-64]
+  - Purpose: Resolves `AiBindings` and AI tuning from the provided config source, applies `no_ai` or `forced_routing` overrides to the routing, clamps `max_concurrency` to at least 1, initializes an `AiLimiter` from that concurrency, and returns the assembled context with the given `project_id`. [crates/gcore/src/ai_context.rs:39-64]
 - `AiContext.binding` (method) component `AiContext.binding [method]` (`05991622-c709-52b7-bfc3-1d680970d380`) lines 66-68 [crates/gcore/src/ai_context.rs:66-68]
   - Signature: `pub fn binding(&self, capability: AiCapability) -> &CapabilityBinding {`
-  - Purpose: Indexed method `AiContext.binding` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:66-68]
+  - Purpose: Returns the immutable `CapabilityBinding` associated with the given `AiCapability` by delegating to `self.bindings.get(capability)`. [crates/gcore/src/ai_context.rs:66-68]
 - `AiContextOptions` (class) component `AiContextOptions [class]` (`a81e31b4-fe5b-52e0-be99-d24cc4a5a7ab`) lines 73-76 [crates/gcore/src/ai_context.rs:73-76]
   - Signature: `pub struct AiContextOptions {`
-  - Purpose: Indexed class `AiContextOptions` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:73-76]
+  - Purpose: `AiContextOptions` is a configuration struct that disables AI context handling via `no_ai` and optionally overrides the default AI routing with a specific `AiRouting` value in `forced_routing`. [crates/gcore/src/ai_context.rs:73-76]
 - `AiBindings` (class) component `AiBindings [class]` (`acf8fbbc-105a-545c-a2f0-0f8f661e2ba4`) lines 80-86 [crates/gcore/src/ai_context.rs:80-86]
   - Signature: `pub struct AiBindings {`
-  - Purpose: Indexed class `AiBindings` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:80-86]
+  - Purpose: `AiBindings` is a configuration struct that aggregates `CapabilityBinding` handles for the AI capabilities `embed`, `audio_transcribe`, `audio_translate`, `vision_extract`, and `text_generate`. [crates/gcore/src/ai_context.rs:80-86]
 - `AiBindings` (class) component `AiBindings [class]` (`62ecfb40-d7fe-5750-a466-153cfb5e3671`) lines 88-124 [crates/gcore/src/ai_context.rs:88-124]
   - Signature: `impl AiBindings {`
-  - Purpose: Indexed class `AiBindings` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:88-124]
+  - Purpose: `AiBindings` is a per-`AiCapability` binding table that resolves each capability’s `CapabilityBinding` from a `ConfigSource`, exposes typed lookup/mutation by capability, and can force the same `AiRouting` across all capabilities. [crates/gcore/src/ai_context.rs:88-124]
 - `AiBindings.resolve` (method) component `AiBindings.resolve [method]` (`5c8f63f4-7954-5438-8450-61873d8e140a`) lines 89-97 [crates/gcore/src/ai_context.rs:89-97]
   - Signature: `pub fn resolve(source: &mut impl ConfigSource) -> Self {`
-  - Purpose: Indexed method `AiBindings.resolve` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:89-97]
+  - Purpose: It constructs and returns a config instance by resolving each AI capability binding (`Embed`, `AudioTranscribe`, `AudioTranslate`, `VisionExtract`, and `TextGenerate`) from the mutable `ConfigSource` with `resolve_capability_binding`. [crates/gcore/src/ai_context.rs:89-97]
 - `AiBindings.get` (method) component `AiBindings.get [method]` (`bd7b2126-a8e1-594e-b8d9-41aa41f38490`) lines 99-107 [crates/gcore/src/ai_context.rs:99-107]
   - Signature: `pub fn get(&self, capability: AiCapability) -> &CapabilityBinding {`
-  - Purpose: Indexed method `AiBindings.get` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:99-107]
+  - Purpose: Returns an immutable reference to the `CapabilityBinding` field associated with the given `AiCapability` by matching each enum variant to its corresponding struct member. [crates/gcore/src/ai_context.rs:99-107]
 - `AiBindings.get_mut` (method) component `AiBindings.get_mut [method]` (`0b3b383f-beba-5c40-8cb5-833c1cd75da3`) lines 109-117 [crates/gcore/src/ai_context.rs:109-117]
   - Signature: `fn get_mut(&mut self, capability: AiCapability) -> &mut CapabilityBinding {`
-  - Purpose: Indexed method `AiBindings.get_mut` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:109-117]
+  - Purpose: Returns a mutable reference to the `CapabilityBinding` field corresponding to the requested `AiCapability` variant by matching `capability` and selecting the associated struct member. [crates/gcore/src/ai_context.rs:109-117]
 - `AiBindings.force_routing` (method) component `AiBindings.force_routing [method]` (`f19b04be-248e-5f82-8498-1733cf29a5df`) lines 119-123 [crates/gcore/src/ai_context.rs:119-123]
   - Signature: `fn force_routing(&mut self, routing: AiRouting) {`
-  - Purpose: Indexed method `AiBindings.force_routing` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:119-123]
-- `apply_discovered_local_backend` (function) component `apply_discovered_local_backend [function]` (`2e8c4c47-6e0f-5acf-8cfa-85fb25d451d9`) lines 134-145 [crates/gcore/src/ai_context.rs:134-145]
-  - Signature: `pub(crate) fn apply_discovered_local_backend(`
-  - Purpose: Indexed function `apply_discovered_local_backend` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:134-145]
-- `binding_needs_local_api_base` (function) component `binding_needs_local_api_base [function]` (`1d93d156-4b53-5db0-9328-ce5ba04fac22`) lines 148-155 [crates/gcore/src/ai_context.rs:148-155]
-  - Signature: `fn binding_needs_local_api_base(binding: &CapabilityBinding) -> bool {`
-  - Purpose: Indexed function `binding_needs_local_api_base` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:148-155]
-- `route` (function) component `route [function]` (`68034a1a-6673-51b6-bb4c-de2623bcfe0b`) lines 158-160 [crates/gcore/src/ai_context.rs:158-160]
+  - Purpose: Sets the `routing` field of every capability in `self` to the provided `AiRouting` value by iterating over `ALL_CAPABILITIES` and mutating each entry in place. [crates/gcore/src/ai_context.rs:119-123]
+- `route` (function) component `route [function]` (`f9cc5895-1a74-5134-9fb9-4c51a62fc5c8`) lines 127-129 [crates/gcore/src/ai_context.rs:127-129]
   - Signature: `pub fn route(context: &AiContext, capability: AiCapability) -> AiRouting {`
-  - Purpose: Indexed function `route` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:158-160]
-- `AiLimiter` (class) component `AiLimiter [class]` (`97bea2bf-f588-56de-b826-d953fb39cab6`) lines 164-166 [crates/gcore/src/ai_context.rs:164-166]
+  - Purpose: Returns the `AiRouting` associated with the given `AiCapability` by looking up the capability’s binding in `context` and reading its `routing` field. [crates/gcore/src/ai_context.rs:127-129]
+- `AiLimiter` (class) component `AiLimiter [class]` (`2d3bf6de-7689-5f9c-b32e-7360e08a5d6d`) lines 133-135 [crates/gcore/src/ai_context.rs:133-135]
   - Signature: `pub struct AiLimiter {`
-  - Purpose: Indexed class `AiLimiter` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:164-166]
-- `LimiterInner` (class) component `LimiterInner [class]` (`2c084d85-bc72-5699-a5d4-c175a2307c96`) lines 168-172 [crates/gcore/src/ai_context.rs:168-172]
+  - Purpose: `AiLimiter` is a cloneable Rust wrapper that holds shared limiter state through an `Arc<LimiterInner>`, providing reference-counted access to the underlying limiter implementation. [crates/gcore/src/ai_context.rs:133-135]
+- `LimiterInner` (class) component `LimiterInner [class]` (`fd8fbf30-3f51-5682-ad2a-e5c6c9364d73`) lines 137-141 [crates/gcore/src/ai_context.rs:137-141]
   - Signature: `struct LimiterInner {`
-  - Purpose: Indexed class `LimiterInner` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:168-172]
-- `AiLimiter` (class) component `AiLimiter [class]` (`ed0da3fc-a501-57fe-aba1-8ad2992e1e12`) lines 174-222 [crates/gcore/src/ai_context.rs:174-222]
+  - Purpose: `LimiterInner` is a concurrency gate that tracks a fixed `u8` capacity in `max`, counts currently acquired permits in a `Mutex<u8>`, and uses a `Condvar` to block and wake waiters until capacity becomes available. [crates/gcore/src/ai_context.rs:137-141]
+- `AiLimiter` (class) component `AiLimiter [class]` (`793a6a4c-8a41-5357-b25a-3a9beec0094b`) lines 143-191 [crates/gcore/src/ai_context.rs:143-191]
   - Signature: `impl AiLimiter {`
-  - Purpose: Indexed class `AiLimiter` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:174-222]
-- `AiLimiter.new` (method) component `AiLimiter.new [method]` (`a61c640b-ba7c-5286-93d3-f5d4c88096ef`) lines 175-183 [crates/gcore/src/ai_context.rs:175-183]
+  - Purpose: `AiLimiter` is a thread-safe, `Arc`-backed concurrency gate that enforces a minimum limit of 1 active `AiPermit`, blocks in `acquire` until capacity is available via a `Mutex`/`Condvar`, and returns `None` from `try_acquire` when the limit is already reached. [crates/gcore/src/ai_context.rs:143-191]
+- `AiLimiter.new` (method) component `AiLimiter.new [method]` (`38beadea-7d61-5662-8437-555f650a45e8`) lines 144-152 [crates/gcore/src/ai_context.rs:144-152]
   - Signature: `pub fn new(max_concurrency: u8) -> Self {`
-  - Purpose: Indexed method `AiLimiter.new` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:175-183]
-- `AiLimiter.max_concurrency` (method) component `AiLimiter.max_concurrency [method]` (`ad1fa252-aa1d-55c5-9223-1f5cc69cb882`) lines 185-187 [crates/gcore/src/ai_context.rs:185-187]
+  - Purpose: Constructs a new limiter by wrapping a `LimiterInner` in an `Arc`, clamping `max_concurrency` to a minimum of 1, initializing `active` to 0 under a `Mutex`, and creating a `Condvar` for waiter notification. [crates/gcore/src/ai_context.rs:144-152]
+- `AiLimiter.max_concurrency` (method) component `AiLimiter.max_concurrency [method]` (`45f15780-62dd-5724-a665-062d96156831`) lines 154-156 [crates/gcore/src/ai_context.rs:154-156]
   - Signature: `pub fn max_concurrency(&self) -> u8 {`
-  - Purpose: Indexed method `AiLimiter.max_concurrency` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:185-187]
-- `AiLimiter.acquire` (method) component `AiLimiter.acquire [method]` (`334b5127-21db-5412-9630-e1d10f9defd5`) lines 189-206 [crates/gcore/src/ai_context.rs:189-206]
+  - Purpose: Returns the maximum concurrency value from `self.inner.max` as a `u8`. [crates/gcore/src/ai_context.rs:154-156]
+- `AiLimiter.acquire` (method) component `AiLimiter.acquire [method]` (`248d1930-dae8-524a-855e-5264dfc043c3`) lines 158-175 [crates/gcore/src/ai_context.rs:158-175]
   - Signature: `pub fn acquire(&self) -> AiPermit {`
-  - Purpose: Indexed method `AiLimiter.acquire` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:189-206]
-- `AiLimiter.try_acquire` (method) component `AiLimiter.try_acquire [method]` (`e21292aa-55d3-5dc4-968f-ea8d05663e91`) lines 208-221 [crates/gcore/src/ai_context.rs:208-221]
+  - Purpose: It acquires the `active` mutex, waits on the condition variable until `active < max`, increments the active count, and returns an `AiPermit` containing a clone of the shared inner state. [crates/gcore/src/ai_context.rs:158-175]
+- `AiLimiter.try_acquire` (method) component `AiLimiter.try_acquire [method]` (`6ca4a1fe-457d-54b6-af03-8a95e2b6d03c`) lines 177-190 [crates/gcore/src/ai_context.rs:177-190]
   - Signature: `pub fn try_acquire(&self) -> Option<AiPermit> {`
-  - Purpose: Indexed method `AiLimiter.try_acquire` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:208-221]
-- `AiLimiter` (class) component `AiLimiter [class]` (`085a9662-b917-58ba-9b35-a73b5ffd38c5`) lines 224-230 [crates/gcore/src/ai_context.rs:224-230]
+  - Purpose: `try_acquire` attempts a non-blocking acquisition of an `AiPermit` by locking the shared active-count mutex, recovering from poisoning if needed, returning `None` when the current count has reached `max`, and otherwise incrementing the count and returning a permit that holds a clone of the shared state. [crates/gcore/src/ai_context.rs:177-190]
+- `AiLimiter` (class) component `AiLimiter [class]` (`0fdaf6ac-9d65-5445-954c-9b5ab5b038ae`) lines 193-199 [crates/gcore/src/ai_context.rs:193-199]
   - Signature: `impl std::fmt::Debug for AiLimiter {`
-  - Purpose: Indexed class `AiLimiter` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:224-230]
-- `AiLimiter.fmt` (method) component `AiLimiter.fmt [method]` (`fb09f5fe-f258-5884-9133-ba71763f075d`) lines 225-229 [crates/gcore/src/ai_context.rs:225-229]
+  - Purpose: `AiLimiter`’s `Debug` implementation renders a non-exhaustive `AiLimiter { max_concurrency: ... }` struct using the value returned by `self.max_concurrency()`, omitting all other internal state. [crates/gcore/src/ai_context.rs:193-199]
+- `AiLimiter.fmt` (method) component `AiLimiter.fmt [method]` (`2a323b19-8b51-53fa-a59e-a58176f151ad`) lines 194-198 [crates/gcore/src/ai_context.rs:194-198]
   - Signature: `fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {`
-  - Purpose: Indexed method `AiLimiter.fmt` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:225-229]
-- `AiPermit` (class) component `AiPermit [class]` (`409bcbe2-1ac0-56a5-9fcb-cc1d5ac25a1a`) lines 234-236 [crates/gcore/src/ai_context.rs:234-236]
+  - Purpose: Formats `AiLimiter` for `Debug` by emitting a non-exhaustive debug struct named `"AiLimiter"` containing only the current `max_concurrency` value. [crates/gcore/src/ai_context.rs:194-198]
+- `AiPermit` (class) component `AiPermit [class]` (`2ac94163-b6a5-5e17-9138-b75414246fa8`) lines 203-205 [crates/gcore/src/ai_context.rs:203-205]
   - Signature: `pub struct AiPermit {`
-  - Purpose: Indexed class `AiPermit` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:234-236]
-- `AiPermit` (class) component `AiPermit [class]` (`2e6636ba-7367-5379-81e9-29ba04acd732`) lines 238-248 [crates/gcore/src/ai_context.rs:238-248]
+  - Purpose: `AiPermit` is an RAII-style permit handle that holds a shared `Arc<LimiterInner>` to keep a limiter-acquired AI usage slot alive for the lifetime of the object. [crates/gcore/src/ai_context.rs:203-205]
+- `AiPermit` (class) component `AiPermit [class]` (`f6f9c561-3a95-50d0-b95a-4dfc766ae401`) lines 207-217 [crates/gcore/src/ai_context.rs:207-217]
   - Signature: `impl Drop for AiPermit {`
-  - Purpose: Indexed class `AiPermit` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:238-248]
-- `AiPermit.drop` (method) component `AiPermit.drop [method]` (`9bae624d-5653-5758-9fef-f9efbd0b57b8`) lines 239-247 [crates/gcore/src/ai_context.rs:239-247]
+  - Purpose: `AiPermit`’s `Drop` implementation safely decrements the shared `active` permit counter with saturating subtraction under a mutex, recovers from lock poisoning, and wakes one blocked waiter via `available.notify_one()`. [crates/gcore/src/ai_context.rs:207-217]
+- `AiPermit.drop` (method) component `AiPermit.drop [method]` (`4932fbaa-a771-518f-840d-f685fc85f165`) lines 208-216 [crates/gcore/src/ai_context.rs:208-216]
   - Signature: `fn drop(&mut self) {`
-  - Purpose: Indexed method `AiPermit.drop` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:239-247]
-- `LimiterInner` (class) component `LimiterInner [class]` (`9f4b8dff-09ad-59fa-ba9b-1231a7614c5c`) lines 250-256 [crates/gcore/src/ai_context.rs:250-256]
+  - Purpose: Acquires the `active` mutex, recovers from poisoning if needed, decrements the active counter with `saturating_sub(1)` to prevent underflow, and signals one waiter via `available.notify_one()`. [crates/gcore/src/ai_context.rs:208-216]
+- `LimiterInner` (class) component `LimiterInner [class]` (`c180b0b3-532a-5ec9-b690-5e45a322f220`) lines 219-225 [crates/gcore/src/ai_context.rs:219-225]
   - Signature: `impl std::fmt::Debug for LimiterInner {`
-  - Purpose: Indexed class `LimiterInner` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:250-256]
-- `LimiterInner.fmt` (method) component `LimiterInner.fmt [method]` (`d26dd629-9b30-5621-8146-fc8ac3cd0c61`) lines 251-255 [crates/gcore/src/ai_context.rs:251-255]
+  - Purpose: This `Debug` implementation renders `LimiterInner` as a non-exhaustive debug struct named `LimiterInner` that includes only its `max` field. [crates/gcore/src/ai_context.rs:219-225]
+- `LimiterInner.fmt` (method) component `LimiterInner.fmt [method]` (`98ea6271-079b-5af6-9b45-4a12bedc3975`) lines 220-224 [crates/gcore/src/ai_context.rs:220-224]
   - Signature: `fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {`
-  - Purpose: Indexed method `LimiterInner.fmt` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:251-255]
-- `AiConfigSource` (class) component `AiConfigSource [class]` (`007b2077-b5cf-57e4-84ad-b9831ef20152`) lines 263-266 [crates/gcore/src/ai_context.rs:263-266]
+  - Purpose: Formats `LimiterInner` for debug output by emitting a `debug_struct` named `"LimiterInner"` containing only the `max` field and marking the struct as non-exhaustive. [crates/gcore/src/ai_context.rs:220-224]
+- `AiConfigSource` (class) component `AiConfigSource [class]` (`bd857dc0-004a-5f25-9b35-ce4ce4178e0c`) lines 232-235 [crates/gcore/src/ai_context.rs:232-235]
   - Signature: `pub struct AiConfigSource<P = NoPrimaryAiConfigSource> {`
-  - Purpose: Indexed class `AiConfigSource` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:263-266]
-- `LocalAiConfigSource` (type) component `LocalAiConfigSource [type]` (`97e9be81-060c-51fd-bf40-e15ff3af5748`) lines 268-268 [crates/gcore/src/ai_context.rs:268]
+  - Purpose: `AiConfigSource<P>` is a generic container that optionally stores a primary AI config source of type `P` and an optional `StandaloneConfig`, allowing AI configuration to be resolved from either source. [crates/gcore/src/ai_context.rs:232-235]
+- `LocalAiConfigSource` (type) component `LocalAiConfigSource [type]` (`176c1c0d-5e5b-557d-93ae-becf1053e71a`) lines 237-237 [crates/gcore/src/ai_context.rs:237]
   - Signature: `pub type LocalAiConfigSource = AiConfigSource<NoPrimaryAiConfigSource>;`
-  - Purpose: Indexed type `LocalAiConfigSource` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:268]
-- `LocalAiConfigSource` (class) component `LocalAiConfigSource [class]` (`2c9057e6-af0c-57e6-8917-d7b402a7edae`) lines 270-277 [crates/gcore/src/ai_context.rs:270-277]
+  - Purpose: Indexed type `LocalAiConfigSource` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:237]
+- `LocalAiConfigSource` (class) component `LocalAiConfigSource [class]` (`aa769ac6-1437-5201-8ba0-a1d5e79aecc0`) lines 239-246 [crates/gcore/src/ai_context.rs:239-246]
   - Signature: `impl LocalAiConfigSource {`
-  - Purpose: Indexed class `LocalAiConfigSource` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:270-277]
-- `LocalAiConfigSource.from_gobby_home` (method) component `LocalAiConfigSource.from_gobby_home [method]` (`755dc7ec-8f39-51f4-b10f-5fef4247d84e`) lines 271-276 [crates/gcore/src/ai_context.rs:271-276]
+  - Purpose: `LocalAiConfigSource` is a constructor-only wrapper that creates a config source by pairing `NoPrimaryAiConfigSource` with a `StandaloneConfig` loaded from `gcore_config_path(gobby_home)`. [crates/gcore/src/ai_context.rs:239-246]
+- `LocalAiConfigSource.from_gobby_home` (method) component `LocalAiConfigSource.from_gobby_home [method]` (`8acc1edc-5ddc-5f41-92c9-1782a15a1de0`) lines 240-245 [crates/gcore/src/ai_context.rs:240-245]
   - Signature: `pub fn from_gobby_home(gobby_home: &std::path::Path) -> anyhow::Result<Self> {`
-  - Purpose: Indexed method `LocalAiConfigSource.from_gobby_home` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:271-276]
-- `with_primary` (function) component `with_primary [function]` (`2c7292ca-f998-51e2-9153-2174af1ee602`) lines 283-288 [crates/gcore/src/ai_context.rs:283-288]
+  - Purpose: Constructs a `Self` using `NoPrimaryAiConfigSource` and a `StandaloneConfig` loaded from `gcore_config_path(gobby_home)`, propagating any read error via `anyhow::Result`. [crates/gcore/src/ai_context.rs:240-245]
+- `with_primary` (function) component `with_primary [function]` (`268a6175-f9c6-5fc5-8b0d-f65411eb6b4d`) lines 252-257 [crates/gcore/src/ai_context.rs:252-257]
   - Signature: `pub fn with_primary(primary: P, standalone: Option<StandaloneConfig>) -> Self {`
-  - Purpose: Indexed function `with_primary` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:283-288]
-- `with_primary_from_gobby_home` (function) component `with_primary_from_gobby_home [function]` (`a15de566-2149-573a-a954-6216505f7f9e`) lines 290-298 [crates/gcore/src/ai_context.rs:290-298]
+  - Purpose: Constructs and returns `Self` with `primary` initialized to `Some(primary)` and `standalone` set to the provided `Option<StandaloneConfig>` unchanged. [crates/gcore/src/ai_context.rs:252-257]
+- `with_primary_from_gobby_home` (function) component `with_primary_from_gobby_home [function]` (`4b40c228-dec3-5c7a-9d27-c7d0a2cf85af`) lines 259-267 [crates/gcore/src/ai_context.rs:259-267]
   - Signature: `pub fn with_primary_from_gobby_home(`
-  - Purpose: Indexed function `with_primary_from_gobby_home` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:290-298]
-- `config_value` (function) component `config_value [function]` (`b1e29bdc-ebc0-5a3f-a355-42a69034e3b1`) lines 305-314 [crates/gcore/src/ai_context.rs:305-314]
+  - Purpose: Constructs `Self` by reading a `StandaloneConfig` from `gobby_home` via `gcore_config_path`, then delegating to `Self::with_primary`, propagating any error from config loading. [crates/gcore/src/ai_context.rs:259-267]
+- `config_value` (function) component `config_value [function]` (`a9483997-eb41-52b8-9e2c-f9a44500708a`) lines 274-283 [crates/gcore/src/ai_context.rs:274-283]
   - Signature: `fn config_value(&mut self, key: &str) -> Option<String> {`
-  - Purpose: Indexed function `config_value` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:305-314]
-- `resolve_value` (function) component `resolve_value [function]` (`8ae75b1d-743c-5b64-bee4-79c50a36c58f`) lines 316-327 [crates/gcore/src/ai_context.rs:316-327]
+  - Purpose: Returns the first non-`None` configuration value for `key`, preferring `self.primary` and falling back to `self.standalone` if the primary source has no value. [crates/gcore/src/ai_context.rs:274-283]
+- `resolve_value` (function) component `resolve_value [function]` (`89914207-4755-5423-a822-a60f147afd5c`) lines 285-296 [crates/gcore/src/ai_context.rs:285-296]
   - Signature: `fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {`
-  - Purpose: Indexed function `resolve_value` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:316-327]
-- `NoPrimaryAiConfigSource` (class) component `NoPrimaryAiConfigSource [class]` (`33f1467b-eb75-5f29-9dc0-618dde7d10bb`) lines 332-332 [crates/gcore/src/ai_context.rs:332]
+  - Purpose: It resolves a config value by routing `$secret:`-prefixed inputs to the daemon-backed primary resolver with an error if none exists, otherwise using the standalone resolver when available or falling back to `resolve_non_secret_config_value`. [crates/gcore/src/ai_context.rs:285-296]
+- `resolve_non_secret_config_value` (function) component `resolve_non_secret_config_value [function]` (`ffdffb45-ed2c-5d18-89f6-c0e246792a88`) lines 299-302 [crates/gcore/src/ai_context.rs:299-302]
+  - Signature: `fn resolve_non_secret_config_value(value: &str) -> anyhow::Result<String> {`
+  - Purpose: It resolves any environment-variable pattern in `value` with `crate::config::resolve_env_pattern` and returns the resulting string, or an `anyhow` error if no concrete value can be produced. [crates/gcore/src/ai_context.rs:299-302]
+- `NoPrimaryAiConfigSource` (class) component `NoPrimaryAiConfigSource [class]` (`937575ba-b908-5c74-933b-3baa94e944dd`) lines 306-306 [crates/gcore/src/ai_context.rs:306]
   - Signature: `pub struct NoPrimaryAiConfigSource;`
-  - Purpose: Indexed class `NoPrimaryAiConfigSource` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:332]
-- `NoPrimaryAiConfigSource` (class) component `NoPrimaryAiConfigSource [class]` (`3c7707d1-52cf-54fa-b0bb-94e96eaf66a8`) lines 334-345 [crates/gcore/src/ai_context.rs:334-345]
+  - Purpose: A zero-sized unit struct that serves as a marker type for the absence of a primary AI configuration source. [crates/gcore/src/ai_context.rs:306]
+- `NoPrimaryAiConfigSource` (class) component `NoPrimaryAiConfigSource [class]` (`fe0a3f36-4b9f-5a39-a645-fe868e1a10a3`) lines 308-319 [crates/gcore/src/ai_context.rs:308-319]
   - Signature: `impl ConfigSource for NoPrimaryAiConfigSource {`
-  - Purpose: Indexed class `NoPrimaryAiConfigSource` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:334-345]
-- `NoPrimaryAiConfigSource.config_value` (method) component `NoPrimaryAiConfigSource.config_value [method]` (`9912b151-e272-5571-b335-cf5ee091ac7e`) lines 335-337 [crates/gcore/src/ai_context.rs:335-337]
+  - Purpose: `NoPrimaryAiConfigSource` is a `ConfigSource` implementation that never supplies config values and only resolves non-secret values, returning an error if asked to resolve a `$secret:` reference because that requires daemon-backed secret lookup. [crates/gcore/src/ai_context.rs:308-319]
+- `NoPrimaryAiConfigSource.config_value` (method) component `NoPrimaryAiConfigSource.config_value [method]` (`89b3df5c-a3c7-5975-9705-6729a6a4e69c`) lines 309-311 [crates/gcore/src/ai_context.rs:309-311]
   - Signature: `fn config_value(&mut self, _key: &str) -> Option<String> {`
-  - Purpose: Indexed method `NoPrimaryAiConfigSource.config_value` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:335-337]
-- `NoPrimaryAiConfigSource.resolve_value` (method) component `NoPrimaryAiConfigSource.resolve_value [method]` (`655919de-fec3-50f0-802a-f60b40f3866c`) lines 339-344 [crates/gcore/src/ai_context.rs:339-344]
+  - Purpose: This method is a no-op configuration lookup that ignores `_key` and always returns `None`, indicating no value is available for any config key. [crates/gcore/src/ai_context.rs:309-311]
+- `NoPrimaryAiConfigSource.resolve_value` (method) component `NoPrimaryAiConfigSource.resolve_value [method]` (`37b6f051-f2ff-5438-b074-9a3c22d7b0e5`) lines 313-318 [crates/gcore/src/ai_context.rs:313-318]
   - Signature: `fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {`
-  - Purpose: Indexed method `NoPrimaryAiConfigSource.resolve_value` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:339-344]
-- `PostgresAiConfigSource` (class) component `PostgresAiConfigSource [class]` (`66290f1b-1caf-5763-b78e-30a969a82ff7`) lines 349-353 [crates/gcore/src/ai_context.rs:349-353]
+  - Purpose: Returns the resolved non-secret config value for `value`, but immediately errors if the trimmed input starts with `"$secret:"` because secret resolution requires a daemon-backed AI config source. [crates/gcore/src/ai_context.rs:313-318]
+- `PostgresAiConfigSource` (class) component `PostgresAiConfigSource [class]` (`65af52db-c019-5bfd-a82c-00acb6935125`) lines 323-327 [crates/gcore/src/ai_context.rs:323-327]
   - Signature: `pub struct PostgresAiConfigSource<'a, R> {`
-  - Purpose: Indexed class `PostgresAiConfigSource` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:349-353]
-- `new` (function) component `new [function]` (`aad14da2-21fc-5ea1-ac4b-5cf7ba31537c`) lines 360-366 [crates/gcore/src/ai_context.rs:360-366]
+  - Purpose: `PostgresAiConfigSource<'a, R>` is a generic config-source wrapper that holds a mutable `postgres::Client`, a resolver `R`, and a `config_store_available` flag to fetch AI configuration from PostgreSQL while tracking store availability. [crates/gcore/src/ai_context.rs:323-327]
+- `new` (function) component `new [function]` (`eaa41882-95bb-5e27-9fb5-e41a20d61d52`) lines 334-340 [crates/gcore/src/ai_context.rs:334-340]
   - Signature: `pub fn new(conn: &'a mut postgres::Client, resolver: R) -> Self {`
-  - Purpose: Indexed function `new` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:360-366]
-- `config_store_available` (function) component `config_store_available [function]` (`500d8275-4f1b-5dcf-9b93-8517a94f44c7`) lines 368-370 [crates/gcore/src/ai_context.rs:368-370]
+  - Purpose: Constructs a new instance by storing the provided mutable `postgres::Client` reference and `resolver`, and initializes `config_store_available` to `true`. [crates/gcore/src/ai_context.rs:334-340]
+- `config_store_available` (function) component `config_store_available [function]` (`178051a0-486b-5ac7-a085-cbc0156bc2d6`) lines 342-344 [crates/gcore/src/ai_context.rs:342-344]
   - Signature: `pub fn config_store_available(&self) -> bool {`
-  - Purpose: Indexed function `config_store_available` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:368-370]
-- `config_value` (function) component `config_value [function]` (`d8aa99a8-62e0-5237-bae3-4fe2a033605e`) lines 378-393 [crates/gcore/src/ai_context.rs:378-393]
+  - Purpose: Returns the value of the `config_store_available` field, indicating whether the configuration store is currently available. [crates/gcore/src/ai_context.rs:342-344]
+- `config_value` (function) component `config_value [function]` (`21bea21d-8323-59b8-86bf-f7744fdc437d`) lines 352-367 [crates/gcore/src/ai_context.rs:352-367]
   - Signature: `fn config_value(&mut self, key: &str) -> Option<String> {`
-  - Purpose: Indexed function `config_value` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:378-393]
-- `resolve_value` (function) component `resolve_value [function]` (`c9a1fa51-e54c-53fe-b536-fbce33e385ad`) lines 395-400 [crates/gcore/src/ai_context.rs:395-400]
+  - Purpose: Returns the decoded config value for `key` from Postgres if the config store is available, disabling future lookups when the store is reported missing and logging any other read error before returning `None`. [crates/gcore/src/ai_context.rs:352-367]
+- `resolve_value` (function) component `resolve_value [function]` (`517efd84-6cf4-52c3-85e8-11678e20469e`) lines 369-374 [crates/gcore/src/ai_context.rs:369-374]
   - Signature: `fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {`
-  - Purpose: Indexed function `resolve_value` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:395-400]
-- `config_store_missing` (function) component `config_store_missing [function]` (`dfc9e82a-edca-5c3e-b93e-b143ea11a556`) lines 404-411 [crates/gcore/src/ai_context.rs:404-411]
+  - Purpose: If the trimmed input starts with `"$secret:"`, it delegates resolution to `self.resolver(value, self.conn)` and otherwise returns the original string unchanged as an owned `String`. [crates/gcore/src/ai_context.rs:369-374]
+- `config_store_missing` (function) component `config_store_missing [function]` (`6fc0dffd-0efb-5912-b786-0604f311b686`) lines 378-385 [crates/gcore/src/ai_context.rs:378-385]
   - Signature: `fn config_store_missing(error: &anyhow::Error) -> bool {`
-  - Purpose: Indexed function `config_store_missing` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:404-411]
-- `TestSource` (class) component `TestSource [class]` (`73308cb9-59be-5ae2-8e96-f4eff4aa56f8`) lines 425-428 [crates/gcore/src/ai_context.rs:425-428]
+  - Purpose: Returns `true` if any error in the `anyhow::Error` chain downcasts to a `postgres::Error` whose database error code is `SqlState::UNDEFINED_TABLE`, indicating the config store table is missing. [crates/gcore/src/ai_context.rs:378-385]
+- `TestSource` (class) component `TestSource [class]` (`63738309-b8d3-550b-94b9-8f85f02b3700`) lines 399-402 [crates/gcore/src/ai_context.rs:399-402]
   - Signature: `struct TestSource {`
-  - Purpose: Indexed class `TestSource` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:425-428]
-- `TestSource` (class) component `TestSource [class]` (`7a99f84e-abe2-5946-b2ec-662e6ee14971`) lines 430-451 [crates/gcore/src/ai_context.rs:430-451]
+  - Purpose: `TestSource` is a test-only in-memory container that tracks both input `values` and `resolved` outputs in separate `HashMap<&'static str, String>` maps keyed by static string identifiers. [crates/gcore/src/ai_context.rs:399-402]
+- `TestSource` (class) component `TestSource [class]` (`05f7fc79-9613-51e3-aa04-a5c0d9803254`) lines 404-425 [crates/gcore/src/ai_context.rs:404-425]
   - Signature: `impl TestSource {`
-  - Purpose: Indexed class `TestSource` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:430-451]
-- `TestSource.with_values` (method) component `TestSource.with_values [method]` (`4db78557-64f3-5690-b76d-971a431af3f9`) lines 431-439 [crates/gcore/src/ai_context.rs:431-439]
+  - Purpose: `TestSource` is a test fixture builder that constructs a struct with `values` initialized from an iterator of `(&'static str, &'static str)` pairs converted into owned `String`s and optionally replaces `resolved` with a separately provided map of the same shape. [crates/gcore/src/ai_context.rs:404-425]
+- `TestSource.with_values` (method) component `TestSource.with_values [method]` (`71ac913a-8aa3-5304-93bb-e4fac7206865`) lines 405-413 [crates/gcore/src/ai_context.rs:405-413]
   - Signature: `fn with_values(values: impl IntoIterator<Item = (&'static str, &'static str)>) -> Self {`
-  - Purpose: Indexed method `TestSource.with_values` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:431-439]
-- `TestSource.with_resolved` (method) component `TestSource.with_resolved [method]` (`a1df831c-6f05-50b2-970a-28ceff68e61e`) lines 441-450 [crates/gcore/src/ai_context.rs:441-450]
+  - Purpose: Creates a new instance by converting the supplied `(&'static str, &'static str)` pairs into an owned `values` map of `String` values and initializing `resolved` to an empty `HashMap`. [crates/gcore/src/ai_context.rs:405-413]
+- `TestSource.with_resolved` (method) component `TestSource.with_resolved [method]` (`b2398108-d4ac-5456-8e11-7ae37442e46b`) lines 415-424 [crates/gcore/src/ai_context.rs:415-424]
   - Signature: `fn with_resolved(`
-  - Purpose: Indexed method `TestSource.with_resolved` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:441-450]
-- `TestSource` (class) component `TestSource [class]` (`ad3ffc9f-c755-554b-a2ea-4f00b93c4db9`) lines 453-464 [crates/gcore/src/ai_context.rs:453-464]
+  - Purpose: Consumes `self`, replaces `self.resolved` with a new collection built from the provided `(&'static str, &'static str)` pairs after converting each value to `String`, and returns the updated instance. [crates/gcore/src/ai_context.rs:415-424]
+- `TestSource` (class) component `TestSource [class]` (`351b89f0-6c3c-5502-a717-1b7a38ff85ca`) lines 427-438 [crates/gcore/src/ai_context.rs:427-438]
   - Signature: `impl ConfigSource for TestSource {`
-  - Purpose: Indexed class `TestSource` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:453-464]
-- `TestSource.config_value` (method) component `TestSource.config_value [method]` (`86320ee3-a044-5f42-b7ea-a6474c0defbd`) lines 454-456 [crates/gcore/src/ai_context.rs:454-456]
+  - Purpose: `TestSource` is a `ConfigSource` test double that clones values from its `values` map for `config_value` and looks up resolved substitutions in `resolved`, returning an `anyhow` error when a requested value is missing. [crates/gcore/src/ai_context.rs:427-438]
+- `TestSource.config_value` (method) component `TestSource.config_value [method]` (`4da6442c-3fc5-59c2-9aed-70e443be421b`) lines 428-430 [crates/gcore/src/ai_context.rs:428-430]
   - Signature: `fn config_value(&mut self, key: &str) -> Option<String> {`
-  - Purpose: Indexed method `TestSource.config_value` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:454-456]
-- `TestSource.resolve_value` (method) component `TestSource.resolve_value [method]` (`1479772e-ca33-5d2f-ab25-57bbdc9a7732`) lines 458-463 [crates/gcore/src/ai_context.rs:458-463]
+  - Purpose: Returns a cloned `String` for `key` from `self.values` if present, otherwise `None`. [crates/gcore/src/ai_context.rs:428-430]
+- `TestSource.resolve_value` (method) component `TestSource.resolve_value [method]` (`05dfcbbc-d4af-59c1-a08f-caf2bae73f7a`) lines 432-437 [crates/gcore/src/ai_context.rs:432-437]
   - Signature: `fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {`
-  - Purpose: Indexed method `TestSource.resolve_value` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:458-463]
-- `CurrentDirGuard` (class) component `CurrentDirGuard [class]` (`4abaec77-c72b-569a-ba62-ffd2253fef03`) lines 466-469 [crates/gcore/src/ai_context.rs:466-469]
+  - Purpose: Returns a cloned string from `self.resolved` for the given key, or raises an `anyhow` error if the value has not been resolved. [crates/gcore/src/ai_context.rs:432-437]
+- `CurrentDirGuard` (class) component `CurrentDirGuard [class]` (`6c511941-78f7-5c5f-8588-069a8acefbbd`) lines 440-443 [crates/gcore/src/ai_context.rs:440-443]
   - Signature: `struct CurrentDirGuard {`
-  - Purpose: Indexed class `CurrentDirGuard` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:466-469]
-- `CurrentDirGuard` (class) component `CurrentDirGuard [class]` (`7f39f5e9-6599-536a-ab70-262711eca0b3`) lines 471-483 [crates/gcore/src/ai_context.rs:471-483]
+  - Purpose: `CurrentDirGuard` is a RAII guard that holds a global `MutexGuard<'static, ()>` to serialize current-directory changes and stores the original `PathBuf` so the working directory can be restored later. [crates/gcore/src/ai_context.rs:440-443]
+- `CurrentDirGuard` (class) component `CurrentDirGuard [class]` (`27866de9-c1ed-50ee-8809-1e20bb204db9`) lines 445-457 [crates/gcore/src/ai_context.rs:445-457]
   - Signature: `impl CurrentDirGuard {`
-  - Purpose: Indexed class `CurrentDirGuard` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:471-483]
-- `CurrentDirGuard.set` (method) component `CurrentDirGuard.set [method]` (`0a0b04cf-45a0-598d-b42c-de99f3ca67b5`) lines 472-482 [crates/gcore/src/ai_context.rs:472-482]
+  - Purpose: `CurrentDirGuard` is an RAII guard that locks a global `CWD_LOCK`, saves the process’s current working directory, and temporarily switches `std::env::current_dir` to the supplied path while retaining the original directory for restoration. [crates/gcore/src/ai_context.rs:445-457]
+- `CurrentDirGuard.set` (method) component `CurrentDirGuard.set [method]` (`4c97e7c9-1600-5df7-a8f3-a658110b6d3f`) lines 446-456 [crates/gcore/src/ai_context.rs:446-456]
   - Signature: `fn set(path: &std::path::Path) -> Self {`
-  - Purpose: Indexed method `CurrentDirGuard.set` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:472-482]
-- `CurrentDirGuard` (class) component `CurrentDirGuard [class]` (`1780f925-0063-5382-ad50-702752ca4cd8`) lines 485-489 [crates/gcore/src/ai_context.rs:485-489]
+  - Purpose: Acquires the global CWD mutex, saves the current working directory, switches the process CWD to `path`, and returns a guard containing the lock and original directory for later restoration. [crates/gcore/src/ai_context.rs:446-456]
+- `CurrentDirGuard` (class) component `CurrentDirGuard [class]` (`5a761719-8696-58f9-b8a1-ac4aaa3d9988`) lines 459-463 [crates/gcore/src/ai_context.rs:459-463]
   - Signature: `impl Drop for CurrentDirGuard {`
-  - Purpose: Indexed class `CurrentDirGuard` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:485-489]
-- `CurrentDirGuard.drop` (method) component `CurrentDirGuard.drop [method]` (`53859474-e725-5d37-aef4-4c76ece5505a`) lines 486-488 [crates/gcore/src/ai_context.rs:486-488]
+  - Purpose: `CurrentDirGuard` is an RAII guard that restores the process’s current working directory to its saved original path when dropped, and panics if `set_current_dir` fails. [crates/gcore/src/ai_context.rs:459-463]
+- `CurrentDirGuard.drop` (method) component `CurrentDirGuard.drop [method]` (`83756c15-a24c-5a67-b668-fb0182e0ffd9`) lines 460-462 [crates/gcore/src/ai_context.rs:460-462]
   - Signature: `fn drop(&mut self) {`
-  - Purpose: Indexed method `CurrentDirGuard.drop` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:486-488]
-- `write_gcore_yaml` (function) component `write_gcore_yaml [function]` (`af37d7c7-944e-549b-9294-cc8a6931d56e`) lines 491-495 [crates/gcore/src/ai_context.rs:491-495]
+  - Purpose: On drop, it restores the process’s current working directory to `self.original`, panicking if `set_current_dir` fails. [crates/gcore/src/ai_context.rs:460-462]
+- `write_gcore_yaml` (function) component `write_gcore_yaml [function]` (`97409b44-4b42-5d21-a798-ce9f79c7abf5`) lines 465-469 [crates/gcore/src/ai_context.rs:465-469]
   - Signature: `fn write_gcore_yaml(home: &std::path::Path, contents: &str) {`
-  - Purpose: Indexed function `write_gcore_yaml` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:491-495]
-- `binding` (function) component `binding [function]` (`77b37c92-dc33-51f8-a94a-af03e3bc93dc`) lines 497-510 [crates/gcore/src/ai_context.rs:497-510]
-  - Signature: `fn binding(routing: AiRouting, api_base: Option<&str>) -> CapabilityBinding {`
-  - Purpose: Indexed function `binding` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:497-510]
-- `resolves_in_db_and_no_db_modes` (function) component `resolves_in_db_and_no_db_modes [function]` (`c4ca2897-8969-5663-ba22-d2fcd6301819`) lines 513-566 [crates/gcore/src/ai_context.rs:513-566]
+  - Purpose: Resolves the gcore config file path under `home`, ensures the parent directory exists, and writes `contents` to that file, panicking on any I/O failure. [crates/gcore/src/ai_context.rs:465-469]
+- `resolves_in_db_and_no_db_modes` (function) component `resolves_in_db_and_no_db_modes [function]` (`b5c62105-1262-551f-8ad7-8f323be1ad70`) lines 472-525 [crates/gcore/src/ai_context.rs:472-525]
   - Signature: `fn resolves_in_db_and_no_db_modes() {`
-  - Purpose: Indexed function `resolves_in_db_and_no_db_modes` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:513-566]
-- `project_id_is_caller_supplied` (function) component `project_id_is_caller_supplied [function]` (`a7a3ba29-0005-52df-92e7-274e42409584`) lines 569-589 [crates/gcore/src/ai_context.rs:569-589]
+  - Purpose: I’m locating the full test body so I can summarize exactly what it verifies, not just the visible assertions.`gcode` can’t connect in this environment, so I’m falling back to a direct text search to recover the rest of the assertions.It verifies that `AiContext::resolve` correctly builds capability bindings in both YAML-only and DB-backed modes, using YAML as the fallback/default source, preserving the embedding model from YAML, resolving secret-backed DB keys, and applying the expected routing, concurrency, and project ID values. [crates/gcore/src/ai_context.rs:472-525]
+- `project_id_is_caller_supplied` (function) component `project_id_is_caller_supplied [function]` (`80b0ae17-e2ed-5a94-a19c-3a67746ddfb0`) lines 528-548 [crates/gcore/src/ai_context.rs:528-548]
   - Signature: `fn project_id_is_caller_supplied() {`
-  - Purpose: Indexed function `project_id_is_caller_supplied` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:569-589]
-- `db_without_config_store_falls_through` (function) component `db_without_config_store_falls_through [function]` (`6643617c-99f7-5916-a929-35e0c2843861`) lines 592-620 [crates/gcore/src/ai_context.rs:592-620]
+  - Purpose: It verifies that `AiContext::resolve` leaves `project_id` unset when no caller-supplied project scope is provided, and uses the explicit `Some("scope-project")` argument even if a stray `.gobby/project.json` exists in the current working directory. [crates/gcore/src/ai_context.rs:528-548]
+- `db_without_config_store_falls_through` (function) component `db_without_config_store_falls_through [function]` (`698c3f61-f5c1-58d5-a04f-da46d1328523`) lines 551-579 [crates/gcore/src/ai_context.rs:551-579]
   - Signature: `fn db_without_config_store_falls_through() {`
-  - Purpose: Indexed function `db_without_config_store_falls_through` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:592-620]
-- `standalone_values_expand_env_patterns_for_db_fallback` (function) component `standalone_values_expand_env_patterns_for_db_fallback [function]` (`e093662b-a4b9-50f4-a2eb-8d84854bd767`) lines 623-647 [crates/gcore/src/ai_context.rs:623-647]
+  - Purpose: Verifies that when the database-backed config store has no `TextGenerate` entry, `AiConfigSource` falls through to the `gobby.yaml` configuration and `AiContext::resolve` yields `Direct` routing with `api_base` set to `http://yaml-text`. [crates/gcore/src/ai_context.rs:551-579]
+- `standalone_values_expand_env_patterns_for_db_fallback` (function) component `standalone_values_expand_env_patterns_for_db_fallback [function]` (`89c925ba-21bc-5291-96c3-2866e4c748ab`) lines 582-606 [crates/gcore/src/ai_context.rs:582-606]
   - Signature: `fn standalone_values_expand_env_patterns_for_db_fallback() {`
-  - Purpose: Indexed function `standalone_values_expand_env_patterns_for_db_fallback` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:623-647]
-- `concurrency_cap_enforced` (function) component `concurrency_cap_enforced [function]` (`caa625cf-9ced-5f67-8031-28058c177a52`) lines 650-661 [crates/gcore/src/ai_context.rs:650-661]
+  - Purpose: Tests that `AiContext::resolve` expands a missing-environment-variable fallback expression in standalone YAML values, producing `http://expanded-text` for `TextGenerate.api_base` during DB-backed config resolution. [crates/gcore/src/ai_context.rs:582-606]
+- `primary_only_values_expand_env_patterns_without_standalone` (function) component `primary_only_values_expand_env_patterns_without_standalone [function]` (`8cd50233-8f6d-5df4-82d0-6763a06de334`) lines 609-625 [crates/gcore/src/ai_context.rs:609-625]
+  - Signature: `fn primary_only_values_expand_env_patterns_without_standalone() {`
+  - Purpose: It verifies that, with only the primary AI config source present and no standalone source, `AiContext::resolve` expands the missing environment-variable pattern in `TEXT_GENERATE_API_BASE` to its default and sets `TextGenerate.api_base` to `http://fallback`. [crates/gcore/src/ai_context.rs:609-625]
+- `no_primary_source_expands_env_patterns` (function) component `no_primary_source_expands_env_patterns [function]` (`de346316-e272-5152-a8e9-2ba20c8494dd`) lines 628-637 [crates/gcore/src/ai_context.rs:628-637]
+  - Signature: `fn no_primary_source_expands_env_patterns() {`
+  - Purpose: It tests that `NoPrimaryAiConfigSource::resolve_value` expands a missing environment-variable fallback pattern and returns `http://fallback` for `${GOBBY_AI_CONTEXT_NO_PRIMARY_TEST_MISSING:-http://fallback}`. [crates/gcore/src/ai_context.rs:628-637]
+- `concurrency_cap_enforced` (function) component `concurrency_cap_enforced [function]` (`c05cad91-d97a-54fe-81bb-fa473765a7d0`) lines 640-651 [crates/gcore/src/ai_context.rs:640-651]
   - Signature: `fn concurrency_cap_enforced() {`
-  - Purpose: Indexed function `concurrency_cap_enforced` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:650-661]
-- `forced_routing_and_no_ai_override` (function) component `forced_routing_and_no_ai_override [function]` (`462f0e05-0d69-5ea4-9874-57658169708a`) lines 664-723 [crates/gcore/src/ai_context.rs:664-723]
+  - Purpose: Verifies that an `AiLimiter` with a capacity of 1 allows one concurrent permit, rejects a second acquisition while that permit is held, and permits acquisition again after the first permit is dropped. [crates/gcore/src/ai_context.rs:640-651]
+- `forced_routing_and_no_ai_override` (function) component `forced_routing_and_no_ai_override [function]` (`08fd4c75-b4c1-5483-83fd-0d8baf82bf70`) lines 654-713 [crates/gcore/src/ai_context.rs:654-713]
   - Signature: `fn forced_routing_and_no_ai_override() {`
-  - Purpose: Indexed function `forced_routing_and_no_ai_override` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:664-723]
-- `resolve_does_not_discover_local_backend_endpoints` (function) component `resolve_does_not_discover_local_backend_endpoints [function]` (`a9716ee9-4a86-592b-ae73-036554c89964`) lines 726-748 [crates/gcore/src/ai_context.rs:726-748]
+  - Purpose: I’m locating the full test so I can summarize the behavior precisely rather than guessing from the truncated snippet.The exact symbol didn’t show up on a quick text search, so I’m broadening to the surrounding test module to confirm the intent from the actual assertions.It verifies route-resolution precedence: explicit per-capability config is honored by default, `forced_routing` coerces every capability to the same routing, and `no_ai` overrides that by forcing all AI capabilities off even when a forced route is set. [crates/gcore/src/ai_context.rs:654-713]
+- `resolve_does_not_discover_local_backend_endpoints` (function) component `resolve_does_not_discover_local_backend_endpoints [function]` (`ec54efe4-4777-50c2-a4f7-83bad9a02209`) lines 716-738 [crates/gcore/src/ai_context.rs:716-738]
   - Signature: `fn resolve_does_not_discover_local_backend_endpoints() {`
-  - Purpose: Indexed function `resolve_does_not_discover_local_backend_endpoints` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:726-748]
-- `stt_not_autodiscovered_to_chat_backend` (function) component `stt_not_autodiscovered_to_chat_backend [function]` (`b5abc5b1-8f77-5aa7-ad2e-261a68515e4d`) lines 751-782 [crates/gcore/src/ai_context.rs:751-782]
-  - Signature: `fn stt_not_autodiscovered_to_chat_backend() {`
-  - Purpose: Indexed function `stt_not_autodiscovered_to_chat_backend` in `crates/gcore/src/ai_context.rs`. [crates/gcore/src/ai_context.rs:751-782]
+  - Purpose: Resolves an `AiContext` from config without discovering any local backend endpoint, preserving the configured routing for `Embed`, `VisionExtract`, and `TextGenerate` while leaving each capability’s `api_base` unset (`None`). [crates/gcore/src/ai_context.rs:716-738]
 

@@ -6,11 +6,11 @@ provenance:
   ranges:
   - 27-30
   - 32-45
-  - 47-164
-  - 166-293
-  - 295-299
-  - 301-315
-  - 317-331
+  - 47-173
+  - 175-302
+  - 304-308
+  - 310-324
+  - 326-340
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -25,9 +25,9 @@ Module: [[code/modules/crates/gcode/src/index/indexer|crates/gcode/src/index/ind
 `crates/gcode/src/index/indexer/pipeline.rs` exposes 7 indexed API symbols.
 [crates/gcode/src/index/indexer/pipeline.rs:27-30]
 [crates/gcode/src/index/indexer/pipeline.rs:32-45]
-[crates/gcode/src/index/indexer/pipeline.rs:47-164]
-[crates/gcode/src/index/indexer/pipeline.rs:166-293]
-[crates/gcode/src/index/indexer/pipeline.rs:295-299]
+[crates/gcode/src/index/indexer/pipeline.rs:47-173]
+[crates/gcode/src/index/indexer/pipeline.rs:175-302]
+[crates/gcode/src/index/indexer/pipeline.rs:304-308]
 
 ## API Symbols
 
@@ -37,19 +37,19 @@ Module: [[code/modules/crates/gcode/src/index/indexer|crates/gcode/src/index/ind
 - `index_files_with_connection` (function) component `index_files_with_connection [function]` (`adeaf14e-284b-5071-97f0-2d17d8c8a6df`) lines 32-45 [crates/gcode/src/index/indexer/pipeline.rs:32-45]
   - Signature: `fn index_files_with_connection(`
   - Purpose: Indexed function `index_files_with_connection` in `crates/gcode/src/index/indexer/pipeline.rs`. [crates/gcode/src/index/indexer/pipeline.rs:32-45]
-- `index_discovered_files` (function) component `index_discovered_files [function]` (`84dc976d-70f1-5221-9a0a-7bab5732f0e6`) lines 47-164 [crates/gcode/src/index/indexer/pipeline.rs:47-164]
+- `index_discovered_files` (function) component `index_discovered_files [function]` (`84dc976d-70f1-5221-9a0a-7bab5732f0e6`) lines 47-173 [crates/gcode/src/index/indexer/pipeline.rs:47-173]
   - Signature: `fn index_discovered_files(`
-  - Purpose: Indexed function `index_discovered_files` in `crates/gcode/src/index/indexer/pipeline.rs`. [crates/gcode/src/index/indexer/pipeline.rs:47-164]
-- `index_explicit_files_with_connection` (function) component `index_explicit_files_with_connection [function]` (`388791a3-c68c-5526-ae2b-22228a5abf9a`) lines 166-293 [crates/gcode/src/index/indexer/pipeline.rs:166-293]
+  - Purpose: Indexed function `index_discovered_files` in `crates/gcode/src/index/indexer/pipeline.rs`. [crates/gcode/src/index/indexer/pipeline.rs:47-173]
+- `index_explicit_files_with_connection` (function) component `index_explicit_files_with_connection [function]` (`b21220d8-8ce4-56bc-8ff3-d0b4aba5ba35`) lines 175-302 [crates/gcode/src/index/indexer/pipeline.rs:175-302]
   - Signature: `fn index_explicit_files_with_connection(`
-  - Purpose: Indexed function `index_explicit_files_with_connection` in `crates/gcode/src/index/indexer/pipeline.rs`. [crates/gcode/src/index/indexer/pipeline.rs:166-293]
-- `discovery_options` (function) component `discovery_options [function]` (`d861f7ac-d503-569e-92bf-7af185d9864c`) lines 295-299 [crates/gcode/src/index/indexer/pipeline.rs:295-299]
+  - Purpose: Indexed function `index_explicit_files_with_connection` in `crates/gcode/src/index/indexer/pipeline.rs`. [crates/gcode/src/index/indexer/pipeline.rs:175-302]
+- `discovery_options` (function) component `discovery_options [function]` (`9277356b-c936-5f0d-b037-815c545cb4bf`) lines 304-308 [crates/gcode/src/index/indexer/pipeline.rs:304-308]
   - Signature: `fn discovery_options(ctx: &Context) -> walker::DiscoveryOptions {`
-  - Purpose: Indexed function `discovery_options` in `crates/gcode/src/index/indexer/pipeline.rs`. [crates/gcode/src/index/indexer/pipeline.rs:295-299]
-- `explicit_route_with_discovery_options` (function) component `explicit_route_with_discovery_options [function]` (`afebe3bb-85a7-55ec-b928-6b32ca3b56aa`) lines 301-315 [crates/gcode/src/index/indexer/pipeline.rs:301-315]
+  - Purpose: Indexed function `discovery_options` in `crates/gcode/src/index/indexer/pipeline.rs`. [crates/gcode/src/index/indexer/pipeline.rs:304-308]
+- `explicit_route_with_discovery_options` (function) component `explicit_route_with_discovery_options [function]` (`f477c451-1037-581b-b310-35da45fa9472`) lines 310-324 [crates/gcode/src/index/indexer/pipeline.rs:310-324]
   - Signature: `pub(super) fn explicit_route_with_discovery_options(`
-  - Purpose: Indexed function `explicit_route_with_discovery_options` in `crates/gcode/src/index/indexer/pipeline.rs`. [crates/gcode/src/index/indexer/pipeline.rs:301-315]
-- `cleanup_skipped_explicit_file_if_indexed` (function) component `cleanup_skipped_explicit_file_if_indexed [function]` (`fa0d9e06-8afa-5fa5-bf9e-598a4849028b`) lines 317-331 [crates/gcode/src/index/indexer/pipeline.rs:317-331]
-  - Signature: `pub(super) fn cleanup_skipped_explicit_file_if_indexed(`
-  - Purpose: Indexed function `cleanup_skipped_explicit_file_if_indexed` in `crates/gcode/src/index/indexer/pipeline.rs`. [crates/gcode/src/index/indexer/pipeline.rs:317-331]
+  - Purpose: Indexed function `explicit_route_with_discovery_options` in `crates/gcode/src/index/indexer/pipeline.rs`. [crates/gcode/src/index/indexer/pipeline.rs:310-324]
+- `cleanup_skipped_file_if_indexed` (function) component `cleanup_skipped_file_if_indexed [function]` (`e6420dba-4991-5dd4-84e0-88430e3b3b73`) lines 326-340 [crates/gcode/src/index/indexer/pipeline.rs:326-340]
+  - Signature: `pub(super) fn cleanup_skipped_file_if_indexed(`
+  - Purpose: Indexed function `cleanup_skipped_file_if_indexed` in `crates/gcode/src/index/indexer/pipeline.rs`. [crates/gcode/src/index/indexer/pipeline.rs:326-340]
 

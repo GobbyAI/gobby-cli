@@ -7,12 +7,11 @@ provenance:
   - 4-8
   - 10-25
   - 27-39
-  - 42-56
-  - 58-72
-  - 75-83
-  - 76-82
-  - 85-126
-  - 128-133
+  - 43-57
+  - 59-73
+  - 76-84
+  - 86-127
+  - 129-134
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -28,38 +27,36 @@ Module: [[code/modules/crates/gwiki/src/ingest/video|crates/gwiki/src/ingest/vid
 [crates/gwiki/src/ingest/video/metadata.rs:4-8]
 [crates/gwiki/src/ingest/video/metadata.rs:10-25]
 [crates/gwiki/src/ingest/video/metadata.rs:27-39]
-[crates/gwiki/src/ingest/video/metadata.rs:42-56]
-[crates/gwiki/src/ingest/video/metadata.rs:58-72]
+[crates/gwiki/src/ingest/video/metadata.rs:43-57]
+[crates/gwiki/src/ingest/video/metadata.rs:59-73]
 
 ## API Symbols
 
 - `VideoDegradationContext` (class) component `VideoDegradationContext [class]` (`5cef0615-849a-5088-9727-c0d3a43555eb`) lines 4-8 [crates/gwiki/src/ingest/video/metadata.rs:4-8]
   - Signature: `pub(crate) struct VideoDegradationContext<'a> {`
-  - Purpose: `VideoDegradationContext` is a crate-private struct that holds borrowed references to video media degradations, optional transcription degradation metadata, and a boolean flag controlling frame sampling suppression. [crates/gwiki/src/ingest/video/metadata.rs:4-8]
+  - Purpose: Indexed class `VideoDegradationContext` in `crates/gwiki/src/ingest/video/metadata.rs`. [crates/gwiki/src/ingest/video/metadata.rs:4-8]
 - `video_media_metadata` (function) component `video_media_metadata [function]` (`50c14da7-1f27-51f7-a67b-5c60ec275906`) lines 10-25 [crates/gwiki/src/ingest/video/metadata.rs:10-25]
   - Signature: `pub(crate) fn video_media_metadata(`
-  - Purpose: Resolves a video asset's absolute path and returns its file size combined with optional duration as `VideoMediaMetadata`, or a `WikiError` on I/O failure. [crates/gwiki/src/ingest/video/metadata.rs:10-25]
+  - Purpose: Indexed function `video_media_metadata` in `crates/gwiki/src/ingest/video/metadata.rs`. [crates/gwiki/src/ingest/video/metadata.rs:10-25]
 - `VideoSnapshotRef` (class) component `VideoSnapshotRef [class]` (`972281b0-e102-5a09-82ba-87d19a7ebc0b`) lines 27-39 [crates/gwiki/src/ingest/video/metadata.rs:27-39]
   - Signature: `pub(crate) struct VideoSnapshotRef<'a> {`
-  - Purpose: `VideoSnapshotRef<'a>` is a lifetime-parameterized borrowed-reference struct that aggregates a video's metadata, sampled frame data with descriptions, and transcription information. [crates/gwiki/src/ingest/video/metadata.rs:27-39]
-- `from_snapshot` (function) component `from_snapshot [function]` (`9133f29e-aa1d-5869-9bf9-5c593208edd8`) lines 42-56 [crates/gwiki/src/ingest/video/metadata.rs:42-56]
+  - Purpose: Indexed class `VideoSnapshotRef` in `crates/gwiki/src/ingest/video/metadata.rs`. [crates/gwiki/src/ingest/video/metadata.rs:27-39]
+- `from_snapshot` (function) component `from_snapshot [function]` (`3522703e-16f5-5898-9feb-e0b52ecbb815`) lines 43-57 [crates/gwiki/src/ingest/video/metadata.rs:43-57]
   - Signature: `pub(crate) fn from_snapshot(snapshot: &'a VideoSnapshot) -> Self {`
-  - Purpose: Constructs a new instance by borrowing fields from a `VideoSnapshot` reference while unwrapping optional types for `mime_type` and `transcription`. [crates/gwiki/src/ingest/video/metadata.rs:42-56]
-- `from_file_snapshot` (function) component `from_file_snapshot [function]` (`99efb05f-bbb7-5205-b58f-843ed69390ab`) lines 58-72 [crates/gwiki/src/ingest/video/metadata.rs:58-72]
+  - Purpose: Indexed function `from_snapshot` in `crates/gwiki/src/ingest/video/metadata.rs`. [crates/gwiki/src/ingest/video/metadata.rs:43-57]
+- `from_file_snapshot` (function) component `from_file_snapshot [function]` (`75e3be97-d080-5235-bd93-6bcc2727e1bb`) lines 59-73 [crates/gwiki/src/ingest/video/metadata.rs:59-73]
   - Signature: `pub(crate) fn from_file_snapshot(snapshot: &'a VideoFileSnapshot) -> Self {`
-  - Purpose: Constructs a borrowed-reference struct instance from a `VideoFileSnapshot` by aliasing its fields and converting owned/optional types to borrowed equivalents. [crates/gwiki/src/ingest/video/metadata.rs:58-72]
-- `IngestResult` (class) component `IngestResult [class]` (`e81b3e56-aedc-5b3a-935f-bd7f603553ff`) lines 75-83 [crates/gwiki/src/ingest/video/metadata.rs:75-83]
+  - Purpose: Indexed function `from_file_snapshot` in `crates/gwiki/src/ingest/video/metadata.rs`. [crates/gwiki/src/ingest/video/metadata.rs:59-73]
+- `IngestResult` (class) component `IngestResult [class]` (`9b8d0d23-cc4d-5679-b896-9f2d56f3ffbf`) lines 76-84 [crates/gwiki/src/ingest/video/metadata.rs:76-84]
   - Signature: `impl From<VideoIngestResult> for IngestResult {`
-  - Purpose: Implements infallible `From<VideoIngestResult>` trait conversion that maps `record` and `raw_path` fields directly while wrapping `asset_path` in `Option::Some`. [crates/gwiki/src/ingest/video/metadata.rs:75-83]
-- `IngestResult.from` (method) component `IngestResult.from [method]` (`521c2914-23e3-5739-8188-2fe2932edb7a`) lines 76-82 [crates/gwiki/src/ingest/video/metadata.rs:76-82]
+  - Purpose: Indexed class `IngestResult` in `crates/gwiki/src/ingest/video/metadata.rs`. [crates/gwiki/src/ingest/video/metadata.rs:76-84]
+- `IngestResult.from` (method) component `IngestResult.from [method]` (`e26ab6b0-6585-5980-b440-3ac9a7b01222`) lines 77-83 [crates/gwiki/src/ingest/video/metadata.rs:77-83]
   - Signature: `fn from(result: VideoIngestResult) -> Self {`
-  - Purpose: Converts a `VideoIngestResult` into `Self` via the `From` trait, mapping `record` and `raw_path` directly while wrapping `asset_path` in `Some()`. [crates/gwiki/src/ingest/video/metadata.rs:76-82]
-- `render_raw_video_markdown` (function) component `render_raw_video_markdown [function]` (`3beca2e6-d782-5ffb-b886-407e6a2de49e`) lines 85-126 [crates/gwiki/src/ingest/video/metadata.rs:85-126]
+  - Purpose: Indexed method `IngestResult.from` in `crates/gwiki/src/ingest/video/metadata.rs`. [crates/gwiki/src/ingest/video/metadata.rs:77-83]
+- `render_raw_video_markdown` (function) component `render_raw_video_markdown [function]` (`c50d2c8f-1fc1-52f7-8b50-2ddcbec19ec6`) lines 86-127 [crates/gwiki/src/ingest/video/metadata.rs:86-127]
   - Signature: `pub(crate) fn render_raw_video_markdown(`
-  - Purpose: # Summary
-
-Generates a markdown document containing video snapshot metadata fields (source hash, duration, mime type, frame/transcript counts) and asset location reference. [crates/gwiki/src/ingest/video/metadata.rs:85-126]
-- `format_timestamp` (function) component `format_timestamp [function]` (`bbc51501-3e90-5f4b-871a-535f22479abd`) lines 128-133 [crates/gwiki/src/ingest/video/metadata.rs:128-133]
+  - Purpose: Indexed function `render_raw_video_markdown` in `crates/gwiki/src/ingest/video/metadata.rs`. [crates/gwiki/src/ingest/video/metadata.rs:86-127]
+- `format_timestamp` (function) component `format_timestamp [function]` (`cd0dca05-9cc7-5c6f-a9d2-87f9d92709fe`) lines 129-134 [crates/gwiki/src/ingest/video/metadata.rs:129-134]
   - Signature: `pub(crate) fn format_timestamp(seconds: u32) -> String {`
-  - Purpose: Converts a total second count into a zero-padded HH:MM:SS formatted time string using integer arithmetic decomposition. [crates/gwiki/src/ingest/video/metadata.rs:128-133]
+  - Purpose: Indexed function `format_timestamp` in `crates/gwiki/src/ingest/video/metadata.rs`. [crates/gwiki/src/ingest/video/metadata.rs:129-134]
 

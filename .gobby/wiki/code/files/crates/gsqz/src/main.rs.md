@@ -6,9 +6,9 @@ provenance:
   ranges:
   - 25-48
   - 50-65
-  - 67-140
-  - 142-185
-  - 187-277
+  - 67-139
+  - 141-184
+  - 186-276
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -23,25 +23,25 @@ Module: [[code/modules/crates/gsqz/src|crates/gsqz/src]]
 `crates/gsqz/src/main.rs` exposes 5 indexed API symbols.
 [crates/gsqz/src/main.rs:25-48]
 [crates/gsqz/src/main.rs:50-65]
-[crates/gsqz/src/main.rs:67-140]
-[crates/gsqz/src/main.rs:142-185]
-[crates/gsqz/src/main.rs:187-277]
+[crates/gsqz/src/main.rs:67-139]
+[crates/gsqz/src/main.rs:141-184]
+[crates/gsqz/src/main.rs:186-276]
 
 ## API Symbols
 
 - `Cli` (class) component `Cli [class]` (`c7adc044-6efa-5afc-8862-690c339ee32c`) lines 25-48 [crates/gsqz/src/main.rs:25-48]
   - Signature: `struct Cli {`
-  - Purpose: Indexed class `Cli` in `crates/gsqz/src/main.rs`. [crates/gsqz/src/main.rs:25-48]
+  - Purpose: A command-line interface argument struct for a compression utility that accepts optional configuration management and statistics flags alongside a required subcommand for compression operations. [crates/gsqz/src/main.rs:25-48]
 - `parse_input_level` (function) component `parse_input_level [function]` (`7cfcfe2a-4b46-532c-ac5f-3feba564bde7`) lines 50-65 [crates/gsqz/src/main.rs:50-65]
   - Signature: `fn parse_input_level(args: &[String]) -> primitives::prose::Level {`
-  - Purpose: Indexed function `parse_input_level` in `crates/gsqz/src/main.rs`. [crates/gsqz/src/main.rs:50-65]
-- `main` (function) component `main [function]` (`9eb0d9c5-2df1-5539-b212-9319fd97f9bb`) lines 67-140 [crates/gsqz/src/main.rs:67-140]
+  - Purpose: Parses a `--level` command-line argument into a `primitives::prose::Level`, defaulting to `Level::Standard` if absent or unparseable. [crates/gsqz/src/main.rs:50-65]
+- `main` (function) component `main [function]` (`9eb0d9c5-2df1-5539-b212-9319fd97f9bb`) lines 67-139 [crates/gsqz/src/main.rs:67-139]
   - Signature: `fn main() {`
-  - Purpose: Indexed function `main` in `crates/gsqz/src/main.rs`. [crates/gsqz/src/main.rs:67-140]
-- `run_input_mode` (function) component `run_input_mode [function]` (`46132549-d505-5d0d-ac43-7a229d7843d8`) lines 142-185 [crates/gsqz/src/main.rs:142-185]
+  - Purpose: Entry point that parses CLI arguments, auto-initializes global and project configuration files, and dispatches to subcommands. [crates/gsqz/src/main.rs:67-139]
+- `run_input_mode` (function) component `run_input_mode [function]` (`d93d6c6c-b216-5905-8e4d-4f9a3637730c`) lines 141-184 [crates/gsqz/src/main.rs:141-184]
   - Signature: `fn run_input_mode(args: &[String], config: &Config, stats: bool) {`
-  - Purpose: Indexed function `run_input_mode` in `crates/gsqz/src/main.rs`. [crates/gsqz/src/main.rs:142-185]
-- `run_output_mode` (function) component `run_output_mode [function]` (`da43547e-8661-5766-8c99-ca35a6488b8f`) lines 187-277 [crates/gsqz/src/main.rs:187-277]
+  - Purpose: Compresses prose read from stdin at a specified level, optionally logs compression statistics, reports metrics to a configured daemon, and outputs the compressed result. [crates/gsqz/src/main.rs:141-184]
+- `run_output_mode` (function) component `run_output_mode [function]` (`88896e39-f136-5069-b7d1-73b094ae2ee7`) lines 186-276 [crates/gsqz/src/main.rs:186-276]
   - Signature: `fn run_output_mode(cmd: &str, config: &Config, stats: bool) {`
-  - Purpose: Indexed function `run_output_mode` in `crates/gsqz/src/main.rs`. [crates/gsqz/src/main.rs:187-277]
+  - Purpose: Executes a cross-platform shell command, sanitizes its output by stripping ANSI escape codes, and compresses the result using a configurable Compressor with optional daemon-fetched configuration overrides. [crates/gsqz/src/main.rs:186-276]
 

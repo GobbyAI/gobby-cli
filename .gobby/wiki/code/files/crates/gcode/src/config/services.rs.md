@@ -4,56 +4,60 @@ type: code_file
 provenance:
 - file: crates/gcode/src/config/services.rs
   ranges:
-  - 22-24
-  - 26-29
-  - 31-41
-  - 43-50
-  - 53-59
-  - 61-63
-  - 67-72
-  - 74-76
-  - 79-82
-  - 85-93
-  - 95-97
-  - 101-112
-  - 114-116
-  - 120-124
-  - 126-130
-  - 133-135
-  - 139-156
-  - 158-160
-  - 163-172
-  - 175-190
-  - 192-216
-  - 193-215
-  - '218'
-  - 220-235
-  - 238-241
-  - 249-251
-  - 253-255
-  - 264-270
-  - 272-274
-  - 278-291
-  - 294-307
-  - 310-323
-  - 326-337
-  - 342-352
-  - 354-369
-  - 374-384
-  - 386-395
-  - 397-405
-  - 407-422
-  - 424-447
-  - 454-464
-  - 466-484
-  - 486-496
-  - 498-507
-  - 509-515
-  - 517-526
-  - 528-535
-  - 537-543
-  - 545-556
-  - 558-567
+  - 20-22
+  - 24-27
+  - 29-39
+  - 41-48
+  - 51-57
+  - 59-61
+  - 64-67
+  - 70-81
+  - 83-85
+  - 89-93
+  - 95-99
+  - 102-104
+  - 108-125
+  - 127-129
+  - 132-135
+  - 138-143
+  - 150-162
+  - 164-166
+  - 169-178
+  - 181-196
+  - 198-222
+  - '224'
+  - 226-241
+  - 244-247
+  - 255-257
+  - 259-261
+  - 270-276
+  - 278-280
+  - 284-287
+  - 295-301
+  - 303-305
+  - 309-322
+  - 325-338
+  - 341-354
+  - 357-370
+  - 373-384
+  - 389-399
+  - 401-416
+  - 421-431
+  - 433-442
+  - 444-452
+  - 454-469
+  - 471-494
+  - 501-511
+  - 513-533
+  - 535-545
+  - 547-557
+  - 559-568
+  - 570-576
+  - 578-587
+  - 589-603
+  - 605-611
+  - 613-624
+  - 626-635
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -65,165 +69,178 @@ Module: [[code/modules/crates/gcode/src/config|crates/gcode/src/config]]
 
 ## Purpose
 
-`crates/gcode/src/config/services.rs` exposes 50 indexed API symbols.
-[crates/gcode/src/config/services.rs:22-24]
-[crates/gcode/src/config/services.rs:26-29]
-[crates/gcode/src/config/services.rs:31-41]
-[crates/gcode/src/config/services.rs:43-50]
-[crates/gcode/src/config/services.rs:53-59]
+`crates/gcode/src/config/services.rs` exposes 55 indexed API symbols.
+[crates/gcode/src/config/services.rs:20-22]
+[crates/gcode/src/config/services.rs:24-27]
+[crates/gcode/src/config/services.rs:29-39]
+[crates/gcode/src/config/services.rs:41-48]
+[crates/gcode/src/config/services.rs:51-57]
 
 ## API Symbols
 
-- `PostgresConfigSource` (class) component `PostgresConfigSource [class]` (`14c4212d-a6da-54df-a04d-2d0c25e27714`) lines 22-24 [crates/gcode/src/config/services.rs:22-24]
+- `PostgresConfigSource` (class) component `PostgresConfigSource [class]` (`2b5627ba-b022-5c99-835a-10b3270e595a`) lines 20-22 [crates/gcode/src/config/services.rs:20-22]
   - Signature: `struct PostgresConfigSource<'a> {`
-  - Purpose: PostgresConfigSource is a wrapper struct that holds a mutable reference to a PostgreSQL Client connection, with an explicit lifetime bound to ensure the reference validity. [crates/gcode/src/config/services.rs:22-24]
-- `ServiceConfigSource` (type) component `ServiceConfigSource [type]` (`2a2eb8b3-dca4-5844-8004-a6d2ee165753`) lines 26-29 [crates/gcode/src/config/services.rs:26-29]
+  - Purpose: Indexed class `PostgresConfigSource` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:20-22]
+- `ServiceConfigSource` (type) component `ServiceConfigSource [type]` (`376426c5-af74-5515-b43e-71c79b27ab8e`) lines 24-27 [crates/gcode/src/config/services.rs:24-27]
   - Signature: `trait ServiceConfigSource {`
-  - Purpose: Indexed type `ServiceConfigSource` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:26-29]
-- `service_env_value` (function) component `service_env_value [function]` (`7fd2e53c-7c6f-5155-bc27-a3c429561fc3`) lines 31-41 [crates/gcode/src/config/services.rs:31-41]
+  - Purpose: Indexed type `ServiceConfigSource` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:24-27]
+- `service_env_value` (function) component `service_env_value [function]` (`8c73cf1c-116b-549f-a285-656fb12318b7`) lines 29-39 [crates/gcode/src/config/services.rs:29-39]
   - Signature: `fn service_env_value(key: &str) -> Option<String> {`
-  - Purpose: Retrieves environment variable values for service configuration keys by mapping them to their GOBBY_* prefixed counterparts, returning None for unmapped keys. [crates/gcode/src/config/services.rs:31-41]
-- `config_store_missing` (function) component `config_store_missing [function]` (`db0efd01-b1fd-56f8-96a0-9f9aa605494a`) lines 43-50 [crates/gcode/src/config/services.rs:43-50]
+  - Purpose: Indexed function `service_env_value` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:29-39]
+- `config_store_missing` (function) component `config_store_missing [function]` (`a1772b25-eb88-5555-acb1-3c9813b557a8`) lines 41-48 [crates/gcode/src/config/services.rs:41-48]
   - Signature: `fn config_store_missing(error: &anyhow::Error) -> bool {`
-  - Purpose: Returns true if any error in the error chain is a PostgreSQL database error with UNDEFINED_TABLE SQL state. [crates/gcode/src/config/services.rs:43-50]
-- `config_value` (function) component `config_value [function]` (`81aa888c-ee22-59df-bcfb-9d1856edf208`) lines 53-59 [crates/gcode/src/config/services.rs:53-59]
+  - Purpose: Indexed function `config_store_missing` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:41-48]
+- `config_value` (function) component `config_value [function]` (`80bdc425-dbd1-58ce-b569-e6e623d260d5`) lines 51-57 [crates/gcode/src/config/services.rs:51-57]
   - Signature: `fn config_value(&mut self, key: &str) -> anyhow::Result<Option<String>> {`
-  - Purpose: Reads a configuration value from PostgreSQL by key and returns its decoded string value, or `None` if the config store is missing, otherwise propagating errors. [crates/gcode/src/config/services.rs:53-59]
-- `resolve_value` (function) component `resolve_value [function]` (`ece694a9-8654-5fe8-921d-7e2ec8a7fc71`) lines 61-63 [crates/gcode/src/config/services.rs:61-63]
+  - Purpose: Indexed function `config_value` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:51-57]
+- `resolve_value` (function) component `resolve_value [function]` (`802f41f9-6958-57bc-9239-5b29484e96c1`) lines 59-61 [crates/gcode/src/config/services.rs:59-61]
   - Signature: `fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {`
-  - Purpose: Resolves a configuration value string by delegating to `secrets::resolve_config_value` with the provided value and the struct's database connection. [crates/gcode/src/config/services.rs:61-63]
-- `config_value` (function) component `config_value [function]` (`95851a28-1ce8-5335-a925-11d6294a992a`) lines 67-72 [crates/gcode/src/config/services.rs:67-72]
-  - Signature: `fn config_value(&mut self, key: &str) -> Option<String> {`
-  - Purpose: Retrieves a configuration value from the ServiceConfigSource trait by key, logs any errors as warnings, and returns a flattened Option<String>. [crates/gcode/src/config/services.rs:67-72]
-- `resolve_value` (function) component `resolve_value [function]` (`766144d1-42b2-5eb4-9c04-d0de59ae07ba`) lines 74-76 [crates/gcode/src/config/services.rs:74-76]
-  - Signature: `fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {`
-  - Purpose: Delegates the resolution of a string value to the `ServiceConfigSource` trait implementation, returning the resolved string or an error. [crates/gcode/src/config/services.rs:74-76]
-- `FallbackConfigSource` (class) component `FallbackConfigSource [class]` (`1b29490e-8a84-58b4-b2e4-e88b56517a91`) lines 79-82 [crates/gcode/src/config/services.rs:79-82]
+  - Purpose: Indexed function `resolve_value` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:59-61]
+- `FallbackConfigSource` (class) component `FallbackConfigSource [class]` (`2b6de914-554a-5521-85c1-34566ed0e76f`) lines 64-67 [crates/gcode/src/config/services.rs:64-67]
   - Signature: `struct FallbackConfigSource<'a> {`
-  - Purpose: `FallbackConfigSource` is a generic struct that holds a primary PostgreSQL configuration source with an optional standalone configuration as a fallback option. [crates/gcode/src/config/services.rs:79-82]
-- `config_value` (function) component `config_value [function]` (`e0a31368-fe19-5829-a9f7-006712693029`) lines 85-93 [crates/gcode/src/config/services.rs:85-93]
-  - Signature: `fn config_value(&mut self, key: &str) -> Option<String> {`
-  - Purpose: Retrieves a configuration string value by key through sequential fallback sources: environment variables, PostgreSQL configuration, and optional standalone configuration, returning the first match or None. [crates/gcode/src/config/services.rs:85-93]
-- `resolve_value` (function) component `resolve_value [function]` (`291295b5-55b7-5bf3-a726-51c76420218f`) lines 95-97 [crates/gcode/src/config/services.rs:95-97]
-  - Signature: `fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {`
-  - Purpose: Resolves a configuration value string by delegating to `ConfigSource::resolve_value` with a mutable reference to the instance's PostgreSQL connection. [crates/gcode/src/config/services.rs:95-97]
-- `config_value` (function) component `config_value [function]` (`8f26dbba-a2b9-5ae2-8dab-ea12e8705fd4`) lines 101-112 [crates/gcode/src/config/services.rs:101-112]
+  - Purpose: Indexed class `FallbackConfigSource` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:64-67]
+- `config_value` (function) component `config_value [function]` (`3308f5d4-fe0e-5ddd-86b0-1a239ad5cbc4`) lines 70-81 [crates/gcode/src/config/services.rs:70-81]
   - Signature: `fn config_value(&mut self, key: &str) -> anyhow::Result<Option<String>> {`
-  - Purpose: Retrieves a configuration value for a given key through a hierarchical lookup chain that checks environment variables first, then PostgreSQL-backed config, then standalone config, returning the first available value or None. [crates/gcode/src/config/services.rs:101-112]
-- `resolve_value` (function) component `resolve_value [function]` (`71905ef8-695f-58c8-88ac-5d22f59699f0`) lines 114-116 [crates/gcode/src/config/services.rs:114-116]
+  - Purpose: Indexed function `config_value` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:70-81]
+- `resolve_value` (function) component `resolve_value [function]` (`195d3c75-4fd1-5d55-a58d-080bc7eadcdc`) lines 83-85 [crates/gcode/src/config/services.rs:83-85]
   - Signature: `fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {`
-  - Purpose: This method delegates value resolution to `ServiceConfigSource::resolve_value` by passing a mutable reference to its `postgres` field, returning an `anyhow::Result<String>`. [crates/gcode/src/config/services.rs:114-116]
-- `EmbeddingConfigDetails` (class) component `EmbeddingConfigDetails [class]` (`304017c5-dfe2-5555-9875-6a31c9c87662`) lines 120-124 [crates/gcode/src/config/services.rs:120-124]
+  - Purpose: Indexed function `resolve_value` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:83-85]
+- `EmbeddingConfigDetails` (class) component `EmbeddingConfigDetails [class]` (`bb3b2b04-75d3-55ea-8326-7ed800d721f2`) lines 89-93 [crates/gcode/src/config/services.rs:89-93]
   - Signature: `pub(crate) struct EmbeddingConfigDetails {`
-  - Purpose: `EmbeddingConfigDetails` is a crate-private struct that encapsulates an `EmbeddingConfig` with static namespace and source metadata. [crates/gcode/src/config/services.rs:120-124]
-- `TracingFallbackConfigSource` (class) component `TracingFallbackConfigSource [class]` (`18d76442-1497-5a59-b7c0-433ae9a91455`) lines 126-130 [crates/gcode/src/config/services.rs:126-130]
+  - Purpose: Indexed class `EmbeddingConfigDetails` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:89-93]
+- `TracingFallbackConfigSource` (class) component `TracingFallbackConfigSource [class]` (`f7c3b020-528e-516b-9c1d-e31527b7bc42`) lines 95-99 [crates/gcode/src/config/services.rs:95-99]
   - Signature: `struct TracingFallbackConfigSource<'a> {`
-  - Purpose: A configuration provider struct that resolves values from a PostgreSQL source first with an optional standalone configuration fallback, while tracking which configuration keys have been accessed via a hit counter map. [crates/gcode/src/config/services.rs:126-130]
-- `hit_source` (function) component `hit_source [function]` (`a9717877-1099-5736-9ea8-4683a02da418`) lines 133-135 [crates/gcode/src/config/services.rs:133-135]
+  - Purpose: Indexed class `TracingFallbackConfigSource` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:95-99]
+- `hit_source` (function) component `hit_source [function]` (`2fb164b7-eb7d-54c7-bd56-0099afebd78b`) lines 102-104 [crates/gcode/src/config/services.rs:102-104]
   - Signature: `fn hit_source(&self, key: &str) -> Option<&'static str> {`
-  - Purpose: Retrieves an optional static string reference from the `hits` map associated with the given key. [crates/gcode/src/config/services.rs:133-135]
-- `config_value` (function) component `config_value [function]` (`942fe0c8-6639-56ff-880f-f34202374a6a`) lines 139-156 [crates/gcode/src/config/services.rs:139-156]
-  - Signature: `fn config_value(&mut self, key: &str) -> Option<String> {`
-  - Purpose: # Summary
-
-This function retrieves a configuration value by hierarchically searching environment variables, PostgreSQL, and standalone YAML in priority order, while tracking the source of each successful lookup. [crates/gcode/src/config/services.rs:139-156]
-- `resolve_value` (function) component `resolve_value [function]` (`0e03cae1-d6e4-55c9-bdd9-fbe4cfb36c83`) lines 158-160 [crates/gcode/src/config/services.rs:158-160]
-  - Signature: `fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {`
-  - Purpose: This instance method delegates to `ConfigSource::resolve_value()` to resolve a configuration string value using a mutable reference to the postgres configuration source. [crates/gcode/src/config/services.rs:158-160]
-- `read_standalone_config_optional` (function) component `read_standalone_config_optional [function]` (`bab6d8b0-2808-57bc-9374-f31156cfadcd`) lines 163-172 [crates/gcode/src/config/services.rs:163-172]
-  - Signature: `pub(crate) fn read_standalone_config_optional() -> Option<StandaloneConfig> {`
-  - Purpose: Reads a standalone configuration and returns `Option<StandaloneConfig>`, returning `Some(config)` on success or `None` on any error, with non-NotFound errors logged as warnings. [crates/gcode/src/config/services.rs:163-172]
-- `StandaloneConfigReadError` (type) component `StandaloneConfigReadError [type]` (`2025869c-530b-5de2-acfc-9ceac7b6aa5b`) lines 175-190 [crates/gcode/src/config/services.rs:175-190]
-  - Signature: `pub(crate) enum StandaloneConfigReadError {`
-  - Purpose: Indexed type `StandaloneConfigReadError` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:175-190]
-- `StandaloneConfigReadError` (class) component `StandaloneConfigReadError [class]` (`b0087188-b260-582c-ab15-c85f480fb3fc`) lines 192-216 [crates/gcode/src/config/services.rs:192-216]
-  - Signature: `impl fmt::Display for StandaloneConfigReadError {`
-  - Purpose: Implements the `Display` trait for `StandaloneConfigReadError` to format contextual error messages for four failure modes: Gobby home directory resolution, missing config file, file read operation, and configuration parsing. [crates/gcode/src/config/services.rs:192-216]
-- `StandaloneConfigReadError.fmt` (method) component `StandaloneConfigReadError.fmt [method]` (`2bfb9379-f5f4-5b1c-af1a-4c1bebff0804`) lines 193-215 [crates/gcode/src/config/services.rs:193-215]
-  - Signature: `fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {`
-  - Purpose: This method implements the `Display` trait to format human-readable error messages for a gcode configuration error enum, handling four failure variants: home directory resolution, config file not found, read errors, and parse errors. [crates/gcode/src/config/services.rs:193-215]
-- `StandaloneConfigReadError` (class) component `StandaloneConfigReadError [class]` (`8e4e4d87-e10e-54f2-8f96-7ff390850c8e`) lines 218-218 [crates/gcode/src/config/services.rs:218]
-  - Signature: `impl std::error::Error for StandaloneConfigReadError {}`
-  - Purpose: Indexed class `StandaloneConfigReadError` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:218]
-- `read_standalone_config` (function) component `read_standalone_config [function]` (`6d278f4b-ad53-5786-94c6-3cd1ddac3032`) lines 220-235 [crates/gcode/src/config/services.rs:220-235]
-  - Signature: `pub(crate) fn read_standalone_config() -> Result<StandaloneConfig, StandaloneConfigReadError> {`
-  - Purpose: Indexed function `read_standalone_config` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:220-235]
-- `ClosureConfigSource` (class) component `ClosureConfigSource [class]` (`0379ee82-5f77-5559-b9b8-a76e2fda6bf1`) lines 238-241 [crates/gcode/src/config/services.rs:238-241]
-  - Signature: `struct ClosureConfigSource<R, S> {`
-  - Purpose: Indexed class `ClosureConfigSource` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:238-241]
-- `config_value` (function) component `config_value [function]` (`65852c62-c7a9-5d1d-9fb0-9fc6ad950252`) lines 249-251 [crates/gcode/src/config/services.rs:249-251]
-  - Signature: `fn config_value(&mut self, key: &str) -> Option<String> {`
-  - Purpose: Indexed function `config_value` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:249-251]
-- `resolve_value` (function) component `resolve_value [function]` (`12fc04f2-7460-5ebb-8536-1c38dee51dee`) lines 253-255 [crates/gcode/src/config/services.rs:253-255]
-  - Signature: `fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {`
-  - Purpose: Indexed function `resolve_value` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:253-255]
-- `config_value` (function) component `config_value [function]` (`743a17c5-9359-51f4-967b-10ee0d1607c7`) lines 264-270 [crates/gcode/src/config/services.rs:264-270]
+  - Purpose: Indexed function `hit_source` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:102-104]
+- `config_value` (function) component `config_value [function]` (`481ab8e0-920d-5092-82f8-60e726ec5b68`) lines 108-125 [crates/gcode/src/config/services.rs:108-125]
   - Signature: `fn config_value(&mut self, key: &str) -> anyhow::Result<Option<String>> {`
-  - Purpose: Indexed function `config_value` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:264-270]
-- `resolve_value` (function) component `resolve_value [function]` (`9d45a022-4b3f-508c-9eca-e6af37c96c2a`) lines 272-274 [crates/gcode/src/config/services.rs:272-274]
+  - Purpose: Indexed function `config_value` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:108-125]
+- `resolve_value` (function) component `resolve_value [function]` (`f022087b-8ec1-5b21-933f-28275f1a9573`) lines 127-129 [crates/gcode/src/config/services.rs:127-129]
   - Signature: `fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {`
-  - Purpose: Indexed function `resolve_value` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:272-274]
-- `resolve_falkordb_config_from_values` (function) component `resolve_falkordb_config_from_values [function]` (`523926e7-1690-5cc7-b673-05e87a2b3fbf`) lines 278-291 [crates/gcode/src/config/services.rs:278-291]
+  - Purpose: Indexed function `resolve_value` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:127-129]
+- `ErrorCapturingConfigSource` (class) component `ErrorCapturingConfigSource [class]` (`59d8cbb2-3be8-53e7-abbb-6ec9ef356504`) lines 132-135 [crates/gcode/src/config/services.rs:132-135]
+  - Signature: `struct ErrorCapturingConfigSource<'a, S> {`
+  - Purpose: Indexed class `ErrorCapturingConfigSource` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:132-135]
+- `finish` (function) component `finish [function]` (`000f4592-81ca-57d8-9950-f933ff4a3b5b`) lines 138-143 [crates/gcode/src/config/services.rs:138-143]
+  - Signature: `fn finish<T>(self, value: T) -> anyhow::Result<T> {`
+  - Purpose: Indexed function `finish` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:138-143]
+- `config_value` (function) component `config_value [function]` (`d72d83bd-5aba-5c26-9d16-8cf00cb01d4c`) lines 150-162 [crates/gcode/src/config/services.rs:150-162]
+  - Signature: `fn config_value(&mut self, key: &str) -> Option<String> {`
+  - Purpose: Indexed function `config_value` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:150-162]
+- `resolve_value` (function) component `resolve_value [function]` (`8dad6043-0fc8-5236-8061-0fc3a429e032`) lines 164-166 [crates/gcode/src/config/services.rs:164-166]
+  - Signature: `fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {`
+  - Purpose: Indexed function `resolve_value` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:164-166]
+- `read_standalone_config_optional` (function) component `read_standalone_config_optional [function]` (`8331635c-e2f7-5a97-9965-1d6d996826fe`) lines 169-178 [crates/gcode/src/config/services.rs:169-178]
+  - Signature: `pub(crate) fn read_standalone_config_optional() -> Option<StandaloneConfig> {`
+  - Purpose: Indexed function `read_standalone_config_optional` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:169-178]
+- `StandaloneConfigReadError` (type) component `StandaloneConfigReadError [type]` (`254de7ef-9797-5f6a-9ca7-c0aa8622aaaa`) lines 181-196 [crates/gcode/src/config/services.rs:181-196]
+  - Signature: `pub(crate) enum StandaloneConfigReadError {`
+  - Purpose: Indexed type `StandaloneConfigReadError` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:181-196]
+- `StandaloneConfigReadError` (class) component `StandaloneConfigReadError [class]` (`2d5d88cb-2717-5134-b681-3ea8d3a2ea39`) lines 198-222 [crates/gcode/src/config/services.rs:198-222]
+  - Signature: `impl fmt::Display for StandaloneConfigReadError {`
+  - Purpose: Indexed class `StandaloneConfigReadError` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:198-222]
+- `StandaloneConfigReadError.fmt` (method) component `StandaloneConfigReadError.fmt [method]` (`da9d2337-c68c-5956-836f-8bf397465272`) lines 199-221 [crates/gcode/src/config/services.rs:199-221]
+  - Signature: `fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {`
+  - Purpose: Indexed method `StandaloneConfigReadError.fmt` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:199-221]
+- `StandaloneConfigReadError` (class) component `StandaloneConfigReadError [class]` (`05c5c555-7356-5546-999e-a80d22f5e6d0`) lines 224-224 [crates/gcode/src/config/services.rs:224]
+  - Signature: `impl std::error::Error for StandaloneConfigReadError {}`
+  - Purpose: Indexed class `StandaloneConfigReadError` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:224]
+- `read_standalone_config` (function) component `read_standalone_config [function]` (`8eb27418-fb2b-5858-97d5-ecd8a1d2c31d`) lines 226-241 [crates/gcode/src/config/services.rs:226-241]
+  - Signature: `pub(crate) fn read_standalone_config() -> Result<StandaloneConfig, StandaloneConfigReadError> {`
+  - Purpose: Indexed function `read_standalone_config` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:226-241]
+- `ClosureConfigSource` (class) component `ClosureConfigSource [class]` (`5e91dc97-455d-5172-9d43-060d723ef1b0`) lines 244-247 [crates/gcode/src/config/services.rs:244-247]
+  - Signature: `struct ClosureConfigSource<R, S> {`
+  - Purpose: Indexed class `ClosureConfigSource` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:244-247]
+- `config_value` (function) component `config_value [function]` (`4b90bf43-1cac-5d65-8f5e-0f85ba3713e2`) lines 255-257 [crates/gcode/src/config/services.rs:255-257]
+  - Signature: `fn config_value(&mut self, key: &str) -> Option<String> {`
+  - Purpose: Indexed function `config_value` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:255-257]
+- `resolve_value` (function) component `resolve_value [function]` (`e9344c04-d2a9-5560-b9ea-55e565b88e79`) lines 259-261 [crates/gcode/src/config/services.rs:259-261]
+  - Signature: `fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {`
+  - Purpose: Indexed function `resolve_value` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:259-261]
+- `config_value` (function) component `config_value [function]` (`1c0fa5fa-a8b0-5b8b-8d48-e43da3c43b16`) lines 270-276 [crates/gcode/src/config/services.rs:270-276]
+  - Signature: `fn config_value(&mut self, key: &str) -> anyhow::Result<Option<String>> {`
+  - Purpose: Indexed function `config_value` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:270-276]
+- `resolve_value` (function) component `resolve_value [function]` (`d727e622-20ad-5169-8567-28f4c0624627`) lines 278-280 [crates/gcode/src/config/services.rs:278-280]
+  - Signature: `fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {`
+  - Purpose: Indexed function `resolve_value` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:278-280]
+- `FallibleClosureConfigSource` (class) component `FallibleClosureConfigSource [class]` (`dbbe6486-153b-5779-9a08-bd7aa071b2bd`) lines 284-287 [crates/gcode/src/config/services.rs:284-287]
+  - Signature: `struct FallibleClosureConfigSource<R, S> {`
+  - Purpose: Indexed class `FallibleClosureConfigSource` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:284-287]
+- `config_value` (function) component `config_value [function]` (`d2fc1ff4-a198-505e-af3e-b2a9ef8899d1`) lines 295-301 [crates/gcode/src/config/services.rs:295-301]
+  - Signature: `fn config_value(&mut self, key: &str) -> anyhow::Result<Option<String>> {`
+  - Purpose: Indexed function `config_value` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:295-301]
+- `resolve_value` (function) component `resolve_value [function]` (`0e207cc9-a653-5aea-ba44-60ecfbfed306`) lines 303-305 [crates/gcode/src/config/services.rs:303-305]
+  - Signature: `fn resolve_value(&mut self, value: &str) -> anyhow::Result<String> {`
+  - Purpose: Indexed function `resolve_value` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:303-305]
+- `resolve_falkordb_config_from_values` (function) component `resolve_falkordb_config_from_values [function]` (`cc9828a3-8814-52a1-b87c-59e38dc98650`) lines 309-322 [crates/gcode/src/config/services.rs:309-322]
   - Signature: `pub(super) fn resolve_falkordb_config_from_values<R, S>(`
-  - Purpose: Indexed function `resolve_falkordb_config_from_values` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:278-291]
-- `resolve_qdrant_config_from_values` (function) component `resolve_qdrant_config_from_values [function]` (`e00f9a7a-fece-5757-8288-3cbbacb9c2d7`) lines 294-307 [crates/gcode/src/config/services.rs:294-307]
+  - Purpose: Indexed function `resolve_falkordb_config_from_values` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:309-322]
+- `resolve_qdrant_config_from_values` (function) component `resolve_qdrant_config_from_values [function]` (`9aba8a5f-536d-5453-b5ce-7771f6fb29e8`) lines 325-338 [crates/gcode/src/config/services.rs:325-338]
   - Signature: `pub(super) fn resolve_qdrant_config_from_values<R, S>(`
-  - Purpose: Indexed function `resolve_qdrant_config_from_values` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:294-307]
-- `resolve_embedding_config_from_values` (function) component `resolve_embedding_config_from_values [function]` (`33141d32-6bc8-5e65-8efe-06ac8a6370a9`) lines 310-323 [crates/gcode/src/config/services.rs:310-323]
+  - Purpose: Indexed function `resolve_qdrant_config_from_values` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:325-338]
+- `resolve_embedding_config_from_values` (function) component `resolve_embedding_config_from_values [function]` (`9330a412-575b-5152-a1cf-135a7f308e3a`) lines 341-354 [crates/gcode/src/config/services.rs:341-354]
   - Signature: `pub(super) fn resolve_embedding_config_from_values<R, S>(`
-  - Purpose: Indexed function `resolve_embedding_config_from_values` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:310-323]
-- `resolve_code_vector_settings_from_values` (function) component `resolve_code_vector_settings_from_values [function]` (`adc777b9-e542-598e-8fab-875b00c2efbf`) lines 326-337 [crates/gcode/src/config/services.rs:326-337]
+  - Purpose: Indexed function `resolve_embedding_config_from_values` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:341-354]
+- `resolve_embedding_config_from_fallible_values` (function) component `resolve_embedding_config_from_fallible_values [function]` (`e103c19a-2c6c-527b-9159-a254b6795001`) lines 357-370 [crates/gcode/src/config/services.rs:357-370]
+  - Signature: `pub(super) fn resolve_embedding_config_from_fallible_values<R, S>(`
+  - Purpose: Indexed function `resolve_embedding_config_from_fallible_values` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:357-370]
+- `resolve_code_vector_settings_from_values` (function) component `resolve_code_vector_settings_from_values [function]` (`c13ee5b5-4dea-5d41-a3c4-6e3f6ec63209`) lines 373-384 [crates/gcode/src/config/services.rs:373-384]
   - Signature: `pub(super) fn resolve_code_vector_settings_from_values<R>(`
-  - Purpose: Indexed function `resolve_code_vector_settings_from_values` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:326-337]
-- `resolve_falkordb_config` (function) component `resolve_falkordb_config [function]` (`890b2a87-752d-5d0f-8152-34488090abfd`) lines 342-352 [crates/gcode/src/config/services.rs:342-352]
+  - Purpose: Indexed function `resolve_code_vector_settings_from_values` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:373-384]
+- `resolve_falkordb_config` (function) component `resolve_falkordb_config [function]` (`c5730274-e339-57fc-bc15-d5abfecf7c0f`) lines 389-399 [crates/gcode/src/config/services.rs:389-399]
   - Signature: `pub(super) fn resolve_falkordb_config(`
-  - Purpose: Indexed function `resolve_falkordb_config` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:342-352]
-- `resolve_falkordb_config_from_source` (function) component `resolve_falkordb_config_from_source [function]` (`739040b9-4171-55ea-81f9-f84fc990f9dc`) lines 354-369 [crates/gcode/src/config/services.rs:354-369]
+  - Purpose: Indexed function `resolve_falkordb_config` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:389-399]
+- `resolve_falkordb_config_from_source` (function) component `resolve_falkordb_config_from_source [function]` (`1f13e8b8-ed66-50e9-99cf-6e6a742d4c0c`) lines 401-416 [crates/gcode/src/config/services.rs:401-416]
   - Signature: `fn resolve_falkordb_config_from_source(`
-  - Purpose: Indexed function `resolve_falkordb_config_from_source` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:354-369]
-- `resolve_qdrant_config` (function) component `resolve_qdrant_config [function]` (`b14f66d8-fde5-573a-908b-ddf133d35105`) lines 374-384 [crates/gcode/src/config/services.rs:374-384]
+  - Purpose: Indexed function `resolve_falkordb_config_from_source` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:401-416]
+- `resolve_qdrant_config` (function) component `resolve_qdrant_config [function]` (`a4e3d0c0-846c-53fa-adc2-c86422c8ebb6`) lines 421-431 [crates/gcode/src/config/services.rs:421-431]
   - Signature: `pub(super) fn resolve_qdrant_config(`
-  - Purpose: Indexed function `resolve_qdrant_config` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:374-384]
-- `resolve_qdrant_config_from_source` (function) component `resolve_qdrant_config_from_source [function]` (`8bd1e74a-54a0-57c3-b63b-25060269a9f3`) lines 386-395 [crates/gcode/src/config/services.rs:386-395]
+  - Purpose: Indexed function `resolve_qdrant_config` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:421-431]
+- `resolve_qdrant_config_from_source` (function) component `resolve_qdrant_config_from_source [function]` (`bdf63c4f-b439-55e6-b850-a837b76becdb`) lines 433-442 [crates/gcode/src/config/services.rs:433-442]
   - Signature: `fn resolve_qdrant_config_from_source(`
-  - Purpose: Indexed function `resolve_qdrant_config_from_source` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:386-395]
-- `resolve_service_setting` (function) component `resolve_service_setting [function]` (`03755984-285c-57e4-915a-4cea8aeab831`) lines 397-405 [crates/gcode/src/config/services.rs:397-405]
+  - Purpose: Indexed function `resolve_qdrant_config_from_source` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:433-442]
+- `resolve_service_setting` (function) component `resolve_service_setting [function]` (`a5a01ca9-8086-52b4-97c9-132d324c6f85`) lines 444-452 [crates/gcode/src/config/services.rs:444-452]
   - Signature: `fn resolve_service_setting(`
-  - Purpose: Indexed function `resolve_service_setting` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:397-405]
-- `resolve_service_non_empty` (function) component `resolve_service_non_empty [function]` (`55e4f315-a103-56fa-b047-df26a822cd55`) lines 407-422 [crates/gcode/src/config/services.rs:407-422]
+  - Purpose: Indexed function `resolve_service_setting` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:444-452]
+- `resolve_service_non_empty` (function) component `resolve_service_non_empty [function]` (`c90f25cf-fbe0-5ed0-b097-77ef348556d1`) lines 454-469 [crates/gcode/src/config/services.rs:454-469]
   - Signature: `fn resolve_service_non_empty(`
-  - Purpose: Indexed function `resolve_service_non_empty` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:407-422]
-- `resolve_service_port` (function) component `resolve_service_port [function]` (`17a48f35-a80a-598e-8eb9-aa38301ec306`) lines 424-447 [crates/gcode/src/config/services.rs:424-447]
+  - Purpose: Indexed function `resolve_service_non_empty` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:454-469]
+- `resolve_service_port` (function) component `resolve_service_port [function]` (`9138da44-4687-593a-95c5-29b8cbd7391a`) lines 471-494 [crates/gcode/src/config/services.rs:471-494]
   - Signature: `fn resolve_service_port(`
-  - Purpose: Indexed function `resolve_service_port` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:424-447]
-- `resolve_embedding_config` (function) component `resolve_embedding_config [function]` (`87e4e3ff-edb6-5489-a5be-94b63a8002ec`) lines 454-464 [crates/gcode/src/config/services.rs:454-464]
+  - Purpose: Indexed function `resolve_service_port` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:471-494]
+- `resolve_embedding_config` (function) component `resolve_embedding_config [function]` (`025b4846-7970-5700-99f0-0ccabc7ebfc4`) lines 501-511 [crates/gcode/src/config/services.rs:501-511]
   - Signature: `pub(super) fn resolve_embedding_config(`
-  - Purpose: Indexed function `resolve_embedding_config` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:454-464]
-- `resolve_embedding_config_details` (function) component `resolve_embedding_config_details [function]` (`8d7d502b-0be0-5138-a1ae-bbd0411df566`) lines 466-484 [crates/gcode/src/config/services.rs:466-484]
+  - Purpose: Indexed function `resolve_embedding_config` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:501-511]
+- `resolve_embedding_config_details` (function) component `resolve_embedding_config_details [function]` (`b0c9bb0b-c7a0-5542-bd3c-95f25dd812df`) lines 513-533 [crates/gcode/src/config/services.rs:513-533]
   - Signature: `pub(crate) fn resolve_embedding_config_details(`
-  - Purpose: Indexed function `resolve_embedding_config_details` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:466-484]
-- `resolve_embedding_config_from_source` (function) component `resolve_embedding_config_from_source [function]` (`5f6fdbea-392e-596b-8fef-08ebf9142edc`) lines 486-496 [crates/gcode/src/config/services.rs:486-496]
+  - Purpose: Indexed function `resolve_embedding_config_details` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:513-533]
+- `resolve_embedding_config_from_service_source` (function) component `resolve_embedding_config_from_service_source [function]` (`ac53669b-29ee-5344-acd8-336ad0104d53`) lines 535-545 [crates/gcode/src/config/services.rs:535-545]
+  - Signature: `fn resolve_embedding_config_from_service_source(`
+  - Purpose: Indexed function `resolve_embedding_config_from_service_source` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:535-545]
+- `resolve_embedding_config_from_source` (function) component `resolve_embedding_config_from_source [function]` (`28c47d46-bd7b-5133-b7c7-372cfc12895e`) lines 547-557 [crates/gcode/src/config/services.rs:547-557]
   - Signature: `pub(crate) fn resolve_embedding_config_from_source(`
-  - Purpose: Indexed function `resolve_embedding_config_from_source` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:486-496]
-- `embedding_binding_routes_direct` (function) component `embedding_binding_routes_direct [function]` (`6a386e76-9564-5c12-ad19-e46fd2812a9d`) lines 498-507 [crates/gcode/src/config/services.rs:498-507]
+  - Purpose: Indexed function `resolve_embedding_config_from_source` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:547-557]
+- `embedding_binding_routes_direct` (function) component `embedding_binding_routes_direct [function]` (`73a8e787-c170-5e1d-82eb-c9430da704fd`) lines 559-568 [crates/gcode/src/config/services.rs:559-568]
   - Signature: `fn embedding_binding_routes_direct(binding: &CapabilityBinding) -> bool {`
-  - Purpose: Indexed function `embedding_binding_routes_direct` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:498-507]
-- `embedding_binding_uses_openai_http` (function) component `embedding_binding_uses_openai_http [function]` (`c9bca84e-f249-55e3-8578-b0f623c66bac`) lines 509-515 [crates/gcode/src/config/services.rs:509-515]
+  - Purpose: Indexed function `embedding_binding_routes_direct` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:559-568]
+- `embedding_binding_uses_openai_http` (function) component `embedding_binding_uses_openai_http [function]` (`43346b4a-a439-52fb-b995-db9d5f53bc03`) lines 570-576 [crates/gcode/src/config/services.rs:570-576]
   - Signature: `fn embedding_binding_uses_openai_http(binding: &CapabilityBinding) -> bool {`
-  - Purpose: Indexed function `embedding_binding_uses_openai_http` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:509-515]
-- `resolve_code_vector_settings` (function) component `resolve_code_vector_settings [function]` (`7797e0f2-91e7-5b47-9f4d-ec529b1b8d9e`) lines 517-526 [crates/gcode/src/config/services.rs:517-526]
+  - Purpose: Indexed function `embedding_binding_uses_openai_http` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:570-576]
+- `resolve_code_vector_settings` (function) component `resolve_code_vector_settings [function]` (`3a3fcf9e-3bc0-592a-936a-6c4014fc535f`) lines 578-587 [crates/gcode/src/config/services.rs:578-587]
   - Signature: `pub(super) fn resolve_code_vector_settings(`
-  - Purpose: Indexed function `resolve_code_vector_settings` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:517-526]
-- `resolve_indexing_settings` (function) component `resolve_indexing_settings [function]` (`baec2284-bbbc-5479-92d1-642723622df2`) lines 528-535 [crates/gcode/src/config/services.rs:528-535]
+  - Purpose: Indexed function `resolve_code_vector_settings` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:578-587]
+- `resolve_indexing_settings` (function) component `resolve_indexing_settings [function]` (`89da399d-3b25-55ce-a12e-30c060540b8c`) lines 589-603 [crates/gcode/src/config/services.rs:589-603]
   - Signature: `pub(super) fn resolve_indexing_settings(`
-  - Purpose: Indexed function `resolve_indexing_settings` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:528-535]
-- `resolve_code_vector_settings_from_source` (function) component `resolve_code_vector_settings_from_source [function]` (`d4038920-4a94-51e8-87d6-4b79d4bf4867`) lines 537-543 [crates/gcode/src/config/services.rs:537-543]
+  - Purpose: Indexed function `resolve_indexing_settings` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:589-603]
+- `resolve_code_vector_settings_from_source` (function) component `resolve_code_vector_settings_from_source [function]` (`a3104df3-262f-55d2-b96d-e90615651334`) lines 605-611 [crates/gcode/src/config/services.rs:605-611]
   - Signature: `fn resolve_code_vector_settings_from_source(`
-  - Purpose: Indexed function `resolve_code_vector_settings_from_source` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:537-543]
-- `resolve_vector_dim` (function) component `resolve_vector_dim [function]` (`1f5d09c3-f01f-5ee8-836f-d2822455fa95`) lines 545-556 [crates/gcode/src/config/services.rs:545-556]
+  - Purpose: Indexed function `resolve_code_vector_settings_from_source` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:605-611]
+- `resolve_vector_dim` (function) component `resolve_vector_dim [function]` (`6b815bbb-2a31-5fae-9311-56606fe1ad6b`) lines 613-624 [crates/gcode/src/config/services.rs:613-624]
   - Signature: `fn resolve_vector_dim(`
-  - Purpose: Indexed function `resolve_vector_dim` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:545-556]
-- `parse_vector_dim` (function) component `parse_vector_dim [function]` (`40f0a253-56b5-5d18-8ca2-415b3ca63f3a`) lines 558-567 [crates/gcode/src/config/services.rs:558-567]
+  - Purpose: Indexed function `resolve_vector_dim` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:613-624]
+- `parse_vector_dim` (function) component `parse_vector_dim [function]` (`688cb87e-bc31-5fda-a82d-3fd925232ac4`) lines 626-635 [crates/gcode/src/config/services.rs:626-635]
   - Signature: `fn parse_vector_dim(source: &'static str, value: &str) -> Result<usize, CodeVectorConfigError> {`
-  - Purpose: Indexed function `parse_vector_dim` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:558-567]
+  - Purpose: Indexed function `parse_vector_dim` in `crates/gcode/src/config/services.rs`. [crates/gcode/src/config/services.rs:626-635]
 

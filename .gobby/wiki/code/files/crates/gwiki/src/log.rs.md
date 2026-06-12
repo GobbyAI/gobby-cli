@@ -4,20 +4,19 @@ type: code_file
 provenance:
 - file: crates/gwiki/src/log.rs
   ranges:
-  - 8-14
-  - 17-20
-  - 22-46
-  - 48-86
-  - 88-103
-  - 105-111
-  - 114-121
-  - 124-143
-  - 127-137
-  - 146-148
-  - 150-156
-  - 158-165
-  - 174-202
-  - 205-224
+  - 9-15
+  - 19-22
+  - 25-49
+  - 52-90
+  - 93-108
+  - 111-117
+  - 121-128
+  - 131-150
+  - 153-155
+  - 158-164
+  - 167-174
+  - 183-211
+  - 214-233
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -30,54 +29,54 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 ## Purpose
 
 `crates/gwiki/src/log.rs` exposes 14 indexed API symbols.
-[crates/gwiki/src/log.rs:8-14]
-[crates/gwiki/src/log.rs:17-20]
-[crates/gwiki/src/log.rs:22-46]
-[crates/gwiki/src/log.rs:48-86]
-[crates/gwiki/src/log.rs:88-103]
+[crates/gwiki/src/log.rs:9-15]
+[crates/gwiki/src/log.rs:19-22]
+[crates/gwiki/src/log.rs:25-49]
+[crates/gwiki/src/log.rs:52-90]
+[crates/gwiki/src/log.rs:93-108]
 
 ## API Symbols
 
-- `LogEntry` (class) component `LogEntry [class]` (`601ce88c-b5d7-5e2a-8f25-b6a9df8617e3`) lines 8-14 [crates/gwiki/src/log.rs:8-14]
+- `LogEntry` (class) component `LogEntry [class]` (`47249c61-90eb-5016-a137-1f84e94def71`) lines 9-15 [crates/gwiki/src/log.rs:9-15]
   - Signature: `pub struct LogEntry {`
-  - Purpose: Indexed class `LogEntry` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:8-14]
-- `LogWriteReport` (class) component `LogWriteReport [class]` (`df69753e-61eb-5ecd-a85d-f9299d7ddde0`) lines 17-20 [crates/gwiki/src/log.rs:17-20]
+  - Purpose: Indexed class `LogEntry` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:9-15]
+- `LogWriteReport` (class) component `LogWriteReport [class]` (`155406c5-4669-5972-ae59-43f52b041264`) lines 19-22 [crates/gwiki/src/log.rs:19-22]
   - Signature: `pub struct LogWriteReport {`
-  - Purpose: Indexed class `LogWriteReport` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:17-20]
-- `append_logs` (function) component `append_logs [function]` (`258c40ab-f206-5c27-aa38-7839bb6eb074`) lines 22-46 [crates/gwiki/src/log.rs:22-46]
+  - Purpose: Indexed class `LogWriteReport` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:19-22]
+- `append_logs` (function) component `append_logs [function]` (`e25c78fd-9fad-5d50-ac2e-0f30fc7cf0d4`) lines 25-49 [crates/gwiki/src/log.rs:25-49]
   - Signature: `pub fn append_logs(`
-  - Purpose: Indexed function `append_logs` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:22-46]
-- `append_log` (function) component `append_log [function]` (`f10a88f5-fdf3-50ad-ad3c-7142458f7918`) lines 48-86 [crates/gwiki/src/log.rs:48-86]
+  - Purpose: Indexed function `append_logs` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:25-49]
+- `append_log` (function) component `append_log [function]` (`5a81c5f5-59c0-5a9a-b384-dffa85b8a546`) lines 52-90 [crates/gwiki/src/log.rs:52-90]
   - Signature: `fn append_log(path: &Path, entry: &LogEntry) -> Result<(), WikiError> {`
-  - Purpose: Indexed function `append_log` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:48-86]
-- `render_entry` (function) component `render_entry [function]` (`1f968dda-340a-55c2-ab9e-f23dfed349b8`) lines 88-103 [crates/gwiki/src/log.rs:88-103]
+  - Purpose: Indexed function `append_log` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:52-90]
+- `render_entry` (function) component `render_entry [function]` (`c901ce57-f6ac-5378-9cff-d0c90c33fe47`) lines 93-108 [crates/gwiki/src/log.rs:93-108]
   - Signature: `fn render_entry(entry: &LogEntry) -> String {`
-  - Purpose: Indexed function `render_entry` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:88-103]
-- `same_log_path` (function) component `same_log_path [function]` (`7a2058eb-b621-5369-9318-d4a5793e2924`) lines 105-111 [crates/gwiki/src/log.rs:105-111]
+  - Purpose: Indexed function `render_entry` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:93-108]
+- `same_log_path` (function) component `same_log_path [function]` (`2061b5d6-09ae-519b-81a7-dfb43d19c803`) lines 111-117 [crates/gwiki/src/log.rs:111-117]
   - Signature: `fn same_log_path(left: &Path, right: &Path) -> bool {`
-  - Purpose: Indexed function `same_log_path` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:105-111]
-- `same_file_identity` (function) component `same_file_identity [function]` (`a099b2b1-7449-57cc-80a6-b0537dfbd694`) lines 114-121 [crates/gwiki/src/log.rs:114-121]
+  - Purpose: Indexed function `same_log_path` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:111-117]
+- `same_file_identity` (function) component `same_file_identity [function]` (`daf9baeb-a7d2-5d26-bd81-7e9e6e73a25d`) lines 121-128 [crates/gwiki/src/log.rs:121-128]
   - Signature: `fn same_file_identity(left: &Path, right: &Path) -> bool {`
-  - Purpose: Indexed function `same_file_identity` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:114-121]
-- `same_file_identity` (function) component `same_file_identity [function]` (`2de90eaf-bed3-5d8c-a746-9014b5f79f38`) lines 124-143 [crates/gwiki/src/log.rs:124-143]
+  - Purpose: Indexed function `same_file_identity` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:121-128]
+- `same_file_identity` (function) component `same_file_identity [function]` (`3369600f-19cf-5eb7-bfaa-0f3febdffc27`) lines 131-150 [crates/gwiki/src/log.rs:131-150]
   - Signature: `fn same_file_identity(left: &Path, right: &Path) -> bool {`
-  - Purpose: Indexed function `same_file_identity` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:124-143]
-- `identity` (function) component `identity [function]` (`2dcc20f2-8437-543b-81b6-ad6c3793acb1`) lines 127-137 [crates/gwiki/src/log.rs:127-137]
+  - Purpose: Indexed function `same_file_identity` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:131-150]
+- `identity` (function) component `identity [function]` (`1b3d975f-81ca-57fe-9355-230c91ee4f52`) lines 134-144 [crates/gwiki/src/log.rs:134-144]
   - Signature: `fn identity(path: &Path) -> Option<(u32, u32, u32)> {`
-  - Purpose: Indexed function `identity` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:127-137]
-- `same_file_identity` (function) component `same_file_identity [function]` (`97e8e1a0-7bdb-53f2-897f-b98596fd9e83`) lines 146-148 [crates/gwiki/src/log.rs:146-148]
+  - Purpose: Indexed function `identity` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:134-144]
+- `same_file_identity` (function) component `same_file_identity [function]` (`13c7499a-efc1-596f-a7e0-631a33814bbc`) lines 153-155 [crates/gwiki/src/log.rs:153-155]
   - Signature: `fn same_file_identity(_left: &Path, _right: &Path) -> bool {`
-  - Purpose: Indexed function `same_file_identity` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:146-148]
-- `resolved_log_path` (function) component `resolved_log_path [function]` (`499f4ef5-31f6-5430-a313-b431bff31108`) lines 150-156 [crates/gwiki/src/log.rs:150-156]
+  - Purpose: Indexed function `same_file_identity` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:153-155]
+- `resolved_log_path` (function) component `resolved_log_path [function]` (`feecdee7-b91b-5ad5-8e7d-3c44fde84722`) lines 158-164 [crates/gwiki/src/log.rs:158-164]
   - Signature: `fn resolved_log_path(path: &Path) -> PathBuf {`
-  - Purpose: Indexed function `resolved_log_path` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:150-156]
-- `resolve_log_path_fallback` (function) component `resolve_log_path_fallback [function]` (`d649a64c-6a28-5cae-b07c-dd7d03cb9515`) lines 158-165 [crates/gwiki/src/log.rs:158-165]
+  - Purpose: Indexed function `resolved_log_path` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:158-164]
+- `resolve_log_path_fallback` (function) component `resolve_log_path_fallback [function]` (`15a03020-97f3-53aa-a339-085717550af0`) lines 167-174 [crates/gwiki/src/log.rs:167-174]
   - Signature: `fn resolve_log_path_fallback(path: &Path) -> PathBuf {`
-  - Purpose: Indexed function `resolve_log_path_fallback` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:158-165]
-- `writes_scope_and_global_logs` (function) component `writes_scope_and_global_logs [function]` (`efc25269-c347-5051-bd16-b0673f28fdb6`) lines 174-202 [crates/gwiki/src/log.rs:174-202]
+  - Purpose: Indexed function `resolve_log_path_fallback` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:167-174]
+- `writes_scope_and_global_logs` (function) component `writes_scope_and_global_logs [function]` (`29419c8a-9ca7-5c5e-9f37-f78a78ae1be9`) lines 183-211 [crates/gwiki/src/log.rs:183-211]
   - Signature: `fn writes_scope_and_global_logs() {`
-  - Purpose: Indexed function `writes_scope_and_global_logs` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:174-202]
-- `does_not_append_twice_when_scope_and_global_logs_match` (function) component `does_not_append_twice_when_scope_and_global_logs_match [function]` (`fce7be73-db98-5365-91f8-799e2357202b`) lines 205-224 [crates/gwiki/src/log.rs:205-224]
+  - Purpose: Indexed function `writes_scope_and_global_logs` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:183-211]
+- `does_not_append_twice_when_scope_and_global_logs_match` (function) component `does_not_append_twice_when_scope_and_global_logs_match [function]` (`bdf78f1d-bfe3-5b48-84db-656d1f7eb4d9`) lines 214-233 [crates/gwiki/src/log.rs:214-233]
   - Signature: `fn does_not_append_twice_when_scope_and_global_logs_match() {`
-  - Purpose: Indexed function `does_not_append_twice_when_scope_and_global_logs_match` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:205-224]
+  - Purpose: Indexed function `does_not_append_twice_when_scope_and_global_logs_match` in `crates/gwiki/src/log.rs`. [crates/gwiki/src/log.rs:214-233]
 

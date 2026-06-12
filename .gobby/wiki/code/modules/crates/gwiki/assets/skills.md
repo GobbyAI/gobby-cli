@@ -13,7 +13,7 @@ Parent: [[code/modules/crates/gwiki/assets|crates/gwiki/assets]]
 
 ## Overview
 
-This module contains skill definition documents for the gwiki crate's assets. It includes four Markdown files describing distinct skills—audit, compile, query, and research—that guide wiki-related operations. These are content/documentation assets rather than code, containing no indexed API symbols.
+This module contains Markdown-based skill asset files defining core procedural and execution guidelines for audit, compile, query, and research capabilities.
 
 ## Files
 

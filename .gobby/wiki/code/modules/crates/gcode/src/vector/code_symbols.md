@@ -7,81 +7,56 @@ provenance:
   - 21-23
   - 26-29
   - 31-35
-  - 32-34
   - 37-41
-  - 38-40
   - 44-47
   - 49-121
-  - 50-64
-  - 66-72
-  - 74-101
-  - 103-120
   - 123-126
   - 128-140
   - 142-145
   - 147-179
   - 181-203
-  - 205-223
-  - 225-228
-  - 230-281
-  - 283-306
-  - 308-338
-  - 340-361
-  - 363-378
-  - 380-411
-  - 422-424
-  - 426-432
-  - 427-431
-  - 434-445
-  - 435-437
-  - 439-444
-  - 448-482
-  - 485-507
-  - 510-533
+  - 205-211
+  - 213-216
+  - 218-224
+  - 226-247
+  - 249-270
+  - 272-287
+  - 289-320
+  - 331-333
+  - 335-341
+  - 343-354
+  - 357-391
+  - 394-416
+  - 419-442
 - file: crates/gcode/src/vector/code_symbols/lifecycle.rs
   ranges:
   - 29-37
   - 39-43
   - 45-56
   - 58-376
-  - 59-82
-  - 84-86
-  - 88-98
-  - 100-118
-  - 120-141
-  - 143-160
-  - 162-182
-  - 184-201
-  - 203-205
-  - 207-217
-  - 219-240
-  - 242-261
-  - 263-282
-  - 284-292
-  - 294-307
-  - 309-326
-  - 328-367
-  - 369-375
   - 378-389
   - 391-393
 - file: crates/gcode/src/vector/code_symbols/qdrant.rs
   ranges:
-  - 17-23
-  - 25-27
-  - 29-36
-  - 38-46
-  - 48-75
-  - 77-95
-  - 97-108
-  - 110-125
-  - 127-136
-  - 138-148
-  - 150-157
-  - 159-178
-  - 180-201
-  - 203-211
-  - 213-283
-  - 285-295
+  - 18-24
+  - 26-28
+  - 30-37
+  - 39-47
+  - 49-76
+  - 78-99
+  - 101-111
+  - 113-124
+  - 126-141
+  - 143-152
+  - 154-164
+  - 166-173
+  - 175-194
+  - 196-217
+  - 219-227
+  - 229-299
+  - 301-311
+  - 318-323
+  - 326-336
 - file: crates/gcode/src/vector/code_symbols/repository.rs
   ranges:
   - 6-18
@@ -94,7 +69,6 @@ provenance:
   ranges:
   - 8-14
   - 16-26
-  - 17-25
   - '28'
   - 30-58
   - 63-81
@@ -122,7 +96,6 @@ provenance:
   - 515-580
   - 583-653
   - 656-703
-  - 661-696
   - 705-762
   - 764-783
   - 785-796
@@ -141,11 +114,9 @@ provenance:
   - 7-12
   - 15-18
   - 20-24
-  - 21-23
   - '26'
   - 29-57
   - 59-96
-  - 60-95
   - 100-105
   - 108-112
   - 115-118
@@ -153,9 +124,7 @@ provenance:
   - 127-137
   - 140-162
   - 164-203
-  - 165-202
   - 205-209
-  - 206-208
   - '211'
 generated_by: gcode-codewiki
 trust: generated
@@ -168,20 +137,10 @@ Parent: [[code/modules/crates/gcode/src/vector|crates/gcode/src/vector]]
 
 ## Overview
 
-The `code_symbols` module provides semantic vector indexing and search for code symbols, backed by Qdrant. It is organized into focused submodules:
-
-- **types**: Defines core data structures including `CodeSymbolVectorPayload`, search request/hit types, lifecycle status/output, collection schemas, and `VectorLifecycleError`.
-- **embedding**: Resolves embedding configuration from AI context and provides an `EmbeddingBackend` for generating text/query embeddings (single and batched), including dimension probing and request/response parsing.
-- **lifecycle**: The `CodeSymbolVectorLifecycle` orchestrator manages collection creation, schema compatibility checks, symbol-to-point conversion, upserts, stale-vector cleanup, and full rebuilds, coordinating embedding and Qdrant operations.
-- **qdrant**: Low-level Qdrant HTTP client helpers for collection naming/paths, vector search, deletion (by project, file, filter, or prefix), schema/count parsing, and timeout handling.
-- **repository**: Fetches symbols from persistent storage scoped by file or project via predicate-based SQL queries.
-- **search**: High-level `search_code_symbols` and `semantic_search` entry points with `SearchError` handling.
-- **tests**: Comprehensive coverage of payload provenance, collection naming, embedding batching/dimension validation, deletion scoping, schema routing, and Rust literal/comment masking for vector text extraction.
-
-Together these provide the end-to-end pipeline from source symbols through embedding generation to Qdrant-backed storage and semantic retrieval.
+This module manages the lifecycle, generation, storage, and retrieval of vector embeddings for code symbols. It encapsulates embedding generation via configured backends, orchestrates collection synchronization and vector lifecycles, communicates directly with Qdrant vector stores, queries symbol metadata from the repository, and performs semantic search over codebase symbols.
 [crates/gcode/src/vector/code_symbols/embedding.rs:21-23]
 [crates/gcode/src/vector/code_symbols/lifecycle.rs:29-37]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:17-23]
+[crates/gcode/src/vector/code_symbols/qdrant.rs:18-24]
 [crates/gcode/src/vector/code_symbols/repository.rs:6-18]
 [crates/gcode/src/vector/code_symbols/search.rs:8-14]
 
@@ -189,38 +148,36 @@ Together these provide the end-to-end pipeline from source symbols through embed
 
 ```mermaid
 sequenceDiagram
-    participant m_05ddf195_9e0c_5edd_b7a9_e3c1a56c8c05 as delete_vectors_for_filter_excluding_ids &#91;function&#93;
     participant m_068f6d68_9c77_52ed_b5a6_7f2c8768040e as payloads_carry_provenance_metadata &#91;function&#93;
-    participant m_08460f1b_a2ce_5726_9d7f_5b7157cdfc72 as embedding_source_from_context &#91;function&#93;
     participant m_08abaa70_62f0_5531_b9e1_6d5eb0ab736b as char_literal_end &#91;function&#93;
     participant m_0bad8712_4896_5d24_b607_9c25e4d63188 as rust_code_without_comments_and_literals &#91;function&#93;
+    participant m_0e7c1d57_7114_50e2_84a9_1682d3a28e18 as delete_qdrant_collection &#91;function&#93;
+    participant m_11d61977_239b_50f6_bf35_94bb6e9f1977 as direct_source_uses_resolved_embedding_config &#91;function&#93;
     participant m_12b82731_a570_5519_941a_7ecf340f9c75 as skip_block_comment &#91;function&#93;
     participant m_1789414f_d055_5920_9aa3_af279ef7de96 as delete_file_vectors_skips_delete_when_count_is_zero &#91;function&#93;
+    participant m_1e1583c9_745e_5c42_856e_5e1b261b64fd as EmbeddingBackend.new &#91;method&#93;
+    participant m_207703c8_c51f_58dc_a2dd_7cecf74d1cfc as delete_file_vectors &#91;function&#93;
     participant m_2107d03f_8e95_51cc_a7a8_05371b1b45a2 as lifecycle_http_scoped_to_module &#91;function&#93;
     participant m_24dee124_d569_52ac_a227_d502192f3000 as fetch_symbols_for_project &#91;function&#93;
     participant m_2891b793_606c_5557_b81f_6fba2da95d75 as sync_rejects_embedding_vectors_with_wrong_dimension &#91;function&#93;
-    participant m_3dd5e950_1424_592b_a552_3fb7a26a9319 as direct_source_uses_resolved_embedding_config &#91;function&#93;
-    participant m_4147d05b_fbaf_5cf5_8a4d_b51c92390afe as qdrant_request_for_config &#91;function&#93;
-    participant m_426955a5_2426_59da_8fa0_b434bd81198b as embedding_source_from_resolved_ai_context &#91;function&#93;
-    participant m_48ecbf3b_6566_53b8_82db_609b6b194775 as embedding_batch_preserves_response_index_order &#91;function&#93;
     participant m_55b43c4d_6aaf_578e_b5ef_eceb572052da as skip_quoted_string &#91;function&#93;
     participant m_6ab7845d_4731_546c_a29b_8405430b3241 as raw_hashes_match &#91;function&#93;
+    participant m_701ba072_c2f3_5035_8c2f_eca788ac5617 as embedding_source_from_resolved_ai_context &#91;function&#93;
+    participant m_753537a7_c2e6_552d_b8ef_08f7def1f99b as collection_name &#91;function&#93;
     participant m_79becebc_7348_56eb_b09e_07ea3974921b as spawn_http_responses &#91;function&#93;
+    participant m_7f9161ad_3ab2_5577_8ac0_3562563d9937 as qdrant_request_for_config &#91;function&#93;
     participant m_823584ac_ee4f_5a77_9d40_ad2f95e4988f as test_symbol &#91;function&#93;
     participant m_86e32944_ff07_5f89_aac1_3be7ffc98412 as push_masked &#91;function&#93;
     participant m_9e348111_a612_5af1_97d4_c9447ffde82c as escaped_char_literal_payload_end &#91;function&#93;
-    participant m_9e4605d9_be27_5b47_8a88_4057f0b3b8fb as resolve_embedding_ai_context &#91;function&#93;
     participant m_ae80a1c0_b3d5_5643_82c4_37a9507a9d52 as visit &#91;function&#93;
     participant m_bb5add13_83d0_5d5f_97a5_b318647215f4 as fetch_symbols_where &#91;function&#93;
-    participant m_e400f9fb_95ef_538b_b177_d5537e1efff6 as parse_points_count &#91;function&#93;
-    participant m_ee6101fe_f3f4_543c_9543_67c9ee079fca as qdrant_http_error &#91;function&#93;
+    participant m_d1f6ab42_05ef_5849_b9c8_27615e3b516b as collection_path &#91;function&#93;
+    participant m_d35c16dd_7eb0_5a67_b10f_6ae70cac681b as qdrant_http_error &#91;function&#93;
+    participant m_ec0b0c90_cf56_5a49_bea0_b8c2fabb962a as delete_vectors_for_filter &#91;function&#93;
+    participant m_f036e431_77ef_5476_a9a5_af731616f618 as embedding_client &#91;function&#93;
     participant m_f3d7949d_38d5_5480_9aed_dbc8c0d1f455 as raw_string_prefix &#91;function&#93;
-    m_05ddf195_9e0c_5edd_b7a9_e3c1a56c8c05->>m_4147d05b_fbaf_5cf5_8a4d_b51c92390afe: calls
-    m_05ddf195_9e0c_5edd_b7a9_e3c1a56c8c05->>m_e400f9fb_95ef_538b_b177_d5537e1efff6: calls
-    m_05ddf195_9e0c_5edd_b7a9_e3c1a56c8c05->>m_ee6101fe_f3f4_543c_9543_67c9ee079fca: calls
+    participant m_f9ba033c_f3c6_5bc3_8b1f_e7b40ad825f4 as qdrant_http_client &#91;function&#93;
     m_068f6d68_9c77_52ed_b5a6_7f2c8768040e->>m_823584ac_ee4f_5a77_9d40_ad2f95e4988f: calls
-    m_08460f1b_a2ce_5726_9d7f_5b7157cdfc72->>m_426955a5_2426_59da_8fa0_b434bd81198b: calls
-    m_08460f1b_a2ce_5726_9d7f_5b7157cdfc72->>m_9e4605d9_be27_5b47_8a88_4057f0b3b8fb: calls
     m_08abaa70_62f0_5531_b9e1_6d5eb0ab736b->>m_9e348111_a612_5af1_97d4_c9447ffde82c: calls
     m_0bad8712_4896_5d24_b607_9c25e4d63188->>m_08abaa70_62f0_5531_b9e1_6d5eb0ab736b: calls
     m_0bad8712_4896_5d24_b607_9c25e4d63188->>m_12b82731_a570_5519_941a_7ecf340f9c75: calls
@@ -228,18 +185,23 @@ sequenceDiagram
     m_0bad8712_4896_5d24_b607_9c25e4d63188->>m_6ab7845d_4731_546c_a29b_8405430b3241: calls
     m_0bad8712_4896_5d24_b607_9c25e4d63188->>m_86e32944_ff07_5f89_aac1_3be7ffc98412: calls
     m_0bad8712_4896_5d24_b607_9c25e4d63188->>m_f3d7949d_38d5_5480_9aed_dbc8c0d1f455: calls
+    m_0e7c1d57_7114_50e2_84a9_1682d3a28e18->>m_7f9161ad_3ab2_5577_8ac0_3562563d9937: calls
+    m_0e7c1d57_7114_50e2_84a9_1682d3a28e18->>m_d1f6ab42_05ef_5849_b9c8_27615e3b516b: calls
+    m_0e7c1d57_7114_50e2_84a9_1682d3a28e18->>m_d35c16dd_7eb0_5a67_b10f_6ae70cac681b: calls
+    m_11d61977_239b_50f6_bf35_94bb6e9f1977->>m_701ba072_c2f3_5035_8c2f_eca788ac5617: calls
     m_1789414f_d055_5920_9aa3_af279ef7de96->>m_79becebc_7348_56eb_b09e_07ea3974921b: calls
+    m_1e1583c9_745e_5c42_856e_5e1b261b64fd->>m_f036e431_77ef_5476_a9a5_af731616f618: calls
+    m_207703c8_c51f_58dc_a2dd_7cecf74d1cfc->>m_753537a7_c2e6_552d_b8ef_08f7def1f99b: calls
+    m_207703c8_c51f_58dc_a2dd_7cecf74d1cfc->>m_ec0b0c90_cf56_5a49_bea0_b8c2fabb962a: calls
+    m_207703c8_c51f_58dc_a2dd_7cecf74d1cfc->>m_f9ba033c_f3c6_5bc3_8b1f_e7b40ad825f4: calls
     m_2107d03f_8e95_51cc_a7a8_05371b1b45a2->>m_ae80a1c0_b3d5_5643_82c4_37a9507a9d52: calls
     m_24dee124_d569_52ac_a227_d502192f3000->>m_bb5add13_83d0_5d5f_97a5_b318647215f4: calls
     m_2891b793_606c_5557_b81f_6fba2da95d75->>m_79becebc_7348_56eb_b09e_07ea3974921b: calls
-    m_2891b793_606c_5557_b81f_6fba2da95d75->>m_823584ac_ee4f_5a77_9d40_ad2f95e4988f: calls
-    m_3dd5e950_1424_592b_a552_3fb7a26a9319->>m_426955a5_2426_59da_8fa0_b434bd81198b: calls
-    m_48ecbf3b_6566_53b8_82db_609b6b194775->>m_79becebc_7348_56eb_b09e_07ea3974921b: calls
 ```
 
 ## Files
 
-- [[code/files/crates/gcode/src/vector/code_symbols/embedding.rs|crates/gcode/src/vector/code_symbols/embedding.rs]] - `crates/gcode/src/vector/code_symbols/embedding.rs` exposes 34 indexed API symbols.
+- [[code/files/crates/gcode/src/vector/code_symbols/embedding.rs|crates/gcode/src/vector/code_symbols/embedding.rs]] - `crates/gcode/src/vector/code_symbols/embedding.rs` exposes 33 indexed API symbols.
 [crates/gcode/src/vector/code_symbols/embedding.rs:21-23]
 [crates/gcode/src/vector/code_symbols/embedding.rs:26-29]
 [crates/gcode/src/vector/code_symbols/embedding.rs:31-35]
@@ -251,12 +213,12 @@ sequenceDiagram
 [crates/gcode/src/vector/code_symbols/lifecycle.rs:45-56]
 [crates/gcode/src/vector/code_symbols/lifecycle.rs:58-376]
 [crates/gcode/src/vector/code_symbols/lifecycle.rs:59-82]
-- [[code/files/crates/gcode/src/vector/code_symbols/qdrant.rs|crates/gcode/src/vector/code_symbols/qdrant.rs]] - `crates/gcode/src/vector/code_symbols/qdrant.rs` exposes 16 indexed API symbols.
-[crates/gcode/src/vector/code_symbols/qdrant.rs:17-23]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:25-27]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:29-36]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:38-46]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:48-75]
+- [[code/files/crates/gcode/src/vector/code_symbols/qdrant.rs|crates/gcode/src/vector/code_symbols/qdrant.rs]] - `crates/gcode/src/vector/code_symbols/qdrant.rs` exposes 19 indexed API symbols.
+[crates/gcode/src/vector/code_symbols/qdrant.rs:18-24]
+[crates/gcode/src/vector/code_symbols/qdrant.rs:26-28]
+[crates/gcode/src/vector/code_symbols/qdrant.rs:30-37]
+[crates/gcode/src/vector/code_symbols/qdrant.rs:39-47]
+[crates/gcode/src/vector/code_symbols/qdrant.rs:49-76]
 - [[code/files/crates/gcode/src/vector/code_symbols/repository.rs|crates/gcode/src/vector/code_symbols/repository.rs]] - `crates/gcode/src/vector/code_symbols/repository.rs` exposes 6 indexed API symbols.
 [crates/gcode/src/vector/code_symbols/repository.rs:6-18]
 [crates/gcode/src/vector/code_symbols/repository.rs:20-25]
@@ -284,40 +246,39 @@ sequenceDiagram
 
 ## Components
 
-- `589ac3d5-8bb7-5601-b39d-acce0a0e012c`
-- `8bc363cb-2547-5104-9236-3db4ab472ad8`
-- `3f69da9d-b9f6-5e38-9e7f-ced9cb1cda88`
-- `5dd53c6b-6052-5f4f-82f7-01142071d334`
-- `f65130d3-6ee2-531a-8aac-de2fcd9075c2`
-- `2f34c2e2-2428-5741-8827-efc049c61799`
-- `f1753204-5a79-5557-a3d3-609c8c924acd`
-- `6bee5b5f-5a52-5685-84c3-07ed7409d707`
-- `62a029ed-1334-5022-a439-adf81275c81b`
-- `e15ff7dd-f742-55fd-b1d6-d6f50a88546c`
-- `d53327a1-d622-5108-b73f-0c32f2cb9941`
-- `eaa17429-a1aa-56db-af8f-4638b84af956`
-- `08460f1b-a2ce-5726-9d7f-5b7157cdfc72`
-- `426955a5-2426-59da-8fa0-b434bd81198b`
-- `b3f25608-8bc8-55c3-b74a-fa7cedee6428`
-- `9e4605d9-be27-5b47-8a88-4057f0b3b8fb`
-- `933da43f-3b6d-50ce-bc47-2ad31809f62c`
-- `e796544f-4d6e-503d-95d0-126089233f63`
-- `ead5f733-966a-59fe-aa08-684aff4de558`
-- `c02b677a-9ae9-5446-b9d5-15e8da244552`
-- `9eb26cd4-da4f-5002-850b-3a8ca2daea62`
-- `25e19896-ecae-5e6a-8578-4e58ec56a0d1`
-- `621907c9-5e94-53ca-983e-168df458329a`
-- `e89f6329-c427-58df-b2af-9065e27bed12`
-- `87c55fec-dbf9-56e6-b8a4-455a78e9e3e3`
-- `5e577ae5-d712-5f8f-b4b3-425bb8d2064c`
-- `7f07b8a1-5332-524a-8b52-f1f5a590d87f`
-- `5b65687f-95a7-5816-888f-06f8cf1eaa92`
-- `e6b0251b-ddca-5c4b-be9b-d6892f6c1800`
-- `b83771cb-16c1-5655-ab53-63e9c74752fa`
-- `413d22ab-b544-55e9-8772-4f7e56ef77b0`
-- `ed7c35dc-09a9-5c86-ac65-7ebe214fd635`
-- `86e8fdfe-8ee9-53d5-91e9-1bb0fe1395c3`
-- `3dd5e950-1424-592b-a552-3fb7a26a9319`
+- `3479b8a3-530f-55b0-a148-2d5196e2fead`
+- `16c7b9d8-2dd0-54ab-9ff8-df68956d3555`
+- `50ac7fe7-1277-5756-ae69-737e85d9f944`
+- `40458da6-e52c-5dd1-bd78-7d075bcdb622`
+- `a6a2b4b0-9074-5263-9ad6-45e7a540bdef`
+- `7b3bd09e-f7d6-50fe-a24f-565dc0df0de4`
+- `f98d857e-5d58-5f52-a11f-10471124b252`
+- `ceda3800-7153-533a-b404-f9e10992ca14`
+- `1e1583c9-745e-5c42-856e-5e1b261b64fd`
+- `e74362f5-35b4-5fed-a03c-ad2f49f90010`
+- `1f50a91c-c517-5871-bfc4-868d7dd0ab8f`
+- `619f225c-4d00-5abe-9a44-450310d704eb`
+- `39317108-df4d-5b14-beaf-e702c0a04cb8`
+- `701ba072-c2f3-5035-8c2f-eca788ac5617`
+- `7d30df26-d4f3-578a-92f0-ef350b47fe53`
+- `4823c87d-a6d3-59cf-b6af-37e143e37284`
+- `f036e431-77ef-5476-a9a5-af731616f618`
+- `bba395d6-6bd8-519f-8e32-6da5f7352b16`
+- `deee3be0-f99f-5e4c-9649-af9fba6c2e1c`
+- `7d21b1a4-6053-545a-a2de-a93d090eaae9`
+- `5165ad64-d7c1-597b-886d-e745f3894276`
+- `5f44552d-f51c-5f1c-9abd-d6cea42e8ac4`
+- `4e0145e7-80dd-5d3c-92a2-404922cc9b0b`
+- `326ce52f-fd0e-5cca-babf-586d8daae36b`
+- `d0dd2dbb-06bf-5257-b6e7-7550d8ff539f`
+- `464e0451-985a-5806-84f7-dfa21f2e51f7`
+- `e7e59da2-9ce4-5552-85a2-1cd4573c46f2`
+- `88f1625e-be18-5e7a-917d-e7f23356d3ae`
+- `77a1beba-ba90-5801-bc38-bc65b593932f`
+- `3bcab959-8918-5f4b-937b-76e536ef1b3b`
+- `b4217f9f-8828-5ea3-a9a2-e95e0bdd8e6b`
+- `1a57e3b9-6d82-5299-bdee-469c8d64a6b6`
+- `11d61977-239b-50f6-bf35-94bb6e9f1977`
 - `0248dc7f-c15d-57e0-b0e5-d01474551f24`
 - `d09cbdf3-4bb8-57cf-bde2-ec364e34db0d`
 - `453c36c5-c71e-5ea5-ad42-ba8eb1b45dc7`
@@ -342,22 +303,25 @@ sequenceDiagram
 - `fa63f5e2-5fc6-5644-8e7c-1986aa30319a`
 - `9644ea59-e921-5ce7-af06-12ab75c1073e`
 - `fbcf6b62-c2a7-52bd-afd3-3fe6073c5f61`
-- `e886a0d1-302c-50be-a33f-22fb7f4245dc`
-- `bb3d04bd-e803-5207-a588-d8de469049ab`
-- `66c1dc48-35d6-5d59-a76f-88a8bab73f50`
-- `af1c9417-c3f5-5b9d-a7ae-a55787d15482`
-- `a4f560f1-3e79-5c18-a250-153793614d63`
-- `d2719ad0-3758-5c8f-8d95-5fca474142e3`
-- `fc175c6b-2b3a-51c7-b146-d3fb86d05750`
-- `2f152d5b-5f8f-5868-9890-8b48df0a3248`
-- `e400f9fb-95ef-538b-b177-d5537e1efff6`
-- `7a7f54d3-51df-5574-8945-c039f98855f7`
-- `6f7b3cf7-41ab-52bc-bf8b-27028a5f817a`
-- `4147d05b-fbaf-5cf5-8a4d-b51c92390afe`
-- `c5ff425d-f22e-59ca-b980-86c24a8a1230`
-- `8c491da8-31ae-5891-b0e9-328d53965250`
-- `05ddf195-9e0c-5edd-b7a9-e3c1a56c8c05`
-- `ee6101fe-f3f4-543c-9543-67c9ee079fca`
+- `753537a7-c2e6-552d-b8ef-08f7def1f99b`
+- `d1f6ab42-05ef-5849-b9c8-27615e3b516b`
+- `cfd613b1-9447-5b9e-9dfe-c63f66e3f148`
+- `207703c8-c51f-58dc-a2dd-7cecf74d1cfc`
+- `576b7d03-3244-54a6-ad82-ad63d740b15c`
+- `70028223-97ec-5788-a29d-3fd6171deeea`
+- `7f84e19d-1d90-5085-8761-c055f88fa761`
+- `0a0b99d3-cc8b-56ca-a68b-3ad40cfcefcb`
+- `52077fa3-0b70-5755-99e7-875ea2992569`
+- `6e0290ce-9997-5d73-988f-9d8cccd380c7`
+- `f9ba033c-f3c6-5bc3-8b1f-e7b40ad825f4`
+- `800cebd9-b264-52cb-bd2f-e261d8cb5242`
+- `7f9161ad-3ab2-5577-8ac0-3562563d9937`
+- `0e7c1d57-7114-50e2-84a9-1682d3a28e18`
+- `ec0b0c90-cf56-5a49-bea0-b8c2fabb962a`
+- `f7191d77-0ad0-5a2d-bcd0-12dc369404b0`
+- `d35c16dd-7eb0-5a67-b10f-6ae70cac681b`
+- `73c68735-f143-51ac-88e4-f972c8e48dff`
+- `ec0952ba-dfaa-5357-83f0-dddd5c7283cb`
 - `900254d8-e0ac-5da2-8534-6625be83a1b7`
 - `24dee124-d569-52ac-a227-d502192f3000`
 - `f099144b-c3ae-5799-bc8d-0636b2b55e49`

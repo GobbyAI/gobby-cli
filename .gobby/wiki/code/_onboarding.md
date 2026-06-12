@@ -5,22 +5,22 @@ provenance:
 - file: crates/gcode/src/commands/codewiki/io.rs
   ranges:
   - 3-9
-  - 11-21
+  - 11-28
 - file: crates/gcode/src/commands/codewiki/mod.rs
   ranges:
-  - 91-96
-  - 99-103
-  - 106-115
-  - 117-126
-  - 130-133
-  - 165-169
-  - 301-313
-  - '392'
-  - 404-408
-  - 413-421
-  - 442-448
-  - 472-600
-  - 609-617
+  - 92-97
+  - 100-104
+  - 107-116
+  - 118-127
+  - 131-134
+  - 166-170
+  - 302-314
+  - '393'
+  - 405-409
+  - 414-422
+  - 443-449
+  - 473-598
+  - 616-624
 - file: crates/gcode/src/commands/codewiki/prompts.rs
   ranges:
   - 11-33
@@ -88,14 +88,14 @@ provenance:
 - file: crates/gcode/src/commands/symbol_at.rs
   ranges:
   - 57-64
-  - 66-124
+  - 66-122
 - file: crates/gcode/src/commands/symbols.rs
   ranges:
-  - 21-80
-  - 260-306
-  - 308-347
-  - 349-362
-  - 364-388
+  - 21-78
+  - 258-302
+  - 304-341
+  - 343-356
+  - 358-382
 - file: crates/gcode/src/commands/vector.rs
   ranges:
   - 12-18
@@ -126,9 +126,9 @@ provenance:
   - 219-284
   - 292-316
   - 319-372
-  - 504-511
-  - 552-555
-  - 557-593
+  - 493-500
+  - 541-544
+  - 546-582
 - file: crates/gcode/src/contract.rs
   ranges:
   - 5-254
@@ -198,8 +198,7 @@ provenance:
   - 203-214
   - 217-230
   - 232-242
-  - 246-249
-  - 250-262
+  - 246-262
 - file: crates/gcode/src/graph/code_graph/read.rs
   ranges:
   - 566-645
@@ -284,14 +283,16 @@ provenance:
   - 16-23
   - 26-34
   - 37-47
-  - 50-76
-  - 78-93
-  - 95-209
-  - 211-237
-  - 239-266
-  - 268-293
-  - 295-314
-  - 316-349
+  - 50-60
+  - 62-84
+  - 86-108
+  - 110-125
+  - 127-241
+  - 243-269
+  - 271-298
+  - 300-325
+  - 327-347
+  - 349-383
 - file: crates/gcode/src/index/chunker.rs
   ranges:
   - 19-62
@@ -339,14 +340,14 @@ provenance:
   - 123-127
 - file: crates/gcode/src/index/walker.rs
   ranges:
-  - 36-39
-  - 42-44
-  - 56-61
-  - 63-108
-  - 111-135
-  - 139-149
-  - 152-161
-  - 164-176
+  - 35-38
+  - 41-43
+  - 55-60
+  - 62-107
+  - 110-134
+  - 138-148
+  - 151-160
+  - 163-175
 - file: crates/gcode/src/lib.rs
   ranges:
   - 34-42
@@ -431,7 +432,6 @@ provenance:
   ranges:
   - 7-12
   - 18-29
-  - 34-54
 - file: crates/gcode/src/schema.rs
   ranges:
   - 24-52
@@ -515,12 +515,12 @@ provenance:
   - 103-120
   - 123-126
   - 181-203
-  - 205-223
-  - 225-228
-  - 230-281
-  - 340-361
-  - 363-378
-  - 380-411
+  - 205-211
+  - 213-216
+  - 218-224
+  - 249-270
+  - 272-287
+  - 289-320
 - file: crates/gcode/src/vector/code_symbols/lifecycle.rs
   ranges:
   - 29-37
@@ -534,11 +534,11 @@ provenance:
   - 143-160
 - file: crates/gcode/src/vector/code_symbols/qdrant.rs
   ranges:
-  - 17-23
-  - 29-36
-  - 38-46
-  - 48-75
-  - 77-95
+  - 18-24
+  - 30-37
+  - 39-47
+  - 49-76
+  - 78-99
 - file: crates/gcode/src/vector/code_symbols/repository.rs
   ranges:
   - 6-18
@@ -573,10 +573,11 @@ provenance:
   - 195-205
   - 207-222
   - 224-254
-  - 356-374
-  - 402-447
-  - 449-489
-  - 491-508
+  - 356-362
+  - 364-383
+  - 452-497
+  - 499-539
+  - 541-558
 - file: crates/gcore/src/ai/daemon.rs
   ranges:
   - 19-24
@@ -586,21 +587,23 @@ provenance:
   - 138-144
   - 149-187
   - 189-223
+- file: crates/gcore/src/ai/embeddings.rs
+  ranges:
+  - 19-38
+  - 42-92
 - file: crates/gcore/src/ai/mod.rs
   ranges:
-  - 30-34
-  - 78-81
-  - 84-88
-  - 90-107
-  - 109-134
-  - 136-141
-  - 143-145
-  - 147-149
-  - 151-168
-  - 170-200
-  - 219-234
-  - 369-373
-  - 375-392
+  - 31-35
+  - 79-82
+  - 85-89
+  - 91-108
+  - 110-135
+  - 137-142
+  - 144-146
+  - 148-150
+  - 152-169
+  - 171-201
+  - 220-235
 - file: crates/gcore/src/ai/probe.rs
   ranges:
   - 20-23
@@ -636,22 +639,22 @@ provenance:
   - 80-86
   - 89-97
   - 99-107
-  - 158-160
-  - 164-166
-  - 175-183
-  - 185-187
-  - 189-206
-  - 208-221
-  - 234-236
-  - 263-266
-  - '268'
-  - 271-276
-  - 283-288
-  - 290-298
-  - '332'
-  - 349-353
-  - 360-366
-  - 368-370
+  - 127-129
+  - 133-135
+  - 144-152
+  - 154-156
+  - 158-175
+  - 177-190
+  - 203-205
+  - 232-235
+  - '237'
+  - 240-245
+  - 252-257
+  - 259-267
+  - '306'
+  - 323-327
+  - 334-340
+  - 342-344
 - file: crates/gcore/src/ai_types.rs
   ranges:
   - 9-13
@@ -674,9 +677,9 @@ provenance:
 - file: crates/gcore/src/bootstrap.rs
   ranges:
   - 33-36
-  - 50-52
-  - 58-63
-  - 69-90
+  - 52-54
+  - 60-65
+  - 71-92
 - file: crates/gcore/src/cli_contract.rs
   ranges:
   - 4-12
@@ -726,21 +729,10 @@ provenance:
   - 224-227
   - 338-340
   - 344-347
-- file: crates/gcore/src/context.rs
-  ranges:
-  - 16-31
-  - 35-55
-  - 57-59
-  - 61-63
-  - 65-67
-  - 69-71
-  - 73-75
-  - 77-79
-  - 81-83
 - file: crates/gcore/src/daemon_url.rs
   ranges:
-  - 15-17
-  - 22-24
+  - 28-34
+  - 40-42
 - file: crates/gcore/src/degradation.rs
   ranges:
   - 12-22
@@ -749,7 +741,9 @@ provenance:
   - 46-53
   - 57-91
   - 100-115
-  - 183-217
+  - 150-171
+  - 175-188
+  - 199-233
 - file: crates/gcore/src/falkor.rs
   ranges:
   - '22'
@@ -765,7 +759,7 @@ provenance:
   - 175-177
   - 180-182
   - 185-187
-  - 190-193
+  - 195-198
 - file: crates/gcore/src/graph_analytics.rs
   ranges:
   - 7-11
@@ -791,18 +785,18 @@ provenance:
   - 130-136
   - 141-147
   - 150-173
+- file: crates/gcore/src/layered_config.rs
+  ranges:
+  - 17-25
+  - 32-63
 - file: crates/gcore/src/lib.rs
   ranges:
-  - 25-32
+  - 27-34
 - file: crates/gcore/src/local_backend.rs
   ranges:
   - 14-20
-  - 23-28
-  - 31-38
-  - 56-62
-  - 64-66
-  - 70-77
-  - 81-114
+  - 24-31
+  - 35-68
 - file: crates/gcore/src/postgres.rs
   ranges:
   - 16-22
@@ -812,8 +806,8 @@ provenance:
   - 66-71
 - file: crates/gcore/src/project.rs
   ranges:
-  - 13-25
-  - 29-52
+  - 12-24
+  - 28-51
 - file: crates/gcore/src/provisioning/bootstrap.rs
   ranges:
   - 8-15
@@ -939,13 +933,12 @@ provenance:
   - 35-51
 - file: crates/ghook/src/main.rs
   ranges:
-  - 38-42
+  - 45-49
 - file: crates/ghook/src/planned_shutdown.rs
   ranges:
   - 21-27
   - 29-37
-  - 52-56
-  - 65-67
+  - 52-54
 - file: crates/ghook/src/terminal_context.rs
   ranges:
   - 18-23
@@ -953,18 +946,18 @@ provenance:
   - 71-77
 - file: crates/ghook/src/transport.rs
   ranges:
-  - 30-35
-  - 39-44
-  - 48-54
-  - 57-60
+  - 31-36
+  - 40-45
+  - 49-55
+  - 58-60
   - 63-65
   - 68-74
   - 77-81
-  - 87-110
-  - 115-121
-  - 129-193
-  - 214-221
-  - 231-262
+  - 87-114
+  - 119-125
+  - 137-204
+  - 225-232
+  - 242-273
 - file: crates/gloc/src/backend.rs
   ranges:
   - 7-12
@@ -974,11 +967,11 @@ provenance:
   - 13-22
   - 25-32
   - 53-65
-  - 70-88
-  - 120-125
-  - 128-159
-  - 163-165
-  - 170-176
+  - 72-89
+  - 92-97
+  - 100-131
+  - 135-137
+  - 142-148
 - file: crates/gloc/src/exec.rs
   ranges:
   - 9-21
@@ -1017,15 +1010,16 @@ provenance:
   - 227-230
   - 237-240
   - 262-264
-  - 268-290
-  - 325-360
+  - 270-287
+  - 290-325
 - file: crates/gsqz/src/daemon.rs
   ranges:
   - 11-23
   - 26-28
   - 32-43
   - 46-53
-  - 60-80
+  - 62-76
+  - 79-83
 - file: crates/gsqz/src/main.rs
   ranges:
   - 25-48
@@ -1081,13 +1075,13 @@ provenance:
   ranges:
   - 33-35
   - 38-44
-  - 46-53
-  - 86-92
-  - 95-102
-  - 105-110
-  - 112-114
-  - 116-139
-  - 141-170
+  - 47-54
+  - 87-93
+  - 96-103
+  - 106-111
+  - 114-116
+  - 118-141
+  - 143-172
 - file: crates/gwiki/src/benchmark.rs
   ranges:
   - 30-39
@@ -1121,9 +1115,9 @@ provenance:
   - 66-77
   - 80-85
   - 88-91
-  - 93-98
-  - 100-185
-  - 187-261
+  - 94-99
+  - 101-191
+  - 193-267
 - file: crates/gwiki/src/contract.rs
   ranges:
   - 6-499
@@ -1137,13 +1131,12 @@ provenance:
 - file: crates/gwiki/src/daemon.rs
   ranges:
   - 11-18
-  - 22-27
-  - 30-35
-  - 38-44
-  - 47-54
-  - 57-66
-  - 169-172
-  - 174-176
+  - 26-31
+  - 34-40
+  - 43-50
+  - 53-62
+  - 165-168
+  - 170-172
 - file: crates/gwiki/src/document.rs
   ranges:
   - 4-16
@@ -1191,11 +1184,11 @@ provenance:
   - 10-13
   - 16-30
   - 33-48
-  - 50-114
-  - 118-124
-  - 127-129
-  - 139-169
-  - 171-189
+  - 51-115
+  - 119-125
+  - 128-130
+  - 140-170
+  - 173-191
 - file: crates/gwiki/src/graph/analytics.rs
   ranges:
   - 14-22
@@ -1206,8 +1199,8 @@ provenance:
   - 74-78
   - 81-85
   - 87-91
-  - 93-97
-  - 99-157
+  - 94-98
+  - 100-158
 - file: crates/gwiki/src/graph/context.rs
   ranges:
   - 8-11
@@ -1256,13 +1249,13 @@ provenance:
   - 345-405
 - file: crates/gwiki/src/health.rs
   ranges:
-  - 21-33
-  - 36-40
-  - 43-46
-  - 48-52
-  - 54-94
-  - 96-105
-  - 263-274
+  - 22-34
+  - 37-41
+  - 44-47
+  - 49-53
+  - 55-95
+  - 97-106
+  - 265-276
 - file: crates/gwiki/src/indexer.rs
   ranges:
   - 16-18
@@ -1273,9 +1266,9 @@ provenance:
   ranges:
   - 21-28
   - 31-37
-  - 39-53
-  - 55-80
-  - 129-140
+  - 40-54
+  - 56-87
+  - 148-159
 - file: crates/gwiki/src/ingest/document/mod.rs
   ranges:
   - 21-27
@@ -1283,45 +1276,45 @@ provenance:
   - 49-53
   - 56-62
   - 64-66
-  - 68-71
-  - 75-84
-  - 100-111
+  - 68-72
+  - 77-86
+  - 103-114
 - file: crates/gwiki/src/ingest/file.rs
   ranges:
-  - 51-55
-  - 63-76
-  - 375-407
+  - 53-57
+  - 65-78
+  - 382-414
 - file: crates/gwiki/src/ingest/git.rs
   ranges:
-  - 13-16
-  - 19-24
-  - 26-51
+  - 15-18
+  - 22-27
+  - 30-55
 - file: crates/gwiki/src/ingest/image.rs
   ranges:
   - 23-31
   - 34-40
-  - 42-55
-  - 57-68
-  - 98-108
+  - 43-56
+  - 59-70
+  - 106-116
 - file: crates/gwiki/src/ingest/mediawiki.rs
   ranges:
-  - 11-19
-  - 21-39
+  - 12-20
+  - 23-41
 - file: crates/gwiki/src/ingest/mod.rs
   ranges:
   - 25-29
 - file: crates/gwiki/src/ingest/pdf/ingest.rs
   ranges:
-  - 22-36
-  - 39-50
-  - 108-125
+  - 23-37
+  - 41-52
+  - 111-128
 - file: crates/gwiki/src/ingest/pdf/types.rs
   ranges:
-  - 9-12
-  - 15-21
-  - 24-29
-  - 32-38
-  - 41-43
+  - 11-14
+  - 18-24
+  - 28-33
+  - 37-43
+  - 47-49
 - file: crates/gwiki/src/ingest/url.rs
   ranges:
   - 22-28
@@ -1330,19 +1323,19 @@ provenance:
   - 45-48
   - 51-57
   - 59-61
-  - 64-73
+  - 65-74
 - file: crates/gwiki/src/ingest/video/mod.rs
   ranges:
-  - 31-44
-  - 47-60
-  - 63-72
-  - 74-92
-  - 94-101
-  - 161-174
+  - 32-45
+  - 48-61
+  - 64-73
+  - 76-94
+  - 97-104
+  - 166-179
 - file: crates/gwiki/src/ingest/wayback.rs
   ranges:
-  - 17-24
-  - 26-45
+  - 18-25
+  - 28-47
 - file: crates/gwiki/src/librarian.rs
   ranges:
   - 15-20
@@ -1371,9 +1364,9 @@ provenance:
   - 105-126
 - file: crates/gwiki/src/log.rs
   ranges:
-  - 8-14
-  - 17-20
-  - 22-46
+  - 9-15
+  - 19-22
+  - 25-49
 - file: crates/gwiki/src/main.rs
   ranges:
   - 46-60
@@ -1383,7 +1376,7 @@ provenance:
   - 22-29
   - 32-35
   - 93-116
-  - 118-129
+  - 119-130
 - file: crates/gwiki/src/media.rs
   ranges:
   - 13-17
@@ -1429,14 +1422,15 @@ provenance:
   - 175-185
   - 188-192
   - 195-202
-  - 205-208
-  - 211-215
-  - 218-224
-  - 227-240
-  - 244-249
-  - 252-258
-  - 261-274
-  - 277-304
+  - 205-209
+  - 216-220
+  - 223-227
+  - 230-236
+  - 239-252
+  - 256-261
+  - 264-270
+  - 273-286
+  - 289-316
 - file: crates/gwiki/src/provenance.rs
   ranges:
   - 14-22
@@ -1444,12 +1438,12 @@ provenance:
   - 32-36
   - 39-47
   - 50-68
-  - 70-77
-  - 79-90
-  - 92-99
-  - 101-103
-  - 105-119
-  - 121-143
+  - 71-78
+  - 80-91
+  - 93-100
+  - 102-104
+  - 106-120
+  - 122-144
 - file: crates/gwiki/src/registry.rs
   ranges:
   - 15-20
@@ -1477,8 +1471,8 @@ provenance:
   - 12-17
 - file: crates/gwiki/src/schema.rs
   ranges:
-  - '12'
-  - 25-27
+  - '13'
+  - 26-28
 - file: crates/gwiki/src/scope.rs
   ranges:
   - 12-16
@@ -1513,18 +1507,18 @@ provenance:
   - 35-39
   - 41-44
   - 46-51
-  - '53'
-  - 67-69
-  - 72-76
-  - 100-102
-  - 105-107
-  - 125-128
-  - 131-133
-  - 135-144
-  - 187-190
-  - 193-196
-  - 198-263
-  - 265-276
+  - '54'
+  - 68-70
+  - 73-77
+  - 101-103
+  - 106-108
+  - 126-129
+  - 132-134
+  - 136-145
+  - 188-191
+  - 194-197
+  - 199-264
+  - 266-277
 - file: crates/gwiki/src/search/mod.rs
   ranges:
   - 14-18
@@ -1551,23 +1545,23 @@ provenance:
   - 8-92
 - file: crates/gwiki/src/search/semantic.rs
   ranges:
-  - 20-24
-  - 27-30
-  - 32-37
-  - 39-56
-  - 59-63
-  - 65-72
-  - 74-164
-  - 173-175
-  - 185-205
-  - 207-212
-  - 215-227
-  - 251-253
-  - 266-268
-  - '372'
-  - 376-378
-  - '424'
-  - '557'
+  - 18-22
+  - 25-28
+  - 30-35
+  - 37-54
+  - 57-61
+  - 63-70
+  - 72-163
+  - 172-174
+  - 184-204
+  - 206-211
+  - 214-226
+  - 250-252
+  - 265-267
+  - '327'
+  - 331-333
+  - '379'
+  - '512'
 - file: crates/gwiki/src/session.rs
   ranges:
   - 15-18
@@ -1597,9 +1591,9 @@ provenance:
   - 57-61
   - 64-66
   - 69-73
-  - 75-77
-  - 79-100
-  - 268-270
+  - 76-78
+  - 80-101
+  - 269-271
 - file: crates/gwiki/src/sources/manifest.rs
   ranges:
   - 23-25
@@ -1670,23 +1664,23 @@ provenance:
   - 456-461
 - file: crates/gwiki/src/transcribe.rs
   ranges:
-  - 12-16
-  - 19-22
-  - 25-37
-  - 40-43
-  - 45-71
-  - 74-79
-  - 81-89
-  - 92-95
-  - 98-101
-  - 103-138
+  - 14-18
+  - 21-24
+  - 27-39
+  - 42-45
+  - 62-90
+  - 93-98
+  - 100-110
+  - 113-116
+  - 119-122
+  - 124-159
 - file: crates/gwiki/src/vault.rs
   ranges:
-  - 18-21
-  - 24-27
-  - 53-58
-  - 60-97
-  - 99-135
+  - 19-22
+  - 25-28
+  - 55-60
+  - 62-99
+  - 101-137
 - file: crates/gwiki/src/video.rs
   ranges:
   - 18-21
@@ -1704,13 +1698,13 @@ provenance:
   - 197-222
 - file: crates/gwiki/src/vision.rs
   ranges:
-  - 17-21
-  - 24-27
-  - 36-38
-  - 41-48
-  - 50-53
-  - 56-59
-  - 61-101
+  - 19-23
+  - 26-29
+  - 54-56
+  - 59-66
+  - 68-72
+  - 75-78
+  - 80-120
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -1946,6 +1940,8 @@ freshness: indexed
 - [[code/files/crates/gcode/src/index/api.rs|crates/gcode/src/index/api.rs]] - CodeFactWriteSummary public API `pub struct CodeFactWriteSummary {`
 - [[code/files/crates/gcode/src/index/api.rs|crates/gcode/src/index/api.rs]] - CodeFactWriteSummary.for_file public API `pub fn for_file(symbols: usize, imports: usize, calls: usize, chunks: usize) -> Self {`
 - [[code/files/crates/gcode/src/index/api.rs|crates/gcode/src/index/api.rs]] - delete_file_facts public API `pub fn delete_file_facts(`
+- [[code/files/crates/gcode/src/index/api.rs|crates/gcode/src/index/api.rs]] - delete_file_non_symbol_facts public API `pub fn delete_file_non_symbol_facts(`
+- [[code/files/crates/gcode/src/index/api.rs|crates/gcode/src/index/api.rs]] - delete_stale_file_symbols public API `pub fn delete_stale_file_symbols(`
 - [[code/files/crates/gcode/src/index/api.rs|crates/gcode/src/index/api.rs]] - file_facts_exist public API `pub fn file_facts_exist(`
 - [[code/files/crates/gcode/src/index/api.rs|crates/gcode/src/index/api.rs]] - upsert_symbols public API `pub fn upsert_symbols(conn: &mut impl GenericClient, symbols: &[Symbol]) -> anyhow::Result<usize> {`
 - [[code/files/crates/gcode/src/index/api.rs|crates/gcode/src/index/api.rs]] - upsert_file public API `pub fn upsert_file(conn: &mut impl GenericClient, file: &IndexedFile) -> anyhow::Result<()> {`
@@ -2054,7 +2050,6 @@ freshness: indexed
 - [[code/files/crates/gcode/src/projection/sync.rs|crates/gcode/src/projection/sync.rs]] - sync_after_index public API `pub fn sync_after_index(`
 - [[code/files/crates/gcode/src/savings.rs|crates/gcode/src/savings.rs]] - savings_pct public API `pub fn savings_pct(original_chars: usize, actual_chars: usize) -> f64 {`
 - [[code/files/crates/gcode/src/savings.rs|crates/gcode/src/savings.rs]] - report_savings public API `pub fn report_savings(base_url: &str, original_chars: usize, actual_chars: usize) {`
-- [[code/files/crates/gcode/src/savings.rs|crates/gcode/src/savings.rs]] - resolve_daemon_url public API `pub fn resolve_daemon_url(config_url: Option<&str>) -> Option<String> {`
 - [[code/files/crates/gcode/src/schema.rs|crates/gcode/src/schema.rs]] - validate_runtime_schema public API `pub fn validate_runtime_schema(client: &mut Client) -> anyhow::Result<()> {`
 - [[code/files/crates/gcode/src/search/fts/common.rs|crates/gcode/src/search/fts/common.rs]] - ResolvedGraphSymbol public API `pub struct ResolvedGraphSymbol {`
 - [[code/files/crates/gcode/src/search/fts/common.rs|crates/gcode/src/search/fts/common.rs]] - expand_paths public API `pub fn expand_paths(paths: &[String]) -> Vec<String> {`
@@ -2157,6 +2152,7 @@ freshness: indexed
 - [[code/files/crates/gcode/src/visibility.rs|crates/gcode/src/visibility.rs]] - visible_symbol_by_id public API `pub fn visible_symbol_by_id(`
 - [[code/files/crates/gcode/src/visibility.rs|crates/gcode/src/visibility.rs]] - visible_symbols_by_ids public API `pub fn visible_symbols_by_ids(`
 - [[code/files/crates/gcode/src/visibility.rs|crates/gcode/src/visibility.rs]] - visible_symbols_for_file public API `pub fn visible_symbols_for_file(`
+- [[code/files/crates/gcode/src/visibility.rs|crates/gcode/src/visibility.rs]] - visible_symbols_for_files public API `pub fn visible_symbols_for_files(`
 - [[code/files/crates/gcode/src/visibility.rs|crates/gcode/src/visibility.rs]] - visible_kinds public API `pub fn visible_kinds(conn: &mut Client, ctx: &Context) -> anyhow::Result<Vec<String>> {`
 - [[code/files/crates/gcode/src/visibility.rs|crates/gcode/src/visibility.rs]] - visible_tree public API `pub fn visible_tree(conn: &mut Client, ctx: &Context) -> anyhow::Result<Vec<VisibleFile>> {`
 - [[code/files/crates/gcode/src/visibility.rs|crates/gcode/src/visibility.rs]] - tombstone_count public API `pub fn tombstone_count(conn: &mut Client, ctx: &Context) -> usize {`
@@ -2167,6 +2163,8 @@ freshness: indexed
 - [[code/files/crates/gcore/src/ai/daemon.rs|crates/gcore/src/ai/daemon.rs]] - generate_via_daemon public API `pub fn generate_via_daemon(`
 - [[code/files/crates/gcore/src/ai/daemon.rs|crates/gcore/src/ai/daemon.rs]] - generate_via_daemon_with_max_tokens public API `pub fn generate_via_daemon_with_max_tokens(`
 - [[code/files/crates/gcore/src/ai/daemon.rs|crates/gcore/src/ai/daemon.rs]] - embed_via_daemon public API `pub fn embed_via_daemon(`
+- [[code/files/crates/gcore/src/ai/embeddings.rs|crates/gcore/src/ai/embeddings.rs]] - embed_one public API `pub fn embed_one(`
+- [[code/files/crates/gcore/src/ai/embeddings.rs|crates/gcore/src/ai/embeddings.rs]] - embed_batch public API `pub fn embed_batch(`
 - [[code/files/crates/gcore/src/ai/mod.rs|crates/gcore/src/ai/mod.rs]] - effective_route public API `pub fn effective_route(context: &AiContext, capability: AiCapability) -> AiRouting {`
 - [[code/files/crates/gcore/src/ai/mod.rs|crates/gcore/src/ai/mod.rs]] - AiTransport public API `pub struct AiTransport<'a> {`
 - [[code/files/crates/gcore/src/ai/mod.rs|crates/gcore/src/ai/mod.rs]] - new public API `pub fn new(context: &'a AiContext) -> Result<Self, AiError> {`
@@ -2178,8 +2176,6 @@ freshness: indexed
 - [[code/files/crates/gcore/src/ai/mod.rs|crates/gcore/src/ai/mod.rs]] - build_json_request public API `pub fn build_json_request<T>(`
 - [[code/files/crates/gcore/src/ai/mod.rs|crates/gcore/src/ai/mod.rs]] - build_multipart_request public API `pub fn build_multipart_request(`
 - [[code/files/crates/gcore/src/ai/mod.rs|crates/gcore/src/ai/mod.rs]] - retry_with_backoff public API `pub fn retry_with_backoff<T>(`
-- [[code/files/crates/gcore/src/ai/mod.rs|crates/gcore/src/ai/mod.rs]] - LocalBackendProbe public API `pub struct LocalBackendProbe {`
-- [[code/files/crates/gcore/src/ai/mod.rs|crates/gcore/src/ai/mod.rs]] - probe_local_backend public API `pub fn probe_local_backend(api_base: &str) -> Result<LocalBackendProbe, AiError> {`
 - [[code/files/crates/gcore/src/ai/probe.rs|crates/gcore/src/ai/probe.rs]] - CapabilityStatusRoute public API `pub struct CapabilityStatusRoute {`
 - [[code/files/crates/gcore/src/ai/probe.rs|crates/gcore/src/ai/probe.rs]] - CapabilityDegradationReason public API `pub enum CapabilityDegradationReason {`
 - [[code/files/crates/gcore/src/ai/probe.rs|crates/gcore/src/ai/probe.rs]] - CapabilityDegradation public API `pub struct CapabilityDegradation {`
@@ -2285,15 +2281,6 @@ freshness: indexed
 - [[code/files/crates/gcore/src/config/types.rs|crates/gcore/src/config/types.rs]] - AiTuning public API `pub struct AiTuning {`
 - [[code/files/crates/gcore/src/config/types.rs|crates/gcore/src/config/types.rs]] - all public API `pub fn all() -> &'static [&'static str] {`
 - [[code/files/crates/gcore/src/config/types.rs|crates/gcore/src/config/types.rs]] - EmbeddingConfigResolution public API `pub struct EmbeddingConfigResolution {`
-- [[code/files/crates/gcore/src/context.rs|crates/gcore/src/context.rs]] - CoreContext public API `pub struct CoreContext {`
-- [[code/files/crates/gcore/src/context.rs|crates/gcore/src/context.rs]] - CoreContext.build public API `pub fn build(`
-- [[code/files/crates/gcore/src/context.rs|crates/gcore/src/context.rs]] - CoreContext.project_root public API `pub fn project_root(&self) -> &Path {`
-- [[code/files/crates/gcore/src/context.rs|crates/gcore/src/context.rs]] - CoreContext.project_id public API `pub fn project_id(&self) -> &str {`
-- [[code/files/crates/gcore/src/context.rs|crates/gcore/src/context.rs]] - CoreContext.database_url public API `pub fn database_url(&self) -> Option<&str> {`
-- [[code/files/crates/gcore/src/context.rs|crates/gcore/src/context.rs]] - CoreContext.falkordb public API `pub fn falkordb(&self) -> Option<&FalkorConfig> {`
-- [[code/files/crates/gcore/src/context.rs|crates/gcore/src/context.rs]] - CoreContext.qdrant public API `pub fn qdrant(&self) -> Option<&QdrantConfig> {`
-- [[code/files/crates/gcore/src/context.rs|crates/gcore/src/context.rs]] - CoreContext.embedding public API `pub fn embedding(&self) -> Option<&EmbeddingConfig> {`
-- [[code/files/crates/gcore/src/context.rs|crates/gcore/src/context.rs]] - CoreContext.daemon_url public API `pub fn daemon_url(&self) -> &str {`
 - [[code/files/crates/gcore/src/daemon_url.rs|crates/gcore/src/daemon_url.rs]] - daemon_url public API `pub fn daemon_url() -> String {`
 - [[code/files/crates/gcore/src/daemon_url.rs|crates/gcore/src/daemon_url.rs]] - daemon_url_at public API `pub fn daemon_url_at(path: &Path) -> String {`
 - [[code/files/crates/gcore/src/degradation.rs|crates/gcore/src/degradation.rs]] - ServiceState public API `pub enum ServiceState {`
@@ -2302,6 +2289,8 @@ freshness: indexed
 - [[code/files/crates/gcore/src/degradation.rs|crates/gcore/src/degradation.rs]] - Guidance public API `pub struct Guidance {`
 - [[code/files/crates/gcore/src/degradation.rs|crates/gcore/src/degradation.rs]] - CoreError public API `pub enum CoreError {`
 - [[code/files/crates/gcore/src/degradation.rs|crates/gcore/src/degradation.rs]] - redact_database_url public API `pub fn redact_database_url(database_url: &str) -> String {`
+- [[code/files/crates/gcore/src/degradation.rs|crates/gcore/src/degradation.rs]] - ModalityDegradationReason public API `pub enum ModalityDegradationReason {`
+- [[code/files/crates/gcore/src/degradation.rs|crates/gcore/src/degradation.rs]] - ModalityDegradationReason.as_str public API `pub fn as_str(self) -> &'static str {`
 - [[code/files/crates/gcore/src/degradation.rs|crates/gcore/src/degradation.rs]] - DegradationKind public API `pub enum DegradationKind {`
 - [[code/files/crates/gcore/src/falkor.rs|crates/gcore/src/falkor.rs]] - Row public API `pub type Row = HashMap<String, Value>;`
 - [[code/files/crates/gcore/src/falkor.rs|crates/gcore/src/falkor.rs]] - GraphClient public API `pub struct GraphClient {`
@@ -2338,12 +2327,10 @@ freshness: indexed
 - [[code/files/crates/gcore/src/indexing.rs|crates/gcore/src/indexing.rs]] - Chunk.identity public API `pub fn identity(&self) -> ChunkIdentity {`
 - [[code/files/crates/gcore/src/indexing.rs|crates/gcore/src/indexing.rs]] - IndexEvent public API `pub enum IndexEvent {`
 - [[code/files/crates/gcore/src/indexing.rs|crates/gcore/src/indexing.rs]] - index_events_from_hashes public API `pub fn index_events_from_hashes(`
+- [[code/files/crates/gcore/src/layered_config.rs|crates/gcore/src/layered_config.rs]] - LayeredConfigError public API `pub enum LayeredConfigError {`
+- [[code/files/crates/gcore/src/layered_config.rs|crates/gcore/src/layered_config.rs]] - load_layered_yaml public API `pub fn load_layered_yaml<T: DeserializeOwned>(`
 - [[code/files/crates/gcore/src/lib.rs|crates/gcore/src/lib.rs]] - gobby_home public API `pub fn gobby_home() -> anyhow::Result<std::path::PathBuf> {`
 - [[code/files/crates/gcore/src/local_backend.rs|crates/gcore/src/local_backend.rs]] - Backend public API `pub struct Backend {`
-- [[code/files/crates/gcore/src/local_backend.rs|crates/gcore/src/local_backend.rs]] - BackendDefault public API `pub struct BackendDefault {`
-- [[code/files/crates/gcore/src/local_backend.rs|crates/gcore/src/local_backend.rs]] - BackendDefault.to_backend public API `pub fn to_backend(self) -> Backend {`
-- [[code/files/crates/gcore/src/local_backend.rs|crates/gcore/src/local_backend.rs]] - default_backends public API `pub fn default_backends() -> Vec<Backend> {`
-- [[code/files/crates/gcore/src/local_backend.rs|crates/gcore/src/local_backend.rs]] - backend_api_base public API `pub fn backend_api_base(backend: &Backend) -> String {`
 - [[code/files/crates/gcore/src/local_backend.rs|crates/gcore/src/local_backend.rs]] - detect_backend public API `pub fn detect_backend(backends: &[Backend], timeout_ms: u64) -> Option<Backend> {`
 - [[code/files/crates/gcore/src/local_backend.rs|crates/gcore/src/local_backend.rs]] - validate_backend public API `pub fn validate_backend(backend: &Backend, timeout_ms: u64) -> bool {`
 - [[code/files/crates/gcore/src/postgres.rs|crates/gcore/src/postgres.rs]] - connect_readonly public API `pub fn connect_readonly(database_url: &str) -> anyhow::Result<Client> {`
@@ -2452,7 +2439,6 @@ freshness: indexed
 - [[code/files/crates/ghook/src/envelope.rs|crates/ghook/src/envelope.rs]] - Envelope.new public API `pub fn new(`
 - [[code/files/crates/ghook/src/planned_shutdown.rs|crates/ghook/src/planned_shutdown.rs]] - should_skip_dispatch public API `pub fn should_skip_dispatch(hook_type: &str) -> bool {`
 - [[code/files/crates/ghook/src/planned_shutdown.rs|crates/ghook/src/planned_shutdown.rs]] - suppress_after_failed_post public API `pub fn suppress_after_failed_post(`
-- [[code/files/crates/ghook/src/planned_shutdown.rs|crates/ghook/src/planned_shutdown.rs]] - daemon_url public API `pub fn daemon_url() -> String {`
 - [[code/files/crates/ghook/src/planned_shutdown.rs|crates/ghook/src/planned_shutdown.rs]] - is_stop_hook public API `pub fn is_stop_hook(hook_type: &str) -> bool {`
 - [[code/files/crates/ghook/src/terminal_context.rs|crates/ghook/src/terminal_context.rs]] - capture public API `pub fn capture() -> Value {`
 - [[code/files/crates/ghook/src/terminal_context.rs|crates/ghook/src/terminal_context.rs]] - enabled_for_hook public API `pub fn enabled_for_hook(hook_type: &str) -> bool {`
@@ -2513,6 +2499,7 @@ freshness: indexed
 - [[code/files/crates/gsqz/src/daemon.rs|crates/gsqz/src/daemon.rs]] - report_savings public API `pub fn report_savings(base_url: &str, strategy: &str, original_chars: usize, actual_chars: usize) {`
 - [[code/files/crates/gsqz/src/daemon.rs|crates/gsqz/src/daemon.rs]] - report_savings public API `pub fn report_savings(`
 - [[code/files/crates/gsqz/src/daemon.rs|crates/gsqz/src/daemon.rs]] - resolve_daemon_url public API `pub fn resolve_daemon_url(config_url: Option<&str>) -> Option<String> {`
+- [[code/files/crates/gsqz/src/daemon.rs|crates/gsqz/src/daemon.rs]] - resolve_daemon_url public API `pub fn resolve_daemon_url(_config_url: Option<&str>) -> Option<String> {`
 - [[code/files/crates/gsqz/src/primitives/dedup.rs|crates/gsqz/src/primitives/dedup.rs]] - dedup public API `pub fn dedup(lines: Vec<String>) -> Vec<String> {`
 - [[code/files/crates/gsqz/src/primitives/filter.rs|crates/gsqz/src/primitives/filter.rs]] - filter_lines public API `pub fn filter_lines(lines: Vec<String>, patterns: &[String]) -> Vec<String> {`
 - [[code/files/crates/gsqz/src/primitives/group.rs|crates/gsqz/src/primitives/group.rs]] - group_lines public API `pub fn group_lines(lines: Vec<String>, mode: &str) -> Vec<String> {`
@@ -2589,7 +2576,6 @@ freshness: indexed
 - [[code/files/crates/gwiki/src/credibility.rs|crates/gwiki/src/credibility.rs]] - CredibilityScore public API `pub struct CredibilityScore {`
 - [[code/files/crates/gwiki/src/credibility.rs|crates/gwiki/src/credibility.rs]] - CredibilityScore.evaluate public API `pub fn evaluate(input: CredibilityInput) -> Self {`
 - [[code/files/crates/gwiki/src/daemon.rs|crates/gwiki/src/daemon.rs]] - DaemonCapability public API `pub enum DaemonCapability {`
-- [[code/files/crates/gwiki/src/daemon.rs|crates/gwiki/src/daemon.rs]] - DegradationReason public API `pub enum DegradationReason {`
 - [[code/files/crates/gwiki/src/daemon.rs|crates/gwiki/src/daemon.rs]] - EndpointShape public API `pub struct EndpointShape {`
 - [[code/files/crates/gwiki/src/daemon.rs|crates/gwiki/src/daemon.rs]] - CapabilityAvailability public API `pub struct CapabilityAvailability {`
 - [[code/files/crates/gwiki/src/daemon.rs|crates/gwiki/src/daemon.rs]] - DaemonDegradation public API `pub struct DaemonDegradation {`
@@ -2817,6 +2803,7 @@ freshness: indexed
 - [[code/files/crates/gwiki/src/output.rs|crates/gwiki/src/output.rs]] - AskRelatedPageOutput public API `pub struct AskRelatedPageOutput {`
 - [[code/files/crates/gwiki/src/output.rs|crates/gwiki/src/output.rs]] - AskAiOutput public API `pub struct AskAiOutput {`
 - [[code/files/crates/gwiki/src/output.rs|crates/gwiki/src/output.rs]] - AskSynthesisOutput public API `pub struct AskSynthesisOutput {`
+- [[code/files/crates/gwiki/src/output.rs|crates/gwiki/src/output.rs]] - AskCitationCheckOutput public API `pub struct AskCitationCheckOutput {`
 - [[code/files/crates/gwiki/src/output.rs|crates/gwiki/src/output.rs]] - SearchSourceExplanationOutput public API `pub struct SearchSourceExplanationOutput {`
 - [[code/files/crates/gwiki/src/output.rs|crates/gwiki/src/output.rs]] - QueryOutput public API `pub struct QueryOutput {`
 - [[code/files/crates/gwiki/src/output.rs|crates/gwiki/src/output.rs]] - QueryOutput.answered public API `pub fn answered(`

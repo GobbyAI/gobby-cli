@@ -13,7 +13,7 @@ Parent: [[code/modules/docs/plans|docs/plans]]
 
 ## Overview
 
-This module archives completed planning documents for the gobby project. It contains design and implementation plans for delivered features, including gcode 0.8.3 skill targets, ghook statusline (phase 1), sandbox-tolerant hooks (both Rust and general implementations), and standalone schema work. These markdown files serve as historical records of finished initiatives and contain no indexed API symbols.
+This directory contains completed technical plans, architectural designs, and specifications that have been successfully integrated into the codebase. Key areas of focus include designing sandbox-tolerant git hooks for restrictive agent environments (Claude, Codex, Gemini, QwenCode), specifying standalone schema structures for decoupled submodules, improving CLI status line feedback for hook execution, and establishing skill targeting protocols for the `gcode` search engine.
 
 ## Files
 

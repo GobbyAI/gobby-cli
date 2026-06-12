@@ -4,22 +4,25 @@ type: code_file
 provenance:
 - file: crates/gcode/src/vector/code_symbols/qdrant.rs
   ranges:
-  - 17-23
-  - 25-27
-  - 29-36
-  - 38-46
-  - 48-75
-  - 77-95
-  - 97-108
-  - 110-125
-  - 127-136
-  - 138-148
-  - 150-157
-  - 159-178
-  - 180-201
-  - 203-211
-  - 213-283
-  - 285-295
+  - 18-24
+  - 26-28
+  - 30-37
+  - 39-47
+  - 49-76
+  - 78-99
+  - 101-111
+  - 113-124
+  - 126-141
+  - 143-152
+  - 154-164
+  - 166-173
+  - 175-194
+  - 196-217
+  - 219-227
+  - 229-299
+  - 301-311
+  - 318-323
+  - 326-336
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -31,61 +34,70 @@ Module: [[code/modules/crates/gcode/src/vector/code_symbols|crates/gcode/src/vec
 
 ## Purpose
 
-`crates/gcode/src/vector/code_symbols/qdrant.rs` exposes 16 indexed API symbols.
-[crates/gcode/src/vector/code_symbols/qdrant.rs:17-23]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:25-27]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:29-36]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:38-46]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:48-75]
+`crates/gcode/src/vector/code_symbols/qdrant.rs` exposes 19 indexed API symbols.
+[crates/gcode/src/vector/code_symbols/qdrant.rs:18-24]
+[crates/gcode/src/vector/code_symbols/qdrant.rs:26-28]
+[crates/gcode/src/vector/code_symbols/qdrant.rs:30-37]
+[crates/gcode/src/vector/code_symbols/qdrant.rs:39-47]
+[crates/gcode/src/vector/code_symbols/qdrant.rs:49-76]
 
 ## API Symbols
 
-- `collection_name` (function) component `collection_name [function]` (`e886a0d1-302c-50be-a33f-22fb7f4245dc`) lines 17-23 [crates/gcode/src/vector/code_symbols/qdrant.rs:17-23]
+- `collection_name` (function) component `collection_name [function]` (`753537a7-c2e6-552d-b8ef-08f7def1f99b`) lines 18-24 [crates/gcode/src/vector/code_symbols/qdrant.rs:18-24]
   - Signature: `pub fn collection_name(`
-  - Purpose: Indexed function `collection_name` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:17-23]
-- `collection_path` (function) component `collection_path [function]` (`bb3d04bd-e803-5207-a588-d8de469049ab`) lines 25-27 [crates/gcode/src/vector/code_symbols/qdrant.rs:25-27]
+  - Purpose: Indexed function `collection_name` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:18-24]
+- `collection_path` (function) component `collection_path [function]` (`d1f6ab42-05ef-5849-b9c8-27615e3b516b`) lines 26-28 [crates/gcode/src/vector/code_symbols/qdrant.rs:26-28]
   - Signature: `pub(super) fn collection_path(collection: &str) -> String {`
-  - Purpose: Indexed function `collection_path` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:25-27]
-- `delete_project_collection` (function) component `delete_project_collection [function]` (`66c1dc48-35d6-5d59-a76f-88a8bab73f50`) lines 29-36 [crates/gcode/src/vector/code_symbols/qdrant.rs:29-36]
+  - Purpose: Indexed function `collection_path` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:26-28]
+- `delete_project_collection` (function) component `delete_project_collection [function]` (`cfd613b1-9447-5b9e-9dfe-c63f66e3f148`) lines 30-37 [crates/gcode/src/vector/code_symbols/qdrant.rs:30-37]
   - Signature: `pub fn delete_project_collection(`
-  - Purpose: Indexed function `delete_project_collection` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:29-36]
-- `delete_file_vectors` (function) component `delete_file_vectors [function]` (`af1c9417-c3f5-5b9d-a7ae-a55787d15482`) lines 38-46 [crates/gcode/src/vector/code_symbols/qdrant.rs:38-46]
+  - Purpose: Indexed function `delete_project_collection` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:30-37]
+- `delete_file_vectors` (function) component `delete_file_vectors [function]` (`207703c8-c51f-58dc-a2dd-7cecf74d1cfc`) lines 39-47 [crates/gcode/src/vector/code_symbols/qdrant.rs:39-47]
   - Signature: `pub fn delete_file_vectors(`
-  - Purpose: Indexed function `delete_file_vectors` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:38-46]
-- `delete_code_symbol_collections_with_prefix` (function) component `delete_code_symbol_collections_with_prefix [function]` (`a4f560f1-3e79-5c18-a250-153793614d63`) lines 48-75 [crates/gcode/src/vector/code_symbols/qdrant.rs:48-75]
+  - Purpose: Indexed function `delete_file_vectors` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:39-47]
+- `delete_code_symbol_collections_with_prefix` (function) component `delete_code_symbol_collections_with_prefix [function]` (`576b7d03-3244-54a6-ad82-ad63d740b15c`) lines 49-76 [crates/gcode/src/vector/code_symbols/qdrant.rs:49-76]
   - Signature: `pub fn delete_code_symbol_collections_with_prefix(`
-  - Purpose: Indexed function `delete_code_symbol_collections_with_prefix` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:48-75]
-- `vector_search` (function) component `vector_search [function]` (`d2719ad0-3758-5c8f-8d95-5fca474142e3`) lines 77-95 [crates/gcode/src/vector/code_symbols/qdrant.rs:77-95]
+  - Purpose: Indexed function `delete_code_symbol_collections_with_prefix` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:49-76]
+- `vector_search` (function) component `vector_search [function]` (`70028223-97ec-5788-a29d-3fd6171deeea`) lines 78-99 [crates/gcode/src/vector/code_symbols/qdrant.rs:78-99]
   - Signature: `pub fn vector_search(`
-  - Purpose: Indexed function `vector_search` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:77-95]
-- `parse_collection_schema` (function) component `parse_collection_schema [function]` (`fc175c6b-2b3a-51c7-b146-d3fb86d05750`) lines 97-108 [crates/gcode/src/vector/code_symbols/qdrant.rs:97-108]
+  - Purpose: Indexed function `vector_search` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:78-99]
+- `vector_search_degradation_warning` (function) component `vector_search_degradation_warning [function]` (`7f84e19d-1d90-5085-8761-c055f88fa761`) lines 101-111 [crates/gcode/src/vector/code_symbols/qdrant.rs:101-111]
+  - Signature: `fn vector_search_degradation_warning(state: &ServiceState) -> Option<String> {`
+  - Purpose: Indexed function `vector_search_degradation_warning` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:101-111]
+- `parse_collection_schema` (function) component `parse_collection_schema [function]` (`0a0b99d3-cc8b-56ca-a68b-3ad40cfcefcb`) lines 113-124 [crates/gcode/src/vector/code_symbols/qdrant.rs:113-124]
   - Signature: `pub(super) fn parse_collection_schema(data: &Value) -> Option<ExistingVectorCollectionSchema> {`
-  - Purpose: Indexed function `parse_collection_schema` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:97-108]
-- `parse_collection_names` (function) component `parse_collection_names [function]` (`2f152d5b-5f8f-5868-9890-8b48df0a3248`) lines 110-125 [crates/gcode/src/vector/code_symbols/qdrant.rs:110-125]
+  - Purpose: Indexed function `parse_collection_schema` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:113-124]
+- `parse_collection_names` (function) component `parse_collection_names [function]` (`52077fa3-0b70-5755-99e7-875ea2992569`) lines 126-141 [crates/gcode/src/vector/code_symbols/qdrant.rs:126-141]
   - Signature: `fn parse_collection_names(data: &Value) -> Vec<String> {`
-  - Purpose: Indexed function `parse_collection_names` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:110-125]
-- `parse_points_count` (function) component `parse_points_count [function]` (`e400f9fb-95ef-538b-b177-d5537e1efff6`) lines 127-136 [crates/gcode/src/vector/code_symbols/qdrant.rs:127-136]
+  - Purpose: Indexed function `parse_collection_names` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:126-141]
+- `parse_points_count` (function) component `parse_points_count [function]` (`6e0290ce-9997-5d73-988f-9d8cccd380c7`) lines 143-152 [crates/gcode/src/vector/code_symbols/qdrant.rs:143-152]
   - Signature: `fn parse_points_count(data: &Value) -> Result<usize, VectorLifecycleError> {`
-  - Purpose: Indexed function `parse_points_count` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:127-136]
-- `qdrant_http_client` (function) component `qdrant_http_client [function]` (`7a7f54d3-51df-5574-8945-c039f98855f7`) lines 138-148 [crates/gcode/src/vector/code_symbols/qdrant.rs:138-148]
+  - Purpose: Indexed function `parse_points_count` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:143-152]
+- `qdrant_http_client` (function) component `qdrant_http_client [function]` (`f9ba033c-f3c6-5bc3-8b1f-e7b40ad825f4`) lines 154-164 [crates/gcode/src/vector/code_symbols/qdrant.rs:154-164]
   - Signature: `fn qdrant_http_client() -> Result<reqwest::blocking::Client, VectorLifecycleError> {`
-  - Purpose: Indexed function `qdrant_http_client` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:138-148]
-- `qdrant_delete_timeout` (function) component `qdrant_delete_timeout [function]` (`6f7b3cf7-41ab-52bc-bf8b-27028a5f817a`) lines 150-157 [crates/gcode/src/vector/code_symbols/qdrant.rs:150-157]
+  - Purpose: Indexed function `qdrant_http_client` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:154-164]
+- `qdrant_delete_timeout` (function) component `qdrant_delete_timeout [function]` (`800cebd9-b264-52cb-bd2f-e261d8cb5242`) lines 166-173 [crates/gcode/src/vector/code_symbols/qdrant.rs:166-173]
   - Signature: `fn qdrant_delete_timeout() -> Duration {`
-  - Purpose: Indexed function `qdrant_delete_timeout` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:150-157]
-- `qdrant_request_for_config` (function) component `qdrant_request_for_config [function]` (`4147d05b-fbaf-5cf5-8a4d-b51c92390afe`) lines 159-178 [crates/gcode/src/vector/code_symbols/qdrant.rs:159-178]
+  - Purpose: Indexed function `qdrant_delete_timeout` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:166-173]
+- `qdrant_request_for_config` (function) component `qdrant_request_for_config [function]` (`7f9161ad-3ab2-5577-8ac0-3562563d9937`) lines 175-194 [crates/gcode/src/vector/code_symbols/qdrant.rs:175-194]
   - Signature: `pub(super) fn qdrant_request_for_config(`
-  - Purpose: Indexed function `qdrant_request_for_config` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:159-178]
-- `delete_qdrant_collection` (function) component `delete_qdrant_collection [function]` (`c5ff425d-f22e-59ca-b980-86c24a8a1230`) lines 180-201 [crates/gcode/src/vector/code_symbols/qdrant.rs:180-201]
+  - Purpose: Indexed function `qdrant_request_for_config` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:175-194]
+- `delete_qdrant_collection` (function) component `delete_qdrant_collection [function]` (`0e7c1d57-7114-50e2-84a9-1682d3a28e18`) lines 196-217 [crates/gcode/src/vector/code_symbols/qdrant.rs:196-217]
   - Signature: `fn delete_qdrant_collection(`
-  - Purpose: Indexed function `delete_qdrant_collection` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:180-201]
-- `delete_vectors_for_filter` (function) component `delete_vectors_for_filter [function]` (`8c491da8-31ae-5891-b0e9-328d53965250`) lines 203-211 [crates/gcode/src/vector/code_symbols/qdrant.rs:203-211]
+  - Purpose: Sends a blocking `DELETE` request to the Qdrant collection endpoint and returns `Ok(0)` if the collection does not exist, `Ok(1)` on successful deletion, or a `VectorLifecycleError` on request or HTTP failure. [crates/gcode/src/vector/code_symbols/qdrant.rs:196-217]
+- `delete_vectors_for_filter` (function) component `delete_vectors_for_filter [function]` (`ec0b0c90-cf56-5a49-bea0-b8c2fabb962a`) lines 219-227 [crates/gcode/src/vector/code_symbols/qdrant.rs:219-227]
   - Signature: `pub(super) fn delete_vectors_for_filter(`
-  - Purpose: Indexed function `delete_vectors_for_filter` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:203-211]
-- `delete_vectors_for_filter_excluding_ids` (function) component `delete_vectors_for_filter_excluding_ids [function]` (`05ddf195-9e0c-5edd-b7a9-e3c1a56c8c05`) lines 213-283 [crates/gcode/src/vector/code_symbols/qdrant.rs:213-283]
+  - Purpose: Indexed function `delete_vectors_for_filter` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:219-227]
+- `delete_vectors_for_filter_excluding_ids` (function) component `delete_vectors_for_filter_excluding_ids [function]` (`f7191d77-0ad0-5a2d-bcd0-12dc369404b0`) lines 229-299 [crates/gcode/src/vector/code_symbols/qdrant.rs:229-299]
   - Signature: `pub(super) fn delete_vectors_for_filter_excluding_ids(`
-  - Purpose: Indexed function `delete_vectors_for_filter_excluding_ids` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:213-283]
-- `qdrant_http_error` (function) component `qdrant_http_error [function]` (`ee6101fe-f3f4-543c-9543-67c9ee079fca`) lines 285-295 [crates/gcode/src/vector/code_symbols/qdrant.rs:285-295]
+  - Purpose: I’m checking the full function body so the summary matches its exact Qdrant delete/count behavior, not just the partial snippet.The first search didn’t hit the file, so I’m broadening the lookup to the whole repo to confirm the tail of the function.It builds an exact Qdrant filter for a given `project_id` and optional `file_path`, excludes any IDs in `keep_point_ids`, counts the matching points, and if any exist issues a synchronous `points/delete?wait=true` request, returning `0` when nothing matches or the collection is missing. [crates/gcode/src/vector/code_symbols/qdrant.rs:229-299]
+- `qdrant_http_error` (function) component `qdrant_http_error [function]` (`d35c16dd-7eb0-5a67-b10f-6ae70cac681b`) lines 301-311 [crates/gcode/src/vector/code_symbols/qdrant.rs:301-311]
   - Signature: `pub(super) fn qdrant_http_error(`
-  - Purpose: Indexed function `qdrant_http_error` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:285-295]
+  - Purpose: Creates a `VectorLifecycleError::QdrantHttp` that captures the operation name, HTTP status code as `u16`, and the response body text from a blocking `reqwest` response, defaulting to an empty body if reading fails. [crates/gcode/src/vector/code_symbols/qdrant.rs:301-311]
+- `vector_search_degradation_warning_mentions_missing_qdrant_config` (function) component `vector_search_degradation_warning_mentions_missing_qdrant_config [function]` (`73c68735-f143-51ac-88e4-f972c8e48dff`) lines 318-323 [crates/gcode/src/vector/code_symbols/qdrant.rs:318-323]
+  - Signature: `fn vector_search_degradation_warning_mentions_missing_qdrant_config() {`
+  - Purpose: Verifies that `vector_search_degradation_warning` returns `Some("semantic vector search skipped: Qdrant is not configured")` when passed `ServiceState::NotConfigured`. [crates/gcode/src/vector/code_symbols/qdrant.rs:318-323]
+- `vector_search_degradation_warning_mentions_unreachable_qdrant` (function) component `vector_search_degradation_warning_mentions_unreachable_qdrant [function]` (`ec0952ba-dfaa-5357-83f0-dddd5c7283cb`) lines 326-336 [crates/gcode/src/vector/code_symbols/qdrant.rs:326-336]
+  - Signature: `fn vector_search_degradation_warning_mentions_unreachable_qdrant() {`
+  - Purpose: Indexed function `vector_search_degradation_warning_mentions_unreachable_qdrant` in `crates/gcode/src/vector/code_symbols/qdrant.rs`. [crates/gcode/src/vector/code_symbols/qdrant.rs:326-336]
 

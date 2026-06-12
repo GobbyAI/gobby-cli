@@ -6,47 +6,38 @@ provenance:
   ranges:
   - 21-24
   - 26-33
-  - 27-32
   - 35-39
   - 41-44
   - 46-51
-  - '53'
-  - 55-65
-  - 56-64
-  - 67-69
-  - 71-77
-  - 72-76
-  - 79-89
-  - 80-88
-  - 92-97
-  - 100-102
-  - 104-108
-  - 105-107
-  - 110-123
-  - 111-122
-  - 125-128
-  - 130-145
-  - 131-133
-  - 135-144
-  - 147-184
-  - 148-183
-  - 187-190
-  - 193-196
-  - 198-263
-  - 265-276
-  - 278-300
-  - 302-307
-  - 309-346
-  - 348-361
-  - 363-383
-  - 385-391
-  - 398-426
-  - 429-451
-  - 454-472
-  - 475-488
-  - 491-511
-  - 513-518
-  - 520-525
+  - '54'
+  - 56-66
+  - 68-70
+  - 72-78
+  - 80-90
+  - 93-98
+  - 101-103
+  - 105-109
+  - 111-124
+  - 126-129
+  - 131-146
+  - 148-185
+  - 188-191
+  - 194-197
+  - 199-264
+  - 266-277
+  - 279-301
+  - 303-308
+  - 310-347
+  - 349-362
+  - 364-384
+  - 386-392
+  - 399-427
+  - 430-452
+  - 455-473
+  - 476-489
+  - 492-512
+  - 514-519
+  - 521-526
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -85,115 +76,115 @@ Module: [[code/modules/crates/gwiki/src/search|crates/gwiki/src/search]]
 - `GraphBoostBackend` (type) component `GraphBoostBackend [type]` (`79b9f5cf-8ade-5662-b3ca-60dc0207e563`) lines 46-51 [crates/gwiki/src/search/graph_boost.rs:46-51]
   - Signature: `pub trait GraphBoostBackend {`
   - Purpose: Indexed type `GraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:46-51]
-- `NoopGraphBoostBackend` (class) component `NoopGraphBoostBackend [class]` (`e66a2440-b384-554a-a3e9-5d0384f9e039`) lines 53-53 [crates/gwiki/src/search/graph_boost.rs:53]
+- `NoopGraphBoostBackend` (class) component `NoopGraphBoostBackend [class]` (`fdcf7e67-3ae8-5cd0-bbf5-cbf0b414835b`) lines 54-54 [crates/gwiki/src/search/graph_boost.rs:54]
   - Signature: `pub struct NoopGraphBoostBackend;`
-  - Purpose: Indexed class `NoopGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:53]
-- `NoopGraphBoostBackend` (class) component `NoopGraphBoostBackend [class]` (`44067d65-c431-55f4-834f-bd49bb29ed4b`) lines 55-65 [crates/gwiki/src/search/graph_boost.rs:55-65]
+  - Purpose: Indexed class `NoopGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:54]
+- `NoopGraphBoostBackend` (class) component `NoopGraphBoostBackend [class]` (`10a25239-1459-5946-89f1-9e0a51be5313`) lines 56-66 [crates/gwiki/src/search/graph_boost.rs:56-66]
   - Signature: `impl GraphBoostBackend for NoopGraphBoostBackend {`
-  - Purpose: Indexed class `NoopGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:55-65]
-- `NoopGraphBoostBackend.search_graph_boost` (method) component `NoopGraphBoostBackend.search_graph_boost [method]` (`32b6a519-80ca-5300-8ffa-7b57b7ee0d81`) lines 56-64 [crates/gwiki/src/search/graph_boost.rs:56-64]
+  - Purpose: Indexed class `NoopGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:56-66]
+- `NoopGraphBoostBackend.search_graph_boost` (method) component `NoopGraphBoostBackend.search_graph_boost [method]` (`f32690f3-5a50-56d2-ba9a-9cbcfdecf2fe`) lines 57-65 [crates/gwiki/src/search/graph_boost.rs:57-65]
   - Signature: `fn search_graph_boost(`
-  - Purpose: Indexed method `NoopGraphBoostBackend.search_graph_boost` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:56-64]
-- `UnavailableGraphBoostBackend` (class) component `UnavailableGraphBoostBackend [class]` (`226b1b7c-2fe3-5863-bd9b-8ab9aee735e8`) lines 67-69 [crates/gwiki/src/search/graph_boost.rs:67-69]
+  - Purpose: Indexed method `NoopGraphBoostBackend.search_graph_boost` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:57-65]
+- `UnavailableGraphBoostBackend` (class) component `UnavailableGraphBoostBackend [class]` (`40dcc694-d455-5d95-878f-28874a4b72f6`) lines 68-70 [crates/gwiki/src/search/graph_boost.rs:68-70]
   - Signature: `pub struct UnavailableGraphBoostBackend {`
-  - Purpose: Indexed class `UnavailableGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:67-69]
-- `UnavailableGraphBoostBackend` (class) component `UnavailableGraphBoostBackend [class]` (`330f31f8-165b-5eb1-817d-3ab643bca26d`) lines 71-77 [crates/gwiki/src/search/graph_boost.rs:71-77]
+  - Purpose: Indexed class `UnavailableGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:68-70]
+- `UnavailableGraphBoostBackend` (class) component `UnavailableGraphBoostBackend [class]` (`85b9c1ad-d53f-5860-b15d-eaa2f692e7b0`) lines 72-78 [crates/gwiki/src/search/graph_boost.rs:72-78]
   - Signature: `impl UnavailableGraphBoostBackend {`
-  - Purpose: Indexed class `UnavailableGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:71-77]
-- `UnavailableGraphBoostBackend.unreachable` (method) component `UnavailableGraphBoostBackend.unreachable [method]` (`dec7de72-0db3-5547-89bf-ef0046732d37`) lines 72-76 [crates/gwiki/src/search/graph_boost.rs:72-76]
+  - Purpose: Indexed class `UnavailableGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:72-78]
+- `UnavailableGraphBoostBackend.unreachable` (method) component `UnavailableGraphBoostBackend.unreachable [method]` (`add1c616-c757-52e5-a5c1-55ee56ebaa9f`) lines 73-77 [crates/gwiki/src/search/graph_boost.rs:73-77]
   - Signature: `pub fn unreachable(message: String) -> Self {`
-  - Purpose: Indexed method `UnavailableGraphBoostBackend.unreachable` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:72-76]
-- `UnavailableGraphBoostBackend` (class) component `UnavailableGraphBoostBackend [class]` (`6cb7473e-7c6c-594e-8cb8-0d4c9be0351a`) lines 79-89 [crates/gwiki/src/search/graph_boost.rs:79-89]
+  - Purpose: Indexed method `UnavailableGraphBoostBackend.unreachable` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:73-77]
+- `UnavailableGraphBoostBackend` (class) component `UnavailableGraphBoostBackend [class]` (`bc4ba5f4-1b2f-5625-9238-9c17078bff8f`) lines 80-90 [crates/gwiki/src/search/graph_boost.rs:80-90]
   - Signature: `impl GraphBoostBackend for UnavailableGraphBoostBackend {`
-  - Purpose: Indexed class `UnavailableGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:79-89]
-- `UnavailableGraphBoostBackend.search_graph_boost` (method) component `UnavailableGraphBoostBackend.search_graph_boost [method]` (`006e9539-6463-5936-81a4-052222237a3a`) lines 80-88 [crates/gwiki/src/search/graph_boost.rs:80-88]
+  - Purpose: Indexed class `UnavailableGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:80-90]
+- `UnavailableGraphBoostBackend.search_graph_boost` (method) component `UnavailableGraphBoostBackend.search_graph_boost [method]` (`0a53f15f-1efa-59fd-86e8-dbf219fb2520`) lines 81-89 [crates/gwiki/src/search/graph_boost.rs:81-89]
   - Signature: `fn search_graph_boost(`
-  - Purpose: Indexed method `UnavailableGraphBoostBackend.search_graph_boost` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:80-88]
-- `search_graph_boost` (function) component `search_graph_boost [function]` (`6685cc89-2c3c-5645-9ea9-21b64dde8a72`) lines 92-97 [crates/gwiki/src/search/graph_boost.rs:92-97]
+  - Purpose: Indexed method `UnavailableGraphBoostBackend.search_graph_boost` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:81-89]
+- `search_graph_boost` (function) component `search_graph_boost [function]` (`70163a3f-43fe-5629-80aa-8c5df7226a57`) lines 93-98 [crates/gwiki/src/search/graph_boost.rs:93-98]
   - Signature: `fn search_graph_boost(`
-  - Purpose: Indexed function `search_graph_boost` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:92-97]
-- `MemoryGraphBoostBackend` (class) component `MemoryGraphBoostBackend [class]` (`c30cbebe-2767-59da-bc02-51f5f21f27b1`) lines 100-102 [crates/gwiki/src/search/graph_boost.rs:100-102]
+  - Purpose: Indexed function `search_graph_boost` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:93-98]
+- `MemoryGraphBoostBackend` (class) component `MemoryGraphBoostBackend [class]` (`1d246388-9a09-55e8-ac0a-d925bebd6cab`) lines 101-103 [crates/gwiki/src/search/graph_boost.rs:101-103]
   - Signature: `pub struct MemoryGraphBoostBackend {`
-  - Purpose: Indexed class `MemoryGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:100-102]
-- `MemoryGraphBoostBackend` (class) component `MemoryGraphBoostBackend [class]` (`7e4f282c-89f1-5843-827a-318ce46923d2`) lines 104-108 [crates/gwiki/src/search/graph_boost.rs:104-108]
+  - Purpose: Indexed class `MemoryGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:101-103]
+- `MemoryGraphBoostBackend` (class) component `MemoryGraphBoostBackend [class]` (`3f9bc16a-2c00-5675-9203-3f7e80cfb5d2`) lines 105-109 [crates/gwiki/src/search/graph_boost.rs:105-109]
   - Signature: `impl MemoryGraphBoostBackend {`
-  - Purpose: Indexed class `MemoryGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:104-108]
-- `MemoryGraphBoostBackend.new` (method) component `MemoryGraphBoostBackend.new [method]` (`5bb7cd22-8580-50ef-9f8d-d229fdb65034`) lines 105-107 [crates/gwiki/src/search/graph_boost.rs:105-107]
+  - Purpose: Indexed class `MemoryGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:105-109]
+- `MemoryGraphBoostBackend.new` (method) component `MemoryGraphBoostBackend.new [method]` (`8c18633a-8ea1-5131-8d52-c333b9b42f3b`) lines 106-108 [crates/gwiki/src/search/graph_boost.rs:106-108]
   - Signature: `pub fn new(graph: MemoryWikiGraph) -> Self {`
-  - Purpose: Indexed method `MemoryGraphBoostBackend.new` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:105-107]
-- `MemoryGraphBoostBackend` (class) component `MemoryGraphBoostBackend [class]` (`aa90d159-1da5-5b91-be74-96a480a785cc`) lines 110-123 [crates/gwiki/src/search/graph_boost.rs:110-123]
+  - Purpose: Indexed method `MemoryGraphBoostBackend.new` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:106-108]
+- `MemoryGraphBoostBackend` (class) component `MemoryGraphBoostBackend [class]` (`0bbd103a-f087-5b8b-b5fd-74d1be8652bc`) lines 111-124 [crates/gwiki/src/search/graph_boost.rs:111-124]
   - Signature: `impl GraphBoostBackend for MemoryGraphBoostBackend {`
-  - Purpose: Indexed class `MemoryGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:110-123]
-- `MemoryGraphBoostBackend.search_graph_boost` (method) component `MemoryGraphBoostBackend.search_graph_boost [method]` (`bbca9a54-385f-5ed5-b262-a1728d6e1f5a`) lines 111-122 [crates/gwiki/src/search/graph_boost.rs:111-122]
+  - Purpose: Indexed class `MemoryGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:111-124]
+- `MemoryGraphBoostBackend.search_graph_boost` (method) component `MemoryGraphBoostBackend.search_graph_boost [method]` (`6790f5e3-3bd0-52ab-a222-0c1734c084a1`) lines 112-123 [crates/gwiki/src/search/graph_boost.rs:112-123]
   - Signature: `fn search_graph_boost(`
-  - Purpose: Indexed method `MemoryGraphBoostBackend.search_graph_boost` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:111-122]
-- `FalkorGraphBoostBackend` (class) component `FalkorGraphBoostBackend [class]` (`26713af0-5f85-5d8e-bf4b-168cad1d36f0`) lines 125-128 [crates/gwiki/src/search/graph_boost.rs:125-128]
+  - Purpose: Indexed method `MemoryGraphBoostBackend.search_graph_boost` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:112-123]
+- `FalkorGraphBoostBackend` (class) component `FalkorGraphBoostBackend [class]` (`712ab77e-617b-5fd8-9c07-592dc9d51642`) lines 126-129 [crates/gwiki/src/search/graph_boost.rs:126-129]
   - Signature: `pub struct FalkorGraphBoostBackend {`
-  - Purpose: Indexed class `FalkorGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:125-128]
-- `FalkorGraphBoostBackend` (class) component `FalkorGraphBoostBackend [class]` (`4bd06c19-1dba-548c-bd16-d39a628681d7`) lines 130-145 [crates/gwiki/src/search/graph_boost.rs:130-145]
+  - Purpose: Indexed class `FalkorGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:126-129]
+- `FalkorGraphBoostBackend` (class) component `FalkorGraphBoostBackend [class]` (`d4cfaa9b-2244-5fa3-a8d4-556ad1602614`) lines 131-146 [crates/gwiki/src/search/graph_boost.rs:131-146]
   - Signature: `impl FalkorGraphBoostBackend {`
-  - Purpose: Indexed class `FalkorGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:130-145]
-- `FalkorGraphBoostBackend.new` (method) component `FalkorGraphBoostBackend.new [method]` (`3074e6a4-a582-5333-bf1d-5ddb443df364`) lines 131-133 [crates/gwiki/src/search/graph_boost.rs:131-133]
+  - Purpose: Indexed class `FalkorGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:131-146]
+- `FalkorGraphBoostBackend.new` (method) component `FalkorGraphBoostBackend.new [method]` (`7cc7999d-089c-5f8c-937b-9857da600394`) lines 132-134 [crates/gwiki/src/search/graph_boost.rs:132-134]
   - Signature: `pub fn new(config: &FalkorConfig) -> Result<Self, SearchError> {`
-  - Purpose: Indexed method `FalkorGraphBoostBackend.new` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:131-133]
-- `FalkorGraphBoostBackend.new_with_config` (method) component `FalkorGraphBoostBackend.new_with_config [method]` (`c94f4149-23c3-5480-b613-ab216a5881c0`) lines 135-144 [crates/gwiki/src/search/graph_boost.rs:135-144]
+  - Purpose: Indexed method `FalkorGraphBoostBackend.new` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:132-134]
+- `FalkorGraphBoostBackend.new_with_config` (method) component `FalkorGraphBoostBackend.new_with_config [method]` (`0bd13d2e-41a2-591a-a482-6b576bc6976b`) lines 136-145 [crates/gwiki/src/search/graph_boost.rs:136-145]
   - Signature: `pub fn new_with_config(`
-  - Purpose: Indexed method `FalkorGraphBoostBackend.new_with_config` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:135-144]
-- `FalkorGraphBoostBackend` (class) component `FalkorGraphBoostBackend [class]` (`f6dda4c4-ba57-5cf4-aa15-27ef500996b9`) lines 147-184 [crates/gwiki/src/search/graph_boost.rs:147-184]
+  - Purpose: Indexed method `FalkorGraphBoostBackend.new_with_config` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:136-145]
+- `FalkorGraphBoostBackend` (class) component `FalkorGraphBoostBackend [class]` (`1b495188-16e0-5626-9fe5-790990586a6c`) lines 148-185 [crates/gwiki/src/search/graph_boost.rs:148-185]
   - Signature: `impl GraphBoostBackend for FalkorGraphBoostBackend {`
-  - Purpose: Indexed class `FalkorGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:147-184]
-- `FalkorGraphBoostBackend.search_graph_boost` (method) component `FalkorGraphBoostBackend.search_graph_boost [method]` (`cfe875d6-69be-5cc0-bbe5-f93566f20c85`) lines 148-183 [crates/gwiki/src/search/graph_boost.rs:148-183]
+  - Purpose: Indexed class `FalkorGraphBoostBackend` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:148-185]
+- `FalkorGraphBoostBackend.search_graph_boost` (method) component `FalkorGraphBoostBackend.search_graph_boost [method]` (`2e663a3b-96f6-5002-abfb-da5c0995391b`) lines 149-184 [crates/gwiki/src/search/graph_boost.rs:149-184]
   - Signature: `fn search_graph_boost(`
-  - Purpose: Indexed method `FalkorGraphBoostBackend.search_graph_boost` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:148-183]
-- `GraphBoostDocument` (class) component `GraphBoostDocument [class]` (`2e3e4a4c-9ece-5a0a-ad49-8a300112da87`) lines 187-190 [crates/gwiki/src/search/graph_boost.rs:187-190]
+  - Purpose: Indexed method `FalkorGraphBoostBackend.search_graph_boost` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:149-184]
+- `GraphBoostDocument` (class) component `GraphBoostDocument [class]` (`fde38213-4994-52f6-af90-c7927cdbbb4d`) lines 188-191 [crates/gwiki/src/search/graph_boost.rs:188-191]
   - Signature: `pub struct GraphBoostDocument {`
-  - Purpose: Indexed class `GraphBoostDocument` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:187-190]
-- `GraphBoostLink` (class) component `GraphBoostLink [class]` (`54b6cb11-c78c-5de5-9c2e-3ae920c1bd42`) lines 193-196 [crates/gwiki/src/search/graph_boost.rs:193-196]
+  - Purpose: Indexed class `GraphBoostDocument` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:188-191]
+- `GraphBoostLink` (class) component `GraphBoostLink [class]` (`2d5784f3-b5af-54db-9564-f1dfb698531a`) lines 194-197 [crates/gwiki/src/search/graph_boost.rs:194-197]
   - Signature: `pub struct GraphBoostLink {`
-  - Purpose: Indexed class `GraphBoostLink` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:193-196]
-- `rank_link_neighborhood` (function) component `rank_link_neighborhood [function]` (`b74b6fbe-cf70-5109-a481-8fbd0fd6348a`) lines 198-263 [crates/gwiki/src/search/graph_boost.rs:198-263]
+  - Purpose: Indexed class `GraphBoostLink` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:194-197]
+- `rank_link_neighborhood` (function) component `rank_link_neighborhood [function]` (`399bea63-f61b-5125-b349-6fbb15c7749e`) lines 199-264 [crates/gwiki/src/search/graph_boost.rs:199-264]
   - Signature: `pub fn rank_link_neighborhood(`
-  - Purpose: Indexed function `rank_link_neighborhood` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:198-263]
-- `graph_boost_hits` (function) component `graph_boost_hits [function]` (`07327f8f-1ee3-5f82-b528-c0825ff9eda9`) lines 265-276 [crates/gwiki/src/search/graph_boost.rs:265-276]
+  - Purpose: Indexed function `rank_link_neighborhood` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:199-264]
+- `graph_boost_hits` (function) component `graph_boost_hits [function]` (`c5b8b0c9-5895-5b22-b50d-9380acf8430d`) lines 266-277 [crates/gwiki/src/search/graph_boost.rs:266-277]
   - Signature: `pub fn graph_boost_hits(`
-  - Purpose: Indexed function `graph_boost_hits` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:265-276]
-- `graph_result` (function) component `graph_result [function]` (`8bb5fcfc-9bfd-5192-95f3-5408b87e8e9f`) lines 278-300 [crates/gwiki/src/search/graph_boost.rs:278-300]
+  - Purpose: Indexed function `graph_boost_hits` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:266-277]
+- `graph_result` (function) component `graph_result [function]` (`252c20c0-2879-5e9a-ace9-2c20b779f1bb`) lines 279-301 [crates/gwiki/src/search/graph_boost.rs:279-301]
   - Signature: `fn graph_result(scope: &SearchScope, path: PathBuf, score: f64) -> WikiSearchResult {`
-  - Purpose: Indexed function `graph_result` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:278-300]
-- `graph_degradation` (function) component `graph_degradation [function]` (`b57e7bb4-5b8a-570a-8708-6b1c71e52d1e`) lines 302-307 [crates/gwiki/src/search/graph_boost.rs:302-307]
+  - Purpose: Indexed function `graph_result` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:279-301]
+- `graph_degradation` (function) component `graph_degradation [function]` (`c3c15f84-b5cf-5302-a3df-fbab1d14abad`) lines 303-308 [crates/gwiki/src/search/graph_boost.rs:303-308]
   - Signature: `fn graph_degradation(message: String) -> DegradationKind {`
-  - Purpose: Indexed function `graph_degradation` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:302-307]
-- `resolve_graph_target` (function) component `resolve_graph_target [function]` (`38f6d167-e3ad-5dc7-bc6c-aed414e42259`) lines 309-346 [crates/gwiki/src/search/graph_boost.rs:309-346]
+  - Purpose: Indexed function `graph_degradation` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:303-308]
+- `resolve_graph_target` (function) component `resolve_graph_target [function]` (`dc80325d-a260-5da1-b7e6-fb3ea37368a9`) lines 310-347 [crates/gwiki/src/search/graph_boost.rs:310-347]
   - Signature: `fn resolve_graph_target(`
-  - Purpose: Indexed function `resolve_graph_target` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:309-346]
-- `normalize_path` (function) component `normalize_path [function]` (`30c42656-3e15-598c-870b-eaab68f28588`) lines 348-361 [crates/gwiki/src/search/graph_boost.rs:348-361]
+  - Purpose: Indexed function `resolve_graph_target` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:310-347]
+- `normalize_path` (function) component `normalize_path [function]` (`78122284-8a95-5c83-a110-878250ca0676`) lines 349-362 [crates/gwiki/src/search/graph_boost.rs:349-362]
   - Signature: `fn normalize_path(path: PathBuf) -> PathBuf {`
-  - Purpose: Indexed function `normalize_path` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:348-361]
-- `slug_target_map` (function) component `slug_target_map [function]` (`03f40a7f-98c6-53fe-b0ee-5f89ab47e68d`) lines 363-383 [crates/gwiki/src/search/graph_boost.rs:363-383]
+  - Purpose: Indexed function `normalize_path` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:349-362]
+- `slug_target_map` (function) component `slug_target_map [function]` (`5497cb79-b2bb-5b5d-943a-0f9d4af8d67e`) lines 364-384 [crates/gwiki/src/search/graph_boost.rs:364-384]
   - Signature: `fn slug_target_map(documents: &[GraphBoostDocument]) -> BTreeMap<String, PathBuf> {`
-  - Purpose: Indexed function `slug_target_map` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:363-383]
-- `is_external_target` (function) component `is_external_target [function]` (`d7947f91-c709-58f8-8413-3f7b0d707c00`) lines 385-391 [crates/gwiki/src/search/graph_boost.rs:385-391]
+  - Purpose: Indexed function `slug_target_map` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:364-384]
+- `is_external_target` (function) component `is_external_target [function]` (`2a76763b-11aa-53db-a2c2-91355e88c41b`) lines 386-392 [crates/gwiki/src/search/graph_boost.rs:386-392]
   - Signature: `fn is_external_target(target: &str) -> bool {`
-  - Purpose: Indexed function `is_external_target` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:385-391]
-- `rank_link_neighborhood_boosts_outbound_and_backlinks` (function) component `rank_link_neighborhood_boosts_outbound_and_backlinks [function]` (`1c7467e0-e1dc-5305-88b8-95350229127b`) lines 398-426 [crates/gwiki/src/search/graph_boost.rs:398-426]
+  - Purpose: Indexed function `is_external_target` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:386-392]
+- `rank_link_neighborhood_boosts_outbound_and_backlinks` (function) component `rank_link_neighborhood_boosts_outbound_and_backlinks [function]` (`919d4929-726e-54d4-bfff-6d45ae422378`) lines 399-427 [crates/gwiki/src/search/graph_boost.rs:399-427]
   - Signature: `fn rank_link_neighborhood_boosts_outbound_and_backlinks() {`
-  - Purpose: Indexed function `rank_link_neighborhood_boosts_outbound_and_backlinks` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:398-426]
-- `rank_link_neighborhood_filters_non_searchable_before_truncating` (function) component `rank_link_neighborhood_filters_non_searchable_before_truncating [function]` (`bc77a448-779e-577b-97e5-7933920336ea`) lines 429-451 [crates/gwiki/src/search/graph_boost.rs:429-451]
+  - Purpose: Indexed function `rank_link_neighborhood_boosts_outbound_and_backlinks` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:399-427]
+- `rank_link_neighborhood_filters_non_searchable_before_truncating` (function) component `rank_link_neighborhood_filters_non_searchable_before_truncating [function]` (`b5d596ff-a374-5d33-bbfd-6cc4cc9efee2`) lines 430-452 [crates/gwiki/src/search/graph_boost.rs:430-452]
   - Signature: `fn rank_link_neighborhood_filters_non_searchable_before_truncating() {`
-  - Purpose: Indexed function `rank_link_neighborhood_filters_non_searchable_before_truncating` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:429-451]
-- `rank_link_neighborhood_resolves_targets_relative_to_source` (function) component `rank_link_neighborhood_resolves_targets_relative_to_source [function]` (`d5e975cf-f240-54ab-bf58-a5c27a8bffa9`) lines 454-472 [crates/gwiki/src/search/graph_boost.rs:454-472]
+  - Purpose: Indexed function `rank_link_neighborhood_filters_non_searchable_before_truncating` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:430-452]
+- `rank_link_neighborhood_resolves_targets_relative_to_source` (function) component `rank_link_neighborhood_resolves_targets_relative_to_source [function]` (`d6ed0fc2-a13e-5a0d-9cc3-57070804098c`) lines 455-473 [crates/gwiki/src/search/graph_boost.rs:455-473]
   - Signature: `fn rank_link_neighborhood_resolves_targets_relative_to_source() {`
-  - Purpose: Indexed function `rank_link_neighborhood_resolves_targets_relative_to_source` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:454-472]
-- `graph_boost_hits_marks_graph_source` (function) component `graph_boost_hits_marks_graph_source [function]` (`e673cda7-f20f-5753-81da-d305bc0fc023`) lines 475-488 [crates/gwiki/src/search/graph_boost.rs:475-488]
+  - Purpose: Indexed function `rank_link_neighborhood_resolves_targets_relative_to_source` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:455-473]
+- `graph_boost_hits_marks_graph_source` (function) component `graph_boost_hits_marks_graph_source [function]` (`07a0094a-ab99-575b-b481-334a769e52a4`) lines 476-489 [crates/gwiki/src/search/graph_boost.rs:476-489]
   - Signature: `fn graph_boost_hits_marks_graph_source() {`
-  - Purpose: Indexed function `graph_boost_hits_marks_graph_source` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:475-488]
-- `unavailable_graph_backend_reports_service_degradation` (function) component `unavailable_graph_backend_reports_service_degradation [function]` (`e32fd87d-d63e-5855-9b99-57930c56b006`) lines 491-511 [crates/gwiki/src/search/graph_boost.rs:491-511]
+  - Purpose: Indexed function `graph_boost_hits_marks_graph_source` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:476-489]
+- `unavailable_graph_backend_reports_service_degradation` (function) component `unavailable_graph_backend_reports_service_degradation [function]` (`5819796a-5e77-539e-9acd-1fbefbc7e2ec`) lines 492-512 [crates/gwiki/src/search/graph_boost.rs:492-512]
   - Signature: `fn unavailable_graph_backend_reports_service_degradation() {`
-  - Purpose: Indexed function `unavailable_graph_backend_reports_service_degradation` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:491-511]
-- `document` (function) component `document [function]` (`10606c7d-551a-5ce5-b5b5-ebaad55c4ac6`) lines 513-518 [crates/gwiki/src/search/graph_boost.rs:513-518]
+  - Purpose: Indexed function `unavailable_graph_backend_reports_service_degradation` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:492-512]
+- `document` (function) component `document [function]` (`17385d68-e8e9-5c02-94c9-eed3651bf547`) lines 514-519 [crates/gwiki/src/search/graph_boost.rs:514-519]
   - Signature: `fn document(path: &str, title: Option<&str>) -> GraphBoostDocument {`
-  - Purpose: Indexed function `document` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:513-518]
-- `link` (function) component `link [function]` (`34862526-6253-5dfc-804b-2d97ed43d494`) lines 520-525 [crates/gwiki/src/search/graph_boost.rs:520-525]
+  - Purpose: Indexed function `document` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:514-519]
+- `link` (function) component `link [function]` (`276cff58-94f4-5748-bee9-4deb1a269a57`) lines 521-526 [crates/gwiki/src/search/graph_boost.rs:521-526]
   - Signature: `fn link(source_path: &str, target_path: &str) -> GraphBoostLink {`
-  - Purpose: Indexed function `link` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:520-525]
+  - Purpose: Indexed function `link` in `crates/gwiki/src/search/graph_boost.rs`. [crates/gwiki/src/search/graph_boost.rs:521-526]
 

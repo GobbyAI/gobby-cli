@@ -13,7 +13,7 @@ Parent: [[code/modules/crates/gcore/assets/postgres-pgsearch|crates/gcore/assets
 
 ## Overview
 
-PostgreSQL initialization scripts for the pgsearch container. Contains ordered SQL files that run on database startup to enable required extensions: `pg_search` (full-text search) and `pgaudit` (audit logging).
+This module contains PostgreSQL initialization SQL scripts for setting up the pg_search extension and configuring pgaudit auditing capabilities within the database.
 
 ## Files
 

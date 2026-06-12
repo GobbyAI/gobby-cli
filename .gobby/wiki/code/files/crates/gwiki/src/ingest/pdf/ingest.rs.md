@@ -4,15 +4,15 @@ type: code_file
 provenance:
 - file: crates/gwiki/src/ingest/pdf/ingest.rs
   ranges:
-  - 22-36
-  - 39-50
-  - 53-106
-  - 108-125
-  - 127-142
-  - 144-215
-  - 217-241
-  - 243-250
-  - 252-258
+  - 23-37
+  - 41-52
+  - 55-108
+  - 111-128
+  - 131-146
+  - 149-220
+  - 223-247
+  - 250-257
+  - 260-266
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -25,41 +25,39 @@ Module: [[code/modules/crates/gwiki/src/ingest/pdf|crates/gwiki/src/ingest/pdf]]
 ## Purpose
 
 `crates/gwiki/src/ingest/pdf/ingest.rs` exposes 9 indexed API symbols.
-[crates/gwiki/src/ingest/pdf/ingest.rs:22-36]
-[crates/gwiki/src/ingest/pdf/ingest.rs:39-50]
-[crates/gwiki/src/ingest/pdf/ingest.rs:53-106]
-[crates/gwiki/src/ingest/pdf/ingest.rs:108-125]
-[crates/gwiki/src/ingest/pdf/ingest.rs:127-142]
+[crates/gwiki/src/ingest/pdf/ingest.rs:23-37]
+[crates/gwiki/src/ingest/pdf/ingest.rs:41-52]
+[crates/gwiki/src/ingest/pdf/ingest.rs:55-108]
+[crates/gwiki/src/ingest/pdf/ingest.rs:111-128]
+[crates/gwiki/src/ingest/pdf/ingest.rs:131-146]
 
 ## API Symbols
 
-- `ingest_pages` (function) component `ingest_pages [function]` (`6bb75d7e-5346-5605-a548-efd3bec8d0bd`) lines 22-36 [crates/gwiki/src/ingest/pdf/ingest.rs:22-36]
+- `ingest_pages` (function) component `ingest_pages [function]` (`8ffb36c7-f2e2-56f3-a324-bb3c8f66a4dd`) lines 23-37 [crates/gwiki/src/ingest/pdf/ingest.rs:23-37]
   - Signature: `pub fn ingest_pages(`
-  - Purpose: Ingests a PDF snapshot into a wiki index store with vision endpoint capabilities disabled. [crates/gwiki/src/ingest/pdf/ingest.rs:22-36]
-- `ingest_pdf_file` (function) component `ingest_pdf_file [function]` (`0dbff40e-79dc-55af-9a8e-081c6e0b6a90`) lines 39-50 [crates/gwiki/src/ingest/pdf/ingest.rs:39-50]
+  - Purpose: Indexed function `ingest_pages` in `crates/gwiki/src/ingest/pdf/ingest.rs`. [crates/gwiki/src/ingest/pdf/ingest.rs:23-37]
+- `ingest_pdf_file` (function) component `ingest_pdf_file [function]` (`95c9dc97-74e0-5d87-a3c1-fe755428ff72`) lines 41-52 [crates/gwiki/src/ingest/pdf/ingest.rs:41-52]
   - Signature: `pub fn ingest_pdf_file(`
-  - Purpose: Ingests a PDF file snapshot into a wiki vault using a vision endpoint, then reindexes the wiki index store. [crates/gwiki/src/ingest/pdf/ingest.rs:39-50]
-- `ingest_pdf_file_without_index` (function) component `ingest_pdf_file_without_index [function]` (`c31a124b-c8b0-5a38-975e-858dfc948d68`) lines 53-106 [crates/gwiki/src/ingest/pdf/ingest.rs:53-106]
+  - Purpose: Indexed function `ingest_pdf_file` in `crates/gwiki/src/ingest/pdf/ingest.rs`. [crates/gwiki/src/ingest/pdf/ingest.rs:41-52]
+- `ingest_pdf_file_without_index` (function) component `ingest_pdf_file_without_index [function]` (`523df09f-79ca-5ea6-acf0-539f5d68ecb6`) lines 55-108 [crates/gwiki/src/ingest/pdf/ingest.rs:55-108]
   - Signature: `pub(crate) fn ingest_pdf_file_without_index(`
-  - Purpose: Extracts text-layer pages and optionally renders pages from a PDF snapshot, accumulates processing degradation metadata, then delegates to the vision-enabled inner ingestion handler. [crates/gwiki/src/ingest/pdf/ingest.rs:53-106]
-- `ingest_pages_with_vision` (function) component `ingest_pages_with_vision [function]` (`e8e8727c-9ab9-5144-8b44-d4059af7d331`) lines 108-125 [crates/gwiki/src/ingest/pdf/ingest.rs:108-125]
+  - Purpose: Indexed function `ingest_pdf_file_without_index` in `crates/gwiki/src/ingest/pdf/ingest.rs`. [crates/gwiki/src/ingest/pdf/ingest.rs:55-108]
+- `ingest_pages_with_vision` (function) component `ingest_pages_with_vision [function]` (`8ddf8eef-a485-5a2d-ba71-f896f29f42c6`) lines 111-128 [crates/gwiki/src/ingest/pdf/ingest.rs:111-128]
   - Signature: `pub fn ingest_pages_with_vision(`
-  - Purpose: # Summary
-
-Ingests rendered PDF pages using a vision endpoint and reindexes the wiki store afterward. [crates/gwiki/src/ingest/pdf/ingest.rs:108-125]
-- `ingest_pages_with_vision_without_index` (function) component `ingest_pages_with_vision_without_index [function]` (`48de14c2-fe03-5a2e-a1dd-a09d67251539`) lines 127-142 [crates/gwiki/src/ingest/pdf/ingest.rs:127-142]
+  - Purpose: Indexed function `ingest_pages_with_vision` in `crates/gwiki/src/ingest/pdf/ingest.rs`. [crates/gwiki/src/ingest/pdf/ingest.rs:111-128]
+- `ingest_pages_with_vision_without_index` (function) component `ingest_pages_with_vision_without_index [function]` (`8cf7e35a-c5a2-5626-b253-f54d87a3b81a`) lines 131-146 [crates/gwiki/src/ingest/pdf/ingest.rs:131-146]
   - Signature: `pub(crate) fn ingest_pages_with_vision_without_index(`
-  - Purpose: Ingests rendered PDF pages using vision processing without an index by delegating to the inner implementation with an empty index vector. [crates/gwiki/src/ingest/pdf/ingest.rs:127-142]
-- `ingest_pages_with_vision_inner` (function) component `ingest_pages_with_vision_inner [function]` (`1a1ab6c5-a69f-55be-86a4-40c2dc9b90e4`) lines 144-215 [crates/gwiki/src/ingest/pdf/ingest.rs:144-215]
+  - Purpose: Indexed function `ingest_pages_with_vision_without_index` in `crates/gwiki/src/ingest/pdf/ingest.rs`. [crates/gwiki/src/ingest/pdf/ingest.rs:131-146]
+- `ingest_pages_with_vision_inner` (function) component `ingest_pages_with_vision_inner [function]` (`50cddb42-fe4a-5472-a9b8-334b7a0e7c10`) lines 149-220 [crates/gwiki/src/ingest/pdf/ingest.rs:149-220]
   - Signature: `fn ingest_pages_with_vision_inner(`
-  - Purpose: Ingests a PDF source into a vault by registering it in a manifest, merging extracted text with vision-API-rendered pages, and converting the result to markdown output. [crates/gwiki/src/ingest/pdf/ingest.rs:144-215]
-- `rollback_registered_pdf_source` (function) component `rollback_registered_pdf_source [function]` (`aa49042f-d020-5f88-8653-d05920be2e66`) lines 217-241 [crates/gwiki/src/ingest/pdf/ingest.rs:217-241]
+  - Purpose: Indexed function `ingest_pages_with_vision_inner` in `crates/gwiki/src/ingest/pdf/ingest.rs`. [crates/gwiki/src/ingest/pdf/ingest.rs:149-220]
+- `rollback_registered_pdf_source` (function) component `rollback_registered_pdf_source [function]` (`4d86afff-2599-5414-9cf3-ce1e3272844f`) lines 223-247 [crates/gwiki/src/ingest/pdf/ingest.rs:223-247]
   - Signature: `fn rollback_registered_pdf_source<T>(`
-  - Purpose: Rolls back a failed PDF source registration by restoring the previous manifest state and cleaning up associated assets, returning the original error with any rollback failures appended. [crates/gwiki/src/ingest/pdf/ingest.rs:217-241]
-- `cleanup_pdf_file` (function) component `cleanup_pdf_file [function]` (`00f73c8d-095a-5e9f-9c63-6f2c28aad24b`) lines 243-250 [crates/gwiki/src/ingest/pdf/ingest.rs:243-250]
+  - Purpose: Indexed function `rollback_registered_pdf_source` in `crates/gwiki/src/ingest/pdf/ingest.rs`. [crates/gwiki/src/ingest/pdf/ingest.rs:223-247]
+- `cleanup_pdf_file` (function) component `cleanup_pdf_file [function]` (`69f90f69-6002-56a2-a801-863cff9b6905`) lines 250-257 [crates/gwiki/src/ingest/pdf/ingest.rs:250-257]
   - Signature: `fn cleanup_pdf_file(vault_root: &Path, relative_path: &Path, cleanup_errors: &mut Vec<String>) {`
-  - Purpose: Attempts to delete a file at the joined vault path, silently ignoring NotFound errors while appending any other deletion failures to the provided error vector. [crates/gwiki/src/ingest/pdf/ingest.rs:243-250]
-- `pdf_cleanup_detail` (function) component `pdf_cleanup_detail [function]` (`ca8ef461-604f-5305-a423-ef35e605d583`) lines 252-258 [crates/gwiki/src/ingest/pdf/ingest.rs:252-258]
+  - Purpose: Indexed function `cleanup_pdf_file` in `crates/gwiki/src/ingest/pdf/ingest.rs`. [crates/gwiki/src/ingest/pdf/ingest.rs:250-257]
+- `pdf_cleanup_detail` (function) component `pdf_cleanup_detail [function]` (`0ecb051b-0d96-5dd6-8a20-889652d189cb`) lines 260-266 [crates/gwiki/src/ingest/pdf/ingest.rs:260-266]
   - Signature: `fn pdf_cleanup_detail(cleanup_errors: &[String]) -> String {`
-  - Purpose: Returns a formatted string containing semicolon-separated cleanup errors prefixed with `"; cleanup failures: "`, or an empty string if the input slice is empty. [crates/gwiki/src/ingest/pdf/ingest.rs:252-258]
+  - Purpose: Indexed function `pdf_cleanup_detail` in `crates/gwiki/src/ingest/pdf/ingest.rs`. [crates/gwiki/src/ingest/pdf/ingest.rs:260-266]
 

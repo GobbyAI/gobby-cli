@@ -5,9 +5,12 @@ provenance:
 - file: crates/gcode/src/dispatch/tests.rs
   ranges:
   - 5-9
-  - 12-52
-  - 55-69
-  - 72-89
+  - 12-14
+  - 17-22
+  - 25-27
+  - 30-70
+  - 73-87
+  - 90-107
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -19,31 +22,29 @@ Parent: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-`crates/gcode/src/dispatch/tests.rs` is a focused test module for the dispatch layer’s service/command resolution logic.
-
-- `services_for` is the central helper/exposed symbol used in this module to derive the set of services involved in dispatch scenarios.
-- `setup_early_dispatch_uses_parsed_request_without_context` verifies early-dispatch setup can proceed from a parsed request alone, without requiring external context state.
-- `lookup_commands_skip_service_config_resolution` verifies command lookup behavior avoids unnecessary service-config resolution during lookup.
-- `graph_and_ai_commands_request_only_needed_services` verifies graph/AI command paths request only the services that are actually required.
-
-Overall, the module validates that dispatch uses minimal, request-driven service dependencies and avoids eager/extra service resolution.
+The dispatch module manages early request dispatching, service resolution, and stderr logging configuration. It facilitates service setup tailored to command requirements, such as skipping configuration resolution for lookup commands and requesting only necessary services for graph and AI commands. It also manages stderr logging behaviors, including setting default warning levels, respecting Rust log configurations, and enforcing quiet modes.
 [crates/gcode/src/dispatch/tests.rs:5-9]
-[crates/gcode/src/dispatch/tests.rs:12-52]
-[crates/gcode/src/dispatch/tests.rs:55-69]
-[crates/gcode/src/dispatch/tests.rs:72-89]
+[crates/gcode/src/dispatch/tests.rs:12-14]
+[crates/gcode/src/dispatch/tests.rs:17-22]
+[crates/gcode/src/dispatch/tests.rs:25-27]
+[crates/gcode/src/dispatch/tests.rs:30-70]
 
 ## Files
 
-- [[code/files/crates/gcode/src/dispatch/tests.rs|crates/gcode/src/dispatch/tests.rs]] - `crates/gcode/src/dispatch/tests.rs` exposes 4 indexed API symbols.
+- [[code/files/crates/gcode/src/dispatch/tests.rs|crates/gcode/src/dispatch/tests.rs]] - `crates/gcode/src/dispatch/tests.rs` exposes 7 indexed API symbols.
 [crates/gcode/src/dispatch/tests.rs:5-9]
-[crates/gcode/src/dispatch/tests.rs:12-52]
-[crates/gcode/src/dispatch/tests.rs:55-69]
-[crates/gcode/src/dispatch/tests.rs:72-89]
+[crates/gcode/src/dispatch/tests.rs:12-14]
+[crates/gcode/src/dispatch/tests.rs:17-22]
+[crates/gcode/src/dispatch/tests.rs:25-27]
+[crates/gcode/src/dispatch/tests.rs:30-70]
 
 ## Components
 
 - `fc1559c1-f164-54c8-b94f-ad104dc8e5e8`
-- `2fca8eb4-00af-5c4d-8c50-88191dd4205c`
-- `5253d1cd-23d7-5140-81a5-8d9180840fc5`
-- `b90e3843-b015-5222-b4fd-b2f92d553ea3`
+- `894d7367-5246-50e3-8415-e2a1f7b75755`
+- `3cab12e5-190b-5cb2-a374-d6c9f1724611`
+- `de6d2aa9-d585-5db3-bb69-408de56a71cc`
+- `211d1ec3-d0e8-5133-91ea-33149e2fc071`
+- `cb67f134-ed2e-574d-84f1-9bd74fafa4c7`
+- `b7e577bb-6d1d-5eac-947f-4c8e497c4264`
 

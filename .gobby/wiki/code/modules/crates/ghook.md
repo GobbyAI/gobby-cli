@@ -4,107 +4,14 @@ type: code_module
 provenance:
 - file: crates/ghook/schemas/diagnose-output.v2.schema.json
   ranges:
-  - '2'
-  - '3'
-  - '4'
-  - '5'
-  - '6'
-  - 7-18
-  - '19'
-  - 20-79
-  - 21-24
-  - '22'
-  - '23'
-  - 25-28
-  - '26'
-  - '27'
-  - 29-32
-  - '30'
-  - '31'
-  - 33-36
-  - '34'
-  - '35'
-  - 37-39
-  - '38'
-  - 40-42
-  - '41'
-  - 43-45
-  - '44'
-  - 46-49
-  - '47'
-  - '48'
-  - 50-53
-  - '51'
-  - '52'
-  - 54-58
-  - '55'
-  - '56'
-  - '57'
-  - 59-61
-  - '60'
-  - 62-64
-  - '63'
-  - 65-67
-  - '66'
-  - 68-70
-  - '69'
-  - 71-74
-  - '72'
-  - '73'
-  - 75-78
-  - '76'
-  - '77'
+  - 2-79
 - file: crates/ghook/schemas/inbox-envelope.v1.schema.json
   ranges:
-  - '2'
-  - '3'
-  - '4'
-  - '5'
-  - '6'
-  - 7-15
-  - '16'
-  - 17-63
-  - 18-22
-  - '19'
-  - '20'
-  - '21'
-  - 23-27
-  - '24'
-  - '25'
-  - '26'
-  - 28-31
-  - '29'
-  - '30'
-  - 32-36
-  - '33'
-  - '34'
-  - '35'
-  - 37-39
-  - '38'
-  - 40-44
-  - '41'
-  - '42'
-  - '43'
-  - 45-62
-  - '46'
-  - '47'
-  - 48-51
-  - '49'
-  - '50'
-  - 52-61
-  - 53-56
-  - '54'
-  - '55'
-  - 57-60
-  - '58'
-  - '59'
+  - 2-63
 - file: crates/ghook/src/cli_config.rs
   ranges:
   - 11-18
   - 20-61
-  - 21-52
-  - 54-56
-  - 58-60
   - 68-74
   - 77-80
   - 83-88
@@ -139,110 +46,125 @@ provenance:
   ranges:
   - 24-32
   - 34-52
-  - 35-51
   - 59-70
   - 73-84
   - 87-109
   - 112-123
   - 126-140
   - 143-162
+- file: crates/ghook/src/json_value.rs
+  ranges:
+  - 3-20
+  - 28-52
 - file: crates/ghook/src/main.rs
   ranges:
-  - 38-42
-  - 50-74
-  - 76-99
-  - 101-117
-  - 119-259
-  - 261-267
-  - 269-271
-  - 273-301
-  - 303-317
-  - 319-327
-  - 329-399
-  - 401-420
-  - 422-482
-  - 484-506
-  - 508-536
-  - 538-555
-  - 557-570
-  - 581-584
-  - 587-599
-  - 602-610
-  - 613-653
-  - 656-677
-  - 680-696
-  - 699-715
-  - 718-735
-  - 738-756
-  - 759-775
-  - 778-794
-  - 797-808
-  - 811-817
-  - 820-836
-  - 839-853
-  - 856-871
-  - 874-887
-  - 890-900
-  - 903-916
-  - 919-932
-  - 935-967
-  - 970-979
+  - 45-49
+  - 57-81
+  - 83-106
+  - 108-124
+  - 126-289
+  - 291-297
+  - 299-301
+  - 303-331
+  - 333-341
+  - 343-413
+  - 415-434
+  - 436-496
+  - 498-520
+  - 522-550
+  - 552-564
+  - 575-578
+  - 581-593
+  - 596-604
+  - 607-647
+  - 650-671
+  - 674-690
+  - 693-709
+  - 712-729
+  - 732-750
+  - 753-769
+  - 772-788
+  - 791-802
+  - 805-811
+  - 814-830
+  - 833-847
+  - 850-865
+  - 868-881
+  - 884-894
+  - 897-910
+  - 913-926
+  - 929-961
+  - 964-973
+- file: crates/ghook/src/output.rs
+  ranges:
+  - 3-5
+  - 7-9
 - file: crates/ghook/src/planned_shutdown.rs
   ranges:
   - 21-27
   - 29-37
   - 39-50
-  - 52-56
-  - 58-63
-  - 65-67
-  - 69-75
-  - 77-88
-  - 90-92
-  - 94-97
-  - 99-126
-  - 128-132
-  - 134-143
-  - 145-153
-  - 155-161
-  - 163-171
-  - 173-179
-  - 181-188
-  - 190-195
-  - 197-203
-  - 214-217
-  - 220-225
-  - 228-238
-  - 241-256
-  - 259-301
-  - 304-310
-  - 313-328
-  - 331-341
-  - 344-360
-  - 363-365
-  - 368-390
-  - 393-403
-  - 406-436
-  - 439-445
+  - 52-54
+  - 56-62
+  - 64-75
+  - 77-79
+  - 81-84
+  - 86-113
+  - 115-119
+  - 121-130
+  - 132-134
+  - 136-142
+  - 144-152
+  - 154-160
+  - 162-169
+  - 171-176
+  - 178-184
+  - 195-198
+  - 201-206
+  - 209-219
+  - 222-237
+  - 240-282
+  - 285-291
+  - 294-304
+  - 307-323
+  - 326-328
+  - 331-353
+  - 356-366
+  - 369-399
+  - 402-408
+- file: crates/ghook/src/source.rs
+  ranges:
+  - 3-14
+  - 20-27
+  - 29-35
+  - '37'
+  - 39-44
+  - 46-50
+  - 53-82
 - file: crates/ghook/src/statusline.rs
   ranges:
-  - 21-23
-  - 25-31
-  - 33-63
-  - 65-100
-  - 102-115
-  - 117-130
-  - 132-165
-  - 168-172
-  - 175-179
-  - 193-229
-  - 232-237
-  - 240-244
-  - 247-251
-  - 254-260
-  - 263-268
-  - 271-298
-  - 301-312
-  - 315-335
+  - 25-27
+  - 29-35
+  - 37-67
+  - 69-104
+  - 106-119
+  - 121-168
+  - 170-174
+  - 177-183
+  - '186'
+  - 189-194
+  - 197-201
+  - 217-222
+  - 225-229
+  - 232-236
+  - 239-245
+  - 248-253
+  - 256-283
+  - 286-310
+  - 313-324
+  - 327-344
+  - 347-371
+  - 374-397
 - file: crates/ghook/src/terminal_context.rs
   ranges:
   - 18-23
@@ -264,29 +186,29 @@ provenance:
   - 219-237
 - file: crates/ghook/src/transport.rs
   ranges:
-  - 30-35
-  - 39-44
-  - 48-54
-  - 57-60
+  - 31-36
+  - 40-45
+  - 49-55
+  - 58-60
   - 63-65
   - 68-74
   - 77-81
-  - 87-110
-  - 115-121
-  - 129-193
-  - 195-210
-  - 214-221
-  - 231-262
-  - 273-309
-  - 312-316
-  - 319-322
-  - 325-331
-  - 334-340
-  - 343-358
-  - 361-374
-  - 377-423
-  - 426-470
-  - 473-505
+  - 87-114
+  - 119-125
+  - 127-129
+  - 137-204
+  - 206-221
+  - 225-232
+  - 242-273
+  - 286-290
+  - 293-296
+  - 299-305
+  - 308-314
+  - 317-332
+  - 335-348
+  - 351-404
+  - 407-458
+  - 461-493
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -298,9 +220,7 @@ Parent: [[code/modules/crates|crates]]
 
 ## Overview
 
-The `crates/ghook` crate provides ghook, the hook-dispatch CLI that bridges agent tooling (Claude, Codex, Droid, Gemini) to the gobby daemon. It detects the calling CLI and per-hook criticality (`CliConfig`), parses incoming hook payloads, optionally injects terminal/tmux context, and wraps events in versioned envelopes before dispatching them to the daemon over HTTP. Daemon responses are translated into hook actions—continue, JSON blocks, exit-two, or stderr passthrough—with failure handling that distinguishes critical from non-critical hooks and transport errors. Additional capabilities include offline inbox enqueue/quarantine with at-least-once delivery and cleanup, statusline forwarding to downstream commands, post-shutdown suppression via freshness markers, and a `diagnose` subcommand reporting CLI detection, daemon connectivity, terminal context, and install provenance.
-
-The crate's structured outputs are governed by two JSON Schemas in `schemas/`: `diagnose-output.v2.schema.json` (diagnostic report format) and `inbox-envelope.v1.schema.json` (queued hook event envelopes with Gobby project/session headers), which serve as the validation and documentation source of truth. An extensive test suite validates envelope serialization, action mapping across all four CLIs, dispatch suppression logic, terminal-context capture, inbox delivery, and schema conformance.
+The crates/ghook module provides a resilient, Rust-based sidecar utility and its associated JSON Schema contracts to intercept, validate, and dispatch CLI tool-use and session-lifecycle hook events to the central Gobby daemon.
 [crates/ghook/schemas/diagnose-output.v2.schema.json:2]
 [crates/ghook/schemas/inbox-envelope.v1.schema.json:2]
 [crates/ghook/src/cli_config.rs:11-18]
@@ -315,292 +235,21 @@ The crate's structured outputs are governed by two JSON Schemas in `schemas/`: `
 [crates/ghook/schemas/diagnose-output.v2.schema.json:3]
 [crates/ghook/schemas/diagnose-output.v2.schema.json:4]
 [crates/ghook/schemas/diagnose-output.v2.schema.json:5]
-- [[code/modules/crates/ghook/src|crates/ghook/src]] - The `crates/ghook/src` module implements ghook, the hook-dispatch CLI that bridges agent tooling (Claude, Codex, Droid, Gemini) to the gobby daemon. It parses incoming hook payloads, wraps them in versioned envelopes (`envelope.rs`), and dispatches them to the daemon over HTTP, translating daemon responses into hook actions—including continue, JSON blocks, and exit-two behavior—via `main.rs`.
+- [[code/modules/crates/ghook/src|crates/ghook/src]] - The crates/ghook/src module implements a resilient Rust-based sidecar utility that intercepts, validates, and dispatches CLI tool-use and session-lifecycle hooks to the central Gobby daemon.
 
-Key responsibilities are spread across focused submodules:
-- `cli_config.rs` — per-CLI configuration, including which hooks are "critical" for fail-closed handling.
-- `transport.rs` — envelope enqueueing to an inbox, atomic writes, daemon POST with cleanup, transport-error classification, and quarantine of malformed payloads.
-- `planned_shutdown.rs` — shutdown-marker freshness logic and daemon-reachability probing to suppress dispatch during planned shutdowns.
-- `terminal_context.rs` — capture and injection of terminal/tmux context (pane validation, TTY, PIDs) into session-start envelopes.
-- `statusline.rs` — Claude statusline hook handling with best-effort daemon posting and downstream forwarding.
-- `diagnose.rs` — self-diagnostic output (v2 schema) reporting CLI recognition and install provenance.
-- `detach.rs` — process detachment for background operation.
-
-The module emphasizes resilient, fail-safe dispatch (env-based disabling, failure suppression, critical-vs-noncritical fallbacks) and is extensively covered by inline unit and golden-fixture tests validating envelope serialization, schema conformance, and action derivation across CLI variants.
+Key Capabilities:
+- CLI Configuration & Detection (cli_config, source): Maps critical/non-critical hooks and detects environment-derived client sources (such as Claude, Droid, and Codex).
+- Context & Envelope Management (envelope, terminal_context, json_value): Encapsulates hook payloads in validated envelopes while injecting TMUX pane and terminal context.
+- High-Reliability Transport & Queueing (transport, planned_shutdown, detach): Guarantees reliable delivery via atomic file-based queuing (inbox/quarantine) and suppresses dispatches during planned daemon shutdowns.
+- Execution Control & Diagnostics (main, diagnose, statusline, output): Routes hook actions (allow, block, or specific exit-codes), validates installation provenance, and processes real-time status-line feeds.
 [crates/ghook/src/cli_config.rs:11-18]
 [crates/ghook/src/detach.rs:23-43]
 [crates/ghook/src/diagnose.rs:15-32]
 [crates/ghook/src/envelope.rs:24-32]
-[crates/ghook/src/main.rs:38-42]
+[crates/ghook/src/json_value.rs:3-20]
 
 ## Files
 
 - [[code/files/crates/ghook/Cargo.toml|crates/ghook/Cargo.toml]] - `crates/ghook/Cargo.toml` has no indexed API symbols. 
 - [[code/files/crates/ghook/README.md|crates/ghook/README.md]] - `crates/ghook/README.md` has no indexed API symbols. 
-
-## Components
-
-- `bacf0899-0f32-5e82-a162-ce6ec065c665`
-- `2098d2a7-1567-5d38-b7ff-aa501e6f20f2`
-- `f4184134-2496-5da6-a6d3-148b09001802`
-- `8c90ed26-3cbd-53ca-9b4e-85bbdf3a873c`
-- `3cfe478d-baf7-53af-adc4-6bc7073dd4d0`
-- `255c1c10-fb50-5c4c-ab0a-6fab53823622`
-- `d32937c3-8cbc-5f70-ad2e-bc4163ff124e`
-- `0c90c2b2-0f3f-566e-9aad-5557d8397b0d`
-- `98a0fbc5-cad9-5724-b8a8-bfcfdb872584`
-- `efdb5996-ebcd-589c-87ea-a123854987bd`
-- `c67570be-71bc-5b6f-9299-251552edf051`
-- `8fafacd4-4027-5f64-9cef-d0bcad3139ef`
-- `e5d2730a-aa45-5bc2-9cd4-2f0c86147f53`
-- `cbfd1119-fdcd-5cb9-b25b-c0d75f68369c`
-- `edefea07-9c4f-5ee1-bce3-c7b7eeedf72b`
-- `d1ff8a5a-bbe5-5f69-b911-5e7fef8a1931`
-- `37d3d038-bc2b-5c2e-a705-a374231a5cb7`
-- `d21d0c64-1768-5acc-b463-406be2d7b8c0`
-- `b828923e-0236-5616-a339-df5d5bff6830`
-- `2916f41a-c5bd-5505-9caa-4699aba07f02`
-- `b21f51e9-f548-56f9-9e5f-849c71b59944`
-- `6eeef965-c316-5f6f-9013-c5977f691690`
-- `76db3b7a-3b7f-5c44-b510-8d1188beeb86`
-- `cf36f950-0e73-5dab-8c96-914dbfcd31b1`
-- `589bbd4a-9e7b-5a24-b1c0-7b9883f5c991`
-- `d3d51a75-fcb5-5f99-be5d-0677d2587ec0`
-- `25f7bffd-0360-59f1-bfe5-5a4224e27969`
-- `239f3d50-c63a-5fa5-8ec9-b5e33b1d4cf6`
-- `61e5c980-5107-5b94-a255-dd30fff3256a`
-- `37e526c1-d0ad-56f2-8f84-459b34ac5abd`
-- `4a698df5-5087-5ad1-ae48-a5fdde313a83`
-- `5a603945-bf8c-539f-8f27-535d8d4ff04e`
-- `d5d778e3-e1c0-57d3-b59d-5ceb5e9ac8a3`
-- `f10afc11-7fd5-57b7-b234-eeef33756cfe`
-- `3184bba7-db11-50eb-ace8-f4dd85fbb21d`
-- `f3af8c8a-b418-5597-885b-db8fb9c1da05`
-- `0f0d8050-a628-564e-9be3-33ac3c2f603e`
-- `24560909-6e1a-5e14-8b72-4998c7ad0db0`
-- `e24a0919-9834-56da-a898-4d640d511e08`
-- `85cd11d0-506d-549e-b640-bc1527518ee2`
-- `51fe7313-cece-5ccb-a29b-7e6cc6d2a9be`
-- `43b83a6c-d9be-5131-96ab-eb1af64f1e5b`
-- `e0465c18-a77b-5c38-b139-77849c1f6929`
-- `42985042-0643-5ae2-9fe0-c9d4bd1a6113`
-- `dc946393-4886-50da-8a0a-351239f928ed`
-- `322f6e90-7f84-5ff0-85c0-9e1d9eca8c9f`
-- `081c77c1-7c54-5af9-9e9e-a2a6f0045a44`
-- `e935415a-1e52-589c-9ebb-ec2d584d1d71`
-- `10ea730c-b509-535b-94d0-33d46f6e36d4`
-- `a7439602-0f19-534d-916b-65788e133a6a`
-- `17f7907d-c460-52fe-bb16-0881d8534d8c`
-- `cd2dfa48-fffa-5667-984b-ed4eae020f3f`
-- `0400aa16-fd74-5b9b-9cca-c6d79166d255`
-- `970506da-8e5c-5ff3-935e-5df113530489`
-- `6d3a4c21-424c-587c-bc52-646246a3e7a3`
-- `fd16482c-1ae6-5e18-a20a-d9a2ed6023d5`
-- `256f4bb0-7817-5dc9-91d8-e4eaf07a4848`
-- `916907be-0c09-5cb6-8a64-dbb3fc3a2b55`
-- `08b9293c-dfb0-58e7-8ab9-4ace41a3aa48`
-- `9eca6f35-d514-504d-a338-ea47cfa63264`
-- `f9ead96a-ca1f-5f39-9b50-d07ec066e15a`
-- `ac91e290-83f5-544c-a35f-34ce3b332cf1`
-- `2a1fe475-78a9-5c5d-93a2-83e30d26df45`
-- `b9e238b5-812f-5777-806d-c6cee62da544`
-- `7f92b363-4acc-586d-8b52-c7315b40c75b`
-- `4cf38688-87f9-50c9-93e2-5f5c52cdb555`
-- `497fcc0c-55d3-59d0-b5fd-42e04987d38a`
-- `ab1d30ec-3a57-5a98-a71e-aa14de228a7f`
-- `c72222f5-99ef-5a80-87ae-c9d32f04882f`
-- `31abbb5a-8203-5c61-b443-a784c245431b`
-- `502ba512-43a0-5bc6-8791-78572816ce9b`
-- `9f9ca76c-562a-58c4-96b9-396610866190`
-- `16c7f78f-4495-5139-af00-1c68e8f04de8`
-- `1e19cd99-6a15-5ed5-830b-a541ab8e4dbe`
-- `a2cf8456-f864-551c-88c5-5dcac06e9561`
-- `60638bde-9f82-51ce-9cf7-3b713e417f67`
-- `e4052035-d08f-5495-bde0-895c3acf7c20`
-- `cf397469-b96c-5507-8101-526d2bf46f80`
-- `1bdcbe2a-2822-5254-a6cb-76f704f5d736`
-- `23078121-1b55-5e92-ad70-5576f50543ab`
-- `9e25e883-fa17-5f32-98ea-54ad18ddc947`
-- `7aa8a2d4-fa60-56f2-a078-11408f4d3ab0`
-- `b1f865fc-a6cc-5b32-b765-35814437fcd0`
-- `865a7d10-c395-5153-a43f-e081c88023c3`
-- `1ac981d0-873b-51f4-a300-46137860a863`
-- `41fbbe9f-07e6-52f8-aa6a-e4bc26dbc49d`
-- `e098f112-7d6b-5651-9021-59e0c880cee0`
-- `4333f09b-b80b-5fc3-8816-2115dd25a635`
-- `4bcbc537-a256-5f80-9666-5dd823856785`
-- `4c84adbb-080d-5e84-b68f-7fc8cdb1c46f`
-- `4ee87c87-7c05-5386-a19c-f679ebe1748f`
-- `b8a4d24c-2451-5980-ba93-8f4e6656b07d`
-- `dfe7d451-73f4-539e-9b59-32c8c9291990`
-- `8ee0a776-cf79-5255-b0fd-2f7f365b159d`
-- `c38c936b-fd31-5b98-9447-8cbc0e7c09af`
-- `3c9c2a2b-aa89-5b2d-ab2e-bca9790720db`
-- `f811c999-8711-59d2-8518-96c9feb5c664`
-- `f40c9f23-98da-522f-8c45-ca809b03e638`
-- `943c844b-abc9-5669-93e6-7a2ccd3c947a`
-- `1c881534-3659-5877-b67f-17bb4ac95d39`
-- `4f9d118c-758a-5611-9b5e-6736994333ce`
-- `c23e955a-627c-536c-a068-42631db416c2`
-- `f8ca49f8-6f88-5ec9-8719-55a412bf2ebc`
-- `bc5df029-37ae-5c56-a2c3-f5e9984de2d9`
-- `ad9a59f4-3cd2-52d5-8dc9-1447563bcc66`
-- `ea8d006f-58de-5e56-9585-3e3626837766`
-- `066e347c-e0f8-580e-859e-f0d06f843f57`
-- `8ad675ee-8102-5b17-9be0-596b651dfb2d`
-- `fc376df5-19c5-581d-b3d2-f09e12350b71`
-- `a992c00e-a5b1-52d1-95fe-4a2da82f0ca7`
-- `03ff381b-511e-56de-96af-0cb6557a25d5`
-- `eccb2c13-3f5c-5c7c-a63e-4c670079d299`
-- `2ab1c8cb-1a26-526b-97e2-c3ced80e7439`
-- `14ae6661-fb9d-5b9e-95dd-ffd3a5d7a474`
-- `00e9dfcb-4c8a-5ce3-9fb1-8c1101e1e67b`
-- `6162c40d-ddf8-5812-bd34-5902c76f6b62`
-- `a10ccd0d-dda9-53a5-b2a8-1c6acc8d7481`
-- `23646fad-b5d5-5ed2-aa07-56333505a4a7`
-- `b48a5f81-4b1e-50c4-a3c6-bd5a56e6adaf`
-- `1037de6b-5f5f-50b7-861d-9f1d9a9a8ffa`
-- `e7a32469-b625-5e77-a884-390c699de709`
-- `68f07533-2835-53d4-ae83-6b840dffd509`
-- `99ed98ac-6741-5da6-b9d6-23c91e3b0c19`
-- `134b0274-548a-57f1-a2ae-2e1ade34d42b`
-- `a20c2033-1b4a-5cbf-a028-ad84070bc7c9`
-- `e9dd6b5a-9f95-533d-9247-b9d353b78915`
-- `fba1baf1-58c9-5e8e-bea3-2f6922eb5a59`
-- `69839c0d-7b5b-53c8-b485-7e62790725d5`
-- `e08d73f1-796c-53fe-8bf3-1d8ace9895f5`
-- `b5f5f2dd-0b5a-5f09-8e6f-39d40a4f98fc`
-- `829b6804-81c4-5be6-b434-5246a5915eac`
-- `2361477e-62f9-5d3e-bb73-98b600aea6fa`
-- `621b3717-b526-5256-b568-1fe551b4cc35`
-- `fd4cad88-5526-5a34-aeda-24b4397cbc24`
-- `938b2354-40c9-5831-b1ef-55074d23b6dc`
-- `0c1a1e6c-7edb-5845-a6f1-14169f776367`
-- `eb63dfc4-2dcb-576f-82c0-777e7a3b8df5`
-- `56d0517b-3b9f-5ecd-b481-815b11372cd1`
-- `03a51f93-89d4-54da-96d6-45db1bcc2dc7`
-- `c643761b-bc69-5517-86cd-0c5f27aa1a43`
-- `310d3663-4164-5dbe-bb05-79931467c260`
-- `14279e14-6377-5c12-b42f-e25a648a2f3d`
-- `a9fac95f-a9f0-58ec-8c35-6a786112a062`
-- `e575a823-1f9b-53c9-a297-1b995e22151e`
-- `6ea37017-9105-5175-909e-08e70807c6ec`
-- `a340b258-6c6d-57b4-814c-77096f5a1ec6`
-- `86105f7e-8f0d-51e3-9bb5-9397b02be28d`
-- `50e3aebd-d3e2-5d93-b997-d5898f82a59b`
-- `b36f51c1-d253-57a3-9e4d-1d657a376c42`
-- `145db008-637c-502d-8768-904b7dd210a5`
-- `311d2266-9504-5fdd-a07a-05a6b773ff4b`
-- `02fe120f-bbe6-5058-8da4-83f7270fb883`
-- `52733481-aeac-51c2-b59f-41bdd673a847`
-- `11c12b39-7c36-5880-ae5a-6d032193d9a3`
-- `88f07f01-1c68-5207-bbb4-84ca9b0cd0f2`
-- `62c41969-5376-57de-9f0f-b89df3b921fb`
-- `ad4cea8f-4c11-5546-962b-18aa80dd45db`
-- `c9cbc63e-d037-5daf-9add-0d07a149bb56`
-- `70959c9c-3990-551b-ada0-21bb3f2c5db0`
-- `64a0ed27-aa71-549c-b4b7-1831867f6be3`
-- `205aef13-ce50-5aed-bbb2-909865a58378`
-- `043503d8-8428-5b6f-96e3-e9b560a59add`
-- `7408971b-126e-5740-af8a-3e2ca9513b4e`
-- `a5ac24a2-fb0b-50b7-8285-42f35daf096e`
-- `ae46af86-f0c8-5ba0-9273-2e40676812aa`
-- `248f4cae-e108-54d3-b664-5de59bf05c6e`
-- `0f786741-84f9-57f5-b8f5-0cfe84ea4db4`
-- `6c5919b0-f639-5e4e-b974-b4c7b0039f4e`
-- `ddb4aa4b-6a10-571a-9144-ba099470899d`
-- `86f7722c-f5bd-5494-b665-6e3583e145f5`
-- `cdf4abcc-14c2-5bdf-ab47-85be2998ac0b`
-- `e42c0c01-e1ab-56b4-87ca-42cd184ae834`
-- `d541982c-6ef2-56ed-b584-df8bb74dd5a1`
-- `bac9852f-aa0b-5b74-89e7-c73228eb2ae4`
-- `2b905a18-67ff-557f-82e8-63ba7d88d93d`
-- `3827b39c-3cbf-5927-87f0-148c3420e136`
-- `72a4f88b-5c0e-50d6-8329-951cb386f035`
-- `19ce34aa-ebab-52d6-9269-cf71840f9cc0`
-- `b13c2607-d734-59a0-a3e0-c2bb5a614908`
-- `ed0d7e53-8e8b-5d63-8fe8-6b00ed2cda4c`
-- `645cffad-4fb0-5bb7-9f67-682094a0bcb3`
-- `fdae92cd-6617-5035-8b64-a39633b6f82b`
-- `6d9b49fb-d93c-5fb3-b15a-eb82046eb984`
-- `dc459c52-db04-520e-8a7c-033dd68fb39b`
-- `30fc2555-a324-5ad7-a6cd-073de8005d59`
-- `75e46e71-1e00-5214-9cf5-282c2ffb2783`
-- `95d30a44-53bb-57e5-aed0-9e697ecc1166`
-- `18cc0f42-0eca-56e4-99fb-a04df18dcd71`
-- `775d79fa-4724-52c1-b5af-c91a715d231e`
-- `67b324d0-657a-5bb8-b348-38eeab4501ec`
-- `a2669e91-e8ba-5cb1-bbf6-9c154007fb4a`
-- `5d7d6430-4f84-58f4-8d70-13674ca7526d`
-- `733a2a04-d346-5365-86f6-171ac7396983`
-- `f003c293-a9d0-5d06-94f4-83dc6e772fa8`
-- `1e5814c8-dc8c-5c92-b42c-d9dc9cd4701a`
-- `7e132ff3-7d41-5018-a8be-7fe6bb4e25cf`
-- `c0e83281-e423-5bac-adbc-ae250d922082`
-- `366e42af-980f-5b67-b281-13355ffcd4e0`
-- `6d2e8e43-9e71-511d-a45f-eb4a5ada2e25`
-- `0ca341ce-ab00-5703-9dcd-1fc994600bc1`
-- `449a9c3e-0594-53f7-b3df-7be89b810128`
-- `93017a05-b596-5dca-abed-8edb8698c68b`
-- `87758fbe-1dc1-5838-82ac-d56671b8d346`
-- `8a8e0b91-aed5-5088-982f-988a7945bf7c`
-- `7583de8d-714b-5e8c-a51f-f8f88f8fde83`
-- `c86d2f6b-5515-5743-b08b-d9d2e3b61de3`
-- `f34e8831-6c29-5cc7-b206-1f7145e32db1`
-- `c716be06-8973-5a77-9c3f-04bb18b56d1a`
-- `b2fff304-4d67-5c5e-9a9c-d7b28b247e89`
-- `bb0f9094-20a7-56b8-a842-d9aa79367388`
-- `efd40423-19fa-51cd-b821-f5d4ac126fa9`
-- `e6350b14-b8f1-5d41-8650-8a0bcc0d4e27`
-- `eff88548-f744-5010-a18d-685cf0a2b5f8`
-- `e9d171c7-d04b-54e2-8579-4003deb4a67c`
-- `8ef4d920-11b6-52d1-a1cd-e7ffa9737cc2`
-- `afdebd6b-cdb6-5532-a5ea-7abc0ecee51c`
-- `6a903184-0148-5a84-a0ca-fe4decb59eb3`
-- `0b85c3d4-8668-5075-9015-6b01e23eb192`
-- `19e06d55-2033-57e4-88db-c47e61f80e05`
-- `73c893e2-a9a8-5ae2-b5b7-389f29b9d17c`
-- `e0adf029-e6a7-557a-9778-da87cd6b6591`
-- `2f4590de-7f5c-58eb-b7ab-cc8ec1b0cb39`
-- `0b6ddeff-5237-5374-b110-0e230f57d481`
-- `032ab45d-17a0-5053-a16d-21bf4a58cdb3`
-- `4be0ac35-4a63-5eaf-9eb8-f26f60ede61d`
-- `2e89661f-cc0d-5e6c-a0a0-8d2b5c0a111e`
-- `d242772e-aa15-5f25-88e4-a6d95061eebd`
-- `fb84c468-93b9-5ab0-8408-49a199163341`
-- `9a03c200-a64a-5b13-8149-3aad1b137c89`
-- `70194d1e-f9d9-5d3f-a7f0-91efdfaf18a8`
-- `ba1c1670-6c09-5a0f-9888-a0b28c8418bb`
-- `0897e27e-b9c0-58f8-8cfd-fe2c0131f65a`
-- `d065c630-b5fd-56ab-81b2-6976a000ef19`
-- `50b499f0-980b-5ef0-b787-91b728960634`
-- `33abafd6-98c6-5317-a520-c2a754c02cb9`
-- `7c984ae4-de71-5f3b-89a9-07defc4ae74a`
-- `4447068e-b3cc-512a-88ff-2405163f28d6`
-- `f629e177-1cde-5057-b69c-4f3032b9864a`
-- `8d707487-2178-5ece-8d22-7bd6cd8e886f`
-- `c8c3ae50-4e71-5ac5-b79c-8f3f4caa9b4b`
-- `38278f8f-3021-5bd9-8ed4-1f1387e2a390`
-- `32df425a-3c69-555c-ae3e-5bd748c44be0`
-- `bef39da5-469f-5842-844b-f79c0a36424c`
-- `e9c9467c-3919-5ae6-a767-25f37486596a`
-- `e30f98d5-dc3f-5260-b87a-b1f3d6c21c01`
-- `be182237-20f0-51c1-b2bf-0e056dc95225`
-- `b8998a77-d05c-5c56-aaa3-0935481e7673`
-- `49bff09d-bc80-5330-8686-0613201dd747`
-- `2fac1832-5b2f-5dd0-84ab-3d93aac08250`
-- `5d8fb49f-6dc3-5cca-9131-8f4261403cc5`
-- `50593f01-6912-515a-b617-06d70e91b067`
-- `57ed436a-45e3-5078-b368-7f0dc18ee728`
-- `0db3487f-e809-5e04-ae32-d1667ef5597a`
-- `d39b7862-21d6-558f-9857-a24f36805ba8`
-- `c09fdab3-394e-53cf-898d-ed135e57e61e`
-- `1370c7e3-5e85-52e2-a8ff-92d4aef7c330`
-- `4cc397ae-18b1-5e5f-9882-a97fa76e6b8c`
-- `df821fda-6169-52e1-a191-2eb3dbc89baa`
-- `483e7067-05ae-587c-a968-e41f0b49966c`
-- `c0610617-b66f-5776-958f-59a401d6f8bb`
-- `3db7c052-d1e7-5e52-82a7-0f4b05967021`
-- `59f76343-6d99-550b-9247-2d45a5e29323`
-- `d906a088-ddc9-574a-8f53-12ca2bacbb63`
 

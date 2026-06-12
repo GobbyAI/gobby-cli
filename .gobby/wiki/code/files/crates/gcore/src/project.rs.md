@@ -4,14 +4,14 @@ type: code_file
 provenance:
 - file: crates/gcore/src/project.rs
   ranges:
-  - 13-25
-  - 29-52
-  - 54-63
-  - 71-90
-  - 93-114
-  - 117-127
-  - 130-146
-  - 149-165
+  - 12-24
+  - 28-51
+  - 53-62
+  - 70-89
+  - 92-113
+  - 116-126
+  - 129-145
+  - 148-164
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -24,36 +24,36 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 ## Purpose
 
 `crates/gcore/src/project.rs` exposes 8 indexed API symbols.
-[crates/gcore/src/project.rs:13-25]
-[crates/gcore/src/project.rs:29-52]
-[crates/gcore/src/project.rs:54-63]
-[crates/gcore/src/project.rs:71-90]
-[crates/gcore/src/project.rs:93-114]
+[crates/gcore/src/project.rs:12-24]
+[crates/gcore/src/project.rs:28-51]
+[crates/gcore/src/project.rs:53-62]
+[crates/gcore/src/project.rs:70-89]
+[crates/gcore/src/project.rs:92-113]
 
 ## API Symbols
 
-- `find_project_root` (function) component `find_project_root [function]` (`434b0dcb-d52b-5d31-9c45-50ec3059336b`) lines 13-25 [crates/gcore/src/project.rs:13-25]
+- `find_project_root` (function) component `find_project_root [function]` (`773fd042-0667-51b8-acdf-645b26e780e1`) lines 12-24 [crates/gcore/src/project.rs:12-24]
   - Signature: `pub fn find_project_root(start: &Path) -> Option<PathBuf> {`
-  - Purpose: Traverses upward through parent directories to locate and return the first directory containing a `.gobby/project.json` or `.gobby/gcode.json` marker file. [crates/gcore/src/project.rs:13-25]
-- `read_project_id` (function) component `read_project_id [function]` (`c1361067-d863-5291-a062-664afcabdac4`) lines 29-52 [crates/gcore/src/project.rs:29-52]
+  - Purpose: Indexed function `find_project_root` in `crates/gcore/src/project.rs`. [crates/gcore/src/project.rs:12-24]
+- `read_project_id` (function) component `read_project_id [function]` (`ca892579-e399-5e47-aef7-91b3d9aab129`) lines 28-51 [crates/gcore/src/project.rs:28-51]
   - Signature: `pub fn read_project_id(project_root: &Path) -> anyhow::Result<String> {`
-  - Purpose: Reads a project ID from `.gobby/project.json` with fallback to `.gobby/gcode.json`, returning the ID string or an error if both sources fail. [crates/gcore/src/project.rs:29-52]
-- `read_project_id_from` (function) component `read_project_id_from [function]` (`c7298233-2fb2-51cb-95a4-4f05aaddba3e`) lines 54-63 [crates/gcore/src/project.rs:54-63]
+  - Purpose: Indexed function `read_project_id` in `crates/gcore/src/project.rs`. [crates/gcore/src/project.rs:28-51]
+- `read_project_id_from` (function) component `read_project_id_from [function]` (`f0c8cb4c-fdc0-5645-939f-bc32e6b32c19`) lines 53-62 [crates/gcore/src/project.rs:53-62]
   - Signature: `fn read_project_id_from(path: &Path) -> anyhow::Result<String> {`
-  - Purpose: Extracts the string value of the `id` field from a JSON file at a specified path, with contextual error handling for file I/O, JSON parsing, and missing or non-string id fields. [crates/gcore/src/project.rs:54-63]
-- `read_project_id_is_non_destructive` (function) component `read_project_id_is_non_destructive [function]` (`19d8a466-e866-5b7c-b628-f101f9a8eaa8`) lines 71-90 [crates/gcore/src/project.rs:71-90]
+  - Purpose: Indexed function `read_project_id_from` in `crates/gcore/src/project.rs`. [crates/gcore/src/project.rs:53-62]
+- `read_project_id_is_non_destructive` (function) component `read_project_id_is_non_destructive [function]` (`299860f6-1f8f-50b3-bda9-35a3313f3900`) lines 70-89 [crates/gcore/src/project.rs:70-89]
   - Signature: `fn read_project_id_is_non_destructive() {`
-  - Purpose: This test verifies that `read_project_id()` successfully extracts the project ID from a project.json file without mutating the file's contents. [crates/gcore/src/project.rs:71-90]
-- `read_project_id_falls_back_to_gcode_json_root_marker` (function) component `read_project_id_falls_back_to_gcode_json_root_marker [function]` (`509ac56e-98d1-5e7f-bae2-9d0e71a04d56`) lines 93-114 [crates/gcore/src/project.rs:93-114]
+  - Purpose: Indexed function `read_project_id_is_non_destructive` in `crates/gcore/src/project.rs`. [crates/gcore/src/project.rs:70-89]
+- `read_project_id_falls_back_to_gcode_json_root_marker` (function) component `read_project_id_falls_back_to_gcode_json_root_marker [function]` (`c2929b1f-653d-5e4a-8126-5f28cc30ea15`) lines 92-113 [crates/gcore/src/project.rs:92-113]
   - Signature: `fn read_project_id_falls_back_to_gcode_json_root_marker() {`
-  - Purpose: This test verifies that `read_project_id()` correctly retrieves the project identifier from the `gcode.json` file located in the `.gobby` directory marker, which serves as the project root. [crates/gcore/src/project.rs:93-114]
-- `missing_project_id_error_mentions_id_key` (function) component `missing_project_id_error_mentions_id_key [function]` (`133c38ef-4d4e-5f0d-917f-4a42ba9f9ba4`) lines 117-127 [crates/gcore/src/project.rs:117-127]
+  - Purpose: Indexed function `read_project_id_falls_back_to_gcode_json_root_marker` in `crates/gcore/src/project.rs`. [crates/gcore/src/project.rs:92-113]
+- `missing_project_id_error_mentions_id_key` (function) component `missing_project_id_error_mentions_id_key [function]` (`d0809951-b630-5b2d-a3ee-782cea3cec3e`) lines 116-126 [crates/gcore/src/project.rs:116-126]
   - Signature: `fn missing_project_id_error_mentions_id_key() {`
-  - Purpose: Tests that `read_project_id()` returns an error message explicitly mentioning the missing `'id' field` when reading a project configuration file lacking the id key. [crates/gcore/src/project.rs:117-127]
-- `read_project_id_falls_back_to_gcode_json_when_project_json_is_bad` (function) component `read_project_id_falls_back_to_gcode_json_when_project_json_is_bad [function]` (`5f12b4d8-7b72-5605-a184-aa7cbfa9806c`) lines 130-146 [crates/gcore/src/project.rs:130-146]
+  - Purpose: Indexed function `missing_project_id_error_mentions_id_key` in `crates/gcore/src/project.rs`. [crates/gcore/src/project.rs:116-126]
+- `read_project_id_falls_back_to_gcode_json_when_project_json_is_bad` (function) component `read_project_id_falls_back_to_gcode_json_when_project_json_is_bad [function]` (`6512e3bc-709d-5ab1-8555-d9f748341576`) lines 129-145 [crates/gcore/src/project.rs:129-145]
   - Signature: `fn read_project_id_falls_back_to_gcode_json_when_project_json_is_bad() {`
-  - Purpose: This test verifies that `read_project_id()` successfully falls back to reading the project ID from `gcode.json` when `project.json` lacks an id field. [crates/gcore/src/project.rs:130-146]
-- `read_project_id_falls_back_to_gcode_json_when_project_json_is_malformed` (function) component `read_project_id_falls_back_to_gcode_json_when_project_json_is_malformed [function]` (`ab4a0d29-a7ae-51cc-89d3-a68d9f43c61a`) lines 149-165 [crates/gcore/src/project.rs:149-165]
+  - Purpose: Indexed function `read_project_id_falls_back_to_gcode_json_when_project_json_is_bad` in `crates/gcore/src/project.rs`. [crates/gcore/src/project.rs:129-145]
+- `read_project_id_falls_back_to_gcode_json_when_project_json_is_malformed` (function) component `read_project_id_falls_back_to_gcode_json_when_project_json_is_malformed [function]` (`c32b60f5-9fe4-562a-9c5b-295b5354f930`) lines 148-164 [crates/gcore/src/project.rs:148-164]
   - Signature: `fn read_project_id_falls_back_to_gcode_json_when_project_json_is_malformed() {`
-  - Purpose: This test verifies that `read_project_id()` successfully returns the project ID from `gcode.json` when `project.json` contains invalid JSON. [crates/gcore/src/project.rs:149-165]
+  - Purpose: Indexed function `read_project_id_falls_back_to_gcode_json_when_project_json_is_malformed` in `crates/gcore/src/project.rs`. [crates/gcore/src/project.rs:148-164]
 

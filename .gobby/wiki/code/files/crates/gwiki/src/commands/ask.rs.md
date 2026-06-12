@@ -16,16 +16,8 @@ provenance:
   - 263-272
   - 274-293
   - 295-302
-  - '304'
-  - '305'
+  - 304-305
   - 307-360
-  - 308-321
-  - 323-327
-  - 329-334
-  - 336-340
-  - 342-346
-  - 348-352
-  - 354-359
   - 362-368
   - 370-379
   - 381-387
@@ -33,18 +25,34 @@ provenance:
   - 393-422
   - 424-436
   - 438-451
-  - 453-473
-  - 475-507
-  - 509-548
-  - 550-552
-  - 554-564
-  - 566-609
-  - 611-618
-  - 634-676
-  - 679-730
-  - 733-835
-  - 838-856
-  - 859-873
+  - 453-486
+  - 488-507
+  - 509-513
+  - 515-533
+  - 555-572
+  - 576-590
+  - 592-602
+  - 604-627
+  - 629-633
+  - 635-639
+  - 643-660
+  - 662-694
+  - 696-735
+  - 737-739
+  - 741-751
+  - 753-803
+  - 805-812
+  - 828-870
+  - 873-924
+  - 927-1029
+  - 1032-1050
+  - 1052-1071
+  - 1074-1117
+  - 1120-1142
+  - 1145-1151
+  - 1154-1171
+  - 1174-1203
+  - 1206-1220
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -56,7 +64,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-`crates/gwiki/src/commands/ask.rs` exposes 41 indexed API symbols.
+`crates/gwiki/src/commands/ask.rs` exposes 57 indexed API symbols.
 [crates/gwiki/src/commands/ask.rs:25-46]
 [crates/gwiki/src/commands/ask.rs:48-88]
 [crates/gwiki/src/commands/ask.rs:90-99]
@@ -65,129 +73,175 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## API Symbols
 
-- `execute` (function) component `execute [function]` (`4353e2b8-d8b1-5293-a498-b7a2531873d7`) lines 25-46 [crates/gwiki/src/commands/ask.rs:25-46]
+- `execute` (function) component `execute [function]` (`af31f8d4-7c9d-5d46-a5eb-7ca4addd9be1`) lines 25-46 [crates/gwiki/src/commands/ask.rs:25-46]
   - Signature: `pub(crate) fn execute(`
-  - Purpose: Retrieves search results for a scoped query, enriches them with unified graph context, optionally synthesizes the output via LLM based on configuration flags, and renders the final command outcome. [crates/gwiki/src/commands/ask.rs:25-46]
-- `ask_output_from_search` (function) component `ask_output_from_search [function]` (`14a85748-a5cf-54cf-b83c-3a68ad9b9bc1`) lines 48-88 [crates/gwiki/src/commands/ask.rs:48-88]
+  - Purpose: Validates that `--llm` is not combined with `--ai off`, retrieves ask search results for the query, enriches them with attached unified graph context, optionally synthesizes an LLM response, and renders the final `CommandOutcome`. [crates/gwiki/src/commands/ask.rs:25-46]
+- `ask_output_from_search` (function) component `ask_output_from_search [function]` (`11b1ce34-9267-582f-b10c-271548719370`) lines 48-88 [crates/gwiki/src/commands/ask.rs:48-88]
   - Signature: `fn ask_output_from_search(search: SearchOutput) -> AskOutput {`
-  - Purpose: Transforms a `SearchOutput` into an `AskOutput` by extracting related pages, unique sources, code citations, and degradation information while determining retrieval status based on result availability. [crates/gwiki/src/commands/ask.rs:48-88]
-- `unique_sources` (function) component `unique_sources [function]` (`b1024d5e-48d6-5ade-b322-dbc73619edd5`) lines 90-99 [crates/gwiki/src/commands/ask.rs:90-99]
+  - Purpose: `ask_output_from_search` converts a `SearchOutput` into an `AskOutput` by copying the search metadata and hits, deriving `related_pages`, `sources`, `code_citations`, `degraded_sources`, and `warnings` from the search results/degradations, setting `status` to `no_results` or `retrieved` based on whether any hits exist, and initializing all other `AskOutput` fields to empty/default values. [crates/gwiki/src/commands/ask.rs:48-88]
+- `unique_sources` (function) component `unique_sources [function]` (`2e116f57-43d2-50c4-bcc5-bac1abbfa630`) lines 90-99 [crates/gwiki/src/commands/ask.rs:90-99]
   - Signature: `fn unique_sources(search: &SearchOutput) -> Vec<String> {`
-  - Purpose: Extracts and deduplicates all source paths and source references from search results, returning them as a sorted vector of unique strings. [crates/gwiki/src/commands/ask.rs:90-99]
-- `code_citations_from_results` (function) component `code_citations_from_results [function]` (`f2ea9f92-7d88-5f5a-b351-41427e848347`) lines 101-119 [crates/gwiki/src/commands/ask.rs:101-119]
+  - Purpose: It collects every `hit.source_path` and every string in `hit.sources` from `search.results`, deduplicates them with a `BTreeSet`, and returns the unique sources as a lexicographically sorted `Vec<String>`. [crates/gwiki/src/commands/ask.rs:90-99]
+- `code_citations_from_results` (function) component `code_citations_from_results [function]` (`4cb7b7bb-f00f-56a7-89f7-bc96b22fa24d`) lines 101-119 [crates/gwiki/src/commands/ask.rs:101-119]
   - Signature: `fn code_citations_from_results(results: &[SearchResultOutput]) -> Vec<AskCodeCitationOutput> {`
-  - Purpose: Deduplicates code search results by (file, symbol) pairs and produces citation objects for each unique combination. [crates/gwiki/src/commands/ask.rs:101-119]
-- `enrich_with_attached_unified_graph_context` (function) component `enrich_with_attached_unified_graph_context [function]` (`0dd091dc-5f5d-58c8-8964-215b56eb2d33`) lines 121-174 [crates/gwiki/src/commands/ask.rs:121-174]
+  - Purpose: It filters the input to code results, deduplicates them by `(file path, symbol)` using a `BTreeSet` while preserving first-seen order, and maps each unique hit to an `AskCodeCitationOutput` with `line: None`. [crates/gwiki/src/commands/ask.rs:101-119]
+- `enrich_with_attached_unified_graph_context` (function) component `enrich_with_attached_unified_graph_context [function]` (`17bb94af-5260-5119-9a34-f59afcfd3994`) lines 121-174 [crates/gwiki/src/commands/ask.rs:121-174]
   - Signature: `fn enrich_with_attached_unified_graph_context(`
-  - Purpose: Enriches an AskOutput with code graph context by loading wiki facts and shared code edges from PostgreSQL and falkor, marking degraded sources for unavailable or truncated data. [crates/gwiki/src/commands/ask.rs:121-174]
-- `optional_falkor_config` (function) component `optional_falkor_config [function]` (`55167441-f46a-5e00-af7f-93ba393155e1`) lines 176-189 [crates/gwiki/src/commands/ask.rs:176-189]
+  - Purpose: It resolves the selected scope, loads wiki facts and optional shared code-graph edges from PostgreSQL/Falkor into `AskOutput`, and records degraded-source or truncation metadata when the shared graph is unavailable or incomplete. [crates/gwiki/src/commands/ask.rs:121-174]
+- `optional_falkor_config` (function) component `optional_falkor_config [function]` (`89511627-b9ad-5530-bd74-3bd6cb647548`) lines 176-189 [crates/gwiki/src/commands/ask.rs:176-189]
   - Signature: `fn optional_falkor_config(conn: &mut postgres::Client) -> Result<Option<FalkorConfig>, WikiError> {`
-  - Purpose: Resolves optional FalkorDB configuration from a composite source combining PostgreSQL and file-based configuration from the Gobby home directory. [crates/gwiki/src/commands/ask.rs:176-189]
-- `enrich_with_unified_graph_context` (function) component `enrich_with_unified_graph_context [function]` (`9fbb6318-bd03-56da-a82f-09207c863935`) lines 191-241 [crates/gwiki/src/commands/ask.rs:191-241]
+  - Purpose: It resolves `Gobby` home, constructs an `AiConfigSource` backed by the provided Postgres client and that home directory, and returns the optional FalkorDB configuration via `resolve_falkordb_config`, mapping any resolution failures to `WikiError::Config`. [crates/gwiki/src/commands/ask.rs:176-189]
+- `enrich_with_unified_graph_context` (function) component `enrich_with_unified_graph_context [function]` (`7570c871-a30c-56f6-88a1-7434454e34c1`) lines 191-241 [crates/gwiki/src/commands/ask.rs:191-241]
   - Signature: `fn enrich_with_unified_graph_context(`
-  - Purpose: Populates an AskOutput with deduplicated graph context (related pages, sources, code edges, and citations) from a WikiGraphFacts context pack while tracking degradation and truncation states. [crates/gwiki/src/commands/ask.rs:191-241]
-- `mark_degraded_source` (function) component `mark_degraded_source [function]` (`402ecd2a-7a1f-5e0c-bccd-2c8e631658ed`) lines 243-246 [crates/gwiki/src/commands/ask.rs:243-246]
+  - Purpose: It builds a `GraphContextOptions`-driven context pack from `facts`, propagates degraded/truncated status into `output`, and appends deduplicated related pages, source citations, code edges, and code citations from each neighborhood into the `AskOutput`. [crates/gwiki/src/commands/ask.rs:191-241]
+- `mark_degraded_source` (function) component `mark_degraded_source [function]` (`d2b9c14b-4f67-59c1-9895-019510b87c6c`) lines 243-246 [crates/gwiki/src/commands/ask.rs:243-246]
   - Signature: `fn mark_degraded_source(output: &mut AskOutput, dedup: &mut AskOutputDedup, source: &str) {`
-  - Purpose: This function marks an AskOutput as degraded by setting its degraded flag to true and registers it in a deduplication structure with the specified source identifier. [crates/gwiki/src/commands/ask.rs:243-246]
-- `code_citations_from_context_edges` (function) component `code_citations_from_context_edges [function]` (`5491d85a-49d1-5bb5-b46c-a6367d090fa7`) lines 248-261 [crates/gwiki/src/commands/ask.rs:248-261]
+  - Purpose: Sets `output.degraded` to `true` and appends `source` to `dedup` as a degraded source for the given `AskOutput`. [crates/gwiki/src/commands/ask.rs:243-246]
+- `code_citations_from_context_edges` (function) component `code_citations_from_context_edges [function]` (`a197d23e-6d0c-5e00-86af-04f9827a6dd4`) lines 248-261 [crates/gwiki/src/commands/ask.rs:248-261]
   - Signature: `fn code_citations_from_context_edges<'a>(`
-  - Purpose: Generates code citations by extracting source and target endpoint information from each graph context code edge, aggregating successful citations into a vector. [crates/gwiki/src/commands/ask.rs:248-261]
-- `code_edge_from_context` (function) component `code_edge_from_context [function]` (`090e5fa2-0c71-5957-a82e-662778a8115e`) lines 263-272 [crates/gwiki/src/commands/ask.rs:263-272]
+  - Purpose: Builds a `Vec<AskCodeCitationOutput>` by iterating `GraphContextCodeEdge`s and, for each edge, conditionally appending citations for the source endpoint with `edge.line` and the target endpoint with no line number whenever `code_citation_from_endpoint` returns `Some`. [crates/gwiki/src/commands/ask.rs:248-261]
+- `code_edge_from_context` (function) component `code_edge_from_context [function]` (`0f9f3ba0-f1e9-5d6b-aac8-f2471a5d1729`) lines 263-272 [crates/gwiki/src/commands/ask.rs:263-272]
   - Signature: `fn code_edge_from_context(edge: &GraphContextCodeEdge) -> AskCodeEdgeOutput {`
-  - Purpose: Converts a `GraphContextCodeEdge` reference into an `AskCodeEdgeOutput` struct by cloning all fields. [crates/gwiki/src/commands/ask.rs:263-272]
-- `code_citation_from_endpoint` (function) component `code_citation_from_endpoint [function]` (`e891fcac-1f8f-59d2-af71-9a0a649c4049`) lines 274-293 [crates/gwiki/src/commands/ask.rs:274-293]
+  - Purpose: Clones the `source`, `target`, `kind`, `direction`, and `provenance` fields and copies the `line` value from a `GraphContextCodeEdge` into a new `AskCodeEdgeOutput`. [crates/gwiki/src/commands/ask.rs:263-272]
+- `code_citation_from_endpoint` (function) component `code_citation_from_endpoint [function]` (`1ab76c1f-168b-5035-9e91-3fc03f57753f`) lines 274-293 [crates/gwiki/src/commands/ask.rs:274-293]
   - Signature: `fn code_citation_from_endpoint(`
-  - Purpose: Parses an endpoint string to extract file path and optional symbol components (delimited by '#' or ':'), returning a structured `AskCodeCitationOutput` or `None` if the endpoint is malformed or empty. [crates/gwiki/src/commands/ask.rs:274-293]
-- `AskOutputDedup` (class) component `AskOutputDedup [class]` (`4e2a433e-883a-56a7-aadf-0fe37de67bd0`) lines 295-302 [crates/gwiki/src/commands/ask.rs:295-302]
+  - Purpose: Parses an endpoint string into a citation by extracting `file` and optional `symbol` from `#` or the last `:`, treating path-like inputs containing `/` or `.` as file-only citations, and returning `None` for invalid or empty file names. [crates/gwiki/src/commands/ask.rs:274-293]
+- `AskOutputDedup` (class) component `AskOutputDedup [class]` (`5ebf5934-b8d8-5323-936d-d96d669c5c0b`) lines 295-302 [crates/gwiki/src/commands/ask.rs:295-302]
   - Signature: `struct AskOutputDedup {`
-  - Purpose: `AskOutputDedup` is a deduplication container that maintains distinct HashSets of sources, degraded sources, truncated components, warnings, code edges, and code citations to eliminate duplicates from Ask operation outputs. [crates/gwiki/src/commands/ask.rs:295-302]
-- `CodeEdgeKey` (type) component `CodeEdgeKey [type]` (`5333f87a-ac51-5a0a-b58b-e0352dee42e6`) lines 304-304 [crates/gwiki/src/commands/ask.rs:304]
+  - Purpose: `AskOutputDedup` is a hash-set-backed deduplication accumulator for ask output, tracking unique `sources`, `degraded_sources`, `truncated_components`, `warnings`, `code_edges`, and `code_citations` to suppress duplicate entries. [crates/gwiki/src/commands/ask.rs:295-302]
+- `CodeEdgeKey` (type) component `CodeEdgeKey [type]` (`470b9ac6-202c-52fb-9081-8f0b92dd3069`) lines 304-304 [crates/gwiki/src/commands/ask.rs:304]
   - Signature: `type CodeEdgeKey = (String, String, String, String, Option<usize>, String);`
   - Purpose: Indexed type `CodeEdgeKey` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:304]
-- `CodeCitationKey` (type) component `CodeCitationKey [type]` (`8f9f056a-d8ed-53b6-8446-6d43fef80764`) lines 305-305 [crates/gwiki/src/commands/ask.rs:305]
+- `CodeCitationKey` (type) component `CodeCitationKey [type]` (`bdaac730-2214-564e-b4c0-db8cce1a842d`) lines 305-305 [crates/gwiki/src/commands/ask.rs:305]
   - Signature: `type CodeCitationKey = (String, Option<usize>, Option<String>);`
   - Purpose: Indexed type `CodeCitationKey` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:305]
-- `AskOutputDedup` (class) component `AskOutputDedup [class]` (`1ffb4c35-47e1-5188-8f79-a1a7eef53f57`) lines 307-360 [crates/gwiki/src/commands/ask.rs:307-360]
+- `AskOutputDedup` (class) component `AskOutputDedup [class]` (`8a21abcd-f1e9-5ea1-91df-42cb9ee9a049`) lines 307-360 [crates/gwiki/src/commands/ask.rs:307-360]
   - Signature: `impl AskOutputDedup {`
-  - Purpose: `AskOutputDedup` is a deduplication utility that conditionally appends items to an `AskOutput` structure only if they haven't been previously added, using HashSet-backed tracking for sources, warnings, code edges, and citations. [crates/gwiki/src/commands/ask.rs:307-360]
-- `AskOutputDedup.from_output` (method) component `AskOutputDedup.from_output [method]` (`211c103b-a757-5a99-8ec2-6bf7c70da35e`) lines 308-321 [crates/gwiki/src/commands/ask.rs:308-321]
+  - Purpose: `AskOutputDedup` is a stateful deduplication helper for `AskOutput` that tracks previously emitted sources, degraded sources, truncated components, warnings, code edges, and code citations in hash sets so subsequent `push_*` calls only append novel entries, while also propagating degraded-source warnings and citation file sources. [crates/gwiki/src/commands/ask.rs:307-360]
+- `AskOutputDedup.from_output` (method) component `AskOutputDedup.from_output [method]` (`7279d9c6-b421-5230-ba3a-550c2916a848`) lines 308-321 [crates/gwiki/src/commands/ask.rs:308-321]
   - Signature: `fn from_output(output: &AskOutput) -> Self {`
-  - Purpose: Constructs a new instance of Self from an AskOutput by cloning collections for sources, degraded sources, truncated components, and warnings, while mapping code edges and citations through key-generating functions. [crates/gwiki/src/commands/ask.rs:308-321]
-- `AskOutputDedup.push_source` (method) component `AskOutputDedup.push_source [method]` (`9e40fd2e-e0cd-5721-b523-6d0c3babdea9`) lines 323-327 [crates/gwiki/src/commands/ask.rs:323-327]
+  - Purpose: It creates a new value by cloning `AskOutput`’s `sources`, `degraded_sources`, `truncated_components`, and `warnings` into sets/collections, and by mapping `code_edges` and `code_citations` through `code_edge_key` and `code_citation_key` before collecting them. [crates/gwiki/src/commands/ask.rs:308-321]
+- `AskOutputDedup.push_source` (method) component `AskOutputDedup.push_source [method]` (`1ba2c611-fcc4-518c-a2f7-2c82696cfa95`) lines 323-327 [crates/gwiki/src/commands/ask.rs:323-327]
   - Signature: `fn push_source(&mut self, output: &mut AskOutput, source: String) {`
-  - Purpose: Appends a source to the output collection if and only if the source is newly inserted into the internal deduplication set. [crates/gwiki/src/commands/ask.rs:323-327]
-- `AskOutputDedup.push_degraded_source` (method) component `AskOutputDedup.push_degraded_source [method]` (`02aaa023-9823-59d2-a2de-ce768058bbe1`) lines 329-334 [crates/gwiki/src/commands/ask.rs:329-334]
+  - Purpose: It inserts `source` into `self.sources` and, only if that insertion succeeds because the value was not already present, appends the source to `output.sources`. [crates/gwiki/src/commands/ask.rs:323-327]
+- `AskOutputDedup.push_degraded_source` (method) component `AskOutputDedup.push_degraded_source [method]` (`8603718a-9eca-5d17-8cd0-4f237274462c`) lines 329-334 [crates/gwiki/src/commands/ask.rs:329-334]
   - Signature: `fn push_degraded_source(&mut self, output: &mut AskOutput, source: String) {`
-  - Purpose: Inserts a source into a deduplicating internal set, conditionally appends it to the output's degraded_sources list if newly inserted, and unconditionally pushes a warning. [crates/gwiki/src/commands/ask.rs:329-334]
-- `AskOutputDedup.push_truncated_component` (method) component `AskOutputDedup.push_truncated_component [method]` (`f658335a-e518-5bbc-95c0-04a758d24252`) lines 336-340 [crates/gwiki/src/commands/ask.rs:336-340]
+  - Purpose: Adds `source` to the `degraded_sources` set, records it in `output.degraded_sources` only on first insertion, and always forwards it to `push_warning` for warning emission. [crates/gwiki/src/commands/ask.rs:329-334]
+- `AskOutputDedup.push_truncated_component` (method) component `AskOutputDedup.push_truncated_component [method]` (`c8b26428-7d7d-52fb-b4a7-544ab23a8867`) lines 336-340 [crates/gwiki/src/commands/ask.rs:336-340]
   - Signature: `fn push_truncated_component(&mut self, output: &mut AskOutput, component: String) {`
-  - Purpose: Inserts a component into an internal deduplicating set and appends it to the output's truncated components list only if the component is newly inserted. [crates/gwiki/src/commands/ask.rs:336-340]
-- `AskOutputDedup.push_warning` (method) component `AskOutputDedup.push_warning [method]` (`5a0dbaf2-0496-5b78-9356-7118cb325d49`) lines 342-346 [crates/gwiki/src/commands/ask.rs:342-346]
+  - Purpose: Adds `component` to `output.truncated_components` only if it was not already present in `self.truncated_components`, making the push idempotent across repeated calls. [crates/gwiki/src/commands/ask.rs:336-340]
+- `AskOutputDedup.push_warning` (method) component `AskOutputDedup.push_warning [method]` (`c83d5d68-52bd-5a17-8c95-b799ebb3d568`) lines 342-346 [crates/gwiki/src/commands/ask.rs:342-346]
   - Signature: `fn push_warning(&mut self, output: &mut AskOutput, warning: String) {`
-  - Purpose: This method deduplicates warnings by inserting them into an internal set and only appending to the output if the warning is newly added (not previously stored). [crates/gwiki/src/commands/ask.rs:342-346]
-- `AskOutputDedup.push_code_edge` (method) component `AskOutputDedup.push_code_edge [method]` (`a9e13b90-66cb-5b77-a441-48f2a104b5c5`) lines 348-352 [crates/gwiki/src/commands/ask.rs:348-352]
+  - Purpose: Deduplicates `warning` via `self.warnings` and appends it to `output.warnings` only on the first successful insertion. [crates/gwiki/src/commands/ask.rs:342-346]
+- `AskOutputDedup.push_code_edge` (method) component `AskOutputDedup.push_code_edge [method]` (`cc37b308-9ba0-5050-a970-58e6df80ca22`) lines 348-352 [crates/gwiki/src/commands/ask.rs:348-352]
   - Signature: `fn push_code_edge(&mut self, output: &mut AskOutput, edge: AskCodeEdgeOutput) {`
-  - Purpose: Deduplicates code edges by appending to the output only if the edge's key is not already present in the internal set. [crates/gwiki/src/commands/ask.rs:348-352]
-- `AskOutputDedup.push_code_citation` (method) component `AskOutputDedup.push_code_citation [method]` (`e05cc882-12da-59d2-b2b0-35b2fff16959`) lines 354-359 [crates/gwiki/src/commands/ask.rs:354-359]
+  - Purpose: It inserts the edge’s deduplication key into `self.code_edges` and, only if the key was newly inserted, appends the `AskCodeEdgeOutput` to `output.code_edges`. [crates/gwiki/src/commands/ask.rs:348-352]
+- `AskOutputDedup.push_code_citation` (method) component `AskOutputDedup.push_code_citation [method]` (`a752866f-ddd4-5d22-9803-0df8cd9860ae`) lines 354-359 [crates/gwiki/src/commands/ask.rs:354-359]
   - Signature: `fn push_code_citation(&mut self, output: &mut AskOutput, citation: AskCodeCitationOutput) {`
-  - Purpose: Inserts a code citation into the output and pushes its source file, but only if the citation key is newly inserted (deduplicating based on citation identity). [crates/gwiki/src/commands/ask.rs:354-359]
-- `ordered_unique_strings` (function) component `ordered_unique_strings [function]` (`6d18b8e4-7105-5ab3-8caa-d683cdd5f6b2`) lines 362-368 [crates/gwiki/src/commands/ask.rs:362-368]
+  - Purpose: Deduplicates `citation` by its computed code-citation key, and if it is newly seen, pushes the citation’s file as a source and appends the citation to `output.code_citations`. [crates/gwiki/src/commands/ask.rs:354-359]
+- `ordered_unique_strings` (function) component `ordered_unique_strings [function]` (`88badd48-2657-5832-a831-c689d11bf7f6`) lines 362-368 [crates/gwiki/src/commands/ask.rs:362-368]
   - Signature: `fn ordered_unique_strings(values: Vec<String>) -> Vec<String> {`
-  - Purpose: Filters and returns a deduplicated vector containing only the first occurrence of each unique string while preserving insertion order. [crates/gwiki/src/commands/ask.rs:362-368]
-- `code_edge_key` (function) component `code_edge_key [function]` (`879b8ad8-a1c1-5fc6-8a9b-0c106dc06901`) lines 370-379 [crates/gwiki/src/commands/ask.rs:370-379]
+  - Purpose: Returns the input `Vec<String>` with duplicates removed while preserving the first occurrence order, by tracking seen values in a `HashSet` and filtering on first insertion. [crates/gwiki/src/commands/ask.rs:362-368]
+- `code_edge_key` (function) component `code_edge_key [function]` (`f43bca75-bed9-5d16-90a6-106503fb2360`) lines 370-379 [crates/gwiki/src/commands/ask.rs:370-379]
   - Signature: `fn code_edge_key(edge: &AskCodeEdgeOutput) -> CodeEdgeKey {`
-  - Purpose: Constructs a `CodeEdgeKey` tuple by extracting and cloning the source, target, kind, direction, line, and provenance fields from an `AskCodeEdgeOutput`. [crates/gwiki/src/commands/ask.rs:370-379]
-- `code_citation_key` (function) component `code_citation_key [function]` (`6ad85944-9afa-5653-870f-e9b5d5e1ec1f`) lines 381-387 [crates/gwiki/src/commands/ask.rs:381-387]
+  - Purpose: `code_edge_key` builds a `CodeEdgeKey` tuple from an `AskCodeEdgeOutput` by cloning its `source`, `target`, `kind`, `direction`, and `provenance` fields and copying its `line` value. [crates/gwiki/src/commands/ask.rs:370-379]
+- `code_citation_key` (function) component `code_citation_key [function]` (`79a1dbc5-6841-5aec-983d-18a3e81a27b9`) lines 381-387 [crates/gwiki/src/commands/ask.rs:381-387]
   - Signature: `fn code_citation_key(citation: &AskCodeCitationOutput) -> CodeCitationKey {`
-  - Purpose: Constructs a `CodeCitationKey` tuple by extracting the file path, line number, and symbol name from an `AskCodeCitationOutput` reference. [crates/gwiki/src/commands/ask.rs:381-387]
-- `is_code_result` (function) component `is_code_result [function]` (`b2631415-1303-5ddd-acab-4cea51a2b91f`) lines 389-391 [crates/gwiki/src/commands/ask.rs:389-391]
+  - Purpose: `code_citation_key` builds a `CodeCitationKey` tuple by cloning the citation’s `file` and `symbol` fields and pairing them with its `line` number. [crates/gwiki/src/commands/ask.rs:381-387]
+- `is_code_result` (function) component `is_code_result [function]` (`dd65de97-baa9-5848-a811-64d27a0c0fa6`) lines 389-391 [crates/gwiki/src/commands/ask.rs:389-391]
   - Signature: `fn is_code_result(hit: &SearchResultOutput) -> bool {`
-  - Purpose: This function returns a boolean indicating whether the given `SearchResultOutput` represents a code search result by calling the `is_code()` method on its `result_type` field. [crates/gwiki/src/commands/ask.rs:389-391]
-- `synthesize` (function) component `synthesize [function]` (`a93d90b9-e54d-535b-965a-8cbd911a6c95`) lines 393-422 [crates/gwiki/src/commands/ask.rs:393-422]
+  - Purpose: Returns `true` when the `SearchResultOutput`’s `result_type` reports itself as code via `is_code()`, otherwise `false`. [crates/gwiki/src/commands/ask.rs:389-391]
+- `synthesize` (function) component `synthesize [function]` (`2c139dbe-5253-5ee3-a052-217ce2ff838a`) lines 393-422 [crates/gwiki/src/commands/ask.rs:393-422]
   - Signature: `fn synthesize(`
-  - Purpose: Resolves an AI context with the requested routing mode, determines the effective text generation route, and dispatches to the corresponding handler (direct generation, daemon, or unavailability marking). [crates/gwiki/src/commands/ask.rs:393-422]
-- `generate_direct` (function) component `generate_direct [function]` (`71607693-b19f-5daf-a4bb-0adb83857735`) lines 424-436 [crates/gwiki/src/commands/ask.rs:424-436]
+  - Purpose: `synthesize` resolves the AI context from hub config with the requested routing forced, seeds `output.ai` with a default “requested but unavailable” record, then dispatches to direct or daemon text generation based on the effective route, or marks AI unavailable for `Auto`/`Off`. [crates/gwiki/src/commands/ask.rs:393-422]
+- `generate_direct` (function) component `generate_direct [function]` (`e6d38d18-7fcc-5dfa-a37d-c430f982c67c`) lines 424-436 [crates/gwiki/src/commands/ask.rs:424-436]
   - Signature: `fn generate_direct(`
-  - Purpose: Generates AI-synthesized text from a synthesis prompt within the given context, records the result on success, or marks AI unavailable on error based on the `require_ai` constraint. [crates/gwiki/src/commands/ask.rs:424-436]
-- `generate_daemon` (function) component `generate_daemon [function]` (`c5726362-dd79-5f95-a88d-bfda26e1804c`) lines 438-451 [crates/gwiki/src/commands/ask.rs:438-451]
+  - Purpose: `generate_direct` invokes `text::generate_text` with a synthesis prompt and system prompt, records the returned text/model via `record_synthesis` on success, and otherwise delegates the error to `mark_ai_unavailable`, propagating the resulting `Result`. [crates/gwiki/src/commands/ask.rs:424-436]
+- `generate_daemon` (function) component `generate_daemon [function]` (`39d88a42-f24f-51b8-87d5-8131ec88a1cd`) lines 438-451 [crates/gwiki/src/commands/ask.rs:438-451]
   - Signature: `fn generate_daemon(`
-  - Purpose: Calls the daemon-based synthesis generator with the provided context and synthesis prompt, recording the text and model information on success, or marking AI unavailable on failure based on the `require_ai` flag. [crates/gwiki/src/commands/ask.rs:438-451]
-- `record_synthesis` (function) component `record_synthesis [function]` (`b1504580-3e65-54de-a976-aeef3224bee5`) lines 453-473 [crates/gwiki/src/commands/ask.rs:453-473]
+  - Purpose: `generate_daemon` attempts to produce a synthesis via `daemon::generate_via_daemon` using the provided `AiContext` plus prompt/system prompt derived from `output`, records the returned text and model on success, and otherwise routes the error through `mark_ai_unavailable`, honoring `require_ai`. [crates/gwiki/src/commands/ask.rs:438-451]
+- `record_synthesis` (function) component `record_synthesis [function]` (`25e34e90-fb5a-5b53-b082-dccb841fcca6`) lines 453-486 [crates/gwiki/src/commands/ask.rs:453-486]
   - Signature: `fn record_synthesis(`
-  - Purpose: Records an AI synthesis result by marking an `AskOutput` as "answered" and populating its AI and synthesis metadata with the provided route, model, and answer. [crates/gwiki/src/commands/ask.rs:453-473]
-- `mark_ai_unavailable` (function) component `mark_ai_unavailable [function]` (`c723890d-4338-5db8-89c9-1afcc5368371`) lines 475-507 [crates/gwiki/src/commands/ask.rs:475-507]
+  - Purpose: It strips leading model narration from the answer, marks the `AskOutput` as answered with available AI metadata, runs citation validation against retrieved evidence, records deduplicated warnings for unsupported claims, and stores the final answer, model, and citation check in `output.synthesis`. [crates/gwiki/src/commands/ask.rs:453-486]
+- `strip_leading_model_narration` (function) component `strip_leading_model_narration [function]` (`f42f1022-1ddd-5918-8448-a119dd39a069`) lines 488-507 [crates/gwiki/src/commands/ask.rs:488-507]
+  - Signature: `fn strip_leading_model_narration(answer: &str) -> String {`
+  - Purpose: It trims leading whitespace, repeatedly removes consecutive leading sentences classified by `is_model_narration_sentence` using `leading_sentence_end`, and returns the remaining text only if at least one such sentence was stripped and nonempty content remains, otherwise it returns the original trimmed input. [crates/gwiki/src/commands/ask.rs:488-507]
+- `leading_sentence_end` (function) component `leading_sentence_end [function]` (`5742dcf0-971b-55c8-a0cc-27f611f5f573`) lines 509-513 [crates/gwiki/src/commands/ask.rs:509-513]
+  - Signature: `fn leading_sentence_end(text: &str) -> Option<usize> {`
+  - Purpose: Indexed function `leading_sentence_end` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:509-513]
+- `is_model_narration_sentence` (function) component `is_model_narration_sentence [function]` (`1ecc6631-6980-5ddc-90cc-dcc0fcbef81a`) lines 515-533 [crates/gwiki/src/commands/ask.rs:515-533]
+  - Signature: `fn is_model_narration_sentence(sentence: &str) -> bool {`
+  - Purpose: Indexed function `is_model_narration_sentence` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:515-533]
+- `citation_check` (function) component `citation_check [function]` (`13c5ceb4-9ef7-5337-9af2-b46b3d0e1789`) lines 555-572 [crates/gwiki/src/commands/ask.rs:555-572]
+  - Signature: `fn citation_check(answer: &str, output: &AskOutput) -> AskCitationCheckOutput {`
+  - Purpose: Indexed function `citation_check` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:555-572]
+- `answer_claims` (function) component `answer_claims [function]` (`a3d86bee-e69c-5228-a003-b6db0adf1fa6`) lines 576-590 [crates/gwiki/src/commands/ask.rs:576-590]
+  - Signature: `fn answer_claims(answer: &str) -> Vec<String> {`
+  - Purpose: Indexed function `answer_claims` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:576-590]
+- `claim_is_supported` (function) component `claim_is_supported [function]` (`f14fc3d7-7c27-5658-82bc-0f39edb2a433`) lines 592-602 [crates/gwiki/src/commands/ask.rs:592-602]
+  - Signature: `fn claim_is_supported(claim: &str, evidence: &HashSet<String>) -> bool {`
+  - Purpose: Indexed function `claim_is_supported` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:592-602]
+- `evidence_tokens` (function) component `evidence_tokens [function]` (`47d17f08-77da-59f8-b20e-38584b446ea6`) lines 604-627 [crates/gwiki/src/commands/ask.rs:604-627]
+  - Signature: `fn evidence_tokens(output: &AskOutput) -> HashSet<String> {`
+  - Purpose: Indexed function `evidence_tokens` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:604-627]
+- `significant_tokens` (function) component `significant_tokens [function]` (`6260f827-766e-5046-abf9-6d0e6387afc8`) lines 629-633 [crates/gwiki/src/commands/ask.rs:629-633]
+  - Signature: `fn significant_tokens(text: &str) -> Vec<String> {`
+  - Purpose: Indexed function `significant_tokens` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:629-633]
+- `collect_tokens` (function) component `collect_tokens [function]` (`7735cac2-c26b-5a66-baf3-d3c2c3c0d24a`) lines 635-639 [crates/gwiki/src/commands/ask.rs:635-639]
+  - Signature: `fn collect_tokens(text: &str, evidence: &mut HashSet<String>) {`
+  - Purpose: Indexed function `collect_tokens` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:635-639]
+- `collect_tokens_into` (function) component `collect_tokens_into [function]` (`bc4e112c-b5c5-54e5-90ab-f417e69f525e`) lines 643-660 [crates/gwiki/src/commands/ask.rs:643-660]
+  - Signature: `fn collect_tokens_into(text: &str, mut push: impl FnMut(String)) {`
+  - Purpose: Indexed function `collect_tokens_into` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:643-660]
+- `mark_ai_unavailable` (function) component `mark_ai_unavailable [function]` (`d009111e-2617-54a2-82d7-5ed97f117c8f`) lines 662-694 [crates/gwiki/src/commands/ask.rs:662-694]
   - Signature: `fn mark_ai_unavailable(`
-  - Purpose: Fails with a `WikiError::Config` if AI synthesis is required, otherwise marks the output as degraded, sets its status to "partial", and records "model_provider_unavailable" in degraded sources. [crates/gwiki/src/commands/ask.rs:475-507]
-- `synthesis_prompt` (function) component `synthesis_prompt [function]` (`7495ed1e-7c43-5061-a611-12726bd63bba`) lines 509-548 [crates/gwiki/src/commands/ask.rs:509-548]
+  - Purpose: Indexed function `mark_ai_unavailable` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:662-694]
+- `synthesis_prompt` (function) component `synthesis_prompt [function]` (`73ec2d93-c338-5e48-aaec-85f5661bd3de`) lines 696-735 [crates/gwiki/src/commands/ask.rs:696-735]
   - Signature: `fn synthesis_prompt(output: &AskOutput) -> String {`
-  - Purpose: Synthesizes an `AskOutput` query, wiki search results, related pages, and code citations into a formatted prompt string for downstream processing. [crates/gwiki/src/commands/ask.rs:509-548]
-- `synthesis_system` (function) component `synthesis_system [function]` (`a981b604-1625-536d-9267-f230d0ee2841`) lines 550-552 [crates/gwiki/src/commands/ask.rs:550-552]
+  - Purpose: Indexed function `synthesis_prompt` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:696-735]
+- `synthesis_system` (function) component `synthesis_system [function]` (`4e85091d-837f-591c-8afa-f27e27ef5674`) lines 737-739 [crates/gwiki/src/commands/ask.rs:737-739]
   - Signature: `fn synthesis_system() -> &'static str {`
-  - Purpose: `synthesis_system` returns a static string reference containing a system prompt that instructs answers to be grounded exclusively in provided wiki hits, unified graph context, and code citations while acknowledging insufficient evidence. [crates/gwiki/src/commands/ask.rs:550-552]
-- `render` (function) component `render [function]` (`45949a04-86ac-5ec6-a3a9-ea65018a366f`) lines 554-564 [crates/gwiki/src/commands/ask.rs:554-564]
+  - Purpose: Indexed function `synthesis_system` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:737-739]
+- `render` (function) component `render [function]` (`b3b2c5a0-5543-57d2-b1e5-e59d2d0bf61e`) lines 741-751 [crates/gwiki/src/commands/ask.rs:741-751]
   - Signature: `fn render(output: AskOutput) -> Result<CommandOutcome, WikiError> {`
-  - Purpose: Transforms an `AskOutput` into a `CommandOutcome` by rendering its query text against the scope and serializing the output as JSON. [crates/gwiki/src/commands/ask.rs:554-564]
-- `render_text` (function) component `render_text [function]` (`02220be1-52c1-5a2d-8add-4441dc5e37a6`) lines 566-609 [crates/gwiki/src/commands/ask.rs:566-609]
+  - Purpose: Indexed function `render` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:741-751]
+- `render_text` (function) component `render_text [function]` (`1c123c3d-ae37-52a3-900b-2c049ebda15c`) lines 753-803 [crates/gwiki/src/commands/ask.rs:753-803]
   - Signature: `fn render_text(query: &str, scope: &ScopeIdentity, output: &AskOutput) -> String {`
-  - Purpose: Formats an `AskOutput` into a human-readable text string, returning either a synthesized answer or a formatted list of wiki hits and code citations with scope and degraded source metadata. [crates/gwiki/src/commands/ask.rs:566-609]
-- `routing_label` (function) component `routing_label [function]` (`fef977e1-5462-5c7e-b458-2c646b483ad2`) lines 611-618 [crates/gwiki/src/commands/ask.rs:611-618]
+  - Purpose: Indexed function `render_text` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:753-803]
+- `routing_label` (function) component `routing_label [function]` (`b78e2b99-ac88-5538-9a80-415b06b5dfcc`) lines 805-812 [crates/gwiki/src/commands/ask.rs:805-812]
   - Signature: `fn routing_label(route: AiRouting) -> &'static str {`
-  - Purpose: Maps an `AiRouting` enum variant to its corresponding static string representation. [crates/gwiki/src/commands/ask.rs:611-618]
-- `ask_output_keeps_full_retrieval_shape` (function) component `ask_output_keeps_full_retrieval_shape [function]` (`667a24a4-1620-56a4-94cf-10fcd4994c62`) lines 634-676 [crates/gwiki/src/commands/ask.rs:634-676]
+  - Purpose: Indexed function `routing_label` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:805-812]
+- `ask_output_keeps_full_retrieval_shape` (function) component `ask_output_keeps_full_retrieval_shape [function]` (`cac9d885-710b-574b-b2b6-3b5c3cc64391`) lines 828-870 [crates/gwiki/src/commands/ask.rs:828-870]
   - Signature: `fn ask_output_keeps_full_retrieval_shape() {`
-  - Purpose: # Summary
-
-This test verifies that `ask_output_from_search()` preserves the complete retrieval structure—including search results, source metadata, and semantic degradation warnings—when transforming a `SearchOutput` into an `AskOutput`. [crates/gwiki/src/commands/ask.rs:634-676]
-- `ask_unified_graph_output_carries_code_citations_and_degradation` (function) component `ask_unified_graph_output_carries_code_citations_and_degradation [function]` (`0310bf76-3847-5c02-aaa3-b12186eede5c`) lines 679-730 [crates/gwiki/src/commands/ask.rs:679-730]
+  - Purpose: Indexed function `ask_output_keeps_full_retrieval_shape` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:828-870]
+- `ask_unified_graph_output_carries_code_citations_and_degradation` (function) component `ask_unified_graph_output_carries_code_citations_and_degradation [function]` (`01ce8be5-b4ff-54ec-a019-76d939a300be`) lines 873-924 [crates/gwiki/src/commands/ask.rs:873-924]
   - Signature: `fn ask_unified_graph_output_carries_code_citations_and_degradation() {`
-  - Purpose: This test verifies that a unified graph search output correctly extracts code file citations from search results and properly propagates degradation status when the shared code graph source is unavailable. [crates/gwiki/src/commands/ask.rs:679-730]
-- `ask_unified_graph_enrichment_uses_context_pack_code_edges_and_degrades` (function) component `ask_unified_graph_enrichment_uses_context_pack_code_edges_and_degrades [function]` (`5aadfa7d-9f29-5286-9987-99f2582c3546`) lines 733-835 [crates/gwiki/src/commands/ask.rs:733-835]
+  - Purpose: Indexed function `ask_unified_graph_output_carries_code_citations_and_degradation` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:873-924]
+- `ask_unified_graph_enrichment_uses_context_pack_code_edges_and_degrades` (function) component `ask_unified_graph_enrichment_uses_context_pack_code_edges_and_degrades [function]` (`518f2aea-32a0-5460-8e0c-a5c16ecb9fea`) lines 927-1029 [crates/gwiki/src/commands/ask.rs:927-1029]
   - Signature: `fn ask_unified_graph_enrichment_uses_context_pack_code_edges_and_degrades() {`
-  - Purpose: Constructs a SearchOutput enriched with WikiGraphFacts to establish graph-based semantic links between wiki documentation and code files, enabling unified graph enrichment of search results with code-to-documentation cross-references. [crates/gwiki/src/commands/ask.rs:733-835]
-- `ask_unified_graph_model_unavailable_marks_degraded` (function) component `ask_unified_graph_model_unavailable_marks_degraded [function]` (`2502c0aa-8f2b-5460-a270-50d27a695900`) lines 838-856 [crates/gwiki/src/commands/ask.rs:838-856]
+  - Purpose: Indexed function `ask_unified_graph_enrichment_uses_context_pack_code_edges_and_degrades` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:927-1029]
+- `ask_unified_graph_model_unavailable_marks_degraded` (function) component `ask_unified_graph_model_unavailable_marks_degraded [function]` (`ab89ed42-de95-5ac7-9537-e9aa9a03e288`) lines 1032-1050 [crates/gwiki/src/commands/ask.rs:1032-1050]
   - Signature: `fn ask_unified_graph_model_unavailable_marks_degraded() {`
-  - Purpose: This function validates that `mark_ai_unavailable()` gracefully degrades a SearchOutput by setting its degraded flag to true, adding 'model_provider_unavailable' to degraded_sources, and 'ai_unavailable' to warnings. [crates/gwiki/src/commands/ask.rs:838-856]
-- `llm_ai_off_is_invalid_input` (function) component `llm_ai_off_is_invalid_input [function]` (`0f732658-6a41-59c8-bf1b-b568f8141736`) lines 859-873 [crates/gwiki/src/commands/ask.rs:859-873]
+  - Purpose: Indexed function `ask_unified_graph_model_unavailable_marks_degraded` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:1032-1050]
+- `output_with_hooks_hit` (function) component `output_with_hooks_hit [function]` (`3a24010e-b7d5-5328-9f38-54a5b27e5d48`) lines 1052-1071 [crates/gwiki/src/commands/ask.rs:1052-1071]
+  - Signature: `fn output_with_hooks_hit() -> AskOutput {`
+  - Purpose: Indexed function `output_with_hooks_hit` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:1052-1071]
+- `synthesis_with_ungrounded_claim_is_flagged_in_json` (function) component `synthesis_with_ungrounded_claim_is_flagged_in_json [function]` (`a68f448a-8ded-50f4-a6db-d61a5f797852`) lines 1074-1117 [crates/gwiki/src/commands/ask.rs:1074-1117]
+  - Signature: `fn synthesis_with_ungrounded_claim_is_flagged_in_json() {`
+  - Purpose: Indexed function `synthesis_with_ungrounded_claim_is_flagged_in_json` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:1074-1117]
+- `synthesis_strips_leading_model_narration_before_recording` (function) component `synthesis_strips_leading_model_narration_before_recording [function]` (`3104702a-e050-5ac4-9a92-293fa86d9b66`) lines 1120-1142 [crates/gwiki/src/commands/ask.rs:1120-1142]
+  - Signature: `fn synthesis_strips_leading_model_narration_before_recording() {`
+  - Purpose: Indexed function `synthesis_strips_leading_model_narration_before_recording` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:1120-1142]
+- `synthesis_system_requests_answer_only_output` (function) component `synthesis_system_requests_answer_only_output [function]` (`e9daf314-4f25-5d6a-81af-6e5b2fbb52d6`) lines 1145-1151 [crates/gwiki/src/commands/ask.rs:1145-1151]
+  - Signature: `fn synthesis_system_requests_answer_only_output() {`
+  - Purpose: Indexed function `synthesis_system_requests_answer_only_output` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:1145-1151]
+- `synthesis_grounded_in_hits_passes_citation_check` (function) component `synthesis_grounded_in_hits_passes_citation_check [function]` (`0f9972c4-71f3-547f-a680-9b185e8b4c45`) lines 1154-1171 [crates/gwiki/src/commands/ask.rs:1154-1171]
+  - Signature: `fn synthesis_grounded_in_hits_passes_citation_check() {`
+  - Purpose: Indexed function `synthesis_grounded_in_hits_passes_citation_check` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:1154-1171]
+- `unverified_synthesis_is_flagged_in_text_render` (function) component `unverified_synthesis_is_flagged_in_text_render [function]` (`e80b10d9-9f45-524b-9195-83a0a42165df`) lines 1174-1203 [crates/gwiki/src/commands/ask.rs:1174-1203]
+  - Signature: `fn unverified_synthesis_is_flagged_in_text_render() {`
+  - Purpose: Indexed function `unverified_synthesis_is_flagged_in_text_render` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:1174-1203]
+- `llm_ai_off_is_invalid_input` (function) component `llm_ai_off_is_invalid_input [function]` (`11b16d56-224b-50a3-83ca-044051119b80`) lines 1206-1220 [crates/gwiki/src/commands/ask.rs:1206-1220]
   - Signature: `fn llm_ai_off_is_invalid_input() {`
-  - Purpose: This test function verifies that executing an "ask" query with `AiRouting::Off` produces a `WikiError::InvalidInput` for the "ask" field before retrieval is attempted. [crates/gwiki/src/commands/ask.rs:859-873]
+  - Purpose: Indexed function `llm_ai_off_is_invalid_input` in `crates/gwiki/src/commands/ask.rs`. [crates/gwiki/src/commands/ask.rs:1206-1220]
 

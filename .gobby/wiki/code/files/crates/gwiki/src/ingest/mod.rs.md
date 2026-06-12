@@ -12,59 +12,47 @@ provenance:
   - 75-85
   - 87-107
   - 109-117
-  - 119-134
-  - 136-142
-  - 145-148
-  - 150-158
-  - 151-153
-  - 155-157
-  - 160-170
-  - 172-177
-  - 179-185
-  - 187-194
-  - 196-203
-  - 205-225
-  - 227-229
-  - 231-234
-  - 236-243
-  - 245-247
-  - 249-251
-  - 253-255
-  - 257-259
-  - 261-263
-  - 265-304
-  - 306-356
-  - 358-373
-  - 375-390
-  - 392-409
-  - 411-419
-  - 421-448
-  - 452-457
-  - 459-473
-  - 475-481
-  - 507-516
-  - 518-524
-  - 526-541
-  - 544-555
-  - 558-584
-  - 587-597
-  - 600-617
-  - 620-669
-  - 672-718
-  - 721-726
-  - 728-745
-  - 729-736
-  - 738-744
-  - 747-796
-  - 748-752
-  - 754-757
-  - 759-766
-  - 768-771
-  - 773-776
-  - 778-781
-  - 783-790
-  - 792-795
-  - 799-832
+  - 120-135
+  - 137-143
+  - 146-149
+  - 151-159
+  - 161-171
+  - 173-178
+  - 180-186
+  - 188-195
+  - 197-204
+  - 206-226
+  - 228-230
+  - 232-235
+  - 237-244
+  - 246-248
+  - 250-252
+  - 254-256
+  - 258-260
+  - 262-264
+  - 266-305
+  - 307-357
+  - 359-374
+  - 376-391
+  - 393-410
+  - 412-420
+  - 422-449
+  - 453-458
+  - 460-474
+  - 476-482
+  - 508-517
+  - 519-525
+  - 527-542
+  - 545-556
+  - 559-585
+  - 588-598
+  - 601-618
+  - 621-670
+  - 673-719
+  - 722-727
+  - 729-746
+  - 748-797
+  - 800-833
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -109,163 +97,163 @@ Module: [[code/modules/crates/gwiki/src/ingest|crates/gwiki/src/ingest]]
 - `index_after_ingest` (function) component `index_after_ingest [function]` (`4a9a51b9-9de1-56a5-bf47-605349732406`) lines 109-117 [crates/gwiki/src/ingest/mod.rs:109-117]
   - Signature: `pub(crate) fn index_after_ingest(`
   - Purpose: Indexed function `index_after_ingest` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:109-117]
-- `write_raw_then_index` (function) component `write_raw_then_index [function]` (`b64c3593-91a1-5a63-ba90-7d9003da2bd1`) lines 119-134 [crates/gwiki/src/ingest/mod.rs:119-134]
+- `write_raw_then_index` (function) component `write_raw_then_index [function]` (`787733c7-0c89-5a05-98a2-b6e39b8f4d87`) lines 120-135 [crates/gwiki/src/ingest/mod.rs:120-135]
   - Signature: `pub(crate) fn write_raw_then_index(`
-  - Purpose: Indexed function `write_raw_then_index` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:119-134]
-- `markdown_metadata` (function) component `markdown_metadata [function]` (`0e7b802b-83c3-59e9-8444-f5279a51b5fd`) lines 136-142 [crates/gwiki/src/ingest/mod.rs:136-142]
+  - Purpose: Indexed function `write_raw_then_index` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:120-135]
+- `markdown_metadata` (function) component `markdown_metadata [function]` (`de1b363b-24e0-5fe1-8424-e221cee442cc`) lines 137-143 [crates/gwiki/src/ingest/mod.rs:137-143]
   - Signature: `pub(crate) fn markdown_metadata(fields: &[(&str, String)]) -> String {`
-  - Purpose: Indexed function `markdown_metadata` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:136-142]
-- `MetadataValue` (type) component `MetadataValue [type]` (`8e2735e9-ebb1-5d33-a425-8b5baa283830`) lines 145-148 [crates/gwiki/src/ingest/mod.rs:145-148]
+  - Purpose: Indexed function `markdown_metadata` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:137-143]
+- `MetadataValue` (type) component `MetadataValue [type]` (`381987e5-be6b-5262-b999-4bedd9ca2e25`) lines 146-149 [crates/gwiki/src/ingest/mod.rs:146-149]
   - Signature: `pub(crate) enum MetadataValue {`
-  - Purpose: Indexed type `MetadataValue` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:145-148]
-- `MetadataValue` (class) component `MetadataValue [class]` (`cfdac1e3-d948-5631-a924-3d46bbd591d3`) lines 150-158 [crates/gwiki/src/ingest/mod.rs:150-158]
+  - Purpose: Indexed type `MetadataValue` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:146-149]
+- `MetadataValue` (class) component `MetadataValue [class]` (`39d96529-84de-57a5-b869-fdabf9dbd318`) lines 151-159 [crates/gwiki/src/ingest/mod.rs:151-159]
   - Signature: `impl MetadataValue {`
-  - Purpose: Indexed class `MetadataValue` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:150-158]
-- `MetadataValue.string` (method) component `MetadataValue.string [method]` (`17cb867d-c7a7-54e8-81bd-706b53ebb08d`) lines 151-153 [crates/gwiki/src/ingest/mod.rs:151-153]
+  - Purpose: Indexed class `MetadataValue` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:151-159]
+- `MetadataValue.string` (method) component `MetadataValue.string [method]` (`0e393fe5-59bd-57ea-8468-21f51a97bcbc`) lines 152-154 [crates/gwiki/src/ingest/mod.rs:152-154]
   - Signature: `pub(crate) fn string(value: impl Into<String>) -> Self {`
-  - Purpose: Indexed method `MetadataValue.string` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:151-153]
-- `MetadataValue.number` (method) component `MetadataValue.number [method]` (`18ad1e58-88d4-5a0c-9c20-924133037f4e`) lines 155-157 [crates/gwiki/src/ingest/mod.rs:155-157]
+  - Purpose: Indexed method `MetadataValue.string` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:152-154]
+- `MetadataValue.number` (method) component `MetadataValue.number [method]` (`9fb50eba-06a2-52a9-a55c-f713ba3df418`) lines 156-158 [crates/gwiki/src/ingest/mod.rs:156-158]
   - Signature: `pub(crate) fn number(value: impl ToString) -> Self {`
-  - Purpose: Indexed method `MetadataValue.number` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:155-157]
-- `markdown_metadata_values` (function) component `markdown_metadata_values [function]` (`24b9c06b-46da-5df3-b04a-035d61aff2f0`) lines 160-170 [crates/gwiki/src/ingest/mod.rs:160-170]
+  - Purpose: Indexed method `MetadataValue.number` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:156-158]
+- `markdown_metadata_values` (function) component `markdown_metadata_values [function]` (`2dd94593-ff10-5f9b-bd01-91e88cf8cd07`) lines 161-171 [crates/gwiki/src/ingest/mod.rs:161-171]
   - Signature: `pub(crate) fn markdown_metadata_values(fields: &[(&str, MetadataValue)]) -> String {`
-  - Purpose: Indexed function `markdown_metadata_values` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:160-170]
-- `yaml_metadata_value` (function) component `yaml_metadata_value [function]` (`50cad92e-7696-5755-b87d-d8e8d351ce8c`) lines 172-177 [crates/gwiki/src/ingest/mod.rs:172-177]
+  - Purpose: Indexed function `markdown_metadata_values` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:161-171]
+- `yaml_metadata_value` (function) component `yaml_metadata_value [function]` (`fee860ae-f37d-5cf8-850a-ca60200fa66a`) lines 173-178 [crates/gwiki/src/ingest/mod.rs:173-178]
   - Signature: `fn yaml_metadata_value(key: &str, value: &MetadataValue) -> String {`
-  - Purpose: Indexed function `yaml_metadata_value` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:172-177]
-- `yaml_metadata_scalar` (function) component `yaml_metadata_scalar [function]` (`8c42929b-048c-5dae-8a20-2fb844424646`) lines 179-185 [crates/gwiki/src/ingest/mod.rs:179-185]
+  - Purpose: Indexed function `yaml_metadata_value` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:173-178]
+- `yaml_metadata_scalar` (function) component `yaml_metadata_scalar [function]` (`7838406b-8f27-512f-bcd1-6b7d48517e42`) lines 180-186 [crates/gwiki/src/ingest/mod.rs:180-186]
   - Signature: `fn yaml_metadata_scalar(key: &str, value: &str) -> String {`
-  - Purpose: Indexed function `yaml_metadata_scalar` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:179-185]
-- `yaml_safe_single_line_scalar` (function) component `yaml_safe_single_line_scalar [function]` (`8c273e9e-83db-5498-a843-1cdb34366c7d`) lines 187-194 [crates/gwiki/src/ingest/mod.rs:187-194]
+  - Purpose: Indexed function `yaml_metadata_scalar` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:180-186]
+- `yaml_safe_single_line_scalar` (function) component `yaml_safe_single_line_scalar [function]` (`3393c00a-5513-57d7-aa8d-16833151dbf3`) lines 188-195 [crates/gwiki/src/ingest/mod.rs:188-195]
   - Signature: `fn yaml_safe_single_line_scalar(value: &str) -> String {`
-  - Purpose: Indexed function `yaml_safe_single_line_scalar` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:187-194]
-- `yaml_numeric_scalar` (function) component `yaml_numeric_scalar [function]` (`1709bc2d-2cbd-5935-bdd6-36df6f599943`) lines 196-203 [crates/gwiki/src/ingest/mod.rs:196-203]
+  - Purpose: Indexed function `yaml_safe_single_line_scalar` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:188-195]
+- `yaml_numeric_scalar` (function) component `yaml_numeric_scalar [function]` (`59944b46-ab75-5fb7-81d7-917431b1dbc4`) lines 197-204 [crates/gwiki/src/ingest/mod.rs:197-204]
   - Signature: `fn yaml_numeric_scalar(value: &str) -> String {`
-  - Purpose: Indexed function `yaml_numeric_scalar` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:196-203]
-- `yaml_plain_scalar_is_safe` (function) component `yaml_plain_scalar_is_safe [function]` (`6734882e-cdf8-5540-98c9-80a8bd3a83ce`) lines 205-225 [crates/gwiki/src/ingest/mod.rs:205-225]
+  - Purpose: Indexed function `yaml_numeric_scalar` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:197-204]
+- `yaml_plain_scalar_is_safe` (function) component `yaml_plain_scalar_is_safe [function]` (`9cc5980f-fa05-5595-befe-63b35008b094`) lines 206-226 [crates/gwiki/src/ingest/mod.rs:206-226]
   - Signature: `fn yaml_plain_scalar_is_safe(value: &str) -> bool {`
-  - Purpose: Indexed function `yaml_plain_scalar_is_safe` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:205-225]
-- `yaml_numeric_scalar_is_safe` (function) component `yaml_numeric_scalar_is_safe [function]` (`88831747-f466-537a-96a1-2d504f02303a`) lines 227-229 [crates/gwiki/src/ingest/mod.rs:227-229]
+  - Purpose: Indexed function `yaml_plain_scalar_is_safe` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:206-226]
+- `yaml_numeric_scalar_is_safe` (function) component `yaml_numeric_scalar_is_safe [function]` (`2faf1335-31c5-5046-b816-73b61802d9d4`) lines 228-230 [crates/gwiki/src/ingest/mod.rs:228-230]
   - Signature: `fn yaml_numeric_scalar_is_safe(value: &str) -> bool {`
-  - Purpose: Indexed function `yaml_numeric_scalar_is_safe` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:227-229]
-- `yaml_plain_scalar_is_timestamp` (function) component `yaml_plain_scalar_is_timestamp [function]` (`fcee03a4-97c7-55ad-86a2-e2b180d2760b`) lines 231-234 [crates/gwiki/src/ingest/mod.rs:231-234]
+  - Purpose: Indexed function `yaml_numeric_scalar_is_safe` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:228-230]
+- `yaml_plain_scalar_is_timestamp` (function) component `yaml_plain_scalar_is_timestamp [function]` (`92b30401-0fef-52c5-810e-592a46a1d3ac`) lines 232-235 [crates/gwiki/src/ingest/mod.rs:232-235]
   - Signature: `fn yaml_plain_scalar_is_timestamp(value: &str) -> bool {`
-  - Purpose: Indexed function `yaml_plain_scalar_is_timestamp` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:231-234]
-- `has_yaml_date_prefix` (function) component `has_yaml_date_prefix [function]` (`a171e0ef-93c5-5b5f-a3c9-ae15e7507e91`) lines 236-243 [crates/gwiki/src/ingest/mod.rs:236-243]
+  - Purpose: Indexed function `yaml_plain_scalar_is_timestamp` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:232-235]
+- `has_yaml_date_prefix` (function) component `has_yaml_date_prefix [function]` (`7267c008-8fc5-51d8-b844-4b4ef6db8a11`) lines 237-244 [crates/gwiki/src/ingest/mod.rs:237-244]
   - Signature: `fn has_yaml_date_prefix(bytes: &[u8]) -> bool {`
-  - Purpose: Indexed function `has_yaml_date_prefix` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:236-243]
-- `quote_yaml_string` (function) component `quote_yaml_string [function]` (`7f6a7509-641c-590b-8a0c-9e461cea329f`) lines 245-247 [crates/gwiki/src/ingest/mod.rs:245-247]
+  - Purpose: Indexed function `has_yaml_date_prefix` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:237-244]
+- `quote_yaml_string` (function) component `quote_yaml_string [function]` (`78abbb64-3eb6-5ed7-a4f0-7257c26ae65b`) lines 246-248 [crates/gwiki/src/ingest/mod.rs:246-248]
   - Signature: `fn quote_yaml_string(value: &str) -> String {`
-  - Purpose: Indexed function `quote_yaml_string` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:245-247]
-- `single_line` (function) component `single_line [function]` (`b5c27967-c9db-5892-8981-fa98b98d05c8`) lines 249-251 [crates/gwiki/src/ingest/mod.rs:249-251]
+  - Purpose: Indexed function `quote_yaml_string` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:246-248]
+- `single_line` (function) component `single_line [function]` (`a368dd47-0eb6-5c65-abb0-c7580f08be8a`) lines 250-252 [crates/gwiki/src/ingest/mod.rs:250-252]
   - Signature: `pub(crate) fn single_line(value: &str) -> String {`
-  - Purpose: Indexed function `single_line` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:249-251]
-- `markdown_title` (function) component `markdown_title [function]` (`5a9a8289-dc41-5503-a6ca-e31ae1225603`) lines 253-255 [crates/gwiki/src/ingest/mod.rs:253-255]
+  - Purpose: Indexed function `single_line` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:250-252]
+- `markdown_title` (function) component `markdown_title [function]` (`2453d1ff-cee8-56db-a1bb-257ad1107707`) lines 254-256 [crates/gwiki/src/ingest/mod.rs:254-256]
   - Signature: `pub(crate) fn markdown_title(value: &str) -> String {`
-  - Purpose: Indexed function `markdown_title` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:253-255]
-- `text_from_utf8_lossy` (function) component `text_from_utf8_lossy [function]` (`a78ea851-f148-5a4c-aec7-a6294b98671d`) lines 257-259 [crates/gwiki/src/ingest/mod.rs:257-259]
+  - Purpose: Indexed function `markdown_title` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:254-256]
+- `text_from_utf8_lossy` (function) component `text_from_utf8_lossy [function]` (`3bc67998-ed2b-5c2e-b433-4b0e3ab41707`) lines 258-260 [crates/gwiki/src/ingest/mod.rs:258-260]
   - Signature: `pub(crate) fn text_from_utf8_lossy(bytes: &[u8]) -> String {`
-  - Purpose: Indexed function `text_from_utf8_lossy` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:257-259]
-- `path_to_string` (function) component `path_to_string [function]` (`5d183b43-3943-59e8-8817-0e762b2b12f5`) lines 261-263 [crates/gwiki/src/ingest/mod.rs:261-263]
+  - Purpose: Indexed function `text_from_utf8_lossy` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:258-260]
+- `path_to_string` (function) component `path_to_string [function]` (`eb5df925-00b6-535b-b839-7c7a67b0f41d`) lines 262-264 [crates/gwiki/src/ingest/mod.rs:262-264]
   - Signature: `pub(crate) fn path_to_string(path: &Path) -> String {`
-  - Purpose: Indexed function `path_to_string` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:261-263]
-- `write_immutable` (function) component `write_immutable [function]` (`afa41f90-7f04-5ffd-8dae-ed1400dd2301`) lines 265-304 [crates/gwiki/src/ingest/mod.rs:265-304]
+  - Purpose: Indexed function `path_to_string` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:262-264]
+- `write_immutable` (function) component `write_immutable [function]` (`22dd1143-f6a1-575a-83e8-c561d6d6aa1a`) lines 266-305 [crates/gwiki/src/ingest/mod.rs:266-305]
   - Signature: `fn write_immutable(vault_root: &Path, relative: &Path, bytes: &[u8]) -> Result<(), WikiError> {`
-  - Purpose: Indexed function `write_immutable` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:265-304]
-- `write_immutable_file` (function) component `write_immutable_file [function]` (`4655b5a4-7233-5278-b98e-18f9525b91ad`) lines 306-356 [crates/gwiki/src/ingest/mod.rs:306-356]
+  - Purpose: Indexed function `write_immutable` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:266-305]
+- `write_immutable_file` (function) component `write_immutable_file [function]` (`203c5c46-1d47-5a6d-b927-8b81c9b13a50`) lines 307-357 [crates/gwiki/src/ingest/mod.rs:307-357]
   - Signature: `fn write_immutable_file(`
-  - Purpose: Indexed function `write_immutable_file` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:306-356]
-- `validate_existing_raw_bytes` (function) component `validate_existing_raw_bytes [function]` (`43fb9154-d19d-52e0-9272-1498bb1afab0`) lines 358-373 [crates/gwiki/src/ingest/mod.rs:358-373]
+  - Purpose: Indexed function `write_immutable_file` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:307-357]
+- `validate_existing_raw_bytes` (function) component `validate_existing_raw_bytes [function]` (`53d67764-5fcf-5edf-afde-a13d5fec3d6c`) lines 359-374 [crates/gwiki/src/ingest/mod.rs:359-374]
   - Signature: `fn validate_existing_raw_bytes(`
-  - Purpose: Indexed function `validate_existing_raw_bytes` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:358-373]
-- `validate_existing_raw_file` (function) component `validate_existing_raw_file [function]` (`6f93f739-71ca-5c64-99f8-7f163a225767`) lines 375-390 [crates/gwiki/src/ingest/mod.rs:375-390]
+  - Purpose: Indexed function `validate_existing_raw_bytes` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:359-374]
+- `validate_existing_raw_file` (function) component `validate_existing_raw_file [function]` (`28c43660-0952-5541-a882-4411fc7988a0`) lines 376-391 [crates/gwiki/src/ingest/mod.rs:376-391]
   - Signature: `fn validate_existing_raw_file(`
-  - Purpose: Indexed function `validate_existing_raw_file` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:375-390]
-- `validate_source_file_hash` (function) component `validate_source_file_hash [function]` (`d1ec4fd4-22f0-5fdd-af9c-d6ebb00957b9`) lines 392-409 [crates/gwiki/src/ingest/mod.rs:392-409]
+  - Purpose: Indexed function `validate_existing_raw_file` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:376-391]
+- `validate_source_file_hash` (function) component `validate_source_file_hash [function]` (`572a3f0b-2362-5104-849a-119115653848`) lines 393-410 [crates/gwiki/src/ingest/mod.rs:393-410]
   - Signature: `fn validate_source_file_hash(source_path: &Path, content_hash: &str) -> Result<String, WikiError> {`
-  - Purpose: Indexed function `validate_source_file_hash` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:392-409]
-- `immutable_exists_error` (function) component `immutable_exists_error [function]` (`c6a490cc-bee7-5183-81c6-ce426221642e`) lines 411-419 [crates/gwiki/src/ingest/mod.rs:411-419]
+  - Purpose: Indexed function `validate_source_file_hash` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:393-410]
+- `immutable_exists_error` (function) component `immutable_exists_error [function]` (`dc4c8ae1-7303-536f-9744-9f6260396144`) lines 412-420 [crates/gwiki/src/ingest/mod.rs:412-420]
   - Signature: `fn immutable_exists_error(relative: &Path) -> WikiError {`
-  - Purpose: Indexed function `immutable_exists_error` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:411-419]
-- `create_raw_temp_file` (function) component `create_raw_temp_file [function]` (`56f41b5f-b8e0-5c6e-af28-a91882a57b15`) lines 421-448 [crates/gwiki/src/ingest/mod.rs:421-448]
+  - Purpose: Indexed function `immutable_exists_error` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:412-420]
+- `create_raw_temp_file` (function) component `create_raw_temp_file [function]` (`93120540-559d-5fa5-8b81-e4cc98c05e87`) lines 422-449 [crates/gwiki/src/ingest/mod.rs:422-449]
   - Signature: `fn create_raw_temp_file(path: &Path) -> Result<tempfile::NamedTempFile, WikiError> {`
-  - Purpose: Indexed function `create_raw_temp_file` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:421-448]
-- `asset_path` (function) component `asset_path [function]` (`6c9baea3-32b7-53f1-8745-726cd9637b36`) lines 452-457 [crates/gwiki/src/ingest/mod.rs:452-457]
+  - Purpose: Indexed function `create_raw_temp_file` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:422-449]
+- `asset_path` (function) component `asset_path [function]` (`3269f5cd-c283-54af-9964-80cbe39e54cb`) lines 453-458 [crates/gwiki/src/ingest/mod.rs:453-458]
   - Signature: `pub(crate) fn asset_path(record: &SourceRecord, file_name: &str) -> PathBuf {`
-  - Purpose: Indexed function `asset_path` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:452-457]
-- `sanitized_extension_for_file_name` (function) component `sanitized_extension_for_file_name [function]` (`8a40d2ac-e1ac-5910-b376-75fc129d3501`) lines 459-473 [crates/gwiki/src/ingest/mod.rs:459-473]
+  - Purpose: Indexed function `asset_path` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:453-458]
+- `sanitized_extension_for_file_name` (function) component `sanitized_extension_for_file_name [function]` (`bad6d23c-4a28-518b-8be0-fd1065e0fe28`) lines 460-474 [crates/gwiki/src/ingest/mod.rs:460-474]
   - Signature: `fn sanitized_extension_for_file_name(file_name: &str) -> String {`
-  - Purpose: Indexed function `sanitized_extension_for_file_name` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:459-473]
-- `sanitize_extension` (function) component `sanitize_extension [function]` (`c39ea2c7-73b5-591a-b0ec-965e7c15a848`) lines 475-481 [crates/gwiki/src/ingest/mod.rs:475-481]
+  - Purpose: Indexed function `sanitized_extension_for_file_name` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:460-474]
+- `sanitize_extension` (function) component `sanitize_extension [function]` (`354d2b97-bcba-5d0b-8f19-f916f6a5a905`) lines 476-482 [crates/gwiki/src/ingest/mod.rs:476-482]
   - Signature: `fn sanitize_extension(extension: &str) -> String {`
-  - Purpose: Indexed function `sanitize_extension` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:475-481]
-- `no_ai_context` (function) component `no_ai_context [function]` (`2071c0f7-4fde-5e86-8128-9d235d08f29e`) lines 507-516 [crates/gwiki/src/ingest/mod.rs:507-516]
+  - Purpose: Indexed function `sanitize_extension` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:476-482]
+- `no_ai_context` (function) component `no_ai_context [function]` (`254d402b-c0df-53ca-90f1-d9b4a39d2c96`) lines 508-517 [crates/gwiki/src/ingest/mod.rs:508-517]
   - Signature: `fn no_ai_context() -> AiContext {`
-  - Purpose: Indexed function `no_ai_context` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:507-516]
-- `write_file` (function) component `write_file [function]` (`72314a55-1297-5ec6-b0a5-6e88e1c4b639`) lines 518-524 [crates/gwiki/src/ingest/mod.rs:518-524]
+  - Purpose: Indexed function `no_ai_context` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:508-517]
+- `write_file` (function) component `write_file [function]` (`2dba5aa4-e981-531e-a24d-b2c02db7e8b8`) lines 519-525 [crates/gwiki/src/ingest/mod.rs:519-525]
   - Signature: `fn write_file(root: &std::path::Path, relative: &str, contents: &str) {`
-  - Purpose: Indexed function `write_file` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:518-524]
-- `test_source_record` (function) component `test_source_record [function]` (`5a6b3478-994f-5774-a3ef-f7d68a295b41`) lines 526-541 [crates/gwiki/src/ingest/mod.rs:526-541]
+  - Purpose: Indexed function `write_file` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:519-525]
+- `test_source_record` (function) component `test_source_record [function]` (`b25cad5b-a834-5ddd-be74-95d6d8d47b67`) lines 527-542 [crates/gwiki/src/ingest/mod.rs:527-542]
   - Signature: `fn test_source_record() -> SourceRecord {`
-  - Purpose: Indexed function `test_source_record` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:526-541]
-- `asset_path_uses_basename_before_extension_extraction` (function) component `asset_path_uses_basename_before_extension_extraction [function]` (`982abc12-1b6c-5f02-9239-65342c44c686`) lines 544-555 [crates/gwiki/src/ingest/mod.rs:544-555]
+  - Purpose: Indexed function `test_source_record` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:527-542]
+- `asset_path_uses_basename_before_extension_extraction` (function) component `asset_path_uses_basename_before_extension_extraction [function]` (`c05548e1-31f6-529b-8cab-ea22e5682610`) lines 545-556 [crates/gwiki/src/ingest/mod.rs:545-556]
   - Signature: `fn asset_path_uses_basename_before_extension_extraction() {`
-  - Purpose: Indexed function `asset_path_uses_basename_before_extension_extraction` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:544-555]
-- `markdown_metadata_quotes_yaml_sensitive_scalars` (function) component `markdown_metadata_quotes_yaml_sensitive_scalars [function]` (`60e11a07-7725-5b52-b965-a5b95e963875`) lines 558-584 [crates/gwiki/src/ingest/mod.rs:558-584]
+  - Purpose: Indexed function `asset_path_uses_basename_before_extension_extraction` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:545-556]
+- `markdown_metadata_quotes_yaml_sensitive_scalars` (function) component `markdown_metadata_quotes_yaml_sensitive_scalars [function]` (`4fb5d0ef-5c8c-5c64-9d75-7f6a0cda8a81`) lines 559-585 [crates/gwiki/src/ingest/mod.rs:559-585]
   - Signature: `fn markdown_metadata_quotes_yaml_sensitive_scalars() {`
-  - Purpose: Indexed function `markdown_metadata_quotes_yaml_sensitive_scalars` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:558-584]
-- `markdown_metadata_allows_explicit_numeric_values` (function) component `markdown_metadata_allows_explicit_numeric_values [function]` (`258c03b2-151c-5142-a57d-24b89a4effbd`) lines 587-597 [crates/gwiki/src/ingest/mod.rs:587-597]
+  - Purpose: Indexed function `markdown_metadata_quotes_yaml_sensitive_scalars` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:559-585]
+- `markdown_metadata_allows_explicit_numeric_values` (function) component `markdown_metadata_allows_explicit_numeric_values [function]` (`ada5c1f8-1083-5b7a-b3f5-ce5e014a29d3`) lines 588-598 [crates/gwiki/src/ingest/mod.rs:588-598]
   - Signature: `fn markdown_metadata_allows_explicit_numeric_values() {`
-  - Purpose: Indexed function `markdown_metadata_allows_explicit_numeric_values` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:587-597]
-- `immutable_file_requires_declared_source_hash_before_copy` (function) component `immutable_file_requires_declared_source_hash_before_copy [function]` (`24b66dcc-045d-5bf4-8991-d727ee3f1ea3`) lines 600-617 [crates/gwiki/src/ingest/mod.rs:600-617]
+  - Purpose: Indexed function `markdown_metadata_allows_explicit_numeric_values` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:588-598]
+- `immutable_file_requires_declared_source_hash_before_copy` (function) component `immutable_file_requires_declared_source_hash_before_copy [function]` (`63c0ae4d-14b1-5f6c-91ba-29cac2cc3858`) lines 601-618 [crates/gwiki/src/ingest/mod.rs:601-618]
   - Signature: `fn immutable_file_requires_declared_source_hash_before_copy() {`
-  - Purpose: Indexed function `immutable_file_requires_declared_source_hash_before_copy` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:600-617]
-- `immutable_file_existing_match_requires_declared_hash` (function) component `immutable_file_existing_match_requires_declared_hash [function]` (`2c92637e-7924-5459-ab64-b1a760902576`) lines 620-669 [crates/gwiki/src/ingest/mod.rs:620-669]
+  - Purpose: Indexed function `immutable_file_requires_declared_source_hash_before_copy` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:601-618]
+- `immutable_file_existing_match_requires_declared_hash` (function) component `immutable_file_existing_match_requires_declared_hash [function]` (`46901b3c-ec09-5052-b7fe-f12ab80b9fb7`) lines 621-670 [crates/gwiki/src/ingest/mod.rs:621-670]
   - Signature: `fn immutable_file_existing_match_requires_declared_hash() {`
-  - Purpose: Indexed function `immutable_file_existing_match_requires_declared_hash` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:620-669]
-- `ingest_indexes_raw_without_wiki_rewrite` (function) component `ingest_indexes_raw_without_wiki_rewrite [function]` (`f86b00bc-1b60-553e-be64-0286af1d781b`) lines 672-718 [crates/gwiki/src/ingest/mod.rs:672-718]
+  - Purpose: Indexed function `immutable_file_existing_match_requires_declared_hash` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:621-670]
+- `ingest_indexes_raw_without_wiki_rewrite` (function) component `ingest_indexes_raw_without_wiki_rewrite [function]` (`82db261e-c96c-57b9-b986-222b277fabfa`) lines 673-719 [crates/gwiki/src/ingest/mod.rs:673-719]
   - Signature: `fn ingest_indexes_raw_without_wiki_rewrite() {`
-  - Purpose: Indexed function `ingest_indexes_raw_without_wiki_rewrite` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:672-718]
-- `RawFirstStore` (class) component `RawFirstStore [class]` (`1d1add87-0e38-5d14-8eff-59d9f28dd507`) lines 721-726 [crates/gwiki/src/ingest/mod.rs:721-726]
+  - Purpose: Indexed function `ingest_indexes_raw_without_wiki_rewrite` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:673-719]
+- `RawFirstStore` (class) component `RawFirstStore [class]` (`b15be3ac-c540-50ee-ba01-c4c820c479b3`) lines 722-727 [crates/gwiki/src/ingest/mod.rs:722-727]
   - Signature: `struct RawFirstStore {`
-  - Purpose: Indexed class `RawFirstStore` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:721-726]
-- `RawFirstStore` (class) component `RawFirstStore [class]` (`9681443d-907d-5d93-93b8-cdcc3dcca48c`) lines 728-745 [crates/gwiki/src/ingest/mod.rs:728-745]
+  - Purpose: Indexed class `RawFirstStore` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:722-727]
+- `RawFirstStore` (class) component `RawFirstStore [class]` (`095562c7-9b36-5449-8829-baa9d3131765`) lines 729-746 [crates/gwiki/src/ingest/mod.rs:729-746]
   - Signature: `impl RawFirstStore {`
-  - Purpose: Indexed class `RawFirstStore` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:728-745]
-- `RawFirstStore.new` (method) component `RawFirstStore.new [method]` (`84ad16e6-f5f7-5775-a33a-3193b377c8b9`) lines 729-736 [crates/gwiki/src/ingest/mod.rs:729-736]
+  - Purpose: Indexed class `RawFirstStore` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:729-746]
+- `RawFirstStore.new` (method) component `RawFirstStore.new [method]` (`30aeeb1e-3e83-51de-8518-d03c9fd620b6`) lines 730-737 [crates/gwiki/src/ingest/mod.rs:730-737]
   - Signature: `fn new(vault_root: &Path, expected_raw_path: impl Into<PathBuf>) -> Self {`
-  - Purpose: Indexed method `RawFirstStore.new` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:729-736]
-- `RawFirstStore.assert_raw_exists_before_index` (method) component `RawFirstStore.assert_raw_exists_before_index [method]` (`798a7b2e-c06f-5dc3-86c7-5d6f2a55df18`) lines 738-744 [crates/gwiki/src/ingest/mod.rs:738-744]
+  - Purpose: Indexed method `RawFirstStore.new` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:730-737]
+- `RawFirstStore.assert_raw_exists_before_index` (method) component `RawFirstStore.assert_raw_exists_before_index [method]` (`1ee63da9-9a82-5309-b840-10fb44fbc5fd`) lines 739-745 [crates/gwiki/src/ingest/mod.rs:739-745]
   - Signature: `fn assert_raw_exists_before_index(&mut self) {`
-  - Purpose: Indexed method `RawFirstStore.assert_raw_exists_before_index` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:738-744]
-- `RawFirstStore` (class) component `RawFirstStore [class]` (`08c74ff4-78cd-522e-a344-d0cd5736b7ae`) lines 747-796 [crates/gwiki/src/ingest/mod.rs:747-796]
+  - Purpose: Indexed method `RawFirstStore.assert_raw_exists_before_index` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:739-745]
+- `RawFirstStore` (class) component `RawFirstStore [class]` (`cf597c10-61d5-56f2-a9da-aca1e9ff0924`) lines 748-797 [crates/gwiki/src/ingest/mod.rs:748-797]
   - Signature: `impl WikiIndexStore for RawFirstStore {`
-  - Purpose: Indexed class `RawFirstStore` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:747-796]
-- `RawFirstStore.indexed_hashes` (method) component `RawFirstStore.indexed_hashes [method]` (`345c7fbb-6396-5a7b-8c80-8427b76d05ee`) lines 748-752 [crates/gwiki/src/ingest/mod.rs:748-752]
+  - Purpose: Indexed class `RawFirstStore` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:748-797]
+- `RawFirstStore.indexed_hashes` (method) component `RawFirstStore.indexed_hashes [method]` (`e4918867-a9a5-5d98-ab6e-ff95576a2142`) lines 749-753 [crates/gwiki/src/ingest/mod.rs:749-753]
   - Signature: `fn indexed_hashes(`
-  - Purpose: Indexed method `RawFirstStore.indexed_hashes` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:748-752]
-- `RawFirstStore.upsert_document` (method) component `RawFirstStore.upsert_document [method]` (`bdc0472f-032a-542b-b76d-6f3cee7a993d`) lines 754-757 [crates/gwiki/src/ingest/mod.rs:754-757]
+  - Purpose: Indexed method `RawFirstStore.indexed_hashes` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:749-753]
+- `RawFirstStore.upsert_document` (method) component `RawFirstStore.upsert_document [method]` (`41a0c096-66bd-507b-b585-65477276ea75`) lines 755-758 [crates/gwiki/src/ingest/mod.rs:755-758]
   - Signature: `fn upsert_document(&mut self, document: WikiDocument) -> Result<(), StoreError> {`
-  - Purpose: Indexed method `RawFirstStore.upsert_document` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:754-757]
-- `RawFirstStore.replace_chunks` (method) component `RawFirstStore.replace_chunks [method]` (`e492d861-e315-55e7-ac60-9a7074a63229`) lines 759-766 [crates/gwiki/src/ingest/mod.rs:759-766]
+  - Purpose: Indexed method `RawFirstStore.upsert_document` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:755-758]
+- `RawFirstStore.replace_chunks` (method) component `RawFirstStore.replace_chunks [method]` (`4a9eab20-e050-56b9-9553-3d406c7219bc`) lines 760-767 [crates/gwiki/src/ingest/mod.rs:760-767]
   - Signature: `fn replace_chunks(`
-  - Purpose: Indexed method `RawFirstStore.replace_chunks` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:759-766]
-- `RawFirstStore.replace_links` (method) component `RawFirstStore.replace_links [method]` (`052a99d1-9f27-5219-ae8e-fd85302a9f73`) lines 768-771 [crates/gwiki/src/ingest/mod.rs:768-771]
+  - Purpose: Indexed method `RawFirstStore.replace_chunks` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:760-767]
+- `RawFirstStore.replace_links` (method) component `RawFirstStore.replace_links [method]` (`11f4d2d5-6054-504e-9866-65db2bd9eb8c`) lines 769-772 [crates/gwiki/src/ingest/mod.rs:769-772]
   - Signature: `fn replace_links(&mut self, path: &Path, links: Vec<WikiLink>) -> Result<(), StoreError> {`
-  - Purpose: Indexed method `RawFirstStore.replace_links` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:768-771]
-- `RawFirstStore.upsert_source` (method) component `RawFirstStore.upsert_source [method]` (`978ee11e-01ad-5219-9957-e97eb9cd1647`) lines 773-776 [crates/gwiki/src/ingest/mod.rs:773-776]
+  - Purpose: Indexed method `RawFirstStore.replace_links` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:769-772]
+- `RawFirstStore.upsert_source` (method) component `RawFirstStore.upsert_source [method]` (`fd072986-038a-5bfd-ab7f-740433dbb110`) lines 774-777 [crates/gwiki/src/ingest/mod.rs:774-777]
   - Signature: `fn upsert_source(&mut self, source: WikiSource) -> Result<(), StoreError> {`
-  - Purpose: Indexed method `RawFirstStore.upsert_source` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:773-776]
-- `RawFirstStore.record_ingestion` (method) component `RawFirstStore.record_ingestion [method]` (`118327f1-6a8a-5549-bf16-13d6539d3154`) lines 778-781 [crates/gwiki/src/ingest/mod.rs:778-781]
+  - Purpose: Indexed method `RawFirstStore.upsert_source` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:774-777]
+- `RawFirstStore.record_ingestion` (method) component `RawFirstStore.record_ingestion [method]` (`f20c3adc-5c7f-5147-a078-ff91b43d78a4`) lines 779-782 [crates/gwiki/src/ingest/mod.rs:779-782]
   - Signature: `fn record_ingestion(&mut self, ingestion: WikiIngestion) -> Result<(), StoreError> {`
-  - Purpose: Indexed method `RawFirstStore.record_ingestion` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:778-781]
-- `RawFirstStore.record_file_hash` (method) component `RawFirstStore.record_file_hash [method]` (`7cfa5b7e-b3ac-510c-b0b4-c7ea9158fc33`) lines 783-790 [crates/gwiki/src/ingest/mod.rs:783-790]
+  - Purpose: Indexed method `RawFirstStore.record_ingestion` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:779-782]
+- `RawFirstStore.record_file_hash` (method) component `RawFirstStore.record_file_hash [method]` (`30d7cd51-2434-546d-a459-27544ade3e76`) lines 784-791 [crates/gwiki/src/ingest/mod.rs:784-791]
   - Signature: `fn record_file_hash(`
-  - Purpose: Indexed method `RawFirstStore.record_file_hash` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:783-790]
-- `RawFirstStore.delete_derived_rows` (method) component `RawFirstStore.delete_derived_rows [method]` (`00803d20-d817-5876-bf1e-1921804e9836`) lines 792-795 [crates/gwiki/src/ingest/mod.rs:792-795]
+  - Purpose: Indexed method `RawFirstStore.record_file_hash` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:784-791]
+- `RawFirstStore.delete_derived_rows` (method) component `RawFirstStore.delete_derived_rows [method]` (`ee5c377a-8d68-558f-abb0-d8f66046992e`) lines 793-796 [crates/gwiki/src/ingest/mod.rs:793-796]
   - Signature: `fn delete_derived_rows(&mut self, path: &Path) -> Result<(), StoreError> {`
-  - Purpose: Indexed method `RawFirstStore.delete_derived_rows` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:792-795]
-- `external_connectors_write_raw_first` (function) component `external_connectors_write_raw_first [function]` (`1349f575-04bb-54b7-99ae-00a8badcb409`) lines 799-832 [crates/gwiki/src/ingest/mod.rs:799-832]
+  - Purpose: Indexed method `RawFirstStore.delete_derived_rows` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:793-796]
+- `external_connectors_write_raw_first` (function) component `external_connectors_write_raw_first [function]` (`e716b1c3-df2b-577b-8b69-e8f55fcc986a`) lines 800-833 [crates/gwiki/src/ingest/mod.rs:800-833]
   - Signature: `fn external_connectors_write_raw_first() {`
-  - Purpose: Indexed function `external_connectors_write_raw_first` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:799-832]
+  - Purpose: Indexed function `external_connectors_write_raw_first` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:800-833]
 

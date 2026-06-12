@@ -10,41 +10,41 @@ provenance:
   - 36-47
   - 50-55
   - 57-64
-  - 66-124
-  - 126-173
-  - 175-185
-  - 187-195
-  - 197-199
-  - 204-220
-  - 222-235
-  - 237-243
-  - 245-270
-  - 272-277
-  - 279-284
-  - 286-294
-  - 296-313
-  - 315-325
-  - 327-329
-  - 331-333
-  - 335-341
-  - 343-351
-  - 353-367
-  - 369-374
-  - 376-385
-  - 387-412
-  - 414-424
-  - 431-458
-  - 460-465
-  - 468-478
-  - 481-487
-  - 490-511
-  - 514-522
-  - 525-530
-  - 533-551
-  - 554-571
-  - 574-592
-  - 595-618
-  - 621-642
+  - 66-122
+  - 124-171
+  - 173-183
+  - 185-193
+  - 195-197
+  - 202-218
+  - 220-233
+  - 235-241
+  - 243-268
+  - 270-275
+  - 277-282
+  - 284-292
+  - 294-311
+  - 313-323
+  - 325-327
+  - 329-331
+  - 333-339
+  - 341-349
+  - 351-365
+  - 367-372
+  - 374-383
+  - 385-410
+  - 412-422
+  - 429-456
+  - 458-463
+  - 466-476
+  - 479-485
+  - 488-509
+  - 512-520
+  - 523-528
+  - 531-549
+  - 552-569
+  - 572-590
+  - 593-616
+  - 619-640
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -67,127 +67,125 @@ Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 - `ParsedLocation` (class) component `ParsedLocation [class]` (`23a18fcf-f191-5f18-8f90-f96c31be5e74`) lines 16-20 [crates/gcode/src/commands/symbol_at.rs:16-20]
   - Signature: `struct ParsedLocation {`
-  - Purpose: ParsedLocation is a struct that represents a source code location with a required file path and line number, and an optional column offset. [crates/gcode/src/commands/symbol_at.rs:16-20]
+  - Purpose: Indexed class `ParsedLocation` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:16-20]
 - `SymbolAtTarget` (class) component `SymbolAtTarget [class]` (`9ab78ade-aec5-51c5-bed0-826bc898d12a`) lines 23-26 [crates/gcode/src/commands/symbol_at.rs:23-26]
   - Signature: `struct SymbolAtTarget {`
-  - Purpose: SymbolAtTarget is a struct that represents a symbol's location in source code using a required line number and an optional byte offset. [crates/gcode/src/commands/symbol_at.rs:23-26]
+  - Purpose: Indexed class `SymbolAtTarget` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:23-26]
 - `MatchKind` (type) component `MatchKind [type]` (`f1fb17f6-d9a7-5b93-acf7-25ccfaddde73`) lines 30-33 [crates/gcode/src/commands/symbol_at.rs:30-33]
   - Signature: `enum MatchKind {`
   - Purpose: Indexed type `MatchKind` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:30-33]
 - `SymbolAtLookup` (class) component `SymbolAtLookup [class]` (`a281f804-6a20-5d49-9471-61b0972ea102`) lines 36-47 [crates/gcode/src/commands/symbol_at.rs:36-47]
   - Signature: `struct SymbolAtLookup {`
-  - Purpose: `SymbolAtLookup` is a struct that encapsulates a symbol lookup query containing target file coordinates (with optional column specificity), match classification, and distance-to-match metrics in both lines and bytes. [crates/gcode/src/commands/symbol_at.rs:36-47]
+  - Purpose: Indexed class `SymbolAtLookup` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:36-47]
 - `SelectedSymbol` (class) component `SelectedSymbol [class]` (`b1661aec-3cb2-5c81-ac62-cf91adba92a9`) lines 50-55 [crates/gcode/src/commands/symbol_at.rs:50-55]
   - Signature: `struct SelectedSymbol<'a> {`
-  - Purpose: `SelectedSymbol<'a>` is a generic struct that encapsulates a borrowed `Symbol` reference along with its match classification (`MatchKind`) and positional distance metrics measured in lines and optional bytes. [crates/gcode/src/commands/symbol_at.rs:50-55]
+  - Purpose: Indexed class `SelectedSymbol` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:50-55]
 - `requested_file_for_freshness` (function) component `requested_file_for_freshness [function]` (`16ef6bf6-1d54-57b8-b278-3596c704aad1`) lines 57-64 [crates/gcode/src/commands/symbol_at.rs:57-64]
   - Signature: `pub fn requested_file_for_freshness(`
-  - Purpose: Parses a location specification with an optional line number and returns the context-normalized file path. [crates/gcode/src/commands/symbol_at.rs:57-64]
-- `run` (function) component `run [function]` (`ebf44413-29e7-5c34-b640-89e53e9a7be2`) lines 66-124 [crates/gcode/src/commands/symbol_at.rs:66-124]
+  - Purpose: Indexed function `requested_file_for_freshness` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:57-64]
+- `run` (function) component `run [function]` (`ebf44413-29e7-5c34-b640-89e53e9a7be2`) lines 66-122 [crates/gcode/src/commands/symbol_at.rs:66-122]
   - Signature: `pub fn run(`
-  - Purpose: Parses a source location, retrieves the corresponding symbol from a visibility-filtered database, and outputs its source code in JSON or text format with optional diagnostics. [crates/gcode/src/commands/symbol_at.rs:66-124]
-- `parse_location` (function) component `parse_location [function]` (`b87b66d9-f346-5aa0-bb4b-25321813cddd`) lines 126-173 [crates/gcode/src/commands/symbol_at.rs:126-173]
+  - Purpose: Indexed function `run` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:66-122]
+- `parse_location` (function) component `parse_location [function]` (`71d67d90-12e7-5f13-8802-a13b3ace34d0`) lines 124-171 [crates/gcode/src/commands/symbol_at.rs:124-171]
   - Signature: `fn parse_location(location: &str, explicit_line: Option<usize>) -> anyhow::Result<ParsedLocation> {`
-  - Purpose: Parses a file location string into file path, line number, and optional column components, supporting PATH:LINE and PATH:LINE:COLUMN formats or an explicit line parameter, with validation of required fields and numeric constraints. [crates/gcode/src/commands/symbol_at.rs:126-173]
-- `has_encoded_line` (function) component `has_encoded_line [function]` (`6f18ef83-0017-5241-9d3c-ccb6ea736eb9`) lines 175-185 [crates/gcode/src/commands/symbol_at.rs:175-185]
+  - Purpose: Indexed function `parse_location` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:124-171]
+- `has_encoded_line` (function) component `has_encoded_line [function]` (`69dec041-4f6c-5ca9-b704-1651529382ca`) lines 173-183 [crates/gcode/src/commands/symbol_at.rs:173-183]
   - Signature: `fn has_encoded_line(location: &str) -> bool {`
-  - Purpose: Returns true if the location string contains numeric text in either the final or penultimate colon-delimited segment. [crates/gcode/src/commands/symbol_at.rs:175-185]
-- `parse_positive_component` (function) component `parse_positive_component [function]` (`aaf8ed9b-33e1-5d5b-8578-e380989e03b8`) lines 187-195 [crates/gcode/src/commands/symbol_at.rs:187-195]
+  - Purpose: Indexed function `has_encoded_line` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:173-183]
+- `parse_positive_component` (function) component `parse_positive_component [function]` (`cb59795f-fe69-59d4-9ec6-2021e45743d9`) lines 185-193 [crates/gcode/src/commands/symbol_at.rs:185-193]
   - Signature: `fn parse_positive_component(kind: &str, value: &str) -> anyhow::Result<usize> {`
-  - Purpose: Parses a string into a non-zero `usize`, returning a context-specific error message if the value is invalid or not strictly positive. [crates/gcode/src/commands/symbol_at.rs:187-195]
-- `is_numeric_text` (function) component `is_numeric_text [function]` (`65fe92ff-06d3-5eef-839f-e8024738b66e`) lines 197-199 [crates/gcode/src/commands/symbol_at.rs:197-199]
+  - Purpose: Indexed function `parse_positive_component` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:185-193]
+- `is_numeric_text` (function) component `is_numeric_text [function]` (`b36003a1-765f-5330-80ef-049c68dfe737`) lines 195-197 [crates/gcode/src/commands/symbol_at.rs:195-197]
   - Signature: `fn is_numeric_text(value: &str) -> bool {`
-  - Purpose: Returns `true` if the string is non-empty and contains exclusively ASCII digit characters (0-9). [crates/gcode/src/commands/symbol_at.rs:197-199]
-- `line_column_to_byte_offset` (function) component `line_column_to_byte_offset [function]` (`9436bfed-4f32-5c30-b763-32d42adabf92`) lines 204-220 [crates/gcode/src/commands/symbol_at.rs:204-220]
+  - Purpose: Indexed function `is_numeric_text` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:195-197]
+- `line_column_to_byte_offset` (function) component `line_column_to_byte_offset [function]` (`2ef0e4f8-9c7e-58a6-9035-2418d830249e`) lines 202-218 [crates/gcode/src/commands/symbol_at.rs:202-218]
   - Signature: `fn line_column_to_byte_offset(source: &[u8], line: usize, column: usize) -> anyhow::Result<usize> {`
-  - Purpose: Converts a 1-indexed (line, column) coordinate to its corresponding byte offset in a source, validating that both coordinates are in bounds. [crates/gcode/src/commands/symbol_at.rs:204-220]
-- `line_bounds` (function) component `line_bounds [function]` (`f6061a37-7259-545d-9d02-423363dfb01a`) lines 222-235 [crates/gcode/src/commands/symbol_at.rs:222-235]
+  - Purpose: Indexed function `line_column_to_byte_offset` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:202-218]
+- `line_bounds` (function) component `line_bounds [function]` (`de1f726f-83f1-5bb4-8453-edb3c34206d4`) lines 220-233 [crates/gcode/src/commands/symbol_at.rs:220-233]
   - Signature: `fn line_bounds(source: &[u8], line: usize) -> Option<(usize, usize)> {`
-  - Purpose: Returns the byte offset bounds of a specified line number in a byte buffer, scanning for newline delimiters and trimming carriage returns from line endings. [crates/gcode/src/commands/symbol_at.rs:222-235]
-- `trim_cr` (function) component `trim_cr [function]` (`559f19c0-2dac-5638-82d3-0c07edb2e376`) lines 237-243 [crates/gcode/src/commands/symbol_at.rs:237-243]
+  - Purpose: Indexed function `line_bounds` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:220-233]
+- `trim_cr` (function) component `trim_cr [function]` (`f3e332d2-ddd3-5df2-b0f8-bab6194a9123`) lines 235-241 [crates/gcode/src/commands/symbol_at.rs:235-241]
   - Signature: `fn trim_cr(source: &[u8], start: usize, end: usize) -> usize {`
-  - Purpose: Returns the adjusted end index of the byte range, decremented by one if the byte at position `end - 1` is a carriage return (`\r`), otherwise unchanged. [crates/gcode/src/commands/symbol_at.rs:237-243]
-- `select_symbol` (function) component `select_symbol [function]` (`2a456788-4130-5809-bc1c-873659422345`) lines 245-270 [crates/gcode/src/commands/symbol_at.rs:245-270]
+  - Purpose: Indexed function `trim_cr` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:235-241]
+- `select_symbol` (function) component `select_symbol [function]` (`ddbfc0d3-511f-5a27-88e3-a161f21da5a8`) lines 243-268 [crates/gcode/src/commands/symbol_at.rs:243-268]
   - Signature: `fn select_symbol(symbols: &[Symbol], target: SymbolAtTarget) -> Option<SelectedSymbol<'_>> {`
-  - Purpose: Selects the smallest symbol containing a target position, or if none exists, the nearest symbol, returning the selection with match kind and distance metrics. [crates/gcode/src/commands/symbol_at.rs:245-270]
-- `contains_target` (function) component `contains_target [function]` (`2e347167-7918-5063-996e-0c3df126e3c4`) lines 272-277 [crates/gcode/src/commands/symbol_at.rs:272-277]
+  - Purpose: Indexed function `select_symbol` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:243-268]
+- `contains_target` (function) component `contains_target [function]` (`01602b75-b275-5c90-9ee9-f4284326e428`) lines 270-275 [crates/gcode/src/commands/symbol_at.rs:270-275]
   - Signature: `fn contains_target(symbol: &Symbol, target: SymbolAtTarget) -> bool {`
-  - Purpose: Checks whether a target position falls within a symbol's byte range (if byte offset is specified) or line range (otherwise). [crates/gcode/src/commands/symbol_at.rs:272-277]
-- `compare_containing` (function) component `compare_containing [function]` (`501c0820-4ab5-5055-963f-5b29880830cb`) lines 279-284 [crates/gcode/src/commands/symbol_at.rs:279-284]
+  - Purpose: Indexed function `contains_target` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:270-275]
+- `compare_containing` (function) component `compare_containing [function]` (`83181fd3-18a9-5f79-b67e-583758271ce6`) lines 277-282 [crates/gcode/src/commands/symbol_at.rs:277-282]
   - Signature: `fn compare_containing(left: &Symbol, right: &Symbol) -> Ordering {`
-  - Purpose: # Summary
-
-`compare_containing` establishes a total ordering of symbols by comparing their line spans, then byte spans, and finally by reverse byte start position to determine containment relationships. [crates/gcode/src/commands/symbol_at.rs:279-284]
-- `compare_nearest` (function) component `compare_nearest [function]` (`c21c34bd-6813-5ac7-b599-73cef8b4cb08`) lines 286-294 [crates/gcode/src/commands/symbol_at.rs:286-294]
+  - Purpose: Indexed function `compare_containing` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:277-282]
+- `compare_nearest` (function) component `compare_nearest [function]` (`d1ea1907-4191-55a5-90b3-582609b9b9a2`) lines 284-292 [crates/gcode/src/commands/symbol_at.rs:284-292]
   - Signature: `fn compare_nearest(left: &Symbol, right: &Symbol, target: SymbolAtTarget) -> Ordering {`
-  - Purpose: Compares two symbols by their proximity to a target location, using line distance as the primary ordering criterion, byte offset distance as a secondary tiebreaker when present, and previous preference as a final fallback. [crates/gcode/src/commands/symbol_at.rs:286-294]
-- `compare_previous_preference` (function) component `compare_previous_preference [function]` (`01e1138b-b604-590d-9c47-a37e90a70ca3`) lines 296-313 [crates/gcode/src/commands/symbol_at.rs:296-313]
+  - Purpose: Indexed function `compare_nearest` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:284-292]
+- `compare_previous_preference` (function) component `compare_previous_preference [function]` (`72955b3a-4c61-57ca-bd2b-0c584060951e`) lines 294-311 [crates/gcode/src/commands/symbol_at.rs:294-311]
   - Signature: `fn compare_previous_preference(left: &Symbol, right: &Symbol, target: SymbolAtTarget) -> Ordering {`
-  - Purpose: Comparatively orders two symbols by prioritizing those matching the target's previous-symbol condition, using reversed positional comparison for previous symbols and forward positional comparison for non-previous symbols. [crates/gcode/src/commands/symbol_at.rs:296-313]
-- `is_previous_symbol` (function) component `is_previous_symbol [function]` (`d76deb34-b57d-5ee3-9081-b6f71b239c64`) lines 315-325 [crates/gcode/src/commands/symbol_at.rs:315-325]
+  - Purpose: Indexed function `compare_previous_preference` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:294-311]
+- `is_previous_symbol` (function) component `is_previous_symbol [function]` (`1f6c60b2-a56c-5c2f-9434-c831a04eb76b`) lines 313-323 [crates/gcode/src/commands/symbol_at.rs:313-323]
   - Signature: `fn is_previous_symbol(symbol: &Symbol, target: SymbolAtTarget) -> bool {`
-  - Purpose: Determines whether a symbol precedes a target location by prioritizing byte offset comparison when available, otherwise falling back to end-line comparison. [crates/gcode/src/commands/symbol_at.rs:315-325]
-- `line_span` (function) component `line_span [function]` (`d73aaa27-f7e1-5dce-8b18-31db9593f048`) lines 327-329 [crates/gcode/src/commands/symbol_at.rs:327-329]
+  - Purpose: Indexed function `is_previous_symbol` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:313-323]
+- `line_span` (function) component `line_span [function]` (`46d9e4b6-f3f9-548f-8677-243aa0cba19f`) lines 325-327 [crates/gcode/src/commands/symbol_at.rs:325-327]
   - Signature: `fn line_span(symbol: &Symbol) -> usize {`
-  - Purpose: Calculates the number of lines spanned by a symbol as the saturating difference between its end and start line numbers. [crates/gcode/src/commands/symbol_at.rs:327-329]
-- `byte_span` (function) component `byte_span [function]` (`9a142e77-333b-5643-a9ae-399f3dacd0b6`) lines 331-333 [crates/gcode/src/commands/symbol_at.rs:331-333]
+  - Purpose: Indexed function `line_span` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:325-327]
+- `byte_span` (function) component `byte_span [function]` (`88360e0e-6793-5775-ac15-040e8863dabf`) lines 329-331 [crates/gcode/src/commands/symbol_at.rs:329-331]
   - Signature: `fn byte_span(symbol: &Symbol) -> usize {`
-  - Purpose: Indexed function `byte_span` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:331-333]
-- `line_distance` (function) component `line_distance [function]` (`de9fe7a5-c293-5819-bff4-a71384836047`) lines 335-341 [crates/gcode/src/commands/symbol_at.rs:335-341]
+  - Purpose: Indexed function `byte_span` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:329-331]
+- `line_distance` (function) component `line_distance [function]` (`725c0860-177d-54b8-9461-8e21407b1aad`) lines 333-339 [crates/gcode/src/commands/symbol_at.rs:333-339]
   - Signature: `fn line_distance(symbol: &Symbol, line: usize) -> usize {`
-  - Purpose: Indexed function `line_distance` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:335-341]
-- `byte_distance` (function) component `byte_distance [function]` (`5c422dca-29b9-5d43-9be3-ee3ff17cb7b0`) lines 343-351 [crates/gcode/src/commands/symbol_at.rs:343-351]
+  - Purpose: Indexed function `line_distance` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:333-339]
+- `byte_distance` (function) component `byte_distance [function]` (`805f80ac-a6a8-5708-a6e9-2c52f96d342d`) lines 341-349 [crates/gcode/src/commands/symbol_at.rs:341-349]
   - Signature: `fn byte_distance(symbol: &Symbol, offset: usize) -> usize {`
-  - Purpose: Indexed function `byte_distance` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:343-351]
-- `lookup_for_selection` (function) component `lookup_for_selection [function]` (`bab6d1ae-4f2c-51ec-a09d-6275d2b73e0a`) lines 353-367 [crates/gcode/src/commands/symbol_at.rs:353-367]
+  - Purpose: Indexed function `byte_distance` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:341-349]
+- `lookup_for_selection` (function) component `lookup_for_selection [function]` (`b135c06c-67c6-5ab8-b0fb-3ef517e4544e`) lines 351-365 [crates/gcode/src/commands/symbol_at.rs:351-365]
   - Signature: `fn lookup_for_selection(`
-  - Purpose: Indexed function `lookup_for_selection` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:353-367]
-- `symbol_source` (function) component `symbol_source [function]` (`b17f356e-ce79-52b3-9ec4-7fac59ef1189`) lines 369-374 [crates/gcode/src/commands/symbol_at.rs:369-374]
+  - Purpose: Indexed function `lookup_for_selection` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:351-365]
+- `symbol_source` (function) component `symbol_source [function]` (`b8d73228-d8e6-501c-ae29-87edbf4f6e0c`) lines 367-372 [crates/gcode/src/commands/symbol_at.rs:367-372]
   - Signature: `fn symbol_source(source: &[u8], symbol: &Symbol) -> (String, usize) {`
-  - Purpose: Indexed function `symbol_source` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:369-374]
-- `symbol_at_json_value` (function) component `symbol_at_json_value [function]` (`7f5ab302-7052-535a-a6c7-fb81f026c6d6`) lines 376-385 [crates/gcode/src/commands/symbol_at.rs:376-385]
+  - Purpose: Indexed function `symbol_source` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:367-372]
+- `symbol_at_json_value` (function) component `symbol_at_json_value [function]` (`e22dde31-2a1c-594d-b067-bc21209e9961`) lines 374-383 [crates/gcode/src/commands/symbol_at.rs:374-383]
   - Signature: `fn symbol_at_json_value(`
-  - Purpose: Indexed function `symbol_at_json_value` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:376-385]
-- `fallback_diagnostic` (function) component `fallback_diagnostic [function]` (`b6aec16a-acee-5796-9dee-a27daba25f41`) lines 387-412 [crates/gcode/src/commands/symbol_at.rs:387-412]
+  - Purpose: Indexed function `symbol_at_json_value` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:374-383]
+- `fallback_diagnostic` (function) component `fallback_diagnostic [function]` (`bc63b2c2-a007-5b5d-b4d4-d9c59f3a435f`) lines 385-410 [crates/gcode/src/commands/symbol_at.rs:385-410]
   - Signature: `fn fallback_diagnostic(symbol: &Symbol, lookup: &SymbolAtLookup, quiet: bool) -> Option<String> {`
-  - Purpose: Indexed function `fallback_diagnostic` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:387-412]
-- `plural` (function) component `plural [function]` (`8380ffc1-58af-5ba3-b1e3-9aafea6d5b34`) lines 414-424 [crates/gcode/src/commands/symbol_at.rs:414-424]
+  - Purpose: Indexed function `fallback_diagnostic` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:385-410]
+- `plural` (function) component `plural [function]` (`cdbc3afb-939b-582f-a532-dbc689e26d88`) lines 412-422 [crates/gcode/src/commands/symbol_at.rs:412-422]
   - Signature: `fn plural(unit: &'static str, value: usize) -> &'static str {`
-  - Purpose: Indexed function `plural` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:414-424]
-- `symbol` (function) component `symbol [function]` (`6c23ec01-90d0-5284-80ed-9baebfe4b2b2`) lines 431-458 [crates/gcode/src/commands/symbol_at.rs:431-458]
+  - Purpose: Indexed function `plural` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:412-422]
+- `symbol` (function) component `symbol [function]` (`46d192ab-301d-5dc0-bdc7-2a183442a67b`) lines 429-456 [crates/gcode/src/commands/symbol_at.rs:429-456]
   - Signature: `fn symbol(`
-  - Purpose: Indexed function `symbol` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:431-458]
-- `error_text` (function) component `error_text [function]` (`18d84262-71d9-5603-b1e5-cfb2831480c2`) lines 460-465 [crates/gcode/src/commands/symbol_at.rs:460-465]
+  - Purpose: Indexed function `symbol` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:429-456]
+- `error_text` (function) component `error_text [function]` (`9cd2d7c4-e33a-51f5-9a82-9bc1260d123e`) lines 458-463 [crates/gcode/src/commands/symbol_at.rs:458-463]
   - Signature: `fn error_text<T>(result: anyhow::Result<T>) -> String {`
-  - Purpose: Indexed function `error_text` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:460-465]
-- `parses_path_line_and_column_from_the_right` (function) component `parses_path_line_and_column_from_the_right [function]` (`82e79384-db9e-59cd-9817-0f5fc76bdfc7`) lines 468-478 [crates/gcode/src/commands/symbol_at.rs:468-478]
+  - Purpose: Indexed function `error_text` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:458-463]
+- `parses_path_line_and_column_from_the_right` (function) component `parses_path_line_and_column_from_the_right [function]` (`94cbf927-c0b3-517a-957e-864cdd08d096`) lines 466-476 [crates/gcode/src/commands/symbol_at.rs:466-476]
   - Signature: `fn parses_path_line_and_column_from_the_right() {`
-  - Purpose: Indexed function `parses_path_line_and_column_from_the_right` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:468-478]
-- `parses_path_with_separate_line` (function) component `parses_path_with_separate_line [function]` (`7b4bca8a-3d15-5382-8b25-37ea440de766`) lines 481-487 [crates/gcode/src/commands/symbol_at.rs:481-487]
+  - Purpose: Indexed function `parses_path_line_and_column_from_the_right` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:466-476]
+- `parses_path_with_separate_line` (function) component `parses_path_with_separate_line [function]` (`1b4a8d5a-4007-58c5-a62b-98c4d6dbc895`) lines 479-485 [crates/gcode/src/commands/symbol_at.rs:479-485]
   - Signature: `fn parses_path_with_separate_line() {`
-  - Purpose: Indexed function `parses_path_with_separate_line` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:481-487]
-- `rejects_invalid_location_forms` (function) component `rejects_invalid_location_forms [function]` (`a9c17528-2482-5a2b-977e-6bf788beac2c`) lines 490-511 [crates/gcode/src/commands/symbol_at.rs:490-511]
+  - Purpose: Indexed function `parses_path_with_separate_line` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:479-485]
+- `rejects_invalid_location_forms` (function) component `rejects_invalid_location_forms [function]` (`95673617-cb70-5189-ab43-969497a27780`) lines 488-509 [crates/gcode/src/commands/symbol_at.rs:488-509]
   - Signature: `fn rejects_invalid_location_forms() {`
-  - Purpose: Indexed function `rejects_invalid_location_forms` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:490-511]
-- `converts_one_based_byte_columns_to_offsets` (function) component `converts_one_based_byte_columns_to_offsets [function]` (`8b3b1663-7f95-5640-addd-e6b11ee4c6c5`) lines 514-522 [crates/gcode/src/commands/symbol_at.rs:514-522]
+  - Purpose: Indexed function `rejects_invalid_location_forms` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:488-509]
+- `converts_one_based_byte_columns_to_offsets` (function) component `converts_one_based_byte_columns_to_offsets [function]` (`4916be6e-bffb-5339-a423-ff5691947193`) lines 512-520 [crates/gcode/src/commands/symbol_at.rs:512-520]
   - Signature: `fn converts_one_based_byte_columns_to_offsets() {`
-  - Purpose: Indexed function `converts_one_based_byte_columns_to_offsets` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:514-522]
-- `rejects_out_of_range_columns` (function) component `rejects_out_of_range_columns [function]` (`c9e305c0-1025-5722-aaf2-cd2e3b16d725`) lines 525-530 [crates/gcode/src/commands/symbol_at.rs:525-530]
+  - Purpose: Indexed function `converts_one_based_byte_columns_to_offsets` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:512-520]
+- `rejects_out_of_range_columns` (function) component `rejects_out_of_range_columns [function]` (`2b10c626-8177-5b38-bff2-b4e51ceea8ea`) lines 523-528 [crates/gcode/src/commands/symbol_at.rs:523-528]
   - Signature: `fn rejects_out_of_range_columns() {`
-  - Purpose: Indexed function `rejects_out_of_range_columns` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:525-530]
-- `containing_selection_prefers_smallest_span_then_later_start` (function) component `containing_selection_prefers_smallest_span_then_later_start [function]` (`b96893c0-f575-5296-8abc-1ac1d83ddec0`) lines 533-551 [crates/gcode/src/commands/symbol_at.rs:533-551]
+  - Purpose: Indexed function `rejects_out_of_range_columns` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:523-528]
+- `containing_selection_prefers_smallest_span_then_later_start` (function) component `containing_selection_prefers_smallest_span_then_later_start [function]` (`f2ffa2e8-24cf-5b06-8989-86418b9f77c1`) lines 531-549 [crates/gcode/src/commands/symbol_at.rs:531-549]
   - Signature: `fn containing_selection_prefers_smallest_span_then_later_start() {`
-  - Purpose: Indexed function `containing_selection_prefers_smallest_span_then_later_start` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:533-551]
-- `nearest_selection_prefers_previous_on_equal_line_distance` (function) component `nearest_selection_prefers_previous_on_equal_line_distance [function]` (`c807afb7-6a47-5965-8ea8-a7ce28f42179`) lines 554-571 [crates/gcode/src/commands/symbol_at.rs:554-571]
+  - Purpose: Indexed function `containing_selection_prefers_smallest_span_then_later_start` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:531-549]
+- `nearest_selection_prefers_previous_on_equal_line_distance` (function) component `nearest_selection_prefers_previous_on_equal_line_distance [function]` (`63a0a1b8-4aad-59d1-adc6-a16393cb0a93`) lines 552-569 [crates/gcode/src/commands/symbol_at.rs:552-569]
   - Signature: `fn nearest_selection_prefers_previous_on_equal_line_distance() {`
-  - Purpose: Indexed function `nearest_selection_prefers_previous_on_equal_line_distance` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:554-571]
-- `nearest_selection_uses_byte_distance_for_column_ties` (function) component `nearest_selection_uses_byte_distance_for_column_ties [function]` (`dfe72ec9-d211-5eb2-bfeb-8f646308dcdf`) lines 574-592 [crates/gcode/src/commands/symbol_at.rs:574-592]
+  - Purpose: Indexed function `nearest_selection_prefers_previous_on_equal_line_distance` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:552-569]
+- `nearest_selection_uses_byte_distance_for_column_ties` (function) component `nearest_selection_uses_byte_distance_for_column_ties [function]` (`2b489723-649f-57ee-bd29-005f34a22191`) lines 572-590 [crates/gcode/src/commands/symbol_at.rs:572-590]
   - Signature: `fn nearest_selection_uses_byte_distance_for_column_ties() {`
-  - Purpose: Indexed function `nearest_selection_uses_byte_distance_for_column_ties` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:574-592]
-- `lookup_json_includes_source_and_metadata` (function) component `lookup_json_includes_source_and_metadata [function]` (`cc535d2f-dd22-5fdf-9efa-05c5b0d82670`) lines 595-618 [crates/gcode/src/commands/symbol_at.rs:595-618]
+  - Purpose: Indexed function `nearest_selection_uses_byte_distance_for_column_ties` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:572-590]
+- `lookup_json_includes_source_and_metadata` (function) component `lookup_json_includes_source_and_metadata [function]` (`c75781ef-95fc-5aa2-ae9f-2f9c7a3da0cf`) lines 593-616 [crates/gcode/src/commands/symbol_at.rs:593-616]
   - Signature: `fn lookup_json_includes_source_and_metadata() {`
-  - Purpose: Indexed function `lookup_json_includes_source_and_metadata` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:595-618]
-- `nearest_diagnostic_is_suppressed_when_quiet_or_containing` (function) component `nearest_diagnostic_is_suppressed_when_quiet_or_containing [function]` (`5a34ebb8-4ae3-54a8-87ed-cc4946a4cc5f`) lines 621-642 [crates/gcode/src/commands/symbol_at.rs:621-642]
+  - Purpose: Indexed function `lookup_json_includes_source_and_metadata` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:593-616]
+- `nearest_diagnostic_is_suppressed_when_quiet_or_containing` (function) component `nearest_diagnostic_is_suppressed_when_quiet_or_containing [function]` (`e3005cae-ebe9-5794-b6c0-2bc6ef8183bd`) lines 619-640 [crates/gcode/src/commands/symbol_at.rs:619-640]
   - Signature: `fn nearest_diagnostic_is_suppressed_when_quiet_or_containing() {`
-  - Purpose: Indexed function `nearest_diagnostic_is_suppressed_when_quiet_or_containing` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:621-642]
+  - Purpose: Indexed function `nearest_diagnostic_is_suppressed_when_quiet_or_containing` in `crates/gcode/src/commands/symbol_at.rs`. [crates/gcode/src/commands/symbol_at.rs:619-640]
 

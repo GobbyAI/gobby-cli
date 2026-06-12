@@ -9,8 +9,8 @@ provenance:
   - 111-115
   - 117-127
   - 130-177
-  - 179-223
-  - 225-258
+  - 179-229
+  - 231-264
 - file: crates/gcode/src/index/indexer/freshness_probe.rs
   ranges:
   - 37-81
@@ -60,51 +60,57 @@ provenance:
   ranges:
   - 27-30
   - 32-45
-  - 47-164
-  - 166-293
-  - 295-299
-  - 301-315
-  - 317-331
+  - 47-173
+  - 175-302
+  - 304-308
+  - 310-324
+  - 326-340
 - file: crates/gcode/src/index/indexer/sink.rs
   ranges:
-  - 6-23
-  - 25-27
-  - 30-32
-  - 39-41
-  - 43-45
-  - 47-49
-  - 51-58
-  - 60-67
-  - 69-71
+  - 6-34
+  - 36-38
+  - 41-43
+  - 50-52
+  - 54-60
+  - 62-69
+  - 71-73
+  - 75-77
+  - 79-86
+  - 88-95
+  - 97-99
 - file: crates/gcode/src/index/indexer/tests.rs
   ranges:
-  - 22-28
-  - 30-38
-  - 41-60
-  - 63-82
-  - 85-103
-  - 106-150
-  - 153-161
-  - 163-212
-  - 164-167
-  - 169-173
-  - 175-179
-  - 181-190
-  - 192-205
-  - 207-211
-  - 215-282
-  - 285-307
-  - 310-346
-  - 349-385
-  - 388-418
-  - 421-447
-  - 450-472
-  - 475-490
-  - 493-542
-  - 545-573
-  - 576-626
-  - 629-666
-  - 669-695
+  - 24-30
+  - 32-40
+  - 43-62
+  - 65-84
+  - 87-105
+  - 108-152
+  - 155-164
+  - 166-235
+  - 238-314
+  - 318-391
+  - 393-402
+  - 404-410
+  - 412-415
+  - 417-423
+  - 425-456
+  - 458-485
+  - 487-514
+  - 516-524
+  - 526-536
+  - 539-561
+  - 564-600
+  - 603-639
+  - 642-672
+  - 675-701
+  - 704-726
+  - 729-744
+  - 747-796
+  - 799-827
+  - 830-880
+  - 883-920
+  - 923-949
 - file: crates/gcode/src/index/indexer/types.rs
   ranges:
   - 8-17
@@ -114,9 +120,6 @@ provenance:
   - 71-76
   - 79-84
   - 86-109
-  - 87-92
-  - 94-104
-  - 106-108
   - 111-113
   - 116-124
 - file: crates/gcode/src/index/indexer/util.rs
@@ -146,13 +149,7 @@ Parent: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 
 ## Overview
 
-The `indexer` module orchestrates the code-indexing pipeline that turns discovered, explicit, and overlay files into persisted code facts.
-
-The `pipeline` entry points (`index_files`, `index_files_with_connection`, `index_discovered_files`, `index_explicit_files_with_connection`) drive indexing for discovered and explicitly requested paths, while `file` handles per-file indexing, content-only fallback, fact writes, and semantic-resolver setup. `overlay` reconciles overlay files against the base index (inherit/shadow/add/delete actions), and `freshness_probe` determines change/staleness via mtime gating, git porcelain status, project stats, and file-state comparisons.
-
-Persistence flows through `sink`, defining the `CodeFactSink` trait and its `PostgresCodeFactSink` implementation for upserting files, symbols, imports, calls, and content chunks plus deletions and tombstones. `lifecycle` manages invalidation, projection cleanup/sync, and daemon notifications. `types` defines the request/outcome data model (`IndexRequest`, `IndexOutcome`, `IndexDurations`, `FileIndexCounts`, degradation and unsupported-file-type metadata), and `util` provides path normalization, relative-path resolution, and discovered-path filtering.
-
-The `tests` module verifies CLI-independent library contracts, fact-writing behavior, gitignore handling, explicit/overlay routing, freshness gating, projection cleanup degradation, and path-normalization edge cases (UNC, cross-drive, mixed separators).
+The indexer module orchestrates the extraction, reconciliation, and storage of code facts from project files. It manages the full indexing lifecycle—including file discovery, path normalization, overlay file reconciliation, change/freshness detection, and writing parsed facts (symbols, imports, calls, and content chunks) to a persistent database sink.
 [crates/gcode/src/index/indexer/file.rs:15-91]
 [crates/gcode/src/index/indexer/freshness_probe.rs:37-81]
 [crates/gcode/src/index/indexer/lifecycle.rs:16-54]
@@ -165,31 +162,32 @@ The `tests` module verifies CLI-independent library contracts, fact-writing beha
 sequenceDiagram
     participant m_01ec77cc_48df_5af6_ad42_b9d5800cf9ad as index_overlay_files &#91;function&#93;
     participant m_06f747c0_d77a_5408_802b_60d142616c74 as skew_margin_boundary_only_ever_makes_the_gate_more_eager &#91;function&#93;
+    participant m_0787f1d1_704a_51e3_826d_c429ef009eef as explicit_file_route_indexes_mjs_and_routes_markdown_to_content_only &#91;function&#93;
     participant m_10340c10_e576_5d26_badb_81bc9e42948a as indexed_file_states &#91;function&#93;
-    participant m_195a4b66_14f8_5543_b933_2ec31aaade71 as current_file_state_keeps_unhashable_paths_present &#91;function&#93;
+    participant m_1338b69e_01ae_51af_800c_39edd113f6fd as SummaryPreservationCleanup.drop &#91;method&#93;
     participant m_1f671963_1e36_5bcb_8b36_35136e72d054 as lexical_relative_path &#91;function&#93;
+    participant m_227a3a94_2cb5_5705_a228_e26c9bbab506 as explicit_file_route_sends_unsupported_text_to_content_only &#91;function&#93;
     participant m_271a6fa6_20dd_501e_bd1a_35ee1d99229f as is_porcelain_status_entry &#91;function&#93;
     participant m_27cff566_a652_5c21_906c_54247b567ec0 as cleanup_deleted_file_projections &#91;function&#93;
     participant m_2b097022_1ca0_54ab_9167_230f31715fe8 as set_mtime &#91;function&#93;
-    participant m_2b40a5c0_fcbb_59a1_9d4c_b51da7c521ab as unsupported_file_types_group_content_only_paths &#91;function&#93;
     participant m_2c3d5dde_70fb_517d_9a30_a57fc029d55a as requested_relative_path &#91;function&#93;
-    participant m_388791a3_c68c_5526_ae2b_22228a5abf9a as index_explicit_files_with_connection &#91;function&#93;
+    participant m_2d437509_ec07_545d_8636_48f4a49d61ce as cleanup_summary_preservation_project &#91;function&#93;
     participant m_4024a0a6_07dc_543a_9b66_60e72d24e7d8 as git_status_timeout &#91;function&#93;
     participant m_4b108bd2_677f_5b6f_baae_1a9687543be0 as git_status_relative_paths &#91;function&#93;
+    participant m_4b12832a_8119_5965_b9c6_d91d8cb4122e as index_file &#91;function&#93;
     participant m_4d80ef56_1326_501d_ad99_6e76e8e39313 as base_time &#91;function&#93;
     participant m_5ea81afb_c78f_589e_9c62_6ad75a49ad6b as push_projection_cleanup_degradation &#91;function&#93;
     participant m_7c9b4b5f_c2f2_5a8a_a844_5837e9288643 as normalized_components &#91;function&#93;
-    participant m_7ff9eba8_b8db_5bc6_bdb0_6efbb21c9347 as write_file &#91;function&#93;
-    participant m_afebe3bb_85a7_55ec_b928_6b32ca3b56aa as explicit_route_with_discovery_options &#91;function&#93;
+    participant m_8db19430_dba8_52b8_b94c_ebd14b9c1b71 as write_parsed_file_facts &#91;function&#93;
+    participant m_93b52f75_55a1_5025_a3a4_7e3d067416a6 as write_file &#91;function&#93;
+    participant m_af592e27_20e6_5df0_b6b1_1ca5703f5d03 as compact_stderr &#91;function&#93;
     participant m_be1729cf_c48d_5d6e_8ccf_bfee68ce411e as overlay_reconcile_action &#91;function&#93;
     participant m_c37b5340_8902_5b1c_a469_944a66f25bf7 as write_tombstone &#91;function&#93;
     participant m_d0c535c9_f938_5584_99a0_02a2a7c3c113 as paths_by_relative &#91;function&#93;
     participant m_d4fc0ae1_b01a_5027_9c1c_91ce4e5a2e64 as write_file &#91;function&#93;
-    participant m_d861f7ac_d503_569e_92bf_7af185d9864c as discovery_options &#91;function&#93;
     participant m_d8a9fdbf_e6be_5cef_ba09_479c03c7e522 as overlay_reconcile_candidates &#91;function&#93;
     participant m_ea312341_5b87_59ce_b013_88a15ba48909 as valid_porcelain_status_byte &#91;function&#93;
     participant m_f6a4f46d_0e79_54eb_b222_2cd0b7d7fb2d as rel_matches_filter &#91;function&#93;
-    participant m_fa0d9e06_8afa_5fa5_bf9e_598a4849028b as cleanup_skipped_explicit_file_if_indexed &#91;function&#93;
     m_01ec77cc_48df_5af6_ad42_b9d5800cf9ad->>m_10340c10_e576_5d26_badb_81bc9e42948a: calls
     m_01ec77cc_48df_5af6_ad42_b9d5800cf9ad->>m_be1729cf_c48d_5d6e_8ccf_bfee68ce411e: calls
     m_01ec77cc_48df_5af6_ad42_b9d5800cf9ad->>m_c37b5340_8902_5b1c_a469_944a66f25bf7: calls
@@ -199,17 +197,17 @@ sequenceDiagram
     m_06f747c0_d77a_5408_802b_60d142616c74->>m_2b097022_1ca0_54ab_9167_230f31715fe8: calls
     m_06f747c0_d77a_5408_802b_60d142616c74->>m_4d80ef56_1326_501d_ad99_6e76e8e39313: calls
     m_06f747c0_d77a_5408_802b_60d142616c74->>m_d4fc0ae1_b01a_5027_9c1c_91ce4e5a2e64: calls
-    m_195a4b66_14f8_5543_b933_2ec31aaade71->>m_7ff9eba8_b8db_5bc6_bdb0_6efbb21c9347: calls
+    m_0787f1d1_704a_51e3_826d_c429ef009eef->>m_93b52f75_55a1_5025_a3a4_7e3d067416a6: calls
+    m_1338b69e_01ae_51af_800c_39edd113f6fd->>m_2d437509_ec07_545d_8636_48f4a49d61ce: calls
     m_1f671963_1e36_5bcb_8b36_35136e72d054->>m_7c9b4b5f_c2f2_5a8a_a844_5837e9288643: calls
+    m_227a3a94_2cb5_5705_a228_e26c9bbab506->>m_93b52f75_55a1_5025_a3a4_7e3d067416a6: calls
     m_271a6fa6_20dd_501e_bd1a_35ee1d99229f->>m_ea312341_5b87_59ce_b013_88a15ba48909: calls
     m_27cff566_a652_5c21_906c_54247b567ec0->>m_5ea81afb_c78f_589e_9c62_6ad75a49ad6b: calls
-    m_2b40a5c0_fcbb_59a1_9d4c_b51da7c521ab->>m_7ff9eba8_b8db_5bc6_bdb0_6efbb21c9347: calls
     m_2c3d5dde_70fb_517d_9a30_a57fc029d55a->>m_1f671963_1e36_5bcb_8b36_35136e72d054: calls
-    m_388791a3_c68c_5526_ae2b_22228a5abf9a->>m_afebe3bb_85a7_55ec_b928_6b32ca3b56aa: calls
-    m_388791a3_c68c_5526_ae2b_22228a5abf9a->>m_d861f7ac_d503_569e_92bf_7af185d9864c: calls
-    m_388791a3_c68c_5526_ae2b_22228a5abf9a->>m_fa0d9e06_8afa_5fa5_bf9e_598a4849028b: calls
     m_4b108bd2_677f_5b6f_baae_1a9687543be0->>m_271a6fa6_20dd_501e_bd1a_35ee1d99229f: calls
     m_4b108bd2_677f_5b6f_baae_1a9687543be0->>m_4024a0a6_07dc_543a_9b66_60e72d24e7d8: calls
+    m_4b108bd2_677f_5b6f_baae_1a9687543be0->>m_af592e27_20e6_5df0_b6b1_1ca5703f5d03: calls
+    m_4b12832a_8119_5965_b9c6_d91d8cb4122e->>m_8db19430_dba8_52b8_b94c_ebd14b9c1b71: calls
 ```
 
 ## Files
@@ -241,21 +239,21 @@ sequenceDiagram
 - [[code/files/crates/gcode/src/index/indexer/pipeline.rs|crates/gcode/src/index/indexer/pipeline.rs]] - `crates/gcode/src/index/indexer/pipeline.rs` exposes 7 indexed API symbols.
 [crates/gcode/src/index/indexer/pipeline.rs:27-30]
 [crates/gcode/src/index/indexer/pipeline.rs:32-45]
-[crates/gcode/src/index/indexer/pipeline.rs:47-164]
-[crates/gcode/src/index/indexer/pipeline.rs:166-293]
-[crates/gcode/src/index/indexer/pipeline.rs:295-299]
-- [[code/files/crates/gcode/src/index/indexer/sink.rs|crates/gcode/src/index/indexer/sink.rs]] - `crates/gcode/src/index/indexer/sink.rs` exposes 9 indexed API symbols.
-[crates/gcode/src/index/indexer/sink.rs:6-23]
-[crates/gcode/src/index/indexer/sink.rs:25-27]
-[crates/gcode/src/index/indexer/sink.rs:30-32]
-[crates/gcode/src/index/indexer/sink.rs:39-41]
-[crates/gcode/src/index/indexer/sink.rs:43-45]
-- [[code/files/crates/gcode/src/index/indexer/tests.rs|crates/gcode/src/index/indexer/tests.rs]] - `crates/gcode/src/index/indexer/tests.rs` exposes 27 indexed API symbols.
-[crates/gcode/src/index/indexer/tests.rs:22-28]
-[crates/gcode/src/index/indexer/tests.rs:30-38]
-[crates/gcode/src/index/indexer/tests.rs:41-60]
-[crates/gcode/src/index/indexer/tests.rs:63-82]
-[crates/gcode/src/index/indexer/tests.rs:85-103]
+[crates/gcode/src/index/indexer/pipeline.rs:47-173]
+[crates/gcode/src/index/indexer/pipeline.rs:175-302]
+[crates/gcode/src/index/indexer/pipeline.rs:304-308]
+- [[code/files/crates/gcode/src/index/indexer/sink.rs|crates/gcode/src/index/indexer/sink.rs]] - `crates/gcode/src/index/indexer/sink.rs` exposes 11 indexed API symbols.
+[crates/gcode/src/index/indexer/sink.rs:6-34]
+[crates/gcode/src/index/indexer/sink.rs:36-38]
+[crates/gcode/src/index/indexer/sink.rs:41-43]
+[crates/gcode/src/index/indexer/sink.rs:50-52]
+[crates/gcode/src/index/indexer/sink.rs:54-60]
+- [[code/files/crates/gcode/src/index/indexer/tests.rs|crates/gcode/src/index/indexer/tests.rs]] - `crates/gcode/src/index/indexer/tests.rs` exposes 40 indexed API symbols.
+[crates/gcode/src/index/indexer/tests.rs:24-30]
+[crates/gcode/src/index/indexer/tests.rs:32-40]
+[crates/gcode/src/index/indexer/tests.rs:43-62]
+[crates/gcode/src/index/indexer/tests.rs:65-84]
+[crates/gcode/src/index/indexer/tests.rs:87-105]
 - [[code/files/crates/gcode/src/index/indexer/types.rs|crates/gcode/src/index/indexer/types.rs]] - `crates/gcode/src/index/indexer/types.rs` exposes 12 indexed API symbols.
 [crates/gcode/src/index/indexer/types.rs:8-17]
 [crates/gcode/src/index/indexer/types.rs:20-25]
@@ -277,7 +275,7 @@ sequenceDiagram
 - `a46733a5-8a30-596e-a98c-6214e9693bde`
 - `b07b2215-4ef6-53de-9d92-eef5f90e3aec`
 - `8db19430-dba8-52b8-b94c-ebd14b9c1b71`
-- `12e0f099-e3f9-5b7a-92a8-df26816e0fb7`
+- `30dacd9b-2dd5-5b96-ae60-f434036b7dca`
 - `d30b24ca-520a-57b2-885f-fb0f1d2fe538`
 - `d4fc0ae1-b01a-5027-9c1c-91ce4e5a2e64`
 - `2b097022-1ca0-54ab-9167-230f31715fe8`
@@ -320,46 +318,61 @@ sequenceDiagram
 - `bdb416a7-b6ae-5ba6-a21f-74c21bbb3f2f`
 - `adeaf14e-284b-5071-97f0-2d17d8c8a6df`
 - `84dc976d-70f1-5221-9a0a-7bab5732f0e6`
-- `388791a3-c68c-5526-ae2b-22228a5abf9a`
-- `d861f7ac-d503-569e-92bf-7af185d9864c`
-- `afebe3bb-85a7-55ec-b928-6b32ca3b56aa`
-- `fa0d9e06-8afa-5fa5-bf9e-598a4849028b`
+- `b21220d8-8ce4-56bc-8ff3-d0b4aba5ba35`
+- `9277356b-c936-5f0d-b037-815c545cb4bf`
+- `f477c451-1037-581b-b310-35da45fa9472`
+- `e6420dba-4991-5dd4-84e0-88430e3b3b73`
 - `4beb9119-9fd1-58f8-95af-7e14c1d44a43`
-- `6578a9d1-4e4d-5d6d-9197-c64ec5e16239`
-- `ec5def8c-dc52-5a92-a864-1dfcd015079c`
-- `0825fe8c-547a-555c-9c93-4a0d561197b1`
-- `164a66d5-f445-53a0-9684-3bb76f632df8`
-- `f083153c-891f-56c8-8041-85b5b6ab3aad`
-- `48c56b0d-0f92-5092-b4c2-aabab24faf1c`
-- `7994087e-2ee8-58f6-a08d-3e1acc77e01b`
-- `edcbd19f-2047-5f44-a1f1-7ef1ae944e71`
-- `7ff9eba8-b8db-5bc6-bdb0-6efbb21c9347`
-- `9a555508-69c1-5909-9d69-a1fb754b3296`
-- `b1f8c304-eba0-5ff2-9f43-6400e08ce6dc`
-- `978e1e00-800a-57c9-9b44-25220237960b`
-- `195a4b66-14f8-5543-b933-2ec31aaade71`
-- `2b40a5c0-fcbb-59a1-9d4c-b51da7c521ab`
-- `21136c8d-da12-54b0-a33d-e0a769e092b4`
-- `3d540223-37a6-583f-8847-1c21135796cf`
-- `418c8dbc-db4b-53d9-bf76-24589ec762b5`
-- `5eca98d9-75a0-586c-8cc4-7ae6518214aa`
-- `8ba21fb8-10fa-50ee-ac45-309ce60dcddb`
-- `317b60d8-7ae5-5a9b-acfd-2f38f150ed09`
-- `9c7a8695-2cc0-5d70-8773-f39d86f7c7a1`
-- `2ac82aa1-e5d8-5ee5-9451-67b51f527bf9`
-- `c8d4bb7b-1791-543c-82e7-c90f678d6fac`
-- `71433a86-3291-5004-9775-de0b34753ffe`
-- `c3f8ea7c-3223-52ae-9c2b-bad4d837a14d`
-- `89f71fe7-84ef-535c-94c8-5c133c4cca52`
-- `8b64e2de-681b-5327-a65c-a6bf97ad0b68`
-- `7cd4e722-01fb-5699-b7db-3395adfd8335`
-- `5f2c8897-001b-5abc-8729-35fbd8cafb32`
-- `7d1e2cf0-4955-5953-bf5e-e477404bf78e`
-- `34d856bd-9b99-5236-a485-b2e84f9ce053`
-- `bf0534e8-aa11-5a70-b062-993812c9bfef`
-- `e7bad465-74e8-5d60-b4bd-ece2ef2aa94b`
-- `670ef2f6-c6c5-5e05-bb96-bdc788727c6d`
-- `8321812f-69ec-586f-a357-9db2017403ec`
+- `519b1645-56e3-50f6-bcf8-ece8c93623d0`
+- `f66039bb-8d68-531b-96d3-7d0f7f01ee33`
+- `6f175061-24d5-5b38-9496-113a1f6e9a8f`
+- `e97c7665-91dc-5e5f-853e-c000add5a733`
+- `7a4de9ca-1c4c-5b93-b739-f5d7061ce532`
+- `2039da60-88d9-5567-a021-f3c6b66cec2a`
+- `4fd617f2-fa69-5f18-b533-aafb5806be6d`
+- `5a0d366b-f54c-5559-a559-34ed1702125b`
+- `e0e15eb2-cccd-5aa8-854e-8076d3687047`
+- `0d1aa3ba-2660-51b7-946a-8e929bfccee1`
+- `93b52f75-55a1-5025-a3a4-7e3d067416a6`
+- `c9ca8599-c3b6-56f5-a793-8464d6dd688a`
+- `a75050de-6e71-506b-b6d9-97a4765ea6b7`
+- `b35c0484-ef88-5e10-bcc0-132cc5775747`
+- `bc26aaea-8070-5ffb-a5f3-5ffd1e0dddda`
+- `b15fe3b0-af43-55b5-a6bf-e1a7641fa3c0`
+- `5227db9f-8954-5910-81bf-40152c3b2374`
+- `1ca5dd93-8369-586f-90a3-1b1f414fddef`
+- `2cbfe908-794d-506c-927c-a073cc7bb09d`
+- `57e95b23-33f2-56f1-9d50-18e93bae14a3`
+- `0b0bf71f-fe23-500b-9d8a-3c9a2afc8c62`
+- `90ed7a42-9cd0-5329-96ed-d6884fc38008`
+- `4b97fd8d-91c4-5de4-ba7c-1f29360ca45b`
+- `d9cfd64d-fc55-5dfa-a38b-362fbc1f3114`
+- `1f23c1ce-dc5f-5a3a-b7d7-6d0460aa821a`
+- `337e0088-4236-5a84-956d-8ef4e82ed3a6`
+- `d345608e-3d2e-57d3-b30d-2559654276aa`
+- `894d5e2d-a7da-580c-842c-13e50be5da5d`
+- `9e1a0adf-229d-5e34-abb2-f86683ad9418`
+- `113ea5cb-b5c7-53b5-93d9-d0f30984f2d3`
+- `4925aa95-6138-52b2-b41b-cdf6a7fb7a9a`
+- `4a1039df-6e46-5825-b39e-40bf6d2df066`
+- `1338b69e-01ae-51af-800c-39edd113f6fd`
+- `2d437509-ec07-545d-8636-48f4a49d61ce`
+- `af4856e6-f5f1-5b04-a546-c239f80014bd`
+- `271f35b2-97ab-56dc-9dfd-7d14c1eb86a7`
+- `ad01f186-a9b3-58bd-b3e6-cf89a069c04c`
+- `4ad66c05-518e-58ee-9787-9821aeed46be`
+- `62d2d834-f427-5750-9174-7e1e362a10ea`
+- `227a3a94-2cb5-5705-a228-e26c9bbab506`
+- `bcd05110-747d-5ffa-9749-c33026443c53`
+- `e2e0c4ea-52ff-5e40-ab16-db3ba6f2a7e4`
+- `0787f1d1-704a-51e3-826d-c429ef009eef`
+- `79356024-2ab3-5387-8ad2-b88db3ee902d`
+- `52d63b8a-e778-516b-870a-b9864e279df4`
+- `c90f37e8-2143-555b-93b3-afb981479de4`
+- `67751663-d09a-5b66-9770-29891765fc32`
+- `e74aee9d-a324-59ae-ae81-d016a5986d89`
+- `caeb3605-e379-545b-9cb0-dfd7edf99b26`
+- `69a88f91-a48b-5461-9f2d-37daa87902f2`
 - `f008b690-f127-5149-ab35-de6fde0893a2`
 - `59e57725-f26f-5161-91e4-37a99b8855d3`
 - `d196f3e6-dc4d-5be8-826c-fb269952d95d`

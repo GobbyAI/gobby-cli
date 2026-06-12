@@ -4,15 +4,17 @@ type: code_file
 provenance:
 - file: crates/gcode/src/index/indexer/sink.rs
   ranges:
-  - 6-23
-  - 25-27
-  - 30-32
-  - 39-41
-  - 43-45
-  - 47-49
-  - 51-58
-  - 60-67
-  - 69-71
+  - 6-34
+  - 36-38
+  - 41-43
+  - 50-52
+  - 54-60
+  - 62-69
+  - 71-73
+  - 75-77
+  - 79-86
+  - 88-95
+  - 97-99
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -24,40 +26,46 @@ Module: [[code/modules/crates/gcode/src/index/indexer|crates/gcode/src/index/ind
 
 ## Purpose
 
-`crates/gcode/src/index/indexer/sink.rs` exposes 9 indexed API symbols.
-[crates/gcode/src/index/indexer/sink.rs:6-23]
-[crates/gcode/src/index/indexer/sink.rs:25-27]
-[crates/gcode/src/index/indexer/sink.rs:30-32]
-[crates/gcode/src/index/indexer/sink.rs:39-41]
-[crates/gcode/src/index/indexer/sink.rs:43-45]
+`crates/gcode/src/index/indexer/sink.rs` exposes 11 indexed API symbols.
+[crates/gcode/src/index/indexer/sink.rs:6-34]
+[crates/gcode/src/index/indexer/sink.rs:36-38]
+[crates/gcode/src/index/indexer/sink.rs:41-43]
+[crates/gcode/src/index/indexer/sink.rs:50-52]
+[crates/gcode/src/index/indexer/sink.rs:54-60]
 
 ## API Symbols
 
-- `CodeFactSink` (type) component `CodeFactSink [type]` (`4beb9119-9fd1-58f8-95af-7e14c1d44a43`) lines 6-23 [crates/gcode/src/index/indexer/sink.rs:6-23]
+- `CodeFactSink` (type) component `CodeFactSink [type]` (`4beb9119-9fd1-58f8-95af-7e14c1d44a43`) lines 6-34 [crates/gcode/src/index/indexer/sink.rs:6-34]
   - Signature: `pub(super) trait CodeFactSink {`
-  - Purpose: Indexed type `CodeFactSink` in `crates/gcode/src/index/indexer/sink.rs`. [crates/gcode/src/index/indexer/sink.rs:6-23]
-- `PostgresCodeFactSink` (class) component `PostgresCodeFactSink [class]` (`6578a9d1-4e4d-5d6d-9197-c64ec5e16239`) lines 25-27 [crates/gcode/src/index/indexer/sink.rs:25-27]
+  - Purpose: Indexed type `CodeFactSink` in `crates/gcode/src/index/indexer/sink.rs`. [crates/gcode/src/index/indexer/sink.rs:6-34]
+- `PostgresCodeFactSink` (class) component `PostgresCodeFactSink [class]` (`519b1645-56e3-50f6-bcf8-ece8c93623d0`) lines 36-38 [crates/gcode/src/index/indexer/sink.rs:36-38]
   - Signature: `pub(super) struct PostgresCodeFactSink<'a, C> {`
-  - Purpose: `PostgresCodeFactSink` is a generic struct that wraps a mutable borrow of a connection type to serve as a consumer/writer for PostgreSQL code facts. [crates/gcode/src/index/indexer/sink.rs:25-27]
-- `new` (function) component `new [function]` (`ec5def8c-dc52-5a92-a864-1dfcd015079c`) lines 30-32 [crates/gcode/src/index/indexer/sink.rs:30-32]
+  - Purpose: Indexed class `PostgresCodeFactSink` in `crates/gcode/src/index/indexer/sink.rs`. [crates/gcode/src/index/indexer/sink.rs:36-38]
+- `new` (function) component `new [function]` (`f66039bb-8d68-531b-96d3-7d0f7f01ee33`) lines 41-43 [crates/gcode/src/index/indexer/sink.rs:41-43]
   - Signature: `pub(super) fn new(conn: &'a mut C) -> Self {`
-  - Purpose: A `pub(super)` constructor that initializes a new `Self` instance by storing a mutable reference to a generic connection parameter with lifetime `'a`. [crates/gcode/src/index/indexer/sink.rs:30-32]
-- `delete_file_facts` (function) component `delete_file_facts [function]` (`0825fe8c-547a-555c-9c93-4a0d561197b1`) lines 39-41 [crates/gcode/src/index/indexer/sink.rs:39-41]
+  - Purpose: Indexed function `new` in `crates/gcode/src/index/indexer/sink.rs`. [crates/gcode/src/index/indexer/sink.rs:41-43]
+- `delete_file_facts` (function) component `delete_file_facts [function]` (`6f175061-24d5-5b38-9496-113a1f6e9a8f`) lines 50-52 [crates/gcode/src/index/indexer/sink.rs:50-52]
   - Signature: `fn delete_file_facts(&mut self, project_id: &str, file_path: &str) -> anyhow::Result<()> {`
-  - Purpose: Deletes file facts (metadata) associated with a specified file path in a given project by delegating to the API layer, returning a Result indicating success or error. [crates/gcode/src/index/indexer/sink.rs:39-41]
-- `upsert_symbols` (function) component `upsert_symbols [function]` (`164a66d5-f445-53a0-9684-3bb76f632df8`) lines 43-45 [crates/gcode/src/index/indexer/sink.rs:43-45]
+  - Purpose: Indexed function `delete_file_facts` in `crates/gcode/src/index/indexer/sink.rs`. [crates/gcode/src/index/indexer/sink.rs:50-52]
+- `delete_file_non_symbol_facts` (function) component `delete_file_non_symbol_facts [function]` (`e97c7665-91dc-5e5f-853e-c000add5a733`) lines 54-60 [crates/gcode/src/index/indexer/sink.rs:54-60]
+  - Signature: `fn delete_file_non_symbol_facts(`
+  - Purpose: Indexed function `delete_file_non_symbol_facts` in `crates/gcode/src/index/indexer/sink.rs`. [crates/gcode/src/index/indexer/sink.rs:54-60]
+- `delete_stale_file_symbols` (function) component `delete_stale_file_symbols [function]` (`7a4de9ca-1c4c-5b93-b739-f5d7061ce532`) lines 62-69 [crates/gcode/src/index/indexer/sink.rs:62-69]
+  - Signature: `fn delete_stale_file_symbols(`
+  - Purpose: Indexed function `delete_stale_file_symbols` in `crates/gcode/src/index/indexer/sink.rs`. [crates/gcode/src/index/indexer/sink.rs:62-69]
+- `upsert_symbols` (function) component `upsert_symbols [function]` (`2039da60-88d9-5567-a021-f3c6b66cec2a`) lines 71-73 [crates/gcode/src/index/indexer/sink.rs:71-73]
   - Signature: `fn upsert_symbols(&mut self, symbols: &[Symbol]) -> anyhow::Result<usize> {`
-  - Purpose: Inserts or updates the provided symbols in the database via a delegated API call, returning the count of affected rows or an error. [crates/gcode/src/index/indexer/sink.rs:43-45]
-- `upsert_file` (function) component `upsert_file [function]` (`f083153c-891f-56c8-8041-85b5b6ab3aad`) lines 47-49 [crates/gcode/src/index/indexer/sink.rs:47-49]
+  - Purpose: Indexed function `upsert_symbols` in `crates/gcode/src/index/indexer/sink.rs`. [crates/gcode/src/index/indexer/sink.rs:71-73]
+- `upsert_file` (function) component `upsert_file [function]` (`4fd617f2-fa69-5f18-b533-aafb5806be6d`) lines 75-77 [crates/gcode/src/index/indexer/sink.rs:75-77]
   - Signature: `fn upsert_file(&mut self, file: &IndexedFile) -> anyhow::Result<()> {`
-  - Purpose: This method delegates insertion or updating of an `IndexedFile` record to an API function via the instance's database connection, returning `Result<()>` to indicate success or error. [crates/gcode/src/index/indexer/sink.rs:47-49]
-- `upsert_imports` (function) component `upsert_imports [function]` (`48c56b0d-0f92-5092-b4c2-aabab24faf1c`) lines 51-58 [crates/gcode/src/index/indexer/sink.rs:51-58]
+  - Purpose: Indexed function `upsert_file` in `crates/gcode/src/index/indexer/sink.rs`. [crates/gcode/src/index/indexer/sink.rs:75-77]
+- `upsert_imports` (function) component `upsert_imports [function]` (`5a0d366b-f54c-5559-a559-34ed1702125b`) lines 79-86 [crates/gcode/src/index/indexer/sink.rs:79-86]
   - Signature: `fn upsert_imports(`
-  - Purpose: Upserts import relations for a specified file path within a project and returns the count of affected records. [crates/gcode/src/index/indexer/sink.rs:51-58]
-- `upsert_calls` (function) component `upsert_calls [function]` (`7994087e-2ee8-58f6-a08d-3e1acc77e01b`) lines 60-67 [crates/gcode/src/index/indexer/sink.rs:60-67]
+  - Purpose: Indexed function `upsert_imports` in `crates/gcode/src/index/indexer/sink.rs`. [crates/gcode/src/index/indexer/sink.rs:79-86]
+- `upsert_calls` (function) component `upsert_calls [function]` (`e0e15eb2-cccd-5aa8-854e-8076d3687047`) lines 88-95 [crates/gcode/src/index/indexer/sink.rs:88-95]
   - Signature: `fn upsert_calls(`
-  - Purpose: This method performs an upsert operation on CallRelation records for a specified project and file, returning the count of affected rows. [crates/gcode/src/index/indexer/sink.rs:60-67]
-- `upsert_content_chunks` (function) component `upsert_content_chunks [function]` (`edcbd19f-2047-5f44-a1f1-7ef1ae944e71`) lines 69-71 [crates/gcode/src/index/indexer/sink.rs:69-71]
+  - Purpose: Indexed function `upsert_calls` in `crates/gcode/src/index/indexer/sink.rs`. [crates/gcode/src/index/indexer/sink.rs:88-95]
+- `upsert_content_chunks` (function) component `upsert_content_chunks [function]` (`0d1aa3ba-2660-51b7-946a-8e929bfccee1`) lines 97-99 [crates/gcode/src/index/indexer/sink.rs:97-99]
   - Signature: `fn upsert_content_chunks(&mut self, chunks: &[ContentChunk]) -> anyhow::Result<usize> {`
-  - Purpose: Upserts a slice of ContentChunk objects and returns the count of affected rows or an error. [crates/gcode/src/index/indexer/sink.rs:69-71]
+  - Purpose: Indexed function `upsert_content_chunks` in `crates/gcode/src/index/indexer/sink.rs`. [crates/gcode/src/index/indexer/sink.rs:97-99]
 

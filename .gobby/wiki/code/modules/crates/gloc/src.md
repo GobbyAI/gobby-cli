@@ -6,7 +6,6 @@ provenance:
   ranges:
   - 7-12
   - 14-23
-  - 15-22
   - 28-62
   - 67-108
   - 111-129
@@ -27,35 +26,28 @@ provenance:
   - 13-22
   - 25-32
   - 34-42
-  - 35-41
   - 44-46
   - 48-50
   - 53-65
-  - 67-166
-  - 70-88
-  - 90-100
-  - 102-117
-  - 120-125
-  - 128-159
-  - 163-165
-  - 170-176
-  - 183-188
-  - 191-196
-  - 199-210
-  - 213-217
-  - 220-235
-  - 238-247
-  - 250-254
-  - 257-260
-  - 263-266
-  - 269-278
-  - 281-290
-  - 293-302
-  - 305-316
-  - 319-327
-  - 330-335
-  - 338-345
-  - 348-355
+  - 67-138
+  - 142-148
+  - 155-160
+  - 163-168
+  - 171-182
+  - 185-189
+  - 192-207
+  - 210-219
+  - 222-226
+  - 229-232
+  - 235-238
+  - 241-250
+  - 253-262
+  - 265-274
+  - 277-288
+  - 291-299
+  - 302-307
+  - 310-317
+  - 320-327
 - file: crates/gloc/src/exec.rs
   ranges:
   - 9-21
@@ -77,13 +69,18 @@ provenance:
 - file: crates/gloc/src/main.rs
   ranges:
   - 16-52
-  - 54-123
-  - 125-136
-  - 138-161
-  - 163-205
-  - 207-232
-  - 234-237
-  - 239-270
+  - 54-118
+  - 120-130
+  - 132-155
+  - 157-202
+  - 204-213
+  - 215-223
+  - 225-250
+  - 252-255
+  - 257-288
+  - 294-301
+  - 304-318
+  - 321-327
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -95,14 +92,12 @@ Parent: [[code/modules/crates/gloc|crates/gloc]]
 
 ## Overview
 
-The `gloc` crate is a CLI tool that launches AI client binaries (e.g. Claude, Codex) against configurable LLM backends, including local Ollama models.
+This module forms the core of the `gloc` command-line utility, providing the infrastructure to configure, resolve, and execute local and remote AI models and clients.
 
-- **config.rs**: Defines the configuration model (`Config`, `Settings`, `Client`) with TOML loading (`load`, `try_load`, `load_or_exit`, `load_builtin`), alias resolution, template variable substitution, and config dumping. Provides defaults for probe timeouts and auto-load behavior.
-- **backend.rs**: Manages Ollama model readiness via `ensure_model_ready`, including model existence checks, pulling, warmup, and name matching. Defines `ModelError` for failure reporting.
-- **exec.rs**: Builds the execution environment and arguments for client processes, locates binaries (`which_binary`), and runs them (`exec_client`).
-- **main.rs**: Entry point wiring the CLI (`Cli`, `main`), handling init, backend/client/model resolution, status reporting, and automatic config export.
-
-Each file carries extensive unit tests covering config parsing, template resolution, env/arg construction, model matching, and backend validation.
+- **backend.rs** handles backend status monitoring and model management, including detecting reachable endpoints, ensuring required models are pulled and ready (specifically for Ollama), and validating model names.
+- **config.rs** manages loading, merging, and dumping application configurations, default settings, aliases, and template resolution for client parameters.
+- **exec.rs** handles process execution logic, dynamically building environment variables and command arguments to run client binaries (like Claude or Codex) based on resolved backend configurations.
+- **main.rs** provides the command-line interface entry point, managing CLI parsing, backend/client/model resolution, configuration initialization, and execution coordination.
 [crates/gloc/src/backend.rs:7-12]
 [crates/gloc/src/config.rs:13-22]
 [crates/gloc/src/exec.rs:9-21]
@@ -113,31 +108,31 @@ Each file carries extensive unit tests covering config parsing, template resolut
 
 ```mermaid
 sequenceDiagram
-    participant m_07d67fd3_b948_5071_81ec_e1c996f1540d as auto_export_config &#91;function&#93;
-    participant m_0be47608_7312_5573_95db_138e4149e0de as print_status &#91;function&#93;
     participant m_0de5951d_2ed3_58aa_905b_800fd4e0804b as Settings.default &#91;method&#93;
     participant m_123761e3_1ee3_58ad_9298_11ac7b82103f as default_probe_timeout_ms &#91;function&#93;
-    participant m_13de0d74_9fef_5129_8312_e710e06ad480 as handle_init &#91;function&#93;
     participant m_1550bb68_f95d_5cf7_9a78_634164f14e23 as ensure_model_ready &#91;function&#93;
     participant m_1a718268_cb56_5f8f_9339_ce52e89cb9c9 as test_build_args_with_model &#91;function&#93;
     participant m_1e60195b_5788_5f91_b6e2_6d960a13ecfb as test_build_args_codex_with_defaults &#91;function&#93;
     participant m_2679f7d7_f4bb_5c79_a06e_537fc750cf7c as main &#91;function&#93;
     participant m_2e3be105_cdbe_547f_90a6_bbe2885de96b as ollama_pull_model &#91;function&#93;
-    participant m_2f9bfc66_80a9_5c4b_ba32_8d9432fc8190 as test_resolve_template_model &#91;function&#93;
+    participant m_35e60a15_0461_5842_8f99_d112b9e7f80e as handle_init &#91;function&#93;
     participant m_3be65073_d21a_506e_b864_3d6c82092932 as test_build_env_claude &#91;function&#93;
     participant m_3ef29eda_b6d2_5dbe_b208_162ea81f5f20 as build_args &#91;function&#93;
+    participant m_40a6142a_2255_5000_b2bc_ed6d91bd0a5f as test_resolve_template_model &#91;function&#93;
     participant m_44053d16_a034_5247_9e93_82f38395b494 as exec_client &#91;function&#93;
-    participant m_4b437605_9873_5a6e_b484_6cad6b6310aa as resolve_template &#91;function&#93;
+    participant m_44b0a98a_f234_5970_930e_8d6b63632257 as resolve_template &#91;function&#93;
+    participant m_54307264_6cff_5244_af17_1dbc2b3602dd as auto_export_config &#91;function&#93;
     participant m_5f667291_dbf4_517d_a474_fdd7b7d4dfce as build_env &#91;function&#93;
+    participant m_65a042fe_e2ee_5878_9e01_26b1c2f0a546 as resolve_client &#91;function&#93;
     participant m_89009b7e_536e_522d_a4a2_2cefee9baad0 as default_auto_load &#91;function&#93;
     participant m_890d349c_d19a_5229_83bd_f48033ddab58 as test_codex_client &#91;function&#93;
-    participant m_8d8063b5_eafe_56f3_8b5c_321f14aa7c38 as resolve_client &#91;function&#93;
-    participant m_b1969e2c_20cf_556d_9a13_e29bca435201 as resolve_model &#91;function&#93;
+    participant m_a3d5db2c_8890_5b16_90da_6767d68c5e42 as resolve_model &#91;function&#93;
     participant m_b32f228a_fea3_57c7_bbaf_095136afd61e as test_claude_client &#91;function&#93;
-    participant m_b9dfbc8b_4498_5ea8_8575_cf55b25ba00f as resolve_backend &#91;function&#93;
     participant m_c0d554a5_0ee5_5ddb_bae2_cc4021fb3ed0 as test_backend &#91;function&#93;
     participant m_c3153167_82c9_5ef3_a9f2_0b33df034b8c as ollama_check_model &#91;function&#93;
+    participant m_c6062f0e_c3d4_5982_80a3_b19a5c29b2f9 as print_status &#91;function&#93;
     participant m_cd57587b_8493_53ba_bd7d_73e123d81762 as ollama_warmup_model &#91;function&#93;
+    participant m_dfb631c4_7c31_59e2_b1f4_fc716efe1cbd as resolve_backend &#91;function&#93;
     m_0de5951d_2ed3_58aa_905b_800fd4e0804b->>m_123761e3_1ee3_58ad_9298_11ac7b82103f: calls
     m_0de5951d_2ed3_58aa_905b_800fd4e0804b->>m_89009b7e_536e_522d_a4a2_2cefee9baad0: calls
     m_1550bb68_f95d_5cf7_9a78_634164f14e23->>m_2e3be105_cdbe_547f_90a6_bbe2885de96b: calls
@@ -147,16 +142,16 @@ sequenceDiagram
     m_1a718268_cb56_5f8f_9339_ce52e89cb9c9->>m_b32f228a_fea3_57c7_bbaf_095136afd61e: calls
     m_1e60195b_5788_5f91_b6e2_6d960a13ecfb->>m_3ef29eda_b6d2_5dbe_b208_162ea81f5f20: calls
     m_1e60195b_5788_5f91_b6e2_6d960a13ecfb->>m_890d349c_d19a_5229_83bd_f48033ddab58: calls
-    m_2679f7d7_f4bb_5c79_a06e_537fc750cf7c->>m_07d67fd3_b948_5071_81ec_e1c996f1540d: calls
-    m_2679f7d7_f4bb_5c79_a06e_537fc750cf7c->>m_0be47608_7312_5573_95db_138e4149e0de: calls
-    m_2679f7d7_f4bb_5c79_a06e_537fc750cf7c->>m_13de0d74_9fef_5129_8312_e710e06ad480: calls
-    m_2679f7d7_f4bb_5c79_a06e_537fc750cf7c->>m_8d8063b5_eafe_56f3_8b5c_321f14aa7c38: calls
-    m_2679f7d7_f4bb_5c79_a06e_537fc750cf7c->>m_b1969e2c_20cf_556d_9a13_e29bca435201: calls
-    m_2679f7d7_f4bb_5c79_a06e_537fc750cf7c->>m_b9dfbc8b_4498_5ea8_8575_cf55b25ba00f: calls
-    m_2f9bfc66_80a9_5c4b_ba32_8d9432fc8190->>m_4b437605_9873_5a6e_b484_6cad6b6310aa: calls
+    m_2679f7d7_f4bb_5c79_a06e_537fc750cf7c->>m_35e60a15_0461_5842_8f99_d112b9e7f80e: calls
+    m_2679f7d7_f4bb_5c79_a06e_537fc750cf7c->>m_54307264_6cff_5244_af17_1dbc2b3602dd: calls
+    m_2679f7d7_f4bb_5c79_a06e_537fc750cf7c->>m_65a042fe_e2ee_5878_9e01_26b1c2f0a546: calls
+    m_2679f7d7_f4bb_5c79_a06e_537fc750cf7c->>m_a3d5db2c_8890_5b16_90da_6767d68c5e42: calls
+    m_2679f7d7_f4bb_5c79_a06e_537fc750cf7c->>m_c6062f0e_c3d4_5982_80a3_b19a5c29b2f9: calls
+    m_2679f7d7_f4bb_5c79_a06e_537fc750cf7c->>m_dfb631c4_7c31_59e2_b1f4_fc716efe1cbd: calls
     m_3be65073_d21a_506e_b864_3d6c82092932->>m_5f667291_dbf4_517d_a474_fdd7b7d4dfce: calls
     m_3be65073_d21a_506e_b864_3d6c82092932->>m_b32f228a_fea3_57c7_bbaf_095136afd61e: calls
     m_3be65073_d21a_506e_b864_3d6c82092932->>m_c0d554a5_0ee5_5ddb_bae2_cc4021fb3ed0: calls
+    m_40a6142a_2255_5000_b2bc_ed6d91bd0a5f->>m_44b0a98a_f234_5970_930e_8d6b63632257: calls
     m_44053d16_a034_5247_9e93_82f38395b494->>m_3ef29eda_b6d2_5dbe_b208_162ea81f5f20: calls
 ```
 
@@ -168,7 +163,7 @@ sequenceDiagram
 [crates/gloc/src/backend.rs:15-22]
 [crates/gloc/src/backend.rs:28-62]
 [crates/gloc/src/backend.rs:67-108]
-- [[code/files/crates/gloc/src/config.rs|crates/gloc/src/config.rs]] - `crates/gloc/src/config.rs` exposes 32 indexed API symbols.
+- [[code/files/crates/gloc/src/config.rs|crates/gloc/src/config.rs]] - `crates/gloc/src/config.rs` exposes 30 indexed API symbols.
 [crates/gloc/src/config.rs:13-22]
 [crates/gloc/src/config.rs:25-32]
 [crates/gloc/src/config.rs:34-42]
@@ -180,12 +175,12 @@ sequenceDiagram
 [crates/gloc/src/exec.rs:39-45]
 [crates/gloc/src/exec.rs:51-80]
 [crates/gloc/src/exec.rs:87-94]
-- [[code/files/crates/gloc/src/main.rs|crates/gloc/src/main.rs]] - `crates/gloc/src/main.rs` exposes 8 indexed API symbols.
+- [[code/files/crates/gloc/src/main.rs|crates/gloc/src/main.rs]] - `crates/gloc/src/main.rs` exposes 13 indexed API symbols.
 [crates/gloc/src/main.rs:16-52]
-[crates/gloc/src/main.rs:54-123]
-[crates/gloc/src/main.rs:125-136]
-[crates/gloc/src/main.rs:138-161]
-[crates/gloc/src/main.rs:163-205]
+[crates/gloc/src/main.rs:54-118]
+[crates/gloc/src/main.rs:120-130]
+[crates/gloc/src/main.rs:132-155]
+[crates/gloc/src/main.rs:157-202]
 
 ## Components
 
@@ -215,30 +210,28 @@ sequenceDiagram
 - `89009b7e-536e-522d-a4a2-2cefee9baad0`
 - `ec61d699-24de-5049-8e7c-7d3fc8ae4d8d`
 - `c5648d9d-918e-5b51-bb23-0cca54761e20`
-- `1ca7c657-fd0e-526a-857b-2eca445f719b`
-- `11880536-a723-50de-accb-ec46b5e68789`
-- `e8915c05-78b6-51bf-b6f4-9807ea9616f2`
-- `14c1e7aa-fa81-5f57-8123-4aaddcaccdac`
-- `2801df61-3b74-5451-94f2-92579d68917f`
-- `cdeb6423-fbd5-59e1-ba4a-e97c91fe6fb1`
-- `4b437605-9873-5a6e-b484-6cad6b6310aa`
-- `cbca34e6-8444-57c8-9ba1-a32e0818b04e`
-- `0d424988-0203-56c1-ba0c-9e706a5f4a30`
-- `c08aca9d-a7b3-555a-9ec0-5e5c65703cfb`
-- `c2e6a01d-d40a-53a0-a091-106e834bafab`
-- `97cf4d3f-ecfc-57c1-9ede-199a7b1891b9`
-- `7f874d50-c295-5597-aea3-b431859f3931`
-- `06a4c4b3-e6a9-5401-a000-d8439866d03e`
-- `b01c369a-ed84-5408-9712-5553f83b9ad2`
-- `f927f447-87d2-5b5f-bcf6-273687eb7cfd`
-- `977cecda-12b9-5c6d-98cf-513eddffe657`
-- `8677cf28-7bcd-5ecb-b423-987ef0315d20`
-- `2f9bfc66-80a9-5c4b-ba32-8d9432fc8190`
-- `06d0529f-e596-549c-bbd1-f788368ec7ab`
-- `3c04ef55-d208-53a5-9262-f642a9163304`
-- `c2874e82-2998-5f9a-88e7-7b7f14d171df`
-- `7a2ed3f7-835c-5239-97e7-cd391c748e7b`
-- `8958b812-3eed-53a5-a1f7-d7bf21c21b0d`
+- `091f53fb-cba2-5931-97be-23ed133fd4f6`
+- `46ea3e45-a48b-5c2e-8ee8-3ad64ca4ec71`
+- `937f8cc4-e5c9-50b0-b78e-43ef155208aa`
+- `883628f7-9a2a-501d-b753-d2f012eb13f4`
+- `44b0a98a-f234-5970-930e-8d6b63632257`
+- `e9157a4a-4997-5589-a5e0-83dcfbe964c4`
+- `9f7d4a5d-dcf3-563e-8e93-c55f3e583936`
+- `7c5ad7be-7a23-51c0-8b53-311a26d28f6c`
+- `ac27f4f8-607c-55ab-99b8-671820619aef`
+- `711eb0ad-3c1d-5bc1-8d21-6d5cd20cedfd`
+- `ec49ad5a-88a9-5244-9fc7-cc709bd45c13`
+- `1cb22630-78d7-5072-b82e-3c360e808f34`
+- `c7ea4c03-f6f0-508d-beef-93a0dafc0afd`
+- `2f955a74-2e66-5c22-ab0e-2bda34c868d8`
+- `57e0bedf-06fb-5481-8bc0-306975e46e39`
+- `71393741-4aa0-525f-b77a-083b99d45201`
+- `40a6142a-2255-5000-b2bc-ed6d91bd0a5f`
+- `2b08bf02-1815-51a3-b499-4039d8aa4d6d`
+- `0055e704-44e7-59e6-b6b4-d15e258d8dd5`
+- `5fd23c31-1ec9-5670-a964-8bc2b2f6ae6b`
+- `ad501f95-e599-580e-a835-459e13800a47`
+- `f1af90af-966b-593c-92fa-88ec6df56024`
 - `5f667291-dbf4-517d-a474-fdd7b7d4dfce`
 - `3ef29eda-b6d2-5dbe-b208-162ea81f5f20`
 - `b5293d60-b85e-5a3f-a15c-3de280834d85`
@@ -257,10 +250,15 @@ sequenceDiagram
 - `f7ac3ece-6fe9-57c8-a00d-dfb224d9db5d`
 - `4f9b85cf-7812-598e-a21b-5c1368511d2f`
 - `2679f7d7-f4bb-5c79-a06e-537fc750cf7c`
-- `07d67fd3-b948-5071-81ec-e1c996f1540d`
-- `13de0d74-9fef-5129-8312-e710e06ad480`
-- `b9dfbc8b-4498-5ea8-8575-cf55b25ba00f`
-- `8d8063b5-eafe-56f3-8b5c-321f14aa7c38`
-- `b1969e2c-20cf-556d-9a13-e29bca435201`
-- `0be47608-7312-5573-95db-138e4149e0de`
+- `54307264-6cff-5244-af17-1dbc2b3602dd`
+- `35e60a15-0461-5842-8f99-d112b9e7f80e`
+- `dfb631c4-7c31-59e2-b1f4-fc716efe1cbd`
+- `80170efa-b391-5bfd-bcc2-c818c6b3ec61`
+- `67b18f9c-15b3-57c4-bd48-1761a0e4b1b9`
+- `65a042fe-e2ee-5878-9e01-26b1c2f0a546`
+- `a3d5db2c-8890-5b16-90da-6767d68c5e42`
+- `c6062f0e-c3d4-5982-80a3-b19a5c29b2f9`
+- `e9d0901f-58ab-5fda-bd04-0ef6e6da1942`
+- `dae1b910-0dee-53fc-a051-bac36191b44b`
+- `6f5b1fba-b61a-5d91-868f-c5bda190e3f3`
 

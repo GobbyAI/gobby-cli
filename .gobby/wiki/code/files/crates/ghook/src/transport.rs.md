@@ -4,29 +4,29 @@ type: code_file
 provenance:
 - file: crates/ghook/src/transport.rs
   ranges:
-  - 30-35
-  - 39-44
-  - 48-54
-  - 57-60
+  - 31-36
+  - 40-45
+  - 49-55
+  - 58-60
   - 63-65
   - 68-74
   - 77-81
-  - 87-110
-  - 115-121
-  - 129-193
-  - 195-210
-  - 214-221
-  - 231-262
-  - 273-309
-  - 312-316
-  - 319-322
-  - 325-331
-  - 334-340
-  - 343-358
-  - 361-374
-  - 377-423
-  - 426-470
-  - 473-505
+  - 87-114
+  - 119-125
+  - 127-129
+  - 137-204
+  - 206-221
+  - 225-232
+  - 242-273
+  - 286-290
+  - 293-296
+  - 299-305
+  - 308-314
+  - 317-332
+  - 335-348
+  - 351-404
+  - 407-458
+  - 461-493
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -39,83 +39,81 @@ Module: [[code/modules/crates/ghook/src|crates/ghook/src]]
 ## Purpose
 
 `crates/ghook/src/transport.rs` exposes 23 indexed API symbols.
-[crates/ghook/src/transport.rs:30-35]
-[crates/ghook/src/transport.rs:39-44]
-[crates/ghook/src/transport.rs:48-54]
-[crates/ghook/src/transport.rs:57-60]
+[crates/ghook/src/transport.rs:31-36]
+[crates/ghook/src/transport.rs:40-45]
+[crates/ghook/src/transport.rs:49-55]
+[crates/ghook/src/transport.rs:58-60]
 [crates/ghook/src/transport.rs:63-65]
 
 ## API Symbols
 
-- `DeliveryOutcome` (type) component `DeliveryOutcome [type]` (`38278f8f-3021-5bd9-8ed4-1f1387e2a390`) lines 30-35 [crates/ghook/src/transport.rs:30-35]
+- `DeliveryOutcome` (type) component `DeliveryOutcome [type]` (`e7612d20-b3e0-50e1-a2b4-6e0c0d469eeb`) lines 31-36 [crates/ghook/src/transport.rs:31-36]
   - Signature: `pub enum DeliveryOutcome {`
-  - Purpose: Indexed type `DeliveryOutcome` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:30-35]
-- `DeliveryFailureKind` (type) component `DeliveryFailureKind [type]` (`32df425a-3c69-555c-ae3e-5bd748c44be0`) lines 39-44 [crates/ghook/src/transport.rs:39-44]
+  - Purpose: Indexed type `DeliveryOutcome` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:31-36]
+- `DeliveryFailureKind` (type) component `DeliveryFailureKind [type]` (`635a2244-471a-578e-9431-93796af5a5e6`) lines 40-45 [crates/ghook/src/transport.rs:40-45]
   - Signature: `pub enum DeliveryFailureKind {`
-  - Purpose: Indexed type `DeliveryFailureKind` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:39-44]
-- `DeliveryReport` (class) component `DeliveryReport [class]` (`bef39da5-469f-5842-844b-f79c0a36424c`) lines 48-54 [crates/ghook/src/transport.rs:48-54]
+  - Purpose: Indexed type `DeliveryFailureKind` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:40-45]
+- `DeliveryReport` (class) component `DeliveryReport [class]` (`fa9467a0-9921-538e-9ec3-9369b2376355`) lines 49-55 [crates/ghook/src/transport.rs:49-55]
   - Signature: `pub struct DeliveryReport {`
-  - Purpose: `DeliveryReport` is a struct that captures the outcome of a delivery operation along with optional diagnostic details including failure classification, HTTP status code, response body, and transport errors. [crates/ghook/src/transport.rs:48-54]
-- `inbox_dir` (function) component `inbox_dir [function]` (`e9c9467c-3919-5ae6-a767-25f37486596a`) lines 57-60 [crates/ghook/src/transport.rs:57-60]
+  - Purpose: Indexed class `DeliveryReport` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:49-55]
+- `inbox_dir` (function) component `inbox_dir [function]` (`337d52ed-6f16-5d5e-94ad-35a16cc183d4`) lines 58-60 [crates/ghook/src/transport.rs:58-60]
   - Signature: `pub fn inbox_dir() -> Result<PathBuf> {`
-  - Purpose: Returns a `Result<PathBuf>` pointing to the inbox directory located at `~/.gobby/hooks/inbox`, or an error if the home directory cannot be resolved. [crates/ghook/src/transport.rs:57-60]
-- `quarantine_dir` (function) component `quarantine_dir [function]` (`e30f98d5-dc3f-5260-b87a-b1f3d6c21c01`) lines 63-65 [crates/ghook/src/transport.rs:63-65]
+  - Purpose: Indexed function `inbox_dir` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:58-60]
+- `quarantine_dir` (function) component `quarantine_dir [function]` (`93cab374-71c7-5c68-b724-03dd57695d10`) lines 63-65 [crates/ghook/src/transport.rs:63-65]
   - Signature: `pub fn quarantine_dir() -> Result<PathBuf> {`
-  - Purpose: Returns a `Result<PathBuf>` pointing to the "quarantine" subdirectory within the inbox directory. [crates/ghook/src/transport.rs:63-65]
-- `ts13` (function) component `ts13 [function]` (`be182237-20f0-51c1-b2bf-0e056dc95225`) lines 68-74 [crates/ghook/src/transport.rs:68-74]
+  - Purpose: Indexed function `quarantine_dir` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:63-65]
+- `ts13` (function) component `ts13 [function]` (`14549333-a1e5-5a38-976d-6535683526f7`) lines 68-74 [crates/ghook/src/transport.rs:68-74]
   - Signature: `pub fn ts13() -> String {`
-  - Purpose: Returns the current Unix timestamp in milliseconds as a 13-character zero-padded string. [crates/ghook/src/transport.rs:68-74]
-- `envelope_filename` (function) component `envelope_filename [function]` (`b8998a77-d05c-5c56-aaa3-0935481e7673`) lines 77-81 [crates/ghook/src/transport.rs:77-81]
+  - Purpose: Indexed function `ts13` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:68-74]
+- `envelope_filename` (function) component `envelope_filename [function]` (`f8be23e4-18cd-503a-8b93-098037bc2130`) lines 77-81 [crates/ghook/src/transport.rs:77-81]
   - Signature: `pub fn envelope_filename(critical: bool) -> String {`
-  - Purpose: Generates a JSON filename with a single-character priority prefix ('c' for critical, 'n' for non-critical), followed by a 13-digit timestamp and a UUID v4. [crates/ghook/src/transport.rs:77-81]
-- `atomic_write` (function) component `atomic_write [function]` (`49bff09d-bc80-5330-8686-0613201dd747`) lines 87-110 [crates/ghook/src/transport.rs:87-110]
+  - Purpose: Indexed function `envelope_filename` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:77-81]
+- `atomic_write` (function) component `atomic_write [function]` (`eaac2601-001e-5287-8c77-829087ecf84b`) lines 87-114 [crates/ghook/src/transport.rs:87-114]
   - Signature: `pub fn atomic_write(final_path: &Path, bytes: &[u8]) -> Result<()> {`
-  - Purpose: Atomically writes bytes to a file by creating a temporary file with explicit fsync, then atomically renaming it to the final path to ensure durability and prevent partial writes. [crates/ghook/src/transport.rs:87-110]
-- `enqueue_to` (function) component `enqueue_to [function]` (`2fac1832-5b2f-5dd0-84ab-3d93aac08250`) lines 115-121 [crates/ghook/src/transport.rs:115-121]
+  - Purpose: Indexed function `atomic_write` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:87-114]
+- `enqueue_to` (function) component `enqueue_to [function]` (`6b11eb8c-bf8a-56d0-9e90-68449253a47a`) lines 119-125 [crates/ghook/src/transport.rs:119-125]
   - Signature: `pub fn enqueue_to(envelope: &Envelope, inbox: &Path) -> Result<PathBuf> {`
-  - Purpose: Atomically serializes an envelope to pretty-printed JSON and writes it to the inbox directory using a filename derived from the envelope's critical field, returning the output path. [crates/ghook/src/transport.rs:115-121]
-- `post_and_cleanup` (function) component `post_and_cleanup [function]` (`5d8fb49f-6dc3-5cca-9131-8f4261403cc5`) lines 129-193 [crates/ghook/src/transport.rs:129-193]
+  - Purpose: Indexed function `enqueue_to` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:119-125]
+- `envelope_id_from_path` (function) component `envelope_id_from_path [function]` (`4d3ecd62-3b6c-5674-ae84-3d766ad79d69`) lines 127-129 [crates/ghook/src/transport.rs:127-129]
+  - Signature: `fn envelope_id_from_path(enqueued_path: &Path) -> Option<&str> {`
+  - Purpose: Indexed function `envelope_id_from_path` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:127-129]
+- `post_and_cleanup` (function) component `post_and_cleanup [function]` (`e58a7860-6a72-5954-a5c8-645a64bc7581`) lines 137-204 [crates/ghook/src/transport.rs:137-204]
   - Signature: `pub fn post_and_cleanup(`
-  - Purpose: # Summary
-
-This function POSTs an envelope serialized to JSON to a daemon HTTP endpoint, returns a `DeliveryReport` indicating delivery success/failure with status and error details, and deletes the enqueued file upon successful (2xx) response. [crates/ghook/src/transport.rs:129-193]
-- `classify_transport_error` (function) component `classify_transport_error [function]` (`50593f01-6912-515a-b617-06d70e91b067`) lines 195-210 [crates/ghook/src/transport.rs:195-210]
+  - Purpose: Indexed function `post_and_cleanup` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:137-204]
+- `classify_transport_error` (function) component `classify_transport_error [function]` (`36a2f566-753b-51b7-bb72-507b303b984a`) lines 206-221 [crates/ghook/src/transport.rs:206-221]
   - Signature: `fn classify_transport_error(err: &ureq::Transport, error_text: &str) -> DeliveryFailureKind {`
-  - Purpose: Classifies ureq HTTP transport errors into DeliveryFailureKind variants by mapping connection/DNS/proxy failures to `Connect`, timeout error text patterns to `Timeout`, and remaining errors to `Other`. [crates/ghook/src/transport.rs:195-210]
-- `quarantine_malformed` (function) component `quarantine_malformed [function]` (`57ed436a-45e3-5078-b368-7f0dc18ee728`) lines 214-221 [crates/ghook/src/transport.rs:214-221]
+  - Purpose: Indexed function `classify_transport_error` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:206-221]
+- `quarantine_malformed` (function) component `quarantine_malformed [function]` (`8ccef319-bc5e-5ef7-bd04-a2d1e5b39563`) lines 225-232 [crates/ghook/src/transport.rs:225-232]
   - Signature: `pub fn quarantine_malformed(`
-  - Purpose: Quarantines malformed input bytes in the system quarantine directory and returns the resulting file path. [crates/ghook/src/transport.rs:214-221]
-- `quarantine_malformed_at` (function) component `quarantine_malformed_at [function]` (`0db3487f-e809-5e04-ae32-d1667ef5597a`) lines 231-262 [crates/ghook/src/transport.rs:231-262]
+  - Purpose: Indexed function `quarantine_malformed` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:225-232]
+- `quarantine_malformed_at` (function) component `quarantine_malformed_at [function]` (`3f58ad50-ce04-5837-8138-d0c2fadd711a`) lines 242-273 [crates/ghook/src/transport.rs:242-273]
   - Signature: `pub fn quarantine_malformed_at(`
-  - Purpose: Quarantines malformed JSON input by atomically writing base64-encoded stdin and error metadata to uniquely timestamped JSON file pairs, using a critical/non-critical prefix for file identification. [crates/ghook/src/transport.rs:231-262]
-- `read_http_request` (function) component `read_http_request [function]` (`d39b7862-21d6-558f-9857-a24f36805ba8`) lines 273-309 [crates/ghook/src/transport.rs:273-309]
-  - Signature: `fn read_http_request(stream: &mut impl Read) -> String {`
-  - Purpose: Buffers chunks from a stream until a complete HTTP request is accumulated by detecting the header terminator (`\r\n\r\n`) and reading the message body according to the Content-Length header. [crates/ghook/src/transport.rs:273-309]
-- `ts13_is_13_digits` (function) component `ts13_is_13_digits [function]` (`c09fdab3-394e-53cf-898d-ed135e57e61e`) lines 312-316 [crates/ghook/src/transport.rs:312-316]
+  - Purpose: Indexed function `quarantine_malformed_at` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:242-273]
+- `ts13_is_13_digits` (function) component `ts13_is_13_digits [function]` (`3bbefc82-9169-5a99-878b-abfaec512d8a`) lines 286-290 [crates/ghook/src/transport.rs:286-290]
   - Signature: `fn ts13_is_13_digits() {`
-  - Purpose: This test function asserts that `ts13()` returns a string of exactly 13 ASCII digit characters. [crates/ghook/src/transport.rs:312-316]
-- `filename_prefix_reflects_critical` (function) component `filename_prefix_reflects_critical [function]` (`1370c7e3-5e85-52e2-a8ff-92d4aef7c330`) lines 319-322 [crates/ghook/src/transport.rs:319-322]
+  - Purpose: Indexed function `ts13_is_13_digits` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:286-290]
+- `filename_prefix_reflects_critical` (function) component `filename_prefix_reflects_critical [function]` (`6e376850-c377-5833-bbc5-e3762b9e6922`) lines 293-296 [crates/ghook/src/transport.rs:293-296]
   - Signature: `fn filename_prefix_reflects_critical() {`
-  - Purpose: This test asserts that `envelope_filename()` returns filenames prefixed with 'c' when called with `true` (critical) and 'n' when called with `false` (non-critical). [crates/ghook/src/transport.rs:319-322]
-- `atomic_write_creates_parent_dirs` (function) component `atomic_write_creates_parent_dirs [function]` (`4cc397ae-18b1-5e5f-9882-a97fa76e6b8c`) lines 325-331 [crates/ghook/src/transport.rs:325-331]
+  - Purpose: Indexed function `filename_prefix_reflects_critical` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:293-296]
+- `atomic_write_creates_parent_dirs` (function) component `atomic_write_creates_parent_dirs [function]` (`95ba8874-a2df-5675-8004-9ade63a041ff`) lines 299-305 [crates/ghook/src/transport.rs:299-305]
   - Signature: `fn atomic_write_creates_parent_dirs() {`
-  - Purpose: This test verifies that the `atomic_write` function automatically creates all required parent directories when writing to a nested file path. [crates/ghook/src/transport.rs:325-331]
-- `atomic_write_leaves_no_tmp_on_success` (function) component `atomic_write_leaves_no_tmp_on_success [function]` (`df821fda-6169-52e1-a191-2eb3dbc89baa`) lines 334-340 [crates/ghook/src/transport.rs:334-340]
+  - Purpose: Indexed function `atomic_write_creates_parent_dirs` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:299-305]
+- `atomic_write_leaves_no_tmp_on_success` (function) component `atomic_write_leaves_no_tmp_on_success [function]` (`f513006f-b922-5b80-a39e-51e07d4a26b8`) lines 308-314 [crates/ghook/src/transport.rs:308-314]
   - Signature: `fn atomic_write_leaves_no_tmp_on_success() {`
-  - Purpose: Verifies that `atomic_write` removes its temporary staging file (`.json.tmp`) after successfully writing content to disk. [crates/ghook/src/transport.rs:334-340]
-- `enqueue_writes_envelope_to_inbox` (function) component `enqueue_writes_envelope_to_inbox [function]` (`483e7067-05ae-587c-a968-e41f0b49966c`) lines 343-358 [crates/ghook/src/transport.rs:343-358]
+  - Purpose: Indexed function `atomic_write_leaves_no_tmp_on_success` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:308-314]
+- `enqueue_writes_envelope_to_inbox` (function) component `enqueue_writes_envelope_to_inbox [function]` (`450dc9d4-6e70-57cd-b566-b7e4d5ac9030`) lines 317-332 [crates/ghook/src/transport.rs:317-332]
   - Signature: `fn enqueue_writes_envelope_to_inbox() {`
-  - Purpose: Tests that the `enqueue_to` function correctly persists an Envelope to a temporary directory with a filename starting with 'c' and ending in '.json' (excluding temporary files). [crates/ghook/src/transport.rs:343-358]
-- `quarantine_writes_pair` (function) component `quarantine_writes_pair [function]` (`c0610617-b66f-5776-958f-59a401d6f8bb`) lines 361-374 [crates/ghook/src/transport.rs:361-374]
+  - Purpose: Indexed function `enqueue_writes_envelope_to_inbox` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:317-332]
+- `quarantine_writes_pair` (function) component `quarantine_writes_pair [function]` (`4adfa98a-3583-511e-90ce-99668ccedfc8`) lines 335-348 [crates/ghook/src/transport.rs:335-348]
   - Signature: `fn quarantine_writes_pair() {`
-  - Purpose: This test verifies that `quarantine_malformed_at()` creates a paired quarantine file and metadata JSON file containing the malformation reason, JSON parsing error, and base64-encoded input bytes when given invalid JSON input. [crates/ghook/src/transport.rs:361-374]
-- `post_and_cleanup_captures_success_response_body` (function) component `post_and_cleanup_captures_success_response_body [function]` (`3db7c052-d1e7-5e52-82a7-0f4b05967021`) lines 377-423 [crates/ghook/src/transport.rs:377-423]
+  - Purpose: Indexed function `quarantine_writes_pair` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:335-348]
+- `post_and_cleanup_captures_success_response_body` (function) component `post_and_cleanup_captures_success_response_body [function]` (`ff6541be-441d-5821-a3bf-1ebf8f60f50d`) lines 351-404 [crates/ghook/src/transport.rs:351-404]
   - Signature: `fn post_and_cleanup_captures_success_response_body() {`
-  - Purpose: Tests that `post_and_cleanup` successfully delivers an Envelope via HTTP POST to a mock server and correctly captures the 200 OK response before cleanup. [crates/ghook/src/transport.rs:377-423]
-- `post_and_cleanup_sends_droid_source_to_unified_hooks_endpoint` (function) component `post_and_cleanup_sends_droid_source_to_unified_hooks_endpoint [function]` (`59f76343-6d99-550b-9247-2d45a5e29323`) lines 426-470 [crates/ghook/src/transport.rs:426-470]
+  - Purpose: Indexed function `post_and_cleanup_captures_success_response_body` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:351-404]
+- `post_and_cleanup_sends_droid_source_to_unified_hooks_endpoint` (function) component `post_and_cleanup_sends_droid_source_to_unified_hooks_endpoint [function]` (`50a4ebc4-a089-5f1d-9955-f2da9deda388`) lines 407-458 [crates/ghook/src/transport.rs:407-458]
   - Signature: `fn post_and_cleanup_sends_droid_source_to_unified_hooks_endpoint() {`
-  - Purpose: This test validates that `post_and_cleanup` successfully POSTs a droid-sourced envelope containing PreToolUse hook metadata to the unified hooks endpoint (`/api/hooks/execute`) and deletes the local enqueued message file upon HTTP 200 delivery confirmation. [crates/ghook/src/transport.rs:426-470]
-- `post_and_cleanup_captures_http_error_body` (function) component `post_and_cleanup_captures_http_error_body [function]` (`d906a088-ddc9-574a-8f53-12ca2bacbb63`) lines 473-505 [crates/ghook/src/transport.rs:473-505]
+  - Purpose: Indexed function `post_and_cleanup_sends_droid_source_to_unified_hooks_endpoint` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:407-458]
+- `post_and_cleanup_captures_http_error_body` (function) component `post_and_cleanup_captures_http_error_body [function]` (`a1fa1f5d-8e49-5552-b64d-3aa8a5efb504`) lines 461-493 [crates/ghook/src/transport.rs:461-493]
   - Signature: `fn post_and_cleanup_captures_http_error_body() {`
-  - Purpose: Tests that `post_and_cleanup` captures HTTP error response bodies, records delivery failures with status code 500, and preserves the enqueued envelope file when posting to a failing endpoint. [crates/ghook/src/transport.rs:473-505]
+  - Purpose: Indexed function `post_and_cleanup_captures_http_error_body` in `crates/ghook/src/transport.rs`. [crates/ghook/src/transport.rs:461-493]
 

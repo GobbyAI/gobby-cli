@@ -4,9 +4,9 @@ type: code_file
 provenance:
 - file: crates/gwiki/src/ingest/pdf/mod.rs
   ranges:
-  - 21-24
-  - 26-32
-  - 35-38
+  - 22-25
+  - 28-34
+  - 37-40
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -19,19 +19,19 @@ Module: [[code/modules/crates/gwiki/src/ingest/pdf|crates/gwiki/src/ingest/pdf]]
 ## Purpose
 
 `crates/gwiki/src/ingest/pdf/mod.rs` exposes 3 indexed API symbols.
-[crates/gwiki/src/ingest/pdf/mod.rs:21-24]
-[crates/gwiki/src/ingest/pdf/mod.rs:26-32]
-[crates/gwiki/src/ingest/pdf/mod.rs:35-38]
+[crates/gwiki/src/ingest/pdf/mod.rs:22-25]
+[crates/gwiki/src/ingest/pdf/mod.rs:28-34]
+[crates/gwiki/src/ingest/pdf/mod.rs:37-40]
 
 ## API Symbols
 
-- `PdfPageMarkdown` (class) component `PdfPageMarkdown [class]` (`30281de0-d088-5f9e-824f-0c0e7a576ee0`) lines 21-24 [crates/gwiki/src/ingest/pdf/mod.rs:21-24]
+- `PdfPageMarkdown` (class) component `PdfPageMarkdown [class]` (`2021a76a-b2b1-532a-8dd0-5615e7b55741`) lines 22-25 [crates/gwiki/src/ingest/pdf/mod.rs:22-25]
   - Signature: `struct PdfPageMarkdown {`
-  - Purpose: PdfPageMarkdown is a struct that pairs a PDF page number with its markdown-formatted textual representation. [crates/gwiki/src/ingest/pdf/mod.rs:21-24]
-- `PdfMarkdownSummary` (class) component `PdfMarkdownSummary [class]` (`649603d2-fe46-5603-b101-da3338ecd4f1`) lines 26-32 [crates/gwiki/src/ingest/pdf/mod.rs:26-32]
+  - Purpose: Indexed class `PdfPageMarkdown` in `crates/gwiki/src/ingest/pdf/mod.rs`. [crates/gwiki/src/ingest/pdf/mod.rs:22-25]
+- `PdfMarkdownSummary` (class) component `PdfMarkdownSummary [class]` (`39ec77cb-ca8d-51b8-9930-d61f4bc795bc`) lines 28-34 [crates/gwiki/src/ingest/pdf/mod.rs:28-34]
   - Signature: `struct PdfMarkdownSummary {`
-  - Purpose: `PdfMarkdownSummary` is a metadata struct that records PDF processing results, including page count, text layer presence, vision model usage, and detected document degradations. [crates/gwiki/src/ingest/pdf/mod.rs:26-32]
-- `PdfRenderOutcome` (class) component `PdfRenderOutcome [class]` (`fedd563a-dc81-5a0a-8822-0018a1961ec8`) lines 35-38 [crates/gwiki/src/ingest/pdf/mod.rs:35-38]
+  - Purpose: Indexed class `PdfMarkdownSummary` in `crates/gwiki/src/ingest/pdf/mod.rs`. [crates/gwiki/src/ingest/pdf/mod.rs:28-34]
+- `PdfRenderOutcome` (class) component `PdfRenderOutcome [class]` (`3c26316a-01a4-5e2e-b1f7-a3745019079a`) lines 37-40 [crates/gwiki/src/ingest/pdf/mod.rs:37-40]
   - Signature: `struct PdfRenderOutcome {`
-  - Purpose: `PdfRenderOutcome` is a struct that encapsulates the result of rendering a PDF document, containing a vector of rendered pages and optional metadata describing any document degradation encountered. [crates/gwiki/src/ingest/pdf/mod.rs:35-38]
+  - Purpose: Indexed class `PdfRenderOutcome` in `crates/gwiki/src/ingest/pdf/mod.rs`. [crates/gwiki/src/ingest/pdf/mod.rs:37-40]
 

@@ -14,84 +14,94 @@ provenance:
   - 189-223
   - 225-233
   - 235-237
-  - 239-246
-  - 248-264
-  - 266-268
-  - 270-272
-  - 274-294
-  - 296-305
-  - 307-332
-  - 334-351
-  - 353-357
-  - 359-361
-  - 363-365
-  - 367-403
-  - 405-424
-  - 438-489
-  - 492-511
-  - 514-531
-  - 534-556
-  - 559-580
-  - 583-606
-  - 609-639
-  - 642-657
-  - 660-695
-  - 698-751
-  - 753-762
-  - 764-767
-  - 769-776
-  - 778-780
-  - 782-784
-  - 786-795
-  - 797-814
-  - 816-829
-  - 831-835
-  - 837-855
-  - 838-854
-  - 857-873
-  - 858-872
+  - 239-245
+  - 247-263
+  - 265-267
+  - 269-271
+  - 273-293
+  - 295-304
+  - 306-331
+  - 333-350
+  - 352-356
+  - 358-360
+  - 362-364
+  - 366-402
+  - 404-423
+  - 437-488
+  - 491-510
+  - 513-530
+  - 533-555
+  - 558-579
+  - 582-605
+  - 608-638
+  - 641-656
+  - 659-694
+  - 697-750
+  - 753-770
+  - 772-781
+  - 783-786
+  - 788-795
+  - 797-799
+  - 801-803
+  - 805-814
+  - 816-833
+  - 835-848
+  - 850-856
+  - 858-881
+  - 883-902
+- file: crates/gcore/src/ai/embeddings.rs
+  ranges:
+  - 19-38
+  - 42-92
+  - 94-105
+  - 107-133
+  - 140-148
+  - 151-166
+  - 169-190
+  - 193-197
+  - 200-217
+  - 220-242
+  - 245-258
+  - 261-273
 - file: crates/gcore/src/ai/mod.rs
   ranges:
-  - 30-34
-  - 36-47
-  - 49-61
-  - 63-75
-  - 78-81
-  - 84-88
-  - 90-107
-  - 109-134
-  - 136-141
-  - 143-145
-  - 147-149
-  - 151-168
-  - 170-200
-  - 203-208
-  - 210-217
-  - 219-234
-  - 236-247
-  - 249-257
-  - 259-261
-  - 263-296
-  - 298-309
-  - 311-317
-  - 319-321
-  - 323-341
-  - 343-346
-  - 348-358
-  - 360-366
-  - 369-373
-  - 375-392
-  - 401-417
-  - 420-442
-  - 445-458
-  - 461-465
-  - 468-475
-  - 478-491
-  - 494-514
-  - 517-556
-  - 559-594
-  - 597-627
-  - 629-642
+  - 31-35
+  - 37-48
+  - 50-62
+  - 64-76
+  - 79-82
+  - 85-89
+  - 91-108
+  - 110-135
+  - 137-142
+  - 144-146
+  - 148-150
+  - 152-169
+  - 171-201
+  - 204-209
+  - 211-218
+  - 220-235
+  - 237-248
+  - 250-258
+  - 260-262
+  - 264-297
+  - 299-310
+  - 312-318
+  - 320-322
+  - 324-342
+  - 344-347
+  - 349-359
+  - 361-367
+  - 376-392
+  - 395-417
+  - 420-433
+  - 436-440
+  - 443-450
+  - 453-466
+  - 469-508
+  - 511-546
+  - 549-579
+  - 581-594
 - file: crates/gcore/src/ai/probe.rs
   ranges:
   - 20-23
@@ -100,7 +110,6 @@ provenance:
   - 45-50
   - 53-56
   - 58-64
-  - 59-63
   - 66-78
   - 80-82
   - 84-89
@@ -115,7 +124,6 @@ provenance:
   - 279-281
   - '283'
   - 285-300
-  - 286-299
   - 309-361
   - 364-377
   - 380-389
@@ -125,10 +133,7 @@ provenance:
   - 469-495
   - 497-500
   - 502-515
-  - 503-510
-  - 512-514
   - 517-530
-  - 518-529
 - file: crates/gcore/src/ai/text.rs
   ranges:
   - 9-15
@@ -146,9 +151,6 @@ provenance:
   ranges:
   - 11-14
   - 16-37
-  - 17-22
-  - 24-29
-  - 31-36
   - 39-73
   - 75-99
   - 101-142
@@ -165,7 +167,6 @@ provenance:
   - 37-63
   - 65-90
   - 92-104
-  - 94-98
   - 106-121
   - 123-156
   - 158-173
@@ -189,80 +190,81 @@ Parent: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Overview
 
-The `ai` module provides gcore's unified AI capability layer, supporting text generation, embeddings, vision/image description, and audio transcription across two execution paths: a local Gobby daemon and direct provider (OpenAI-compatible) endpoints.
-
-`mod.rs` defines the routing core, computing the effective route per capability based on configured routing modes (auto, daemon, direct, off) and live daemon availability, with fallback logic between daemon and direct backends. `daemon.rs` implements daemon-based calls—building multipart and JSON requests with local CLI token auth, resolving the daemon URL/home, and parsing transcription and embedding responses. `probe.rs` handles capability discovery, probing the daemon's status endpoint to determine which capabilities (text, vision, audio, embeddings) are available or degraded, abstracted over a pluggable probe transport.
-
-The remaining files implement the direct provider path: a shared `AiTransport` (in mod.rs) handles JSON/multipart POSTs with API-key auth, capability-specific timeouts, and exponential backoff retry honoring Retry-After headers. `text.rs`, `vision.rs`, and `transcription.rs` build chat-completion and multipart requests and parse responses, with vision supporting delimited/JSON-fenced structured section extraction and transcription distinguishing transcribe vs. translate tasks.
-
-The module is extensively unit-tested with fake transports, spawned test servers, and environment guards covering routing precedence, retry behavior, multipart wiring, token handling, and response parsing edge cases.
+The `ai` module in `gcore` provides a unified interface and client transports for interacting with local or remote daemon-backed AI services. It supports core capabilities such as text generation, text embedding, audio transcription, and image/vision analysis, complete with capability probing, request routing, retry handling, and direct fallback mechanisms.
 [crates/gcore/src/ai/daemon.rs:19-24]
-[crates/gcore/src/ai/mod.rs:30-34]
+[crates/gcore/src/ai/embeddings.rs:19-38]
+[crates/gcore/src/ai/mod.rs:31-35]
 [crates/gcore/src/ai/probe.rs:20-23]
 [crates/gcore/src/ai/text.rs:9-15]
-[crates/gcore/src/ai/transcription.rs:11-14]
 
 ## Call Diagram
 
 ```mermaid
 sequenceDiagram
-    participant m_0018671e_1bf6_5f64_84e3_f7bb31b64397 as post_multipart &#91;function&#93;
     participant m_03177fc3_a65a_553d_89df_cae5f70ccc6f as probe_daemon_capability_with &#91;function&#93;
-    participant m_06ae781a_755e_5cba_91c7_bc6d7f03b6f9 as forwards_provider_model_and_optional_project_id &#91;function&#93;
+    participant m_09f6bb39_7d40_5fc9_b75c_86642c544ea9 as explicit_provider_model_suppresses_profile_override &#91;function&#93;
+    participant m_0c92d3d6_d4b8_5aba_bc76_1828a1193b9c as non_empty &#91;function&#93;
     participant m_0fcc2a50_b69d_5539_a83c_b340710a09d2 as capability_status_route &#91;function&#93;
-    participant m_1011bfa8_deef_5104_ae3c_083e282f55a3 as effective_route_explicit_routing_modes_are_forced &#91;function&#93;
-    participant m_10fd6471_8d82_556b_8c85_9ddf3ce3e87a as auto_uses_explicit_direct_config_when_daemon_unavailable &#91;function&#93;
+    participant m_1046d96e_a58d_5957_928b_7fa50a164102 as parse_daemon_embeddings &#91;function&#93;
+    participant m_105fdbc7_4236_5718_a78a_9c5d67ff92d1 as empty_embedding_batch_parses_daemon_model_and_dim &#91;function&#93;
     participant m_13e8b8b5_4f2e_53a2_8766_fca00c5d8a3d as status_route_is_availability_truth &#91;function&#93;
-    participant m_1552c005_f9c6_5d08_8268_e85f725b3228 as explicit_provider_model_suppresses_profile_override &#91;function&#93;
-    participant m_1dee5433_2483_5385_b504_76e3e2db6cff as write_daemon_files &#91;function&#93;
-    participant m_2b002f39_70c7_5bf2_add4_86a4bd0e9fcc as binding &#91;function&#93;
-    participant m_2ececf02_86d2_579e_b67f_be87fe34be70 as retry_with_backoff &#91;function&#93;
-    participant m_3ee0fb4d_cf88_5f67_8ee6_7afe5c56ce51 as spawn_server &#91;function&#93;
-    participant m_4a81b62f_3833_566d_81d1_43cf40f800c6 as test_context &#91;function&#93;
+    participant m_140a3d79_8513_56bb_801d_abc6d2c3f055 as add_optional_text &#91;function&#93;
+    participant m_143aa9a9_113a_58d6_8646_298ca7675e6d as retry_caps_at_two &#91;function&#93;
+    participant m_1c37eb23_5d40_580d_ad00_0bc37f768176 as retry_honors_retry_after_before_exponential_backoff &#91;function&#93;
+    participant m_2c4f50e8_a084_5f3a_96da_34b5e3586b3c as spawn_server &#91;function&#93;
     participant m_4b57ee25_c217_531b_912e_8d2fec0a4168 as unavailable &#91;function&#93;
-    participant m_79897c3c_a54c_5605_9155_ac311297092d as generate_via_daemon &#91;function&#93;
+    participant m_4dd15874_95ea_5090_a1af_a5a7feee5644 as request_body_json &#91;function&#93;
+    participant m_51653529_1ebf_5764_8485_705de7077402 as test_context &#91;function&#93;
+    participant m_603a96e1_c01d_512b_9e6c_ddfbfd10c60f as embed_via_daemon &#91;function&#93;
+    participant m_639814da_47a4_528f_9763_5d60e7bbfae9 as write_daemon_files &#91;function&#93;
+    participant m_94e6bc19_a8a2_5e4c_bd8a_da355a23f463 as retry_with_backoff &#91;function&#93;
     participant m_cc963b53_c2ac_5943_8e93_686cbc5e9e52 as probe_daemon_capabilities_with &#91;function&#93;
-    participant m_d6439506_5ad9_5288_83c2_debaf42a28a3 as generate_via_daemon_with_max_tokens &#91;function&#93;
-    participant m_d666aa1a_0c17_5bfd_9dd4_6edb842360e5 as parse_json_response &#91;function&#93;
-    participant m_e3dfbd16_cdf8_5be4_b660_24d14f42f06f as request_body_json &#91;function&#93;
-    participant m_f55ca630_86e7_5f15_9bd9_2bec3a37af6e as temp_home &#91;function&#93;
+    participant m_d05d6301_bbec_50aa_94b7_4887e115e98d as parse_daemon_embedding &#91;function&#93;
+    participant m_f475c60b_885a_5c8f_b098_6857aacba69b as temp_home &#91;function&#93;
     participant m_f5b1ae31_d8ba_5980_98a9_a916753b17c8 as status_body_advertises &#91;function&#93;
-    m_0018671e_1bf6_5f64_84e3_f7bb31b64397->>m_2ececf02_86d2_579e_b67f_be87fe34be70: calls
-    m_0018671e_1bf6_5f64_84e3_f7bb31b64397->>m_d666aa1a_0c17_5bfd_9dd4_6edb842360e5: calls
+    participant m_fc924f08_7212_584c_994d_5ec9121f6793 as generate_via_daemon_with_max_tokens &#91;function&#93;
     m_03177fc3_a65a_553d_89df_cae5f70ccc6f->>m_0fcc2a50_b69d_5539_a83c_b340710a09d2: calls
     m_03177fc3_a65a_553d_89df_cae5f70ccc6f->>m_4b57ee25_c217_531b_912e_8d2fec0a4168: calls
     m_03177fc3_a65a_553d_89df_cae5f70ccc6f->>m_f5b1ae31_d8ba_5980_98a9_a916753b17c8: calls
-    m_06ae781a_755e_5cba_91c7_bc6d7f03b6f9->>m_1dee5433_2483_5385_b504_76e3e2db6cff: calls
-    m_06ae781a_755e_5cba_91c7_bc6d7f03b6f9->>m_3ee0fb4d_cf88_5f67_8ee6_7afe5c56ce51: calls
-    m_06ae781a_755e_5cba_91c7_bc6d7f03b6f9->>m_4a81b62f_3833_566d_81d1_43cf40f800c6: calls
-    m_06ae781a_755e_5cba_91c7_bc6d7f03b6f9->>m_79897c3c_a54c_5605_9155_ac311297092d: calls
-    m_06ae781a_755e_5cba_91c7_bc6d7f03b6f9->>m_d6439506_5ad9_5288_83c2_debaf42a28a3: calls
-    m_06ae781a_755e_5cba_91c7_bc6d7f03b6f9->>m_e3dfbd16_cdf8_5be4_b660_24d14f42f06f: calls
-    m_06ae781a_755e_5cba_91c7_bc6d7f03b6f9->>m_f55ca630_86e7_5f15_9bd9_2bec3a37af6e: calls
-    m_1011bfa8_deef_5104_ae3c_083e282f55a3->>m_2b002f39_70c7_5bf2_add4_86a4bd0e9fcc: calls
-    m_10fd6471_8d82_556b_8c85_9ddf3ce3e87a->>m_2b002f39_70c7_5bf2_add4_86a4bd0e9fcc: calls
+    m_09f6bb39_7d40_5fc9_b75c_86642c544ea9->>m_2c4f50e8_a084_5f3a_96da_34b5e3586b3c: calls
+    m_09f6bb39_7d40_5fc9_b75c_86642c544ea9->>m_4dd15874_95ea_5090_a1af_a5a7feee5644: calls
+    m_09f6bb39_7d40_5fc9_b75c_86642c544ea9->>m_51653529_1ebf_5764_8485_705de7077402: calls
+    m_09f6bb39_7d40_5fc9_b75c_86642c544ea9->>m_639814da_47a4_528f_9763_5d60e7bbfae9: calls
+    m_09f6bb39_7d40_5fc9_b75c_86642c544ea9->>m_f475c60b_885a_5c8f_b098_6857aacba69b: calls
+    m_09f6bb39_7d40_5fc9_b75c_86642c544ea9->>m_fc924f08_7212_584c_994d_5ec9121f6793: calls
+    m_1046d96e_a58d_5957_928b_7fa50a164102->>m_d05d6301_bbec_50aa_94b7_4887e115e98d: calls
+    m_105fdbc7_4236_5718_a78a_9c5d67ff92d1->>m_2c4f50e8_a084_5f3a_96da_34b5e3586b3c: calls
+    m_105fdbc7_4236_5718_a78a_9c5d67ff92d1->>m_4dd15874_95ea_5090_a1af_a5a7feee5644: calls
+    m_105fdbc7_4236_5718_a78a_9c5d67ff92d1->>m_51653529_1ebf_5764_8485_705de7077402: calls
+    m_105fdbc7_4236_5718_a78a_9c5d67ff92d1->>m_603a96e1_c01d_512b_9e6c_ddfbfd10c60f: calls
+    m_105fdbc7_4236_5718_a78a_9c5d67ff92d1->>m_639814da_47a4_528f_9763_5d60e7bbfae9: calls
+    m_105fdbc7_4236_5718_a78a_9c5d67ff92d1->>m_f475c60b_885a_5c8f_b098_6857aacba69b: calls
     m_13e8b8b5_4f2e_53a2_8766_fca00c5d8a3d->>m_cc963b53_c2ac_5943_8e93_686cbc5e9e52: calls
-    m_1552c005_f9c6_5d08_8268_e85f725b3228->>m_1dee5433_2483_5385_b504_76e3e2db6cff: calls
-    m_1552c005_f9c6_5d08_8268_e85f725b3228->>m_3ee0fb4d_cf88_5f67_8ee6_7afe5c56ce51: calls
-    m_1552c005_f9c6_5d08_8268_e85f725b3228->>m_4a81b62f_3833_566d_81d1_43cf40f800c6: calls
-    m_1552c005_f9c6_5d08_8268_e85f725b3228->>m_d6439506_5ad9_5288_83c2_debaf42a28a3: calls
-    m_1552c005_f9c6_5d08_8268_e85f725b3228->>m_e3dfbd16_cdf8_5be4_b660_24d14f42f06f: calls
+    m_140a3d79_8513_56bb_801d_abc6d2c3f055->>m_0c92d3d6_d4b8_5aba_bc76_1828a1193b9c: calls
+    m_143aa9a9_113a_58d6_8646_298ca7675e6d->>m_94e6bc19_a8a2_5e4c_bd8a_da355a23f463: calls
+    m_1c37eb23_5d40_580d_ad00_0bc37f768176->>m_94e6bc19_a8a2_5e4c_bd8a_da355a23f463: calls
 ```
 
 ## Files
 
-- [[code/files/crates/gcore/src/ai/daemon.rs|crates/gcore/src/ai/daemon.rs]] - `crates/gcore/src/ai/daemon.rs` exposes 46 indexed API symbols.
+- [[code/files/crates/gcore/src/ai/daemon.rs|crates/gcore/src/ai/daemon.rs]] - `crates/gcore/src/ai/daemon.rs` exposes 47 indexed API symbols.
 [crates/gcore/src/ai/daemon.rs:19-24]
 [crates/gcore/src/ai/daemon.rs:27-31]
 [crates/gcore/src/ai/daemon.rs:34-41]
 [crates/gcore/src/ai/daemon.rs:44-96]
 [crates/gcore/src/ai/daemon.rs:98-136]
-- [[code/files/crates/gcore/src/ai/mod.rs|crates/gcore/src/ai/mod.rs]] - `crates/gcore/src/ai/mod.rs` exposes 40 indexed API symbols.
-[crates/gcore/src/ai/mod.rs:30-34]
-[crates/gcore/src/ai/mod.rs:36-47]
-[crates/gcore/src/ai/mod.rs:49-61]
-[crates/gcore/src/ai/mod.rs:63-75]
-[crates/gcore/src/ai/mod.rs:78-81]
+- [[code/files/crates/gcore/src/ai/embeddings.rs|crates/gcore/src/ai/embeddings.rs]] - `crates/gcore/src/ai/embeddings.rs` exposes 12 indexed API symbols.
+[crates/gcore/src/ai/embeddings.rs:19-38]
+[crates/gcore/src/ai/embeddings.rs:42-92]
+[crates/gcore/src/ai/embeddings.rs:94-105]
+[crates/gcore/src/ai/embeddings.rs:107-133]
+[crates/gcore/src/ai/embeddings.rs:140-148]
+- [[code/files/crates/gcore/src/ai/mod.rs|crates/gcore/src/ai/mod.rs]] - `crates/gcore/src/ai/mod.rs` exposes 37 indexed API symbols.
+[crates/gcore/src/ai/mod.rs:31-35]
+[crates/gcore/src/ai/mod.rs:37-48]
+[crates/gcore/src/ai/mod.rs:50-62]
+[crates/gcore/src/ai/mod.rs:64-76]
+[crates/gcore/src/ai/mod.rs:79-82]
 - [[code/files/crates/gcore/src/ai/probe.rs|crates/gcore/src/ai/probe.rs]] - `crates/gcore/src/ai/probe.rs` exposes 35 indexed API symbols.
 [crates/gcore/src/ai/probe.rs:20-23]
 [crates/gcore/src/ai/probe.rs:26-34]
@@ -294,88 +296,98 @@ sequenceDiagram
 - `37bfcc0e-6619-5f90-91f9-c3910c81e82d`
 - `9e9d7634-b2f2-5ee0-8608-cf9c74922d62`
 - `e9f2ba09-f1c6-5a87-8884-c48c0e955a54`
-- `3994d8af-6946-5c94-9d15-b13a669b4205`
-- `79897c3c-a54c-5605-9155-ac311297092d`
-- `d6439506-5ad9-5288-83c2-debaf42a28a3`
-- `1e34ffe6-d101-5f82-b5c5-984af336254c`
-- `49b51891-f2c1-5926-b509-c693f53b8a61`
-- `7237a9f5-0474-58d5-8bf0-2c5a05cc84c5`
-- `76288d26-6ac2-5efa-aa96-267bf0b370a8`
-- `2e8672fc-9c21-56b7-8c7d-e17398fda00c`
-- `e43a0c36-a77a-5ab1-a03e-9ba813eeffd0`
-- `a128c39c-e06a-5b0e-b5b3-1cbdff58789d`
-- `1075be87-707c-5178-bd57-2a28d62792b8`
-- `ee0128da-3cb5-5062-8ae1-42fbddb251a2`
-- `c7682195-e6b0-5b60-8d93-a0d95f733ade`
-- `663b2e9b-4244-5dde-9077-b046bff7b9a3`
-- `9f79bb23-320f-59e8-b1a6-eff4aa6975d3`
-- `d2a39e0d-8b83-54cc-8ace-34ac7bca077f`
-- `5e832e72-f128-522e-81c7-2de834bd28f7`
-- `59b84bce-b665-5e2a-8c1a-16d3c4f5c116`
-- `1fe73f28-18c0-5b8a-9efe-f34fc5195ca2`
-- `06ae781a-755e-5cba-91c7-bc6d7f03b6f9`
-- `25ace869-f350-5741-90d1-780bfbd4ebdb`
-- `60199882-318a-56a5-b95e-94c939721c74`
-- `f0317802-7c2c-501e-a32c-fae0e4ac4319`
-- `1552c005-f9c6-5d08-8268-e85f725b3228`
-- `efbe8daf-cbdb-565d-a7b4-803f757a246d`
-- `1f82c016-7c22-5126-b0da-eeaa124c98ce`
-- `c1572ec6-d65c-5f2e-ae7c-fcbaf5e91616`
-- `77dc010b-5748-5e32-97ac-8498c025bc45`
-- `45772243-03b3-5bbe-83f8-489df9b21bf3`
-- `3ee0fb4d-cf88-5f67-8ee6-7afe5c56ce51`
-- `e3dfbd16-cdf8-5be4-b660-24d14f42f06f`
-- `5f2f41f1-d0cd-59c0-aa0b-93c76d74e556`
-- `c30127c5-f3fb-50a8-941b-41db8bc5e751`
-- `f55ca630-86e7-5f15-9bd9-2bec3a37af6e`
-- `1dee5433-2483-5385-b504-76e3e2db6cff`
-- `4a81b62f-3833-566d-81d1-43cf40f800c6`
-- `a029f3b4-0b70-5089-8806-0d05dfc85f37`
-- `fe0cc51a-d67a-5ad6-9585-0b7fbd72902b`
-- `c7f9c022-d9dc-50e9-9c11-27a0c2d33317`
-- `c57a679a-8970-537f-9c79-8ece6cc60f43`
-- `73378adb-e8da-5688-a669-fe3364b7332d`
-- `d810ca29-9acb-5157-b0b6-dd1962a9c696`
-- `1d1d0d89-a9c1-582f-ab80-915b25aefa53`
-- `b34e7711-5869-55b9-9575-b7d62dbeb638`
-- `7ac3caa0-64bd-538f-8655-a126bcd11d99`
-- `4fe7c3e2-223b-50d7-868c-4bf6f663463c`
-- `d26b891b-cc06-5b8e-a3f5-e5d84ef97d54`
-- `53688775-43ae-55f0-9379-44144f5a3e94`
-- `55fbf56f-d8bf-52eb-b025-9c2029036720`
-- `0018671e-1bf6-5f64-84e3-f7bb31b64397`
-- `d8d288d4-ac54-592b-b459-e12733229ca5`
-- `a9b615d0-68d2-5f7d-b273-bd171f254ad9`
-- `31ac76f5-4048-5ca7-9c40-dc4a762b811c`
-- `7f405bcf-9303-57e0-8b4b-22d3b7063db7`
-- `5ad14028-eee9-5187-89d7-98bbd4d0e30b`
-- `a434752b-eb5e-5871-9705-8047e358b820`
-- `0b788c42-cd46-5e53-8d5c-0b0373e3225a`
-- `2ececf02-86d2-579e-b67f-be87fe34be70`
-- `5c0027dc-e773-510c-bec6-1de51bd6ce96`
-- `549f2359-b022-5a51-a0ab-e035a28c2c36`
-- `cfc58b79-32d9-579f-8e5e-8840dbb4bfce`
-- `d666aa1a-0c17-5bfd-9dd4-6edb842360e5`
-- `61e1ad83-2dfc-58ad-a003-8329aafadb01`
-- `fdc7c636-2564-53dd-b089-69877ef97366`
-- `6e566e2d-75e8-5a93-b76b-12a99507dffb`
-- `69420957-e9b4-548b-b149-3316b92e9d97`
-- `08c141ca-1096-56e0-b4de-4f51ca7190d0`
-- `874e9aed-f4e4-5dc3-9867-e66130320bc9`
-- `05de862b-e895-5ee5-8bd7-675205da4d77`
-- `35f30b57-9fc0-5191-8c8f-7d924d51b9d7`
-- `0b7b4c60-9dbe-535b-b313-6855a30cf7aa`
-- `fd54f973-0ccf-5052-8bb7-13ec1b0e427d`
-- `e2312c8c-82f5-59f1-ad18-47afef870497`
-- `55f30a2a-202b-5b93-bb53-b330f90b6f81`
-- `fc1cad30-445e-5c46-a8a5-d40f72b2032a`
-- `cee3a472-d975-5a4f-81ac-4ca2bd989ce6`
-- `2323068f-992f-5061-95b0-59abc52266be`
-- `315ab23c-ff83-542a-9b02-0656f56433e5`
-- `d2217cf5-e110-5896-aaf9-b1149f3596d9`
-- `1011bfa8-deef-5104-ae3c-083e282f55a3`
-- `10fd6471-8d82-556b-8c85-9ddf3ce3e87a`
-- `2b002f39-70c7-5bf2-add4-86a4bd0e9fcc`
+- `48017a1b-075c-5dbe-9269-323340b49c6d`
+- `3575e0cd-f05d-5d20-90d2-8e3d02cc9a40`
+- `fc924f08-7212-584c-994d-5ec9121f6793`
+- `603a96e1-c01d-512b-9e6c-ddfbfd10c60f`
+- `d51d0c9e-6a27-5522-a654-14444ab1c0e4`
+- `1ac4b829-b376-5132-971e-b80c34d0b1a3`
+- `8d162ca0-183b-5e09-b857-519683114dc3`
+- `9097eb66-0a1d-5ddc-ba26-d478094936ea`
+- `11e2a651-32d0-5ad9-93ec-3405ccf9ff7b`
+- `4071c551-a34b-594d-b9e9-85864097d0ea`
+- `e76b63fb-1a4f-5e8b-aaf4-a35137efebde`
+- `140a3d79-8513-56bb-801d-abc6d2c3f055`
+- `562b2429-576a-52b5-bbe1-885d9457d3e7`
+- `5e23fec2-f487-5fd5-b3cd-66bf41d79dcd`
+- `d9ac39f5-a35a-5c32-9d43-18a2d6019fe5`
+- `0c92d3d6-d4b8-5aba-bc76-1828a1193b9c`
+- `05808d65-c919-5b8c-9350-18f7947c00a3`
+- `1046d96e-a58d-5957-928b-7fa50a164102`
+- `d05d6301-bbec-50aa-94b7-4887e115e98d`
+- `3973bc4e-c301-53b9-a1d3-e94ea03e6732`
+- `3b0bce9b-06c9-585d-8879-938b9f41c8ca`
+- `3ff1eade-8add-5bd6-a401-5550c7d0001d`
+- `45e9aa3d-6fa9-5867-94d0-978b1012fd9a`
+- `09f6bb39-7d40-5fc9-b75c-86642c544ea9`
+- `d803c299-8c52-5095-9b32-ffb9a6d68e03`
+- `5f3be6a0-edf9-5794-86b9-b0c7af28ac0f`
+- `105fdbc7-4236-5718-a78a-9c5d67ff92d1`
+- `6298e2ca-d1a8-5124-89f1-1f8e6e800843`
+- `77571a21-d63c-5ae2-90ce-73834889e1b7`
+- `842bfa7f-9938-5650-8f08-119c1c05cc4f`
+- `2c4f50e8-a084-5f3a-96da-34b5e3586b3c`
+- `4dd15874-95ea-5090-a1af-a5a7feee5644`
+- `4b4f4ddc-1587-5a42-8a56-671bcb939a7b`
+- `2d67bef1-b486-53e0-9cf0-18b28208f637`
+- `f475c60b-885a-5c8f-b098-6857aacba69b`
+- `639814da-47a4-528f-9763-5d60e7bbfae9`
+- `51653529-1ebf-5764-8485-705de7077402`
+- `913108dd-e5d5-52de-abcf-11b802236def`
+- `c1f000a1-bfe4-5002-b75d-142552507f1c`
+- `aa6cfc87-ccd4-5874-b010-b5c4a3839636`
+- `65d08b11-ecae-52d9-8f65-b0f7664735fb`
+- `3c19b4cf-1b6a-5027-b81d-0a9ff40b575c`
+- `59aa653c-0579-5480-a8cc-3c30fed9b3d2`
+- `d0d7979c-9bb2-539d-a1d3-3ad97583ebbe`
+- `f7e5c845-5e5c-59a6-820d-36a4bfd3a762`
+- `f4099757-dc15-5968-bc5d-0c7bb369416e`
+- `32bf8302-449f-5124-9a03-b41911acec6d`
+- `ba5055d0-6975-5a42-8852-37f2289afaf1`
+- `e925bbea-0fa5-56d0-86c5-1e79377b9acb`
+- `7728919a-760a-5f6d-aef9-1115c53a5c71`
+- `962aace2-4f44-5772-a035-4b7c1ead8018`
+- `4844d745-aade-55a0-a2a0-6b5c9b9632ca`
+- `87ec6256-1a32-5ca8-8f70-fdcb63101747`
+- `6eee425b-26f1-5709-b431-c9a62443ea63`
+- `e87f7552-91a0-5a49-916c-d67be76ff322`
+- `7f89060f-a6e2-567f-8875-ecc1d63bb8f0`
+- `ba15d92b-546d-5fba-84af-962924e83744`
+- `d748e96c-668a-5e85-a419-39df03dc7534`
+- `5c23eaa1-07fb-5c1a-b22f-d4490145b0b7`
+- `180a310a-8d01-53ee-a9ae-ed6f8f7e7f27`
+- `f2706583-a628-5ffe-966d-bd49cec75939`
+- `e082eff8-11d3-57f6-b9a8-701d46711e66`
+- `294ff439-365a-561b-a659-4850992be683`
+- `f34172c1-25a5-5f04-9884-382b86cdd0a5`
+- `586d5323-0a44-5219-9128-f5131b14fbab`
+- `0a3c1953-81c4-5755-a522-8fafb180f32c`
+- `89ec5e8e-cd53-5e8a-b9d2-5e35a45f196c`
+- `8b11e1be-5b59-539e-a4f6-f0d507fa3768`
+- `7b88d6da-e416-571d-acf7-30f2983a0213`
+- `288cea22-62db-5cd7-8d81-47a5b927d621`
+- `94e6bc19-a8a2-5e4c-bd8a-da355a23f463`
+- `0034cc07-303d-5381-9144-11591a1833d4`
+- `b973fc1b-5383-5f7b-9b52-cb80df401c30`
+- `20c216cb-9f02-5325-9bf3-d1ed06dd6f91`
+- `a3239c25-8ddc-538e-baa3-ece77b66908c`
+- `0fa3fced-36c4-59d0-b42d-7123046d90d7`
+- `c1ba8fce-c141-5eec-abad-7f6c7b720f3d`
+- `72821b0b-9b72-5d9e-a06c-956a8bfae21d`
+- `b08e9691-7526-5f85-a51a-d8034d39322f`
+- `99b40713-77a1-523b-8538-bc4a91de2f8e`
+- `a58e079f-24c0-5e54-8ab1-4b06408a953d`
+- `ce22a089-c955-53d2-b87b-77c57900350c`
+- `143aa9a9-113a-58d6-8646-298ca7675e6d`
+- `1c37eb23-5d40-580d-ad00-0bc37f768176`
+- `c42531d7-b6b0-5b1a-8489-bba7f9608c68`
+- `eb4791f6-4ac7-5942-9f69-327dde783e18`
+- `b1b17622-92e4-58d1-b212-b6035106f379`
+- `ab19bf8e-6883-5513-9091-b66a14a42988`
+- `da14e39f-b323-51c7-afff-c507513a5b0c`
+- `d0e67e30-a452-5c3a-98b2-37b54b69188e`
+- `4ac9e6c1-3dd5-5bde-8acc-ae6b49965dac`
+- `546e5000-7aaf-5018-91d1-86626b20c60a`
 - `a6fd6091-6989-5495-bbf4-ee3bbfb68060`
 - `26985c38-c0bb-55ac-9844-7f8dfa3af22b`
 - `da7befb9-65bc-521f-af9a-28f36d32ff24`

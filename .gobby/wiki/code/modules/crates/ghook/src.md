@@ -6,9 +6,6 @@ provenance:
   ranges:
   - 11-18
   - 20-61
-  - 21-52
-  - 54-56
-  - 58-60
   - 68-74
   - 77-80
   - 83-88
@@ -43,110 +40,125 @@ provenance:
   ranges:
   - 24-32
   - 34-52
-  - 35-51
   - 59-70
   - 73-84
   - 87-109
   - 112-123
   - 126-140
   - 143-162
+- file: crates/ghook/src/json_value.rs
+  ranges:
+  - 3-20
+  - 28-52
 - file: crates/ghook/src/main.rs
   ranges:
-  - 38-42
-  - 50-74
-  - 76-99
-  - 101-117
-  - 119-259
-  - 261-267
-  - 269-271
-  - 273-301
-  - 303-317
-  - 319-327
-  - 329-399
-  - 401-420
-  - 422-482
-  - 484-506
-  - 508-536
-  - 538-555
-  - 557-570
-  - 581-584
-  - 587-599
-  - 602-610
-  - 613-653
-  - 656-677
-  - 680-696
-  - 699-715
-  - 718-735
-  - 738-756
-  - 759-775
-  - 778-794
-  - 797-808
-  - 811-817
-  - 820-836
-  - 839-853
-  - 856-871
-  - 874-887
-  - 890-900
-  - 903-916
-  - 919-932
-  - 935-967
-  - 970-979
+  - 45-49
+  - 57-81
+  - 83-106
+  - 108-124
+  - 126-289
+  - 291-297
+  - 299-301
+  - 303-331
+  - 333-341
+  - 343-413
+  - 415-434
+  - 436-496
+  - 498-520
+  - 522-550
+  - 552-564
+  - 575-578
+  - 581-593
+  - 596-604
+  - 607-647
+  - 650-671
+  - 674-690
+  - 693-709
+  - 712-729
+  - 732-750
+  - 753-769
+  - 772-788
+  - 791-802
+  - 805-811
+  - 814-830
+  - 833-847
+  - 850-865
+  - 868-881
+  - 884-894
+  - 897-910
+  - 913-926
+  - 929-961
+  - 964-973
+- file: crates/ghook/src/output.rs
+  ranges:
+  - 3-5
+  - 7-9
 - file: crates/ghook/src/planned_shutdown.rs
   ranges:
   - 21-27
   - 29-37
   - 39-50
-  - 52-56
-  - 58-63
-  - 65-67
-  - 69-75
-  - 77-88
-  - 90-92
-  - 94-97
-  - 99-126
-  - 128-132
-  - 134-143
-  - 145-153
-  - 155-161
-  - 163-171
-  - 173-179
-  - 181-188
-  - 190-195
-  - 197-203
-  - 214-217
-  - 220-225
-  - 228-238
-  - 241-256
-  - 259-301
-  - 304-310
-  - 313-328
-  - 331-341
-  - 344-360
-  - 363-365
-  - 368-390
-  - 393-403
-  - 406-436
-  - 439-445
+  - 52-54
+  - 56-62
+  - 64-75
+  - 77-79
+  - 81-84
+  - 86-113
+  - 115-119
+  - 121-130
+  - 132-134
+  - 136-142
+  - 144-152
+  - 154-160
+  - 162-169
+  - 171-176
+  - 178-184
+  - 195-198
+  - 201-206
+  - 209-219
+  - 222-237
+  - 240-282
+  - 285-291
+  - 294-304
+  - 307-323
+  - 326-328
+  - 331-353
+  - 356-366
+  - 369-399
+  - 402-408
+- file: crates/ghook/src/source.rs
+  ranges:
+  - 3-14
+  - 20-27
+  - 29-35
+  - '37'
+  - 39-44
+  - 46-50
+  - 53-82
 - file: crates/ghook/src/statusline.rs
   ranges:
-  - 21-23
-  - 25-31
-  - 33-63
-  - 65-100
-  - 102-115
-  - 117-130
-  - 132-165
-  - 168-172
-  - 175-179
-  - 193-229
-  - 232-237
-  - 240-244
-  - 247-251
-  - 254-260
-  - 263-268
-  - 271-298
-  - 301-312
-  - 315-335
+  - 25-27
+  - 29-35
+  - 37-67
+  - 69-104
+  - 106-119
+  - 121-168
+  - 170-174
+  - 177-183
+  - '186'
+  - 189-194
+  - 197-201
+  - 217-222
+  - 225-229
+  - 232-236
+  - 239-245
+  - 248-253
+  - 256-283
+  - 286-310
+  - 313-324
+  - 327-344
+  - 347-371
+  - 374-397
 - file: crates/ghook/src/terminal_context.rs
   ranges:
   - 18-23
@@ -168,29 +180,29 @@ provenance:
   - 219-237
 - file: crates/ghook/src/transport.rs
   ranges:
-  - 30-35
-  - 39-44
-  - 48-54
-  - 57-60
+  - 31-36
+  - 40-45
+  - 49-55
+  - 58-60
   - 63-65
   - 68-74
   - 77-81
-  - 87-110
-  - 115-121
-  - 129-193
-  - 195-210
-  - 214-221
-  - 231-262
-  - 273-309
-  - 312-316
-  - 319-322
-  - 325-331
-  - 334-340
-  - 343-358
-  - 361-374
-  - 377-423
-  - 426-470
-  - 473-505
+  - 87-114
+  - 119-125
+  - 127-129
+  - 137-204
+  - 206-221
+  - 225-232
+  - 242-273
+  - 286-290
+  - 293-296
+  - 299-305
+  - 308-314
+  - 317-332
+  - 335-348
+  - 351-404
+  - 407-458
+  - 461-493
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -202,77 +214,71 @@ Parent: [[code/modules/crates/ghook|crates/ghook]]
 
 ## Overview
 
-The `crates/ghook/src` module implements ghook, the hook-dispatch CLI that bridges agent tooling (Claude, Codex, Droid, Gemini) to the gobby daemon. It parses incoming hook payloads, wraps them in versioned envelopes (`envelope.rs`), and dispatches them to the daemon over HTTP, translating daemon responses into hook actions—including continue, JSON blocks, and exit-two behavior—via `main.rs`.
+The crates/ghook/src module implements a resilient Rust-based sidecar utility that intercepts, validates, and dispatches CLI tool-use and session-lifecycle hooks to the central Gobby daemon.
 
-Key responsibilities are spread across focused submodules:
-- `cli_config.rs` — per-CLI configuration, including which hooks are "critical" for fail-closed handling.
-- `transport.rs` — envelope enqueueing to an inbox, atomic writes, daemon POST with cleanup, transport-error classification, and quarantine of malformed payloads.
-- `planned_shutdown.rs` — shutdown-marker freshness logic and daemon-reachability probing to suppress dispatch during planned shutdowns.
-- `terminal_context.rs` — capture and injection of terminal/tmux context (pane validation, TTY, PIDs) into session-start envelopes.
-- `statusline.rs` — Claude statusline hook handling with best-effort daemon posting and downstream forwarding.
-- `diagnose.rs` — self-diagnostic output (v2 schema) reporting CLI recognition and install provenance.
-- `detach.rs` — process detachment for background operation.
-
-The module emphasizes resilient, fail-safe dispatch (env-based disabling, failure suppression, critical-vs-noncritical fallbacks) and is extensively covered by inline unit and golden-fixture tests validating envelope serialization, schema conformance, and action derivation across CLI variants.
+Key Capabilities:
+- CLI Configuration & Detection (cli_config, source): Maps critical/non-critical hooks and detects environment-derived client sources (such as Claude, Droid, and Codex).
+- Context & Envelope Management (envelope, terminal_context, json_value): Encapsulates hook payloads in validated envelopes while injecting TMUX pane and terminal context.
+- High-Reliability Transport & Queueing (transport, planned_shutdown, detach): Guarantees reliable delivery via atomic file-based queuing (inbox/quarantine) and suppresses dispatches during planned daemon shutdowns.
+- Execution Control & Diagnostics (main, diagnose, statusline, output): Routes hook actions (allow, block, or specific exit-codes), validates installation provenance, and processes real-time status-line feeds.
 [crates/ghook/src/cli_config.rs:11-18]
 [crates/ghook/src/detach.rs:23-43]
 [crates/ghook/src/diagnose.rs:15-32]
 [crates/ghook/src/envelope.rs:24-32]
-[crates/ghook/src/main.rs:38-42]
+[crates/ghook/src/json_value.rs:3-20]
 
 ## Call Diagram
 
 ```mermaid
 sequenceDiagram
+    participant m_00c45c9b_0377_5f2c_b12f_360c8d9afc3b as marker_accepts_fresh_allowed_intents &#91;function&#93;
+    participant m_00c5f153_9c2c_56fc_979f_9a99a53fbe15 as action_from_success_claude_continue_false_without_reason_does_not_exit_two &#91;function&#93;
     participant m_00e9dfcb_4c8a_5ce3_9fb1_8c1101e1e67b as compile_v2_schema &#91;function&#93;
-    participant m_02fe120f_bbe6_5058_8da4_83f7270fb883 as dispatch_envelope_omits_terminal_context_for_tool_hooks &#91;function&#93;
     participant m_032ab45d_17a0_5053_a16d_21bf4a58cdb3 as capture &#91;function&#93;
     participant m_03ff381b_511e_56de_96af_0cb6557a25d5 as unknown_cli_marked_not_recognized &#91;function&#93;
-    participant m_043503d8_8428_5b6f_96e3_e9b560a59add as action_from_success_claude_continue_false_without_reason_does_not_exit_two &#91;function&#93;
-    participant m_0b6ddeff_5237_5374_b110_0e230f57d481 as downstream_timeout_returns_before_six_seconds &#91;function&#93;
-    participant m_0db3487f_e809_5e04_ae32_d1667ef5597a as quarantine_malformed_at &#91;function&#93;
-    participant m_0f786741_84f9_57f5_b8f5_0cfe84ea4db4 as action_from_failure_treats_timeout_like_python &#91;function&#93;
+    participant m_097bff57_1207_5c8f_8998_0a73eb840ae8 as dispatch_envelope_nulls_tmux_fields_for_missing_or_invalid_tmux_pane &#91;function&#93;
+    participant m_0a673d02_fe70_5e9d_97c3_8401533286eb as SourceEnvGuard.new &#91;method&#93;
+    participant m_0ef43db4_c8e2_5ba0_97fd_b8c92d8e432d as dispatch_envelope_injects_valid_tmux_pane_for_session_start &#91;function&#93;
     participant m_1037de6b_5f5f_50b7_861d_9f1d9a9a8ffa as install_provenance_absent_when_no_sidecar &#91;function&#93;
-    participant m_11c12b39_7c36_5880_ae5a_6d032193d9a3 as action_from_success_forwards_sessionstart_context_json &#91;function&#93;
-    participant m_145db008_637c_502d_8768_904b7dd210a5 as with_tmux_env &#91;function&#93;
+    participant m_122bbc33_3e69_5b6e_8aef_f4faf1b67741 as posts_statusline_payload_to_daemon_endpoint &#91;function&#93;
     participant m_14ae6661_fb9d_5b9e_95dd_ffd3a5d7a474 as droid_session_start_is_recognized_noncritical_with_terminal_context_enabled &#91;function&#93;
-    participant m_19ce34aa_ebab_52d6_9269_cf71840f9cc0 as should_skip_dispatch_with &#91;function&#93;
-    participant m_1e5814c8_dc8c_5c92_b42c_d9dc9cd4701a as marker_accepts_allowed_source_prefixes &#91;function&#93;
-    participant m_205aef13_ce50_5aed_bbb2_909865a58378 as action_from_success_claude_stop_with_permission_deny_no_exit_two &#91;function&#93;
+    participant m_18168f09_19dd_51df_a93c_0d919181cb35 as main &#91;function&#93;
     participant m_23646fad_b5d5_5ed2_aa07_56333505a4a7 as diagnose_output_for_unknown_cli_validates &#91;function&#93;
-    participant m_248f4cae_e108_54d3_b664_5de59bf05c6e as action_from_failure_returns_json_for_noncritical_hooks &#91;function&#93;
+    participant m_271dfe9e_f471_5360_abc1_ec4df58efec4 as statusline_post_honors_gobby_daemon_url_override &#91;function&#93;
+    participant m_28ed3bc1_d502_5e4f_86c3_35da4990e90b as with_tmux_env &#91;function&#93;
     participant m_2ab1c8cb_1a26_526b_97e2_c3ced80e7439 as codex_pre_tool_use_noncritical_without_terminal_context &#91;function&#93;
     participant m_2e89661f_cc0d_5e6c_a0a0_8d2b5c0a111e as build_context &#91;function&#93;
-    participant m_49bff09d_bc80_5330_8686_0613201dd747 as atomic_write &#91;function&#93;
-    participant m_5d7d6430_4f84_58f4_8d70_13674ca7526d as write_marker &#91;function&#93;
+    participant m_4e51d57c_e47d_5e20_9b1a_797318e05011 as handle &#91;function&#93;
     participant m_6162c40d_ddf8_5812_bd34_5902c76f6b62 as assert_validates &#91;function&#93;
-    participant m_6ea37017_9105_5175_909e_08e70807c6ec as action_from_failure &#91;function&#93;
-    participant m_72a4f88b_5c0e_50d6_8329_951cb386f035 as is_stop_hook &#91;function&#93;
+    participant m_7bc923b0_648a_5ef1_a7d8_92e8050e90db as action_from_success_response &#91;function&#93;
+    participant m_81abe270_a6b5_564e_8a5f_3493c0488684 as build_dispatch_envelope &#91;function&#93;
     participant m_8ad675ee_8102_5b17_9be0_596b651dfb2d as read_install_provenance &#91;function&#93;
+    participant m_8eb8af78_9ba0_5380_9259_bb31386939fd as write_runtime_stamp &#91;function&#93;
+    participant m_97af9d03_cbf7_57d6_9a35_24425c730f05 as clear_source_env &#91;function&#93;
+    participant m_a7cdbeb5_469f_58f0_9dc7_5f4cc7a9b8ea as run_diagnose &#91;function&#93;
     participant m_a992c00e_a5b1_52d1_95fe_4a2da82f0ca7 as diagnose &#91;function&#93;
-    participant m_a9fac95f_a9f0_58ec_8c35_6a786112a062 as action_from_success_response &#91;function&#93;
-    participant m_be182237_20f0_51c1_b2bf_0e056dc95225 as ts13 &#91;function&#93;
-    participant m_c643761b_bc69_5517_86cd_0c5f27aa1a43 as build_dispatch_envelope &#91;function&#93;
-    participant m_c716be06_8973_5a77_9c3f_04bb18b56d1a as handle_with &#91;function&#93;
-    m_02fe120f_bbe6_5058_8da4_83f7270fb883->>m_145db008_637c_502d_8768_904b7dd210a5: calls
-    m_02fe120f_bbe6_5058_8da4_83f7270fb883->>m_c643761b_bc69_5517_86cd_0c5f27aa1a43: calls
+    participant m_b790b565_784f_5385_819b_858e1b4a29e2 as write_marker &#91;function&#93;
+    participant m_c6003e4b_082c_5bc3_b50c_64efd6160f60 as run_gobby_owned &#91;function&#93;
+    participant m_e54362c6_30f4_5525_be69_4cd83ede2126 as handle_with &#91;function&#93;
+    m_00c45c9b_0377_5f2c_b12f_360c8d9afc3b->>m_b790b565_784f_5385_819b_858e1b4a29e2: calls
+    m_00c5f153_9c2c_56fc_979f_9a99a53fbe15->>m_7bc923b0_648a_5ef1_a7d8_92e8050e90db: calls
     m_032ab45d_17a0_5053_a16d_21bf4a58cdb3->>m_2e89661f_cc0d_5e6c_a0a0_8d2b5c0a111e: calls
     m_03ff381b_511e_56de_96af_0cb6557a25d5->>m_a992c00e_a5b1_52d1_95fe_4a2da82f0ca7: calls
-    m_043503d8_8428_5b6f_96e3_e9b560a59add->>m_a9fac95f_a9f0_58ec_8c35_6a786112a062: calls
-    m_0b6ddeff_5237_5374_b110_0e230f57d481->>m_c716be06_8973_5a77_9c3f_04bb18b56d1a: calls
-    m_0db3487f_e809_5e04_ae32_d1667ef5597a->>m_49bff09d_bc80_5330_8686_0613201dd747: calls
-    m_0db3487f_e809_5e04_ae32_d1667ef5597a->>m_be182237_20f0_51c1_b2bf_0e056dc95225: calls
-    m_0f786741_84f9_57f5_b8f5_0cfe84ea4db4->>m_6ea37017_9105_5175_909e_08e70807c6ec: calls
+    m_097bff57_1207_5c8f_8998_0a73eb840ae8->>m_28ed3bc1_d502_5e4f_86c3_35da4990e90b: calls
+    m_097bff57_1207_5c8f_8998_0a73eb840ae8->>m_81abe270_a6b5_564e_8a5f_3493c0488684: calls
+    m_0a673d02_fe70_5e9d_97c3_8401533286eb->>m_97af9d03_cbf7_57d6_9a35_24425c730f05: calls
+    m_0ef43db4_c8e2_5ba0_97fd_b8c92d8e432d->>m_28ed3bc1_d502_5e4f_86c3_35da4990e90b: calls
+    m_0ef43db4_c8e2_5ba0_97fd_b8c92d8e432d->>m_81abe270_a6b5_564e_8a5f_3493c0488684: calls
     m_1037de6b_5f5f_50b7_861d_9f1d9a9a8ffa->>m_8ad675ee_8102_5b17_9be0_596b651dfb2d: calls
-    m_11c12b39_7c36_5880_ae5a_6d032193d9a3->>m_a9fac95f_a9f0_58ec_8c35_6a786112a062: calls
+    m_122bbc33_3e69_5b6e_8aef_f4faf1b67741->>m_e54362c6_30f4_5525_be69_4cd83ede2126: calls
     m_14ae6661_fb9d_5b9e_95dd_ffd3a5d7a474->>m_a992c00e_a5b1_52d1_95fe_4a2da82f0ca7: calls
-    m_19ce34aa_ebab_52d6_9269_cf71840f9cc0->>m_72a4f88b_5c0e_50d6_8329_951cb386f035: calls
-    m_1e5814c8_dc8c_5c92_b42c_d9dc9cd4701a->>m_5d7d6430_4f84_58f4_8d70_13674ca7526d: calls
-    m_205aef13_ce50_5aed_bbb2_909865a58378->>m_a9fac95f_a9f0_58ec_8c35_6a786112a062: calls
+    m_18168f09_19dd_51df_a93c_0d919181cb35->>m_8eb8af78_9ba0_5380_9259_bb31386939fd: calls
+    m_18168f09_19dd_51df_a93c_0d919181cb35->>m_a7cdbeb5_469f_58f0_9dc7_5f4cc7a9b8ea: calls
+    m_18168f09_19dd_51df_a93c_0d919181cb35->>m_c6003e4b_082c_5bc3_b50c_64efd6160f60: calls
     m_23646fad_b5d5_5ed2_aa07_56333505a4a7->>m_00e9dfcb_4c8a_5ce3_9fb1_8c1101e1e67b: calls
     m_23646fad_b5d5_5ed2_aa07_56333505a4a7->>m_6162c40d_ddf8_5812_bd34_5902c76f6b62: calls
     m_23646fad_b5d5_5ed2_aa07_56333505a4a7->>m_a992c00e_a5b1_52d1_95fe_4a2da82f0ca7: calls
-    m_248f4cae_e108_54d3_b664_5de59bf05c6e->>m_6ea37017_9105_5175_909e_08e70807c6ec: calls
+    m_271dfe9e_f471_5360_abc1_ec4df58efec4->>m_4e51d57c_e47d_5e20_9b1a_797318e05011: calls
     m_2ab1c8cb_1a26_526b_97e2_c3ced80e7439->>m_a992c00e_a5b1_52d1_95fe_4a2da82f0ca7: calls
 ```
 
@@ -297,24 +303,36 @@ sequenceDiagram
 [crates/ghook/src/envelope.rs:35-51]
 [crates/ghook/src/envelope.rs:59-70]
 [crates/ghook/src/envelope.rs:73-84]
-- [[code/files/crates/ghook/src/main.rs|crates/ghook/src/main.rs]] - `crates/ghook/src/main.rs` exposes 39 indexed API symbols.
-[crates/ghook/src/main.rs:38-42]
-[crates/ghook/src/main.rs:50-74]
-[crates/ghook/src/main.rs:76-99]
-[crates/ghook/src/main.rs:101-117]
-[crates/ghook/src/main.rs:119-259]
-- [[code/files/crates/ghook/src/planned_shutdown.rs|crates/ghook/src/planned_shutdown.rs]] - `crates/ghook/src/planned_shutdown.rs` exposes 34 indexed API symbols.
+- [[code/files/crates/ghook/src/json_value.rs|crates/ghook/src/json_value.rs]] - `crates/ghook/src/json_value.rs` exposes 2 indexed API symbols.
+[crates/ghook/src/json_value.rs:3-20]
+[crates/ghook/src/json_value.rs:28-52]
+- [[code/files/crates/ghook/src/main.rs|crates/ghook/src/main.rs]] - `crates/ghook/src/main.rs` exposes 37 indexed API symbols.
+[crates/ghook/src/main.rs:45-49]
+[crates/ghook/src/main.rs:57-81]
+[crates/ghook/src/main.rs:83-106]
+[crates/ghook/src/main.rs:108-124]
+[crates/ghook/src/main.rs:126-289]
+- [[code/files/crates/ghook/src/output.rs|crates/ghook/src/output.rs]] - `crates/ghook/src/output.rs` exposes 2 indexed API symbols.
+[crates/ghook/src/output.rs:3-5]
+[crates/ghook/src/output.rs:7-9]
+- [[code/files/crates/ghook/src/planned_shutdown.rs|crates/ghook/src/planned_shutdown.rs]] - `crates/ghook/src/planned_shutdown.rs` exposes 31 indexed API symbols.
 [crates/ghook/src/planned_shutdown.rs:21-27]
 [crates/ghook/src/planned_shutdown.rs:29-37]
 [crates/ghook/src/planned_shutdown.rs:39-50]
-[crates/ghook/src/planned_shutdown.rs:52-56]
-[crates/ghook/src/planned_shutdown.rs:58-63]
-- [[code/files/crates/ghook/src/statusline.rs|crates/ghook/src/statusline.rs]] - `crates/ghook/src/statusline.rs` exposes 18 indexed API symbols.
-[crates/ghook/src/statusline.rs:21-23]
-[crates/ghook/src/statusline.rs:25-31]
-[crates/ghook/src/statusline.rs:33-63]
-[crates/ghook/src/statusline.rs:65-100]
-[crates/ghook/src/statusline.rs:102-115]
+[crates/ghook/src/planned_shutdown.rs:52-54]
+[crates/ghook/src/planned_shutdown.rs:56-62]
+- [[code/files/crates/ghook/src/source.rs|crates/ghook/src/source.rs]] - `crates/ghook/src/source.rs` exposes 9 indexed API symbols.
+[crates/ghook/src/source.rs:3-14]
+[crates/ghook/src/source.rs:20-27]
+[crates/ghook/src/source.rs:29-35]
+[crates/ghook/src/source.rs:37]
+[crates/ghook/src/source.rs:39-44]
+- [[code/files/crates/ghook/src/statusline.rs|crates/ghook/src/statusline.rs]] - `crates/ghook/src/statusline.rs` exposes 22 indexed API symbols.
+[crates/ghook/src/statusline.rs:25-27]
+[crates/ghook/src/statusline.rs:29-35]
+[crates/ghook/src/statusline.rs:37-67]
+[crates/ghook/src/statusline.rs:69-104]
+[crates/ghook/src/statusline.rs:106-119]
 - [[code/files/crates/ghook/src/terminal_context.rs|crates/ghook/src/terminal_context.rs]] - `crates/ghook/src/terminal_context.rs` exposes 17 indexed API symbols.
 [crates/ghook/src/terminal_context.rs:18-23]
 [crates/ghook/src/terminal_context.rs:25-32]
@@ -322,10 +340,10 @@ sequenceDiagram
 [crates/ghook/src/terminal_context.rs:71-77]
 [crates/ghook/src/terminal_context.rs:79-84]
 - [[code/files/crates/ghook/src/transport.rs|crates/ghook/src/transport.rs]] - `crates/ghook/src/transport.rs` exposes 23 indexed API symbols.
-[crates/ghook/src/transport.rs:30-35]
-[crates/ghook/src/transport.rs:39-44]
-[crates/ghook/src/transport.rs:48-54]
-[crates/ghook/src/transport.rs:57-60]
+[crates/ghook/src/transport.rs:31-36]
+[crates/ghook/src/transport.rs:40-45]
+[crates/ghook/src/transport.rs:49-55]
+[crates/ghook/src/transport.rs:58-60]
 [crates/ghook/src/transport.rs:63-65]
 
 ## Components
@@ -370,97 +388,109 @@ sequenceDiagram
 - `b5f5f2dd-0b5a-5f09-8e6f-39d40a4f98fc`
 - `829b6804-81c4-5be6-b434-5246a5915eac`
 - `2361477e-62f9-5d3e-bb73-98b600aea6fa`
-- `621b3717-b526-5256-b568-1fe551b4cc35`
-- `fd4cad88-5526-5a34-aeda-24b4397cbc24`
-- `938b2354-40c9-5831-b1ef-55074d23b6dc`
-- `0c1a1e6c-7edb-5845-a6f1-14169f776367`
-- `eb63dfc4-2dcb-576f-82c0-777e7a3b8df5`
-- `56d0517b-3b9f-5ecd-b481-815b11372cd1`
-- `03a51f93-89d4-54da-96d6-45db1bcc2dc7`
-- `c643761b-bc69-5517-86cd-0c5f27aa1a43`
-- `310d3663-4164-5dbe-bb05-79931467c260`
-- `14279e14-6377-5c12-b42f-e25a648a2f3d`
-- `a9fac95f-a9f0-58ec-8c35-6a786112a062`
-- `e575a823-1f9b-53c9-a297-1b995e22151e`
-- `6ea37017-9105-5175-909e-08e70807c6ec`
-- `a340b258-6c6d-57b4-814c-77096f5a1ec6`
-- `86105f7e-8f0d-51e3-9bb5-9397b02be28d`
-- `50e3aebd-d3e2-5d93-b997-d5898f82a59b`
-- `b36f51c1-d253-57a3-9e4d-1d657a376c42`
-- `145db008-637c-502d-8768-904b7dd210a5`
-- `311d2266-9504-5fdd-a07a-05a6b773ff4b`
-- `02fe120f-bbe6-5058-8da4-83f7270fb883`
-- `52733481-aeac-51c2-b59f-41bdd673a847`
-- `11c12b39-7c36-5880-ae5a-6d032193d9a3`
-- `88f07f01-1c68-5207-bbb4-84ca9b0cd0f2`
-- `62c41969-5376-57de-9f0f-b89df3b921fb`
-- `ad4cea8f-4c11-5546-962b-18aa80dd45db`
-- `c9cbc63e-d037-5daf-9add-0d07a149bb56`
-- `70959c9c-3990-551b-ada0-21bb3f2c5db0`
-- `64a0ed27-aa71-549c-b4b7-1831867f6be3`
-- `205aef13-ce50-5aed-bbb2-909865a58378`
-- `043503d8-8428-5b6f-96e3-e9b560a59add`
-- `7408971b-126e-5740-af8a-3e2ca9513b4e`
-- `a5ac24a2-fb0b-50b7-8285-42f35daf096e`
-- `ae46af86-f0c8-5ba0-9273-2e40676812aa`
-- `248f4cae-e108-54d3-b664-5de59bf05c6e`
-- `0f786741-84f9-57f5-b8f5-0cfe84ea4db4`
-- `6c5919b0-f639-5e4e-b974-b4c7b0039f4e`
-- `ddb4aa4b-6a10-571a-9144-ba099470899d`
-- `86f7722c-f5bd-5494-b665-6e3583e145f5`
-- `cdf4abcc-14c2-5bdf-ab47-85be2998ac0b`
+- `5d14c0ef-39c5-5653-9867-265c50d0ac2b`
+- `ff170581-95ff-5889-acf6-7e3482709df8`
+- `b7deea92-b69e-59db-b0f9-aa74c3168cf2`
+- `6aae9f18-b7ef-5eef-b421-a457b7ea5592`
+- `18168f09-19dd-51df-a93c-0d919181cb35`
+- `a7cdbeb5-469f-58f0-9dc7-5f4cc7a9b8ea`
+- `c6003e4b-082c-5bc3-b50c-64efd6160f60`
+- `3cd667d6-af11-5d99-ac5f-ea3c1428080e`
+- `f1d23afb-d11b-58d8-b164-792b4be9e3f0`
+- `81abe270-a6b5-564e-8a5f-3493c0488684`
+- `78c5e172-6548-5c83-89ec-babdf0ae6618`
+- `7bc923b0-648a-5ef1-a7d8-92e8050e90db`
+- `7c600128-f2e8-5b0d-bc49-719f2707b958`
+- `f557d416-7896-54a3-bb7e-eeb234f11ba0`
+- `0e8fcaab-3029-5db8-b659-74d952fc6699`
+- `b3f37854-7e1d-58e2-b717-80d127e732f4`
+- `8eb8af78-9ba0-5380-9259-bb31386939fd`
+- `28ed3bc1-d502-5e4f-86c3-35da4990e90b`
+- `0ef43db4-c8e2-5ba0-97fd-b8c92d8e432d`
+- `de1fbc6b-8bdf-5eb0-9645-1e6b00d62370`
+- `097bff57-1207-5c8f-8998-0a73eb840ae8`
+- `50718e31-2e10-5ee3-a281-0dd4e9f891b9`
+- `a3b57140-e96a-5a48-859c-30363bdf7774`
+- `a5d84a8a-b133-5da7-9011-c1a73acc3f8a`
+- `a273a2c4-e22f-5d4c-93c3-cf32660743d1`
+- `5e09f940-fd41-596e-b679-e0c0e03ec591`
+- `3bc38d23-725d-53ec-af28-b26995e83717`
+- `4b488b1f-5617-5f1e-87f8-92e3dd3d35b7`
+- `6ed23c5f-4a01-5e74-99d5-57bcbb565750`
+- `00c5f153-9c2c-56fc-979f-9a99a53fbe15`
+- `edc2b916-083b-5bdb-a6ac-32fa81db9d72`
+- `de65aea7-54d9-577b-a6b2-a51e5bd422cf`
+- `71752248-8bf5-5c9c-bbe4-51353d6b010a`
+- `f400851f-9095-5f48-814d-2f6055123c6d`
+- `e36c40a4-a579-5a44-852d-9d1c411eecc3`
+- `589f7555-91ba-55fd-ab93-f5c80507857a`
+- `92a4c9ca-3cd2-5360-b9d2-e03f5917449d`
+- `75293c20-7800-58c1-bd4a-29b484058eb7`
+- `feddd93c-bed0-50e0-8ffd-4128c2677d50`
+- `677ea6dd-6742-544e-9bff-64bd94b6a6b1`
+- `0a198369-26e3-55ef-a139-d04ae0c5fa76`
 - `e42c0c01-e1ab-56b4-87ca-42cd184ae834`
-- `d541982c-6ef2-56ed-b584-df8bb74dd5a1`
-- `bac9852f-aa0b-5b74-89e7-c73228eb2ae4`
-- `2b905a18-67ff-557f-82e8-63ba7d88d93d`
-- `3827b39c-3cbf-5927-87f0-148c3420e136`
-- `72a4f88b-5c0e-50d6-8329-951cb386f035`
-- `19ce34aa-ebab-52d6-9269-cf71840f9cc0`
-- `b13c2607-d734-59a0-a3e0-c2bb5a614908`
-- `ed0d7e53-8e8b-5d63-8fe8-6b00ed2cda4c`
-- `645cffad-4fb0-5bb7-9f67-682094a0bcb3`
-- `fdae92cd-6617-5035-8b64-a39633b6f82b`
-- `6d9b49fb-d93c-5fb3-b15a-eb82046eb984`
-- `dc459c52-db04-520e-8a7c-033dd68fb39b`
-- `30fc2555-a324-5ad7-a6cd-073de8005d59`
-- `75e46e71-1e00-5214-9cf5-282c2ffb2783`
-- `95d30a44-53bb-57e5-aed0-9e697ecc1166`
-- `18cc0f42-0eca-56e4-99fb-a04df18dcd71`
-- `775d79fa-4724-52c1-b5af-c91a715d231e`
-- `67b324d0-657a-5bb8-b348-38eeab4501ec`
-- `a2669e91-e8ba-5cb1-bbf6-9c154007fb4a`
-- `5d7d6430-4f84-58f4-8d70-13674ca7526d`
-- `733a2a04-d346-5365-86f6-171ac7396983`
-- `f003c293-a9d0-5d06-94f4-83dc6e772fa8`
-- `1e5814c8-dc8c-5c92-b42c-d9dc9cd4701a`
-- `7e132ff3-7d41-5018-a8be-7fe6bb4e25cf`
-- `c0e83281-e423-5bac-adbc-ae250d922082`
-- `366e42af-980f-5b67-b281-13355ffcd4e0`
-- `6d2e8e43-9e71-511d-a45f-eb4a5ada2e25`
-- `0ca341ce-ab00-5703-9dcd-1fc994600bc1`
-- `449a9c3e-0594-53f7-b3df-7be89b810128`
-- `93017a05-b596-5dca-abed-8edb8698c68b`
-- `87758fbe-1dc1-5838-82ac-d56671b8d346`
-- `8a8e0b91-aed5-5088-982f-988a7945bf7c`
-- `7583de8d-714b-5e8c-a51f-f8f88f8fde83`
-- `c86d2f6b-5515-5743-b08b-d9d2e3b61de3`
-- `f34e8831-6c29-5cc7-b206-1f7145e32db1`
-- `c716be06-8973-5a77-9c3f-04bb18b56d1a`
-- `b2fff304-4d67-5c5e-9a9c-d7b28b247e89`
-- `bb0f9094-20a7-56b8-a842-d9aa79367388`
-- `efd40423-19fa-51cd-b821-f5d4ac126fa9`
-- `e6350b14-b8f1-5d41-8650-8a0bcc0d4e27`
-- `eff88548-f744-5010-a18d-685cf0a2b5f8`
-- `e9d171c7-d04b-54e2-8579-4003deb4a67c`
-- `8ef4d920-11b6-52d1-a1cd-e7ffa9737cc2`
-- `afdebd6b-cdb6-5532-a5ea-7abc0ecee51c`
-- `6a903184-0148-5a84-a0ca-fe4decb59eb3`
-- `0b85c3d4-8668-5075-9015-6b01e23eb192`
-- `19e06d55-2033-57e4-88db-c47e61f80e05`
-- `73c893e2-a9a8-5ae2-b5b7-389f29b9d17c`
-- `e0adf029-e6a7-557a-9778-da87cd6b6591`
-- `2f4590de-7f5c-58eb-b7ab-cc8ec1b0cb39`
-- `0b6ddeff-5237-5374-b110-0e230f57d481`
+- `480a97fa-f382-56de-81d6-231456e02757`
+- `915605ab-403f-5ea7-919f-0d8b79d6bfdc`
+- `8ede0f52-e4f0-5d0b-b223-36bd5ea11bb2`
+- `f74d3a29-061a-5f08-a9ba-0d9e26b44077`
+- `85b48489-0263-565e-bf19-5a18845e3c2d`
+- `fd6c5466-4319-59b8-b435-fd161c8b2405`
+- `ccb6214b-2a4e-5530-8a2b-9302a356ea6f`
+- `b3c3b5d5-6d52-5c9e-91f7-aa4dfaa3b406`
+- `05688997-63c0-5bf0-9083-978328be448d`
+- `7a9b0033-3751-5d7e-9d9e-5665b2b2f174`
+- `fea7a275-648e-59e3-a686-39b888fc347c`
+- `933ab78d-939e-52d0-983c-8e96010de45e`
+- `fbf08e40-b0bd-5487-8b9d-5305c01947b5`
+- `76bb012b-1464-5bec-b7e2-edf391fe3245`
+- `aa1adcdc-a165-5be2-9dbb-a77535328a6a`
+- `4c480cc4-6019-53b3-94ee-887000152de5`
+- `34768c55-e686-5b08-adf7-aff1710edf15`
+- `b790b565-784f-5385-819b-858e1b4a29e2`
+- `d476cae5-ff6f-533a-89f8-0243ac580704`
+- `00c45c9b-0377-5f2c-b12f-360c8d9afc3b`
+- `d1dd9125-6864-56f1-8c1e-591cbfa00739`
+- `802d8af0-fd5f-5b8d-bf55-0390ca79e58a`
+- `ed9a3e23-bd1a-5304-a8c2-6f0f950b52b2`
+- `b577a8e8-f1b6-529d-8a11-72c75c04442b`
+- `2ae06111-955d-5553-ae00-03de7532c146`
+- `3e883e54-ca3d-5068-a0b0-6f68e377453f`
+- `f43f8514-eb6e-5720-bc7d-240d40a86ae2`
+- `a6e7ff0c-3d6c-5139-9be1-d9e3b7673cdc`
+- `c17e17be-8228-5d89-99cf-f00b69e83031`
+- `3f702f5f-5ce6-5a7b-b47b-8ed9c339a049`
+- `32182b88-ac1b-5a85-8084-efc7eee1e0c3`
+- `97af9d03-cbf7-57d6-9a35-24425c730f05`
+- `7dd4ad00-7abe-5ed9-b923-e7646a56aca6`
+- `8cc10a88-b936-5ef0-a760-b71a29f4875b`
+- `e8eeea64-a990-57d2-85f5-0f49fd22ed66`
+- `0a673d02-fe70-5e9d-97c3-8401533286eb`
+- `9fe91193-cc60-5991-8139-693d88119cc8`
+- `a19d35be-177c-59aa-aebe-fb5e0bccc023`
+- `9e829fba-d764-5165-bdfa-83cff325db90`
+- `98676496-c1ef-5e62-abc3-2f6fc510fe89`
+- `4e51d57c-e47d-5e20-9b1a-797318e05011`
+- `e54362c6-30f4-5525-be69-4cd83ede2126`
+- `1882ec9f-4e36-53f4-8a85-0c963aecb5d2`
+- `64d25050-ccb7-542a-b7ed-11466794a09d`
+- `e9041adc-57e0-5c61-abfa-09da545cfb15`
+- `a7f90096-675f-571f-aa5d-17a83ae432b4`
+- `c351cb94-5e68-5bd1-a037-d29a05326bb1`
+- `e15fa213-5637-5db1-ac26-36f0a4297e0e`
+- `6d0eb7ae-9c75-53bc-a774-7f796ccc373d`
+- `87a58021-b993-5d39-a0e8-807db949e60c`
+- `d16adccf-b71e-51da-97ab-a58600962b23`
+- `9dba13dd-a22d-57dd-b8a5-3170edbc2eba`
+- `db5c0de8-9839-514c-a360-ff8080d86db9`
+- `56fd7a3f-2596-5a55-8c97-fe480a524e27`
+- `f97e1ca5-361f-52f8-ae46-40bd7f64464d`
+- `122bbc33-3e69-5b6e-8aef-f4faf1b67741`
+- `271dfe9e-f471-5360-abc1-ec4df58efec4`
+- `35e38e77-8f95-5c4a-8954-a88f78b669b9`
+- `d26f134a-9fb4-5e18-b6c6-c8879a1dd32e`
+- `895005c4-92ea-51d5-bf58-1e4ed0df9f23`
+- `c510a3d0-3fd9-5ee1-8a95-e2b3c4523b86`
 - `032ab45d-17a0-5053-a16d-21bf4a58cdb3`
 - `4be0ac35-4a63-5eaf-9eb8-f26f60ede61d`
 - `2e89661f-cc0d-5e6c-a0a0-8d2b5c0a111e`
@@ -478,27 +508,27 @@ sequenceDiagram
 - `f629e177-1cde-5057-b69c-4f3032b9864a`
 - `8d707487-2178-5ece-8d22-7bd6cd8e886f`
 - `c8c3ae50-4e71-5ac5-b79c-8f3f4caa9b4b`
-- `38278f8f-3021-5bd9-8ed4-1f1387e2a390`
-- `32df425a-3c69-555c-ae3e-5bd748c44be0`
-- `bef39da5-469f-5842-844b-f79c0a36424c`
-- `e9c9467c-3919-5ae6-a767-25f37486596a`
-- `e30f98d5-dc3f-5260-b87a-b1f3d6c21c01`
-- `be182237-20f0-51c1-b2bf-0e056dc95225`
-- `b8998a77-d05c-5c56-aaa3-0935481e7673`
-- `49bff09d-bc80-5330-8686-0613201dd747`
-- `2fac1832-5b2f-5dd0-84ab-3d93aac08250`
-- `5d8fb49f-6dc3-5cca-9131-8f4261403cc5`
-- `50593f01-6912-515a-b617-06d70e91b067`
-- `57ed436a-45e3-5078-b368-7f0dc18ee728`
-- `0db3487f-e809-5e04-ae32-d1667ef5597a`
-- `d39b7862-21d6-558f-9857-a24f36805ba8`
-- `c09fdab3-394e-53cf-898d-ed135e57e61e`
-- `1370c7e3-5e85-52e2-a8ff-92d4aef7c330`
-- `4cc397ae-18b1-5e5f-9882-a97fa76e6b8c`
-- `df821fda-6169-52e1-a191-2eb3dbc89baa`
-- `483e7067-05ae-587c-a968-e41f0b49966c`
-- `c0610617-b66f-5776-958f-59a401d6f8bb`
-- `3db7c052-d1e7-5e52-82a7-0f4b05967021`
-- `59f76343-6d99-550b-9247-2d45a5e29323`
-- `d906a088-ddc9-574a-8f53-12ca2bacbb63`
+- `e7612d20-b3e0-50e1-a2b4-6e0c0d469eeb`
+- `635a2244-471a-578e-9431-93796af5a5e6`
+- `fa9467a0-9921-538e-9ec3-9369b2376355`
+- `337d52ed-6f16-5d5e-94ad-35a16cc183d4`
+- `93cab374-71c7-5c68-b724-03dd57695d10`
+- `14549333-a1e5-5a38-976d-6535683526f7`
+- `f8be23e4-18cd-503a-8b93-098037bc2130`
+- `eaac2601-001e-5287-8c77-829087ecf84b`
+- `6b11eb8c-bf8a-56d0-9e90-68449253a47a`
+- `4d3ecd62-3b6c-5674-ae84-3d766ad79d69`
+- `e58a7860-6a72-5954-a5c8-645a64bc7581`
+- `36a2f566-753b-51b7-bb72-507b303b984a`
+- `8ccef319-bc5e-5ef7-bd04-a2d1e5b39563`
+- `3f58ad50-ce04-5837-8138-d0c2fadd711a`
+- `3bbefc82-9169-5a99-878b-abfaec512d8a`
+- `6e376850-c377-5833-bbc5-e3762b9e6922`
+- `95ba8874-a2df-5675-8004-9ade63a041ff`
+- `f513006f-b922-5b80-a39e-51e07d4a26b8`
+- `450dc9d4-6e70-57cd-b566-b7e4d5ac9030`
+- `4adfa98a-3583-511e-90ce-99668ccedfc8`
+- `ff6541be-441d-5821-a3bf-1ebf8f60f50d`
+- `50a4ebc4-a089-5f1d-9955-f2da9deda388`
+- `a1fa1f5d-8e49-5552-b64d-3aa8a5efb504`
 

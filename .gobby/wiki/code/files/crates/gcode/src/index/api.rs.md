@@ -7,16 +7,17 @@ provenance:
   - 16-23
   - 26-34
   - 36-48
-  - 37-47
-  - 50-76
-  - 78-93
-  - 95-209
-  - 211-237
-  - 239-266
-  - 268-293
-  - 295-314
-  - 316-349
-  - 351-353
+  - 50-60
+  - 62-84
+  - 86-108
+  - 110-125
+  - 127-241
+  - 243-269
+  - 271-298
+  - 300-325
+  - 327-347
+  - 349-383
+  - 385-387
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -28,52 +29,58 @@ Module: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 
 ## Purpose
 
-`crates/gcode/src/index/api.rs` exposes 13 indexed API symbols.
+`crates/gcode/src/index/api.rs` exposes 15 indexed API symbols.
 [crates/gcode/src/index/api.rs:16-23]
 [crates/gcode/src/index/api.rs:26-34]
 [crates/gcode/src/index/api.rs:36-48]
 [crates/gcode/src/index/api.rs:37-47]
-[crates/gcode/src/index/api.rs:50-76]
+[crates/gcode/src/index/api.rs:50-60]
 
 ## API Symbols
 
 - `CodeFactWriteRequest` (class) component `CodeFactWriteRequest [class]` (`999fd758-5ee6-565b-b3fc-05ece84767a6`) lines 16-23 [crates/gcode/src/index/api.rs:16-23]
   - Signature: `pub struct CodeFactWriteRequest {`
-  - Purpose: CodeFactWriteRequest is a struct that aggregates static code analysis metrics (symbol, import, call, and chunk counts) for a specified file within a project. [crates/gcode/src/index/api.rs:16-23]
+  - Purpose: Indexed class `CodeFactWriteRequest` in `crates/gcode/src/index/api.rs`. [crates/gcode/src/index/api.rs:16-23]
 - `CodeFactWriteSummary` (class) component `CodeFactWriteSummary [class]` (`2a187c49-b0c7-5c33-9cff-0423155e25d3`) lines 26-34 [crates/gcode/src/index/api.rs:26-34]
   - Signature: `pub struct CodeFactWriteSummary {`
-  - Purpose: `CodeFactWriteSummary` is a metrics struct that aggregates write counts for code facts (files, symbols, imports, calls, chunks) and tracks pending synchronization flags for graph and vector indexes. [crates/gcode/src/index/api.rs:26-34]
+  - Purpose: Indexed class `CodeFactWriteSummary` in `crates/gcode/src/index/api.rs`. [crates/gcode/src/index/api.rs:26-34]
 - `CodeFactWriteSummary` (class) component `CodeFactWriteSummary [class]` (`c2c04fa1-0607-55ee-9c89-5e5655282072`) lines 36-48 [crates/gcode/src/index/api.rs:36-48]
   - Signature: `impl CodeFactWriteSummary {`
-  - Purpose: `CodeFactWriteSummary::for_file` is a factory constructor that creates a single-file summary with specified counts of symbols, imports, calls, and chunks, initializing both graph and vector synchronization flags as pending. [crates/gcode/src/index/api.rs:36-48]
+  - Purpose: Indexed class `CodeFactWriteSummary` in `crates/gcode/src/index/api.rs`. [crates/gcode/src/index/api.rs:36-48]
 - `CodeFactWriteSummary.for_file` (method) component `CodeFactWriteSummary.for_file [method]` (`404ecb9a-f4ec-5e4a-9eb6-0f0088f2b397`) lines 37-47 [crates/gcode/src/index/api.rs:37-47]
   - Signature: `pub fn for_file(symbols: usize, imports: usize, calls: usize, chunks: usize) -> Self {`
-  - Purpose: Constructs a metrics struct for a single file with specified symbol, import, call, and chunk counts, initializing graph and vector synchronization flags as pending. [crates/gcode/src/index/api.rs:37-47]
-- `delete_file_facts` (function) component `delete_file_facts [function]` (`4f7daf79-3a6f-5f10-b235-168a2bb29944`) lines 50-76 [crates/gcode/src/index/api.rs:50-76]
+  - Purpose: Indexed method `CodeFactWriteSummary.for_file` in `crates/gcode/src/index/api.rs`. [crates/gcode/src/index/api.rs:37-47]
+- `delete_file_facts` (function) component `delete_file_facts [function]` (`4f7daf79-3a6f-5f10-b235-168a2bb29944`) lines 50-60 [crates/gcode/src/index/api.rs:50-60]
   - Signature: `pub fn delete_file_facts(`
-  - Purpose: Removes all code analysis metadata (symbols, chunks, imports, and calls) associated with a file from a project's database. [crates/gcode/src/index/api.rs:50-76]
-- `file_facts_exist` (function) component `file_facts_exist [function]` (`54839e09-5fc4-5e76-b690-d0fe0bf8c568`) lines 78-93 [crates/gcode/src/index/api.rs:78-93]
+  - Purpose: Indexed function `delete_file_facts` in `crates/gcode/src/index/api.rs`. [crates/gcode/src/index/api.rs:50-60]
+- `delete_file_non_symbol_facts` (function) component `delete_file_non_symbol_facts [function]` (`b4986145-e045-52e0-b8f2-645b158e4435`) lines 62-84 [crates/gcode/src/index/api.rs:62-84]
+  - Signature: `pub fn delete_file_non_symbol_facts(`
+  - Purpose: Indexed function `delete_file_non_symbol_facts` in `crates/gcode/src/index/api.rs`. [crates/gcode/src/index/api.rs:62-84]
+- `delete_stale_file_symbols` (function) component `delete_stale_file_symbols [function]` (`3dc60508-0219-5081-9294-638784b75dde`) lines 86-108 [crates/gcode/src/index/api.rs:86-108]
+  - Signature: `pub fn delete_stale_file_symbols(`
+  - Purpose: Indexed function `delete_stale_file_symbols` in `crates/gcode/src/index/api.rs`. [crates/gcode/src/index/api.rs:86-108]
+- `file_facts_exist` (function) component `file_facts_exist [function]` (`815e371c-69c6-5070-a5fd-fe1b0fb501b6`) lines 110-125 [crates/gcode/src/index/api.rs:110-125]
   - Signature: `pub fn file_facts_exist(`
-  - Purpose: Returns whether a file has indexed code facts by checking for its existence across five code analysis database tables: code_indexed_files, code_symbols, code_content_chunks, code_imports, and code_calls. [crates/gcode/src/index/api.rs:78-93]
-- `upsert_symbols` (function) component `upsert_symbols [function]` (`571e0ce4-5896-556e-9cc2-9e2348b9e541`) lines 95-209 [crates/gcode/src/index/api.rs:95-209]
+  - Purpose: Indexed function `file_facts_exist` in `crates/gcode/src/index/api.rs`. [crates/gcode/src/index/api.rs:110-125]
+- `upsert_symbols` (function) component `upsert_symbols [function]` (`79b66ff9-5fe5-5fcc-bf68-660114849caa`) lines 127-241 [crates/gcode/src/index/api.rs:127-241]
   - Signature: `pub fn upsert_symbols(conn: &mut impl GenericClient, symbols: &[Symbol]) -> anyhow::Result<usize> {`
-  - Purpose: Batches and upserts Symbol records into a database by extracting symbol attributes into columnar vectors for bulk insert-or-update operations. [crates/gcode/src/index/api.rs:95-209]
-- `upsert_file` (function) component `upsert_file [function]` (`5bd27f49-a67d-555a-9142-d6f04a44e631`) lines 211-237 [crates/gcode/src/index/api.rs:211-237]
+  - Purpose: Indexed function `upsert_symbols` in `crates/gcode/src/index/api.rs`. [crates/gcode/src/index/api.rs:127-241]
+- `upsert_file` (function) component `upsert_file [function]` (`3fdcfdc6-7eaf-548d-8d3f-9aad31d16fc2`) lines 243-269 [crates/gcode/src/index/api.rs:243-269]
   - Signature: `pub fn upsert_file(conn: &mut impl GenericClient, file: &IndexedFile) -> anyhow::Result<()> {`
-  - Purpose: Executes an SQL UPSERT operation to insert or update an indexed file record in the database, resetting synchronization flags when a conflict occurs. [crates/gcode/src/index/api.rs:211-237]
-- `upsert_content_chunks` (function) component `upsert_content_chunks [function]` (`86cee32a-87d0-5a66-8e59-78a2df7b46b9`) lines 239-266 [crates/gcode/src/index/api.rs:239-266]
+  - Purpose: Indexed function `upsert_file` in `crates/gcode/src/index/api.rs`. [crates/gcode/src/index/api.rs:243-269]
+- `upsert_content_chunks` (function) component `upsert_content_chunks [function]` (`d4ea5d25-98d9-569f-8fc0-8a31c0d4d468`) lines 271-298 [crates/gcode/src/index/api.rs:271-298]
   - Signature: `pub fn upsert_content_chunks(`
-  - Purpose: Performs batch UPSERT of ContentChunk records into the code_content_chunks table using INSERT...ON CONFLICT(id) DO UPDATE semantics, returning the count of processed chunks. [crates/gcode/src/index/api.rs:239-266]
-- `upsert_project_stats` (function) component `upsert_project_stats [function]` (`010d7ed5-bb30-52e4-80f1-821b6810d900`) lines 268-293 [crates/gcode/src/index/api.rs:268-293]
+  - Purpose: Indexed function `upsert_content_chunks` in `crates/gcode/src/index/api.rs`. [crates/gcode/src/index/api.rs:271-298]
+- `upsert_project_stats` (function) component `upsert_project_stats [function]` (`93f41710-4909-52e1-9c6f-483de6e5c739`) lines 300-325 [crates/gcode/src/index/api.rs:300-325]
   - Signature: `pub fn upsert_project_stats(`
-  - Purpose: Performs an UPSERT operation to insert or update a project's indexing statistics (file count, symbol count, indexing duration, and timestamp) in the `code_indexed_projects` table, keyed on project ID. [crates/gcode/src/index/api.rs:268-293]
-- `upsert_imports` (function) component `upsert_imports [function]` (`dee039e1-55f0-5a5d-ab8c-5e2f843600d6`) lines 295-314 [crates/gcode/src/index/api.rs:295-314]
+  - Purpose: Indexed function `upsert_project_stats` in `crates/gcode/src/index/api.rs`. [crates/gcode/src/index/api.rs:300-325]
+- `upsert_imports` (function) component `upsert_imports [function]` (`e336b793-2d4c-5620-baeb-f25375077ace`) lines 327-347 [crates/gcode/src/index/api.rs:327-347]
   - Signature: `pub fn upsert_imports(`
-  - Purpose: Deletes all existing code imports for a given project file and re-inserts the provided import relations, returning the count of imports. [crates/gcode/src/index/api.rs:295-314]
-- `upsert_calls` (function) component `upsert_calls [function]` (`d5bdfe77-83ca-58c2-aa48-7fbf0ec62445`) lines 316-349 [crates/gcode/src/index/api.rs:316-349]
+  - Purpose: Indexed function `upsert_imports` in `crates/gcode/src/index/api.rs`. [crates/gcode/src/index/api.rs:327-347]
+- `upsert_calls` (function) component `upsert_calls [function]` (`43190ed3-8515-59d2-a699-288a839e5f70`) lines 349-383 [crates/gcode/src/index/api.rs:349-383]
   - Signature: `pub fn upsert_calls(`
-  - Purpose: Replaces all code call relations for a specified project file by deleting existing entries and bulk-inserting new CallRelation records with conflict handling, returning the count of inserted calls. [crates/gcode/src/index/api.rs:316-349]
-- `to_i32` (function) component `to_i32 [function]` (`93268314-0647-5ec1-ad56-ee395a6a4491`) lines 351-353 [crates/gcode/src/index/api.rs:351-353]
+  - Purpose: Indexed function `upsert_calls` in `crates/gcode/src/index/api.rs`. [crates/gcode/src/index/api.rs:349-383]
+- `to_i32` (function) component `to_i32 [function]` (`b858b861-c078-5168-9ba2-2363bd9617eb`) lines 385-387 [crates/gcode/src/index/api.rs:385-387]
   - Signature: `fn to_i32(value: usize) -> i32 {`
-  - Purpose: Converts a `usize` to an `i32` by clamping the input to `i32::MAX` before casting to prevent overflow. [crates/gcode/src/index/api.rs:351-353]
+  - Purpose: Indexed function `to_i32` in `crates/gcode/src/index/api.rs`. [crates/gcode/src/index/api.rs:385-387]
 

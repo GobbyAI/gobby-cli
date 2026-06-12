@@ -26,29 +26,31 @@ provenance:
   - 108-117
   - 119-128
   - 130-132
-  - 134-197
-  - 199-221
-  - 223-230
-  - 232-250
-  - 252-254
-  - 256-290
-  - 297-304
+  - 134-193
+  - 195-217
+  - 219-245
+  - 247-250
+  - 252-262
+  - 264-270
+  - 272-290
+  - 292-294
+  - 296-330
+  - 337-344
 - file: crates/gwiki/src/compile/mod.rs
   ranges:
   - 27-32
   - 35-38
   - 41-44
   - 46-53
-  - 47-52
   - 56-63
   - 66-77
   - 80-85
   - 88-91
-  - 93-98
-  - 100-185
-  - 187-261
-  - 264-269
-  - 271-284
+  - 94-99
+  - 101-191
+  - 193-267
+  - 270-275
+  - 277-290
 - file: crates/gwiki/src/compile/render.rs
   ranges:
   - 11-47
@@ -68,11 +70,11 @@ provenance:
   - 172-218
   - 222-242
   - 246-276
-  - 279-330
-  - 333-360
-  - 363-391
-  - 394-401
-  - 404-423
+  - 279-348
+  - 351-378
+  - 381-409
+  - 412-419
+  - 422-441
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -84,7 +86,7 @@ Parent: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-The `compile` module transforms accepted notes into rendered wiki pages within a vault. It collects in-scope accepted sources (`collect.rs`), parses note sections and chunk offsets, and enforces path-scope safety. The orchestration layer (`mod.rs`) exposes `compile_to_wiki`/`compile_to_wiki_with_options` and `prepare_handoff`, building a `CompileBundle` from `CollectedSources` and driving the compile pipeline via `CompileRequest`/`WikiCompileOptions` into a `CompileOutcome`. Rendering (`render.rs`) produces Obsidian-flavored Markdown sections, normalizes and slugifies target page paths, writes pages with overwrite/race protection, and guards against escaping the vault (including symlinked parents). Index maintenance (`index.rs`) updates the wiki index file under a lock, inserting compiled-page links and headings idempotently via structural checks, and records provenance for compiled sources. The `tests.rs` suite verifies non-destructive handoff, scope and path-traversal rejection, structural index updates, and correct Markdown output.
+The compile module orchestrates the compilation of raw notes into a structured wiki. It collects and parses accepted source notes and line spans, updates and locks the wiki index with structural heading and link validations, and renders compiled document bundles to destination Markdown pages with path normalization, slugification, and directory/symlink safety checks. The module exposes its core capabilities via unified compilation requests, options, and outcome contracts.
 [crates/gwiki/src/compile/collect.rs:10-82]
 [crates/gwiki/src/compile/index.rs:16-63]
 [crates/gwiki/src/compile/mod.rs:27-32]
@@ -95,50 +97,51 @@ The `compile` module transforms accepted notes into rendered wiki pages within a
 
 ```mermaid
 sequenceDiagram
+    participant m_0cdc1b36_9f9a_5703_98f9_b28d100c8b57 as provenance_sections &#91;function&#93;
     participant m_0faa4d12_cb37_582c_bb6a_dbe2dcaf0dba as line_body &#91;function&#93;
     participant m_23d732c6_84ed_5480_8de1_d8b5557464ac as collect_accepted_sources &#91;function&#93;
+    participant m_2a156988_2628_5bdb_a544_3280ce8f6377 as compile_to_wiki &#91;function&#93;
     participant m_34d25cfc_0db8_55ca_93e0_79fba665e376 as prepare_handoff_does_not_write_target_page &#91;function&#93;
+    participant m_39c081ce_ce7f_58e5_89db_c44b6cef9156 as compile_to_wiki_with_options &#91;function&#93;
+    participant m_3e28f071_5dc8_5415_9b48_aaa3380f0f1a as lock_wiki_index &#91;function&#93;
     participant m_3f09bb62_7ee3_5979_bcf6_49346dd087f6 as update_wiki_index &#91;function&#93;
-    participant m_435b71d5_dfcf_5490_9dc3_4f3f473793ad as compile_to_wiki &#91;function&#93;
     participant m_43fef494_7f9b_5c21_9f91_260631da5688 as has_exact_line &#91;function&#93;
+    participant m_48930bf4_aeb8_5490_8246_5dc6e2d52f2f as section_id_for_article &#91;function&#93;
     participant m_4940fb81_b2f5_5531_b686_12f3ea7fae1d as compile_rejects_absolute_or_escaping_target_pages &#91;function&#93;
-    participant m_4a414ca2_8f8c_5066_bdf1_00e3a4fa1251 as index_update_preserves_unrelated_entries &#91;function&#93;
     participant m_54ec3ba7_27d4_5900_bbae_9b4a1e506977 as exact_line_end &#91;function&#93;
     participant m_56943c0d_cfe8_5f14_b11b_ef9f9ecc2475 as render_bundle &#91;function&#93;
+    participant m_5d6965b3_4153_5c8a_b169_a6dc4aa91374 as lock_file &#91;function&#93;
     participant m_61302e83_d007_53cd_9be3_baedf55045c7 as require_path_in_scope &#91;function&#93;
     participant m_62e35eaa_c21a_554b_9715_46e4c8ec78c1 as compile_bundle_contains_required_sections &#91;function&#93;
-    participant m_69699489_4263_5e02_9dbc_56f81d56c6fc as lock_file &#91;function&#93;
-    participant m_69d66cc7_b233_5883_90c3_a3afd71cba27 as compile_to_wiki_with_options &#91;function&#93;
     participant m_6e117f33_212e_5617_8922_1f912616373a as has_compiled_pages_heading &#91;function&#93;
-    participant m_7f0538f2_0306_5b6e_ab00_51c50cc5070e as prepare_handoff &#91;function&#93;
-    participant m_80e78fc1_fb42_57ad_a1d4_18719d825b54 as lock_provenance &#91;function&#93;
     participant m_86a66327_f657_5f40_9456_73fe29a71bec as note_path &#91;function&#93;
-    participant m_8826b932_6250_5299_a37c_e218d8fdb489 as lock_wiki_index &#91;function&#93;
+    participant m_888dd733_cdb7_5b4e_9ed8_d0e3e9a010fe as prepare_handoff &#91;function&#93;
     participant m_8a8fad35_0605_5d7e_8337_77d99e362f64 as has_compiled_page_link &#91;function&#93;
     participant m_8b3a3172_d870_51cb_b0a1_e7eda831e87b as next_section_heading_offset &#91;function&#93;
     participant m_9486b9f1_345e_50c5_bc7c_7c3cf70dcad4 as extend_unique &#91;function&#93;
+    participant m_9576f3de_ea14_55c3_afef_7ea57de8fcef as rendered_article_sections &#91;function&#93;
     participant m_ae32249d_50e9_57df_9f43_40958cb632b7 as session_with_note &#91;function&#93;
     participant m_baaff445_0c64_5c5d_a2f4_899d7dcee052 as parse_note_sections &#91;function&#93;
     participant m_db1bb4e7_8492_594b_be39_e60973e9976f as insert_compiled_page_link &#91;function&#93;
     participant m_dd6472a3_a905_5843_99bf_6c5edb0de4c9 as render_list_section &#91;function&#93;
+    m_0cdc1b36_9f9a_5703_98f9_b28d100c8b57->>m_48930bf4_aeb8_5490_8246_5dc6e2d52f2f: calls
+    m_0cdc1b36_9f9a_5703_98f9_b28d100c8b57->>m_9576f3de_ea14_55c3_afef_7ea57de8fcef: calls
     m_23d732c6_84ed_5480_8de1_d8b5557464ac->>m_61302e83_d007_53cd_9be3_baedf55045c7: calls
     m_23d732c6_84ed_5480_8de1_d8b5557464ac->>m_86a66327_f657_5f40_9456_73fe29a71bec: calls
     m_23d732c6_84ed_5480_8de1_d8b5557464ac->>m_9486b9f1_345e_50c5_bc7c_7c3cf70dcad4: calls
     m_23d732c6_84ed_5480_8de1_d8b5557464ac->>m_baaff445_0c64_5c5d_a2f4_899d7dcee052: calls
+    m_2a156988_2628_5bdb_a544_3280ce8f6377->>m_39c081ce_ce7f_58e5_89db_c44b6cef9156: calls
     m_34d25cfc_0db8_55ca_93e0_79fba665e376->>m_ae32249d_50e9_57df_9f43_40958cb632b7: calls
-    m_3f09bb62_7ee3_5979_bcf6_49346dd087f6->>m_8826b932_6250_5299_a37c_e218d8fdb489: calls
+    m_39c081ce_ce7f_58e5_89db_c44b6cef9156->>m_888dd733_cdb7_5b4e_9ed8_d0e3e9a010fe: calls
+    m_3e28f071_5dc8_5415_9b48_aaa3380f0f1a->>m_5d6965b3_4153_5c8a_b169_a6dc4aa91374: calls
+    m_3f09bb62_7ee3_5979_bcf6_49346dd087f6->>m_3e28f071_5dc8_5415_9b48_aaa3380f0f1a: calls
     m_3f09bb62_7ee3_5979_bcf6_49346dd087f6->>m_8a8fad35_0605_5d7e_8337_77d99e362f64: calls
     m_3f09bb62_7ee3_5979_bcf6_49346dd087f6->>m_db1bb4e7_8492_594b_be39_e60973e9976f: calls
-    m_435b71d5_dfcf_5490_9dc3_4f3f473793ad->>m_69d66cc7_b233_5883_90c3_a3afd71cba27: calls
     m_4940fb81_b2f5_5531_b686_12f3ea7fae1d->>m_ae32249d_50e9_57df_9f43_40958cb632b7: calls
-    m_4a414ca2_8f8c_5066_bdf1_00e3a4fa1251->>m_ae32249d_50e9_57df_9f43_40958cb632b7: calls
     m_54ec3ba7_27d4_5900_bbae_9b4a1e506977->>m_0faa4d12_cb37_582c_bb6a_dbe2dcaf0dba: calls
     m_56943c0d_cfe8_5f14_b11b_ef9f9ecc2475->>m_dd6472a3_a905_5843_99bf_6c5edb0de4c9: calls
     m_62e35eaa_c21a_554b_9715_46e4c8ec78c1->>m_ae32249d_50e9_57df_9f43_40958cb632b7: calls
-    m_69d66cc7_b233_5883_90c3_a3afd71cba27->>m_7f0538f2_0306_5b6e_ab00_51c50cc5070e: calls
     m_6e117f33_212e_5617_8922_1f912616373a->>m_43fef494_7f9b_5c21_9f91_260631da5688: calls
-    m_80e78fc1_fb42_57ad_a1d4_18719d825b54->>m_69699489_4263_5e02_9dbc_56f81d56c6fc: calls
-    m_8826b932_6250_5299_a37c_e218d8fdb489->>m_69699489_4263_5e02_9dbc_56f81d56c6fc: calls
     m_8a8fad35_0605_5d7e_8337_77d99e362f64->>m_43fef494_7f9b_5c21_9f91_260631da5688: calls
     m_8b3a3172_d870_51cb_b0a1_e7eda831e87b->>m_0faa4d12_cb37_582c_bb6a_dbe2dcaf0dba: calls
 ```
@@ -151,7 +154,7 @@ sequenceDiagram
 [crates/gwiki/src/compile/collect.rs:93-97]
 [crates/gwiki/src/compile/collect.rs:99-127]
 [crates/gwiki/src/compile/collect.rs:129-142]
-- [[code/files/crates/gwiki/src/compile/index.rs|crates/gwiki/src/compile/index.rs]] - `crates/gwiki/src/compile/index.rs` exposes 15 indexed API symbols.
+- [[code/files/crates/gwiki/src/compile/index.rs|crates/gwiki/src/compile/index.rs]] - `crates/gwiki/src/compile/index.rs` exposes 18 indexed API symbols.
 [crates/gwiki/src/compile/index.rs:16-63]
 [crates/gwiki/src/compile/index.rs:65-94]
 [crates/gwiki/src/compile/index.rs:96-98]
@@ -199,12 +202,15 @@ sequenceDiagram
 - `8b3a3172-d870-51cb-b0a1-e7eda831e87b`
 - `0faa4d12-cb37-582c-bb6a-dbe2dcaf0dba`
 - `f36d0d54-3863-5836-b84a-0edaf33e8c9c`
-- `80e78fc1-fb42-57ad-a1d4-18719d825b54`
-- `31f9fae1-6ee0-5d4b-b604-491003baed5c`
-- `bfe33f1b-15af-5af6-ae2e-11e405e0daaa`
-- `8826b932-6250-5299-a37c-e218d8fdb489`
-- `69699489-4263-5e02-9dbc-56f81d56c6fc`
-- `f8472fe5-12c1-50ed-ab41-189036a30911`
+- `db7865d3-9fb4-5d98-8450-105ede1284a4`
+- `0cdc1b36-9f9a-5703-98f9-b28d100c8b57`
+- `5893b7f8-395a-5bdd-85c0-76d995757665`
+- `9576f3de-ea14-55c3-afef-7ea57de8fcef`
+- `48930bf4-aeb8-5490-8246-5dc6e2d52f2f`
+- `5985bdf2-d328-5271-a1d8-08bcd257a73d`
+- `3e28f071-5dc8-5415-9b48-aaa3380f0f1a`
+- `5d6965b3-4153-5c8a-b169-a6dc4aa91374`
+- `c8247e83-3fee-5dcb-8ade-4ad5fafd9c11`
 - `f142bd4e-6024-5bd2-8a68-d4abbfb74473`
 - `0dc46c8c-7081-593e-99c3-6b8af3a12dbc`
 - `bc977b2c-ac5e-5f6f-ba8a-642de40a82bd`
@@ -214,11 +220,11 @@ sequenceDiagram
 - `362b576b-41c0-55a0-9d91-df95e0c3ecb7`
 - `2335f491-9403-5b78-ab1c-1d04df9b3827`
 - `3a630aca-cc9b-57f8-ab22-d2442c6378d8`
-- `435b71d5-dfcf-5490-9dc3-4f3f473793ad`
-- `69d66cc7-b233-5883-90c3-a3afd71cba27`
-- `7f0538f2-0306-5b6e-ab00-51c50cc5070e`
-- `3af94de7-7485-5c14-a987-6422e03c702b`
-- `12ad8f2c-dfd5-5fbd-9d18-711b84f6ca62`
+- `2a156988-2628-5bdb-a544-3280ce8f6377`
+- `39c081ce-ce7f-58e5-89db-c44b6cef9156`
+- `888dd733-cdb7-5b4e-9ed8-d0e3e9a010fe`
+- `20741746-0a8d-5fb4-8fbe-47b209f3173b`
+- `c28560cb-fffe-569b-b1bd-3586abf8366e`
 - `56943c0d-cfe8-5f14-b11b-ef9f9ecc2475`
 - `dd6472a3-a905-5843-99bf-6c5edb0de4c9`
 - `be4b6643-5374-525e-8c59-cb225be17d24`
@@ -235,8 +241,8 @@ sequenceDiagram
 - `3d36043b-e181-578d-9ef8-a75ac10d422e`
 - `d734feb4-d0b2-5af6-917d-553b270eef56`
 - `d30a45f3-a17d-5087-8e5d-dbc8b7d128dc`
-- `4a414ca2-8f8c-5066-bdf1-00e3a4fa1251`
-- `620a1437-e143-598b-ba49-a4e3718b38af`
-- `48f0721d-dda5-5909-b2de-7af2063d1ff2`
-- `9021c487-bcfb-58a9-8839-51cd0072aec3`
+- `ac79e077-9733-52ff-8dc2-ce7524dd9e22`
+- `6a55bc46-9bf3-58e9-b9c7-cd53ae54ba91`
+- `c2356878-d3c6-5343-b715-9658e084a4b3`
+- `1f0546d7-9a8a-518a-9bb0-ec7607854f4a`
 

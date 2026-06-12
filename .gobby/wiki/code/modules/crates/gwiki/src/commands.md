@@ -16,16 +16,8 @@ provenance:
   - 263-272
   - 274-293
   - 295-302
-  - '304'
-  - '305'
+  - 304-305
   - 307-360
-  - 308-321
-  - 323-327
-  - 329-334
-  - 336-340
-  - 342-346
-  - 348-352
-  - 354-359
   - 362-368
   - 370-379
   - 381-387
@@ -33,18 +25,34 @@ provenance:
   - 393-422
   - 424-436
   - 438-451
-  - 453-473
-  - 475-507
-  - 509-548
-  - 550-552
-  - 554-564
-  - 566-609
-  - 611-618
-  - 634-676
-  - 679-730
-  - 733-835
-  - 838-856
-  - 859-873
+  - 453-486
+  - 488-507
+  - 509-513
+  - 515-533
+  - 555-572
+  - 576-590
+  - 592-602
+  - 604-627
+  - 629-633
+  - 635-639
+  - 643-660
+  - 662-694
+  - 696-735
+  - 737-739
+  - 741-751
+  - 753-803
+  - 805-812
+  - 828-870
+  - 873-924
+  - 927-1029
+  - 1032-1050
+  - 1052-1071
+  - 1074-1117
+  - 1120-1142
+  - 1145-1151
+  - 1154-1171
+  - 1174-1203
+  - 1206-1220
 - file: crates/gwiki/src/commands/audit.rs
   ranges:
   - 3-13
@@ -64,55 +72,71 @@ provenance:
   - 83-121
 - file: crates/gwiki/src/commands/citation_quality.rs
   ranges:
-  - 20-27
-  - 30-34
-  - 37-43
-  - 46-50
-  - 53-58
-  - 61-64
+  - 26-33
+  - 36-40
+  - 43-49
+  - 52-56
+  - 59-64
   - 67-70
-  - 73-77
-  - 80-83
+  - 73-76
+  - 79-83
   - 86-89
   - 92-95
   - 98-101
-  - 104-108
-  - 110-140
-  - 142-156
-  - 158-198
-  - 200-240
-  - 242-252
-  - 254-261
-  - 263-278
-  - 280-311
-  - 313-342
-  - 344-356
-  - 358-390
-  - 392-402
-  - 404-410
-  - 412-423
-  - 425-435
-  - 437-461
-  - 463-477
-  - 479-490
-  - 492-511
-  - 513-524
-  - 526-539
-  - 541-555
-  - 569-579
-  - 582-646
-  - 649-693
-  - 696-725
-  - 729-748
-  - 750-754
-  - 756-771
+  - 104-107
+  - 110-114
+  - 116-146
+  - 148-162
+  - 164-175
+  - 177-222
+  - 224-264
+  - 266-276
+  - 278-285
+  - 287-302
+  - 304-335
+  - 337-349
+  - 351-383
+  - 385-395
+  - 397-403
+  - 405-416
+  - 418-428
+  - 430-454
+  - 456-470
+  - 472-483
+  - 485-504
+  - 506-517
+  - 519-532
+  - 534-548
+  - 562-572
+  - 575-639
+  - 642-716
+  - 719-769
+  - 772-786
+  - 789-818
+  - 822-841
+  - 843-847
+  - 849-864
+- file: crates/gwiki/src/commands/citation_quality/contradictions.rs
+  ranges:
+  - 15-18
+  - 21-24
+  - 27-29
+  - 31-67
+  - 69-117
+  - 119-125
+  - 127-163
+  - 169-180
+  - 182-193
+  - 195-226
+  - 228-234
+  - 236-241
 - file: crates/gwiki/src/commands/collect.rs
   ranges:
   - 10-20
   - 22-43
 - file: crates/gwiki/src/commands/compile.rs
   ranges:
-  - 8-67
+  - 8-74
 - file: crates/gwiki/src/commands/export.rs
   ranges:
   - 4-30
@@ -124,10 +148,7 @@ provenance:
   - 93-118
   - 129-131
   - 133-138
-  - 134-137
   - 140-148
-  - 141-143
-  - 145-147
   - 150-158
   - 160-162
   - 164-168
@@ -145,33 +166,40 @@ provenance:
   - 4-19
 - file: crates/gwiki/src/commands/index.rs
   ranges:
-  - 31-37
-  - 39-59
-  - 61-126
-  - 128-164
-  - 166-178
-  - 180-202
-  - 204-227
-  - 229-231
-  - 233-239
-  - 241-245
-  - 247-251
-  - 253-258
-  - 260-283
-  - 285-336
-  - 338-373
-  - 375-399
-  - 401-411
-  - 413-438
-  - 440-495
-  - 497-567
-  - 569-579
-  - 585-587
-  - 589-599
-  - 590-594
-  - 596-598
-  - 602-609
-  - 613-618
+  - 35-38
+  - 40-46
+  - 48-52
+  - 54-86
+  - 88-153
+  - 155-191
+  - 193-205
+  - 207-229
+  - 231-254
+  - 256-258
+  - 260-266
+  - 268-272
+  - 274-278
+  - 280-285
+  - 287-311
+  - 313-364
+  - 366-368
+  - 370-372
+  - 374-384
+  - 386-391
+  - 393-428
+  - 430-454
+  - 456-466
+  - 468-509
+  - 511-566
+  - 568-638
+  - 640-650
+  - 656-658
+  - 660-670
+  - 673-680
+  - 683-700
+  - 703-727
+  - 731-736
+  - 738-746
 - file: crates/gwiki/src/commands/init.rs
   ranges:
   - 9-20
@@ -209,22 +237,11 @@ provenance:
   - 364-378
   - 380-385
   - 387-487
-  - 388-410
-  - 412-427
-  - 429-442
-  - 444-461
-  - 463-486
   - 490-493
   - 495-509
-  - 496-501
-  - 503-508
   - 512-515
   - 518-522
   - 524-557
-  - 525-532
-  - 534-540
-  - 542-548
-  - 550-556
   - 566-592
   - 595-608
   - 611-622
@@ -250,21 +267,15 @@ provenance:
   - 27-38
   - 41-43
   - 45-52
-  - 46-51
   - 54-69
-  - 55-68
   - 72-85
   - 88-98
   - 101-107
   - 110-116
   - 119-125
   - 127-137
-  - 128-136
   - 140-144
   - 146-170
-  - 147-153
-  - 155-161
-  - 163-169
 - file: crates/gwiki/src/commands/refresh/render.rs
   ranges:
   - 3-49
@@ -272,21 +283,21 @@ provenance:
 - file: crates/gwiki/src/commands/refresh/selection.rs
   ranges:
   - 4-75
-  - 78-81
-  - 83-110
-  - 113-116
-  - 119-122
-  - 124-136
-  - 138-144
-  - 146-150
-  - 152-166
-  - 168-181
-  - 183-206
-  - 208-216
-  - 218-220
-  - 222-228
-  - 230-235
-  - 244-290
+  - 79-82
+  - 85-112
+  - 115-118
+  - 121-124
+  - 126-138
+  - 140-146
+  - 148-152
+  - 155-169
+  - 171-184
+  - 186-209
+  - 211-219
+  - 221-223
+  - 225-231
+  - 233-238
+  - 247-293
 - file: crates/gwiki/src/commands/refresh/tests.rs
   ranges:
   - 7-13
@@ -325,8 +336,6 @@ provenance:
   - 28-105
   - 108-113
   - 115-143
-  - 116-135
-  - 137-142
   - 146-154
   - 157-167
   - 170-174
@@ -356,8 +365,9 @@ provenance:
   - 613-625
   - 639-706
   - 709-731
-  - 734-745
-  - 748-761
+  - 734-741
+  - 744-755
+  - 758-771
 - file: crates/gwiki/src/commands/search.rs
   ranges:
   - 23-30
@@ -400,12 +410,8 @@ provenance:
   - 125-138
   - 141-146
   - 148-172
-  - 149-155
-  - 157-163
-  - 165-171
   - 175-181
   - 183-193
-  - 184-192
   - 195-205
   - 208-213
   - 216-219
@@ -453,10 +459,8 @@ provenance:
   - 96-105
   - 108-123
   - 125-197
-  - 126-196
   - 200-207
   - 209-220
-  - 210-219
   - 223-227
   - 230-234
   - 237-240
@@ -481,62 +485,49 @@ Parent: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-The `crates/gwiki/src/commands` module implements the CLI command layer for gwiki, the wiki/knowledge-base tool. Each file defines an `execute` entry point plus supporting types and rendering helpers for a distinct subcommand, sharing common patterns for degradation tracking, scope resolution, config diagnosis (Postgres/FalkorDB/Qdrant/embedding), and dual JSON/text output rendering.
-
-Core retrieval and authoring commands include `ask` (search-backed synthesis with deduplicated sources, code citations, and unified-graph context enrichment), `search`, `read` (path/title resolution with content capping), `research`, `compile`, `export`, and `collect`. Knowledge-graph and analysis commands cover `graph`, `graph_context`, `backlinks`, `review_report` (diff-driven affected-page and risky-dependency analysis), `citation_quality` (credibility, coverage gaps, contradictions, staleness, and confidence sections), and `benchmark`.
-
-Lifecycle and maintenance commands handle `init`, `setup` (Postgres provisioning and gcore config), `index`/ingest (file and URL ingestion with Falkor/Qdrant sync), `status`, `health`, `trust` (aggregate index, freshness, audit, link, and graph health reporting), `sources` (manifest listing and transactional removal with rollback), `audit`, `lint`, and `librarian`. The `mod.rs` file provides shared command dispatch and scoped-analysis runners.
-
-The child `refresh` submodule implements a source-refresh pipeline that re-fetches indexed HTTP and local-file sources, detects content changes via hashing, and updates the vault accordingly.
+The `commands` module provides the core CLI and daemon command suite for the GWiki research and knowledge engine. It orchestrates wiki initialization, source-file reading, compilation, and linting alongside robust indexing workflows that synchronize local and remote assets with PostgreSQL, Qdrant, and FalkorDB. The module features semantic and graph-structured search tools, an AI synthesis engine for answering natural language queries with verified citations, and graph analytics to render backlinks and structural page relationships. It also includes comprehensive diagnostic, auditing, and maintenance utilities for measuring citation quality, performing diff-based change risk assessments, administering service setups, and reporting workspace trust and health.
 [crates/gwiki/src/commands/ask.rs:25-46]
 [crates/gwiki/src/commands/audit.rs:3-13]
 [crates/gwiki/src/commands/backlinks.rs:10-18]
 [crates/gwiki/src/commands/benchmark.rs:11-44]
-[crates/gwiki/src/commands/citation_quality.rs:20-27]
+[crates/gwiki/src/commands/citation_quality.rs:26-33]
 
 ## Call Diagram
 
 ```mermaid
 sequenceDiagram
-    participant m_02aaa023_9823_59d2_a2de_ce768058bbe1 as AskOutputDedup.push_degraded_source &#91;method&#93;
-    participant m_0310bf76_3847_5c02_aaa3_b12186eede5c as ask_unified_graph_output_carries_code_citations_and_degradation &#91;function&#93;
+    participant m_01ce8be5_b4ff_54ec_a019_76d939a300be as ask_unified_graph_output_carries_code_citations_and_degradation &#91;function&#93;
     participant m_04a320e4_7c1f_538b_b5f1_cecdbc496e5c as stage_source_asset &#91;function&#93;
     participant m_09260527_fdfb_5094_bbff_ca7a329574b4 as graph_backend_from_falkor_config &#91;function&#93;
-    participant m_0990c152_2b93_596f_87c6_2ef0a3ed9e1d as build_report &#91;function&#93;
     participant m_0a5764ea_fd4a_5845_be2c_12402c7c056a as source_entry &#91;function&#93;
     participant m_0a8d327d_259c_51be_ade0_98eb40c069a4 as rollback_removed_source_reports_manifest_race &#91;function&#93;
     participant m_0b06c2d1_c120_56d0_8829_f758f34c943b as missing_falkor_config_degrades_graph_search &#91;function&#93;
     participant m_0cc5aa25_3130_5ed1_999b_4d1a0ffcadaa as parse_unified_diff_files &#91;function&#93;
     participant m_0d0ab174_357e_54b8_9491_e34fe1ad5bb2 as manifest_remove_deletes_only_matching_source_record &#91;function&#93;
-    participant m_0dd091dc_5f5d_58c8_8964_215b56eb2d33 as enrich_with_attached_unified_graph_context &#91;function&#93;
-    participant m_14a85748_a5cf_54cf_b83c_3a68ad9b9bc1 as ask_output_from_search &#91;function&#93;
+    participant m_0f9972c4_71f3_547f_a680_9b185e8b4c45 as synthesis_grounded_in_hits_passes_citation_check &#91;function&#93;
+    participant m_10c09de1_bf0b_56d8_9fc6_770d1316814d as execute &#91;function&#93;
+    participant m_11b16d56_224b_50a3_83ca_044051119b80 as llm_ai_off_is_invalid_input &#91;function&#93;
+    participant m_11b1ce34_9267_582f_b10c_271548719370 as ask_output_from_search &#91;function&#93;
     participant m_1d3a56df_c8f1_535d_82ad_63bcc3577694 as raw_source_path &#91;function&#93;
-    participant m_24ded5e4_8e5b_5063_9134_6e7a0d0d3f50 as render_markdown &#91;function&#93;
-    participant m_29a3503d_7ef2_560f_ae80_ff22017c0f92 as contradiction_section &#91;function&#93;
+    participant m_25e34e90_fb5a_5b53_b082_dccb841fcca6 as record_synthesis &#91;function&#93;
     participant m_2db59a9d_6f61_5685_828d_27626cb26cc3 as read_source_asset &#91;function&#93;
+    participant m_2e116f57_43d2_50c4_bcc5_bac1abbfa630 as unique_sources &#91;function&#93;
     participant m_379f6256_1fc9_586d_9383_6ca5fb30b562 as seed_manifest_source &#91;function&#93;
-    participant m_402ecd2a_7a1f_5e0c_bccd_2c8e631658ed as mark_degraded_source &#91;function&#93;
-    participant m_5a0dbaf2_0496_5b78_9356_7118cb325d49 as AskOutputDedup.push_warning &#91;method&#93;
+    participant m_3a24010e_b7d5_5328_9f38_54a5b27e5d48 as output_with_hooks_hit &#91;function&#93;
+    participant m_4cb7b7bb_f00f_56a7_89f7_bc96b22fa24d as code_citations_from_results &#91;function&#93;
     participant m_5f8b3c2f_05cc_54c1_942f_7ec0b0943520 as display_path &#91;function&#93;
-    participant m_7495ed1e_7c43_5061_a611_12726bd63bba as synthesis_prompt &#91;function&#93;
+    participant m_73ec2d93_c338_5e48_aaec_85f5661bd3de as synthesis_prompt &#91;function&#93;
+    participant m_88badd48_2657_5832_a831_c689d11bf7f6 as ordered_unique_strings &#91;function&#93;
     participant m_9c58c938_e5bf_52bb_89c3_12635742da40 as stage_source_removal &#91;function&#93;
-    participant m_9da63a7d_cfb0_5b78_89c4_d7196be2fd57 as coverage_gap_section &#91;function&#93;
+    participant m_9fa3d9f3_cae0_5baa_a69e_b4a5c3115926 as load_index_counts &#91;function&#93;
     participant m_a4856219_1bda_59b4_9ea5_3232c19f0316 as rollback_removed_source &#91;function&#93;
-    participant m_c897a3f9_4a94_5875_b486_7e6a712abbfa as credibility_section &#91;function&#93;
-    participant m_cd112861_f84d_5fa7_a6c6_f27d2ed2259e as confidence_section &#91;function&#93;
+    participant m_af31f8d4_7c9d_5d46_a5eb_7ca4addd9be1 as execute &#91;function&#93;
+    participant m_d033754f_6f13_575c_9bef_1be62b55acb6 as render_text &#91;function&#93;
     participant m_eaa08a75_1975_5102_bb09_a178f2efdf4e as trim_diff_path &#91;function&#93;
-    participant m_eb5a04cf_4496_5e9e_b530_02d5362fc11c as stale_source_section &#91;function&#93;
-    m_02aaa023_9823_59d2_a2de_ce768058bbe1->>m_5a0dbaf2_0496_5b78_9356_7118cb325d49: calls
-    m_0310bf76_3847_5c02_aaa3_b12186eede5c->>m_14a85748_a5cf_54cf_b83c_3a68ad9b9bc1: calls
-    m_0310bf76_3847_5c02_aaa3_b12186eede5c->>m_7495ed1e_7c43_5061_a611_12726bd63bba: calls
+    m_01ce8be5_b4ff_54ec_a019_76d939a300be->>m_11b1ce34_9267_582f_b10c_271548719370: calls
+    m_01ce8be5_b4ff_54ec_a019_76d939a300be->>m_73ec2d93_c338_5e48_aaec_85f5661bd3de: calls
     m_04a320e4_7c1f_538b_b5f1_cecdbc496e5c->>m_5f8b3c2f_05cc_54c1_942f_7ec0b0943520: calls
     m_04a320e4_7c1f_538b_b5f1_cecdbc496e5c->>m_9c58c938_e5bf_52bb_89c3_12635742da40: calls
-    m_0990c152_2b93_596f_87c6_2ef0a3ed9e1d->>m_24ded5e4_8e5b_5063_9134_6e7a0d0d3f50: calls
-    m_0990c152_2b93_596f_87c6_2ef0a3ed9e1d->>m_29a3503d_7ef2_560f_ae80_ff22017c0f92: calls
-    m_0990c152_2b93_596f_87c6_2ef0a3ed9e1d->>m_9da63a7d_cfb0_5b78_89c4_d7196be2fd57: calls
-    m_0990c152_2b93_596f_87c6_2ef0a3ed9e1d->>m_c897a3f9_4a94_5875_b486_7e6a712abbfa: calls
-    m_0990c152_2b93_596f_87c6_2ef0a3ed9e1d->>m_cd112861_f84d_5fa7_a6c6_f27d2ed2259e: calls
-    m_0990c152_2b93_596f_87c6_2ef0a3ed9e1d->>m_eb5a04cf_4496_5e9e_b530_02d5362fc11c: calls
     m_0a5764ea_fd4a_5845_be2c_12402c7c056a->>m_1d3a56df_c8f1_535d_82ad_63bcc3577694: calls
     m_0a5764ea_fd4a_5845_be2c_12402c7c056a->>m_2db59a9d_6f61_5685_828d_27626cb26cc3: calls
     m_0a5764ea_fd4a_5845_be2c_12402c7c056a->>m_5f8b3c2f_05cc_54c1_942f_7ec0b0943520: calls
@@ -545,16 +536,25 @@ sequenceDiagram
     m_0b06c2d1_c120_56d0_8829_f758f34c943b->>m_09260527_fdfb_5094_bbff_ca7a329574b4: calls
     m_0cc5aa25_3130_5ed1_999b_4d1a0ffcadaa->>m_eaa08a75_1975_5102_bb09_a178f2efdf4e: calls
     m_0d0ab174_357e_54b8_9491_e34fe1ad5bb2->>m_379f6256_1fc9_586d_9383_6ca5fb30b562: calls
-    m_0dd091dc_5f5d_58c8_8964_215b56eb2d33->>m_402ecd2a_7a1f_5e0c_bccd_2c8e631658ed: calls
+    m_0f9972c4_71f3_547f_a680_9b185e8b4c45->>m_25e34e90_fb5a_5b53_b082_dccb841fcca6: calls
+    m_0f9972c4_71f3_547f_a680_9b185e8b4c45->>m_3a24010e_b7d5_5328_9f38_54a5b27e5d48: calls
+    m_10c09de1_bf0b_56d8_9fc6_770d1316814d->>m_9fa3d9f3_cae0_5baa_a69e_b4a5c3115926: calls
+    m_10c09de1_bf0b_56d8_9fc6_770d1316814d->>m_d033754f_6f13_575c_9bef_1be62b55acb6: calls
+    m_11b16d56_224b_50a3_83ca_044051119b80->>m_af31f8d4_7c9d_5d46_a5eb_7ca4addd9be1: calls
+    m_11b1ce34_9267_582f_b10c_271548719370->>m_2e116f57_43d2_50c4_bcc5_bac1abbfa630: calls
+    m_11b1ce34_9267_582f_b10c_271548719370->>m_4cb7b7bb_f00f_56a7_89f7_bc96b22fa24d: calls
+    m_11b1ce34_9267_582f_b10c_271548719370->>m_88badd48_2657_5832_a831_c689d11bf7f6: calls
 ```
 
 ## Child Modules
 
-- [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/commands/refresh]] - The `refresh` command module implements gwiki's source-refresh pipeline, which re-fetches previously indexed sources (HTTP URLs and local files), detects content changes via hashing, and updates the vault accordingly.
-
-Execution flows through `mod.rs` entry points (`execute`, `execute_with_fetcher`, `execute_resolved_with_fetcher`) that orchestrate selection, fetching, and finalization while supporting dry-run and injectable fetchers for testing. `selection.rs` resolves which sources to refresh—handling explicit IDs, all-source sweeps, and change-triggered selection—classifying URL vs. local-file sources, markdown replay kinds, and structural selection failures. `candidate.rs` performs the per-source work: building URL and local-file refresh candidates, hashing local files, and finalizing changed refreshes by replacing manifests and removing stale raw assets. `vault.rs` provides safe path handling for raw sources and assets, scope-root setup, and guarded relative-file removal that rejects unsafe paths. `model.rs` defines the shared data types (`RefreshPlan`, `RefreshResult`, `RefreshedSource`, `RefreshFailure`, `SkippedRefresh`, `IndexStatus`, `IndexedCounts`, etc.), and `render.rs` formats refresh results and status into user-facing output.
-
-`tests.rs` provides extensive coverage including dry-run planning, unchanged-content skips, changed-content replay/replacement, unsupported/missing source failures, path-safety guards, and case-insensitive HTTP scheme handling.
+- [[code/modules/crates/gwiki/src/commands/citation_quality|crates/gwiki/src/commands/citation_quality]] - `crates/gwiki/src/commands/citation_quality` contains 1 direct file and 0 child modules.
+[crates/gwiki/src/commands/citation_quality/contradictions.rs:15-18]
+[crates/gwiki/src/commands/citation_quality/contradictions.rs:21-24]
+[crates/gwiki/src/commands/citation_quality/contradictions.rs:27-29]
+[crates/gwiki/src/commands/citation_quality/contradictions.rs:31-67]
+[crates/gwiki/src/commands/citation_quality/contradictions.rs:69-117]
+- [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/commands/refresh]] - `crates/gwiki/src/commands/refresh` contains 7 direct files and 0 child modules.
 [crates/gwiki/src/commands/refresh/candidate.rs:15-74]
 [crates/gwiki/src/commands/refresh/mod.rs:29-37]
 [crates/gwiki/src/commands/refresh/model.rs:5-9]
@@ -563,7 +563,7 @@ Execution flows through `mod.rs` entry points (`execute`, `execute_with_fetcher`
 
 ## Files
 
-- [[code/files/crates/gwiki/src/commands/ask.rs|crates/gwiki/src/commands/ask.rs]] - `crates/gwiki/src/commands/ask.rs` exposes 41 indexed API symbols.
+- [[code/files/crates/gwiki/src/commands/ask.rs|crates/gwiki/src/commands/ask.rs]] - `crates/gwiki/src/commands/ask.rs` exposes 57 indexed API symbols.
 [crates/gwiki/src/commands/ask.rs:25-46]
 [crates/gwiki/src/commands/ask.rs:48-88]
 [crates/gwiki/src/commands/ask.rs:90-99]
@@ -581,16 +581,16 @@ Execution flows through `mod.rs` entry points (`execute`, `execute_with_fetcher`
 [crates/gwiki/src/commands/benchmark.rs:46-73]
 [crates/gwiki/src/commands/benchmark.rs:75-81]
 [crates/gwiki/src/commands/benchmark.rs:83-121]
-- [[code/files/crates/gwiki/src/commands/citation_quality.rs|crates/gwiki/src/commands/citation_quality.rs]] - `crates/gwiki/src/commands/citation_quality.rs` exposes 42 indexed API symbols.
-[crates/gwiki/src/commands/citation_quality.rs:20-27]
-[crates/gwiki/src/commands/citation_quality.rs:30-34]
-[crates/gwiki/src/commands/citation_quality.rs:37-43]
-[crates/gwiki/src/commands/citation_quality.rs:46-50]
-[crates/gwiki/src/commands/citation_quality.rs:53-58]
+- [[code/files/crates/gwiki/src/commands/citation_quality.rs|crates/gwiki/src/commands/citation_quality.rs]] - `crates/gwiki/src/commands/citation_quality.rs` exposes 44 indexed API symbols.
+[crates/gwiki/src/commands/citation_quality.rs:26-33]
+[crates/gwiki/src/commands/citation_quality.rs:36-40]
+[crates/gwiki/src/commands/citation_quality.rs:43-49]
+[crates/gwiki/src/commands/citation_quality.rs:52-56]
+[crates/gwiki/src/commands/citation_quality.rs:59-64]
 - [[code/files/crates/gwiki/src/commands/collect.rs|crates/gwiki/src/commands/collect.rs]] - `crates/gwiki/src/commands/collect.rs` exposes 2 indexed API symbols.
 [crates/gwiki/src/commands/collect.rs:10-20]
 [crates/gwiki/src/commands/collect.rs:22-43]
-- [[code/files/crates/gwiki/src/commands/compile.rs|crates/gwiki/src/commands/compile.rs]] - `crates/gwiki/src/commands/compile.rs` exposes 1 indexed API symbol. [crates/gwiki/src/commands/compile.rs:8-67]
+- [[code/files/crates/gwiki/src/commands/compile.rs|crates/gwiki/src/commands/compile.rs]] - `crates/gwiki/src/commands/compile.rs` exposes 1 indexed API symbol. [crates/gwiki/src/commands/compile.rs:8-74]
 - [[code/files/crates/gwiki/src/commands/export.rs|crates/gwiki/src/commands/export.rs]] - `crates/gwiki/src/commands/export.rs` exposes 1 indexed API symbol. [crates/gwiki/src/commands/export.rs:4-30]
 - [[code/files/crates/gwiki/src/commands/graph.rs|crates/gwiki/src/commands/graph.rs]] - `crates/gwiki/src/commands/graph.rs` exposes 18 indexed API symbols.
 [crates/gwiki/src/commands/graph.rs:13-52]
@@ -602,12 +602,12 @@ Execution flows through `mod.rs` entry points (`execute`, `execute_with_fetcher`
 [crates/gwiki/src/commands/graph_context.rs:13-83]
 [crates/gwiki/src/commands/graph_context.rs:85-98]
 - [[code/files/crates/gwiki/src/commands/health.rs|crates/gwiki/src/commands/health.rs]] - `crates/gwiki/src/commands/health.rs` exposes 1 indexed API symbol. [crates/gwiki/src/commands/health.rs:4-19]
-- [[code/files/crates/gwiki/src/commands/index.rs|crates/gwiki/src/commands/index.rs]] - `crates/gwiki/src/commands/index.rs` exposes 27 indexed API symbols.
-[crates/gwiki/src/commands/index.rs:31-37]
-[crates/gwiki/src/commands/index.rs:39-59]
-[crates/gwiki/src/commands/index.rs:61-126]
-[crates/gwiki/src/commands/index.rs:128-164]
-[crates/gwiki/src/commands/index.rs:166-178]
+- [[code/files/crates/gwiki/src/commands/index.rs|crates/gwiki/src/commands/index.rs]] - `crates/gwiki/src/commands/index.rs` exposes 36 indexed API symbols.
+[crates/gwiki/src/commands/index.rs:35-38]
+[crates/gwiki/src/commands/index.rs:40-46]
+[crates/gwiki/src/commands/index.rs:48-52]
+[crates/gwiki/src/commands/index.rs:54-86]
+[crates/gwiki/src/commands/index.rs:88-153]
 - [[code/files/crates/gwiki/src/commands/init.rs|crates/gwiki/src/commands/init.rs]] - `crates/gwiki/src/commands/init.rs` exposes 2 indexed API symbols.
 [crates/gwiki/src/commands/init.rs:9-20]
 [crates/gwiki/src/commands/init.rs:22-40]
@@ -626,7 +626,7 @@ Execution flows through `mod.rs` entry points (`execute`, `execute_with_fetcher`
 - [[code/files/crates/gwiki/src/commands/research.rs|crates/gwiki/src/commands/research.rs]] - `crates/gwiki/src/commands/research.rs` exposes 2 indexed API symbols.
 [crates/gwiki/src/commands/research.rs:5-30]
 [crates/gwiki/src/commands/research.rs:32-74]
-- [[code/files/crates/gwiki/src/commands/review_report.rs|crates/gwiki/src/commands/review_report.rs]] - `crates/gwiki/src/commands/review_report.rs` exposes 36 indexed API symbols.
+- [[code/files/crates/gwiki/src/commands/review_report.rs|crates/gwiki/src/commands/review_report.rs]] - `crates/gwiki/src/commands/review_report.rs` exposes 37 indexed API symbols.
 [crates/gwiki/src/commands/review_report.rs:28-105]
 [crates/gwiki/src/commands/review_report.rs:108-113]
 [crates/gwiki/src/commands/review_report.rs:115-143]
@@ -665,47 +665,63 @@ Execution flows through `mod.rs` entry points (`execute`, `execute_with_fetcher`
 
 ## Components
 
-- `4353e2b8-d8b1-5293-a498-b7a2531873d7`
-- `14a85748-a5cf-54cf-b83c-3a68ad9b9bc1`
-- `b1024d5e-48d6-5ade-b322-dbc73619edd5`
-- `f2ea9f92-7d88-5f5a-b351-41427e848347`
-- `0dd091dc-5f5d-58c8-8964-215b56eb2d33`
-- `55167441-f46a-5e00-af7f-93ba393155e1`
-- `9fbb6318-bd03-56da-a82f-09207c863935`
-- `402ecd2a-7a1f-5e0c-bccd-2c8e631658ed`
-- `5491d85a-49d1-5bb5-b46c-a6367d090fa7`
-- `090e5fa2-0c71-5957-a82e-662778a8115e`
-- `e891fcac-1f8f-59d2-af71-9a0a649c4049`
-- `4e2a433e-883a-56a7-aadf-0fe37de67bd0`
-- `5333f87a-ac51-5a0a-b58b-e0352dee42e6`
-- `8f9f056a-d8ed-53b6-8446-6d43fef80764`
-- `1ffb4c35-47e1-5188-8f79-a1a7eef53f57`
-- `211c103b-a757-5a99-8ec2-6bf7c70da35e`
-- `9e40fd2e-e0cd-5721-b523-6d0c3babdea9`
-- `02aaa023-9823-59d2-a2de-ce768058bbe1`
-- `f658335a-e518-5bbc-95c0-04a758d24252`
-- `5a0dbaf2-0496-5b78-9356-7118cb325d49`
-- `a9e13b90-66cb-5b77-a441-48f2a104b5c5`
-- `e05cc882-12da-59d2-b2b0-35b2fff16959`
-- `6d18b8e4-7105-5ab3-8caa-d683cdd5f6b2`
-- `879b8ad8-a1c1-5fc6-8a9b-0c106dc06901`
-- `6ad85944-9afa-5653-870f-e9b5d5e1ec1f`
-- `b2631415-1303-5ddd-acab-4cea51a2b91f`
-- `a93d90b9-e54d-535b-965a-8cbd911a6c95`
-- `71607693-b19f-5daf-a4bb-0adb83857735`
-- `c5726362-dd79-5f95-a88d-bfda26e1804c`
-- `b1504580-3e65-54de-a976-aeef3224bee5`
-- `c723890d-4338-5db8-89c9-1afcc5368371`
-- `7495ed1e-7c43-5061-a611-12726bd63bba`
-- `a981b604-1625-536d-9267-f230d0ee2841`
-- `45949a04-86ac-5ec6-a3a9-ea65018a366f`
-- `02220be1-52c1-5a2d-8add-4441dc5e37a6`
-- `fef977e1-5462-5c7e-b458-2c646b483ad2`
-- `667a24a4-1620-56a4-94cf-10fcd4994c62`
-- `0310bf76-3847-5c02-aaa3-b12186eede5c`
-- `5aadfa7d-9f29-5286-9987-99f2582c3546`
-- `2502c0aa-8f2b-5460-a270-50d27a695900`
-- `0f732658-6a41-59c8-bf1b-b568f8141736`
+- `af31f8d4-7c9d-5d46-a5eb-7ca4addd9be1`
+- `11b1ce34-9267-582f-b10c-271548719370`
+- `2e116f57-43d2-50c4-bcc5-bac1abbfa630`
+- `4cb7b7bb-f00f-56a7-89f7-bc96b22fa24d`
+- `17bb94af-5260-5119-9a34-f59afcfd3994`
+- `89511627-b9ad-5530-bd74-3bd6cb647548`
+- `7570c871-a30c-56f6-88a1-7434454e34c1`
+- `d2b9c14b-4f67-59c1-9895-019510b87c6c`
+- `a197d23e-6d0c-5e00-86af-04f9827a6dd4`
+- `0f9f3ba0-f1e9-5d6b-aac8-f2471a5d1729`
+- `1ab76c1f-168b-5035-9e91-3fc03f57753f`
+- `5ebf5934-b8d8-5323-936d-d96d669c5c0b`
+- `470b9ac6-202c-52fb-9081-8f0b92dd3069`
+- `bdaac730-2214-564e-b4c0-db8cce1a842d`
+- `8a21abcd-f1e9-5ea1-91df-42cb9ee9a049`
+- `7279d9c6-b421-5230-ba3a-550c2916a848`
+- `1ba2c611-fcc4-518c-a2f7-2c82696cfa95`
+- `8603718a-9eca-5d17-8cd0-4f237274462c`
+- `c8b26428-7d7d-52fb-b4a7-544ab23a8867`
+- `c83d5d68-52bd-5a17-8c95-b799ebb3d568`
+- `cc37b308-9ba0-5050-a970-58e6df80ca22`
+- `a752866f-ddd4-5d22-9803-0df8cd9860ae`
+- `88badd48-2657-5832-a831-c689d11bf7f6`
+- `f43bca75-bed9-5d16-90a6-106503fb2360`
+- `79a1dbc5-6841-5aec-983d-18a3e81a27b9`
+- `dd65de97-baa9-5848-a811-64d27a0c0fa6`
+- `2c139dbe-5253-5ee3-a052-217ce2ff838a`
+- `e6d38d18-7fcc-5dfa-a37d-c430f982c67c`
+- `39d88a42-f24f-51b8-87d5-8131ec88a1cd`
+- `25e34e90-fb5a-5b53-b082-dccb841fcca6`
+- `f42f1022-1ddd-5918-8448-a119dd39a069`
+- `5742dcf0-971b-55c8-a0cc-27f611f5f573`
+- `1ecc6631-6980-5ddc-90cc-dcc0fcbef81a`
+- `13c5ceb4-9ef7-5337-9af2-b46b3d0e1789`
+- `a3d86bee-e69c-5228-a003-b6db0adf1fa6`
+- `f14fc3d7-7c27-5658-82bc-0f39edb2a433`
+- `47d17f08-77da-59f8-b20e-38584b446ea6`
+- `6260f827-766e-5046-abf9-6d0e6387afc8`
+- `7735cac2-c26b-5a66-baf3-d3c2c3c0d24a`
+- `bc4e112c-b5c5-54e5-90ab-f417e69f525e`
+- `d009111e-2617-54a2-82d7-5ed97f117c8f`
+- `73ec2d93-c338-5e48-aaec-85f5661bd3de`
+- `4e85091d-837f-591c-8afa-f27e27ef5674`
+- `b3b2c5a0-5543-57d2-b1e5-e59d2d0bf61e`
+- `1c123c3d-ae37-52a3-900b-2c049ebda15c`
+- `b78e2b99-ac88-5538-9a80-415b06b5dfcc`
+- `cac9d885-710b-574b-b2b6-3b5c3cc64391`
+- `01ce8be5-b4ff-54ec-a019-76d939a300be`
+- `518f2aea-32a0-5460-8e0c-a5c16ecb9fea`
+- `ab89ed42-de95-5ac7-9537-e9aa9a03e288`
+- `3a24010e-b7d5-5328-9f38-54a5b27e5d48`
+- `a68f448a-8ded-50f4-a6db-d61a5f797852`
+- `3104702a-e050-5ac4-9a92-293fa86d9b66`
+- `e9daf314-4f25-5d6a-81af-6e5b2fbb52d6`
+- `0f9972c4-71f3-547f-a680-9b185e8b4c45`
+- `e80b10d9-9f45-524b-9195-83a0a42165df`
+- `11b16d56-224b-50a3-83ca-044051119b80`
 - `120069a4-7de5-57d0-8c26-8107d8dc8144`
 - `9221ea26-3d62-54ec-a050-21b36b815b78`
 - `586b2147-ca79-5c2d-891a-3ac1a13a3d54`
@@ -717,48 +733,50 @@ Execution flows through `mod.rs` entry points (`execute`, `execute_with_fetcher`
 - `3c7f7188-f600-57c0-8608-e946c8dd7210`
 - `147862a7-e4ad-5a29-bcf5-28ef1c506b95`
 - `5ffc67db-8128-5a37-8622-d1a397a94dd6`
-- `0626884e-2a39-5b13-b8be-fe2a57a323b5`
-- `4d6ab4f4-97a7-5bbf-90a5-02351c47012a`
-- `b6893647-b28f-52f7-b4cb-e8b387a066d1`
-- `eab22ee9-b78f-5362-8512-c02750d592ed`
-- `41de8c78-cd5c-5125-b118-36c75c4a16cd`
-- `8842ec53-618e-537f-8190-dfcdc6b6320e`
-- `ed3d3b65-5f63-5cd4-8b36-f0a86463f567`
-- `5e572abe-a3f9-54a3-a16f-19d452378a59`
-- `8e617206-485c-50ee-92ce-fa8a8677d58b`
-- `70df4638-9e5b-5f9f-a13d-e015e7271c66`
-- `83031209-71fe-54c0-bb2e-ea5a5564f899`
-- `0f069f69-41dd-59c9-a031-239e2cc75c1d`
-- `a195ed81-8b38-5a14-bd6b-dcfd0b301a29`
-- `1e42fbe5-22cc-5759-830d-ebf26d9a3e21`
-- `7596b9e5-83f6-531d-9ce2-018430bcc015`
-- `0990c152-2b93-596f-87c6-2ef0a3ed9e1d`
-- `c897a3f9-4a94-5875-b486-7e6a712abbfa`
-- `fc6d3878-6985-56ee-ad0b-3e03a1cbe250`
-- `90944aa9-9f86-53d6-b27c-2831af608c9d`
-- `78069b76-6b5d-5b35-a827-b621bf7ad99c`
-- `9da63a7d-cfb0-5b78-89c4-d7196be2fd57`
-- `29a3503d-7ef2-560f-ae80-ff22017c0f92`
-- `eb5a04cf-4496-5e9e-b530-02d5362fc11c`
-- `cd112861-f84d-5fa7-a6c6-f27d2ed2259e`
-- `edc9c408-4130-5875-b270-bb9922b14a4d`
-- `c5a784e1-5b36-5340-9262-9cb2d4707c7d`
-- `268b404c-fc69-5458-aa32-ad59a5d166b3`
-- `1d19baa0-950a-58e5-8bda-1fe3b3eab775`
-- `24ded5e4-8e5b-5063-9134-6e7a0d0d3f50`
-- `ae2cd9ba-0679-5081-8da5-934c8579a7fa`
-- `94402ab5-5e26-51eb-86b6-12e5d1b1b9e5`
-- `db583e89-4c59-55ae-b707-af3e2f6dd28b`
-- `c160fbdf-7ede-5730-8983-cce3fc53cc6b`
-- `c2c5650f-3299-571d-bec8-dad5ca48fd93`
-- `da0c555c-8859-59fb-b9c6-f5f25ec9fa67`
-- `55fc8cf0-0de7-5e3f-96f5-2aabfc861b4d`
-- `65cdbf4d-9d36-570b-91d4-215fe2b39a9f`
-- `335de342-e361-5101-b6bd-999ede97b45e`
-- `d5f96ff7-6caf-58d8-8806-2a69dc1b40b8`
-- `488c0e48-0dcd-5b75-a9c9-a017830605e1`
-- `45b73007-069d-5f30-99a3-e54b7d25c8a7`
-- `9ab7d097-37d1-5c7b-a280-c27d993aa85a`
+- `1e9a9421-24e0-5dae-bb74-d6756d087444`
+- `cc451b9b-2526-535b-a6d9-433d5b71f671`
+- `047a286f-3032-5f5a-bfb2-d061fc6dd9d8`
+- `48ff1b20-b7ae-59d5-8e0c-7d87b14a97a3`
+- `4b2ee9e1-8f33-5020-b23a-9db616cedba9`
+- `ec16f50d-f01b-51dd-955a-c90e1d412d55`
+- `2eb27a02-0545-57a5-a96e-0fead9b9f817`
+- `39a6da3b-bb8c-55b9-a609-499e6d712fa5`
+- `146f86bf-e6e6-528e-8a87-17ebbcf0070c`
+- `fc52cc3b-9bcb-599e-a612-4312aac13ba0`
+- `86298599-2f1e-5efb-acee-56fffcfdf4df`
+- `0b670d02-a812-51e8-8d74-455b8a5e3baa`
+- `8149901e-badb-5820-8205-3042c3b968c9`
+- `f66e3760-ebdc-5cf9-b01d-edc74c3d9679`
+- `354ac887-a1e7-54dc-9922-65e6d0beb061`
+- `e0b154d3-59d8-53ac-ba7b-6d506e070027`
+- `e2963772-05f1-523b-96b9-439ab519c7b0`
+- `f912fc0f-8c03-52ff-a29e-778b1cb3cf3c`
+- `27af47be-5e91-51a0-8e29-b47a9725a4fb`
+- `cb21ed28-d217-573a-9cdf-fdf6faf71c7f`
+- `b5d40b7a-5463-517c-a63f-0c7b249703ac`
+- `7a2af10b-aa2e-5810-865f-8e71f719f466`
+- `95d87f46-7972-5fd3-b723-b5159cd9ab05`
+- `02bf7786-fd03-506c-8d59-8c3659f22bfd`
+- `fd90408b-86db-56c9-a640-5fb4931af0f6`
+- `63709a04-a849-5343-ac1e-44212fa67613`
+- `b8e26556-2147-59be-861b-13daa5c2b5fd`
+- `db74ba73-8cc4-5f03-8e59-39fbb2cbe5ee`
+- `280a6922-d472-5f76-aef0-bfb0bed71797`
+- `4b488d69-3eaa-5346-b901-dc8d746428d0`
+- `bb544b4b-e2cf-5f9b-a4c5-f210e3a7b997`
+- `0a7ff010-0292-5eca-80f5-be2948f56406`
+- `9aae3683-0eaa-553e-8de0-ab0e1331892c`
+- `80f36ad8-4e25-5c4c-8706-f7d4409620d2`
+- `7dce2f2c-b96b-523c-b35b-ab98dffe9084`
+- `714c7e53-14b6-5945-a346-09b0811f3292`
+- `5bb885c9-6387-5384-ab14-2310aaad8983`
+- `d2869ddf-13be-5172-86ac-faf15c720d31`
+- `c85950a2-34ac-54a7-8641-f95bbf894bde`
+- `283896ab-ead9-551e-a988-4a7553050b68`
+- `7571597e-4c01-506a-a985-1cb39aac41d4`
+- `1b37caaa-a95a-530c-97d2-57370d80d0e2`
+- `3ce73178-c265-52a6-ba20-2981b22a6d46`
+- `e104c9da-f522-51d8-b75d-0b0455d4473f`
 - `b82f162e-63a4-5a97-b033-94faa99f166d`
 - `e6c80f4c-f0f7-5dfc-b6f6-1903106e80b6`
 - `10d88a12-3854-56bf-a151-bf57696ae5b8`
@@ -784,33 +802,42 @@ Execution flows through `mod.rs` entry points (`execute`, `execute_with_fetcher`
 - `2dae974e-88f7-5adc-9fa3-f48631f3a61b`
 - `8b9db018-ee54-58b6-9b78-261136331485`
 - `1bfb51ea-113b-5885-af3d-f5ac0d32b8fc`
-- `6ddfec1b-c9ec-565f-bdbd-02f449d99b3e`
-- `9db1115f-a7c2-5a0e-bc2c-1f90403a015d`
-- `a7e925a1-8625-5f65-8d93-cf582938ea04`
-- `4457a3e0-3993-5f49-aa02-8009820d0ef9`
-- `4e549873-6a52-52b5-8545-955542916d88`
-- `db278293-f2eb-540b-90e4-4d8e189f0c4f`
-- `ec2c79f5-d7d0-53a7-b258-13c73dd8815b`
-- `8d9ea157-db6a-5f7a-914e-9eb3e64e106c`
-- `6c87f5fa-fd95-50fe-93eb-2d5df8c679b0`
-- `81a124ba-cc67-536b-bd6d-b3ff5b47ff57`
-- `2804243b-20ae-5238-a154-ae0427db510e`
-- `089ba086-dd1c-5fd3-b3a1-e5b9eef9123f`
-- `170e3ad5-15e7-5d99-966f-ac2a3a5de0de`
-- `ca945602-1958-5069-a200-89ba88051809`
-- `f95db7be-612e-5a16-97bc-5951a7bdcb7b`
-- `b8ffe67a-d4f3-5c22-8526-2bfcb3ce05e3`
-- `20159b63-3311-5d07-b5a1-817f4783d490`
-- `906e9925-f4ee-5461-b042-c16b492508a6`
-- `cc108563-f0a5-5db1-9f5a-bbb82b7665d9`
-- `f50db82e-a5cb-55fc-9258-e6951e62e35f`
-- `0a87b97b-f933-5f65-a570-77ed9afb1e66`
-- `af93486d-d885-57a4-8a6a-8f5aed789013`
-- `b40c07b8-d815-595b-9bcc-82d4904cb5b8`
-- `c1b7ab97-5087-5f6e-8e39-8e1a52f11abc`
-- `5e77ac48-9e46-5891-9b89-a54c8c032446`
-- `1753ca14-3845-5829-88ce-c4a2da02f7d9`
-- `8ca187d2-c36e-5354-a0ee-15c1996fca82`
+- `841f90e8-756b-5f27-999e-57a7ec5d9b09`
+- `678c88e9-6753-57dc-a8e3-e1e21e3ecfbc`
+- `37703920-7301-538b-8d5e-31f0b51a00ea`
+- `e7aa8d66-45f1-53aa-83e0-dc2c1689cc42`
+- `77dbe63b-0177-50c3-8465-0a851f1d031b`
+- `ecf220bb-76ab-5eb1-bfd5-660fa389652d`
+- `9729101d-7abb-55a0-a226-979234dd085a`
+- `cfbe3467-16d0-567b-94b9-2c6e77dba77b`
+- `59c4b099-4d0e-521f-958b-c4bdd8c0d5f2`
+- `c64a5c44-b124-5b2c-9f89-31495292256a`
+- `c009b1dd-36e8-58ec-9f9b-f4695741fd3c`
+- `2be8454c-2cb6-5653-a99f-2738e4b40648`
+- `017829fc-abe9-5a85-93fb-fcc437d7ce86`
+- `d97f234b-180f-5583-95e4-8e7d72b04fb8`
+- `d64fa9f2-6d5a-5b44-8b49-1c73c39c287a`
+- `7e033ae3-37d0-5c08-9eb4-0c30804f7957`
+- `d20d5bda-cde0-5045-ac35-9191d3d5152e`
+- `9c6bb4d8-caf2-50d0-90fb-a2b49f2ba605`
+- `835a6f2c-f0a3-5478-96d7-d2ceed81c223`
+- `88f3017e-d04a-5b86-8545-972ed85d3622`
+- `ecf85ac6-782e-5275-8059-41b0513f8cf8`
+- `1cfd6c70-d7c8-5e2f-a1f9-9222705b28fe`
+- `72f82a07-ad9a-5dc6-a531-6cfb8422e95a`
+- `78921df2-77e0-5db8-b2ae-1647d846dd74`
+- `8207455e-bf1f-54ab-bcb5-82cf810d4d1a`
+- `d2700626-88b1-521c-887e-ba14b4c544a7`
+- `5d23e034-fc13-56a8-b98f-9573a6d74a39`
+- `db7d0eb3-249f-5a41-973d-e1ba40ffb8cd`
+- `ec331ffd-525f-5b3d-af07-b956c0120ba1`
+- `12dcd5a1-c8e0-543a-9c78-cc03866fe453`
+- `cf13850f-c20d-52d0-9565-eb661ddda8ce`
+- `a47a8d54-63cf-5742-ab78-41718f559a8b`
+- `f0e72029-e1a1-52ef-9a1a-3b7add578b39`
+- `2ca0a3ce-ecd2-59e1-b72d-917336cbf3ff`
+- `c1db0ae3-66a7-5978-9166-b68df05b7a42`
+- `74d4d4d3-8618-5361-b946-a19d96de3be7`
 - `14fc1143-adc3-5c81-adf6-f1b4513f3b65`
 - `b2ef46a2-b1e1-5219-af7c-0bbd643befb0`
 - `ce00f6fd-84c3-5e9b-940b-9e677acbac9c`
@@ -857,80 +884,6 @@ Execution flows through `mod.rs` entry points (`execute`, `execute_with_fetcher`
 - `ced3ed5e-1c79-54b3-899d-50b780203db4`
 - `78c0f306-caf7-5a6a-b5b6-0238d9da34d8`
 - `971e1604-aee8-565b-b053-8e25fb6b38d2`
-- `a7c9fd4c-051e-5770-9312-3bc6c06b84f9`
-- `48af8e2b-650e-5dc6-bf51-9b4ed587c3f5`
-- `c2499481-b616-52a5-b31f-4718867fc6f2`
-- `127f7552-2e11-530b-ae47-f15b8e508c33`
-- `0617c338-79c5-5ba3-8339-0cbf68291f33`
-- `83f8620d-bb18-5b19-a613-960b9176b15a`
-- `9c9623fa-6398-5989-ac54-83c7fee1fd7a`
-- `8da3eaa0-5c03-5427-89ae-c1f0d1e62003`
-- `d74e7588-1bd5-5eb1-86df-553481328145`
-- `874650ac-0dff-502a-8035-6405ea9310d4`
-- `43669b6c-7faf-5bd2-afb3-d105e22ba108`
-- `bf1bc86b-1ac9-53d4-8741-51cad3b7925b`
-- `8117eae6-c791-5b5e-adf4-a3b6ac0d78da`
-- `1fa98b8d-014e-5085-bf84-934fbc50f9d5`
-- `457c7789-2c3b-5dc5-bcb5-0e2c2d9c2db2`
-- `b3da7bc7-485c-5d14-90de-0ac1b86f6dfe`
-- `55975ede-169c-5c20-9780-16926f7f3e50`
-- `f792e1fa-85ac-56a4-8327-f5f12e39d65c`
-- `6f5b1380-21a1-53c6-b3d0-6ee35ae2bde8`
-- `f8e6d8ea-8cf7-5b0f-9ea2-91fddd659439`
-- `fb6e0497-0aba-52a0-9d7e-80bd27b2c223`
-- `8b94b10e-cbba-5e2a-bc36-4a5a5694f8a5`
-- `1a9bceb0-a94d-543f-97cd-3b139f30362a`
-- `dae32f12-40e1-5ee1-8e41-68514034c103`
-- `8e873a86-dad2-527e-8ea9-36e1784dc1bd`
-- `de90fac6-1b17-548d-b587-74bbf6b0d1ce`
-- `da7ff7e7-84ea-59cb-be8d-52e4375f6c40`
-- `fe73f4e0-08df-59bd-bf14-6594034fe599`
-- `641cb946-d3f9-5425-8a41-cf671eb2d9a8`
-- `ae95f6a6-c89f-59d2-af4b-ccd5f7520ed2`
-- `32596f90-e4f7-59fb-a334-109181d2b8e8`
-- `7dd40a3d-6099-54f0-b0b3-9f8263f090ce`
-- `7e5a9b6f-d731-5e28-a03c-79bcbc382a6e`
-- `50a5bf4b-66b9-5619-be11-1ef651641bf0`
-- `64688b30-b3c6-51a1-abc7-ba361633771c`
-- `d2da1068-b915-51b4-89a1-7f2e2f3a487c`
-- `39997ebd-f2a3-51a9-959b-7d6a49c1d64f`
-- `cc9363af-a2c9-593c-ab6c-d8b5a5b8e851`
-- `a15047df-bca9-539b-a3f8-7580205d6d79`
-- `fe34ccee-568f-525d-a4ff-4add664c2e2b`
-- `4ac2cdad-4ebf-5740-8ce9-02091e3f4f47`
-- `53628105-4d35-56b1-ace1-4b8071e44803`
-- `d7268323-3e3c-55ce-adfa-ae6ec4b855fd`
-- `27b7e1a4-7251-53e9-832a-a2437abc7cd2`
-- `a73fe07b-22e6-570a-84e4-963bdce68f84`
-- `3f55b8fd-a8d5-590e-8eb4-63fef81b71a9`
-- `b3d2d10a-509c-5f0d-942e-c9a3e0ee7c6e`
-- `1da5a4a4-9ee2-5155-9f00-416c1fe4a381`
-- `f73f4006-211d-5a0f-807a-1c2b33bd3644`
-- `f0c37b2c-e586-5edd-83aa-ecf554126398`
-- `89d5ac91-7ebb-524b-afcd-aef82ff7e4bd`
-- `3ad695f4-9565-51ea-9256-24cdf83998ea`
-- `84002a94-24c5-5225-8eae-3d954ae5f21f`
-- `5a5a8b89-8f80-5e29-911d-0e57b4729095`
-- `a40abd46-665f-5ed9-bf15-40147ac6ba9f`
-- `d6fb63c9-a2d7-5932-b6eb-71439d96a961`
-- `5e442ff7-e6d7-5623-aa92-6f39de454509`
-- `ca67f7fa-b319-5b17-8ab5-4262fe13b736`
-- `72a0b3b7-9571-5c41-a72d-81e1dcfaa1ca`
-- `7caa4d04-5754-51a6-b0fa-50d48cdfc3c3`
-- `6ad1cf88-5527-56ac-8fee-0a7b0e5337da`
-- `bb82ea79-87de-595c-b6a5-29a7060493ae`
-- `15891dbb-a94f-557e-a2a8-58e41edc447b`
-- `6435efb4-6a3a-59ea-beca-f03f22b17bc9`
-- `b40cd965-6aba-5110-ae2d-a7836be41da6`
-- `86663790-f95c-5160-b1e0-d687141387f3`
-- `ee373694-2e3b-52b7-b803-38861eb67d49`
-- `43829ce6-08fa-5a08-997b-2a8d28afae4d`
-- `01d45770-ff0f-5b92-8aaf-0fbb9fcb8add`
-- `7ddeb860-4996-5c9e-a5de-5ea32fbaa3fe`
-- `ae8e3acc-72e8-542f-a848-14c1b2142b96`
-- `9e8329db-1be0-5251-bd70-004062b7efbb`
-- `b8008095-9a22-5c29-9787-a87dec3b4a7d`
-- `28780a83-c6fe-5064-9065-eae3d4de0538`
 - `00dd1933-7c87-5f90-97df-0db5df97f9e0`
 - `4affbed1-b435-515e-b69b-7b7adc027da2`
 - `152523ff-0977-56ed-88ae-e5fe3a199e54`
@@ -967,8 +920,9 @@ Execution flows through `mod.rs` entry points (`execute`, `execute_with_fetcher`
 - `3747302d-1a4b-5f52-b22b-ca5caf22dc22`
 - `1eab52e1-01fb-5acb-bd3a-0e9358bb8ad4`
 - `e0de044b-8932-538c-b060-253b7a98d3c4`
-- `4b6e2498-f7e5-5c9d-ac7f-8eaae9774f21`
-- `b61c3078-32f7-5e55-949e-d4765d95fe24`
+- `28f51d74-41f1-5ad6-9f11-d831c6af519f`
+- `822dfed8-a116-54e6-9d05-593c4e4caaa9`
+- `52f350c5-ef4b-5928-ace7-18fcde0eb7bc`
 - `4f541be4-d7ae-5f0a-af99-f929e1b9581f`
 - `89363076-8481-5c6f-a623-e35febf33d75`
 - `442c1db1-e973-58de-add4-cbd764f2490e`
