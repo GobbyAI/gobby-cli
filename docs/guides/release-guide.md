@@ -6,51 +6,53 @@ This guide covers the multi-crate Rust release flow for maintainers.
 
 | Crate | Binary | Version | Tag | Publishes? |
 |---|---|---:|---|---|
-| `gobby-core` | n/a | `0.4.0` | `gobby-core-v0.4.0` | crates.io only |
-| `gobby-code` | `gcode` | `1.0.0` | `gcode-v1.0.0` | crates.io + GitHub binaries |
-| `gobby-hooks` | `ghook` | `0.4.6` | `ghook-v0.4.6` | crates.io + GitHub binaries |
-| `gobby-squeeze` | `gsqz` | `0.4.6` | `gsqz-v0.4.6` | crates.io + GitHub binaries |
-| `gobby-local` | `gloc` | `0.1.4` | `gloc-v0.1.4` | crates.io + GitHub binaries |
-| `gobby-wiki` | `gwiki` | `0.3.0` | `gwiki-v0.3.0` | crates.io + GitHub binaries |
-
-`gobby-code` reaches its first stable `1.0.0` release in this set.
+| `gobby-core` | n/a | `0.5.0` | `gobby-core-v0.5.0` | crates.io only |
+| `gobby-code` | `gcode` | `1.1.0` | `gcode-v1.1.0` | crates.io + GitHub binaries |
+| `gobby-hooks` | `ghook` | `0.5.0` | `ghook-v0.5.0` | crates.io + GitHub binaries |
+| `gobby-squeeze` | `gsqz` | `0.4.7` | `gsqz-v0.4.7` | crates.io + GitHub binaries |
+| `gobby-local` | `gloc` | `0.1.5` | `gloc-v0.1.5` | crates.io + GitHub binaries |
+| `gobby-wiki` | `gwiki` | `0.4.0` | `gwiki-v0.4.0` | crates.io + GitHub binaries |
 
 ## Version Rules
 
-- Promote `gobby-code` to its first stable `1.0.0`.
-- Bump `gobby-core` to `0.4.0` (a breaking pre-1.0 minor bump).
-- Bump `gobby-wiki` to `0.3.0`.
-- Bump patch versions for `gobby-hooks`, `gobby-squeeze`, and `gobby-local`.
-- `gobby-core 0.3.0 → 0.4.0` is breaking under Cargo's pre-1.0 semver, so every
+- Bump `gobby-code` to `1.1.0` (post-1.0 minor: new features such as the
+  mid-tier AI profile and stderr diagnostics, no breaking CLI or envelope
+  changes).
+- Bump `gobby-core` to `0.5.0` (a breaking pre-1.0 minor bump: removed public
+  APIs, `ureq` and the embeddings client re-gated under the `ai` feature).
+- Bump `gobby-wiki` to `0.4.0` and `gobby-hooks` to `0.5.0` (pre-1.0 minors
+  with new features).
+- Bump patch versions for `gobby-squeeze` and `gobby-local`.
+- `gobby-core 0.4.0 → 0.5.0` is breaking under Cargo's pre-1.0 semver, so every
   consumer crate's `gobby-core` path dependency must move its explicit `version`
-  to `0.4.0` in the same release (gcode, gwiki — both dep and dev-dep — gloc, and
-  ghook). crates.io also rejects a path dependency with no version, so the
-  `version` field must never be dropped.
+  to `0.5.0` in the same release (gcode, gwiki — both dep and dev-dep — gsqz,
+  gloc, and ghook). crates.io also rejects a path dependency with no version, so
+  the `version` field must never be dropped.
 
 ## Tag Order
 
 Publish the upstream library before the binaries that depend on it. Every binary
-crate resolves `gobby-core 0.4.0` from crates.io at publish time, so
+crate resolves `gobby-core 0.5.0` from crates.io at publish time, so
 `gobby-core` must be indexed first. `gwiki` additionally re-verifies that the
 published `gobby-core` exposes the `ai` feature.
 
 ```bash
-git tag gobby-core-v0.4.0
-git push origin gobby-core-v0.4.0
+git tag gobby-core-v0.5.0
+git push origin gobby-core-v0.5.0
 
-# Wait for crates.io to index gobby-core 0.4.0.
+# Wait for crates.io to index gobby-core 0.5.0.
 
-git tag gcode-v1.0.0
-git tag ghook-v0.4.6
-git tag gsqz-v0.4.6
-git tag gloc-v0.1.4
-git tag gwiki-v0.3.0
+git tag gcode-v1.1.0
+git tag ghook-v0.5.0
+git tag gsqz-v0.4.7
+git tag gloc-v0.1.5
+git tag gwiki-v0.4.0
 
 # Push the tags ONE AT A TIME. GitHub Actions does not create push events for
 # any tag when more than three tags arrive in a single push, so a batched
 # `git push origin <tag> <tag> <tag> <tag> ...` silently triggers NO release
 # workflows. Push each tag in its own invocation:
-for tag in gcode-v1.0.0 ghook-v0.4.6 gsqz-v0.4.6 gloc-v0.1.4 gwiki-v0.3.0; do
+for tag in gcode-v1.1.0 ghook-v0.5.0 gsqz-v0.4.7 gloc-v0.1.5 gwiki-v0.4.0; do
   git push origin "refs/tags/$tag"
 done
 ```
@@ -60,9 +62,10 @@ workflows, delete them first (`git push origin --delete <tag> ...`) and re-push
 individually as above — re-pushing an existing remote tag ref is a no-op and
 fires no event.
 
-`gsqz` has no `gobby-core` dependency and may be tagged at any time. The release
-workflows verify binary crate tag/version alignment where the installer expects
-GitHub assets. `gobby-core` has no binary artifact matrix.
+Since #609 `gsqz` depends on `gobby-core` (no default features), so it follows
+the same tag ordering as the other binaries. The release workflows verify binary
+crate tag/version alignment where the installer expects GitHub assets.
+`gobby-core` has no binary artifact matrix.
 
 The `gwiki` crates.io publish uses Trusted Publishing in the GitHub environment
 `crates-io`. The workflow obtains an OIDC token during the publish job, so no
@@ -126,4 +129,4 @@ cargo build --release -p gobby-code -p gobby-hooks -p gobby-squeeze -p gobby-loc
 The repository CI still owns cross-target release packaging. Local validation
 only proves manifests, lockfile resolution, and native release binaries.
 
-_Last verified: 2026-06-05_
+_Last verified: 2026-06-11_

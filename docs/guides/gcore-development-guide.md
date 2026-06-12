@@ -205,7 +205,7 @@ Every individual feature must compile in isolation. Do not rely on `--all-featur
 - **Minor bumps (0.x.0)** — additive public API (new functions, new fields). Existing consumers stay compatible.
 - **Pre-1.0 breaking changes** — bump the minor and bump *every* consumer crate's gobby-core dep in the same release. Don't strand consumers on an old gobby-core.
 
-Consumers that depend only on the minor-line contract can pin to a minor version (`gobby-core = "0.4"`). In-tree crates released with `gobby-core` should pin to the current patch floor when they rely on behavior from that patch, for example `gobby-core = "0.4.0"`.
+Consumers that depend only on the minor-line contract can pin to a minor version (`gobby-core = "0.5"`). In-tree crates released with `gobby-core` should pin to the current patch floor when they rely on behavior from that patch, for example `gobby-core = "0.5.0"`.
 
 ## How to Consume
 
@@ -213,7 +213,7 @@ Consumers that depend only on the minor-line contract can pin to a minor version
 
 ```toml
 [dependencies]
-gobby-core = { path = "../gcore", version = "0.4.0" }
+gobby-core = { path = "../gcore", version = "0.5.0" }
 ```
 
 The `path` is for local workspace builds; `version` is required by `cargo publish` and gets used when consumers install the crate from crates.io. Don't drop the `version` field — `cargo publish` will reject the consumer's manifest.
@@ -222,7 +222,7 @@ Opt in to heavier modules explicitly:
 
 ```toml
 [dependencies]
-gobby-core = { path = "../gcore", version = "0.4.0", features = ["postgres", "search"] }
+gobby-core = { path = "../gcore", version = "0.5.0", features = ["postgres", "search"] }
 ```
 
 Small binaries should keep the default empty feature set unless they directly use a feature-gated module.
@@ -231,7 +231,7 @@ Small binaries should keep the default empty feature set unless they directly us
 
 ```toml
 [dependencies]
-gobby-core = "0.4.0"
+gobby-core = "0.5.0"
 ```
 
 Resolves against crates.io. The default crate has no datastore dependencies. It will not pull in PostgreSQL, FalkorDB, Qdrant, reqwest, ignore, sha2, tokio, tracing, or anything else heavy unless the consumer selects the matching feature.
