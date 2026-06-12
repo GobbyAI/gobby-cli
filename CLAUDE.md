@@ -124,7 +124,7 @@ CLI parses args → loads layered config → auto-detects backend (probes LM Stu
 - **`ingest/`** — Per-source ingestion. `file` routes by extension/type; `document`/`pdf`/`url`/`mediawiki`/`git`/`wayback` handle text-bearing sources; `audio`/`image`/`video` are the multimodal orchestrators (transcription/translation, vision, frame extraction).
 - **`ai/`** — AI clients (`clients`), chunking (`chunk`), and translation (`translate`), routed through `gobby_core` AI transport. `transcribe.rs`/`vision.rs`/`video.rs` define the modality client traits and degradation vocabulary.
 - **`search/`** — Same hybrid stack as gcode: `bm25` + `semantic` (Qdrant) + `graph_boost` (FalkorDB) merged via `rrf`.
-- **`commands/`** — One handler per subcommand: `init`, `setup`, `collect`, `index`, `compile`, `export`, `search`, `read`, `backlinks`, `sources`, `status`, `health`, `audit`, `lint`, `research`.
+- **`commands/`** — One handler per subcommand: `init`, `setup`, `collect`, `index`, `compile`, `export`, `search`, `ask`, `read`, `backlinks`, `sources`, `status`, `health`, `audit`, `lint`. `search` is the agent retrieval primitive (bounded query-token snippets, provenance, hit-tied code citations); `ask` is a thin bounded-evidence RAG layer over it (~12K-token prompt cap, daemon or direct OpenAI-compatible transport).
 - **`vault`/`document`/`frontmatter`/`provenance`/`citations`/`credibility`** — The Markdown vault model: documents, frontmatter, source provenance, and citation/credibility tracking.
 
 ### Graceful Degradation

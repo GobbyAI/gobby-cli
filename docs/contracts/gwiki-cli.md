@@ -5,9 +5,9 @@ The machine-readable contract lives at `crates/gwiki/contract/gwiki.contract.jso
 
 ## Version
 
-`contract_version`: 4
+`contract_version`: 5
 
-Version 4 covers the daemon-consumed surface:
+Version 5 covers the daemon-consumed surface:
 
 - `contract`
 - `index`
@@ -18,7 +18,6 @@ Version 4 covers the daemon-consumed surface:
 - `ingest-file`
 - `ingest-url`
 - `collect`
-- `research`
 - `compile`
 - `audit`
 - `graph`
@@ -33,27 +32,38 @@ Version 4 covers the daemon-consumed surface:
 - `trust`
 - `remove-source`
 
-Version 4 adds the `librarian`, `review-report`, and `citation-quality`
+Version 5 makes `search` the agent retrieval primitive and rebuilds `ask` as a
+thin bounded-evidence layer over it. `search` results carry bounded
+query-token snippets (never full document bodies), provenance (`wiki_page`,
+`source_path`, `result_type`, `sources`, `explanations`), and top-level
+`code_citations` derived from the returned hits only. `ask` retrieves top-k
+hits, assembles a prompt capped at `prompt_token_budget` (~12K estimated
+tokens), runs a single completion through the daemon route or a direct
+OpenAI-compatible endpoint, and reports `evidence`, `prompt_tokens_estimated`,
+and `truncated`/`truncated_components` accounting; the whole-scope graph
+expansion (`related_pages`, `code_edges`, `gaps`, `stale_candidates`,
+`suggested_questions`) is gone. The `research` command is removed — agents
+compose `search` and `read` for retrieval and deposit results through
+`collect`/`ingest-file`; `compile` still compiles accepted research notes.
+
+Version 4 added the `librarian`, `review-report`, and `citation-quality`
 surfaces to the daemon contract. These entries pin dependency/degradation
 classification fields and advertise trust, freshness, audit, source, and
 degradation payload keys where the surface emits them.
 
 Version 3 added code-grounded payload fields to `ask` and `graph-context`.
-`ask` returns `code_edges` and `code_citations` alongside wiki hits and source
-citations when code graph signals are available. `graph-context` returns
-`code_edges` and `code_citations` alongside `context`, `source_bundle`, `trust`,
-`freshness`, `audit`, `warnings`, and `degradation`.
+`graph-context` returns `code_edges` and `code_citations` alongside `context`,
+`source_bundle`, `trust`, `freshness`, `audit`, `warnings`, and `degradation`.
 
-The `ask`, `graph-context`, `research`, `librarian`, `review-report`, and
+The `ask`, `graph-context`, `librarian`, `review-report`, and
 `citation-quality` entries pin their dependency and degradation rows in the
-machine-readable contract. `ask` treats model synthesis, code graph, semantic
-vectors, and FalkorDB as optional signals, and can degrade to an extractive
-citation-list answer. `research` treats the model synthesis loop, code
-graph/index, and semantic vectors as optional, and can degrade to a
-retrieval-only research scaffold. `librarian` keeps deterministic upkeep
-proposals available while skipping unavailable checks. `review-report` can emit
-a report without the risky-shift section when graph analytics are unavailable.
-`citation-quality` can skip unavailable quality sections independently.
+machine-readable contract. `ask` treats model synthesis, semantic vectors, and
+the FalkorDB graph boost as optional signals, and can degrade to
+retrieval-only hits with grounded citations. `librarian` keeps deterministic
+upkeep proposals available while skipping unavailable checks. `review-report`
+can emit a report without the risky-shift section when graph analytics are
+unavailable. `citation-quality` can skip unavailable quality sections
+independently.
 
 ## Scope
 
@@ -69,13 +79,6 @@ with `kind` and `id`.
 
 AI route flags use `auto|daemon|direct|off`. `direct` means any
 OpenAI-compatible endpoint, local or remote. There is no `local` route.
-
-## Research
-
-`gwiki research` is governed by the standalone research contract in
-[`gwiki-research.md`](gwiki-research.md). That contract defines the replacement
-reason-act loop, audit mode, provenance rules, budgets, and the boundary between
-gwiki-owned wiki mutation and Gobby-owned daemon enhancement.
 
 ## Dependency & Degradation Classification
 
@@ -112,8 +115,7 @@ silently.
 | `graph` | PostgreSQL, Markdown | FalkorDB, embeddings/Qdrant | none - not used | available nodes/edges; missing edge classes empty and flagged | `degraded`, `degraded_sources[]` in `graph.json`/`GRAPH_REPORT.md` |
 | `graph-context` | PostgreSQL | FalkorDB, shared code graph | none - not used | wiki-link-only neighborhood | `warnings[]`, `degradation{degraded,degraded_sources[]}` |
 | `benchmark` | PostgreSQL, seeded project | FalkorDB, Qdrant+embeddings, model | none - not used | metrics for available dimensions only | per-metric `available`, `degraded_sources[]` |
-| `ask` | PostgreSQL | model synthesis, code graph, Qdrant+embeddings, FalkorDB | none - not used | model off emits an extractive citation-list answer; signal loss falls back to wiki-only grounding | `degraded`, `degraded_sources[]` on answer |
-| `research` | PostgreSQL | model multi-step synthesis loop, code graph/index, Qdrant+embeddings | none - not used | model off emits a retrieval-only research scaffold with candidate sources and citations but no synthesized notes; code graph/index off emits docs-only output | per-note and report `degradation` note |
+| `ask` | PostgreSQL | model synthesis, Qdrant+embeddings, FalkorDB graph boost | none - not used | model off emits retrieval-only hits with grounded citations; signal loss falls back to BM25-only evidence | `degraded`, `degraded_sources[]`, `truncated`, `truncated_components[]` on answer |
 | `librarian` | PostgreSQL, vault | FalkorDB/code graph, Qdrant+embeddings, model | none - not used | each check skipped independently with a note | per-check `available` in proposals report |
 | `review-report` | PostgreSQL, change set | FalkorDB/code graph and analytics | none - not used | report without risky-shift section | `degraded`, `degraded_sources[]` on report |
 | `citation-quality` | PostgreSQL | credibility signals, model contradiction detection | none - not used | per-section skipped with a note | per-section `available` |
@@ -137,10 +139,10 @@ Both the CLI and daemon tests load this contract. New daemon-facing flags or JSO
 keys should update this document, the JSON contract, and the corresponding drift
 tests in the same change.
 
-The pinned `ask`, `graph-context`, `research`, `librarian`, `review-report`, and
+The pinned `ask`, `graph-context`, `librarian`, `review-report`, and
 `citation-quality` command entries record their classification rows with
 top-level `hard_dependencies`, `optional_dependencies`, `multimodal`, and
 `degradation` fields so daemon consumers can detect dependency and degradation
 drift directly from the contract JSON.
 
-_Last verified: 2026-06-08_
+_Last verified: 2026-06-12_

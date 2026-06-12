@@ -1,13 +1,16 @@
 # gwiki User Guide
 
 A complete guide to using `gwiki` to capture, search, upkeep, and synthesize a
-local-first knowledge vault: install → vault → ingest → search → research →
+local-first knowledge vault: install → vault → ingest → search/ask →
 maintenance.
 
 `gwiki` ingests multimodal sources (documents, PDFs, URLs, MediaWiki, git,
 audio/image/video) into a Markdown vault, indexes them for hybrid search, and
-turns accepted research notes into cited articles. It shares gcode's hybrid
-BM25 + semantic + graph search stack and the shared Gobby AI routing layer.
+turns accepted research notes into cited articles. `search` is the retrieval
+primitive — for humans and for agents composing `search` + `read` research
+loops — and `ask` layers one bounded-evidence completion on top of it. It
+shares gcode's hybrid BM25 + semantic + graph search stack and the shared
+Gobby AI routing layer.
 
 ## Getting Started
 
@@ -284,7 +287,12 @@ agents can identify the canonical wiki page even when BM25 chunks, semantic
 points, and graph documents contributed separate backend hit IDs.
 
 **When to use:** General-purpose queries over vault content. Best for natural
-language and conceptual searches.
+language and conceptual searches. `search` is also the agent retrieval
+primitive: each hit carries a bounded query-token snippet (never a full
+document body), `wiki_page`, `source_path`, `result_type` (`wiki`/`code`),
+contributing `sources` with per-source `explanations`, and the output includes
+`code_citations` derived from the returned hits. Follow up with
+`gwiki read --path <wiki_page>` for full content.
 
 **Options:**
 - `--limit <N>` — Max results (default: `10`).
@@ -298,23 +306,27 @@ gwiki --topic rust-async ask "..." --llm
 gwiki --topic rust-async ask "..." --llm --ai direct --require-ai
 ```
 
-`ask` runs the retrieval path and returns ranked hits, related pages, sources,
-gaps, stale candidates, and suggested follow-up questions. Add `--llm` to
-synthesize a written answer from the retrieved hits.
+`ask` is a thin RAG layer over `search`: it retrieves the top-k hits, builds a
+bounded evidence prompt from query-centered excerpts (capped at
+`prompt_token_budget`, ~12K estimated tokens; actual usage is reported as
+`prompt_tokens_estimated`), and — with `--llm` — runs a single completion to
+synthesize a written answer with grounded citations. When evidence has to be
+dropped to stay inside the budget, `truncated` is set and
+`truncated_components` lists `evidence`.
 
 **When to use:** You want an answer assembled from the vault, not just a ranked
 list of pages.
 
 **Options:**
 - `--llm` — Synthesize an answer from retrieved wiki hits.
-- `--ai <auto|daemon|direct|off>` — AI routing override for synthesis (default: `auto`). Inert unless `--llm` is set.
+- `--ai <auto|daemon|direct|off>` — AI routing override for synthesis (default: `auto`). Inert unless `--llm` is set. `daemon` routes through the Gobby daemon; `direct` hits any OpenAI-compatible endpoint (`ai.text_generate.api_base`/`api_key`), including LM Studio locally.
 - `--require-ai` — Fail if synthesis is requested but no AI route succeeds.
 
 Without `--llm`, `ask` is a pure retrieval command and runs without any AI route.
 
 **Citation check.** Synthesized answers are checked after generation against the
-retrieved evidence (hit titles, snippets, paths, related pages, and code
-citations). The JSON output carries the verdict in
+retrieved evidence (hit titles, snippets, paths, the prompt's evidence
+excerpts, and code citations). The JSON output carries the verdict in
 `synthesis.citation_check` — `status` is `supported` when every extracted claim
 overlaps the evidence, or `unsupported_claims` with the offending claims listed
 in `unsupported_claims[]`; each ungrounded claim also adds a `warnings[]` entry.
@@ -367,50 +379,24 @@ pages that don't exist yet, so you can fill gaps or fix typos.
 
 ## Research & Compile
 
-### Research (`research`)
+### Agent Research (search + read + deposit)
+
+There is no built-in research loop: the calling agent *is* the research loop.
+Compose the retrieval primitives —
 
 ```bash
-gwiki --topic rust-async research "What changed in async fn in traits?"
-gwiki --topic rust-async research "..." --max-sources 4 --source-constraint "docs.rs"
-gwiki --topic rust-async research --audit
-gwiki --topic rust-async research --audit --ai off
+gwiki --topic rust-async search "async fn in traits stabilization"
+gwiki --topic rust-async read --path knowledge/topics/async-traits.md
 ```
 
-`research` is a mutating command with its own reason-act loop that runs inside
-`gwiki` (no Gobby daemon required). Each step asks the model for the next action,
-executes one allowed action — `ask`, `search`, `read`, `ingest_url`,
-`ingest_file`, `accept_note`, `record_gap`, or `finish` — validates the output,
-checkpoints, and stops on the first termination rule. Research produces accepted
-notes under `raw/research/` and audit findings; it never writes final article
-pages directly (that is `compile`'s job).
+— then deposit findings back into the vault as cited notes through the capture
+commands: write a Markdown note with a `citation:` line, register it with
+`gwiki ingest-file <note.md>` (or drop it in the inbox for `collect`), and run
+`index`. Provenance, citations, and lint/audit checks apply to deposited notes
+the same as any other source.
 
-**When to use:** You want gwiki to enrich the vault on a question, gathering and
-citing new sources, or to audit existing content for hygiene problems.
-
-**Options:**
-- `--audit` — Run deterministic audit checks instead of enrichment. `QUESTION` is optional in this mode; if omitted, the audit prompt is derived from vault health, stale pages, uncited claims, broken source references, and any source constraints.
-- `--source-constraint <TEXT>` — Constrain acceptable sources. Repeatable.
-- `--max-steps <N>` — Step budget (default: `12`).
-- `--max-tokens <N>` — Combined model-output and tool-observation budget (default: `24000`).
-- `--max-sources <N>` — Newly ingested external sources (default: `8`).
-- `--ai <auto|daemon|direct|off>` — AI routing override (default: `auto`).
-- `--require-ai` — Fail before mutation if AI is unavailable.
-
-Enrichment mode needs a model, so `--ai off` is invalid there. `--ai off --audit`
-is valid for the deterministic audit checks only and returns `ai_unavailable`
-for any finding that needs model judgment. Internal budgets also include
-`max_wall_time_seconds` (900) and `max_note_bytes` (24000 per note).
-
-Every run reports a `stop_reason`: `finish`, `budget_exhausted`, `no_progress`,
-`duplicate_frontier`, `source_blocked`, `write_conflict`, or `ai_unavailable`,
-alongside `steps_used`, `tokens_used`, `sources_added`, and `changed_paths`.
-Research tolerates another process ingesting or indexing the same vault; if a
-target note changed between draft validation and commit it records
-`write_conflict` and writes no partial note.
-
-The full reason-act loop, provenance rules, audit checks, and the
-gwiki-owned / Gobby-enhancer boundary are specified in
-[gwiki Research Contract](../contracts/gwiki-research.md).
+**When to use:** You (or an agent) want to enrich the vault on a question,
+gathering and citing new sources with full control over the loop.
 
 ### Compile (`compile`)
 
@@ -447,9 +433,7 @@ gwiki --topic rust-async audit
 ```
 
 Reports claims that lack source support — the uncited-claims check over the
-vault. Findings include the offending page and evidence. (`gwiki research --audit`
-runs a broader, optionally model-assisted audit; `gwiki audit` is the focused
-deterministic claim check.)
+vault. Findings include the offending page and evidence.
 
 ### Lint (`lint`)
 
@@ -625,7 +609,7 @@ OpenAI-compatible HTTP endpoint, or stay off:
 | Audio transcription (`ai.audio_transcribe`) | Speech-to-text for audio/video |
 | Audio translation (`ai.audio_translate`) | Translating audio segments |
 | Vision extraction (`ai.vision_extract`) | Image/frame understanding |
-| Text generation (`ai.text_generate`) | `ask --llm` synthesis, research, derived text |
+| Text generation (`ai.text_generate`) | `ask --llm` synthesis, derived text |
 | Embeddings (`ai.embeddings`) | Semantic vectors for hybrid search |
 
 Routing values are `auto`, `daemon`, `direct`, and `off`. `direct` means any
@@ -741,6 +725,5 @@ merge is intended.
 ---
 
 See also: [gwiki Development Guide](./gwiki-development-guide.md) (internals),
-[gwiki README](../../crates/gwiki/README.md) (source refresh contract),
-[gwiki Research Contract](../contracts/gwiki-research.md), and
+[gwiki README](../../crates/gwiki/README.md) (source refresh contract), and
 [gwiki CLI Contract](../contracts/gwiki-cli.md).
