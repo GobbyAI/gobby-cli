@@ -26,13 +26,20 @@ mod cli_config;
 mod detach;
 mod diagnose;
 mod envelope;
+mod json_value;
+mod output;
 mod planned_shutdown;
+mod source;
 mod statusline;
 mod terminal_context;
+#[cfg(test)]
+mod test_http;
 mod transport;
 
 use cli_config::CliConfig;
 use envelope::Envelope;
+use json_value::is_python_truthy;
+use source::detect_source;
 
 #[derive(Debug, PartialEq, Eq)]
 struct HookAction {
@@ -81,8 +88,8 @@ fn main() -> ExitCode {
             Ok(()) => ExitCode::SUCCESS,
             Err(e) => {
                 // Still print the version; stamp-write failure is non-fatal.
-                println!("ghook {}", diagnose::GHOOK_VERSION);
-                eprintln!("note: could not write runtime stamp: {e}");
+                output::stdout(format_args!("ghook {}\n", diagnose::GHOOK_VERSION));
+                output::stderr(format_args!("note: could not write runtime stamp: {e}\n"));
                 ExitCode::SUCCESS
             }
         };
@@ -185,27 +192,50 @@ fn run_gobby_owned(args: &Args) -> ExitCode {
 
     let env = build_dispatch_envelope(&cfg, hook_type, input_data, project_id.as_deref());
 
+    let direct_post_after_enqueue_failure = |failure_detail: String| -> HookAction {
+        // Mirror the normal enqueue→detach→POST ordering: a --detach run must
+        // escape the host's process group before the bounded fallback POST,
+        // or a host group-kill can reap us mid-delivery with no action emitted.
+        if args.detach {
+            detach::detach();
+        }
+        let daemon_url = gobby_core::daemon_url::daemon_url();
+        // No inbox file exists here; post_and_cleanup ignores remove errors after 2xx.
+        let missing_enqueued_path = PathBuf::new();
+        let report = transport::post_and_cleanup(&env, &missing_enqueued_path, &daemon_url);
+        match report.outcome {
+            transport::DeliveryOutcome::Delivered => {
+                let body = report.response_body.as_deref().unwrap_or_default();
+                match action_from_success_response(cfg.source, hook_type, body) {
+                    Ok(action) => action,
+                    Err(error) => action_from_failure(
+                        hook_type,
+                        &cfg,
+                        transport::DeliveryFailureKind::Other,
+                        &error,
+                    ),
+                }
+            }
+            transport::DeliveryOutcome::Enqueued => action_from_failure(
+                hook_type,
+                &cfg,
+                transport::DeliveryFailureKind::Other,
+                &failure_detail,
+            ),
+        }
+    };
+
     // Enqueue first (atomic write to ~/.gobby/hooks/inbox/).
     let inbox = match transport::inbox_dir() {
         Ok(d) => d,
         Err(e) => {
-            return emit_action(action_from_failure(
-                hook_type,
-                &cfg,
-                transport::DeliveryFailureKind::Other,
-                &e.to_string(),
-            ));
+            return emit_action(direct_post_after_enqueue_failure(e.to_string()));
         }
     };
     let enqueued_path = match transport::enqueue_to(&env, &inbox) {
         Ok(p) => p,
         Err(e) => {
-            return emit_action(action_from_failure(
-                hook_type,
-                &cfg,
-                transport::DeliveryFailureKind::Other,
-                &e.to_string(),
-            ));
+            return emit_action(direct_post_after_enqueue_failure(e.to_string()));
         }
     };
 
@@ -300,28 +330,12 @@ fn build_dispatch_envelope(
     )
 }
 
-fn detect_source(cfg: &CliConfig) -> String {
-    if cfg.source != "claude" {
-        return cfg.source.to_string();
-    }
-
-    if let Some(source) = std::env::var_os("GOBBY_SOURCE")
-        && !source.is_empty()
-    {
-        return source.to_string_lossy().into_owned();
-    }
-    if std::env::var("CLAUDE_CODE_ENTRYPOINT").ok().as_deref() == Some("sdk-py") {
-        return "claude".to_string();
-    }
-    cfg.source.to_string()
-}
-
 fn emit_action(action: HookAction) -> ExitCode {
     if let Some(stdout_json) = action.stdout_json {
-        println!("{stdout_json}");
+        output::stdout(format_args!("{stdout_json}\n"));
     }
     if let Some(stderr_message) = action.stderr_message {
-        eprintln!("\n{}", stderr_message.trim_end());
+        output::stderr(format_args!("\n{}\n", stderr_message.trim_end()));
     }
     ExitCode::from(action.exit_code)
 }
@@ -371,7 +385,7 @@ fn action_from_success_response(
 
         return Ok(HookAction {
             exit_code: 0,
-            stdout_json: json_value_is_meaningful(&result).then_some(serialized),
+            stdout_json: is_python_truthy(&result).then_some(serialized),
             stderr_message: None,
         });
     }
@@ -393,7 +407,7 @@ fn action_from_success_response(
 
     Ok(HookAction {
         exit_code: 0,
-        stdout_json: json_value_is_meaningful(&result).then_some(serialized),
+        stdout_json: is_python_truthy(&result).then_some(serialized),
         stderr_message: None,
     })
 }
@@ -414,7 +428,7 @@ fn action_from_droid_success(result: Value, serialized: String) -> HookAction {
 
     HookAction {
         exit_code: 0,
-        stdout_json: json_value_is_meaningful(&result).then_some(serialized),
+        stdout_json: is_python_truthy(&result).then_some(serialized),
         stderr_message: None,
     }
 }
@@ -535,28 +549,8 @@ fn extract_reason(result: &Value) -> String {
     "Blocked by hook".to_string()
 }
 
-fn json_value_is_meaningful(value: &Value) -> bool {
-    match value {
-        Value::Null => false,
-        Value::Bool(flag) => *flag,
-        Value::Number(number) => {
-            if let Some(i) = number.as_i64() {
-                i != 0
-            } else if let Some(u) = number.as_u64() {
-                u != 0
-            } else {
-                number.as_f64().is_some_and(|f| f != 0.0)
-            }
-        }
-        Value::String(text) => !text.is_empty(),
-        Value::Array(items) => !items.is_empty(),
-        Value::Object(map) => !map.is_empty(),
-    }
-}
-
 fn write_runtime_stamp() -> Result<()> {
-    let home = dirs::home_dir().ok_or_else(|| anyhow::anyhow!("no home directory"))?;
-    let bin_dir = home.join(".gobby").join("bin");
+    let bin_dir = gobby_core::gobby_home()?.join("bin");
     std::fs::create_dir_all(&bin_dir)?;
     let stamp_path = bin_dir.join(".ghook-runtime.json");
     let stamp = serde_json::json!({
@@ -565,7 +559,7 @@ fn write_runtime_stamp() -> Result<()> {
     });
     let bytes = serde_json::to_vec_pretty(&stamp)?;
     transport::atomic_write(&stamp_path, &bytes)?;
-    println!("ghook {}", diagnose::GHOOK_VERSION);
+    output::stdout(format_args!("ghook {}\n", diagnose::GHOOK_VERSION));
     Ok(())
 }
 

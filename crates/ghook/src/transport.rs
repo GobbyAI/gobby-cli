@@ -22,6 +22,7 @@ use std::time::Duration;
 
 const POST_TIMEOUT: Duration = Duration::from_secs(30);
 const HOOKS_ENDPOINT: &str = "/api/hooks/execute";
+const ENVELOPE_ID_HEADER: &str = "X-Gobby-Envelope-Id";
 
 /// Result of `enqueue_and_post` — the main CLI needs to know whether the
 /// daemon ACKed (delete the inbox file and return early) or not (keep the
@@ -55,8 +56,7 @@ pub struct DeliveryReport {
 
 /// Compute the inbox directory (`~/.gobby/hooks/inbox/`).
 pub fn inbox_dir() -> Result<PathBuf> {
-    let home = dirs::home_dir().context("no home directory")?;
-    Ok(home.join(".gobby").join("hooks").join("inbox"))
+    Ok(gobby_core::gobby_home()?.join("hooks").join("inbox"))
 }
 
 /// Compute the quarantine directory (`~/.gobby/hooks/inbox/quarantine/`).
@@ -106,6 +106,10 @@ pub fn atomic_write(final_path: &Path, bytes: &[u8]) -> Result<()> {
     }
     fs::rename(&tmp, final_path)
         .with_context(|| format!("rename {} -> {}", tmp.display(), final_path.display()))?;
+    if let Some(parent) = final_path.parent() {
+        // Directory fsync is best-effort because some platforms/filesystems reject it.
+        let _ = File::open(parent).and_then(|dir| dir.sync_all());
+    }
     Ok(())
 }
 
@@ -118,6 +122,10 @@ pub fn enqueue_to(envelope: &Envelope, inbox: &Path) -> Result<PathBuf> {
     let bytes = serde_json::to_vec_pretty(envelope)?;
     atomic_write(&path, &bytes)?;
     Ok(path)
+}
+
+fn envelope_id_from_path(enqueued_path: &Path) -> Option<&str> {
+    enqueued_path.file_stem()?.to_str()
 }
 
 /// POST the current hook envelope to the daemon. On 2xx, delete the inbox file
@@ -137,6 +145,9 @@ pub fn post_and_cleanup(
         .set("Content-Type", "application/json");
     for (k, v) in &envelope.headers {
         req = req.set(k, v);
+    }
+    if let Some(envelope_id) = envelope_id_from_path(enqueued_path) {
+        req = req.set(ENVELOPE_ID_HEADER, envelope_id);
     }
 
     let body = match serde_json::to_string(envelope) {
@@ -264,49 +275,12 @@ pub fn quarantine_malformed_at(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::test_http::read_http_request;
     use std::collections::BTreeMap;
-    use std::io::{Read, Write};
+    use std::io::Write;
     use std::net::TcpListener;
     use std::thread;
     use tempfile::tempdir;
-
-    fn read_http_request(stream: &mut impl Read) -> String {
-        let mut request = Vec::new();
-        let mut chunk = [0_u8; 1024];
-        let mut header_end = None;
-        let mut content_length = None;
-
-        loop {
-            let n = stream.read(&mut chunk).unwrap();
-            assert!(n > 0, "client closed before request body was fully read");
-            request.extend_from_slice(&chunk[..n]);
-
-            if header_end.is_none()
-                && let Some(pos) = request.windows(4).position(|window| window == b"\r\n\r\n")
-            {
-                let end = pos + 4;
-                header_end = Some(end);
-                let headers = String::from_utf8_lossy(&request[..end]);
-                content_length = Some(
-                    headers
-                        .lines()
-                        .find_map(|line| {
-                            let (name, value) = line.split_once(':')?;
-                            name.eq_ignore_ascii_case("Content-Length")
-                                .then(|| value.trim().parse::<usize>().ok())
-                                .flatten()
-                        })
-                        .unwrap_or(0),
-                );
-            }
-
-            if let (Some(end), Some(len)) = (header_end, content_length)
-                && request.len() >= end + len
-            {
-                return String::from_utf8(request).unwrap();
-            }
-        }
-    }
 
     #[test]
     fn ts13_is_13_digits() {
@@ -387,6 +361,12 @@ mod tests {
             headers,
         );
         let path = enqueue_to(&envelope, &inbox).unwrap();
+        let envelope_id = path
+            .file_name()
+            .and_then(|name| name.to_str())
+            .and_then(|name| name.strip_suffix(".json"))
+            .unwrap()
+            .to_string();
 
         let listener = TcpListener::bind("127.0.0.1:0").unwrap();
         let addr = listener.local_addr().unwrap();
@@ -394,6 +374,7 @@ mod tests {
             let (mut stream, _) = listener.accept().unwrap();
             let request = read_http_request(&mut stream);
             assert!(request.contains("POST /api/hooks/execute HTTP/1.1"));
+            assert!(request.contains(&format!("{ENVELOPE_ID_HEADER}: {envelope_id}")));
             assert!(request.contains("X-Gobby-Session-Id: s"));
             assert!(request.contains("\"hook_type\":\"SessionStart\""));
             assert!(request.contains("\"input_data\":{\"session_id\":\"s\"}"));
@@ -439,6 +420,12 @@ mod tests {
             BTreeMap::new(),
         );
         let path = enqueue_to(&envelope, &inbox).unwrap();
+        let envelope_id = path
+            .file_name()
+            .and_then(|name| name.to_str())
+            .and_then(|name| name.strip_suffix(".json"))
+            .unwrap()
+            .to_string();
 
         let listener = TcpListener::bind("127.0.0.1:0").unwrap();
         let addr = listener.local_addr().unwrap();
@@ -446,6 +433,7 @@ mod tests {
             let (mut stream, _) = listener.accept().unwrap();
             let request = read_http_request(&mut stream);
             assert!(request.contains("POST /api/hooks/execute HTTP/1.1"));
+            assert!(request.contains(&format!("{ENVELOPE_ID_HEADER}: {envelope_id}")));
             assert!(request.contains("\"hook_type\":\"PreToolUse\""));
             assert!(request.contains("\"source\":\"droid\""));
             assert!(request.contains("\"schema_version\":1"));

@@ -56,6 +56,14 @@ pub fn delete_file_facts(
         "DELETE FROM code_symbols WHERE project_id = $1 AND file_path = $2",
         &[&project_id, &file_path],
     )?;
+    delete_file_non_symbol_facts(conn, project_id, file_path)
+}
+
+pub fn delete_file_non_symbol_facts(
+    conn: &mut impl GenericClient,
+    project_id: &str,
+    file_path: &str,
+) -> anyhow::Result<()> {
     conn.execute(
         "DELETE FROM code_indexed_files WHERE project_id = $1 AND file_path = $2",
         &[&project_id, &file_path],
@@ -73,6 +81,30 @@ pub fn delete_file_facts(
         &[&project_id, &file_path],
     )?;
     Ok(())
+}
+
+pub fn delete_stale_file_symbols(
+    conn: &mut impl GenericClient,
+    project_id: &str,
+    file_path: &str,
+    current_symbol_ids: &[String],
+) -> anyhow::Result<usize> {
+    let deleted = if current_symbol_ids.is_empty() {
+        conn.execute(
+            "DELETE FROM code_symbols WHERE project_id = $1 AND file_path = $2",
+            &[&project_id, &file_path],
+        )?
+    } else {
+        let current_symbol_ids = current_symbol_ids.to_vec();
+        conn.execute(
+            "DELETE FROM code_symbols
+             WHERE project_id = $1
+               AND file_path = $2
+               AND NOT (id = ANY($3::text[]))",
+            &[&project_id, &file_path, &current_symbol_ids],
+        )?
+    };
+    usize::try_from(deleted).map_err(|_| anyhow::anyhow!("deleted symbol count exceeds usize"))
 }
 
 pub fn file_facts_exist(
@@ -302,15 +334,16 @@ pub fn upsert_imports(
         "DELETE FROM code_imports WHERE project_id = $1 AND source_file = $2",
         &[&project_id, &file_path],
     )?;
+    let mut rows_affected = 0usize;
     for imp in imports {
-        conn.execute(
+        rows_affected += conn.execute(
             "INSERT INTO code_imports (project_id, source_file, target_module)
              VALUES ($1, $2, $3)
              ON CONFLICT (project_id, source_file, target_module) DO NOTHING",
             &[&project_id, &imp.file_path, &imp.module_name],
-        )?;
+        )? as usize;
     }
-    Ok(imports.len())
+    Ok(rows_affected)
 }
 
 pub fn upsert_calls(
@@ -323,8 +356,9 @@ pub fn upsert_calls(
         "DELETE FROM code_calls WHERE project_id = $1 AND file_path = $2",
         &[&project_id, &file_path],
     )?;
+    let mut rows_affected = 0usize;
     for call in calls {
-        conn.execute(
+        rows_affected += conn.execute(
             "INSERT INTO code_calls
              (project_id, caller_symbol_id, callee_symbol_id, callee_name, \
               callee_target_kind, callee_external_module, file_path, line)
@@ -343,9 +377,9 @@ pub fn upsert_calls(
                 &call.file_path,
                 &to_i32(call.line),
             ],
-        )?;
+        )? as usize;
     }
-    Ok(calls.len())
+    Ok(rows_affected)
 }
 
 fn to_i32(value: usize) -> i32 {

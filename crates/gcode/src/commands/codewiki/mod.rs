@@ -73,16 +73,17 @@ pub(crate) use render::{
 // AI and structural text helpers.
 pub(crate) use text::{
     Generation, citation_list, citation_markers, collect_link_spans, frontmatter_with_degradation,
-    ground_text, maybe_generate, replace_citations_with_markers, resolve_text_generator,
-    structural_file_summary, structural_module_summary, structural_repo_summary,
-    structural_symbol_purpose, write_references, write_section,
+    frontmatter_with_degradation_without_ranges, ground_text, maybe_generate,
+    replace_citations_with_markers, resolve_text_generator, structural_file_summary,
+    structural_module_summary, structural_repo_summary, structural_symbol_purpose,
+    write_references, write_section,
 };
 #[cfg(test)]
 pub(crate) use text::{frontmatter, generate_with_bounded_retry};
 
 #[cfg(test)]
 pub(crate) use io::write_incremental_doc_set_with_snapshot;
-pub(crate) use io::{DocSink, read_ownership_meta, write_ownership_meta};
+pub(crate) use io::{DocPruneScope, DocSink, read_ownership_meta, write_ownership_meta};
 pub use io::{write_doc_set, write_incremental_doc_set};
 // Reuse of unchanged docs without regeneration.
 pub(crate) use reuse::{ReusePlan, span_files};
@@ -494,17 +495,9 @@ pub fn run(
         .map(|file| file.file_path)
         .filter(|file| in_scope(file, &scopes))
         .collect::<Vec<_>>();
-    progress.emit(format!("loading symbols for {} files", files.len()));
-    let mut symbols = Vec::new();
-    for (index, file) in files.iter().enumerate() {
-        progress.emit(format!(
-            "loading symbols file {}/{} {}",
-            index + 1,
-            files.len(),
-            file
-        ));
-        symbols.extend(visibility::visible_symbols_for_file(&mut conn, ctx, file)?);
-    }
+    let symbols = load_symbols_for_codewiki(&files, &mut progress, |paths| {
+        visibility::visible_symbols_for_files(&mut conn, ctx, paths)
+    })?;
 
     progress.emit(format!(
         "fetching graph edges for {} files and {} symbols (limit {})",
@@ -534,7 +527,12 @@ pub fn run(
     let mut ownership_meta = read_ownership_meta(out_path)?;
     let mut reuse_plan = ReusePlan::load(&ctx.project_root, out_path, ai_mode)?;
     let mut reuse = Some(&mut reuse_plan);
-    let mut sink = DocSink::open(&ctx.project_root, out_path, ai_mode)?;
+    let mut sink = DocSink::open_with_prune_scope(
+        &ctx.project_root,
+        out_path,
+        ai_mode,
+        DocPruneScope::from_scopes(&scopes),
+    )?;
     let mut generated_pages = 0_usize;
     let mut module_count = 0_usize;
     let mut file_count = 0_usize;
@@ -604,6 +602,15 @@ fn validate_edge_limit(edge_limit: usize) -> anyhow::Result<()> {
         return Ok(());
     }
     anyhow::bail!("codewiki --edge-limit must be between 1 and {MAX_EDGE_LIMIT}, got {edge_limit}")
+}
+
+fn load_symbols_for_codewiki(
+    files: &[String],
+    progress: &mut CodewikiProgress,
+    mut load_symbols: impl FnMut(&[String]) -> anyhow::Result<Vec<Symbol>>,
+) -> anyhow::Result<Vec<Symbol>> {
+    progress.emit(format!("loading symbols for {} files", files.len()));
+    load_symbols(files)
 }
 
 pub fn generate_hierarchical_docs(

@@ -5,6 +5,7 @@
 //! preserve downstream stdout bytes exactly and must never expose transport
 //! failures to Claude as hook failures.
 
+use crate::json_value::is_python_truthy;
 use serde_json::{Value, json};
 use std::ffi::OsStr;
 use std::io::{Read, Write};
@@ -12,6 +13,9 @@ use std::process::{Command, ExitCode, Stdio};
 use std::sync::mpsc;
 use std::thread;
 use std::time::{Duration, Instant};
+
+#[cfg(not(target_os = "windows"))]
+use std::os::unix::process::CommandExt;
 
 const STATUSLINE_ENDPOINT: &str = "/api/sessions/statusline";
 const DAEMON_POST_TIMEOUT: Duration = Duration::from_secs(2);
@@ -64,7 +68,7 @@ fn handle_with(
 
 fn extract_payload(input: &Value) -> Option<Value> {
     let session_id = input.get("session_id")?;
-    if !python_truthy(session_id) {
+    if !is_python_truthy(session_id) {
         return None;
     }
 
@@ -99,21 +103,6 @@ fn extract_payload(input: &Value) -> Option<Value> {
     }))
 }
 
-fn python_truthy(value: &Value) -> bool {
-    match value {
-        Value::Null => false,
-        Value::Bool(flag) => *flag,
-        Value::Number(number) => {
-            number.as_i64().is_some_and(|n| n != 0)
-                || number.as_u64().is_some_and(|n| n != 0)
-                || number.as_f64().is_some_and(|n| n != 0.0)
-        }
-        Value::String(text) => !text.is_empty(),
-        Value::Array(items) => !items.is_empty(),
-        Value::Object(map) => !map.is_empty(),
-    }
-}
-
 fn post_to_daemon_best_effort(payload: Value, daemon_url: &str) {
     let endpoint = format!("{daemon_url}{STATUSLINE_ENDPOINT}");
     let (tx, rx) = mpsc::channel();
@@ -137,37 +126,70 @@ fn forward_downstream(command: &OsStr, stdin_raw: &[u8]) -> Option<Vec<u8>> {
         .spawn()
         .ok()?;
 
-    if let Some(mut stdin) = child.stdin.take() {
+    let mut stdout_pipe = child.stdout.take()?;
+    let stdout_reader = thread::spawn(move || {
+        let mut stdout = Vec::new();
+        let _ = stdout_pipe.read_to_end(&mut stdout);
+        stdout
+    });
+
+    let stdin_writer = child.stdin.take().map(|mut stdin| {
         // Python's Popen.communicate(input=...) tolerates a downstream that
         // exits without reading stdin (e.g. `printf`). Still collect stdout.
-        let _ = stdin.write_all(stdin_raw);
-    }
+        let stdin_raw = stdin_raw.to_vec();
+        thread::spawn(move || {
+            let _ = stdin.write_all(&stdin_raw);
+        })
+    });
 
     let started = Instant::now();
     loop {
         match child.try_wait() {
             Ok(Some(_status)) => {
-                let mut stdout = Vec::new();
-                let mut stdout_pipe = child.stdout.take()?;
-                let _ = stdout_pipe.read_to_end(&mut stdout);
+                if let Some(writer) = stdin_writer {
+                    let _ = writer.join();
+                }
+                let stdout = stdout_reader.join().ok()?;
                 return (!stdout.is_empty()).then_some(stdout);
             }
             Ok(None) if started.elapsed() < DOWNSTREAM_TIMEOUT => {
                 thread::sleep(Duration::from_millis(10));
             }
             Ok(None) | Err(_) => {
-                let _ = child.kill();
-                let _ = child.wait();
+                terminate_downstream(&mut child);
+                if let Some(writer) = stdin_writer {
+                    let _ = writer.join();
+                }
+                let _ = stdout_reader.join();
                 return None;
             }
         }
     }
 }
 
+fn terminate_downstream(child: &mut std::process::Child) {
+    terminate_downstream_group(child);
+    let _ = child.kill();
+    let _ = child.wait();
+}
+
+#[cfg(not(target_os = "windows"))]
+fn terminate_downstream_group(child: &std::process::Child) {
+    // SAFETY: downstream_shell_command puts the shell in a fresh process group
+    // whose pgid equals the child pid, so this only targets that downstream tree.
+    unsafe {
+        libc::killpg(child.id() as libc::pid_t, libc::SIGKILL);
+    }
+}
+
+#[cfg(target_os = "windows")]
+fn terminate_downstream_group(_child: &std::process::Child) {}
+
 #[cfg(not(target_os = "windows"))]
 fn downstream_shell_command(command: &OsStr) -> Command {
     let mut shell = Command::new("sh");
     shell.arg("-c").arg(command);
+    shell.process_group(0);
     shell
 }
 
@@ -181,7 +203,8 @@ fn downstream_shell_command(command: &OsStr) -> Command {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::io::{Read, Write};
+    use crate::test_http::read_http_request;
+    use std::io::Write;
     use std::net::TcpListener;
 
     const VALID_INPUT: &str = include_str!("../tests/fixtures/statusline/full-input.json");
@@ -189,44 +212,6 @@ mod tests {
     const DEFAULT_INPUT: &str = include_str!("../tests/fixtures/statusline/defaults-input.json");
     const DEFAULT_PAYLOAD: &str =
         include_str!("../tests/fixtures/statusline/defaults-payload.json");
-
-    fn read_http_request(stream: &mut impl Read) -> String {
-        let mut request = Vec::new();
-        let mut chunk = [0_u8; 1024];
-        let mut header_end = None;
-        let mut content_length = None;
-
-        loop {
-            let n = stream.read(&mut chunk).unwrap();
-            assert!(n > 0, "client closed before request body was fully read");
-            request.extend_from_slice(&chunk[..n]);
-
-            if header_end.is_none()
-                && let Some(pos) = request.windows(4).position(|window| window == b"\r\n\r\n")
-            {
-                let end = pos + 4;
-                header_end = Some(end);
-                let headers = String::from_utf8_lossy(&request[..end]);
-                content_length = Some(
-                    headers
-                        .lines()
-                        .find_map(|line| {
-                            let (name, value) = line.split_once(':')?;
-                            name.eq_ignore_ascii_case("Content-Length")
-                                .then(|| value.trim().parse::<usize>().ok())
-                                .flatten()
-                        })
-                        .unwrap_or(0),
-                );
-            }
-
-            if let (Some(end), Some(len)) = (header_end, content_length)
-                && request.len() >= end + len
-            {
-                return String::from_utf8(request).unwrap();
-            }
-        }
-    }
 
     #[test]
     fn recognizes_only_claude_statusline_hook() {
@@ -339,15 +324,39 @@ mod tests {
     }
 
     #[test]
-    fn downstream_timeout_returns_before_six_seconds() {
+    fn downstream_large_stdout_returns_full_output_quickly() {
         if cfg!(target_os = "windows") {
             return;
         }
 
         let started = Instant::now();
+        let stdout = forward_downstream(
+            OsStr::new("yes x | head -c 204800"),
+            br#"{"session_id":"sess-123"}"#,
+        )
+        .expect("large downstream stdout should be captured");
+
+        assert_eq!(stdout.len(), 204_800);
+        assert!(
+            started.elapsed() < Duration::from_secs(2),
+            "large stdout should not wait for the downstream timeout"
+        );
+    }
+
+    #[test]
+    fn downstream_timeout_returns_before_six_seconds() {
+        if cfg!(target_os = "windows") {
+            return;
+        }
+
+        let stdin = format!(
+            r#"{{"session_id":"sess-123","transcript_path":"{}"}}"#,
+            "x".repeat(200 * 1024)
+        );
+        let started = Instant::now();
         let mut stdout = Vec::new();
         let exit = handle_with(
-            br#"{"session_id":"sess-123"}"#,
+            stdin.as_bytes(),
             "http://127.0.0.1:9",
             Some(OsStr::new("sleep 10")),
             &mut stdout,
@@ -358,6 +367,32 @@ mod tests {
         assert!(
             started.elapsed() < Duration::from_secs(6),
             "downstream timeout should fire before CI hangs"
+        );
+    }
+
+    #[test]
+    fn downstream_timeout_kills_pipeline_survivors_holding_stdout() {
+        if cfg!(target_os = "windows") {
+            return;
+        }
+
+        // The background sleep inherits the stdout write-end; only the
+        // process-group kill releases the reader thread. Killing just the
+        // direct shell child would leave this test blocked ~30s.
+        let started = Instant::now();
+        let mut stdout = Vec::new();
+        let exit = handle_with(
+            br#"{"session_id":"sess-123","transcript_path":"/tmp/t.jsonl"}"#,
+            "http://127.0.0.1:9",
+            Some(OsStr::new("sleep 30 & sleep 30")),
+            &mut stdout,
+        );
+
+        assert_eq!(exit, ExitCode::SUCCESS);
+        assert!(stdout.is_empty());
+        assert!(
+            started.elapsed() < Duration::from_secs(7),
+            "group kill should release the stdout reader despite survivors"
         );
     }
 }

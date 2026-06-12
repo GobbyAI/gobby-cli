@@ -10,7 +10,7 @@ See [AGENTS.md](AGENTS.md#guiding-principles) for the canonical agent rules enfo
 
 A Cargo workspace with six members: five Gobby CLI binaries plus one shared foundation library.
 
-- **gcode** (`crates/gcode/`) — AST-aware code search, symbol navigation, and dependency graph analysis. Reads/writes the Gobby PostgreSQL hub; reads FalkorDB and Qdrant when configured. External sync (embeddings, graph) is handled by the Gobby daemon.
+- **gcode** (`crates/gcode/`) — AST-aware code search, symbol navigation, and dependency graph analysis. Reads/writes the Gobby PostgreSQL hub and owns code graph/vector projection writes into FalkorDB and Qdrant when those services are configured. The Gobby daemon may trigger or schedule indexing/sync work, but Rust owns code projection mutation.
 - **gsqz** (`crates/gsqz/`) — YAML-configurable output compressor for LLM token optimization. Wraps shell commands and applies pattern-based compression pipelines.
 - **gloc** (`crates/gloc/`) — Local LLM launcher. Auto-detects backends (LM Studio, Ollama), manages model lifecycle, and execs into AI CLI tools (Claude Code, Codex) with the right env vars.
 - **gwiki** (`crates/gwiki/`) — Research/knowledge-vault CLI. Ingests multimodal sources (documents, PDFs, URLs, MediaWiki, git, audio/image/video) into a Markdown vault, then indexes/searches/compiles them. Shares gcode's hybrid BM25 + semantic + graph search stack.
@@ -66,7 +66,8 @@ Release profiles are in the root `Cargo.toml` with per-package overrides. Each b
 - **`db`** — PostgreSQL bootstrap/keyring resolution plus read/write connection helpers. Runtime schema is validated, never created or migrated by gcode.
 - **`models`** — All data types: `Symbol`, `IndexedFile`, `ContentChunk`, `SearchResult`, `GraphResult`, etc.
 - **`secrets`** — Fernet decryption of Gobby secrets using `~/.gobby/machine_id` + `~/.gobby/.secret_salt` for key derivation.
-- **`falkor`** — FalkorDB read client for graph queries (callers, usages, imports, blast radius). Graph writes are handled by the Gobby daemon.
+- **`graph`** — FalkorDB-backed code graph reads plus Rust-owned code graph projection lifecycle and sync. Daemon/UI callers delegate code graph projection work here; memory graph data stays daemon-owned.
+- **`projection` / `vector`** — Rust-owned sync of code-index facts into FalkorDB and Qdrant `code_symbols_{project_id}` collections. Embedding calls for code vectors happen in Rust using resolved runtime config.
 - **`output`** — Output formatting (text vs JSON).
 
 ### `commands/` — CLI Command Handlers
@@ -75,7 +76,7 @@ Each subcommand maps to a function: `index::run`, `search::search`, `symbols::ou
 
 ### `index/` — Indexing Pipeline
 
-`walker` (file discovery via `ignore` crate) → `parser` (tree-sitter AST extraction per language) → `chunker` (content splitting for BM25 content search) → `hasher` (SHA-256 for incremental indexing) → `indexer` (PostgreSQL hub writes + sync flags for daemon). `languages` maps extensions to tree-sitter grammars. `security` validates paths.
+`walker` (file discovery via `ignore` crate) → `parser` (tree-sitter AST extraction per language) → `chunker` (content splitting for BM25 content search) → `hasher` (SHA-256 for incremental indexing) → `indexer` (PostgreSQL hub writes + sync flags for Rust projection sync). `languages` maps extensions to tree-sitter grammars. `security` validates paths.
 
 ### `search/` — Search Pipeline
 
