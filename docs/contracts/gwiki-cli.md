@@ -46,6 +46,22 @@ expansion (`related_pages`, `code_edges`, `gaps`, `stale_candidates`,
 compose `search` and `read` for retrieval and deposit results through
 `collect`/`ingest-file`; `compile` still compiles accepted research notes.
 
+An additive version 5 update gives `compile` an LLM explainer layer over its
+deterministic skeleton. `--ai auto|daemon|direct|off` routes one bounded
+completion (the same ~12K estimated-token budget as `ask`) through the daemon
+text lane or a direct OpenAI-compatible endpoint. Generated prose is grounded
+against the accepted sources before it reaches the vault: `[source: <path>]`
+markers that match an accepted source are rewritten to vault wiki links,
+invented citations are stripped, and prose sections left uncited get a
+fallback citation to the lexically closest source. A failed attempt keeps the
+deterministic skeleton and marks the page frontmatter with
+`degraded`/`degraded_sources` (`model_provider_unavailable`); `--ai off`, an
+unresolvable `auto` route, or a compile with no accepted sources stays
+structural by intent with no degradation markers. The compile payload gains an
+`ai` block (`requested_mode`, `route`, `status`, `model`, `error`, citation
+grounding counts) and the `prompt` object reports `tokens_estimated` and
+`truncated_sources` budget accounting.
+
 Version 4 added the `librarian`, `review-report`, and `citation-quality`
 surfaces to the daemon contract. These entries pin dependency/degradation
 classification fields and advertise trust, freshness, audit, source, and
@@ -118,6 +134,7 @@ silently.
 | `graph-context` | PostgreSQL | FalkorDB, shared code graph | none - not used | wiki-link-only neighborhood | `warnings[]`, `degradation{degraded,degraded_sources[]}` |
 | `benchmark` | PostgreSQL, seeded project | FalkorDB, Qdrant+embeddings, model | none - not used | metrics for available dimensions only | per-metric `available`, `degraded_sources[]` |
 | `ask` | PostgreSQL | model synthesis, Qdrant+embeddings, FalkorDB graph boost | none - not used | model off emits retrieval-only hits with grounded citations; signal loss falls back to BM25-only evidence | `degraded`, `degraded_sources[]`, `truncated`, `truncated_components[]` on answer |
+| `compile` | canonical Markdown vault, research session | model synthesis (daemon text lane or direct OpenAI-compatible endpoint) | none - not used | explainer failure keeps the deterministic skeleton with degradation markers; AI off compiles the structural article without markers | `ai.status`/`ai.error` in payload; page frontmatter `degraded`/`degraded_sources[]` |
 | `librarian` | PostgreSQL, vault | FalkorDB/code graph, Qdrant+embeddings, model | none - not used | each check skipped independently with a note | per-check `available` in proposals report |
 | `review-report` | PostgreSQL, change set | FalkorDB/code graph and analytics | none - not used | report without risky-shift section | `degraded`, `degraded_sources[]` on report |
 | `citation-quality` | PostgreSQL | credibility signals, model contradiction detection | none - not used | per-section skipped with a note | per-section `available` |
