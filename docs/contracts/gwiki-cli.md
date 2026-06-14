@@ -44,7 +44,17 @@ and `truncated`/`truncated_components` accounting; the whole-scope graph
 expansion (`related_pages`, `code_edges`, `gaps`, `stale_candidates`,
 `suggested_questions`) is gone. The `research` command is removed — agents
 compose `search` and `read` for retrieval and deposit results through
-`collect`/`ingest-file`; `compile` still compiles accepted research notes.
+`collect`/`ingest-file`; `compile` still compiles accepted research notes and
+can select ingested manifest records with repeatable
+`--source SOURCE_ID_OR_PATH`.
+
+An additive version 5 update gives `compile` a source-selection surface.
+`--source` selectors resolve as exact source ID, derived raw path
+`raw/<id>.md`, then exact manifest `location`/`canonical_location`. Passing at
+least one `--source` replaces the compile checkpoint's `accepted_notes` with the
+resolved raw markdown sources, deduped by source ID in selector order, before
+the article is compiled. On a fresh vault, `compile` may create the research
+checkpoint only when a positional topic or `--topic` supplies the topic seed.
 
 An additive version 5 update gives `compile` an LLM explainer layer over its
 deterministic skeleton. `--ai auto|daemon|direct|off` routes one bounded
@@ -164,4 +174,4 @@ top-level `hard_dependencies`, `optional_dependencies`, `multimodal`, and
 `degradation` fields so daemon consumers can detect dependency and degradation
 drift directly from the contract JSON.
 
-_Last verified: 2026-06-12_
+_Last verified: 2026-06-14_

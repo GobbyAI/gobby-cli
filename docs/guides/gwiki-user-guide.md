@@ -405,6 +405,8 @@ gwiki --topic rust-async compile "Borrow Checker"
 gwiki --topic rust-async compile "Borrow Checker" --kind concept
 gwiki --topic rust-async compile "Borrow Checker" \
   --outline "Overview" --outline "Reborrows" --outline "Common errors"
+gwiki --topic rust-async compile "Borrow Checker" \
+  --source src-abc123 --source raw/src-def456.md
 gwiki --topic rust-async compile "Borrow Checker" --target knowledge/topics/borrow.md --write-intent
 ```
 
@@ -413,9 +415,18 @@ names the article topic — it never changes the scope (use `--topic`/`--project
 for that). With no positional, the article topic defaults to the topic scope's
 own name, then to the research session's compile state or question.
 
+Use `--source <SOURCE_ID_OR_PATH>` to select already-ingested manifest sources
+for the compile session. It is repeatable; selectors resolve as source ID,
+derived raw path (`raw/<id>.md`), then exact manifest `location` or
+`canonical_location`. Passing `--source` replaces the checkpoint's accepted
+notes with the selected sources in selector order. On a fresh vault with no
+research checkpoint, compile creates the checkpoint from the provided `[TOPIC]`
+or `--topic`; without either topic seed it returns `invalid_input`.
+
 **Options:**
 - `[TOPIC]` — Optional positional naming the article topic.
 - `--outline <HEADING>` — Seed an article heading. Repeatable to set the section order.
+- `--source <SOURCE_ID_OR_PATH>` — Select an ingested source for this compile session. Repeatable; duplicates by source ID are ignored after the first occurrence.
 - `--kind <source|concept|topic>` — Article kind (default: `topic`). Determines which `knowledge/` subdirectory the page lands in (`knowledge/sources`, `knowledge/concepts`, or `knowledge/topics`).
 - `--target <PAGE>` — Explicit vault-relative target page path.
 - `--write-intent` — Authorize overwriting an existing target page. By default `compile` **refuses** to overwrite an existing page and returns an `invalid_input` error asking for merge/diff handling; `--write-intent` opts into overwrite-after-merge.
