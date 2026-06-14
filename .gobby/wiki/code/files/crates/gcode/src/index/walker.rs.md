@@ -65,7 +65,11 @@ Module: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 
 ## Purpose
 
-`crates/gcode/src/index/walker.rs` exposes 55 indexed API symbols.
+This file implements git-aware file discovery and classification for the gcode indexer. It discovers files eligible for indexing under a root directory while respecting .gitignore patterns, then classifies each file as either Ast (for syntactic analysis) or ContentOnly (for text search).
+
+The core discovery flow uses `discover_files_with_options` to walk the filesystem with configurable gitignore respect, yielding two result lists of file candidates. Each discovered file is classified via `classify_file`, which applies a layered set of heuristics: it checks for hidden paths against an allowlist (managed by `HiddenPathAllowlist`), detects auto-generated markers in JavaScript files, identifies minified bundles by file size and line characteristics, recognizes generated metadata patterns (wiki, build artifacts), and validates file extension and content safety.
+
+Helper predicates like `is_hidden_metadata_content_only`, `is_generated_js_bundle`, `looks_minified_js_bundle`, and `is_safe_text_file` work together to exclude generated or non-indexable content while preserving legitimate source code. The `HiddenPathAllowlist` class loads default allowlist patterns and project-specific overrides from `.gobby/gcode.json`, using glob pattern matching to determine which hidden files to include. Auxiliary utilities handle language detection, file prefix reading for marker scanning, and path visibility logic. The file also contains comprehensive test cases validating that discovery respects gitignore, classification handles various file types correctly, and special cases like generated wiki metadata and minified JS bundles are properly filtered.
 [crates/gcode/src/index/walker.rs:35-38]
 [crates/gcode/src/index/walker.rs:41-43]
 [crates/gcode/src/index/walker.rs:45-51]

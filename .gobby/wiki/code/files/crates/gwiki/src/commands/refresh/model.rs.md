@@ -10,21 +10,15 @@ provenance:
   - 27-38
   - 41-43
   - 45-52
-  - 46-51
   - 54-69
-  - 55-68
   - 72-85
   - 88-98
   - 101-107
   - 110-116
   - 119-125
   - 127-137
-  - 128-136
   - 140-144
   - 146-170
-  - 147-153
-  - 155-161
-  - 163-169
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -36,7 +30,7 @@ Module: [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/comman
 
 ## Purpose
 
-`crates/gwiki/src/commands/refresh/model.rs` exposes 21 indexed API symbols.
+This file defines the internal data model for refresh operations in `gwiki`: it separates a refresh run into planned, skipped, failed, refreshed, unchanged, and degraded outcomes, then bundles those pieces into a renderable result. `RefreshPlan` validates and wraps a `SourceRecord` before refresh, and its custom serialization emits the key source metadata plus a derived `raw_path` and replay kind. `ChangedRefresh`, `RefreshedSource`, `RefreshResult`, `RefreshFailure`, and `SkippedRefresh` carry the detailed per-item state for successes, no-ops, errors, and skips, while `RefreshSinks` provides mutable buckets for collecting those results during processing. `IndexedCounts` and `IndexStatus` capture indexing telemetry and lifecycle state, with constructors for not run, indexed, and degraded cases, and `RefreshRender` ties everything together into the final scoped refresh summary.
 [crates/gwiki/src/commands/refresh/model.rs:5-9]
 [crates/gwiki/src/commands/refresh/model.rs:12-17]
 [crates/gwiki/src/commands/refresh/model.rs:19-24]

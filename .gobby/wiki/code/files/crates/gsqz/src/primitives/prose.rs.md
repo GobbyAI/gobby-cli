@@ -6,7 +6,6 @@ provenance:
   ranges:
   - 5-9
   - 11-20
-  - 12-19
   - 23-34
   - 50-100
   - 102-109
@@ -43,7 +42,7 @@ Module: [[code/modules/crates/gsqz/src/primitives|crates/gsqz/src/primitives]]
 
 ## Purpose
 
-`crates/gsqz/src/primitives/prose.rs` exposes 28 indexed API symbols.
+This file defines prose-compression primitives for three levels, `Lite`, `Standard`, and `Aggressive`, plus a small parser that maps their string names to the enum. The main `compress_prose` entry point protects YAML frontmatter and fenced code blocks before dispatching to the selected compression strategy, then restores the protected regions afterward. Supporting helpers extract and replace protected placeholders, perform the lite/standard/aggressive text reductions, and split sentences so aggressive mode can truncate lists and paragraphs without damaging preserved structure.
 [crates/gsqz/src/primitives/prose.rs:5-9]
 [crates/gsqz/src/primitives/prose.rs:11-20]
 [crates/gsqz/src/primitives/prose.rs:12-19]

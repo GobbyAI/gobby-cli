@@ -22,14 +22,9 @@ provenance:
   - 218-223
   - 226-232
   - 234-244
-  - 235-237
-  - 239-243
   - 247-252
   - 255-259
   - 261-371
-  - 262-362
-  - 364-366
-  - 368-370
   - 373-375
   - 377-379
   - 381-391
@@ -93,20 +88,11 @@ Parent: [[code/modules/crates/gcode/src/index/parser|crates/gcode/src/index/pars
 
 ## Overview
 
-The `calls` module extracts function and method call sites during code indexing, supporting both AST-based and textual (regex/scan-based) call detection. It is organized into focused components:
+The `calls` parser module is responsible for turning language syntax and source text into indexed `CallRelation` records. Its AST path runs tree-sitter call queries, requires a `name` capture, optionally uses a broader `call` capture, filters ignored names, and resolves qualifiers before materializing calls; JavaScript adds a dedicated entry point plus import binding extraction so qualified member calls can map through module aliases [crates/gcode/src/index/parser/calls/ast.rs:17-96] [crates/gcode/src/index/parser/calls/ast.rs:109-140] [crates/gcode/src/index/parser/calls/ast.rs:142-154]. For Dart, the module also has a textual extractor that walks line spans, carries lexical scan state, skips imports/classes/typedefs, finds dot-call candidates, rejects comments, strings, declarations, class-member declaration contexts, and ignored keyword names, then sends surviving candidates through shared call materialization with optional semantic resolution .
 
-- **ast.rs**: Extracts calls from tree-sitter AST nodes (including JS bindings), classifying call syntax (bare vs. member) and upgrading detection when qualified names are captured.
-- **dart_textual.rs**: Provides a textual fallback scanner for Dart, tracking line/string/comment state (`DartScanState`, `DartLineScan`) to find candidate calls while skipping ignored contexts, type declarations, and function declarations.
-- **resolution.rs**: Resolves callees to same-file symbols, determining enclosing scope, callable/member kinds, and qualifier paths from call nodes.
-- **shadowing.rs**: Detects when external calls are shadowed by local bindings or parameters in scope, parsing assignments, declarations, and stripping block comments.
-- **text.rs**: Low-level text utilities for UTF-16 column/offset handling, identifier byte classification (Unicode XID aware), token trimming, and filtering out language keywords masquerading as calls.
+Resolution and shadowing supply the semantic guardrails around extraction. `resolution.rs` classifies syntax as bare, member, or other, finds the innermost enclosing symbol for a byte offset, detects member-like AST ancestors, and resolves same-file callees only when a unique callable symbol matches the call form and language-specific constraints [crates/gcode/src/index/parser/calls/resolution.rs:6-10] [crates/gcode/src/index/parser/calls/resolution.rs:17-21] [crates/gcode/src/index/parser/calls/resolution.rs:23-46] [crates/gcode/src/index/parser/calls/resolution.rs:48-61]. `shadowing.rs` prevents external calls from being treated as valid when a bare callee or member root alias is shadowed by a local parameter or binding before the call site, first stripping nested block comments so commented code does not introduce fake bindings [crates/gcode/src/index/parser/calls/shadowing.rs:6-23] [crates/gcode/src/index/parser/calls/shadowing.rs:25-43] [crates/gcode/src/index/parser/calls/shadowing.rs:45-84].
 
-Together these enable robust call-graph extraction across AST-capable and textual-only languages, with careful handling of identifiers, scoping, and shadowing.
-[crates/gcode/src/index/parser/calls/ast.rs:17-96]
-[crates/gcode/src/index/parser/calls/dart_textual.rs:8-55]
-[crates/gcode/src/index/parser/calls/resolution.rs:6-10]
-[crates/gcode/src/index/parser/calls/shadowing.rs:6-23]
-[crates/gcode/src/index/parser/calls/text.rs:4-20]
+The shared `text.rs` utilities support both textual extraction and resolution by keeping source locations and identifiers consistent across languages. It computes UTF-16 columns from byte offsets with lossy handling for invalid UTF-8, trims tokens to identifier boundaries, accepts Unicode XID identifiers plus `_` and `$`, recognizes textual call-name bytes, and filters language keywords and special forms for Dart, Elixir, and Kotlin [crates/gcode/src/index/parser/calls/text.rs:22-30] [crates/gcode/src/index/parser/calls/text.rs:32-49] . Together, the files form a layered call pipeline: AST or text scanners discover candidates, text helpers normalize names and positions, resolution links candidates to local symbols where possible, and shadowing avoids recording external edges that are actually local references.
 
 ## Call Diagram
 
@@ -161,31 +147,33 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gcode/src/index/parser/calls/ast.rs|crates/gcode/src/index/parser/calls/ast.rs]] - `crates/gcode/src/index/parser/calls/ast.rs` exposes 7 indexed API symbols.
+- [[code/files/crates/gcode/src/index/parser/calls/ast.rs|crates/gcode/src/index/parser/calls/ast.rs]] - This file implements AST-based call extraction for the gcode indexer. `extract_ast_calls` runs a language-specific tree-sitter call query over a parsed syntax tree, finds the `name` and optional `call` captures, filters out ignored names, and uses qualifier and semantic-resolution helpers to build `CallRelation` results. `extract_js_calls` is the JavaScript-specific entry point that parses JS, applies the shared extraction logic, and `js_bindings` parses import statements so qualified member calls can be resolved against module bindings. The tests cover query-capture requirements, keyword call filtering, and correct handling of member calls and imported qualified names.
 [crates/gcode/src/index/parser/calls/ast.rs:17-96]
 [crates/gcode/src/index/parser/calls/ast.rs:109-140]
 [crates/gcode/src/index/parser/calls/ast.rs:142-154]
 [crates/gcode/src/index/parser/calls/ast.rs:157-166]
 [crates/gcode/src/index/parser/calls/ast.rs:169-178]
-- [[code/files/crates/gcode/src/index/parser/calls/dart_textual.rs|crates/gcode/src/index/parser/calls/dart_textual.rs]] - `crates/gcode/src/index/parser/calls/dart_textual.rs` exposes 23 indexed API symbols.
+- [[code/files/crates/gcode/src/index/parser/calls/dart_textual.rs|crates/gcode/src/index/parser/calls/dart_textual.rs]] - This file implements a textual Dart call extractor for the indexer. It scans source line by line, maintains Dart lexical state across lines, finds dot-notation call candidates, filters out false positives from comments, strings, declarations, and ignored callee names, then materializes valid `CallRelation` entries with optional semantic resolution.
+
+The supporting helpers split the source into line spans, recognize and validate candidate call syntax, detect generic angle brackets and string starts, and track per-byte scan state so the main extractor can make context-aware decisions while iterating through the file.
 [crates/gcode/src/index/parser/calls/dart_textual.rs:8-55]
 [crates/gcode/src/index/parser/calls/dart_textual.rs:57-77]
 [crates/gcode/src/index/parser/calls/dart_textual.rs:79-168]
 [crates/gcode/src/index/parser/calls/dart_textual.rs:170-172]
 [crates/gcode/src/index/parser/calls/dart_textual.rs:174-189]
-- [[code/files/crates/gcode/src/index/parser/calls/resolution.rs|crates/gcode/src/index/parser/calls/resolution.rs]] - `crates/gcode/src/index/parser/calls/resolution.rs` exposes 12 indexed API symbols.
+- [[code/files/crates/gcode/src/index/parser/calls/resolution.rs|crates/gcode/src/index/parser/calls/resolution.rs]] - This file resolves call references within a single source file by combining symbol-table lookup with tree-sitter syntax analysis. It finds the innermost enclosing symbol for an offset, classifies a call as bare, member, or other by walking the AST, and then uses that classification plus name/qualifier parsing helpers to match a callee to a unique symbol ID, with language-specific filtering to avoid false positives such as Ruby bare calls.
 [crates/gcode/src/index/parser/calls/resolution.rs:6-10]
 [crates/gcode/src/index/parser/calls/resolution.rs:17-21]
 [crates/gcode/src/index/parser/calls/resolution.rs:23-46]
 [crates/gcode/src/index/parser/calls/resolution.rs:48-61]
 [crates/gcode/src/index/parser/calls/resolution.rs:63-65]
-- [[code/files/crates/gcode/src/index/parser/calls/shadowing.rs|crates/gcode/src/index/parser/calls/shadowing.rs]] - `crates/gcode/src/index/parser/calls/shadowing.rs` exposes 18 indexed API symbols.
+- [[code/files/crates/gcode/src/index/parser/calls/shadowing.rs|crates/gcode/src/index/parser/calls/shadowing.rs]] - This file implements shadowing detection for external function calls in a code analysis pipeline. The main `external_call_is_shadowed` function determines whether a call target is shadowed by checking if a matching local identifier exists in the caller's scope before the call site. Core logic in `local_name_in_scope_before_call` examines function parameters and local bindings while correctly excluding block-commented regions. Supporting functions handle parameter extraction, various assignment and declaration patterns (including typed declarations and multiple operators), and structural analysis of bindings. Utility functions parse assignment operators, track nested parentheses and comments, and extract identifiers from parameter and binding contexts. Multiple tests validate correct handling of compound operators, block comment nesting, and typed patterns.
 [crates/gcode/src/index/parser/calls/shadowing.rs:6-23]
 [crates/gcode/src/index/parser/calls/shadowing.rs:25-43]
 [crates/gcode/src/index/parser/calls/shadowing.rs:45-84]
 [crates/gcode/src/index/parser/calls/shadowing.rs:86-96]
 [crates/gcode/src/index/parser/calls/shadowing.rs:98-113]
-- [[code/files/crates/gcode/src/index/parser/calls/text.rs|crates/gcode/src/index/parser/calls/text.rs]] - `crates/gcode/src/index/parser/calls/text.rs` exposes 10 indexed API symbols.
+- [[code/files/crates/gcode/src/index/parser/calls/text.rs|crates/gcode/src/index/parser/calls/text.rs]] - This file provides text parsing utilities for the gcode index parser's call detection system. It handles three main concerns: line and column position tracking (via line terminators and UTF-16 unit conversion), identifier validation (using Unicode XID properties plus underscore and dollar sign), and language-specific keyword filtering (for Dart, Elixir, and Kotlin) to distinguish reserved words from actual function calls. The utilities work together to accurately parse textual call names while accounting for multi-byte UTF-8 sequences treated as replacement characters, enabling proper source location mapping and symbol identification across multiple programming languages.
 [crates/gcode/src/index/parser/calls/text.rs:4-20]
 [crates/gcode/src/index/parser/calls/text.rs:22-30]
 [crates/gcode/src/index/parser/calls/text.rs:32-49]

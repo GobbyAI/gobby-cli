@@ -11,9 +11,6 @@ provenance:
   - 71-76
   - 79-84
   - 86-109
-  - 87-92
-  - 94-104
-  - 106-108
   - 111-113
   - 116-124
 generated_by: gcode-codewiki
@@ -27,7 +24,7 @@ Module: [[code/modules/crates/gcode/src/index/indexer|crates/gcode/src/index/ind
 
 ## Purpose
 
-`crates/gcode/src/index/indexer/types.rs` exposes 12 indexed API symbols.
+This file defines the core data structures for the code indexing subsystem. IndexRequest specifies indexing parameters including project root, path filters, and control flags for depth, C++ semantics, and projection sync. IndexOutcome is the primary result struct that aggregates comprehensive metrics from an indexing operation—file counts (scanned, indexed, skipped), indexed entity counts (symbols, imports, calls), processing timings via IndexDurations, unsupported file types, and optional degradation diagnostics and projection sync status. Supporting types include IndexDegradation (an enum for various indexing failures), FileIndexCounts (per-file statistics), UnsupportedFileType (tracking unsupported extensions), and OverlayIndexMetadata (project reference metadata). These types work together to configure indexing operations and serialize complete indexing results with detailed metrics and diagnostics.
 [crates/gcode/src/index/indexer/types.rs:8-17]
 [crates/gcode/src/index/indexer/types.rs:20-25]
 [crates/gcode/src/index/indexer/types.rs:29-42]

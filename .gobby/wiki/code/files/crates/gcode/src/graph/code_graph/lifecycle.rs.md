@@ -6,24 +6,16 @@ provenance:
   ranges:
   - 18-21
   - 23-44
-  - 24-29
-  - 31-36
-  - 38-43
   - 47-52
   - 54-62
-  - 55-61
   - 65-68
   - 70-77
-  - 71-76
   - 79-96
-  - 80-88
-  - 90-95
   - 98-105
   - 108-113
   - 116-122
   - 125-130
   - 132-150
-  - 133-149
   - '152'
   - 154-164
   - 166-176
@@ -43,7 +35,7 @@ Module: [[code/modules/crates/gcode/src/graph/code_graph|crates/gcode/src/graph/
 
 ## Purpose
 
-`crates/gcode/src/graph/code_graph/lifecycle.rs` exposes 28 indexed API symbols.
+This file manages graph lifecycle operations (clear and rebuild) for a code-indexing system. GraphLifecycleAction is an enum that maps two operations to their CLI commands, REST API endpoints, and success messages. GraphLifecycleRequest encapsulates the project context and timeout configuration needed for lifecycle operations, constructible from environment variables via from_context. GraphLifecycleTimeouts provides configurable timeout durations loaded from environment variables with sensible defaults, and maps actions to their corresponding timeout values. The file includes helper functions that handle HTTP communication with a Gobby daemon: require_daemon_url validates daemon configuration, build_lifecycle_url constructs request URLs, format_http_error and parse_success_payload handle responses, extract_summary_text finds summary information in JSON payloads, and run_lifecycle_action orchestrates the full HTTP POST workflow. GraphReadRequest and GraphReadError support querying graph data and reporting read failures respectively. Together these components enable remote execution of graph lifecycle operations with configurable timeouts and detailed error reporting.
 [crates/gcode/src/graph/code_graph/lifecycle.rs:18-21]
 [crates/gcode/src/graph/code_graph/lifecycle.rs:23-44]
 [crates/gcode/src/graph/code_graph/lifecycle.rs:24-29]

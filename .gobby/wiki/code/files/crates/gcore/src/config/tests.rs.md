@@ -65,7 +65,7 @@ Module: [[code/modules/crates/gcore/src/config|crates/gcore/src/config]]
 
 ## Purpose
 
-`crates/gcore/src/config/tests.rs` exposes 74 indexed API symbols.
+Test support and regression coverage for `gcore` config resolution. The file defines a scoped test logger and environment guard to serialize log capture and process-env mutation, then uses a set of synthetic config source types to exercise decoding, layered precedence, secret handling, provider/binding resolution, indexing defaults, timeout and port fallback behavior, and guardrails around embedding-key literals and other config invariants.
 [crates/gcore/src/config/tests.rs:9-11]
 [crates/gcore/src/config/tests.rs:18-32]
 [crates/gcore/src/config/tests.rs:19-21]

@@ -47,7 +47,11 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/video.rs` exposes 32 indexed API symbols.
+This file manages video-to-markdown conversion, providing data structures and utilities for sampling video frames, aligning transcripts with frame timestamps, and generating structured markdown documentation of video content.
+
+The core workflow: `FrameSamplingPlan` configures periodic frame extraction via `sample_frames()`, which produces `VideoFrameSample` objects containing timestamps and media references. `align_transcript_and_frames()` correlates these sampled frames with `TranscriptSegment` objects to create time-synchronized `AlignedVideoSegment` pairs. `write_video_derived_markdown()` orchestrates this alignment process and invokes `render_video_derived_markdown()` to generate a markdown representation containing metadata fields (file size, duration, degradation info, audio references, and aligned frame/transcript data).
+
+Supporting utilities handle timestamp parsing/formatting across multiple formats (colon-separated, numeric seconds, milliseconds), construct video audio references, and manage durable file I/O through atomic writes with fsync operations and temporary sibling file patterns. Comprehensive unit tests validate frame sampling intervals, transcript-frame alignment, markdown generation with partial failures, and metadata inclusion.
 [crates/gwiki/src/video.rs:18-21]
 [crates/gwiki/src/video.rs:24-29]
 [crates/gwiki/src/video.rs:32-36]

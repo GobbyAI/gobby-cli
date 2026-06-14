@@ -4,56 +4,7 @@ type: code_file
 provenance:
 - file: crates/ghook/schemas/diagnose-output.v2.schema.json
   ranges:
-  - '2'
-  - '3'
-  - '4'
-  - '5'
-  - '6'
-  - 7-18
-  - '19'
-  - 20-79
-  - 21-24
-  - '22'
-  - '23'
-  - 25-28
-  - '26'
-  - '27'
-  - 29-32
-  - '30'
-  - '31'
-  - 33-36
-  - '34'
-  - '35'
-  - 37-39
-  - '38'
-  - 40-42
-  - '41'
-  - 43-45
-  - '44'
-  - 46-49
-  - '47'
-  - '48'
-  - 50-53
-  - '51'
-  - '52'
-  - 54-58
-  - '55'
-  - '56'
-  - '57'
-  - 59-61
-  - '60'
-  - 62-64
-  - '63'
-  - 65-67
-  - '66'
-  - 68-70
-  - '69'
-  - 71-74
-  - '72'
-  - '73'
-  - 75-78
-  - '76'
-  - '77'
+  - 2-79
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -65,7 +16,7 @@ Module: [[code/modules/crates/ghook/schemas|crates/ghook/schemas]]
 
 ## Purpose
 
-`crates/ghook/schemas/diagnose-output.v2.schema.json` exposes 50 indexed API symbols.
+Defines the draft-07 JSON Schema for `ghook --diagnose` output version 2. The schema names the document, fixes `schema_version` to `2`, and requires the core diagnostic fields that describe the installed `ghook` binary, the selected CLI/hook type, daemon connection details, whether the command is critical, and whether the CLI was recognized. It also allows optional contextual fields like `source`, project identifiers, and terminal preview data, while forbidding unknown properties. Version 2 extends the v1 shape with `install_method` and `install_source_url` so diagnose output can report install provenance from the sidecar metadata.
 [crates/ghook/schemas/diagnose-output.v2.schema.json:2]
 [crates/ghook/schemas/diagnose-output.v2.schema.json:3]
 [crates/ghook/schemas/diagnose-output.v2.schema.json:4]

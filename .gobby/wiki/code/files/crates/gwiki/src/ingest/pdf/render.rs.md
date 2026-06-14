@@ -26,7 +26,7 @@ Module: [[code/modules/crates/gwiki/src/ingest/pdf|crates/gwiki/src/ingest/pdf]]
 
 ## Purpose
 
-`crates/gwiki/src/ingest/pdf/render.rs` exposes 11 indexed API symbols.
+This file implements PDF ingestion helpers for the documents feature: one path extracts per-page text from a PDF’s text layer, and the other renders PDF pages into images while enforcing page and byte limits. `render_pdf_pages` loads the PDF through bundled Pdfium, renders each page at a requested DPI, converts the bitmap into PNG bytes, tracks the total rendered size, and degrades the outcome when the page cap or byte budget is exceeded. The remaining helpers support that flow by selecting the bundled Pdfium build, converting point sizes to pixels, validating bitmap dimensions, encoding RGBA PNG output, and producing consistent Pdfium-backed errors; the tests cover overflow handling and rejecting non-positive bitmap dimensions before casting.
 [crates/gwiki/src/ingest/pdf/render.rs:23-39]
 [crates/gwiki/src/ingest/pdf/render.rs:42-94]
 [crates/gwiki/src/ingest/pdf/render.rs:97-100]

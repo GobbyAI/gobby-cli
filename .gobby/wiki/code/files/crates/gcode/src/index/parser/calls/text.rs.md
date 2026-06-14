@@ -25,7 +25,7 @@ Module: [[code/modules/crates/gcode/src/index/parser/calls|crates/gcode/src/inde
 
 ## Purpose
 
-`crates/gcode/src/index/parser/calls/text.rs` exposes 10 indexed API symbols.
+This file provides text parsing utilities for the gcode index parser's call detection system. It handles three main concerns: line and column position tracking (via line terminators and UTF-16 unit conversion), identifier validation (using Unicode XID properties plus underscore and dollar sign), and language-specific keyword filtering (for Dart, Elixir, and Kotlin) to distinguish reserved words from actual function calls. The utilities work together to accurately parse textual call names while accounting for multi-byte UTF-8 sequences treated as replacement characters, enabling proper source location mapping and symbol identification across multiple programming languages.
 [crates/gcode/src/index/parser/calls/text.rs:4-20]
 [crates/gcode/src/index/parser/calls/text.rs:22-30]
 [crates/gcode/src/index/parser/calls/text.rs:32-49]

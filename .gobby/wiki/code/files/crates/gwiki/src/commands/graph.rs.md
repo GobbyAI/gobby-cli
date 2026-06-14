@@ -10,10 +10,7 @@ provenance:
   - 93-118
   - 129-131
   - 133-138
-  - 134-137
   - 140-148
-  - 141-143
-  - 145-147
   - 150-158
   - 160-162
   - 164-168
@@ -33,7 +30,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-`crates/gwiki/src/commands/graph.rs` exposes 18 indexed API symbols.
+This file implements the `gwiki graph` command: it resolves the requested scope, opens a readonly PostgreSQL connection, loads wiki graph facts, and exports graph artifacts, returning a scoped `CommandOutcome` with artifact payload and file paths. It also contains helper logic to detect degraded optional sources by wiring PostgreSQL-backed AI config resolution through Gobby home settings, then checking whether FalkorDB, embeddings, and Qdrant are available. The test-only `TestConfigSource` and its helpers provide an in-memory config source for verifying the degraded-source detection behavior across missing, present, and blank configuration cases.
 [crates/gwiki/src/commands/graph.rs:13-52]
 [crates/gwiki/src/commands/graph.rs:54-67]
 [crates/gwiki/src/commands/graph.rs:69-90]

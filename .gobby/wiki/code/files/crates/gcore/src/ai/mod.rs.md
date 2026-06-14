@@ -52,7 +52,9 @@ Module: [[code/modules/crates/gcore/src/ai|crates/gcore/src/ai]]
 
 ## Purpose
 
-`crates/gcore/src/ai/mod.rs` exposes 37 indexed API symbols.
+This module is the core AI transport/router layer for `gcore`: it wires together the daemon, direct, text, transcription, vision, embeddings, and probe submodules, and centralizes how an `AiContext` is turned into an effective `AiRouting` choice. Its routing helpers prefer explicit `Off`/`Direct`/`Daemon` settings, while `Auto` probes daemon availability first and otherwise falls back to a configured direct endpoint or `Off`.
+
+It also defines `AiTransport` and the request/response plumbing used by AI calls: building JSON and multipart requests, attaching API keys, choosing per-capability timeouts, retrying retryable failures with capped exponential backoff and jitter, parsing JSON and `Retry-After` headers, and extracting chat-completion URL, root, model, and content fields. The test functions at the bottom verify the routing fallback behavior, timeout choices, and retry/header parsing rules.
 [crates/gcore/src/ai/mod.rs:31-35]
 [crates/gcore/src/ai/mod.rs:37-48]
 [crates/gcore/src/ai/mod.rs:50-62]

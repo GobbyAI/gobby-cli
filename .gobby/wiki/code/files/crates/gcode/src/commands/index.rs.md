@@ -32,7 +32,7 @@ Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Purpose
 
-`crates/gcode/src/commands/index.rs` exposes 17 indexed API symbols.
+This file implements the indexing command interface for the gcode project. The `run` function is the main entry point that resolves project context, acquires an exclusive lock, and orchestrates file indexing with optional path/file filtering and C++ semantic analysis. It delegates context resolution to `resolve_index_context`, which determines the target project and applies path filters via `path_filter_for`, while `clone_context` handles creation of project-specific contexts. The indexing outcome is formatted for output through either `index_text` for human-readable summaries or `sync_projections_payload` and `sync_projections_text` for structured JSON sync reports, with `pluralize` supporting grammatical formatting. The module also contains test helpers (`sample_outcome`, `sample_reports`) and snapshot-based contract tests that validate output formatting and JSON serialization behavior.
 [crates/gcode/src/commands/index.rs:10-60]
 [crates/gcode/src/commands/index.rs:62-92]
 [crates/gcode/src/commands/index.rs:96-104]

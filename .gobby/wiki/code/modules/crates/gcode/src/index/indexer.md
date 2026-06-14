@@ -89,28 +89,28 @@ provenance:
   - 155-164
   - 166-235
   - 238-314
-  - 318-391
-  - 393-402
-  - 404-410
-  - 412-415
-  - 417-423
-  - 425-456
-  - 458-485
-  - 487-514
-  - 516-524
-  - 526-536
-  - 539-561
-  - 564-600
-  - 603-639
-  - 642-672
-  - 675-701
-  - 704-726
-  - 729-744
-  - 747-796
-  - 799-827
-  - 830-880
-  - 883-920
-  - 923-949
+  - 325-396
+  - 399-405
+  - 407-413
+  - 415-418
+  - 420-426
+  - 428-459
+  - 461-488
+  - 490-517
+  - 519-527
+  - 529-539
+  - 542-564
+  - 567-603
+  - 606-642
+  - 645-675
+  - 678-704
+  - 707-729
+  - 732-747
+  - 750-799
+  - 802-830
+  - 833-883
+  - 886-923
+  - 926-952
 - file: crates/gcode/src/index/indexer/types.rs
   ranges:
   - 8-17
@@ -149,12 +149,11 @@ Parent: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 
 ## Overview
 
-The indexer module orchestrates the extraction, reconciliation, and storage of code facts from project files. It manages the full indexing lifecycle—including file discovery, path normalization, overlay file reconciliation, change/freshness detection, and writing parsed facts (symbols, imports, calls, and content chunks) to a persistent database sink.
-[crates/gcode/src/index/indexer/file.rs:15-91]
-[crates/gcode/src/index/indexer/freshness_probe.rs:37-81]
-[crates/gcode/src/index/indexer/lifecycle.rs:16-54]
-[crates/gcode/src/index/indexer/overlay.rs:32-35]
-[crates/gcode/src/index/indexer/pipeline.rs:27-30]
+The indexer module is the orchestration layer for turning project files into persisted code facts and reporting a structured indexing result. Its public contract is centered on `IndexRequest`, which carries the project root, optional path filter, explicit files, full-index flag, C++ semantic requirement, and projection sync flag, and `IndexOutcome`, which aggregates scanned, indexed, skipped, symbol/import/call/chunk counts, tombstones, durations, degradations, projection sync, and overlay metadata . The pipeline entry points choose between overlay indexing, discovered-file indexing, and explicit-file indexing, while file-level indexing handles parsing, language detection, content hashing, semantic resolver setup, content-only fallback, and transactional writes through the sink abstraction  .
+
+The main flows collaborate around discovery, reconciliation, persistence, and cleanup. Discovered indexing uses walker options and utility path filtering, including default excludes such as `node_modules`, `.git`, build directories, caches, and `target` . Explicit routing decides whether a file should be parsed, indexed as content only, skipped, or cleaned up, while unsupported file types are grouped for outcome reporting  [crates/gcode/src/index/indexer/util.rs:70-93]. Overlay indexing reconciles parent, overlay, and current filesystem state into actions such as Index, Inherit, Tombstone, DeleteOverlay, or Skip, based on file existence, hashes, tombstone state, and indexability . Freshness probing provides a fast pre-index gate by checking mtimes and deleted indexed paths without locks or hashing, using the same discovery exclusions and a skew margin to avoid missing changes .
+
+Persistence and lifecycle code keep the indexed database and projections consistent as files change. `CodeFactSink` separates indexing logic from PostgreSQL writes by exposing deletion and upsert operations for file facts, symbols, imports, calls, and content chunks, with `PostgresCodeFactSink` delegating those operations to the API layer . Lifecycle utilities detect stale and orphaned files, invalidate project indexes, refresh project statistics, attach projection sync results, and record projection cleanup failures as degradations rather than failing the whole run . The test suite ties these behaviors together with CLI-independence checks, recording sinks, explicit-route and gitignore cases, overlay reconciliation coverage, symbol-summary preservation, and cleanup behavior for skipped or deleted files .
 
 ## Call Diagram
 
@@ -162,24 +161,20 @@ The indexer module orchestrates the extraction, reconciliation, and storage of c
 sequenceDiagram
     participant m_01ec77cc_48df_5af6_ad42_b9d5800cf9ad as index_overlay_files &#91;function&#93;
     participant m_06f747c0_d77a_5408_802b_60d142616c74 as skew_margin_boundary_only_ever_makes_the_gate_more_eager &#91;function&#93;
-    participant m_0787f1d1_704a_51e3_826d_c429ef009eef as explicit_file_route_indexes_mjs_and_routes_markdown_to_content_only &#91;function&#93;
     participant m_10340c10_e576_5d26_badb_81bc9e42948a as indexed_file_states &#91;function&#93;
-    participant m_1338b69e_01ae_51af_800c_39edd113f6fd as SummaryPreservationCleanup.drop &#91;method&#93;
     participant m_1f671963_1e36_5bcb_8b36_35136e72d054 as lexical_relative_path &#91;function&#93;
-    participant m_227a3a94_2cb5_5705_a228_e26c9bbab506 as explicit_file_route_sends_unsupported_text_to_content_only &#91;function&#93;
     participant m_271a6fa6_20dd_501e_bd1a_35ee1d99229f as is_porcelain_status_entry &#91;function&#93;
     participant m_27cff566_a652_5c21_906c_54247b567ec0 as cleanup_deleted_file_projections &#91;function&#93;
     participant m_2b097022_1ca0_54ab_9167_230f31715fe8 as set_mtime &#91;function&#93;
     participant m_2c3d5dde_70fb_517d_9a30_a57fc029d55a as requested_relative_path &#91;function&#93;
-    participant m_2d437509_ec07_545d_8636_48f4a49d61ce as cleanup_summary_preservation_project &#91;function&#93;
     participant m_4024a0a6_07dc_543a_9b66_60e72d24e7d8 as git_status_timeout &#91;function&#93;
     participant m_4b108bd2_677f_5b6f_baae_1a9687543be0 as git_status_relative_paths &#91;function&#93;
     participant m_4b12832a_8119_5965_b9c6_d91d8cb4122e as index_file &#91;function&#93;
     participant m_4d80ef56_1326_501d_ad99_6e76e8e39313 as base_time &#91;function&#93;
+    participant m_4fc2ee8c_d38a_51cf_97de_7c9fa10bf90c as gitignored_new_files_follow_respect_gitignore_setting &#91;function&#93;
     participant m_5ea81afb_c78f_589e_9c62_6ad75a49ad6b as push_projection_cleanup_degradation &#91;function&#93;
     participant m_7c9b4b5f_c2f2_5a8a_a844_5837e9288643 as normalized_components &#91;function&#93;
     participant m_8db19430_dba8_52b8_b94c_ebd14b9c1b71 as write_parsed_file_facts &#91;function&#93;
-    participant m_93b52f75_55a1_5025_a3a4_7e3d067416a6 as write_file &#91;function&#93;
     participant m_af592e27_20e6_5df0_b6b1_1ca5703f5d03 as compact_stderr &#91;function&#93;
     participant m_be1729cf_c48d_5d6e_8ccf_bfee68ce411e as overlay_reconcile_action &#91;function&#93;
     participant m_c37b5340_8902_5b1c_a469_944a66f25bf7 as write_tombstone &#91;function&#93;
@@ -197,10 +192,7 @@ sequenceDiagram
     m_06f747c0_d77a_5408_802b_60d142616c74->>m_2b097022_1ca0_54ab_9167_230f31715fe8: calls
     m_06f747c0_d77a_5408_802b_60d142616c74->>m_4d80ef56_1326_501d_ad99_6e76e8e39313: calls
     m_06f747c0_d77a_5408_802b_60d142616c74->>m_d4fc0ae1_b01a_5027_9c1c_91ce4e5a2e64: calls
-    m_0787f1d1_704a_51e3_826d_c429ef009eef->>m_93b52f75_55a1_5025_a3a4_7e3d067416a6: calls
-    m_1338b69e_01ae_51af_800c_39edd113f6fd->>m_2d437509_ec07_545d_8636_48f4a49d61ce: calls
     m_1f671963_1e36_5bcb_8b36_35136e72d054->>m_7c9b4b5f_c2f2_5a8a_a844_5837e9288643: calls
-    m_227a3a94_2cb5_5705_a228_e26c9bbab506->>m_93b52f75_55a1_5025_a3a4_7e3d067416a6: calls
     m_271a6fa6_20dd_501e_bd1a_35ee1d99229f->>m_ea312341_5b87_59ce_b013_88a15ba48909: calls
     m_27cff566_a652_5c21_906c_54247b567ec0->>m_5ea81afb_c78f_589e_9c62_6ad75a49ad6b: calls
     m_2c3d5dde_70fb_517d_9a30_a57fc029d55a->>m_1f671963_1e36_5bcb_8b36_35136e72d054: calls
@@ -208,59 +200,62 @@ sequenceDiagram
     m_4b108bd2_677f_5b6f_baae_1a9687543be0->>m_4024a0a6_07dc_543a_9b66_60e72d24e7d8: calls
     m_4b108bd2_677f_5b6f_baae_1a9687543be0->>m_af592e27_20e6_5df0_b6b1_1ca5703f5d03: calls
     m_4b12832a_8119_5965_b9c6_d91d8cb4122e->>m_8db19430_dba8_52b8_b94c_ebd14b9c1b71: calls
+    m_4fc2ee8c_d38a_51cf_97de_7c9fa10bf90c->>m_2b097022_1ca0_54ab_9167_230f31715fe8: calls
+    m_4fc2ee8c_d38a_51cf_97de_7c9fa10bf90c->>m_4d80ef56_1326_501d_ad99_6e76e8e39313: calls
+    m_4fc2ee8c_d38a_51cf_97de_7c9fa10bf90c->>m_d4fc0ae1_b01a_5027_9c1c_91ce4e5a2e64: calls
 ```
 
 ## Files
 
-- [[code/files/crates/gcode/src/index/indexer/file.rs|crates/gcode/src/index/indexer/file.rs]] - `crates/gcode/src/index/indexer/file.rs` exposes 7 indexed API symbols.
+- [[code/files/crates/gcode/src/index/indexer/file.rs|crates/gcode/src/index/indexer/file.rs]] - This file implements the core file-level indexing logic for a code analysis system. The main `index_file` function orchestrates parsing, language detection, content hashing, and metadata collection for individual files, then persists the extracted facts to PostgreSQL through a transactional sink. Supporting functions handle semantic resolver setup (`create_semantic_resolver_if_needed`), explicit file routing configuration (`ExplicitFileRoute` and `explicit_file_route`), content-only indexing workflows (`index_content_only`), and database writes for both fully parsed results (`write_parsed_file_facts`) and content-only variants (`write_content_only_file_facts`).
 [crates/gcode/src/index/indexer/file.rs:15-91]
 [crates/gcode/src/index/indexer/file.rs:93-108]
 [crates/gcode/src/index/indexer/file.rs:111-115]
 [crates/gcode/src/index/indexer/file.rs:117-127]
 [crates/gcode/src/index/indexer/file.rs:130-177]
-- [[code/files/crates/gcode/src/index/indexer/freshness_probe.rs|crates/gcode/src/index/indexer/freshness_probe.rs]] - `crates/gcode/src/index/indexer/freshness_probe.rs` exposes 11 indexed API symbols.
+- [[code/files/crates/gcode/src/index/indexer/freshness_probe.rs|crates/gcode/src/index/indexer/freshness_probe.rs]] - This file implements a lock-free, lightweight change-detection gate for project indexing. The main function `project_changed_since` determines if a project has been modified since a recorded timestamp by checking whether any discovered files have mtimes newer than a skew-adjusted threshold or whether previously-indexed paths no longer exist on disk. It short-circuits on the first change and avoids taking advisory locks or hashing files, making the common no-change case fast. The detection mirrors the indexer's `walker::discover_files` logic with identical exclusion rules to stay in sync, including respecting gitignore settings and exclusion patterns. A 2-second SKEW_MARGIN constant is subtracted from the threshold to absorb clock skew and mtime granularity, ensuring the gate errs toward refreshing rather than missing changes. Helper functions like `write_file` and `set_mtime` support test scenarios, while the test suite verifies correct behavior for file modifications, additions, deletions, boundary conditions with SKEW_MARGIN, and gitignore-aware filtering.
 [crates/gcode/src/index/indexer/freshness_probe.rs:37-81]
 [crates/gcode/src/index/indexer/freshness_probe.rs:89-96]
 [crates/gcode/src/index/indexer/freshness_probe.rs:98-105]
 [crates/gcode/src/index/indexer/freshness_probe.rs:109-111]
 [crates/gcode/src/index/indexer/freshness_probe.rs:113-115]
-- [[code/files/crates/gcode/src/index/indexer/lifecycle.rs|crates/gcode/src/index/indexer/lifecycle.rs]] - `crates/gcode/src/index/indexer/lifecycle.rs` exposes 11 indexed API symbols.
+- [[code/files/crates/gcode/src/index/indexer/lifecycle.rs|crates/gcode/src/index/indexer/lifecycle.rs]] - This file manages the lifecycle operations of the code indexing system. It handles cleanup of deleted file projections (both code graph and vector database), tracks file changes by comparing current filesystem state against indexed records, and manages project-wide indexing operations. The core functions work together to: detect stale files (content changed) and orphaned files (deleted but still indexed), clean up projections when files are removed, invalidate entire project indices atomically, refresh project statistics, and coordinate synchronization of projections to external systems. Error conditions during projection cleanup are recorded as index degradations, allowing partial success when operations fail. The CurrentFileState struct and related functions provide efficient change detection by maintaining path-to-hash mappings for incremental indexing decisions.
 [crates/gcode/src/index/indexer/lifecycle.rs:16-54]
 [crates/gcode/src/index/indexer/lifecycle.rs:56-69]
 [crates/gcode/src/index/indexer/lifecycle.rs:71-81]
 [crates/gcode/src/index/indexer/lifecycle.rs:84-121]
 [crates/gcode/src/index/indexer/lifecycle.rs:125-152]
-- [[code/files/crates/gcode/src/index/indexer/overlay.rs|crates/gcode/src/index/indexer/overlay.rs]] - `crates/gcode/src/index/indexer/overlay.rs` exposes 17 indexed API symbols.
+- [[code/files/crates/gcode/src/index/indexer/overlay.rs|crates/gcode/src/index/indexer/overlay.rs]] - The file implements overlay project file indexing and reconciliation. It determines which files to index in an overlay project by reconciling file states between parent and overlay indices using the `overlay_reconcile_action` function, which evaluates file existence, content hashes, and indexability to decide whether to Index, Inherit, Tombstone, DeleteOverlay, or Skip each file. The main entry point `index_overlay_files` discovers candidate files through multiple sources (git status, database queries, explicit paths), reconciles them against parent and overlay indexed states, and separates results for AST parsing versus content-only processing. Supporting functions handle git integration (status parsing with timeouts, porcelain format validation), database queries for file states, relative path mapping and filtering, soft-delete operations via tombstone records, and configuration of git operation timeouts.
 [crates/gcode/src/index/indexer/overlay.rs:32-35]
 [crates/gcode/src/index/indexer/overlay.rs:38-44]
 [crates/gcode/src/index/indexer/overlay.rs:46-82]
 [crates/gcode/src/index/indexer/overlay.rs:84-255]
 [crates/gcode/src/index/indexer/overlay.rs:257-288]
-- [[code/files/crates/gcode/src/index/indexer/pipeline.rs|crates/gcode/src/index/indexer/pipeline.rs]] - `crates/gcode/src/index/indexer/pipeline.rs` exposes 7 indexed API symbols.
+- [[code/files/crates/gcode/src/index/indexer/pipeline.rs|crates/gcode/src/index/indexer/pipeline.rs]] - This file implements the indexing pipeline orchestration for the gcode indexer. It provides the main entry point `index_files` which establishes a database connection and routes to the appropriate indexing strategy via `index_files_with_connection`. That router dispatches to either overlay indexing, discovered file indexing, or explicit file indexing based on project scope and request contents. The discovered files flow uses `walker::discover_files_with_options` with configuration from `discovery_options` to find candidates, then processes them through `index_discovered_files`. The explicit files flow uses `index_explicit_files_with_connection` for directly specified paths, optionally incorporating discovery through `explicit_route_with_discovery_options`. Supporting utilities like `cleanup_skipped_file_if_indexed` manage state cleanup. Together these functions form the decision tree and orchestration logic that coordinates file discovery, filtering, semantic resolution, and indexing outcomes.
 [crates/gcode/src/index/indexer/pipeline.rs:27-30]
 [crates/gcode/src/index/indexer/pipeline.rs:32-45]
 [crates/gcode/src/index/indexer/pipeline.rs:47-173]
 [crates/gcode/src/index/indexer/pipeline.rs:175-302]
 [crates/gcode/src/index/indexer/pipeline.rs:304-308]
-- [[code/files/crates/gcode/src/index/indexer/sink.rs|crates/gcode/src/index/indexer/sink.rs]] - `crates/gcode/src/index/indexer/sink.rs` exposes 11 indexed API symbols.
+- [[code/files/crates/gcode/src/index/indexer/sink.rs|crates/gcode/src/index/indexer/sink.rs]] - This file defines a sink abstraction for persisting code indexing data to PostgreSQL. The CodeFactSink trait specifies an interface for managing indexed code facts, providing methods to delete obsolete data (file facts, non-symbol facts, stale symbols) and upsert current data (symbols, files, imports, calls, content chunks). PostgresCodeFactSink implements this trait as a generic wrapper around a database connection, delegating all operations to corresponding functions in the api module. Together, these pieces enable the indexer to maintain a consistent code database by cleanly separating the indexing logic from the underlying database persistence layer.
 [crates/gcode/src/index/indexer/sink.rs:6-34]
 [crates/gcode/src/index/indexer/sink.rs:36-38]
 [crates/gcode/src/index/indexer/sink.rs:41-43]
 [crates/gcode/src/index/indexer/sink.rs:50-52]
 [crates/gcode/src/index/indexer/sink.rs:54-60]
-- [[code/files/crates/gcode/src/index/indexer/tests.rs|crates/gcode/src/index/indexer/tests.rs]] - `crates/gcode/src/index/indexer/tests.rs` exposes 40 indexed API symbols.
+- [[code/files/crates/gcode/src/index/indexer/tests.rs|crates/gcode/src/index/indexer/tests.rs]] - This file contains the indexer’s test suite, with small helpers for writing temp files and asserting that public indexer types remain CLI-independent, plus a `RecordingCodeFactSink` test double that tracks every code-fact write path. The tests exercise file indexing and cleanup behavior end to end: serialization contracts, PostgreSQL invalidation scoping, unsupported-file classification, parsed-file fact emission, symbol-summary preservation across reindexing, explicit file routing and gitignore handling, overlay reconciliation, and deleted/skipped file projection cleanup.
 [crates/gcode/src/index/indexer/tests.rs:24-30]
 [crates/gcode/src/index/indexer/tests.rs:32-40]
 [crates/gcode/src/index/indexer/tests.rs:43-62]
 [crates/gcode/src/index/indexer/tests.rs:65-84]
 [crates/gcode/src/index/indexer/tests.rs:87-105]
-- [[code/files/crates/gcode/src/index/indexer/types.rs|crates/gcode/src/index/indexer/types.rs]] - `crates/gcode/src/index/indexer/types.rs` exposes 12 indexed API symbols.
+- [[code/files/crates/gcode/src/index/indexer/types.rs|crates/gcode/src/index/indexer/types.rs]] - This file defines the core data structures for the code indexing subsystem. IndexRequest specifies indexing parameters including project root, path filters, and control flags for depth, C++ semantics, and projection sync. IndexOutcome is the primary result struct that aggregates comprehensive metrics from an indexing operation—file counts (scanned, indexed, skipped), indexed entity counts (symbols, imports, calls), processing timings via IndexDurations, unsupported file types, and optional degradation diagnostics and projection sync status. Supporting types include IndexDegradation (an enum for various indexing failures), FileIndexCounts (per-file statistics), UnsupportedFileType (tracking unsupported extensions), and OverlayIndexMetadata (project reference metadata). These types work together to configure indexing operations and serialize complete indexing results with detailed metrics and diagnostics.
 [crates/gcode/src/index/indexer/types.rs:8-17]
 [crates/gcode/src/index/indexer/types.rs:20-25]
 [crates/gcode/src/index/indexer/types.rs:29-42]
 [crates/gcode/src/index/indexer/types.rs:45-68]
 [crates/gcode/src/index/indexer/types.rs:71-76]
-- [[code/files/crates/gcode/src/index/indexer/util.rs|crates/gcode/src/index/indexer/util.rs]] - `crates/gcode/src/index/indexer/util.rs` exposes 14 indexed API symbols.
+- [[code/files/crates/gcode/src/index/indexer/util.rs|crates/gcode/src/index/indexer/util.rs]] - This utility module supports the code indexer's path handling and file discovery operations. It provides path filtering that uses lexical prefix matching with canonical path fallback to identify files within specified directories, file type categorization that aggregates unsupported files by extension with example collection, and relative path computation supporting multiple strategies: absolute path prefix stripping, lexical path component diffing for cross-directory cases, and path normalization. The functions compose to enable directory-scoped indexing with proper symlink and cross-platform path handling, while tracking unsupported file types for reporting. Constants define default exclusion patterns, and tests verify behavior across platform-specific cases like UNC paths, mixed separators, and cross-drive scenarios.
 [crates/gcode/src/index/indexer/util.rs:28-66]
 [crates/gcode/src/index/indexer/util.rs:70-93]
 [crates/gcode/src/index/indexer/util.rs:95-101]
@@ -350,29 +345,29 @@ sequenceDiagram
 - `1f23c1ce-dc5f-5a3a-b7d7-6d0460aa821a`
 - `337e0088-4236-5a84-956d-8ef4e82ed3a6`
 - `d345608e-3d2e-57d3-b30d-2559654276aa`
-- `894d5e2d-a7da-580c-842c-13e50be5da5d`
-- `9e1a0adf-229d-5e34-abb2-f86683ad9418`
-- `113ea5cb-b5c7-53b5-93d9-d0f30984f2d3`
-- `4925aa95-6138-52b2-b41b-cdf6a7fb7a9a`
-- `4a1039df-6e46-5825-b39e-40bf6d2df066`
-- `1338b69e-01ae-51af-800c-39edd113f6fd`
-- `2d437509-ec07-545d-8636-48f4a49d61ce`
-- `af4856e6-f5f1-5b04-a546-c239f80014bd`
-- `271f35b2-97ab-56dc-9dfd-7d14c1eb86a7`
-- `ad01f186-a9b3-58bd-b3e6-cf89a069c04c`
-- `4ad66c05-518e-58ee-9787-9821aeed46be`
-- `62d2d834-f427-5750-9174-7e1e362a10ea`
-- `227a3a94-2cb5-5705-a228-e26c9bbab506`
-- `bcd05110-747d-5ffa-9749-c33026443c53`
-- `e2e0c4ea-52ff-5e40-ab16-db3ba6f2a7e4`
-- `0787f1d1-704a-51e3-826d-c429ef009eef`
-- `79356024-2ab3-5387-8ad2-b88db3ee902d`
-- `52d63b8a-e778-516b-870a-b9864e279df4`
-- `c90f37e8-2143-555b-93b3-afb981479de4`
-- `67751663-d09a-5b66-9770-29891765fc32`
-- `e74aee9d-a324-59ae-ae81-d016a5986d89`
-- `caeb3605-e379-545b-9cb0-dfd7edf99b26`
-- `69a88f91-a48b-5461-9f2d-37daa87902f2`
+- `cb1ede0d-30e3-5627-8743-224b367e3577`
+- `87c041ff-313d-5b8b-bb4d-e29c2ace6c8d`
+- `84dd1f64-5bb5-5824-9019-da5dfea477fe`
+- `77d099ec-1720-50d5-a7f4-d1a439102ba6`
+- `b7c10ebd-c6ef-5d11-a2d5-1372b9f04a33`
+- `57789680-12c3-5318-8c9c-ed63b0e3633b`
+- `b49025b8-8136-5397-9b30-34934448342f`
+- `03fbf907-efa9-5dbc-91be-9a3212521556`
+- `becd65c3-2f32-5c62-a38d-24eaed34ad41`
+- `699f9adc-4821-5420-aa6f-4ed543e7752d`
+- `012f264d-5fb8-5cf7-839e-9bc77ef8925a`
+- `29f2ec76-fe0f-56e0-9cce-d5df71c04dd9`
+- `f9c0921d-74ab-5d46-a979-209eef3c5e22`
+- `c41bf724-242e-5152-b00e-6813dc2214cb`
+- `a76fbbc7-9566-5df4-a262-5f5bf40e3bd3`
+- `e3478d38-ed2e-5998-8c7d-b4c49345fa5d`
+- `b96ef10b-f433-5ae6-b922-f34a171f4db3`
+- `ebae9ab4-f5cf-52a3-9b5d-4b91b993cd84`
+- `10b84684-b35a-55d8-baa8-eb3f75fa9b06`
+- `b2a865aa-5da0-5c97-bcaa-2eaef5e55fc9`
+- `b71c3bb5-a673-50df-86e1-ab79dc0b3486`
+- `d11a636b-dde1-5ab0-8019-c2b16e41ece7`
+- `44a9a3fb-2628-5d1f-867e-7a2fdd841c26`
 - `f008b690-f127-5149-ab35-de6fde0893a2`
 - `59e57725-f26f-5161-91e4-37a99b8855d3`
 - `d196f3e6-dc4d-5be8-826c-fb269952d95d`

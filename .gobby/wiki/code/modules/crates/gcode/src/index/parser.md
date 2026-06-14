@@ -28,14 +28,9 @@ provenance:
   - 218-223
   - 226-232
   - 234-244
-  - 235-237
-  - 239-243
   - 247-252
   - 255-259
   - 261-371
-  - 262-362
-  - 364-366
-  - 368-370
   - 373-375
   - 377-379
   - 381-391
@@ -88,6 +83,9 @@ provenance:
   - 67-151
   - 158-163
   - 166-172
+- file: crates/gcode/src/index/parser/tests.rs
+  ranges:
+  - 1-8
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -99,38 +97,79 @@ Parent: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 
 ## Overview
 
-The `parser` module extracts function and method call sites during code indexing, producing indexed call symbols for cross-reference analysis. It supports both AST-based detection (including JavaScript-specific handling) and textual scan/regex-based detection, with specialized Dart line-scanning that tracks code, string, and comment contexts to avoid false positives. Core capabilities include resolving same-file callees, computing qualifier paths, detecting shadowed bindings, splitting qualified callee names, and filtering language keywords. Helper utilities handle UTF-16 column mapping, identifier tokenization (Unicode-aware), block-comment removal, and generic-delimiter disambiguation. An accompanying test suite validates extraction, binding resolution, and keyword-filtering behavior.
-[crates/gcode/src/index/parser/calls.rs:23-32]
-[crates/gcode/src/index/parser/calls/ast.rs:17-96]
-[crates/gcode/src/index/parser/calls/dart_textual.rs:8-55]
-[crates/gcode/src/index/parser/calls/resolution.rs:6-10]
-[crates/gcode/src/index/parser/calls/shadowing.rs:6-23]
+The parser module’s call-indexing responsibility is to extract syntactic call sites from source files and turn them into `CallRelation` records. Its public flow is centered on `extract_calls`, which receives the tree-sitter parse tree, raw source, language spec, extraction context, and optional semantic resolver, then routes Dart through a textual extractor while other languages use the AST extractor [crates/gcode/src/index/parser/calls.rs:44-55]. The shared `CallExtractionContext` carries the language, tree-sitter language, relative and filesystem paths, file symbols, import resolution context, and import bindings needed to interpret a source file , while `CallSite` stores the detected callee, qualifier, byte positions, line, and syntax kind before resolution .
+
+Once a call candidate is found, `materialize_call` performs the resolution-heavy part of the flow. It locates the enclosing caller symbol, resolves same-file callees for the current language, extracts a root alias from qualified calls, checks whether an external target is shadowed, and can fall back to semantic resolution when syntax and import-based resolution are insufficient [crates/gcode/src/index/parser/calls.rs:57-100]. The module is split into focused submodules for AST extraction, Dart textual scanning, resolution, shadowing, and text utilities, with `calls.rs` coordinating those pieces through `mod ast`, `mod dart_textual`, `mod resolution`, `mod shadowing`, and `mod text` .
+
+The child `calls` implementation handles both general tree-sitter query extraction and Dart-specific textual parsing. The AST path runs call queries, requires usable name captures, filters ignored names, handles qualifier paths, and supports JavaScript import bindings for qualified member-call resolution; the Dart path scans source line by line, carries lexical state, skips import/export/type declarations, and rejects candidates from comments, strings, declarations, or ignored keyword contexts before using the same materialization flow. Tests are organized by language families and behavior categories, with `tests.rs` grouping common, resolution, semantic, and language-specific suites for Go/Rust/Java/C#, Kotlin/Swift, PHP/Ruby/Dart/Elixir, and Python/JavaScript/TypeScript coverage [crates/gcode/src/index/parser/tests.rs:1-8].
+
+## Call Diagram
+
+```mermaid
+sequenceDiagram
+    participant m_044945e8_53b2_5a84_abe4_a18304877a11 as is_textual_qualifier_byte &#91;function&#93;
+    participant m_18b2b0c1_9d75_540c_945d_d4927534fe86 as is_angle_operator_neighbor &#91;function&#93;
+    participant m_27126f44_582f_5846_bbb3_35f882af0451 as parameter_list_contains_name &#91;function&#93;
+    participant m_28c9ff78_6b41_50f6_a96d_e43acc99fb8f as is_callable_kind &#91;function&#93;
+    participant m_3159fb65_0a43_5df8_b392_1bc39ff422a6 as textual_call_candidates &#91;function&#93;
+    participant m_3b863457_e36d_5dad_a9b0_be2a70dadf05 as utf16_column_at_byte &#91;function&#93;
+    participant m_4285af00_ea06_5e6e_9bb4_a124b63b67fa as skips_matches_without_name_capture &#91;function&#93;
+    participant m_4369cc1b_3d2f_5e06_b490_edb9cdd35100 as member_call_uses_qualifier_path_from_call_node &#91;function&#93;
+    participant m_5124f9d4_2259_5d16_a479_3131f6cb9b16 as resolve_same_file_callee &#91;function&#93;
+    participant m_53222c78_5e39_5e45_a035_c9b48740a4d6 as call_syntax_kind &#91;function&#93;
+    participant m_647ac655_f5a8_5f0d_a60f_33c8ea2c9ce2 as angle_looks_like_generic_delimiter &#91;function&#93;
+    participant m_6eca919c_11ec_5425_a720_90a47399bf04 as is_memberish_kind &#91;function&#93;
+    participant m_70058089_d832_5fb3_821e_00c47d79f8d2 as ignores_qualified_keyword_callee_after_split &#91;function&#93;
+    participant m_719a45ba_540c_509e_974f_23109a634cfb as resolve_same_file_callee_for_language &#91;function&#93;
+    participant m_75250a72_74e8_5862_ad9b_51b8a6da1a65 as matching_angle_start &#91;function&#93;
+    participant m_91f1f774_696c_59ea_a440_ebfe9a240361 as remove_block_comments &#91;function&#93;
+    participant m_9a912ba2_7c9e_56b2_8ec3_a010eabb16c0 as matching_paren_in_str &#91;function&#93;
+    participant m_9d0c7948_4a09_5532_a9a1_d9c3c4bcb0dd as unique_symbol_id &#91;function&#93;
+    participant m_9ed7304a_528a_586b_adb5_856d6b59e102 as looks_like_textual_function_declaration &#91;function&#93;
+    participant m_a85b31c9_4048_5e10_85e0_98f46229b40d as bare_detected_syntax_upgrades_to_member_when_qualified_name_is_captured &#91;function&#93;
+    participant m_b0d1f2d1_32c5_5ede_87e1_ac1a74ee89e9 as local_name_in_scope_before_call &#91;function&#93;
+    participant m_b3483c06_ebea_51c2_af6f_d117e03e0e14 as extract_js_calls &#91;function&#93;
+    participant m_d2baba53_3b1c_5882_ac45_347bb590c86c as parameter_segment_name &#91;function&#93;
+    participant m_e07e10e4_1d48_574d_8dc2_afdc044556eb as js_bindings &#91;function&#93;
+    participant m_e8df33ef_7361_5e81_9601_63ebdf33a38f as lossy_utf16_units &#91;function&#93;
+    m_27126f44_582f_5846_bbb3_35f882af0451->>m_9a912ba2_7c9e_56b2_8ec3_a010eabb16c0: calls
+    m_27126f44_582f_5846_bbb3_35f882af0451->>m_d2baba53_3b1c_5882_ac45_347bb590c86c: calls
+    m_3159fb65_0a43_5df8_b392_1bc39ff422a6->>m_044945e8_53b2_5a84_abe4_a18304877a11: calls
+    m_3159fb65_0a43_5df8_b392_1bc39ff422a6->>m_75250a72_74e8_5862_ad9b_51b8a6da1a65: calls
+    m_3159fb65_0a43_5df8_b392_1bc39ff422a6->>m_9ed7304a_528a_586b_adb5_856d6b59e102: calls
+    m_3b863457_e36d_5dad_a9b0_be2a70dadf05->>m_e8df33ef_7361_5e81_9601_63ebdf33a38f: calls
+    m_4285af00_ea06_5e6e_9bb4_a124b63b67fa->>m_b3483c06_ebea_51c2_af6f_d117e03e0e14: calls
+    m_4369cc1b_3d2f_5e06_b490_edb9cdd35100->>m_b3483c06_ebea_51c2_af6f_d117e03e0e14: calls
+    m_4369cc1b_3d2f_5e06_b490_edb9cdd35100->>m_e07e10e4_1d48_574d_8dc2_afdc044556eb: calls
+    m_5124f9d4_2259_5d16_a479_3131f6cb9b16->>m_28c9ff78_6b41_50f6_a96d_e43acc99fb8f: calls
+    m_5124f9d4_2259_5d16_a479_3131f6cb9b16->>m_9d0c7948_4a09_5532_a9a1_d9c3c4bcb0dd: calls
+    m_53222c78_5e39_5e45_a035_c9b48740a4d6->>m_6eca919c_11ec_5425_a720_90a47399bf04: calls
+    m_647ac655_f5a8_5f0d_a60f_33c8ea2c9ce2->>m_18b2b0c1_9d75_540c_945d_d4927534fe86: calls
+    m_70058089_d832_5fb3_821e_00c47d79f8d2->>m_b3483c06_ebea_51c2_af6f_d117e03e0e14: calls
+    m_719a45ba_540c_509e_974f_23109a634cfb->>m_5124f9d4_2259_5d16_a479_3131f6cb9b16: calls
+    m_75250a72_74e8_5862_ad9b_51b8a6da1a65->>m_647ac655_f5a8_5f0d_a60f_33c8ea2c9ce2: calls
+    m_a85b31c9_4048_5e10_85e0_98f46229b40d->>m_b3483c06_ebea_51c2_af6f_d117e03e0e14: calls
+    m_a85b31c9_4048_5e10_85e0_98f46229b40d->>m_e07e10e4_1d48_574d_8dc2_afdc044556eb: calls
+    m_b0d1f2d1_32c5_5ede_87e1_ac1a74ee89e9->>m_27126f44_582f_5846_bbb3_35f882af0451: calls
+    m_b0d1f2d1_32c5_5ede_87e1_ac1a74ee89e9->>m_91f1f774_696c_59ea_a440_ebfe9a240361: calls
+```
 
 ## Child Modules
 
-- [[code/modules/crates/gcode/src/index/parser/calls|crates/gcode/src/index/parser/calls]] - The `calls` module extracts function and method call sites during code indexing, supporting both AST-based and textual (regex/scan-based) call detection. It is organized into focused components:
+- [[code/modules/crates/gcode/src/index/parser/calls|crates/gcode/src/index/parser/calls]] - The calls parser module is responsible for turning language-specific call syntax into `CallRelation` records, using both tree-sitter AST extraction and textual fallbacks. The AST path runs call queries, requires usable `name` captures, filters ignored names, and combines qualifier handling with semantic resolution for languages such as JavaScript; its JS entry point also parses imports so qualified member calls can resolve through bindings [crates/gcode/src/index/parser/calls/ast.rs:17-96] [crates/gcode/src/index/parser/calls/ast.rs:109-140] [crates/gcode/src/index/parser/calls/ast.rs:142-154]. The Dart textual path scans source line by line, carries lexical state across lines, skips import/export/type declarations, rejects candidates in comments, strings, declarations, or ignored keyword contexts, and materializes surviving dot-call candidates through the shared call construction flow .
 
-- **ast.rs**: Extracts calls from tree-sitter AST nodes (including JS bindings), classifying call syntax (bare vs. member) and upgrading detection when qualified names are captured.
-- **dart_textual.rs**: Provides a textual fallback scanner for Dart, tracking line/string/comment state (`DartScanState`, `DartLineScan`) to find candidate calls while skipping ignored contexts, type declarations, and function declarations.
-- **resolution.rs**: Resolves callees to same-file symbols, determining enclosing scope, callable/member kinds, and qualifier paths from call nodes.
-- **shadowing.rs**: Detects when external calls are shadowed by local bindings or parameters in scope, parsing assignments, declarations, and stripping block comments.
-- **text.rs**: Low-level text utilities for UTF-16 column/offset handling, identifier byte classification (Unicode XID aware), token trimming, and filtering out language keywords masquerading as calls.
+Resolution and shadowing provide the semantic guardrails around extraction. `resolution.rs` finds the innermost enclosing symbol, classifies call syntax as bare, member, or other by walking tree-sitter ancestry, recognizes member-like syntax forms, and resolves same-file callees only when a unique callable symbol matches the call shape [crates/gcode/src/index/parser/calls/resolution.rs:6-10] [crates/gcode/src/index/parser/calls/resolution.rs:17-21] [crates/gcode/src/index/parser/calls/resolution.rs:23-46] [crates/gcode/src/index/parser/calls/resolution.rs:48-61]. `shadowing.rs` then prevents external-call resolution when a local parameter or binding with the same bare name, or the same member-call root alias, is in scope before the call site, after stripping nested block comments from the caller prefix [crates/gcode/src/index/parser/calls/shadowing.rs:6-23] [crates/gcode/src/index/parser/calls/shadowing.rs:25-43] [crates/gcode/src/index/parser/calls/shadowing.rs:45-84].
 
-Together these enable robust call-graph extraction across AST-capable and textual-only languages, with careful handling of identifiers, scoping, and shadowing.
-[crates/gcode/src/index/parser/calls/ast.rs:17-96]
-[crates/gcode/src/index/parser/calls/dart_textual.rs:8-55]
-[crates/gcode/src/index/parser/calls/resolution.rs:6-10]
-[crates/gcode/src/index/parser/calls/shadowing.rs:6-23]
-[crates/gcode/src/index/parser/calls/text.rs:4-20]
+The shared text utilities support both textual extraction and resolution by normalizing source positions and identifiers. They compute UTF-16 columns from byte offsets while tolerating invalid UTF-8, trim identifier-like tokens, accept Unicode XID identifiers plus `_` and `$`, define textual call-name bytes for punctuation-bearing names, and centralize language keyword filtering for Dart, Elixir, and Kotlin  . Together, the files split responsibilities cleanly: extractors find candidate call sites, resolution classifies and links them to symbols, shadowing blocks misleading external matches, and text helpers keep location and identifier behavior consistent across parser strategies.
 
 ## Files
 
-- [[code/files/crates/gcode/src/index/parser/calls.rs|crates/gcode/src/index/parser/calls.rs]] - `crates/gcode/src/index/parser/calls.rs` exposes 4 indexed API symbols.
+- [[code/files/crates/gcode/src/index/parser/calls.rs|crates/gcode/src/index/parser/calls.rs]] - This file implements call-site extraction for the indexer. It defines the borrowed `CallExtractionContext` needed to interpret a source file, a `CallSite` record for the syntactic details of each detected call, and `extract_calls`, which dispatches to a Dart-specific textual path or a language-agnostic AST-based parser. The internal `materialize_call` helper turns a parsed call site into a `CallRelation` by resolving the caller’s enclosing symbol, checking same-file and import-based targets, accounting for shadowing, and falling back to semantic resolution when needed.
 [crates/gcode/src/index/parser/calls.rs:23-32]
 [crates/gcode/src/index/parser/calls.rs:35-42]
 [crates/gcode/src/index/parser/calls.rs:44-55]
 [crates/gcode/src/index/parser/calls.rs:57-132]
-- [[code/files/crates/gcode/src/index/parser/tests.rs|crates/gcode/src/index/parser/tests.rs]] - `crates/gcode/src/index/parser/tests.rs` has no indexed API symbols. 
+- [[code/files/crates/gcode/src/index/parser/tests.rs|crates/gcode/src/index/parser/tests.rs]] - This file declares test modules for the GCode parser index functionality. It organizes test submodules by programming language groups (Go/Rust/Java/C#, Kotlin/Swift, PHP/Ruby/Dart/Elixir, Python/JavaScript/TypeScript) and testing categories (common, resolution, semantic). It serves as the main test module organization file for the parser index component. [crates/gcode/src/index/parser/tests.rs:1-8]
 
 ## Components
 
@@ -138,74 +177,4 @@ Together these enable robust call-graph extraction across AST-capable and textua
 - `52986442-3c6c-5b74-8b49-4b78638db497`
 - `e903b8d9-6b22-5ad3-a5aa-330b94923a9e`
 - `0d374fc6-9cf4-539f-9c71-7ad4d398aa09`
-- `01939a5b-e090-5540-8d47-89bb67ced83d`
-- `b3483c06-ebea-51c2-af6f-d117e03e0e14`
-- `e07e10e4-1d48-574d-8dc2-afdc044556eb`
-- `4285af00-ea06-5e6e-9bb4-a124b63b67fa`
-- `70058089-d832-5fb3-821e-00c47d79f8d2`
-- `4369cc1b-3d2f-5e06-b490-edb9cdd35100`
-- `a85b31c9-4048-5e10-85e0-98f46229b40d`
-- `e61b2a21-72d5-5d34-8e75-b367e3ad76ba`
-- `2738a422-f288-534e-a366-5e9e46974efe`
-- `3159fb65-0a43-5df8-b392-1bc39ff422a6`
-- `044945e8-53b2-5a84-abe4-a18304877a11`
-- `75250a72-74e8-5862-ad9b-51b8a6da1a65`
-- `647ac655-f5a8-5f0d-a60f-33c8ea2c9ce2`
-- `18b2b0c1-9d75-540c-945d-d4927534fe86`
-- `a0546f1a-f17f-57c6-b2ff-422ba208d0c1`
-- `6baf9d3f-da3f-5253-b8b2-51b1f14b40bf`
-- `1f8978c2-802f-5f74-bade-eb9b8c282f14`
-- `c1a66187-3bcc-5091-b205-1883d9e3935b`
-- `c94c5b27-366d-50be-b9e8-f8f2e7af1dc8`
-- `826e8df3-be70-5ac4-ada1-55a31359f6ff`
-- `b7006ee4-fd09-55a8-b408-ca7ca1e92081`
-- `f3fb79da-43d4-545c-b031-131b84dca8a2`
-- `ddf1d64c-873e-530c-8e50-7993d3724101`
-- `8a1a9ca2-9049-55c1-b8f6-bc61d1c51cab`
-- `c3e16433-934e-5dfc-a56a-f42893a6a5b1`
-- `dcc92820-a198-56bc-bbad-0abad5c21c36`
-- `3efdcaae-3db8-5670-b839-7d379eb7a396`
-- `c99e04de-c6b8-5a5a-90af-0d60d1bc23f3`
-- `0467e7e4-5fdd-570e-9d33-c53d9783c68f`
-- `9ed7304a-528a-586b-adb5-856d6b59e102`
-- `05532d20-0797-5f98-b19e-15a7f431a888`
-- `9c30b856-c855-5c26-aa73-bdd164c437a1`
-- `53222c78-5e39-5e45-a035-c9b48740a4d6`
-- `6eca919c-11ec-5425-a720-90a47399bf04`
-- `28c9ff78-6b41-50f6-a96d-e43acc99fb8f`
-- `5124f9d4-2259-5d16-a479-3131f6cb9b16`
-- `719a45ba-540c-509e-974f-23109a634cfb`
-- `9d0c7948-4a09-5532-a9a1-d9c3c4bcb0dd`
-- `720986cd-dadd-56a2-ad70-5fdc2a966923`
-- `88a242ea-d394-5089-b65f-fcb57556954f`
-- `1ad174c0-0cae-569e-a964-41e540ed90c0`
-- `de130dfa-ced4-5096-aa07-d865ac254172`
-- `f711cf40-36c2-52cf-a202-bec5a2006631`
-- `b0d1f2d1-32c5-5ede-87e1-ac1a74ee89e9`
-- `91f1f774-696c-59ea-a440-ebfe9a240361`
-- `27126f44-582f-5846-bbb3-35f882af0451`
-- `9a912ba2-7c9e-56b2-8ec3-a010eabb16c0`
-- `d2baba53-3b1c-5882-ac45-347bb590c86c`
-- `f415fafa-d665-539d-a4b7-afc5cc430827`
-- `cf48944d-8b8e-5118-af00-bdfbe3bcfd31`
-- `c4cf63f5-441f-58dc-bb8d-ce325f3b1102`
-- `5c036c95-a10b-5266-bb92-093fffd8426f`
-- `1918300f-65c6-5a07-afb9-d4f94583c372`
-- `e2847a7f-7c36-5a77-a2e2-4ba041ba4fd9`
-- `ec04f0a0-efd8-52c8-a5c3-599458fe9acf`
-- `b17f0d6c-1293-5411-b64d-0d647a9e93db`
-- `a4ea9e5c-1e62-5126-8f32-c7c46b895e78`
-- `06cdea89-74a0-5cb1-b281-6ff2abd3ab95`
-- `5cb38be7-7a0b-55f3-a86e-19cfbc4a490b`
-- `80f0837f-99ac-5448-8675-89e6bf304849`
-- `fdf5bec9-0f92-580b-ad2e-d55c1b4ab60c`
-- `3b863457-e36d-5dad-a9b0-be2a70dadf05`
-- `e8df33ef-7361-5e81-9601-63ebdf33a38f`
-- `c03b08bd-256c-5124-9ad7-47206d4ca21c`
-- `761af537-d29e-5635-af22-70470219838a`
-- `d84b1f89-9474-5ae0-b6eb-11f06485d78b`
-- `73d66dcf-5b03-5775-be09-6972894fa9a9`
-- `7c1d719b-94ea-51f9-a0d0-a3e8634e8930`
-- `c93f116e-886b-57d7-9591-c47dab4c5380`
-- `652e44d5-64b2-5fd4-bd27-4d0381e2b588`
 

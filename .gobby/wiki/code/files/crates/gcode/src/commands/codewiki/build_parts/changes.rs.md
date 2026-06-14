@@ -20,7 +20,7 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gco
 
 ## Purpose
 
-`crates/gcode/src/commands/codewiki/build_parts/changes.rs` exposes 5 indexed API symbols.
+This file generates markdown documentation of changes between CodewikiIndexSnapshot versions. The main function build_codewiki_changes_doc compares two snapshots (or designates the current one as a baseline if no previous version exists), identifies file and symbol additions, removals, and content modifications, then compiles them into a structured markdown document. Supporting functions handle specific tasks: changes_frontmatter serializes change metadata including baseline and degradation status into YAML frontmatter, write_bullet_section appends markdown sections with level-2 headings and bullet-point lists, and symbol_label formats code symbols with their qualified names, kinds, and file paths for display. The pieces work together to produce a human-readable change report with metadata, summary statistics, and detailed lists of modifications.
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:5-101]
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:104-113]
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:115-138]

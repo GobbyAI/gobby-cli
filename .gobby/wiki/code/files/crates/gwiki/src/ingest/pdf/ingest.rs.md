@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gwiki/src/ingest/pdf|crates/gwiki/src/ingest/pdf]]
 
 ## Purpose
 
-`crates/gwiki/src/ingest/pdf/ingest.rs` exposes 9 indexed API symbols.
+Implements the PDF ingestion pipeline for gwiki: it accepts either pre-rendered page snapshots or full PDF files, turns them into Markdown and assets, and optionally reindexes the wiki afterward. The no-index variants do the core work by extracting text-layer pages when available, falling back to vision-based page ingestion when needed, normalizing page text, merging PDF pages, and recording degradations or failures in the ingest result. The rollback and cleanup helpers undo registered PDF sources and remove temporary PDF files, with `pdf_cleanup_detail` providing the cleanup summary message.
 [crates/gwiki/src/ingest/pdf/ingest.rs:23-37]
 [crates/gwiki/src/ingest/pdf/ingest.rs:41-52]
 [crates/gwiki/src/ingest/pdf/ingest.rs:55-108]

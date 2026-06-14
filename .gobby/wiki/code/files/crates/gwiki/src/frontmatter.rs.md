@@ -46,7 +46,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/frontmatter.rs` exposes 35 indexed API symbols.
+Defines the wiki frontmatter model and its parse/serialize pipeline. `FrontmatterFormat` selects YAML or TOML, `WikiFrontmatter` holds the canonical metadata fields plus an `unknown` map to preserve legacy or tool-specific keys, and `empty`/`as_json` provide a normalized default and JSON export. The parser side splits out frontmatter delimiters, parses metadata into typed fields, converts generic objects into `WikiFrontmatter`, and reports failures through `FrontmatterError`/`ParsedFrontmatter`. The helper serializers and tests cover round-tripping, stale-markdown marking, legacy unknown-field preservation, and migration of shared contract keys into the wiki metadata shape.
 [crates/gwiki/src/frontmatter.rs:10-13]
 [crates/gwiki/src/frontmatter.rs:16-30]
 [crates/gwiki/src/frontmatter.rs:32-116]

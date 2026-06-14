@@ -103,12 +103,11 @@ Parent: [[code/modules/crates/gwiki/src/ingest|crates/gwiki/src/ingest]]
 
 ## Overview
 
-The `document` module manages the ingestion and extraction of HTML and Office documents (DOCX, PPTX, and XLSX) into normalized Markdown. It defines core types for document requests and extraction results, parses visible text and tabular structures with safety limits, and implements rendering pathways with graceful error degradation.
-[crates/gwiki/src/ingest/document/html.rs:8-39]
-[crates/gwiki/src/ingest/document/mod.rs:21-27]
-[crates/gwiki/src/ingest/document/office.rs:39-52]
-[crates/gwiki/src/ingest/document/render.rs:11-33]
-[crates/gwiki/src/ingest/document/tests.rs:9-18]
+The `crates/gwiki/src/ingest/document` module owns document ingestion from snapshot to wiki-ready output. Its core types model the incoming asset, extraction request, extraction result, and final ingest result, with `DocumentIngestResult` converting back into the shared `IngestResult` shape used by the wider ingest system. The module wires local extractors into ingest entry points that can optionally update the index after writing assets and markdown, while keeping endpoint availability and degradation metadata explicit in the API .
+
+Extraction is split by document family. HTML ingestion decodes bytes, parses a DOM, extracts a normalized title, walks the body or root node, skips non-visible `head`, `script`, and `style` content, and normalizes collected text into markdown; if no readable text remains, it returns a degraded `HtmlNoContent` extraction while preserving the original asset [crates/gwiki/src/ingest/document/html.rs:8-39] [crates/gwiki/src/ingest/document/html.rs:41-51] [crates/gwiki/src/ingest/document/html.rs:53-76]. Office ingestion routes by extension to DOCX, PPTX, or spreadsheet extractors, using bounded ZIP/XML reads and environment-overridable limits for entry size, slides, rows, and columns so large or malformed inputs can still produce structured partial markdown with warnings and degradation metadata [crates/gwiki/src/ingest/document/office.rs:39-52] .
+
+Rendering completes the pipeline by producing raw document markdown, resolving the derived markdown path, creating parent directories, and atomically staging then flushing final content to disk. Its helpers also classify failure modes and unit counts, including PDF-specific and unsupported-source fallbacks, so downstream callers receive consistent degradation reporting when extraction or rendering cannot fully succeed [crates/gwiki/src/ingest/document/render.rs:11-33] [crates/gwiki/src/ingest/document/render.rs:36-67]  [crates/gwiki/src/ingest/document/render.rs:124-211]. The integration tests exercise these collaborations with in-memory DOCX, PPTX, XLSX, and HTML fixtures, verifying successful markdown conversion and indexing alongside graceful behavior for malformed, oversized, empty, and formatting-sensitive inputs [crates/gwiki/src/ingest/document/tests.rs:9-18] .
 
 ## Call Diagram
 
@@ -163,31 +162,33 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gwiki/src/ingest/document/html.rs|crates/gwiki/src/ingest/document/html.rs]] - `crates/gwiki/src/ingest/document/html.rs` exposes 12 indexed API symbols.
+- [[code/files/crates/gwiki/src/ingest/document/html.rs|crates/gwiki/src/ingest/document/html.rs]] - Parses HTML documents into normalized markdown for wiki ingestion. It reads bytes into a scraper DOM, extracts a decoded/formatted `<title>`, then walks the body or root element to gather visible text while skipping head/script/style content. Block-level elements split text into separate parts, inline text is spaced and trimmed carefully, and the collected text is normalized by decoding entities and standardizing whitespace before being returned as `DocumentExtraction`. If no readable content is found, it emits a degraded extraction with `HtmlNoContent` metadata. The included tests lock in whitespace normalization and block-element classification behavior.
 [crates/gwiki/src/ingest/document/html.rs:8-39]
 [crates/gwiki/src/ingest/document/html.rs:41-51]
 [crates/gwiki/src/ingest/document/html.rs:53-76]
 [crates/gwiki/src/ingest/document/html.rs:78-96]
 [crates/gwiki/src/ingest/document/html.rs:98-110]
-- [[code/files/crates/gwiki/src/ingest/document/mod.rs|crates/gwiki/src/ingest/document/mod.rs]] - `crates/gwiki/src/ingest/document/mod.rs` exposes 19 indexed API symbols.
+- [[code/files/crates/gwiki/src/ingest/document/mod.rs|crates/gwiki/src/ingest/document/mod.rs]] - This module defines the document-ingest pipeline for gwiki. It models an incoming document snapshot, a borrowed extraction request, and the resulting ingest/extraction records, then converts ingest results into the normalized `IngestResult` used elsewhere.
+
+The main flow ingests a `DocumentSnapshot` either through a supplied `DocumentEndpoint` or a local extractor, writes the raw markdown and asset files, records degradation metadata when extraction is limited or unavailable, and optionally reindexes the wiki afterward. `LocalDocumentExtractor` routes HTML and Office documents to specialized extraction paths, while small helpers handle filename extension lookup, HTML entity decoding, cleanup after failures, and consistent document-specific error creation.
 [crates/gwiki/src/ingest/document/mod.rs:21-27]
 [crates/gwiki/src/ingest/document/mod.rs:30-36]
 [crates/gwiki/src/ingest/document/mod.rs:38-46]
 [crates/gwiki/src/ingest/document/mod.rs:39-45]
 [crates/gwiki/src/ingest/document/mod.rs:49-53]
-- [[code/files/crates/gwiki/src/ingest/document/office.rs|crates/gwiki/src/ingest/document/office.rs]] - `crates/gwiki/src/ingest/document/office.rs` exposes 26 indexed API symbols.
+- [[code/files/crates/gwiki/src/ingest/document/office.rs|crates/gwiki/src/ingest/document/office.rs]] - Implements office-document ingestion and bounded text extraction for `.docx`, `.pptx`, and spreadsheet formats. `extract_office_document` routes by file extension to the format-specific extractors, while the `office_max_*` helpers read environment overrides for limits on ZIP entry size, slide count, and spreadsheet dimensions. The rest of the file provides the low-level ZIP/XML parsing and markdown rendering machinery: it opens archives, reads entries safely, extracts XML paragraphs and slide numbers, converts spreadsheet rows into markdown tables, escapes cell text, and emits warnings when text is ignored or paragraphs are empty so the extractor can return truncated but structured document content.
 [crates/gwiki/src/ingest/document/office.rs:39-52]
 [crates/gwiki/src/ingest/document/office.rs:54-56]
 [crates/gwiki/src/ingest/document/office.rs:58-60]
 [crates/gwiki/src/ingest/document/office.rs:62-64]
 [crates/gwiki/src/ingest/document/office.rs:66-68]
-- [[code/files/crates/gwiki/src/ingest/document/render.rs|crates/gwiki/src/ingest/document/render.rs]] - `crates/gwiki/src/ingest/document/render.rs` exposes 9 indexed API symbols.
+- [[code/files/crates/gwiki/src/ingest/document/render.rs|crates/gwiki/src/ingest/document/render.rs]] - This file turns document ingest results into markdown and writes them safely to disk. `render_raw_document_markdown` builds a front-matter-rich markdown stub for the original document asset, while `write_document_derived_markdown` resolves the derived markdown path, creates parent directories, renders the final document markdown, and persists it. The write path uses `write_document_markdown_atomic` plus `create_document_temp_file` so content is first staged in a temp file and then flushed atomically. The remaining helpers classify failures into degradation metadata and unit counts, including special handling for PDF failures and non-document sources, so callers can report the right fallback behavior when rendering does not succeed.
 [crates/gwiki/src/ingest/document/render.rs:11-33]
 [crates/gwiki/src/ingest/document/render.rs:36-67]
 [crates/gwiki/src/ingest/document/render.rs:69-93]
 [crates/gwiki/src/ingest/document/render.rs:95-122]
 [crates/gwiki/src/ingest/document/render.rs:124-211]
-- [[code/files/crates/gwiki/src/ingest/document/tests.rs|crates/gwiki/src/ingest/document/tests.rs]] - `crates/gwiki/src/ingest/document/tests.rs` exposes 16 indexed API symbols.
+- [[code/files/crates/gwiki/src/ingest/document/tests.rs|crates/gwiki/src/ingest/document/tests.rs]] - Test helpers and integration tests for document ingest in the wiki pipeline. The file builds minimal DOCX, PPTX, XLSX, and HTML-like fixtures from ZIP/XML bytes, ingests them into a `MemoryWikiStore`, and verifies the extractor behavior end to end: successful Office/HTML conversion to markdown and indexing, graceful degradation on malformed or oversized inputs, uniform degradation metadata, bounded ZIP/XML and slide/row extraction, and a couple of HTML formatting edge cases.
 [crates/gwiki/src/ingest/document/tests.rs:9-18]
 [crates/gwiki/src/ingest/document/tests.rs:20-25]
 [crates/gwiki/src/ingest/document/tests.rs:27-38]

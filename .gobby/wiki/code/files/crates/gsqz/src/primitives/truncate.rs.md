@@ -28,7 +28,7 @@ Module: [[code/modules/crates/gsqz/src/primitives|crates/gsqz/src/primitives]]
 
 ## Purpose
 
-`crates/gsqz/src/primitives/truncate.rs` exposes 13 indexed API symbols.
+This file provides line-truncation utilities for `Vec<String>` output. `truncate` keeps a configurable head and tail, inserts an omission marker when content is shortened, and can switch to regex-based section truncation when `per_file_lines` and `file_marker` are set. `truncate_per_section` groups lines by section markers, truncates oversized sections independently, and preserves smaller sections unchanged; the test module exercises empty, boundary, head/tail-only, and per-section cases, plus invalid-regex fallback.
 [crates/gsqz/src/primitives/truncate.rs:5-27]
 [crates/gsqz/src/primitives/truncate.rs:29-67]
 [crates/gsqz/src/primitives/truncate.rs:74-78]

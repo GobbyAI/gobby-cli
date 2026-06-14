@@ -55,12 +55,11 @@ Parent: [[code/modules/crates/gcode/src/index/import_resolution|crates/gcode/src
 
 ## Overview
 
-This module implements language-specific import statement parsing for import resolution. The `mod.rs` entry point dispatches to per-language parsers via `parse_import_statement`, seeds import bindings, resolves external callees, and records unparsed imports. Dedicated files handle distinct language families: Go and Rust (including grouped/path imports), Java and C# (with global alias normalization), PHP and Kotlin (use groups, wildcards, import kinds), Python and JavaScript, and a `rest` module covering Swift, Ruby, Dart, and Elixir. Each parser extracts module paths and symbol bindings used downstream to map imports to resolved targets.
-[crates/gcode/src/index/import_resolution/parser/go_rust.rs:12-40]
-[crates/gcode/src/index/import_resolution/parser/java_csharp.rs:8-60]
-[crates/gcode/src/index/import_resolution/parser/mod.rs:29-54]
-[crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:7-14]
-[crates/gcode/src/index/import_resolution/parser/python_js.rs:11-98]
+The parser module is the language-dispatch layer for import-resolution indexing. `parse_import_statement` routes raw import text by language to focused parsers for Python/JavaScript, Go/Rust, Java/C#, PHP/Kotlin, and Swift/Ruby/Dart/Elixir, while unsupported languages fall back to `push_unparsed_import` so the relation is still tracked in a generic form. The module also owns shared follow-up behavior: seeding external root bindings for languages such as Rust and Elixir, and resolving external callees by combining bindings, qualified-path analysis, and wildcard-import ambiguity checks. [crates/gcode/src/index/import_resolution/parser/mod.rs:29-54] [crates/gcode/src/index/import_resolution/parser/mod.rs:56-74] [crates/gcode/src/index/import_resolution/parser/mod.rs:76-126] [crates/gcode/src/index/import_resolution/parser/mod.rs:128-203]
+
+Each language file converts syntax-specific import forms into the same `ExtractedImports` shape: an `ImportRelation` from the current file to the imported module, plus binding metadata that later callee resolution can use. Python and JavaScript split imports, normalize aliases, and distinguish module dependencies from member or namespace bindings; Go and Rust handle block/group imports and register usable aliases for external modules or roots; Java and C# handle static imports, aliases, wildcards, and C# `global::` normalization. [crates/gcode/src/index/import_resolution/parser/python_js.rs:11-98] [crates/gcode/src/index/import_resolution/parser/python_js.rs:100-194] [crates/gcode/src/index/import_resolution/parser/go_rust.rs:12-40] [crates/gcode/src/index/import_resolution/parser/go_rust.rs:42-77] [crates/gcode/src/index/import_resolution/parser/java_csharp.rs:8-60] [crates/gcode/src/index/import_resolution/parser/java_csharp.rs:62-118]
+
+The remaining parsers cover ecosystems with more specialized import syntax while still feeding the same index contracts. PHP detects function, const, class-like, grouped, aliased, and wildcard `use` forms, with helpers for local-symbol checks and namespace path normalization; Kotlin records imports and external Java class symbol bindings; Swift, Ruby, Dart, and Elixir extract module or root bindings while filtering local modules and language keywords. Together these files keep parsing rules isolated by language, while `mod.rs` provides the common dispatch, fallback, binding seed, and callee-resolution collaboration points. [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:7-14] [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:16-59] [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:68-104] [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:106-147] [crates/gcode/src/index/import_resolution/parser/rest.rs:10-54] [crates/gcode/src/index/import_resolution/parser/rest.rs:56-92] [crates/gcode/src/index/import_resolution/parser/rest.rs:94-121] [crates/gcode/src/index/import_resolution/parser/rest.rs:123-176]
 
 ## Call Diagram
 
@@ -101,32 +100,32 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gcode/src/index/import_resolution/parser/go_rust.rs|crates/gcode/src/index/import_resolution/parser/go_rust.rs]] - `crates/gcode/src/index/import_resolution/parser/go_rust.rs` exposes 7 indexed API symbols.
+- [[code/files/crates/gcode/src/index/import_resolution/parser/go_rust.rs|crates/gcode/src/index/import_resolution/parser/go_rust.rs]] - This file implements import extraction for Go and Rust source text. `parse_go_import_statement` validates Go `import` syntax, handles single imports and parenthesized blocks, and delegates each entry to `parse_go_import_spec`, which records the file-to-module relation and, for external Go modules, registers a usable local alias binding. The Rust side mirrors that role: `parse_rust_import_statement` dispatches `use` parsing into `register_rust_group_imports` for nested group imports and `register_rust_path_import` for individual paths, where external roots are validated and bindings are created for the root, imported symbol, and any alias. The tests confirm that non-import Go and Rust statements are ignored and do not produce extracted imports.
 [crates/gcode/src/index/import_resolution/parser/go_rust.rs:12-40]
 [crates/gcode/src/index/import_resolution/parser/go_rust.rs:42-77]
 [crates/gcode/src/index/import_resolution/parser/go_rust.rs:79-106]
 [crates/gcode/src/index/import_resolution/parser/go_rust.rs:108-136]
 [crates/gcode/src/index/import_resolution/parser/go_rust.rs:138-188]
-- [[code/files/crates/gcode/src/index/import_resolution/parser/java_csharp.rs|crates/gcode/src/index/import_resolution/parser/java_csharp.rs]] - `crates/gcode/src/index/import_resolution/parser/java_csharp.rs` exposes 4 indexed API symbols.
+- [[code/files/crates/gcode/src/index/import_resolution/parser/java_csharp.rs|crates/gcode/src/index/import_resolution/parser/java_csharp.rs]] - Parses Java `import` statements and C# `using` directives into import relations plus binding metadata for the import-resolution index. The Java parser records each import, handles static versus regular imports, skips wildcards, and binds external class members or class aliases; the C# parser does the same for `using` forms, including static imports, aliases, and external namespace roots, with helpers to strip and validate the `global::` qualifier before binding.
 [crates/gcode/src/index/import_resolution/parser/java_csharp.rs:8-60]
 [crates/gcode/src/index/import_resolution/parser/java_csharp.rs:62-118]
 [crates/gcode/src/index/import_resolution/parser/java_csharp.rs:120-122]
 [crates/gcode/src/index/import_resolution/parser/java_csharp.rs:124-137]
-- [[code/files/crates/gcode/src/index/import_resolution/parser/mod.rs|crates/gcode/src/index/import_resolution/parser/mod.rs]] - `crates/gcode/src/index/import_resolution/parser/mod.rs` exposes 4 indexed API symbols.
+- [[code/files/crates/gcode/src/index/import_resolution/parser/mod.rs|crates/gcode/src/index/import_resolution/parser/mod.rs]] - This module coordinates import-resolution parsing across languages. It dispatches each import statement to the appropriate language-specific parser, falls back to recording an unparsed import when the language is unsupported, seeds external module-root bindings from the import resolution context for Rust and Elixir, and resolves external function callees back to their source modules by combining those bindings with qualified-path analysis and wildcard-import ambiguity checks.
 [crates/gcode/src/index/import_resolution/parser/mod.rs:29-54]
 [crates/gcode/src/index/import_resolution/parser/mod.rs:56-74]
 [crates/gcode/src/index/import_resolution/parser/mod.rs:76-126]
 [crates/gcode/src/index/import_resolution/parser/mod.rs:128-203]
-- [[code/files/crates/gcode/src/index/import_resolution/parser/php_kotlin.rs|crates/gcode/src/index/import_resolution/parser/php_kotlin.rs]] - `crates/gcode/src/index/import_resolution/parser/php_kotlin.rs` exposes 9 indexed API symbols.
+- [[code/files/crates/gcode/src/index/import_resolution/parser/php_kotlin.rs|crates/gcode/src/index/import_resolution/parser/php_kotlin.rs]] - Parses PHP and Kotlin import statements for import resolution, turning raw `use`/`import` text into structured bindings in `ExtractedImports`. The PHP path handles local-symbol checks, import kind detection, grouped and ungrouped `use` forms, wildcard modules, path joining, alias splitting, and registration of function, const, and class-like imports. The Kotlin path records imports similarly, including alias handling and symbol-to-module bindings for external Java classes, while the small helpers keep PHP namespace matching and use-path normalization consistent.
 [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:7-14]
 [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:16-59]
 [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:62-66]
 [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:68-104]
 [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:106-147]
-- [[code/files/crates/gcode/src/index/import_resolution/parser/python_js.rs|crates/gcode/src/index/import_resolution/parser/python_js.rs]] - `crates/gcode/src/index/import_resolution/parser/python_js.rs` exposes 2 indexed API symbols.
+- [[code/files/crates/gcode/src/index/import_resolution/parser/python_js.rs|crates/gcode/src/index/import_resolution/parser/python_js.rs]] - This file parses import statements for Python and JavaScript and turns them into import-dependency records plus binding maps. The Python parser handles both `import ...` and `from ... import ...`, splitting top-level entries, normalizing aliases, recording each module in `ExtractedImports.imports`, and registering member bindings only when the module is external; unrecognized forms are sent to the unparsed-import fallback. The JavaScript parser does the same for JS import syntax, extracting the module specifier and classifying namespace and named imports into member or bare bindings while tracking the module dependency.
 [crates/gcode/src/index/import_resolution/parser/python_js.rs:11-98]
 [crates/gcode/src/index/import_resolution/parser/python_js.rs:100-194]
-- [[code/files/crates/gcode/src/index/import_resolution/parser/rest.rs|crates/gcode/src/index/import_resolution/parser/rest.rs]] - `crates/gcode/src/index/import_resolution/parser/rest.rs` exposes 4 indexed API symbols.
+- [[code/files/crates/gcode/src/index/import_resolution/parser/rest.rs|crates/gcode/src/index/import_resolution/parser/rest.rs]] - `crates/gcode/src/index/import_resolution/parser/rest.rs` implements language-specific import parsing for the import-resolution indexer. It handles Swift, Ruby, Dart, and Elixir import-like statements, extracts the imported module or root binding, records an `ImportRelation`, and registers external dependencies when the target is not a local module or language keyword.
 [crates/gcode/src/index/import_resolution/parser/rest.rs:10-54]
 [crates/gcode/src/index/import_resolution/parser/rest.rs:56-92]
 [crates/gcode/src/index/import_resolution/parser/rest.rs:94-121]

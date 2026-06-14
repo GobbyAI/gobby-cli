@@ -26,7 +26,7 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-`crates/gcode/src/git.rs` exposes 11 indexed API symbols.
+This module inspects and classifies Git repository worktrees. It defines a `WorktreeKind` enum and `WorktreeInfo` struct to represent git directory metadata. The core `worktree_info()` function resolves repository paths using git commands, canonicalizes them, and classifies the worktree as Main (standard repo), Linked (created with git worktree), or NotGit (not a repository). Supporting functions handle git command execution with error handling, relative path resolution fallbacks, and absolute path conversion. The file includes helper functions for test setup (`run_git`, `commit_initial`) and three test cases validating correct detection of main worktrees, linked worktrees, and repos with separate git directories.
 [crates/gcode/src/git.rs:5-9]
 [crates/gcode/src/git.rs:12-17]
 [crates/gcode/src/git.rs:19-51]

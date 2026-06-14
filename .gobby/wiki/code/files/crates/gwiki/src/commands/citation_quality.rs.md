@@ -59,7 +59,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-`crates/gwiki/src/commands/citation_quality.rs` exposes 44 indexed API symbols.
+Builds and executes the `citation-quality` command for a wiki scope, producing a report artifact plus serialized metadata that summarize citation health. The file defines the report and section data models, computes credibility, coverage gaps, contradictions, stale sources, and confidence from the source manifest, provenance graph, and health report, renders those results into markdown, and writes the artifact; the helper functions handle source scoring, section-ID and slug derivation, AI availability checks, and file output, while the tests verify PostgreSQL attachment requirements, scope filtering, contradiction detection, and report degradation behavior.
 [crates/gwiki/src/commands/citation_quality.rs:26-33]
 [crates/gwiki/src/commands/citation_quality.rs:36-40]
 [crates/gwiki/src/commands/citation_quality.rs:43-49]

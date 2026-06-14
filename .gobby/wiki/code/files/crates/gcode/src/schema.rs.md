@@ -10,9 +10,9 @@ provenance:
   - 73-88
   - 91-93
   - 99-105
-  - 112-120
-  - 124-129
-  - 132-137
+  - 116-123
+  - 127-132
+  - 135-140
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -24,7 +24,9 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-`crates/gcode/src/schema.rs` exposes 9 indexed API symbols.
+This file validates that a PostgreSQL Gobby hub has the expected runtime schema before gcode uses it. `validate_runtime_schema` checks for the `pg_search` extension, the BM25 score procedure, required code-index tables, and required BM25 indexes, failing fast with a migration hint if anything is missing.
+
+The helper functions each probe one part of the database catalog: `extension_exists` checks `pg_extension`, `procedure_exists` resolves a `regprocedure`, and `missing_relations` looks up tables or indexes via `to_regclass`, with `required_relation_regclass_name` providing the schema-qualified names used by the checks. The tests verify that missing schema is reported clearly and that relation checks target the expected schema.
 [crates/gcode/src/schema.rs:24-52]
 [crates/gcode/src/schema.rs:54-63]
 [crates/gcode/src/schema.rs:65-71]
@@ -51,13 +53,13 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 - `required_schema_contract_names_code_index_tables_and_bm25_indexes` (function) component `required_schema_contract_names_code_index_tables_and_bm25_indexes [function]` (`a5d232ea-38f2-543c-a5cc-32837548312c`) lines 99-105 [crates/gcode/src/schema.rs:99-105]
   - Signature: `fn required_schema_contract_names_code_index_tables_and_bm25_indexes() {`
   - Purpose: This function verifies that the schema contract includes the `code_symbols` and `code_content_chunks` tables, the `code_symbols_search_bm25` and `code_content_search_bm25` BM25 indexes, and that `BM25_SCORE_REGPROCEDURE` equals `pdb.score(anyelement)`. [crates/gcode/src/schema.rs:99-105]
-- `validates_runtime_schema_when_postgres_test_dsn_is_set` (function) component `validates_runtime_schema_when_postgres_test_dsn_is_set [function]` (`38e653de-169a-5be2-a62e-e6a3c2c14888`) lines 112-120 [crates/gcode/src/schema.rs:112-120]
+- `validates_runtime_schema_when_postgres_test_dsn_is_set` (function) component `validates_runtime_schema_when_postgres_test_dsn_is_set [function]` (`52413b93-42d7-5ac0-9eae-8ec893e60908`) lines 116-123 [crates/gcode/src/schema.rs:116-123]
   - Signature: `fn validates_runtime_schema_when_postgres_test_dsn_is_set() {`
-  - Purpose: Returns early unless `GCODE_POSTGRES_TEST_DATABASE_URL` is set, then opens a read-write PostgreSQL connection to that URL and asserts `validate_runtime_schema(&mut client)` succeeds. [crates/gcode/src/schema.rs:112-120]
-- `missing_schema_requires_setup` (function) component `missing_schema_requires_setup [function]` (`15e7262d-8f3e-5afe-a928-04f01b3df459`) lines 124-129 [crates/gcode/src/schema.rs:124-129]
+  - Purpose: Indexed function `validates_runtime_schema_when_postgres_test_dsn_is_set` in `crates/gcode/src/schema.rs`. [crates/gcode/src/schema.rs:116-123]
+- `missing_schema_requires_setup` (function) component `missing_schema_requires_setup [function]` (`ed4a76b3-0990-507d-be46-0068f4883db9`) lines 127-132 [crates/gcode/src/schema.rs:127-132]
   - Signature: `fn missing_schema_requires_setup() {`
-  - Purpose: This test asserts that `MIGRATION_HINT` includes `gcode setup --standalone`, enforcing that missing runtime schema guidance directs standalone users to run explicit setup. [crates/gcode/src/schema.rs:124-129]
-- `relation_validation_qualifies_public_schema` (function) component `relation_validation_qualifies_public_schema [function]` (`9b645547-0b6c-5fe8-aa8d-069622245b11`) lines 132-137 [crates/gcode/src/schema.rs:132-137]
+  - Purpose: Indexed function `missing_schema_requires_setup` in `crates/gcode/src/schema.rs`. [crates/gcode/src/schema.rs:127-132]
+- `relation_validation_qualifies_public_schema` (function) component `relation_validation_qualifies_public_schema [function]` (`cebd5590-90dd-56e5-8214-eba948346301`) lines 135-140 [crates/gcode/src/schema.rs:135-140]
   - Signature: `fn relation_validation_qualifies_public_schema() {`
-  - Purpose: It verifies that `required_relation_regclass_name("code_symbols")` resolves an unqualified relation name to the schema-qualified form `"public.code_symbols"`. [crates/gcode/src/schema.rs:132-137]
+  - Purpose: Indexed function `relation_validation_qualifies_public_schema` in `crates/gcode/src/schema.rs`. [crates/gcode/src/schema.rs:135-140]
 

@@ -31,7 +31,9 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-`crates/gcode/src/project.rs` exposes 16 indexed API symbols.
+This file manages project identity resolution for gcode in standalone mode. It implements a hierarchical resolution strategy (existing gobby project.json > existing gcode-owned gcode.json > generated identity) to determine and track project identifiers. The core components work together as follows:
+
+IsolationMarker struct represents parent project relationships for tracking isolation boundaries. The identity reading functions (read_gcode_json, read_isolation_marker) retrieve existing project metadata from .gobby config files. code_index_id_for_root generates deterministic UUIDs using canonical file paths, while ensure_gcode_json creates or retrieves the project identity file with metadata (ID, name, creation timestamp), returning both the ID and a flag indicating whether the file was newly initialized. Supporting utilities include has_identity_file to check for identity file presence, now_iso8601 for RFC3339 timestamps, and absolute_fallback for reliable path resolution. The file includes extensive unit tests verifying deterministic ID generation across multiple invocations, correct config file handling, idempotent gcode.json creation, isolation marker deserialization, and timestamp formatting.
 [crates/gcode/src/project.rs:15-18]
 [crates/gcode/src/project.rs:21-30]
 [crates/gcode/src/project.rs:35-44]

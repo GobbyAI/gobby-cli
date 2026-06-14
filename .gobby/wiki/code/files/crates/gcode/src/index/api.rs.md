@@ -29,7 +29,7 @@ Module: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 
 ## Purpose
 
-`crates/gcode/src/index/api.rs` exposes 15 indexed API symbols.
+This file provides the database API layer for persisting code analysis facts to PostgreSQL. It defines two main data structures: CodeFactWriteRequest captures the counts of code elements to write for a file, while CodeFactWriteSummary tracks write statistics and sync state. The file implements deletion functions (delete_file_facts, delete_file_non_symbol_facts, delete_stale_file_symbols) to clean up stale index data and upsert functions (upsert_symbols, upsert_file, upsert_content_chunks, upsert_project_stats, upsert_imports, upsert_calls) to incrementally write code analysis results into various database tables including code_symbols, code_indexed_files, code_content_chunks, code_imports, and code_calls. These components work together to provide a complete CRUD interface for managing indexed code metadata.
 [crates/gcode/src/index/api.rs:16-23]
 [crates/gcode/src/index/api.rs:26-34]
 [crates/gcode/src/index/api.rs:36-48]

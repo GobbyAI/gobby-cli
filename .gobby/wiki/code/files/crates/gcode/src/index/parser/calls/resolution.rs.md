@@ -27,7 +27,7 @@ Module: [[code/modules/crates/gcode/src/index/parser/calls|crates/gcode/src/inde
 
 ## Purpose
 
-`crates/gcode/src/index/parser/calls/resolution.rs` exposes 12 indexed API symbols.
+This file resolves call references within a single source file by combining symbol-table lookup with tree-sitter syntax analysis. It finds the innermost enclosing symbol for an offset, classifies a call as bare, member, or other by walking the AST, and then uses that classification plus name/qualifier parsing helpers to match a callee to a unique symbol ID, with language-specific filtering to avoid false positives such as Ruby bare calls.
 [crates/gcode/src/index/parser/calls/resolution.rs:6-10]
 [crates/gcode/src/index/parser/calls/resolution.rs:17-21]
 [crates/gcode/src/index/parser/calls/resolution.rs:23-46]

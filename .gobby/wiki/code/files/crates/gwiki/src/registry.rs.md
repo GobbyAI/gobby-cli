@@ -29,7 +29,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/registry.rs` exposes 14 indexed API symbols.
+This file defines the serialized wiki registry model and the persistence logic for updating it safely on disk. `Registry` stores topic and project registrations in ordered maps, while `TopicRegistration` and `ProjectRegistration` capture the identifying metadata and paths for each scope. `register_scope` loads the current registry, inserts or replaces the entry for a topic or project, and writes the updated JSON atomically under an exclusive file lock. The supporting helpers handle lock acquisition with exponential backoff, generate lock and temporary file paths, perform durable atomic writes, and read the registry back with a default fallback when the file is missing. The tests cover lock backoff behavior, overwrite semantics, and temp-path uniqueness.
 [crates/gwiki/src/registry.rs:15-20]
 [crates/gwiki/src/registry.rs:23-26]
 [crates/gwiki/src/registry.rs:29-33]

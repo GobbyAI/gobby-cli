@@ -4,16 +4,7 @@ type: code_file
 provenance:
 - file: crates/gcode/assets/import_roots/ruby_require_roots.json
   ranges:
-  - '2'
-  - '3'
-  - '4'
-  - '5'
-  - '6'
-  - '7'
-  - '8'
-  - '9'
-  - '10'
-  - '11'
+  - 2-11
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -25,7 +16,7 @@ Module: [[code/modules/crates/gcode/assets/import_roots|crates/gcode/assets/impo
 
 ## Purpose
 
-`crates/gcode/assets/import_roots/ruby_require_roots.json` exposes 10 indexed API symbols.
+This file is a JSON configuration that maps Ruby require paths to their root module namespaces. It contains entries for common Ruby standard library modules (json, fileutils, net/http, net/https) and third-party gems (faraday, nokogiri, rspec and its submodules), each paired with their corresponding top-level constant names. The mapping enables gcode to resolve which root module a given Ruby require statement belongs to, supporting code analysis and import tracking for Ruby projects.
 [crates/gcode/assets/import_roots/ruby_require_roots.json:2]
 [crates/gcode/assets/import_roots/ruby_require_roots.json:3]
 [crates/gcode/assets/import_roots/ruby_require_roots.json:4]

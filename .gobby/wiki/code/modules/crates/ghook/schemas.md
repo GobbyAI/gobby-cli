@@ -4,100 +4,10 @@ type: code_module
 provenance:
 - file: crates/ghook/schemas/diagnose-output.v2.schema.json
   ranges:
-  - '2'
-  - '3'
-  - '4'
-  - '5'
-  - '6'
-  - 7-18
-  - '19'
-  - 20-79
-  - 21-24
-  - '22'
-  - '23'
-  - 25-28
-  - '26'
-  - '27'
-  - 29-32
-  - '30'
-  - '31'
-  - 33-36
-  - '34'
-  - '35'
-  - 37-39
-  - '38'
-  - 40-42
-  - '41'
-  - 43-45
-  - '44'
-  - 46-49
-  - '47'
-  - '48'
-  - 50-53
-  - '51'
-  - '52'
-  - 54-58
-  - '55'
-  - '56'
-  - '57'
-  - 59-61
-  - '60'
-  - 62-64
-  - '63'
-  - 65-67
-  - '66'
-  - 68-70
-  - '69'
-  - 71-74
-  - '72'
-  - '73'
-  - 75-78
-  - '76'
-  - '77'
+  - 2-79
 - file: crates/ghook/schemas/inbox-envelope.v1.schema.json
   ranges:
-  - '2'
-  - '3'
-  - '4'
-  - '5'
-  - '6'
-  - 7-15
-  - '16'
-  - 17-63
-  - 18-22
-  - '19'
-  - '20'
-  - '21'
-  - 23-27
-  - '24'
-  - '25'
-  - '26'
-  - 28-31
-  - '29'
-  - '30'
-  - 32-36
-  - '33'
-  - '34'
-  - '35'
-  - 37-39
-  - '38'
-  - 40-44
-  - '41'
-  - '42'
-  - '43'
-  - 45-62
-  - '46'
-  - '47'
-  - 48-51
-  - '49'
-  - '50'
-  - 52-61
-  - 53-56
-  - '54'
-  - '55'
-  - 57-60
-  - '58'
-  - '59'
+  - 2-63
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -109,22 +19,21 @@ Parent: [[code/modules/crates/ghook|crates/ghook]]
 
 ## Overview
 
-The `crates/ghook/schemas` module defines JSON Schema contracts for ghook's data interchange. It contains two versioned schemas: `diagnose-output.v2.schema.json`, which specifies the diagnostic report format (CLI detection, daemon connection details, terminal context, and installation metadata), and `inbox-envelope.v1.schema.json`, which describes queued hook event envelopes (schema version, enqueue timestamp, hook type, input data, source, and Gobby project/session headers). These schemas serve as the validation and documentation source of truth for ghook's structured outputs and message payloads.
-[crates/ghook/schemas/diagnose-output.v2.schema.json:2]
-[crates/ghook/schemas/inbox-envelope.v1.schema.json:2]
-[crates/ghook/schemas/diagnose-output.v2.schema.json:3]
-[crates/ghook/schemas/diagnose-output.v2.schema.json:4]
-[crates/ghook/schemas/diagnose-output.v2.schema.json:5]
+The `crates/ghook/schemas` module defines the strict JSON contracts for ghook’s external diagnostic and queueing surfaces. Both schemas use draft-07 JSON Schema identifiers and object-level validation, with `additionalProperties: false` to keep emitted data predictable and reject unknown fields  [crates/ghook/schemas/diagnose-output.v2.schema.json:19]  [crates/ghook/schemas/inbox-envelope.v1.schema.json:16].
+
+The diagnose schema covers `ghook --diagnose --cli=<c> --type=<t>` output, requiring versioned metadata about the ghook binary, selected CLI and hook type, criticality, terminal-context state, daemon URL/host/port, and CLI recognition [crates/ghook/schemas/diagnose-output.v2.schema.json:4] [crates/ghook/schemas/diagnose-output.v2.schema.json:7]. Version 2 keeps the v1 fields unchanged while adding install provenance through nullable `install_method` and `install_source_url`, sourced from sidecar metadata next to the binary when available [crates/ghook/schemas/diagnose-output.v2.schema.json:5] [crates/ghook/schemas/diagnose-output.v2.schema.json:68] [crates/ghook/schemas/diagnose-output.v2.schema.json:72].
+
+The inbox envelope schema describes the files ghook writes to `~/.gobby/hooks/inbox/` for later replay by the daemon drain worker [crates/ghook/schemas/inbox-envelope.v1.schema.json:4]. Its flow centers on a versioned envelope containing enqueue time, critical flag, hook type, original stdin payload, source CLI, and daemon-style headers [crates/ghook/schemas/inbox-envelope.v1.schema.json:7]. Header validation allows arbitrary non-empty string headers while explicitly documenting optional Gobby project and session IDs, letting ghook persist the same routing context that would be sent directly to the daemon [crates/ghook/schemas/inbox-envelope.v1.schema.json:43] [crates/ghook/schemas/inbox-envelope.v1.schema.json:51].
 
 ## Files
 
-- [[code/files/crates/ghook/schemas/diagnose-output.v2.schema.json|crates/ghook/schemas/diagnose-output.v2.schema.json]] - `crates/ghook/schemas/diagnose-output.v2.schema.json` exposes 50 indexed API symbols.
+- [[code/files/crates/ghook/schemas/diagnose-output.v2.schema.json|crates/ghook/schemas/diagnose-output.v2.schema.json]] - Defines the draft-07 JSON Schema for `ghook --diagnose` output version 2. The schema names the document, fixes `schema_version` to `2`, and requires the core diagnostic fields that describe the installed `ghook` binary, the selected CLI/hook type, daemon connection details, whether the command is critical, and whether the CLI was recognized. It also allows optional contextual fields like `source`, project identifiers, and terminal preview data, while forbidding unknown properties. Version 2 extends the v1 shape with `install_method` and `install_source_url` so diagnose output can report install provenance from the sidecar metadata.
 [crates/ghook/schemas/diagnose-output.v2.schema.json:2]
 [crates/ghook/schemas/diagnose-output.v2.schema.json:3]
 [crates/ghook/schemas/diagnose-output.v2.schema.json:4]
 [crates/ghook/schemas/diagnose-output.v2.schema.json:5]
 [crates/ghook/schemas/diagnose-output.v2.schema.json:6]
-- [[code/files/crates/ghook/schemas/inbox-envelope.v1.schema.json|crates/ghook/schemas/inbox-envelope.v1.schema.json]] - `crates/ghook/schemas/inbox-envelope.v1.schema.json` exposes 42 indexed API symbols.
+- [[code/files/crates/ghook/schemas/inbox-envelope.v1.schema.json|crates/ghook/schemas/inbox-envelope.v1.schema.json]] - Defines the JSON Schema v1 for a Gobby ghook inbox envelope: a strict object written to `~/.gobby/hooks/inbox/` and replayed by the daemon drain worker. It requires the envelope metadata (`schema_version`, `enqueued_at`, `critical`, `hook_type`, `input_data`, `source`, `headers`), forbids extra fields, and constrains each property so consumers can validate the envelope version, timestamp, hook identity, original stdin payload, source CLI, and emitted headers, including optional Gobby project/session IDs.
 [crates/ghook/schemas/inbox-envelope.v1.schema.json:2]
 [crates/ghook/schemas/inbox-envelope.v1.schema.json:3]
 [crates/ghook/schemas/inbox-envelope.v1.schema.json:4]

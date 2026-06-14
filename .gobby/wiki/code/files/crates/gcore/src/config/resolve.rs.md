@@ -47,7 +47,7 @@ Module: [[code/modules/crates/gcore/src/config|crates/gcore/src/config]]
 
 ## Purpose
 
-`crates/gcore/src/config/resolve.rs` exposes 34 indexed API symbols.
+This file centralizes config resolution for the gcore crate: it decodes persisted config values, expands `${VAR}` and `${VAR:-default}` environment references, and provides a layered `ConfigSource` abstraction plus an `EnvOnlySource` for reading settings through different source strategies. On top of that, it defines a family of focused resolvers for specific domains like FalkorDB, Qdrant, embeddings, indexing, AI tuning, routing, booleans, ports, and non-empty values, with small helpers such as `env_value`, `resolve_setting`, and `resolve_setting_from_keys` composing those rules into final config outputs.
 [crates/gcore/src/config/resolve.rs:11-21]
 [crates/gcore/src/config/resolve.rs:24-75]
 [crates/gcore/src/config/resolve.rs:78-84]

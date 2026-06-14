@@ -6,9 +6,6 @@ provenance:
   ranges:
   - 11-14
   - 16-37
-  - 17-22
-  - 24-29
-  - 31-36
   - 39-73
   - 75-99
   - 101-142
@@ -29,7 +26,7 @@ Module: [[code/modules/crates/gcore/src/ai|crates/gcore/src/ai]]
 
 ## Purpose
 
-`crates/gcore/src/ai/transcription.rs` exposes 14 indexed API symbols.
+This file implements the audio transcription/translation client for the AI layer. `TranscriptionTask` is the small task enum that centralizes the string name, required `AiCapability`, and REST path for each operation, so the rest of the code can switch between transcribe and translate consistently. `transcribe` orchestrates the call end to end: it builds an `AiTransport`, resolves the endpoint from config, acquires rate-limit permission, retries the request with backoff, and parses the JSON response into a `TranscriptionResult`. The helper functions split the work into URL resolution, multipart request construction, and low-level wiring such as filename, auth, and optional language handling, while the test helpers exercise multipart assembly and header behavior.
 [crates/gcore/src/ai/transcription.rs:11-14]
 [crates/gcore/src/ai/transcription.rs:16-37]
 [crates/gcore/src/ai/transcription.rs:17-22]

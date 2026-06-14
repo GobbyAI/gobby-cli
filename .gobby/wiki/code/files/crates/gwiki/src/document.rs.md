@@ -6,22 +6,12 @@ provenance:
   ranges:
   - 4-16
   - 18-34
-  - 19-33
   - 37-40
   - 42-71
-  - 43-48
-  - 50-55
-  - 57-62
-  - 64-66
-  - 68-70
   - 74-78
   - 80-96
-  - 81-91
-  - 93-95
   - '98'
   - 100-126
-  - 101-116
-  - 118-125
   - 133-217
 generated_by: gcode-codewiki
 trust: generated
@@ -34,7 +24,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/document.rs` exposes 19 indexed API symbols.
+This file defines the document degradation model used to describe and report parse failures. `DocumentFailureMode` names the supported failure cases and maps each one to a stable string key; `DocumentUnitCount` tags a numeric count with the relevant document unit label (`page_count`, `sheet_count`, or `slide_count`). `DocumentDegradation` combines a failure mode, unit count, and fallback text into one record, while `DocumentDegradationMatrix` formats that record into key-value metadata and a markdown section for human-readable failure reporting. The `document_degradation_matrix` test setup covers the failure modes across office, HTML, and PDF paths.
 [crates/gwiki/src/document.rs:4-16]
 [crates/gwiki/src/document.rs:18-34]
 [crates/gwiki/src/document.rs:19-33]

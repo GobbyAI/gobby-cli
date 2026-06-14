@@ -6,12 +6,9 @@ provenance:
   ranges:
   - 18-20
   - 22-44
-  - 23-29
-  - 31-43
   - 46-61
   - 68-71
   - 73-80
-  - 74-79
   - 82-86
   - 88-93
   - 96-102
@@ -24,16 +21,11 @@ provenance:
   - 153-168
   - 182-185
   - 187-201
-  - 188-200
   - 203-212
-  - 204-211
   - 214-220
   - 223-225
   - 227-232
-  - 228-231
   - 234-242
-  - 235-237
-  - 239-241
   - 245-257
   - 260-279
   - 283-301
@@ -47,7 +39,6 @@ provenance:
   - 22-33
   - 36-42
   - 44-54
-  - 45-53
   - 56-72
   - 79-85
 - file: crates/gwiki/src/support/env.rs
@@ -87,6 +78,9 @@ provenance:
   - 195-208
   - 211-236
   - 239-272
+- file: crates/gwiki/src/support/mod.rs
+  ranges:
+  - 1-12
 - file: crates/gwiki/src/support/postgres.rs
   ranges:
   - 6-39
@@ -99,19 +93,16 @@ provenance:
   - 60-66
   - 68-76
   - 78-87
-  - 89-96
-  - 98-104
-  - 106-111
-  - 114-118
-  - 120-131
+  - 89-95
+  - 97-102
+  - 105-109
+  - 111-122
 - file: crates/gwiki/src/support/search.rs
   ranges:
   - 11-13
   - 15-22
-  - 16-21
   - '24'
   - 26-39
-  - 27-38
   - 41-43
   - 46-51
   - 53-57
@@ -120,15 +111,17 @@ provenance:
   ranges:
   - 7-13
   - 15-22
-  - 24-35
-  - 37-49
-  - 51-59
-  - 61-67
-  - 69-71
-  - 73-75
-  - 77-102
-  - 109-114
-  - 117-127
+  - 26-46
+  - 48-59
+  - 61-73
+  - 75-83
+  - 85-91
+  - 93-95
+  - 97-99
+  - 101-126
+  - 133-138
+  - 141-153
+  - 156-166
 - file: crates/gwiki/src/support/time.rs
   ranges:
   - 3-6
@@ -145,23 +138,16 @@ Parent: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-The `support` module provides shared infrastructure and utilities for the gwiki crate.
+The `support` module gathers gwiki’s shared adapters and normalization helpers behind focused submodules for configuration, counting, environment, graph, Postgres access, scoping, search, text, and time, with `mod.rs` wiring those pieces together for the rest of the crate. Its configuration path can build AI config sources from local Gobby home state or a PostgreSQL hub, with `HubPrimary` resolving regular config values and `$secret:` references through an optional database connection, while local and connection-backed helpers resolve indexing options and shared code graph limits with defaults and config precedence. crates/gwiki/src/support/mod.rs:1-12 crates/gwiki/src/support/config.rs:18-20 crates/gwiki/src/support/config.rs:22-44 crates/gwiki/src/support/config.rs:46-61
 
-Key areas:
-- **Configuration** (`config.rs`, `postgres.rs`): Resolves index options and code-graph limits from local `gcore.yaml`, database connections, and standalone config, with a `PostgresConfigSource` and hub-aware value resolution.
-- **Database connectivity** (`env.rs`): Resolves database URLs from environment, gcore config, bootstrap files, and a loopback-validated broker; validates daemon URLs and parses positive integer env settings.
-- **Scope & selection** (`scope.rs`): Resolves command/search scopes, selection contexts, and store backends (`StoreBm25Backend`, `UnavailableSemanticBackend`), enforcing attached/Postgres index requirements and topic/project precedence.
-- **Search** (`search.rs`): Produces store search hits with keyword scoring, query tokenization, and snippet extraction.
-- **Graph** (`graph.rs`): Builds memory graphs from stores, resolving slug, relative, and external link targets to document paths.
-- **Counts** (`counts.rs`): Tabulates index counts across fixed gwiki Postgres tables.
-- **Text & time helpers** (`text.rs`, `time.rs`): Slugification, path display, document-kind naming, degradation labels, and Unix timestamp utilities.
+The main runtime flows revolve around finding the right backing data and converting it into stable gwiki views. `env.rs` resolves the PostgreSQL URL by preferring direct environment variables, then brokered lookup through the user’s Gobby home bootstrap file, then bootstrap and gcore config fallbacks; it also validates loopback daemon URLs, headers, database URLs, timeouts, and inbox byte limits. `postgres.rs` uses that resolution to require an attached PostgreSQL index, open a readonly client, and run schema validation, while `counts.rs` presents the same `IndexCounts` shape for either memory stores or scoped PostgreSQL tables. crates/gwiki/src/support/env.rs:27-30 crates/gwiki/src/support/env.rs:32-49 crates/gwiki/src/support/env.rs:51-55 crates/gwiki/src/support/postgres.rs:6-39 crates/gwiki/src/support/counts.rs:4-10 crates/gwiki/src/support/counts.rs:22-33
 
-Test fixtures (`EnvGuard`, `TestSource`) support isolated configuration testing.
+The in-memory support flow is built from small reusable collaborators: `scope.rs` resolves user scope selections into identities, search scopes, and optional indexed stores; `graph.rs` turns a memory store into graph facts by copying documents and sources, resolving internal links, rejecting URL-like targets, and using slug or relative-path fallbacks; `search.rs` adapts precomputed BM25 hits, unavailable semantic search, Postgres config lookup, and keyword ranking; and `text.rs` supplies shared tokenization, scoring, safe path normalization, snippets, labels, and slugification. `time.rs` rounds out the package with Unix millisecond timestamps and the downstream `unix-ms:<millis>` collection format. crates/gwiki/src/support/scope.rs:12-36 crates/gwiki/src/support/graph.rs:8-55 crates/gwiki/src/support/graph.rs:57-90 crates/gwiki/src/support/search.rs:15-22 crates/gwiki/src/support/search.rs:26-39 crates/gwiki/src/support/text.rs:7-13 crates/gwiki/src/support/text.rs:26-46 crates/gwiki/src/support/time.rs:8-17
 [crates/gwiki/src/support/config.rs:18-20]
 [crates/gwiki/src/support/counts.rs:4-10]
 [crates/gwiki/src/support/env.rs:21-24]
 [crates/gwiki/src/support/graph.rs:8-55]
-[crates/gwiki/src/support/postgres.rs:6-39]
+[crates/gwiki/src/support/mod.rs:1-12]
 
 ## Call Diagram
 
@@ -170,16 +156,15 @@ sequenceDiagram
     participant m_0e66cf59_0d78_55be_9627_7fe994e92989 as graph_resolves_relative_targets_from_source_document_directory &#91;function&#93;
     participant m_162348de_8b35_5292_872d_aae9d34f1e6a as write_file &#91;function&#93;
     participant m_18b25317_47eb_57e2_a149_7bee167bfb4a as resolve_database_url_from_gcore_config &#91;function&#93;
+    participant m_1fad4bf4_a690_52bc_8d03_af8b394ae02c as database_url_from_env &#91;function&#93;
     participant m_227d07d9_395c_5de5_b248_f26b36b2c4fb as max_inbox_item_bytes_from_env &#91;function&#93;
-    participant m_25edf047_b574_5d44_ba5d_42891d7cc8f1 as search_scope_for_resolved &#91;function&#93;
     participant m_289e2b52_0509_5e66_b63a_ba50562a6513 as graph_uses_distinct_source_document_paths &#91;function&#93;
-    participant m_2e6f0d32_a201_59b5_81e4_20be67a8adcf as slugify &#91;function&#93;
     participant m_30377db8_c862_5fb7_a883_ddd62e0e4acb as resolve_database_url_from_bootstrap_file &#91;function&#93;
-    participant m_3dc3cb65_c67f_558c_9095_1f919ab863c2 as snippets_reserve_space_for_ellipsis &#91;function&#93;
+    participant m_3bcc6db3_11eb_5919_8bfe_ee76e46c64b8 as topic_project_precedence &#91;function&#93;
     participant m_3e2f928b_097a_5b21_9bce_c31e8a06b096 as collect_timestamp &#91;function&#93;
     participant m_410c7d5e_0ab7_5e59_965c_ebac3fe2d0a2 as local_index_options &#91;function&#93;
+    participant m_48263c4e_f642_5b7b_9ebd_554b1bf614e9 as search_scope_for_resolved &#91;function&#93;
     participant m_53594747_a121_50f2_a698_e8d276c76a69 as unix_timestamp_ms_returns_epoch_milliseconds &#91;function&#93;
-    participant m_565c6461_166f_5d18_91c6_23b28a664e08 as snippet_from_text &#91;function&#93;
     participant m_58500376_9458_5dd0_aacc_f3d53c8080f0 as database_url_for &#91;function&#93;
     participant m_60853d35_bf82_58e6_ad93_cc1f079f8d0d as local_shared_code_graph_limits &#91;function&#93;
     participant m_6091d7ec_1fde_5e22_b8d8_76e452eb8ad4 as database_url_broker_rejects_non_loopback_daemon_host &#91;function&#93;
@@ -187,11 +172,9 @@ sequenceDiagram
     participant m_78da5e83_3767_5309_8c31_229eca2daee8 as local_shared_code_graph_limits_read_gcore_yaml &#91;function&#93;
     participant m_7acfa5f4_1a8d_55c2_8c66_45705c0b2ae9 as database_url &#91;function&#93;
     participant m_846416e3_5b33_5a34_aaa2_933004d7b604 as unix_timestamp_ms &#91;function&#93;
-    participant m_8aff6269_e2ef_544a_affd_1f6e579c81b1 as topic_project_precedence &#91;function&#93;
     participant m_920f35da_5b07_5065_b5fa_c5ab57f1ad2c as validate_loopback_daemon_url &#91;function&#93;
     participant m_a6f8ad7e_af2f_59a1_bae5_47c7094b7d91 as slug_target_map &#91;function&#93;
     participant m_aafef5e8_bf8a_5a7f_a7d7_e7a44e2a4855 as parse_positive_u64 &#91;function&#93;
-    participant m_b80d26fc_3355_527f_aa2c_8df0bf8e79d6 as slugify_with_options &#91;function&#93;
     participant m_bb07c06f_6a16_5a03_b359_d42af8261ce6 as non_empty_trimmed &#91;function&#93;
     participant m_c35262bf_e907_56e5_a22b_192bcc35ddcf as resolve_index_options &#91;function&#93;
     participant m_c58bfe53_d5ea_5e3b_8307_5db7d7679aeb as memory_graph_from_store &#91;function&#93;
@@ -200,14 +183,12 @@ sequenceDiagram
     m_0e66cf59_0d78_55be_9627_7fe994e92989->>m_a6f8ad7e_af2f_59a1_bae5_47c7094b7d91: calls
     m_18b25317_47eb_57e2_a149_7bee167bfb4a->>m_bb07c06f_6a16_5a03_b359_d42af8261ce6: calls
     m_227d07d9_395c_5de5_b248_f26b36b2c4fb->>m_aafef5e8_bf8a_5a7f_a7d7_e7a44e2a4855: calls
-    m_25edf047_b574_5d44_ba5d_42891d7cc8f1->>m_8aff6269_e2ef_544a_affd_1f6e579c81b1: calls
     m_289e2b52_0509_5e66_b63a_ba50562a6513->>m_c58bfe53_d5ea_5e3b_8307_5db7d7679aeb: calls
-    m_2e6f0d32_a201_59b5_81e4_20be67a8adcf->>m_b80d26fc_3355_527f_aa2c_8df0bf8e79d6: calls
     m_30377db8_c862_5fb7_a883_ddd62e0e4acb->>m_bb07c06f_6a16_5a03_b359_d42af8261ce6: calls
-    m_3dc3cb65_c67f_558c_9095_1f919ab863c2->>m_565c6461_166f_5d18_91c6_23b28a664e08: calls
     m_3e2f928b_097a_5b21_9bce_c31e8a06b096->>m_846416e3_5b33_5a34_aaa2_933004d7b604: calls
     m_410c7d5e_0ab7_5e59_965c_ebac3fe2d0a2->>m_c35262bf_e907_56e5_a22b_192bcc35ddcf: calls
     m_410c7d5e_0ab7_5e59_965c_ebac3fe2d0a2->>m_fbc1bd41_cbfc_577a_aabe_3bcc8801eb76: calls
+    m_48263c4e_f642_5b7b_9ebd_554b1bf614e9->>m_3bcc6db3_11eb_5919_8bfe_ee76e46c64b8: calls
     m_53594747_a121_50f2_a698_e8d276c76a69->>m_846416e3_5b33_5a34_aaa2_933004d7b604: calls
     m_58500376_9458_5dd0_aacc_f3d53c8080f0->>m_7acfa5f4_1a8d_55c2_8c66_45705c0b2ae9: calls
     m_60853d35_bf82_58e6_ad93_cc1f079f8d0d->>m_d0057609_80cc_5913_9b05_63a231f0a13e: calls
@@ -217,57 +198,59 @@ sequenceDiagram
     m_78da5e83_3767_5309_8c31_229eca2daee8->>m_162348de_8b35_5292_872d_aae9d34f1e6a: calls
     m_78da5e83_3767_5309_8c31_229eca2daee8->>m_60853d35_bf82_58e6_ad93_cc1f079f8d0d: calls
     m_7acfa5f4_1a8d_55c2_8c66_45705c0b2ae9->>m_18b25317_47eb_57e2_a149_7bee167bfb4a: calls
+    m_7acfa5f4_1a8d_55c2_8c66_45705c0b2ae9->>m_1fad4bf4_a690_52bc_8d03_af8b394ae02c: calls
+    m_7acfa5f4_1a8d_55c2_8c66_45705c0b2ae9->>m_30377db8_c862_5fb7_a883_ddd62e0e4acb: calls
 ```
 
 ## Files
 
-- [[code/files/crates/gwiki/src/support/config.rs|crates/gwiki/src/support/config.rs]] - `crates/gwiki/src/support/config.rs` exposes 36 indexed API symbols.
+- [[code/files/crates/gwiki/src/support/config.rs|crates/gwiki/src/support/config.rs]] - This file centralizes gwiki support configuration: it builds AI config sources from either the PostgreSQL hub or local Gobby home settings, resolves indexing options, and loads shared code graph edge limits with fallback/default behavior. `HubPrimary` bridges config reads and `$secret:` resolution to Postgres when available, while the `local_*` and `*_from_conn` helpers layer standalone config with database-backed overrides and map failures into `WikiError`. It also includes small test-support utilities like a scoped `GOBBY_HOME` guard, file writing, and an in-memory `TestSource`, plus tests that verify default limits, config precedence, YAML parsing, and indexing behavior.
 [crates/gwiki/src/support/config.rs:18-20]
 [crates/gwiki/src/support/config.rs:22-44]
 [crates/gwiki/src/support/config.rs:23-29]
 [crates/gwiki/src/support/config.rs:31-43]
 [crates/gwiki/src/support/config.rs:46-61]
-- [[code/files/crates/gwiki/src/support/counts.rs|crates/gwiki/src/support/counts.rs]] - `crates/gwiki/src/support/counts.rs` exposes 8 indexed API symbols.
+- [[code/files/crates/gwiki/src/support/counts.rs|crates/gwiki/src/support/counts.rs]] - This file provides count aggregation for gwiki index data across both in-memory and PostgreSQL-backed stores. `IndexCounts` is a shared result struct for document, chunk, link, source, and ingestion totals; `index_counts` computes those totals directly from `MemoryWikiStore`, while `postgres_index_counts` computes the same shape by calling `postgres_count` for each logical table in a given `SearchScope`. `GwikiTable` centralizes the fixed table-name mapping via `as_identifier`, and the test module verifies those identifiers stay stable.
 [crates/gwiki/src/support/counts.rs:4-10]
 [crates/gwiki/src/support/counts.rs:12-20]
 [crates/gwiki/src/support/counts.rs:22-33]
 [crates/gwiki/src/support/counts.rs:36-42]
 [crates/gwiki/src/support/counts.rs:44-54]
-- [[code/files/crates/gwiki/src/support/env.rs|crates/gwiki/src/support/env.rs]] - `crates/gwiki/src/support/env.rs` exposes 22 indexed API symbols.
+- [[code/files/crates/gwiki/src/support/env.rs|crates/gwiki/src/support/env.rs]] - Resolves the wiki’s PostgreSQL connection details from environment, bootstrap/config files, or a brokered hub lookup, while validating the daemon URL and related request headers used in that flow. `database_url` is the top-level resolver: it prefers direct env vars, then tries broker-based discovery from the user’s gobby home bootstrap file, then falls back to the bootstrap file itself and finally gcore config. The helper functions break that path into smaller steps for reading the local CLI token, constructing and timing out broker requests, validating loopback daemon URLs and database URLs, and deriving request base/host headers. The file also defines parsing for positive byte limits for inbox items, plus tests covering env parsing, broker fallback behavior, and rejection of non-loopback daemon hosts.
 [crates/gwiki/src/support/env.rs:21-24]
 [crates/gwiki/src/support/env.rs:27-30]
 [crates/gwiki/src/support/env.rs:32-49]
 [crates/gwiki/src/support/env.rs:51-55]
 [crates/gwiki/src/support/env.rs:57-66]
-- [[code/files/crates/gwiki/src/support/graph.rs|crates/gwiki/src/support/graph.rs]] - `crates/gwiki/src/support/graph.rs` exposes 11 indexed API symbols.
+- [[code/files/crates/gwiki/src/support/graph.rs|crates/gwiki/src/support/graph.rs]] - Builds an in-memory wiki graph from a memory store by collecting documents, links, and sources into `MemoryWikiGraph` facts. It first copies all stored documents and sources into graph records, then resolves each link target with a target-resolution pipeline that filters out external/URL-like targets, normalizes fragments and path separators, checks for direct document-path matches, and falls back to a precomputed slug-to-path map or relative-path resolution from the source document’s directory. Helper functions centralize path normalization, slug mapping, and external-target detection so the main graph assembly stays focused on translating store state into resolved graph facts.
 [crates/gwiki/src/support/graph.rs:8-55]
 [crates/gwiki/src/support/graph.rs:57-90]
 [crates/gwiki/src/support/graph.rs:92-103]
 [crates/gwiki/src/support/graph.rs:105-107]
 [crates/gwiki/src/support/graph.rs:109-122]
-- [[code/files/crates/gwiki/src/support/mod.rs|crates/gwiki/src/support/mod.rs]] - `crates/gwiki/src/support/mod.rs` has no indexed API symbols. 
-- [[code/files/crates/gwiki/src/support/postgres.rs|crates/gwiki/src/support/postgres.rs]] - `crates/gwiki/src/support/postgres.rs` exposes 2 indexed API symbols.
+- [[code/files/crates/gwiki/src/support/mod.rs|crates/gwiki/src/support/mod.rs]] - Module declaration file that organizes the `support` package for `gwiki`, exposing internal helper submodules for configuration, counting, environment, graph, Postgres access, scoping, search, text, and time, plus a test-only environment module. [crates/gwiki/src/support/mod.rs:1-12]
+- [[code/files/crates/gwiki/src/support/postgres.rs|crates/gwiki/src/support/postgres.rs]] - This file provides PostgreSQL-specific support checks for `gwiki`. `require_attached_index` verifies that a PostgreSQL hub is configured, opens a readonly connection, runs runtime schema validation through `ValidationContext`, and returns a config error if required index pieces are missing. `require_postgres_index` is the lower-level helper that resolves the database URL from environment settings and returns a readonly `postgres::Client`, converting missing config or connection failures into `WikiError::Config`.
 [crates/gwiki/src/support/postgres.rs:6-39]
 [crates/gwiki/src/support/postgres.rs:41-51]
-- [[code/files/crates/gwiki/src/support/scope.rs|crates/gwiki/src/support/scope.rs]] - `crates/gwiki/src/support/scope.rs` exposes 11 indexed API symbols.
+- [[code/files/crates/gwiki/src/support/scope.rs|crates/gwiki/src/support/scope.rs]] - Provides scope-resolution helpers for gwiki commands: it turns a user’s `ScopeSelection` into a resolved wiki scope, an output `ScopeIdentity`, and a matching search scope, then optionally indexes the vault root into an in-memory wiki store. The helpers keep topic/project precedence consistent across search and storage, map resolved scopes back to identities, and enforce that global search scopes are not converted into scoped stores.
 [crates/gwiki/src/support/scope.rs:12-36]
 [crates/gwiki/src/support/scope.rs:38-42]
 [crates/gwiki/src/support/scope.rs:44-55]
 [crates/gwiki/src/support/scope.rs:60-66]
 [crates/gwiki/src/support/scope.rs:68-76]
-- [[code/files/crates/gwiki/src/support/search.rs|crates/gwiki/src/support/search.rs]] - `crates/gwiki/src/support/search.rs` exposes 10 indexed API symbols.
+- [[code/files/crates/gwiki/src/support/search.rs|crates/gwiki/src/support/search.rs]] - This file provides support adapters for wiki search and config lookup. It wraps precomputed BM25 hits in `StoreBm25Backend` so the search trait can return a truncated cloned slice, defines `UnavailableSemanticBackend` as a stub semantic backend that reports Qdrant as not configured, and adapts a live PostgreSQL client through `PostgresConfigSource` to read and resolve configuration values, including `$secret:` references. The `store_search_hits` helper performs keyword-based ranking over in-memory wiki documents by tokenizing the query, scoring matching documents, and returning `WikiSearchResult` values.
 [crates/gwiki/src/support/search.rs:11-13]
 [crates/gwiki/src/support/search.rs:15-22]
 [crates/gwiki/src/support/search.rs:16-21]
 [crates/gwiki/src/support/search.rs:24]
 [crates/gwiki/src/support/search.rs:26-39]
-- [[code/files/crates/gwiki/src/support/text.rs|crates/gwiki/src/support/text.rs]] - `crates/gwiki/src/support/text.rs` exposes 11 indexed API symbols.
+- [[code/files/crates/gwiki/src/support/text.rs|crates/gwiki/src/support/text.rs]] - This file provides shared text utilities for gwiki: it tokenizes search queries, scores text against normalized keywords, safely normalizes code paths to repo-relative form, extracts short snippets from text, and maps degradation states and document/object kinds to stable labels or names. It also exposes slugification helpers plus a small path display helper, so the rest of the crate can reuse consistent text normalization, indexing, and user-facing formatting rules from one place.
 [crates/gwiki/src/support/text.rs:7-13]
 [crates/gwiki/src/support/text.rs:15-22]
-[crates/gwiki/src/support/text.rs:24-35]
-[crates/gwiki/src/support/text.rs:37-49]
-[crates/gwiki/src/support/text.rs:51-59]
-- [[code/files/crates/gwiki/src/support/time.rs|crates/gwiki/src/support/time.rs]] - `crates/gwiki/src/support/time.rs` exposes 3 indexed API symbols.
+[crates/gwiki/src/support/text.rs:26-46]
+[crates/gwiki/src/support/text.rs:48-59]
+[crates/gwiki/src/support/text.rs:61-73]
+- [[code/files/crates/gwiki/src/support/time.rs|crates/gwiki/src/support/time.rs]] - Provides timestamp helpers for the wiki crate. `unix_timestamp_ms` reads the current system time, converts it to Unix epoch milliseconds, and returns a `u64` or a `WikiError` if the clock is before the epoch or the value does not fit in `u64`. `collect_timestamp` wraps that value in the `unix-ms:<millis>` string format for downstream use. The test verifies the millisecond timestamp falls within a reasonable range between a fixed minimum date and the current time.
 [crates/gwiki/src/support/time.rs:3-6]
 [crates/gwiki/src/support/time.rs:8-17]
 [crates/gwiki/src/support/time.rs:24-39]
@@ -353,17 +336,16 @@ sequenceDiagram
 - `0e66cf59-0d78-55be-9627-7fe994e92989`
 - `e5e4bf14-b0e4-5ecf-a2e7-b9ca1e8a01db`
 - `5f965f9d-b719-59de-84bd-72e703a7bc08`
-- `df141688-ee38-5b52-bd23-fc11a48ce4d9`
-- `1d240702-63f1-5372-b4ca-5c3c97aa6710`
-- `ab45668c-9fc1-537d-a96d-8f07bce81dff`
-- `25edf047-b574-5d44-ba5d-42891d7cc8f1`
-- `c5a00368-428f-5a21-a914-ad69e9e221b6`
-- `118423b2-f7d5-5894-9213-cc544048ccdd`
-- `9b22dbcb-071f-5cd1-a54b-31ba0a2d822d`
-- `cdee2a59-85c5-5e73-aa95-10ee01910ed1`
-- `b8f5ad0f-186e-5868-9916-49a43410ac45`
-- `c3447c4f-1834-5fe7-9778-2f7f050e52ad`
-- `8aff6269-e2ef-544a-affd-1f6e579c81b1`
+- `8f54063e-8084-55f1-b7d1-bf23dfd5fb0c`
+- `821fcfba-0b58-5df4-bb53-99251b725b62`
+- `c6b77ff9-7bf5-59cd-a76d-7e4e64dd367e`
+- `48263c4e-f642-5b7b-9ebd-554b1bf614e9`
+- `f7e64c9b-bd8c-56a3-85e1-a58a9e27c5ec`
+- `1a05aa2b-117b-54d7-849b-2696e6197f32`
+- `b5b3766e-efe7-5e0f-a92e-2813c361acfd`
+- `cfa277c0-f6f7-5eed-8532-63622bc7b822`
+- `0b81337a-18a6-53c5-b6fa-fd3e0d49c61c`
+- `3bcc6db3-11eb-5919-8bfe-ee76e46c64b8`
 - `57275bba-d082-54ff-b944-52fdd9f97c05`
 - `8eb2ef98-3345-5b48-b9ce-625bdc330f44`
 - `1f0c3d0f-f271-5426-a656-c12b82843f34`
@@ -376,15 +358,17 @@ sequenceDiagram
 - `23d15dc3-e88a-5fc5-8acf-a92884afbccf`
 - `9d7a2ce6-8feb-5fb6-aa36-19986c3ef7b7`
 - `91790d1a-0fe3-5fc3-ab61-2655714dc637`
-- `565c6461-166f-5d18-91c6-23b28a664e08`
-- `dd4c773e-02ab-5f4e-8e61-b20704393db1`
-- `cd9bfc9c-9322-5e23-91f2-e44d1ea31620`
-- `fb1bdf5a-98ea-5331-88a5-099bb1fb3caa`
-- `865de779-6685-5a45-9b5b-52923941e2ee`
-- `2e6f0d32-a201-59b5-81e4-20be67a8adcf`
-- `b80d26fc-3355-527f-aa2c-8df0bf8e79d6`
-- `3dc3cb65-c67f-558c-9095-1f919ab863c2`
-- `22092578-41f7-5706-83d1-92d63e86a0f5`
+- `e6ee4298-a16f-59b0-8280-90cadaa5fcc3`
+- `a19532b2-de2b-59bd-8b3b-75376c885954`
+- `67129cf2-e917-5cd9-b30a-aed2a05b5be1`
+- `d42b4658-ebe0-52ae-a9e1-373a5a81d760`
+- `972dc6e5-2409-58d6-b9ed-89de9de3b427`
+- `a33408bc-a2eb-574c-b231-09c256188203`
+- `f9678e6e-5cab-5644-9005-69225719f089`
+- `85deb1dd-437d-5e93-bed7-18ce0f2b4493`
+- `9e229e53-0e5c-5140-b948-55f4b02e870a`
+- `8cf79b6a-4e06-5249-bb09-a271f3e99c7a`
+- `68bfe972-fb6b-5463-b9b8-292389fe08ce`
 - `3e2f928b-097a-5b21-9bce-c31e8a06b096`
 - `846416e3-5b33-5a34-aaa2-933004d7b604`
 - `53594747-a121-50f2-a698-e8d276c76a69`

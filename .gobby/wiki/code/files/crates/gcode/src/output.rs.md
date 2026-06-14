@@ -19,7 +19,7 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-`crates/gcode/src/output.rs` exposes 4 indexed API symbols.
+This file provides output formatting utilities for the gcode crate. It defines a `Format` enum with Json and Text variants for specifying output format, and implements three printing functions: `print_json` outputs serializable values as pretty-printed JSON, `print_json_compact` outputs them as compact JSON without whitespace, and `print_text` prints plain string output. Together these functions enable flexible stdout output in multiple formats.
 [crates/gcode/src/output.rs:5-8]
 [crates/gcode/src/output.rs:11-14]
 [crates/gcode/src/output.rs:17-20]

@@ -23,7 +23,7 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-`crates/gcode/src/utils.rs` exposes 8 indexed API symbols.
+Provides small utility helpers for `gcode`: `api_key_fingerprint` turns an API key into a stable 16-character SHA-256 fingerprint, `short_id` trims identifiers to the first eight Unicode characters, and `i64_to_usize` converts signed counts to `usize` with contextual error reporting. The tests lock in truncation behavior, Unicode handling, and deterministic fingerprint output.
 [crates/gcode/src/utils.rs:4-12]
 [crates/gcode/src/utils.rs:14-16]
 [crates/gcode/src/utils.rs:18-22]

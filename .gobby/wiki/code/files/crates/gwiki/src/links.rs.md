@@ -54,7 +54,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/links.rs` exposes 39 indexed API symbols.
+This file implements wiki-style and Markdown link extraction for markdown text, producing `WikiLink` records that capture link kind, raw and normalized targets, optional anchors and aliases, byte offsets, and whether the target resolves against a known set. The main `extract_links` scan skips over fenced and inline code ranges, then delegates to specialized parsers for `[[wikilinks]]` and `[label](destination)` links, while helper functions handle escaping, bracket/parenthesis matching, destination parsing, and path normalization. Normalization logic also deduplicates known targets, preserves URL-like paths, and strips or collapses vault-relative path noise so links can be matched consistently. The tests cover link-shape parsing, alias and bracket edge cases, code-block exclusion, and normalization behavior for suffixes and URL-like targets.
 [crates/gwiki/src/links.rs:4-7]
 [crates/gwiki/src/links.rs:10-19]
 [crates/gwiki/src/links.rs:21-23]

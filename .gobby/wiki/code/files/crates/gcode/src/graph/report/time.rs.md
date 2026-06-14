@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcode/src/graph/report|crates/gcode/src/graph/repo
 
 ## Purpose
 
-`crates/gcode/src/graph/report/time.rs` exposes 1 indexed API symbol. [crates/gcode/src/graph/report/time.rs:3-5]
+This file provides a time utility function for the reporting module. The single public function `now_iso8601` generates a current UTC timestamp formatted as an RFC3339-compliant ISO8601 string with microsecond precision, using chrono's `Utc::now()` and `to_rfc3339_opts()` method with microsecond granularity. [crates/gcode/src/graph/report/time.rs:3-5]
 
 ## API Symbols
 

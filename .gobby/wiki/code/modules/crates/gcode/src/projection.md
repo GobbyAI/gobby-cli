@@ -2,6 +2,9 @@
 title: crates/gcode/src/projection
 type: code_module
 provenance:
+- file: crates/gcode/src/projection/mod.rs
+  ranges:
+  - 1-2
 - file: crates/gcode/src/projection/sync.rs
   ranges:
   - 11-14
@@ -11,9 +14,6 @@ provenance:
   - 40-43
   - 46-52
   - 54-97
-  - 55-63
-  - 65-81
-  - 83-96
   - 100-103
   - 105-112
   - 114-122
@@ -29,7 +29,6 @@ provenance:
   - 328-335
   - 337-348
   - 355-390
-  - 358-361
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -41,14 +40,14 @@ Parent: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-The `projection` module synchronizes indexed code data to downstream projection targets, primarily graph and vector stores. Its core logic lives in `sync.rs`, which defines projection target and status types (`ProjectionTarget`, `ProjectionStatus`, `VectorProjectionState`) alongside sync request and reporting structures (`ProjectionSyncRequest`, `ProjectionSyncReport`/`Reports`, `ProjectionSyncStatus`, `ProjectionSyncError`).
+The projection module is a small root that exposes the `sync` submodule, keeping projection-related implementation in `sync.rs` while `mod.rs` only declares `pub mod sync` (crates/gcode/src/projection/mod.rs:1-2). The sync layer coordinates database projection updates for two targets, graph and vectors, using `ProjectionTarget`, `ProjectionSyncRequest`, and `ProjectionSyncStatus` to describe what project files need syncing and whether graph or vector work is pending (crates/gcode/src/projection/sync.rs:7-28).
 
-It exposes sync entry points—`sync_after_index`, `sync_files_with_state`, `sync_graph_files`/`sync_graph_file`, `sync_vector_files`, and `sync_file`—that propagate code facts to graph and vector projections while tracking per-file synced state (`mark_synced`, `pending_after_code_fact_write`). Reports capture ok, degraded, and error outcomes, with helpers (`typed_projection_error`, `graph_error_kind`, `vector_error_kind`, `vector_lifecycle_from_context`) classifying failures by target.
+Its reporting model separates successful, degraded, and failed projection outcomes through `ProjectionStatus`, `ProjectionSyncError`, and `ProjectionSyncReport` (crates/gcode/src/projection/sync.rs:30-44). Reports can be built as clean successes with synced file and symbol counts, or as degraded results carrying a typed error kind and message while still preserving partial sync counts (crates/gcode/src/projection/sync.rs:46-75). The module collaborates with configuration context, database access, code graph reads, and vector symbol lifecycle code, as shown by its imports from `config::Context`, `db`, `graph::code_graph`, and `vector::code_symbols` (crates/gcode/src/projection/sync.rs:1-6).
+[crates/gcode/src/projection/mod.rs:1-2]
 [crates/gcode/src/projection/sync.rs:11-14]
 [crates/gcode/src/projection/sync.rs:17-21]
 [crates/gcode/src/projection/sync.rs:24-29]
 [crates/gcode/src/projection/sync.rs:33-37]
-[crates/gcode/src/projection/sync.rs:40-43]
 
 ## Call Diagram
 
@@ -78,8 +77,14 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gcode/src/projection/mod.rs|crates/gcode/src/projection/mod.rs]] - `crates/gcode/src/projection/mod.rs` has no indexed API symbols. 
-- [[code/files/crates/gcode/src/projection/sync.rs|crates/gcode/src/projection/sync.rs]] - `crates/gcode/src/projection/sync.rs` exposes 26 indexed API symbols.
+- [[code/files/crates/gcode/src/projection/mod.rs|crates/gcode/src/projection/mod.rs]] - This is a Rust module file that declares a public `sync` submodule within the `projection` module of the gcode crate. It serves as the module root for organizing projection-related functionality, with the actual implementation of the sync module located in a separate file. [crates/gcode/src/projection/mod.rs:1-2]
+- [[code/files/crates/gcode/src/projection/sync.rs|crates/gcode/src/projection/sync.rs]] - This file implements projection synchronization for a code indexing system. It defines structures and functions to track and execute synchronization of code graph and vector projections to a database.
+
+The core data types include ProjectionSyncRequest (specifying which targets to sync), ProjectionSyncStatus (tracking pending operations), and ProjectionSyncReport (capturing outcomes with file/symbol counts and error details). ProjectionTarget enumerates the two projection types: Graph and Vectors.
+
+Synchronization flows through several layers: pending_after_code_fact_write determines what needs syncing based on a request, sync_after_index orchestrates both graph and vector syncs, and sync_files_with_state applies a stateful closure to each file while accumulating metrics. Graph synchronization (sync_graph_files, sync_graph_file) handles lexical facts from PostgreSQL into CodeGraph objects. Vector synchronization (sync_vector_files, sync_file, mark_synced) manages code symbol embeddings through a lifecycle manager extracted from context.
+
+Error handling converts anyhow::Error into typed ProjectionSyncError through graph_error_kind and vector_error_kind mappers. ProjectionSyncReport factory methods (ok, degraded, degraded_from_error) construct outcome reports tracking partial success, with ProjectionSyncReports aggregating both projection types' reports together.
 [crates/gcode/src/projection/sync.rs:11-14]
 [crates/gcode/src/projection/sync.rs:17-21]
 [crates/gcode/src/projection/sync.rs:24-29]

@@ -6,17 +6,10 @@ provenance:
   ranges:
   - '5'
   - 7-23
-  - 8-10
-  - 12-14
-  - 16-18
-  - 20-22
   - 25-29
-  - 26-28
   - 31-38
-  - 32-37
   - 41-66
   - 68-88
-  - 69-87
   - 95-110
   - 114-118
   - 121-129
@@ -33,7 +26,7 @@ Module: [[code/modules/crates/gcode/src/setup|crates/gcode/src/setup]]
 
 ## Purpose
 
-`crates/gcode/src/setup/types.rs` exposes 18 indexed API symbols.
+This file defines setup-time data types for standalone Gobby provisioning, centered on a `Redacted` newtype that wraps optional secrets and hides their contents in `Debug` output while still allowing basic access and cloning. It then uses that wrapper in `StandaloneSetupRequest`, which collects standalone mode, database, embedding, and FalkorDB/Qdrant configuration, with a constructor that fills defaults like `DEFAULT_SCHEMA` and leaves optional fields unset unless provided. The rest of the file defines status and error structs for reporting provisioning progress and outcomes, including service health, embedding configuration, individual failures, and the overall setup result.
 [crates/gcode/src/setup/types.rs:5]
 [crates/gcode/src/setup/types.rs:7-23]
 [crates/gcode/src/setup/types.rs:8-10]

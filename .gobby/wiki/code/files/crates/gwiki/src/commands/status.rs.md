@@ -20,7 +20,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-`crates/gwiki/src/commands/status.rs` exposes 5 indexed API symbols.
+This file implements the `gwiki status` command. `execute` resolves the requested scope and passes it to `render`, which gathers the daemon URL and runtime details, builds both structured JSON and a human-readable summary, and returns a scoped command outcome. `RuntimeStatus` is the small data carrier for the status fields. `runtime_status_for` determines runtime mode by first checking whether a database URL is available: if not, it reports a shell-ready, memory-only state; otherwise it opens a read-only PostgreSQL connection, loads configuration from the Gobby home directory, and derives service configuration such as FalkorDB, Qdrant, and embeddings. `gobby_home` supplies the local Gobby home path used during that config resolution.
 [crates/gwiki/src/commands/status.rs:6-9]
 [crates/gwiki/src/commands/status.rs:11-30]
 [crates/gwiki/src/commands/status.rs:32-36]

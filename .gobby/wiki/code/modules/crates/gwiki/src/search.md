@@ -170,12 +170,11 @@ Parent: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-The crates/gwiki/src/search module implements a robust, multi-strategy search system for wiki documentation. It integrates traditional keyword-based search via BM25 (supporting PostgreSQL and in-memory backends) with vector-based semantic search (leveraging OpenAI embeddings and Qdrant). Additionally, a graph-boosting subsystem ranks documents based on link neighborhood structures using FalkorDB or local memory. The module leverages Reciprocal Rank Fusion (RRF) to combine and prioritize results from these diverse search strategies into a single ranked list, complete with graceful degradation handling when individual backend services are unavailable.
-[crates/gwiki/src/search/bm25.rs:13-17]
-[crates/gwiki/src/search/graph_boost.rs:21-24]
-[crates/gwiki/src/search/mod.rs:14-18]
-[crates/gwiki/src/search/rrf.rs:8-92]
-[crates/gwiki/src/search/semantic.rs:18-22]
+The `crates/gwiki/src/search` module defines the shared wiki-search model and coordinates the concrete retrieval layers. Its root module exposes BM25, graph boost, reciprocal-rank fusion, and semantic search, while defining common scope, source, hit kind, provenance, result, response, path normalization, and error types used across those layers  [crates/gwiki/src/search/mod.rs:20-60]. `SearchScope` provides global, project, and topic filtering with reusable scope-kind/value helpers, and `SearchSource` standardizes source names for BM25, graph, and semantic hits .
+
+The main flow starts with source-specific retrieval. BM25 builds sanitized, parameterized PostgreSQL search SQL from a query, scope, and limit, fetches extra candidates, then keeps only keyword-searchable paths carrying BM25 provenance before truncating to the requested limit . Semantic search separates embedding generation from vector lookup: `search_semantic` short-circuits empty queries and invalid limits, chooses a scoped Qdrant collection, embeds the query, searches vectors, and returns hits with optional degradation status . Graph boost accepts seed paths and a scope, then uses graph backends to rank linked neighborhoods, with no-op and unavailable implementations supporting graceful fallback .
+
+The files collaborate by producing the same `WikiSearchResult` shape with consistent `SearchSource`, `SearchHitKind`, and provenance metadata, then fusing those independent result streams. Graph boost reuses BM25 path-searchability rules so graph-sourced pages remain compatible with keyword-search result constraints . RRF combines BM25, semantic, and graph lists by canonical document identity, merges metadata from duplicate hits, assigns final fusion scores, and preserves degradation details in the final `WikiSearchResponse` [crates/gwiki/src/search/rrf.rs:8-92] [crates/gwiki/src/search/rrf.rs:119-180].
 
 ## Call Diagram
 
@@ -233,31 +232,33 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gwiki/src/search/bm25.rs|crates/gwiki/src/search/bm25.rs]] - `crates/gwiki/src/search/bm25.rs` exposes 33 indexed API symbols.
+- [[code/files/crates/gwiki/src/search/bm25.rs|crates/gwiki/src/search/bm25.rs]] - This file implements BM25-backed wiki search. It defines the request and SQL parameter types, a `Bm25SearchBackend` trait, and a high-level `search_bm25` wrapper that asks a backend for extra candidates, then filters them down to keyword-searchable paths and BM25-sourced hits before truncating to the requested limit. `build_bm25_sql` turns a query, scope, and limit into parameterized PostgreSQL BM25 SQL, using shared score expressions and scope/path predicates, while helpers like `trusted_row_id`, `is_keyword_searchable_path`, and `searchable_path_predicate` support safe SQL construction and path filtering. The file also provides a `PostgresBm25Backend` that runs the SQL and maps rows into `WikiSearchResult` values, a `MemoryBm25Backend` for cached hits in tests or in-memory use, and unit tests that lock down SQL shape, sanitization, path coverage, and row parsing behavior.
 [crates/gwiki/src/search/bm25.rs:13-17]
 [crates/gwiki/src/search/bm25.rs:20-23]
 [crates/gwiki/src/search/bm25.rs:26-37]
 [crates/gwiki/src/search/bm25.rs:39-44]
 [crates/gwiki/src/search/bm25.rs:46-69]
-- [[code/files/crates/gwiki/src/search/graph_boost.rs|crates/gwiki/src/search/graph_boost.rs]] - `crates/gwiki/src/search/graph_boost.rs` exposes 43 indexed API symbols.
+- [[code/files/crates/gwiki/src/search/graph_boost.rs|crates/gwiki/src/search/graph_boost.rs]] - This file defines the graph-boost search layer for gwiki: a backend abstraction for running graph-based search boosts, plus the request, outcome, and config types that control query limits and returned degradation status. It provides a no-op backend, an unavailable backend that always reports a service degradation, and a Falkor-backed implementation that can be configured from `FalkorConfig` and `GraphClient` state. The rest of the file is the ranking and normalization logic that resolves graph targets, filters and scores link neighborhoods, builds boosted hits and results, and constructs graph documents and links for use by wiki search.
 [crates/gwiki/src/search/graph_boost.rs:21-24]
 [crates/gwiki/src/search/graph_boost.rs:26-33]
 [crates/gwiki/src/search/graph_boost.rs:27-32]
 [crates/gwiki/src/search/graph_boost.rs:35-39]
 [crates/gwiki/src/search/graph_boost.rs:41-44]
-- [[code/files/crates/gwiki/src/search/mod.rs|crates/gwiki/src/search/mod.rs]] - `crates/gwiki/src/search/mod.rs` exposes 39 indexed API symbols.
+- [[code/files/crates/gwiki/src/search/mod.rs|crates/gwiki/src/search/mod.rs]] - This module defines the search domain model and shared utilities for wiki search, while re-exporting the BM25, graph-boost, RRF, and semantic submodules that implement the actual retrieval pipeline. It centers on `SearchScope` and `SearchSource` for describing where results come from and how they are filtered, `SearchHitKind` plus provenance structs for attaching chunk/document metadata to hits, and `WikiSearchResult`/`WikiSearchResponse` for packaging ranked results, explanations, and degradation details. It also provides `normalized_path` and `SearchError` so results can be keyed and reported consistently, and includes search helpers/tests that show the search flow combining BM25 with optional semantic and graph boosting, including graceful fallback when backends are unavailable.
 [crates/gwiki/src/search/mod.rs:14-18]
 [crates/gwiki/src/search/mod.rs:20-60]
 [crates/gwiki/src/search/mod.rs:21-23]
 [crates/gwiki/src/search/mod.rs:25-29]
 [crates/gwiki/src/search/mod.rs:31-35]
-- [[code/files/crates/gwiki/src/search/rrf.rs|crates/gwiki/src/search/rrf.rs]] - `crates/gwiki/src/search/rrf.rs` exposes 7 indexed API symbols.
+- [[code/files/crates/gwiki/src/search/rrf.rs|crates/gwiki/src/search/rrf.rs]] - Implements reciprocal-rank fusion for wiki search results by combining BM25, semantic, and graph hit lists into a single `WikiSearchResponse`. `fuse_sources` first collects ranked fusion keys from each source, deduplicates hits in a `BTreeMap` keyed by canonical document identity, merges missing metadata across duplicate hits, then feeds the ranked key lists into the core RRF merge to assign final scores plus ordered source and explanation provenance; `ranked_keys` and `merge_hit_metadata` support that pipeline, while the tests verify duplicate coalescing, canonical page-key behavior, invalid-path rejection, and preservation of degradation metadata.
 [crates/gwiki/src/search/rrf.rs:8-92]
 [crates/gwiki/src/search/rrf.rs:94-96]
 [crates/gwiki/src/search/rrf.rs:98-108]
 [crates/gwiki/src/search/rrf.rs:119-180]
 [crates/gwiki/src/search/rrf.rs:183-225]
-- [[code/files/crates/gwiki/src/search/semantic.rs|crates/gwiki/src/search/semantic.rs]] - `crates/gwiki/src/search/semantic.rs` exposes 64 indexed API symbols.
+- [[code/files/crates/gwiki/src/search/semantic.rs|crates/gwiki/src/search/semantic.rs]] - This file defines the semantic-search abstraction layer for Gobby wiki search. It introduces request and result types, then splits the pipeline into an embedder interface and a vector-search interface so `search_semantic` can turn a query plus scope into embeddings, choose the right Qdrant collection and payload filter, run the vector lookup, and convert hits into `WikiSearchResult` values with any degradation status.
+
+The rest of the file provides concrete backend adapters and helpers for the supported embedding modes and Qdrant behavior, including collection/scope mapping, payload extraction, degradation detection, and “unavailable” or failing test doubles used to exercise error paths and backend-specific search behavior.
 [crates/gwiki/src/search/semantic.rs:18-22]
 [crates/gwiki/src/search/semantic.rs:25-28]
 [crates/gwiki/src/search/semantic.rs:30-35]

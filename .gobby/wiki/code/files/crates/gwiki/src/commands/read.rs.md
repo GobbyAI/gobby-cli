@@ -24,22 +24,11 @@ provenance:
   - 364-378
   - 380-385
   - 387-487
-  - 388-410
-  - 412-427
-  - 429-442
-  - 444-461
-  - 463-486
   - 490-493
   - 495-509
-  - 496-501
-  - 503-508
   - 512-515
   - 518-522
   - 524-557
-  - 525-532
-  - 534-540
-  - 542-548
-  - 550-556
   - 566-592
   - 595-608
   - 611-622
@@ -54,7 +43,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-`crates/gwiki/src/commands/read.rs` exposes 39 indexed API symbols.
+Implements the `read` command for gwiki. `execute` resolves the selected command scope, dispatches to either path-based or title-based lookup, and renders the result as a `CommandOutcome` or `WikiError`. The path flow normalizes and validates vault-relative paths, rejects unreadable locations, checks file existence, then reads markdown content with a byte cap, extracting the first heading and truncation metadata. The title flow searches the scoped wiki tree for matching first headings with bounded depth and scan limits, returning either the unique document, a not-found result, or an ambiguous result with candidates. Supporting types model the requested target, candidate documents, read output, and structured degradation/error messages used to report invalid input, missing documents, and ambiguity.
 [crates/gwiki/src/commands/read.rs:17-28]
 [crates/gwiki/src/commands/read.rs:30-57]
 [crates/gwiki/src/commands/read.rs:59-85]

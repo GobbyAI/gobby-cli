@@ -22,7 +22,7 @@ Module: [[code/modules/crates/gwiki/src/ingest/pdf|crates/gwiki/src/ingest/pdf]]
 
 ## Purpose
 
-`crates/gwiki/src/ingest/pdf/types.rs` exposes 8 indexed API symbols.
+Defines the core data model for PDF ingestion and the helper used to parse fetch timestamps. `PdfPage`, `PdfSnapshot`, `PdfFileSnapshot`, and `PdfRenderedPage` carry the extracted text, raw bytes, page images, and metadata for a PDF at different stages of processing. `PdfIngestOptions` currently just configures render DPI, defaulting to `DEFAULT_PDF_RENDER_DPI` so callers share the same rasterization setting. When the `documents` feature is enabled, `pdf_fetched_at` normalizes a timestamp string into `DateTime<Utc>`, accepting either `unix-ms:` values or RFC3339 and returning config errors for invalid or out-of-range input.
 [crates/gwiki/src/ingest/pdf/types.rs:11-14]
 [crates/gwiki/src/ingest/pdf/types.rs:18-24]
 [crates/gwiki/src/ingest/pdf/types.rs:28-33]

@@ -6,8 +6,6 @@ provenance:
   ranges:
   - 19-37
   - 39-53
-  - 40-45
-  - 47-52
   - 56-59
   - 62-67
   - 70-73
@@ -47,7 +45,7 @@ Module: [[code/modules/crates/gcode/src/index/import_resolution|crates/gcode/src
 
 ## Purpose
 
-`crates/gcode/src/index/import_resolution/context.rs` exposes 32 indexed API symbols.
+This file implements multi-language import resolution by defining an ImportResolutionContext struct that aggregates symbol indices, external package metadata, and resolution overrides across eleven programming languages (Python, JavaScript, Go, Rust, Java, C#, PHP, Ruby, Swift, Dart, and Elixir). The context provides methods to resolve Ruby requires and Elixir modules by checking override mappings before delegating to default lookup functions. Supporting data structures (ExternalImportBinding, ImportBindings, ExternalRootBinding, ExtractedImports, ExternalCallTarget) track bindings between imports and callables. Builder functions populate the context by extracting local symbol indices from source files (via regex parsing and TOML/YAML parsing), loading external dependencies from language-specific manifests (package.json, go.mod, Cargo.toml, pubspec.yaml, mix.exs/mix.lock), and normalizing identifiers (Rust crate name normalization, Python module path conversion). Rust-specific helpers scan workspace manifests and extract crate dependencies; language-specific parsers parallelize extraction of class names, namespaces, constants, and module declarations.
 [crates/gcode/src/index/import_resolution/context.rs:19-37]
 [crates/gcode/src/index/import_resolution/context.rs:39-53]
 [crates/gcode/src/index/import_resolution/context.rs:40-45]

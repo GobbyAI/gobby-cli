@@ -45,7 +45,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-`crates/gcore/src/postgres.rs` exposes 33 indexed API symbols.
+Postgres adapter boundary and hub connection helpers for the `postgres` feature. The file provides read-only and read-write connection entry points, config value lookup from `config_store`, and a small `SchemaCheck` result type plus validator plumbing for checking externally managed schemas without mutating them. It also normalizes `sslmode` handling from URLs or libpq DSNs, maps that policy into TLS connector modes, and builds PostgreSQL clients with the appropriate OpenSSL verification and hostname-check behavior.
 [crates/gcore/src/postgres.rs:16-22]
 [crates/gcore/src/postgres.rs:25-27]
 [crates/gcore/src/postgres.rs:36-45]

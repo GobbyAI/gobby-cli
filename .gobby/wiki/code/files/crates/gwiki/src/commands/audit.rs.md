@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-`crates/gwiki/src/commands/audit.rs` exposes 1 indexed API symbol. [crates/gwiki/src/commands/audit.rs:3-13]
+This file wires the `audit` command into the shared analysis-command pipeline. Its `execute` function takes a `ScopeSelection`, runs `audit::run_with_options` with audit options loaded from the environment, and then renders the resulting report as text via `audit::render_text`. [crates/gwiki/src/commands/audit.rs:3-13]
 
 ## API Symbols
 

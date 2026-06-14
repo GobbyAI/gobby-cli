@@ -35,7 +35,9 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-`crates/gcore/src/degradation.rs` exposes 23 indexed API symbols.
+This file defines the shared degradation and error vocabulary for `gcore`: service availability states, setup diagnostics, and fatal core errors that let callers distinguish partial availability from real failures. `ServiceState`, `SetupIssue`, and `Guidance` model service health and actionable remediation, while `CoreError` captures invalid config, hub conflicts, missing services, and related fatal conditions.
+
+It also includes redaction helpers for database URLs so sensitive credentials are stripped before serialization or display, including support for both URL-style and keyword-style DSNs. `ModalityDegradationReason` and `DegradationKind` provide stable, serde-friendly markers for degradation categories, and the tests enforce that serialization, `Display`, and redaction behavior stay consistent.
 [crates/gcore/src/degradation.rs:12-22]
 [crates/gcore/src/degradation.rs:24-29]
 [crates/gcore/src/degradation.rs:26-28]

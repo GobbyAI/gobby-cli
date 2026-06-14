@@ -6,12 +6,9 @@ provenance:
   ranges:
   - 15-20
   - 22-31
-  - 23-30
   - 33-40
-  - 34-39
   - 43-50
   - 52-60
-  - 54-59
   - 63-69
   - 72-76
   - 79-85
@@ -53,7 +50,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/librarian.rs` exposes 38 indexed API symbols.
+This file defines the librarian’s configuration, report model, analysis helpers, and persistence path for documentation-quality inspection. `Options` controls which dependencies are available, with `offline()` disabling everything and `Default` enabling the PostgreSQL index requirement while otherwise staying offline. `run` gathers health, audit, and lint signals over a scoped vault, then assembles a `ProposalsReport` containing availability checks, suggested remediation tasks, suggested patch diffs, artifact locations, and dependency classifications. The helper functions break that work into small pieces: they detect missing citations, weak provenance, stale or outdated codewiki pages, build check/task/diff records, deduplicate and sort paths, render the report as text, and persist the results to JSON and Markdown artifacts.
 [crates/gwiki/src/librarian.rs:15-20]
 [crates/gwiki/src/librarian.rs:22-31]
 [crates/gwiki/src/librarian.rs:23-30]

@@ -49,7 +49,7 @@ Module: [[code/modules/crates/gwiki/src/search|crates/gwiki/src/search]]
 
 ## Purpose
 
-`crates/gwiki/src/search/graph_boost.rs` exposes 43 indexed API symbols.
+This file defines the graph-boost search layer for gwiki: a backend abstraction for running graph-based search boosts, plus the request, outcome, and config types that control query limits and returned degradation status. It provides a no-op backend, an unavailable backend that always reports a service degradation, and a Falkor-backed implementation that can be configured from `FalkorConfig` and `GraphClient` state. The rest of the file is the ranking and normalization logic that resolves graph targets, filters and scores link neighborhoods, builds boosted hits and results, and constructs graph documents and links for use by wiki search.
 [crates/gwiki/src/search/graph_boost.rs:21-24]
 [crates/gwiki/src/search/graph_boost.rs:26-33]
 [crates/gwiki/src/search/graph_boost.rs:27-32]

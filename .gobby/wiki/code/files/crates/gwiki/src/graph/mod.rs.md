@@ -12,8 +12,6 @@ provenance:
   - 62-67
   - 70-72
   - 74-82
-  - 75-77
-  - 79-81
   - 85-92
   - 95-103
   - 106-113
@@ -23,18 +21,9 @@ provenance:
   - 138-143
   - 146-148
   - 150-156
-  - 151-155
   - 158-239
   - 242-244
   - 246-414
-  - 247-249
-  - 252-254
-  - 256-290
-  - 292-334
-  - 298-301
-  - 336-343
-  - 345-405
-  - 407-413
   - 416-418
   - 420-422
   - 424-426
@@ -77,7 +66,7 @@ Module: [[code/modules/crates/gwiki/src/graph|crates/gwiki/src/graph]]
 
 ## Purpose
 
-`crates/gwiki/src/graph/mod.rs` exposes 62 indexed API symbols.
+Defines the core wiki-graph model and export helpers for `gwiki`: typed records capture documents, sources, links, code edges, and the aggregated fact set; export structs turn those facts into serializable graph nodes, grouped edge categories, and Cypher statements; `GraphExportOptions` carries degraded-source state; `MemoryWikiGraph` stores facts in memory and derives backlinks, link suggestions, and related-path rankings from them; and the helper functions build scope-qualified IDs, normalize paths and labels for graph backends, and provide a few test constructors for documents and links.
 [crates/gwiki/src/graph/mod.rs:22-26]
 [crates/gwiki/src/graph/mod.rs:29-33]
 [crates/gwiki/src/graph/mod.rs:36-39]

@@ -23,7 +23,7 @@ Module: [[code/modules/crates/gsqz/src/primitives|crates/gsqz/src/primitives]]
 
 ## Purpose
 
-`crates/gsqz/src/primitives/filter.rs` exposes 8 indexed API symbols.
+Provides a small line-filtering utility for `gsqz`: `filter_lines` takes owned strings and a slice of regex pattern strings, compiles only the valid patterns, and returns a new vector excluding any line that matches at least one compiled regex. The implementation is simple and data-flow oriented: it fast-paths empty pattern lists by returning the input unchanged, then uses `filter_map` to skip invalid regexes silently before filtering lines against the compiled set. The tests cover the main behaviors together: removing matching lines, preserving input when patterns are empty or match nothing, handling empty input, supporting multiple patterns, and ignoring invalid regex patterns.
 [crates/gsqz/src/primitives/filter.rs:4-15]
 [crates/gsqz/src/primitives/filter.rs:22-32]
 [crates/gsqz/src/primitives/filter.rs:35-39]

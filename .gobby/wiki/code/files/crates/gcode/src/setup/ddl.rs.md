@@ -7,15 +7,7 @@ provenance:
   - 8-10
   - 13-16
   - 18-279
-  - 19-23
-  - 25-27
-  - 29-34
-  - 36-38
-  - 40-278
   - 281-309
-  - 282-284
-  - 286-292
-  - 294-308
   - 311-319
   - 321-338
 generated_by: gcode-codewiki
@@ -29,7 +21,7 @@ Module: [[code/modules/crates/gcode/src/setup|crates/gcode/src/setup]]
 
 ## Purpose
 
-`crates/gcode/src/setup/ddl.rs` exposes 14 indexed API symbols.
+This file defines `GcodeStandaloneSetup`, a schema-aware PostgreSQL setup helper for gcode. It builds a list of schema-qualified DDL objects for the `pg_search` extension and the code-indexing tables, wraps them as `OwnedObject`s, and implements `StandaloneSetup` so those objects can be created sequentially with `SetupContext`, producing a `SetupReport` that records successes, failures, and skipped follow-on objects.
 [crates/gcode/src/setup/ddl.rs:8-10]
 [crates/gcode/src/setup/ddl.rs:13-16]
 [crates/gcode/src/setup/ddl.rs:18-279]

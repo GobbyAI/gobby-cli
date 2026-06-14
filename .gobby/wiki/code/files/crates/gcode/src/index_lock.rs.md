@@ -6,7 +6,6 @@ provenance:
   ranges:
   - 15-21
   - 23-30
-  - 24-29
   - 33-36
   - 38-47
   - 49-52
@@ -17,15 +16,14 @@ provenance:
   - 148-154
   - 156-160
   - 162-191
-  - 163-190
   - 200-214
-  - 216-225
-  - 227-233
-  - 236-238
-  - 241-243
-  - 250-268
-  - 272-298
-  - 302-320
+  - 216-221
+  - 223-229
+  - 232-234
+  - 237-239
+  - 250-266
+  - 274-298
+  - 306-322
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -37,7 +35,9 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-`crates/gcode/src/index_lock.rs` exposes 22 indexed API symbols.
+Implements project-scoped PostgreSQL advisory locking for gcode indexing. It defines lock policies and results, computes a deterministic per-project lock key, acquires the lock with either blocking or brief retry semantics, warns if acquisition is slow, and returns a RAII guard that releases the lock on drop.
+
+The helper `with_project_lock` runs a closure only after the lock is acquired and reports `Busy` otherwise. Test helpers and cases verify key generation, lock contention behavior, and that different project IDs do not block each other.
 [crates/gcode/src/index_lock.rs:15-21]
 [crates/gcode/src/index_lock.rs:23-30]
 [crates/gcode/src/index_lock.rs:24-29]
@@ -91,25 +91,25 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 - `context_for` (function) component `context_for [function]` (`85b117b7-bb60-5d10-a9be-cf809f79fe6a`) lines 200-214 [crates/gcode/src/index_lock.rs:200-214]
   - Signature: `fn context_for(database_url: String, project_id: &str) -> Context {`
   - Purpose: `context_for` constructs and returns a `Context` initialized with the supplied `database_url` and `project_id`, a fixed temporary `project_root`, `quiet = true`, no FalkorDB/Qdrant/embedding/daemon URL, default vector and indexing settings, and `ProjectIndexScope::Single`. [crates/gcode/src/index_lock.rs:200-214]
-- `connect_postgres_test_db` (function) component `connect_postgres_test_db [function]` (`73c49d7e-d58b-5aae-8ba5-43ab46c514cb`) lines 216-225 [crates/gcode/src/index_lock.rs:216-225]
-  - Signature: `fn connect_postgres_test_db() -> Option<String> {`
-  - Purpose: Returns `Some(database_url)` only if `GCODE_POSTGRES_TEST_DATABASE_URL` is set and `db::connect_readwrite` can open it, otherwise logs that PostgreSQL is unavailable for advisory-lock tests and returns `None`. [crates/gcode/src/index_lock.rs:216-225]
-- `hold_project_lock` (function) component `hold_project_lock [function]` (`e2673ab8-a2ba-5e22-a7aa-c246d740b25b`) lines 227-233 [crates/gcode/src/index_lock.rs:227-233]
+- `connect_postgres_test_db` (function) component `connect_postgres_test_db [function]` (`73c49d7e-d58b-5aae-8ba5-43ab46c514cb`) lines 216-221 [crates/gcode/src/index_lock.rs:216-221]
+  - Signature: `fn connect_postgres_test_db() -> String {`
+  - Purpose: Indexed function `connect_postgres_test_db` in `crates/gcode/src/index_lock.rs`. [crates/gcode/src/index_lock.rs:216-221]
+- `hold_project_lock` (function) component `hold_project_lock [function]` (`8a3d943a-86b7-5bc1-bffc-fa23556511db`) lines 223-229 [crates/gcode/src/index_lock.rs:223-229]
   - Signature: `fn hold_project_lock(database_url: &str, project_id: &str) -> Client {`
-  - Purpose: Opens a read-write PostgreSQL connection to `database_url`, computes the advisory lock key for `project_id`, acquires `pg_advisory_lock` on that key, and returns the live `Client` while the lock is held. [crates/gcode/src/index_lock.rs:227-233]
-- `project_lock_key_matches_fixture` (function) component `project_lock_key_matches_fixture [function]` (`a4d87a32-3a04-5506-b8bf-10947b418925`) lines 236-238 [crates/gcode/src/index_lock.rs:236-238]
+  - Purpose: Indexed function `hold_project_lock` in `crates/gcode/src/index_lock.rs`. [crates/gcode/src/index_lock.rs:223-229]
+- `project_lock_key_matches_fixture` (function) component `project_lock_key_matches_fixture [function]` (`b4c162d0-b497-5609-8a19-68e9a30e9118`) lines 232-234 [crates/gcode/src/index_lock.rs:232-234]
   - Signature: `fn project_lock_key_matches_fixture() {`
-  - Purpose: Verifies that `project_lock_key("proj")` deterministically returns the fixture hash value `-9102099203869195108`. [crates/gcode/src/index_lock.rs:236-238]
-- `project_lock_key_is_project_scoped` (function) component `project_lock_key_is_project_scoped [function]` (`ee8443d6-54d8-542f-8b50-b2b2198707ef`) lines 241-243 [crates/gcode/src/index_lock.rs:241-243]
+  - Purpose: Indexed function `project_lock_key_matches_fixture` in `crates/gcode/src/index_lock.rs`. [crates/gcode/src/index_lock.rs:232-234]
+- `project_lock_key_is_project_scoped` (function) component `project_lock_key_is_project_scoped [function]` (`03e58d56-06c2-5630-a74d-1577eb76c28e`) lines 237-239 [crates/gcode/src/index_lock.rs:237-239]
   - Signature: `fn project_lock_key_is_project_scoped() {`
-  - Purpose: Verifies that `project_lock_key` is scoped per project by asserting it returns different lock keys for `"proj-a"` and `"proj-b"`. [crates/gcode/src/index_lock.rs:241-243]
-- `brief_try_returns_busy_while_same_project_lock_is_held` (function) component `brief_try_returns_busy_while_same_project_lock_is_held [function]` (`7928a51c-6844-59ab-bdd4-5d57316208a4`) lines 250-268 [crates/gcode/src/index_lock.rs:250-268]
+  - Purpose: Verifies that 'project_lock_key' generates project-scoped lock keys by asserting the keys for '"proj-a"' and '"proj-b"' are not equal. [crates/gcode/src/index_lock.rs:237-239]
+- `brief_try_returns_busy_while_same_project_lock_is_held` (function) component `brief_try_returns_busy_while_same_project_lock_is_held [function]` (`33180984-54e1-59b8-a3cf-d142488fe408`) lines 250-266 [crates/gcode/src/index_lock.rs:250-266]
   - Signature: `fn brief_try_returns_busy_while_same_project_lock_is_held() {`
-  - Purpose: Verifies that `with_project_lock` using `IndexLockPolicy::BriefTry` returns `IndexLockResult::Busy` when the same project lock is already held, and does not execute the provided closure. [crates/gcode/src/index_lock.rs:250-268]
-- `wait_blocks_until_same_project_lock_is_released` (function) component `wait_blocks_until_same_project_lock_is_released [function]` (`7d26c8ba-20d2-5d22-b2bb-44fb96310daf`) lines 272-298 [crates/gcode/src/index_lock.rs:272-298]
+  - Purpose: Verifies that 'with_project_lock' using 'IndexLockPolicy::BriefTry' returns 'IndexLockResult::Busy' without executing the closure when the same project lock is already held. [crates/gcode/src/index_lock.rs:250-266]
+- `wait_blocks_until_same_project_lock_is_released` (function) component `wait_blocks_until_same_project_lock_is_released [function]` (`b0ff08fa-643c-5981-89a5-0621fbcb8362`) lines 274-298 [crates/gcode/src/index_lock.rs:274-298]
   - Signature: `fn wait_blocks_until_same_project_lock_is_released() {`
-  - Purpose: Verifies that `with_project_lock` under `IndexLockPolicy::Wait` blocks on an already-held same-project lock, then completes successfully and returns `IndexLockResult::Acquired(())` once the lock is dropped. [crates/gcode/src/index_lock.rs:272-298]
-- `different_project_ids_do_not_block_each_other` (function) component `different_project_ids_do_not_block_each_other [function]` (`ab61e402-2065-5151-b229-0f8e4749550d`) lines 302-320 [crates/gcode/src/index_lock.rs:302-320]
+  - Purpose: Verifies that 'with_project_lock(..., IndexLockPolicy::Wait, ...)' blocks until an existing lock on the same project is released, then successfully acquires the lock and returns 'IndexLockResult::Acquired(())'. [crates/gcode/src/index_lock.rs:274-298]
+- `different_project_ids_do_not_block_each_other` (function) component `different_project_ids_do_not_block_each_other [function]` (`c184843a-46aa-5af2-b2fa-69aa47f56f8c`) lines 306-322 [crates/gcode/src/index_lock.rs:306-322]
   - Signature: `fn different_project_ids_do_not_block_each_other() {`
-  - Purpose: Verifies that holding a PostgreSQL project lock for one project ID does not prevent `with_project_lock` from immediately acquiring and executing under a different project ID, returning `IndexLockResult::Acquired(7)`. [crates/gcode/src/index_lock.rs:302-320]
+  - Purpose: Verifies that a project index lock held for one project ID does not prevent 'with_project_lock' from acquiring and executing successfully for a different project ID, returning 'IndexLockResult::Acquired(7)'. [crates/gcode/src/index_lock.rs:306-322]
 

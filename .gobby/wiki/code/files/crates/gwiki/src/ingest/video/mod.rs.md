@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gwiki/src/ingest/video|crates/gwiki/src/ingest/vid
 
 ## Purpose
 
-`crates/gwiki/src/ingest/video/mod.rs` exposes 9 indexed API symbols.
+This module defines the video-ingest data shapes and orchestration entry points for turning a video source into derived wiki assets. `VideoSnapshot` and `VideoFileSnapshot` capture the fetched media state plus extracted frames, frame descriptions, transcript segments, and optional transcription output, while `VideoIngestResult` packages the resulting source record and any generated metadata. The ingest functions layer the workflow from a generic `ingest_video` entry point down through file-based paths, with variants that either use degraded processing or production processing, and corresponding “without_index” helpers that perform the extraction/transcription work and then feed the results into the shared ingest/indexing pipeline.
 [crates/gwiki/src/ingest/video/mod.rs:32-45]
 [crates/gwiki/src/ingest/video/mod.rs:48-61]
 [crates/gwiki/src/ingest/video/mod.rs:64-73]

@@ -27,7 +27,9 @@ Module: [[code/modules/crates/gwiki/src/commands/citation_quality|crates/gwiki/s
 
 ## Purpose
 
-`crates/gwiki/src/commands/citation_quality/contradictions.rs` exposes 12 indexed API symbols.
+This file builds the contradiction-detection pipeline for citation quality checks. It defines small comparison records for section-level claims, groups provenance links into deduplicated multi-source section comparisons, and either returns an unavailable/empty contradiction section or runs an AI-backed detector over those comparisons.
+
+The detector path serializes section comparisons into a prompt, parses the model’s JSON response into contradiction findings, and then sanitizes those findings against the known source IDs by trimming, normalizing, and deduplicating claims before producing the final `ContradictionSection`. An AI error is converted into a `WikiError::Daemon` so failures surface through the wiki error type.
 [crates/gwiki/src/commands/citation_quality/contradictions.rs:15-18]
 [crates/gwiki/src/commands/citation_quality/contradictions.rs:21-24]
 [crates/gwiki/src/commands/citation_quality/contradictions.rs:27-29]

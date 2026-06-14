@@ -39,7 +39,25 @@ Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Purpose
 
-`crates/gcode/src/commands/symbols.rs` exposes 24 indexed API symbols.
+This file implements symbol querying and outline commands for a code index. It provides:
+
+**Core Commands:**
+- `outline` queries visible symbols for a file, reports size savings vs full file, and emits results as JSON or rendered text outline
+- `symbol`/`symbols` retrieve and display specific symbols by ID from the database
+- `kinds` lists available symbol kinds for the project
+- `tree` displays the visible file tree with language and symbol counts
+
+**Outline Rendering:**
+The outline system computes symbol hierarchies (via `outline_depth` following parent chains) and formats them with proper indentation using `render_outline_text` and `format_outline_text_line`.
+
+**AI Summarization:**
+When enabled, `summarize_outline` invokes AI generation by building a prompt (`outline_summary_prompt`) from file content and symbol inventory, delegating to `summarize_outline_with`, which coordinates with an `AiContext` resolved from Postgres-backed config (`resolve_outline_ai_context`). Falls back to AST-based rendering when summarization unavailable or file exceeds `OUTLINE_SUMMARY_MAX_BYTES` (1 MiB).
+
+**Diagnostics:**
+`outline_missing_diagnostic` and `unsupported_file_type_diagnostic` provide context-sensitive messages for why symbols are missing or unavailable.
+
+**Format Support:**
+All commands support JSON and text output modes, with optional verbose details and file path/byte-range metadata.
 [crates/gcode/src/commands/symbols.rs:21-78]
 [crates/gcode/src/commands/symbols.rs:80-103]
 [crates/gcode/src/commands/symbols.rs:105-126]

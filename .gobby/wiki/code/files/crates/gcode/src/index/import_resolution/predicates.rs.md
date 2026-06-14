@@ -35,7 +35,7 @@ Module: [[code/modules/crates/gcode/src/index/import_resolution|crates/gcode/src
 
 ## Purpose
 
-`crates/gcode/src/index/import_resolution/predicates.rs` exposes 20 indexed API symbols.
+This file provides language-agnostic predicates for determining whether imports and symbol references are external to a codebase. It implements external/internal checks for Python, JavaScript, Go, Java, C#, PHP, Rust, and Dart by comparing imports against locally-declared modules, classes, and symbols tracked in an ImportResolutionContext. Supporting utilities extract declared types and symbols from source code by first stripping comments and string literals, identify package names from module paths, and access bundled dependency registries for Ruby and Elixir. These predicates enable the import resolution system to distinguish between internal and external references across multi-language codebases.
 [crates/gcode/src/index/import_resolution/predicates.rs:8-21]
 [crates/gcode/src/index/import_resolution/predicates.rs:23-53]
 [crates/gcode/src/index/import_resolution/predicates.rs:55-68]

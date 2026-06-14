@@ -36,7 +36,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/markdown.rs` exposes 24 indexed API symbols.
+This file parses a Markdown document into a structured domain record for indexing: it extracts frontmatter, wiki links, headings, and content chunks for a given path, and wraps frontmatter or I/O failures in a single `MarkdownParseError`. The helper types and functions work together in a pipeline: fence detection keeps heading scanning out of code blocks, ATX heading parsing normalizes heading text and hierarchy paths, section ranges are tracked as byte offsets, and chunk building turns the body into ordered indexed spans tied to file path and heading metadata. The included tests verify heading range assignment, code-fence exclusion, read-only file parsing, and ATX heading trimming behavior.
 [crates/gwiki/src/markdown.rs:11-19]
 [crates/gwiki/src/markdown.rs:22-29]
 [crates/gwiki/src/markdown.rs:32-35]

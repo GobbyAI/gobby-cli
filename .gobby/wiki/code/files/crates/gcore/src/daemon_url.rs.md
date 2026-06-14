@@ -35,7 +35,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-`crates/gcore/src/daemon_url.rs` exposes 20 indexed API symbols.
+Resolves the dialable daemon URL for all Gobby binaries. `daemon_url` applies the shared precedence rules, using `GOBBY_DAEMON_URL` first, then `GOBBY_PORT`, and finally the advertised endpoint from `bootstrap.yaml`; `daemon_url_at` does the same for an explicit bootstrap path without env overrides. The helper functions implement the contract: `env_override` trims and validates env values, normalizes a URL override by removing trailing slashes, and turns a valid port into a loopback `http://127.0.0.1:<port>` URL; `endpoint_to_url` and `dial_host` convert a raw daemon endpoint into a connectable URL, including bracketed IPv6 handling and normalization of wildcard listen addresses like `0.0.0.0` and `::` to loopback. The remaining functions are tests that verify the default fallback, host normalization, URL composition, and that env overrides win or are ignored as intended.
 [crates/gcore/src/daemon_url.rs:28-34]
 [crates/gcore/src/daemon_url.rs:40-42]
 [crates/gcore/src/daemon_url.rs:47-59]

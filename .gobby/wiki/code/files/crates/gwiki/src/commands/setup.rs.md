@@ -32,7 +32,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-`crates/gwiki/src/commands/setup.rs` exposes 17 indexed API symbols.
+This file implements the `gwiki setup` command. It resolves the requested scope, gathers the default PostgreSQL-backed objects the wiki needs, and then either runs a standalone Docker-based setup or uses an attached database URL from options or the environment. In standalone mode it validates embedding dimensions, applies service overrides, provisions Hub-dependent services, and writes the merged gCore config; in non-standalone mode it prepares the database connection and records the setup outcome. The helper functions handle config path lookup, merging PostgreSQL/FalkorDB/Qdrant settings into existing standalone config, embedding option validation, error conversion, outcome rendering, and status selection from created/skipped/failed results. The tests verify config merging, preserving existing database settings, standalone PostgreSQL-only persistence, and rejecting invalid embedding dimensions without mutating config.
 [crates/gwiki/src/commands/setup.rs:18]
 [crates/gwiki/src/commands/setup.rs:20-92]
 [crates/gwiki/src/commands/setup.rs:94-111]

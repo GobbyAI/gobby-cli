@@ -19,7 +19,7 @@ Module: [[code/modules/crates/gwiki/src/ingest|crates/gwiki/src/ingest]]
 
 ## Purpose
 
-`crates/gwiki/src/ingest/mediawiki.rs` exposes 4 indexed API symbols.
+This file defines the MediaWiki ingestion path for gwiki: it packages a fetched page into a `MediaWikiPageSnapshot`, registers the raw wikitext as a source manifest entry, renders a Markdown document with metadata, and writes it into the vault/index via `write_raw_then_index`. `render_mediawiki_markdown` builds the frontmatter from page and revision fields, normalizing values to single lines and including optional revision timestamp and category, while `mediawiki_records_revision_metadata` captures the revision details that should be preserved in the indexed record.
 [crates/gwiki/src/ingest/mediawiki.rs:12-20]
 [crates/gwiki/src/ingest/mediawiki.rs:23-41]
 [crates/gwiki/src/ingest/mediawiki.rs:44-77]

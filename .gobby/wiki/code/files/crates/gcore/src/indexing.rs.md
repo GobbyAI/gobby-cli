@@ -6,16 +6,12 @@ provenance:
   ranges:
   - 17-26
   - 28-67
-  - 30-37
-  - 43-46
-  - 49-66
   - 70-74
   - 77-91
   - 93-100
   - 104-115
   - 119-126
   - 128-137
-  - 130-136
   - 141-147
   - 150-173
   - 183-189
@@ -41,7 +37,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-`crates/gcore/src/indexing.rs` exposes 26 indexed API symbols.
+Generic indexing utilities shared by consumer crates. It defines `WalkerSettings` to configure an `ignore::WalkBuilder` with gitignore handling, file-size limits, and extra ignore patterns; hashing helpers for file content and whole files to drive incremental change detection; `Chunk` and `ChunkIdentity` to represent indexed file slices and their stable identity; and `IndexEvent` plus `index_events_from_hashes` to classify hash differences into indexing actions. The remaining helpers write indexed file output, build relationship data, and the tests verify the defaults, hashing behavior, opaque chunk metadata, identity rules, incremental event coverage, and that the feature stays parser-agnostic.
 [crates/gcore/src/indexing.rs:17-26]
 [crates/gcore/src/indexing.rs:28-67]
 [crates/gcore/src/indexing.rs:30-37]

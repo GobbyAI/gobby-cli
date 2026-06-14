@@ -29,18 +29,8 @@ provenance:
   - 316-331
   - 333-341
   - 343-470
-  - 344-374
-  - 376-388
-  - 390-408
-  - 410-438
-  - 440-450
-  - 452-458
-  - 460-465
-  - 467-469
   - 472-480
-  - 473-479
   - 482-519
-  - 483-518
   - 521-527
   - 529-547
   - 549-571
@@ -71,7 +61,7 @@ Module: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 
 ## Purpose
 
-`crates/gcode/src/index/semantic.rs` exposes 56 indexed API symbols.
+This file implements semantic analysis for C/C++ code by spawning and communicating with a clangd language server to resolve whether function calls are external to a project. The core flow is: `SemanticCallRequest` (encapsulating call location and source context) → `create_cpp_semantic_resolver` (discovers compile_commands.json, resolves clangd executable, instantiates `ClangdResolver`) → `ClangdResolver` (manages clangd subprocess via LSP JSON-RPC protocol) → `classify_definition` (determines if definition is external). Key supporting functions handle file URI conversion for cross-platform compatibility, macro detection to avoid resolving preprocessor symbols, logical line reconstruction for backslash continuations, and clangd process lifecycle management. The `ClangdResolver` spawns a background thread reading clangd's stdout, bidirectionally communicates via stdin, tracks opened files, correlates requests by ID, and enforces a 30-second timeout for responses. Extensive test coverage validates compilation discovery, LSP parsing, macro detection, path encoding, and end-to-end clangd integration.
 [crates/gcode/src/index/semantic.rs:15-23]
 [crates/gcode/src/index/semantic.rs:26-29]
 [crates/gcode/src/index/semantic.rs:31-36]

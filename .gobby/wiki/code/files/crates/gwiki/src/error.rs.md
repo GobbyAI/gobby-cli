@@ -6,19 +6,12 @@ provenance:
   ranges:
   - 10-66
   - 68-100
-  - 69-86
-  - 88-99
   - 102-159
-  - 103-158
   - 161-176
   - 178-190
-  - 179-189
   - 192-196
-  - 193-195
   - 198-202
-  - 199-201
   - 204-208
-  - 205-207
   - 216-227
   - 230-240
   - 243-254
@@ -35,7 +28,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/error.rs` exposes 20 indexed API symbols.
+Defines the `WikiError` error model for the wiki crate, collecting all failure modes into a typed enum for config, I/O, JSON/YAML parsing, registry, daemon, invalid input, not found, timeout, indexing, search, and setup errors. Its `code()` method turns each variant into a stable string code, while `is_ffmpeg_unavailable()` recognizes the specific config or I/O patterns that mean ffmpeg is missing. The remaining impls handle formatting, source chaining, and conversions from wrapped errors so higher-level code can preserve root causes and present consistent diagnostics. The tests verify that typed sources are retained, wrapped errors get specific codes, timeouts stay typed, ffmpeg-missing detection works for config and I/O paths, and setup error sources are preserved.
 [crates/gwiki/src/error.rs:10-66]
 [crates/gwiki/src/error.rs:68-100]
 [crates/gwiki/src/error.rs:69-86]

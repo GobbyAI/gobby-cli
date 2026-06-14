@@ -20,7 +20,7 @@ Module: [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/comman
 
 ## Purpose
 
-`crates/gwiki/src/commands/refresh/vault.rs` exposes 5 indexed API symbols.
+This file provides helper routines for refreshing raw vault source assets: it resolves raw source paths, finds existing `raw/assets` files whose stem matches a given id, safely deletes superseded relative files, and validates that refresh paths stay under the scope root. The functions work together so a refresh can locate matching assets, remove outdated files without treating missing files as errors, and reject unsafe or out-of-vault relative paths before any deletion happens.
 [crates/gwiki/src/commands/refresh/vault.rs:7-9]
 [crates/gwiki/src/commands/refresh/vault.rs:16-49]
 [crates/gwiki/src/commands/refresh/vault.rs:51-66]

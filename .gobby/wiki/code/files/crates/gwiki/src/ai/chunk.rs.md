@@ -56,7 +56,7 @@ Module: [[code/modules/crates/gwiki/src/ai|crates/gwiki/src/ai]]
 
 ## Purpose
 
-`crates/gwiki/src/ai/chunk.rs` exposes 49 indexed API symbols.
+Provides the audio chunking and chunk-aware transcription pipeline for `gwiki`. It defines the chunk data model and transcription mode enum, an `AudioChunker` abstraction with a media-backed implementation that splits input audio into overlapping windows, plus orchestration helpers that decide whether chunking is needed, run single or multi-chunk transcription/translation requests, merge chunk metadata and segment offsets, deduplicate overlaps, and expose test-only chunk/client fakes for deterministic validation.
 [crates/gwiki/src/ai/chunk.rs:24-30]
 [crates/gwiki/src/ai/chunk.rs:33-35]
 [crates/gwiki/src/ai/chunk.rs:38-47]

@@ -6,8 +6,6 @@ provenance:
   ranges:
   - 6-9
   - 11-44
-  - 12-31
-  - 33-43
   - 46-65
   - 67-75
   - 78-80
@@ -30,12 +28,11 @@ Parent: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Overview
 
-The grep module provides pattern-matching support for the gcode grep command. Its core `GrepMatcher` compiles search patterns (with error reporting for invalid or empty patterns) and locates matching spans within text via `find_spans`. It implements word-boundary matching using identifier-character helpers (`is_identifier_char`, `has_identifier_boundaries`, `has_adjacent_identifier_boundaries`) that treat Unicode characters as non-identifier boundaries while preserving regex word-boundary semantics. The module includes an extensive test suite covering boundary acceptance/rejection, Unicode handling, and pattern error cases.
-[crates/gcode/src/commands/grep/grep_matcher.rs:6-9]
-[crates/gcode/src/commands/grep/grep_matcher.rs:11-44]
-[crates/gcode/src/commands/grep/grep_matcher.rs:12-31]
-[crates/gcode/src/commands/grep/grep_matcher.rs:33-43]
-[crates/gcode/src/commands/grep/grep_matcher.rs:46-65]
+The grep command module centers on `GrepMatcher`, a small regex-backed matcher that turns user grep options into reusable line-matching behavior. It owns a compiled `regex::Regex` plus the `word` flag, rejects empty patterns, escapes patterns for fixed-string mode, applies optional case-insensitive matching, and wraps regex build failures with the “invalid gcode grep pattern” context before returning the matcher .
+
+At match time, `find_spans` scans each line with `find_iter`, drops zero-width matches, converts results into `GrepSpan` start/end byte ranges, and conditionally filters matches through word-boundary logic when `-w` behavior is enabled [crates/gcode/src/commands/grep/grep_matcher.rs:33-43]. That boundary flow first finds the identifier-like token inside the matched span, falls back to checking the whole span when no identifier characters are present, and then verifies the characters immediately before and after are not identifier characters [crates/gcode/src/commands/grep/grep_matcher.rs:46-65].
+
+The module’s collaboration boundary is intentionally narrow: it imports `GrepSpan` from the parent grep command module and returns only those spans, leaving presentation and command orchestration outside this file . Its word matching is tuned for indexed source tokens by treating only ASCII alphanumerics and underscores as identifier characters, so Unicode and punctuation behave as separators while source-style names remain protected from partial matches [crates/gcode/src/commands/grep/grep_matcher.rs:67-70].
 
 ## Call Diagram
 
@@ -52,7 +49,7 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gcode/src/commands/grep/grep_matcher.rs|crates/gcode/src/commands/grep/grep_matcher.rs]] - `crates/gcode/src/commands/grep/grep_matcher.rs` exposes 15 indexed API symbols.
+- [[code/files/crates/gcode/src/commands/grep/grep_matcher.rs|crates/gcode/src/commands/grep/grep_matcher.rs]] - This file implements GrepMatcher, a regex-based pattern matching utility for grep operations. The GrepMatcher struct wraps a compiled regex and optional word-boundary enforcement, constructed via the new() method which validates non-empty patterns, optionally escapes them for literal matching, and builds case-insensitive regex when requested. The find_spans() method locates all non-zero-width matches in a line and optionally filters them through word-boundary validation. Word-boundary checking relies on helper functions that extract identifier tokens from match spans and validate no ASCII alphanumeric characters or underscores are adjacent to the match, effectively treating only ASCII identifiers as word constituents while treating Unicode and other characters as word separators. The matched_texts() utility function extracts matched substrings from results. Comprehensive unit tests verify correct matching behavior across literal strings, case sensitivity, word boundaries with various adjacent character types (delimiters, operators, Unicode), and proper error reporting for invalid regex patterns and empty input.
 [crates/gcode/src/commands/grep/grep_matcher.rs:6-9]
 [crates/gcode/src/commands/grep/grep_matcher.rs:11-44]
 [crates/gcode/src/commands/grep/grep_matcher.rs:12-31]

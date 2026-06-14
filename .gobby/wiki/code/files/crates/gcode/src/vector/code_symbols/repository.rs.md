@@ -21,7 +21,7 @@ Module: [[code/modules/crates/gcode/src/vector/code_symbols|crates/gcode/src/vec
 
 ## Purpose
 
-`crates/gcode/src/vector/code_symbols/repository.rs` exposes 6 indexed API symbols.
+This file provides repository helpers for reading symbol records from the `code_symbols` table. `fetch_symbols_for_file` and `fetch_symbols_for_project` are the public entry points; both delegate to `fetch_symbols_where` with a `SymbolPredicate` that encodes whether the query should filter by project alone or by project plus file path. The predicate supplies both the SQL `WHERE` clause and the bound parameters, and `fetch_symbols_where` builds the select using the shared symbol column list, runs the query through a PostgreSQL client, converts each row into a `Symbol`, and returns the results ordered by file path, byte offset, and id.
 [crates/gcode/src/vector/code_symbols/repository.rs:6-18]
 [crates/gcode/src/vector/code_symbols/repository.rs:20-25]
 [crates/gcode/src/vector/code_symbols/repository.rs:27-35]

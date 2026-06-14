@@ -64,7 +64,9 @@ Module: [[code/modules/crates/gwiki/src/ingest|crates/gwiki/src/ingest]]
 
 ## Purpose
 
-`crates/gwiki/src/ingest/mod.rs` exposes 61 indexed API symbols.
+Helpers for ingesting immutable raw wiki sources into the vault, with the module organizing file-type submodules plus shared routines for writing raw markdown, storing assets, sanitizing names/extensions, and validating source hashes before indexing.
+
+The pieces work together in a raw-first flow: source text or binaries are written to stable `raw/...` paths, metadata values are converted into YAML-safe scalars, immutable writes are checked against existing content and declared hashes, and `RawFirstStore` plus `index_after_ingest` coordinate recording the ingestion and triggering indexing without rewriting wiki content.
 [crates/gwiki/src/ingest/mod.rs:25-29]
 [crates/gwiki/src/ingest/mod.rs:31-36]
 [crates/gwiki/src/ingest/mod.rs:38-46]

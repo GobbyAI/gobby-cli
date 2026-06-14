@@ -131,12 +131,11 @@ Parent: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-The graph module provides a comprehensive graph-based representation, analytics, and context generation system for wiki documents and code-level relationships. It supports building graph models from facts or memory, performing structural analytics (including community detection, centrality, and hotspot calculations) for export, auditing context degradation or stale links, and maintaining the core in-memory wiki graph to compute bidirectional links, path recommendations, and inline link suggestions.
-[crates/gwiki/src/graph/analytics.rs:14-22]
-[crates/gwiki/src/graph/context.rs:8-11]
-[crates/gwiki/src/graph/export.rs:11-112]
-[crates/gwiki/src/graph/mod.rs:22-26]
-[crates/gwiki/src/graph/analytics.rs:24-39]
+The `crates/gwiki/src/graph` module owns the wiki graph data model and the exported views built from it. Its core types represent documents, sources, resolved or unresolved links, code edges, and the aggregate `WikiGraphFacts`, while export-facing structures carry graph nodes, edge groups, analytics, and degradation metadata for serialization  . The module also defines shared graph labels, relationship constants, helper IDs, and `MemoryWikiGraph`, which keeps facts in memory and derives backlinks, link suggestions, and related-path rankings from the same fact set .
+
+The export flow starts from `WikiGraphFacts::export_graph`, deduplicating document, source, citation, target, and code endpoint nodes while building directed trust, audit, link, and code relationships. Sources produce `supports` and `cites` edges, resolved links can add placeholder document nodes, and unresolved links become target nodes so missing wiki targets remain visible in the graph [crates/gwiki/src/graph/export.rs:11-100]. `render_graph_report` then formats that export into a markdown report with counts, degradation state, analytics, and Mermaid output, while the analytics layer converts `MemoryWikiGraph` or `WikiGraphFacts` into `gobby_core`’s `AnalyticsGraph`, rejects duplicate node metadata conflicts, runs analysis, and maps communities, centrality, bridges, god nodes, unexpected links, and hotspots back into serializable export types  .
+
+The context path builds a separate JSON-friendly payload for search and ask workflows. `GraphContextOptions` records degraded and truncated components, and `GraphContextPack` combines scope, degradation, warnings, neighborhoods, and recommendations into one response shape  . Neighborhood entries merge wiki neighbors, document links, citations, calls, and imports, so consumers can inspect both documentation relationships and code-derived relationships around a path without reassembling the graph themselves .
 
 ## Call Diagram
 
@@ -190,25 +189,25 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gwiki/src/graph/analytics.rs|crates/gwiki/src/graph/analytics.rs]] - `crates/gwiki/src/graph/analytics.rs` exposes 29 indexed API symbols.
+- [[code/files/crates/gwiki/src/graph/analytics.rs|crates/gwiki/src/graph/analytics.rs]] - This file defines the graph analytics layer for wiki memory data: it converts `MemoryWikiGraph`/`WikiGraphFacts` into a core `AnalyticsGraph`, runs analysis, and exports the result as serializable report types for communities, centrality, bridges, god nodes, unexpected links, and hotspots. It also defines `GraphAnalyticsError` for duplicate node metadata conflicts, plus helper builders like `insert_node` and `from_core`/`from` conversions that map core analytics structures into the export model, with tests covering conversion, missing resolved targets, and duplicate-node rejection.
 [crates/gwiki/src/graph/analytics.rs:14-22]
 [crates/gwiki/src/graph/analytics.rs:24-39]
 [crates/gwiki/src/graph/analytics.rs:25-38]
 [crates/gwiki/src/graph/analytics.rs:41]
 [crates/gwiki/src/graph/analytics.rs:44-51]
-- [[code/files/crates/gwiki/src/graph/context.rs|crates/gwiki/src/graph/context.rs]] - `crates/gwiki/src/graph/context.rs` exposes 36 indexed API symbols.
+- [[code/files/crates/gwiki/src/graph/context.rs|crates/gwiki/src/graph/context.rs]] - Builds the unified graph-context payload for wiki/code search results. It defines serializable structs for the overall pack, scope, degradation state, warnings, neighborhoods, neighbors, doc links, citations, code edges, and recommendations, plus `GraphContextOptions` to track degraded sources and truncated components. The helper functions assemble this pack from a path and `WikiGraphFacts`, derive scope and citation grouping, emit warnings for capped, stale, or audited data, collect neighborhood/doc-link/code-edge details, and provide constructors for resolved and unresolved links so wiki and code relationships are merged into one JSON-friendly context view.
 [crates/gwiki/src/graph/context.rs:8-11]
 [crates/gwiki/src/graph/context.rs:13-29]
 [crates/gwiki/src/graph/context.rs:14-16]
 [crates/gwiki/src/graph/context.rs:18-23]
 [crates/gwiki/src/graph/context.rs:25-28]
-- [[code/files/crates/gwiki/src/graph/export.rs|crates/gwiki/src/graph/export.rs]] - `crates/gwiki/src/graph/export.rs` exposes 5 indexed API symbols.
+- [[code/files/crates/gwiki/src/graph/export.rs|crates/gwiki/src/graph/export.rs]] - This file defines wiki graph export and reporting for `WikiGraphFacts`. `export_graph` builds a deduplicated `GraphExport` by collecting document, source, and citation nodes, then wiring them with directed `supports` and `cites` edges while also handling link targets, including unresolved and placeholder nodes for missing documents. `render_graph_report` turns that export into a markdown summary with graph counts, degraded-source and analytics sections, and a Mermaid visualization. The tests exercise scope-aware ID generation, unresolved targets, and placeholder creation for missing resolved targets.
 [crates/gwiki/src/graph/export.rs:11-112]
 [crates/gwiki/src/graph/export.rs:12-111]
 [crates/gwiki/src/graph/export.rs:114-190]
 [crates/gwiki/src/graph/export.rs:204-317]
 [crates/gwiki/src/graph/export.rs:320-349]
-- [[code/files/crates/gwiki/src/graph/mod.rs|crates/gwiki/src/graph/mod.rs]] - `crates/gwiki/src/graph/mod.rs` exposes 62 indexed API symbols.
+- [[code/files/crates/gwiki/src/graph/mod.rs|crates/gwiki/src/graph/mod.rs]] - Defines the core wiki-graph model and export helpers for `gwiki`: typed records capture documents, sources, links, code edges, and the aggregated fact set; export structs turn those facts into serializable graph nodes, grouped edge categories, and Cypher statements; `GraphExportOptions` carries degraded-source state; `MemoryWikiGraph` stores facts in memory and derives backlinks, link suggestions, and related-path rankings from them; and the helper functions build scope-qualified IDs, normalize paths and labels for graph backends, and provide a few test constructors for documents and links.
 [crates/gwiki/src/graph/mod.rs:22-26]
 [crates/gwiki/src/graph/mod.rs:29-33]
 [crates/gwiki/src/graph/mod.rs:36-39]

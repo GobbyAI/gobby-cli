@@ -137,12 +137,11 @@ Parent: [[code/modules/crates/gcode/src/vector|crates/gcode/src/vector]]
 
 ## Overview
 
-This module manages the lifecycle, generation, storage, and retrieval of vector embeddings for code symbols. It encapsulates embedding generation via configured backends, orchestrates collection synchronization and vector lifecycles, communicates directly with Qdrant vector stores, queries symbol metadata from the repository, and performs semantic search over codebase symbols.
-[crates/gcode/src/vector/code_symbols/embedding.rs:21-23]
-[crates/gcode/src/vector/code_symbols/lifecycle.rs:29-37]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:18-24]
-[crates/gcode/src/vector/code_symbols/repository.rs:6-18]
-[crates/gcode/src/vector/code_symbols/search.rs:8-14]
+The `code_symbols` vector module owns semantic indexing and lookup for extracted code symbols. Its shared types define search requests and hits, vector payloads built from `Symbol` records, lifecycle status/output/schema structs, and common lifecycle errors, while tests show payloads preserving provenance, source location, symbol identity, and optional enrichment like summaries  [crates/gcode/src/vector/code_symbols/tests.rs:47-74]. Embedding support abstracts over daemon-backed AI contexts and direct embedding configs, validates direct configuration, caches blocking clients, applies query prefixes, and exposes both single-text and batch embedding paths plus the fixed probe text used for dimensionality checks   [crates/gcode/src/vector/code_symbols/embedding.rs:58-100].
+
+The lifecycle flow centers on `CodeSymbolVectorLifecycle`, which combines a project id, derived Qdrant collection name, Qdrant config, embedding backend, vector settings, probed vector size, and blocking HTTP client . Creation validates the Qdrant boundary config, derives a stable code-symbol collection from the configured prefix and project id, constructs the embedding backend, and prepares a timeout-scoped client . Repository helpers feed that lifecycle by selecting symbols for a project or file through a shared predicate path, binding the appropriate SQL parameters, materializing `Symbol` rows, and ordering them by file path, byte offset, and id .
+
+Qdrant integration provides the storage boundary used by lifecycle and search: it normalizes collection names through `gobby_core::qdrant`, builds encoded collection paths, caches HTTP clients, deletes whole project collections or per-file vectors, deletes all prefixed code-symbol collections, parses Qdrant responses, and reports degraded search behavior when Qdrant is missing or unreachable  . The search layer wraps this with user-facing errors for missing configuration, embedding failures, invalid collection naming, and transport failures, while the test suite exercises naming, deletion scoping, batch embedding order, sync validation, dimension probing, and HTTP lifecycle scoping across the collaborating files  .
 
 ## Call Diagram
 
@@ -201,43 +200,47 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gcode/src/vector/code_symbols/embedding.rs|crates/gcode/src/vector/code_symbols/embedding.rs]] - `crates/gcode/src/vector/code_symbols/embedding.rs` exposes 33 indexed API symbols.
+- [[code/files/crates/gcode/src/vector/code_symbols/embedding.rs|crates/gcode/src/vector/code_symbols/embedding.rs]] - This file centralizes embedding-source resolution and embedding execution for the vector subsystem. It defines `EmbeddingSource` as either a direct `EmbeddingConfig` or a daemon-backed `AiContext`, then builds `EmbeddingBackend` around that choice so queries and batches can be embedded through either path, with direct clients cached by timeout and query prefixes applied when configured. Supporting helpers resolve the effective AI context and embedding config from context or database bindings, translate AI errors into `VectorLifecycleError`, format a `Symbol` into embeddable text, and expose the probe text used to measure embedding dimensionality. The test-only `TestSource` supplies static config values and secret resolution for routing and binding-resolution tests.
 [crates/gcode/src/vector/code_symbols/embedding.rs:21-23]
 [crates/gcode/src/vector/code_symbols/embedding.rs:26-29]
 [crates/gcode/src/vector/code_symbols/embedding.rs:31-35]
 [crates/gcode/src/vector/code_symbols/embedding.rs:32-34]
 [crates/gcode/src/vector/code_symbols/embedding.rs:37-41]
-- [[code/files/crates/gcode/src/vector/code_symbols/lifecycle.rs|crates/gcode/src/vector/code_symbols/lifecycle.rs]] - `crates/gcode/src/vector/code_symbols/lifecycle.rs` exposes 24 indexed API symbols.
+- [[code/files/crates/gcode/src/vector/code_symbols/lifecycle.rs|crates/gcode/src/vector/code_symbols/lifecycle.rs]] - This file implements the lifecycle manager for code-symbol vectors stored in Qdrant. `CodeSymbolVectorLifecycle` ties together project-scoped collection naming, Qdrant client setup, embedding generation, schema validation, and batch sync/delete/upsert operations so symbol data can be created, reconciled, rebuilt, and cleared safely.
+
+The free functions provide small entry points: `resolve_lifecycle_qdrant_config` resolves Qdrant settings from config, and `lifecycle_status` builds a status object for a given project/action. Inside the class, `new` initializes the manager, `ensure_collection` and schema-related methods verify or create compatible collections, `sync_file_symbols` and `upsert_points` push symbol data into Qdrant, `delete_vectors` and `delete_stale_vectors` remove obsolete entries, and `rebuild_symbols`/`clear_project_vectors` support full refresh workflows. `points_for_symbols`, `payload_map`, and `point_ids` translate symbols into Qdrant point payloads and identifiers, while `output` and `qdrant_request` shape the lifecycle result and HTTP requests.
 [crates/gcode/src/vector/code_symbols/lifecycle.rs:29-37]
 [crates/gcode/src/vector/code_symbols/lifecycle.rs:39-43]
 [crates/gcode/src/vector/code_symbols/lifecycle.rs:45-56]
 [crates/gcode/src/vector/code_symbols/lifecycle.rs:58-376]
 [crates/gcode/src/vector/code_symbols/lifecycle.rs:59-82]
-- [[code/files/crates/gcode/src/vector/code_symbols/qdrant.rs|crates/gcode/src/vector/code_symbols/qdrant.rs]] - `crates/gcode/src/vector/code_symbols/qdrant.rs` exposes 19 indexed API symbols.
+- [[code/files/crates/gcode/src/vector/code_symbols/qdrant.rs|crates/gcode/src/vector/code_symbols/qdrant.rs]] - This file is the Qdrant integration layer for gcode’s code-symbol vectors. It standardizes collection naming and paths, builds and caches a blocking Qdrant HTTP client from config, and constructs requests against the configured Qdrant base URL and API key. On top of that, it implements the main lifecycle operations: deleting an entire project collection, deleting vectors for a specific file or filter, and removing all code-symbol collections with the configured prefix. It also provides vector search by translating a query vector into a Qdrant search request, then converting results and surfacing a degradation warning when Qdrant is unavailable or unconfigured. The parsing helpers extract collection schemas, collection names, and point counts from Qdrant JSON responses, while the error helper turns failed HTTP responses into `VectorLifecycleError` values. The tests verify the user-facing degradation messages for missing and unreachable Qdrant.
 [crates/gcode/src/vector/code_symbols/qdrant.rs:18-24]
 [crates/gcode/src/vector/code_symbols/qdrant.rs:26-28]
 [crates/gcode/src/vector/code_symbols/qdrant.rs:30-37]
 [crates/gcode/src/vector/code_symbols/qdrant.rs:39-47]
 [crates/gcode/src/vector/code_symbols/qdrant.rs:49-76]
-- [[code/files/crates/gcode/src/vector/code_symbols/repository.rs|crates/gcode/src/vector/code_symbols/repository.rs]] - `crates/gcode/src/vector/code_symbols/repository.rs` exposes 6 indexed API symbols.
+- [[code/files/crates/gcode/src/vector/code_symbols/repository.rs|crates/gcode/src/vector/code_symbols/repository.rs]] - This file provides repository helpers for reading symbol records from the `code_symbols` table. `fetch_symbols_for_file` and `fetch_symbols_for_project` are the public entry points; both delegate to `fetch_symbols_where` with a `SymbolPredicate` that encodes whether the query should filter by project alone or by project plus file path. The predicate supplies both the SQL `WHERE` clause and the bound parameters, and `fetch_symbols_where` builds the select using the shared symbol column list, runs the query through a PostgreSQL client, converts each row into a `Symbol`, and returns the results ordered by file path, byte offset, and id.
 [crates/gcode/src/vector/code_symbols/repository.rs:6-18]
 [crates/gcode/src/vector/code_symbols/repository.rs:20-25]
 [crates/gcode/src/vector/code_symbols/repository.rs:27-35]
 [crates/gcode/src/vector/code_symbols/repository.rs:38-43]
 [crates/gcode/src/vector/code_symbols/repository.rs:45-56]
-- [[code/files/crates/gcode/src/vector/code_symbols/search.rs|crates/gcode/src/vector/code_symbols/search.rs]] - `crates/gcode/src/vector/code_symbols/search.rs` exposes 6 indexed API symbols.
+- [[code/files/crates/gcode/src/vector/code_symbols/search.rs|crates/gcode/src/vector/code_symbols/search.rs]] - This file defines the error type and search entrypoints for vector-based code-symbol lookup. `SearchError` captures missing Qdrant or embedding configuration, query-embedding failure, invalid collection naming, and vector-search transport errors, with `Display` and `Error` implementations for human-readable reporting.
+
+`search_code_symbols` is the core fallible path: it pulls Qdrant and embedding settings from `Context`, embeds the query, builds the target collection name, runs a Qdrant vector search, and converts raw `(symbol_id, score)` pairs into `CodeSymbolVectorSearchHit` values. `semantic_search` wraps that behavior as a degraded semantic-ranking signal, returning results up to the requested limit while logging errors and falling back to an empty list on failure.
 [crates/gcode/src/vector/code_symbols/search.rs:8-14]
 [crates/gcode/src/vector/code_symbols/search.rs:16-26]
 [crates/gcode/src/vector/code_symbols/search.rs:17-25]
 [crates/gcode/src/vector/code_symbols/search.rs:28]
 [crates/gcode/src/vector/code_symbols/search.rs:30-58]
-- [[code/files/crates/gcode/src/vector/code_symbols/tests.rs|crates/gcode/src/vector/code_symbols/tests.rs]] - `crates/gcode/src/vector/code_symbols/tests.rs` exposes 36 indexed API symbols.
+- [[code/files/crates/gcode/src/vector/code_symbols/tests.rs|crates/gcode/src/vector/code_symbols/tests.rs]] - This file is the test suite for `vector::code_symbols`, covering how Rust symbols are turned into vector payloads, how collections and Qdrant-backed operations are named and validated, and how embedding/sync workflows behave end to end. It uses small helper builders like `test_symbol`, `test_symbol_with_index`, and `test_context` to construct fixtures, then verifies provenance metadata, optional summaries, collection name rules, project/file vector deletion behavior, embedding batch ordering, sync error handling, dimension probing, HTTP lifecycle scoping, and Rust source masking/parsing helpers for comments, strings, chars, and raw literals.
 [crates/gcode/src/vector/code_symbols/tests.rs:13-34]
 [crates/gcode/src/vector/code_symbols/tests.rs:36-44]
 [crates/gcode/src/vector/code_symbols/tests.rs:47-74]
 [crates/gcode/src/vector/code_symbols/tests.rs:77-86]
 [crates/gcode/src/vector/code_symbols/tests.rs:89-94]
-- [[code/files/crates/gcode/src/vector/code_symbols/types.rs|crates/gcode/src/vector/code_symbols/types.rs]] - `crates/gcode/src/vector/code_symbols/types.rs` exposes 19 indexed API symbols.
+- [[code/files/crates/gcode/src/vector/code_symbols/types.rs|crates/gcode/src/vector/code_symbols/types.rs]] - This file defines the data types used by the code-symbol vector indexing and lifecycle pipeline. It includes a search request and search hit model, a rich `CodeSymbolVectorPayload` that is built from a `Symbol` via `from_symbol` by copying symbol fields and attaching extracted projection metadata/provenance, and lifecycle schema/output/status types for managing vector collections. It also defines `VectorLifecycleError` with formatting and conversion support so lifecycle operations can report structured failures consistently.
 [crates/gcode/src/vector/code_symbols/types.rs:7-12]
 [crates/gcode/src/vector/code_symbols/types.rs:15-18]
 [crates/gcode/src/vector/code_symbols/types.rs:20-24]

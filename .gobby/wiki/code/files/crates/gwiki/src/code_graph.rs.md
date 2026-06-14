@@ -45,7 +45,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/code_graph.rs` exposes 30 indexed API symbols.
+This file provides the code-graph layer for gwiki: it queries a Falkor-backed graph for file or symbol relationships, converts raw rows into structured `CodeGraphEdge` records, and wraps service availability into degradation signals. It also defines change-set and affected-page models, then uses them to map modified files and symbols through the code graph and a provenance graph to the pages that should be refreshed. Helper functions handle query construction, row extraction, path/source normalization, and graceful fallback when graph data is unavailable or malformed.
 [crates/gwiki/src/code_graph.rs:15-18]
 [crates/gwiki/src/code_graph.rs:21-28]
 [crates/gwiki/src/code_graph.rs:31-34]

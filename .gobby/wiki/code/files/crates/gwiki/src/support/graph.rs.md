@@ -26,7 +26,7 @@ Module: [[code/modules/crates/gwiki/src/support|crates/gwiki/src/support]]
 
 ## Purpose
 
-`crates/gwiki/src/support/graph.rs` exposes 11 indexed API symbols.
+Builds an in-memory wiki graph from a memory store by collecting documents, links, and sources into `MemoryWikiGraph` facts. It first copies all stored documents and sources into graph records, then resolves each link target with a target-resolution pipeline that filters out external/URL-like targets, normalizes fragments and path separators, checks for direct document-path matches, and falls back to a precomputed slug-to-path map or relative-path resolution from the source document’s directory. Helper functions centralize path normalization, slug mapping, and external-target detection so the main graph assembly stays focused on translating store state into resolved graph facts.
 [crates/gwiki/src/support/graph.rs:8-55]
 [crates/gwiki/src/support/graph.rs:57-90]
 [crates/gwiki/src/support/graph.rs:92-103]

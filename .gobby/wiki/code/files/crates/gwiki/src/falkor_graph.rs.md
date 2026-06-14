@@ -6,8 +6,6 @@ provenance:
   ranges:
   - 29-31
   - 33-43
-  - 34-38
-  - 40-42
   - 46-49
   - 51-54
   - 56-60
@@ -71,7 +69,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/falkor_graph.rs` exposes 56 indexed API symbols.
+This file manages the wiki graph’s FalkorDB integration and the helper logic that loads, trims, resolves, and writes graph data. It defines truncation and edge wrapper types for tracking when shared code graph results are capped, then uses them in query/load paths for code edges, boost data, and wiki facts. The core flow is: load wiki documents and links from PostgreSQL-backed graph data, resolve link targets and paths, build Cypher parameters and queries, enforce per-query and global edge limits with sentinel-based truncation tracking, and write or clear scoped data in FalkorDB. The test functions validate the graph name, target resolution, scope parameter formatting, path conversion, Cypher escaping, degradation reporting, truncation behavior, and the required wiki graph write statements.
 [crates/gwiki/src/falkor_graph.rs:29-31]
 [crates/gwiki/src/falkor_graph.rs:33-43]
 [crates/gwiki/src/falkor_graph.rs:34-38]

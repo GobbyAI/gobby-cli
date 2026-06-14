@@ -9,7 +9,6 @@ provenance:
   - 22-33
   - 36-42
   - 44-54
-  - 45-53
   - 56-72
   - 79-85
 generated_by: gcode-codewiki
@@ -23,7 +22,7 @@ Module: [[code/modules/crates/gwiki/src/support|crates/gwiki/src/support]]
 
 ## Purpose
 
-`crates/gwiki/src/support/counts.rs` exposes 8 indexed API symbols.
+This file provides count aggregation for gwiki index data across both in-memory and PostgreSQL-backed stores. `IndexCounts` is a shared result struct for document, chunk, link, source, and ingestion totals; `index_counts` computes those totals directly from `MemoryWikiStore`, while `postgres_index_counts` computes the same shape by calling `postgres_count` for each logical table in a given `SearchScope`. `GwikiTable` centralizes the fixed table-name mapping via `as_identifier`, and the test module verifies those identifiers stay stable.
 [crates/gwiki/src/support/counts.rs:4-10]
 [crates/gwiki/src/support/counts.rs:12-20]
 [crates/gwiki/src/support/counts.rs:22-33]

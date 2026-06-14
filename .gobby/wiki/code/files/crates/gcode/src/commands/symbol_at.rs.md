@@ -56,7 +56,9 @@ Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Purpose
 
-`crates/gcode/src/commands/symbol_at.rs` exposes 41 indexed API symbols.
+This file implements a symbol-at-location lookup command. It parses a location specification (file path, line, and optional column), retrieves symbols from the database for that file, reads the source code, and finds the best-matching symbol at the requested position.
+
+The core workflow: `parse_location` converts a location string and line number into a ParsedLocation with file, line, and optional column. `run` then normalizes the file path, fetches visible symbols from the database, and uses `line_column_to_byte_offset` to convert the location to a SymbolAtTarget (line and byte offset). The `select_symbol` function chooses the best match from candidates using two strategies: "containing" (symbols that encompass the target position, preferring smallest span then latest start) or "nearest" (closest symbol by line then byte distance, preferring previous symbols on ties). Helper functions like `contains_target`, `compare_containing`, and `compare_nearest` implement the selection logic. Finally, `lookup_for_selection` packages the result with metadata (match kind, distances) for JSON serialization. Utility functions handle source parsing (detecting line bounds, trimming carriage returns, validating numeric components) and output formatting.
 [crates/gcode/src/commands/symbol_at.rs:16-20]
 [crates/gcode/src/commands/symbol_at.rs:23-26]
 [crates/gcode/src/commands/symbol_at.rs:30-33]

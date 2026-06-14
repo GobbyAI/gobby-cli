@@ -13,29 +13,13 @@ provenance:
   - 69-73
   - 76-78
   - 80-112
-  - 81-87
-  - 89-95
-  - 97-99
-  - 101-103
-  - 105-107
-  - 109-111
   - 115-121
   - 123-134
-  - 124-133
   - '136'
   - 138-148
-  - 139-147
   - 150-159
   - 168-180
   - 182-233
-  - 183-185
-  - 187-191
-  - 193-198
-  - 200-205
-  - 207-211
-  - 213-216
-  - 218-221
-  - 223-232
   - 236-240
   - 242-246
   - 249-255
@@ -82,7 +66,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/store.rs` exposes 67 indexed API symbols.
+This file defines the core data model and storage layer for gwiki, covering wiki documents, chunks, links, sources, ingestion records, and scope metadata. It ties together an in-memory `MemoryWikiStore` and a PostgreSQL-backed `PostgresWikiStore` through shared store operations: validating paths, upserting and replacing derived rows, recording ingestions and hashes, normalizing scoped IDs and paths, and mapping document and ingestion kinds to storage-friendly strings, with `StoreError` used to surface validation and database failures.
 [crates/gwiki/src/store.rs:15-21]
 [crates/gwiki/src/store.rs:24-30]
 [crates/gwiki/src/store.rs:33-40]

@@ -48,7 +48,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/lint.rs` exposes 33 indexed API symbols.
+This file implements the wiki linter: it scans a vault, parses pages, and produces a `LintReport` summarizing broken links, orphan pages, missing frontmatter, duplicate aliases, and missing backlinks. `run` orchestrates the analysis by collecting pages, building lookup maps, counting inbound and outbound links, and assembling issues, while the helper functions handle markdown discovery, path normalization, target resolution, backlink/orphan checks, and report rendering.
 [crates/gwiki/src/lint.rs:13-22]
 [crates/gwiki/src/lint.rs:25-30]
 [crates/gwiki/src/lint.rs:33-36]

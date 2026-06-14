@@ -59,7 +59,9 @@ Module: [[code/modules/crates/gsqz/src|crates/gsqz/src]]
 
 ## Purpose
 
-`crates/gsqz/src/config.rs` exposes 55 indexed API symbols.
+This file defines the gsqz configuration model and its YAML deserialization/serialization behavior. `Config` ties together global `Settings`, a named pipeline map, fallback behavior, and excluded commands, while `DEFAULT_CONFIG_YAML` exposes the compiled-in config for initialization and `BUILTIN_EXCLUDED_COMMANDS` lists commands that should not be processed.
+
+`Settings` provides compression and daemon-related defaults, `Pipeline` describes a match pattern plus an ordered list of processing `Step`s, and `Fallback` supplies a default truncate-based recovery path when a pipeline has no steps. `Step` uses a custom serde visitor to decode single-key YAML maps into typed variants like filter, group, truncate, dedup, replace, match_output, and compress_prose, with dedicated argument structs and helper defaults supporting each operation.
 [crates/gsqz/src/config.rs:26-35]
 [crates/gsqz/src/config.rs:38-47]
 [crates/gsqz/src/config.rs:49-58]

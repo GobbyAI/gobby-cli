@@ -9,7 +9,6 @@ provenance:
   - 37-63
   - 65-90
   - 92-104
-  - 94-98
   - 106-121
   - 123-156
   - 158-173
@@ -33,7 +32,7 @@ Module: [[code/modules/crates/gcore/src/ai|crates/gcore/src/ai]]
 
 ## Purpose
 
-`crates/gcore/src/ai/vision.rs` exposes 18 indexed API symbols.
+This file implements AI vision extraction for images: `describe_image` sends an image to the configured vision-capable chat-completions endpoint, and the rest of the module builds the request and normalizes the response into a `VisionResult`. `request_body` base64-encodes the image into a data URI, inserts the vision prompt, and optionally sets the bound model. `parse_content` is the main response handler, first trying structured JSON, then a delimited text fallback, and finally a plain-text fallback, using helpers like `parse_json_content`, `strip_json_fence`, `parse_delimited_content`, `parse_section_label`, and `clean_optional_text` to extract `description` and `ocr_text`. The test helpers and cases at the end verify request construction and parsing edge cases such as empty JSON descriptions and unterminated JSON fences.
 [crates/gcore/src/ai/vision.rs:14-17]
 [crates/gcore/src/ai/vision.rs:19-35]
 [crates/gcore/src/ai/vision.rs:37-63]

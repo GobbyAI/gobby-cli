@@ -29,7 +29,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-`crates/gcore/src/local_backend.rs` exposes 17 indexed API symbols.
+Implements feature-gated local backend discovery and health checking. `Backend` is the deserialized config for a candidate backend, and `detect_backend` walks a list in order, returning the first clone that passes `validate_backend`. Validation turns the backend’s probe path into a URL, parses it as an HTTP target, sends a bounded TCP probe with the trimmed auth token and timeout, and accepts only 2xx responses while tracing failures. The supporting helpers handle URL authority parsing, request construction, status parsing, probe URL formatting, and reusable reachable/unreachable backend predicates used by the detection tests.
 [crates/gcore/src/local_backend.rs:14-20]
 [crates/gcore/src/local_backend.rs:24-31]
 [crates/gcore/src/local_backend.rs:35-68]

@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gwiki/src/ingest/pdf|crates/gwiki/src/ingest/pdf]]
 
 ## Purpose
 
-`crates/gwiki/src/ingest/pdf/text.rs` exposes 9 indexed API symbols.
+This file normalizes extracted PDF page text into clean paragraphs. `normalize_page_text` walks each input line, passes it through `single_line` to trim and flatten wrapping, groups non-empty lines into paragraphs, and joins paragraphs with blank lines so original paragraph breaks are preserved while extra whitespace and repeated blank lines are removed. The test module verifies the behavior across edge cases such as leading/trailing whitespace, multiple blank lines, whitespace-only input, empty input, single lines, and multi-line text with and without paragraph breaks.
 [crates/gwiki/src/ingest/pdf/text.rs:4-25]
 [crates/gwiki/src/ingest/pdf/text.rs:32-36]
 [crates/gwiki/src/ingest/pdf/text.rs:39-49]

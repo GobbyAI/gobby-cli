@@ -19,7 +19,7 @@ Module: [[code/modules/crates/gcode/src/index/parser|crates/gcode/src/index/pars
 
 ## Purpose
 
-`crates/gcode/src/index/parser/calls.rs` exposes 4 indexed API symbols.
+This file implements call-site extraction for the indexer. It defines the borrowed `CallExtractionContext` needed to interpret a source file, a `CallSite` record for the syntactic details of each detected call, and `extract_calls`, which dispatches to a Dart-specific textual path or a language-agnostic AST-based parser. The internal `materialize_call` helper turns a parsed call site into a `CallRelation` by resolving the caller’s enclosing symbol, checking same-file and import-based targets, accounting for shadowing, and falling back to semantic resolution when needed.
 [crates/gcode/src/index/parser/calls.rs:23-32]
 [crates/gcode/src/index/parser/calls.rs:35-42]
 [crates/gcode/src/index/parser/calls.rs:44-55]

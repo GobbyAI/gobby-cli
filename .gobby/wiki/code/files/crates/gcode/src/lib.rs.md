@@ -20,7 +20,7 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-`crates/gcode/src/lib.rs` exposes 6 indexed API symbols.
+The file serves as the root library module organizing code analysis and indexing functionality through multiple sub-modules (index, graph, vector, projection, etc.). It re-exports key public APIs including IndexRequest, IndexOutcome, and related types for indexing operations. The test module enforces architectural boundaries through assert_cli_independent_contract, a generic validation helper that ensures types don't reference CLI-specific modules (commands, output, clap), and public_projection_api_is_cli_independent, which verifies that core public APIs remain decoupled from CLI code. Additional functions like foundation_consumer_migration, indexing_search_primitive_migration, and falkor_facade_uses_core_graph_client_only support internal system evolution and constraint validation. Together these pieces maintain clean separation between the core library and command-line interface layers while supporting system migrations.
 [crates/gcode/src/lib.rs:34-42]
 [crates/gcode/src/lib.rs:45-75]
 [crates/gcode/src/lib.rs:78-142]

@@ -6,15 +6,17 @@ provenance:
   ranges:
   - 7-13
   - 15-22
-  - 24-35
-  - 37-49
-  - 51-59
-  - 61-67
-  - 69-71
-  - 73-75
-  - 77-102
-  - 109-114
-  - 117-127
+  - 26-46
+  - 48-59
+  - 61-73
+  - 75-83
+  - 85-91
+  - 93-95
+  - 97-99
+  - 101-126
+  - 133-138
+  - 141-153
+  - 156-166
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -26,12 +28,12 @@ Module: [[code/modules/crates/gwiki/src/support|crates/gwiki/src/support]]
 
 ## Purpose
 
-`crates/gwiki/src/support/text.rs` exposes 11 indexed API symbols.
+This file provides shared text utilities for gwiki: it tokenizes search queries, scores text against normalized keywords, safely normalizes code paths to repo-relative form, extracts short snippets from text, and maps degradation states and document/object kinds to stable labels or names. It also exposes slugification helpers plus a small path display helper, so the rest of the crate can reuse consistent text normalization, indexing, and user-facing formatting rules from one place.
 [crates/gwiki/src/support/text.rs:7-13]
 [crates/gwiki/src/support/text.rs:15-22]
-[crates/gwiki/src/support/text.rs:24-35]
-[crates/gwiki/src/support/text.rs:37-49]
-[crates/gwiki/src/support/text.rs:51-59]
+[crates/gwiki/src/support/text.rs:26-46]
+[crates/gwiki/src/support/text.rs:48-59]
+[crates/gwiki/src/support/text.rs:61-73]
 
 ## API Symbols
 
@@ -41,31 +43,37 @@ Module: [[code/modules/crates/gwiki/src/support|crates/gwiki/src/support]]
 - `keyword_score` (function) component `keyword_score [function]` (`91790d1a-0fe3-5fc3-ab61-2655714dc637`) lines 15-22 [crates/gwiki/src/support/text.rs:15-22]
   - Signature: `pub(crate) fn keyword_score(text: &str, tokens: &[String]) -> usize {`
   - Purpose: Counts the total occurrences of all provided normalized tokens within a case-insensitive version of the input text. [crates/gwiki/src/support/text.rs:15-22]
-- `snippet_from_text` (function) component `snippet_from_text [function]` (`565c6461-166f-5d18-91c6-23b28a664e08`) lines 24-35 [crates/gwiki/src/support/text.rs:24-35]
+- `sanitize_code_path` (function) component `sanitize_code_path [function]` (`e6ee4298-a16f-59b0-8280-90cadaa5fcc3`) lines 26-46 [crates/gwiki/src/support/text.rs:26-46]
+  - Signature: `pub(crate) fn sanitize_code_path(path: &str) -> Option<String> {`
+  - Purpose: Indexed function `sanitize_code_path` in `crates/gwiki/src/support/text.rs`. [crates/gwiki/src/support/text.rs:26-46]
+- `snippet_from_text` (function) component `snippet_from_text [function]` (`a19532b2-de2b-59bd-8b3b-75376c885954`) lines 48-59 [crates/gwiki/src/support/text.rs:48-59]
   - Signature: `pub(crate) fn snippet_from_text(text: &str) -> String {`
-  - Purpose: Extracts the first non-empty line from the input text, trims it, and returns it truncated to 240 characters with '...' appended if it exceeds that length. [crates/gwiki/src/support/text.rs:24-35]
-- `degradation_label` (function) component `degradation_label [function]` (`dd4c773e-02ab-5f4e-8e61-b20704393db1`) lines 37-49 [crates/gwiki/src/support/text.rs:37-49]
+  - Purpose: Indexed function `snippet_from_text` in `crates/gwiki/src/support/text.rs`. [crates/gwiki/src/support/text.rs:48-59]
+- `degradation_label` (function) component `degradation_label [function]` (`67129cf2-e917-5cd9-b30a-aed2a05b5be1`) lines 61-73 [crates/gwiki/src/support/text.rs:61-73]
   - Signature: `pub(crate) fn degradation_label(degradation: &DegradationKind) -> String {`
-  - Purpose: Maps a `DegradationKind` enum variant to its corresponding string label representation, with service unavailability cases further differentiated by their `ServiceState`. [crates/gwiki/src/support/text.rs:37-49]
-- `document_kind_name` (function) component `document_kind_name [function]` (`cd9bfc9c-9322-5e23-91f2-e44d1ea31620`) lines 51-59 [crates/gwiki/src/support/text.rs:51-59]
+  - Purpose: Indexed function `degradation_label` in `crates/gwiki/src/support/text.rs`. [crates/gwiki/src/support/text.rs:61-73]
+- `document_kind_name` (function) component `document_kind_name [function]` (`d42b4658-ebe0-52ae-a9e1-373a5a81d760`) lines 75-83 [crates/gwiki/src/support/text.rs:75-83]
   - Signature: `pub(crate) fn document_kind_name(kind: store::WikiDocumentKind) -> &'static str {`
-  - Purpose: Maps a `WikiDocumentKind` enum variant to its corresponding static string identifier. [crates/gwiki/src/support/text.rs:51-59]
-- `postgres_object_kind` (function) component `postgres_object_kind [function]` (`fb1bdf5a-98ea-5331-88a5-099bb1fb3caa`) lines 61-67 [crates/gwiki/src/support/text.rs:61-67]
+  - Purpose: Indexed function `document_kind_name` in `crates/gwiki/src/support/text.rs`. [crates/gwiki/src/support/text.rs:75-83]
+- `postgres_object_kind` (function) component `postgres_object_kind [function]` (`972dc6e5-2409-58d6-b9ed-89de9de3b427`) lines 85-91 [crates/gwiki/src/support/text.rs:85-91]
   - Signature: `pub(crate) fn postgres_object_kind(kind: setup::GwikiPostgresObjectKind) -> &'static str {`
-  - Purpose: Maps `GwikiPostgresObjectKind` enum variants to their corresponding static string representations via pattern matching. [crates/gwiki/src/support/text.rs:61-67]
-- `display_path` (function) component `display_path [function]` (`865de779-6685-5a45-9b5b-52923941e2ee`) lines 69-71 [crates/gwiki/src/support/text.rs:69-71]
+  - Purpose: Indexed function `postgres_object_kind` in `crates/gwiki/src/support/text.rs`. [crates/gwiki/src/support/text.rs:85-91]
+- `display_path` (function) component `display_path [function]` (`a33408bc-a2eb-574c-b231-09c256188203`) lines 93-95 [crates/gwiki/src/support/text.rs:93-95]
   - Signature: `pub(crate) fn display_path(path: &Path) -> String {`
-  - Purpose: Converts a `Path` to a UTF-8 string representation with all backslashes normalized to forward slashes. [crates/gwiki/src/support/text.rs:69-71]
-- `slugify` (function) component `slugify [function]` (`2e6f0d32-a201-59b5-81e4-20be67a8adcf`) lines 73-75 [crates/gwiki/src/support/text.rs:73-75]
+  - Purpose: Indexed function `display_path` in `crates/gwiki/src/support/text.rs`. [crates/gwiki/src/support/text.rs:93-95]
+- `slugify` (function) component `slugify [function]` (`f9678e6e-5cab-5644-9005-69225719f089`) lines 97-99 [crates/gwiki/src/support/text.rs:97-99]
   - Signature: `pub(crate) fn slugify(value: &str) -> String {`
-  - Purpose: Wraps `slugify_with_options` to convert a string to a URL-friendly slug using default configuration parameters. [crates/gwiki/src/support/text.rs:73-75]
-- `slugify_with_options` (function) component `slugify_with_options [function]` (`b80d26fc-3355-527f-aa2c-8df0bf8e79d6`) lines 77-102 [crates/gwiki/src/support/text.rs:77-102]
+  - Purpose: Indexed function `slugify` in `crates/gwiki/src/support/text.rs`. [crates/gwiki/src/support/text.rs:97-99]
+- `slugify_with_options` (function) component `slugify_with_options [function]` (`85deb1dd-437d-5e93-bed7-18ce0f2b4493`) lines 101-126 [crates/gwiki/src/support/text.rs:101-126]
   - Signature: `pub(crate) fn slugify_with_options(`
-  - Purpose: Converts a string into a lowercase, ASCII-alphanumeric slug with single-dash word delimiters, optionally truncated to a maximum length and falling back to a provided string if the result is empty. [crates/gwiki/src/support/text.rs:77-102]
-- `snippets_reserve_space_for_ellipsis` (function) component `snippets_reserve_space_for_ellipsis [function]` (`3dc3cb65-c67f-558c-9095-1f919ab863c2`) lines 109-114 [crates/gwiki/src/support/text.rs:109-114]
+  - Purpose: Indexed function `slugify_with_options` in `crates/gwiki/src/support/text.rs`. [crates/gwiki/src/support/text.rs:101-126]
+- `snippets_reserve_space_for_ellipsis` (function) component `snippets_reserve_space_for_ellipsis [function]` (`9e229e53-0e5c-5140-b948-55f4b02e870a`) lines 133-138 [crates/gwiki/src/support/text.rs:133-138]
   - Signature: `fn snippets_reserve_space_for_ellipsis() {`
-  - Purpose: Tests that `snippet_from_text` truncates input strings to exactly 240 characters while appending a trailing ellipsis marker. [crates/gwiki/src/support/text.rs:109-114]
-- `slugify_with_options_applies_fallback_and_max_length` (function) component `slugify_with_options_applies_fallback_and_max_length [function]` (`22092578-41f7-5706-83d1-92d63e86a0f5`) lines 117-127 [crates/gwiki/src/support/text.rs:117-127]
+  - Purpose: Indexed function `snippets_reserve_space_for_ellipsis` in `crates/gwiki/src/support/text.rs`. [crates/gwiki/src/support/text.rs:133-138]
+- `sanitize_code_path_strips_current_dir_components` (function) component `sanitize_code_path_strips_current_dir_components [function]` (`8cf79b6a-4e06-5249-bb09-a271f3e99c7a`) lines 141-153 [crates/gwiki/src/support/text.rs:141-153]
+  - Signature: `fn sanitize_code_path_strips_current_dir_components() {`
+  - Purpose: Indexed function `sanitize_code_path_strips_current_dir_components` in `crates/gwiki/src/support/text.rs`. [crates/gwiki/src/support/text.rs:141-153]
+- `slugify_with_options_applies_fallback_and_max_length` (function) component `slugify_with_options_applies_fallback_and_max_length [function]` (`68bfe972-fb6b-5463-b9b8-292389fe08ce`) lines 156-166 [crates/gwiki/src/support/text.rs:156-166]
   - Signature: `fn slugify_with_options_applies_fallback_and_max_length() {`
-  - Purpose: This unit test verifies that `slugify_with_options` correctly truncates slugs to a maximum length limit and returns a fallback value when the generated slug would be empty. [crates/gwiki/src/support/text.rs:117-127]
+  - Purpose: Indexed function `slugify_with_options_applies_fallback_and_max_length` in `crates/gwiki/src/support/text.rs`. [crates/gwiki/src/support/text.rs:156-166]
 

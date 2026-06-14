@@ -4,48 +4,7 @@ type: code_file
 provenance:
 - file: crates/ghook/schemas/inbox-envelope.v1.schema.json
   ranges:
-  - '2'
-  - '3'
-  - '4'
-  - '5'
-  - '6'
-  - 7-15
-  - '16'
-  - 17-63
-  - 18-22
-  - '19'
-  - '20'
-  - '21'
-  - 23-27
-  - '24'
-  - '25'
-  - '26'
-  - 28-31
-  - '29'
-  - '30'
-  - 32-36
-  - '33'
-  - '34'
-  - '35'
-  - 37-39
-  - '38'
-  - 40-44
-  - '41'
-  - '42'
-  - '43'
-  - 45-62
-  - '46'
-  - '47'
-  - 48-51
-  - '49'
-  - '50'
-  - 52-61
-  - 53-56
-  - '54'
-  - '55'
-  - 57-60
-  - '58'
-  - '59'
+  - 2-63
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -57,7 +16,7 @@ Module: [[code/modules/crates/ghook/schemas|crates/ghook/schemas]]
 
 ## Purpose
 
-`crates/ghook/schemas/inbox-envelope.v1.schema.json` exposes 42 indexed API symbols.
+Defines the JSON Schema v1 for a Gobby ghook inbox envelope: a strict object written to `~/.gobby/hooks/inbox/` and replayed by the daemon drain worker. It requires the envelope metadata (`schema_version`, `enqueued_at`, `critical`, `hook_type`, `input_data`, `source`, `headers`), forbids extra fields, and constrains each property so consumers can validate the envelope version, timestamp, hook identity, original stdin payload, source CLI, and emitted headers, including optional Gobby project/session IDs.
 [crates/ghook/schemas/inbox-envelope.v1.schema.json:2]
 [crates/ghook/schemas/inbox-envelope.v1.schema.json:3]
 [crates/ghook/schemas/inbox-envelope.v1.schema.json:4]

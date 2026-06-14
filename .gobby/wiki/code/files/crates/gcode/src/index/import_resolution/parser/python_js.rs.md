@@ -17,7 +17,7 @@ Module: [[code/modules/crates/gcode/src/index/import_resolution/parser|crates/gc
 
 ## Purpose
 
-`crates/gcode/src/index/import_resolution/parser/python_js.rs` exposes 2 indexed API symbols.
+This file parses import statements for Python and JavaScript and turns them into import-dependency records plus binding maps. The Python parser handles both `import ...` and `from ... import ...`, splitting top-level entries, normalizing aliases, recording each module in `ExtractedImports.imports`, and registering member bindings only when the module is external; unrecognized forms are sent to the unparsed-import fallback. The JavaScript parser does the same for JS import syntax, extracting the module specifier and classifying namespace and named imports into member or bare bindings while tracking the module dependency.
 [crates/gcode/src/index/import_resolution/parser/python_js.rs:11-98]
 [crates/gcode/src/index/import_resolution/parser/python_js.rs:100-194]
 

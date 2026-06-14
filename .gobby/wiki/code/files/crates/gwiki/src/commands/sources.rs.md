@@ -9,12 +9,8 @@ provenance:
   - 125-138
   - 141-146
   - 148-172
-  - 149-155
-  - 157-163
-  - 165-171
   - 175-181
   - 183-193
-  - 184-192
   - 195-205
   - 208-213
   - 216-219
@@ -58,7 +54,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-`crates/gwiki/src/commands/sources.rs` exposes 43 indexed API symbols.
+Implements the `gwiki` source-management commands for a resolved scope: `execute` reads the source manifest, expands each manifest record into a renderable source entry, and returns a combined listing with any degradation notices, while `execute_remove` finds a source by ID, resolves its raw and asset paths, stages their deletion, updates the manifest and index state, and rolls everything back on failure or dry-run. The rest of the file is supporting machinery for that flow: small data types for listing/index status and path-change tracking, helpers for reading frontmatter and constructing safe vault-relative paths, staging/removal/rollback routines, rendering functions for normal and remove output, and tests that cover listing, path validation, manifest updates, and rollback behavior.
 [crates/gwiki/src/commands/sources.rs:15-23]
 [crates/gwiki/src/commands/sources.rs:25-122]
 [crates/gwiki/src/commands/sources.rs:125-138]

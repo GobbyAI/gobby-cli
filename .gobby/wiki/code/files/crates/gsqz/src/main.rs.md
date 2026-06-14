@@ -20,7 +20,7 @@ Module: [[code/modules/crates/gsqz/src|crates/gsqz/src]]
 
 ## Purpose
 
-`crates/gsqz/src/main.rs` exposes 5 indexed API symbols.
+Command-line entry point for `gsqz`, a utility that runs compression workflows on either stdin or a shell command’s output for LLM use. It defines the CLI flags and subcommand dispatch, parses `--level` into a prose compression level with a standard default, loads and auto-initializes config on first run, then routes to `run_input_mode` or `run_output_mode`; the output path also strips ANSI escape codes before compression and can report stats or daemon-backed metrics.
 [crates/gsqz/src/main.rs:25-48]
 [crates/gsqz/src/main.rs:50-65]
 [crates/gsqz/src/main.rs:67-139]

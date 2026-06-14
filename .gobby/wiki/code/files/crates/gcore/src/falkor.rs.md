@@ -43,7 +43,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-`crates/gcore/src/falkor.rs` exposes 32 indexed API symbols.
+This file defines the FalkorDB adapter boundary for `gcore`: it wraps a blocking `SyncGraph` in `GraphClient`, provides a constrained `ReadOnlySyncGraph` for read-only access, and exposes helpers to build clients from config, run Cypher queries, parse results into `Row` maps, and manage exact node indexes. It also centralizes identifier and string escaping plus error classification so duplicate-index failures can be suppressed safely, and includes degradation helpers that return `ServiceState`-tagged defaults when FalkorDB is unavailable or unconfigured.
 [crates/gcore/src/falkor.rs:22]
 [crates/gcore/src/falkor.rs:28-30]
 [crates/gcore/src/falkor.rs:36-38]

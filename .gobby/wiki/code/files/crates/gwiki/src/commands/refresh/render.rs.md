@@ -17,7 +17,7 @@ Module: [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/comman
 
 ## Purpose
 
-`crates/gwiki/src/commands/refresh/render.rs` exposes 2 indexed API symbols.
+Builds the command output for a refresh run. `render_refresh` gathers the refresh results, derives a status string with `refresh_status`, and packages everything into a scoped `CommandOutcome` containing both JSON and human-readable text. The JSON payload includes the command name, scope, dry-run flag, planned/refreshed/unchanged/failed/skipped lists, indexed data, index status, and degradations, while the text summary reports counts for the main result buckets. It only returns exit code `1` for an explicit non-dry-run single-source refresh that failed completely; all other cases exit successfully. `refresh_status` encodes the outcome priority as `dry_run`, `failed`, `partial`, `refreshed`, or `unchanged` based on the counts.
 [crates/gwiki/src/commands/refresh/render.rs:3-49]
 [crates/gwiki/src/commands/refresh/render.rs:51-68]
 

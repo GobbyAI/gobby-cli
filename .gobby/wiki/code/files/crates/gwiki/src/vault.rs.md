@@ -30,7 +30,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/vault.rs` exposes 15 indexed API symbols.
+This file defines the canonical gwiki vault layout and the helpers that materialize and tear it down. `VaultPaths` and `CreatedVaultPaths` describe the required directory/file shape and what was newly created, `required_paths()` exposes the fixed manifest, and `initialize()` ensures every required directory and default file exists before atomically writing `.gwiki/scope.json` from the resolved scope identity and root. The lower-level helpers support that lifecycle: `create_dir()` wraps recursive directory creation, `ensure_file()` creates default files only when missing, `write_scope_file_atomically()` handles durable temp-file write and rename for the scope file, `temp_sibling_path()` generates the temp filename, `sync_parent_dir()` flushes parent metadata on Unix, and `cleanup_created()` removes only paths recorded as created, ignoring expected missing/not-empty cases while surfacing other I/O errors.
 [crates/gwiki/src/vault.rs:19-22]
 [crates/gwiki/src/vault.rs:25-28]
 [crates/gwiki/src/vault.rs:55-60]

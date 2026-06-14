@@ -18,7 +18,7 @@ Module: [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/comman
 
 ## Purpose
 
-`crates/gwiki/src/commands/refresh/mod.rs` exposes 3 indexed API symbols.
+Implements the `refresh` command for gwiki source re-ingestion and index maintenance. `execute` is the public entry point, `execute_with_fetcher` resolves the command scope and injects URL fetching, and `execute_resolved_with_fetcher` does the real work: it validates the scope, reads the source manifest, selects requested sources, handles dry-run rendering, and then coordinates the refresh/update flow using the module’s helper subcomponents.
 [crates/gwiki/src/commands/refresh/mod.rs:29-37]
 [crates/gwiki/src/commands/refresh/mod.rs:39-49]
 [crates/gwiki/src/commands/refresh/mod.rs:51-140]

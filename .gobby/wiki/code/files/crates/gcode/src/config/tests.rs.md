@@ -39,7 +39,7 @@ Module: [[code/modules/crates/gcode/src/config|crates/gcode/src/config]]
 
 ## Purpose
 
-`crates/gcode/src/config/tests.rs` exposes 25 indexed API symbols.
+This file is a test suite for the gcode configuration system. It provides utility functions to set up test environments (write_project_json, run_git, create_linked_worktree, with_service_env) and manage test configuration state. The test functions validate multiple aspects of configuration resolution: environment variable precedence, JSON decoding, project ID persistence across different repository contexts (main repos, linked worktrees, isolated markers with parent metadata), daemon URL normalization and fallback behavior, service credential resolution (Falkordb, Qdrant secrets), embedding and vector configuration parsing, and error propagation through config sources. Tests also verify validation logic that rejects incomplete metadata, missing paths, and invalid service ports while applying sensible defaults.
 [crates/gcode/src/config/tests.rs:14-22]
 [crates/gcode/src/config/tests.rs:24-38]
 [crates/gcode/src/config/tests.rs:40-70]

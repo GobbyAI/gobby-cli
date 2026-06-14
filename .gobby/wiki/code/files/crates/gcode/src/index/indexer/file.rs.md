@@ -22,7 +22,7 @@ Module: [[code/modules/crates/gcode/src/index/indexer|crates/gcode/src/index/ind
 
 ## Purpose
 
-`crates/gcode/src/index/indexer/file.rs` exposes 7 indexed API symbols.
+This file implements the core file-level indexing logic for a code analysis system. The main `index_file` function orchestrates parsing, language detection, content hashing, and metadata collection for individual files, then persists the extracted facts to PostgreSQL through a transactional sink. Supporting functions handle semantic resolver setup (`create_semantic_resolver_if_needed`), explicit file routing configuration (`ExplicitFileRoute` and `explicit_file_route`), content-only indexing workflows (`index_content_only`), and database writes for both fully parsed results (`write_parsed_file_facts`) and content-only variants (`write_content_only_file_facts`).
 [crates/gcode/src/index/indexer/file.rs:15-91]
 [crates/gcode/src/index/indexer/file.rs:93-108]
 [crates/gcode/src/index/indexer/file.rs:111-115]

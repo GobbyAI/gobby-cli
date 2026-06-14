@@ -7,22 +7,14 @@ provenance:
   - 20-23
   - 25-27
   - 29-33
-  - 30-32
   - 35-153
-  - 36-70
-  - 72-107
-  - 109-152
   - 155-199
-  - 156-178
-  - 180-198
   - 201-219
   - 221-254
   - 256-270
   - 272-274
   - 276-280
-  - 277-279
   - 282-302
-  - 283-301
   - 304-313
   - 315-322
   - 324-329
@@ -43,7 +35,9 @@ Module: [[code/modules/crates/gwiki/src/ai|crates/gwiki/src/ai]]
 
 ## Purpose
 
-`crates/gwiki/src/ai/clients.rs` exposes 28 indexed API symbols.
+This file defines the production AI clients for the `gwiki` crate, wrapping a shared `AiContext` and exposing transcription and vision services through the crate’s `TranscriptionClient` and `VisionClient` traits. The transcription client routes work between daemon-backed and direct AI paths based on the effective capability routing, supports raw transcription and translation to English, and includes a segment-translation pipeline that batches transcript segments, retries with smaller chunks when needed, and validates JSON-indexed translation output. The vision client follows the same routing model to extract image information and converts core AI errors and results into crate-level `WikiError`, `TranscriptionOutput`, and `VisionExtraction` types.
+
+Supporting helpers build the translation prompt, parse indexed translation responses, warn on batch mismatches, map routing and errors into local representations, and convert core transcription/vision results into the crate’s output types. The tests at the end verify routing behavior for off/direct modes, validate indexed-translation parsing failures, and provide shared test context and capability binding fixtures.
 [crates/gwiki/src/ai/clients.rs:20-23]
 [crates/gwiki/src/ai/clients.rs:25-27]
 [crates/gwiki/src/ai/clients.rs:29-33]
@@ -116,26 +110,26 @@ Parses a JSON-encoded array of indexed translations, validates completeness and 
   - Purpose: Returns an `AiError` indicating the specified capability is unavailable after shared effective routing resolves to the given route. [crates/gwiki/src/ai/clients.rs:304-313]
 - `route_name` (function) component `route_name [function]` (`7eb7621e-6e4f-5964-9d77-eaaa0191baec`) lines 315-322 [crates/gwiki/src/ai/clients.rs:315-322]
   - Signature: `fn route_name(route: AiRouting) -> &'static str {`
-  - Purpose: Indexed function `route_name` in `crates/gwiki/src/ai/clients.rs`. [crates/gwiki/src/ai/clients.rs:315-322]
+  - Purpose: Maps an `AiRouting` enum variant to its corresponding static string representation. [crates/gwiki/src/ai/clients.rs:315-322]
 - `ai_error_to_wiki_error` (function) component `ai_error_to_wiki_error [function]` (`366340b0-5b92-53b0-ae6c-a7defe4ac2b8`) lines 324-329 [crates/gwiki/src/ai/clients.rs:324-329]
   - Signature: `fn ai_error_to_wiki_error(error: AiError) -> WikiError {`
-  - Purpose: Indexed function `ai_error_to_wiki_error` in `crates/gwiki/src/ai/clients.rs`. [crates/gwiki/src/ai/clients.rs:324-329]
+  - Purpose: Converts an `AiError` into a `WikiError::Daemon` variant with the hardcoded endpoint identifier `"gcore::ai"` and the error's string representation as the message. [crates/gwiki/src/ai/clients.rs:324-329]
 - `transcription_output_from_core` (function) component `transcription_output_from_core [function]` (`d94e9112-3e98-5e4b-b1b8-ef53ea3ac1b1`) lines 331-357 [crates/gwiki/src/ai/clients.rs:331-357]
   - Signature: `fn transcription_output_from_core(result: CoreTranscriptionResult) -> TranscriptionOutput {`
-  - Purpose: Indexed function `transcription_output_from_core` in `crates/gwiki/src/ai/clients.rs`. [crates/gwiki/src/ai/clients.rs:331-357]
+  - Purpose: Converts a `CoreTranscriptionResult` into a `TranscriptionOutput` by remapping segments to `TranscriptSegment` structs and resolving the output language with source language fallback. [crates/gwiki/src/ai/clients.rs:331-357]
 - `vision_extraction_from_core` (function) component `vision_extraction_from_core [function]` (`04ed7217-5fc7-5f41-8824-978fa7b36b47`) lines 359-372 [crates/gwiki/src/ai/clients.rs:359-372]
   - Signature: `fn vision_extraction_from_core(result: VisionResult) -> VisionExtraction {`
-  - Purpose: Indexed function `vision_extraction_from_core` in `crates/gwiki/src/ai/clients.rs`. [crates/gwiki/src/ai/clients.rs:359-372]
+  - Purpose: Converts a `VisionResult` to a `VisionExtraction`, conditionally appending the model field to metadata if it exists and isn't already present. [crates/gwiki/src/ai/clients.rs:359-372]
 - `clients_consume_effective_off_and_direct_routes` (function) component `clients_consume_effective_off_and_direct_routes [function]` (`6c19c5e3-c505-5d59-ab6b-10a4137dc35e`) lines 384-439 [crates/gwiki/src/ai/clients.rs:384-439]
   - Signature: `fn clients_consume_effective_off_and_direct_routes() {`
-  - Purpose: Indexed function `clients_consume_effective_off_and_direct_routes` in `crates/gwiki/src/ai/clients.rs`. [crates/gwiki/src/ai/clients.rs:384-439]
+  - Purpose: Tests that ProductionTranscriptionClient and ProductionVisionClient properly enforce service unavailability when AiRouting is set to Off and require explicit API configuration when set to Direct. [crates/gwiki/src/ai/clients.rs:384-439]
 - `indexed_translation_errors_name_bad_index_shape` (function) component `indexed_translation_errors_name_bad_index_shape [function]` (`081a4819-1d9c-5e1e-bb89-832c80ec26c7`) lines 442-451 [crates/gwiki/src/ai/clients.rs:442-451]
   - Signature: `fn indexed_translation_errors_name_bad_index_shape() {`
-  - Purpose: Indexed function `indexed_translation_errors_name_bad_index_shape` in `crates/gwiki/src/ai/clients.rs`. [crates/gwiki/src/ai/clients.rs:442-451]
+  - Purpose: Unit test that validates `parse_indexed_translation` correctly rejects both duplicate indices and indices exceeding the target array length. [crates/gwiki/src/ai/clients.rs:442-451]
 - `test_context` (function) component `test_context [function]` (`ddb4a9f1-ba30-59f9-a2aa-543760c7f3b9`) lines 453-469 [crates/gwiki/src/ai/clients.rs:453-469]
   - Signature: `fn test_context(binding: CapabilityBinding) -> AiContext {`
-  - Purpose: Indexed function `test_context` in `crates/gwiki/src/ai/clients.rs`. [crates/gwiki/src/ai/clients.rs:453-469]
+  - Purpose: Constructs an `AiContext` test instance by replicating a single `CapabilityBinding` across all AI service types (embed, audio transcription/translation, vision, text generation) with serialized execution (max_concurrency=1), unit rate limiting, and project ID "project-123". [crates/gwiki/src/ai/clients.rs:453-469]
 - `binding` (function) component `binding [function]` (`bb21c0d9-ac1e-568c-8bcb-726a905316ca`) lines 471-484 [crates/gwiki/src/ai/clients.rs:471-484]
   - Signature: `fn binding(routing: AiRouting, api_base: Option<&str>) -> CapabilityBinding {`
-  - Purpose: Indexed function `binding` in `crates/gwiki/src/ai/clients.rs`. [crates/gwiki/src/ai/clients.rs:471-484]
+  - Purpose: Constructs a `CapabilityBinding` struct with the provided `routing` and `api_base` parameters, hard-coded test model and provider identifiers, and `None` for all remaining fields. [crates/gwiki/src/ai/clients.rs:471-484]
 

@@ -28,7 +28,7 @@ Module: [[code/modules/crates/gsqz/src|crates/gsqz/src]]
 
 ## Purpose
 
-`crates/gsqz/src/command_split.rs` exposes 13 indexed API symbols.
+This file provides `split_compound`, a small parser that breaks a shell command string into trimmed top-level segments on `&&`, `||`, and `;` while leaving `|` pipelines intact and ignoring operators inside single quotes, double quotes, and parenthesized groups. It scans the input byte by byte, tracks quote state and parenthesis depth to decide when a separator is real, collects each segment, and falls back to returning the original command as a single element when nothing is split. The test module exercises the edge cases and core cases together: plain commands, each separator type, mixed operators, quoted and parenthesized operators, empty input, trailing operators, and whitespace trimming.
 [crates/gsqz/src/command_split.rs:5-85]
 [crates/gsqz/src/command_split.rs:92-94]
 [crates/gsqz/src/command_split.rs:97-102]

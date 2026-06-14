@@ -27,7 +27,7 @@ Module: [[code/modules/crates/gwiki/src/ingest/document|crates/gwiki/src/ingest/
 
 ## Purpose
 
-`crates/gwiki/src/ingest/document/html.rs` exposes 12 indexed API symbols.
+Parses HTML documents into normalized markdown for wiki ingestion. It reads bytes into a scraper DOM, extracts a decoded/formatted `<title>`, then walks the body or root element to gather visible text while skipping head/script/style content. Block-level elements split text into separate parts, inline text is spaced and trimmed carefully, and the collected text is normalized by decoding entities and standardizing whitespace before being returned as `DocumentExtraction`. If no readable content is found, it emits a degraded extraction with `HtmlNoContent` metadata. The included tests lock in whitespace normalization and block-element classification behavior.
 [crates/gwiki/src/ingest/document/html.rs:8-39]
 [crates/gwiki/src/ingest/document/html.rs:41-51]
 [crates/gwiki/src/ingest/document/html.rs:53-76]

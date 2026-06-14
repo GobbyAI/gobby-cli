@@ -67,7 +67,7 @@ Module: [[code/modules/crates/gwiki/src/ingest|crates/gwiki/src/ingest]]
 
 ## Purpose
 
-`crates/gwiki/src/ingest/url.rs` exposes 67 indexed API symbols.
+This file implements URL ingestion for gwiki: it fetches and validates URLs, captures them as `UrlSnapshot`s, and turns those snapshots into ingested wiki content. The ingest path splits into HTML and non-HTML handling, with helpers for redirect resolution, URL/IP safety checks, response-size limiting, and HTML-to-markdown/text extraction before writing raw content, assets, and source manifests into the store. It also defines batch result types for accepted and failed ingests, plus status/exit-code reporting for CLI or API callers.
 [crates/gwiki/src/ingest/url.rs:22-28]
 [crates/gwiki/src/ingest/url.rs:31-35]
 [crates/gwiki/src/ingest/url.rs:38-42]

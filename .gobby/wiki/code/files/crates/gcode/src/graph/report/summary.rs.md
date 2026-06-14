@@ -31,7 +31,7 @@ Module: [[code/modules/crates/gcode/src/graph/report|crates/gcode/src/graph/repo
 
 ## Purpose
 
-`crates/gcode/src/graph/report/summary.rs` exposes 16 indexed API symbols.
+This file provides analysis and summarization functions for code dependency graphs. It computes structural statistics (node/edge counts by type) via `summarize_graph`, identifies high-degree "hotspot" nodes across files and symbols through `summarize_hotspots` and supporting functions like `gcore_hotspots_for_code_graph` and `analytics_top_hotspots`, and analyzes call patterns and edge frequencies via `gcore_incoming_call_hotspots` and `target_frequencies`. The module also includes bridge edge analysis functions (`summarize_bridge_edges`, `gcore_bridge_summary_for_edges`, `bridge_summary_from_analytics_edges`) to detect critical dependency connections, along with helper utilities like `edge_degree_stats`, `sort_hotspots`, and `is_symbol_node` for filtering and ranking nodes. The `DegreeStats` struct tracks incoming/outgoing edge counts used throughout these analyses.
 [crates/gcode/src/graph/report/summary.rs:14-17]
 [crates/gcode/src/graph/report/summary.rs:19-41]
 [crates/gcode/src/graph/report/summary.rs:43-49]

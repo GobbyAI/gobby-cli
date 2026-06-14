@@ -70,7 +70,7 @@ Module: [[code/modules/crates/gcode/src/db|crates/gcode/src/db]]
 
 ## Purpose
 
-`crates/gcode/src/db/resolution.rs` exposes 55 indexed API symbols.
+This file implements PostgreSQL database URL resolution for the gcode crate with a cascading multi-source lookup strategy. The core function `resolve_database_url()` delegates to `resolve_database_url_from_sources_with_identity_and_reachability()`, which prioritizes sources in order: environment variables (GCODE_DATABASE_URL or GOBBY_POSTGRES_DSN), authenticated broker daemon requests, bootstrap.yaml configuration files, and gcore config files. Each source is validated through reachability checks (readonly connection testing) and identity probing when applicable. The broker integration uses HTTP POST requests with local CLI token authentication, validates daemon URLs resolve to loopback addresses, and enforces strict PostgreSQL URL format (postgres:// or postgresql:// scheme with non-empty host and database path). Helper functions parse bootstrap YAML into `BootstrapDatabase` structs, read files and environment variables with trimming, and handle broker timeouts (defaulting to 7 seconds). The extensive test suite verifies source precedence, error handling for missing tokens or daemon failures, timeout behavior, and validation of malformed URLs across all resolution paths.
 [crates/gcode/src/db/resolution.rs:16-18]
 [crates/gcode/src/db/resolution.rs:21-24]
 [crates/gcode/src/db/resolution.rs:27-29]

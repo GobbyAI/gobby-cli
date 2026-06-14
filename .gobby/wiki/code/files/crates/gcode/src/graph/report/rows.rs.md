@@ -26,7 +26,11 @@ Module: [[code/modules/crates/gcode/src/graph/report|crates/gcode/src/graph/repo
 
 ## Purpose
 
-`crates/gcode/src/graph/report/rows.rs` exposes 11 indexed API symbols.
+This file provides row-to-object conversion utilities for graph reporting, transforming database Row objects into domain models with sensible defaults and fallback values.
+
+The main converters are `rows_to_named_counts`, which collects rows into a sorted name-to-count map; `row_to_graph_hotspot`, which extracts id/name (mandatory) and node type, degree, and directional metrics (with defaults); `row_to_target_frequency`, which builds a frequency struct from id, name, and optional count; and `row_to_bridge_edge_hypothesis`, which deserializes complex edge data including source/target identifiers, relation type, and optional metadata like confidence and provenance.
+
+Supporting the converters are three low-level extractors: `row_string` returns the first non-empty string from candidate keys; `row_usize` attempts multi-type numeric conversions (u64, i64, f64) in sequence; and `row_f64` retrieves and converts floating-point values. Unit tests verify that extractors skip invalid or missing values, returning only valid conversions.
 [crates/gcode/src/graph/report/rows.rs:11-19]
 [crates/gcode/src/graph/report/rows.rs:21-31]
 [crates/gcode/src/graph/report/rows.rs:33-39]

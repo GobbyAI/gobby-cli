@@ -27,7 +27,7 @@ Module: [[code/modules/crates/gsqz/src/primitives|crates/gsqz/src/primitives]]
 
 ## Purpose
 
-`crates/gsqz/src/primitives/match_output.rs` exposes 12 indexed API symbols.
+This file implements full-blob output matching against an ordered list of `MatchOutputRule`s. `check` concatenates all output lines, evaluates each rule’s regex with first-match-wins semantics, skips invalid patterns, and suppresses a match when a valid `unless` regex also matches; it returns the matched rule’s message or `None`. The local `rule` and `lines` helpers make test setup ergonomic, and the tests cover matching, negative conditions, empty/invalid rules, rule ordering, and matching across newline boundaries.
 [crates/gsqz/src/primitives/match_output.rs:8-33]
 [crates/gsqz/src/primitives/match_output.rs:39-45]
 [crates/gsqz/src/primitives/match_output.rs:47-49]

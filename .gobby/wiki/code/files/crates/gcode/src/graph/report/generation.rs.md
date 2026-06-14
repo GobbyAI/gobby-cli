@@ -20,7 +20,7 @@ Module: [[code/modules/crates/gcode/src/graph/report|crates/gcode/src/graph/repo
 
 ## Purpose
 
-`crates/gcode/src/graph/report/generation.rs` exposes 5 indexed API symbols.
+This file generates project graph reports through a tiered API. The entry point `generate_report` delegates to `generate_report_with_options`, which connects to FalkorDB, loads a filtered graph snapshot with service state error handling, and constructs a timestamped report. For direct snapshot-based workflows, `generate_report_from_snapshot_with_options` computes missing analysis components including graph summaries, hotspot identification, unresolved target detection, and bridge relationship normalization. The module also provides convenience functions like `empty_report` for stub reports. The functions coordinate snapshot loading, options normalization, summary generation, and markdown rendering to produce comprehensive ProjectGraphReport outputs with configurable analysis parameters.
 [crates/gcode/src/graph/report/generation.rs:21-23]
 [crates/gcode/src/graph/report/generation.rs:25-59]
 [crates/gcode/src/graph/report/generation.rs:61-63]

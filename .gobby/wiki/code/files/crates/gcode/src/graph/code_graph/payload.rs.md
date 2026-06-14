@@ -6,28 +6,14 @@ provenance:
   ranges:
   - 10-19
   - 21-82
-  - 22-30
-  - 32-43
-  - 45-47
-  - 49-51
-  - 53-71
-  - 73-81
   - 84-88
-  - 85-87
   - 90-109
-  - 91-108
   - 111-113
   - 116-135
   - 137-200
-  - 138-155
-  - 161-177
-  - 179-199
   - 203-214
   - 216-243
-  - 217-230
-  - 232-242
-  - 246-249
-  - 250-262
+  - 246-262
   - 264-290
   - 292-297
   - 299-316
@@ -45,7 +31,7 @@ Module: [[code/modules/crates/gcode/src/graph/code_graph|crates/gcode/src/graph/
 
 ## Purpose
 
-`crates/gcode/src/graph/code_graph/payload.rs` exposes 30 indexed API symbols.
+This file defines the core data structures and utilities for building and managing code dependency graphs with analytics integration. `GraphPayload` is the main container holding collections of `GraphNode` (vertices) and `GraphLink` (edges), with an optional center reference and an internal cache of node IDs to prevent duplicates. Its methods manage node insertion, graph construction, and node caching. `GraphNode` and `GraphLink` encapsulate vertex and edge data respectively, with factory methods to construct instances from database rows. The `AnalyticsGraph` struct converts the internal graph representation into `gobby_core`'s analytics framework for dependency analysis. Supporting utility functions extract and parse row data into node/link/edge metadata components, calculate node weights, and populate graph structures. This enables the codebase to represent code dependencies as queryable graphs suitable for impact analysis.
 [crates/gcode/src/graph/code_graph/payload.rs:10-19]
 [crates/gcode/src/graph/code_graph/payload.rs:21-82]
 [crates/gcode/src/graph/code_graph/payload.rs:22-30]

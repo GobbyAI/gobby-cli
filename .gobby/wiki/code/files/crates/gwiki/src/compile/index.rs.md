@@ -33,7 +33,7 @@ Module: [[code/modules/crates/gwiki/src/compile|crates/gwiki/src/compile]]
 
 ## Purpose
 
-`crates/gwiki/src/compile/index.rs` exposes 18 indexed API symbols.
+This file updates the generated wiki index and manages the bookkeeping around compiled content. `update_wiki_index` acquires an index lock, loads or initializes `_index.md`, and ensures the compiled article is linked under a “Compiled pages” section by using the link/heading helpers. The rest of the module supports provenance and synchronization: it writes provenance sections for source chunks, maps chunks and articles to stable section IDs, marks sources as compiled, and uses file and index locks to prevent concurrent edits while compiling.
 [crates/gwiki/src/compile/index.rs:16-63]
 [crates/gwiki/src/compile/index.rs:65-94]
 [crates/gwiki/src/compile/index.rs:96-98]

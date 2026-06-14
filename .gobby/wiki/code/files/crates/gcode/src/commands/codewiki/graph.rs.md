@@ -5,7 +5,6 @@ provenance:
 - file: crates/gcode/src/commands/codewiki/graph.rs
   ranges:
   - 4-109
-  - 34-49
   - 113-142
   - 148-163
   - 165-180
@@ -20,7 +19,7 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Purpose
 
-`crates/gcode/src/commands/codewiki/graph.rs` exposes 5 indexed API symbols.
+This file manages code dependency graph operations by querying FalkorDB and transforming results into graph edge representations. The primary function fetch_codewiki_graph_edges orchestrates the process: it filters symbols from core files, establishes a FalkorDB connection, executes parametric Cypher queries to retrieve both call and import edges, and returns a CodewikiGraph structure. Helper function query_or_unavailable handles query execution with error handling and optional logging. The query generator functions codewiki_call_edges_query and codewiki_import_edges_query create parameterized Cypher strings that retrieve CALLS relationships between CodeSymbols and IMPORTS relationships between CodeFile and CodeModule nodes respectively, bounded by the specified project and edge limit. The import_edges_from_pairs function transforms raw file-module import pairs into typed CodewikiGraphEdge instances by resolving files to their component IDs and filtering for imports originating from core files.
 [crates/gcode/src/commands/codewiki/graph.rs:4-109]
 [crates/gcode/src/commands/codewiki/graph.rs:34-49]
 [crates/gcode/src/commands/codewiki/graph.rs:113-142]

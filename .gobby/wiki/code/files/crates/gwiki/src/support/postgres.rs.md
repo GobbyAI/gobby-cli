@@ -17,7 +17,7 @@ Module: [[code/modules/crates/gwiki/src/support|crates/gwiki/src/support]]
 
 ## Purpose
 
-`crates/gwiki/src/support/postgres.rs` exposes 2 indexed API symbols.
+This file provides PostgreSQL-specific support checks for `gwiki`. `require_attached_index` verifies that a PostgreSQL hub is configured, opens a readonly connection, runs runtime schema validation through `ValidationContext`, and returns a config error if required index pieces are missing. `require_postgres_index` is the lower-level helper that resolves the database URL from environment settings and returns a readonly `postgres::Client`, converting missing config or connection failures into `WikiError::Config`.
 [crates/gwiki/src/support/postgres.rs:6-39]
 [crates/gwiki/src/support/postgres.rs:41-51]
 

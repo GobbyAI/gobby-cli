@@ -6,10 +6,8 @@ provenance:
   ranges:
   - 4-9
   - 11-20
-  - 12-19
   - 23-26
   - 28-35
-  - 29-34
   - 38-41
   - 44-48
   - 51-54
@@ -19,7 +17,6 @@ provenance:
   - 169-279
   - 281-283
   - 286-337
-  - 290-292
   - 340-344
   - 347-352
   - 355-358
@@ -43,7 +40,7 @@ Module: [[code/modules/crates/gcore/src/provisioning|crates/gcore/src/provisioni
 
 ## Purpose
 
-`crates/gcore/src/provisioning/hub.rs` exposes 28 indexed API symbols.
+Provides hub provisioning and database-URL resolution for gcore. It defines the option and result types used to identify a hub, collects candidate PostgreSQL DSNs from environment, config, and bootstrap sources, probes an existing database’s identity when possible, and falls back to Docker service provisioning when no verified hub is reachable.
 [crates/gcore/src/provisioning/hub.rs:4-9]
 [crates/gcore/src/provisioning/hub.rs:11-20]
 [crates/gcore/src/provisioning/hub.rs:12-19]

@@ -43,8 +43,8 @@ provenance:
   - 199-209
   - 212-216
   - 218-223
-  - 225-329
-  - 331-335
+  - 225-333
+  - 335-339
 - file: crates/gwiki/src/ingest/video/tests.rs
   ranges:
   - 18-55
@@ -89,12 +89,11 @@ Parent: [[code/modules/crates/gwiki/src/ingest|crates/gwiki/src/ingest]]
 
 ## Overview
 
-The `crates/gwiki/src/ingest/video` module handles the ingestion, metadata extraction, and multi-modal processing of video files. It provides core functionality for extracting audio, sampling and describing video frame images, managing media degradation, rendering markdown representations of video content, and persisting frame assets with automated lifecycle cleanup of temporary source files.
-[crates/gwiki/src/ingest/video/assets.rs:4-23]
-[crates/gwiki/src/ingest/video/metadata.rs:4-8]
-[crates/gwiki/src/ingest/video/mod.rs:32-45]
-[crates/gwiki/src/ingest/video/processing.rs:18-26]
-[crates/gwiki/src/ingest/video/tests.rs:18-55]
+The video ingest module turns fetched or file-backed video sources into wiki assets, metadata, transcripts, frame samples, and derived markdown. Its central data shapes are `VideoSnapshot`, `VideoFileSnapshot`, and `VideoIngestResult`, which carry source identity, media bytes or paths, timing, extracted frame information, transcript segments, optional transcription output, and the resulting source record [crates/gwiki/src/ingest/video/mod.rs:32-45] [crates/gwiki/src/ingest/video/mod.rs:48-61] [crates/gwiki/src/ingest/video/mod.rs:64-73]. The public orchestration layers start from generic video ingest entry points and branch into file-based, degraded, production-processing, and without-index variants so callers can choose whether extraction/transcription work is followed by vault reindexing [crates/gwiki/src/ingest/video/mod.rs:76-94] [crates/gwiki/src/ingest/video/mod.rs:97-104].
+
+The asset path owns persistence: it registers the source, writes the original asset, gathers file metadata, renders raw markdown, optionally samples frames, persists frame assets, and cleans up temporary frame sources afterward [crates/gwiki/src/ingest/video/assets.rs:25-115] [crates/gwiki/src/ingest/video/assets.rs:126-206] [crates/gwiki/src/ingest/video/assets.rs:208-212]. The processing path supplies the media-heavy work through a `VideoMediaExtractor` trait; the production implementation delegates audio extraction and frame sampling to `crate::media`, then the ingest flow transcribes audio, describes sampled frames through vision, classifies degradations, and packages the result before optional indexing [crates/gwiki/src/ingest/video/processing.rs:18-26] [crates/gwiki/src/ingest/video/processing.rs:30-42] [crates/gwiki/src/ingest/video/processing.rs:35-41].
+
+The metadata helpers keep the rest of the module’s data transformation small and shared. `VideoDegradationContext` carries media and transcription degradation state, `video_media_metadata` stats the stored asset, `VideoSnapshotRef` provides borrowed access over either snapshot type, and render helpers convert snapshots, transcripts, frame descriptions, and timestamps into raw ingest output and markdown [crates/gwiki/src/ingest/video/metadata.rs:4-8] [crates/gwiki/src/ingest/video/metadata.rs:10-25] [crates/gwiki/src/ingest/video/metadata.rs:27-39] [crates/gwiki/src/ingest/video/metadata.rs:43-57] [crates/gwiki/src/ingest/video/metadata.rs:59-73]. Tests mirror those collaboration points with fake media extractors, transcription clients, vision clients, temporary file helpers, and coverage for success and failure paths including transcript/frame generation, disabled frame sampling, degradation classification, and cleanup behavior .
 
 ## Call Diagram
 
@@ -151,31 +150,33 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gwiki/src/ingest/video/assets.rs|crates/gwiki/src/ingest/video/assets.rs]] - `crates/gwiki/src/ingest/video/assets.rs` exposes 7 indexed API symbols.
+- [[code/files/crates/gwiki/src/ingest/video/assets.rs|crates/gwiki/src/ingest/video/assets.rs]] - This file implements video ingestion when an asset file is being written, with one wrapper that also reindexes the vault afterward and a core path that performs the ingest work without indexing. The main flow registers the video source, writes the asset, gathers media metadata, renders and saves raw markdown, samples frames when enabled, and then persists the resulting frame assets. The cleanup helpers remove deferred or sampled temporary frame sources after persistence so the ingest pipeline leaves only the finalized video assets behind.
 [crates/gwiki/src/ingest/video/assets.rs:4-23]
 [crates/gwiki/src/ingest/video/assets.rs:25-115]
 [crates/gwiki/src/ingest/video/assets.rs:118-122]
 [crates/gwiki/src/ingest/video/assets.rs:126-206]
 [crates/gwiki/src/ingest/video/assets.rs:208-212]
-- [[code/files/crates/gwiki/src/ingest/video/metadata.rs|crates/gwiki/src/ingest/video/metadata.rs]] - `crates/gwiki/src/ingest/video/metadata.rs` exposes 9 indexed API symbols.
+- [[code/files/crates/gwiki/src/ingest/video/metadata.rs|crates/gwiki/src/ingest/video/metadata.rs]] - This module collects the small data-shaping helpers used by video ingestion. It defines `VideoDegradationContext` to carry degradation settings, `video_media_metadata` to stat the video asset and build `VideoMediaMetadata`, and `VideoSnapshotRef` plus its `from_snapshot`/`from_file_snapshot` constructors to expose borrowed views over full or file-backed video snapshots. It also provides `IngestResult::from`, `render_raw_video_markdown`, and `format_timestamp` to turn snapshot and transcript data into ingest output and formatted markdown.
 [crates/gwiki/src/ingest/video/metadata.rs:4-8]
 [crates/gwiki/src/ingest/video/metadata.rs:10-25]
 [crates/gwiki/src/ingest/video/metadata.rs:27-39]
 [crates/gwiki/src/ingest/video/metadata.rs:43-57]
 [crates/gwiki/src/ingest/video/metadata.rs:59-73]
-- [[code/files/crates/gwiki/src/ingest/video/mod.rs|crates/gwiki/src/ingest/video/mod.rs]] - `crates/gwiki/src/ingest/video/mod.rs` exposes 9 indexed API symbols.
+- [[code/files/crates/gwiki/src/ingest/video/mod.rs|crates/gwiki/src/ingest/video/mod.rs]] - This module defines the video-ingest data shapes and orchestration entry points for turning a video source into derived wiki assets. `VideoSnapshot` and `VideoFileSnapshot` capture the fetched media state plus extracted frames, frame descriptions, transcript segments, and optional transcription output, while `VideoIngestResult` packages the resulting source record and any generated metadata. The ingest functions layer the workflow from a generic `ingest_video` entry point down through file-based paths, with variants that either use degraded processing or production processing, and corresponding “without_index” helpers that perform the extraction/transcription work and then feed the results into the shared ingest/indexing pipeline.
 [crates/gwiki/src/ingest/video/mod.rs:32-45]
 [crates/gwiki/src/ingest/video/mod.rs:48-61]
 [crates/gwiki/src/ingest/video/mod.rs:64-73]
 [crates/gwiki/src/ingest/video/mod.rs:76-94]
 [crates/gwiki/src/ingest/video/mod.rs:97-104]
-- [[code/files/crates/gwiki/src/ingest/video/processing.rs|crates/gwiki/src/ingest/video/processing.rs]] - `crates/gwiki/src/ingest/video/processing.rs` exposes 13 indexed API symbols.
+- [[code/files/crates/gwiki/src/ingest/video/processing.rs|crates/gwiki/src/ingest/video/processing.rs]] - This file defines the video-processing pipeline used during ingest: a `VideoMediaExtractor` abstraction with a production implementation that delegates audio extraction and frame sampling to `crate::media`, plus entry points that ingest a video with processing and optionally reindex the vault afterward. The main ingest path derives frame intervals, runs transcription and vision-based frame description work, records media degradations when extraction fails or FFmpeg is unavailable, and packages the results into a `VideoIngestResult`; helper types and functions support frame-description assembly, error classification, timestamp labeling, and best-effort cleanup of kept temporary frame files.
 [crates/gwiki/src/ingest/video/processing.rs:18-26]
 [crates/gwiki/src/ingest/video/processing.rs:28]
 [crates/gwiki/src/ingest/video/processing.rs:30-42]
 [crates/gwiki/src/ingest/video/processing.rs:31-33]
 [crates/gwiki/src/ingest/video/processing.rs:35-41]
-- [[code/files/crates/gwiki/src/ingest/video/tests.rs|crates/gwiki/src/ingest/video/tests.rs]] - `crates/gwiki/src/ingest/video/tests.rs` exposes 40 indexed API symbols.
+- [[code/files/crates/gwiki/src/ingest/video/tests.rs|crates/gwiki/src/ingest/video/tests.rs]] - Test support and integration coverage for video ingestion. The file defines fixtures and mock `VideoMediaExtractor`, `TranscriptionClient`, and `VisionClient` implementations for both success and failure paths, plus a helper for writing temporary files and building transcription outputs.
+
+Those pieces feed a suite of ingestion tests that verify frame sampling, transcript alignment, media degradation behavior, persistence of original and derived assets, and provenance metadata across normal and error scenarios.
 [crates/gwiki/src/ingest/video/tests.rs:18-55]
 [crates/gwiki/src/ingest/video/tests.rs:57-62]
 [crates/gwiki/src/ingest/video/tests.rs:64-89]
@@ -221,7 +222,7 @@ sequenceDiagram
 - `dd498a39-6aca-56f5-a7a8-3672a4892e7e`
 - `4e412cc1-28bd-572f-bf6c-a91bd5bfc35a`
 - `e87fb9d9-8b4d-59b8-87b7-589e77628835`
-- `95b17763-51ac-5490-95e9-5aa1ba2dba46`
+- `8c7b0327-80cc-5b3a-ac12-1ce0464a5efa`
 - `28f836b4-c6ff-5d8f-984d-d99c991de698`
 - `bc0764a2-32f9-571e-87ee-d99e82f20ccc`
 - `a0a23429-0424-57a3-b5fd-13ea091bbfdd`

@@ -60,7 +60,9 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-`crates/gcore/src/ai_context.rs` exposes 68 indexed API symbols.
+This file defines the transport-free AI context layer for gcore: it resolves per-capability AI bindings and tuning from layered config sources, applies command-scoped overrides like `no_ai` or forced routing, and packages the result into an `AiContext` with a shared concurrency limiter and optional `project_id` scope.
+
+The core pieces work together as follows: `AiBindings` loads and manages bindings for each `AiCapability`, `AiContextOptions` controls override behavior, and `AiLimiter`/`AiPermit` enforce runtime concurrency. The file also includes config-source adapters for primary, standalone, and Postgres-backed resolution, plus test-only helpers and guards for exercising config lookup and filesystem-dependent behavior.
 [crates/gcore/src/ai_context.rs:25-30]
 [crates/gcore/src/ai_context.rs:32-69]
 [crates/gcore/src/ai_context.rs:34-36]

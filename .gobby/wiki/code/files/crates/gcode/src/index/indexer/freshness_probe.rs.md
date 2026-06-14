@@ -26,7 +26,7 @@ Module: [[code/modules/crates/gcode/src/index/indexer|crates/gcode/src/index/ind
 
 ## Purpose
 
-`crates/gcode/src/index/indexer/freshness_probe.rs` exposes 11 indexed API symbols.
+This file implements a lock-free, lightweight change-detection gate for project indexing. The main function `project_changed_since` determines if a project has been modified since a recorded timestamp by checking whether any discovered files have mtimes newer than a skew-adjusted threshold or whether previously-indexed paths no longer exist on disk. It short-circuits on the first change and avoids taking advisory locks or hashing files, making the common no-change case fast. The detection mirrors the indexer's `walker::discover_files` logic with identical exclusion rules to stay in sync, including respecting gitignore settings and exclusion patterns. A 2-second SKEW_MARGIN constant is subtracted from the threshold to absorb clock skew and mtime granularity, ensuring the gate errs toward refreshing rather than missing changes. Helper functions like `write_file` and `set_mtime` support test scenarios, while the test suite verifies correct behavior for file modifications, additions, deletions, boundary conditions with SKEW_MARGIN, and gitignore-aware filtering.
 [crates/gcode/src/index/indexer/freshness_probe.rs:37-81]
 [crates/gcode/src/index/indexer/freshness_probe.rs:89-96]
 [crates/gcode/src/index/indexer/freshness_probe.rs:98-105]

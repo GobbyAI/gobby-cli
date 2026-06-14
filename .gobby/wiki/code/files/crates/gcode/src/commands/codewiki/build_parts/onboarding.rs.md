@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gco
 
 ## Purpose
 
-`crates/gcode/src/commands/codewiki/build_parts/onboarding.rs` exposes 9 indexed API symbols.
+This file generates an ordered onboarding guide for a Rust codebase by identifying entry points and ranking modules by importance. The main function `build_onboarding_doc` orchestrates the process: it extracts entry points (main.rs, lib.rs, and public API symbols) via `onboarding_entry_points`, computes a reading order by ranking modules via their dependency graph centrality using `ranked_onboarding_steps`, and gracefully degrades when graph analytics are unavailable or truncated. Supporting functions classify files as Rust entry points with `is_rust_entry_file`, identify public API symbols with `is_public_api_symbol`, retrieve source spans for ranked steps via `step_source_spans`, and construct Symbol metadata with `symbol_with_signature`. The file includes unit tests validating public visibility detection.
 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:7-52]
 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:54-109]
 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:111-200]

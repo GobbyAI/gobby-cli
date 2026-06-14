@@ -17,7 +17,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-`crates/gwiki/src/commands/graph_context.rs` exposes 2 indexed API symbols.
+Builds the `gwiki graph-context` command. `execute` resolves the user’s scope selection, connects read-only to PostgreSQL, fetches the wiki graph facts, and, when available for a project scope, augments them with shared code-graph edges from Falkor while tracking degraded sources and truncated components before returning the final context outcome. `optional_falkor_config` reads Falkor configuration from the current database connection and lets the command degrade gracefully when that integration is not configured.
 [crates/gwiki/src/commands/graph_context.rs:13-83]
 [crates/gwiki/src/commands/graph_context.rs:85-98]
 

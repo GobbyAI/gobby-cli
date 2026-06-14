@@ -6,18 +6,7 @@ provenance:
   ranges:
   - 53-55
   - 57-115
-  - 58-60
-  - 62-64
-  - 66-75
-  - 77-85
-  - 87-98
-  - 100-102
-  - 104-106
-  - 108-110
-  - 112-114
   - 117-128
-  - 118-120
-  - 122-127
   - 130-132
   - 134-136
   - 138-140
@@ -35,7 +24,7 @@ Module: [[code/modules/crates/gcore/src/provisioning|crates/gcore/src/provisioni
 
 ## Purpose
 
-`crates/gcore/src/provisioning/mod.rs` exposes 20 indexed API symbols.
+Provides standalone bootstrap and Docker service provisioning for gcore, bundling service templates/assets and the default connection settings needed to recreate the daemon’s local service stack. `StandaloneConfig` wraps a string map for loading, saving, and mutating `gcore.yaml`, resolving embedded/env-backed values, while helper functions compute the config/services/compose paths, derive the default database URL, and insert nested YAML values into generated config.
 [crates/gcore/src/provisioning/mod.rs:53-55]
 [crates/gcore/src/provisioning/mod.rs:57-115]
 [crates/gcore/src/provisioning/mod.rs:58-60]

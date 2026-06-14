@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gsqz/src|crates/gsqz/src]]
 
 ## Purpose
 
-`crates/gsqz/src/daemon.rs` exposes 9 indexed API symbols.
+This file provides feature-gated integration with the Gobby daemon for best-effort compression support: it can fetch output-compression settings from the daemon’s HTTP API, report compression savings back to an admin endpoint, and resolve the daemon URL from config or shared defaults. When the `gobby` feature is disabled, each API is replaced with a no-op or `None`-returning stub, and the tests verify URL pass-through, `${GOBBY_PORT}` expansion, and bootstrap-based resolution when env vars are absent.
 [crates/gsqz/src/daemon.rs:11-23]
 [crates/gsqz/src/daemon.rs:26-28]
 [crates/gsqz/src/daemon.rs:32-43]

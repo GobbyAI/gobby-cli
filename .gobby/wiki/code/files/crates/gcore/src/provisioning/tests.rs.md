@@ -6,10 +6,7 @@ provenance:
   ranges:
   - 5-7
   - 9-35
-  - 10-18
-  - 20-34
   - 37-41
-  - 38-40
   - 43-46
   - 49-74
   - 77-89
@@ -34,12 +31,8 @@ provenance:
   - 655-687
   - 690-692
   - 694-703
-  - 695-702
   - 706-709
   - 711-729
-  - 712-716
-  - 718-722
-  - 724-728
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -51,7 +44,7 @@ Module: [[code/modules/crates/gcore/src/provisioning|crates/gcore/src/provisioni
 
 ## Purpose
 
-`crates/gcore/src/provisioning/tests.rs` exposes 36 indexed API symbols.
+This file is a test module for `gcore` provisioning and standalone config behavior. It defines `EnvGuard` to serialize and clear a fixed set of Gobby environment variables around tests, plus a small `write_services_stack` helper for setting up a fake services directory and compose file. The tests then exercise YAML config parsing and serialization, including reading flat and nested keys, handling dotted mapping prefixes, rejecting invalid nesting or scalar collisions, and stringifying tagged scalar/sequence values. The later tests cover provisioning flow: resolving service keys and API keys from standalone config, writing embeddings API keys, locating the compose template, preparing assets and running compose/health checks, and ensuring hub selection logic correctly reuses, provisions, or reports conflicts based on recorded hubs, reachable environments, and identity privilege.
 [crates/gcore/src/provisioning/tests.rs:5-7]
 [crates/gcore/src/provisioning/tests.rs:9-35]
 [crates/gcore/src/provisioning/tests.rs:10-18]

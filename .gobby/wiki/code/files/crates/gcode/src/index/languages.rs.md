@@ -27,7 +27,7 @@ Module: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 
 ## Purpose
 
-`crates/gcode/src/index/languages.rs` exposes 12 indexed API symbols.
+This file is a language registry that manages tree-sitter query definitions and language detection for code indexing. It defines LanguageSpec structures that associate file extensions with tree-sitter query strings for extracting symbols, imports, and calls from different programming languages. The core functions work together to: detect a programming language from its file extension (detect_language), retrieve the corresponding LanguageSpec (get_spec), obtain the appropriate tree-sitter Language parser (get_ts_language), and handle special cases like TSX files (get_ts_language_for_path). Helper functions parses_without_error and parses_with_error validate whether source code parses correctly. Unit tests verify that language detection works as expected for JavaScript, TypeScript, and TSX files, and confirm markdown files are intentionally excluded from AST parsing.
 [crates/gcode/src/index/languages.rs:7-12]
 [crates/gcode/src/index/languages.rs:326-338]
 [crates/gcode/src/index/languages.rs:341-346]

@@ -37,7 +37,7 @@ Module: [[code/modules/crates/ghook/src|crates/ghook/src]]
 
 ## Purpose
 
-`crates/ghook/src/statusline.rs` exposes 22 indexed API symbols.
+Claude Code statusline hook handler that reads JSON from stdin, extracts a statusline payload when the input looks like a valid session event, and best-effort posts it to the daemon’s `/api/sessions/statusline` endpoint without surfacing transport failures as hook errors. It also optionally runs a downstream command and mirrors its stdout back to Claude exactly, with timeout and process-group termination helpers to keep the pipeline responsive and to clean up surviving child processes; the tests cover hook recognition, payload extraction, daemon posting, stdout passthrough, and timeout/kill behavior.
 [crates/ghook/src/statusline.rs:25-27]
 [crates/ghook/src/statusline.rs:29-35]
 [crates/ghook/src/statusline.rs:37-67]

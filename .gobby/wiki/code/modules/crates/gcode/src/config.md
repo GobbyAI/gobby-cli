@@ -128,12 +128,11 @@ Parent: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-The crates/gcode/src/config module manages configuration and environment resolution for gcode, establishing a unified bridge between project identity contexts and backend service configurations. It features robust project-level discovery that handles parent project roots, linked worktrees, and isolated scopes, alongside flexible service resolution adapters to configure external systems such as FalkorDB, Qdrant, and embedding endpoints from fallible, fallback-capable configuration sources.
-[crates/gcode/src/config/context.rs:26-31]
-[crates/gcode/src/config/services.rs:20-22]
-[crates/gcode/src/config/tests.rs:14-22]
-[crates/gcode/src/config/context.rs:34]
-[crates/gcode/src/config/context.rs:37]
+The config module is responsible for building gcode’s runtime configuration from layered sources: bootstrap.yaml, the PostgreSQL hub, config stores, standalone service config, environment variables, and secret references. Its context layer defines the public configuration shapes for FalkorDB, Qdrant, embeddings, vector settings, indexing, and service selection, then drives resolution through Context and project identity helpers; the module-level docs explicitly describe the flow as “bootstrap.yaml → PostgreSQL hub → config_store → service configs” with `$secret:NAME` and `${VAR}` expansion . Core types and constants for FalkorDB, Qdrant, embeddings, graph naming, env vars, config keys, and service selection are centralized in context.rs .
+
+The services layer supplies the source abstraction that makes those resolution flows composable. ServiceConfigSource exposes config_value and resolve_value, while PostgresConfigSource reads decoded config values from PostgreSQL and resolves secrets through the shared secrets path  . Environment overrides are mapped for FalkorDB and Qdrant keys, and missing config-store tables are treated as absent data rather than fatal errors [crates/gcode/src/config/services.rs:29-39] [crates/gcode/src/config/services.rs:41-48]. Context delegates to services.rs for resolving FalkorDB, Qdrant, embedding, indexing, and code-vector settings, keeping project and execution-context decisions separate from per-service credential and setting lookup .
+
+The tests exercise both halves together: they create project metadata, git repositories, linked worktrees, and scoped environment overrides to validate identity resolution and service configuration behavior . The suite covers precedence, JSON decoding, daemon URL fallback and normalization, secret-backed service credentials, embedding/vector parsing, invalid ports, and project identity edge cases such as isolated markers, parent metadata, missing parent paths, and linked worktrees, ensuring the collaboration between context discovery and service source resolution remains explicit and predictable  .
 
 ## Call Diagram
 
@@ -188,19 +187,19 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gcode/src/config/context.rs|crates/gcode/src/config/context.rs]] - `crates/gcode/src/config/context.rs` exposes 42 indexed API symbols.
+- [[code/files/crates/gcode/src/config/context.rs|crates/gcode/src/config/context.rs]] - This file manages configuration resolution for gcode, orchestrating the reading and resolution of settings from bootstrap.yaml, PostgreSQL, and service configuration stores while expanding environment variables and secret references. It defines configuration structures for FalkorDB connections, Qdrant, embeddings, and code vector indexing, along with ServiceConfigSelection to enable/disable specific service configurations. The core Context class provides methods to resolve full configurations with optional service selection via resolve_with_services(). Supporting functions handle project identity resolution from filesystem markers, parent project hierarchies, and configuration stores, with detect_project_root variants discovering project boundaries through manifest files. Utility functions normalize project IDs, validate parent code indices, and resolve projects by name, working together to establish execution contexts for isolated or non-isolated project scopes. Error handling through CodeVectorConfigError ensures configuration issues surface clearly during resolution.
 [crates/gcode/src/config/context.rs:26-31]
 [crates/gcode/src/config/context.rs:34]
 [crates/gcode/src/config/context.rs:37]
 [crates/gcode/src/config/context.rs:51-53]
 [crates/gcode/src/config/context.rs:55]
-- [[code/files/crates/gcode/src/config/services.rs|crates/gcode/src/config/services.rs]] - `crates/gcode/src/config/services.rs` exposes 55 indexed API symbols.
+- [[code/files/crates/gcode/src/config/services.rs|crates/gcode/src/config/services.rs]] - This file provides a trait-based configuration system for resolving service configs from multiple sources. The ServiceConfigSource trait defines a two-method interface (config_value, resolve_value) that various source implementations fulfill: PostgresConfigSource reads from a database, FallbackConfigSource chains PostgreSQL with standalone configs, TracingFallbackConfigSource and ErrorCapturingConfigSource add observability, and ClosureConfigSource/FallibleClosureConfigSource wrap custom resolution logic. Helper functions like service_env_value and config_store_missing handle environment lookups and error detection. Numerous resolution functions (resolve_falkordb_config, resolve_qdrant_config, resolve_embedding_config, resolve_code_vector_settings, etc.) compose these sources through fallback chains to build specific service configurations, often trying multiple key variants and applying validation. The system supports reading from PostgreSQL config tables, environment variables, standalone YAML files, and dynamic closures with built-in error capturing and tracing.
 [crates/gcode/src/config/services.rs:20-22]
 [crates/gcode/src/config/services.rs:24-27]
 [crates/gcode/src/config/services.rs:29-39]
 [crates/gcode/src/config/services.rs:41-48]
 [crates/gcode/src/config/services.rs:51-57]
-- [[code/files/crates/gcode/src/config/tests.rs|crates/gcode/src/config/tests.rs]] - `crates/gcode/src/config/tests.rs` exposes 25 indexed API symbols.
+- [[code/files/crates/gcode/src/config/tests.rs|crates/gcode/src/config/tests.rs]] - This file is a test suite for the gcode configuration system. It provides utility functions to set up test environments (write_project_json, run_git, create_linked_worktree, with_service_env) and manage test configuration state. The test functions validate multiple aspects of configuration resolution: environment variable precedence, JSON decoding, project ID persistence across different repository contexts (main repos, linked worktrees, isolated markers with parent metadata), daemon URL normalization and fallback behavior, service credential resolution (Falkordb, Qdrant secrets), embedding and vector configuration parsing, and error propagation through config sources. Tests also verify validation logic that rejects incomplete metadata, missing paths, and invalid service ports while applying sensible defaults.
 [crates/gcode/src/config/tests.rs:14-22]
 [crates/gcode/src/config/tests.rs:24-38]
 [crates/gcode/src/config/tests.rs:40-70]

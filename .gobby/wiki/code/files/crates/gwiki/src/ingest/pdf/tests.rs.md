@@ -29,7 +29,7 @@ Module: [[code/modules/crates/gwiki/src/ingest/pdf|crates/gwiki/src/ingest/pdf]]
 
 ## Purpose
 
-`crates/gwiki/src/ingest/pdf/tests.rs` exposes 18 indexed API symbols.
+Test module for PDF ingestion and rendering behavior. It defines fake `VisionClient` implementations and a timestamp helper so the tests can exercise page ingestion end to end without real vision service calls, then verifies the main PDF pipeline pieces work together correctly: the default render DPI and fetched-at parsing, combining native text extraction with rendered-page vision OCR, naming rendered page assets from the file stem, escaping risky markdown constructs and internal page markers, preserving page references and source asset bytes, rolling back manifest and asset state on write failures, and recording uniform degradation metadata when vision extraction or render budgets fail.
 [crates/gwiki/src/ingest/pdf/tests.rs:21]
 [crates/gwiki/src/ingest/pdf/tests.rs:23-27]
 [crates/gwiki/src/ingest/pdf/tests.rs:29-60]

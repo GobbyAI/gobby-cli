@@ -25,7 +25,7 @@ Module: [[code/modules/crates/gsqz/src/primitives|crates/gsqz/src/primitives]]
 
 ## Purpose
 
-`crates/gsqz/src/primitives/replace.rs` exposes 10 indexed API symbols.
+This file defines a small regex-based line replacer that takes a vector of strings and a slice of `ReplaceRule`s, compiles the valid patterns once, and then applies each rule sequentially to every line so earlier substitutions feed into later ones. It also includes a helper for constructing owned rules in tests, and the tests verify basic substitution, backreferences, chained rules, skipping invalid regexes, no-op behavior for empty rules or non-matching patterns, empty input handling, and replacing multiple matches within a line.
 [crates/gsqz/src/primitives/replace.rs:7-30]
 [crates/gsqz/src/primitives/replace.rs:36-41]
 [crates/gsqz/src/primitives/replace.rs:44-48]

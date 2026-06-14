@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-`crates/gcore/src/lib.rs` exposes 1 indexed API symbol. [crates/gcore/src/lib.rs:27-34]
+Shared foundation crate for Gobby CLI tools. It exposes the always-available primitives for bootstrap, CLI contracts, daemon URLs, project handling, provisioning, config, and local backend/setup logic, while keeping heavier datastore and indexing integrations behind feature flags. The one concrete utility here is `gobby_home`, which resolves the Gobby home directory by honoring `GOBBY_HOME` first and otherwise falling back to `~/.gobby`, so the rest of the crate can share a consistent state location. [crates/gcore/src/lib.rs:27-34]
 
 ## API Symbols
 

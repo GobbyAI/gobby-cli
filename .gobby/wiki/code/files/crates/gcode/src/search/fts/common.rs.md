@@ -9,7 +9,6 @@ provenance:
   - 25-29
   - 32-36
   - 38-54
-  - 39-53
   - 56-59
   - 63-69
   - 71-76
@@ -40,7 +39,7 @@ Module: [[code/modules/crates/gcode/src/search/fts|crates/gcode/src/search/fts]]
 
 ## Purpose
 
-`crates/gcode/src/search/fts/common.rs` exposes 25 indexed API symbols.
+This file provides utilities for full-text search queries against PostgreSQL symbol records. It defines core types like `ResolvedGraphSymbol` and `SymbolFilters`, and exports a central `query_symbols_by_conditions` function that executes parameterized queries with dynamic SQL WHERE/ORDER BY clauses. Supporting functions build SQL fragments: `push_symbol_filters` adds kind/language/path conditions, `push_path_filter` handles glob-pattern matching via SQL LIKE expressions, and `push_visible_project_file_filter` excludes tombstoned files while enforcing project scope visibility. The `SymbolOrder` enum generates ORDER BY clauses for BM25 relevance, lexicographic name ordering, or case-sensitive exact-match prioritization. Helper functions like `push_param`, `param_refs`, and `trusted_row_id` manage parameter binding to prevent SQL injection, while path utilities (`escape_like`, `glob_to_like_prefix`, `expand_paths`, `compile_patterns`) transform glob patterns into SQL-safe prefixes. The module centralizes FTS SQL construction to keep query sanitation consistent across the codebase.
 [crates/gcode/src/search/fts/common.rs:16]
 [crates/gcode/src/search/fts/common.rs:19-22]
 [crates/gcode/src/search/fts/common.rs:25-29]

@@ -23,7 +23,7 @@ Module: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 
 ## Purpose
 
-`crates/gcode/src/index/security.rs` exposes 8 indexed API symbols.
+This file implements security validation for code indexing, preventing sensitive or unwanted files from being indexed. It provides several layers of protection: path validation functions (validate_path, is_symlink_safe) guard against directory traversal and unsafe symbolic links; binary file detection (is_binary) checks for null bytes in the first 8KB to skip non-text content; secret file identification (has_secret_extension) matches against predefined lists of sensitive extension, prefix, and substring patterns stored in constants; and path exclusion logic (should_exclude_path, is_root_generated_dir) filters directories using both literal matching for root-level generated directories and glob pattern matching (glob_match, glob_inner) for broader exclusions. The functions work together in an indexing pipeline to validate, filter, and safely process filesystem paths.
 [crates/gcode/src/index/security.rs:26-31]
 [crates/gcode/src/index/security.rs:34-39]
 [crates/gcode/src/index/security.rs:42-54]

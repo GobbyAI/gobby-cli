@@ -39,12 +39,11 @@ Parent: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Overview
 
-The qdrant module handles Qdrant vector database integration for gcore. It provides collection naming utilities (`naming.rs`) that generate and validate scoped collection names via `collection_name` and `validate_collection_name_component`, supporting multiple `CollectionScope` values and reporting issues through `CollectionNameError`. The accompanying test suite (`tests.rs`) verifies naming validation, collection lifecycle and schema enforcement, batched upserts that require completed operations, point-count reads, typed HTTP error handling and degradation contracts, and search composition from the CLI path.
-[crates/gcore/src/qdrant/naming.rs:3-10]
-[crates/gcore/src/qdrant/tests.rs:12-30]
-[crates/gcore/src/qdrant/naming.rs:13-22]
-[crates/gcore/src/qdrant/naming.rs:25-43]
-[crates/gcore/src/qdrant/naming.rs:45-70]
+The `crates/gcore/src/qdrant` module covers Qdrant collection naming and the integration behavior expected around search, upsert, lifecycle, schema, and degradation paths. Its naming surface lets callers choose project-scoped, topic-scoped, or verbatim custom collection names through `CollectionScope`, with `collection_name` applying namespace prefixes for scoped collections and preserving custom names after validation  [crates/gcore/src/qdrant/naming.rs:25-43]. Validation rejects empty names, reserved `.`/`..`, surrounding whitespace, ASCII control or whitespace characters, and path-like separators such as `/`, `\`, and `:`; those failures are represented by typed `CollectionNameError` variants [crates/gcore/src/qdrant/naming.rs:13-22] [crates/gcore/src/qdrant/naming.rs:45-70].
+
+The test coverage describes the broader integration contract around those helpers and the Qdrant HTTP layer. Request payloads remain opaque JSON maps for upsert and filters for search, preserving caller-provided fields instead of imposing a fixed schema [crates/gcore/src/qdrant/tests.rs:12-30]. Configuration is mediated through `with_qdrant`, which returns fallback values with `ServiceState::NotConfigured` when no usable Qdrant URL is present, marks the service available when configured, and propagates closure failures unchanged [crates/gcore/src/qdrant/tests.rs:33-59]. The CLI search path uses a mocked Qdrant response to verify dispatch against the expected HTTP contract, including result IDs, scores, payloads, and API-key configuration [crates/gcore/src/qdrant/tests.rs:62-99].
+
+Together, the files split responsibilities between a small, deterministic naming module and an integration test module that anchors the behavior of the surrounding Qdrant client API. The naming functions protect collection boundaries before callers reach Qdrant, while tests exercise the flows that consume those names and request types: search composition, batched upserts, completed-operation checks, typed HTTP error mapping, schema validation, collection lifecycle cleanup, and point counts through mocked HTTP endpoints .
 
 ## Call Diagram
 
@@ -77,13 +76,13 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gcore/src/qdrant/naming.rs|crates/gcore/src/qdrant/naming.rs]] - `crates/gcore/src/qdrant/naming.rs` exposes 7 indexed API symbols.
+- [[code/files/crates/gcore/src/qdrant/naming.rs|crates/gcore/src/qdrant/naming.rs]] - Defines Qdrant collection naming rules. `CollectionScope` models three naming modes: project-scoped, topic-scoped, or custom. `collection_name` builds the final collection name from a namespace and scope, while `validate_collection_name_component` enforces that each component is non-empty, trimmed, non-reserved, and free of path-like or control/whitespace characters. `CollectionNameError` captures the specific validation failures. The tests verify that scoped names are generated for all scope variants and that invalid custom or scoped components are rejected.
 [crates/gcore/src/qdrant/naming.rs:3-10]
 [crates/gcore/src/qdrant/naming.rs:13-22]
 [crates/gcore/src/qdrant/naming.rs:25-43]
 [crates/gcore/src/qdrant/naming.rs:45-70]
 [crates/gcore/src/qdrant/naming.rs:77-90]
-- [[code/files/crates/gcore/src/qdrant/tests.rs|crates/gcore/src/qdrant/tests.rs]] - `crates/gcore/src/qdrant/tests.rs` exposes 15 indexed API symbols.
+- [[code/files/crates/gcore/src/qdrant/tests.rs|crates/gcore/src/qdrant/tests.rs]] - Test coverage for the Qdrant integration layer, exercising the helper wrappers and request/response types used by search and upsert flows. The tests verify that payloads stay opaque, configuration-based degradation returns the right service state, CLI search dispatch uses the expected HTTP contract, search composition and batch upsert behavior work correctly, Qdrant errors are mapped to typed failures, collection schema validation rejects unsupported vectors, and collection lifecycle/count operations read and delete points through the mocked HTTP API.
 [crates/gcore/src/qdrant/tests.rs:12-30]
 [crates/gcore/src/qdrant/tests.rs:33-59]
 [crates/gcore/src/qdrant/tests.rs:62-99]

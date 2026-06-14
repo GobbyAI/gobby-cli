@@ -46,7 +46,7 @@ Module: [[code/modules/crates/gwiki/src/ingest|crates/gwiki/src/ingest]]
 
 ## Purpose
 
-`crates/gwiki/src/ingest/wayback.rs` exposes 31 indexed API symbols.
+This file ingests archived Wayback captures into the wiki index. `WaybackCaptureSnapshot` carries the capture URL, timestamps, raw body, and content type; `ingest_capture` drives the pipeline by decoding the snapshot into HTML, parsing it, deriving a title, registering the source draft, rendering markdown, and writing/indexing the result. The helper functions split that work into stages: content-type and charset validation, HTML decoding, title selection, URL/path fallback formatting, HTML-to-text extraction, block-aware inline text collection, and markdown rendering. The tests at the bottom verify the key behaviors: metadata capture, body-text extraction, block grouping, title fallback order, charset handling, entity decoding, and rejection of non-HTML captures.
 [crates/gwiki/src/ingest/wayback.rs:18-25]
 [crates/gwiki/src/ingest/wayback.rs:28-47]
 [crates/gwiki/src/ingest/wayback.rs:50-60]

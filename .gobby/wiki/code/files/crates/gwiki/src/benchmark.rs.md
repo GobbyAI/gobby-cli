@@ -45,12 +45,9 @@ provenance:
   - 645-649
   - '657'
   - 659-667
-  - 660-666
   - 669-671
   - 673-679
-  - 674-678
   - 681-702
-  - 682-701
   - 704-719
   - 721-737
   - 740-771
@@ -70,7 +67,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/benchmark.rs` exposes 55 indexed API symbols.
+This file builds a structured benchmark report for Gobby’s wiki/search systems, combining token compression, graph coverage, retrieval precision, source mix, and model-provider availability into one serializable `BenchmarkReport`. The helper functions gather and normalize data from Postgres, the graph backend, Qdrant, and embedding/model configuration, while the small backend types and report structs package the results; the test cases verify that optional sources are marked degraded only when appropriate, configured backends are not incorrectly degraded, candidate counts are configurable, and negative counts are rejected.
 [crates/gwiki/src/benchmark.rs:30-39]
 [crates/gwiki/src/benchmark.rs:42-48]
 [crates/gwiki/src/benchmark.rs:51-58]

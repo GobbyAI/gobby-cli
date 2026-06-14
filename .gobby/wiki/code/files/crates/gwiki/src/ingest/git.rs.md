@@ -27,7 +27,7 @@ Module: [[code/modules/crates/gwiki/src/ingest|crates/gwiki/src/ingest]]
 
 ## Purpose
 
-`crates/gwiki/src/ingest/git.rs` exposes 12 indexed API symbols.
+This file ingests a selected snapshot of a Git repository into the wiki index. `GitFileSnapshot` and `GitRepositorySnapshot` model the remote, commit, fetch time, and chosen file bytes; `ingest_repository` rejects empty snapshots, registers the repository as a `SourceDraft`/`SourceManifest`, renders a markdown representation, and writes/indexes it. The helper functions derive stable content bytes for hashing/provenance, format git-specific markdown with code fences and metadata, and clamp fence delimiters so rendered fences stay valid even when content contains long runs of backticks or tildes.
 [crates/gwiki/src/ingest/git.rs:15-18]
 [crates/gwiki/src/ingest/git.rs:22-27]
 [crates/gwiki/src/ingest/git.rs:30-55]

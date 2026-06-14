@@ -21,7 +21,7 @@ Module: [[code/modules/crates/gwiki/src/sources|crates/gwiki/src/sources]]
 
 ## Purpose
 
-`crates/gwiki/src/sources/atomic.rs` exposes 6 indexed API symbols.
+This file provides atomic file-write helpers for wiki source updates. `write_atomic` is the main entry point: it creates a uniquely named sibling temp file, writes and `sync_all`s the bytes, then atomically swaps it into place with `replace_atomic` and fsyncs the parent directory via `sync_parent_dir` for durability. `replace_atomic` handles the platform-specific rename behavior, including deleting an existing destination on Windows first. `temp_sibling_path` builds a safe temp path from the target file name plus process ID, UUID, and timestamp, and returns config errors for missing or non-UTF-8 file names. The tests cover those path-validation failures.
 [crates/gwiki/src/sources/atomic.rs:7-44]
 [crates/gwiki/src/sources/atomic.rs:46-56]
 [crates/gwiki/src/sources/atomic.rs:58-83]

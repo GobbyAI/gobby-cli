@@ -94,12 +94,11 @@ Parent: [[code/modules/crates/gwiki/src/ingest|crates/gwiki/src/ingest]]
 
 ## Overview
 
-The `crates/gwiki/src/ingest/pdf` module provides a comprehensive pipeline for ingesting and processing PDF documents into structured Markdown for `gwiki`. It handles standard text layer extraction and normalization alongside visual rendering of pages (utilizing a bundled Pdfium engine) to support vision-based OCR extraction. The module securely merges, sanitizes, and deduplicates content from both textual and visual layers, manages page-rendering budgets and layout scaling, and provides robust transactional mechanisms for cleaning up or rolling back assets when ingestion operations fail.
-[crates/gwiki/src/ingest/pdf/ingest.rs:23-37]
-[crates/gwiki/src/ingest/pdf/markdown.rs:15-89]
-[crates/gwiki/src/ingest/pdf/mod.rs:22-25]
-[crates/gwiki/src/ingest/pdf/render.rs:23-39]
-[crates/gwiki/src/ingest/pdf/tests.rs:21]
+The PDF ingest module is the hub for turning PDF inputs into wiki-ready Markdown and assets, with document-feature-gated entry points and shared transport types exposed from `mod.rs` while implementation stays split across ingest, markdown, render, text, and types [crates/gwiki/src/ingest/pdf/mod.rs:22-25] [crates/gwiki/src/ingest/pdf/mod.rs:28-34]. Its data model carries PDFs through the pipeline as source bytes, extracted text pages, rendered page images, and ingest options such as the shared default render DPI [crates/gwiki/src/ingest/pdf/types.rs:11-14] [crates/gwiki/src/ingest/pdf/types.rs:18-24] [crates/gwiki/src/ingest/pdf/types.rs:28-33] [crates/gwiki/src/ingest/pdf/types.rs:37-43].
+
+The main flow starts in `ingest.rs`, where callers can ingest pre-rendered page snapshots or full PDF files. Full-file ingestion first attempts text-layer extraction, records a degradation if that fails, renders pages when document support is enabled, merges native text with optional vision/OCR output, writes Markdown and assets, and optionally reindexes afterward [crates/gwiki/src/ingest/pdf/ingest.rs:23-37] [crates/gwiki/src/ingest/pdf/ingest.rs:41-52] [crates/gwiki/src/ingest/pdf/ingest.rs:55-108]. Rendering is handled by `render.rs`, which uses bundled Pdfium to load pages, rasterize them at the requested DPI, encode PNG bytes, and enforce page and byte budgets with degradation metadata when limits are exceeded [crates/gwiki/src/ingest/pdf/render.rs:23-39] [crates/gwiki/src/ingest/pdf/render.rs:42-94].
+
+Markdown assembly and text cleanup form the final coordination layer. `markdown.rs` builds document metadata, degradation sections, and per-page content, using sanitized page Markdown so page boundaries and internal markers remain safe . `text.rs` normalizes extracted page text by flattening individual lines, grouping non-empty runs into paragraphs, and preserving paragraph breaks while removing excess whitespace [crates/gwiki/src/ingest/pdf/text.rs:4-25]. The tests wire these pieces together with fake vision clients to verify combined text-layer plus OCR ingestion, rendered asset naming, Markdown escaping, rollback behavior, preserved page references, timestamp parsing, and uniform degradation metadata [crates/gwiki/src/ingest/pdf/tests.rs:21] [crates/gwiki/src/ingest/pdf/tests.rs:23-27] [crates/gwiki/src/ingest/pdf/tests.rs:29-60].
 
 ## Call Diagram
 
@@ -154,41 +153,43 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gwiki/src/ingest/pdf/ingest.rs|crates/gwiki/src/ingest/pdf/ingest.rs]] - `crates/gwiki/src/ingest/pdf/ingest.rs` exposes 9 indexed API symbols.
+- [[code/files/crates/gwiki/src/ingest/pdf/ingest.rs|crates/gwiki/src/ingest/pdf/ingest.rs]] - Implements the PDF ingestion pipeline for gwiki: it accepts either pre-rendered page snapshots or full PDF files, turns them into Markdown and assets, and optionally reindexes the wiki afterward. The no-index variants do the core work by extracting text-layer pages when available, falling back to vision-based page ingestion when needed, normalizing page text, merging PDF pages, and recording degradations or failures in the ingest result. The rollback and cleanup helpers undo registered PDF sources and remove temporary PDF files, with `pdf_cleanup_detail` providing the cleanup summary message.
 [crates/gwiki/src/ingest/pdf/ingest.rs:23-37]
 [crates/gwiki/src/ingest/pdf/ingest.rs:41-52]
 [crates/gwiki/src/ingest/pdf/ingest.rs:55-108]
 [crates/gwiki/src/ingest/pdf/ingest.rs:111-128]
 [crates/gwiki/src/ingest/pdf/ingest.rs:131-146]
-- [[code/files/crates/gwiki/src/ingest/pdf/markdown.rs|crates/gwiki/src/ingest/pdf/markdown.rs]] - `crates/gwiki/src/ingest/pdf/markdown.rs` exposes 14 indexed API symbols.
+- [[code/files/crates/gwiki/src/ingest/pdf/markdown.rs|crates/gwiki/src/ingest/pdf/markdown.rs]] - This file assembles a PDF ingest pipeline that turns a PDF snapshot into Markdown with metadata, page content, and optional vision/OCR enrichment. `render_pdf_markdown` builds the final document header and per-page output, while helpers sanitize page Markdown, neutralize page-marker variants, and detect horizontal rules so page boundaries stay safe and consistent.
+
+The middle of the file handles page composition and OCR integration: `merge_pdf_pages` and `merge_page_markdown` combine page text, `extract_vision_for_page` prepares vision requests using the configured model and rendered page assets, and `dedupe_ocr_text` with `overlap_key` removes repeated OCR content without collapsing distinct punctuation cases. Small helpers like `rendered_page_asset_path`, `rendered_page_file_name`, and the marker-neutralization tests support stable asset naming and ensure the page formatting rules behave as intended.
 [crates/gwiki/src/ingest/pdf/markdown.rs:15-89]
 [crates/gwiki/src/ingest/pdf/markdown.rs:92-107]
 [crates/gwiki/src/ingest/pdf/markdown.rs:110-135]
 [crates/gwiki/src/ingest/pdf/markdown.rs:138-156]
 [crates/gwiki/src/ingest/pdf/markdown.rs:159-239]
-- [[code/files/crates/gwiki/src/ingest/pdf/mod.rs|crates/gwiki/src/ingest/pdf/mod.rs]] - `crates/gwiki/src/ingest/pdf/mod.rs` exposes 3 indexed API symbols.
+- [[code/files/crates/gwiki/src/ingest/pdf/mod.rs|crates/gwiki/src/ingest/pdf/mod.rs]] - This module is the PDF ingestion hub for `gwiki`, coordinating text-layer extraction, page rendering, markdown generation, and vision-merged output. It exposes the document-feature-gated PDF entry points and shared types, while keeping the implementation split across `ingest`, `markdown`, `render`, `text`, and `types`. The internal structs `PdfPageMarkdown`, `PdfMarkdownSummary`, and `PdfRenderOutcome` act as lightweight transport objects for per-page markdown, overall ingestion summary state, and rendered-page results plus any degradation detected during rendering.
 [crates/gwiki/src/ingest/pdf/mod.rs:22-25]
 [crates/gwiki/src/ingest/pdf/mod.rs:28-34]
 [crates/gwiki/src/ingest/pdf/mod.rs:37-40]
-- [[code/files/crates/gwiki/src/ingest/pdf/render.rs|crates/gwiki/src/ingest/pdf/render.rs]] - `crates/gwiki/src/ingest/pdf/render.rs` exposes 11 indexed API symbols.
+- [[code/files/crates/gwiki/src/ingest/pdf/render.rs|crates/gwiki/src/ingest/pdf/render.rs]] - This file implements PDF ingestion helpers for the documents feature: one path extracts per-page text from a PDF’s text layer, and the other renders PDF pages into images while enforcing page and byte limits. `render_pdf_pages` loads the PDF through bundled Pdfium, renders each page at a requested DPI, converts the bitmap into PNG bytes, tracks the total rendered size, and degrades the outcome when the page cap or byte budget is exceeded. The remaining helpers support that flow by selecting the bundled Pdfium build, converting point sizes to pixels, validating bitmap dimensions, encoding RGBA PNG output, and producing consistent Pdfium-backed errors; the tests cover overflow handling and rejecting non-positive bitmap dimensions before casting.
 [crates/gwiki/src/ingest/pdf/render.rs:23-39]
 [crates/gwiki/src/ingest/pdf/render.rs:42-94]
 [crates/gwiki/src/ingest/pdf/render.rs:97-100]
 [crates/gwiki/src/ingest/pdf/render.rs:103-114]
 [crates/gwiki/src/ingest/pdf/render.rs:117-128]
-- [[code/files/crates/gwiki/src/ingest/pdf/tests.rs|crates/gwiki/src/ingest/pdf/tests.rs]] - `crates/gwiki/src/ingest/pdf/tests.rs` exposes 18 indexed API symbols.
+- [[code/files/crates/gwiki/src/ingest/pdf/tests.rs|crates/gwiki/src/ingest/pdf/tests.rs]] - Test module for PDF ingestion and rendering behavior. It defines fake `VisionClient` implementations and a timestamp helper so the tests can exercise page ingestion end to end without real vision service calls, then verifies the main PDF pipeline pieces work together correctly: the default render DPI and fetched-at parsing, combining native text extraction with rendered-page vision OCR, naming rendered page assets from the file stem, escaping risky markdown constructs and internal page markers, preserving page references and source asset bytes, rolling back manifest and asset state on write failures, and recording uniform degradation metadata when vision extraction or render budgets fail.
 [crates/gwiki/src/ingest/pdf/tests.rs:21]
 [crates/gwiki/src/ingest/pdf/tests.rs:23-27]
 [crates/gwiki/src/ingest/pdf/tests.rs:29-60]
 [crates/gwiki/src/ingest/pdf/tests.rs:30-59]
 [crates/gwiki/src/ingest/pdf/tests.rs:63-65]
-- [[code/files/crates/gwiki/src/ingest/pdf/text.rs|crates/gwiki/src/ingest/pdf/text.rs]] - `crates/gwiki/src/ingest/pdf/text.rs` exposes 9 indexed API symbols.
+- [[code/files/crates/gwiki/src/ingest/pdf/text.rs|crates/gwiki/src/ingest/pdf/text.rs]] - This file normalizes extracted PDF page text into clean paragraphs. `normalize_page_text` walks each input line, passes it through `single_line` to trim and flatten wrapping, groups non-empty lines into paragraphs, and joins paragraphs with blank lines so original paragraph breaks are preserved while extra whitespace and repeated blank lines are removed. The test module verifies the behavior across edge cases such as leading/trailing whitespace, multiple blank lines, whitespace-only input, empty input, single lines, and multi-line text with and without paragraph breaks.
 [crates/gwiki/src/ingest/pdf/text.rs:4-25]
 [crates/gwiki/src/ingest/pdf/text.rs:32-36]
 [crates/gwiki/src/ingest/pdf/text.rs:39-49]
 [crates/gwiki/src/ingest/pdf/text.rs:52-54]
 [crates/gwiki/src/ingest/pdf/text.rs:57-59]
-- [[code/files/crates/gwiki/src/ingest/pdf/types.rs|crates/gwiki/src/ingest/pdf/types.rs]] - `crates/gwiki/src/ingest/pdf/types.rs` exposes 8 indexed API symbols.
+- [[code/files/crates/gwiki/src/ingest/pdf/types.rs|crates/gwiki/src/ingest/pdf/types.rs]] - Defines the core data model for PDF ingestion and the helper used to parse fetch timestamps. `PdfPage`, `PdfSnapshot`, `PdfFileSnapshot`, and `PdfRenderedPage` carry the extracted text, raw bytes, page images, and metadata for a PDF at different stages of processing. `PdfIngestOptions` currently just configures render DPI, defaulting to `DEFAULT_PDF_RENDER_DPI` so callers share the same rasterization setting. When the `documents` feature is enabled, `pdf_fetched_at` normalizes a timestamp string into `DateTime<Utc>`, accepting either `unix-ms:` values or RFC3339 and returning config errors for invalid or out-of-range input.
 [crates/gwiki/src/ingest/pdf/types.rs:11-14]
 [crates/gwiki/src/ingest/pdf/types.rs:18-24]
 [crates/gwiki/src/ingest/pdf/types.rs:28-33]

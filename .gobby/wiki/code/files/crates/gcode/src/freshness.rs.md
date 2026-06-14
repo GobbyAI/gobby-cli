@@ -13,21 +13,19 @@ provenance:
   - 162-182
   - '184'
   - 186-193
-  - 187-192
   - 195-200
-  - 196-199
   - 208-222
   - 224-226
-  - 228-249
-  - 251-274
-  - 276-283
-  - 285-293
-  - 295-300
-  - 302-315
-  - 322-330
-  - 334-343
-  - 347-388
-  - 392-428
+  - 228-245
+  - 247-264
+  - 266-273
+  - 275-283
+  - 285-290
+  - 292-305
+  - 312-320
+  - 328-335
+  - 343-382
+  - 386-422
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -39,7 +37,7 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-`crates/gcode/src/freshness.rs` exposes 24 indexed API symbols.
+This file implements freshness management for GCode indexing. `ensure_fresh` short-circuits when freshness is already in flight, pre-gates whole-project refreshes with `project_needs_refresh`, and otherwise takes an advisory project lock before reindexing either the entire project or a normalized explicit file list; `FreshnessStatus` reports whether work ran or was skipped because the lock was busy. Supporting helpers check symbol slice hashes against stored content, normalize file paths under the project root, and manage the `GCODE_FRESHNESS_INFLIGHT` marker with an RAII guard, while the test helpers and cases exercise lock behavior, env short-circuiting, refresh invalidation, and byte-range hash validation.
 [crates/gcode/src/freshness.rs:13-16]
 [crates/gcode/src/freshness.rs:19-22]
 [crates/gcode/src/freshness.rs:24-83]
@@ -90,34 +88,34 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 - `symbol_hash` (function) component `symbol_hash [function]` (`77932652-b9d3-5e58-aeac-0e74ca70877f`) lines 224-226 [crates/gcode/src/freshness.rs:224-226]
   - Signature: `fn symbol_hash(source: &[u8], start: usize, end: usize) -> String {`
   - Purpose: Computes a hash of the byte content between the specified start and end indices, returning it as a String. [crates/gcode/src/freshness.rs:224-226]
-- `postgres_test_context` (function) component `postgres_test_context [function]` (`2525dc46-d85e-555e-8fe5-7b170c985f2d`) lines 228-249 [crates/gcode/src/freshness.rs:228-249]
-  - Signature: `fn postgres_test_context(project_id: &str) -> Option<Context> {`
-  - Purpose: Returns a test `Context` for the given `project_id` only when `GCODE_POSTGRES_TEST_DATABASE_URL` is set and `db::connect_readwrite` succeeds, otherwise it logs that the PostgreSQL hub is unavailable and returns `None`. [crates/gcode/src/freshness.rs:228-249]
-- `postgres_context_with_root` (function) component `postgres_context_with_root [function]` (`0d55b484-c5bd-5508-b2d2-afe0c8b67554`) lines 251-274 [crates/gcode/src/freshness.rs:251-274]
-  - Signature: `fn postgres_context_with_root(project_id: &str, root: &Path) -> Option<Context> {`
-  - Purpose: Reads `GCODE_POSTGRES_TEST_DATABASE_URL`, verifies it can open a read-write PostgreSQL connection, and returns a quiet `Context` configured for the given `project_id` and `root` with default indexing/vector settings, or `None` after logging a skip message if the database is unavailable. [crates/gcode/src/freshness.rs:251-274]
-- `hold_project_lock` (function) component `hold_project_lock [function]` (`33ef1321-30a3-547d-8439-157e57e309d0`) lines 276-283 [crates/gcode/src/freshness.rs:276-283]
+- `postgres_test_context` (function) component `postgres_test_context [function]` (`2525dc46-d85e-555e-8fe5-7b170c985f2d`) lines 228-245 [crates/gcode/src/freshness.rs:228-245]
+  - Signature: `fn postgres_test_context(project_id: &str) -> Context {`
+  - Purpose: Indexed function `postgres_test_context` in `crates/gcode/src/freshness.rs`. [crates/gcode/src/freshness.rs:228-245]
+- `postgres_context_with_root` (function) component `postgres_context_with_root [function]` (`db970b82-436f-5da7-aff4-3adb610737a4`) lines 247-264 [crates/gcode/src/freshness.rs:247-264]
+  - Signature: `fn postgres_context_with_root(project_id: &str, root: &Path) -> Context {`
+  - Purpose: Indexed function `postgres_context_with_root` in `crates/gcode/src/freshness.rs`. [crates/gcode/src/freshness.rs:247-264]
+- `hold_project_lock` (function) component `hold_project_lock [function]` (`a9f2c37b-f389-51a0-a072-9e0a37c211d8`) lines 266-273 [crates/gcode/src/freshness.rs:266-273]
   - Signature: `fn hold_project_lock(ctx: &Context) -> Client {`
-  - Purpose: It opens a read-write PostgreSQL connection for `ctx.database_url`, computes the project-specific advisory lock key from `ctx.project_id`, acquires that lock with `pg_advisory_lock`, and returns the locked `Client` connection. [crates/gcode/src/freshness.rs:276-283]
-- `set_mtime` (function) component `set_mtime [function]` (`f028e1a6-8ba1-5105-8ba0-417521ce5f72`) lines 285-293 [crates/gcode/src/freshness.rs:285-293]
+  - Purpose: Indexed function `hold_project_lock` in `crates/gcode/src/freshness.rs`. [crates/gcode/src/freshness.rs:266-273]
+- `set_mtime` (function) component `set_mtime [function]` (`db6a25a4-60ce-5c9d-b451-3ad0dfb142fa`) lines 275-283 [crates/gcode/src/freshness.rs:275-283]
   - Signature: `fn set_mtime(path: &Path, time: SystemTime) {`
-  - Purpose: Opens the file at `path` with read-write access and sets its last-modified timestamp to `time`, panicking if either operation fails. [crates/gcode/src/freshness.rs:285-293]
-- `invalidate_test_project` (function) component `invalidate_test_project [function]` (`3720e36a-f4b2-548a-b670-5ad04ba03108`) lines 295-300 [crates/gcode/src/freshness.rs:295-300]
+  - Purpose: Indexed function `set_mtime` in `crates/gcode/src/freshness.rs`. [crates/gcode/src/freshness.rs:275-283]
+- `invalidate_test_project` (function) component `invalidate_test_project [function]` (`c795b9ab-9a3a-5bc0-bb23-1af5b39714cf`) lines 285-290 [crates/gcode/src/freshness.rs:285-290]
   - Signature: `fn invalidate_test_project(ctx: &Context) {`
-  - Purpose: Connects to the PostgreSQL database at `ctx.database_url` with a read-write handle and invalidates the index for `ctx.project_id` via `crate::index::indexer::invalidate(..., None)`, panicking if either operation fails. [crates/gcode/src/freshness.rs:295-300]
-- `full_index` (function) component `full_index [function]` (`a6f0e81f-88f7-5283-92cb-a725e91241fb`) lines 302-315 [crates/gcode/src/freshness.rs:302-315]
+  - Purpose: Indexed function `invalidate_test_project` in `crates/gcode/src/freshness.rs`. [crates/gcode/src/freshness.rs:285-290]
+- `full_index` (function) component `full_index [function]` (`a39e2d92-ff91-5403-8947-b40af9ff64bf`) lines 292-305 [crates/gcode/src/freshness.rs:292-305]
   - Signature: `fn full_index(ctx: &Context) {`
-  - Purpose: Calls `api::index_files` with the context’s project root in a full-index mode (`path_filter: None`, no explicit files, no C++ semantics, no projection sync) and panics if indexing fails. [crates/gcode/src/freshness.rs:302-315]
-- `no_freshness_env_short_circuits_project_refresh` (function) component `no_freshness_env_short_circuits_project_refresh [function]` (`5713ef22-5332-5977-88da-72674eb6e997`) lines 322-330 [crates/gcode/src/freshness.rs:322-330]
+  - Purpose: Indexed function `full_index` in `crates/gcode/src/freshness.rs`. [crates/gcode/src/freshness.rs:292-305]
+- `no_freshness_env_short_circuits_project_refresh` (function) component `no_freshness_env_short_circuits_project_refresh [function]` (`882a8f06-d15a-56ac-9fd2-4ec5425a3638`) lines 312-320 [crates/gcode/src/freshness.rs:312-320]
   - Signature: `fn no_freshness_env_short_circuits_project_refresh() {`
-  - Purpose: Verifies that setting `INFLIGHT_ENV` short-circuits `ensure_fresh` for `FreshnessScope::Project`, causing it to return `FreshnessStatus::Checked` without performing a freshness refresh. [crates/gcode/src/freshness.rs:322-330]
-- `busy_project_lock_skips_freshness_refresh` (function) component `busy_project_lock_skips_freshness_refresh [function]` (`cb13391f-f830-5379-9017-7f0e180b499f`) lines 334-343 [crates/gcode/src/freshness.rs:334-343]
+  - Purpose: Indexed function `no_freshness_env_short_circuits_project_refresh` in `crates/gcode/src/freshness.rs`. [crates/gcode/src/freshness.rs:312-320]
+- `busy_project_lock_skips_freshness_refresh` (function) component `busy_project_lock_skips_freshness_refresh [function]` (`6e155bbb-4b2d-50fd-ae4b-655f4a75e04f`) lines 328-335 [crates/gcode/src/freshness.rs:328-335]
   - Signature: `fn busy_project_lock_skips_freshness_refresh() {`
-  - Purpose: This test verifies that `ensure_fresh` returns `FreshnessStatus::SkippedBusy` when invoked on a project scope while a project lock is actively held. [crates/gcode/src/freshness.rs:334-343]
-- `pre_gate_skips_lock_when_unchanged_and_trips_after_a_change` (function) component `pre_gate_skips_lock_when_unchanged_and_trips_after_a_change [function]` (`16703327-90f7-56c2-9f86-373a36770ed1`) lines 347-388 [crates/gcode/src/freshness.rs:347-388]
+  - Purpose: Indexed function `busy_project_lock_skips_freshness_refresh` in `crates/gcode/src/freshness.rs`. [crates/gcode/src/freshness.rs:328-335]
+- `pre_gate_skips_lock_when_unchanged_and_trips_after_a_change` (function) component `pre_gate_skips_lock_when_unchanged_and_trips_after_a_change [function]` (`033cbdbd-93ca-508c-91e8-3189ffb13a43`) lines 343-382 [crates/gcode/src/freshness.rs:343-382]
   - Signature: `fn pre_gate_skips_lock_when_unchanged_and_trips_after_a_change() {`
-  - Purpose: Verifies that a pre-gate freshness check skips advisory lock acquisition when source files are unchanged, but acquires the lock and reports SkippedBusy upon file modification. [crates/gcode/src/freshness.rs:347-388]
-- `symbol_slice_check_uses_stored_byte_range_hash` (function) component `symbol_slice_check_uses_stored_byte_range_hash [function]` (`dd72a5da-6d0b-5f25-945e-39d1f67e6232`) lines 392-428 [crates/gcode/src/freshness.rs:392-428]
+  - Purpose: Indexed function `pre_gate_skips_lock_when_unchanged_and_trips_after_a_change` in `crates/gcode/src/freshness.rs`. [crates/gcode/src/freshness.rs:343-382]
+- `symbol_slice_check_uses_stored_byte_range_hash` (function) component `symbol_slice_check_uses_stored_byte_range_hash [function]` (`636cf13c-5179-546e-9c0a-b6e7d3eeffaf`) lines 386-422 [crates/gcode/src/freshness.rs:386-422]
   - Signature: `fn symbol_slice_check_uses_stored_byte_range_hash() {`
-  - Purpose: This test validates that `symbol_slice_is_current` correctly uses the stored byte-range content hash to detect when a symbol's cached location becomes stale after file modifications. [crates/gcode/src/freshness.rs:392-428]
+  - Purpose: Indexed function `symbol_slice_check_uses_stored_byte_range_hash` in `crates/gcode/src/freshness.rs`. [crates/gcode/src/freshness.rs:386-422]
 

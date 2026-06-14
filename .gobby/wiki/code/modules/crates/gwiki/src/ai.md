@@ -67,6 +67,9 @@ provenance:
   - 442-451
   - 453-469
   - 471-484
+- file: crates/gwiki/src/ai/mod.rs
+  ranges:
+  - 1-4
 - file: crates/gwiki/src/ai/translate.rs
   ranges:
   - 6-29
@@ -99,12 +102,11 @@ Parent: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-The crates/gwiki/src/ai module provides a comprehensive suite of artificial intelligence clients and utility functions for audio transcription, media chunking, and content translation. It manages large media inputs through dedicated audio chunking and deduplication mechanics, orchestrates production and test-oriented clients for vision extraction and audio transcription, and coordinates complex segment-based translation workflows to support multiple source languages and target fallbacks.
-[crates/gwiki/src/ai/chunk.rs:24-30]
-[crates/gwiki/src/ai/clients.rs:20-23]
-[crates/gwiki/src/ai/translate.rs:6-29]
-[crates/gwiki/src/ai/chunk.rs:33-35]
-[crates/gwiki/src/ai/chunk.rs:38-47]
+The `ai` module is the `gwiki` integration layer for audio transcription, audio translation, and vision extraction. Its module surface is split into chunk handling, production client adapters, and translation orchestration through `chunk`, `clients`, and `translate` submodules [crates/gwiki/src/ai/mod.rs:1-4]. The chunking side defines upload limits, fixed audio constants, default 10-minute windows, 3-second overlap, the `AudioChunk` model, chunked output wrapper, chunk transcription modes, and an `AudioChunker` trait with a media-backed implementation that reads split audio bytes from generated chunk files   .
+
+The main transcription flow starts from a `TranscriptionRequest`, decides whether chunking is needed, and either sends one request or splits audio into overlapping chunks, then merges metadata, offsets segment ranges, and removes overlap duplicates. Chunk modes let the same pipeline run raw transcription, direct English translation, or segment translation for a target language [crates/gwiki/src/ai/chunk.rs:38-47]. Translation orchestration sits above the client trait: `translate_audio` normalizes the requested target, prefers `translate_to_english` for English output, falls back to transcription plus segment translation when that fails, and otherwise transcribes first before translating transcript segments [crates/gwiki/src/ai/translate.rs:6-29]. Segment translation resolves the source language, skips translation when source and target match, replaces segment text, and updates language/task metadata to mark translated output [crates/gwiki/src/ai/translate.rs:31-55].
+
+The production clients wrap `gobby_core` AI facilities behind `gwiki`’s `TranscriptionClient` and `VisionClient` traits. `ProductionTranscriptionClient` stores a shared `AiContext`, chooses daemon or direct execution from `effective_route`, sends audio requests with the proper capability and MIME type, and maps core transcription results and AI errors into `TranscriptionOutput` and `WikiError`  . The same file also owns indexed segment-translation support and the production vision adapter, while tests across `chunk.rs` and `translate.rs` use fake chunkers and fake clients to validate chunk boundaries, fallback behavior, language precedence, and retry behavior.
 
 ## Call Diagram
 
@@ -161,20 +163,22 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gwiki/src/ai/chunk.rs|crates/gwiki/src/ai/chunk.rs]] - `crates/gwiki/src/ai/chunk.rs` exposes 49 indexed API symbols.
+- [[code/files/crates/gwiki/src/ai/chunk.rs|crates/gwiki/src/ai/chunk.rs]] - Provides the audio chunking and chunk-aware transcription pipeline for `gwiki`. It defines the chunk data model and transcription mode enum, an `AudioChunker` abstraction with a media-backed implementation that splits input audio into overlapping windows, plus orchestration helpers that decide whether chunking is needed, run single or multi-chunk transcription/translation requests, merge chunk metadata and segment offsets, deduplicate overlaps, and expose test-only chunk/client fakes for deterministic validation.
 [crates/gwiki/src/ai/chunk.rs:24-30]
 [crates/gwiki/src/ai/chunk.rs:33-35]
 [crates/gwiki/src/ai/chunk.rs:38-47]
 [crates/gwiki/src/ai/chunk.rs:49-56]
 [crates/gwiki/src/ai/chunk.rs:58]
-- [[code/files/crates/gwiki/src/ai/clients.rs|crates/gwiki/src/ai/clients.rs]] - `crates/gwiki/src/ai/clients.rs` exposes 28 indexed API symbols.
+- [[code/files/crates/gwiki/src/ai/clients.rs|crates/gwiki/src/ai/clients.rs]] - This file defines the production AI clients for the `gwiki` crate, wrapping a shared `AiContext` and exposing transcription and vision services through the crate’s `TranscriptionClient` and `VisionClient` traits. The transcription client routes work between daemon-backed and direct AI paths based on the effective capability routing, supports raw transcription and translation to English, and includes a segment-translation pipeline that batches transcript segments, retries with smaller chunks when needed, and validates JSON-indexed translation output. The vision client follows the same routing model to extract image information and converts core AI errors and results into crate-level `WikiError`, `TranscriptionOutput`, and `VisionExtraction` types.
+
+Supporting helpers build the translation prompt, parse indexed translation responses, warn on batch mismatches, map routing and errors into local representations, and convert core transcription/vision results into the crate’s output types. The tests at the end verify routing behavior for off/direct modes, validate indexed-translation parsing failures, and provide shared test context and capability binding fixtures.
 [crates/gwiki/src/ai/clients.rs:20-23]
 [crates/gwiki/src/ai/clients.rs:25-27]
 [crates/gwiki/src/ai/clients.rs:29-33]
 [crates/gwiki/src/ai/clients.rs:30-32]
 [crates/gwiki/src/ai/clients.rs:35-153]
-- [[code/files/crates/gwiki/src/ai/mod.rs|crates/gwiki/src/ai/mod.rs]] - `crates/gwiki/src/ai/mod.rs` has no indexed API symbols. 
-- [[code/files/crates/gwiki/src/ai/translate.rs|crates/gwiki/src/ai/translate.rs]] - `crates/gwiki/src/ai/translate.rs` exposes 24 indexed API symbols.
+- [[code/files/crates/gwiki/src/ai/mod.rs|crates/gwiki/src/ai/mod.rs]] - Module declaration file for the `ai` package, exposing internal submodules for chunk handling, client integrations, and translation logic. [crates/gwiki/src/ai/mod.rs:1-4]
+- [[code/files/crates/gwiki/src/ai/translate.rs|crates/gwiki/src/ai/translate.rs]] - Orchestrates audio transcription and translation for wiki content, choosing between direct English translation and segment-by-segment translation based on the target language and client support. The main path normalizes the requested language, prefers `translate_to_english` for English targets with a transcription fallback, and otherwise transcribes first then rewrites the output via `translate_transcription_segments`, which resolves the source language, skips work when source and target match, and updates translation metadata after replacing segment text. Supporting helpers normalize and compare language codes, emit batch-translation warnings, and mark English translation outputs. The file also includes a `FakeTranslationClient` plus test fixtures and cases that verify fallback behavior, language precedence, and batch retry logic.
 [crates/gwiki/src/ai/translate.rs:6-29]
 [crates/gwiki/src/ai/translate.rs:31-55]
 [crates/gwiki/src/ai/translate.rs:57-87]

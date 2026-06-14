@@ -7,36 +7,20 @@ provenance:
   - 9-13
   - 17-26
   - 28-34
-  - 29-33
   - 38-44
   - 46-51
-  - 47-50
   - 55-64
   - 67-74
   - 76-89
-  - 82-88
   - 91-96
-  - 92-95
   - 100-126
   - 128-191
-  - 129-137
-  - 139-144
-  - 146-156
-  - 158-164
-  - 166-170
-  - 172-180
-  - 182-190
   - 193-209
-  - 194-208
   - '211'
   - 214-231
   - 234-238
   - 240-261
-  - '241'
-  - 243-260
   - 263-280
-  - '264'
-  - 266-279
   - 282-295
   - 297-299
   - 306-313
@@ -57,7 +41,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-`crates/gcore/src/ai_types.rs` exposes 42 indexed API symbols.
+Defines shared AI result and error types for gcore. It models normalized transcription output, vision analysis output, and text-generation output, plus token-usage accounting, and provides `from_wire_json` helpers to deserialize transport-specific JSON into these domain structs. The file also defines `AiError` constructors and accessors for capability, configuration, transport, rate-limit, HTTP-status, and parse failures, along with conversion helpers that normalize transcription segment timestamps from floating-point seconds into validated integer milliseconds.
 [crates/gcore/src/ai_types.rs:9-13]
 [crates/gcore/src/ai_types.rs:17-26]
 [crates/gcore/src/ai_types.rs:28-34]

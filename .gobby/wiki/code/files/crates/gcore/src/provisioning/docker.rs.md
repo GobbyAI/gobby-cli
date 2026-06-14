@@ -6,9 +6,6 @@ provenance:
   ranges:
   - 9-18
   - 20-41
-  - 21-32
-  - 34-36
-  - 38-40
   - 44-49
   - 52-58
   - 61-66
@@ -16,15 +13,10 @@ provenance:
   - 75-77
   - '79'
   - 81-98
-  - 82-97
   - 100-104
   - 106-109
   - 111-118
-  - 112-117
   - 120-148
-  - 121-124
-  - 126-142
-  - 144-147
   - 150-156
   - 158-190
   - 192-271
@@ -49,7 +41,7 @@ Module: [[code/modules/crates/gcore/src/provisioning|crates/gcore/src/provisioni
 
 ## Purpose
 
-`crates/gcore/src/provisioning/docker.rs` exposes 34 indexed API symbols.
+This file provisions a Docker-based local service stack for Gobby and provides the supporting utilities around that flow. It defines `DockerServiceOptions` to hold ports, hosts, passwords, and the home directory used to build service URLs, plus report types that record created asset paths and provisioning results. It also defines a small command-execution abstraction (`CommandSpec`, `CommandOutput`, `CommandRunner`, `RealCommandRunner`) so the provisioning logic can run `docker-compose` through a concrete process runner. A `DockerHealthChecker` implementation, `TcpDockerHealthChecker`, waits for PostgreSQL and FalkorDB via TCP and Qdrant via its `/healthz` endpoint with retry logic. The main orchestration functions create the service assets, build the `docker-compose up` command, start the containers, wait for health checks, and return a `DockerProvisioningReport`. Helper functions handle pg_search manifest selection, Debian architecture normalization, environment-file updates, retry loops, and Unix executable permissions.
 [crates/gcore/src/provisioning/docker.rs:9-18]
 [crates/gcore/src/provisioning/docker.rs:20-41]
 [crates/gcore/src/provisioning/docker.rs:21-32]

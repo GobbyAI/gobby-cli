@@ -6,14 +6,10 @@ provenance:
   ranges:
   - 10-17
   - 19-50
-  - 20-34
-  - 36-49
   - 53-68
   - 71-73
   - 75-81
-  - 76-80
   - 83-89
-  - 84-88
   - 92-97
   - 100-105
   - 108-118
@@ -24,22 +20,15 @@ provenance:
   - 151-155
   - 158-162
   - 164-179
-  - 165-178
   - '181'
   - 184-192
   - 195-200
   - 202-222
-  - 204-215
-  - 218-221
   - 225-229
   - 231-244
-  - 233-243
   - 247-251
   - 253-262
-  - 254-256
-  - 259-261
   - 264-268
-  - 265-267
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -51,7 +40,7 @@ Module: [[code/modules/crates/gcode/src/graph/report|crates/gcode/src/graph/repo
 
 ## Purpose
 
-`crates/gcode/src/graph/report/types.rs` exposes 36 indexed API symbols.
+This file defines type structures and implementations for dependency graph analysis and reporting. It provides several layers of abstractions: core elements like BridgeEdgeHypothesis (directed edges with relation semantics and metadata) and graph topology nodes/edges (ReportNode, ReportCodeEdge); analysis results including GraphReportHotspots (high-degree files, symbols, modules), TargetFrequency (occurrence metrics), and ConfidenceRange (numeric bounds); configuration options (ProjectGraphReportOptions) for controlling report scope; and error handling (ProjectGraphReportError) for graph query failures. The main ProjectGraphReport struct aggregates all these components into a serializable report capturing hotspots, unresolved targets, bridge edge hypotheses across multiple source systems, degradation details, and investigation recommendations. BridgeEdgeInput provides factory methods to construct available or unavailable bridge edge variants, while ReportGraphSnapshot encapsulates the complete analyzed graph structure. Together, these types form the complete schema for representing code dependency graph analysis results.
 [crates/gcode/src/graph/report/types.rs:10-17]
 [crates/gcode/src/graph/report/types.rs:19-50]
 [crates/gcode/src/graph/report/types.rs:20-34]

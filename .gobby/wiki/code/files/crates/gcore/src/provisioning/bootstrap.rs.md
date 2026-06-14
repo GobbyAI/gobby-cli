@@ -6,8 +6,6 @@ provenance:
   ranges:
   - 8-15
   - 17-39
-  - 18-27
-  - 29-38
   - 41-71
   - 73-79
   - 81-134
@@ -29,7 +27,7 @@ Module: [[code/modules/crates/gcore/src/provisioning|crates/gcore/src/provisioni
 
 ## Purpose
 
-`crates/gcore/src/provisioning/bootstrap.rs` exposes 14 indexed API symbols.
+This file builds standalone provisioning bootstrap configuration for a local deployment and provides YAML-flattening helpers used to turn nested config and validation structures into dotted-path key/value data. `EmbeddingBootstrap` captures embedding-provider settings with preset constructors for LM Studio and Ollama, `write_standalone_bootstrap` assembles a `StandaloneConfig` from database, service, compose-file, and optional embedding inputs, and the remaining helpers recursively flatten YAML values and errors while preserving paths and limiting recursion depth.
 [crates/gcore/src/provisioning/bootstrap.rs:8-15]
 [crates/gcore/src/provisioning/bootstrap.rs:17-39]
 [crates/gcore/src/provisioning/bootstrap.rs:18-27]

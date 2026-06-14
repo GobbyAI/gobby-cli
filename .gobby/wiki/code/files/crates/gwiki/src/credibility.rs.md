@@ -9,7 +9,6 @@ provenance:
   - 25-30
   - 33-36
   - 38-58
-  - 39-57
   - 60-89
   - 91-118
   - 120-135
@@ -28,7 +27,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/credibility.rs` exposes 13 indexed API symbols.
+Implements explainable credibility scoring for raw wiki sources. `CredibilityInput` captures the source metadata used in scoring, `CredibilityScore::evaluate` starts from a baseline score and combines weighted signals for source type, freshness, authorship, publisher, and corroboration, then clamps the result to 0-100. The helper functions each translate one aspect of the input into a `CredibilitySignal` with a weight and explanation, and the test verifies the score includes all five explanatory signals.
 [crates/gwiki/src/credibility.rs:7-13]
 [crates/gwiki/src/credibility.rs:16-22]
 [crates/gwiki/src/credibility.rs:25-30]

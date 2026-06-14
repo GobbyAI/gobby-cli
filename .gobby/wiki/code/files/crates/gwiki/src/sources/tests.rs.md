@@ -20,7 +20,7 @@ Module: [[code/modules/crates/gwiki/src/sources|crates/gwiki/src/sources]]
 
 ## Purpose
 
-`crates/gwiki/src/sources/tests.rs` exposes 5 indexed API symbols.
+This file contains unit tests for source manifest and rendering behavior in `gwiki`. Together, the tests verify that source registration deduplicates equivalent inputs by canonical URL identity and content hash, that local file replay metadata survives a manifest round trip without losing ingestion settings, and that location canonicalization normalizes URLs by case, query order, trailing slashes, and fragments. It also checks that existing index rendering can strip both unmarked and marked manifest sections while preserving the surrounding manual content.
 [crates/gwiki/src/sources/tests.rs:8-50]
 [crates/gwiki/src/sources/tests.rs:53-113]
 [crates/gwiki/src/sources/tests.rs:116-121]

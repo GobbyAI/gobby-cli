@@ -28,7 +28,7 @@ Module: [[code/modules/crates/gcode/src/setup|crates/gcode/src/setup]]
 
 ## Purpose
 
-`crates/gcode/src/setup/postgres.rs` exposes 13 indexed API symbols.
+This file implements PostgreSQL-backed standalone setup for gcode. `run_standalone_setup` validates the request, optionally resets or compatibility-checks the existing code-index schema, runs the setup inside a transaction, and converts the resulting `SetupReport` into a `StandaloneSetupStatus`; the rest of the file is the support layer for that flow, including status mapping, schema-contract inspection, catalog queries for tables and indexes, reset SQL generation, and request validation against the required standalone/public schema.
 [crates/gcode/src/setup/postgres.rs:12-57]
 [crates/gcode/src/setup/postgres.rs:59-77]
 [crates/gcode/src/setup/postgres.rs:85-101]

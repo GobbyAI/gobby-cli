@@ -5,70 +5,10 @@ provenance:
 - file: crates/gcore/assets/docker-compose.services.yml
   ranges:
   - 5-117
-  - 6-28
-  - '7'
-  - 8-10
-  - 11-16
-  - 17-18
-  - 19-26
-  - 21-23
-  - '24'
-  - '25'
-  - '26'
-  - '27'
-  - '28'
-  - 30-49
-  - '31'
-  - 32-34
-  - 35-38
-  - 39-40
-  - 41-45
-  - '42'
-  - '43'
-  - '44'
-  - '45'
-  - '46'
-  - 47-49
-  - 51-117
-  - 52-56
-  - '53'
-  - 54-56
-  - '55'
-  - '56'
-  - '57'
-  - '58'
-  - 59-82
-  - 83-87
-  - '84'
-  - '85'
-  - '86'
-  - '87'
-  - 88-89
-  - 90-92
-  - 93-113
-  - 94-110
-  - '111'
-  - '112'
-  - '113'
-  - '114'
-  - 115-117
   - 119-128
-  - 120-121
-  - '121'
-  - 122-123
-  - '123'
-  - 124-125
-  - '125'
-  - 126-128
-  - '127'
 - file: crates/gcore/assets/postgres-pgsearch/version.json
   ranges:
-  - '2'
-  - '3'
-  - 4-7
-  - '5'
-  - '6'
-  - '8'
+  - 2-8
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -80,27 +20,21 @@ Parent: [[code/modules/crates/gcore|crates/gcore]]
 
 ## Overview
 
-This module provides containerized infrastructure assets for the gcore crate. The `docker-compose.services.yml` defines the backing services for the Gobby stack—FalkorDB (graph), Qdrant (vector search), and PostgreSQL—each configured with images, ports, volumes, environment variables, healthchecks, restart policies, and profiles, plus named persistent volumes. The accompanying `postgres-pgsearch` child module packages a custom PostgreSQL image bundling the `pg_search` full-text search and `pgaudit` audit-logging extensions, with version and per-architecture SHA256 build arguments.
-[crates/gcore/assets/docker-compose.services.yml:5-117]
-[crates/gcore/assets/postgres-pgsearch/version.json:2]
-[crates/gcore/assets/docker-compose.services.yml:6-28]
-[crates/gcore/assets/docker-compose.services.yml:7]
-[crates/gcore/assets/docker-compose.services.yml:8-10]
+The assets module packages the local service dependencies that Gobby installs and manages through Docker Compose. Its main manifest defines a profile-driven service bundle for FalkorDB, Qdrant, and Postgres, with comments indicating that it is “installed via: gobby install” and managed by daemon start/stop through Compose profiles . FalkorDB provides Redis-compatible storage with configurable data and browser ports, password injection through `REDIS_ARGS`, a persistent `/data` volume, and a Redis PING healthcheck [crates/gcore/assets/docker-compose.services.yml:5-28]. Qdrant provides vector search on HTTP and gRPC ports, uses local-only default auth assumptions, persists `/qdrant/storage`, and validates readiness through its `/healthz` endpoint [crates/gcore/assets/docker-compose.services.yml:30-51].
+
+The Postgres service is the most customized flow in the bundle: Compose builds it from the `postgres-pgsearch` asset context, passes `PG_SEARCH_VERSION` and `PG_SEARCH_SHA256` build arguments, tags the resulting image as `gobby-postgres-local:18-pgsearch`, and starts Postgres with `pg_search` and `pgaudit` preloaded [crates/gcore/assets/docker-compose.services.yml:53-75]. The child `postgres-pgsearch` module supplies the version manifest that pins the bundled pg_search release to `0.23.4`, records integrity hashes for verification, and ties the asset to PostgreSQL major version `18` [crates/gcore/assets/postgres-pgsearch/version.json:8].
+
+Together, these files let higher-level install and daemon lifecycle code treat infrastructure as a reproducible local dependency set. The Compose file owns runtime wiring such as ports, environment, restart policy, profiles, healthchecks, and named persistence volumes, while the pg_search asset manifest owns the build-time database extension contract and checksum data needed to produce the customized Postgres image [crates/gcore/assets/docker-compose.services.yml:5-117] [crates/gcore/assets/postgres-pgsearch/version.json:8].
 
 ## Child Modules
 
-- [[code/modules/crates/gcore/assets/postgres-pgsearch|crates/gcore/assets/postgres-pgsearch]] - This module packages a custom PostgreSQL container image with the `pg_search` (full-text search) and `pgaudit` (audit logging) extensions for the gcore crate.
+- [[code/modules/crates/gcore/assets/postgres-pgsearch|crates/gcore/assets/postgres-pgsearch]] - This module is a single asset manifest for the bundled `postgres-pgsearch` dependency. Its responsibility is to pin the pg_search release version and integrity hashes used by build or packaging code, with `pg_search_version` fixed at `0.23.4` and a default `pg_search_sha256` for artifact verification. It also records the target PostgreSQL major version as `18`, tying the asset to the expected database runtime compatibility range.  [crates/gcore/assets/postgres-pgsearch/version.json:8]
 
-A Dockerfile defines the image build, while `version.json` pins extension versions and per-architecture (amd64/arm64) SHA256 checksums alongside the target PostgreSQL major version. The `initdb.d` directory holds ordered SQL scripts that enable the required extensions on database startup, and the `scripts` directory provides `pg_audit_export.sh` for exporting audit data.
-[crates/gcore/assets/postgres-pgsearch/version.json:2]
-[crates/gcore/assets/postgres-pgsearch/version.json:3]
-[crates/gcore/assets/postgres-pgsearch/version.json:4-7]
-[crates/gcore/assets/postgres-pgsearch/version.json:5]
-[crates/gcore/assets/postgres-pgsearch/version.json:6]
+The key flow is artifact selection followed by checksum validation. Consumers can use the top-level checksum as the default value, or select an architecture-specific checksum from `pg_search_sha256_by_arch`, which currently differentiates `amd64` and `arm64` artifacts. This keeps the version pin, platform-specific binary verification data, and PostgreSQL compatibility target together in one compact manifest, with no child modules involved. [crates/gcore/assets/postgres-pgsearch/version.json:4-7]
 
 ## Files
 
-- [[code/files/crates/gcore/assets/docker-compose.services.yml|crates/gcore/assets/docker-compose.services.yml]] - `crates/gcore/assets/docker-compose.services.yml` exposes 57 indexed API symbols.
+- [[code/files/crates/gcore/assets/docker-compose.services.yml|crates/gcore/assets/docker-compose.services.yml]] - This file defines the Docker Compose service bundle for Gobby’s local dependencies and persistence. It wires up three services: `falkordb` for Redis-compatible storage, `qdrant` for vector search, and `postgres` for the main database with pg_search/pgaudit support. Each service is configured with ports, environment variables, volumes, restart policy, and healthchecks so the daemon can start and stop them reliably through Compose profiles, while the bottom `volumes` section declares the named data volumes used to persist each service’s state.
 [crates/gcore/assets/docker-compose.services.yml:5-117]
 [crates/gcore/assets/docker-compose.services.yml:6-28]
 [crates/gcore/assets/docker-compose.services.yml:7]
@@ -166,10 +100,4 @@ A Dockerfile defines the image build, while `version.json` pins extension versio
 - `500f6f15-fce0-5878-ba8d-10ebbbdb5071`
 - `69cc6e92-3262-5da5-9494-733e42d29757`
 - `72678802-facf-508b-892a-07eb709831db`
-- `17581f92-e7dd-5204-bf06-e074856e1e24`
-- `285db167-531d-5f8d-bce7-fb83e7b6eec1`
-- `639c4bb7-5d6b-5c42-97ae-a91ad5dd89e2`
-- `f9a502f7-9ea0-511e-acbd-bcbca7e3d51c`
-- `ee9fce5b-6a4d-55a5-8041-72c6a34b2055`
-- `f8bb4329-ce0c-5c51-8419-610e3adaba84`
 

@@ -20,7 +20,7 @@ Module: [[code/modules/crates/gcode/src/graph/report|crates/gcode/src/graph/repo
 
 ## Purpose
 
-`crates/gcode/src/graph/report/loading.rs` exposes 5 indexed API symbols.
+The file provides loading functionality for graph-based code analysis reports. It centers on `load_report_snapshot`, which orchestrates multiple GraphClient queries to assemble a complete report snapshot containing aggregated node/edge statistics, high-degree hotspots across files/symbols/modules, incoming call hotspots, and target frequency data for a specified project. Supporting functions (`load_hotspots`, `load_incoming_call_hotspots`, `load_target_frequencies`) handle individual query execution and row transformation, while `collect_report_rows` provides common error handling for row mapping operations.
 [crates/gcode/src/graph/report/loading.rs:18-78]
 [crates/gcode/src/graph/report/loading.rs:80-95]
 [crates/gcode/src/graph/report/loading.rs:97-111]

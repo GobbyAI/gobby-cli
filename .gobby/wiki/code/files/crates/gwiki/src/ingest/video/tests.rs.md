@@ -46,7 +46,9 @@ Module: [[code/modules/crates/gwiki/src/ingest/video|crates/gwiki/src/ingest/vid
 
 ## Purpose
 
-`crates/gwiki/src/ingest/video/tests.rs` exposes 40 indexed API symbols.
+Test support and integration coverage for video ingestion. The file defines fixtures and mock `VideoMediaExtractor`, `TranscriptionClient`, and `VisionClient` implementations for both success and failure paths, plus a helper for writing temporary files and building transcription outputs.
+
+Those pieces feed a suite of ingestion tests that verify frame sampling, transcript alignment, media degradation behavior, persistence of original and derived assets, and provenance metadata across normal and error scenarios.
 [crates/gwiki/src/ingest/video/tests.rs:18-55]
 [crates/gwiki/src/ingest/video/tests.rs:57-62]
 [crates/gwiki/src/ingest/video/tests.rs:64-89]

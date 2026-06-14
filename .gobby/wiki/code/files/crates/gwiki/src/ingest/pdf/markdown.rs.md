@@ -29,7 +29,9 @@ Module: [[code/modules/crates/gwiki/src/ingest/pdf|crates/gwiki/src/ingest/pdf]]
 
 ## Purpose
 
-`crates/gwiki/src/ingest/pdf/markdown.rs` exposes 14 indexed API symbols.
+This file assembles a PDF ingest pipeline that turns a PDF snapshot into Markdown with metadata, page content, and optional vision/OCR enrichment. `render_pdf_markdown` builds the final document header and per-page output, while helpers sanitize page Markdown, neutralize page-marker variants, and detect horizontal rules so page boundaries stay safe and consistent.
+
+The middle of the file handles page composition and OCR integration: `merge_pdf_pages` and `merge_page_markdown` combine page text, `extract_vision_for_page` prepares vision requests using the configured model and rendered page assets, and `dedupe_ocr_text` with `overlap_key` removes repeated OCR content without collapsing distinct punctuation cases. Small helpers like `rendered_page_asset_path`, `rendered_page_file_name`, and the marker-neutralization tests support stable asset naming and ensure the page formatting rules behave as intended.
 [crates/gwiki/src/ingest/pdf/markdown.rs:15-89]
 [crates/gwiki/src/ingest/pdf/markdown.rs:92-107]
 [crates/gwiki/src/ingest/pdf/markdown.rs:110-135]

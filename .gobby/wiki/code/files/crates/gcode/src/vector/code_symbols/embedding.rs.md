@@ -39,7 +39,7 @@ Module: [[code/modules/crates/gcode/src/vector/code_symbols|crates/gcode/src/vec
 
 ## Purpose
 
-`crates/gcode/src/vector/code_symbols/embedding.rs` exposes 33 indexed API symbols.
+This file centralizes embedding-source resolution and embedding execution for the vector subsystem. It defines `EmbeddingSource` as either a direct `EmbeddingConfig` or a daemon-backed `AiContext`, then builds `EmbeddingBackend` around that choice so queries and batches can be embedded through either path, with direct clients cached by timeout and query prefixes applied when configured. Supporting helpers resolve the effective AI context and embedding config from context or database bindings, translate AI errors into `VectorLifecycleError`, format a `Symbol` into embeddable text, and expose the probe text used to measure embedding dimensionality. The test-only `TestSource` supplies static config values and secret resolution for routing and binding-resolution tests.
 [crates/gcode/src/vector/code_symbols/embedding.rs:21-23]
 [crates/gcode/src/vector/code_symbols/embedding.rs:26-29]
 [crates/gcode/src/vector/code_symbols/embedding.rs:31-35]

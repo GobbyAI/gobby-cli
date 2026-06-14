@@ -31,7 +31,9 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-`crates/gcore/src/layered_config.rs` exposes 18 indexed API symbols.
+This file implements layered YAML configuration loading for tool binaries, with a strict precedence order: explicit CLI override, current-directory `.gobby/<tool>.yaml`, project-root `.gobby/<tool>.yaml`, then `<gobby_home>/<tool>.yaml`, otherwise `None` so callers can use built-in defaults. `load_layered_yaml` drives that search, `try_layer` handles per-path read-and-parse attempts while skipping missing files, and `parse` turns YAML into a generic deserialized type while preserving file-path context on errors.
+
+`LayeredConfigError` distinguishes read failures from parse failures, and the test-only `CwdGuard` plus `project_with_config` helpers set up isolated filesystem state and environment for exercising resolution behavior. The tests verify the key contracts: project-root discovery from subdirectories, current-directory precedence without a project marker, CLI override dominance, errors for unreadable overrides and malformed YAML, fallback to `GOBBY_HOME`, and `None` when no layer exists.
 [crates/gcore/src/layered_config.rs:17-25]
 [crates/gcore/src/layered_config.rs:32-63]
 [crates/gcore/src/layered_config.rs:65-70]

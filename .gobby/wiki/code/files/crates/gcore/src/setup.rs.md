@@ -8,11 +8,9 @@ provenance:
   - 26-34
   - 38-43
   - 45-50
-  - 47-49
   - 53-54
   - 57-64
   - 69-84
-  - 74-83
   - 90-100
   - 104-107
   - 111-113
@@ -23,9 +21,6 @@ provenance:
   - 162-169
   - 172-181
   - 190-245
-  - '191'
-  - 193-218
-  - 194-217
   - 248-274
   - 277-315
 generated_by: gcode-codewiki
@@ -39,7 +34,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-`crates/gcore/src/setup.rs` exposes 24 indexed API symbols.
+This file defines the shared setup boundary for gobby: it classifies setup resources by `StoreKind`, provides validation and setup contexts that carry optional datastore/config handles, and wraps validation results in `ValidationReport` with an `is_healthy` check. It also defines the callback types and object descriptors for consumer-supplied validation and creation (`RequiredValidator`, `RequiredObject`, `AttachedValidator`, `OwnedObject`, `SetupPostgresExecutor`, `StandaloneSetup`, `SetupError`, `SetupReport`), so attached-mode checks and standalone provisioning can share the same setup abstractions. The included tests verify runtime validation guidance, mutable-context access inside validator closures, and creator closures executing without moving shared ownership.
 [crates/gcore/src/setup.rs:11-18]
 [crates/gcore/src/setup.rs:26-34]
 [crates/gcore/src/setup.rs:38-43]

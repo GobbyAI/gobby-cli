@@ -22,7 +22,9 @@ Module: [[code/modules/crates/ghook/src|crates/ghook/src]]
 
 ## Purpose
 
-`crates/ghook/src/source.rs` exposes 9 indexed API symbols.
+This file resolves the active source name for ghook dispatch. `detect_source` returns the configured source by default, but for `claude` it can be overridden by a non-empty `GOBBY_SOURCE` environment variable; `CLAUDE_CODE_ENTRYPOINT` is intentionally ignored here.
+
+The rest of the file is test support for that behavior. `clear_source_env` and `set_source_env` manage the process-wide variables safely within tests, and `SourceEnvGuard` resets them on creation and drop so `detect_source_respects_override_only_for_claude` can verify override handling and the rule that only `GOBBY_SOURCE` changes the detected source.
 [crates/ghook/src/source.rs:3-14]
 [crates/ghook/src/source.rs:20-27]
 [crates/ghook/src/source.rs:29-35]

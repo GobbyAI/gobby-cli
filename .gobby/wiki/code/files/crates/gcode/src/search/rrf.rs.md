@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gcode/src/search|crates/gcode/src/search]]
 
 ## Purpose
 
-`crates/gcode/src/search/rrf.rs` exposes 9 indexed API symbols.
+This file provides a small Reciprocal Rank Fusion wrapper for search results. It defines `MergedResult` as the merged output shape `(symbol_id, combined_score, source_names)` and exposes `merge`, which forwards ranked ID lists from multiple named sources to `gobby_core::search::rrf_merge` and converts the core result into the local tuple form. The test module exercises the behavior end to end: single-source ordering, duplicate IDs accumulating score across sources, deterministic ordering of source names on merged results, disjoint sources, and empty-input edge cases, confirming that the wrapper preserves the core fusion semantics.
 [crates/gcode/src/search/rrf.rs:7]
 [crates/gcode/src/search/rrf.rs:15-20]
 [crates/gcode/src/search/rrf.rs:27-34]

@@ -2,22 +2,6 @@
 title: crates/gcode/src
 type: code_module
 provenance:
-- file: crates/gcode/src/cli.rs
-  ranges:
-  - 21-44
-  - 47-52
-  - 54-63
-  - 66-71
-  - 74-80
-  - 84-380
-  - 383-445
-  - 448-459
-  - 462-465
-  - 467-473
-  - 475-477
-  - 479-481
-  - 483-494
-  - 496-504
 - file: crates/gcode/src/cli/tests.rs
   ranges:
   - 5-213
@@ -57,139 +41,33 @@ provenance:
   - 890-899
   - 902-913
   - 916-924
-- file: crates/gcode/src/commands/codewiki/build_parts/architecture.rs
-  ranges:
-  - 5-114
-  - 116-131
-  - 134-184
-- file: crates/gcode/src/commands/codewiki/build_parts/changes.rs
-  ranges:
-  - 5-101
-  - 104-113
-  - 115-138
-  - 140-156
-  - 158-163
-- file: crates/gcode/src/commands/codewiki/build_parts/file.rs
-  ranges:
-  - 12-15
-  - 18-143
-- file: crates/gcode/src/commands/codewiki/build_parts/hotspots.rs
-  ranges:
-  - 5-131
-  - 133-157
-- file: crates/gcode/src/commands/codewiki/build_parts/modules.rs
-  ranges:
-  - 4-136
-  - 138-149
-  - 151-153
-  - 155-165
-- file: crates/gcode/src/commands/codewiki/build_parts/onboarding.rs
-  ranges:
-  - 7-52
-  - 54-109
-  - 111-200
-  - 202-208
-  - 210-212
-  - 214-219
-  - 225-246
-  - 249-255
-  - 258-268
-- file: crates/gcode/src/commands/codewiki/build_parts/snapshot.rs
-  ranges:
-  - 6-84
-  - 86-99
-  - 101-134
-- file: crates/gcode/src/commands/codewiki/cluster.rs
-  ranges:
-  - 3-54
-  - 56-80
-  - 89-130
-  - 132-156
-  - 158-168
-  - 170-178
-  - 180-196
-  - 198-206
-  - 208-226
-  - 228-233
-- file: crates/gcode/src/commands/codewiki/graph.rs
-  ranges:
-  - 4-109
-  - 113-142
-  - 148-163
-  - 165-180
 - file: crates/gcode/src/commands/codewiki/io.rs
   ranges:
   - 3-9
   - 11-28
   - 30-43
   - 46-48
-  - 50-77
-  - 83-93
-  - 97-103
-  - 105-127
-  - 131-179
-  - 181-192
-  - 196-224
-  - 227-231
-  - 233-237
-  - 239-247
-  - 249-267
-  - 269-289
-  - 291-309
-  - 311-314
-  - 316-323
-  - 325-328
-  - 330-351
-  - 353-388
-  - 391-421
-  - 424-431
-  - 433-443
-- file: crates/gcode/src/commands/codewiki/mod.rs
-  ranges:
-  - 92-97
-  - 100-104
-  - 106-128
-  - 131-134
-  - 137-140
-  - 142-163
-  - 166-170
-  - 173-185
-  - 188-194
-  - 197-212
-  - 215-220
-  - 223-227
-  - 230-235
-  - 238-242
-  - 245-250
-  - 253-259
-  - 262-268
-  - 271-278
-  - 281-285
-  - 288-292
-  - 295-299
-  - 302-314
-  - 317-324
-  - 327-343
-  - 348-355
-  - 357-366
-  - 369-376
-  - 379-382
-  - 385-391
-  - '393'
-  - 405-409
-  - 414-422
-  - 424-440
-  - 443-449
-  - 451-471
-  - 473-598
-  - 600-605
-  - 607-614
-  - 616-624
-  - 626-648
-  - 651-670
-  - 673-680
-  - 684-708
-  - 710-886
+  - 50-93
+  - 99-109
+  - 113-119
+  - 121-143
+  - 147-195
+  - 197-208
+  - 212-240
+  - 243-247
+  - 249-253
+  - 255-263
+  - 265-283
+  - 285-305
+  - 307-325
+  - 327-330
+  - 332-339
+  - 341-344
+  - 346-367
+  - 369-404
+  - 407-437
+  - 440-447
+  - 449-459
 - file: crates/gcode/src/commands/codewiki/ownership.rs
   ranges:
   - 17-20
@@ -240,142 +118,102 @@ provenance:
   - 913-922
   - 924-940
   - 942-950
-- file: crates/gcode/src/commands/codewiki/paths.rs
-  ranges:
-  - 3-14
-  - 16-28
-  - 30-32
-  - 34-41
-  - 43-98
-  - 103-111
-  - 113-119
-  - 121-129
-  - 131-133
-  - 135-137
-  - 139-147
-  - 149-151
-  - 153-155
-  - 157-159
-  - 161-163
-  - 165-167
-- file: crates/gcode/src/commands/codewiki/progress.rs
-  ranges:
-  - 2-7
-  - 10-12
-  - 14-55
-- file: crates/gcode/src/commands/codewiki/prompts.rs
-  ranges:
-  - 11-33
-  - 35-56
-  - 58-72
-  - 74-104
-  - 106-120
-  - 122-133
-  - 135-174
-  - 185-203
-  - 206-214
-  - 217-220
-  - 226-235
-  - 238-258
-  - 261-268
-  - 271-278
-- file: crates/gcode/src/commands/codewiki/render.rs
-  ranges:
-  - 5-35
-  - 37-71
-  - 73-87
-  - 89-112
-  - 114-121
-  - 123-211
-  - 213-242
-  - 244-294
-  - 296-309
-  - 311-321
-  - 323-338
-  - 340-410
-  - 412-446
-  - 448-474
-  - 476-512
-  - 514-557
-  - 559-561
-  - 563-622
-  - 625-631
-  - 633-697
-  - 699-742
-- file: crates/gcode/src/commands/codewiki/reuse.rs
-  ranges:
-  - 11-19
-  - 21-101
-  - 105-107
 - file: crates/gcode/src/commands/codewiki/text.rs
   ranges:
-  - 15-27
-  - 30-34
-  - 36-84
-  - 89-103
-  - 105-113
-  - 115-131
-  - 138-142
-  - 144-161
-  - 163-177
-  - 186-196
-  - 198-201
-  - 203-218
-  - 220-229
-  - 231-243
-  - 245-251
-  - 253-255
-  - 257-266
-  - 277-298
-  - 300-306
-  - 308-328
-  - 330-342
-  - 344-353
-  - 355-361
-  - 366-379
-  - 381-397
-  - 399-425
-  - 427-444
-  - 446-459
-  - 462-464
-  - 468-475
-  - 477-484
-  - 486-533
-  - 535-559
-  - 565-571
-  - 574-593
-  - 596-616
-  - 619-631
-  - 634-647
-  - 650-663
-  - 666-681
-  - 684-691
-  - 694-726
-  - 729-732
-  - 734-740
-  - 743-756
-  - 759-768
-  - 771-783
-- file: crates/gcode/src/commands/embeddings_doctor.rs
+  - 18-32
+  - 35-39
+  - 41-89
+  - 94-108
+  - 110-118
+  - 120-136
+  - 143-147
+  - 149-166
+  - 168-182
+  - 191-201
+  - 203-206
+  - 208-223
+  - 225-234
+  - 239-242
+  - 244-256
+  - 258-264
+  - 266-268
+  - 270-279
+  - 303-311
+  - 315-321
+  - 323-328
+  - 335-375
+  - 377-383
+  - 385-405
+  - 407-419
+  - 421-430
+  - 432-438
+  - 443-456
+  - 458-474
+  - 476-502
+  - 504-521
+  - 523-536
+  - 539-541
+  - 545-552
+  - 554-561
+  - 563-630
+  - 632-656
+  - 662-668
+  - 671-690
+  - 693-713
+  - 716-728
+  - 731-744
+  - 747-760
+  - 763-773
+  - 776-787
+  - 790-822
+  - 825-840
+  - 843-850
+  - 853-886
+  - 889-892
+  - 894-900
+  - 903-916
+  - 919-928
+  - 931-943
+- file: crates/gcode/src/commands/codewiki/types.rs
   ranges:
-  - 19-22
-  - 24-32
-  - 34-38
-  - '40'
-  - 43-55
-  - 58-63
-  - 66-70
-  - 73-77
-  - 79-95
-  - 97-99
-  - 101-165
-  - 167-176
-  - 178-195
-  - 197-223
-  - 225-239
-  - 241-276
-  - 283-295
-  - 298-362
+  - 11-21
+  - 26-30
+  - 33-45
+  - 50-62
+  - 65-69
+  - 71-93
+  - 96-99
+  - 102-105
+  - 107-128
+  - 131-135
+  - 138-150
+  - 153-159
+  - 162-177
+  - 180-186
+  - 189-194
+  - 197-202
+  - 205-209
+  - 212-217
+  - 220-226
+  - 229-235
+  - 238-245
+  - 248-252
+  - 255-259
+  - 262-266
+  - 269-281
+  - 284-291
+  - 294-310
+  - 315-322
+  - 324-333
+  - 336-343
+  - 346-349
+  - 352-358
+  - '360'
+  - 367-371
+  - 376-384
+  - 386-402
+  - 405-411
+  - 413-433
 - file: crates/gcode/src/commands/graph/lifecycle.rs
   ranges:
   - 11-13
@@ -388,24 +226,16 @@ provenance:
   - 87-98
   - 100-114
   - 116-128
-  - 130-136
-  - 138-145
-  - 147-177
-  - 179-200
-  - 202-280
-  - 282-289
-  - 291-298
-  - 300-348
-- file: crates/gcode/src/commands/graph/payload.rs
-  ranges:
-  - 6-37
-  - 39-44
-  - 46-48
-  - 50-59
-  - 61-64
-  - 66-69
-  - 71-79
-  - 81-96
+  - 130-137
+  - 139-146
+  - 148-160
+  - 162-164
+  - 166-204
+  - 206-227
+  - 229-307
+  - 309-316
+  - 318-325
+  - 327-390
 - file: crates/gcode/src/commands/graph/reads.rs
   ranges:
   - 14-20
@@ -423,40 +253,20 @@ provenance:
   - 264-316
   - 318-353
   - 355-402
-  - 419-421
-  - 423-440
-  - 442-449
-  - 451-454
-  - 456-464
-  - 466-479
-  - 481-484
-  - 486-500
-  - 502-511
-  - 513-524
-  - 526-545
-  - 552-580
-  - 584-610
-  - 614-650
-- file: crates/gcode/src/commands/graph/tests.rs
-  ranges:
-  - 16-30
-  - 33-39
-  - 42-50
-  - 53-89
-  - 92-106
-  - 109-111
-  - 113-132
-  - 135-158
-  - 161-170
-  - 173-189
-  - 192-204
-  - 207-219
-  - 222-235
-  - 238-253
-  - 256-272
-  - 275-292
-  - 295-312
-  - 315-373
+  - 419-422
+  - 424-431
+  - 433-440
+  - 442-445
+  - 447-454
+  - 456-469
+  - 471-474
+  - 476-490
+  - 492-501
+  - 503-514
+  - 516-535
+  - 546-572
+  - 580-604
+  - 612-646
 - file: crates/gcode/src/commands/grep.rs
   ranges:
   - 21-33
@@ -501,57 +311,6 @@ provenance:
   - 820-837
   - 840-868
   - 871-879
-- file: crates/gcode/src/commands/grep/grep_matcher.rs
-  ranges:
-  - 6-9
-  - 11-44
-  - 46-65
-  - 67-75
-  - 78-80
-  - 86-92
-  - 95-105
-  - 108-116
-  - 119-126
-  - 129-136
-  - 139-146
-  - 149-156
-  - 159-163
-- file: crates/gcode/src/commands/index.rs
-  ranges:
-  - 10-60
-  - 62-92
-  - 96-104
-  - 107-117
-  - 119-132
-  - 134-138
-  - 140-195
-  - 197-216
-  - 218-240
-  - 252-257
-  - 260-262
-  - 264-272
-  - 274-294
-  - 297-301
-  - 304-309
-  - 312-338
-  - 341-364
-- file: crates/gcode/src/commands/init.rs
-  ranges:
-  - 11-148
-- file: crates/gcode/src/commands/scope.rs
-  ranges:
-  - 9-12
-  - 14-27
-  - 29-45
-  - 47-60
-  - 62-69
-  - 71-109
-  - 111-133
-  - 135-146
-  - 153-167
-  - 170-182
-  - 185-190
-  - 193-208
 - file: crates/gcode/src/commands/search.rs
   ranges:
   - 13-21
@@ -592,47 +351,6 @@ provenance:
   - 863-874
   - 877-879
   - 882-887
-- file: crates/gcode/src/commands/setup.rs
-  ranges:
-  - 22-94
-  - 96-99
-  - 101-117
-  - 119-165
-  - 167-186
-  - 188-201
-  - 203-219
-  - 221-283
-  - 285-296
-  - 298-301
-  - 303-351
-  - 353-372
-  - 374-390
-  - 398-460
-  - 463-511
-  - 514-529
-  - 532-541
-  - 548-586
-- file: crates/gcode/src/commands/status.rs
-  ranges:
-  - 18-42
-  - 45-58
-  - 60-134
-  - 136-158
-  - 160-185
-  - 187-197
-  - 200-227
-  - 229-245
-  - 248-256
-  - 259-268
-  - 271-293
-  - 296-310
-  - 313-316
-  - 318-372
-  - 375-415
-  - 417-457
-  - 463-473
-  - 475-489
-  - 492-510
 - file: crates/gcode/src/commands/symbol_at.rs
   ranges:
   - 16-20
@@ -676,48 +394,6 @@ provenance:
   - 572-590
   - 593-616
   - 619-640
-- file: crates/gcode/src/commands/symbols.rs
-  ranges:
-  - 21-78
-  - 80-103
-  - 105-126
-  - 128-142
-  - 144-167
-  - 169-183
-  - 185-200
-  - 202-229
-  - 231-239
-  - 241-256
-  - 258-302
-  - 304-341
-  - 343-356
-  - 358-382
-  - 390-417
-  - 423-444
-  - 447-453
-  - 456-478
-  - 481-490
-  - 493-511
-  - 514-516
-  - 519-531
-  - 534-557
-  - 560-568
-- file: crates/gcode/src/commands/vector.rs
-  ranges:
-  - 12-18
-  - 20-24
-  - 26-41
-  - 43-62
-  - 64-71
-  - 73-83
-  - 85-95
-  - 98-114
-  - 116-136
-  - 145-159
-  - 161-166
-  - 168-184
-  - 187-207
-  - 210-268
 - file: crates/gcode/src/config/context.rs
   ranges:
   - 26-31
@@ -833,48 +509,6 @@ provenance:
   - 469-500
   - 503-515
   - 518-525
-- file: crates/gcode/src/contract.rs
-  ranges:
-  - 5-254
-  - 256-258
-  - 260-263
-  - 265-272
-  - 274-286
-  - 288-294
-  - 296-314
-  - 316-339
-  - 341-357
-  - 359-369
-  - 371-373
-  - 375-387
-- file: crates/gcode/src/db/mod.rs
-  ranges:
-  - 16-20
-  - 27-31
-  - 33-35
-- file: crates/gcode/src/db/queries.rs
-  ranges:
-  - 8-13
-  - 15-26
-  - 28-38
-  - 40-55
-  - 57-69
-  - 71-83
-  - 85-97
-  - 99-109
-  - 111-123
-  - 125-135
-  - 141-156
-  - 158-168
-  - 170-190
-  - 192-205
-  - 207-236
-  - 238-240
-  - 242-249
-  - 251-270
-  - 272-281
-  - 288-292
-  - 296-298
 - file: crates/gcode/src/db/resolution.rs
   ranges:
   - 16-18
@@ -932,72 +566,6 @@ provenance:
   - 756-761
   - 763-765
   - 767-794
-- file: crates/gcode/src/dispatch.rs
-  ranges:
-  - '8'
-  - 10-22
-  - 24-28
-  - 30-37
-  - 39-47
-  - 49-61
-  - 63-65
-  - 67-72
-  - 74-78
-  - 80-123
-  - 125-206
-  - 208-234
-  - 236-556
-- file: crates/gcode/src/dispatch/tests.rs
-  ranges:
-  - 5-9
-  - 12-14
-  - 17-22
-  - 25-27
-  - 30-70
-  - 73-87
-  - 90-107
-- file: crates/gcode/src/freshness.rs
-  ranges:
-  - 13-16
-  - 19-22
-  - 24-83
-  - 93-121
-  - 123-144
-  - 146-160
-  - 162-182
-  - '184'
-  - 186-193
-  - 195-200
-  - 208-222
-  - 224-226
-  - 228-249
-  - 251-274
-  - 276-283
-  - 285-293
-  - 295-300
-  - 302-315
-  - 322-330
-  - 334-343
-  - 347-388
-  - 392-428
-- file: crates/gcode/src/git.rs
-  ranges:
-  - 5-9
-  - 12-17
-  - 19-51
-  - 53-63
-  - 65-77
-  - 79-87
-  - 93-101
-  - 103-118
-  - 121-132
-  - 135-158
-  - 161-181
-- file: crates/gcode/src/graph/code_graph/connection.rs
-  ranges:
-  - 7-12
-  - 14-40
-  - 42-68
 - file: crates/gcode/src/graph/code_graph/lifecycle.rs
   ranges:
   - 18-21
@@ -1082,27 +650,6 @@ provenance:
   - 912-928
   - 930-936
   - 938-949
-- file: crates/gcode/src/graph/code_graph/tests.rs
-  ranges:
-  - 7-21
-  - 24-33
-  - 36-65
-  - 68-151
-  - 154-159
-  - 162-189
-  - 192-198
-  - 201-218
-  - 221-237
-  - 240-245
-  - 248-252
-  - 255-269
-  - 272-282
-  - 285-324
-  - 327-374
-  - 377-396
-  - 399-409
-  - 412-439
-  - 442-454
 - file: crates/gcode/src/graph/code_graph/write.rs
   ranges:
   - 110-113
@@ -1161,87 +708,6 @@ provenance:
   - 959-975
   - 977-986
   - 988-997
-- file: crates/gcode/src/graph/report/generation.rs
-  ranges:
-  - 21-23
-  - 25-59
-  - 61-63
-  - 65-76
-  - 78-159
-- file: crates/gcode/src/graph/report/loading.rs
-  ranges:
-  - 18-78
-  - 80-95
-  - 97-111
-  - 113-128
-  - 130-146
-- file: crates/gcode/src/graph/report/queries.rs
-  ranges:
-  - 7-18
-  - 20-22
-  - 24-26
-  - 28-38
-  - 40-49
-  - 51-85
-  - 87-104
-  - 106-126
-  - 128-144
-- file: crates/gcode/src/graph/report/render.rs
-  ranges:
-  - 8-18
-  - 20-99
-  - 101-121
-  - 123-141
-  - 143-150
-  - 152-164
-  - 166-177
-  - 179-185
-- file: crates/gcode/src/graph/report/rows.rs
-  ranges:
-  - 11-19
-  - 21-31
-  - 33-39
-  - 41-66
-  - 68-78
-  - 80-106
-  - 108-112
-  - 119-128
-  - 131-140
-  - 143-154
-  - 157-162
-- file: crates/gcode/src/graph/report/summary.rs
-  ranges:
-  - 14-17
-  - 19-41
-  - 43-49
-  - 51-91
-  - 93-100
-  - 102-156
-  - 158-195
-  - 197-231
-  - 233-237
-  - 239-275
-  - 277-317
-  - 319-329
-  - 333-347
-  - 349-378
-  - 380-388
-  - 390-395
-- file: crates/gcode/src/graph/report/tests.rs
-  ranges:
-  - 15-65
-  - 68-84
-  - 87-127
-  - 129-179
-  - 181-196
-  - 199-225
-  - 228-249
-  - 252-277
-  - 280-317
-  - 320-342
-- file: crates/gcode/src/graph/report/time.rs
-  ranges:
-  - 3-5
 - file: crates/gcode/src/graph/report/types.rs
   ranges:
   - 10-17
@@ -1295,34 +761,6 @@ provenance:
   - 300-315
   - 318-341
   - 344-350
-- file: crates/gcode/src/index/api.rs
-  ranges:
-  - 16-23
-  - 26-34
-  - 36-48
-  - 50-60
-  - 62-84
-  - 86-108
-  - 110-125
-  - 127-241
-  - 243-269
-  - 271-298
-  - 300-325
-  - 327-347
-  - 349-383
-  - 385-387
-- file: crates/gcode/src/index/chunker.rs
-  ranges:
-  - 19-62
-  - 64-72
-  - 77-90
-- file: crates/gcode/src/index/hasher.rs
-  ranges:
-  - 7-9
-  - 12-14
-  - 17-27
-  - 35-49
-  - 52-59
 - file: crates/gcode/src/index/import_resolution/context.rs
   ranges:
   - 19-37
@@ -1355,169 +793,6 @@ provenance:
   - 670-691
   - 693-698
   - 700-706
-- file: crates/gcode/src/index/import_resolution/helpers.rs
-  ranges:
-  - 1-3
-  - 5-11
-  - 13-17
-  - 19-47
-  - 49-86
-  - 88-97
-  - 99-105
-  - 107-134
-  - 136-164
-  - 167-172
-  - 174-182
-  - '184'
-  - 186-195
-  - 197-212
-  - 214-303
-  - 305-307
-  - 309-316
-  - 318-330
-  - 332-334
-  - 336-338
-  - 340-352
-- file: crates/gcode/src/index/import_resolution/parser/go_rust.rs
-  ranges:
-  - 12-40
-  - 42-77
-  - 79-106
-  - 108-136
-  - 138-188
-  - 195-206
-  - 209-219
-- file: crates/gcode/src/index/import_resolution/parser/java_csharp.rs
-  ranges:
-  - 8-60
-  - 62-118
-  - 120-122
-  - 124-137
-- file: crates/gcode/src/index/import_resolution/parser/mod.rs
-  ranges:
-  - 29-54
-  - 56-74
-  - 76-126
-  - 128-203
-- file: crates/gcode/src/index/import_resolution/parser/php_kotlin.rs
-  ranges:
-  - 7-14
-  - 16-59
-  - 62-66
-  - 68-104
-  - 106-147
-  - 149-168
-  - 170-183
-  - 185-191
-  - 193-213
-- file: crates/gcode/src/index/import_resolution/parser/python_js.rs
-  ranges:
-  - 11-98
-  - 100-194
-- file: crates/gcode/src/index/import_resolution/parser/rest.rs
-  ranges:
-  - 10-54
-  - 56-92
-  - 94-121
-  - 123-176
-- file: crates/gcode/src/index/import_resolution/predicates.rs
-  ranges:
-  - 8-21
-  - 23-53
-  - 55-68
-  - 70-77
-  - 79-81
-  - 83-88
-  - 94-107
-  - 109-179
-  - 185-201
-  - 203-210
-  - 212-220
-  - 222-231
-  - 233-241
-  - 243-251
-  - 258-262
-  - 264-276
-  - 284-288
-  - 290-302
-  - 304-316
-  - 318-328
-- file: crates/gcode/src/index/indexer/file.rs
-  ranges:
-  - 15-91
-  - 93-108
-  - 111-115
-  - 117-127
-  - 130-177
-  - 179-229
-  - 231-264
-- file: crates/gcode/src/index/indexer/freshness_probe.rs
-  ranges:
-  - 37-81
-  - 89-96
-  - 98-105
-  - 109-111
-  - 113-115
-  - 118-138
-  - 141-156
-  - 159-176
-  - 179-195
-  - 198-235
-  - 238-265
-- file: crates/gcode/src/index/indexer/lifecycle.rs
-  ranges:
-  - 16-54
-  - 56-69
-  - 71-81
-  - 84-121
-  - 125-152
-  - 154-181
-  - 183-229
-  - 232-235
-  - 237-260
-  - 262-294
-  - 296-305
-- file: crates/gcode/src/index/indexer/overlay.rs
-  ranges:
-  - 32-35
-  - 38-44
-  - 46-82
-  - 84-255
-  - 257-288
-  - 290-299
-  - 301-321
-  - 323-375
-  - 377-393
-  - 395-400
-  - 402-407
-  - 409-414
-  - 416-429
-  - 431-447
-  - 455-462
-  - 466-470
-  - 474-483
-- file: crates/gcode/src/index/indexer/pipeline.rs
-  ranges:
-  - 27-30
-  - 32-45
-  - 47-173
-  - 175-302
-  - 304-308
-  - 310-324
-  - 326-340
-- file: crates/gcode/src/index/indexer/sink.rs
-  ranges:
-  - 6-34
-  - 36-38
-  - 41-43
-  - 50-52
-  - 54-60
-  - 62-69
-  - 71-73
-  - 75-77
-  - 79-86
-  - 88-95
-  - 97-99
 - file: crates/gcode/src/index/indexer/tests.rs
   ranges:
   - 24-30
@@ -1529,168 +804,28 @@ provenance:
   - 155-164
   - 166-235
   - 238-314
-  - 318-391
-  - 393-402
-  - 404-410
-  - 412-415
-  - 417-423
-  - 425-456
-  - 458-485
-  - 487-514
-  - 516-524
-  - 526-536
-  - 539-561
-  - 564-600
-  - 603-639
-  - 642-672
-  - 675-701
-  - 704-726
-  - 729-744
-  - 747-796
-  - 799-827
-  - 830-880
-  - 883-920
-  - 923-949
-- file: crates/gcode/src/index/indexer/types.rs
-  ranges:
-  - 8-17
-  - 20-25
-  - 29-42
-  - 45-68
-  - 71-76
-  - 79-84
-  - 86-109
-  - 111-113
-  - 116-124
-- file: crates/gcode/src/index/indexer/util.rs
-  ranges:
-  - 28-66
-  - 70-93
-  - 95-101
-  - 103-111
-  - 113-142
-  - 144-154
-  - 156-160
-  - 162-169
-  - 176-186
-  - 189-194
-  - 197-205
-  - 209-214
-  - 218-223
-  - 227-232
-- file: crates/gcode/src/index/languages.rs
-  ranges:
-  - 7-12
-  - 326-338
-  - 341-346
-  - 349-371
-  - 374-385
-  - 392-396
-  - 399-404
-  - 407-410
-  - 413-419
-  - 422-428
-  - 430-435
-  - 437-442
-- file: crates/gcode/src/index/parser.rs
-  ranges:
-  - 29-133
-  - 135-234
-  - 236-261
-  - 263-324
-  - 326-333
-  - 335-378
-- file: crates/gcode/src/index/parser/calls.rs
-  ranges:
-  - 23-32
-  - 35-42
-  - 44-55
-  - 57-132
-- file: crates/gcode/src/index/parser/calls/ast.rs
-  ranges:
-  - 17-96
-  - 109-140
-  - 142-154
-  - 157-166
-  - 169-178
-  - 181-196
-  - 199-213
-- file: crates/gcode/src/index/parser/calls/dart_textual.rs
-  ranges:
-  - 8-55
-  - 57-77
-  - 79-168
-  - 170-172
-  - 174-189
-  - 191-216
-  - 218-223
-  - 226-232
-  - 234-244
-  - 247-252
-  - 255-259
-  - 261-371
-  - 373-375
-  - 377-379
-  - 381-391
-  - 393-417
-  - 419-441
-  - 443-492
-- file: crates/gcode/src/index/parser/calls/resolution.rs
-  ranges:
-  - 6-10
-  - 17-21
-  - 23-46
-  - 48-61
-  - 63-65
-  - 67-90
-  - 92-105
-  - 107-115
-  - 117-155
-  - 157-162
-  - 164-175
-  - 177-182
-- file: crates/gcode/src/index/parser/calls/shadowing.rs
-  ranges:
-  - 6-23
-  - 25-43
-  - 45-84
-  - 86-96
-  - 98-113
-  - 115-129
-  - 131-153
-  - 155-218
-  - 220-224
-  - 226-235
-  - 237-260
-  - 262-273
-  - 283-299
-  - 302-315
-  - 318-327
-  - 330-339
-  - 342-351
-  - 354-363
-- file: crates/gcode/src/index/parser/calls/text.rs
-  ranges:
-  - 4-20
-  - 22-30
-  - 32-49
-  - 51-53
-  - 55-57
-  - 59-61
-  - 63-65
-  - 67-151
-  - 158-163
-  - 166-172
-- file: crates/gcode/src/index/security.rs
-  ranges:
-  - 26-31
-  - 34-39
-  - 42-54
-  - 63-89
-  - 91-93
-  - 96-120
-  - 123-127
-  - 129-148
+  - 325-396
+  - 399-405
+  - 407-413
+  - 415-418
+  - 420-426
+  - 428-459
+  - 461-488
+  - 490-517
+  - 519-527
+  - 529-539
+  - 542-564
+  - 567-603
+  - 606-642
+  - 645-675
+  - 678-704
+  - 707-729
+  - 732-747
+  - 750-799
+  - 802-830
+  - 833-883
+  - 886-923
+  - 926-952
 - file: crates/gcode/src/index/semantic.rs
   ranges:
   - 15-23
@@ -1791,38 +926,6 @@ provenance:
   - 880-894
   - 897-907
   - 910-917
-- file: crates/gcode/src/index_lock.rs
-  ranges:
-  - 15-21
-  - 23-30
-  - 33-36
-  - 38-47
-  - 49-52
-  - 54-92
-  - 94-125
-  - 127-132
-  - 134-146
-  - 148-154
-  - 156-160
-  - 162-191
-  - 200-214
-  - 216-225
-  - 227-233
-  - 236-238
-  - 241-243
-  - 250-268
-  - 272-298
-  - 302-320
-- file: crates/gcode/src/lib.rs
-  ranges:
-  - 34-42
-  - 45-75
-  - 78-142
-  - 145-172
-  - 175-204
-- file: crates/gcode/src/main.rs
-  ranges:
-  - 4-6
 - file: crates/gcode/src/models.rs
   ranges:
   - 18-22
@@ -1855,34 +958,6 @@ provenance:
   - 525-536
   - 539-553
   - 556-590
-- file: crates/gcode/src/output.rs
-  ranges:
-  - 5-8
-  - 11-14
-  - 17-20
-  - 23-26
-- file: crates/gcode/src/progress.rs
-  ranges:
-  - 9-14
-  - 16-71
-- file: crates/gcode/src/project.rs
-  ranges:
-  - 15-18
-  - 21-30
-  - 35-44
-  - 47-70
-  - 78-115
-  - 118-121
-  - 126-128
-  - 130-138
-  - 145-152
-  - 155-161
-  - 164-183
-  - 186-201
-  - 204-226
-  - 229-245
-  - 248-254
-  - 257-265
 - file: crates/gcode/src/projection/sync.rs
   ranges:
   - 11-14
@@ -1907,103 +982,6 @@ provenance:
   - 328-335
   - 337-348
   - 355-390
-- file: crates/gcode/src/savings.rs
-  ranges:
-  - 7-12
-  - 18-29
-  - 36-39
-  - 42-44
-  - 47-49
-- file: crates/gcode/src/schema.rs
-  ranges:
-  - 24-52
-  - 54-63
-  - 65-71
-  - 73-88
-  - 91-93
-  - 99-105
-  - 112-120
-  - 124-129
-  - 132-137
-- file: crates/gcode/src/search/fts/common.rs
-  ranges:
-  - '16'
-  - 19-22
-  - 25-29
-  - 32-36
-  - 38-54
-  - 56-59
-  - 63-69
-  - 71-76
-  - 78-86
-  - 88-123
-  - 126-135
-  - 138-148
-  - 150-152
-  - 154-175
-  - 177-184
-  - 186-196
-  - 198-200
-  - 202-233
-  - 235-250
-  - 252-272
-  - 274-291
-  - 293-341
-  - 348-354
-  - 357-362
-- file: crates/gcode/src/search/fts/content.rs
-  ranges:
-  - 13-21
-  - 24-81
-  - 83-138
-  - 140-178
-  - 180-196
-  - 199-202
-  - 204-210
-  - 212-227
-  - 229-244
-  - 250-253
-  - 256-261
-  - 264-269
-- file: crates/gcode/src/search/fts/counts.rs
-  ranges:
-  - 10-66
-  - 69-113
-  - 115-146
-  - 148-164
-  - 166-191
-  - 193-243
-  - 245-259
-  - 261-273
-  - 275-294
-  - 296-307
-  - 309-333
-  - 335-359
-  - 366-385
-- file: crates/gcode/src/search/fts/graph.rs
-  ranges:
-  - 16-50
-  - 52-55
-  - 57-62
-  - 64-69
-  - 71-78
-  - 80-96
-  - 98-103
-  - 108-147
-- file: crates/gcode/src/search/fts/symbols.rs
-  ranges:
-  - 15-18
-  - 21-26
-  - 28-33
-  - 36-73
-  - 76-112
-  - 114-190
-  - 192-225
-  - 227-260
-  - 262-337
-  - 339-371
-  - 374-386
-  - 388-401
 - file: crates/gcode/src/search/fts/tests.rs
   ranges:
   - 17-26
@@ -2018,146 +996,28 @@ provenance:
   - 136-142
   - 145-151
   - 154-166
-  - 173-207
-  - 211-239
-  - 242-257
-  - 260-269
-  - 272-281
-  - 283-302
-  - 304-308
-  - 310-319
-  - 321-325
-  - 327-336
-  - 338-342
-  - 344-347
-  - 349-355
-  - 357-360
-  - 362-364
-  - 366-380
-  - 382-470
-  - 472-480
-  - 482-499
-  - 501-514
-  - 516-533
-  - 535-554
-- file: crates/gcode/src/search/graph_boost.rs
-  ranges:
-  - 21-47
-  - 55-86
-  - 88-106
-  - 113-127
-  - 129-153
-  - 156-160
-  - 163-167
-  - 170-174
-  - 177-223
-- file: crates/gcode/src/search/rrf.rs
-  ranges:
-  - '7'
-  - 15-20
-  - 27-34
-  - 37-49
-  - 52-64
-  - 67-75
-  - 78-81
-  - 84-87
-  - 90-113
-- file: crates/gcode/src/setup/contracts.rs
-  ranges:
-  - 5-8
-  - 10-14
-  - 191-193
-  - 195-197
-- file: crates/gcode/src/setup/ddl.rs
-  ranges:
-  - 8-10
-  - 13-16
-  - 18-279
-  - 281-309
-  - 311-319
-  - 321-338
-- file: crates/gcode/src/setup/identifiers.rs
-  ranges:
-  - 5-15
-  - 17-41
-- file: crates/gcode/src/setup/postgres.rs
-  ranges:
-  - 12-57
-  - 59-77
-  - 85-101
-  - 103-114
-  - 116-131
-  - 133-145
-  - 147-179
-  - 181-212
-  - 214-232
-  - 234-256
-  - 258-262
-  - 264-292
-  - 294-308
-- file: crates/gcode/src/setup/tests.rs
-  ranges:
-  - 12-55
-  - 58-84
-  - 87-128
-  - 130-155
-  - 157-162
-  - 165-180
-  - 183-191
-  - 194-224
-  - 227-231
-  - 234-244
-  - 247-258
-  - 261-274
-  - 277-297
-  - 300-313
-  - 316-321
-  - 324-329
-  - 336-409
-  - 412-424
-  - 426-430
-  - 432-438
-  - 440-445
-  - 449-460
-  - 464-473
-- file: crates/gcode/src/setup/types.rs
-  ranges:
-  - '5'
-  - 7-23
-  - 25-29
-  - 31-38
-  - 41-66
-  - 68-88
-  - 95-110
-  - 114-118
-  - 121-129
-  - 132-135
-  - 138-147
-- file: crates/gcode/src/skill.rs
-  ranges:
-  - 20-23
-  - 26-29
-  - 61-63
-  - 67-72
-  - 75-85
-  - 88-94
-  - 100-107
-  - 109-114
-  - 117-128
-  - 131-148
-  - 151-164
-  - 167-188
-  - 191-220
-- file: crates/gcode/src/utils.rs
-  ranges:
-  - 4-12
-  - 14-16
-  - 18-22
-  - 29-31
-  - 34-36
-  - 39-41
-  - 44-48
-  - 51-53
+  - 177-209
+  - 217-243
+  - 251-264
+  - 272-279
+  - 287-295
+  - 298-305
+  - 307-311
+  - 313-322
+  - 324-328
+  - 330-339
+  - 341-345
+  - 347-350
+  - 352-358
+  - 360-363
+  - 365-367
+  - 369-383
+  - 385-473
+  - 475-483
+  - 485-502
+  - 504-517
+  - 519-536
+  - 538-557
 - file: crates/gcode/src/vector/code_symbols/embedding.rs
   ranges:
   - 21-23
@@ -2184,50 +1044,6 @@ provenance:
   - 357-391
   - 394-416
   - 419-442
-- file: crates/gcode/src/vector/code_symbols/lifecycle.rs
-  ranges:
-  - 29-37
-  - 39-43
-  - 45-56
-  - 58-376
-  - 378-389
-  - 391-393
-- file: crates/gcode/src/vector/code_symbols/qdrant.rs
-  ranges:
-  - 18-24
-  - 26-28
-  - 30-37
-  - 39-47
-  - 49-76
-  - 78-99
-  - 101-111
-  - 113-124
-  - 126-141
-  - 143-152
-  - 154-164
-  - 166-173
-  - 175-194
-  - 196-217
-  - 219-227
-  - 229-299
-  - 301-311
-  - 318-323
-  - 326-336
-- file: crates/gcode/src/vector/code_symbols/repository.rs
-  ranges:
-  - 6-18
-  - 20-25
-  - 27-35
-  - 38-43
-  - 45-56
-  - 59-77
-- file: crates/gcode/src/vector/code_symbols/search.rs
-  ranges:
-  - 8-14
-  - 16-26
-  - '28'
-  - 30-58
-  - 63-81
 - file: crates/gcode/src/vector/code_symbols/tests.rs
   ranges:
   - 13-34
@@ -2265,23 +1081,6 @@ provenance:
   - 886-915
   - 917-937
   - 939-979
-- file: crates/gcode/src/vector/code_symbols/types.rs
-  ranges:
-  - 7-12
-  - 15-18
-  - 20-24
-  - '26'
-  - 29-57
-  - 59-96
-  - 100-105
-  - 108-112
-  - 115-118
-  - 121-124
-  - 127-137
-  - 140-162
-  - 164-203
-  - 205-209
-  - '211'
 - file: crates/gcode/src/visibility.rs
   ranges:
   - 13-17
@@ -2312,6 +1111,7 @@ provenance:
   - 566-587
   - 590-598
   - 601-611
+provenance_truncated: 123
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -2323,248 +1123,256 @@ Parent: [[code/modules/crates/gcode|crates/gcode]]
 
 ## Overview
 
-The crates/gcode/src module orchestrates project-wide code indexing, analysis, and retrieval. It provides a command-line interface, resolves database and backend services config, parses multi-language ASTs to extract symbols and imports, syncs facts to graph and vector databases, and executes hybrid search, graph traversal, and automated documentation generation.
-[crates/gcode/src/cli.rs:21-44]
-[crates/gcode/src/cli/tests.rs:5-213]
-[crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-114]
-[crates/gcode/src/commands/codewiki/build_parts/changes.rs:5-101]
-[crates/gcode/src/commands/codewiki/build_parts/file.rs:12-15]
+The `crates/gcode/src` module is the root of the Rust `gcode` CLI and library surface. It separates command-line concerns from core indexing APIs: `main.rs` delegates process execution to dispatch, `cli.rs` defines the clap parser and typed command arguments, `contract.rs` publishes the daemon-facing CLI contract, and `lib.rs` organizes the core modules while tests enforce that public library APIs stay independent from CLI-specific code [crates/gcode/src/main.rs:4-6] [crates/gcode/src/cli.rs:21-44] [crates/gcode/src/contract.rs:5-259] [crates/gcode/src/lib.rs:34-42]. Output, progress, utility, secrets, setup, and skill-installation helpers fill in the operational shell around the domain services  [crates/gcode/src/progress.rs:16-71]  [crates/gcode/src/secrets.rs:1-4] [crates/gcode/src/setup.rs:1-16] .
+
+The main runtime flow starts with CLI parsing and dispatch, then resolves the minimum needed service configuration, checks freshness where appropriate, and routes to command handlers for indexing, search, graph, grep, status, setup/init, symbols, codewiki, embeddings diagnostics, and vector operations [crates/gcode/src/dispatch.rs:10-22] [crates/gcode/src/commands/mod.rs:1-14]. Freshness is coordinated through `ensure_fresh`, which skips recursive refreshes using `GCODE_FRESHNESS_INFLIGHT`, pre-gates whole-project reads with `project_needs_refresh`, and reindexes either the project or explicit normalized files under a project advisory lock  [crates/gcode/src/freshness.rs:24-83]. The advisory lock layer computes project-scoped PostgreSQL lock keys, supports blocking or brief retry policies, and returns a guard-backed result that reports busy state without forcing callers to fail  .
+
+The module’s data model and collaboration points center on indexed code facts. `models.rs` defines stable UUID-backed symbols, files, chunks, imports, calls, search and graph results, plus projection provenance metadata used by graph and vector projections . The `index` child discovers, classifies, parses, chunks, hashes, and persists files; `db` owns PostgreSQL connections and schema validation; `search`, `graph`, `projection`, and `vector` consume those facts for BM25, semantic, graph, and projection workflows. Project scoping is shared through configuration and visibility helpers: `visibility.rs` maps single-project and overlay contexts into visible project IDs, source-project contexts, tombstone filtering, and SQL-backed visibility checks so search, graph, outline, and symbol flows see the right files and symbols  [crates/gcode/src/visibility.rs:55-99].
 
 ## Call Diagram
 
 ```mermaid
 sequenceDiagram
+    participant m_002737f5_f8fe_5e56_8173_de1610984978 as blame_file_contributors_with_timeout &#91;function&#93;
+    participant m_011a0baa_dc8d_5b8e_b0e9_cb9f4295edb3 as falkor_password_reads_password_key &#91;function&#93;
+    participant m_012eaa3b_661d_5d53_9d81_3c47594e071f as find_callees_batch &#91;function&#93;
+    participant m_015125b2_7388_5621_8d0d_9cb2a00b81fb as ReusePlan.reusable_page_with_summary &#91;method&#93;
+    participant m_01643f1a_bc6d_5aa0_b1c7_e24709829aa6 as TypedQuery.insert_param &#91;method&#93;
+    participant m_01ac953b_e521_5091_9d8e_d040ecc2e069 as file_uri_to_path_strips_windows_drive_leading_slash &#91;function&#93;
+    participant m_01ec77cc_48df_5af6_ad42_b9d5800cf9ad as index_overlay_files &#91;function&#93;
+    participant m_025b4846_7970_5700_99f0_0ccabc7ebfc4 as resolve_embedding_config &#91;function&#93;
+    participant m_028fe4bd_db40_553e_b5a7_ac83a4266eea as skips_root_build_directory &#91;function&#93;
     participant m_029a8312_9dd7_5dc3_a5bb_b810ceecb892 as ensure_files_fresh &#91;function&#93;
-    participant m_084373a5_89ac_5b0e_9de2_b797ec84980d as overlay_symbols_for_files_sql_batches_paths_and_preserves_overlay_shadowing &#91;function&#93;
-    participant m_0a7779c0_e57f_5686_bc51_c8731d6cd7f8 as overlay_symbols_for_files_sql &#91;function&#93;
-    participant m_0d55b484_c5bd_5508_b2d2_afe0c8b67554 as postgres_context_with_root &#91;function&#93;
-    participant m_16703327_90f7_56c2_9f86_373a36770ed1 as pre_gate_skips_lock_when_unchanged_and_trips_after_a_change &#91;function&#93;
-    participant m_18eb1b3b_6103_5b73_8075_cf6108ff4856 as test_ensure_gcode_json_skips_when_project_json_exists &#91;function&#93;
-    participant m_19f46b95_cbd2_56c2_81ed_405f4c6c937e as test_code_index_id_for_root_different_paths &#91;function&#93;
-    participant m_223d866d_626c_567b_b1d6_88465ce3d9d4 as claude_plugin_manifest_is_written &#91;function&#93;
-    participant m_2383f1c4_c756_5611_8934_d7cb282e6e22 as StderrLogger.enabled &#91;method&#93;
-    participant m_27e3bed4_eb80_526e_bb22_4465aa356e45 as ensure_symbol_fresh &#91;function&#93;
-    participant m_28aaf799_7974_505a_9374_0f2746c10b4b as test_code_index_id_for_root_deterministic &#91;function&#93;
-    participant m_33ef1321_30a3_547d_8439_157e57e309d0 as hold_project_lock &#91;function&#93;
-    participant m_3720e36a_f4b2_548a_b670_5ad04ba03108 as invalidate_test_project &#91;function&#93;
-    participant m_396f55d1_22db_5f92_9b10_c8908210073f as StderrLogger.log &#91;method&#93;
-    participant m_3b9073c2_95da_5c40_9d52_749c36c03f12 as ProjectionMetadata.inferred &#91;method&#93;
+    participant m_033cbdbd_93ca_508c_91e8_3189ffb13a43 as pre_gate_skips_lock_when_unchanged_and_trips_after_a_change &#91;function&#93;
+    participant m_10340c10_e576_5d26_badb_81bc9e42948a as indexed_file_states &#91;function&#93;
+    participant m_2280ab06_6ecd_52db_a9c1_f33bbd0eb73c as find_callees_batch_query &#91;function&#93;
     participant m_3d1b84ec_2be8_570c_920b_a124276a9dec as FreshnessGuard.drop &#91;method&#93;
-    participant m_467bbc7c_52d2_5eb9_bfca_74b47d7a5ff0 as positive_usize &#91;function&#93;
+    participant m_42851f95_fa4f_5cbf_9f12_a9f8ea0efc38 as file_uri_to_path &#91;function&#93;
+    participant m_4f32cb32_3983_5e2e_a133_2621571d3454 as write_file &#91;function&#93;
+    participant m_653f5cff_90ae_52e9_9bfb_ba0d78c31172 as validate_identifier &#91;function&#93;
+    participant m_74c91864_ce73_5e7a_bf1c_749773eb62dd as render_cypher_value &#91;function&#93;
+    participant m_80b86ae0_52b6_557e_a3f7_fcd29acbffbd as with_service_env &#91;function&#93;
     participant m_842ac6aa_35d2_5a1b_b8bd_f032a923d79f as warn_if_busy &#91;function&#93;
-    participant m_9f86c033_896a_53a7_8c17_44012ae81185 as symbol_slice_is_current &#91;function&#93;
-    participant m_a6f0e81f_88f7_5283_92cb_a725e91241fb as full_index &#91;function&#93;
-    participant m_c8af2110_ca73_5c67_932b_0c884dd653dd as ensure_fresh &#91;function&#93;
-    participant m_d364c373_f668_5d5b_99f7_8b7f56ba6115 as ProjectionMetadata.with_confidence &#91;method&#93;
-    participant m_d7f9547a_f9cf_560c_b138_e885f7216d75 as ensure_gcode_json &#91;function&#93;
-    participant m_e6e960ab_26f4_5111_a271_5931638cf9da as bounded_positive_usize &#91;function&#93;
-    participant m_e754ea69_291a_54da_bf88_8dcfd72a920e as supported_targets &#91;function&#93;
-    participant m_f028e1a6_8ba1_5105_8ba0_417521ce5f72 as set_mtime &#91;function&#93;
-    participant m_f4026363_dfb6_5286_acc2_5a86c632d07f as install_skill &#91;function&#93;
-    participant m_fb2c6384_be67_5ea1_a338_6e9e3ab1075c as code_index_id_for_root &#91;function&#93;
+    participant m_99326af5_69bd_5565_bee6_cb3375d238ae as config_value_for &#91;function&#93;
+    participant m_a39e2d92_ff91_5403_8947_b40af9ff64bf as full_index &#91;function&#93;
+    participant m_a9f2c37b_f389_51a0_a072_9e0a37c211d8 as hold_project_lock &#91;function&#93;
+    participant m_ac53669b_29ee_5344_acd8_336ad0104d53 as resolve_embedding_config_from_service_source &#91;function&#93;
+    participant m_be1729cf_c48d_5d6e_8ccf_bfee68ce411e as overlay_reconcile_action &#91;function&#93;
+    participant m_c0f1027b_eb47_565d_baf4_8dbc40908eee as blame_file_contributors &#91;function&#93;
+    participant m_c37b5340_8902_5b1c_a469_944a66f25bf7 as write_tombstone &#91;function&#93;
+    participant m_c4fae48a_685c_593e_831c_dab9e872d3af as ReusePlan.reusable_page &#91;method&#93;
+    participant m_d0c535c9_f938_5584_99a0_02a2a7c3c113 as paths_by_relative &#91;function&#93;
+    participant m_d8a9fdbf_e6be_5cef_ba09_479c03c7e522 as overlay_reconcile_candidates &#91;function&#93;
+    participant m_f6a4f46d_0e79_54eb_b222_2cd0b7d7fb2d as rel_matches_filter &#91;function&#93;
+    m_002737f5_f8fe_5e56_8173_de1610984978->>m_c0f1027b_eb47_565d_baf4_8dbc40908eee: calls
+    m_011a0baa_dc8d_5b8e_b0e9_cb9f4295edb3->>m_80b86ae0_52b6_557e_a3f7_fcd29acbffbd: calls
+    m_011a0baa_dc8d_5b8e_b0e9_cb9f4295edb3->>m_99326af5_69bd_5565_bee6_cb3375d238ae: calls
+    m_012eaa3b_661d_5d53_9d81_3c47594e071f->>m_2280ab06_6ecd_52db_a9c1_f33bbd0eb73c: calls
+    m_015125b2_7388_5621_8d0d_9cb2a00b81fb->>m_c4fae48a_685c_593e_831c_dab9e872d3af: calls
+    m_01643f1a_bc6d_5aa0_b1c7_e24709829aa6->>m_653f5cff_90ae_52e9_9bfb_ba0d78c31172: calls
+    m_01643f1a_bc6d_5aa0_b1c7_e24709829aa6->>m_74c91864_ce73_5e7a_bf1c_749773eb62dd: calls
+    m_01ac953b_e521_5091_9d8e_d040ecc2e069->>m_42851f95_fa4f_5cbf_9f12_a9f8ea0efc38: calls
+    m_01ec77cc_48df_5af6_ad42_b9d5800cf9ad->>m_10340c10_e576_5d26_badb_81bc9e42948a: calls
+    m_01ec77cc_48df_5af6_ad42_b9d5800cf9ad->>m_be1729cf_c48d_5d6e_8ccf_bfee68ce411e: calls
+    m_01ec77cc_48df_5af6_ad42_b9d5800cf9ad->>m_c37b5340_8902_5b1c_a469_944a66f25bf7: calls
+    m_01ec77cc_48df_5af6_ad42_b9d5800cf9ad->>m_d0c535c9_f938_5584_99a0_02a2a7c3c113: calls
+    m_01ec77cc_48df_5af6_ad42_b9d5800cf9ad->>m_d8a9fdbf_e6be_5cef_ba09_479c03c7e522: calls
+    m_01ec77cc_48df_5af6_ad42_b9d5800cf9ad->>m_f6a4f46d_0e79_54eb_b222_2cd0b7d7fb2d: calls
+    m_025b4846_7970_5700_99f0_0ccabc7ebfc4->>m_ac53669b_29ee_5344_acd8_336ad0104d53: calls
+    m_028fe4bd_db40_553e_b5a7_ac83a4266eea->>m_4f32cb32_3983_5e2e_a133_2621571d3454: calls
     m_029a8312_9dd7_5dc3_a5bb_b810ceecb892->>m_842ac6aa_35d2_5a1b_b8bd_f032a923d79f: calls
-    m_084373a5_89ac_5b0e_9de2_b797ec84980d->>m_0a7779c0_e57f_5686_bc51_c8731d6cd7f8: calls
-    m_16703327_90f7_56c2_9f86_373a36770ed1->>m_0d55b484_c5bd_5508_b2d2_afe0c8b67554: calls
-    m_16703327_90f7_56c2_9f86_373a36770ed1->>m_33ef1321_30a3_547d_8439_157e57e309d0: calls
-    m_16703327_90f7_56c2_9f86_373a36770ed1->>m_3720e36a_f4b2_548a_b670_5ad04ba03108: calls
-    m_16703327_90f7_56c2_9f86_373a36770ed1->>m_3d1b84ec_2be8_570c_920b_a124276a9dec: calls
-    m_16703327_90f7_56c2_9f86_373a36770ed1->>m_a6f0e81f_88f7_5283_92cb_a725e91241fb: calls
-    m_16703327_90f7_56c2_9f86_373a36770ed1->>m_c8af2110_ca73_5c67_932b_0c884dd653dd: calls
-    m_16703327_90f7_56c2_9f86_373a36770ed1->>m_f028e1a6_8ba1_5105_8ba0_417521ce5f72: calls
-    m_18eb1b3b_6103_5b73_8075_cf6108ff4856->>m_d7f9547a_f9cf_560c_b138_e885f7216d75: calls
-    m_19f46b95_cbd2_56c2_81ed_405f4c6c937e->>m_fb2c6384_be67_5ea1_a338_6e9e3ab1075c: calls
-    m_223d866d_626c_567b_b1d6_88465ce3d9d4->>m_e754ea69_291a_54da_bf88_8dcfd72a920e: calls
-    m_223d866d_626c_567b_b1d6_88465ce3d9d4->>m_f4026363_dfb6_5286_acc2_5a86c632d07f: calls
-    m_27e3bed4_eb80_526e_bb22_4465aa356e45->>m_3d1b84ec_2be8_570c_920b_a124276a9dec: calls
-    m_27e3bed4_eb80_526e_bb22_4465aa356e45->>m_9f86c033_896a_53a7_8c17_44012ae81185: calls
-    m_27e3bed4_eb80_526e_bb22_4465aa356e45->>m_c8af2110_ca73_5c67_932b_0c884dd653dd: calls
-    m_28aaf799_7974_505a_9374_0f2746c10b4b->>m_fb2c6384_be67_5ea1_a338_6e9e3ab1075c: calls
-    m_396f55d1_22db_5f92_9b10_c8908210073f->>m_2383f1c4_c756_5611_8934_d7cb282e6e22: calls
-    m_3b9073c2_95da_5c40_9d52_749c36c03f12->>m_d364c373_f668_5d5b_99f7_8b7f56ba6115: calls
-    m_467bbc7c_52d2_5eb9_bfca_74b47d7a5ff0->>m_e6e960ab_26f4_5111_a271_5931638cf9da: calls
+    m_033cbdbd_93ca_508c_91e8_3189ffb13a43->>m_3d1b84ec_2be8_570c_920b_a124276a9dec: calls
+    m_033cbdbd_93ca_508c_91e8_3189ffb13a43->>m_a39e2d92_ff91_5403_8947_b40af9ff64bf: calls
+    m_033cbdbd_93ca_508c_91e8_3189ffb13a43->>m_a9f2c37b_f389_51a0_a072_9e0a37c211d8: calls
 ```
 
 ## Child Modules
 
-- [[code/modules/crates/gcode/src/cli|crates/gcode/src/cli]] - The `cli` module provides the command-line argument parsing layer for gcode, currently surfaced through its test suite (`tests.rs`). Tests validate parsing and routing across the full command set: search (symbol, language, content, and text queries with positional paths and format handling), graph operations (callers, usages, imports, blast-radius, sync, reports), grep (flags, word/case matching, max-count, and rejection of unsupported options), projection lifecycle, codewiki (AI and edge-limit flags), index, and setup commands. Additional coverage confirms global flags (format, freshness), help-text content, and effective-format defaulting behavior (e.g., grep defaulting to text while other commands default to JSON).
+- [[code/modules/crates/gcode/src/cli|crates/gcode/src/cli]] - The `crates/gcode/src/cli` module is responsible for defining and preserving the command-line surface of `gcode`, with its behavior documented here through parser tests. Its coverage centers on mapping user invocations into structured `Cli` and `Command` variants, including graph and vector projection lifecycle commands such as `sync-file`, `clear`, `rebuild`, `report`, and `overview`, while also checking global format handling like `--format text` on projection commands (crates/gcode/src/cli/tests.rs:5-100). The tests assert both command shape and parsed field values, so this module acts as the contract between raw CLI arguments and the rest of the application’s typed command execution layer.
+
+The key flows are argument parsing, validation, and default resolution. Search commands are tested across symbol, text, and content variants with filters, positional paths, graph selection, language constraints, and rejected legacy or unsupported flags; grep parsing is similarly exercised for pattern options, fixed JSON output, max counts, empty-pattern rejection, and unsupported flag failures (crates/gcode/src/cli/tests.rs:5-213, crates/gcode/src/cli/tests.rs:216-234, crates/gcode/src/cli/tests.rs:237-252). The module also keeps important commands at the top level, including callers, usages, imports, and blast-radius, and validates configuration/setup-oriented flows such as index, codewiki, and setup parsing.
+
+Because there are no child modules, collaboration is mostly between the CLI definitions in the parent module and this test suite’s exhaustive checks. The tests use Clap’s `Cli::try_parse_from()` and command factory support to verify success cases, parser errors, help text content, and output-format defaults, including the special case that grep defaults to text while other commands retain JSON unless explicitly overridden (crates/gcode/src/cli/tests.rs:255-270, crates/gcode/src/cli/tests.rs:273-288).
 [crates/gcode/src/cli/tests.rs:5-213]
 [crates/gcode/src/cli/tests.rs:216-234]
 [crates/gcode/src/cli/tests.rs:237-252]
 [crates/gcode/src/cli/tests.rs:255-270]
 [crates/gcode/src/cli/tests.rs:273-288]
-- [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]] - `crates/gcode/src/commands` contains 13 direct files and 4 child modules.
-[crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-114]
-[crates/gcode/src/commands/codewiki/build_parts/changes.rs:5-101]
-[crates/gcode/src/commands/codewiki/build_parts/file.rs:12-15]
-[crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-131]
-[crates/gcode/src/commands/codewiki/build_parts/modules.rs:4-136]
-- [[code/modules/crates/gcode/src/config|crates/gcode/src/config]] - `crates/gcode/src/config` contains 3 direct files and 0 child modules.
-[crates/gcode/src/config/context.rs:26-31]
-[crates/gcode/src/config/services.rs:20-22]
-[crates/gcode/src/config/tests.rs:14-22]
-[crates/gcode/src/config/context.rs:34]
-[crates/gcode/src/config/context.rs:37]
-- [[code/modules/crates/gcode/src/db|crates/gcode/src/db]] - The `db` module provides PostgreSQL database access for gcode's code index. It exposes read-only and read-write connection helpers and a layered database URL resolution strategy that prefers environment variables, then a daemon-mediated broker (with loopback validation, local CLI token auth, and configurable timeouts), then inline bootstrap files and gcore config. A bootstrap routine validates and persists Postgres connection settings.
+- [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]] - The commands module is the command-facing surface of gcode: `mod.rs` registers indexing, search, graph, grep, status, setup/init, symbol lookup, embeddings diagnostics, codewiki, and vector operations as sibling command implementations [crates/gcode/src/commands/mod.rs:1-14]. Most commands follow the same shape: accept a `Context`, connect to the configured database or service, normalize project/file scope, run a domain operation, and print either structured JSON or text. Examples include indexing, which resolves project context, locks and indexes files, then formats human or sync-projection output [crates/gcode/src/commands/index.rs:10-60] [crates/gcode/src/commands/index.rs:62-92]; setup, which provisions or resolves services, connects to Postgres, cleans projections when requested, writes config, and reports status [crates/gcode/src/commands/setup.rs:22-94]; and init, which resolves project identity, writes config, installs CLI skills, and prepares database context [crates/gcode/src/commands/init.rs:11-148].
 
-Query helpers read indexed artifacts—imports, symbols, calls, and graph file facts—check project/file existence, list indexed paths, and track graph and vector sync state per file and project. Internal utilities handle safe symbol column selection and call-target parsing. The module is extensively covered by tests spanning URL resolution precedence, broker request behavior and failure modes, bootstrap parsing, and SQL alias safety.
+The module’s main read flows center on code intelligence over the indexed project. Search combines exact symbol lookup, BM25, semantic vectors, optional graph enrichment, and visibility/path filters before ranking and diagnostics [crates/gcode/src/commands/search.rs:13-21] [crates/gcode/src/commands/search.rs:25-200] [crates/gcode/src/commands/search.rs:301-405]. Grep searches indexed content chunks with regex or fixed-string matching, path/glob filters, context lines, truncation tracking, and JSON/text responses; its `run` path opens a readonly DB connection, builds `GrepFilters`, loads chunks, then matches and formats results  . Symbol commands provide outlines and point lookups: `symbols::outline` normalizes file scope, loads visible symbols, optionally summarizes through AI, and reports savings , while `symbol_at::run` parses a file/line/column request, reads source, loads visible symbols, and selects the containing or nearest symbol  .
+
+Submodules collaborate around shared project scope and generated projections. `scope` is the cross-cutting helper for normalizing file arguments, checking paths against current and overlay roots, and locating the indexed project that owns a file [crates/gcode/src/commands/scope.rs:9-12] . `graph` is split into lifecycle, payload, and read/report layers, then re-exported by its module file so callers can clear, rebuild, sync, inspect neighbors, analyze blast radius, and render reports through one public surface [crates/gcode/src/commands/graph.rs:1-13]. `vector` wraps code-symbol vector lifecycle work against Qdrant and embedding sources, including sync, clear, rebuild, status, config validation, and JSON payload rendering [crates/gcode/src/commands/vector.rs:12-18] , while `embeddings_doctor` validates the local embedding configuration against daemon peer state and returns a serializable report with health, drift, missing-config, or transport-error exit semantics .
+- [[code/modules/crates/gcode/src/config|crates/gcode/src/config]] - The config module is responsible for building gcode’s runtime configuration from layered sources: bootstrap.yaml, the PostgreSQL hub, config stores, standalone service config, environment variables, and secret references. Its context layer defines the public configuration shapes for FalkorDB, Qdrant, embeddings, vector settings, indexing, and service selection, then drives resolution through Context and project identity helpers; the module-level docs explicitly describe the flow as “bootstrap.yaml → PostgreSQL hub → config_store → service configs” with `$secret:NAME` and `${VAR}` expansion . Core types and constants for FalkorDB, Qdrant, embeddings, graph naming, env vars, config keys, and service selection are centralized in context.rs .
+
+The services layer supplies the source abstraction that makes those resolution flows composable. ServiceConfigSource exposes config_value and resolve_value, while PostgresConfigSource reads decoded config values from PostgreSQL and resolves secrets through the shared secrets path  . Environment overrides are mapped for FalkorDB and Qdrant keys, and missing config-store tables are treated as absent data rather than fatal errors [crates/gcode/src/config/services.rs:29-39] [crates/gcode/src/config/services.rs:41-48]. Context delegates to services.rs for resolving FalkorDB, Qdrant, embedding, indexing, and code-vector settings, keeping project and execution-context decisions separate from per-service credential and setting lookup .
+
+The tests exercise both halves together: they create project metadata, git repositories, linked worktrees, and scoped environment overrides to validate identity resolution and service configuration behavior . The suite covers precedence, JSON decoding, daemon URL fallback and normalization, secret-backed service credentials, embedding/vector parsing, invalid ports, and project identity edge cases such as isolated markers, parent metadata, missing parent paths, and linked worktrees, ensuring the collaboration between context discovery and service source resolution remains explicit and predictable  .
+- [[code/modules/crates/gcode/src/db|crates/gcode/src/db]] - The `crates/gcode/src/db` module is the database boundary for gcode’s PostgreSQL-backed code index. Its top-level module exposes explicit read-write and read-only connection entry points, validates the runtime schema before returning a client, delegates config value reads to `gobby_core::postgres`, and re-exports the query and resolution APIs for callers (`crates/gcode/src/db/mod.rs:3-7`, `crates/gcode/src/db/mod.rs:13-31`, `crates/gcode/src/db/mod.rs:33-35`). The separate connection functions currently share core connection mechanics but preserve access intent for future routing, permissions, pools, or replica support (`crates/gcode/src/db/mod.rs:8-12`, `crates/gcode/src/db/mod.rs:20-24`).
+
+The query layer models per-file graph data with `GraphFileFacts`, combining imports, symbol definitions, and call relations (`crates/gcode/src/db/queries.rs:6-12`). Its main read flow lists indexed files, checks project or file presence, and builds a file’s graph facts by composing `read_imports_for_file`, `read_symbols_for_file`, and `read_calls_for_file` before returning the aggregate (`crates/gcode/src/db/queries.rs:14-48`, `crates/gcode/src/db/queries.rs:50-62`). The same file owns synchronization mutations such as marking graph sync attempts and successful syncs, keeping status updates close to the indexed-file tables they affect (`crates/gcode/src/db/queries.rs:64-100`).
+
+Database URL resolution is centralized in `resolution.rs`. It derives Gobby home and bootstrap paths, then resolves a PostgreSQL DSN through a cascade that starts from environment overrides, asks the daemon broker when available, and falls back to bootstrap or gcore configuration sources while validating reachability and hub identity (`crates/gcode/src/db/resolution.rs:8-12`, `crates/gcode/src/db/resolution.rs:25-48`). Brokered resolution is guarded by local CLI token use, loopback-only daemon validation, a strict PostgreSQL URL contract, and a default seven-second timeout, represented by the broker response and bootstrap database structs near the top of the module (`crates/gcode/src/db/resolution.rs:13-23`, `crates/gcode/src/db/resolution.rs:31-39`).
 [crates/gcode/src/db/mod.rs:16-20]
 [crates/gcode/src/db/queries.rs:8-13]
 [crates/gcode/src/db/resolution.rs:16-18]
 [crates/gcode/src/db/mod.rs:27-31]
 [crates/gcode/src/db/mod.rs:33-35]
-- [[code/modules/crates/gcode/src/dispatch|crates/gcode/src/dispatch]] - `crates/gcode/src/dispatch` contains 1 direct file and 0 child modules.
+- [[code/modules/crates/gcode/src/dispatch|crates/gcode/src/dispatch]] - The dispatch module is responsible for turning parsed `gcode` CLI commands into the right early actions, logger settings, and service initialization requirements. Its tests show that dispatch treats stderr logging as warning-only by default, honors a plain `RUST_LOG` level such as `debug`, and lets the quiet flag hard-mute stderr logging even when an environment level is supplied. The `services_for` helper parses CLI arguments through `Cli::try_parse_from` and passes the parsed command into `service_config_selection`, making service resolution a direct consequence of the command variant rather than a separate ad hoc path  .
+
+A key flow is early command dispatch for setup: the parsed `Cli` is passed to `dispatch_early_command` along with the effective output format and a callback that receives the setup request. The test confirms this path uses only the parsed request fields, including standalone mode, database URL, schema, overwrite behavior, and embedding API base, and succeeds without resolving project context first . This keeps setup-style commands independent from the normal project/service bootstrapping path.
+
+The module also distinguishes lookup commands from graph and AI commands when deciding which services to request. Lookup-oriented commands such as `grep`, `tree`, `symbol-at`, and search variants are tested as skipping service config resolution, while separate coverage verifies graph and AI command families request only the services they actually need . Since there are no child modules, collaboration is primarily between dispatch functions, CLI parsing, format selection, and configuration selection within this module’s test surface.
 [crates/gcode/src/dispatch/tests.rs:5-9]
 [crates/gcode/src/dispatch/tests.rs:12-14]
 [crates/gcode/src/dispatch/tests.rs:17-22]
 [crates/gcode/src/dispatch/tests.rs:25-27]
 [crates/gcode/src/dispatch/tests.rs:30-70]
-- [[code/modules/crates/gcode/src/graph|crates/gcode/src/graph]] - The `graph` module provides gcode's code-graph layer over a Neo4j/Cypher-style backend, spanning storage, querying, lifecycle management, and reporting.
+- [[code/modules/crates/gcode/src/graph|crates/gcode/src/graph]] - The graph module is the gcode crate’s entry point for code graph functionality, exposing the code graph projection, graph reports, and typed query construction as sibling public modules [crates/gcode/src/graph/mod.rs:1-4]. Its code graph facade gathers connection, lifecycle, payload, read, and write concerns behind one API: it re-exports graph access guards, lifecycle request/output types, node/link payload types, read queries such as callers, usages, imports, blast radius, and overview graphs, plus write operations for syncing, cleanup, deletion, and project clearing [crates/gcode/src/graph/code_graph.rs:1-46].
 
-The `code_graph` submodule (`CodeGraph`) handles both writes—syncing files, adding imports, definitions, and calls, and deleting/cleaning up stale or orphaned nodes scoped by project—and reads, exposing typed query builders and APIs for project overviews, file graphs, symbol neighbors, blast radius, caller/usage counts, and batched call/callee lookups. Results are returned as `GraphNode`/`GraphLink` payloads with provenance and link metadata.
+The main operational flow starts with indexed code being projected into graph storage by the code_graph write side, which manages CodeFile, CodeSymbol, CodeModule, UnresolvedCallee, and ExternalSymbol nodes and their relationships with sync tokens and provenance. Read APIs then convert query rows into GraphPayload node/link structures for callers, callees, usages, imports, file graphs, symbol neighborhoods, and blast radius analysis. Lifecycle and connection helpers sit around those flows so graph reads can be required or degraded depending on service availability, while scoped deletion and cleanup keep per-project projections current.
 
-The `report` submodule transforms graph snapshots into structured `ProjectGraphReport` summaries—degree statistics, hotspots, incoming-call hotspots, target frequencies, and bridge-edge hypotheses—and renders them to CommonMark Markdown, with graceful degradation when the graph service is unavailable.
+The report submodule consumes that graph data to produce structured project analysis and rendered markdown. Its public facade re-exports generation entry points and the report schema types, while internal generation, loading, queries, render, rows, summary, time, and types modules collaborate to load snapshots, compute summaries and hotspots, track unresolved and external target frequencies, summarize bridge relationships, and render results [crates/gcode/src/graph/report.rs:1-21]. Typed queries support both graph reads and writes by pairing Cypher text with validated rendered parameters: TypedQuery stores the query and parameter map, TypedValue covers nulls, strings, numbers, booleans, lists, and maps, and insertion validates parameter identifiers before rendering safe Cypher literals .
+- [[code/modules/crates/gcode/src/index|crates/gcode/src/index]] - The index module is the gcode crate’s code indexing subsystem: it discovers eligible project files, validates them, parses AST-backed languages, chunks text-only content, hashes content for incremental work, and persists resulting code facts. Its root wires together parsers, semantic analysis, security checks, import resolution, chunking, hashing, and related helpers while enforcing a 10 MB indexing limit [crates/gcode/src/index/mod.rs:1-16]. File discovery is git-aware and classifies paths into AST or content-only indexing using `DiscoveryOptions`, `FileClassification`, `.gitignore` handling, hidden allowlists, generated-file checks, language detection, and the shared `MAX_FILE_SIZE` limit .
 
-The `typed_query` file (`TypedQuery`) underpins safe query construction, providing parameterized Cypher rendering with identifier validation, string-literal escaping (including control characters), and limit/offset clamping to prevent injection.
+The main flow starts with the indexer, which selects overlay, discovered-file, or explicit-file indexing, then performs per-file parsing, language detection, hashing, optional semantic resolver setup, content-only fallback, and transactional writes through a sink abstraction. Parsing is tree-sitter based: `parse_file_with_semantic` validates security and size, detects language, extracts symbols, imports, docstrings, and parent links, and integrates semantic call resolution into a `ParseResult` [crates/gcode/src/index/parser.rs:29-133] [crates/gcode/src/index/parser.rs:135-234] [crates/gcode/src/index/parser.rs:236-261] [crates/gcode/src/index/parser.rs:263-324]. The language registry supplies file-extension detection, tree-sitter parsers, and symbol/import/call query definitions through `LanguageSpec` [crates/gcode/src/index/languages.rs:7-12] [crates/gcode/src/index/languages.rs:326-338] [crates/gcode/src/index/languages.rs:349-371].
 
-Supporting lifecycle utilities manage graph daemon actions—building endpoint URLs, applying configurable timeouts, formatting HTTP errors, and enforcing read guards that stay strict while allowing public reads to degrade without a backing service.
-[crates/gcode/src/graph/code_graph/connection.rs:7-12]
-[crates/gcode/src/graph/code_graph/lifecycle.rs:18-21]
-[crates/gcode/src/graph/code_graph/payload.rs:10-19]
-[crates/gcode/src/graph/code_graph/read.rs:45-90]
-[crates/gcode/src/graph/code_graph/tests.rs:7-21]
-- [[code/modules/crates/gcode/src/index|crates/gcode/src/index]] - The index module orchestrates project-wide code indexing, change detection, and fact extraction, writing symbols, imports, calls, and content chunks to a database sink. It resolves local versus external import bindings across multiple languages, extracts call sites using AST and line scanning (including specialized JS/Dart support), manages file state/overlay reconciliation, and implements Clangd-based semantic call resolution.
-[crates/gcode/src/index/api.rs:16-23]
-[crates/gcode/src/index/chunker.rs:19-62]
-[crates/gcode/src/index/hasher.rs:7-9]
-[crates/gcode/src/index/import_resolution/context.rs:19-37]
-[crates/gcode/src/index/import_resolution/helpers.rs:1-3]
-- [[code/modules/crates/gcode/src/projection|crates/gcode/src/projection]] - The `projection` module synchronizes indexed code data to downstream projection targets, primarily graph and vector stores. Its core logic lives in `sync.rs`, which defines projection target and status types (`ProjectionTarget`, `ProjectionStatus`, `VectorProjectionState`) alongside sync request and reporting structures (`ProjectionSyncRequest`, `ProjectionSyncReport`/`Reports`, `ProjectionSyncStatus`, `ProjectionSyncError`).
+The persistence layer in `api.rs` exposes the public indexing API and PostgreSQL CRUD operations for symbols, indexed files, chunks, imports, calls, and project stats, with write summaries tracking graph and vector sync state  . Import resolution turns raw imports into local or external bindings across many languages, feeding call resolution so local references can be distinguished from external targets [crates/gcode/src/index/import_resolution/context.rs:19-37] [crates/gcode/src/index/import_resolution/context.rs:39-53]. For C/C++, semantic analysis optionally launches clangd, discovers `compile_commands.json`, resolves definitions through LSP, and classifies external calls while gracefully disabling itself unless strict semantics are required [crates/gcode/src/index/semantic.rs:15-23] .
+- [[code/modules/crates/gcode/src/projection|crates/gcode/src/projection]] - The projection module is a small root that exposes the `sync` submodule, keeping projection-related implementation in `sync.rs` while `mod.rs` only declares `pub mod sync` (crates/gcode/src/projection/mod.rs:1-2). The sync layer coordinates database projection updates for two targets, graph and vectors, using `ProjectionTarget`, `ProjectionSyncRequest`, and `ProjectionSyncStatus` to describe what project files need syncing and whether graph or vector work is pending (crates/gcode/src/projection/sync.rs:7-28).
 
-It exposes sync entry points—`sync_after_index`, `sync_files_with_state`, `sync_graph_files`/`sync_graph_file`, `sync_vector_files`, and `sync_file`—that propagate code facts to graph and vector projections while tracking per-file synced state (`mark_synced`, `pending_after_code_fact_write`). Reports capture ok, degraded, and error outcomes, with helpers (`typed_projection_error`, `graph_error_kind`, `vector_error_kind`, `vector_lifecycle_from_context`) classifying failures by target.
+Its reporting model separates successful, degraded, and failed projection outcomes through `ProjectionStatus`, `ProjectionSyncError`, and `ProjectionSyncReport` (crates/gcode/src/projection/sync.rs:30-44). Reports can be built as clean successes with synced file and symbol counts, or as degraded results carrying a typed error kind and message while still preserving partial sync counts (crates/gcode/src/projection/sync.rs:46-75). The module collaborates with configuration context, database access, code graph reads, and vector symbol lifecycle code, as shown by its imports from `config::Context`, `db`, `graph::code_graph`, and `vector::code_symbols` (crates/gcode/src/projection/sync.rs:1-6).
+[crates/gcode/src/projection/mod.rs:1-2]
 [crates/gcode/src/projection/sync.rs:11-14]
 [crates/gcode/src/projection/sync.rs:17-21]
 [crates/gcode/src/projection/sync.rs:24-29]
 [crates/gcode/src/projection/sync.rs:33-37]
-[crates/gcode/src/projection/sync.rs:40-43]
-- [[code/modules/crates/gcode/src/search|crates/gcode/src/search]] - The `search` module provides hybrid code search over a Postgres-backed index. It combines full-text search (`fts`) across symbols, file content, and text queries—with visibility filtering, glob/path matching, BM25 ranking, and snippet generation—plus graph-based result boosting and expansion (`graph_boost`) via FalkorDB, and Reciprocal Rank Fusion (`rrf`) for deterministically merging results from multiple ranked sources.
+- [[code/modules/crates/gcode/src/search|crates/gcode/src/search]] - The search module is the gcode search orchestration layer: it groups PostgreSQL BM25 full-text search, semantic-vector inputs, graph-derived boosts, and Reciprocal Rank Fusion into one search surface, while allowing hybrid callers to degrade when a configured backend is unavailable at query time (crates/gcode/src/search/mod.rs:1-11). Its `fts` submodule is the PostgreSQL-backed lexical layer, keeping the public module name stable while running pg_search BM25 against Gobby’s hub; it exposes content search, symbol search, visible-project variants, counts, graph-symbol resolution, query sanitation, path expansion, and pattern compilation from smaller internal files such as `common`, `content`, `counts`, `graph`, and `symbols` (crates/gcode/src/search/fts.rs:1-32).
+
+The key flow starts with lexical lookup through `fts`, where shared helpers centralize BM25 query sanitation, parameter handling, row-id trust boundaries, reusable symbol filters, path-glob expansion, visible-project file predicates, and ordering strategies. Graph-aware ranking then uses `graph_boost`: it first resolves the query through exact-first visible symbol search, scopes graph access to the resolved symbol’s source project, gathers caller and usage IDs from FalkorDB, and returns a deduplicated ranked boost list; if FalkorDB, a PostgreSQL connection, or a resolved symbol is missing, it returns an empty list so callers can keep lexical results (crates/gcode/src/search/graph_boost.rs:1-47). Related flows expand seed IDs from FTS or semantic search into callee/caller neighborhoods, ranking callees first and deduplicating results for use as another RRF source (crates/gcode/src/search/graph_boost.rs:49-86).
+
+Final result blending is handled by `rrf`, a narrow wrapper around `gobby_core::search::rrf_merge`: callers provide named ranked ID lists such as FTS, semantic, or graph sources, and receive `(symbol_id, combined_score, source_names)` sorted by fused relevance (crates/gcode/src/search/rrf.rs:1-20). Its tests document the expected collaboration contract: single-source ordering is preserved, duplicate IDs accumulate score across sources, source names are deterministic, disjoint sources still merge, and empty inputs are valid edge cases (crates/gcode/src/search/rrf.rs:22-64).
 [crates/gcode/src/search/fts/common.rs:16]
 [crates/gcode/src/search/fts/content.rs:13-21]
 [crates/gcode/src/search/fts/counts.rs:10-66]
 [crates/gcode/src/search/fts/graph.rs:16-50]
 [crates/gcode/src/search/fts/symbols.rs:15-18]
-- [[code/modules/crates/gcode/src/setup|crates/gcode/src/setup]] - The `crates/gcode/src/setup` module provisions and validates a standalone Postgres-backed gcode/code-index deployment. It defines table and index contracts (`TableContract`, `IndexContract`) and catalog inspection helpers that compare expected schema against the live database, plus DDL generation and execution (`execute_postgres_ddl`, `PostgresObjectDefinition`, `GcodeStandaloneSetup`) for creating owned, schema-qualified relations.
+- [[code/modules/crates/gcode/src/setup|crates/gcode/src/setup]] - The `crates/gcode/src/setup` module owns standalone provisioning for gcode’s PostgreSQL code index. Its contract layer defines the expected schema namespace, tables, required columns, and indexes, while `GcodeStandaloneSetup` turns those contracts into schema-qualified DDL objects for the `pg_search` extension and code-index tables such as indexed projects, files, symbols, chunks, imports, and calls. The DDL path implements the shared `StandaloneSetup` interface, reports created/skipped/failed objects, and limits the declared public objects to the daemon code-index subset rather than broader Gobby storage like config, secrets, migrations, or sync-state tables [crates/gcode/src/setup/ddl.rs:8-10] [crates/gcode/src/setup/ddl.rs:18-279] [crates/gcode/src/setup/tests.rs:12-55].
 
-Identifier handling enforces safe, byte-limited quoting (`quote_identifier`, `qualified_relation`). The orchestration layer (`run_standalone_setup`, `standalone_setup_status`, `validate_standalone_request`) drives setup execution and status reporting, while compatibility and reset routines (`ensure_postgres_code_index_compatible`, `reset_postgres_code_index`, `postgres_overwrite_reset_sql`) detect and recreate incompatible relations under an allowlisted overwrite flow.
+The main PostgreSQL flow starts in `run_standalone_setup`: it validates the request, opens a transaction, either resets incompatible code-index relations when overwrite is requested or checks compatibility against the existing schema, then calls `setup.create` through a `SetupContext`. Successful reports are committed, while failures clear created/skipped entries before being converted into `StandaloneSetupStatus` with structured failure objects [crates/gcode/src/setup/postgres.rs:12-57] [crates/gcode/src/setup/postgres.rs:59-77]. Identifier helpers keep all generated SQL safe by validating PostgreSQL identifier length and contents, quoting schema and relation names independently, and returning setup errors on invalid input [crates/gcode/src/setup/identifiers.rs:5-15] [crates/gcode/src/setup/identifiers.rs:17-41].
 
-Core types (`StandaloneSetupRequest`, `StandaloneSetupStatus`, `StandaloneServicesStatus`, `StandaloneFailure`) model requests and outcomes, with a `Redacted` wrapper ensuring passwords and database URLs are scrubbed from debug and JSON output. An extensive test suite covers contract/DDL alignment, secret redaction, schema restrictions, identifier limits, connect-timeout injection, and destructive-test guards.
-[crates/gcode/src/setup/contracts.rs:5-8]
-[crates/gcode/src/setup/ddl.rs:8-10]
-[crates/gcode/src/setup/identifiers.rs:5-15]
-[crates/gcode/src/setup/postgres.rs:12-57]
-[crates/gcode/src/setup/tests.rs:12-55]
-- [[code/modules/crates/gcode/src/vector|crates/gcode/src/vector]] - The vector module provides comprehensive vector database integration and semantic search functionality for code symbols. It handles the generation of text embeddings through configurable embedding backends and manages the complete lifecycle of vector collections (primarily utilizing Qdrant), including indexing, syncing, updating, and deleting code symbol vectors. Additionally, it integrates with the symbol database repository to retrieve and index code symbols, enabling high-performance semantic search capabilities across project codebases.
-[crates/gcode/src/vector/code_symbols/embedding.rs:21-23]
-[crates/gcode/src/vector/code_symbols/lifecycle.rs:29-37]
-[crates/gcode/src/vector/code_symbols/qdrant.rs:18-24]
-[crates/gcode/src/vector/code_symbols/repository.rs:6-18]
-[crates/gcode/src/vector/code_symbols/search.rs:8-14]
+The type layer carries setup input and output state across this flow. `StandaloneSetupRequest` collects standalone mode, database URL, overwrite flag, schema, embedding, FalkorDB, and Qdrant configuration, defaulting the schema from the shared contract; sensitive fields use `Redacted`, which preserves access for provisioning but hides values in debug output and skips selected secrets during JSON serialization [crates/gcode/src/setup/types.rs:5] [crates/gcode/src/setup/types.rs:7-23] [crates/gcode/src/setup/types.rs:8-10] [crates/gcode/src/setup/types.rs:16-18]. The tests tie these pieces together by asserting the standalone object set, core setup trait integration, DDL/catalog contract matching, overwrite/reset SQL allowlisting, request redaction, serialization behavior, identifier edge cases, and destructive-Postgres safeguards [crates/gcode/src/setup/tests.rs:58-84] [crates/gcode/src/setup/tests.rs:87-128] [crates/gcode/src/setup/tests.rs:130-155].
+- [[code/modules/crates/gcode/src/vector|crates/gcode/src/vector]] - The `crates/gcode/src/vector` module is a small entry point that exposes vector functionality through its `code_symbols` submodule, making semantic code-symbol indexing available to the rest of the crate via `pub mod code_symbols` [crates/gcode/src/vector/mod.rs:1-2]. The `code_symbols` facade gathers the public API from its internal embedding, lifecycle, Qdrant, repository, search, and type modules, so callers can use one namespace for embedding text and queries, probing dimensions, resolving embedding sources, fetching repository symbols, managing vector collections, deleting project or file vectors, and running semantic searches [crates/gcode/src/vector/code_symbols.rs:1-21].
+
+Its key flow starts with repository symbol extraction, turns `Symbol` records into vector text and payloads, embeds that text, and stores or searches the resulting vectors in Qdrant-backed collections. The child module summaries show that shared types carry search requests and hits, payload provenance, source locations, symbol identity, lifecycle status/output/schema data, and lifecycle errors, with tests covering preserved metadata and optional summary enrichment [crates/gcode/src/vector/code_symbols/tests.rs:47-74]. Embedding support sits at the front of that flow by abstracting daemon-backed AI contexts and direct embedding configs, validating direct configuration, caching blocking clients, applying query prefixes, supporting single and batch embeddings, and providing a fixed probe text for dimension checks [crates/gcode/src/vector/code_symbols/embedding.rs:58-100].
+
+The files collaborate through `code_symbols.rs` as a public facade rather than exposing each implementation module directly. Lifecycle APIs coordinate collection setup, schema compatibility, sync, rebuild, and status reporting; Qdrant APIs handle collection naming, deletion, vector search, and distance configuration; repository APIs fetch symbols at file or project scope; search APIs provide higher-level semantic lookup and error handling; and the type exports define the request, hit, payload, lifecycle, schema, and error structures shared across those operations [crates/gcode/src/vector/code_symbols.rs:7-21].
 
 ## Files
 
-- [[code/files/crates/gcode/src/cli.rs|crates/gcode/src/cli.rs]] - `crates/gcode/src/cli.rs` exposes 15 indexed API symbols.
+- [[code/files/crates/gcode/src/cli.rs|crates/gcode/src/cli.rs]] - This file defines the `gcode` CLI surface: a clap-parsed `Cli` root that carries global flags for project root, output format, verbosity, warnings, and freshness checks, then dispatches into the `Command` subcommand tree. It also defines value-enum argument types for AI routing and AI depth with `From` conversions into the core config types, plus validation helpers for non-empty grep patterns and bounded positive integers, and a formatter helper that chooses a default output format when the user does not specify one.
 [crates/gcode/src/cli.rs:21-44]
 [crates/gcode/src/cli.rs:47-52]
 [crates/gcode/src/cli.rs:54-63]
 [crates/gcode/src/cli.rs:55-62]
 [crates/gcode/src/cli.rs:66-71]
-- [[code/files/crates/gcode/src/config.rs|crates/gcode/src/config.rs]] - `crates/gcode/src/config.rs` has no indexed API symbols. 
-- [[code/files/crates/gcode/src/contract.rs|crates/gcode/src/contract.rs]] - `crates/gcode/src/contract.rs` exposes 12 indexed API symbols.
-[crates/gcode/src/contract.rs:5-254]
-[crates/gcode/src/contract.rs:256-258]
-[crates/gcode/src/contract.rs:260-263]
-[crates/gcode/src/contract.rs:265-272]
-[crates/gcode/src/contract.rs:274-286]
-- [[code/files/crates/gcode/src/dispatch.rs|crates/gcode/src/dispatch.rs]] - `crates/gcode/src/dispatch.rs` exposes 16 indexed API symbols.
+- [[code/files/crates/gcode/src/config.rs|crates/gcode/src/config.rs]] - Configuration resolution module for gcode that handles settings and initialization. Serves as the public API for configuration management, re-exporting types and functions from submodules for project identity detection, embedding configuration (including Qdrant and FalkorDB database settings), code vector settings, and configuration validation utilities. [crates/gcode/src/config.rs:1-25]
+- [[code/files/crates/gcode/src/contract.rs|crates/gcode/src/contract.rs]] - Defines the CLI contract for the `gcode` tool, describing its global flags, project scoping, and the full command surface that the daemon consumes. `contract()` assembles the top-level `CliContract` and wires each command to shared helpers for flags and JSON output keys, while the smaller helper functions group reusable contract pieces for formatting, AI/search/grep options, graph read options, and key lists for search, grep, graph read, lifecycle, and overall contract payloads.
+[crates/gcode/src/contract.rs:5-259]
+[crates/gcode/src/contract.rs:261-263]
+[crates/gcode/src/contract.rs:265-268]
+[crates/gcode/src/contract.rs:270-277]
+[crates/gcode/src/contract.rs:279-291]
+- [[code/files/crates/gcode/src/dispatch.rs|crates/gcode/src/dispatch.rs]] - This file is the CLI dispatch layer for `gcode`: it sets up stderr logging, checks index freshness, chooses the minimal service configuration for each command, and routes parsed commands to their handlers. `StderrLogger` provides a simple `log::Log` implementation that prints enabled messages as `LEVEL: message` to stderr, while `init_logger` and `stderr_log_level` control global verbosity from `quiet` and `RUST_LOG`. The freshness helpers wrap project, file, and symbol refresh checks and surface a non-fatal warning when the index is already busy. `dispatch_early_command` handles startup-style commands that can exit before full context resolution, `run_with_exit_code` translates `run()` results into process exit codes with specialized error reporting, and `run` ties everything together by parsing the CLI, initializing output, resolving context, and dispatching the selected subcommand.
 [crates/gcode/src/dispatch.rs:8]
 [crates/gcode/src/dispatch.rs:10-22]
 [crates/gcode/src/dispatch.rs:11-13]
 [crates/gcode/src/dispatch.rs:15-19]
 [crates/gcode/src/dispatch.rs:21]
-- [[code/files/crates/gcode/src/freshness.rs|crates/gcode/src/freshness.rs]] - `crates/gcode/src/freshness.rs` exposes 24 indexed API symbols.
+- [[code/files/crates/gcode/src/freshness.rs|crates/gcode/src/freshness.rs]] - This file implements freshness management for GCode indexing. `ensure_fresh` short-circuits when freshness is already in flight, pre-gates whole-project refreshes with `project_needs_refresh`, and otherwise takes an advisory project lock before reindexing either the entire project or a normalized explicit file list; `FreshnessStatus` reports whether work ran or was skipped because the lock was busy. Supporting helpers check symbol slice hashes against stored content, normalize file paths under the project root, and manage the `GCODE_FRESHNESS_INFLIGHT` marker with an RAII guard, while the test helpers and cases exercise lock behavior, env short-circuiting, refresh invalidation, and byte-range hash validation.
 [crates/gcode/src/freshness.rs:13-16]
 [crates/gcode/src/freshness.rs:19-22]
 [crates/gcode/src/freshness.rs:24-83]
 [crates/gcode/src/freshness.rs:93-121]
 [crates/gcode/src/freshness.rs:123-144]
-- [[code/files/crates/gcode/src/git.rs|crates/gcode/src/git.rs]] - `crates/gcode/src/git.rs` exposes 11 indexed API symbols.
+- [[code/files/crates/gcode/src/git.rs|crates/gcode/src/git.rs]] - This module inspects and classifies Git repository worktrees. It defines a `WorktreeKind` enum and `WorktreeInfo` struct to represent git directory metadata. The core `worktree_info()` function resolves repository paths using git commands, canonicalizes them, and classifies the worktree as Main (standard repo), Linked (created with git worktree), or NotGit (not a repository). Supporting functions handle git command execution with error handling, relative path resolution fallbacks, and absolute path conversion. The file includes helper functions for test setup (`run_git`, `commit_initial`) and three test cases validating correct detection of main worktrees, linked worktrees, and repos with separate git directories.
 [crates/gcode/src/git.rs:5-9]
 [crates/gcode/src/git.rs:12-17]
 [crates/gcode/src/git.rs:19-51]
 [crates/gcode/src/git.rs:53-63]
 [crates/gcode/src/git.rs:65-77]
-- [[code/files/crates/gcode/src/index_lock.rs|crates/gcode/src/index_lock.rs]] - `crates/gcode/src/index_lock.rs` exposes 22 indexed API symbols.
+- [[code/files/crates/gcode/src/index_lock.rs|crates/gcode/src/index_lock.rs]] - Implements project-scoped PostgreSQL advisory locking for gcode indexing. It defines lock policies and results, computes a deterministic per-project lock key, acquires the lock with either blocking or brief retry semantics, warns if acquisition is slow, and returns a RAII guard that releases the lock on drop.
+
+The helper `with_project_lock` runs a closure only after the lock is acquired and reports `Busy` otherwise. Test helpers and cases verify key generation, lock contention behavior, and that different project IDs do not block each other.
 [crates/gcode/src/index_lock.rs:15-21]
 [crates/gcode/src/index_lock.rs:23-30]
 [crates/gcode/src/index_lock.rs:24-29]
 [crates/gcode/src/index_lock.rs:33-36]
 [crates/gcode/src/index_lock.rs:38-47]
-- [[code/files/crates/gcode/src/lib.rs|crates/gcode/src/lib.rs]] - `crates/gcode/src/lib.rs` exposes 6 indexed API symbols.
+- [[code/files/crates/gcode/src/lib.rs|crates/gcode/src/lib.rs]] - The file serves as the root library module organizing code analysis and indexing functionality through multiple sub-modules (index, graph, vector, projection, etc.). It re-exports key public APIs including IndexRequest, IndexOutcome, and related types for indexing operations. The test module enforces architectural boundaries through assert_cli_independent_contract, a generic validation helper that ensures types don't reference CLI-specific modules (commands, output, clap), and public_projection_api_is_cli_independent, which verifies that core public APIs remain decoupled from CLI code. Additional functions like foundation_consumer_migration, indexing_search_primitive_migration, and falkor_facade_uses_core_graph_client_only support internal system evolution and constraint validation. Together these pieces maintain clean separation between the core library and command-line interface layers while supporting system migrations.
 [crates/gcode/src/lib.rs:34-42]
 [crates/gcode/src/lib.rs:45-75]
 [crates/gcode/src/lib.rs:78-142]
 [crates/gcode/src/lib.rs:145-172]
 [crates/gcode/src/lib.rs:175-204]
-- [[code/files/crates/gcode/src/main.rs|crates/gcode/src/main.rs]] - `crates/gcode/src/main.rs` exposes 1 indexed API symbol. [crates/gcode/src/main.rs:4-6]
-- [[code/files/crates/gcode/src/models.rs|crates/gcode/src/models.rs]] - `crates/gcode/src/models.rs` exposes 51 indexed API symbols.
+- [[code/files/crates/gcode/src/main.rs|crates/gcode/src/main.rs]] - This file serves as the entry point for the gcode CLI application. The main function delegates program execution to the dispatch::run_with_exit_code() function and returns its exit code. The file imports two modules—cli and dispatch—that provide command-line interface handling and dispatch logic for the application. [crates/gcode/src/main.rs:4-6]
+- [[code/files/crates/gcode/src/models.rs|crates/gcode/src/models.rs]] - The file defines core domain models for a code indexing and search system. It provides artifacts (Symbol, IndexedFile, ContentChunk, IndexedProject), relationships (CallRelation, ImportRelation), and result types (SearchResult, GraphResult, PagedResponse) that represent indexed code structure. ProjectionProvenance and ProjectionMetadata track data provenance and confidence levels, with ProjectionMetadata supporting a builder pattern for constructing lineage metadata. Symbol generates deterministic UUID v5 identifiers from composite keys (project ID, file path, name, kind, offset) using CODE_INDEX_UUID_NAMESPACE, enabling cross-system compatibility; related functions make_unresolved_callee_id and make_external_symbol_id do the same for external and unresolved callees. CallRelation uses a builder pattern to resolve call targets to internal symbols or external modules. Symbol also deserializes from PostgreSQL rows and converts to OutlineSymbol and SearchResult forms. The models integrate Serde for JSON serialization with optional field skipping, and include tests validating UUID determinism against Python golden vectors, call relation construction, and JSON contract enforcement for optional metadata fields.
 [crates/gcode/src/models.rs:18-22]
 [crates/gcode/src/models.rs:24-33]
 [crates/gcode/src/models.rs:25-32]
 [crates/gcode/src/models.rs:37-50]
 [crates/gcode/src/models.rs:52-108]
-- [[code/files/crates/gcode/src/output.rs|crates/gcode/src/output.rs]] - `crates/gcode/src/output.rs` exposes 4 indexed API symbols.
+- [[code/files/crates/gcode/src/output.rs|crates/gcode/src/output.rs]] - This file provides output formatting utilities for the gcode crate. It defines a `Format` enum with Json and Text variants for specifying output format, and implements three printing functions: `print_json` outputs serializable values as pretty-printed JSON, `print_json_compact` outputs them as compact JSON without whitespace, and `print_text` prints plain string output. Together these functions enable flexible stdout output in multiple formats.
 [crates/gcode/src/output.rs:5-8]
 [crates/gcode/src/output.rs:11-14]
 [crates/gcode/src/output.rs:17-20]
 [crates/gcode/src/output.rs:23-26]
-- [[code/files/crates/gcode/src/progress.rs|crates/gcode/src/progress.rs]] - `crates/gcode/src/progress.rs` exposes 5 indexed API symbols.
+- [[code/files/crates/gcode/src/progress.rs|crates/gcode/src/progress.rs]] - This file provides a lightweight, single-line progress bar for indexing operations that displays on stderr only when it's a TTY and quiet mode is disabled. The ProgressBar struct maintains state (total items, current position, enabled flag, display width) and exposes three methods: new() initializes the bar conditionally based on terminal capability, tick() increments progress and renders a visual bar with filled/empty characters plus file path information (truncating from the left to fit terminal width), and finish() clears the display line. The implementation uses ANSI escape codes for line overwriting and clearing, with no external dependencies.
 [crates/gcode/src/progress.rs:9-14]
 [crates/gcode/src/progress.rs:16-71]
 [crates/gcode/src/progress.rs:18-26]
 [crates/gcode/src/progress.rs:29-62]
 [crates/gcode/src/progress.rs:65-70]
-- [[code/files/crates/gcode/src/project.rs|crates/gcode/src/project.rs]] - `crates/gcode/src/project.rs` exposes 16 indexed API symbols.
+- [[code/files/crates/gcode/src/project.rs|crates/gcode/src/project.rs]] - This file manages project identity resolution for gcode in standalone mode. It implements a hierarchical resolution strategy (existing gobby project.json > existing gcode-owned gcode.json > generated identity) to determine and track project identifiers. The core components work together as follows:
+
+IsolationMarker struct represents parent project relationships for tracking isolation boundaries. The identity reading functions (read_gcode_json, read_isolation_marker) retrieve existing project metadata from .gobby config files. code_index_id_for_root generates deterministic UUIDs using canonical file paths, while ensure_gcode_json creates or retrieves the project identity file with metadata (ID, name, creation timestamp), returning both the ID and a flag indicating whether the file was newly initialized. Supporting utilities include has_identity_file to check for identity file presence, now_iso8601 for RFC3339 timestamps, and absolute_fallback for reliable path resolution. The file includes extensive unit tests verifying deterministic ID generation across multiple invocations, correct config file handling, idempotent gcode.json creation, isolation marker deserialization, and timestamp formatting.
 [crates/gcode/src/project.rs:15-18]
 [crates/gcode/src/project.rs:21-30]
 [crates/gcode/src/project.rs:35-44]
 [crates/gcode/src/project.rs:47-70]
 [crates/gcode/src/project.rs:78-115]
-- [[code/files/crates/gcode/src/savings.rs|crates/gcode/src/savings.rs]] - `crates/gcode/src/savings.rs` exposes 5 indexed API symbols.
+- [[code/files/crates/gcode/src/savings.rs|crates/gcode/src/savings.rs]] - This file implements daemon-based savings tracking for gcode. It calculates and reports token savings when gcode returns compact symbol/outline data instead of full file contents.
+
+The core functionality centers on two functions: `savings_pct` computes the percentage reduction between original and actual character counts, handling the edge case of zero-length originals by returning 0.0. `report_savings` wraps this calculation and sends it to the Gobby daemon via HTTP POST with context metadata (strategy: "outline"), designed as best-effort with all errors silently ignored so daemon downtime never breaks gcode functionality.
+
+Three unit tests validate `savings_pct` behavior across basic calculation, zero-division handling, and no-savings scenarios.
 [crates/gcode/src/savings.rs:7-12]
 [crates/gcode/src/savings.rs:18-29]
 [crates/gcode/src/savings.rs:36-39]
 [crates/gcode/src/savings.rs:42-44]
 [crates/gcode/src/savings.rs:47-49]
-- [[code/files/crates/gcode/src/schema.rs|crates/gcode/src/schema.rs]] - `crates/gcode/src/schema.rs` exposes 9 indexed API symbols.
+- [[code/files/crates/gcode/src/schema.rs|crates/gcode/src/schema.rs]] - This file validates that a PostgreSQL Gobby hub has the expected runtime schema before gcode uses it. `validate_runtime_schema` checks for the `pg_search` extension, the BM25 score procedure, required code-index tables, and required BM25 indexes, failing fast with a migration hint if anything is missing.
+
+The helper functions each probe one part of the database catalog: `extension_exists` checks `pg_extension`, `procedure_exists` resolves a `regprocedure`, and `missing_relations` looks up tables or indexes via `to_regclass`, with `required_relation_regclass_name` providing the schema-qualified names used by the checks. The tests verify that missing schema is reported clearly and that relation checks target the expected schema.
 [crates/gcode/src/schema.rs:24-52]
 [crates/gcode/src/schema.rs:54-63]
 [crates/gcode/src/schema.rs:65-71]
 [crates/gcode/src/schema.rs:73-88]
 [crates/gcode/src/schema.rs:91-93]
-- [[code/files/crates/gcode/src/secrets.rs|crates/gcode/src/secrets.rs]] - `crates/gcode/src/secrets.rs` has no indexed API symbols. 
-- [[code/files/crates/gcode/src/setup.rs|crates/gcode/src/setup.rs]] - `crates/gcode/src/setup.rs` has no indexed API symbols. 
-- [[code/files/crates/gcode/src/skill.rs|crates/gcode/src/skill.rs]] - `crates/gcode/src/skill.rs` exposes 13 indexed API symbols.
+- [[code/files/crates/gcode/src/secrets.rs|crates/gcode/src/secrets.rs]] - Shared secret-resolution module for the Gobby CLI crates, re-exporting `resolve_config_value` and `resolve_secret` from `gobby_core::secrets`. [crates/gcode/src/secrets.rs:1-4]
+- [[code/files/crates/gcode/src/setup.rs|crates/gcode/src/setup.rs]] - Exports the standalone GCode setup API surface by wiring together internal setup modules and re-exporting the main setup type, request/status types, and helper functions for running and validating standalone setup. [crates/gcode/src/setup.rs:1-16]
+- [[code/files/crates/gcode/src/skill.rs|crates/gcode/src/skill.rs]] - This file defines the embedded `gcode` skill installer for AI CLI agents. It stores the bundled `SKILL.md` content and a Claude Code `plugin.json` manifest, models each supported install destination with `SkillTarget` and the private `InstallKind`, and exposes `supported_targets()` plus `install_skill()` to route installation to either a Claude plugin layout or a CLI-specific skill directory. Helper functions resolve the expected manifest path and validate the plugin metadata, while the tests lock down the supported target list, confirm installs land in the right places, and ensure existing CLI files are left untouched.
 [crates/gcode/src/skill.rs:20-23]
 [crates/gcode/src/skill.rs:26-29]
 [crates/gcode/src/skill.rs:61-63]
 [crates/gcode/src/skill.rs:67-72]
 [crates/gcode/src/skill.rs:75-85]
-- [[code/files/crates/gcode/src/utils.rs|crates/gcode/src/utils.rs]] - `crates/gcode/src/utils.rs` exposes 8 indexed API symbols.
+- [[code/files/crates/gcode/src/utils.rs|crates/gcode/src/utils.rs]] - Provides small utility helpers for `gcode`: `api_key_fingerprint` turns an API key into a stable 16-character SHA-256 fingerprint, `short_id` trims identifiers to the first eight Unicode characters, and `i64_to_usize` converts signed counts to `usize` with contextual error reporting. The tests lock in truncation behavior, Unicode handling, and deterministic fingerprint output.
 [crates/gcode/src/utils.rs:4-12]
 [crates/gcode/src/utils.rs:14-16]
 [crates/gcode/src/utils.rs:18-22]
 [crates/gcode/src/utils.rs:29-31]
 [crates/gcode/src/utils.rs:34-36]
-- [[code/files/crates/gcode/src/visibility.rs|crates/gcode/src/visibility.rs]] - `crates/gcode/src/visibility.rs` exposes 28 indexed API symbols.
+- [[code/files/crates/gcode/src/visibility.rs|crates/gcode/src/visibility.rs]] - Implements visibility and lookup logic for indexed code data in a project context, including the tombstone-language marker, visible project scoping, and conversion of a context to the appropriate source-project view. It provides helpers to determine whether files, content chunks, symbols, symbol kinds, and the file tree are visible in either single-project or overlay mode, with overlay handling that respects shadowing by the overlay project and excludes tombstoned files. The file also builds the SQL used to fetch visible symbols from the database and includes tests that verify project ordering, query shape, and overlay shadowing behavior.
 [crates/gcode/src/visibility.rs:13-17]
 [crates/gcode/src/visibility.rs:19-21]
 [crates/gcode/src/visibility.rs:23-32]
@@ -2580,26 +1388,26 @@ Core types (`StandaloneSetupRequest`, `StandaloneSetupStatus`, `StandaloneServic
 - `f38f3121-6b12-5aef-8091-7dd5fd749e1a`
 - `41201313-ba7e-58f2-8e2b-4342ce3238e1`
 - `b894d587-5257-5619-a169-0f99c19b2ee1`
-- `0960d853-f42d-5796-bf40-1436d600ccd5`
-- `003669f9-f244-5d23-a7c6-b5b07dba5381`
-- `2f7c95c0-1fcf-593e-8321-e83bb1598564`
-- `e0bd14f8-43d3-57e5-8551-678b9cc3be03`
-- `467bbc7c-52d2-5eb9-bfca-74b47d7a5ff0`
-- `ce0a2e00-a68c-5c73-a0c5-96dd1e7b814c`
-- `e6e960ab-26f4-5111-a271-5931638cf9da`
-- `c3786b05-e88a-56a7-b1c4-51b5ac889074`
+- `8a2bb2a8-1daa-5e86-8dab-93b4052ed2b7`
+- `3b477146-180a-5533-8b10-b53f3694d2ef`
+- `e8375ffb-7f0c-57ad-8210-320375431816`
+- `7e0340cb-36b4-599d-b0b6-a71c0dfb3744`
+- `1d85ee7d-2cd8-5ff9-bd34-05aa1f5dece8`
+- `a4090ed9-4aca-5e39-9761-619ba1becedc`
+- `55113a99-7ecb-5781-be1d-649abf191a52`
+- `231651c1-aa08-5915-91ab-724aa68e1656`
 - `41472832-6151-5685-ba9f-58ae5a756e29`
-- `27bc2e46-e13e-5e85-b7c0-29c052ce93fa`
-- `43644977-5212-5ee1-8935-db0b7710a94f`
-- `34f209bf-7e8a-5a1f-90c4-60f3c3e40149`
-- `b0ac629e-152e-597f-be08-4a1d03fa3ba8`
-- `04c2ccfe-3138-59e4-b778-39d1872d6206`
-- `4e74cfc1-65fd-55ca-9fd3-c581dfc5bd07`
-- `979eacd0-660b-51cb-9b8e-686e55bacacb`
-- `86e51545-9ede-587f-990d-ce15e5b604b0`
-- `5deaa977-b39a-5bff-88cf-4a121c664c32`
-- `7f715bf6-c3b0-5dd5-814f-44493c36fa65`
-- `4c6fe517-7a38-568a-8d51-53fb7ba2b755`
+- `53720267-007d-59bc-b200-1e0700065598`
+- `be5a6e0b-7096-5719-9822-56c2dfe50381`
+- `fbaf9a3c-1a8f-51fc-9dee-0ee6bd4e66ac`
+- `5147e4b6-fd8c-5993-a383-859f8696b499`
+- `69de647b-d000-5874-b1a7-76fb11b0141f`
+- `df93c2ec-3ca5-53fc-88cf-8a0a6536c8db`
+- `6c9c6458-4970-515b-b154-c03258eab42e`
+- `b9fdace3-d26c-5883-8eb6-c01a6c769dbe`
+- `e0a2ffd1-7a2e-5f10-9c60-5e55fa8cf79e`
+- `3fe99dec-cf08-57dc-989b-2bcc192f684e`
+- `b606dde8-ef83-567d-944b-4f0c98da1de0`
 - `2d71eb13-2869-5f4a-920c-da64de430437`
 - `a777337a-8ad5-5616-8c21-649766f70339`
 - `2383f1c4-c756-5611-8934-d7cb282e6e22`
@@ -2631,15 +1439,15 @@ Core types (`StandaloneSetupRequest`, `StandaloneSetupStatus`, `StandaloneServic
 - `d65f924d-9fc6-57c4-9336-56b7592a4b13`
 - `77932652-b9d3-5e58-aeac-0e74ca70877f`
 - `2525dc46-d85e-555e-8fe5-7b170c985f2d`
-- `0d55b484-c5bd-5508-b2d2-afe0c8b67554`
-- `33ef1321-30a3-547d-8439-157e57e309d0`
-- `f028e1a6-8ba1-5105-8ba0-417521ce5f72`
-- `3720e36a-f4b2-548a-b670-5ad04ba03108`
-- `a6f0e81f-88f7-5283-92cb-a725e91241fb`
-- `5713ef22-5332-5977-88da-72674eb6e997`
-- `cb13391f-f830-5379-9017-7f0e180b499f`
-- `16703327-90f7-56c2-9f86-373a36770ed1`
-- `dd72a5da-6d0b-5f25-945e-39d1f67e6232`
+- `db970b82-436f-5da7-aff4-3adb610737a4`
+- `a9f2c37b-f389-51a0-a072-9e0a37c211d8`
+- `db6a25a4-60ce-5c9d-b451-3ad0dfb142fa`
+- `c795b9ab-9a3a-5bc0-bb23-1af5b39714cf`
+- `a39e2d92-ff91-5403-8947-b40af9ff64bf`
+- `882a8f06-d15a-56ac-9fd2-4ec5425a3638`
+- `6e155bbb-4b2d-50fd-ae4b-655f4a75e04f`
+- `033cbdbd-93ca-508c-91e8-3189ffb13a43`
+- `636cf13c-5179-546e-9c0a-b6e7d3eeffaf`
 - `63bb9aec-16fc-5ad9-a688-0860d4308d52`
 - `d19e4784-7058-56e5-935c-839bad7b4ba8`
 - `4b64c580-012c-5152-bc7f-77b063ea1f16`
@@ -2667,12 +1475,12 @@ Core types (`StandaloneSetupRequest`, `StandaloneSetupStatus`, `StandaloneServic
 - `f4f1ce2c-c984-53f3-9675-e52d858a778c`
 - `85b117b7-bb60-5d10-a9be-cf809f79fe6a`
 - `73c49d7e-d58b-5aae-8ba5-43ab46c514cb`
-- `e2673ab8-a2ba-5e22-a7aa-c246d740b25b`
-- `a4d87a32-3a04-5506-b8bf-10947b418925`
-- `ee8443d6-54d8-542f-8b50-b2b2198707ef`
-- `7928a51c-6844-59ab-bdd4-5d57316208a4`
-- `7d26c8ba-20d2-5d22-b2bb-44fb96310daf`
-- `ab61e402-2065-5151-b229-0f8e4749550d`
+- `8a3d943a-86b7-5bc1-bffc-fa23556511db`
+- `b4c162d0-b497-5609-8a19-68e9a30e9118`
+- `03e58d56-06c2-5630-a74d-1577eb76c28e`
+- `33180984-54e1-59b8-a3cf-d142488fe408`
+- `b0ff08fa-643c-5981-89a5-0621fbcb8362`
+- `c184843a-46aa-5af2-b2fa-69aa47f56f8c`
 - `44b94af2-7a42-5fd8-8e11-8fd9e7dcdf2a`
 - `5d684f92-1512-5642-aecc-03e9de62f772`
 - `76b62a69-0285-5800-a977-6f72e0b92710`
@@ -2767,9 +1575,9 @@ Core types (`StandaloneSetupRequest`, `StandaloneSetupStatus`, `StandaloneServic
 - `a9cc14ab-1c4e-5309-ba0b-7261c3223c4a`
 - `d7648799-f584-5d53-9d54-5fb155831fd1`
 - `a5d232ea-38f2-543c-a5cc-32837548312c`
-- `38e653de-169a-5be2-a62e-e6a3c2c14888`
-- `15e7262d-8f3e-5afe-a928-04f01b3df459`
-- `9b645547-0b6c-5fe8-aa8d-069622245b11`
+- `52413b93-42d7-5ac0-9eae-8ec893e60908`
+- `ed4a76b3-0990-507d-be46-0068f4883db9`
+- `cebd5590-90dd-56e5-8214-eba948346301`
 - `5a41c0d8-d3ac-577b-8a2f-141c12fdb8c5`
 - `1ddf8fc8-5593-56e8-889f-8eb842a4fdb4`
 - `e754ea69-291a-54da-bf88-8dcfd72a920e`

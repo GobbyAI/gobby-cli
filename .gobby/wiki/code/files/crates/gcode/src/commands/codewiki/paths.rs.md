@@ -31,7 +31,17 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Purpose
 
-`crates/gcode/src/commands/codewiki/paths.rs` exposes 16 indexed API symbols.
+This file provides utility functions for a code documentation wiki generator. It contains three categories of helpers:
+
+**Markdown formatting** (`inline_code`, `max_backtick_run`, `plural`, `component_label`) handle converting code metadata into properly-formatted Markdown text, including intelligent backtick delimiting for inline code.
+
+**File classification and scoping** (`is_core_file`, `in_scope`) filter files to identify core project code by excluding hidden paths, tests, generated code, and auxiliary directories like vendor or node_modules.
+
+**Module hierarchy utilities** (`module_for_file`, `module_ancestors`, `parent_module`, `module_is_ancestor`, `direct_child_modules`, `module_depth`) manage module path operations—extracting parents, finding ancestors, checking relationships, and counting nesting depth.
+
+**Documentation path generation** (`file_doc_path`, `module_doc_path`, `file_wikilink`, `module_wikilink`) construct wiki documentation file paths and link syntax by templating filenames and module names into standardized locations.
+
+Together, these functions support building a searchable code documentation system by normalizing file metadata, determining what code to document, organizing it hierarchically, and generating consistent wiki cross-references.
 [crates/gcode/src/commands/codewiki/paths.rs:3-14]
 [crates/gcode/src/commands/codewiki/paths.rs:16-28]
 [crates/gcode/src/commands/codewiki/paths.rs:30-32]

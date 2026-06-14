@@ -4,22 +4,7 @@ type: code_file
 provenance:
 - file: crates/gcode/assets/import_roots/elixir_dependency_roots.json
   ranges:
-  - '2'
-  - '3'
-  - '4'
-  - '5'
-  - '6'
-  - '7'
-  - '8'
-  - '9'
-  - '10'
-  - '11'
-  - '12'
-  - '13'
-  - '14'
-  - '15'
-  - '16'
-  - '17'
+  - 2-17
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -31,7 +16,7 @@ Module: [[code/modules/crates/gcode/assets/import_roots|crates/gcode/assets/impo
 
 ## Purpose
 
-`crates/gcode/assets/import_roots/elixir_dependency_roots.json` exposes 16 indexed API symbols.
+This JSON configuration file defines a mapping of Elixir package dependency names to their corresponding module root names. It contains sixteen entries, each pairing a snake_case package name (jason, httpoison, tesla, req, finch, mint, ecto, phoenix, plug, oban, broadway, nimble_options, nimble_parsec, telemetry, benchee, ex_doc) with an array containing the PascalCase module name for that package. This mapping serves as a lookup table to resolve which top-level modules are provided by each Elixir dependency, supporting import root analysis and code generation tooling in the gcode asset system.
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:3]
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:4]

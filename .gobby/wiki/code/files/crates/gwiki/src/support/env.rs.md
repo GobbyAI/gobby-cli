@@ -37,7 +37,7 @@ Module: [[code/modules/crates/gwiki/src/support|crates/gwiki/src/support]]
 
 ## Purpose
 
-`crates/gwiki/src/support/env.rs` exposes 22 indexed API symbols.
+Resolves the wiki’s PostgreSQL connection details from environment, bootstrap/config files, or a brokered hub lookup, while validating the daemon URL and related request headers used in that flow. `database_url` is the top-level resolver: it prefers direct env vars, then tries broker-based discovery from the user’s gobby home bootstrap file, then falls back to the bootstrap file itself and finally gcore config. The helper functions break that path into smaller steps for reading the local CLI token, constructing and timing out broker requests, validating loopback daemon URLs and database URLs, and deriving request base/host headers. The file also defines parsing for positive byte limits for inbox items, plus tests covering env parsing, broker fallback behavior, and rejection of non-loopback daemon hosts.
 [crates/gwiki/src/support/env.rs:21-24]
 [crates/gwiki/src/support/env.rs:27-30]
 [crates/gwiki/src/support/env.rs:32-49]

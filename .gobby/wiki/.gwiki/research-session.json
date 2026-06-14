@@ -1,7 +1,7 @@
 {
-  "session_id": "research-1781065959616-fd0d1e9b",
-  "question": "How does codewiki derive Mermaid diagrams from FalkorDB call and import edges?",
-  "prompt": "Research question: How does codewiki derive Mermaid diagrams from FalkorDB call and import edges?\nWorkers: 1\nReturn source-grounded notes suitable for raw/research/.",
+  "session_id": "wp3-compile-demo-1262",
+  "question": "How does gobby-cli merge hybrid search results?",
+  "prompt": "Topic: How does gobby-cli merge hybrid search results?\nReturn source-grounded notes.",
   "scope": {
     "kind": "project",
     "project_id": "3bf57fe7-2a0c-4074-8912-a83d9cd4df01",
@@ -11,13 +11,22 @@
   "agent_count": 1,
   "dispatch_task_id": null,
   "dispatch": null,
-  "accepted_notes": [],
+  "accepted_notes": [
+    {
+      "title": "How gobby-cli merges hybrid search results",
+      "path": "/Users/josh/Projects/gobby-cli/.gobby/wiki/raw/src-ab36a0b101bf7f6f-inbox-wp3-rrf-note-md.md"
+    }
+  ],
   "compile_state": {
-    "handoff_id": "compile-how-does-codewiki-derive-mermaid-diagrams-from-falkordb-call-and-import-edges-1781104657305",
-    "topic": "How does codewiki derive Mermaid diagrams from FalkorDB call and import edges?",
-    "bundle_path": "/Users/josh/Projects/gobby-cli/.gobby/wiki/.gwiki/compile/compile-how-does-codewiki-derive-mermaid-diagrams-from-falkordb-call-and-import-edges-1781104657305.md",
-    "selected_note_paths": [],
-    "selected_source_titles": [],
+    "handoff_id": "compile-hybrid-search-result-merging-1781420467017",
+    "topic": "hybrid search result merging",
+    "bundle_path": "/Users/josh/Projects/gobby-cli/.gobby/wiki/.gwiki/compile/compile-hybrid-search-result-merging-1781420467017.md",
+    "selected_note_paths": [
+      "/Users/josh/Projects/gobby-cli/.gobby/wiki/raw/src-ab36a0b101bf7f6f-inbox-wp3-rrf-note-md.md"
+    ],
+    "selected_source_titles": [
+      "How gobby-cli merges hybrid search results"
+    ],
     "citations": [],
     "conflicting_claims": [],
     "missing_evidence": [],

@@ -6,7 +6,6 @@ provenance:
   ranges:
   - 7-12
   - 14-23
-  - 15-22
   - 28-62
   - 67-108
   - 111-129
@@ -33,7 +32,9 @@ Module: [[code/modules/crates/gloc/src|crates/gloc/src]]
 
 ## Purpose
 
-`crates/gloc/src/backend.rs` exposes 18 indexed API symbols.
+This file centralizes backend-specific model readiness for local inference, with a `ModelError` type for not-found, pull, warmup, and network failures. `ensure_model_ready` is the main entry point: it no-ops for non-Ollama backends, but for Ollama it checks whether a model is downloaded or loaded, optionally pulls missing models and warms them up based on settings, and propagates errors otherwise.
+
+The helper functions split that workflow into smaller steps: `ollama_check_model` probes Ollama for model presence/load state, `ollama_pull_model` downloads missing models, `ollama_warmup_model` triggers loading, `model_name_matches` compares requested model names against Ollama metadata, and `unreachable_backend` represents a backend that cannot be contacted. The tests exercise the readiness path, backend failure handling, model-name matching rules, and `ModelError` formatting.
 [crates/gloc/src/backend.rs:7-12]
 [crates/gloc/src/backend.rs:14-23]
 [crates/gloc/src/backend.rs:15-22]

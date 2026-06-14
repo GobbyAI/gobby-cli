@@ -22,7 +22,7 @@ Module: [[code/modules/crates/gcode/src/dispatch|crates/gcode/src/dispatch]]
 
 ## Purpose
 
-`crates/gcode/src/dispatch/tests.rs` exposes 7 indexed API symbols.
+This is a test module for the dispatch functionality that verifies command handling, service resolution, and logging configuration. The file contains helper function `services_for` which parses CLI arguments to extract service configuration, and multiple test functions that validate: stderr logger behavior respects quiet flags and RUST_LOG environment variables; early command dispatch processes parsed requests without resolving project context; and different command types correctly determine which services to request during initialization. The tests collectively ensure the dispatch layer properly routes commands with appropriate service and logging configurations.
 [crates/gcode/src/dispatch/tests.rs:5-9]
 [crates/gcode/src/dispatch/tests.rs:12-14]
 [crates/gcode/src/dispatch/tests.rs:17-22]

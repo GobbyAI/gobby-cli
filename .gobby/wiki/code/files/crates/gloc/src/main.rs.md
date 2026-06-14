@@ -28,7 +28,7 @@ Module: [[code/modules/crates/gloc/src|crates/gloc/src]]
 
 ## Purpose
 
-`crates/gloc/src/main.rs` exposes 13 indexed API symbols.
+`crates/gloc/src/main.rs` is the CLI entrypoint for `gloc`, a launcher that auto-detects local LLM backends and starts AI client tools. `Cli` defines flags for choosing a client, backend, model, backend URL override, config path, and control modes like `--init`, `--status`, and `--dump_config`, plus passthrough args for the target binary. `main` wires the flow together by handling early exits, loading config, optionally exporting a default config, resolving the active backend/client/model, printing status when requested, checking model readiness, and then continuing into execution. The helper functions keep that orchestration focused: `auto_export_config` writes a default home config on first run, `handle_init` initializes a project-local `.gobby/gloc.yaml`, `resolve_backend` and `resolve_client` select the runtime targets with validation and fallback behavior, `resolve_model` canonicalizes aliases, `print_status` reports the resolved setup, and the URL override helpers and backend constructor support backend selection and tests.
 [crates/gloc/src/main.rs:16-52]
 [crates/gloc/src/main.rs:54-118]
 [crates/gloc/src/main.rs:120-130]

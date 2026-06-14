@@ -9,24 +9,26 @@ provenance:
   - 27-39
   - 42-45
   - 47-60
-  - 62-90
-  - 93-98
-  - 100-110
-  - 113-116
-  - 119-122
-  - 124-159
-  - 161-185
-  - 187-214
-  - 216-235
-  - 237-367
-  - 369-375
-  - 377-383
-  - 392-394
-  - 396-427
-  - 429-445
-  - 448-504
-  - 507-566
-  - 569-609
+  - 66-71
+  - 73-101
+  - 104-109
+  - 111-121
+  - 124-127
+  - 130-133
+  - 135-183
+  - 185-209
+  - 211-238
+  - 240-259
+  - 261-391
+  - 393-399
+  - 401-407
+  - 416-418
+  - 420-451
+  - 453-469
+  - 472-528
+  - 531-590
+  - 593-633
+  - 636-681
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -38,7 +40,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/transcribe.rs` exposes 27 indexed API symbols.
+This file defines the transcription pipeline data model and Markdown output flow for audio notes. It includes the core structs for transcript segments, transcription results, time ranges, and degradation metadata, plus helpers that treat blank or segmentless output as empty and map AI routing state to a fallback reason. The `TranscriptionClient` trait is the transcription/translation abstraction, with translation methods intentionally disabled here; the main work happens in `write_audio_transcript_markdown`, which renders either successful transcript content or degradation fallback text into Markdown, writes it atomically, and syncs the parent directory. Formatting helpers and a fake client support timestamp/range rendering and tests that verify successful transcription, precomputed output, and degraded cases.
 [crates/gwiki/src/transcribe.rs:14-18]
 [crates/gwiki/src/transcribe.rs:21-24]
 [crates/gwiki/src/transcribe.rs:27-39]
@@ -65,67 +67,73 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 - `TranscriptionDegradation.for_routing` (method) component `TranscriptionDegradation.for_routing [method]` (`aa5b7fd0-3db0-5b26-9f02-c668a004fb94`) lines 48-59 [crates/gwiki/src/transcribe.rs:48-59]
   - Signature: `pub(crate) fn for_routing(routing: AiRouting, fallback: &str) -> Self {`
   - Purpose: Constructs a `Self` value by translating `AiRouting::Off` to `ModalityDegradationReason::Disabled` and all other routing modes to `ModalityDegradationReason::MissingEndpoint`, while cloning `fallback` into the `fallback` field. [crates/gwiki/src/transcribe.rs:48-59]
-- `TranscriptionClient` (type) component `TranscriptionClient [type]` (`daa24d7d-7449-5261-a1e7-2674e7911b49`) lines 62-90 [crates/gwiki/src/transcribe.rs:62-90]
+- `transcription_output_is_empty` (function) component `transcription_output_is_empty [function]` (`60951741-0f4e-53b4-b5b5-aad389e9acad`) lines 66-71 [crates/gwiki/src/transcribe.rs:66-71]
+  - Signature: `pub(crate) fn transcription_output_is_empty(output: &TranscriptionOutput) -> bool {`
+  - Purpose: Returns 'true' only when every segment in 'output.segments' has 'text' that is empty or whitespace-only after trimming, otherwise returns 'false'. [crates/gwiki/src/transcribe.rs:66-71]
+- `TranscriptionClient` (type) component `TranscriptionClient [type]` (`2116932d-286f-5b96-9f12-4afd0164c50a`) lines 73-101 [crates/gwiki/src/transcribe.rs:73-101]
   - Signature: `pub trait TranscriptionClient {`
-  - Purpose: Indexed type `TranscriptionClient` in `crates/gwiki/src/transcribe.rs`. [crates/gwiki/src/transcribe.rs:62-90]
-- `TranscriptionClient.translate_to_english` (method) component `TranscriptionClient.translate_to_english [method]` (`57dcb168-2c9d-5e37-ae02-4b1395f78cb0`) lines 69-77 [crates/gwiki/src/transcribe.rs:69-77]
+  - Purpose: Indexed type `TranscriptionClient` in `crates/gwiki/src/transcribe.rs`. [crates/gwiki/src/transcribe.rs:73-101]
+- `TranscriptionClient.translate_to_english` (method) component `TranscriptionClient.translate_to_english [method]` (`cb0b1e38-b8cf-579e-b5ea-59665a025929`) lines 80-88 [crates/gwiki/src/transcribe.rs:80-88]
   - Signature: `fn translate_to_english(`
-  - Purpose: This method unconditionally returns `Err(WikiError::Config)` with the message `"audio translation is not configured"`, indicating that English translation is disabled regardless of the request or language hint. [crates/gwiki/src/transcribe.rs:69-77]
-- `TranscriptionClient.translate_segments` (method) component `TranscriptionClient.translate_segments [method]` (`bb5687cf-7bf7-52b2-812e-198f1f58add4`) lines 80-89 [crates/gwiki/src/transcribe.rs:80-89]
+  - Purpose: 'translate_to_english' ignores its request and language hint and always returns 'Err(WikiError::Config)' with the message '"audio translation is not configured"'. [crates/gwiki/src/transcribe.rs:80-88]
+- `TranscriptionClient.translate_segments` (method) component `TranscriptionClient.translate_segments [method]` (`ea5d0e39-323a-52f1-96bb-dbac824c7636`) lines 91-100 [crates/gwiki/src/transcribe.rs:91-100]
   - Signature: `fn translate_segments(`
-  - Purpose: `translate_segments` is a stub implementation that ignores its inputs and always returns `Err(WikiError::Config { detail: "text translation is not configured" })`, indicating translation support is unavailable. [crates/gwiki/src/transcribe.rs:80-89]
-- `TranscriptionRequest` (class) component `TranscriptionRequest [class]` (`0b59e683-1f25-52e2-a9c0-33c17957d051`) lines 93-98 [crates/gwiki/src/transcribe.rs:93-98]
+  - Purpose: 'translate_segments' unconditionally returns 'Err(WikiError::Config { detail: "text translation is not configured" })', indicating the translation path is disabled and no segment translation is performed. [crates/gwiki/src/transcribe.rs:91-100]
+- `TranscriptionRequest` (class) component `TranscriptionRequest [class]` (`52df6d85-3bbf-5725-9758-9a79872066ea`) lines 104-109 [crates/gwiki/src/transcribe.rs:104-109]
   - Signature: `pub struct TranscriptionRequest<'a> {`
-  - Purpose: `TranscriptionRequest<'a>` is a borrowed request payload for a transcription job that carries the input file’s name, optional MIME type, asset path, and raw byte contents. [crates/gwiki/src/transcribe.rs:93-98]
-- `TranscriptionEndpoint` (type) component `TranscriptionEndpoint [type]` (`31afa17d-562c-51cf-94c9-06bbc1321c2d`) lines 100-110 [crates/gwiki/src/transcribe.rs:100-110]
+  - Purpose: 'TranscriptionRequest<'a>' is a borrowed request payload that carries an input file’s name, optional MIME type, filesystem path, and raw byte contents for transcription processing. [crates/gwiki/src/transcribe.rs:104-109]
+- `TranscriptionEndpoint` (type) component `TranscriptionEndpoint [type]` (`90c28a3a-e3b7-5633-954f-ebb57a3ad603`) lines 111-121 [crates/gwiki/src/transcribe.rs:111-121]
   - Signature: `pub enum TranscriptionEndpoint<'a> {`
-  - Purpose: Indexed type `TranscriptionEndpoint` in `crates/gwiki/src/transcribe.rs`. [crates/gwiki/src/transcribe.rs:100-110]
-- `TranscriptionMarkdownResult` (class) component `TranscriptionMarkdownResult [class]` (`75c8e303-7615-5856-ad6b-3fc28071c9a5`) lines 113-116 [crates/gwiki/src/transcribe.rs:113-116]
+  - Purpose: Indexed type `TranscriptionEndpoint` in `crates/gwiki/src/transcribe.rs`. [crates/gwiki/src/transcribe.rs:111-121]
+- `TranscriptionMarkdownResult` (class) component `TranscriptionMarkdownResult [class]` (`f31417d6-f7c5-5d32-bd44-cf854eaf0862`) lines 124-127 [crates/gwiki/src/transcribe.rs:124-127]
   - Signature: `pub struct TranscriptionMarkdownResult {`
-  - Purpose: `TranscriptionMarkdownResult` is a result container for a generated transcription Markdown file, storing its filesystem `PathBuf` and an optional `TranscriptionDegradation` describing quality loss or fallback behavior. [crates/gwiki/src/transcribe.rs:113-116]
-- `TranscriptionMarkdownInput` (type) component `TranscriptionMarkdownInput [type]` (`baacf877-c7b4-5a91-837b-fcb33a2cfc33`) lines 119-122 [crates/gwiki/src/transcribe.rs:119-122]
+  - Purpose: 'TranscriptionMarkdownResult' is a result struct that stores the generated markdown file path and an optional 'TranscriptionDegradation' describing any quality loss during transcription. [crates/gwiki/src/transcribe.rs:124-127]
+- `TranscriptionMarkdownInput` (type) component `TranscriptionMarkdownInput [type]` (`9c606d5f-3310-5a24-8c69-7b738abae17d`) lines 130-133 [crates/gwiki/src/transcribe.rs:130-133]
   - Signature: `pub enum TranscriptionMarkdownInput {`
-  - Purpose: Indexed type `TranscriptionMarkdownInput` in `crates/gwiki/src/transcribe.rs`. [crates/gwiki/src/transcribe.rs:119-122]
-- `write_audio_transcript_markdown` (function) component `write_audio_transcript_markdown [function]` (`690c6720-af4e-58bf-9779-7252bb4bfc64`) lines 124-159 [crates/gwiki/src/transcribe.rs:124-159]
+  - Purpose: Indexed type `TranscriptionMarkdownInput` in `crates/gwiki/src/transcribe.rs`. [crates/gwiki/src/transcribe.rs:130-133]
+- `write_audio_transcript_markdown` (function) component `write_audio_transcript_markdown [function]` (`b420b5fa-e7de-5430-95d2-220b01ca93e6`) lines 135-183 [crates/gwiki/src/transcribe.rs:135-183]
   - Signature: `pub fn write_audio_transcript_markdown(`
-  - Purpose: Writes the transcript markdown for a source record to its derived path under `vault_root` atomically after creating parent directories, rendering the content from `scope`, `record`, `request`, and either a transcription or degradation, and returns the relative path plus any degradation metadata. [crates/gwiki/src/transcribe.rs:124-159]
-- `write_transcript_markdown_atomically` (function) component `write_transcript_markdown_atomically [function]` (`6bd0d58e-9026-5a1b-863e-c7e2b5c173a7`) lines 161-185 [crates/gwiki/src/transcribe.rs:161-185]
+  - Purpose: Creates the derived markdown path for an audio source record under 'vault_root', renders transcript markdown from either a successful transcription or a degradation fallback, writes it atomically after ensuring parent directories exist, and returns the relative path plus any degradation metadata. [crates/gwiki/src/transcribe.rs:135-183]
+- `write_transcript_markdown_atomically` (function) component `write_transcript_markdown_atomically [function]` (`3ab8ba4f-6c9d-5e02-89d7-3159a663959e`) lines 185-209 [crates/gwiki/src/transcribe.rs:185-209]
   - Signature: `fn write_transcript_markdown_atomically(path: &Path, contents: &[u8]) -> Result<(), WikiError> {`
-  - Purpose: Creates a temporary transcript markdown file, writes and `fsync`s the bytes to it, atomically renames it over `path`, and then syncs the parent directory, returning a `WikiError::Io` on any step failure. [crates/gwiki/src/transcribe.rs:161-185]
-- `create_transcript_temp_file` (function) component `create_transcript_temp_file [function]` (`31308ae9-9b11-5c67-ae9e-4815495770e9`) lines 187-214 [crates/gwiki/src/transcribe.rs:187-214]
+  - Purpose: Creates a temporary file, writes the markdown bytes, fsyncs it, atomically persists it to the target path, and then syncs the parent directory, returning 'WikiError::Io' on any I/O failure. [crates/gwiki/src/transcribe.rs:185-209]
+- `create_transcript_temp_file` (function) component `create_transcript_temp_file [function]` (`bb4495d4-910b-5049-a5c4-c93c24625529`) lines 211-238 [crates/gwiki/src/transcribe.rs:211-238]
   - Signature: `fn create_transcript_temp_file(path: &Path) -> Result<NamedTempFile, WikiError> {`
-  - Purpose: Creates a `NamedTempFile` in the target path’s non-empty parent directory, using a hidden `.{file_name}.` prefix and `.tmp` suffix for the transcript temp file, and returns `WikiError::Io` if the path has no parent or temp-file creation fails. [crates/gwiki/src/transcribe.rs:187-214]
-- `sync_parent_dir` (function) component `sync_parent_dir [function]` (`dcc81203-f8ab-526f-a008-03fd4fa30b78`) lines 216-235 [crates/gwiki/src/transcribe.rs:216-235]
+  - Purpose: Creates a temporary file in the target path’s non-empty parent directory, naming it with a '.{filename}.' prefix and '.tmp' suffix, and returns a 'WikiError::Io' if the path has no parent or tempfile creation fails. [crates/gwiki/src/transcribe.rs:211-238]
+- `sync_parent_dir` (function) component `sync_parent_dir [function]` (`855fa9aa-7f03-51fa-9f30-476b2b99614b`) lines 240-259 [crates/gwiki/src/transcribe.rs:240-259]
   - Signature: `fn sync_parent_dir(path: &Path) -> Result<(), WikiError> {`
-  - Purpose: On Unix, it opens the parent directory of `path` and calls `sync_all()` to flush directory metadata to disk, returning a `WikiError::Io` with the parent path on failure, while on non-Unix platforms it is a no-op that always returns `Ok(())`. [crates/gwiki/src/transcribe.rs:216-235]
-- `render_audio_transcript_markdown` (function) component `render_audio_transcript_markdown [function]` (`94ab4bbe-0b37-52e0-8f16-db5d390abdf0`) lines 237-367 [crates/gwiki/src/transcribe.rs:237-367]
+  - Purpose: On Unix, it opens 'path'’s parent directory and calls 'sync_all' to flush directory metadata to disk, mapping any I/O failure into 'WikiError::Io' with the parent path, while on non-Unix platforms it returns 'Ok(())' without doing anything. [crates/gwiki/src/transcribe.rs:240-259]
+- `render_audio_transcript_markdown` (function) component `render_audio_transcript_markdown [function]` (`c4ec0288-32f8-534b-8c44-aca336f7b08f`) lines 261-391 [crates/gwiki/src/transcribe.rs:261-391]
   - Signature: `fn render_audio_transcript_markdown(`
-  - Purpose: Builds and returns a markdown document for an audio transcript by assembling frontmatter metadata from the scope, source record, transcription request, and any available transcription or degradation details. [crates/gwiki/src/transcribe.rs:237-367]
-- `format_timestamp_ms` (function) component `format_timestamp_ms [function]` (`b09bd4e4-deeb-5427-98dc-85b682efdde1`) lines 369-375 [crates/gwiki/src/transcribe.rs:369-375]
+  - Purpose: 'render_audio_transcript_markdown' constructs a Markdown document for an audio transcription record by assembling frontmatter-style metadata from the source record, scope, request, and optional transcription/degradation details, including paths, hashes, byte size, MIME type, and transcription status. [crates/gwiki/src/transcribe.rs:261-391]
+- `format_timestamp_ms` (function) component `format_timestamp_ms [function]` (`0da904dc-43a0-54fd-a459-31fff425b6e3`) lines 393-399 [crates/gwiki/src/transcribe.rs:393-399]
   - Signature: `fn format_timestamp_ms(timestamp_ms: u64) -> String {`
-  - Purpose: Converts a millisecond timestamp to a zero-padded `HH:MM:SS` string by truncating to whole seconds and deriving hours, minutes, and seconds with integer division and modulo. [crates/gwiki/src/transcribe.rs:369-375]
-- `format_ranges_ms` (function) component `format_ranges_ms [function]` (`d3988338-05ed-5db4-9faf-510499a598ea`) lines 377-383 [crates/gwiki/src/transcribe.rs:377-383]
+  - Purpose: Converts a timestamp in milliseconds into an 'HH:MM:SS' string by truncating to whole seconds and zero-padding hours, minutes, and seconds to two digits each. [crates/gwiki/src/transcribe.rs:393-399]
+- `format_ranges_ms` (function) component `format_ranges_ms [function]` (`6f694a11-1a8d-5055-94a8-7a37d630ecf6`) lines 401-407 [crates/gwiki/src/transcribe.rs:401-407]
   - Signature: `fn format_ranges_ms(ranges: &[TranscriptionRange]) -> String {`
-  - Purpose: Formats a slice of `TranscriptionRange` values into a comma-separated string of `start_ms-end_ms` pairs. [crates/gwiki/src/transcribe.rs:377-383]
-- `FakeTranscriptionClient` (class) component `FakeTranscriptionClient [class]` (`2711905a-53f0-5af0-9eaa-5afd3a6c8e2b`) lines 392-394 [crates/gwiki/src/transcribe.rs:392-394]
+  - Purpose: Formats a slice of 'TranscriptionRange' values into a comma-separated string of 'start_ms-end_ms' pairs. [crates/gwiki/src/transcribe.rs:401-407]
+- `FakeTranscriptionClient` (class) component `FakeTranscriptionClient [class]` (`550a7324-801a-565e-9b3d-daeaa8d1c970`) lines 416-418 [crates/gwiki/src/transcribe.rs:416-418]
   - Signature: `struct FakeTranscriptionClient {`
-  - Purpose: A test double that uses interior mutability to count how many times the transcription client has been called via a `Cell<usize>` counter. [crates/gwiki/src/transcribe.rs:392-394]
-- `FakeTranscriptionClient` (class) component `FakeTranscriptionClient [class]` (`d96a1999-ece3-5d2d-91f1-f3014bc3cbf1`) lines 396-427 [crates/gwiki/src/transcribe.rs:396-427]
+  - Purpose: 'FakeTranscriptionClient' is a test double struct that tracks the number of transcription-related invocations in a 'Cell<usize>' via its 'calls' field. [crates/gwiki/src/transcribe.rs:416-418]
+- `FakeTranscriptionClient` (class) component `FakeTranscriptionClient [class]` (`20176f7b-152b-519a-a863-316e8304c491`) lines 420-451 [crates/gwiki/src/transcribe.rs:420-451]
   - Signature: `impl TranscriptionClient for FakeTranscriptionClient {`
-  - Purpose: `FakeTranscriptionClient` is a test double for `TranscriptionClient` that increments an internal call counter and returns a fixed, English `TranscriptionOutput` with two hard-coded transcript segments and no translation or range metadata. [crates/gwiki/src/transcribe.rs:396-427]
-- `FakeTranscriptionClient.transcribe` (method) component `FakeTranscriptionClient.transcribe [method]` (`27e74d06-d0cf-5219-b4ac-751d3979f22b`) lines 397-426 [crates/gwiki/src/transcribe.rs:397-426]
+  - Purpose: 'FakeTranscriptionClient' is a test double implementing 'TranscriptionClient' whose 'transcribe' method increments an internal call counter and returns a fixed English 'TranscriptionOutput' with two hard-coded 'TranscriptSegment's and fake STT metadata. [crates/gwiki/src/transcribe.rs:420-451]
+- `FakeTranscriptionClient.transcribe` (method) component `FakeTranscriptionClient.transcribe [method]` (`c5d7a41a-daf6-5688-b2cc-d8249f5963f3`) lines 421-450 [crates/gwiki/src/transcribe.rs:421-450]
   - Signature: `fn transcribe(`
-  - Purpose: It increments `self.calls` and returns a deterministic `TranscriptionOutput` containing two hard-coded transcript segments plus English/fake-STT metadata, ignoring the input request. [crates/gwiki/src/transcribe.rs:397-426]
-- `record_for` (function) component `record_for [function]` (`a4cb50da-d54c-5078-aa14-e1ffc9b21903`) lines 429-445 [crates/gwiki/src/transcribe.rs:429-445]
+  - Purpose: Increments the internal call counter and returns a fixed successful 'TranscriptionOutput' containing two English transcript segments, 'fake-stt' metadata, and default non-translated, non-partial range fields. [crates/gwiki/src/transcribe.rs:421-450]
+- `record_for` (function) component `record_for [function]` (`d4b67e40-ebdf-5fb3-94be-7ae5093bd950`) lines 453-469 [crates/gwiki/src/transcribe.rs:453-469]
   - Signature: `fn record_for(temp: &Path) -> SourceRecord {`
-  - Purpose: `record_for` registers a fixed, manually ingested pending audio `SourceDraft` with `SourceManifest` at the given `temp` path and returns the resulting `SourceRecord`, panicking if registration fails. [crates/gwiki/src/transcribe.rs:429-445]
-- `writes_timestamped_transcript` (function) component `writes_timestamped_transcript [function]` (`e2439d90-b13e-511a-8b96-2ae9182baed3`) lines 448-504 [crates/gwiki/src/transcribe.rs:448-504]
+  - Purpose: Registers a pending manually ingested audio 'SourceDraft' for '/tmp/interview.wav' in the 'SourceManifest' under 'temp' and returns the resulting 'SourceRecord', panicking if registration fails. [crates/gwiki/src/transcribe.rs:453-469]
+- `writes_timestamped_transcript` (function) component `writes_timestamped_transcript [function]` (`712a0319-2409-5298-a6e1-c76265582bb6`) lines 472-528 [crates/gwiki/src/transcribe.rs:472-528]
   - Signature: `fn writes_timestamped_transcript() {`
-  - Purpose: It verifies that `write_audio_transcript_markdown` calls the transcription client exactly once and writes a `knowledge/sources/{record.id}.md` transcript containing audio/topic metadata, `transcription_status: transcribed`, the original asset path, and timestamped transcript lines with no degradation. [crates/gwiki/src/transcribe.rs:448-504]
-- `renders_precomputed_output_without_transcribing` (function) component `renders_precomputed_output_without_transcribing [function]` (`fee4e573-da5f-5e26-94e8-7849b0602b7b`) lines 507-566 [crates/gwiki/src/transcribe.rs:507-566]
+  - Purpose: Verifies that 'write_audio_transcript_markdown' writes a transcript Markdown file at the expected 'knowledge/sources/{record.id}.md' path with audio/topic frontmatter, transcribed status, timestamped transcript lines, and original audio provenance, while invoking the transcription client exactly once. [crates/gwiki/src/transcribe.rs:472-528]
+- `renders_precomputed_output_without_transcribing` (function) component `renders_precomputed_output_without_transcribing [function]` (`32bec997-b130-5825-ba87-990d76cf12f4`) lines 531-590 [crates/gwiki/src/transcribe.rs:531-590]
   - Signature: `fn renders_precomputed_output_without_transcribing() {`
-  - Purpose: This test verifies that `write_audio_transcript_markdown` serializes a precomputed `Transcribed` `TranscriptionOutput` to markdown without calling the transcription client and without surfacing any degradation metadata. [crates/gwiki/src/transcribe.rs:507-566]
-- `missing_transcription_degrades` (function) component `missing_transcription_degrades [function]` (`fad472b8-abe4-52d8-bc56-35627bcec966`) lines 569-609 [crates/gwiki/src/transcribe.rs:569-609]
+  - Purpose: Verifies that 'write_audio_transcript_markdown' writes a supplied 'TranscriptionMarkdownInput::Transcribed' result directly to markdown without calling the transcription client, and returns no degradation metadata. [crates/gwiki/src/transcribe.rs:531-590]
+- `missing_transcription_degrades` (function) component `missing_transcription_degrades [function]` (`4286e9ff-18e8-5930-a704-79136f7b9cfa`) lines 593-633 [crates/gwiki/src/transcribe.rs:593-633]
   - Signature: `fn missing_transcription_degrades() {`
-  - Purpose: Verifies that `write_audio_transcript_markdown` emits degraded transcript markdown for a missing transcription endpoint while preserving the raw audio asset, carrying through the degradation reason, and marking the output as `transcription_status: unavailable` with `transcription_degradation: missing_endpoint`. [crates/gwiki/src/transcribe.rs:569-609]
+  - Purpose: Verifies that 'write_audio_transcript_markdown' handles a missing transcription endpoint by returning a 'MissingEndpoint' degradation, preserving the original audio asset, and writing markdown marked 'transcription_status: unavailable' with the appropriate degradation metadata and fallback text. [crates/gwiki/src/transcribe.rs:593-633]
+- `empty_transcript_degrades` (function) component `empty_transcript_degrades [function]` (`a34a0209-2474-5f6c-bdc6-3426e4d35425`) lines 636-681 [crates/gwiki/src/transcribe.rs:636-681]
+  - Signature: `fn empty_transcript_degrades() {`
+  - Purpose: Verifies that writing a transcribed transcript with zero speech segments degrades the modality to 'TranscriptionError'/'unavailable' and emits markdown metadata reflecting that degraded status rather than 'transcribed'. [crates/gwiki/src/transcribe.rs:636-681]
 

@@ -16,12 +16,7 @@ provenance:
   - 135-137
   - 147-154
   - 156-170
-  - 157-162
-  - 164-169
   - 172-207
-  - 173-179
-  - 181-188
-  - 190-206
   - 210-236
   - 239-259
   - 262-290
@@ -39,7 +34,7 @@ Module: [[code/modules/crates/gwiki/src/ai|crates/gwiki/src/ai]]
 
 ## Purpose
 
-`crates/gwiki/src/ai/translate.rs` exposes 24 indexed API symbols.
+Orchestrates audio transcription and translation for wiki content, choosing between direct English translation and segment-by-segment translation based on the target language and client support. The main path normalizes the requested language, prefers `translate_to_english` for English targets with a transcription fallback, and otherwise transcribes first then rewrites the output via `translate_transcription_segments`, which resolves the source language, skips work when source and target match, and updates translation metadata after replacing segment text. Supporting helpers normalize and compare language codes, emit batch-translation warnings, and mark English translation outputs. The file also includes a `FakeTranslationClient` plus test fixtures and cases that verify fallback behavior, language precedence, and batch retry logic.
 [crates/gwiki/src/ai/translate.rs:6-29]
 [crates/gwiki/src/ai/translate.rs:31-55]
 [crates/gwiki/src/ai/translate.rs:57-87]

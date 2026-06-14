@@ -18,7 +18,7 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gco
 
 ## Purpose
 
-`crates/gcode/src/commands/codewiki/build_parts/snapshot.rs` exposes 3 indexed API symbols.
+This file builds and snapshots code index data for a codewiki system. The primary function, build_codewiki_index_snapshot, orchestrates the snapshot creation by filtering core files and symbols, computing content hashes for each file, and capturing symbol metadata. It delegates to hash_snapshot_file to securely compute file content hashes while preventing directory traversal attacks through path canonicalization and root validation. For symbol relationships, it calls graph_neighborhood_fingerprints to generate deterministic fingerprints by hashing each symbol's sorted incoming and outgoing edges, enabling change detection in code dependencies. The functions work together to produce a complete, integrity-checked snapshot of the codebase state suitable for indexing and tracking code structure changes.
 [crates/gcode/src/commands/codewiki/build_parts/snapshot.rs:6-84]
 [crates/gcode/src/commands/codewiki/build_parts/snapshot.rs:86-99]
 [crates/gcode/src/commands/codewiki/build_parts/snapshot.rs:101-134]

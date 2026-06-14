@@ -19,7 +19,7 @@ Module: [[code/modules/crates/gcode/src/index/import_resolution/parser|crates/gc
 
 ## Purpose
 
-`crates/gcode/src/index/import_resolution/parser/rest.rs` exposes 4 indexed API symbols.
+`crates/gcode/src/index/import_resolution/parser/rest.rs` implements language-specific import parsing for the import-resolution indexer. It handles Swift, Ruby, Dart, and Elixir import-like statements, extracts the imported module or root binding, records an `ImportRelation`, and registers external dependencies when the target is not a local module or language keyword.
 [crates/gcode/src/index/import_resolution/parser/rest.rs:10-54]
 [crates/gcode/src/index/import_resolution/parser/rest.rs:56-92]
 [crates/gcode/src/index/import_resolution/parser/rest.rs:94-121]

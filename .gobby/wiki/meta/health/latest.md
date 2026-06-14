@@ -9,15 +9,20 @@ Stale citations:
 - none
 
 Uncited sources:
-- none
+- src-495a2039993adc47-https-en-wikipedia-org-wiki-retrieval-augmented (https://en.wikipedia.org/wiki/Retrieval-augmented_generation)
+- src-d0009cf2de348320-users-josh-projects-gobby-cli-readme-md (/Users/josh/Projects/gobby-cli/README.md)
+- src-a23d7939da1b175c-private-tmp-wp3-deposit-note-md (/private/tmp/wp3-deposit-note.md)
 
 Broken links:
-- none
+- code/files/crates/gwiki/src/compile/tests.rs.md:75 -> knowledge/topics/exact
+- code/files/crates/gwiki/src/synthesis.rs.md:130 -> relative_path
 
 Duplicate concepts:
 - none
 
 Uncompiled sources:
-- src-9171ba1efd048efb-https-en-wikipedia-org-wiki-mean-reciprocal-rank (https://en.wikipedia.org/wiki/Mean_reciprocal_rank)
-- src-d4ddc9797f438586-users-josh-projects-gobby-cli-readme-md (/Users/josh/Projects/gobby-cli/README.md)
-- src-df96b663b72e1f6a-inbox-rrf-note-txt (inbox/rrf-note.txt)
+- src-495a2039993adc47-https-en-wikipedia-org-wiki-retrieval-augmented (https://en.wikipedia.org/wiki/Retrieval-augmented_generation)
+- src-d0009cf2de348320-users-josh-projects-gobby-cli-readme-md (/Users/josh/Projects/gobby-cli/README.md)
+- src-cfe14a7625e12a59-private-tmp-wp3-logo-png (/private/tmp/wp3-logo.png)
+- src-ab36a0b101bf7f6f-inbox-wp3-rrf-note-md (inbox/wp3-rrf-note.md)
+- src-a23d7939da1b175c-private-tmp-wp3-deposit-note-md (/private/tmp/wp3-deposit-note.md)

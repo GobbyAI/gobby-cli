@@ -62,7 +62,9 @@ Module: [[code/modules/crates/gwiki/src/search|crates/gwiki/src/search]]
 
 ## Purpose
 
-`crates/gwiki/src/search/semantic.rs` exposes 64 indexed API symbols.
+This file defines the semantic-search abstraction layer for Gobby wiki search. It introduces request and result types, then splits the pipeline into an embedder interface and a vector-search interface so `search_semantic` can turn a query plus scope into embeddings, choose the right Qdrant collection and payload filter, run the vector lookup, and convert hits into `WikiSearchResult` values with any degradation status.
+
+The rest of the file provides concrete backend adapters and helpers for the supported embedding modes and Qdrant behavior, including collection/scope mapping, payload extraction, degradation detection, and “unavailable” or failing test doubles used to exercise error paths and backend-specific search behavior.
 [crates/gwiki/src/search/semantic.rs:18-22]
 [crates/gwiki/src/search/semantic.rs:25-28]
 [crates/gwiki/src/search/semantic.rs:30-35]
@@ -190,7 +192,7 @@ Module: [[code/modules/crates/gwiki/src/search|crates/gwiki/src/search]]
   - Purpose: Indexed function `payload_string` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:459-461]
 - `payload_usize` (function) component `payload_usize [function]` (`3bfa7530-6717-5406-bda1-f02eb1504763`) lines 463-468 [crates/gwiki/src/search/semantic.rs:463-468]
   - Signature: `fn payload_usize(payload: &Map<String, Value>, key: &str) -> Option<usize> {`
-  - Purpose: Indexed function `payload_usize` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:463-468]
+  - Purpose: It looks up 'key' in the JSON 'Map', attempts to read the value as a 'u64', then returns 'Some(usize)' only if that integer fits in 'usize', otherwise 'None'. [crates/gwiki/src/search/semantic.rs:463-468]
 - `degraded` (function) component `degraded [function]` (`81c916dd-6f47-5fa9-9ee6-d7984c403816`) lines 470-478 [crates/gwiki/src/search/semantic.rs:470-478]
   - Signature: `fn degraded(service: &str, state: gobby_core::degradation::ServiceState) -> SemanticSearchOutcome {`
   - Purpose: Indexed function `degraded` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:470-478]
@@ -199,7 +201,7 @@ Module: [[code/modules/crates/gwiki/src/search|crates/gwiki/src/search]]
   - Purpose: Indexed function `qdrant_degradation` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:480-509]
 - `UnavailableSemanticBackend` (class) component `UnavailableSemanticBackend [class]` (`ae502464-896d-59c6-ba4b-899972bb3249`) lines 512-512 [crates/gwiki/src/search/semantic.rs:512]
   - Signature: `pub struct UnavailableSemanticBackend;`
-  - Purpose: Indexed class `UnavailableSemanticBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:512]
+  - Purpose: 'UnavailableSemanticBackend' is a zero-sized marker struct used to represent a semantic backend implementation that is present in the type system but unavailable for use at runtime. [crates/gwiki/src/search/semantic.rs:512]
 - `UnavailableSemanticBackend` (class) component `UnavailableSemanticBackend [class]` (`6f2b91ca-05d5-587f-b87f-c7dd711f3e2b`) lines 515-525 [crates/gwiki/src/search/semantic.rs:515-525]
   - Signature: `impl SemanticSearchBackend for UnavailableSemanticBackend {`
   - Purpose: Indexed class `UnavailableSemanticBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:515-525]
@@ -238,13 +240,13 @@ Module: [[code/modules/crates/gwiki/src/search|crates/gwiki/src/search]]
   - Purpose: Indexed method `RecordingVectorBackend.search` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:575-584]
 - `FailingEmbedder` (class) component `FailingEmbedder [class]` (`cd81caa4-39cf-5b20-83e2-4004551759fa`) lines 588-588 [crates/gwiki/src/search/semantic.rs:588]
   - Signature: `struct FailingEmbedder;`
-  - Purpose: Indexed class `FailingEmbedder` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:588]
+  - Purpose: 'FailingEmbedder' is a struct that implements an embedder test double which deterministically fails on embedding requests, typically to exercise error-handling paths. [crates/gwiki/src/search/semantic.rs:588]
 - `FailingEmbedder` (class) component `FailingEmbedder [class]` (`543f4619-deb6-565e-9dcd-36016fd1b751`) lines 591-599 [crates/gwiki/src/search/semantic.rs:591-599]
   - Signature: `impl QueryEmbedder for FailingEmbedder {`
-  - Purpose: Indexed class `FailingEmbedder` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:591-599]
+  - Purpose: 'FailingEmbedder' is a 'QueryEmbedder' implementation whose 'embed_query' method unconditionally fails by returning 'SearchError::Backend("embedding timeout")' for every query and embedding input. [crates/gwiki/src/search/semantic.rs:591-599]
 - `FailingEmbedder.embed_query` (method) component `FailingEmbedder.embed_query [method]` (`381d678b-9362-5b15-8e55-4b5c283bcb02`) lines 592-598 [crates/gwiki/src/search/semantic.rs:592-598]
   - Signature: `fn embed_query(`
-  - Purpose: Indexed method `FailingEmbedder.embed_query` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:592-598]
+  - Purpose: 'embed_query' ignores its embedding and query inputs and always returns 'Err(SearchError::Backend("embedding timeout".to_string()))', i.e. a backend failure indicating an embedding timeout. [crates/gwiki/src/search/semantic.rs:592-598]
 - `FailingVectorBackend` (class) component `FailingVectorBackend [class]` (`dd201376-fadd-5fb9-94d2-b346649d3920`) lines 602-602 [crates/gwiki/src/search/semantic.rs:602]
   - Signature: `struct FailingVectorBackend;`
   - Purpose: Indexed class `FailingVectorBackend` in `crates/gwiki/src/search/semantic.rs`. [crates/gwiki/src/search/semantic.rs:602]

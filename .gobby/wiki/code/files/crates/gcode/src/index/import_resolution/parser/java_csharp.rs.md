@@ -19,7 +19,7 @@ Module: [[code/modules/crates/gcode/src/index/import_resolution/parser|crates/gc
 
 ## Purpose
 
-`crates/gcode/src/index/import_resolution/parser/java_csharp.rs` exposes 4 indexed API symbols.
+Parses Java `import` statements and C# `using` directives into import relations plus binding metadata for the import-resolution index. The Java parser records each import, handles static versus regular imports, skips wildcards, and binds external class members or class aliases; the C# parser does the same for `using` forms, including static imports, aliases, and external namespace roots, with helpers to strip and validate the `global::` qualifier before binding.
 [crates/gcode/src/index/import_resolution/parser/java_csharp.rs:8-60]
 [crates/gcode/src/index/import_resolution/parser/java_csharp.rs:62-118]
 [crates/gcode/src/index/import_resolution/parser/java_csharp.rs:120-122]

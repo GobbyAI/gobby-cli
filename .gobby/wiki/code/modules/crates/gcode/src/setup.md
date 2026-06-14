@@ -13,15 +13,7 @@ provenance:
   - 8-10
   - 13-16
   - 18-279
-  - 19-23
-  - 25-27
-  - 29-34
-  - 36-38
-  - 40-278
   - 281-309
-  - 282-284
-  - 286-292
-  - 294-308
   - 311-319
   - 321-338
 - file: crates/gcode/src/setup/identifiers.rs
@@ -47,7 +39,6 @@ provenance:
   ranges:
   - 12-55
   - 58-84
-  - '59'
   - 87-128
   - 130-155
   - 157-162
@@ -62,28 +53,21 @@ provenance:
   - 300-313
   - 316-321
   - 324-329
-  - 336-409
-  - 412-424
-  - 426-430
-  - 432-438
-  - 440-445
-  - 449-460
-  - 464-473
+  - 340-407
+  - 410-422
+  - 424-428
+  - 430-436
+  - 438-443
+  - 447-458
+  - 462-471
 - file: crates/gcode/src/setup/types.rs
   ranges:
   - '5'
   - 7-23
-  - 8-10
-  - 12-14
-  - 16-18
-  - 20-22
   - 25-29
-  - 26-28
   - 31-38
-  - 32-37
   - 41-66
   - 68-88
-  - 69-87
   - 95-110
   - 114-118
   - 121-129
@@ -100,16 +84,11 @@ Parent: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-The `crates/gcode/src/setup` module provisions and validates a standalone Postgres-backed gcode/code-index deployment. It defines table and index contracts (`TableContract`, `IndexContract`) and catalog inspection helpers that compare expected schema against the live database, plus DDL generation and execution (`execute_postgres_ddl`, `PostgresObjectDefinition`, `GcodeStandaloneSetup`) for creating owned, schema-qualified relations.
+The `crates/gcode/src/setup` module owns standalone provisioning for gcode’s PostgreSQL code index. Its contract layer defines the expected schema namespace, tables, required columns, and indexes, while `GcodeStandaloneSetup` turns those contracts into schema-qualified DDL objects for the `pg_search` extension and code-index tables such as indexed projects, files, symbols, chunks, imports, and calls. The DDL path implements the shared `StandaloneSetup` interface, reports created/skipped/failed objects, and limits the declared public objects to the daemon code-index subset rather than broader Gobby storage like config, secrets, migrations, or sync-state tables [crates/gcode/src/setup/ddl.rs:8-10] [crates/gcode/src/setup/ddl.rs:18-279] [crates/gcode/src/setup/tests.rs:12-55].
 
-Identifier handling enforces safe, byte-limited quoting (`quote_identifier`, `qualified_relation`). The orchestration layer (`run_standalone_setup`, `standalone_setup_status`, `validate_standalone_request`) drives setup execution and status reporting, while compatibility and reset routines (`ensure_postgres_code_index_compatible`, `reset_postgres_code_index`, `postgres_overwrite_reset_sql`) detect and recreate incompatible relations under an allowlisted overwrite flow.
+The main PostgreSQL flow starts in `run_standalone_setup`: it validates the request, opens a transaction, either resets incompatible code-index relations when overwrite is requested or checks compatibility against the existing schema, then calls `setup.create` through a `SetupContext`. Successful reports are committed, while failures clear created/skipped entries before being converted into `StandaloneSetupStatus` with structured failure objects [crates/gcode/src/setup/postgres.rs:12-57] [crates/gcode/src/setup/postgres.rs:59-77]. Identifier helpers keep all generated SQL safe by validating PostgreSQL identifier length and contents, quoting schema and relation names independently, and returning setup errors on invalid input [crates/gcode/src/setup/identifiers.rs:5-15] [crates/gcode/src/setup/identifiers.rs:17-41].
 
-Core types (`StandaloneSetupRequest`, `StandaloneSetupStatus`, `StandaloneServicesStatus`, `StandaloneFailure`) model requests and outcomes, with a `Redacted` wrapper ensuring passwords and database URLs are scrubbed from debug and JSON output. An extensive test suite covers contract/DDL alignment, secret redaction, schema restrictions, identifier limits, connect-timeout injection, and destructive-test guards.
-[crates/gcode/src/setup/contracts.rs:5-8]
-[crates/gcode/src/setup/ddl.rs:8-10]
-[crates/gcode/src/setup/identifiers.rs:5-15]
-[crates/gcode/src/setup/postgres.rs:12-57]
-[crates/gcode/src/setup/tests.rs:12-55]
+The type layer carries setup input and output state across this flow. `StandaloneSetupRequest` collects standalone mode, database URL, overwrite flag, schema, embedding, FalkorDB, and Qdrant configuration, defaulting the schema from the shared contract; sensitive fields use `Redacted`, which preserves access for provisioning but hides values in debug output and skips selected secrets during JSON serialization [crates/gcode/src/setup/types.rs:5] [crates/gcode/src/setup/types.rs:7-23] [crates/gcode/src/setup/types.rs:8-10] [crates/gcode/src/setup/types.rs:16-18]. The tests tie these pieces together by asserting the standalone object set, core setup trait integration, DDL/catalog contract matching, overwrite/reset SQL allowlisting, request redaction, serialization behavior, identifier edge cases, and destructive-Postgres safeguards [crates/gcode/src/setup/tests.rs:58-84] [crates/gcode/src/setup/tests.rs:87-128] [crates/gcode/src/setup/tests.rs:130-155].
 
 ## Call Diagram
 
@@ -118,23 +97,23 @@ sequenceDiagram
     participant m_04f9b064_f6ae_5ba7_983e_1f3fa73ed2e6 as owned_object &#91;function&#93;
     participant m_11681dec_a19e_5e08_b39e_19ee0b3f0498 as run_standalone_setup &#91;function&#93;
     participant m_235f4be8_628e_5fc2_adf5_172e0cc94e9d as incompatible_postgres_code_index_relations &#91;function&#93;
-    participant m_31350683_68f5_5cd1_898d_7e7451c2da92 as destructive_postgres_test_override_enabled &#91;function&#93;
-    participant m_3b085f0d_5895_53da_b49f_cf207b3c65f2 as cleanup_code_index_relations &#91;function&#93;
+    participant m_40902f66_8497_5989_b560_fdf1f294aa39 as cleanup_code_index_relations &#91;function&#93;
     participant m_43b0536b_6236_5396_828a_d849d6703daa as Redacted.as_deref &#91;method&#93;
     participant m_45d1441b_1225_5a18_987b_bf8deff951da as validate_standalone_request &#91;function&#93;
     participant m_474e86f6_d808_5308_9be4_3ecbdd4d6ea4 as normalized_sql &#91;function&#93;
-    participant m_58fd371e_1410_5d04_81df_904e00da24c8 as destructive_postgres_guard_requires_test_database_name &#91;function&#93;
-    participant m_6c002796_aad6_53eb_bd3d_fd8c04c948a7 as database_url_with_connect_timeout &#91;function&#93;
+    participant m_5b29f6f8_b8fb_5aea_9096_ccb9e71da0c1 as overwrite_recreates_incompatible_code_index_and_preserves_sentinel_table &#91;function&#93;
+    participant m_67c8249e_ec85_5b2b_b71e_7f1e5073e638 as destructive_postgres_guard_requires_test_database_name &#91;function&#93;
     participant m_77341870_4d98_5e54_be3e_43a1ebabf437 as postgres_overwrite_reset_sql &#91;function&#93;
     participant m_89cace5d_69f7_5df5_a793_f42f65af553c as standalone_setup_status &#91;function&#93;
+    participant m_904f2572_f1c8_5101_8733_89e0659c09a4 as destructive_postgres_test_override_enabled &#91;function&#93;
     participant m_97bf37d5_752a_5416_93b2_11b6302a37e6 as relation_kind &#91;function&#93;
     participant m_a3b0568e_44cd_5cc2_a219_b916c0dd8b26 as inspect_table_contract &#91;function&#93;
+    participant m_a8708006_b143_57ac_8ea7_a7d766ad09ee as destructive_postgres_test_allowed &#91;function&#93;
     participant m_abcd285d_32d4_5b4a_90d7_7bd3b4d8f080 as GcodeStandaloneSetup.postgres_object_definitions &#91;method&#93;
     participant m_b5b176ea_cc9d_569b_adad_7ab7ebefefe2 as GcodeStandaloneSetup.create &#91;method&#93;
-    participant m_b9c46036_b6a1_5b9e_8dfe_8fa2afd7b179 as destructive_postgres_test_allowed &#91;function&#93;
     participant m_c0d54b4e_fe77_5139_b186_661ebd52cf67 as table_columns &#91;function&#93;
-    participant m_cf046636_642c_5461_82b6_dce489317e68 as overwrite_recreates_incompatible_code_index_and_preserves_sentinel_table &#91;function&#93;
     participant m_d80d2822_a0a2_588c_be75_db3e66a9ed5f as standalone_setup_ddl_matches_catalog_contracts &#91;function&#93;
+    participant m_da5ff6a6_14ef_5c25_a891_84f4d333e60f as database_url_with_connect_timeout &#91;function&#93;
     participant m_dc7786dc_8f65_54b0_bdc0_a259549f1298 as reset_postgres_code_index &#91;function&#93;
     participant m_e45dd2f8_8bcc_5120_8b51_1a67b7cbc0f0 as Redacted.is_some &#91;method&#93;
     participant m_e574eea3_b6bc_5388_a882_5c5e664ff8d9 as ensure_postgres_code_index_compatible &#91;function&#93;
@@ -150,15 +129,15 @@ sequenceDiagram
     m_235f4be8_628e_5fc2_adf5_172e0cc94e9d->>m_a3b0568e_44cd_5cc2_a219_b916c0dd8b26: calls
     m_235f4be8_628e_5fc2_adf5_172e0cc94e9d->>m_f312243d_71fa_5712_96a3_9cf9f738e90a: calls
     m_43b0536b_6236_5396_828a_d849d6703daa->>m_43b0536b_6236_5396_828a_d849d6703daa: calls
-    m_58fd371e_1410_5d04_81df_904e00da24c8->>m_b9c46036_b6a1_5b9e_8dfe_8fa2afd7b179: calls
+    m_5b29f6f8_b8fb_5aea_9096_ccb9e71da0c1->>m_40902f66_8497_5989_b560_fdf1f294aa39: calls
+    m_5b29f6f8_b8fb_5aea_9096_ccb9e71da0c1->>m_a8708006_b143_57ac_8ea7_a7d766ad09ee: calls
+    m_5b29f6f8_b8fb_5aea_9096_ccb9e71da0c1->>m_da5ff6a6_14ef_5c25_a891_84f4d333e60f: calls
+    m_67c8249e_ec85_5b2b_b71e_7f1e5073e638->>m_a8708006_b143_57ac_8ea7_a7d766ad09ee: calls
     m_a3b0568e_44cd_5cc2_a219_b916c0dd8b26->>m_97bf37d5_752a_5416_93b2_11b6302a37e6: calls
     m_a3b0568e_44cd_5cc2_a219_b916c0dd8b26->>m_c0d54b4e_fe77_5139_b186_661ebd52cf67: calls
+    m_a8708006_b143_57ac_8ea7_a7d766ad09ee->>m_904f2572_f1c8_5101_8733_89e0659c09a4: calls
     m_abcd285d_32d4_5b4a_90d7_7bd3b4d8f080->>m_e818b83f_2486_5a5b_b41c_a79fe05cc710: calls
     m_b5b176ea_cc9d_569b_adad_7ab7ebefefe2->>m_ed46b380_73b5_5734_a9de_d3146f45110c: calls
-    m_b9c46036_b6a1_5b9e_8dfe_8fa2afd7b179->>m_31350683_68f5_5cd1_898d_7e7451c2da92: calls
-    m_cf046636_642c_5461_82b6_dce489317e68->>m_3b085f0d_5895_53da_b49f_cf207b3c65f2: calls
-    m_cf046636_642c_5461_82b6_dce489317e68->>m_6c002796_aad6_53eb_bd3d_fd8c04c948a7: calls
-    m_cf046636_642c_5461_82b6_dce489317e68->>m_b9c46036_b6a1_5b9e_8dfe_8fa2afd7b179: calls
     m_d80d2822_a0a2_588c_be75_db3e66a9ed5f->>m_474e86f6_d808_5308_9be4_3ecbdd4d6ea4: calls
     m_dc7786dc_8f65_54b0_bdc0_a259549f1298->>m_77341870_4d98_5e54_be3e_43a1ebabf437: calls
     m_e45dd2f8_8bcc_5120_8b51_1a67b7cbc0f0->>m_e45dd2f8_8bcc_5120_8b51_1a67b7cbc0f0: calls
@@ -166,33 +145,35 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gcode/src/setup/contracts.rs|crates/gcode/src/setup/contracts.rs]] - `crates/gcode/src/setup/contracts.rs` exposes 4 indexed API symbols.
+- [[code/files/crates/gcode/src/setup/contracts.rs|crates/gcode/src/setup/contracts.rs]] - This file defines the static schema contract metadata used by `gcode` setup for the code index database: shared constants like the default schema and namespace, plus `TableContract` and `IndexContract` records that describe the expected tables, their required columns, and related index definitions.
+
+The `TABLE_CONTRACTS` and `INDEX_CONTRACTS` arrays centralize those expectations for all code-indexed relations, and the `code_index_table_names` and `code_index_index_names` helpers expose just the contract names as iterators so other setup or validation code can inspect them without depending on the full contract structs.
 [crates/gcode/src/setup/contracts.rs:5-8]
 [crates/gcode/src/setup/contracts.rs:10-14]
 [crates/gcode/src/setup/contracts.rs:191-193]
 [crates/gcode/src/setup/contracts.rs:195-197]
-- [[code/files/crates/gcode/src/setup/ddl.rs|crates/gcode/src/setup/ddl.rs]] - `crates/gcode/src/setup/ddl.rs` exposes 14 indexed API symbols.
+- [[code/files/crates/gcode/src/setup/ddl.rs|crates/gcode/src/setup/ddl.rs]] - This file defines `GcodeStandaloneSetup`, a schema-aware PostgreSQL setup helper for gcode. It builds a list of schema-qualified DDL objects for the `pg_search` extension and the code-indexing tables, wraps them as `OwnedObject`s, and implements `StandaloneSetup` so those objects can be created sequentially with `SetupContext`, producing a `SetupReport` that records successes, failures, and skipped follow-on objects.
 [crates/gcode/src/setup/ddl.rs:8-10]
 [crates/gcode/src/setup/ddl.rs:13-16]
 [crates/gcode/src/setup/ddl.rs:18-279]
 [crates/gcode/src/setup/ddl.rs:19-23]
 [crates/gcode/src/setup/ddl.rs:25-27]
-- [[code/files/crates/gcode/src/setup/identifiers.rs|crates/gcode/src/setup/identifiers.rs]] - `crates/gcode/src/setup/identifiers.rs` exposes 2 indexed API symbols.
+- [[code/files/crates/gcode/src/setup/identifiers.rs|crates/gcode/src/setup/identifiers.rs]] - This file provides PostgreSQL identifier formatting helpers for setup code. `quote_identifier` sanitizes a single identifier by trimming whitespace, rejecting empty values, NUL bytes, and names over 63 bytes, then escaping internal double quotes and wrapping the result in quotes. `qualified_relation` builds a schema-qualified name by quoting the schema and relation separately and joining them with a dot, so any validation or quoting failure is returned as a `SetupError`.
 [crates/gcode/src/setup/identifiers.rs:5-15]
 [crates/gcode/src/setup/identifiers.rs:17-41]
-- [[code/files/crates/gcode/src/setup/postgres.rs|crates/gcode/src/setup/postgres.rs]] - `crates/gcode/src/setup/postgres.rs` exposes 13 indexed API symbols.
+- [[code/files/crates/gcode/src/setup/postgres.rs|crates/gcode/src/setup/postgres.rs]] - This file implements PostgreSQL-backed standalone setup for gcode. `run_standalone_setup` validates the request, optionally resets or compatibility-checks the existing code-index schema, runs the setup inside a transaction, and converts the resulting `SetupReport` into a `StandaloneSetupStatus`; the rest of the file is the support layer for that flow, including status mapping, schema-contract inspection, catalog queries for tables and indexes, reset SQL generation, and request validation against the required standalone/public schema.
 [crates/gcode/src/setup/postgres.rs:12-57]
 [crates/gcode/src/setup/postgres.rs:59-77]
 [crates/gcode/src/setup/postgres.rs:85-101]
 [crates/gcode/src/setup/postgres.rs:103-114]
 [crates/gcode/src/setup/postgres.rs:116-131]
-- [[code/files/crates/gcode/src/setup/tests.rs|crates/gcode/src/setup/tests.rs]] - `crates/gcode/src/setup/tests.rs` exposes 24 indexed API symbols.
+- [[code/files/crates/gcode/src/setup/tests.rs|crates/gcode/src/setup/tests.rs]] - This file is the test suite for `gcode` standalone setup behavior. It checks that `GcodeStandaloneSetup` exposes the right public code-index objects and Postgres-backed contract, that its DDL and overwrite/reset SQL match the expected catalog rules, and that helper functions and request/status types handle identifier limits, timeouts, redaction, serialization, and destructive-Postgres safeguards correctly.
 [crates/gcode/src/setup/tests.rs:12-55]
 [crates/gcode/src/setup/tests.rs:58-84]
 [crates/gcode/src/setup/tests.rs:59]
 [crates/gcode/src/setup/tests.rs:87-128]
 [crates/gcode/src/setup/tests.rs:130-155]
-- [[code/files/crates/gcode/src/setup/types.rs|crates/gcode/src/setup/types.rs]] - `crates/gcode/src/setup/types.rs` exposes 18 indexed API symbols.
+- [[code/files/crates/gcode/src/setup/types.rs|crates/gcode/src/setup/types.rs]] - This file defines setup-time data types for standalone Gobby provisioning, centered on a `Redacted` newtype that wraps optional secrets and hides their contents in `Debug` output while still allowing basic access and cloning. It then uses that wrapper in `StandaloneSetupRequest`, which collects standalone mode, database, embedding, and FalkorDB/Qdrant configuration, with a constructor that fills defaults like `DEFAULT_SCHEMA` and leaves optional fields unset unless provided. The rest of the file defines status and error structs for reporting provisioning progress and outcomes, including service health, embedding configuration, individual failures, and the overall setup result.
 [crates/gcode/src/setup/types.rs:5]
 [crates/gcode/src/setup/types.rs:7-23]
 [crates/gcode/src/setup/types.rs:8-10]
@@ -251,13 +232,13 @@ sequenceDiagram
 - `cbddf32b-fe2f-5bfb-a80a-61a6c133a5e5`
 - `99c06abf-0932-5669-a2fd-10c7075a852b`
 - `71b3132f-835a-541a-a5e4-42a0601d3e0f`
-- `cf046636-642c-5461-82b6-dce489317e68`
-- `b9c46036-b6a1-5b9e-8dfe-8fa2afd7b179`
-- `31350683-68f5-5cd1-898d-7e7451c2da92`
-- `6c002796-aad6-53eb-bd3d-fd8c04c948a7`
-- `3b085f0d-5895-53da-b49f-cf207b3c65f2`
-- `58fd371e-1410-5d04-81df-904e00da24c8`
-- `73d84bbd-10b2-52c1-92fe-58086616dccc`
+- `5b29f6f8-b8fb-5aea-9096-ccb9e71da0c1`
+- `a8708006-b143-57ac-8ea7-a7d766ad09ee`
+- `904f2572-f1c8-5101-8733-89e0659c09a4`
+- `da5ff6a6-14ef-5c25-a891-84f4d333e60f`
+- `40902f66-8497-5989-b560-fdf1f294aa39`
+- `67c8249e-ec85-5b2b-b71e-7f1e5073e638`
+- `4e5cf3ef-d937-5eb7-bfab-2b61c84a53eb`
 - `d9102a69-174a-5828-a221-b7ed718b7f84`
 - `f0bb5422-09a0-5671-98f6-92353cb94270`
 - `fd79f391-2ac6-5180-aa28-de8243988bf8`

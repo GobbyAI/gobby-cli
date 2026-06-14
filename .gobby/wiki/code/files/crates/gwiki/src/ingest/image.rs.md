@@ -31,7 +31,7 @@ Module: [[code/modules/crates/gwiki/src/ingest|crates/gwiki/src/ingest]]
 
 ## Purpose
 
-`crates/gwiki/src/ingest/image.rs` exposes 17 indexed API symbols.
+Defines the image ingestion pipeline for gwiki, centered on an `ImageSnapshot` input and an `ImageIngestResult` that records the generated source record plus raw, asset, and derived output paths and any vision degradation used. The top-level `ingest_image` path falls back to default degradation, while the production and non-production vision variants split index updates from ingestion work; shared helpers then render raw image markdown, decide whether original images are stored, determine scope-indexed metadata, and build the final `IngestResult` from the produced files and vision output.
 [crates/gwiki/src/ingest/image.rs:23-31]
 [crates/gwiki/src/ingest/image.rs:34-40]
 [crates/gwiki/src/ingest/image.rs:43-56]

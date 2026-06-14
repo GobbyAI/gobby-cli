@@ -8,24 +8,6 @@ provenance:
   - 39-43
   - 45-56
   - 58-376
-  - 59-82
-  - 84-86
-  - 88-98
-  - 100-118
-  - 120-141
-  - 143-160
-  - 162-182
-  - 184-201
-  - 203-205
-  - 207-217
-  - 219-240
-  - 242-261
-  - 263-282
-  - 284-292
-  - 294-307
-  - 309-326
-  - 328-367
-  - 369-375
   - 378-389
   - 391-393
 generated_by: gcode-codewiki
@@ -39,7 +21,9 @@ Module: [[code/modules/crates/gcode/src/vector/code_symbols|crates/gcode/src/vec
 
 ## Purpose
 
-`crates/gcode/src/vector/code_symbols/lifecycle.rs` exposes 24 indexed API symbols.
+This file implements the lifecycle manager for code-symbol vectors stored in Qdrant. `CodeSymbolVectorLifecycle` ties together project-scoped collection naming, Qdrant client setup, embedding generation, schema validation, and batch sync/delete/upsert operations so symbol data can be created, reconciled, rebuilt, and cleared safely.
+
+The free functions provide small entry points: `resolve_lifecycle_qdrant_config` resolves Qdrant settings from config, and `lifecycle_status` builds a status object for a given project/action. Inside the class, `new` initializes the manager, `ensure_collection` and schema-related methods verify or create compatible collections, `sync_file_symbols` and `upsert_points` push symbol data into Qdrant, `delete_vectors` and `delete_stale_vectors` remove obsolete entries, and `rebuild_symbols`/`clear_project_vectors` support full refresh workflows. `points_for_symbols`, `payload_map`, and `point_ids` translate symbols into Qdrant point payloads and identifiers, while `output` and `qdrant_request` shape the lifecycle result and HTTP requests.
 [crates/gcode/src/vector/code_symbols/lifecycle.rs:29-37]
 [crates/gcode/src/vector/code_symbols/lifecycle.rs:39-43]
 [crates/gcode/src/vector/code_symbols/lifecycle.rs:45-56]

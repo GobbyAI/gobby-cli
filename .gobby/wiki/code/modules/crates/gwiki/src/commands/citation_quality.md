@@ -27,7 +27,11 @@ Parent: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Overview
 
-The `citation_quality` module provides tools for assessing citation quality by identifying contradictions between document sections and sources. Through the `contradictions.rs` submodule, it compares claims (`SectionClaimComparison`, `SourceClaim`), executes model-based detection to find discrepancies (`model_contradiction_findings`), and parses, extracts, and sanitizes the contradiction results. It also provides helper functions for claim normalization and error mapping from AI responses to domain-specific errors.
+The citation_quality contradiction module assembles and runs the citation contradiction-detection stage. Its public flow is `contradiction_section`, which first reports AI detection as unavailable without inventing findings when AI is off, then builds section-level comparisons, returns an empty available result when no usable multi-source differing claims exist, or runs a supplied detector and sanitizes its findings against the compared source IDs before returning a `ContradictionSection` (crates/gwiki/src/commands/citation_quality/contradictions.rs:30-68).
+
+The module’s data model is deliberately small: `SectionClaimComparison` groups a section name with source claims, `SourceClaim` records each source ID and claim text, and `ContradictionModelOutput` represents the AI response shape containing `ContradictionFinding` values (crates/gwiki/src/commands/citation_quality/contradictions.rs:13-28). It collaborates with `ProvenanceGraph` by scanning provenance links, trimming and filtering claim text, and organizing claims in ordered maps/sets so comparisons are deduplicated and deterministic (crates/gwiki/src/commands/citation_quality/contradictions.rs:1-10, 70-100).
+
+AI integration is kept behind helper flows summarized by the module: `model_contradiction_findings` invokes the configured AI route, `parse_contradiction_findings` and `extract_json_payload` recover structured model output, `sanitize_contradiction_findings` filters or normalizes model results, and `ai_error_to_wiki_error` adapts AI failures into the wiki command’s error type. Together these helpers turn provenance-derived multi-source section claims into bounded, validated contradiction findings rather than trusting raw model output directly.
 [crates/gwiki/src/commands/citation_quality/contradictions.rs:15-18]
 [crates/gwiki/src/commands/citation_quality/contradictions.rs:21-24]
 [crates/gwiki/src/commands/citation_quality/contradictions.rs:27-29]
@@ -57,7 +61,9 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gwiki/src/commands/citation_quality/contradictions.rs|crates/gwiki/src/commands/citation_quality/contradictions.rs]] - `crates/gwiki/src/commands/citation_quality/contradictions.rs` exposes 12 indexed API symbols.
+- [[code/files/crates/gwiki/src/commands/citation_quality/contradictions.rs|crates/gwiki/src/commands/citation_quality/contradictions.rs]] - This file builds the contradiction-detection pipeline for citation quality checks. It defines small comparison records for section-level claims, groups provenance links into deduplicated multi-source section comparisons, and either returns an unavailable/empty contradiction section or runs an AI-backed detector over those comparisons.
+
+The detector path serializes section comparisons into a prompt, parses the model’s JSON response into contradiction findings, and then sanitizes those findings against the known source IDs by trimming, normalizing, and deduplicating claims before producing the final `ContradictionSection`. An AI error is converted into a `WikiError::Daemon` so failures surface through the wiki error type.
 [crates/gwiki/src/commands/citation_quality/contradictions.rs:15-18]
 [crates/gwiki/src/commands/citation_quality/contradictions.rs:21-24]
 [crates/gwiki/src/commands/citation_quality/contradictions.rs:27-29]

@@ -19,7 +19,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-`crates/gwiki/src/commands/benchmark.rs` exposes 4 indexed API symbols.
+This file implements the `gwiki benchmark` command flow. `execute` validates the benchmark options, resolves the PostgreSQL database URL, and delegates to `run_analysis_command` so the benchmark runs against the selected scope and produces a serialized report. `run_attached` performs the database-backed benchmark work: it builds AI/config context from Gobby home and PostgreSQL, resolves the benchmark inputs, and returns a `BenchmarkReport`. `search_scope_for_identity` derives the search scope from the selected output identity, and `benchmark_text` formats the final report into command output.
 [crates/gwiki/src/commands/benchmark.rs:11-44]
 [crates/gwiki/src/commands/benchmark.rs:46-73]
 [crates/gwiki/src/commands/benchmark.rs:75-81]

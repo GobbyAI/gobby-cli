@@ -4,16 +4,24 @@ type: code_file
 provenance:
 - file: crates/gcode/src/commands/codewiki/cluster.rs
   ranges:
-  - 3-54
-  - 56-80
-  - 89-130
-  - 132-156
-  - 158-168
-  - 170-178
-  - 180-196
-  - 198-206
-  - 208-226
-  - 228-233
+  - 8-43
+  - 46-55
+  - 57-61
+  - 63-123
+  - 125-149
+  - 158-199
+  - 201-225
+  - 227-237
+  - 239-247
+  - 249-265
+  - 267-275
+  - 277-295
+  - 297-302
+  - 308-310
+  - 313-329
+  - 332-336
+  - 339-350
+  - 353-413
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -25,43 +33,67 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Purpose
 
-`crates/gcode/src/commands/codewiki/cluster.rs` exposes 10 indexed API symbols.
-[crates/gcode/src/commands/codewiki/cluster.rs:3-54]
-[crates/gcode/src/commands/codewiki/cluster.rs:56-80]
-[crates/gcode/src/commands/codewiki/cluster.rs:89-130]
-[crates/gcode/src/commands/codewiki/cluster.rs:132-156]
-[crates/gcode/src/commands/codewiki/cluster.rs:158-168]
+This file provides utilities for organizing code into subsystem hierarchies based on directory structure and file locations. The `subsystem_roots` function identifies top-level decomposition units from the file tree, expanding container directories one level to reveal meaningful units. Supporting functions like `subsystem_root_for_file`, `module_is_within`, and `path_components` validate and navigate these hierarchies. The file clustering logic (`cluster_file_modules`, `union_files`, `common_module_for_files`) groups related files by their module structure and symbol relationships, while constraint functions like `call_edges_never_merge_clusters_across_subsystem_roots` enforce organizational boundaries that prevent clustering across different subsystems.
+[crates/gcode/src/commands/codewiki/cluster.rs:8-43]
+[crates/gcode/src/commands/codewiki/cluster.rs:46-55]
+[crates/gcode/src/commands/codewiki/cluster.rs:57-61]
+[crates/gcode/src/commands/codewiki/cluster.rs:63-123]
+[crates/gcode/src/commands/codewiki/cluster.rs:125-149]
 
 ## API Symbols
 
-- `cluster_file_modules` (function) component `cluster_file_modules [function]` (`b5f7a087-cd7f-5e27-823b-79664f1a5646`) lines 3-54 [crates/gcode/src/commands/codewiki/cluster.rs:3-54]
+- `subsystem_roots` (function) component `subsystem_roots [function]` (`1162d4f9-5626-571f-89ec-a1251b313bd7`) lines 8-43 [crates/gcode/src/commands/codewiki/cluster.rs:8-43]
+  - Signature: `pub(crate) fn subsystem_roots(files: &[String]) -> BTreeSet<String> {`
+  - Purpose: Indexed function `subsystem_roots` in `crates/gcode/src/commands/codewiki/cluster.rs`. [crates/gcode/src/commands/codewiki/cluster.rs:8-43]
+- `subsystem_root_for_file` (function) component `subsystem_root_for_file [function]` (`cd08cbab-e272-5dfb-a306-6728aeacea18`) lines 46-55 [crates/gcode/src/commands/codewiki/cluster.rs:46-55]
+  - Signature: `pub(crate) fn subsystem_root_for_file<'a>(`
+  - Purpose: Indexed function `subsystem_root_for_file` in `crates/gcode/src/commands/codewiki/cluster.rs`. [crates/gcode/src/commands/codewiki/cluster.rs:46-55]
+- `module_is_within` (function) component `module_is_within [function]` (`b5d6567b-87b1-59a7-8894-5a2df2ce8d6f`) lines 57-61 [crates/gcode/src/commands/codewiki/cluster.rs:57-61]
+  - Signature: `fn module_is_within(module: &str, root: &str) -> bool {`
+  - Purpose: Indexed function `module_is_within` in `crates/gcode/src/commands/codewiki/cluster.rs`. [crates/gcode/src/commands/codewiki/cluster.rs:57-61]
+- `cluster_file_modules` (function) component `cluster_file_modules [function]` (`d05bc055-1ab7-54e0-880f-8ae763200521`) lines 63-123 [crates/gcode/src/commands/codewiki/cluster.rs:63-123]
   - Signature: `pub(crate) fn cluster_file_modules(`
-  - Purpose: Clusters the input files into connected components via `Call` edges between their symbols, then assigns each file the module path derived from either the common module of its component or its own file module when isolated. [crates/gcode/src/commands/codewiki/cluster.rs:3-54]
-- `union_files` (function) component `union_files [function]` (`2cf219a4-ccdc-5833-af4a-e0b6a1985105`) lines 56-80 [crates/gcode/src/commands/codewiki/cluster.rs:56-80]
+  - Purpose: Indexed function `cluster_file_modules` in `crates/gcode/src/commands/codewiki/cluster.rs`. [crates/gcode/src/commands/codewiki/cluster.rs:63-123]
+- `union_files` (function) component `union_files [function]` (`69836486-d6f1-5a42-9d07-abfd020e0cb2`) lines 125-149 [crates/gcode/src/commands/codewiki/cluster.rs:125-149]
   - Signature: `pub(crate) fn union_files(`
-  - Purpose: `union_files` merges the disjoint-set components containing `left` and `right` by finding their roots, returning early if they are already unified, and otherwise performing a union-by-rank with a deterministic lexicographic tie-break on equal ranks while updating `parents` and incrementing the selected root’s rank when needed. [crates/gcode/src/commands/codewiki/cluster.rs:56-80]
-- `find_file_root` (function) component `find_file_root [function]` (`731f2c21-b8ef-5b43-a961-72daf4bf1d5a`) lines 89-130 [crates/gcode/src/commands/codewiki/cluster.rs:89-130]
+  - Purpose: Indexed function `union_files` in `crates/gcode/src/commands/codewiki/cluster.rs`. [crates/gcode/src/commands/codewiki/cluster.rs:125-149]
+- `find_file_root` (function) component `find_file_root [function]` (`9e38315c-b59c-5c60-9533-218af1e5e89f`) lines 158-199 [crates/gcode/src/commands/codewiki/cluster.rs:158-199]
   - Signature: `pub(crate) fn find_file_root(parents: &mut HashMap<String, String>, file: &str) -> String {`
-  - Purpose: `find_file_root` walks the `parents` union-find chain from `file` to its canonical root, detects and resolves parent cycles by choosing the lexicographically smallest node in the cycle, and path-compresses every visited node to that root in `parents`. [crates/gcode/src/commands/codewiki/cluster.rs:89-130]
-- `common_module_for_files` (function) component `common_module_for_files [function]` (`375c30f2-681b-56a1-bb8c-3a87f1b45bb1`) lines 132-156 [crates/gcode/src/commands/codewiki/cluster.rs:132-156]
+  - Purpose: Indexed function `find_file_root` in `crates/gcode/src/commands/codewiki/cluster.rs`. [crates/gcode/src/commands/codewiki/cluster.rs:158-199]
+- `common_module_for_files` (function) component `common_module_for_files [function]` (`921214d7-ccfc-5fad-9c90-f94f966ffb06`) lines 201-225 [crates/gcode/src/commands/codewiki/cluster.rs:201-225]
   - Signature: `pub(crate) fn common_module_for_files(files: &[String]) -> String {`
-  - Purpose: Returns the longest shared slash-delimited module path prefix across all input files after transforming each path with `module_for_file`, or `""` when `files` is empty. [crates/gcode/src/commands/codewiki/cluster.rs:132-156]
-- `symbols_by_file_component` (function) component `symbols_by_file_component [function]` (`f49c3c64-b3e7-5a95-8f0f-4848c16324dc`) lines 158-168 [crates/gcode/src/commands/codewiki/cluster.rs:158-168]
+  - Purpose: Indexed function `common_module_for_files` in `crates/gcode/src/commands/codewiki/cluster.rs`. [crates/gcode/src/commands/codewiki/cluster.rs:201-225]
+- `symbols_by_file_component` (function) component `symbols_by_file_component [function]` (`15b839b6-5065-5891-af35-45ed8ba699c4`) lines 227-237 [crates/gcode/src/commands/codewiki/cluster.rs:227-237]
   - Signature: `pub(crate) fn symbols_by_file_component(symbols: &[Symbol]) -> BTreeMap<String, Vec<String>> {`
-  - Purpose: Builds a `BTreeMap` keyed by each core file path, collecting the `id` of every `Symbol` whose `file_path` passes `is_core_file` into the corresponding `Vec<String>`, with non-core symbols skipped. [crates/gcode/src/commands/codewiki/cluster.rs:158-168]
-- `first_component_for_file` (function) component `first_component_for_file [function]` (`4a29bdf1-f7ab-5254-a2cf-cddacc17f47c`) lines 170-178 [crates/gcode/src/commands/codewiki/cluster.rs:170-178]
+  - Purpose: Indexed function `symbols_by_file_component` in `crates/gcode/src/commands/codewiki/cluster.rs`. [crates/gcode/src/commands/codewiki/cluster.rs:227-237]
+- `first_component_for_file` (function) component `first_component_for_file [function]` (`6926a399-46b2-5fc0-86de-ccd09751f171`) lines 239-247 [crates/gcode/src/commands/codewiki/cluster.rs:239-247]
   - Signature: `pub(crate) fn first_component_for_file(`
-  - Purpose: Looks up `file` in `symbols_by_file` and returns a cloned `String` containing that file’s first component, or `None` if the file is absent or its component list is empty. [crates/gcode/src/commands/codewiki/cluster.rs:170-178]
-- `files_for_import_target` (function) component `files_for_import_target [function]` (`f24c62ab-dfa9-57f2-aede-7b84478262c7`) lines 180-196 [crates/gcode/src/commands/codewiki/cluster.rs:180-196]
+  - Purpose: Indexed function `first_component_for_file` in `crates/gcode/src/commands/codewiki/cluster.rs`. [crates/gcode/src/commands/codewiki/cluster.rs:239-247]
+- `files_for_import_target` (function) component `files_for_import_target [function]` (`b5b4658b-fe51-54b2-94ab-c763bbd85b77`) lines 249-265 [crates/gcode/src/commands/codewiki/cluster.rs:249-265]
   - Signature: `pub(crate) fn files_for_import_target<'a>(`
-  - Purpose: Returns the subset of `files` as borrowed `&str` slices whose path components or derived module-name components contain the component sequence of `target_module`, or an empty `Vec` if `target_module` has no components. [crates/gcode/src/commands/codewiki/cluster.rs:180-196]
-- `module_components` (function) component `module_components [function]` (`5b87f590-cc00-51f2-a9b3-705b4fdb4048`) lines 198-206 [crates/gcode/src/commands/codewiki/cluster.rs:198-206]
+  - Purpose: Indexed function `files_for_import_target` in `crates/gcode/src/commands/codewiki/cluster.rs`. [crates/gcode/src/commands/codewiki/cluster.rs:249-265]
+- `module_components` (function) component `module_components [function]` (`07e3fb63-606b-5d7d-926b-0080b561c941`) lines 267-275 [crates/gcode/src/commands/codewiki/cluster.rs:267-275]
   - Signature: `fn module_components(value: &str) -> Vec<String> {`
-  - Purpose: It normalizes `::`, `.`, and `\` to `/`, splits the string on `/`, filters out empty segments, and returns the remaining path-like components as owned `String`s. [crates/gcode/src/commands/codewiki/cluster.rs:198-206]
-- `path_components` (function) component `path_components [function]` (`0c6bff98-f535-535b-b04c-5bc1873f8bfb`) lines 208-226 [crates/gcode/src/commands/codewiki/cluster.rs:208-226]
+  - Purpose: Indexed function `module_components` in `crates/gcode/src/commands/codewiki/cluster.rs`. [crates/gcode/src/commands/codewiki/cluster.rs:267-275]
+- `path_components` (function) component `path_components [function]` (`984bc8c7-5466-54dc-a75f-6d345529eb0d`) lines 277-295 [crates/gcode/src/commands/codewiki/cluster.rs:277-295]
   - Signature: `fn path_components(file: &str) -> Vec<String> {`
-  - Purpose: It returns a `Vec<String>` of the path’s normal components, skipping non-`Normal` segments and stripping each component’s extension to its file stem when one is present. [crates/gcode/src/commands/codewiki/cluster.rs:208-226]
-- `contains_component_sequence` (function) component `contains_component_sequence [function]` (`a2788420-9cd4-55d3-925d-8765093224a7`) lines 228-233 [crates/gcode/src/commands/codewiki/cluster.rs:228-233]
+  - Purpose: Indexed function `path_components` in `crates/gcode/src/commands/codewiki/cluster.rs`. [crates/gcode/src/commands/codewiki/cluster.rs:277-295]
+- `contains_component_sequence` (function) component `contains_component_sequence [function]` (`8ee1a096-f2bb-5fa2-8c7c-9d52c5a1b472`) lines 297-302 [crates/gcode/src/commands/codewiki/cluster.rs:297-302]
   - Signature: `fn contains_component_sequence(components: &[String], target: &[String]) -> bool {`
-  - Purpose: Returns `true` when `target` exactly matches any contiguous slice of `components` of length `target.len()`, and `false` otherwise. [crates/gcode/src/commands/codewiki/cluster.rs:228-233]
+  - Purpose: Indexed function `contains_component_sequence` in `crates/gcode/src/commands/codewiki/cluster.rs`. [crates/gcode/src/commands/codewiki/cluster.rs:297-302]
+- `paths` (function) component `paths [function]` (`b80a607d-786c-5c72-a0f6-b9bceb73d0e7`) lines 308-310 [crates/gcode/src/commands/codewiki/cluster.rs:308-310]
+  - Signature: `fn paths(values: &[&str]) -> Vec<String> {`
+  - Purpose: Indexed function `paths` in `crates/gcode/src/commands/codewiki/cluster.rs`. [crates/gcode/src/commands/codewiki/cluster.rs:308-310]
+- `subsystem_roots_expand_container_directories_one_level` (function) component `subsystem_roots_expand_container_directories_one_level [function]` (`eba3f9fc-4edb-508b-9d88-599114e469ed`) lines 313-329 [crates/gcode/src/commands/codewiki/cluster.rs:313-329]
+  - Signature: `fn subsystem_roots_expand_container_directories_one_level() {`
+  - Purpose: Indexed function `subsystem_roots_expand_container_directories_one_level` in `crates/gcode/src/commands/codewiki/cluster.rs`. [crates/gcode/src/commands/codewiki/cluster.rs:313-329]
+- `subsystem_roots_keep_top_level_directories_with_direct_files` (function) component `subsystem_roots_keep_top_level_directories_with_direct_files [function]` (`5e0da510-1ba6-5e2f-ab68-a592e2284a91`) lines 332-336 [crates/gcode/src/commands/codewiki/cluster.rs:332-336]
+  - Signature: `fn subsystem_roots_keep_top_level_directories_with_direct_files() {`
+  - Purpose: Indexed function `subsystem_roots_keep_top_level_directories_with_direct_files` in `crates/gcode/src/commands/codewiki/cluster.rs`. [crates/gcode/src/commands/codewiki/cluster.rs:332-336]
+- `subsystem_root_for_file_matches_whole_components_only` (function) component `subsystem_root_for_file_matches_whole_components_only [function]` (`8d84bd95-4e0d-5bb0-98f8-b22ff265a5b7`) lines 339-350 [crates/gcode/src/commands/codewiki/cluster.rs:339-350]
+  - Signature: `fn subsystem_root_for_file_matches_whole_components_only() {`
+  - Purpose: Indexed function `subsystem_root_for_file_matches_whole_components_only` in `crates/gcode/src/commands/codewiki/cluster.rs`. [crates/gcode/src/commands/codewiki/cluster.rs:339-350]
+- `call_edges_never_merge_clusters_across_subsystem_roots` (function) component `call_edges_never_merge_clusters_across_subsystem_roots [function]` (`c7422994-ec4b-5acb-a19d-1bfb95d95df8`) lines 353-413 [crates/gcode/src/commands/codewiki/cluster.rs:353-413]
+  - Signature: `fn call_edges_never_merge_clusters_across_subsystem_roots() {`
+  - Purpose: Indexed function `call_edges_never_merge_clusters_across_subsystem_roots` in `crates/gcode/src/commands/codewiki/cluster.rs`. [crates/gcode/src/commands/codewiki/cluster.rs:353-413]
 

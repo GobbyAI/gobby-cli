@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-`crates/gcode/src/main.rs` exposes 1 indexed API symbol. [crates/gcode/src/main.rs:4-6]
+This file serves as the entry point for the gcode CLI application. The main function delegates program execution to the dispatch::run_with_exit_code() function and returns its exit code. The file imports two modules—cli and dispatch—that provide command-line interface handling and dispatch logic for the application. [crates/gcode/src/main.rs:4-6]
 
 ## API Symbols
 

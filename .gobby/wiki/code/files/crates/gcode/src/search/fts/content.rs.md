@@ -27,7 +27,7 @@ Module: [[code/modules/crates/gcode/src/search/fts|crates/gcode/src/search/fts]]
 
 ## Purpose
 
-`crates/gcode/src/search/fts/content.rs` exposes 12 indexed API symbols.
+This file implements full-text search functionality for code content using PostgreSQL's BM25 algorithm. It provides two primary search functions: search_content searches a specific project's code chunks, while search_content_visible searches content with overlay project support. The search pipeline works by generating parameterized BM25 SQL queries with relevance-based ordering, executing those queries filtered by project ID, language, and file paths, converting database rows into ContentSearchHit objects, and generating text snippets that highlight matching tokens with surrounding context. Helper functions construct SQL query components for BM25 ordering and visible file filtering, tokenize and process query strings, extract context-aware snippets from matched content by finding the first token occurrence and extracting 60 characters of leading context and up to 120 of trailing context, and map character positions during case conversion to support Unicode-aware substring extraction.
 [crates/gcode/src/search/fts/content.rs:13-21]
 [crates/gcode/src/search/fts/content.rs:24-81]
 [crates/gcode/src/search/fts/content.rs:83-138]

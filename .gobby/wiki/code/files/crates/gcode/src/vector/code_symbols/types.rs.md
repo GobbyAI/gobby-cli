@@ -7,11 +7,9 @@ provenance:
   - 7-12
   - 15-18
   - 20-24
-  - 21-23
   - '26'
   - 29-57
   - 59-96
-  - 60-95
   - 100-105
   - 108-112
   - 115-118
@@ -19,9 +17,7 @@ provenance:
   - 127-137
   - 140-162
   - 164-203
-  - 165-202
   - 205-209
-  - 206-208
   - '211'
 generated_by: gcode-codewiki
 trust: generated
@@ -34,7 +30,7 @@ Module: [[code/modules/crates/gcode/src/vector/code_symbols|crates/gcode/src/vec
 
 ## Purpose
 
-`crates/gcode/src/vector/code_symbols/types.rs` exposes 19 indexed API symbols.
+This file defines the data types used by the code-symbol vector indexing and lifecycle pipeline. It includes a search request and search hit model, a rich `CodeSymbolVectorPayload` that is built from a `Symbol` via `from_symbol` by copying symbol fields and attaching extracted projection metadata/provenance, and lifecycle schema/output/status types for managing vector collections. It also defines `VectorLifecycleError` with formatting and conversion support so lifecycle operations can report structured failures consistently.
 [crates/gcode/src/vector/code_symbols/types.rs:7-12]
 [crates/gcode/src/vector/code_symbols/types.rs:15-18]
 [crates/gcode/src/vector/code_symbols/types.rs:20-24]

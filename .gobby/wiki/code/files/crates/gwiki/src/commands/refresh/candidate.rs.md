@@ -22,7 +22,7 @@ Module: [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/comman
 
 ## Purpose
 
-`crates/gwiki/src/commands/refresh/candidate.rs` exposes 7 indexed API symbols.
+This file implements refresh handling for candidate sources in the wiki command pipeline. `refresh_url_candidate` and `refresh_local_candidate` are the entry points: they verify a candidate against its stored `SourceRecord`, compute or fetch current content, and then classify the result as unchanged, successfully refreshed, or failed by pushing structured results into the provided sink vectors. The helper functions support that flow by hashing local files with validation and producing consistent `RefreshFailure` values, while `refresh_changed_url_source`, `refresh_changed_local_source`, and `finalize_changed_refresh` perform the actual re-ingest/update path for changed sources, including staging new content, computing deltas against the prior record, removing obsolete vault paths, and returning the updated refresh metadata.
 [crates/gwiki/src/commands/refresh/candidate.rs:15-74]
 [crates/gwiki/src/commands/refresh/candidate.rs:76-173]
 [crates/gwiki/src/commands/refresh/candidate.rs:175-214]

@@ -6,8 +6,6 @@ provenance:
   ranges:
   - '20'
   - 22-36
-  - 29-31
-  - 33-35
   - 39-41
   - 45-55
   - 59-63
@@ -34,7 +32,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-`crates/gcore/src/search.rs` exposes 19 indexed API symbols.
+This file defines the shared search primitives used by the `search` feature: a trusted wrapper for SQL row identifiers, helpers for building BM25 score expressions, result and explanation structs for fused search output, and a degradation record for missing sources. It also implements Reciprocal Rank Fusion and Postgres search-query sanitization, with tests that verify RRF preserves metadata, deduplicates and orders sources deterministically, BM25 wiring matches the runtime schema, and sanitized queries follow the project’s rules.
 [crates/gcore/src/search.rs:20]
 [crates/gcore/src/search.rs:22-36]
 [crates/gcore/src/search.rs:29-31]

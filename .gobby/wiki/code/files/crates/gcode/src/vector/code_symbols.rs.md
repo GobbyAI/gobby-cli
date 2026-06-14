@@ -1,7 +1,10 @@
 ---
 title: crates/gcode/src/vector/code_symbols.rs
 type: code_file
-provenance: []
+provenance:
+- file: crates/gcode/src/vector/code_symbols.rs
+  ranges:
+  - 1-28
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -13,7 +16,7 @@ Module: [[code/modules/crates/gcode/src/vector|crates/gcode/src/vector]]
 
 ## Purpose
 
-`crates/gcode/src/vector/code_symbols.rs` has no indexed API symbols.
+Re-exports the public API for code-symbol vector indexing and semantic search, wiring together embedding, lifecycle, Qdrant storage, repository symbol extraction, search, and shared vector types for the `gcode` vector module. [crates/gcode/src/vector/code_symbols.rs:1-28]
 
 ## API Symbols
 

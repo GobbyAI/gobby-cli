@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gsqz/src/primitives|crates/gsqz/src/primitives]]
 
 ## Purpose
 
-`crates/gsqz/src/primitives/dedup.rs` exposes 9 indexed API symbols.
+Provides a line deduplication primitive that collapses only consecutive runs of identical or number-only-different strings. It normalizes each trimmed line by replacing digit sequences with a placeholder, groups adjacent matches, and emits the first line of each run followed by a `[repeated N times]` annotation when a run has multiple entries. The test module exercises the main behaviors: collapsing exact and near-identical duplicates, preserving distinct and non-consecutive lines, and handling empty, single-line, two-line, and mixed-group inputs.
 [crates/gsqz/src/primitives/dedup.rs:9-45]
 [crates/gsqz/src/primitives/dedup.rs:52-58]
 [crates/gsqz/src/primitives/dedup.rs:61-70]

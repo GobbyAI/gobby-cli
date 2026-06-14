@@ -92,17 +92,11 @@ Parent: [[code/modules/crates/gloc|crates/gloc]]
 
 ## Overview
 
-This module forms the core of the `gloc` command-line utility, providing the infrastructure to configure, resolve, and execute local and remote AI models and clients.
+The `crates/gloc/src` module implements the `gloc` launcher: it loads configuration, resolves a backend/client/model combination, prepares local model availability, then transfers control to the selected AI CLI tool. The CLI surface in `main.rs` accepts client, backend, model, URL override, config path, status/init/dump modes, and passthrough arguments, then sequences early exits, config loading/export, backend and client resolution, alias-aware model resolution, status printing, readiness checks, and execution handoff [crates/gloc/src/main.rs:16-52] [crates/gloc/src/main.rs:54-100]. Configuration is owned by `config.rs`, where `Config` groups settings, backend definitions, named clients, and aliases, with defaults for probe timeout, auto-load, and auto-pull behavior .
 
-- **backend.rs** handles backend status monitoring and model management, including detecting reachable endpoints, ensuring required models are pulled and ready (specifically for Ollama), and validating model names.
-- **config.rs** manages loading, merging, and dumping application configurations, default settings, aliases, and template resolution for client parameters.
-- **exec.rs** handles process execution logic, dynamically building environment variables and command arguments to run client binaries (like Claude or Codex) based on resolved backend configurations.
-- **main.rs** provides the command-line interface entry point, managing CLI parsing, backend/client/model resolution, configuration initialization, and execution coordination.
-[crates/gloc/src/backend.rs:7-12]
-[crates/gloc/src/config.rs:13-22]
-[crates/gloc/src/exec.rs:9-21]
-[crates/gloc/src/main.rs:16-52]
-[crates/gloc/src/backend.rs:14-23]
+Backend readiness is isolated in `backend.rs`. `ensure_model_ready` deliberately no-ops for non-Ollama backends, while Ollama follows a check, optional pull, and optional warmup flow controlled by `Settings`; failures are represented as `ModelError` variants for missing models, pull failures, warmup failures, and network errors  . This keeps model lifecycle policy separate from CLI orchestration, so `main.rs` only has to call readiness after resolving the active backend and model [crates/gloc/src/main.rs:84-100].
+
+Process launch concerns live in `exec.rs`. It builds the child environment by applying `default_env` first and allowing explicit client env values to override it, resolving templates against the selected backend and model . It then assembles arguments from the model flag, client default args, and passthrough CLI args , provides `PATH` lookup for binaries , and finally executes the configured client, replacing the current process on Unix or spawning and exiting with the child status elsewhere .
 
 ## Call Diagram
 
@@ -157,25 +151,29 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gloc/src/backend.rs|crates/gloc/src/backend.rs]] - `crates/gloc/src/backend.rs` exposes 18 indexed API symbols.
+- [[code/files/crates/gloc/src/backend.rs|crates/gloc/src/backend.rs]] - This file centralizes backend-specific model readiness for local inference, with a `ModelError` type for not-found, pull, warmup, and network failures. `ensure_model_ready` is the main entry point: it no-ops for non-Ollama backends, but for Ollama it checks whether a model is downloaded or loaded, optionally pulls missing models and warms them up based on settings, and propagates errors otherwise.
+
+The helper functions split that workflow into smaller steps: `ollama_check_model` probes Ollama for model presence/load state, `ollama_pull_model` downloads missing models, `ollama_warmup_model` triggers loading, `model_name_matches` compares requested model names against Ollama metadata, and `unreachable_backend` represents a backend that cannot be contacted. The tests exercise the readiness path, backend failure handling, model-name matching rules, and `ModelError` formatting.
 [crates/gloc/src/backend.rs:7-12]
 [crates/gloc/src/backend.rs:14-23]
 [crates/gloc/src/backend.rs:15-22]
 [crates/gloc/src/backend.rs:28-62]
 [crates/gloc/src/backend.rs:67-108]
-- [[code/files/crates/gloc/src/config.rs|crates/gloc/src/config.rs]] - `crates/gloc/src/config.rs` exposes 30 indexed API symbols.
+- [[code/files/crates/gloc/src/config.rs|crates/gloc/src/config.rs]] - This file defines the gloc configuration schema and loading logic. `Config` groups settings, backend definitions, named client configs, and model aliases, while `Settings` and `Client` describe the per-section values and defaults used during serde deserialization.
+
+The implementation ties those pieces together by loading a single YAML config through layered first-found-wins resolution, falling back to the compiled-in `DEFAULT_CONFIG` when needed. It also supports alias lookup, pretty dumping of the resolved config, template interpolation for backend/model placeholders, and tests that pin the built-in defaults and substitution behavior.
 [crates/gloc/src/config.rs:13-22]
 [crates/gloc/src/config.rs:25-32]
 [crates/gloc/src/config.rs:34-42]
 [crates/gloc/src/config.rs:35-41]
 [crates/gloc/src/config.rs:44-46]
-- [[code/files/crates/gloc/src/exec.rs|crates/gloc/src/exec.rs]] - `crates/gloc/src/exec.rs` exposes 16 indexed API symbols.
+- [[code/files/crates/gloc/src/exec.rs|crates/gloc/src/exec.rs]] - This file provides the process-launching helpers for `gloc`: it resolves a client’s execution environment from backend/model templates, assembles command-line arguments from the model flag, defaults, and passthrough args, and locates binaries on `PATH`. `exec_client` ties those pieces together to run the configured client binary, using `exec()` on Unix and spawning a child process on non-Unix platforms, while the tests verify backend/client-specific env resolution, argument construction, env precedence, and binary lookup behavior.
 [crates/gloc/src/exec.rs:9-21]
 [crates/gloc/src/exec.rs:24-36]
 [crates/gloc/src/exec.rs:39-45]
 [crates/gloc/src/exec.rs:51-80]
 [crates/gloc/src/exec.rs:87-94]
-- [[code/files/crates/gloc/src/main.rs|crates/gloc/src/main.rs]] - `crates/gloc/src/main.rs` exposes 13 indexed API symbols.
+- [[code/files/crates/gloc/src/main.rs|crates/gloc/src/main.rs]] - `crates/gloc/src/main.rs` is the CLI entrypoint for `gloc`, a launcher that auto-detects local LLM backends and starts AI client tools. `Cli` defines flags for choosing a client, backend, model, backend URL override, config path, and control modes like `--init`, `--status`, and `--dump_config`, plus passthrough args for the target binary. `main` wires the flow together by handling early exits, loading config, optionally exporting a default config, resolving the active backend/client/model, printing status when requested, checking model readiness, and then continuing into execution. The helper functions keep that orchestration focused: `auto_export_config` writes a default home config on first run, `handle_init` initializes a project-local `.gobby/gloc.yaml`, `resolve_backend` and `resolve_client` select the runtime targets with validation and fallback behavior, `resolve_model` canonicalizes aliases, `print_status` reports the resolved setup, and the URL override helpers and backend constructor support backend selection and tests.
 [crates/gloc/src/main.rs:16-52]
 [crates/gloc/src/main.rs:54-118]
 [crates/gloc/src/main.rs:120-130]

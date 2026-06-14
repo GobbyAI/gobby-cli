@@ -35,7 +35,7 @@ Module: [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/comman
 
 ## Purpose
 
-`crates/gwiki/src/commands/refresh/tests.rs` exposes 20 indexed API symbols.
+Test module for the `refresh` command that builds a temporary topic scope and seeds source records for URL, file, and local replay cases. The helper functions set up manifests and on-disk files, and the tests exercise refresh behavior end to end: dry-run planning, skipping unchanged content, replacing changed manifests and raw assets, handling unsupported or missing sources, validating source ID and path normalization rules, accepting HTTP URLs case-insensitively, and ensuring all-source refresh skips unsupported records.
 [crates/gwiki/src/commands/refresh/tests.rs:7-13]
 [crates/gwiki/src/commands/refresh/tests.rs:15-31]
 [crates/gwiki/src/commands/refresh/tests.rs:33-49]

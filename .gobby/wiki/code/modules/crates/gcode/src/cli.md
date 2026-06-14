@@ -52,7 +52,11 @@ Parent: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-The `cli` module provides the command-line argument parsing layer for gcode, currently surfaced through its test suite (`tests.rs`). Tests validate parsing and routing across the full command set: search (symbol, language, content, and text queries with positional paths and format handling), graph operations (callers, usages, imports, blast-radius, sync, reports), grep (flags, word/case matching, max-count, and rejection of unsupported options), projection lifecycle, codewiki (AI and edge-limit flags), index, and setup commands. Additional coverage confirms global flags (format, freshness), help-text content, and effective-format defaulting behavior (e.g., grep defaulting to text while other commands default to JSON).
+The `crates/gcode/src/cli` module is responsible for defining and preserving the command-line surface of `gcode`, with its behavior documented here through parser tests. Its coverage centers on mapping user invocations into structured `Cli` and `Command` variants, including graph and vector projection lifecycle commands such as `sync-file`, `clear`, `rebuild`, `report`, and `overview`, while also checking global format handling like `--format text` on projection commands (crates/gcode/src/cli/tests.rs:5-100). The tests assert both command shape and parsed field values, so this module acts as the contract between raw CLI arguments and the rest of the application’s typed command execution layer.
+
+The key flows are argument parsing, validation, and default resolution. Search commands are tested across symbol, text, and content variants with filters, positional paths, graph selection, language constraints, and rejected legacy or unsupported flags; grep parsing is similarly exercised for pattern options, fixed JSON output, max counts, empty-pattern rejection, and unsupported flag failures (crates/gcode/src/cli/tests.rs:5-213, crates/gcode/src/cli/tests.rs:216-234, crates/gcode/src/cli/tests.rs:237-252). The module also keeps important commands at the top level, including callers, usages, imports, and blast-radius, and validates configuration/setup-oriented flows such as index, codewiki, and setup parsing.
+
+Because there are no child modules, collaboration is mostly between the CLI definitions in the parent module and this test suite’s exhaustive checks. The tests use Clap’s `Cli::try_parse_from()` and command factory support to verify success cases, parser errors, help text content, and output-format defaults, including the special case that grep defaults to text while other commands retain JSON unless explicitly overridden (crates/gcode/src/cli/tests.rs:255-270, crates/gcode/src/cli/tests.rs:273-288).
 [crates/gcode/src/cli/tests.rs:5-213]
 [crates/gcode/src/cli/tests.rs:216-234]
 [crates/gcode/src/cli/tests.rs:237-252]
@@ -61,7 +65,7 @@ The `cli` module provides the command-line argument parsing layer for gcode, cur
 
 ## Files
 
-- [[code/files/crates/gcode/src/cli/tests.rs|crates/gcode/src/cli/tests.rs]] - `crates/gcode/src/cli/tests.rs` exposes 37 indexed API symbols.
+- [[code/files/crates/gcode/src/cli/tests.rs|crates/gcode/src/cli/tests.rs]] - This file contains comprehensive unit tests for the gcode CLI parser, validating argument parsing across all command variants. The tests simulate CLI invocations using `Cli::try_parse_from()` with various argument combinations, then assert the parsed command structure, field values, and default values match expectations. Coverage spans multiple command families: projection lifecycle operations (graph/vector sync-file, clear, rebuild), search variants (search-symbol, search-text, search-content) with filter flags, grep with pattern matching options, top-level commands (callers, usages, imports, blast-radius), and configuration commands (index, codewiki, setup). The suite validates both successful parsing and error handling for unsupported flags, invalid argument positions, and constraint violations like empty patterns or oversized numeric values. Additional tests verify help text content accuracy and the effective_format function's logic for defaulting output formats based on command type.
 [crates/gcode/src/cli/tests.rs:5-213]
 [crates/gcode/src/cli/tests.rs:216-234]
 [crates/gcode/src/cli/tests.rs:237-252]

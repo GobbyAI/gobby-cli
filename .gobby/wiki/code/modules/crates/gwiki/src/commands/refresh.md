@@ -95,12 +95,11 @@ Parent: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Overview
 
-The refresh command module manages the process of updating wiki content from local files and remote URLs. It handles source selection (including change-triggered detection), identifies stale or modified candidates via file hashing or URL fetching, constructs execution plans, safely writes updated content within the vault, and renders the refresh outcome and progress.
-[crates/gwiki/src/commands/refresh/candidate.rs:15-74]
-[crates/gwiki/src/commands/refresh/mod.rs:29-37]
-[crates/gwiki/src/commands/refresh/model.rs:5-9]
-[crates/gwiki/src/commands/refresh/render.rs:3-49]
-[crates/gwiki/src/commands/refresh/selection.rs:4-75]
+The refresh module owns gwiki source re-ingestion and index maintenance. Its command entry points resolve scope and URL fetching, validate the requested scope, read the source manifest, select sources, support dry-run rendering, and coordinate the update flow through the module’s selection, candidate, vault, model, and render helpers [crates/gwiki/src/commands/refresh/mod.rs:29-37] [crates/gwiki/src/commands/refresh/mod.rs:39-49] [crates/gwiki/src/commands/refresh/mod.rs:51-140]. Its internal model keeps the run structured as planned, skipped, failed, refreshed, unchanged, degraded, and indexed outcomes; `RefreshPlan` validates records by deriving a raw source path before refresh, while serialization exposes source metadata, replay kind, raw path, and content hash for command output [crates/gwiki/src/commands/refresh/model.rs:5-9] [crates/gwiki/src/commands/refresh/model.rs:19-24] [crates/gwiki/src/commands/refresh/model.rs:41-43].
+
+Selection is the first major flow: all-source refresh scans manifest entries, classifies unsupported replay contracts as skips, treats missing replay metadata or malformed plans as failures, and explicit refresh deduplicates requested IDs while reporting missing sources structurally [crates/gwiki/src/commands/refresh/selection.rs:4-75]. Candidate refresh then handles the replay-specific work. URL candidates fetch current content, hash it, emit an unchanged result when the hash matches, or re-ingest changed content and record the old and new raw paths, removed files, final URL, and updated source record; local candidates follow the same unchanged/changed/failed shape using local file hashing and replay validation [crates/gwiki/src/commands/refresh/candidate.rs:15-74] [crates/gwiki/src/commands/refresh/candidate.rs:76-173] .
+
+The vault helpers provide the filesystem safety layer used by changed refreshes: they resolve raw source paths, find existing raw asset files by source id, delete superseded relative files without erroring on already-missing paths, and reject unsafe or out-of-scope paths before deletion [crates/gwiki/src/commands/refresh/vault.rs:7-9] [crates/gwiki/src/commands/refresh/vault.rs:16-49] . Rendering then converts the collected model into a scoped command outcome with JSON and text summaries, including planned/refreshed/unchanged/failed/skipped lists, index status, and degradations; status prioritizes dry-run, failed, partial, refreshed, and unchanged states, with exit code 1 only for a non-dry-run explicit single-source refresh that completely failed .
 
 ## Call Diagram
 
@@ -153,38 +152,38 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gwiki/src/commands/refresh/candidate.rs|crates/gwiki/src/commands/refresh/candidate.rs]] - `crates/gwiki/src/commands/refresh/candidate.rs` exposes 7 indexed API symbols.
+- [[code/files/crates/gwiki/src/commands/refresh/candidate.rs|crates/gwiki/src/commands/refresh/candidate.rs]] - This file implements refresh handling for candidate sources in the wiki command pipeline. `refresh_url_candidate` and `refresh_local_candidate` are the entry points: they verify a candidate against its stored `SourceRecord`, compute or fetch current content, and then classify the result as unchanged, successfully refreshed, or failed by pushing structured results into the provided sink vectors. The helper functions support that flow by hashing local files with validation and producing consistent `RefreshFailure` values, while `refresh_changed_url_source`, `refresh_changed_local_source`, and `finalize_changed_refresh` perform the actual re-ingest/update path for changed sources, including staging new content, computing deltas against the prior record, removing obsolete vault paths, and returning the updated refresh metadata.
 [crates/gwiki/src/commands/refresh/candidate.rs:15-74]
 [crates/gwiki/src/commands/refresh/candidate.rs:76-173]
 [crates/gwiki/src/commands/refresh/candidate.rs:175-214]
 [crates/gwiki/src/commands/refresh/candidate.rs:216-224]
 [crates/gwiki/src/commands/refresh/candidate.rs:226-245]
-- [[code/files/crates/gwiki/src/commands/refresh/mod.rs|crates/gwiki/src/commands/refresh/mod.rs]] - `crates/gwiki/src/commands/refresh/mod.rs` exposes 3 indexed API symbols.
+- [[code/files/crates/gwiki/src/commands/refresh/mod.rs|crates/gwiki/src/commands/refresh/mod.rs]] - Implements the `refresh` command for gwiki source re-ingestion and index maintenance. `execute` is the public entry point, `execute_with_fetcher` resolves the command scope and injects URL fetching, and `execute_resolved_with_fetcher` does the real work: it validates the scope, reads the source manifest, selects requested sources, handles dry-run rendering, and then coordinates the refresh/update flow using the module’s helper subcomponents.
 [crates/gwiki/src/commands/refresh/mod.rs:29-37]
 [crates/gwiki/src/commands/refresh/mod.rs:39-49]
 [crates/gwiki/src/commands/refresh/mod.rs:51-140]
-- [[code/files/crates/gwiki/src/commands/refresh/model.rs|crates/gwiki/src/commands/refresh/model.rs]] - `crates/gwiki/src/commands/refresh/model.rs` exposes 21 indexed API symbols.
+- [[code/files/crates/gwiki/src/commands/refresh/model.rs|crates/gwiki/src/commands/refresh/model.rs]] - This file defines the internal data model for refresh operations in `gwiki`: it separates a refresh run into planned, skipped, failed, refreshed, unchanged, and degraded outcomes, then bundles those pieces into a renderable result. `RefreshPlan` validates and wraps a `SourceRecord` before refresh, and its custom serialization emits the key source metadata plus a derived `raw_path` and replay kind. `ChangedRefresh`, `RefreshedSource`, `RefreshResult`, `RefreshFailure`, and `SkippedRefresh` carry the detailed per-item state for successes, no-ops, errors, and skips, while `RefreshSinks` provides mutable buckets for collecting those results during processing. `IndexedCounts` and `IndexStatus` capture indexing telemetry and lifecycle state, with constructors for not run, indexed, and degraded cases, and `RefreshRender` ties everything together into the final scoped refresh summary.
 [crates/gwiki/src/commands/refresh/model.rs:5-9]
 [crates/gwiki/src/commands/refresh/model.rs:12-17]
 [crates/gwiki/src/commands/refresh/model.rs:19-24]
 [crates/gwiki/src/commands/refresh/model.rs:27-38]
 [crates/gwiki/src/commands/refresh/model.rs:41-43]
-- [[code/files/crates/gwiki/src/commands/refresh/render.rs|crates/gwiki/src/commands/refresh/render.rs]] - `crates/gwiki/src/commands/refresh/render.rs` exposes 2 indexed API symbols.
+- [[code/files/crates/gwiki/src/commands/refresh/render.rs|crates/gwiki/src/commands/refresh/render.rs]] - Builds the command output for a refresh run. `render_refresh` gathers the refresh results, derives a status string with `refresh_status`, and packages everything into a scoped `CommandOutcome` containing both JSON and human-readable text. The JSON payload includes the command name, scope, dry-run flag, planned/refreshed/unchanged/failed/skipped lists, indexed data, index status, and degradations, while the text summary reports counts for the main result buckets. It only returns exit code `1` for an explicit non-dry-run single-source refresh that failed completely; all other cases exit successfully. `refresh_status` encodes the outcome priority as `dry_run`, `failed`, `partial`, `refreshed`, or `unchanged` based on the counts.
 [crates/gwiki/src/commands/refresh/render.rs:3-49]
 [crates/gwiki/src/commands/refresh/render.rs:51-68]
-- [[code/files/crates/gwiki/src/commands/refresh/selection.rs|crates/gwiki/src/commands/refresh/selection.rs]] - `crates/gwiki/src/commands/refresh/selection.rs` exposes 16 indexed API symbols.
+- [[code/files/crates/gwiki/src/commands/refresh/selection.rs|crates/gwiki/src/commands/refresh/selection.rs]] - This file contains the refresh-selection logic for wiki sources. It builds a `Selection` by either scanning all source records or resolving an explicit list of source IDs, deduplicates requested IDs, and splits results into planned refreshes, skipped sources, and failures based on each record’s replay contract and `RefreshPlan::from_record`. It also supports change-triggered refreshes by finding markdown-capable local-file sources in affected pages, returning the source IDs to refresh and the page paths to mark stale. The remaining helpers classify records by replay kind and source kind, detect HTTP URLs and local-file replays, and convert selection or planning errors into structured refresh failures.
 [crates/gwiki/src/commands/refresh/selection.rs:4-75]
 [crates/gwiki/src/commands/refresh/selection.rs:79-82]
 [crates/gwiki/src/commands/refresh/selection.rs:85-112]
 [crates/gwiki/src/commands/refresh/selection.rs:115-118]
 [crates/gwiki/src/commands/refresh/selection.rs:121-124]
-- [[code/files/crates/gwiki/src/commands/refresh/tests.rs|crates/gwiki/src/commands/refresh/tests.rs]] - `crates/gwiki/src/commands/refresh/tests.rs` exposes 20 indexed API symbols.
+- [[code/files/crates/gwiki/src/commands/refresh/tests.rs|crates/gwiki/src/commands/refresh/tests.rs]] - Test module for the `refresh` command that builds a temporary topic scope and seeds source records for URL, file, and local replay cases. The helper functions set up manifests and on-disk files, and the tests exercise refresh behavior end to end: dry-run planning, skipping unchanged content, replacing changed manifests and raw assets, handling unsupported or missing sources, validating source ID and path normalization rules, accepting HTTP URLs case-insensitively, and ensuring all-source refresh skips unsupported records.
 [crates/gwiki/src/commands/refresh/tests.rs:7-13]
 [crates/gwiki/src/commands/refresh/tests.rs:15-31]
 [crates/gwiki/src/commands/refresh/tests.rs:33-49]
 [crates/gwiki/src/commands/refresh/tests.rs:51-103]
 [crates/gwiki/src/commands/refresh/tests.rs:105-121]
-- [[code/files/crates/gwiki/src/commands/refresh/vault.rs|crates/gwiki/src/commands/refresh/vault.rs]] - `crates/gwiki/src/commands/refresh/vault.rs` exposes 5 indexed API symbols.
+- [[code/files/crates/gwiki/src/commands/refresh/vault.rs|crates/gwiki/src/commands/refresh/vault.rs]] - This file provides helper routines for refreshing raw vault source assets: it resolves raw source paths, finds existing `raw/assets` files whose stem matches a given id, safely deletes superseded relative files, and validates that refresh paths stay under the scope root. The functions work together so a refresh can locate matching assets, remove outdated files without treating missing files as errors, and reject unsafe or out-of-vault relative paths before any deletion happens.
 [crates/gwiki/src/commands/refresh/vault.rs:7-9]
 [crates/gwiki/src/commands/refresh/vault.rs:16-49]
 [crates/gwiki/src/commands/refresh/vault.rs:51-66]

@@ -6,17 +6,12 @@ provenance:
   ranges:
   - 7-12
   - 14-34
-  - 15-20
-  - 29-33
   - 36-40
   - 42-52
   - 54-60
   - 62-67
   - 69-76
   - 78-233
-  - 79-109
-  - 118-125
-  - 127-232
   - 235-266
   - 272-274
   - 277-282
@@ -58,7 +53,7 @@ Module: [[code/modules/crates/gsqz/src|crates/gsqz/src]]
 
 ## Purpose
 
-`crates/gsqz/src/compressor.rs` exposes 43 indexed API symbols.
+This file implements the `gsqz` compression engine for command output. It defines `CompressionResult` for reporting the compressed text, size stats, savings, and passthrough classification; helper functions to identify the first real command token, skip shell environment assignments, and normalize command basenames; `CompiledPipeline` to hold precompiled config rules; and `Compressor`, which builds those pipelines, applies matching step sequences and fallback steps, honors excluded commands, and decides when to emit a low-savings marker or keep the original output unchanged.
 [crates/gsqz/src/compressor.rs:7-12]
 [crates/gsqz/src/compressor.rs:14-34]
 [crates/gsqz/src/compressor.rs:15-20]

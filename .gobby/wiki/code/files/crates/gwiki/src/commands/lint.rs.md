@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-`crates/gwiki/src/commands/lint.rs` exposes 1 indexed API symbol. [crates/gwiki/src/commands/lint.rs:3-11]
+Provides the `lint` command entry point for the wiki CLI. It accepts a `ScopeSelection` and forwards the work to the shared analysis-command runner, supplying the `lint` analysis name, a lint-report serialization label, and the lint-specific `run` and `render_text` functions so execution and text output stay centralized. [crates/gwiki/src/commands/lint.rs:3-11]
 
 ## API Symbols
 

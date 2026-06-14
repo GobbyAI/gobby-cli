@@ -49,7 +49,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-`crates/gwiki/src/commands/index.rs` exposes 36 indexed API symbols.
+Implements the `gwiki index` and ingest command flow for a resolved scope: it validates the target root, computes index reports, and renders command outcomes for indexing, file ingest, and URL ingest. The core path branches between a PostgreSQL-backed index when a database URL is configured and an in-memory fallback otherwise, then layers in optional Qdrant and FalkorDB synchronization, capturing any service degradations alongside `IndexCounts` in `IndexReport`. Helper functions resolve AI context and embedding configuration, derive project IDs and config sources, check video frame interval settings, open Postgres connections, build scoped stores, and format consistent success output. The file also includes degradation constructors, scope-root validation, a test config source, and tests covering invalid video intervals, empty degradations, Qdrant failure reporting, and embedding-route fallback behavior.
 [crates/gwiki/src/commands/index.rs:35-38]
 [crates/gwiki/src/commands/index.rs:40-46]
 [crates/gwiki/src/commands/index.rs:48-52]

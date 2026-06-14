@@ -6,12 +6,9 @@ provenance:
   ranges:
   - 18-20
   - 22-44
-  - 23-29
-  - 31-43
   - 46-61
   - 68-71
   - 73-80
-  - 74-79
   - 82-86
   - 88-93
   - 96-102
@@ -24,16 +21,11 @@ provenance:
   - 153-168
   - 182-185
   - 187-201
-  - 188-200
   - 203-212
-  - 204-211
   - 214-220
   - 223-225
   - 227-232
-  - 228-231
   - 234-242
-  - 235-237
-  - 239-241
   - 245-257
   - 260-279
   - 283-301
@@ -51,7 +43,7 @@ Module: [[code/modules/crates/gwiki/src/support|crates/gwiki/src/support]]
 
 ## Purpose
 
-`crates/gwiki/src/support/config.rs` exposes 36 indexed API symbols.
+This file centralizes gwiki support configuration: it builds AI config sources from either the PostgreSQL hub or local Gobby home settings, resolves indexing options, and loads shared code graph edge limits with fallback/default behavior. `HubPrimary` bridges config reads and `$secret:` resolution to Postgres when available, while the `local_*` and `*_from_conn` helpers layer standalone config with database-backed overrides and map failures into `WikiError`. It also includes small test-support utilities like a scoped `GOBBY_HOME` guard, file writing, and an in-memory `TestSource`, plus tests that verify default limits, config precedence, YAML parsing, and indexing behavior.
 [crates/gwiki/src/support/config.rs:18-20]
 [crates/gwiki/src/support/config.rs:22-44]
 [crates/gwiki/src/support/config.rs:23-29]

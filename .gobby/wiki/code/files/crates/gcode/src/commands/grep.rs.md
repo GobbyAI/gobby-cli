@@ -22,14 +22,10 @@ provenance:
   - 377-407
   - 409-414
   - 416-439
-  - 417-430
-  - 432-438
   - 441-456
   - 458-467
   - 469-472
   - 474-497
-  - 475-481
-  - 483-496
   - 499-515
   - 517-533
   - 535-582
@@ -61,7 +57,15 @@ Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Purpose
 
-`crates/gcode/src/commands/grep.rs` exposes 46 indexed API symbols.
+This file implements a grep-style pattern search command that operates on indexed code chunks stored in a database. It coordinates several key pieces:
+
+Configuration and data structures define search parameters (GrepOptions), indexed content chunks, and result containers (GrepMatch, GrepResponse, GrepResult). The GrepFilters system handles path and glob-based filtering with compiled regex patterns and SQL query optimization.
+
+The main search pipeline starts with the run function, which loads indexed chunks from the database through load_indexed_chunks (applying pre-filtering), then executes pattern matching via grep_chunks_with_filters. This core function performs regex or fixed-string matching, deduplicates results by file path and line number, enforces maximum result limits, and attaches context lines (before and after) to each match.
+
+Supporting functions handle context line extraction (context_before, context_after), SQL optimization for database queries (push_grep_sql_prefilters, sql_like_prefixes for escaping and prefix extraction), and output formatting for both text and JSON representations (format_text_matches, push_grouped_grep_line). The GrepFilters and CompiledGlob classes provide sophisticated pattern matching that respects ripgrep conventions where bare globs match basenames and slash-containing globs match full paths.
+
+Extensive test functions verify correct pattern matching, case sensitivity options, fixed-string literal matching, context line handling with deduplication of overlapping ranges, result truncation, proper ordering by file path then line number, and composition of multiple path and glob filters.
 [crates/gcode/src/commands/grep.rs:21-33]
 [crates/gcode/src/commands/grep.rs:36-40]
 [crates/gcode/src/commands/grep.rs:43-46]

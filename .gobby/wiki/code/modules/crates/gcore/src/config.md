@@ -2,6 +2,9 @@
 title: crates/gcore/src/config
 type: code_module
 provenance:
+- file: crates/gcore/src/config/mod.rs
+  ranges:
+  - 1-31
 - file: crates/gcore/src/config/resolve.rs
   ranges:
   - 11-21
@@ -121,12 +124,11 @@ Parent: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Overview
 
-The `crates/gcore/src/config` module defines and resolves configuration structures for core application services, including FalkorDB, Qdrant, embeddings, and indexing. It models configuration domains and routing capabilities—such as AI capabilities and bindings—and implements layered resolution strategies that prioritize environment variables, database configuration stores, and YAML files. The module also features comprehensive unit testing to validate precedence rules, default fallback behaviors, and secure pattern decoding.
-[crates/gcore/src/config/resolve.rs:11-21]
-[crates/gcore/src/config/tests.rs:9-11]
-[crates/gcore/src/config/types.rs:5-9]
-[crates/gcore/src/config/resolve.rs:24-75]
-[crates/gcore/src/config/resolve.rs:78-84]
+The config module is the shared public boundary for lightweight configuration contracts used across Gobby Rust crates. Its `mod.rs` keeps the surface small by wiring together `resolve` and `types`, exporting the code graph name constant, resolver APIs, config source abstractions, and core config/capability types from one place [crates/gcore/src/config/mod.rs:1-31]. The type layer defines the data carried through the rest of the system: FalkorDB, Qdrant, embedding, and indexing configs, plus AI routing and capability enums with parsing and stable key accessors so registry, lookup, and runtime behavior use the same vocabulary .
+
+Resolution flows are centralized in `resolve.rs`. It starts with decoding persisted config-store values, then resolves `${VAR}` and `${VAR:-default}` environment patterns, and builds on `ConfigSource`, `LayeredConfigSource`, and `EnvOnlySource` to support different precedence strategies . Domain-specific resolvers compose those primitives into FalkorDB, Qdrant, embedding, indexing, AI tuning, routing, boolean, port, and non-empty-value outputs, with defaults such as the FalkorDB port, embedding model, embedding timeout, and indexing gitignore behavior defined alongside the resolver code .
+
+The tests collaborate with both layers by exercising the public config boundary through synthetic sources and guarded process-environment mutation. `tests.rs` installs a scoped warning logger, serializes environment changes through `EnvGuard`, and covers precedence, secret resolution, provider and binding behavior, indexing defaults, fallback handling, and guardrails around embedding-key literals . Together, the module’s files separate stable configuration shapes from resolution mechanics while keeping test-only synchronization and regression coverage local to the module [crates/gcore/src/config/mod.rs:24-31] .
 
 ## Call Diagram
 
@@ -181,20 +183,20 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gcore/src/config/mod.rs|crates/gcore/src/config/mod.rs]] - `crates/gcore/src/config/mod.rs` has no indexed API symbols. 
-- [[code/files/crates/gcore/src/config/resolve.rs|crates/gcore/src/config/resolve.rs]] - `crates/gcore/src/config/resolve.rs` exposes 34 indexed API symbols.
+- [[code/files/crates/gcore/src/config/mod.rs|crates/gcore/src/config/mod.rs]] - Public configuration boundary for shared Gobby Rust crates, defining the code graph name constant and re-exporting config resolution helpers and core config types; it also includes test-only env locking and the module test suite. [crates/gcore/src/config/mod.rs:1-31]
+- [[code/files/crates/gcore/src/config/resolve.rs|crates/gcore/src/config/resolve.rs]] - This file centralizes config resolution for the gcore crate: it decodes persisted config values, expands `${VAR}` and `${VAR:-default}` environment references, and provides a layered `ConfigSource` abstraction plus an `EnvOnlySource` for reading settings through different source strategies. On top of that, it defines a family of focused resolvers for specific domains like FalkorDB, Qdrant, embeddings, indexing, AI tuning, routing, booleans, ports, and non-empty values, with small helpers such as `env_value`, `resolve_setting`, and `resolve_setting_from_keys` composing those rules into final config outputs.
 [crates/gcore/src/config/resolve.rs:11-21]
 [crates/gcore/src/config/resolve.rs:24-75]
 [crates/gcore/src/config/resolve.rs:78-84]
 [crates/gcore/src/config/resolve.rs:87-90]
 [crates/gcore/src/config/resolve.rs:93-95]
-- [[code/files/crates/gcore/src/config/tests.rs|crates/gcore/src/config/tests.rs]] - `crates/gcore/src/config/tests.rs` exposes 74 indexed API symbols.
+- [[code/files/crates/gcore/src/config/tests.rs|crates/gcore/src/config/tests.rs]] - Test support and regression coverage for `gcore` config resolution. The file defines a scoped test logger and environment guard to serialize log capture and process-env mutation, then uses a set of synthetic config source types to exercise decoding, layered precedence, secret handling, provider/binding resolution, indexing defaults, timeout and port fallback behavior, and guardrails around embedding-key literals and other config invariants.
 [crates/gcore/src/config/tests.rs:9-11]
 [crates/gcore/src/config/tests.rs:18-32]
 [crates/gcore/src/config/tests.rs:19-21]
 [crates/gcore/src/config/tests.rs:23-25]
 [crates/gcore/src/config/tests.rs:27-31]
-- [[code/files/crates/gcore/src/config/types.rs|crates/gcore/src/config/types.rs]] - `crates/gcore/src/config/types.rs` exposes 35 indexed API symbols.
+- [[code/files/crates/gcore/src/config/types.rs|crates/gcore/src/config/types.rs]] - Defines the core configuration and capability types used by gcore’s AI, indexing, and vector-store integrations. It provides simple config structs for FalkorDB, Qdrant, embedding endpoints, and indexing defaults, plus routing and capability enums that parse from strings and expose stable string/key accessors for registry and config lookup. It also includes error types, capability bindings, AI tuning metadata, and embedding resolution support so the surrounding code can map capabilities to providers, transport settings, and runtime behavior consistently.
 [crates/gcore/src/config/types.rs:5-9]
 [crates/gcore/src/config/types.rs:15-18]
 [crates/gcore/src/config/types.rs:22-28]

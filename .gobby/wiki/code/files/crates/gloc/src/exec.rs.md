@@ -31,7 +31,7 @@ Module: [[code/modules/crates/gloc/src|crates/gloc/src]]
 
 ## Purpose
 
-`crates/gloc/src/exec.rs` exposes 16 indexed API symbols.
+This file provides the process-launching helpers for `gloc`: it resolves a client’s execution environment from backend/model templates, assembles command-line arguments from the model flag, defaults, and passthrough args, and locates binaries on `PATH`. `exec_client` ties those pieces together to run the configured client binary, using `exec()` on Unix and spawning a child process on non-Unix platforms, while the tests verify backend/client-specific env resolution, argument construction, env precedence, and binary lookup behavior.
 [crates/gloc/src/exec.rs:9-21]
 [crates/gloc/src/exec.rs:24-36]
 [crates/gloc/src/exec.rs:39-45]

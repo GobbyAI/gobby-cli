@@ -31,7 +31,7 @@ Module: [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/comman
 
 ## Purpose
 
-`crates/gwiki/src/commands/refresh/selection.rs` exposes 16 indexed API symbols.
+This file contains the refresh-selection logic for wiki sources. It builds a `Selection` by either scanning all source records or resolving an explicit list of source IDs, deduplicates requested IDs, and splits results into planned refreshes, skipped sources, and failures based on each record’s replay contract and `RefreshPlan::from_record`. It also supports change-triggered refreshes by finding markdown-capable local-file sources in affected pages, returning the source IDs to refresh and the page paths to mark stale. The remaining helpers classify records by replay kind and source kind, detect HTTP URLs and local-file replays, and convert selection or planning errors into structured refresh failures.
 [crates/gwiki/src/commands/refresh/selection.rs:4-75]
 [crates/gwiki/src/commands/refresh/selection.rs:79-82]
 [crates/gwiki/src/commands/refresh/selection.rs:85-112]

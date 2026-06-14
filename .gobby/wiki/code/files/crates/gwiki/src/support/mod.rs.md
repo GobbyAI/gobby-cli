@@ -1,7 +1,10 @@
 ---
 title: crates/gwiki/src/support/mod.rs
 type: code_file
-provenance: []
+provenance:
+- file: crates/gwiki/src/support/mod.rs
+  ranges:
+  - 1-12
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -13,7 +16,7 @@ Module: [[code/modules/crates/gwiki/src/support|crates/gwiki/src/support]]
 
 ## Purpose
 
-`crates/gwiki/src/support/mod.rs` has no indexed API symbols.
+Module declaration file that organizes the `support` package for `gwiki`, exposing internal helper submodules for configuration, counting, environment, graph, Postgres access, scoping, search, text, and time, plus a test-only environment module. [crates/gwiki/src/support/mod.rs:1-12]
 
 ## API Symbols
 

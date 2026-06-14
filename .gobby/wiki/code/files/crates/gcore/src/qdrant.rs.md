@@ -45,7 +45,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-`crates/gcore/src/qdrant.rs` exposes 30 indexed API symbols.
+This file defines the Qdrant adapter boundary for vector storage and search behind the `qdrant` feature, with a 5-second request timeout and a default upsert batch size. It centers on typed error handling in `QdrantError`, schema/request/result structs for collection management, upserts, and search, and helper functions that build Qdrant request paths, send HTTP calls, and parse responses into those domain types. The collection helpers validate or create compatible vector collections, while the upsert helpers support single and batched writes and the search helpers return parsed hits; together they turn raw Qdrant HTTP/API behavior into a small, typed service layer with degraded-service handling for unreachable or missing vector backends.
 [crates/gcore/src/qdrant.rs:20-36]
 [crates/gcore/src/qdrant.rs:38-47]
 [crates/gcore/src/qdrant.rs:50-53]

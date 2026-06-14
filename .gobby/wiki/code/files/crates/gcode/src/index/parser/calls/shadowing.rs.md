@@ -33,7 +33,7 @@ Module: [[code/modules/crates/gcode/src/index/parser/calls|crates/gcode/src/inde
 
 ## Purpose
 
-`crates/gcode/src/index/parser/calls/shadowing.rs` exposes 18 indexed API symbols.
+This file implements shadowing detection for external function calls in a code analysis pipeline. The main `external_call_is_shadowed` function determines whether a call target is shadowed by checking if a matching local identifier exists in the caller's scope before the call site. Core logic in `local_name_in_scope_before_call` examines function parameters and local bindings while correctly excluding block-commented regions. Supporting functions handle parameter extraction, various assignment and declaration patterns (including typed declarations and multiple operators), and structural analysis of bindings. Utility functions parse assignment operators, track nested parentheses and comments, and extract identifiers from parameter and binding contexts. Multiple tests validate correct handling of compound operators, block comment nesting, and typed patterns.
 [crates/gcode/src/index/parser/calls/shadowing.rs:6-23]
 [crates/gcode/src/index/parser/calls/shadowing.rs:25-43]
 [crates/gcode/src/index/parser/calls/shadowing.rs:45-84]

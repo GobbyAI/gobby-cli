@@ -34,7 +34,11 @@ Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Purpose
 
-`crates/gcode/src/commands/status.rs` exposes 19 indexed API symbols.
+This file implements project status and management commands for the gcode indexer. It provides utilities to query the code_indexed_projects database table, validate project metadata, and display indexing statistics (file/symbol counts, timestamps) in JSON or text formats.
+
+The core functions are: `run` queries overall project indexing stats, `projects` lists all indexed projects with coverage details, `repo_outline` displays a directory-grouped file structure, and `invalidate` removes stale entries. Helper functions handle timestamp normalization (`format_timestamp`, `days_to_ymd`), project data deserialization (`indexed_project_from_row`), and validity checking (`is_stale`).
+
+The file also manages stale project detection and cleanup: `stale_projects` identifies projects with invalid metadata or superseded by resolved duplicates at shared roots, and `prune` removes them from the database after user confirmation. Additional functions support overlay configurations (`overlay_status_json`), database cleanup (`cleanup_project_projections`), and project metadata persistence (`write_project_json`). A test verifies that duplicate detection preserves the canonical project ID.
 [crates/gcode/src/commands/status.rs:18-42]
 [crates/gcode/src/commands/status.rs:45-58]
 [crates/gcode/src/commands/status.rs:60-134]

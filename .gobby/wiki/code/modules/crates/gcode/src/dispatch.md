@@ -22,7 +22,11 @@ Parent: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-The dispatch module manages early request dispatching, service resolution, and stderr logging configuration. It facilitates service setup tailored to command requirements, such as skipping configuration resolution for lookup commands and requesting only necessary services for graph and AI commands. It also manages stderr logging behaviors, including setting default warning levels, respecting Rust log configurations, and enforcing quiet modes.
+The dispatch module is responsible for turning parsed `gcode` CLI commands into the right early actions, logger settings, and service initialization requirements. Its tests show that dispatch treats stderr logging as warning-only by default, honors a plain `RUST_LOG` level such as `debug`, and lets the quiet flag hard-mute stderr logging even when an environment level is supplied. The `services_for` helper parses CLI arguments through `Cli::try_parse_from` and passes the parsed command into `service_config_selection`, making service resolution a direct consequence of the command variant rather than a separate ad hoc path  .
+
+A key flow is early command dispatch for setup: the parsed `Cli` is passed to `dispatch_early_command` along with the effective output format and a callback that receives the setup request. The test confirms this path uses only the parsed request fields, including standalone mode, database URL, schema, overwrite behavior, and embedding API base, and succeeds without resolving project context first . This keeps setup-style commands independent from the normal project/service bootstrapping path.
+
+The module also distinguishes lookup commands from graph and AI commands when deciding which services to request. Lookup-oriented commands such as `grep`, `tree`, `symbol-at`, and search variants are tested as skipping service config resolution, while separate coverage verifies graph and AI command families request only the services they actually need . Since there are no child modules, collaboration is primarily between dispatch functions, CLI parsing, format selection, and configuration selection within this module’s test surface.
 [crates/gcode/src/dispatch/tests.rs:5-9]
 [crates/gcode/src/dispatch/tests.rs:12-14]
 [crates/gcode/src/dispatch/tests.rs:17-22]
@@ -31,7 +35,7 @@ The dispatch module manages early request dispatching, service resolution, and s
 
 ## Files
 
-- [[code/files/crates/gcode/src/dispatch/tests.rs|crates/gcode/src/dispatch/tests.rs]] - `crates/gcode/src/dispatch/tests.rs` exposes 7 indexed API symbols.
+- [[code/files/crates/gcode/src/dispatch/tests.rs|crates/gcode/src/dispatch/tests.rs]] - This is a test module for the dispatch functionality that verifies command handling, service resolution, and logging configuration. The file contains helper function `services_for` which parses CLI arguments to extract service configuration, and multiple test functions that validate: stderr logger behavior respects quiet flags and RUST_LOG environment variables; early command dispatch processes parsed requests without resolving project context; and different command types correctly determine which services to request during initialization. The tests collectively ensure the dispatch layer properly routes commands with appropriate service and logging configurations.
 [crates/gcode/src/dispatch/tests.rs:5-9]
 [crates/gcode/src/dispatch/tests.rs:12-14]
 [crates/gcode/src/dispatch/tests.rs:17-22]

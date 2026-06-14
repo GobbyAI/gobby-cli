@@ -22,7 +22,7 @@ Module: [[code/modules/crates/gwiki/src/ingest/video|crates/gwiki/src/ingest/vid
 
 ## Purpose
 
-`crates/gwiki/src/ingest/video/assets.rs` exposes 7 indexed API symbols.
+This file implements video ingestion when an asset file is being written, with one wrapper that also reindexes the vault afterward and a core path that performs the ingest work without indexing. The main flow registers the video source, writes the asset, gathers media metadata, renders and saves raw markdown, samples frames when enabled, and then persists the resulting frame assets. The cleanup helpers remove deferred or sampled temporary frame sources after persistence so the ingest pipeline leaves only the finalized video assets behind.
 [crates/gwiki/src/ingest/video/assets.rs:4-23]
 [crates/gwiki/src/ingest/video/assets.rs:25-115]
 [crates/gwiki/src/ingest/video/assets.rs:118-122]

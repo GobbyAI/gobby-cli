@@ -6,10 +6,8 @@ provenance:
   ranges:
   - 11-13
   - 15-22
-  - 16-21
   - '24'
   - 26-39
-  - 27-38
   - 41-43
   - 46-51
   - 53-57
@@ -25,7 +23,7 @@ Module: [[code/modules/crates/gwiki/src/support|crates/gwiki/src/support]]
 
 ## Purpose
 
-`crates/gwiki/src/support/search.rs` exposes 10 indexed API symbols.
+This file provides support adapters for wiki search and config lookup. It wraps precomputed BM25 hits in `StoreBm25Backend` so the search trait can return a truncated cloned slice, defines `UnavailableSemanticBackend` as a stub semantic backend that reports Qdrant as not configured, and adapts a live PostgreSQL client through `PostgresConfigSource` to read and resolve configuration values, including `$secret:` references. The `store_search_hits` helper performs keyword-based ranking over in-memory wiki documents by tokenizing the query, scoring matching documents, and returning `WikiSearchResult` values.
 [crates/gwiki/src/support/search.rs:11-13]
 [crates/gwiki/src/support/search.rs:15-22]
 [crates/gwiki/src/support/search.rs:16-21]

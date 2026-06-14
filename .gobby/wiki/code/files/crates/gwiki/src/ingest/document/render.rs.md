@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gwiki/src/ingest/document|crates/gwiki/src/ingest/
 
 ## Purpose
 
-`crates/gwiki/src/ingest/document/render.rs` exposes 9 indexed API symbols.
+This file turns document ingest results into markdown and writes them safely to disk. `render_raw_document_markdown` builds a front-matter-rich markdown stub for the original document asset, while `write_document_derived_markdown` resolves the derived markdown path, creates parent directories, renders the final document markdown, and persists it. The write path uses `write_document_markdown_atomic` plus `create_document_temp_file` so content is first staged in a temp file and then flushed atomically. The remaining helpers classify failures into degradation metadata and unit counts, including special handling for PDF failures and non-document sources, so callers can report the right fallback behavior when rendering does not succeed.
 [crates/gwiki/src/ingest/document/render.rs:11-33]
 [crates/gwiki/src/ingest/document/render.rs:36-67]
 [crates/gwiki/src/ingest/document/render.rs:69-93]

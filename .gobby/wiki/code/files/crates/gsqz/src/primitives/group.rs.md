@@ -60,7 +60,7 @@ Module: [[code/modules/crates/gsqz/src/primitives|crates/gsqz/src/primitives]]
 
 ## Purpose
 
-`crates/gsqz/src/primitives/group.rs` exposes 45 indexed API symbols.
+Provides a small output-normalization layer for grouping and summarizing line-oriented command results. `group_lines` dispatches to mode-specific helpers, and those helpers reshape common noisy outputs into compact, human-readable sections: git status and diff summaries, pytest and test failure extraction, lint grouping by rule, and file/path grouping by extension, directory, or filename, plus generic error/warning aggregation. The file also includes unit tests that verify the dispatcher behavior, grouping classification, truncation limits, and passthrough cases.
 [crates/gsqz/src/primitives/group.rs:8-21]
 [crates/gsqz/src/primitives/group.rs:28-79]
 [crates/gsqz/src/primitives/group.rs:99-183]

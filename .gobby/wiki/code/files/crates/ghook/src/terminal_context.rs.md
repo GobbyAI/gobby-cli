@@ -32,7 +32,7 @@ Module: [[code/modules/crates/ghook/src|crates/ghook/src]]
 
 ## Purpose
 
-`crates/ghook/src/terminal_context.rs` exposes 17 indexed API symbols.
+Builds and injects a terminal/process context payload for session-start hooks so the daemon can reconcile spawned terminal agents with their environment. `capture()` gathers `TMUX` and `TMUX_PANE` from the process environment and delegates to `build_context()`, while `enabled_for_hook()` gates the logic to `sessionstart` hook names after normalizing case and separators. `build_context()` assembles a JSON object with safe process, terminal, tmux, and `GOBBY_*` metadata, only filling tmux fields when `TMUX` is present and the pane matches the daemon’s `%<digits>` contract. The helper functions handle environment lookup, parent PID and TTY discovery, tmux pane validation, and tmux socket-path parsing, and `inject()` adds the resulting `terminal_context` to a JSON object only when it is missing.
 [crates/ghook/src/terminal_context.rs:18-23]
 [crates/ghook/src/terminal_context.rs:25-32]
 [crates/ghook/src/terminal_context.rs:34-65]

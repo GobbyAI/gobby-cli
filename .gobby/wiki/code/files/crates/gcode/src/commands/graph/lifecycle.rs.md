@@ -6,29 +6,24 @@ provenance:
   ranges:
   - 11-13
   - 15-53
-  - 16-27
-  - 29-40
-  - 42-44
-  - 46-48
-  - 50-52
   - 55-64
-  - 56-63
   - '66'
   - 68-75
   - 77-83
   - '85'
   - 87-98
-  - 88-97
   - 100-114
   - 116-128
-  - 130-136
-  - 138-145
-  - 147-177
-  - 179-200
-  - 202-280
-  - 282-289
-  - 291-298
-  - 300-348
+  - 130-137
+  - 139-146
+  - 148-160
+  - 162-164
+  - 166-204
+  - 206-227
+  - 229-307
+  - 309-316
+  - 318-325
+  - 327-390
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -40,7 +35,7 @@ Module: [[code/modules/crates/gcode/src/commands/graph|crates/gcode/src/commands
 
 ## Purpose
 
-`crates/gcode/src/commands/graph/lifecycle.rs` exposes 25 indexed API symbols.
+This file implements the command-side lifecycle flow for code graphs: it defines `GraphSyncContractError` for JSON-formatted contract failures, helpers for success/error output shaping, and a `LifecycleBackend` abstraction with `CodeGraphLifecycleBackend` as the concrete dispatcher. The backend routes `GraphLifecycleAction` variants to clear, rebuild, or sync operations, while `run_lifecycle_action_with_backend` and related helpers package the result into either JSON or formatted text.
 [crates/gcode/src/commands/graph/lifecycle.rs:11-13]
 [crates/gcode/src/commands/graph/lifecycle.rs:15-53]
 [crates/gcode/src/commands/graph/lifecycle.rs:16-27]
@@ -104,30 +99,34 @@ This method routes a `GraphLifecycleAction` enum variant to either clear or rebu
 - `lifecycle_output` (function) component `lifecycle_output [function]` (`c53a32d7-43a2-5c19-b3e5-3aafb3902d5d`) lines 116-128 [crates/gcode/src/commands/graph/lifecycle.rs:116-128]
   - Signature: `fn lifecycle_output(`
   - Purpose: This function constructs a `GraphLifecycleOutput` struct containing a lifecycle action, its associated project ID, and an extracted or stringified summary of the provided payload. [crates/gcode/src/commands/graph/lifecycle.rs:116-128]
-- `GraphFileSyncOutcome` (type) component `GraphFileSyncOutcome [type]` (`072f681f-19cb-55b6-b525-dd0ea38472ac`) lines 130-136 [crates/gcode/src/commands/graph/lifecycle.rs:130-136]
+- `GraphFileSyncOutcome` (type) component `GraphFileSyncOutcome [type]` (`072f681f-19cb-55b6-b525-dd0ea38472ac`) lines 130-137 [crates/gcode/src/commands/graph/lifecycle.rs:130-137]
   - Signature: `enum GraphFileSyncOutcome {`
-  - Purpose: Indexed type `GraphFileSyncOutcome` in `crates/gcode/src/commands/graph/lifecycle.rs`. [crates/gcode/src/commands/graph/lifecycle.rs:130-136]
-- `skipped_missing_indexed_file_payload` (function) component `skipped_missing_indexed_file_payload [function]` (`83b93b4b-8806-5801-b747-d10d4b510d5a`) lines 138-145 [crates/gcode/src/commands/graph/lifecycle.rs:138-145]
+  - Purpose: Indexed type `GraphFileSyncOutcome` in `crates/gcode/src/commands/graph/lifecycle.rs`. [crates/gcode/src/commands/graph/lifecycle.rs:130-137]
+- `skipped_missing_indexed_file_payload` (function) component `skipped_missing_indexed_file_payload [function]` (`430cb271-d063-54c4-8bed-9d55ac16e6d0`) lines 139-146 [crates/gcode/src/commands/graph/lifecycle.rs:139-146]
   - Signature: `pub(super) fn skipped_missing_indexed_file_payload(ctx: &Context, file_path: &str) -> Value {`
-  - Purpose: # Summary
-
-Constructs a JSON payload documenting a skipped file indexing operation due to the indexed file not being found. [crates/gcode/src/commands/graph/lifecycle.rs:138-145]
-- `sync_file_graph` (function) component `sync_file_graph [function]` (`01fd49c6-babb-53a4-9732-2b70dc8bf2a6`) lines 147-177 [crates/gcode/src/commands/graph/lifecycle.rs:147-177]
+  - Purpose: Returns a JSON value marking the given file path as 'skipped' for the current project with reason 'indexed_file_not_found'. [crates/gcode/src/commands/graph/lifecycle.rs:139-146]
+- `skipped_no_graph_facts_payload` (function) component `skipped_no_graph_facts_payload [function]` (`805d6a74-75a2-58c9-8312-701a4294d130`) lines 148-160 [crates/gcode/src/commands/graph/lifecycle.rs:148-160]
+  - Signature: `pub(super) fn skipped_no_graph_facts_payload(ctx: &Context, file_path: &str) -> Value {`
+  - Purpose: Returns a JSON 'Value' marking the file sync as successfully skipped for 'no_graph_facts', including the project ID, file path, zero written symbols/relationships, one synced file, and a formatted summary message. [crates/gcode/src/commands/graph/lifecycle.rs:148-160]
+- `has_no_graph_facts` (function) component `has_no_graph_facts [function]` (`ed99b437-50e8-50cc-80ee-6bdd442fd1d2`) lines 162-164 [crates/gcode/src/commands/graph/lifecycle.rs:162-164]
+  - Signature: `pub(super) fn has_no_graph_facts<I, D, C>(imports: &[I], definitions: &[D], calls: &[C]) -> bool {`
+  - Purpose: Indexed function `has_no_graph_facts` in `crates/gcode/src/commands/graph/lifecycle.rs`. [crates/gcode/src/commands/graph/lifecycle.rs:162-164]
+- `sync_file_graph` (function) component `sync_file_graph [function]` (`4ff376f4-d80f-5b7f-b3b2-e61a4cd1e71b`) lines 166-204 [crates/gcode/src/commands/graph/lifecycle.rs:166-204]
   - Signature: `fn sync_file_graph(`
-  - Purpose: Synchronizes a file's code graph by reading its imports, definitions, and calls from the database and writing them to the graph system, returning the number of relationships and symbols synced. [crates/gcode/src/commands/graph/lifecycle.rs:147-177]
-- `clear_project_graph` (function) component `clear_project_graph [function]` (`b6d8e8dd-0c93-5f78-987b-e51c973cd1cd`) lines 179-200 [crates/gcode/src/commands/graph/lifecycle.rs:179-200]
+  - Purpose: Indexed function `sync_file_graph` in `crates/gcode/src/commands/graph/lifecycle.rs`. [crates/gcode/src/commands/graph/lifecycle.rs:166-204]
+- `clear_project_graph` (function) component `clear_project_graph [function]` (`eccf3bf4-37e8-5b8f-a537-d5310af2cbc5`) lines 206-227 [crates/gcode/src/commands/graph/lifecycle.rs:206-227]
   - Signature: `fn clear_project_graph(ctx: &Context) -> anyhow::Result<GraphLifecycleOutput> {`
-  - Purpose: Clears the project's code graph projection and marks all project files as pending re-synchronization. [crates/gcode/src/commands/graph/lifecycle.rs:179-200]
-- `rebuild_project_graph` (function) component `rebuild_project_graph [function]` (`09a464ab-ebaf-54a6-97e6-4c42851d7961`) lines 202-280 [crates/gcode/src/commands/graph/lifecycle.rs:202-280]
+  - Purpose: Indexed function `clear_project_graph` in `crates/gcode/src/commands/graph/lifecycle.rs`. [crates/gcode/src/commands/graph/lifecycle.rs:206-227]
+- `rebuild_project_graph` (function) component `rebuild_project_graph [function]` (`1312cd99-2d27-5fac-b353-a18cb2ce9ba6`) lines 229-307 [crates/gcode/src/commands/graph/lifecycle.rs:229-307]
   - Signature: `fn rebuild_project_graph(ctx: &Context) -> anyhow::Result<GraphLifecycleOutput> {`
-  - Purpose: Synchronizes all indexed project files' code facts (definitions, imports, calls) from a relational database into an in-memory code dependency graph, cleaning up orphaned symbols upon successful completion. [crates/gcode/src/commands/graph/lifecycle.rs:202-280]
-- `clear` (function) component `clear [function]` (`4d0f4c95-1f34-5975-8246-5dfc20a8b5d0`) lines 282-289 [crates/gcode/src/commands/graph/lifecycle.rs:282-289]
+  - Purpose: Indexed function `rebuild_project_graph` in `crates/gcode/src/commands/graph/lifecycle.rs`. [crates/gcode/src/commands/graph/lifecycle.rs:229-307]
+- `clear` (function) component `clear [function]` (`fa4bcfeb-225c-50e9-adec-d64525c4b162`) lines 309-316 [crates/gcode/src/commands/graph/lifecycle.rs:309-316]
   - Signature: `pub fn clear(ctx: &Context, format: Format) -> anyhow::Result<()> {`
-  - Purpose: Executes a Clear lifecycle action on a code graph using the CodeGraphLifecycleBackend with the provided context and format. [crates/gcode/src/commands/graph/lifecycle.rs:282-289]
-- `rebuild` (function) component `rebuild [function]` (`b9f3c9a0-e046-5fea-a178-9900f51d35ac`) lines 291-298 [crates/gcode/src/commands/graph/lifecycle.rs:291-298]
+  - Purpose: Indexed function `clear` in `crates/gcode/src/commands/graph/lifecycle.rs`. [crates/gcode/src/commands/graph/lifecycle.rs:309-316]
+- `rebuild` (function) component `rebuild [function]` (`ec55216b-5ceb-531f-8f67-7acaadf762e4`) lines 318-325 [crates/gcode/src/commands/graph/lifecycle.rs:318-325]
   - Signature: `pub fn rebuild(ctx: &Context, format: Format) -> anyhow::Result<()> {`
-  - Purpose: Executes a rebuild lifecycle action on the code graph backend with the provided context and output format, propagating any errors through `anyhow::Result`. [crates/gcode/src/commands/graph/lifecycle.rs:291-298]
-- `sync_file` (function) component `sync_file [function]` (`7bf10282-b9d8-563c-a20a-7969760dcde0`) lines 300-348 [crates/gcode/src/commands/graph/lifecycle.rs:300-348]
+  - Purpose: Indexed function `rebuild` in `crates/gcode/src/commands/graph/lifecycle.rs`. [crates/gcode/src/commands/graph/lifecycle.rs:318-325]
+- `sync_file` (function) component `sync_file [function]` (`39f592a9-5a73-58fc-afd8-f179f4e324ff`) lines 327-390 [crates/gcode/src/commands/graph/lifecycle.rs:327-390]
   - Signature: `pub fn sync_file(`
-  - Purpose: Synchronizes a file's code-index graph relationships and symbols, outputting a formatted operation report in the specified format or a skip notification if the indexed file is missing. [crates/gcode/src/commands/graph/lifecycle.rs:300-348]
+  - Purpose: Indexed function `sync_file` in `crates/gcode/src/commands/graph/lifecycle.rs`. [crates/gcode/src/commands/graph/lifecycle.rs:327-390]
 

@@ -6,8 +6,6 @@ provenance:
   ranges:
   - 19-37
   - 39-53
-  - 40-45
-  - 47-52
   - 56-59
   - 62-67
   - 70-73
@@ -49,10 +47,8 @@ provenance:
   - 136-164
   - 167-172
   - 174-182
-  - 175-181
   - '184'
   - 186-195
-  - 187-194
   - 197-212
   - 214-303
   - 305-307
@@ -125,6 +121,9 @@ provenance:
   - 290-302
   - 304-316
   - 318-328
+- file: crates/gcode/src/index/import_resolution/tests.rs
+  ranges:
+  - 1-6
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -136,43 +135,43 @@ Parent: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 
 ## Overview
 
-This module resolves import statements across many programming languages to distinguish local from external symbol references. It builds per-language resolution contexts (`build_import_resolution_context` and overrides) by loading project manifests and local symbol indexes—covering Go modules, Rust crates, JS/Dart packages, Python modules, Java/C# types, PHP symbols, Ruby constants, Swift modules, and Elixir dependencies.
+The import_resolution module turns raw multi-language import syntax into dependency and binding data that later indexing can use to distinguish local references from external calls. Its central state is ImportResolutionContext, which tracks local and external roots for Python, JavaScript, Go, Rust, Java, C#, PHP, Ruby, Swift, Dart, and Elixir, including self-package names, manifest-derived dependencies, and override maps for Ruby and Elixir resolution [crates/gcode/src/index/import_resolution/context.rs:19-37]. The context exposes targeted lookup flows such as Ruby require root resolution and Elixir external root resolution, where explicit overrides are checked before bundled or manifest-derived defaults [crates/gcode/src/index/import_resolution/context.rs:39-53].
 
-The module is organized into four concerns. `context.rs` defines the core data structures (`ImportResolutionContext`, `ImportBindings`, `ExternalImportBinding`, `ExtractedImports`, `ExternalCallTarget`) and manifest/index builders. `helpers.rs` provides parsing utilities for module specifiers, aliases, quoted strings, top-level splitting, and language-specific name validation. `predicates.rs` implements per-language externality checks (e.g., `is_external_python_module`, `is_external_rust_root`, `declared_types`). The `parser` submodule dispatches language-specific import statement parsing via `parse_import_statement`, seeds bindings, and resolves external callees. `tests.rs` holds the test suite.
-[crates/gcode/src/index/import_resolution/context.rs:19-37]
-[crates/gcode/src/index/import_resolution/helpers.rs:1-3]
-[crates/gcode/src/index/import_resolution/parser/go_rust.rs:12-40]
-[crates/gcode/src/index/import_resolution/parser/java_csharp.rs:8-60]
-[crates/gcode/src/index/import_resolution/parser/mod.rs:29-54]
+Parsing and classification are split across collaborating layers. The parser child module dispatches parse_import_statement by language to specialized parsers and preserves unsupported imports as fallback data, while each parser appends ImportRelation records and fills ExtractedImports bindings for later call resolution [crates/gcode/src/index/import_resolution/parser/mod.rs:29-54] [crates/gcode/src/index/import_resolution/parser/mod.rs:56-74]. helpers.rs provides the shared low-level parsing utilities used by those parsers, including whitespace normalization, JavaScript module and clause extraction, quoted-string parsing with template interpolation handling, and balanced top-level splitting .
+
+predicates.rs applies the populated context to decide whether imports are external. It rejects Python relative imports and local module overlaps, treats JavaScript relative/path aliases as internal while recognizing node builtins and package.json dependencies, handles Go self-module prefixes, and builds Rust external roots from manifest crates plus standard crates while excluding the current crate . Tests are organized around the subsystem’s collaboration points: context loading, helper parsing, import statement parsing, and language predicate behavior [crates/gcode/src/index/import_resolution/tests.rs:1-6].
 
 ## Call Diagram
 
 ```mermaid
 sequenceDiagram
+    participant m_09b2efc9_1277_55d5_bcd5_177f6318698b as parse_go_import_statement &#91;function&#93;
+    participant m_1198e746_172a_5cb1_b20f_e9369afc0ee6 as non_use_rust_statement_does_not_record_raw_import &#91;function&#93;
     participant m_1458f6f6_a1e9_50b3_92b7_ff0e333b20d0 as is_elixir_alias &#91;function&#93;
     participant m_1916df87_11f9_5c71_a142_83c4c1d86c8c as build_java_local_class_index &#91;function&#93;
-    participant m_1d00d95f_4489_5e2f_b842_bd3c2e0b6b79 as elixir_lock_dependency_regex &#91;function&#93;
     participant m_20f62109_b4b8_589b_8404_2a3d49722dff as build_import_resolution_context_with_overrides &#91;function&#93;
     participant m_298a796f_3b71_57de_91e3_92ee6f7bd0f2 as elixir_alias_as &#91;function&#93;
     participant m_2e711541_2bba_5bba_8dba_4f9fb59e65bf as collect_rust_dependency_keys &#91;function&#93;
     participant m_36c33943_45c4_56a6_a86c_7e386caf98f7 as build_ruby_local_constant_roots &#91;function&#93;
-    participant m_41594132_4ef6_50b6_a67b_621a3c3ac5fb as load_elixir_dependency_names &#91;function&#93;
     participant m_43bc3bfa_f233_500f_a022_b41ea83a5c4d as load_dart_self_package_name &#91;function&#93;
     participant m_49a757df_a6df_58a8_a6b5_cb2d92d804fd as load_rust_external_crates &#91;function&#93;
     participant m_4ce37be2_33ae_5331_82e6_afaa3c389553 as build_elixir_local_module_roots &#91;function&#93;
+    participant m_4f70d13c_23e0_5f16_a6c6_69ce69537432 as parse_go_import_spec &#91;function&#93;
     participant m_5958e922_0af7_552c_81a6_891a17beaf6d as load_rust_self_crate_name &#91;function&#93;
     participant m_7ba7179b_456f_57ee_816e_a2659bf976b5 as load_js_external_packages &#91;function&#93;
     participant m_7f4d4363_fe89_51aa_829d_0ee94609faa5 as load_dart_external_packages &#91;function&#93;
     participant m_858dff17_95c0_552d_9531_9e03c4e80028 as build_csharp_local_roots &#91;function&#93;
-    participant m_a6cf91da_e087_5ac1_8fd8_6c64b8313da4 as elixir_mix_dependency_regex &#91;function&#93;
     participant m_a8899244_81c7_5851_b841_761da9b4337d as build_php_local_symbol_index &#91;function&#93;
     participant m_c49321da_1712_5774_918d_95128f238d98 as normalize_rust_crate_name &#91;function&#93;
     participant m_e1682169_e23a_543d_8a3f_980c8fca3bb0 as build_python_module_index &#91;function&#93;
+    participant m_ead7eba1_e088_5d34_ba91_e3ccc61cd99f as parse_rust_import_statement &#91;function&#93;
     participant m_f56ce8bc_3a86_5c7b_904d_709b101e4612 as build_swift_local_modules &#91;function&#93;
     participant m_f6e24e4b_9f00_53b9_9028_0b3b8aaa1497 as load_elixir_external_roots &#91;function&#93;
     participant m_fc0d68ad_f171_5100_b2fd_a9c81b419072 as load_go_module_path &#91;function&#93;
     participant m_fc9f79bc_ed88_5926_b897_e76e0c08081d as is_uppercase_ascii_alnum_underscore_name &#91;function&#93;
     participant m_fd5d8525_3676_5763_874c_711e900e07af as load_js_self_package_name &#91;function&#93;
+    m_09b2efc9_1277_55d5_bcd5_177f6318698b->>m_4f70d13c_23e0_5f16_a6c6_69ce69537432: calls
+    m_1198e746_172a_5cb1_b20f_e9369afc0ee6->>m_ead7eba1_e088_5d34_ba91_e3ccc61cd99f: calls
     m_1458f6f6_a1e9_50b3_92b7_ff0e333b20d0->>m_fc9f79bc_ed88_5926_b897_e76e0c08081d: calls
     m_20f62109_b4b8_589b_8404_2a3d49722dff->>m_1916df87_11f9_5c71_a142_83c4c1d86c8c: calls
     m_20f62109_b4b8_589b_8404_2a3d49722dff->>m_36c33943_45c4_56a6_a86c_7e386caf98f7: calls
@@ -191,40 +190,37 @@ sequenceDiagram
     m_20f62109_b4b8_589b_8404_2a3d49722dff->>m_fd5d8525_3676_5763_874c_711e900e07af: calls
     m_298a796f_3b71_57de_91e3_92ee6f7bd0f2->>m_1458f6f6_a1e9_50b3_92b7_ff0e333b20d0: calls
     m_2e711541_2bba_5bba_8dba_4f9fb59e65bf->>m_c49321da_1712_5774_918d_95128f238d98: calls
-    m_41594132_4ef6_50b6_a67b_621a3c3ac5fb->>m_1d00d95f_4489_5e2f_b842_bd3c2e0b6b79: calls
-    m_41594132_4ef6_50b6_a67b_621a3c3ac5fb->>m_a6cf91da_e087_5ac1_8fd8_6c64b8313da4: calls
 ```
 
 ## Child Modules
 
-- [[code/modules/crates/gcode/src/index/import_resolution/parser|crates/gcode/src/index/import_resolution/parser]] - This module implements language-specific import statement parsing for import resolution. The `mod.rs` entry point dispatches to per-language parsers via `parse_import_statement`, seeds import bindings, resolves external callees, and records unparsed imports. Dedicated files handle distinct language families: Go and Rust (including grouped/path imports), Java and C# (with global alias normalization), PHP and Kotlin (use groups, wildcards, import kinds), Python and JavaScript, and a `rest` module covering Swift, Ruby, Dart, and Elixir. Each parser extracts module paths and symbol bindings used downstream to map imports to resolved targets.
-[crates/gcode/src/index/import_resolution/parser/go_rust.rs:12-40]
-[crates/gcode/src/index/import_resolution/parser/java_csharp.rs:8-60]
-[crates/gcode/src/index/import_resolution/parser/mod.rs:29-54]
-[crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:7-14]
-[crates/gcode/src/index/import_resolution/parser/python_js.rs:11-98]
+- [[code/modules/crates/gcode/src/index/import_resolution/parser|crates/gcode/src/index/import_resolution/parser]] - The parser module is the import-resolution dispatch layer for `gcode`: `parse_import_statement` routes a raw import statement by language to specialized parsers for Python/JS, Go/Rust, Java/C#, PHP/Kotlin, and Swift/Ruby/Dart/Elixir, while unsupported languages are preserved through `push_unparsed_import` as fallback data [crates/gcode/src/index/import_resolution/parser/mod.rs:29-54] [crates/gcode/src/index/import_resolution/parser/mod.rs:56-74]. Across these parsers, the common responsibility is to append `ImportRelation` records for file-to-module dependencies and populate `ExtractedImports` binding maps so later resolution can connect references back to imported external modules.
+
+The language files each normalize their own syntax before recording imports and bindings. Go handles both single imports and parenthesized import blocks, strips comments, extracts quoted module names, and binds the default package alias or explicit alias for external modules [crates/gcode/src/index/import_resolution/parser/go_rust.rs:12-40] [crates/gcode/src/index/import_resolution/parser/go_rust.rs:42-77]. Java and C# parse regular, static, alias, and wildcard-like forms, including C# `global::` normalization helpers [crates/gcode/src/index/import_resolution/parser/java_csharp.rs:8-60] [crates/gcode/src/index/import_resolution/parser/java_csharp.rs:62-118]. PHP covers class/function/const `use` forms, grouped imports, wildcard modules, and case-insensitive local-symbol collision checks, while Kotlin records imported symbols, aliases, and external Java class imports [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:7-14] [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:16-59] [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:68-104]. Python/JavaScript and the remaining language parsers follow the same pattern for their supported import-like statements [crates/gcode/src/index/import_resolution/parser/python_js.rs:11-98] [crates/gcode/src/index/import_resolution/parser/python_js.rs:100-194] .
+
+After parsing, the module also participates in call resolution. `seed_import_bindings` preloads external-root bindings from the import context for languages such as Rust and Elixir, and `resolve_external_callee` uses the accumulated bindings, qualified paths, wildcard imports, and local-symbol checks to map external function calls back to source modules [crates/gcode/src/index/import_resolution/parser/mod.rs:76-126] [crates/gcode/src/index/import_resolution/parser/mod.rs:128-203]. The collaboration is intentionally split: `mod.rs` owns routing and shared resolution behavior, while each sibling file translates language-specific import syntax into the common relation and binding structures.
 
 ## Files
 
-- [[code/files/crates/gcode/src/index/import_resolution/context.rs|crates/gcode/src/index/import_resolution/context.rs]] - `crates/gcode/src/index/import_resolution/context.rs` exposes 32 indexed API symbols.
+- [[code/files/crates/gcode/src/index/import_resolution/context.rs|crates/gcode/src/index/import_resolution/context.rs]] - This file implements multi-language import resolution by defining an ImportResolutionContext struct that aggregates symbol indices, external package metadata, and resolution overrides across eleven programming languages (Python, JavaScript, Go, Rust, Java, C#, PHP, Ruby, Swift, Dart, and Elixir). The context provides methods to resolve Ruby requires and Elixir modules by checking override mappings before delegating to default lookup functions. Supporting data structures (ExternalImportBinding, ImportBindings, ExternalRootBinding, ExtractedImports, ExternalCallTarget) track bindings between imports and callables. Builder functions populate the context by extracting local symbol indices from source files (via regex parsing and TOML/YAML parsing), loading external dependencies from language-specific manifests (package.json, go.mod, Cargo.toml, pubspec.yaml, mix.exs/mix.lock), and normalizing identifiers (Rust crate name normalization, Python module path conversion). Rust-specific helpers scan workspace manifests and extract crate dependencies; language-specific parsers parallelize extraction of class names, namespaces, constants, and module declarations.
 [crates/gcode/src/index/import_resolution/context.rs:19-37]
 [crates/gcode/src/index/import_resolution/context.rs:39-53]
 [crates/gcode/src/index/import_resolution/context.rs:40-45]
 [crates/gcode/src/index/import_resolution/context.rs:47-52]
 [crates/gcode/src/index/import_resolution/context.rs:56-59]
-- [[code/files/crates/gcode/src/index/import_resolution/helpers.rs|crates/gcode/src/index/import_resolution/helpers.rs]] - `crates/gcode/src/index/import_resolution/helpers.rs` exposes 23 indexed API symbols.
+- [[code/files/crates/gcode/src/index/import_resolution/helpers.rs|crates/gcode/src/index/import_resolution/helpers.rs]] - This file provides string-parsing helpers for import-resolution across several languages. It normalizes whitespace, extracts JavaScript module specifiers and import clauses, parses quoted strings including backtick templates with nested `${...}` interpolation, and tracks balanced delimiters with `split_top_level` plus a `SplitTopLevelError` that carries location and context when splitting fails. It also includes language-specific import/alias helpers for Go, Rust, Dart, Ruby, and Elixir, along with small validators for constant-style identifiers, so the broader import indexer can consistently break import statements into usable path and alias pieces.
 [crates/gcode/src/index/import_resolution/helpers.rs:1-3]
 [crates/gcode/src/index/import_resolution/helpers.rs:5-11]
 [crates/gcode/src/index/import_resolution/helpers.rs:13-17]
 [crates/gcode/src/index/import_resolution/helpers.rs:19-47]
 [crates/gcode/src/index/import_resolution/helpers.rs:49-86]
-- [[code/files/crates/gcode/src/index/import_resolution/predicates.rs|crates/gcode/src/index/import_resolution/predicates.rs]] - `crates/gcode/src/index/import_resolution/predicates.rs` exposes 20 indexed API symbols.
+- [[code/files/crates/gcode/src/index/import_resolution/predicates.rs|crates/gcode/src/index/import_resolution/predicates.rs]] - This file provides language-agnostic predicates for determining whether imports and symbol references are external to a codebase. It implements external/internal checks for Python, JavaScript, Go, Java, C#, PHP, Rust, and Dart by comparing imports against locally-declared modules, classes, and symbols tracked in an ImportResolutionContext. Supporting utilities extract declared types and symbols from source code by first stripping comments and string literals, identify package names from module paths, and access bundled dependency registries for Ruby and Elixir. These predicates enable the import resolution system to distinguish between internal and external references across multi-language codebases.
 [crates/gcode/src/index/import_resolution/predicates.rs:8-21]
 [crates/gcode/src/index/import_resolution/predicates.rs:23-53]
 [crates/gcode/src/index/import_resolution/predicates.rs:55-68]
 [crates/gcode/src/index/import_resolution/predicates.rs:70-77]
 [crates/gcode/src/index/import_resolution/predicates.rs:79-81]
-- [[code/files/crates/gcode/src/index/import_resolution/tests.rs|crates/gcode/src/index/import_resolution/tests.rs]] - `crates/gcode/src/index/import_resolution/tests.rs` has no indexed API symbols. 
+- [[code/files/crates/gcode/src/index/import_resolution/tests.rs|crates/gcode/src/index/import_resolution/tests.rs]] - This is a Rust test module organization file for the import resolution subsystem in the gcode project. It declares and includes five test submodules (common, context_loading, helper_parsing, import_statement_parsing, and language_predicates) that contain unit tests for various aspects of import resolution functionality, such as parsing import statements, loading context, and evaluating language predicates. [crates/gcode/src/index/import_resolution/tests.rs:1-6]
 
 ## Components
 
@@ -283,36 +279,6 @@ sequenceDiagram
 - `1458f6f6-a1e9-50b3-92b7-ff0e333b20d0`
 - `a4479e3d-fc7f-5c19-8df0-c3c3a9b81d5a`
 - `298a796f-3b71-57de-91e3-92ee6f7bd0f2`
-- `09b2efc9-1277-55d5-bcd5-177f6318698b`
-- `4f70d13c-23e0-5f16-a6c6-69ce69537432`
-- `ead7eba1-e088-5d34-ba91-e3ccc61cd99f`
-- `82851c31-bf0c-5a9e-87cc-fa0437fb8915`
-- `cd7395b3-be22-5552-8d59-09fe129eee76`
-- `5bf53bfb-5e8c-5982-8126-7de7c1838571`
-- `1198e746-172a-5cb1-b20f-e9369afc0ee6`
-- `31904d91-9f4c-54e0-8a86-8056b5df3716`
-- `e5cc9588-90a6-5344-94bb-ac47901275cc`
-- `b2225e6f-4ecd-5924-89de-8bfcb35cca75`
-- `c0a263fb-60f4-5921-ac79-71d39e7bd81e`
-- `42ae76be-6ef2-51f4-a9d0-db788ea9cbba`
-- `ebf4eb51-028a-5909-8da9-325dbbb89705`
-- `3d6658af-dec0-5ed6-9ef6-23af85f8d081`
-- `4be33aa6-bc44-53dc-a95e-2d90037f0ff0`
-- `9d0cf291-80b8-561b-89b5-e1c1cf992098`
-- `8a4fb0c6-b6c9-514c-a9b2-35d6261ffd1d`
-- `d0eb6e1f-cacc-536d-8ad3-65e661acaedb`
-- `344a756e-ef65-554e-adda-c6414e768359`
-- `d14f20b1-7d41-5049-bc5d-16e27d701598`
-- `8a75b2a5-d532-5828-87f4-f1af978fc6e7`
-- `352830db-1cc4-54fc-95dd-37c91592e63e`
-- `9b01598a-a9e4-59a8-a095-a5633f8ee2cb`
-- `46e6ba59-99c4-5804-aedc-4c1a39955cc5`
-- `3ea5626f-08bc-55a2-b9b6-ba688ae21f0a`
-- `6be4b17d-d357-5b96-acbc-fab4a2a49803`
-- `77ba50c7-a30b-5dd0-8037-7d2f0f2ea69b`
-- `9d13c163-29db-520d-899f-f584bb13933a`
-- `bf2026d2-540d-5f58-9f42-2702565a0aa5`
-- `73cc590f-f921-59aa-b038-486b2307a92c`
 - `07f657d4-9c5a-56b4-8ddc-3a5d061639d7`
 - `750b41c0-111c-5111-9510-6e02889c7d9e`
 - `7e7d0299-670d-518b-bf8f-7552a45b1590`

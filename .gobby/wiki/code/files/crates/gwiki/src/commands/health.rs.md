@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-`crates/gwiki/src/commands/health.rs` exposes 1 indexed API symbol. [crates/gwiki/src/commands/health.rs:4-19]
+Implements the `health` command for a wiki scope. It resolves the requested scope, derives a stable identity for output, runs the health check against the scope root, serializes the resulting report to JSON, and wraps both the structured payload and human-readable text into a scoped command outcome. [crates/gwiki/src/commands/health.rs:4-19]
 
 ## API Symbols
 

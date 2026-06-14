@@ -4,8 +4,7 @@ type: code_file
 provenance:
 - file: crates/gcode/src/graph/code_graph/read.rs
   ranges:
-  - 45-90
-  - 91-93
+  - 45-93
   - 95-97
   - 99-111
   - 113-128
@@ -58,7 +57,15 @@ Module: [[code/modules/crates/gcode/src/graph/code_graph|crates/gcode/src/graph/
 
 ## Purpose
 
-`crates/gcode/src/graph/code_graph/read.rs` exposes 43 indexed API symbols.
+This file provides a query layer for analyzing code call graphs stored in Neo4j. It contains three main categories of functions working together:
+
+**Query builders** generate parameterized Cypher queries for different analysis patterns: single-symbol queries (find callers, usages, neighbors), batch queries (multiple symbols at once), file-level analysis (symbols and calls within files), import graph navigation, and transitive dependency analysis (blast radius queries). These builders use constants like CALL_TARGET_PREDICATE and NEIGHBOR_TYPE_CASE to handle multiple Neo4j node types (CodeSymbol, UnresolvedCallee, ExternalSymbol).
+
+**Execution wrappers** are the public API that run these queries against an optional core graph database using `with_optional_core_graph`, executing operations like `count_callers`, `find_usages`, and `blast_radius`. They map query results to GraphResult objects via `row_to_graph_result`.
+
+**Payload builders** (`project_overview_graph`, `file_graph`, `symbol_neighbors`, `blast_radius_graph`) transform raw query rows into structured GraphPayload objects containing nodes and links for visualization. Helper functions like `row_usize`, `count_from_rows`, and `dedupe_limited_blast_rows` process raw database results, with `clamp_limit` and `clamp_offset` enforcing the MAX_GRAPH_LIMIT (100) boundary on all result sets.
+
+Together these components enable exploring code relationships from multiple perspectives: direct caller/callee relationships, project-wide file and module imports, file-level function definitions and calls, and impact analysis showing all symbols that transitively depend on a given target.
 [crates/gcode/src/graph/code_graph/read.rs:45-90]
 [crates/gcode/src/graph/code_graph/read.rs:91-93]
 [crates/gcode/src/graph/code_graph/read.rs:95-97]

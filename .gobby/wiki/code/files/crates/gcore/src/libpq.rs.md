@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-`crates/gcore/src/libpq.rs` exposes 1 indexed API symbol. [crates/gcore/src/libpq.rs:1-39]
+This file provides a single helper for parsing libpq-style keyword DSN strings into whitespace-separated tokens while respecting quoting and escaping. `split_keyword_dsn_tokens` scans the input by character index, skips leading whitespace, tracks whether it is inside single quotes, honors backslash escapes, and only splits on whitespace when not quoted. It returns string slices into the original DSN so callers can process the parsed tokens without allocating new substrings. [crates/gcore/src/libpq.rs:1-39]
 
 ## API Symbols
 

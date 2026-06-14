@@ -22,7 +22,7 @@ Module: [[code/modules/crates/gwiki/src/compile|crates/gwiki/src/compile]]
 
 ## Purpose
 
-`crates/gwiki/src/compile/render.rs` exposes 7 indexed API symbols.
+This file turns a `CompileBundle` into a Markdown handoff page and writes it safely into the vault. `render_bundle` assembles the document structure, `render_list_section` formats repeated bullet-list sections with a fallback when empty, and `write_target_page` creates the target file only after validating the destination stays inside the vault root and the file does not already exist. The path helpers enforce safe relative targeting: `ensure_compile_target_parent_inside_vault` checks the parent directory or nearest existing canonical ancestor, `normalize_target_page` rejects absolute or traversal-based paths and joins valid ones to the vault root, `slugify` wraps the shared slugification helper with fixed options, and `unix_timestamp_ms` provides a timestamp utility for compile output or filenames.
 [crates/gwiki/src/compile/render.rs:11-47]
 [crates/gwiki/src/compile/render.rs:49-63]
 [crates/gwiki/src/compile/render.rs:65-105]

@@ -6,8 +6,6 @@ provenance:
   ranges:
   - 6-9
   - 11-44
-  - 12-31
-  - 33-43
   - 46-65
   - 67-75
   - 78-80
@@ -30,7 +28,7 @@ Module: [[code/modules/crates/gcode/src/commands/grep|crates/gcode/src/commands/
 
 ## Purpose
 
-`crates/gcode/src/commands/grep/grep_matcher.rs` exposes 15 indexed API symbols.
+This file implements GrepMatcher, a regex-based pattern matching utility for grep operations. The GrepMatcher struct wraps a compiled regex and optional word-boundary enforcement, constructed via the new() method which validates non-empty patterns, optionally escapes them for literal matching, and builds case-insensitive regex when requested. The find_spans() method locates all non-zero-width matches in a line and optionally filters them through word-boundary validation. Word-boundary checking relies on helper functions that extract identifier tokens from match spans and validate no ASCII alphanumeric characters or underscores are adjacent to the match, effectively treating only ASCII identifiers as word constituents while treating Unicode and other characters as word separators. The matched_texts() utility function extracts matched substrings from results. Comprehensive unit tests verify correct matching behavior across literal strings, case sensitivity, word boundaries with various adjacent character types (delimiters, operators, Unicode), and proper error reporting for invalid regex patterns and empty input.
 [crates/gcode/src/commands/grep/grep_matcher.rs:6-9]
 [crates/gcode/src/commands/grep/grep_matcher.rs:11-44]
 [crates/gcode/src/commands/grep/grep_matcher.rs:12-31]

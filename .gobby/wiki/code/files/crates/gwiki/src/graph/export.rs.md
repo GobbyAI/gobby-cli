@@ -5,7 +5,6 @@ provenance:
 - file: crates/gwiki/src/graph/export.rs
   ranges:
   - 11-112
-  - 12-111
   - 114-190
   - 204-317
   - 320-349
@@ -20,7 +19,7 @@ Module: [[code/modules/crates/gwiki/src/graph|crates/gwiki/src/graph]]
 
 ## Purpose
 
-`crates/gwiki/src/graph/export.rs` exposes 5 indexed API symbols.
+This file defines wiki graph export and reporting for `WikiGraphFacts`. `export_graph` builds a deduplicated `GraphExport` by collecting document, source, and citation nodes, then wiring them with directed `supports` and `cites` edges while also handling link targets, including unresolved and placeholder nodes for missing documents. `render_graph_report` turns that export into a markdown summary with graph counts, degraded-source and analytics sections, and a Mermaid visualization. The tests exercise scope-aware ID generation, unresolved targets, and placeholder creation for missing resolved targets.
 [crates/gwiki/src/graph/export.rs:11-112]
 [crates/gwiki/src/graph/export.rs:12-111]
 [crates/gwiki/src/graph/export.rs:114-190]

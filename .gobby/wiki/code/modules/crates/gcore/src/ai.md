@@ -190,12 +190,11 @@ Parent: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Overview
 
-The `ai` module in `gcore` provides a unified interface and client transports for interacting with local or remote daemon-backed AI services. It supports core capabilities such as text generation, text embedding, audio transcription, and image/vision analysis, complete with capability probing, request routing, retry handling, and direct fallback mechanisms.
-[crates/gcore/src/ai/daemon.rs:19-24]
-[crates/gcore/src/ai/embeddings.rs:19-38]
-[crates/gcore/src/ai/mod.rs:31-35]
-[crates/gcore/src/ai/probe.rs:20-23]
-[crates/gcore/src/ai/text.rs:9-15]
+The `crates/gcore/src/ai` module is the AI transport and routing layer for `gcore`. Its root module exposes the daemon, direct embeddings, probing, text, transcription, and vision submodules, while `effective_route` resolves each capability from `AiContext`: explicit `Off`, `Direct`, and `Daemon` bindings are honored, and `Auto` probes daemon availability before falling back to a configured direct route or `Off`  . It also centralizes shared transport concerns such as capability-specific timeouts, retry limits, and backoff constants for generation, vision, embeddings, and speech-to-text paths .
+
+The daemon path adapts local Gobby daemon APIs into typed AI results. `daemon.rs` defines daemon endpoint paths for voice transcription, vision extraction, text generation, and embeddings, reads the local CLI token, builds authenticated multipart or JSON requests, applies the context limiter, retries with backoff, and parses daemon replies into transcription, vision, text, or embedding outputs   . Direct provider flows use the shared `AiTransport`: text generation builds chat-completions payloads with optional system context, model, and max-token limits, then normalizes returned content and usage; vision sends a base64 data URI plus a structured extraction prompt and parses JSON, delimited, or plain text responses; transcription switches between transcribe and translate tasks using a task enum that owns the operation name, capability, and endpoint path   .
+
+Capability probing ties the router and daemon transport together. `probe.rs` maps each `AiCapability` to a daemon status endpoint, probes those routes with a short timeout, and records either availability or structured degradation reasons such as unauthorized, unreachable, not advertised, or invalid status body   . The direct embeddings client fills the non-daemon embedding path by posting OpenAI-compatible `/embeddings` requests for single or batched inputs, preserving response order and rejecting malformed, missing, duplicate, or failed responses before returning `Vec<f32>` vectors [crates/gcore/src/ai/embeddings.rs:19-38] .
 
 ## Call Diagram
 
@@ -247,43 +246,45 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gcore/src/ai/daemon.rs|crates/gcore/src/ai/daemon.rs]] - `crates/gcore/src/ai/daemon.rs` exposes 47 indexed API symbols.
+- [[code/files/crates/gcore/src/ai/daemon.rs|crates/gcore/src/ai/daemon.rs]] - Provides the local-daemon AI transport layer for Gobby: it builds authenticated requests to the daemon’s voice transcription, vision extraction, text generation, and embeddings endpoints, applies limiter/retry/backoff behavior, and parses daemon JSON replies into typed results. The file also contains small helpers for token and URL handling, multipart/JSON request construction, capability validation, and response parsing, plus test-only fixtures and guards that verify the request shapes, defaults, and environment setup.
 [crates/gcore/src/ai/daemon.rs:19-24]
 [crates/gcore/src/ai/daemon.rs:27-31]
 [crates/gcore/src/ai/daemon.rs:34-41]
 [crates/gcore/src/ai/daemon.rs:44-96]
 [crates/gcore/src/ai/daemon.rs:98-136]
-- [[code/files/crates/gcore/src/ai/embeddings.rs|crates/gcore/src/ai/embeddings.rs]] - `crates/gcore/src/ai/embeddings.rs` exposes 12 indexed API symbols.
+- [[code/files/crates/gcore/src/ai/embeddings.rs|crates/gcore/src/ai/embeddings.rs]] - Blocking OpenAI-compatible embeddings client for direct, non-daemon routes. It builds a fixed `EmbeddingConfig` for the `embed-small` model, sends single-text or batched `/embeddings` requests with optional bearer auth and a per-request timeout, then parses and validates the returned vectors so `embed_one` and `embed_batch` return ordered `Vec<f32>` results or `AiError` parse/http failures when the response is missing, malformed, duplicated, or status-failing.
 [crates/gcore/src/ai/embeddings.rs:19-38]
 [crates/gcore/src/ai/embeddings.rs:42-92]
 [crates/gcore/src/ai/embeddings.rs:94-105]
 [crates/gcore/src/ai/embeddings.rs:107-133]
 [crates/gcore/src/ai/embeddings.rs:140-148]
-- [[code/files/crates/gcore/src/ai/mod.rs|crates/gcore/src/ai/mod.rs]] - `crates/gcore/src/ai/mod.rs` exposes 37 indexed API symbols.
+- [[code/files/crates/gcore/src/ai/mod.rs|crates/gcore/src/ai/mod.rs]] - This module is the core AI transport/router layer for `gcore`: it wires together the daemon, direct, text, transcription, vision, embeddings, and probe submodules, and centralizes how an `AiContext` is turned into an effective `AiRouting` choice. Its routing helpers prefer explicit `Off`/`Direct`/`Daemon` settings, while `Auto` probes daemon availability first and otherwise falls back to a configured direct endpoint or `Off`.
+
+It also defines `AiTransport` and the request/response plumbing used by AI calls: building JSON and multipart requests, attaching API keys, choosing per-capability timeouts, retrying retryable failures with capped exponential backoff and jitter, parsing JSON and `Retry-After` headers, and extracting chat-completion URL, root, model, and content fields. The test functions at the bottom verify the routing fallback behavior, timeout choices, and retry/header parsing rules.
 [crates/gcore/src/ai/mod.rs:31-35]
 [crates/gcore/src/ai/mod.rs:37-48]
 [crates/gcore/src/ai/mod.rs:50-62]
 [crates/gcore/src/ai/mod.rs:64-76]
 [crates/gcore/src/ai/mod.rs:79-82]
-- [[code/files/crates/gcore/src/ai/probe.rs|crates/gcore/src/ai/probe.rs]] - `crates/gcore/src/ai/probe.rs` exposes 35 indexed API symbols.
+- [[code/files/crates/gcore/src/ai/probe.rs|crates/gcore/src/ai/probe.rs]] - This file defines the AI capability probing layer for a daemon: it maps each `AiCapability` to a status endpoint, probes those endpoints with a timeouted HTTP transport, and classifies the result into structured availability and degradation reports. `CapabilityAvailability`, `CapabilityDegradation`, and `CapabilityProbeReport` hold the probing outcome, while `CapabilityProbeReport::availability` provides a lookup by capability. The probing flow uses `capability_status_route` to choose the route, `probe_daemon_capability(_at/_with)` to execute a single check, `probe_daemon_capabilities(_at/_with)` to collect all predefined capabilities, and helpers like `status_body_advertises`, `bool_at_path`, and `unavailable` to interpret JSON status bodies and build failure reasons. `UreqProbeTransport` implements the transport interface for real HTTP requests, and `FakeTransport` supports tests that verify route mapping and status-body interpretation.
 [crates/gcore/src/ai/probe.rs:20-23]
 [crates/gcore/src/ai/probe.rs:26-34]
 [crates/gcore/src/ai/probe.rs:37-42]
 [crates/gcore/src/ai/probe.rs:45-50]
 [crates/gcore/src/ai/probe.rs:53-56]
-- [[code/files/crates/gcore/src/ai/text.rs|crates/gcore/src/ai/text.rs]] - `crates/gcore/src/ai/text.rs` exposes 11 indexed API symbols.
+- [[code/files/crates/gcore/src/ai/text.rs|crates/gcore/src/ai/text.rs]] - This file provides the text-generation path for AI chat completions. `generate_text` is a thin convenience wrapper over `generate_text_with_max_tokens`, which creates an `AiTransport`, resolves the chat-completions URL for the `TextGenerate` capability, builds the JSON payload, sends the authenticated POST request, and assembles a `TextResult` from the returned content, model name, token usage, and empty metadata. The helper `request_body` formats the request messages from optional system context plus the required user prompt, while conditionally adding the binding’s model and a positive `max_tokens` limit. `chat_completion_usage` normalizes usage data from different provider field names into `TokenUsage`. The test helpers and unit tests spin up a stub server, inspect request headers and JSON body, and verify the request/response behavior and `max_tokens` forwarding.
 [crates/gcore/src/ai/text.rs:9-15]
 [crates/gcore/src/ai/text.rs:17-35]
 [crates/gcore/src/ai/text.rs:37-67]
 [crates/gcore/src/ai/text.rs:69-87]
 [crates/gcore/src/ai/text.rs:98-120]
-- [[code/files/crates/gcore/src/ai/transcription.rs|crates/gcore/src/ai/transcription.rs]] - `crates/gcore/src/ai/transcription.rs` exposes 14 indexed API symbols.
+- [[code/files/crates/gcore/src/ai/transcription.rs|crates/gcore/src/ai/transcription.rs]] - This file implements the audio transcription/translation client for the AI layer. `TranscriptionTask` is the small task enum that centralizes the string name, required `AiCapability`, and REST path for each operation, so the rest of the code can switch between transcribe and translate consistently. `transcribe` orchestrates the call end to end: it builds an `AiTransport`, resolves the endpoint from config, acquires rate-limit permission, retries the request with backoff, and parses the JSON response into a `TranscriptionResult`. The helper functions split the work into URL resolution, multipart request construction, and low-level wiring such as filename, auth, and optional language handling, while the test helpers exercise multipart assembly and header behavior.
 [crates/gcore/src/ai/transcription.rs:11-14]
 [crates/gcore/src/ai/transcription.rs:16-37]
 [crates/gcore/src/ai/transcription.rs:17-22]
 [crates/gcore/src/ai/transcription.rs:24-29]
 [crates/gcore/src/ai/transcription.rs:31-36]
-- [[code/files/crates/gcore/src/ai/vision.rs|crates/gcore/src/ai/vision.rs]] - `crates/gcore/src/ai/vision.rs` exposes 18 indexed API symbols.
+- [[code/files/crates/gcore/src/ai/vision.rs|crates/gcore/src/ai/vision.rs]] - This file implements AI vision extraction for images: `describe_image` sends an image to the configured vision-capable chat-completions endpoint, and the rest of the module builds the request and normalizes the response into a `VisionResult`. `request_body` base64-encodes the image into a data URI, inserts the vision prompt, and optionally sets the bound model. `parse_content` is the main response handler, first trying structured JSON, then a delimited text fallback, and finally a plain-text fallback, using helpers like `parse_json_content`, `strip_json_fence`, `parse_delimited_content`, `parse_section_label`, and `clean_optional_text` to extract `description` and `ocr_text`. The test helpers and cases at the end verify request construction and parsing edge cases such as empty JSON descriptions and unterminated JSON fences.
 [crates/gcore/src/ai/vision.rs:14-17]
 [crates/gcore/src/ai/vision.rs:19-35]
 [crates/gcore/src/ai/vision.rs:37-63]

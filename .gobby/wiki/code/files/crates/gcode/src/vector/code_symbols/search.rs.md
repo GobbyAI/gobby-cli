@@ -6,7 +6,6 @@ provenance:
   ranges:
   - 8-14
   - 16-26
-  - 17-25
   - '28'
   - 30-58
   - 63-81
@@ -21,7 +20,9 @@ Module: [[code/modules/crates/gcode/src/vector/code_symbols|crates/gcode/src/vec
 
 ## Purpose
 
-`crates/gcode/src/vector/code_symbols/search.rs` exposes 6 indexed API symbols.
+This file defines the error type and search entrypoints for vector-based code-symbol lookup. `SearchError` captures missing Qdrant or embedding configuration, query-embedding failure, invalid collection naming, and vector-search transport errors, with `Display` and `Error` implementations for human-readable reporting.
+
+`search_code_symbols` is the core fallible path: it pulls Qdrant and embedding settings from `Context`, embeds the query, builds the target collection name, runs a Qdrant vector search, and converts raw `(symbol_id, score)` pairs into `CodeSymbolVectorSearchHit` values. `semantic_search` wraps that behavior as a degraded semantic-ranking signal, returning results up to the requested limit while logging errors and falling back to an empty list on failure.
 [crates/gcode/src/vector/code_symbols/search.rs:8-14]
 [crates/gcode/src/vector/code_symbols/search.rs:16-26]
 [crates/gcode/src/vector/code_symbols/search.rs:17-25]

@@ -25,7 +25,7 @@ Module: [[code/modules/crates/gcode/src/graph/report|crates/gcode/src/graph/repo
 
 ## Purpose
 
-`crates/gcode/src/graph/report/tests.rs` exposes 10 indexed API symbols.
+This file contains unit tests for the graph report generation system. It validates report structure and content through several test functions: `report_shape` verifies that generated JSON reports contain correct project metadata, node/edge counts, and hotspot detection; `graph_report_hotspots_use_shared_centrality_degree` and related tests ensure hotspot algorithms work correctly; `bridge_edges_are_read_only` and `bridge_edges_are_hypotheses` verify bridge edge behavior; markdown rendering tests validate formatting with CommonMark delimiters; and `report_degradation_contract` tests backwards compatibility. Helper functions `expected_graph_hotspots` and `expected_bridge_summary` provide reference data for comparison. The tests use snapshot-based inputs containing nodes (files, modules, functions), code edges (relationships like DEFINES, CALLS), and bridge edges (inferred hypotheses with confidence scores).
 [crates/gcode/src/graph/report/tests.rs:15-65]
 [crates/gcode/src/graph/report/tests.rs:68-84]
 [crates/gcode/src/graph/report/tests.rs:87-127]

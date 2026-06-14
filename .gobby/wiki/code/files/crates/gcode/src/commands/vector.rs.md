@@ -29,7 +29,7 @@ Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Purpose
 
-`crates/gcode/src/commands/vector.rs` exposes 14 indexed API symbols.
+The file manages the vector lifecycle for code symbols, coordinating between indexed code metadata and a Qdrant vector database. It provides core operations including constructing lifecycle instances from context and embedding sources (lifecycle_from_context, lifecycle_from_resolved_embedding_source), performing lifecycle actions like syncing files to vectors (sync_file), clearing and rebuilding collections (clear, rebuild), and querying lifecycle status (lifecycle_status). The module wraps the underlying CodeSymbolVectorLifecycle to handle project-specific configuration, database connectivity, and formatted output reporting (print_lifecycle_output). Support functions build configuration objects (qdrant_config, daemon_embedding_source), construct contexts (make_ctx), validate required configuration (vector_lifecycle_requires_config), and serialize status as JSON payloads (lifecycle_json_payload, VectorLifecycleJsonPayload).
 [crates/gcode/src/commands/vector.rs:12-18]
 [crates/gcode/src/commands/vector.rs:20-24]
 [crates/gcode/src/commands/vector.rs:26-41]

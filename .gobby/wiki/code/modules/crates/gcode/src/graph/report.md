@@ -87,14 +87,10 @@ provenance:
   ranges:
   - 10-17
   - 19-50
-  - 20-34
-  - 36-49
   - 53-68
   - 71-73
   - 75-81
-  - 76-80
   - 83-89
-  - 84-88
   - 92-97
   - 100-105
   - 108-118
@@ -105,22 +101,15 @@ provenance:
   - 151-155
   - 158-162
   - 164-179
-  - 165-178
   - '181'
   - 184-192
   - 195-200
   - 202-222
-  - 204-215
-  - 218-221
   - 225-229
   - 231-244
-  - 233-243
   - 247-251
   - 253-262
-  - 254-256
-  - 259-261
   - 264-268
-  - 265-267
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -132,18 +121,11 @@ Parent: [[code/modules/crates/gcode/src/graph|crates/gcode/src/graph]]
 
 ## Overview
 
-The `graph/report` module generates project-level graph analysis reports, transforming code graph snapshots into structured summaries and rendered Markdown output.
+The graph report module turns a project’s code graph into a structured and rendered analysis report. Its public generation flow starts with `generate_report`, delegates through option-aware entry points, loads a filtered graph snapshot when needed, and can also operate directly from a supplied snapshot to compute summaries, hotspots, unresolved or external target frequencies, bridge relationship data, recommendations, timestamps, and markdown output [crates/gcode/src/graph/report/generation.rs:21-23] [crates/gcode/src/graph/report/generation.rs:25-59] [crates/gcode/src/graph/report/generation.rs:78-159]. The report schema is centralized in `types.rs`, where `ProjectGraphReport` aggregates project metadata, summary counts, hotspot groups, target lists, optional bridge summaries, bridge hypotheses, degradation details, suggested questions, and rendered markdown [crates/gcode/src/graph/report/types.rs:36-49].
 
-The pipeline flows through several stages: `loading.rs` queries snapshots and hotspot data (via the SQL builders in `queries.rs`), `rows.rs` converts raw query rows into typed domain values, and `summary.rs` computes the analytical core—graph statistics, hotspots, target frequencies, bridge-edge hypotheses, degree stats, and suggested questions. The top-level `generation.rs` orchestrates these into `ProjectGraphReport` values via `generate_report` and snapshot-based variants, with configurable `ProjectGraphReportOptions` and graceful `ReportDegradation` handling. `render.rs` emits CommonMark-safe Markdown (with careful backtick escaping) for hotspot and target sections.
+Database-backed reporting is split between query construction, loading, and row conversion. `queries.rs` builds the scoped Cypher used to classify nodes, count nodes and edges, rank hotspots, find frequent targets, and retrieve provenance for bridge edges [crates/gcode/src/graph/report/queries.rs:7-18] [crates/gcode/src/graph/report/queries.rs:28-38] [crates/gcode/src/graph/report/queries.rs:40-49]. `loading.rs` orchestrates those queries through `load_report_snapshot`, assembling aggregate statistics, high-degree and incoming-call hotspots, and target frequencies, while helper loaders and `collect_report_rows` keep per-query mapping and error handling consistent [crates/gcode/src/graph/report/loading.rs:18-78] . `rows.rs` then converts raw database rows into domain types, including named counts, graph hotspots, target frequencies, and bridge edge hypotheses with provenance and confidence metadata .
 
-`types.rs` defines the module's data model: report, summary, hotspot, bridge-edge, named-count, and snapshot/node/edge types plus error variants. `time.rs` provides ISO-8601 timestamps, and `tests.rs` pins expected output, centrality-degree sharing, read-only bridge-edge semantics, Markdown formatting, and degradation contracts.
-
-Bridge edges are explicitly modeled as read-only hypotheses rather than asserted facts.
-[crates/gcode/src/graph/report/generation.rs:21-23]
-[crates/gcode/src/graph/report/loading.rs:18-78]
-[crates/gcode/src/graph/report/queries.rs:7-18]
-[crates/gcode/src/graph/report/render.rs:8-18]
-[crates/gcode/src/graph/report/rows.rs:11-19]
+Snapshot analysis and presentation are handled by the summary and render layers. `summary.rs` computes node and relationship counts, runs graph analytics for high-degree files, symbols, and modules, derives incoming-call hotspots and target frequencies, and summarizes bridge hypotheses using shared degree statistics and ranking helpers [crates/gcode/src/graph/report/summary.rs:14-17] [crates/gcode/src/graph/report/summary.rs:19-41] [crates/gcode/src/graph/report/summary.rs:51-91]. `render.rs` packages the resulting data into markdown sections for metadata, hotspot groups, incoming calls, and target frequencies, with helpers for escaping inline code and text safely [crates/gcode/src/graph/report/render.rs:8-18] [crates/gcode/src/graph/report/render.rs:20-99] . Tests exercise the collaboration end to end with synthetic snapshots containing files, modules, symbols, call edges, unresolved and external targets, and bridge hypotheses, validating JSON shape, hotspot algorithms, bridge behavior, degradation contracts, and CommonMark rendering details [crates/gcode/src/graph/report/tests.rs:15-65] .
 
 ## Call Diagram
 
@@ -197,50 +179,54 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gcode/src/graph/report/generation.rs|crates/gcode/src/graph/report/generation.rs]] - `crates/gcode/src/graph/report/generation.rs` exposes 5 indexed API symbols.
+- [[code/files/crates/gcode/src/graph/report/generation.rs|crates/gcode/src/graph/report/generation.rs]] - This file generates project graph reports through a tiered API. The entry point `generate_report` delegates to `generate_report_with_options`, which connects to FalkorDB, loads a filtered graph snapshot with service state error handling, and constructs a timestamped report. For direct snapshot-based workflows, `generate_report_from_snapshot_with_options` computes missing analysis components including graph summaries, hotspot identification, unresolved target detection, and bridge relationship normalization. The module also provides convenience functions like `empty_report` for stub reports. The functions coordinate snapshot loading, options normalization, summary generation, and markdown rendering to produce comprehensive ProjectGraphReport outputs with configurable analysis parameters.
 [crates/gcode/src/graph/report/generation.rs:21-23]
 [crates/gcode/src/graph/report/generation.rs:25-59]
 [crates/gcode/src/graph/report/generation.rs:61-63]
 [crates/gcode/src/graph/report/generation.rs:65-76]
 [crates/gcode/src/graph/report/generation.rs:78-159]
-- [[code/files/crates/gcode/src/graph/report/loading.rs|crates/gcode/src/graph/report/loading.rs]] - `crates/gcode/src/graph/report/loading.rs` exposes 5 indexed API symbols.
+- [[code/files/crates/gcode/src/graph/report/loading.rs|crates/gcode/src/graph/report/loading.rs]] - The file provides loading functionality for graph-based code analysis reports. It centers on `load_report_snapshot`, which orchestrates multiple GraphClient queries to assemble a complete report snapshot containing aggregated node/edge statistics, high-degree hotspots across files/symbols/modules, incoming call hotspots, and target frequency data for a specified project. Supporting functions (`load_hotspots`, `load_incoming_call_hotspots`, `load_target_frequencies`) handle individual query execution and row transformation, while `collect_report_rows` provides common error handling for row mapping operations.
 [crates/gcode/src/graph/report/loading.rs:18-78]
 [crates/gcode/src/graph/report/loading.rs:80-95]
 [crates/gcode/src/graph/report/loading.rs:97-111]
 [crates/gcode/src/graph/report/loading.rs:113-128]
 [crates/gcode/src/graph/report/loading.rs:130-146]
-- [[code/files/crates/gcode/src/graph/report/queries.rs|crates/gcode/src/graph/report/queries.rs]] - `crates/gcode/src/graph/report/queries.rs` exposes 9 indexed API symbols.
+- [[code/files/crates/gcode/src/graph/report/queries.rs|crates/gcode/src/graph/report/queries.rs]] - This file provides Cypher query builders for analyzing code graph metrics and patterns in Neo4j. It exposes helper functions that generate consistent SQL expressions for node type classification (`report_node_type_case`), identification (`report_node_id_expr`), and naming (`report_node_name_expr`). These helpers are composed into parameterized query functions that support various reporting operations: `report_node_counts_query` and `report_code_edge_counts_query` tally nodes and relationships by type, `report_hotspots_query` and `report_incoming_call_hotspots_query` identify highly-connected nodes ranked by degree or incoming calls, `report_target_frequencies_query` finds the most frequently called external or unresolved targets, and `report_bridge_edges_query` retrieves provenance metadata for RELATES_TO_CODE edges. Together these queries enable introspection of code graph structure across node types (CodeFile, CodeModule, CodeSymbol, UnresolvedCallee, ExternalSymbol) and relationship types (DEFINES, IMPORTS, CALLS) scoped to a project.
 [crates/gcode/src/graph/report/queries.rs:7-18]
 [crates/gcode/src/graph/report/queries.rs:20-22]
 [crates/gcode/src/graph/report/queries.rs:24-26]
 [crates/gcode/src/graph/report/queries.rs:28-38]
 [crates/gcode/src/graph/report/queries.rs:40-49]
-- [[code/files/crates/gcode/src/graph/report/render.rs|crates/gcode/src/graph/report/render.rs]] - `crates/gcode/src/graph/report/render.rs` exposes 8 indexed API symbols.
+- [[code/files/crates/gcode/src/graph/report/render.rs|crates/gcode/src/graph/report/render.rs]] - This file provides markdown rendering for graph analysis reports. The `RenderMarkdownInput` struct packages report data, and `render_markdown` orchestrates the output by building a markdown string containing project metadata, high-degree hotspots (files, modules, symbols), incoming-call hotspots, and target frequency information. Helper functions handle specific formatting: `append_hotspot_section` and `append_target_section` structure report sections, `inline_code` and `markdown_text` manage content escaping, `max_backtick_run` supports proper backtick fence generation, and `named_counts_inline` formats categorical counts inline.
 [crates/gcode/src/graph/report/render.rs:8-18]
 [crates/gcode/src/graph/report/render.rs:20-99]
 [crates/gcode/src/graph/report/render.rs:101-121]
 [crates/gcode/src/graph/report/render.rs:123-141]
 [crates/gcode/src/graph/report/render.rs:143-150]
-- [[code/files/crates/gcode/src/graph/report/rows.rs|crates/gcode/src/graph/report/rows.rs]] - `crates/gcode/src/graph/report/rows.rs` exposes 11 indexed API symbols.
+- [[code/files/crates/gcode/src/graph/report/rows.rs|crates/gcode/src/graph/report/rows.rs]] - This file provides row-to-object conversion utilities for graph reporting, transforming database Row objects into domain models with sensible defaults and fallback values.
+
+The main converters are `rows_to_named_counts`, which collects rows into a sorted name-to-count map; `row_to_graph_hotspot`, which extracts id/name (mandatory) and node type, degree, and directional metrics (with defaults); `row_to_target_frequency`, which builds a frequency struct from id, name, and optional count; and `row_to_bridge_edge_hypothesis`, which deserializes complex edge data including source/target identifiers, relation type, and optional metadata like confidence and provenance.
+
+Supporting the converters are three low-level extractors: `row_string` returns the first non-empty string from candidate keys; `row_usize` attempts multi-type numeric conversions (u64, i64, f64) in sequence; and `row_f64` retrieves and converts floating-point values. Unit tests verify that extractors skip invalid or missing values, returning only valid conversions.
 [crates/gcode/src/graph/report/rows.rs:11-19]
 [crates/gcode/src/graph/report/rows.rs:21-31]
 [crates/gcode/src/graph/report/rows.rs:33-39]
 [crates/gcode/src/graph/report/rows.rs:41-66]
 [crates/gcode/src/graph/report/rows.rs:68-78]
-- [[code/files/crates/gcode/src/graph/report/summary.rs|crates/gcode/src/graph/report/summary.rs]] - `crates/gcode/src/graph/report/summary.rs` exposes 16 indexed API symbols.
+- [[code/files/crates/gcode/src/graph/report/summary.rs|crates/gcode/src/graph/report/summary.rs]] - This file provides analysis and summarization functions for code dependency graphs. It computes structural statistics (node/edge counts by type) via `summarize_graph`, identifies high-degree "hotspot" nodes across files and symbols through `summarize_hotspots` and supporting functions like `gcore_hotspots_for_code_graph` and `analytics_top_hotspots`, and analyzes call patterns and edge frequencies via `gcore_incoming_call_hotspots` and `target_frequencies`. The module also includes bridge edge analysis functions (`summarize_bridge_edges`, `gcore_bridge_summary_for_edges`, `bridge_summary_from_analytics_edges`) to detect critical dependency connections, along with helper utilities like `edge_degree_stats`, `sort_hotspots`, and `is_symbol_node` for filtering and ranking nodes. The `DegreeStats` struct tracks incoming/outgoing edge counts used throughout these analyses.
 [crates/gcode/src/graph/report/summary.rs:14-17]
 [crates/gcode/src/graph/report/summary.rs:19-41]
 [crates/gcode/src/graph/report/summary.rs:43-49]
 [crates/gcode/src/graph/report/summary.rs:51-91]
 [crates/gcode/src/graph/report/summary.rs:93-100]
-- [[code/files/crates/gcode/src/graph/report/tests.rs|crates/gcode/src/graph/report/tests.rs]] - `crates/gcode/src/graph/report/tests.rs` exposes 10 indexed API symbols.
+- [[code/files/crates/gcode/src/graph/report/tests.rs|crates/gcode/src/graph/report/tests.rs]] - This file contains unit tests for the graph report generation system. It validates report structure and content through several test functions: `report_shape` verifies that generated JSON reports contain correct project metadata, node/edge counts, and hotspot detection; `graph_report_hotspots_use_shared_centrality_degree` and related tests ensure hotspot algorithms work correctly; `bridge_edges_are_read_only` and `bridge_edges_are_hypotheses` verify bridge edge behavior; markdown rendering tests validate formatting with CommonMark delimiters; and `report_degradation_contract` tests backwards compatibility. Helper functions `expected_graph_hotspots` and `expected_bridge_summary` provide reference data for comparison. The tests use snapshot-based inputs containing nodes (files, modules, functions), code edges (relationships like DEFINES, CALLS), and bridge edges (inferred hypotheses with confidence scores).
 [crates/gcode/src/graph/report/tests.rs:15-65]
 [crates/gcode/src/graph/report/tests.rs:68-84]
 [crates/gcode/src/graph/report/tests.rs:87-127]
 [crates/gcode/src/graph/report/tests.rs:129-179]
 [crates/gcode/src/graph/report/tests.rs:181-196]
-- [[code/files/crates/gcode/src/graph/report/time.rs|crates/gcode/src/graph/report/time.rs]] - `crates/gcode/src/graph/report/time.rs` exposes 1 indexed API symbol. [crates/gcode/src/graph/report/time.rs:3-5]
-- [[code/files/crates/gcode/src/graph/report/types.rs|crates/gcode/src/graph/report/types.rs]] - `crates/gcode/src/graph/report/types.rs` exposes 36 indexed API symbols.
+- [[code/files/crates/gcode/src/graph/report/time.rs|crates/gcode/src/graph/report/time.rs]] - This file provides a time utility function for the reporting module. The single public function `now_iso8601` generates a current UTC timestamp formatted as an RFC3339-compliant ISO8601 string with microsecond precision, using chrono's `Utc::now()` and `to_rfc3339_opts()` method with microsecond granularity. [crates/gcode/src/graph/report/time.rs:3-5]
+- [[code/files/crates/gcode/src/graph/report/types.rs|crates/gcode/src/graph/report/types.rs]] - This file defines type structures and implementations for dependency graph analysis and reporting. It provides several layers of abstractions: core elements like BridgeEdgeHypothesis (directed edges with relation semantics and metadata) and graph topology nodes/edges (ReportNode, ReportCodeEdge); analysis results including GraphReportHotspots (high-degree files, symbols, modules), TargetFrequency (occurrence metrics), and ConfidenceRange (numeric bounds); configuration options (ProjectGraphReportOptions) for controlling report scope; and error handling (ProjectGraphReportError) for graph query failures. The main ProjectGraphReport struct aggregates all these components into a serializable report capturing hotspots, unresolved targets, bridge edge hypotheses across multiple source systems, degradation details, and investigation recommendations. BridgeEdgeInput provides factory methods to construct available or unavailable bridge edge variants, while ReportGraphSnapshot encapsulates the complete analyzed graph structure. Together, these types form the complete schema for representing code dependency graph analysis results.
 [crates/gcode/src/graph/report/types.rs:10-17]
 [crates/gcode/src/graph/report/types.rs:19-50]
 [crates/gcode/src/graph/report/types.rs:20-34]

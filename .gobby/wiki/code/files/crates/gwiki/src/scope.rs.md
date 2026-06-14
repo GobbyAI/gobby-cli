@@ -7,15 +7,6 @@ provenance:
   - 12-16
   - 19-27
   - 29-89
-  - 30-36
-  - 38-48
-  - 50-52
-  - 54-56
-  - 58-60
-  - 62-67
-  - 69-74
-  - 76-81
-  - 83-88
   - 91-94
   - 96-121
   - 123-129
@@ -25,10 +16,7 @@ provenance:
   - 190-206
   - 216-218
   - 220-226
-  - 221-225
   - 228-236
-  - 229-231
-  - 233-235
   - 240-256
   - 259-273
   - 276-312
@@ -44,7 +32,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/scope.rs` exposes 29 indexed API symbols.
+This file resolves a wiki scope selection into a concrete `ResolvedScope` for either a topic or a project. `ResolvedScope` stores the scope kind plus its root and registry path, while accessor methods expose the active variant and derived identity data such as topic name, project ID, and project root. The resolver functions use config and environment-based hub-path lookup, validate topic/project names, expand `~` in paths, and derive the project wiki root and registry file location; the tests verify global-topic resolution, invalid-name rejection, read-only project scope resolution, and that `.` maps to the absolute project wiki root.
 [crates/gwiki/src/scope.rs:12-16]
 [crates/gwiki/src/scope.rs:19-27]
 [crates/gwiki/src/scope.rs:29-89]

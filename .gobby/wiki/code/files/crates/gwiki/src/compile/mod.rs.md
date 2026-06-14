@@ -4,19 +4,19 @@ type: code_file
 provenance:
 - file: crates/gwiki/src/compile/mod.rs
   ranges:
-  - 27-32
-  - 35-38
-  - 41-44
-  - 46-53
-  - 56-63
-  - 66-77
-  - 80-85
-  - 88-91
-  - 94-99
-  - 101-191
-  - 193-267
-  - 270-275
-  - 277-290
+  - 30-35
+  - 38-41
+  - 44-47
+  - 49-56
+  - 59-67
+  - 70-81
+  - 84-89
+  - 92-95
+  - 98-103
+  - 105-204
+  - 206-280
+  - 283-288
+  - 290-303
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -28,55 +28,55 @@ Module: [[code/modules/crates/gwiki/src/compile|crates/gwiki/src/compile]]
 
 ## Purpose
 
-`crates/gwiki/src/compile/mod.rs` exposes 14 indexed API symbols.
-[crates/gwiki/src/compile/mod.rs:27-32]
-[crates/gwiki/src/compile/mod.rs:35-38]
-[crates/gwiki/src/compile/mod.rs:41-44]
-[crates/gwiki/src/compile/mod.rs:46-53]
-[crates/gwiki/src/compile/mod.rs:47-52]
+This module defines the data structures and orchestration entry points for wiki compilation. `CompileRequest` carries the user’s topic, outline, optional target page, and whether output should be written; `WikiCompileOptions` controls the target article kind and whether daemon synthesis is available, with a default of `ArticleKind::Topic` and no daemon support. The compile flow starts with `compile_to_wiki`, which just applies default options and forwards to `compile_to_wiki_with_options`, then `prepare_handoff` validates the request, normalizes the target page, gathers accepted sources from the research session, and writes a `.gwiki/compile/{handoff_id}.md` handoff bundle. The resulting `CompileBundle`, `CompileOutcome`, and `WikiCompileOutcome` structs carry the handoff metadata, accepted sources, citations, conflict and evidence gaps, synthesis prompt, generated paths, page write results, and optional explainer report. `CollectedSources` groups source material and reporting data for downstream synthesis, and `index_lock_timeout` reads the compile index lock timeout from the environment with a validated fallback.
+[crates/gwiki/src/compile/mod.rs:30-35]
+[crates/gwiki/src/compile/mod.rs:38-41]
+[crates/gwiki/src/compile/mod.rs:44-47]
+[crates/gwiki/src/compile/mod.rs:49-56]
+[crates/gwiki/src/compile/mod.rs:50-55]
 
 ## API Symbols
 
-- `CompileRequest` (class) component `CompileRequest [class]` (`f142bd4e-6024-5bd2-8a68-d4abbfb74473`) lines 27-32 [crates/gwiki/src/compile/mod.rs:27-32]
+- `CompileRequest` (class) component `CompileRequest [class]` (`b23540e3-d38d-56c1-90c9-14963213139f`) lines 30-35 [crates/gwiki/src/compile/mod.rs:30-35]
   - Signature: `pub struct CompileRequest {`
-  - Purpose: Indexed class `CompileRequest` in `crates/gwiki/src/compile/mod.rs`. [crates/gwiki/src/compile/mod.rs:27-32]
-- `CompileOutcome` (class) component `CompileOutcome [class]` (`0dc46c8c-7081-593e-99c3-6b8af3a12dbc`) lines 35-38 [crates/gwiki/src/compile/mod.rs:35-38]
+  - Purpose: 'CompileRequest' is a Rust request payload that carries a 'topic', an 'outline' of string sections, an optional 'target_page' path, and a 'write_intent' flag indicating whether the compile operation is intended to persist output. [crates/gwiki/src/compile/mod.rs:30-35]
+- `CompileOutcome` (class) component `CompileOutcome [class]` (`b6734559-97c0-5e96-a3e5-8caf50e357d2`) lines 38-41 [crates/gwiki/src/compile/mod.rs:38-41]
   - Signature: `pub struct CompileOutcome {`
-  - Purpose: Indexed class `CompileOutcome` in `crates/gwiki/src/compile/mod.rs`. [crates/gwiki/src/compile/mod.rs:35-38]
-- `WikiCompileOptions` (class) component `WikiCompileOptions [class]` (`bc977b2c-ac5e-5f6f-ba8a-642de40a82bd`) lines 41-44 [crates/gwiki/src/compile/mod.rs:41-44]
+  - Purpose: 'CompileOutcome' is a Rust struct that pairs a 'CompileBundle' with the resulting 'CompileState'. [crates/gwiki/src/compile/mod.rs:38-41]
+- `WikiCompileOptions` (class) component `WikiCompileOptions [class]` (`192531a0-7c72-5348-bec2-7886adba8b49`) lines 44-47 [crates/gwiki/src/compile/mod.rs:44-47]
   - Signature: `pub struct WikiCompileOptions {`
-  - Purpose: Indexed class `WikiCompileOptions` in `crates/gwiki/src/compile/mod.rs`. [crates/gwiki/src/compile/mod.rs:41-44]
-- `WikiCompileOptions` (class) component `WikiCompileOptions [class]` (`ea913fe9-5ad5-50c8-9a40-98423b9f608e`) lines 46-53 [crates/gwiki/src/compile/mod.rs:46-53]
+  - Purpose: 'WikiCompileOptions' is a configuration struct that specifies the target 'ArticleKind' to compile for and whether daemon synthesis is available during compilation. [crates/gwiki/src/compile/mod.rs:44-47]
+- `WikiCompileOptions` (class) component `WikiCompileOptions [class]` (`e81f90b8-c658-5938-b818-ed7d561f298f`) lines 49-56 [crates/gwiki/src/compile/mod.rs:49-56]
   - Signature: `impl Default for WikiCompileOptions {`
-  - Purpose: Indexed class `WikiCompileOptions` in `crates/gwiki/src/compile/mod.rs`. [crates/gwiki/src/compile/mod.rs:46-53]
-- `WikiCompileOptions.default` (method) component `WikiCompileOptions.default [method]` (`c1f28bae-12ac-5369-a916-a4011cbb397e`) lines 47-52 [crates/gwiki/src/compile/mod.rs:47-52]
+  - Purpose: 'WikiCompileOptions' defines the default wiki compilation settings, initializing 'target_kind' to 'ArticleKind::Topic' and 'daemon_synthesis_available' to 'false'. [crates/gwiki/src/compile/mod.rs:49-56]
+- `WikiCompileOptions.default` (method) component `WikiCompileOptions.default [method]` (`d8ef38af-aeb1-5853-b421-1de93e7d1323`) lines 50-55 [crates/gwiki/src/compile/mod.rs:50-55]
   - Signature: `fn default() -> Self {`
-  - Purpose: Indexed method `WikiCompileOptions.default` in `crates/gwiki/src/compile/mod.rs`. [crates/gwiki/src/compile/mod.rs:47-52]
-- `WikiCompileOutcome` (class) component `WikiCompileOutcome [class]` (`8ce75f73-c2ee-5237-ad78-6431caf17910`) lines 56-63 [crates/gwiki/src/compile/mod.rs:56-63]
+  - Purpose: Constructs a 'Self' instance with 'target_kind' initialized to 'ArticleKind::Topic' and 'daemon_synthesis_available' set to 'false'. [crates/gwiki/src/compile/mod.rs:50-55]
+- `WikiCompileOutcome` (class) component `WikiCompileOutcome [class]` (`20be72c2-19de-56bf-b907-af8f59f9cad5`) lines 59-67 [crates/gwiki/src/compile/mod.rs:59-67]
   - Signature: `pub struct WikiCompileOutcome {`
-  - Purpose: Indexed class `WikiCompileOutcome` in `crates/gwiki/src/compile/mod.rs`. [crates/gwiki/src/compile/mod.rs:56-63]
-- `CompileBundle` (class) component `CompileBundle [class]` (`362b576b-41c0-55a0-9d91-df95e0c3ecb7`) lines 66-77 [crates/gwiki/src/compile/mod.rs:66-77]
+  - Purpose: 'WikiCompileOutcome' is a result record for a wiki compilation run, capturing the handoff ID, generated article and index paths, contributing source paths, per-page write outcomes, the synthesis prompt used, and an optional explainer report. [crates/gwiki/src/compile/mod.rs:59-67]
+- `CompileBundle` (class) component `CompileBundle [class]` (`088250f4-33b1-546d-8bf0-b1e977fdab7b`) lines 70-81 [crates/gwiki/src/compile/mod.rs:70-81]
   - Signature: `pub struct CompileBundle {`
-  - Purpose: Indexed class `CompileBundle` in `crates/gwiki/src/compile/mod.rs`. [crates/gwiki/src/compile/mod.rs:66-77]
-- `AcceptedCompileSource` (class) component `AcceptedCompileSource [class]` (`2335f491-9403-5b78-ab1c-1d04df9b3827`) lines 80-85 [crates/gwiki/src/compile/mod.rs:80-85]
+  - Purpose: 'CompileBundle' is a data carrier for a compile/handoff operation, bundling the handoff metadata, topic outline, accepted sources, citations, conflict and evidence gaps, optional target page, write intent flag, and output path. [crates/gwiki/src/compile/mod.rs:70-81]
+- `AcceptedCompileSource` (class) component `AcceptedCompileSource [class]` (`81e495a8-9423-5f49-895b-a6b785c011f5`) lines 84-89 [crates/gwiki/src/compile/mod.rs:84-89]
   - Signature: `pub struct AcceptedCompileSource {`
-  - Purpose: Indexed class `AcceptedCompileSource` in `crates/gwiki/src/compile/mod.rs`. [crates/gwiki/src/compile/mod.rs:80-85]
-- `AcceptedCompileChunkOffset` (class) component `AcceptedCompileChunkOffset [class]` (`3a630aca-cc9b-57f8-ab22-d2442c6378d8`) lines 88-91 [crates/gwiki/src/compile/mod.rs:88-91]
+  - Purpose: 'AcceptedCompileSource' is a data container for an accepted compile input, holding a 'title', a filesystem 'path', the source split into 'chunks', and corresponding 'chunk_offsets' for those chunks. [crates/gwiki/src/compile/mod.rs:84-89]
+- `AcceptedCompileChunkOffset` (class) component `AcceptedCompileChunkOffset [class]` (`3f17d229-f900-5fe6-b1ca-8bc44882b1b1`) lines 92-95 [crates/gwiki/src/compile/mod.rs:92-95]
   - Signature: `pub struct AcceptedCompileChunkOffset {`
-  - Purpose: Indexed class `AcceptedCompileChunkOffset` in `crates/gwiki/src/compile/mod.rs`. [crates/gwiki/src/compile/mod.rs:88-91]
-- `compile_to_wiki` (function) component `compile_to_wiki [function]` (`2a156988-2628-5bdb-a544-3280ce8f6377`) lines 94-99 [crates/gwiki/src/compile/mod.rs:94-99]
+  - Purpose: 'AcceptedCompileChunkOffset' is a struct that stores the accepted byte-range boundaries of a compile chunk via 'byte_start' and 'byte_end' offsets. [crates/gwiki/src/compile/mod.rs:92-95]
+- `compile_to_wiki` (function) component `compile_to_wiki [function]` (`0659dfce-1c2b-5d6b-a343-0ec556862cf5`) lines 98-103 [crates/gwiki/src/compile/mod.rs:98-103]
   - Signature: `pub fn compile_to_wiki(`
-  - Purpose: Indexed function `compile_to_wiki` in `crates/gwiki/src/compile/mod.rs`. [crates/gwiki/src/compile/mod.rs:94-99]
-- `compile_to_wiki_with_options` (function) component `compile_to_wiki_with_options [function]` (`39c081ce-ce7f-58e5-89db-c44b6cef9156`) lines 101-191 [crates/gwiki/src/compile/mod.rs:101-191]
+  - Purpose: 'compile_to_wiki' is a thin wrapper that delegates the given 'ResearchSession' and 'CompileRequest' to 'compile_to_wiki_with_options' using 'WikiCompileOptions::default()' and no extra context, returning its 'WikiCompileOutcome' or 'WikiError'. [crates/gwiki/src/compile/mod.rs:98-103]
+- `compile_to_wiki_with_options` (function) component `compile_to_wiki_with_options [function]` (`49c1e484-b88c-58a1-a53e-d6f7be9353a2`) lines 105-204 [crates/gwiki/src/compile/mod.rs:105-204]
   - Signature: `pub fn compile_to_wiki_with_options(`
-  - Purpose: Indexed function `compile_to_wiki_with_options` in `crates/gwiki/src/compile/mod.rs`. [crates/gwiki/src/compile/mod.rs:101-191]
-- `prepare_handoff` (function) component `prepare_handoff [function]` (`888dd733-cdb7-5b4e-9ed8-d0e3e9a010fe`) lines 193-267 [crates/gwiki/src/compile/mod.rs:193-267]
+  - Purpose: Normalizes the requested target page, prepares and records a wiki-compilation handoff from the research session and request, optionally renders and writes the target page when 'write_intent' is set, and assembles unique citations plus synthesis input for downstream wiki generation. [crates/gwiki/src/compile/mod.rs:105-204]
+- `prepare_handoff` (function) component `prepare_handoff [function]` (`05b8ac7e-6c62-5efc-9c94-e6f52519e4bd`) lines 206-280 [crates/gwiki/src/compile/mod.rs:206-280]
   - Signature: `pub fn prepare_handoff(`
-  - Purpose: Indexed function `prepare_handoff` in `crates/gwiki/src/compile/mod.rs`. [crates/gwiki/src/compile/mod.rs:193-267]
-- `CollectedSources` (class) component `CollectedSources [class]` (`20741746-0a8d-5fb4-8fbe-47b209f3173b`) lines 270-275 [crates/gwiki/src/compile/mod.rs:270-275]
+  - Purpose: 'prepare_handoff' validates that 'request.topic' is non-empty, normalizes the target page, generates a unique compile handoff ID and bundle path, collects accepted sources from the session, renders and writes a '.gwiki/compile/{handoff_id}.md' bundle, and begins constructing a 'CompileState'/'CompileOutcome' for the handoff. [crates/gwiki/src/compile/mod.rs:206-280]
+- `CollectedSources` (class) component `CollectedSources [class]` (`b05172c1-0012-5265-b08e-1fc88b7c1c04`) lines 283-288 [crates/gwiki/src/compile/mod.rs:283-288]
   - Signature: `pub(crate) struct CollectedSources {`
-  - Purpose: Indexed class `CollectedSources` in `crates/gwiki/src/compile/mod.rs`. [crates/gwiki/src/compile/mod.rs:270-275]
-- `index_lock_timeout` (function) component `index_lock_timeout [function]` (`c28560cb-fffe-569b-b1bd-3586abf8366e`) lines 277-290 [crates/gwiki/src/compile/mod.rs:277-290]
+  - Purpose: 'CollectedSources' is an internal aggregation struct that groups accepted compile sources alongside citation strings, conflicting claims, and missing-evidence records for downstream evaluation or reporting. [crates/gwiki/src/compile/mod.rs:283-288]
+- `index_lock_timeout` (function) component `index_lock_timeout [function]` (`37c3c1e1-1596-570c-8950-3d451ecff6b5`) lines 290-303 [crates/gwiki/src/compile/mod.rs:290-303]
   - Signature: `pub(crate) fn index_lock_timeout() -> Duration {`
-  - Purpose: Indexed function `index_lock_timeout` in `crates/gwiki/src/compile/mod.rs`. [crates/gwiki/src/compile/mod.rs:277-290]
+  - Purpose: Returns the index lock timeout as a 'Duration', reading 'INDEX_LOCK_TIMEOUT_ENV' as a positive 'u64' millisecond value when present and otherwise falling back to 'DEFAULT_INDEX_LOCK_TIMEOUT_MS', while emitting a warning to stderr for invalid environment values. [crates/gwiki/src/compile/mod.rs:290-303]
 

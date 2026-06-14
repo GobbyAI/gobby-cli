@@ -6,9 +6,6 @@ provenance:
   ranges:
   - 8-11
   - 13-29
-  - 14-16
-  - 18-23
-  - 25-28
   - 32-39
   - 42-45
   - 48-53
@@ -51,7 +48,7 @@ Module: [[code/modules/crates/gwiki/src/graph|crates/gwiki/src/graph]]
 
 ## Purpose
 
-`crates/gwiki/src/graph/context.rs` exposes 36 indexed API symbols.
+Builds the unified graph-context payload for wiki/code search results. It defines serializable structs for the overall pack, scope, degradation state, warnings, neighborhoods, neighbors, doc links, citations, code edges, and recommendations, plus `GraphContextOptions` to track degraded sources and truncated components. The helper functions assemble this pack from a path and `WikiGraphFacts`, derive scope and citation grouping, emit warnings for capped, stale, or audited data, collect neighborhood/doc-link/code-edge details, and provide constructors for resolved and unresolved links so wiki and code relationships are merged into one JSON-friendly context view.
 [crates/gwiki/src/graph/context.rs:8-11]
 [crates/gwiki/src/graph/context.rs:13-29]
 [crates/gwiki/src/graph/context.rs:14-16]

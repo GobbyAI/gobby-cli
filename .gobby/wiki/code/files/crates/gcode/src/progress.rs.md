@@ -6,9 +6,6 @@ provenance:
   ranges:
   - 9-14
   - 16-71
-  - 18-26
-  - 29-62
-  - 65-70
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -20,7 +17,7 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-`crates/gcode/src/progress.rs` exposes 5 indexed API symbols.
+This file provides a lightweight, single-line progress bar for indexing operations that displays on stderr only when it's a TTY and quiet mode is disabled. The ProgressBar struct maintains state (total items, current position, enabled flag, display width) and exposes three methods: new() initializes the bar conditionally based on terminal capability, tick() increments progress and renders a visual bar with filled/empty characters plus file path information (truncating from the left to fit terminal width), and finish() clears the display line. The implementation uses ANSI escape codes for line overwriting and clearing, with no external dependencies.
 [crates/gcode/src/progress.rs:9-14]
 [crates/gcode/src/progress.rs:16-71]
 [crates/gcode/src/progress.rs:18-26]

@@ -27,7 +27,7 @@ Module: [[code/modules/crates/gwiki/src/compile|crates/gwiki/src/compile]]
 
 ## Purpose
 
-`crates/gwiki/src/compile/collect.rs` exposes 12 indexed API symbols.
+This file gathers a research session’s accepted notes into `CollectedSources`, verifying each note exists, stays within the session scope, and can be read before turning it into an accepted compile source. It parses note text into structured sections and chunks, then merges citations, conflicting claims, and missing evidence with order-preserving deduplication so the compile step gets a clean combined view. The helper functions support that pipeline by extracting section content and offsets, building prefixed values and note paths, enforcing scope safety, and the tests cover deduplication order and the error raised when an accepted note is missing.
 [crates/gwiki/src/compile/collect.rs:10-82]
 [crates/gwiki/src/compile/collect.rs:85-90]
 [crates/gwiki/src/compile/collect.rs:93-97]

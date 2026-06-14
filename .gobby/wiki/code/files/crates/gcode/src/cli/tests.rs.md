@@ -52,7 +52,7 @@ Module: [[code/modules/crates/gcode/src/cli|crates/gcode/src/cli]]
 
 ## Purpose
 
-`crates/gcode/src/cli/tests.rs` exposes 37 indexed API symbols.
+This file contains comprehensive unit tests for the gcode CLI parser, validating argument parsing across all command variants. The tests simulate CLI invocations using `Cli::try_parse_from()` with various argument combinations, then assert the parsed command structure, field values, and default values match expectations. Coverage spans multiple command families: projection lifecycle operations (graph/vector sync-file, clear, rebuild), search variants (search-symbol, search-text, search-content) with filter flags, grep with pattern matching options, top-level commands (callers, usages, imports, blast-radius), and configuration commands (index, codewiki, setup). The suite validates both successful parsing and error handling for unsupported flags, invalid argument positions, and constraint violations like empty patterns or oversized numeric values. Additional tests verify help text content accuracy and the effective_format function's logic for defaulting output formats based on command type.
 [crates/gcode/src/cli/tests.rs:5-213]
 [crates/gcode/src/cli/tests.rs:216-234]
 [crates/gcode/src/cli/tests.rs:237-252]

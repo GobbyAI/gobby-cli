@@ -31,7 +31,7 @@ Module: [[code/modules/crates/gwiki/src/ingest/document|crates/gwiki/src/ingest/
 
 ## Purpose
 
-`crates/gwiki/src/ingest/document/tests.rs` exposes 16 indexed API symbols.
+Test helpers and integration tests for document ingest in the wiki pipeline. The file builds minimal DOCX, PPTX, XLSX, and HTML-like fixtures from ZIP/XML bytes, ingests them into a `MemoryWikiStore`, and verifies the extractor behavior end to end: successful Office/HTML conversion to markdown and indexing, graceful degradation on malformed or oversized inputs, uniform degradation metadata, bounded ZIP/XML and slide/row extraction, and a couple of HTML formatting edge cases.
 [crates/gwiki/src/ingest/document/tests.rs:9-18]
 [crates/gwiki/src/ingest/document/tests.rs:20-25]
 [crates/gwiki/src/ingest/document/tests.rs:27-38]

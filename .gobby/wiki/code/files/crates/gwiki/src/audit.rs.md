@@ -63,7 +63,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/audit.rs` exposes 53 indexed API symbols.
+This file implements the wiki audit logic for checking claim provenance and reporting unsupported content. `AuditOptions` builds the audit configuration, seeding a default set of ignored section headings and optionally extending it from the `GOBBY_WIKI_AUDIT_IGNORED_SECTIONS` environment variable or caller-provided sections; its helper methods normalize headings before matching. `AuditReport`, `UnsupportedClaim`, `AuditSourceContext`, and `ClaimLine` model the structured audit output, while `run` and `run_with_options` drive the audit over collected pages and provenance data. The remaining functions break the audit into focused checks: they render reports, derive source context, identify generated Codewiki pages and valid source spans, classify claim lines and kinds, filter out ignored or structural claims, and decide whether claims are supported by inline sources, frontmatter, or path/scope rules. The tests at the bottom encode the contract for those rules, especially around generated pages, frontmatter handling, ignored sections, and which claims should or should not be reported.
 [crates/gwiki/src/audit.rs:33-35]
 [crates/gwiki/src/audit.rs:37-73]
 [crates/gwiki/src/audit.rs:38-44]

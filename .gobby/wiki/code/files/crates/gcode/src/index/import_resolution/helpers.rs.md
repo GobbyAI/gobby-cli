@@ -15,10 +15,8 @@ provenance:
   - 136-164
   - 167-172
   - 174-182
-  - 175-181
   - '184'
   - 186-195
-  - 187-194
   - 197-212
   - 214-303
   - 305-307
@@ -38,7 +36,7 @@ Module: [[code/modules/crates/gcode/src/index/import_resolution|crates/gcode/src
 
 ## Purpose
 
-`crates/gcode/src/index/import_resolution/helpers.rs` exposes 23 indexed API symbols.
+This file provides string-parsing helpers for import-resolution across several languages. It normalizes whitespace, extracts JavaScript module specifiers and import clauses, parses quoted strings including backtick templates with nested `${...}` interpolation, and tracks balanced delimiters with `split_top_level` plus a `SplitTopLevelError` that carries location and context when splitting fails. It also includes language-specific import/alias helpers for Go, Rust, Dart, Ruby, and Elixir, along with small validators for constant-style identifiers, so the broader import indexer can consistently break import statements into usable path and alias pieces.
 [crates/gcode/src/index/import_resolution/helpers.rs:1-3]
 [crates/gcode/src/index/import_resolution/helpers.rs:5-11]
 [crates/gcode/src/index/import_resolution/helpers.rs:13-17]

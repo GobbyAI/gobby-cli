@@ -28,7 +28,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/log.rs` exposes 14 indexed API symbols.
+This file defines the log-writing model for `gwiki`: `LogEntry` captures a timestamped scoped action with a summary and artifact paths, and `LogWriteReport` returns the scope log path plus an optional mirrored global log path. `append_logs` writes each entry to the scope `log.md` first, then mirrors it to the global log only if configured and not the same file, so the scope log remains the source of truth. The lower-level helpers handle creating parent directories, opening/appending the file, writing the log header and rendered entry text, comparing paths and file identities, and resolving fallback paths; the tests verify that scope and global logs are both written when distinct and only written once when they refer to the same underlying file.
 [crates/gwiki/src/log.rs:9-15]
 [crates/gwiki/src/log.rs:19-22]
 [crates/gwiki/src/log.rs:25-49]

@@ -1,7 +1,16 @@
 ---
 title: docs
 type: code_module
-provenance: []
+provenance:
+- file: docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json
+  ranges:
+  - 3-47
+- file: docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json
+  ranges:
+  - 3-47
+- file: docs/evidence/wiki-parity-2026-06/wp3-search-sources.json
+  ranges:
+  - 3-227
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -13,12 +22,27 @@ Parent: [[code/repo|Repository Overview]]
 
 ## Overview
 
-The docs module is the central documentation repository for the Gobby ecosystem, consolidating integration contracts, developer and user guides, technical plans, and research spikes. It governs system boundaries and schemas for core CLI utilities, contains operational and release runbooks, maps out future architectural blueprints, and documents technical investigations across a wide range of external programming languages and environments.
+The docs module is currently a documentation namespace with no direct files of its own. Its responsibilities are expressed through child modules, especially docs/evidence, which acts as a container for proof artifacts rather than executable source or authored documentation.
+
+The visible flow is evidence-driven: docs/evidence/wiki-parity-2026-06 records artifacts for a gwiki parity workflow that resolves a project scope, searches within that scope, selects relevant sources, and uses those sources to compile a grounded explainer. The stable component IDs show the shape of those artifacts, including search inputs and results, selected source paths, prompts, synthesis metadata, citation handling, page writes, and generated article/index paths.
+
+Because the docs module has no direct files or source excerpts in the supplied input, collaboration is organized by containment rather than code calls: docs owns the top-level documentation area, docs/evidence groups evidence sets, and the wiki parity child set carries the concrete workflow records and metadata. No file:line spans were supplied for citation.
+[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:3-12]
+[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:3-12]
+[docs/evidence/wiki-parity-2026-06/wp3-search-sources.json:3-16]
+[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:4]
+[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:5]
 
 ## Child Modules
 
-- [[code/modules/docs/contracts|docs/contracts]] - This module defines the canonical integration contracts, boundary specifications, and execution interfaces for Gobby and its companion tools. It outlines the CLI boundaries and operational responsibilities for the gcode and gwiki command-line interfaces, governs how research/audit tasks and daemon-routed model calls are handled, and documents the shared graph schemas used to represent structured data across the system. 
-- [[code/modules/docs/guides|docs/guides]] - This module contains comprehensive development and user documentation for Gobby's integrated ecosystem of tools and core components. It includes detailed guides, user manuals, and system contracts for key CLI utilities (such as gcode, gcore, ghook, gloc, gsqz, and gwiki), alongside operational runbooks for AI daemon configurations, repository installation contracts, and project release procedures. 
-- [[code/modules/docs/plans|docs/plans]] - The docs/plans module manages technical specifications, architectural blueprints, and deployment plans for the codebase. It holds active documentation for future releases alongside a library of completed plans detailing agent sandbox-tolerant git hooks, modular schema specifications, CLI feedback enhancements, and skill targeting protocols for the gcode search engine. 
-- [[code/modules/docs/spikes|docs/spikes]] - The docs/spikes module compiles research spikes and technical investigations analyzing external callees across a variety of programming languages and environments, including Bash, C/C++, Dart, Elixir, Kotlin, Lua, Ruby, and Scala. 
+- [[code/modules/docs/evidence|docs/evidence]] - docs/evidence is an evidence container rather than a source module: it has no direct files of its own, and its documented behavior currently comes through child evidence sets. The visible child, docs/evidence/wiki-parity-2026-06, stores proof artifacts for a gwiki parity workflow that first searches a resolved project scope and then uses selected sources to compile a grounded explainer.
+
+The key flow is search-to-synthesis evidence capture. The search artifact records the query, limit, command invocation, degradations, code citation targets, and ranked hybrid results for “reciprocal rank fusion hybrid search,” preserving both BM25 and semantic explanations along with fusion keys, snippets, source paths, titles, and wiki pages (docs/evidence/wiki-parity-2026-06/wp3-search-sources.json:1-49).
+
+The module’s collaboration pattern is therefore archival: docs/evidence groups dated evidence submodules, while the child artifact files hold the structured fields needed to audit how a wiki answer was grounded. Properties such as command, scope, source_paths, status, article_path, outline, page_writes, and citation-tracking fields indicate that search metadata, source selection, synthesis availability, and final write outputs are captured together so later reviewers can trace the workflow from inputs through generated documentation.
+[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:3-12]
+[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:3-12]
+[docs/evidence/wiki-parity-2026-06/wp3-search-sources.json:3-16]
+[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:4]
+[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:5]
 

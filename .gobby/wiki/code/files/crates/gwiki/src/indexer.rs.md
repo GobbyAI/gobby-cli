@@ -6,16 +6,11 @@ provenance:
   ranges:
   - 16-18
   - 20-26
-  - 21-25
   - 29-35
   - 37-58
-  - 38-57
   - 60-68
-  - 61-67
   - 70-74
-  - 71-73
   - 76-80
-  - 77-79
   - 82-87
   - 89-148
   - 150-155
@@ -53,7 +48,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/indexer.rs` exposes 38 indexed API symbols.
+This file implements the wiki vault indexing pipeline: it walks a vault, optionally respects `.gitignore`, hashes files to detect added/changed/deleted/unchanged content, parses markdown documents into indexed chunks and links, and writes the resulting documents, sources, chunks, links, and ingestion events into a `WikiIndexStore`. It also defines the indexing configuration and error types, plus helpers for path classification, heading and link extraction, file writing, and a set of tests covering gitignore handling, deletion behavior, raw source immutability, idempotency, provenance, and memory-limit rejection.
 [crates/gwiki/src/indexer.rs:16-18]
 [crates/gwiki/src/indexer.rs:20-26]
 [crates/gwiki/src/indexer.rs:21-25]

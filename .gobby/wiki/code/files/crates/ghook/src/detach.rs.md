@@ -16,7 +16,7 @@ Module: [[code/modules/crates/ghook/src|crates/ghook/src]]
 
 ## Purpose
 
-`crates/ghook/src/detach.rs` exposes 1 indexed API symbol. [crates/ghook/src/detach.rs:23-43]
+Provides a small cross-platform process-detachment helper for the `ghook` crate. `detach()` uses `setsid()` on Unix to leave the controlling terminal and process group, and `FreeConsole()` on Windows to drop the current console, with both paths treated as best-effort so the caller can continue even if detachment does nothing. [crates/ghook/src/detach.rs:23-43]
 
 ## API Symbols
 

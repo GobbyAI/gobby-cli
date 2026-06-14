@@ -4,12 +4,7 @@ type: code_file
 provenance:
 - file: crates/gcore/assets/postgres-pgsearch/version.json
   ranges:
-  - '2'
-  - '3'
-  - 4-7
-  - '5'
-  - '6'
-  - '8'
+  - 2-8
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -21,7 +16,7 @@ Module: [[code/modules/crates/gcore/assets/postgres-pgsearch|crates/gcore/assets
 
 ## Purpose
 
-`crates/gcore/assets/postgres-pgsearch/version.json` exposes 6 indexed API symbols.
+This file is a version manifest for the `postgres-pgsearch` asset. It records the `pg_search_version`, a default `pg_search_sha256`, architecture-specific SHA-256 values for `amd64` and `arm64`, and the target `postgres_major` version so the build or packaging logic can select and verify the correct binary artifact.
 [crates/gcore/assets/postgres-pgsearch/version.json:2]
 [crates/gcore/assets/postgres-pgsearch/version.json:3]
 [crates/gcore/assets/postgres-pgsearch/version.json:4-7]

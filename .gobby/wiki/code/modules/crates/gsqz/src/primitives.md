@@ -84,11 +84,13 @@ provenance:
   - 97-101
   - 104-107
   - 110-115
+- file: crates/gsqz/src/primitives/mod.rs
+  ranges:
+  - 1-8
 - file: crates/gsqz/src/primitives/prose.rs
   ranges:
   - 5-9
   - 11-20
-  - 12-19
   - 23-34
   - 50-100
   - 102-109
@@ -152,22 +154,11 @@ Parent: [[code/modules/crates/gsqz/src|crates/gsqz/src]]
 
 ## Overview
 
-The `primitives` module provides the core text-compression and transformation building blocks for the gsqz crate. Each file implements a self-contained primitive:
+The `primitives` module is the line- and text-normalization toolbox for `gsqz`, re-exporting focused submodules for deduplication, filtering, grouping, full-output matching, prose compression, replacement, and truncation through its module declaration [crates/gsqz/src/primitives/mod.rs:1-8]. Most primitives operate on command output as `Vec<String>`: `filter_lines` removes lines matching valid regex patterns while silently skipping invalid ones [crates/gsqz/src/primitives/filter.rs:4-15], `replace` applies compiled regex replacement rules sequentially so earlier substitutions feed later rules [crates/gsqz/src/primitives/replace.rs:7-30], and `dedup` collapses only adjacent exact or number-normalized repeats with a repetition marker [crates/gsqz/src/primitives/dedup.rs:9-45].
 
-- **dedup**: Collapses consecutive identical (or near-identical) lines.
-- **filter**: Removes lines matching configurable regex patterns, skipping invalid regexes.
-- **group**: The largest primitive, dispatching lines into structured groupings by mode—git status, git diff (collapsing lock/binary/generated files, truncating large diffs), pytest/test failures, lint rules, file extension, directory, file, and errors/warnings.
-- **match_output**: Evaluates ordered rules (with optional `unless` guards) against the full blob, returning the first matching message.
-- **prose**: Markdown/prose compression at lite, standard, and aggressive levels, with sentence splitting and protection of code blocks, frontmatter, URLs, XML tags, and file paths.
-- **replace**: Applies chained regex substitutions with backreference support.
-- **truncate**: Trims content to a size budget, either head/tail globally or per matched section.
+The higher-level output flows are handled by `group`, `truncate`, and `match_output`. `group_lines` is a dispatcher from mode names to specialized summarizers for git status, git diff, pytest failures, generic test failures, lint rules, path grouping, and error/warning aggregation, falling back to passthrough for unknown modes [crates/gsqz/src/primitives/group.rs:8-21]. `truncate` keeps configurable head and tail slices with an omission marker, or delegates to section-aware truncation when a marker regex is configured [crates/gsqz/src/primitives/truncate.rs:5-27] [crates/gsqz/src/primitives/truncate.rs:29-67]. `match_output::check` treats output as a single concatenated blob, evaluates rules in order, skips invalid regexes, honors optional `unless` suppressors, and returns the first matching message [crates/gsqz/src/primitives/match_output.rs:8-33].
 
-The `mod.rs` aggregates these primitives. All files carry extensive unit-test coverage for edge cases and boundaries.
-[crates/gsqz/src/primitives/dedup.rs:9-45]
-[crates/gsqz/src/primitives/filter.rs:4-15]
-[crates/gsqz/src/primitives/group.rs:8-21]
-[crates/gsqz/src/primitives/match_output.rs:8-33]
-[crates/gsqz/src/primitives/prose.rs:5-9]
+`prose` complements the line-oriented primitives with document compression. It defines `Lite`, `Standard`, and `Aggressive` levels plus string parsing , then routes `compress_prose` through protected-region extraction, level-specific compression, and restoration so YAML frontmatter, fenced code blocks, inline code, URLs, XML tags, and file paths survive transformation [crates/gsqz/src/primitives/prose.rs:23-34] [crates/gsqz/src/primitives/prose.rs:50-100]. Together, these files collaborate as small composable passes: regex filtering and replacement clean raw lines, grouping and truncation reshape large outputs, dedup reduces repeated noise, match rules summarize full results, and prose compression handles narrative text without damaging structured regions.
 
 ## Call Diagram
 
@@ -223,44 +214,44 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gsqz/src/primitives/dedup.rs|crates/gsqz/src/primitives/dedup.rs]] - `crates/gsqz/src/primitives/dedup.rs` exposes 9 indexed API symbols.
+- [[code/files/crates/gsqz/src/primitives/dedup.rs|crates/gsqz/src/primitives/dedup.rs]] - Provides a line deduplication primitive that collapses only consecutive runs of identical or number-only-different strings. It normalizes each trimmed line by replacing digit sequences with a placeholder, groups adjacent matches, and emits the first line of each run followed by a `[repeated N times]` annotation when a run has multiple entries. The test module exercises the main behaviors: collapsing exact and near-identical duplicates, preserving distinct and non-consecutive lines, and handling empty, single-line, two-line, and mixed-group inputs.
 [crates/gsqz/src/primitives/dedup.rs:9-45]
 [crates/gsqz/src/primitives/dedup.rs:52-58]
 [crates/gsqz/src/primitives/dedup.rs:61-70]
 [crates/gsqz/src/primitives/dedup.rs:73-77]
 [crates/gsqz/src/primitives/dedup.rs:80-83]
-- [[code/files/crates/gsqz/src/primitives/filter.rs|crates/gsqz/src/primitives/filter.rs]] - `crates/gsqz/src/primitives/filter.rs` exposes 8 indexed API symbols.
+- [[code/files/crates/gsqz/src/primitives/filter.rs|crates/gsqz/src/primitives/filter.rs]] - Provides a small line-filtering utility for `gsqz`: `filter_lines` takes owned strings and a slice of regex pattern strings, compiles only the valid patterns, and returns a new vector excluding any line that matches at least one compiled regex. The implementation is simple and data-flow oriented: it fast-paths empty pattern lists by returning the input unchanged, then uses `filter_map` to skip invalid regexes silently before filtering lines against the compiled set. The tests cover the main behaviors together: removing matching lines, preserving input when patterns are empty or match nothing, handling empty input, supporting multiple patterns, and ignoring invalid regex patterns.
 [crates/gsqz/src/primitives/filter.rs:4-15]
 [crates/gsqz/src/primitives/filter.rs:22-32]
 [crates/gsqz/src/primitives/filter.rs:35-39]
 [crates/gsqz/src/primitives/filter.rs:42-45]
 [crates/gsqz/src/primitives/filter.rs:48-52]
-- [[code/files/crates/gsqz/src/primitives/group.rs|crates/gsqz/src/primitives/group.rs]] - `crates/gsqz/src/primitives/group.rs` exposes 45 indexed API symbols.
+- [[code/files/crates/gsqz/src/primitives/group.rs|crates/gsqz/src/primitives/group.rs]] - Provides a small output-normalization layer for grouping and summarizing line-oriented command results. `group_lines` dispatches to mode-specific helpers, and those helpers reshape common noisy outputs into compact, human-readable sections: git status and diff summaries, pytest and test failure extraction, lint grouping by rule, and file/path grouping by extension, directory, or filename, plus generic error/warning aggregation. The file also includes unit tests that verify the dispatcher behavior, grouping classification, truncation limits, and passthrough cases.
 [crates/gsqz/src/primitives/group.rs:8-21]
 [crates/gsqz/src/primitives/group.rs:28-79]
 [crates/gsqz/src/primitives/group.rs:99-183]
 [crates/gsqz/src/primitives/group.rs:187-243]
 [crates/gsqz/src/primitives/group.rs:247-296]
-- [[code/files/crates/gsqz/src/primitives/match_output.rs|crates/gsqz/src/primitives/match_output.rs]] - `crates/gsqz/src/primitives/match_output.rs` exposes 12 indexed API symbols.
+- [[code/files/crates/gsqz/src/primitives/match_output.rs|crates/gsqz/src/primitives/match_output.rs]] - This file implements full-blob output matching against an ordered list of `MatchOutputRule`s. `check` concatenates all output lines, evaluates each rule’s regex with first-match-wins semantics, skips invalid patterns, and suppresses a match when a valid `unless` regex also matches; it returns the matched rule’s message or `None`. The local `rule` and `lines` helpers make test setup ergonomic, and the tests cover matching, negative conditions, empty/invalid rules, rule ordering, and matching across newline boundaries.
 [crates/gsqz/src/primitives/match_output.rs:8-33]
 [crates/gsqz/src/primitives/match_output.rs:39-45]
 [crates/gsqz/src/primitives/match_output.rs:47-49]
 [crates/gsqz/src/primitives/match_output.rs:52-56]
 [crates/gsqz/src/primitives/match_output.rs:59-63]
-- [[code/files/crates/gsqz/src/primitives/mod.rs|crates/gsqz/src/primitives/mod.rs]] - `crates/gsqz/src/primitives/mod.rs` has no indexed API symbols. 
-- [[code/files/crates/gsqz/src/primitives/prose.rs|crates/gsqz/src/primitives/prose.rs]] - `crates/gsqz/src/primitives/prose.rs` exposes 28 indexed API symbols.
+- [[code/files/crates/gsqz/src/primitives/mod.rs|crates/gsqz/src/primitives/mod.rs]] - Module घोषणापत्र for `primitives`, exposing the primitive submodules `dedup`, `filter`, `group`, `match_output`, `prose`, `replace`, and `truncate` for use elsewhere in the crate. [crates/gsqz/src/primitives/mod.rs:1-8]
+- [[code/files/crates/gsqz/src/primitives/prose.rs|crates/gsqz/src/primitives/prose.rs]] - This file defines prose-compression primitives for three levels, `Lite`, `Standard`, and `Aggressive`, plus a small parser that maps their string names to the enum. The main `compress_prose` entry point protects YAML frontmatter and fenced code blocks before dispatching to the selected compression strategy, then restores the protected regions afterward. Supporting helpers extract and replace protected placeholders, perform the lite/standard/aggressive text reductions, and split sentences so aggressive mode can truncate lists and paragraphs without damaging preserved structure.
 [crates/gsqz/src/primitives/prose.rs:5-9]
 [crates/gsqz/src/primitives/prose.rs:11-20]
 [crates/gsqz/src/primitives/prose.rs:12-19]
 [crates/gsqz/src/primitives/prose.rs:23-34]
 [crates/gsqz/src/primitives/prose.rs:50-100]
-- [[code/files/crates/gsqz/src/primitives/replace.rs|crates/gsqz/src/primitives/replace.rs]] - `crates/gsqz/src/primitives/replace.rs` exposes 10 indexed API symbols.
+- [[code/files/crates/gsqz/src/primitives/replace.rs|crates/gsqz/src/primitives/replace.rs]] - This file defines a small regex-based line replacer that takes a vector of strings and a slice of `ReplaceRule`s, compiles the valid patterns once, and then applies each rule sequentially to every line so earlier substitutions feed into later ones. It also includes a helper for constructing owned rules in tests, and the tests verify basic substitution, backreferences, chained rules, skipping invalid regexes, no-op behavior for empty rules or non-matching patterns, empty input handling, and replacing multiple matches within a line.
 [crates/gsqz/src/primitives/replace.rs:7-30]
 [crates/gsqz/src/primitives/replace.rs:36-41]
 [crates/gsqz/src/primitives/replace.rs:44-48]
 [crates/gsqz/src/primitives/replace.rs:51-55]
 [crates/gsqz/src/primitives/replace.rs:58-63]
-- [[code/files/crates/gsqz/src/primitives/truncate.rs|crates/gsqz/src/primitives/truncate.rs]] - `crates/gsqz/src/primitives/truncate.rs` exposes 13 indexed API symbols.
+- [[code/files/crates/gsqz/src/primitives/truncate.rs|crates/gsqz/src/primitives/truncate.rs]] - This file provides line-truncation utilities for `Vec<String>` output. `truncate` keeps a configurable head and tail, inserts an omission marker when content is shortened, and can switch to regex-based section truncation when `per_file_lines` and `file_marker` are set. `truncate_per_section` groups lines by section markers, truncates oversized sections independently, and preserves smaller sections unchanged; the test module exercises empty, boundary, head/tail-only, and per-section cases, plus invalid-regex fallback.
 [crates/gsqz/src/primitives/truncate.rs:5-27]
 [crates/gsqz/src/primitives/truncate.rs:29-67]
 [crates/gsqz/src/primitives/truncate.rs:74-78]

@@ -19,7 +19,9 @@ Module: [[code/modules/crates/gcode/src/setup|crates/gcode/src/setup]]
 
 ## Purpose
 
-`crates/gcode/src/setup/contracts.rs` exposes 4 indexed API symbols.
+This file defines the static schema contract metadata used by `gcode` setup for the code index database: shared constants like the default schema and namespace, plus `TableContract` and `IndexContract` records that describe the expected tables, their required columns, and related index definitions.
+
+The `TABLE_CONTRACTS` and `INDEX_CONTRACTS` arrays centralize those expectations for all code-indexed relations, and the `code_index_table_names` and `code_index_index_names` helpers expose just the contract names as iterators so other setup or validation code can inspect them without depending on the full contract structs.
 [crates/gcode/src/setup/contracts.rs:5-8]
 [crates/gcode/src/setup/contracts.rs:10-14]
 [crates/gcode/src/setup/contracts.rs:191-193]

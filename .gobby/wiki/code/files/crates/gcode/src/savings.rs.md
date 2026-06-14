@@ -20,7 +20,11 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-`crates/gcode/src/savings.rs` exposes 5 indexed API symbols.
+This file implements daemon-based savings tracking for gcode. It calculates and reports token savings when gcode returns compact symbol/outline data instead of full file contents.
+
+The core functionality centers on two functions: `savings_pct` computes the percentage reduction between original and actual character counts, handling the edge case of zero-length originals by returning 0.0. `report_savings` wraps this calculation and sends it to the Gobby daemon via HTTP POST with context metadata (strategy: "outline"), designed as best-effort with all errors silently ignored so daemon downtime never breaks gcode functionality.
+
+Three unit tests validate `savings_pct` behavior across basic calculation, zero-division handling, and no-savings scenarios.
 [crates/gcode/src/savings.rs:7-12]
 [crates/gcode/src/savings.rs:18-29]
 [crates/gcode/src/savings.rs:36-39]

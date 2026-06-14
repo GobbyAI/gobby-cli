@@ -26,7 +26,7 @@ Module: [[code/modules/crates/gcode/src/index/indexer|crates/gcode/src/index/ind
 
 ## Purpose
 
-`crates/gcode/src/index/indexer/sink.rs` exposes 11 indexed API symbols.
+This file defines a sink abstraction for persisting code indexing data to PostgreSQL. The CodeFactSink trait specifies an interface for managing indexed code facts, providing methods to delete obsolete data (file facts, non-symbol facts, stale symbols) and upsert current data (symbols, files, imports, calls, content chunks). PostgresCodeFactSink implements this trait as a generic wrapper around a database connection, delegating all operations to corresponding functions in the api module. Together, these pieces enable the indexer to maintain a consistent code database by cleanly separating the indexing logic from the underlying database persistence layer.
 [crates/gcode/src/index/indexer/sink.rs:6-34]
 [crates/gcode/src/index/indexer/sink.rs:36-38]
 [crates/gcode/src/index/indexer/sink.rs:41-43]

@@ -23,7 +23,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-`crates/gcore/src/project.rs` exposes 8 indexed API symbols.
+This file provides non-mutating helpers for locating a Gobby project and reading its project ID. `find_project_root` walks upward from a starting path until it finds a `.gobby` directory containing either `project.json` or `gcode.json`, while `read_project_id` prefers `.gobby/project.json` and falls back to `.gobby/gcode.json` for standalone code-index roots. The private `read_project_id_from` handles the shared file read, JSON parse, and `"id"` extraction logic, and the tests verify that lookup is non-destructive, that fallback to `gcode.json` works when needed, and that error messages mention the missing `id` field clearly.
 [crates/gcore/src/project.rs:12-24]
 [crates/gcore/src/project.rs:28-51]
 [crates/gcore/src/project.rs:53-62]

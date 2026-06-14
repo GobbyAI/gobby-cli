@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gcode/src/index/import_resolution/parser|crates/gc
 
 ## Purpose
 
-`crates/gcode/src/index/import_resolution/parser/php_kotlin.rs` exposes 9 indexed API symbols.
+Parses PHP and Kotlin import statements for import resolution, turning raw `use`/`import` text into structured bindings in `ExtractedImports`. The PHP path handles local-symbol checks, import kind detection, grouped and ungrouped `use` forms, wildcard modules, path joining, alias splitting, and registration of function, const, and class-like imports. The Kotlin path records imports similarly, including alias handling and symbol-to-module bindings for external Java classes, while the small helpers keep PHP namespace matching and use-path normalization consistent.
 [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:7-14]
 [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:16-59]
 [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:62-66]

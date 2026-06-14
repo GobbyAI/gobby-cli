@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcode|crates/gcode]]
 
 ## Purpose
 
-`crates/gcode/build.rs` exposes 1 indexed API symbol. [crates/gcode/build.rs:1-8]
+This is a Cargo build script that conditionally enables PostgreSQL-related tests. The main function instructs Cargo to rerun the build whenever the GCODE_POSTGRES_TEST_DATABASE_URL environment variable changes, and it sets the gcode_postgres_tests conditional compilation flag when that variable is present, allowing test code guarded by that cfg attribute to be compiled into the binary. [crates/gcode/build.rs:1-8]
 
 ## API Symbols
 

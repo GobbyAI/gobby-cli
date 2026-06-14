@@ -46,9 +46,6 @@ provenance:
   - 620-654
   - 656-660
   - 662-694
-  - 663-680
-  - 682-686
-  - 688-693
   - 696-702
   - 704-723
   - 725-743
@@ -74,7 +71,7 @@ Module: [[code/modules/crates/gcode/src/graph/code_graph|crates/gcode/src/graph/
 
 ## Purpose
 
-`crates/gcode/src/graph/code_graph/write.rs` exposes 59 indexed API symbols.
+This file implements write operations for the code-index graph projection, managing FalkorDB graph database writes for code structure data extracted from PostgreSQL index rows. The CodeGraph class provides the main interface with methods for syncing files (sync_file, sync_file_graph), deleting stale or complete file graphs, and clearing projects. Supporting the core sync operation are query-building functions that generate Cypher statements for creating/updating graph nodes and relationships: ensure_file_node_query builds file node creation, add_imports_query and add_definitions_query construct symbol and import relationships, and the add_*_calls_query functions handle different types of call relationships (symbol calls, external calls, unresolved calls). Helper classes like GraphCallTarget, SyncFileMutation, ImportGraphItem, and CallGraphItem encapsulate the data structures needed for graph operations. Lower-level utility functions (import_graph_items, partition_call_graph_items, symbol_rows, call_rows) transform code index data into graph-ready formats, while cleanup and deletion functions (cleanup_orphans_queries, delete_stale_file_graph_queries, clear_all_code_index_query) maintain graph consistency by removing stale nodes and edges with sync token tracking.
 [crates/gcode/src/graph/code_graph/write.rs:110-113]
 [crates/gcode/src/graph/code_graph/write.rs:116-118]
 [crates/gcode/src/graph/code_graph/write.rs:120-158]

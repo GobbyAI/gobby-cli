@@ -69,7 +69,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/health.rs` exposes 57 indexed API symbols.
+Implements the wiki health check pipeline: it inspects a vault, assembles a `HealthReport`, and can persist both JSON and text summaries. `run` is the entry point that calls `inspect` and then `persist_report`; `inspect` combines lint results, page collection, source manifest/provenance loading, citation indexing, stale-page and stale-citation detection, uncited/uncompiled source tracking, broken-link and duplicate-concept aggregation, and path generation for output files. The rest of the file is helper logic for staleness rules, source-citation matching, markdown/link pattern checks, regex caching, duplicate concept grouping, and report rendering/writing.
 [crates/gwiki/src/health.rs:22-34]
 [crates/gwiki/src/health.rs:37-41]
 [crates/gwiki/src/health.rs:44-47]

@@ -6,31 +6,18 @@ provenance:
   ranges:
   - 12-29
   - 31-51
-  - 32-50
   - 55-58
   - 60-67
-  - 61-66
   - 71-74
   - 76-83
-  - 77-82
   - 86-96
   - 98-150
-  - 99-116
-  - 118-124
-  - 126-129
-  - 131-134
-  - 136-139
-  - 141-144
-  - 146-149
   - 152-162
   - 165-179
   - 183-189
   - 191-198
-  - 192-197
   - 201-216
   - 218-245
-  - 219-229
-  - 231-244
   - 247-249
   - 251-259
   - 261-274
@@ -45,7 +32,7 @@ Module: [[code/modules/crates/gwiki/src/sources|crates/gwiki/src/sources]]
 
 ## Purpose
 
-`crates/gwiki/src/sources/types.rs` exposes 30 indexed API symbols.
+Defines the source ingestion data model for `gwiki`, including enums for source kind, ingestion method, and compile status, plus their string serialization. It also provides the draft/replay/record types and helper constructors/converters that move source data through the pipeline: `SourceDraft` builds an in-memory fetched source with optional metadata, `SourceDraftRef` offers a borrowed view, `SourceRecord` stores the persisted record, and `SourceReplay`/`SourceReplayOptions` translate replay settings to and from ingest options, with `routing_name` and `parse_routing` handling routing conversion and validation.
 [crates/gwiki/src/sources/types.rs:12-29]
 [crates/gwiki/src/sources/types.rs:31-51]
 [crates/gwiki/src/sources/types.rs:32-50]

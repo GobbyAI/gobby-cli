@@ -19,7 +19,7 @@ Module: [[code/modules/crates/gcode/src/index/import_resolution/parser|crates/gc
 
 ## Purpose
 
-`crates/gcode/src/index/import_resolution/parser/mod.rs` exposes 4 indexed API symbols.
+This module coordinates import-resolution parsing across languages. It dispatches each import statement to the appropriate language-specific parser, falls back to recording an unparsed import when the language is unsupported, seeds external module-root bindings from the import resolution context for Rust and Elixir, and resolves external function callees back to their source modules by combining those bindings with qualified-path analysis and wildcard-import ambiguity checks.
 [crates/gcode/src/index/import_resolution/parser/mod.rs:29-54]
 [crates/gcode/src/index/import_resolution/parser/mod.rs:56-74]
 [crates/gcode/src/index/import_resolution/parser/mod.rs:76-126]

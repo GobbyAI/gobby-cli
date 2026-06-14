@@ -14,27 +14,28 @@ provenance:
   - 55-61
   - 63-66
   - 68-70
-  - 73-80
-  - 82-99
-  - 102-124
-  - 127-135
-  - 138-144
-  - 149-152
-  - 154-172
-  - 175-185
-  - 188-192
-  - 195-202
-  - 205-209
-  - 216-220
-  - 223-227
-  - 230-236
-  - 238-253
-  - 256-261
-  - 264-270
-  - 272-287
-  - 289-316
-  - 325-416
-  - 419-445
+  - 73-81
+  - 83-102
+  - 107-125
+  - 131-151
+  - 155-159
+  - 162-168
+  - 173-176
+  - 178-196
+  - 199-209
+  - 212-219
+  - 222-226
+  - 233-237
+  - 240-244
+  - 247-253
+  - 255-270
+  - 273-278
+  - 281-287
+  - 289-304
+  - 306-333
+  - 342-434
+  - 437-476
+  - 479-505
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -46,7 +47,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/output.rs` exposes 39 indexed API symbols.
+This file defines the output layer for `gwiki`: it formats command results for stdout/stderr and provides the serializable response types used by search, query, audit, and ask workflows. The `Format` enum selects JSON or text output, `OutputError` unifies I/O and JSON serialization failures, and `print_result` delegates to `print_json` or `print_text` while `print_status` writes prefixed status messages to stderr. The rest of the file is a set of output models and small constructors: `SearchOutput` derives code citations from code-only hits, `SearchResultType` classifies wiki pages as code or wiki, `QueryOutput` and `AuditOutput` capture their respective command responses, and helpers like `render_query_text` turn structured results back into human-readable text. The tests at the end verify stable JSON shapes and that citation derivation/rendering behave as expected.
 [crates/gwiki/src/output.rs:10-13]
 [crates/gwiki/src/output.rs:16-19]
 [crates/gwiki/src/output.rs:21-28]
@@ -94,84 +95,85 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 - `print_status` (function) component `print_status [function]` (`64f93a82-188b-5c8a-a5ce-32dea3bde8b6`) lines 68-70 [crates/gwiki/src/output.rs:68-70]
   - Signature: `pub fn print_status(message: &str) {`
   - Purpose: `print_status` writes a message to standard error (stderr) with the "gwiki: " prefix. [crates/gwiki/src/output.rs:68-70]
-- `SearchOutput` (class) component `SearchOutput [class]` (`cbfd0ce3-f0de-57cc-9358-40d405770a4d`) lines 73-80 [crates/gwiki/src/output.rs:73-80]
+- `SearchOutput` (class) component `SearchOutput [class]` (`cbfd0ce3-f0de-57cc-9358-40d405770a4d`) lines 73-81 [crates/gwiki/src/output.rs:73-81]
   - Signature: `pub struct SearchOutput {`
-  - Purpose: SearchOutput is a struct aggregating search command metadata, scope, query parameters, the returned results, and any quality degradations encountered during execution. [crates/gwiki/src/output.rs:73-80]
-- `SearchOutput` (class) component `SearchOutput [class]` (`7c61b245-13df-5635-9d50-a4d55aa1e6e4`) lines 82-99 [crates/gwiki/src/output.rs:82-99]
+  - Purpose: 'SearchOutput' is a search response struct that records the invoked command, target scope, query string, result limit, returned 'SearchResultOutput' items, associated 'CodeCitationOutput' entries, and any degradation messages. [crates/gwiki/src/output.rs:73-81]
+- `SearchOutput` (class) component `SearchOutput [class]` (`22d8af39-7b95-5bc4-aeab-db890619de25`) lines 83-102 [crates/gwiki/src/output.rs:83-102]
   - Signature: `impl SearchOutput {`
-  - Purpose: `SearchOutput` is a constructor that instantiates a new search command output with a given scope, query string, result limit, result collection, and degradation messages. [crates/gwiki/src/output.rs:82-99]
-- `SearchOutput.new` (method) component `SearchOutput.new [method]` (`f4a4ca49-cb4b-5f75-9401-52950f96bcd2`) lines 83-98 [crates/gwiki/src/output.rs:83-98]
+  - Purpose: 'SearchOutput::new' constructs a 'SearchOutput' for a search command by storing the scope, query, limit, results, and degradations, while deriving 'code_citations' from the provided results and hardcoding 'command' to '"search"'. [crates/gwiki/src/output.rs:83-102]
+- `SearchOutput.new` (method) component `SearchOutput.new [method]` (`b09db649-43b7-51e5-ad12-88fddc71aa69`) lines 84-101 [crates/gwiki/src/output.rs:84-101]
   - Signature: `pub fn new(`
-  - Purpose: Constructs a new search instance with the provided scope, query string, result limit, search results vector, and degradations list, while hardcoding the command field to "search". [crates/gwiki/src/output.rs:83-98]
-- `AskOutput` (class) component `AskOutput [class]` (`9a65ff4b-3e08-5689-a255-8f9b629e8c3d`) lines 102-124 [crates/gwiki/src/output.rs:102-124]
+  - Purpose: Creates a 'Self' for a search operation by converting 'query' into a 'String', copying 'scope', 'limit', 'results', and 'degradations', deriving 'code_citations' from 'results', and setting 'command' to '"search"'. [crates/gwiki/src/output.rs:84-101]
+- `code_citations_from_results` (function) component `code_citations_from_results [function]` (`c27e36c0-ade6-5163-8505-0cd0576fb6f9`) lines 107-125 [crates/gwiki/src/output.rs:107-125]
+  - Signature: `pub fn code_citations_from_results(results: &[SearchResultOutput]) -> Vec<CodeCitationOutput> {`
+  - Purpose: It filters the input search results to code hits, deduplicates them by '(file path, title)' using a 'BTreeSet', and returns one 'CodeCitationOutput' per unique file-symbol pair with 'line' set to 'None'. [crates/gwiki/src/output.rs:107-125]
+- `AskOutput` (class) component `AskOutput [class]` (`578c4b1f-7d89-5d39-970f-7954da1f98fc`) lines 131-151 [crates/gwiki/src/output.rs:131-151]
   - Signature: `pub struct AskOutput {`
-  - Purpose: `AskOutput` is a struct that encapsulates the complete response to a search query, including results, execution metadata (status, degradation, truncation), source citations, code relationships, and optional AI-synthesized analysis. [crates/gwiki/src/output.rs:102-124]
-- `AskCodeEdgeOutput` (class) component `AskCodeEdgeOutput [class]` (`a9934a7c-27d9-5fbc-a67e-e6a339706c7e`) lines 127-135 [crates/gwiki/src/output.rs:127-135]
-  - Signature: `pub struct AskCodeEdgeOutput {`
-  - Purpose: `AskCodeEdgeOutput` is a serializable struct representing a directed edge in a code dependency graph, containing source and target identifiers, edge classification metadata (kind and direction), an optional line number, and provenance information. [crates/gwiki/src/output.rs:127-135]
-- `AskCodeCitationOutput` (class) component `AskCodeCitationOutput [class]` (`abda8ed8-ac86-5484-88a6-f3b55a849b1b`) lines 138-144 [crates/gwiki/src/output.rs:138-144]
-  - Signature: `pub struct AskCodeCitationOutput {`
-  - Purpose: `AskCodeCitationOutput` is a serializable struct that represents a code citation with a required file path and optional line number and symbol identifier, conditionally omitting None values during serialization. [crates/gwiki/src/output.rs:138-144]
-- `SearchResultType` (type) component `SearchResultType [type]` (`ff38e03a-1a0d-5e43-9e86-1d1910739bbb`) lines 149-152 [crates/gwiki/src/output.rs:149-152]
+  - Purpose: 'AskOutput' is a structured result envelope for an 'ask' operation that packages the command metadata, scope, query, status, search hits, source and citation evidence, token-budget/truncation diagnostics, warnings, and optional AI synthesis output. [crates/gwiki/src/output.rs:131-151]
+- `AskEvidenceOutput` (class) component `AskEvidenceOutput [class]` (`d24c6fb4-7c6a-56d7-a802-ed9e6b5fe5a2`) lines 155-159 [crates/gwiki/src/output.rs:155-159]
+  - Signature: `pub struct AskEvidenceOutput {`
+  - Purpose: 'AskEvidenceOutput' is a Rust output struct that records the generated wiki page path, the originating source file path, and the number of characters included in the excerpt. [crates/gwiki/src/output.rs:155-159]
+- `CodeCitationOutput` (class) component `CodeCitationOutput [class]` (`d11dde81-b751-5642-81e2-e6fc83b25f65`) lines 162-168 [crates/gwiki/src/output.rs:162-168]
+  - Signature: `pub struct CodeCitationOutput {`
+  - Purpose: 'CodeCitationOutput' is a serializable citation record that identifies a source 'file' and optionally includes a 'line' number and 'symbol' name, omitting unset optional fields during serialization. [crates/gwiki/src/output.rs:162-168]
+- `SearchResultType` (type) component `SearchResultType [type]` (`a3d31626-3533-557d-9328-c8bd13050219`) lines 173-176 [crates/gwiki/src/output.rs:173-176]
   - Signature: `pub enum SearchResultType {`
-  - Purpose: Indexed type `SearchResultType` in `crates/gwiki/src/output.rs`. [crates/gwiki/src/output.rs:149-152]
-- `SearchResultType` (class) component `SearchResultType [class]` (`95e11036-1a71-5c89-8e8a-b54f90e4186d`) lines 154-172 [crates/gwiki/src/output.rs:154-172]
+  - Purpose: Indexed type `SearchResultType` in `crates/gwiki/src/output.rs`. [crates/gwiki/src/output.rs:173-176]
+- `SearchResultType` (class) component `SearchResultType [class]` (`2d21d509-53bd-523b-a138-c3ba4ee3a196`) lines 178-196 [crates/gwiki/src/output.rs:178-196]
   - Signature: `impl SearchResultType {`
-  - Purpose: This implementation classifies vault-relative wiki page paths as either code (if located under `code/files/`) or wiki content, with a predicate method to test the code classification. [crates/gwiki/src/output.rs:154-172]
-- `SearchResultType.from_wiki_page` (method) component `SearchResultType.from_wiki_page [method]` (`7d05c4dc-3b0f-5638-98ec-c3bb7246c857`) lines 157-167 [crates/gwiki/src/output.rs:157-167]
+  - Purpose: 'SearchResultType' classifies a vault-relative wiki page path as 'Code' when its normalized string form starts with 'code/files/', otherwise 'Wiki', and exposes 'is_code()' as a predicate for the 'Code' variant. [crates/gwiki/src/output.rs:178-196]
+- `SearchResultType.from_wiki_page` (method) component `SearchResultType.from_wiki_page [method]` (`05cf896a-a88e-5786-9022-3d3c7bd64748`) lines 181-191 [crates/gwiki/src/output.rs:181-191]
   - Signature: `pub fn from_wiki_page(path: &Path) -> Self {`
-  - Purpose: Returns `Self::Code` if the normalized path (with backslashes converted to forward slashes) starts with `"code/files/"`, otherwise returns `Self::Wiki`. [crates/gwiki/src/output.rs:157-167]
-- `SearchResultType.is_code` (method) component `SearchResultType.is_code [method]` (`0a38d7a3-7c89-5990-a589-0fdebc958ea8`) lines 169-171 [crates/gwiki/src/output.rs:169-171]
+  - Purpose: Returns 'Self::Code' when the provided path, after lossy UTF-8 conversion and '\' to '/' normalization, starts with 'code/files/'; otherwise it returns 'Self::Wiki'. [crates/gwiki/src/output.rs:181-191]
+- `SearchResultType.is_code` (method) component `SearchResultType.is_code [method]` (`4b7096c7-e7eb-55bb-be0c-f9f134bbb17d`) lines 193-195 [crates/gwiki/src/output.rs:193-195]
   - Signature: `pub fn is_code(self) -> bool {`
-  - Purpose: The `is_code` method returns `true` if the enum variant is `Code`, otherwise `false`. [crates/gwiki/src/output.rs:169-171]
-- `SearchResultOutput` (class) component `SearchResultOutput [class]` (`cdd9f244-d679-522c-b389-e2334ea9b9a8`) lines 175-185 [crates/gwiki/src/output.rs:175-185]
+  - Purpose: Returns 'true' if 'self' is the 'Self::Code' variant, and 'false' for all other variants. [crates/gwiki/src/output.rs:193-195]
+- `SearchResultOutput` (class) component `SearchResultOutput [class]` (`272db8a5-f863-539a-888d-b9fd020656be`) lines 199-209 [crates/gwiki/src/output.rs:199-209]
   - Signature: `pub struct SearchResultOutput {`
-  - Purpose: Encapsulates a ranked search result with title, snippet, relevance score, source paths, and explanatory metadata. [crates/gwiki/src/output.rs:175-185]
-- `AskRelatedPageOutput` (class) component `AskRelatedPageOutput [class]` (`9f21297d-24f7-5a98-9914-10c790180afa`) lines 188-192 [crates/gwiki/src/output.rs:188-192]
-  - Signature: `pub struct AskRelatedPageOutput {`
-  - Purpose: A struct representing a ranked page search result containing an optional title, filesystem path, and floating-point relevance score. [crates/gwiki/src/output.rs:188-192]
-- `AskAiOutput` (class) component `AskAiOutput [class]` (`59dfbeff-2c1c-5c9e-b54b-239ca0beca26`) lines 195-202 [crates/gwiki/src/output.rs:195-202]
+  - Purpose: 'SearchResultOutput' is a search-hit record that carries the result’s optional title, fusion key, wiki and source paths, result type, snippet, relevance score, contributing source identifiers, and per-source explanation data. [crates/gwiki/src/output.rs:199-209]
+- `AskAiOutput` (class) component `AskAiOutput [class]` (`c7209590-baf1-5e7f-96ae-80bc5d59b0de`) lines 212-219 [crates/gwiki/src/output.rs:212-219]
   - Signature: `pub struct AskAiOutput {`
-  - Purpose: `AskAiOutput` is a struct that encapsulates the result metadata of an AI request, containing a boolean request flag, static string references for mode, route, and status, and optional fields for the model identifier and error information. [crates/gwiki/src/output.rs:195-202]
-- `AskSynthesisOutput` (class) component `AskSynthesisOutput [class]` (`5b8a0128-128d-5c63-8656-37b08698a4d0`) lines 205-209 [crates/gwiki/src/output.rs:205-209]
+  - Purpose: 'AskAiOutput' is a Rust output record that captures whether an AI request was issued, the requested mode and route, the resulting status, and optional model and error information. [crates/gwiki/src/output.rs:212-219]
+- `AskSynthesisOutput` (class) component `AskSynthesisOutput [class]` (`be1b8eaa-0246-553b-ac9d-192b3b392692`) lines 222-226 [crates/gwiki/src/output.rs:222-226]
   - Signature: `pub struct AskSynthesisOutput {`
-  - Purpose: `AskSynthesisOutput` is a struct that encapsulates the result of a synthesis operation, containing a synthesized answer string, an optional model identifier, and citation verification results. [crates/gwiki/src/output.rs:205-209]
-- `AskCitationCheckOutput` (class) component `AskCitationCheckOutput [class]` (`f980369e-6343-524f-85b9-a6587109be7b`) lines 216-220 [crates/gwiki/src/output.rs:216-220]
+  - Purpose: 'AskSynthesisOutput' is a Rust struct representing a synthesized response payload, with the answer text, an optional model identifier, and a 'AskCitationCheckOutput' citation-check result. [crates/gwiki/src/output.rs:222-226]
+- `AskCitationCheckOutput` (class) component `AskCitationCheckOutput [class]` (`130a5e53-431c-5e3d-bed1-1a847f1a09f4`) lines 233-237 [crates/gwiki/src/output.rs:233-237]
   - Signature: `pub struct AskCitationCheckOutput {`
-  - Purpose: `AskCitationCheckOutput` is a struct that encapsulates the results of a citation verification operation, containing a static status indicator, a count of claims checked, and a vector of unsupported claim strings. [crates/gwiki/src/output.rs:216-220]
-- `SearchSourceExplanationOutput` (class) component `SearchSourceExplanationOutput [class]` (`9cb0deea-94eb-5f40-b86a-c7cf1cc571a2`) lines 223-227 [crates/gwiki/src/output.rs:223-227]
+  - Purpose: 'AskCitationCheckOutput' is a result struct that reports the citation-check 'status', the number of claims evaluated in 'checked_claims', and the unsupported claim texts in 'unsupported_claims'. [crates/gwiki/src/output.rs:233-237]
+- `SearchSourceExplanationOutput` (class) component `SearchSourceExplanationOutput [class]` (`0625d05a-3491-5a15-a850-e321c55ea4da`) lines 240-244 [crates/gwiki/src/output.rs:240-244]
   - Signature: `pub struct SearchSourceExplanationOutput {`
-  - Purpose: `SearchSourceExplanationOutput` is a struct that encapsulates search result metadata, containing a source identifier string, its ranking position (usize), and a floating-point relevance score (f64). [crates/gwiki/src/output.rs:223-227]
-- `QueryOutput` (class) component `QueryOutput [class]` (`78109ee2-b945-5ba3-b7b7-c084a1666b2b`) lines 230-236 [crates/gwiki/src/output.rs:230-236]
+  - Purpose: 'SearchSourceExplanationOutput' is a Rust struct that captures a search source identifier plus its 'rank' and 'score' for explaining or reporting search result ordering. [crates/gwiki/src/output.rs:240-244]
+- `QueryOutput` (class) component `QueryOutput [class]` (`7c3fdc92-ed32-5fe5-b278-bb1574490453`) lines 247-253 [crates/gwiki/src/output.rs:247-253]
   - Signature: `pub struct QueryOutput {`
-  - Purpose: `QueryOutput` is a Rust struct that encapsulates a query response, containing a static command identifier, scope context, input query string, generated answer string, and a vector of citation references. [crates/gwiki/src/output.rs:230-236]
-- `QueryOutput` (class) component `QueryOutput [class]` (`64461ad0-e6fe-5f66-acf3-a765ae8f48cc`) lines 238-253 [crates/gwiki/src/output.rs:238-253]
+  - Purpose: 'QueryOutput' is a data struct that captures the result of a scoped query operation, including the fixed command name, the 'ScopeIdentity', the original query string, the generated answer, and a list of supporting 'QueryCitation's. [crates/gwiki/src/output.rs:247-253]
+- `QueryOutput` (class) component `QueryOutput [class]` (`a60b07e1-181f-53f4-a33c-e06b8afff1f2`) lines 255-270 [crates/gwiki/src/output.rs:255-270]
   - Signature: `impl QueryOutput {`
-  - Purpose: `QueryOutput::answered` is a constructor method that instantiates a query response struct with a scope identity, query and answer strings (via the `Into` trait for flexible input types), and a vector of citations. [crates/gwiki/src/output.rs:238-253]
-- `QueryOutput.answered` (method) component `QueryOutput.answered [method]` (`267ff829-fda3-5916-ab51-97725675e03a`) lines 239-252 [crates/gwiki/src/output.rs:239-252]
+  - Purpose: 'QueryOutput' is a Rust constructor/response type that produces a 'query' command output containing the scope, query string, answer string, and associated citations. [crates/gwiki/src/output.rs:255-270]
+- `QueryOutput.answered` (method) component `QueryOutput.answered [method]` (`96326e52-aa2c-5d38-b41d-d5e6f24218bd`) lines 256-269 [crates/gwiki/src/output.rs:256-269]
   - Signature: `pub fn answered(`
-  - Purpose: Constructs and returns a Self instance configured with command="query" and the provided scope, query string, answer string, and citations. [crates/gwiki/src/output.rs:239-252]
-- `QueryCitation` (class) component `QueryCitation [class]` (`deebcb1c-d4a2-5d4b-b170-c5c6249b01cb`) lines 256-261 [crates/gwiki/src/output.rs:256-261]
+  - Purpose: Constructs and returns a 'Self' value for a '"query"' command by storing the provided 'scope', converting 'query' and 'answer' into 'String's, and attaching the given 'citations' vector. [crates/gwiki/src/output.rs:256-269]
+- `QueryCitation` (class) component `QueryCitation [class]` (`f884f3ad-ba29-5120-9073-26a1f92094a1`) lines 273-278 [crates/gwiki/src/output.rs:273-278]
   - Signature: `pub struct QueryCitation {`
-  - Purpose: `QueryCitation` is a struct that pairs a source file path with a wiki page reference, optionally including a title and line information for citation tracking. [crates/gwiki/src/output.rs:256-261]
-- `AuditOutput` (class) component `AuditOutput [class]` (`ea2b6aff-c07d-5788-887c-a8c569ff7cf7`) lines 264-270 [crates/gwiki/src/output.rs:264-270]
+  - Purpose: 'QueryCitation' is a Rust struct that stores a citation’s source file path, associated wiki page path, and optional title and line-reference metadata. [crates/gwiki/src/output.rs:273-278]
+- `AuditOutput` (class) component `AuditOutput [class]` (`03c8d9fa-3f1c-56e7-ab24-9bd96a985e1f`) lines 281-287 [crates/gwiki/src/output.rs:281-287]
   - Signature: `pub struct AuditOutput {`
-  - Purpose: AuditOutput is a struct that encapsulates the results of an audit operation, containing the executed command, scope context, count of unsupported claims detected, an optional report output path, and the source file paths that were audited. [crates/gwiki/src/output.rs:264-270]
-- `AuditOutput` (class) component `AuditOutput [class]` (`8e09801a-d01d-551d-935b-74c5a61cf257`) lines 272-287 [crates/gwiki/src/output.rs:272-287]
+  - Purpose: 'AuditOutput' is a Rust struct that captures an audit command identifier, the scoped target being audited, the count of unsupported claims found, an optional report file path, and the list of source paths examined. [crates/gwiki/src/output.rs:281-287]
+- `AuditOutput` (class) component `AuditOutput [class]` (`60039241-e50a-5696-ae80-258f161cdea2`) lines 289-304 [crates/gwiki/src/output.rs:289-304]
   - Signature: `impl AuditOutput {`
-  - Purpose: `AuditOutput::new()` is a constructor that initializes an `AuditOutput` instance with a scope identity, unsupported claim count, optional report path, and source paths, setting the command field to "audit". [crates/gwiki/src/output.rs:272-287]
-- `AuditOutput.new` (method) component `AuditOutput.new [method]` (`0af68c17-d456-56d7-bf34-7182de782081`) lines 273-286 [crates/gwiki/src/output.rs:273-286]
+  - Purpose: 'AuditOutput' is a constructor-only Rust wrapper that builds an audit command output value with a fixed 'command' of '"audit"' and stores the provided 'scope', 'unsupported_claim_count', optional 'report_path', and 'source_paths' into the returned struct. [crates/gwiki/src/output.rs:289-304]
+- `AuditOutput.new` (method) component `AuditOutput.new [method]` (`b6f17b21-3774-521e-9b21-b220d398b64c`) lines 290-303 [crates/gwiki/src/output.rs:290-303]
   - Signature: `pub fn new(`
-  - Purpose: Instantiates an audit command struct with the provided scope identity, unsupported claim count, optional report path, and source paths. [crates/gwiki/src/output.rs:273-286]
-- `render_query_text` (function) component `render_query_text [function]` (`94927022-d299-5b3b-977c-e67abf37b9c8`) lines 289-316 [crates/gwiki/src/output.rs:289-316]
+  - Purpose: Constructs and returns a new instance with 'command' fixed to '"audit"' and the provided 'scope', 'unsupported_claim_count', 'report_path', and 'source_paths' fields. [crates/gwiki/src/output.rs:290-303]
+- `render_query_text` (function) component `render_query_text [function]` (`5a22ce47-3064-5f85-bb9b-91301a64d7de`) lines 306-333 [crates/gwiki/src/output.rs:306-333]
   - Signature: `pub fn render_query_text(output: &QueryOutput) -> String {`
-  - Purpose: Converts a `QueryOutput` struct into a formatted text string representation containing the query scope, question, answer, and citations with their source paths, wiki pages, and optional metadata. [crates/gwiki/src/output.rs:289-316]
-- `json_output_is_stable` (function) component `json_output_is_stable [function]` (`db6d6c87-95ee-5002-9b5b-4d849a7d6bbe`) lines 325-416 [crates/gwiki/src/output.rs:325-416]
+  - Purpose: Formats a 'QueryOutput' into a plain-text report containing the scope, question, answer, and either 'Citations: none' or a per-citation list with source path, wiki page, optional title, and optional lines. [crates/gwiki/src/output.rs:306-333]
+- `json_output_is_stable` (function) component `json_output_is_stable [function]` (`3a248764-4294-59bc-92d6-c63528ecc703`) lines 342-434 [crates/gwiki/src/output.rs:342-434]
   - Signature: `fn json_output_is_stable() {`
-  - Purpose: This function asserts that a `SearchOutput` struct serializes to a deterministic JSON representation matching its expected schema via `serde_json::to_value()`. [crates/gwiki/src/output.rs:325-416]
-- `query_output_includes_citations` (function) component `query_output_includes_citations [function]` (`e395a29f-c131-5747-9f43-e0f0bb4e9d03`) lines 419-445 [crates/gwiki/src/output.rs:419-445]
+  - Purpose: Verifies that 'SearchOutput', 'QueryOutput', and 'AuditOutput' serialize to the expected stable JSON shape and field values using 'serde_json::to_value' equality assertions. [crates/gwiki/src/output.rs:342-434]
+- `search_output_derives_code_citations_from_code_hits_only` (function) component `search_output_derives_code_citations_from_code_hits_only [function]` (`e31aae4b-80a9-52d2-b00d-300b084bc2e0`) lines 437-476 [crates/gwiki/src/output.rs:437-476]
+  - Signature: `fn search_output_derives_code_citations_from_code_hits_only() {`
+  - Purpose: Verifies that 'SearchOutput::new' derives 'code_citations' exclusively from code search hits, deduplicating duplicate code hits and ignoring wiki hits. [crates/gwiki/src/output.rs:437-476]
+- `query_output_includes_citations` (function) component `query_output_includes_citations [function]` (`dcb5d888-c149-58e5-89b9-41140c53b981`) lines 479-505 [crates/gwiki/src/output.rs:479-505]
   - Signature: `fn query_output_includes_citations() {`
-  - Purpose: # Summary
-
-A unit test that verifies `QueryOutput` correctly initializes with `QueryCitation` metadata and that `render_query_text` properly formats source and wiki page paths in the rendered query output. [crates/gwiki/src/output.rs:419-445]
+  - Purpose: Verifies that an answered 'QueryOutput' preserves citation paths and that 'render_query_text' includes both the source and wiki citation references in its output. [crates/gwiki/src/output.rs:479-505]
 

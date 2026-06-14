@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gcode/src/search|crates/gcode/src/search]]
 
 ## Purpose
 
-`crates/gcode/src/search/graph_boost.rs` exposes 9 indexed API symbols.
+Provides FalkorDB-backed search boosting for the gcode search pipeline by turning a resolved query or seed symbol set into related symbol IDs from the code graph. `graph_boost` resolves a query through exact-first FTS, then collects deduplicated caller and usage IDs for the matched symbol, while `graph_expand` and `graph_expand_grouped` broaden seed IDs into per-project callee/caller neighborhoods with deduplication. The helper constructors build test `Context` variants with and without graph access, and the tests verify empty fallbacks plus grouped expansion and deduping behavior.
 [crates/gcode/src/search/graph_boost.rs:21-47]
 [crates/gcode/src/search/graph_boost.rs:55-86]
 [crates/gcode/src/search/graph_boost.rs:88-106]

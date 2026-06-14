@@ -2,350 +2,37 @@
 title: Repository Overview
 type: code_repo
 provenance:
-- file: crates/gcode/assets/import_roots/elixir_dependency_roots.json
-- file: crates/gcode/assets/import_roots/ruby_require_roots.json
-- file: crates/gcode/build.rs
 - file: crates/gcode/contract/gcode.contract.json
-- file: crates/gcode/src/cli.rs
-- file: crates/gcode/src/cli/tests.rs
-- file: crates/gcode/src/commands/codewiki/build_parts/architecture.rs
-- file: crates/gcode/src/commands/codewiki/build_parts/changes.rs
-- file: crates/gcode/src/commands/codewiki/build_parts/file.rs
-- file: crates/gcode/src/commands/codewiki/build_parts/hotspots.rs
-- file: crates/gcode/src/commands/codewiki/build_parts/modules.rs
-- file: crates/gcode/src/commands/codewiki/build_parts/onboarding.rs
-- file: crates/gcode/src/commands/codewiki/build_parts/snapshot.rs
-- file: crates/gcode/src/commands/codewiki/cluster.rs
-- file: crates/gcode/src/commands/codewiki/graph.rs
-- file: crates/gcode/src/commands/codewiki/io.rs
-- file: crates/gcode/src/commands/codewiki/mod.rs
 - file: crates/gcode/src/commands/codewiki/ownership.rs
-- file: crates/gcode/src/commands/codewiki/paths.rs
-- file: crates/gcode/src/commands/codewiki/progress.rs
-- file: crates/gcode/src/commands/codewiki/prompts.rs
-- file: crates/gcode/src/commands/codewiki/render.rs
-- file: crates/gcode/src/commands/codewiki/reuse.rs
 - file: crates/gcode/src/commands/codewiki/text.rs
-- file: crates/gcode/src/commands/embeddings_doctor.rs
-- file: crates/gcode/src/commands/graph/lifecycle.rs
-- file: crates/gcode/src/commands/graph/payload.rs
-- file: crates/gcode/src/commands/graph/reads.rs
-- file: crates/gcode/src/commands/graph/tests.rs
-- file: crates/gcode/src/commands/grep.rs
-- file: crates/gcode/src/commands/grep/grep_matcher.rs
-- file: crates/gcode/src/commands/index.rs
-- file: crates/gcode/src/commands/init.rs
-- file: crates/gcode/src/commands/scope.rs
-- file: crates/gcode/src/commands/search.rs
-- file: crates/gcode/src/commands/setup.rs
-- file: crates/gcode/src/commands/status.rs
-- file: crates/gcode/src/commands/symbol_at.rs
-- file: crates/gcode/src/commands/symbols.rs
-- file: crates/gcode/src/commands/vector.rs
-- file: crates/gcode/src/config/context.rs
+- file: crates/gcode/src/commands/codewiki/types.rs
 - file: crates/gcode/src/config/services.rs
-- file: crates/gcode/src/config/tests.rs
-- file: crates/gcode/src/contract.rs
-- file: crates/gcode/src/db/mod.rs
-- file: crates/gcode/src/db/queries.rs
 - file: crates/gcode/src/db/resolution.rs
-- file: crates/gcode/src/dispatch.rs
-- file: crates/gcode/src/dispatch/tests.rs
-- file: crates/gcode/src/freshness.rs
-- file: crates/gcode/src/git.rs
-- file: crates/gcode/src/graph/code_graph/connection.rs
-- file: crates/gcode/src/graph/code_graph/lifecycle.rs
-- file: crates/gcode/src/graph/code_graph/payload.rs
-- file: crates/gcode/src/graph/code_graph/read.rs
-- file: crates/gcode/src/graph/code_graph/tests.rs
 - file: crates/gcode/src/graph/code_graph/write.rs
-- file: crates/gcode/src/graph/report/generation.rs
-- file: crates/gcode/src/graph/report/loading.rs
-- file: crates/gcode/src/graph/report/queries.rs
-- file: crates/gcode/src/graph/report/render.rs
-- file: crates/gcode/src/graph/report/rows.rs
-- file: crates/gcode/src/graph/report/summary.rs
-- file: crates/gcode/src/graph/report/tests.rs
-- file: crates/gcode/src/graph/report/time.rs
-- file: crates/gcode/src/graph/report/types.rs
-- file: crates/gcode/src/graph/typed_query.rs
-- file: crates/gcode/src/index/api.rs
-- file: crates/gcode/src/index/chunker.rs
-- file: crates/gcode/src/index/hasher.rs
-- file: crates/gcode/src/index/import_resolution/context.rs
-- file: crates/gcode/src/index/import_resolution/helpers.rs
-- file: crates/gcode/src/index/import_resolution/parser/go_rust.rs
-- file: crates/gcode/src/index/import_resolution/parser/java_csharp.rs
-- file: crates/gcode/src/index/import_resolution/parser/mod.rs
-- file: crates/gcode/src/index/import_resolution/parser/php_kotlin.rs
-- file: crates/gcode/src/index/import_resolution/parser/python_js.rs
-- file: crates/gcode/src/index/import_resolution/parser/rest.rs
-- file: crates/gcode/src/index/import_resolution/predicates.rs
-- file: crates/gcode/src/index/indexer/file.rs
-- file: crates/gcode/src/index/indexer/freshness_probe.rs
-- file: crates/gcode/src/index/indexer/lifecycle.rs
-- file: crates/gcode/src/index/indexer/overlay.rs
-- file: crates/gcode/src/index/indexer/pipeline.rs
-- file: crates/gcode/src/index/indexer/sink.rs
-- file: crates/gcode/src/index/indexer/tests.rs
-- file: crates/gcode/src/index/indexer/types.rs
-- file: crates/gcode/src/index/indexer/util.rs
-- file: crates/gcode/src/index/languages.rs
-- file: crates/gcode/src/index/parser.rs
-- file: crates/gcode/src/index/parser/calls.rs
-- file: crates/gcode/src/index/parser/calls/ast.rs
-- file: crates/gcode/src/index/parser/calls/dart_textual.rs
-- file: crates/gcode/src/index/parser/calls/resolution.rs
-- file: crates/gcode/src/index/parser/calls/shadowing.rs
-- file: crates/gcode/src/index/parser/calls/text.rs
-- file: crates/gcode/src/index/security.rs
 - file: crates/gcode/src/index/semantic.rs
 - file: crates/gcode/src/index/walker.rs
-- file: crates/gcode/src/index_lock.rs
-- file: crates/gcode/src/lib.rs
-- file: crates/gcode/src/main.rs
 - file: crates/gcode/src/models.rs
-- file: crates/gcode/src/output.rs
-- file: crates/gcode/src/progress.rs
-- file: crates/gcode/src/project.rs
-- file: crates/gcode/src/projection/sync.rs
-- file: crates/gcode/src/savings.rs
-- file: crates/gcode/src/schema.rs
-- file: crates/gcode/src/search/fts/common.rs
-- file: crates/gcode/src/search/fts/content.rs
-- file: crates/gcode/src/search/fts/counts.rs
-- file: crates/gcode/src/search/fts/graph.rs
-- file: crates/gcode/src/search/fts/symbols.rs
-- file: crates/gcode/src/search/fts/tests.rs
-- file: crates/gcode/src/search/graph_boost.rs
-- file: crates/gcode/src/search/rrf.rs
-- file: crates/gcode/src/setup/contracts.rs
-- file: crates/gcode/src/setup/ddl.rs
-- file: crates/gcode/src/setup/identifiers.rs
-- file: crates/gcode/src/setup/postgres.rs
-- file: crates/gcode/src/setup/tests.rs
-- file: crates/gcode/src/setup/types.rs
-- file: crates/gcode/src/skill.rs
-- file: crates/gcode/src/utils.rs
-- file: crates/gcode/src/vector/code_symbols/embedding.rs
-- file: crates/gcode/src/vector/code_symbols/lifecycle.rs
-- file: crates/gcode/src/vector/code_symbols/qdrant.rs
-- file: crates/gcode/src/vector/code_symbols/repository.rs
-- file: crates/gcode/src/vector/code_symbols/search.rs
-- file: crates/gcode/src/vector/code_symbols/tests.rs
-- file: crates/gcode/src/vector/code_symbols/types.rs
-- file: crates/gcode/src/visibility.rs
 - file: crates/gcore/assets/docker-compose.services.yml
-- file: crates/gcore/assets/postgres-pgsearch/version.json
-- file: crates/gcore/src/ai/daemon.rs
-- file: crates/gcore/src/ai/embeddings.rs
-- file: crates/gcore/src/ai/mod.rs
-- file: crates/gcore/src/ai/probe.rs
-- file: crates/gcore/src/ai/text.rs
-- file: crates/gcore/src/ai/transcription.rs
-- file: crates/gcore/src/ai/vision.rs
 - file: crates/gcore/src/ai_context.rs
-- file: crates/gcore/src/ai_types.rs
-- file: crates/gcore/src/bootstrap.rs
-- file: crates/gcore/src/cli_contract.rs
-- file: crates/gcore/src/codewiki_contract.rs
-- file: crates/gcore/src/config/resolve.rs
 - file: crates/gcore/src/config/tests.rs
-- file: crates/gcore/src/config/types.rs
-- file: crates/gcore/src/daemon_url.rs
-- file: crates/gcore/src/degradation.rs
-- file: crates/gcore/src/falkor.rs
-- file: crates/gcore/src/graph_analytics.rs
-- file: crates/gcore/src/indexing.rs
-- file: crates/gcore/src/layered_config.rs
-- file: crates/gcore/src/lib.rs
-- file: crates/gcore/src/libpq.rs
-- file: crates/gcore/src/local_backend.rs
-- file: crates/gcore/src/postgres.rs
-- file: crates/gcore/src/project.rs
-- file: crates/gcore/src/provisioning/bootstrap.rs
-- file: crates/gcore/src/provisioning/docker.rs
-- file: crates/gcore/src/provisioning/hub.rs
-- file: crates/gcore/src/provisioning/mod.rs
-- file: crates/gcore/src/provisioning/tests.rs
-- file: crates/gcore/src/qdrant.rs
-- file: crates/gcore/src/qdrant/naming.rs
-- file: crates/gcore/src/qdrant/tests.rs
-- file: crates/gcore/src/search.rs
-- file: crates/gcore/src/secrets.rs
-- file: crates/gcore/src/setup.rs
 - file: crates/ghook/schemas/diagnose-output.v2.schema.json
-- file: crates/ghook/schemas/inbox-envelope.v1.schema.json
-- file: crates/ghook/src/cli_config.rs
-- file: crates/ghook/src/detach.rs
-- file: crates/ghook/src/diagnose.rs
-- file: crates/ghook/src/envelope.rs
-- file: crates/ghook/src/json_value.rs
-- file: crates/ghook/src/main.rs
-- file: crates/ghook/src/output.rs
-- file: crates/ghook/src/planned_shutdown.rs
-- file: crates/ghook/src/source.rs
-- file: crates/ghook/src/statusline.rs
-- file: crates/ghook/src/terminal_context.rs
-- file: crates/ghook/src/transport.rs
-- file: crates/gloc/config.yaml
-- file: crates/gloc/src/backend.rs
-- file: crates/gloc/src/config.rs
-- file: crates/gloc/src/exec.rs
-- file: crates/gloc/src/main.rs
 - file: crates/gsqz/config.yaml
-- file: crates/gsqz/src/command_split.rs
-- file: crates/gsqz/src/compressor.rs
 - file: crates/gsqz/src/config.rs
-- file: crates/gsqz/src/daemon.rs
-- file: crates/gsqz/src/main.rs
-- file: crates/gsqz/src/primitives/dedup.rs
-- file: crates/gsqz/src/primitives/filter.rs
-- file: crates/gsqz/src/primitives/group.rs
-- file: crates/gsqz/src/primitives/match_output.rs
-- file: crates/gsqz/src/primitives/prose.rs
-- file: crates/gsqz/src/primitives/replace.rs
-- file: crates/gsqz/src/primitives/truncate.rs
 - file: crates/gwiki/contract/gwiki.contract.json
 - file: crates/gwiki/src/ai/chunk.rs
-- file: crates/gwiki/src/ai/clients.rs
-- file: crates/gwiki/src/ai/translate.rs
-- file: crates/gwiki/src/api.rs
 - file: crates/gwiki/src/audit.rs
 - file: crates/gwiki/src/benchmark.rs
-- file: crates/gwiki/src/citations.rs
-- file: crates/gwiki/src/code_graph.rs
-- file: crates/gwiki/src/collect.rs
-- file: crates/gwiki/src/commands/ask.rs
-- file: crates/gwiki/src/commands/audit.rs
-- file: crates/gwiki/src/commands/backlinks.rs
-- file: crates/gwiki/src/commands/benchmark.rs
-- file: crates/gwiki/src/commands/citation_quality.rs
-- file: crates/gwiki/src/commands/citation_quality/contradictions.rs
-- file: crates/gwiki/src/commands/collect.rs
-- file: crates/gwiki/src/commands/compile.rs
-- file: crates/gwiki/src/commands/export.rs
-- file: crates/gwiki/src/commands/graph.rs
-- file: crates/gwiki/src/commands/graph_context.rs
-- file: crates/gwiki/src/commands/health.rs
-- file: crates/gwiki/src/commands/index.rs
-- file: crates/gwiki/src/commands/init.rs
-- file: crates/gwiki/src/commands/librarian.rs
-- file: crates/gwiki/src/commands/lint.rs
-- file: crates/gwiki/src/commands/mod.rs
-- file: crates/gwiki/src/commands/read.rs
-- file: crates/gwiki/src/commands/refresh/candidate.rs
-- file: crates/gwiki/src/commands/refresh/mod.rs
-- file: crates/gwiki/src/commands/refresh/model.rs
-- file: crates/gwiki/src/commands/refresh/render.rs
-- file: crates/gwiki/src/commands/refresh/selection.rs
-- file: crates/gwiki/src/commands/refresh/tests.rs
-- file: crates/gwiki/src/commands/refresh/vault.rs
-- file: crates/gwiki/src/commands/research.rs
-- file: crates/gwiki/src/commands/review_report.rs
-- file: crates/gwiki/src/commands/search.rs
-- file: crates/gwiki/src/commands/setup.rs
-- file: crates/gwiki/src/commands/sources.rs
-- file: crates/gwiki/src/commands/status.rs
-- file: crates/gwiki/src/commands/trust.rs
-- file: crates/gwiki/src/compile/collect.rs
-- file: crates/gwiki/src/compile/index.rs
-- file: crates/gwiki/src/compile/mod.rs
-- file: crates/gwiki/src/compile/render.rs
-- file: crates/gwiki/src/compile/tests.rs
-- file: crates/gwiki/src/contract.rs
-- file: crates/gwiki/src/credibility.rs
-- file: crates/gwiki/src/daemon.rs
-- file: crates/gwiki/src/document.rs
-- file: crates/gwiki/src/error.rs
-- file: crates/gwiki/src/events.rs
-- file: crates/gwiki/src/exports.rs
 - file: crates/gwiki/src/falkor_graph.rs
-- file: crates/gwiki/src/frontmatter.rs
-- file: crates/gwiki/src/graph/analytics.rs
-- file: crates/gwiki/src/graph/context.rs
-- file: crates/gwiki/src/graph/export.rs
 - file: crates/gwiki/src/graph/mod.rs
 - file: crates/gwiki/src/health.rs
-- file: crates/gwiki/src/indexer.rs
 - file: crates/gwiki/src/ingest/audio.rs
-- file: crates/gwiki/src/ingest/document/html.rs
-- file: crates/gwiki/src/ingest/document/mod.rs
-- file: crates/gwiki/src/ingest/document/office.rs
-- file: crates/gwiki/src/ingest/document/render.rs
-- file: crates/gwiki/src/ingest/document/tests.rs
-- file: crates/gwiki/src/ingest/file.rs
-- file: crates/gwiki/src/ingest/git.rs
-- file: crates/gwiki/src/ingest/image.rs
-- file: crates/gwiki/src/ingest/mediawiki.rs
 - file: crates/gwiki/src/ingest/mod.rs
-- file: crates/gwiki/src/ingest/pdf/ingest.rs
-- file: crates/gwiki/src/ingest/pdf/markdown.rs
-- file: crates/gwiki/src/ingest/pdf/mod.rs
-- file: crates/gwiki/src/ingest/pdf/render.rs
-- file: crates/gwiki/src/ingest/pdf/tests.rs
-- file: crates/gwiki/src/ingest/pdf/text.rs
-- file: crates/gwiki/src/ingest/pdf/types.rs
 - file: crates/gwiki/src/ingest/url.rs
-- file: crates/gwiki/src/ingest/video/assets.rs
-- file: crates/gwiki/src/ingest/video/metadata.rs
-- file: crates/gwiki/src/ingest/video/mod.rs
-- file: crates/gwiki/src/ingest/video/processing.rs
-- file: crates/gwiki/src/ingest/video/tests.rs
-- file: crates/gwiki/src/ingest/wayback.rs
-- file: crates/gwiki/src/librarian.rs
-- file: crates/gwiki/src/links.rs
-- file: crates/gwiki/src/lint.rs
-- file: crates/gwiki/src/log.rs
-- file: crates/gwiki/src/main.rs
-- file: crates/gwiki/src/markdown.rs
-- file: crates/gwiki/src/media.rs
-- file: crates/gwiki/src/models.rs
-- file: crates/gwiki/src/output.rs
-- file: crates/gwiki/src/paths.rs
-- file: crates/gwiki/src/provenance.rs
-- file: crates/gwiki/src/registry.rs
-- file: crates/gwiki/src/research/mod.rs
-- file: crates/gwiki/src/research/model.rs
-- file: crates/gwiki/src/research/notes.rs
-- file: crates/gwiki/src/research/outcome.rs
-- file: crates/gwiki/src/research/storage.rs
-- file: crates/gwiki/src/research/tests.rs
-- file: crates/gwiki/src/research_loop/engine.rs
-- file: crates/gwiki/src/research_loop/helpers.rs
-- file: crates/gwiki/src/research_loop/tests.rs
-- file: crates/gwiki/src/research_loop/types.rs
-- file: crates/gwiki/src/runner.rs
-- file: crates/gwiki/src/schema.rs
-- file: crates/gwiki/src/scope.rs
-- file: crates/gwiki/src/search/bm25.rs
-- file: crates/gwiki/src/search/graph_boost.rs
-- file: crates/gwiki/src/search/mod.rs
-- file: crates/gwiki/src/search/rrf.rs
 - file: crates/gwiki/src/search/semantic.rs
-- file: crates/gwiki/src/session.rs
-- file: crates/gwiki/src/setup.rs
-- file: crates/gwiki/src/sources/atomic.rs
-- file: crates/gwiki/src/sources/manifest.rs
-- file: crates/gwiki/src/sources/render.rs
-- file: crates/gwiki/src/sources/tests.rs
-- file: crates/gwiki/src/sources/types.rs
 - file: crates/gwiki/src/store.rs
-- file: crates/gwiki/src/support/config.rs
-- file: crates/gwiki/src/support/counts.rs
-- file: crates/gwiki/src/support/env.rs
-- file: crates/gwiki/src/support/graph.rs
-- file: crates/gwiki/src/support/postgres.rs
-- file: crates/gwiki/src/support/scope.rs
-- file: crates/gwiki/src/support/search.rs
-- file: crates/gwiki/src/support/text.rs
-- file: crates/gwiki/src/support/time.rs
-- file: crates/gwiki/src/synthesis.rs
-- file: crates/gwiki/src/transcribe.rs
-- file: crates/gwiki/src/vault.rs
 - file: crates/gwiki/src/vector.rs
-- file: crates/gwiki/src/video.rs
-- file: crates/gwiki/src/vision.rs
+- file: docs/evidence/wiki-parity-2026-06/wp3-search-sources.json
+provenance_truncated: 342
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -355,44 +42,50 @@ freshness: indexed
 
 ## Overview
 
-Gobby is a local-first developer ecosystem and AI orchestration platform. The repository is structured into Rust-based core backend utilities, comprehensive architectural documentation, and system verification tools:
+Gobby is organized as a Rust workspace whose top-level `crates` directory groups the command-line tooling and shared foundation rather than owning direct source files itself. The main CLI-facing pieces are split between `gcode`, which provides a code-indexing command-line tool plus reusable library APIs, and `gcore`, which supplies shared infrastructure such as bootstrap, daemon URL discovery, project lookup, layered configuration, CLI contracts, setup/provisioning, degradation terminology, and optional storage/indexing integrations [2336] [491] [2330] [3527].
 
-- Core Rust Backend (crates): Houses the foundational services, utilities, and libraries powering the platform. This includes `gcode` and `gcore` for project-wide code indexing and multi-database synchronization, `ghook` for managing secure lifecycle hook interception and validation, `gloc` for executing local and remote AI models, `gsqz` for terminal output compression to optimize LLM token usage, and `gwiki` for multimodal research ingestion and wiki compilation.
-- Documentation & Design (docs): Serves as the central repository for integration contracts, boundary specifications, user and developer guides, and multi-language research spikes exploring code analysis patterns.
-- Automation & Maintenance (scripts): Contains helper and verification scripts (such as verify.sh) to maintain codebase integrity.
+The major pieces fit together around a clean separation between CLI concerns, daemon-facing contracts, and reusable indexing foundations. `gcode` keeps command parsing, process dispatch, contract publication, and core indexing APIs separated, with tests protecting the public library from depending on CLI-specific code [1370] [2330]. `gcore` sits underneath as the common layer used to discover projects and daemon endpoints, manage configuration, describe command contracts, and package the Docker Compose service stack installed by `gobby install` [3527].
 
-Root files provide standard repository metadata, licensing, changelogs, and toolchain configurations supporting this multi-tool AI development environment. [1] [17] [27] [28] [491]
+A reader should start in `crates/gcore/src/lib.rs` to understand the shared vocabulary and services that support the workspace, then move to `crates/gcode/src/lib.rs` for the reusable indexing API surface and `crates/gcode/src/cli.rs` or `crates/gcode/src/main.rs` for how that functionality is exposed as a command-line program [3527] [2330] [491] [2336]. The `docs` tree is presently just a documentation namespace, with `docs/evidence` serving as a container for proof artifacts rather than executable code or authored documentation.
 
 ## Modules
 
-- [[code/modules/crates|crates]] - The crates module houses the Rust-based foundational backend libraries, service orchestrators, and command-line utilities that power Gobby's local-first developer ecosystem. It consolidates crucial system capabilities including project-wide code indexing and multi-database synchronization (gcode, gcore), secure lifecycle hook interception and validation sidecars (ghook), local and remote AI model execution (gloc), terminal command output compression for LLM token efficiency (gsqz), and multimodal research ingestion and wiki compilation (gwiki).
-[1]
-[17]
-[27]
-[28]
-[491]
-- [[code/modules/docs|docs]] - The docs module serves as the central documentation and research repository for the Gobby ecosystem. It organizes integration contracts and boundary specifications for external daemon interfaces, comprehensive user and developer guides for core sub-systems and utilities, engineering plans and release strategies for infrastructure improvements, and multi-language research spikes exploring code analysis patterns. 
-- [[code/modules/scripts|scripts]] - The scripts module contains utility and maintenance scripts, including codebase verification procedures like verify.sh. It exposes no public API symbols, submodules, or indexed components. 
+- [[code/modules/crates|crates]] - The crates module is a container directory with no direct files of its own; it groups the Rust workspace's tooling crates and shared foundation that together make up the Gobby command-line surface. Its responsibilities are split across six child crates: gcode packages a code-indexing CLI and reusable library whose source root keeps command parsing, process dispatch, daemon-facing contract publication, and core indexing APIs separated, with tests guarding that the public library stays independent of CLI-specific code [2336] [491] [1370] [2330]; and gcore provides the shared foundation—bootstrap, daemon URL discovery, project lookup, layered configuration, CLI contracts, setup/provisioning, degradation vocabulary, and feature-gated storage/indexing integrations—alongside assets that package the Docker Compose service stack installed by `gobby install` [3527].
 
-## Files
+The remaining crates layer specific tools on top of that foundation. ghook is a hook-dispatcher crate plus strict draft-07 JSON schemas for diagnostic output and queued inbox envelopes, using `additionalProperties: false` so external surfaces reject unknown fields [3843] [3893]. gloc is a launcher that auto-detects a local LLM backend and hands control to a supported AI CLI, with a built-in YAML defining configuration precedence and runtime defaults such as a 500 ms probe timeout and automatic model loading [crates/gloc/config.yaml:11-14]. gsqz compresses command output for LLM consumption, defining ordered first-match-wins pipeline matching in YAML and routing stdin or stripped-ANSI command output through the compressor with optional stats and daemon savings reporting [4487] [4489] [4491]. gwiki is the local-first wiki system, pairing a contract layer that declares tool identity, version, command shape, output flags, and scope selectors with a library/CLI layer covering scope resolution, vault initialization, ingestion, indexing, manifest and registry persistence, search, provenance audits, and formatted output [4618] [4621] [6828].
 
-- [[code/files/AGENTS.md|AGENTS.md]] - `AGENTS.md` has no indexed API symbols. 
-- [[code/files/CHANGELOG.md|CHANGELOG.md]] - `CHANGELOG.md` has no indexed API symbols. 
-- [[code/files/CLAUDE.md|CLAUDE.md]] - `CLAUDE.md` has no indexed API symbols. 
-- [[code/files/CONTRIBUTING.md|CONTRIBUTING.md]] - `CONTRIBUTING.md` has no indexed API symbols. 
-- [[code/files/Cargo.lock|Cargo.lock]] - `Cargo.lock` has no indexed API symbols. 
-- [[code/files/Cargo.toml|Cargo.toml]] - `Cargo.toml` has no indexed API symbols. 
-- [[code/files/LICENSE|LICENSE]] - `LICENSE` has no indexed API symbols. 
-- [[code/files/README.md|README.md]] - `README.md` has no indexed API symbols. 
-- [[code/files/built-with-gobby.svg|built-with-gobby.svg]] - `built-with-gobby.svg` has no indexed API symbols. 
-- [[code/files/fable-repo-analysis.md|fable-repo-analysis.md]] - `fable-repo-analysis.md` has no indexed API symbols. 
-- [[code/files/rust-toolchain.toml|rust-toolchain.toml]] - `rust-toolchain.toml` has no indexed API symbols. 
+These crates collaborate through a consistent pattern established in gcode and gcore: each tool publishes a JSON CLI contract describing its tool identity, version, summary, global flags, project detection, and identity keys [28] [31], while depending on gcore for cross-cutting concerns like configuration layering, daemon discovery, and the provisioned service stack. The tool crates (gcode, gsqz, gloc, ghook, gwiki) thus remain focused on their domain logic and contract surfaces, deferring shared bootstrap, storage, and degradation handling to gcore so that the Gobby CLI ecosystem stays uniform in how it detects projects, reads configuration, and reports degraded behavior.
+- [[code/modules/docs|docs]] - The docs module is currently a documentation namespace with no direct files of its own. Its responsibilities are expressed through child modules, especially docs/evidence, which acts as a container for proof artifacts rather than executable source or authored documentation.
+
+The visible flow is evidence-driven: docs/evidence/wiki-parity-2026-06 records artifacts for a gwiki parity workflow that resolves a project scope, searches within that scope, selects relevant sources, and uses those sources to compile a grounded explainer. The stable component IDs show the shape of those artifacts, including search inputs and results, selected source paths, prompts, synthesis metadata, citation handling, page writes, and generated article/index paths.
+
+Because the docs module has no direct files or source excerpts in the supplied input, collaboration is organized by containment rather than code calls: docs owns the top-level documentation area, docs/evidence groups evidence sets, and the wiki parity child set carries the concrete workflow records and metadata. No file:line spans were supplied for citation.
+[7917]
+[7949]
+[7981]
+[7918]
+[7919]
 
 ## References
 
-- [1] [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
-- [17] [crates/gcode/assets/import_roots/ruby_require_roots.json:2]
-- [27] [crates/gcode/build.rs:1-8]
 - [28] [crates/gcode/contract/gcode.contract.json:2]
+- [31] [crates/gcode/contract/gcode.contract.json:5-49]
 - [491] [crates/gcode/src/cli.rs:21-44]
+- [1370] [crates/gcode/src/contract.rs:5-259]
+- [2330] [crates/gcode/src/lib.rs:34-42]
+- [2336] [crates/gcode/src/main.rs:4-6]
+- [3527] [crates/gcore/src/lib.rs:27-34]
+- [3843] [crates/ghook/schemas/diagnose-output.v2.schema.json:19]
+- [3893] [crates/ghook/schemas/inbox-envelope.v1.schema.json:16]
+- [4487] [crates/gsqz/src/main.rs:25-48]
+- [4489] [crates/gsqz/src/main.rs:67-139]
+- [4491] [crates/gsqz/src/main.rs:186-276]
+- [4618] [crates/gwiki/contract/gwiki.contract.json:2]
+- [4621] [crates/gwiki/contract/gwiki.contract.json:5-25]
+- [6828] [crates/gwiki/src/lib.rs:1-60]
+- [7917] [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:3-12]
+- [7918] [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:4]
+- [7919] [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:5]
+- [7949] [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:3-12]
+- [7981] [docs/evidence/wiki-parity-2026-06/wp3-search-sources.json:3-16]
 

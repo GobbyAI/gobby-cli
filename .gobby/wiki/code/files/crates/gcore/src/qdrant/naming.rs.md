@@ -22,7 +22,7 @@ Module: [[code/modules/crates/gcore/src/qdrant|crates/gcore/src/qdrant]]
 
 ## Purpose
 
-`crates/gcore/src/qdrant/naming.rs` exposes 7 indexed API symbols.
+Defines Qdrant collection naming rules. `CollectionScope` models three naming modes: project-scoped, topic-scoped, or custom. `collection_name` builds the final collection name from a namespace and scope, while `validate_collection_name_component` enforces that each component is non-empty, trimmed, non-reserved, and free of path-like or control/whitespace characters. `CollectionNameError` captures the specific validation failures. The tests verify that scoped names are generated for all scope variants and that invalid custom or scoped components are rejected.
 [crates/gcore/src/qdrant/naming.rs:3-10]
 [crates/gcore/src/qdrant/naming.rs:13-22]
 [crates/gcore/src/qdrant/naming.rs:25-43]

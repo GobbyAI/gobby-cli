@@ -4,42 +4,7 @@ type: code_file
 provenance:
 - file: crates/gloc/config.yaml
   ranges:
-  - 11-17
-  - '12'
-  - '13'
-  - '14'
-  - 18-30
-  - '19'
-  - '20'
-  - '21'
-  - '22'
-  - '24'
-  - '25'
-  - '26'
-  - '27'
-  - 31-53
-  - 32-41
-  - '33'
-  - 34-37
-  - '35'
-  - '36'
-  - '37'
-  - '38'
-  - '39'
-  - '40'
-  - '41'
-  - 43-53
-  - '44'
-  - 45-47
-  - '46'
-  - '47'
-  - '48'
-  - '49'
-  - '50'
-  - '51'
-  - 54-57
-  - '55'
-  - '56'
+  - 11-57
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -51,7 +16,7 @@ Module: [[code/modules/crates/gloc|crates/gloc]]
 
 ## Purpose
 
-`crates/gloc/config.yaml` exposes 36 indexed API symbols.
+This file defines the built-in default `gloc` configuration: global settings, backend discovery, client launch templates, and model aliases. The `settings` block tunes probing and pull behavior, `backends` lists local LLM servers to probe in priority order, `clients` maps supported CLIs (`claude` and `codex`) to their binaries, environment variables, model flags, and defaults, and `aliases` provides shorthand model names that resolve before execution.
 [crates/gloc/config.yaml:11-17]
 [crates/gloc/config.yaml:12]
 [crates/gloc/config.yaml:13]

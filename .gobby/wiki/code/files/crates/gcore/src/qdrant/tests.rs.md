@@ -30,7 +30,7 @@ Module: [[code/modules/crates/gcore/src/qdrant|crates/gcore/src/qdrant]]
 
 ## Purpose
 
-`crates/gcore/src/qdrant/tests.rs` exposes 15 indexed API symbols.
+Test coverage for the Qdrant integration layer, exercising the helper wrappers and request/response types used by search and upsert flows. The tests verify that payloads stay opaque, configuration-based degradation returns the right service state, CLI search dispatch uses the expected HTTP contract, search composition and batch upsert behavior work correctly, Qdrant errors are mapped to typed failures, collection schema validation rejects unsupported vectors, and collection lifecycle/count operations read and delete points through the mocked HTTP API.
 [crates/gcore/src/qdrant/tests.rs:12-30]
 [crates/gcore/src/qdrant/tests.rs:33-59]
 [crates/gcore/src/qdrant/tests.rs:62-99]

@@ -46,7 +46,7 @@ Module: [[code/modules/crates/gcode/src/config|crates/gcode/src/config]]
 
 ## Purpose
 
-`crates/gcode/src/config/context.rs` exposes 42 indexed API symbols.
+This file manages configuration resolution for gcode, orchestrating the reading and resolution of settings from bootstrap.yaml, PostgreSQL, and service configuration stores while expanding environment variables and secret references. It defines configuration structures for FalkorDB connections, Qdrant, embeddings, and code vector indexing, along with ServiceConfigSelection to enable/disable specific service configurations. The core Context class provides methods to resolve full configurations with optional service selection via resolve_with_services(). Supporting functions handle project identity resolution from filesystem markers, parent project hierarchies, and configuration stores, with detect_project_root variants discovering project boundaries through manifest files. Utility functions normalize project IDs, validate parent code indices, and resolve projects by name, working together to establish execution contexts for isolated or non-isolated project scopes. Error handling through CodeVectorConfigError ensures configuration issues surface clearly during resolution.
 [crates/gcode/src/config/context.rs:26-31]
 [crates/gcode/src/config/context.rs:34]
 [crates/gcode/src/config/context.rs:37]

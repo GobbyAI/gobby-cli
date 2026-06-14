@@ -6,8 +6,6 @@ provenance:
   ranges:
   - 8-15
   - 17-39
-  - 18-27
-  - 29-38
   - 41-71
   - 73-79
   - 81-134
@@ -22,9 +20,6 @@ provenance:
   ranges:
   - 9-18
   - 20-41
-  - 21-32
-  - 34-36
-  - 38-40
   - 44-49
   - 52-58
   - 61-66
@@ -32,15 +27,10 @@ provenance:
   - 75-77
   - '79'
   - 81-98
-  - 82-97
   - 100-104
   - 106-109
   - 111-118
-  - 112-117
   - 120-148
-  - 121-124
-  - 126-142
-  - 144-147
   - 150-156
   - 158-190
   - 192-271
@@ -58,10 +48,8 @@ provenance:
   ranges:
   - 4-9
   - 11-20
-  - 12-19
   - 23-26
   - 28-35
-  - 29-34
   - 38-41
   - 44-48
   - 51-54
@@ -71,7 +59,6 @@ provenance:
   - 169-279
   - 281-283
   - 286-337
-  - 290-292
   - 340-344
   - 347-352
   - 355-358
@@ -88,18 +75,7 @@ provenance:
   ranges:
   - 53-55
   - 57-115
-  - 58-60
-  - 62-64
-  - 66-75
-  - 77-85
-  - 87-98
-  - 100-102
-  - 104-106
-  - 108-110
-  - 112-114
   - 117-128
-  - 118-120
-  - 122-127
   - 130-132
   - 134-136
   - 138-140
@@ -110,10 +86,7 @@ provenance:
   ranges:
   - 5-7
   - 9-35
-  - 10-18
-  - 20-34
   - 37-41
-  - 38-40
   - 43-46
   - 49-74
   - 77-89
@@ -138,12 +111,8 @@ provenance:
   - 655-687
   - 690-692
   - 694-703
-  - 695-702
   - 706-709
   - 711-729
-  - 712-716
-  - 718-722
-  - 724-728
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -155,22 +124,11 @@ Parent: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Overview
 
-The `provisioning` module manages standalone deployment setup for gcore, orchestrating configuration, Docker services, and database hub resolution.
+The provisioning module owns standalone local-service setup for gcore: it bundles Docker service templates and default connection settings, manages `gcore.yaml`, and exposes paths for config, services, and compose assets. Its root module defines the service filenames, default PostgreSQL, FalkorDB, Qdrant, and embedding constants, embeds the compose and PostgreSQL asset templates, and centers configuration around `StandaloneConfig`, a dotted-key string map used for reading, writing, resolving, and mutating persisted bootstrap values. This matches the module comment that runtime callers copy bundled assets into `~/.gobby/services`, start daemon-equivalent profiles, and persist daemon-style bootstrap keys in `gcore.yaml`   .
 
-`mod.rs` defines `StandaloneConfig`, a YAML-backed configuration store supporting nested/dotted keys, service key resolution, and read/write persistence, along with path helpers (`gcore_config_path`, `services_dir`, `compose_file_path`) and nested-YAML insertion utilities.
+The main flows split between bootstrap generation, Docker provisioning, and hub selection. Bootstrap code builds a standalone config from database, service, compose-file, and optional embedding inputs, with preset embedding providers for LM Studio and Ollama and YAML flattening helpers for converting nested config into dotted-path values [crates/gcore/src/provisioning/bootstrap.rs:8-15] [crates/gcore/src/provisioning/bootstrap.rs:17-39] [crates/gcore/src/provisioning/bootstrap.rs:41-71]. Docker provisioning starts from `DockerServiceOptions`, whose defaults derive local ports, hosts, passwords, and URLs, then prepares service assets, constructs a compose command through the `CommandRunner` abstraction, starts containers, and reports assets and health-check outcomes  . Hub provisioning coordinates those pieces by collecting candidate database URLs, probing reachable PostgreSQL identity when possible, and invoking Docker provisioning only when no verified hub can be reused  .
 
-`bootstrap.rs` provides `EmbeddingBootstrap` (Ollama/LM Studio presets) and `write_standalone_bootstrap`, plus YAML flattening helpers (`flatten_yaml_value`, `scalar_to_string`, `yaml_path`) used to translate configuration trees into flat, path-qualified keys with diagnostic error paths.
-
-`docker.rs` drives container provisioning via `provision_docker_services(_with)`, preparing service assets (including pgsearch manifests and architecture detection), generating `docker compose up` command specs, and running them through the `CommandRunner` abstraction (`RealCommandRunner`). Health is verified through the `DockerHealthChecker` trait and `TcpDockerHealthChecker`, which waits on Postgres, Qdrant, and FalkorDB endpoints; results are captured in `DockerProvisioningReport`/`ServiceAssetReport`.
-
-`hub.rs` handles database hub identity and reachability. `ensure_hub(_with/_with_identity)` resolves candidate database URLs from gcore config, bootstrap files, and environment overrides, probes Postgres hub identity, detects conflicts between recorded and reachable hubs, and avoids redundant provisioning while preserving recorded hubs under insufficient privilege or unknown identity.
-
-`tests.rs` exercises YAML key handling, standalone API-key writing, compose-template parity, full Docker provisioning flows, and hub resolution scenarios (reuse, divergence, conflicts, privilege), using `RecordingRunner`/`RecordingHealth` fakes and an `EnvGuard` for environment isolation.
-[crates/gcore/src/provisioning/bootstrap.rs:8-15]
-[crates/gcore/src/provisioning/docker.rs:9-18]
-[crates/gcore/src/provisioning/hub.rs:4-9]
-[crates/gcore/src/provisioning/mod.rs:53-55]
-[crates/gcore/src/provisioning/tests.rs:5-7]
+The tests document how the files collaborate: `EnvGuard` serializes and clears the relevant Gobby environment variables, `write_services_stack` fabricates a services directory and compose file, and the config tests verify flat and nested YAML keys both resolve to dotted `StandaloneConfig` entries  . Later tests, per the supplied summaries, cover serialization edge cases, embedding API key persistence, compose-template lookup, Docker asset preparation with mocked command and health runners, and hub behavior for reuse, provisioning, conflict reporting, and insufficient identity privilege.
 
 ## Call Diagram
 
@@ -227,31 +185,31 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gcore/src/provisioning/bootstrap.rs|crates/gcore/src/provisioning/bootstrap.rs]] - `crates/gcore/src/provisioning/bootstrap.rs` exposes 14 indexed API symbols.
+- [[code/files/crates/gcore/src/provisioning/bootstrap.rs|crates/gcore/src/provisioning/bootstrap.rs]] - This file builds standalone provisioning bootstrap configuration for a local deployment and provides YAML-flattening helpers used to turn nested config and validation structures into dotted-path key/value data. `EmbeddingBootstrap` captures embedding-provider settings with preset constructors for LM Studio and Ollama, `write_standalone_bootstrap` assembles a `StandaloneConfig` from database, service, compose-file, and optional embedding inputs, and the remaining helpers recursively flatten YAML values and errors while preserving paths and limiting recursion depth.
 [crates/gcore/src/provisioning/bootstrap.rs:8-15]
 [crates/gcore/src/provisioning/bootstrap.rs:17-39]
 [crates/gcore/src/provisioning/bootstrap.rs:18-27]
 [crates/gcore/src/provisioning/bootstrap.rs:29-38]
 [crates/gcore/src/provisioning/bootstrap.rs:41-71]
-- [[code/files/crates/gcore/src/provisioning/docker.rs|crates/gcore/src/provisioning/docker.rs]] - `crates/gcore/src/provisioning/docker.rs` exposes 34 indexed API symbols.
+- [[code/files/crates/gcore/src/provisioning/docker.rs|crates/gcore/src/provisioning/docker.rs]] - This file provisions a Docker-based local service stack for Gobby and provides the supporting utilities around that flow. It defines `DockerServiceOptions` to hold ports, hosts, passwords, and the home directory used to build service URLs, plus report types that record created asset paths and provisioning results. It also defines a small command-execution abstraction (`CommandSpec`, `CommandOutput`, `CommandRunner`, `RealCommandRunner`) so the provisioning logic can run `docker-compose` through a concrete process runner. A `DockerHealthChecker` implementation, `TcpDockerHealthChecker`, waits for PostgreSQL and FalkorDB via TCP and Qdrant via its `/healthz` endpoint with retry logic. The main orchestration functions create the service assets, build the `docker-compose up` command, start the containers, wait for health checks, and return a `DockerProvisioningReport`. Helper functions handle pg_search manifest selection, Debian architecture normalization, environment-file updates, retry loops, and Unix executable permissions.
 [crates/gcore/src/provisioning/docker.rs:9-18]
 [crates/gcore/src/provisioning/docker.rs:20-41]
 [crates/gcore/src/provisioning/docker.rs:21-32]
 [crates/gcore/src/provisioning/docker.rs:34-36]
 [crates/gcore/src/provisioning/docker.rs:38-40]
-- [[code/files/crates/gcore/src/provisioning/hub.rs|crates/gcore/src/provisioning/hub.rs]] - `crates/gcore/src/provisioning/hub.rs` exposes 28 indexed API symbols.
+- [[code/files/crates/gcore/src/provisioning/hub.rs|crates/gcore/src/provisioning/hub.rs]] - Provides hub provisioning and database-URL resolution for gcore. It defines the option and result types used to identify a hub, collects candidate PostgreSQL DSNs from environment, config, and bootstrap sources, probes an existing database’s identity when possible, and falls back to Docker service provisioning when no verified hub is reachable.
 [crates/gcore/src/provisioning/hub.rs:4-9]
 [crates/gcore/src/provisioning/hub.rs:11-20]
 [crates/gcore/src/provisioning/hub.rs:12-19]
 [crates/gcore/src/provisioning/hub.rs:23-26]
 [crates/gcore/src/provisioning/hub.rs:28-35]
-- [[code/files/crates/gcore/src/provisioning/mod.rs|crates/gcore/src/provisioning/mod.rs]] - `crates/gcore/src/provisioning/mod.rs` exposes 20 indexed API symbols.
+- [[code/files/crates/gcore/src/provisioning/mod.rs|crates/gcore/src/provisioning/mod.rs]] - Provides standalone bootstrap and Docker service provisioning for gcore, bundling service templates/assets and the default connection settings needed to recreate the daemon’s local service stack. `StandaloneConfig` wraps a string map for loading, saving, and mutating `gcore.yaml`, resolving embedded/env-backed values, while helper functions compute the config/services/compose paths, derive the default database URL, and insert nested YAML values into generated config.
 [crates/gcore/src/provisioning/mod.rs:53-55]
 [crates/gcore/src/provisioning/mod.rs:57-115]
 [crates/gcore/src/provisioning/mod.rs:58-60]
 [crates/gcore/src/provisioning/mod.rs:62-64]
 [crates/gcore/src/provisioning/mod.rs:66-75]
-- [[code/files/crates/gcore/src/provisioning/tests.rs|crates/gcore/src/provisioning/tests.rs]] - `crates/gcore/src/provisioning/tests.rs` exposes 36 indexed API symbols.
+- [[code/files/crates/gcore/src/provisioning/tests.rs|crates/gcore/src/provisioning/tests.rs]] - This file is a test module for `gcore` provisioning and standalone config behavior. It defines `EnvGuard` to serialize and clear a fixed set of Gobby environment variables around tests, plus a small `write_services_stack` helper for setting up a fake services directory and compose file. The tests then exercise YAML config parsing and serialization, including reading flat and nested keys, handling dotted mapping prefixes, rejecting invalid nesting or scalar collisions, and stringifying tagged scalar/sequence values. The later tests cover provisioning flow: resolving service keys and API keys from standalone config, writing embeddings API keys, locating the compose template, preparing assets and running compose/health checks, and ensuring hub selection logic correctly reuses, provisions, or reports conflicts based on recorded hubs, reachable environments, and identity privilege.
 [crates/gcore/src/provisioning/tests.rs:5-7]
 [crates/gcore/src/provisioning/tests.rs:9-35]
 [crates/gcore/src/provisioning/tests.rs:10-18]

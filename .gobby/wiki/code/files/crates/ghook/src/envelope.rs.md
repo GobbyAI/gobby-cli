@@ -6,7 +6,6 @@ provenance:
   ranges:
   - 24-32
   - 34-52
-  - 35-51
   - 59-70
   - 73-84
   - 87-109
@@ -24,7 +23,7 @@ Module: [[code/modules/crates/ghook/src|crates/ghook/src]]
 
 ## Purpose
 
-`crates/ghook/src/envelope.rs` exposes 9 indexed API symbols.
+Defines the v1 inbox webhook envelope that `ghook` enqueues and the daemon later replays, with a frozen `SCHEMA_VERSION` and a serialized `Envelope` struct carrying enqueue time, critical flag, hook type, raw `input_data`, source, and ordered headers. `Envelope::new` fills in the schema version and current UTC RFC3339 timestamp, while the test helpers build sample envelopes and verify JSON serialization and Draft 7 schema conformance, including the behavior of present and absent headers.
 [crates/ghook/src/envelope.rs:24-32]
 [crates/ghook/src/envelope.rs:34-52]
 [crates/ghook/src/envelope.rs:35-51]

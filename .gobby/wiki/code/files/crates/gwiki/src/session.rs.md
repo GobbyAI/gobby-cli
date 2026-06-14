@@ -11,25 +11,25 @@ provenance:
   - 68-76
   - 79-87
   - 89-95
-  - 97-160
-  - 163-170
-  - 173-183
-  - 186-198
-  - 200-317
-  - 319-338
-  - 340-349
-  - 351-356
-  - 358-365
-  - 367-369
-  - 371-387
-  - 394-427
-  - 430-441
-  - 444-456
-  - 459-467
-  - 470-478
-  - 481-506
-  - 509-530
-  - 533-554
+  - 97-156
+  - 159-166
+  - 169-179
+  - 182-194
+  - 196-313
+  - 315-334
+  - 336-345
+  - 347-352
+  - 354-361
+  - 363-365
+  - 367-383
+  - 390-423
+  - 426-437
+  - 440-452
+  - 455-463
+  - 466-474
+  - 477-502
+  - 505-526
+  - 529-550
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -41,7 +41,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/session.rs` exposes 45 indexed API symbols.
+`session.rs` defines the core serialized state for a research wiki session: scopes, daemon dispatch metadata, code citations, compile state, and the session record itself. It also provides constructors, scope/root normalization helpers, checkpoint save/load logic, and validation so persisted sessions and citations stay consistent and reject invalid or legacy paths.
 [crates/gwiki/src/session.rs:15-18]
 [crates/gwiki/src/session.rs:20-46]
 [crates/gwiki/src/session.rs:21-26]
@@ -92,9 +92,9 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 - `ResearchCodeCitation.try_from` (method) component `ResearchCodeCitation.try_from [method]` (`049f2fce-ca39-5af4-9394-a9ba74703653`) lines 92-94 [crates/gwiki/src/session.rs:92-94]
   - Signature: `fn try_from(value: ResearchCodeCitationUnchecked) -> Result<Self, Self::Error> {`
   - Purpose: Indexed method `ResearchCodeCitation.try_from` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:92-94]
-- `ResearchCodeCitation` (class) component `ResearchCodeCitation [class]` (`65efdf7d-27ab-5197-8a87-afeba0172f4c`) lines 97-160 [crates/gwiki/src/session.rs:97-160]
+- `ResearchCodeCitation` (class) component `ResearchCodeCitation [class]` (`65efdf7d-27ab-5197-8a87-afeba0172f4c`) lines 97-156 [crates/gwiki/src/session.rs:97-156]
   - Signature: `impl ResearchCodeCitation {`
-  - Purpose: Indexed class `ResearchCodeCitation` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:97-160]
+  - Purpose: Indexed class `ResearchCodeCitation` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:97-156]
 - `ResearchCodeCitation.new` (method) component `ResearchCodeCitation.new [method]` (`d9897627-5d63-57a1-905b-41701b00bc3f`) lines 98-110 [crates/gwiki/src/session.rs:98-110]
   - Signature: `pub fn new(`
   - Purpose: Indexed method `ResearchCodeCitation.new` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:98-110]
@@ -113,76 +113,73 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 - `ResearchCodeCitation.provenance` (method) component `ResearchCodeCitation.provenance [method]` (`086fdf1a-8fbe-5dac-ba71-e8d6475573f7`) lines 153-155 [crates/gwiki/src/session.rs:153-155]
   - Signature: `pub fn provenance(&self) -> &[String] {`
   - Purpose: Indexed method `ResearchCodeCitation.provenance` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:153-155]
-- `ResearchCodeCitation.provenance_mut` (method) component `ResearchCodeCitation.provenance_mut [method]` (`d4c88106-7471-5aa5-b2b7-ee4392274b8a`) lines 157-159 [crates/gwiki/src/session.rs:157-159]
-  - Signature: `pub(crate) fn provenance_mut(&mut self) -> &mut Vec<String> {`
-  - Purpose: Indexed method `ResearchCodeCitation.provenance_mut` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:157-159]
-- `AcceptedResearchNote` (class) component `AcceptedResearchNote [class]` (`c930b788-7c22-58aa-b133-8372aff6a016`) lines 163-170 [crates/gwiki/src/session.rs:163-170]
+- `AcceptedResearchNote` (class) component `AcceptedResearchNote [class]` (`eeee9703-20ec-5cf2-bad7-38e27c167591`) lines 159-166 [crates/gwiki/src/session.rs:159-166]
   - Signature: `pub struct AcceptedResearchNote {`
-  - Purpose: Indexed class `AcceptedResearchNote` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:163-170]
-- `CompileState` (class) component `CompileState [class]` (`56415b0e-6f1c-5d8a-9893-43aa6480c021`) lines 173-183 [crates/gwiki/src/session.rs:173-183]
+  - Purpose: Indexed class `AcceptedResearchNote` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:159-166]
+- `CompileState` (class) component `CompileState [class]` (`f8374798-95ad-5e36-b227-f563bc53b4e3`) lines 169-179 [crates/gwiki/src/session.rs:169-179]
   - Signature: `pub struct CompileState {`
-  - Purpose: Indexed class `CompileState` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:173-183]
-- `ResearchSession` (class) component `ResearchSession [class]` (`e27de505-c6f0-5680-8c3f-96d75cf86826`) lines 186-198 [crates/gwiki/src/session.rs:186-198]
+  - Purpose: Indexed class `CompileState` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:169-179]
+- `ResearchSession` (class) component `ResearchSession [class]` (`d50bae3a-1c79-575e-b4e6-86dbf4f56ae4`) lines 182-194 [crates/gwiki/src/session.rs:182-194]
   - Signature: `pub struct ResearchSession {`
-  - Purpose: Indexed class `ResearchSession` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:186-198]
-- `ResearchSession` (class) component `ResearchSession [class]` (`574300e3-bf43-5b06-9bd7-480009899e8c`) lines 200-317 [crates/gwiki/src/session.rs:200-317]
+  - Purpose: Indexed class `ResearchSession` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:182-194]
+- `ResearchSession` (class) component `ResearchSession [class]` (`3d7bff01-c074-5cb8-8a5e-96c90a1334ad`) lines 196-313 [crates/gwiki/src/session.rs:196-313]
   - Signature: `impl ResearchSession {`
-  - Purpose: Indexed class `ResearchSession` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:200-317]
-- `ResearchSession.new` (method) component `ResearchSession.new [method]` (`e1fc863b-ec9b-5c0a-ae6b-02f9a3e262e6`) lines 201-228 [crates/gwiki/src/session.rs:201-228]
+  - Purpose: Indexed class `ResearchSession` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:196-313]
+- `ResearchSession.new` (method) component `ResearchSession.new [method]` (`8a539915-4364-5cc3-9c42-f8698563cc04`) lines 197-224 [crates/gwiki/src/session.rs:197-224]
   - Signature: `pub fn new(`
-  - Purpose: Indexed method `ResearchSession.new` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:201-228]
-- `ResearchSession.checkpoint_path` (method) component `ResearchSession.checkpoint_path [method]` (`53d9d661-bce3-5ae1-88e6-6e69f9071b61`) lines 230-232 [crates/gwiki/src/session.rs:230-232]
+  - Purpose: Indexed method `ResearchSession.new` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:197-224]
+- `ResearchSession.checkpoint_path` (method) component `ResearchSession.checkpoint_path [method]` (`abbad0d5-a7da-53d6-b16c-044a1ca3ba0f`) lines 226-228 [crates/gwiki/src/session.rs:226-228]
   - Signature: `pub fn checkpoint_path(vault_root: &Path) -> PathBuf {`
-  - Purpose: Indexed method `ResearchSession.checkpoint_path` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:230-232]
-- `ResearchSession.save_checkpoint` (method) component `ResearchSession.save_checkpoint [method]` (`35e9aaaa-f348-57c2-bf51-f58f37cbe958`) lines 234-293 [crates/gwiki/src/session.rs:234-293]
+  - Purpose: Indexed method `ResearchSession.checkpoint_path` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:226-228]
+- `ResearchSession.save_checkpoint` (method) component `ResearchSession.save_checkpoint [method]` (`b9196d71-81b3-5493-af62-96df968cc8a0`) lines 230-289 [crates/gwiki/src/session.rs:230-289]
   - Signature: `pub fn save_checkpoint(&self) -> Result<(), WikiError> {`
-  - Purpose: Indexed method `ResearchSession.save_checkpoint` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:234-293]
-- `ResearchSession.load_checkpoint` (method) component `ResearchSession.load_checkpoint [method]` (`6bd5e793-532a-5651-9527-0a8d65729887`) lines 295-311 [crates/gwiki/src/session.rs:295-311]
+  - Purpose: Indexed method `ResearchSession.save_checkpoint` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:230-289]
+- `ResearchSession.load_checkpoint` (method) component `ResearchSession.load_checkpoint [method]` (`af9b87b7-98ac-58d7-8994-2357193c2b13`) lines 291-307 [crates/gwiki/src/session.rs:291-307]
   - Signature: `pub fn load_checkpoint(vault_root: &Path) -> Result<Self, WikiError> {`
-  - Purpose: Indexed method `ResearchSession.load_checkpoint` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:295-311]
-- `ResearchSession.record_compile_state` (method) component `ResearchSession.record_compile_state [method]` (`0b55ff06-a73f-5ddd-9cb2-171e4e1e1cd1`) lines 313-316 [crates/gwiki/src/session.rs:313-316]
+  - Purpose: Indexed method `ResearchSession.load_checkpoint` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:291-307]
+- `ResearchSession.record_compile_state` (method) component `ResearchSession.record_compile_state [method]` (`155c09a6-abca-5a3b-921b-1b30b0e9b394`) lines 309-312 [crates/gwiki/src/session.rs:309-312]
   - Signature: `pub fn record_compile_state(&mut self, state: CompileState) -> Result<(), WikiError> {`
-  - Purpose: Indexed method `ResearchSession.record_compile_state` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:313-316]
-- `validate_checkpoint_scope_root` (function) component `validate_checkpoint_scope_root [function]` (`3e4d94a5-a3ca-5cc2-9a22-3122bf9ebb76`) lines 319-338 [crates/gwiki/src/session.rs:319-338]
+  - Purpose: Indexed method `ResearchSession.record_compile_state` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:309-312]
+- `validate_checkpoint_scope_root` (function) component `validate_checkpoint_scope_root [function]` (`89484546-b51f-5390-a6c3-2a9f40b9dbca`) lines 315-334 [crates/gwiki/src/session.rs:315-334]
   - Signature: `fn validate_checkpoint_scope_root(`
-  - Purpose: Indexed function `validate_checkpoint_scope_root` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:319-338]
-- `comparable_path` (function) component `comparable_path [function]` (`7bb86727-544a-54f1-a056-ae25ebe58ac4`) lines 340-349 [crates/gwiki/src/session.rs:340-349]
+  - Purpose: Indexed function `validate_checkpoint_scope_root` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:315-334]
+- `comparable_path` (function) component `comparable_path [function]` (`98fc7de2-941f-508d-ab65-681426c09c1e`) lines 336-345 [crates/gwiki/src/session.rs:336-345]
   - Signature: `fn comparable_path(path: &Path, relative_base: Option<&Path>) -> PathBuf {`
-  - Purpose: Indexed function `comparable_path` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:340-349]
-- `checkpoint_vault_root` (function) component `checkpoint_vault_root [function]` (`f88d6f21-126b-5622-886f-0cca5f191ba8`) lines 351-356 [crates/gwiki/src/session.rs:351-356]
+  - Purpose: Indexed function `comparable_path` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:336-345]
+- `checkpoint_vault_root` (function) component `checkpoint_vault_root [function]` (`2ad606ed-735e-515b-8efa-83c466994295`) lines 347-352 [crates/gwiki/src/session.rs:347-352]
   - Signature: `fn checkpoint_vault_root(checkpoint_path: &Path) -> Option<PathBuf> {`
-  - Purpose: Indexed function `checkpoint_vault_root` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:351-356]
-- `new_session_id` (function) component `new_session_id [function]` (`4901e59b-9281-5885-a42e-db9c85d382ab`) lines 358-365 [crates/gwiki/src/session.rs:358-365]
+  - Purpose: Indexed function `checkpoint_vault_root` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:347-352]
+- `new_session_id` (function) component `new_session_id [function]` (`8fc3a09f-6cfd-531f-bed9-f6f70ee8ac1a`) lines 354-361 [crates/gwiki/src/session.rs:354-361]
   - Signature: `fn new_session_id() -> Result<String, WikiError> {`
-  - Purpose: Indexed function `new_session_id` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:358-365]
-- `unix_timestamp_ms` (function) component `unix_timestamp_ms [function]` (`ff28fc70-8f3a-5980-85cf-e55aba3af94a`) lines 367-369 [crates/gwiki/src/session.rs:367-369]
+  - Purpose: Indexed function `new_session_id` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:354-361]
+- `unix_timestamp_ms` (function) component `unix_timestamp_ms [function]` (`92bde559-866b-562d-a39b-adc4b4df8c04`) lines 363-365 [crates/gwiki/src/session.rs:363-365]
   - Signature: `fn unix_timestamp_ms() -> Result<u64, WikiError> {`
-  - Purpose: Indexed function `unix_timestamp_ms` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:367-369]
-- `research_prompt` (function) component `research_prompt [function]` (`8b7c9ffc-31c6-5e66-a877-ed54e38f3e10`) lines 371-387 [crates/gwiki/src/session.rs:371-387]
+  - Purpose: Indexed function `unix_timestamp_ms` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:363-365]
+- `research_prompt` (function) component `research_prompt [function]` (`a8cb78dd-fc49-52a1-ae37-18ebb8b72b8b`) lines 367-383 [crates/gwiki/src/session.rs:367-383]
   - Signature: `pub(crate) fn research_prompt(`
-  - Purpose: Indexed function `research_prompt` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:371-387]
-- `compile_state_is_resumable` (function) component `compile_state_is_resumable [function]` (`4be29e74-4861-5f58-b21a-875c5772a6b4`) lines 394-427 [crates/gwiki/src/session.rs:394-427]
+  - Purpose: Indexed function `research_prompt` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:367-383]
+- `compile_state_is_resumable` (function) component `compile_state_is_resumable [function]` (`36f6d594-e200-5587-a13d-469bc5d0d11f`) lines 390-423 [crates/gwiki/src/session.rs:390-423]
   - Signature: `fn compile_state_is_resumable() {`
-  - Purpose: Indexed function `compile_state_is_resumable` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:394-427]
-- `research_code_citation_rejects_empty_provenance` (function) component `research_code_citation_rejects_empty_provenance [function]` (`e82110fd-44a5-56f3-8b93-6b1f58805a2f`) lines 430-441 [crates/gwiki/src/session.rs:430-441]
+  - Purpose: Indexed function `compile_state_is_resumable` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:390-423]
+- `research_code_citation_rejects_empty_provenance` (function) component `research_code_citation_rejects_empty_provenance [function]` (`17bf2072-3673-5bc2-a482-705ca996fcdf`) lines 426-437 [crates/gwiki/src/session.rs:426-437]
   - Signature: `fn research_code_citation_rejects_empty_provenance() {`
-  - Purpose: Indexed function `research_code_citation_rejects_empty_provenance` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:430-441]
-- `research_code_citation_rejects_parent_path_components` (function) component `research_code_citation_rejects_parent_path_components [function]` (`a183eeb1-da89-5bc8-b30f-2f5637ee164d`) lines 444-456 [crates/gwiki/src/session.rs:444-456]
+  - Purpose: Indexed function `research_code_citation_rejects_empty_provenance` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:426-437]
+- `research_code_citation_rejects_parent_path_components` (function) component `research_code_citation_rejects_parent_path_components [function]` (`3fd0abe0-236a-56b3-9c4a-2b293a2fb97a`) lines 440-452 [crates/gwiki/src/session.rs:440-452]
   - Signature: `fn research_code_citation_rejects_parent_path_components() {`
-  - Purpose: Indexed function `research_code_citation_rejects_parent_path_components` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:444-456]
-- `research_code_citation_deserialization_rejects_empty_provenance` (function) component `research_code_citation_deserialization_rejects_empty_provenance [function]` (`c9ba030c-7ec2-58f0-8dac-e187bce9ffc8`) lines 459-467 [crates/gwiki/src/session.rs:459-467]
+  - Purpose: Indexed function `research_code_citation_rejects_parent_path_components` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:440-452]
+- `research_code_citation_deserialization_rejects_empty_provenance` (function) component `research_code_citation_deserialization_rejects_empty_provenance [function]` (`f034753b-66c4-503a-9751-6f4050fbeb23`) lines 455-463 [crates/gwiki/src/session.rs:455-463]
   - Signature: `fn research_code_citation_deserialization_rejects_empty_provenance() {`
-  - Purpose: Indexed function `research_code_citation_deserialization_rejects_empty_provenance` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:459-467]
-- `research_code_citation_deserialization_rejects_parent_path_components` (function) component `research_code_citation_deserialization_rejects_parent_path_components [function]` (`c0cd4017-b53d-519a-b8ca-6d88f4af7d38`) lines 470-478 [crates/gwiki/src/session.rs:470-478]
+  - Purpose: Indexed function `research_code_citation_deserialization_rejects_empty_provenance` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:455-463]
+- `research_code_citation_deserialization_rejects_parent_path_components` (function) component `research_code_citation_deserialization_rejects_parent_path_components [function]` (`8385f8c9-8fe9-5e70-8038-7c553b67f27e`) lines 466-474 [crates/gwiki/src/session.rs:466-474]
   - Signature: `fn research_code_citation_deserialization_rejects_parent_path_components() {`
-  - Purpose: Indexed function `research_code_citation_deserialization_rejects_parent_path_components` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:470-478]
-- `load_checkpoint_rejects_legacy_project_vault_relative_scope_root` (function) component `load_checkpoint_rejects_legacy_project_vault_relative_scope_root [function]` (`ed8d6cdc-bb3f-5168-9dd9-25a5843b19b6`) lines 481-506 [crates/gwiki/src/session.rs:481-506]
+  - Purpose: Indexed function `research_code_citation_deserialization_rejects_parent_path_components` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:466-474]
+- `load_checkpoint_rejects_legacy_project_vault_relative_scope_root` (function) component `load_checkpoint_rejects_legacy_project_vault_relative_scope_root [function]` (`9f3ec953-1ca8-5218-936f-f692e1bec553`) lines 477-502 [crates/gwiki/src/session.rs:477-502]
   - Signature: `fn load_checkpoint_rejects_legacy_project_vault_relative_scope_root() {`
-  - Purpose: Indexed function `load_checkpoint_rejects_legacy_project_vault_relative_scope_root` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:481-506]
-- `load_checkpoint_rejects_mismatched_scope_root` (function) component `load_checkpoint_rejects_mismatched_scope_root [function]` (`54103125-2c94-5bb2-b752-bd6750a1eb10`) lines 509-530 [crates/gwiki/src/session.rs:509-530]
+  - Purpose: Indexed function `load_checkpoint_rejects_legacy_project_vault_relative_scope_root` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:477-502]
+- `load_checkpoint_rejects_mismatched_scope_root` (function) component `load_checkpoint_rejects_mismatched_scope_root [function]` (`c71d8a0c-ab8b-5557-be7e-12d7156ebb75`) lines 505-526 [crates/gwiki/src/session.rs:505-526]
   - Signature: `fn load_checkpoint_rejects_mismatched_scope_root() {`
-  - Purpose: Indexed function `load_checkpoint_rejects_mismatched_scope_root` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:509-530]
-- `load_checkpoint_normalizes_relative_scope_root_against_checkpoint_vault` (function) component `load_checkpoint_normalizes_relative_scope_root_against_checkpoint_vault [function]` (`f8893375-e233-5462-acb1-e0973093c2d3`) lines 533-554 [crates/gwiki/src/session.rs:533-554]
+  - Purpose: Indexed function `load_checkpoint_rejects_mismatched_scope_root` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:505-526]
+- `load_checkpoint_normalizes_relative_scope_root_against_checkpoint_vault` (function) component `load_checkpoint_normalizes_relative_scope_root_against_checkpoint_vault [function]` (`3bcf2e89-5b28-5a08-9ca8-7f5d3d730d3b`) lines 529-550 [crates/gwiki/src/session.rs:529-550]
   - Signature: `fn load_checkpoint_normalizes_relative_scope_root_against_checkpoint_vault() {`
-  - Purpose: Indexed function `load_checkpoint_normalizes_relative_scope_root_against_checkpoint_vault` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:533-554]
+  - Purpose: Indexed function `load_checkpoint_normalizes_relative_scope_root_against_checkpoint_vault` in `crates/gwiki/src/session.rs`. [crates/gwiki/src/session.rs:529-550]
 

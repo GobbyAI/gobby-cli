@@ -1,7 +1,10 @@
 ---
 title: crates/gcode/src/secrets.rs
 type: code_file
-provenance: []
+provenance:
+- file: crates/gcode/src/secrets.rs
+  ranges:
+  - 1-4
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -13,7 +16,7 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-`crates/gcode/src/secrets.rs` has no indexed API symbols.
+Shared secret-resolution module for the Gobby CLI crates, re-exporting `resolve_config_value` and `resolve_secret` from `gobby_core::secrets`. [crates/gcode/src/secrets.rs:1-4]
 
 ## API Symbols
 

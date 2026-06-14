@@ -11,24 +11,16 @@ provenance:
   ranges:
   - 18-21
   - 23-44
-  - 24-29
-  - 31-36
-  - 38-43
   - 47-52
   - 54-62
-  - 55-61
   - 65-68
   - 70-77
-  - 71-76
   - 79-96
-  - 80-88
-  - 90-95
   - 98-105
   - 108-113
   - 116-122
   - 125-130
   - 132-150
-  - 133-149
   - '152'
   - 154-164
   - 166-176
@@ -41,28 +33,14 @@ provenance:
   ranges:
   - 10-19
   - 21-82
-  - 22-30
-  - 32-43
-  - 45-47
-  - 49-51
-  - 53-71
-  - 73-81
   - 84-88
-  - 85-87
   - 90-109
-  - 91-108
   - 111-113
   - 116-135
   - 137-200
-  - 138-155
-  - 161-177
-  - 179-199
   - 203-214
   - 216-243
-  - 217-230
-  - 232-242
-  - 246-249
-  - 250-262
+  - 246-262
   - 264-290
   - 292-297
   - 299-316
@@ -71,8 +49,7 @@ provenance:
   - 330-339
 - file: crates/gcode/src/graph/code_graph/read.rs
   ranges:
-  - 45-90
-  - 91-93
+  - 45-93
   - 95-97
   - 99-111
   - 113-128
@@ -179,9 +156,6 @@ provenance:
   - 620-654
   - 656-660
   - 662-694
-  - 663-680
-  - 682-686
-  - 688-693
   - 696-702
   - 704-723
   - 725-743
@@ -207,21 +181,11 @@ Parent: [[code/modules/crates/gcode/src/graph|crates/gcode/src/graph]]
 
 ## Overview
 
-The `code_graph` module implements the code-index graph layer over a Neo4j/Cypher-style graph database, handling both reads and writes of code structure (files, symbols, imports, calls, and their relationships).
+The code_graph module owns the code-index graph projection: it writes FalkorDB CodeFile, CodeSymbol, CodeModule, UnresolvedCallee, and ExternalSymbol nodes and edges derived from PostgreSQL index rows, despite the broader rule that Gobby-owned stores are externally managed . Its write side builds and executes Cypher for file nodes, imports, definitions, calls, stale graph deletion, orphan cleanup, and project clearing, with sync tokens and provenance metadata keeping projections scoped and current  . Connection helpers gate access to the core graph client, while tests cover strict read guards, degraded public reads, scoped deletion, provenance, import handling, and graph cleanup behavior.
 
-- **connection.rs**: Graph read-access guards, requiring or optionally attaching the core graph service for read operations.
-- **lifecycle.rs**: Defines graph lifecycle actions (CLI commands, endpoint paths, success prefixes), request/timeout configuration (with env-based overrides), and orchestrates daemon-driven lifecycle operations including URL building, HTTP error formatting, and payload parsing.
-- **payload.rs**: Graph payload data model—`GraphPayload`, `GraphNode`, `GraphLink`, and `AnalyticsGraph`—with constructors from result rows, node caching, blast-radius targets, and projection/edge metadata extraction.
-- **read.rs**: Read-side query builders and execution for callers/callees/usages (single and batched), imports, blast radius, project overviews, file graphs, and symbol neighbors, with limit/offset clamping and row deduplication.
-- **write.rs**: `CodeGraph` write API for syncing file graphs—ensuring file nodes and project indexes, adding imports/definitions/calls (symbol, external, unresolved), and project- and path-scoped deletion/cleanup operations using sync tokens and typed mutation queries.
-- **tests.rs**: Integration tests validating edge provenance, read payload shape, read-guard strictness, blast-radius traversal/dedup, projection metadata sourcing, and project-scoped deletion/cleanup behavior.
+The read and payload layers turn stored graph data back into query results and API payloads. read.rs defines query builders and public graph reads for callers, usages, imports, project overviews, file graphs, symbol neighbors, and blast radius analysis, using optional graph access and row conversion helpers from payload.rs  . payload.rs provides GraphPayload as the shared node/link container, deduplicating nodes through an internal cache and optionally marking a center node for focused graph views  [crates/gcode/src/graph/code_graph/payload.rs:21-43]. It also converts graph pieces into analytics nodes and edges for dependency analysis [crates/gcode/src/graph/code_graph/payload.rs:45-66].
 
-Together these files provide query construction, payload modeling, and lifecycle management for maintaining and querying the code-index graph.
-[crates/gcode/src/graph/code_graph/connection.rs:7-12]
-[crates/gcode/src/graph/code_graph/lifecycle.rs:18-21]
-[crates/gcode/src/graph/code_graph/payload.rs:10-19]
-[crates/gcode/src/graph/code_graph/read.rs:45-90]
-[crates/gcode/src/graph/code_graph/tests.rs:7-21]
+Lifecycle support wraps graph-wide clear and rebuild operations as daemon-backed requests. GraphLifecycleAction maps each operation to its CLI command, REST endpoint, and success prefix, while GraphLifecycleRequest carries project, daemon URL, and timeout configuration from Context  . GraphLifecycleTimeouts supplies defaults and environment overrides for clear and rebuild durations, letting lifecycle commands use short clear windows and longer rebuild windows without hard-coding call-site behavior .
 
 ## Call Diagram
 
@@ -274,35 +238,53 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gcode/src/graph/code_graph/connection.rs|crates/gcode/src/graph/code_graph/connection.rs]] - `crates/gcode/src/graph/code_graph/connection.rs` exposes 3 indexed API symbols.
+- [[code/files/crates/gcode/src/graph/code_graph/connection.rs|crates/gcode/src/graph/code_graph/connection.rs]] - This file provides utilities for managing FalkorDB graph client connections with configurable error handling semantics. It contains three functions that work together to validate and access graph clients from a Context object.
+
+`require_graph_reads` serves as a guard that fails early if FalkorDB is not configured. `with_required_core_graph` wraps graph operations that must succeed, executing a provided closure with a graph client and explicitly mapping service state outcomes (unavailable, unreachable, query failures) to domain-specific GraphReadError types. `with_optional_core_graph` provides a fallback pattern for operations that can gracefully degrade—it either executes the closure on an available client or returns a default value when the service is unconfigured or unreachable, only failing on actual query execution errors.
+
+Together, these functions allow callers to express whether graph reads are mandatory or optional, with the appropriate error behavior for each case.
 [crates/gcode/src/graph/code_graph/connection.rs:7-12]
 [crates/gcode/src/graph/code_graph/connection.rs:14-40]
 [crates/gcode/src/graph/code_graph/connection.rs:42-68]
-- [[code/files/crates/gcode/src/graph/code_graph/lifecycle.rs|crates/gcode/src/graph/code_graph/lifecycle.rs]] - `crates/gcode/src/graph/code_graph/lifecycle.rs` exposes 28 indexed API symbols.
+- [[code/files/crates/gcode/src/graph/code_graph/lifecycle.rs|crates/gcode/src/graph/code_graph/lifecycle.rs]] - This file manages graph lifecycle operations (clear and rebuild) for a code-indexing system. GraphLifecycleAction is an enum that maps two operations to their CLI commands, REST API endpoints, and success messages. GraphLifecycleRequest encapsulates the project context and timeout configuration needed for lifecycle operations, constructible from environment variables via from_context. GraphLifecycleTimeouts provides configurable timeout durations loaded from environment variables with sensible defaults, and maps actions to their corresponding timeout values. The file includes helper functions that handle HTTP communication with a Gobby daemon: require_daemon_url validates daemon configuration, build_lifecycle_url constructs request URLs, format_http_error and parse_success_payload handle responses, extract_summary_text finds summary information in JSON payloads, and run_lifecycle_action orchestrates the full HTTP POST workflow. GraphReadRequest and GraphReadError support querying graph data and reporting read failures respectively. Together these components enable remote execution of graph lifecycle operations with configurable timeouts and detailed error reporting.
 [crates/gcode/src/graph/code_graph/lifecycle.rs:18-21]
 [crates/gcode/src/graph/code_graph/lifecycle.rs:23-44]
 [crates/gcode/src/graph/code_graph/lifecycle.rs:24-29]
 [crates/gcode/src/graph/code_graph/lifecycle.rs:31-36]
 [crates/gcode/src/graph/code_graph/lifecycle.rs:38-43]
-- [[code/files/crates/gcode/src/graph/code_graph/payload.rs|crates/gcode/src/graph/code_graph/payload.rs]] - `crates/gcode/src/graph/code_graph/payload.rs` exposes 30 indexed API symbols.
+- [[code/files/crates/gcode/src/graph/code_graph/payload.rs|crates/gcode/src/graph/code_graph/payload.rs]] - This file defines the core data structures and utilities for building and managing code dependency graphs with analytics integration. `GraphPayload` is the main container holding collections of `GraphNode` (vertices) and `GraphLink` (edges), with an optional center reference and an internal cache of node IDs to prevent duplicates. Its methods manage node insertion, graph construction, and node caching. `GraphNode` and `GraphLink` encapsulate vertex and edge data respectively, with factory methods to construct instances from database rows. The `AnalyticsGraph` struct converts the internal graph representation into `gobby_core`'s analytics framework for dependency analysis. Supporting utility functions extract and parse row data into node/link/edge metadata components, calculate node weights, and populate graph structures. This enables the codebase to represent code dependencies as queryable graphs suitable for impact analysis.
 [crates/gcode/src/graph/code_graph/payload.rs:10-19]
 [crates/gcode/src/graph/code_graph/payload.rs:21-82]
 [crates/gcode/src/graph/code_graph/payload.rs:22-30]
 [crates/gcode/src/graph/code_graph/payload.rs:32-43]
 [crates/gcode/src/graph/code_graph/payload.rs:45-47]
-- [[code/files/crates/gcode/src/graph/code_graph/read.rs|crates/gcode/src/graph/code_graph/read.rs]] - `crates/gcode/src/graph/code_graph/read.rs` exposes 43 indexed API symbols.
+- [[code/files/crates/gcode/src/graph/code_graph/read.rs|crates/gcode/src/graph/code_graph/read.rs]] - This file provides a query layer for analyzing code call graphs stored in Neo4j. It contains three main categories of functions working together:
+
+**Query builders** generate parameterized Cypher queries for different analysis patterns: single-symbol queries (find callers, usages, neighbors), batch queries (multiple symbols at once), file-level analysis (symbols and calls within files), import graph navigation, and transitive dependency analysis (blast radius queries). These builders use constants like CALL_TARGET_PREDICATE and NEIGHBOR_TYPE_CASE to handle multiple Neo4j node types (CodeSymbol, UnresolvedCallee, ExternalSymbol).
+
+**Execution wrappers** are the public API that run these queries against an optional core graph database using `with_optional_core_graph`, executing operations like `count_callers`, `find_usages`, and `blast_radius`. They map query results to GraphResult objects via `row_to_graph_result`.
+
+**Payload builders** (`project_overview_graph`, `file_graph`, `symbol_neighbors`, `blast_radius_graph`) transform raw query rows into structured GraphPayload objects containing nodes and links for visualization. Helper functions like `row_usize`, `count_from_rows`, and `dedupe_limited_blast_rows` process raw database results, with `clamp_limit` and `clamp_offset` enforcing the MAX_GRAPH_LIMIT (100) boundary on all result sets.
+
+Together these components enable exploring code relationships from multiple perspectives: direct caller/callee relationships, project-wide file and module imports, file-level function definitions and calls, and impact analysis showing all symbols that transitively depend on a given target.
 [crates/gcode/src/graph/code_graph/read.rs:45-90]
 [crates/gcode/src/graph/code_graph/read.rs:91-93]
 [crates/gcode/src/graph/code_graph/read.rs:95-97]
 [crates/gcode/src/graph/code_graph/read.rs:99-111]
 [crates/gcode/src/graph/code_graph/read.rs:113-128]
-- [[code/files/crates/gcode/src/graph/code_graph/tests.rs|crates/gcode/src/graph/code_graph/tests.rs]] - `crates/gcode/src/graph/code_graph/tests.rs` exposes 19 indexed API symbols.
+- [[code/files/crates/gcode/src/graph/code_graph/tests.rs|crates/gcode/src/graph/code_graph/tests.rs]] - This test file validates the code_graph module's core functionality through a suite of unit tests. It provides a `test_context` helper that instantiates a Context struct with test configuration values, then exercises multiple aspects of code graph operations:
+
+The tests verify data integrity by checking that code edge metadata (provenance, confidence, source file path, line numbers) is correctly extracted and preserved through serialization and GraphPayload transformations. They validate query generation by asserting that SQL and Cypher queries use proper column aliasing to prevent shadowing, maintain distinct metadata field references, and employ correct filtering patterns.
+
+The tests ensure safety constraints including project-scoped operations (all deletions and cleanup queries filter by project ID), label targeting (distinguishing code index labels from memory graph labels), and selective preservation (stale symbols are deleted while current symbols are retained through parameterized ID filters). They also verify graceful degradation—when FalkorDB is not configured, read guards fail strictly while public query APIs return empty responses rather than erroring.
+
+Additional tests confirm support operations like row deduplication by node_id with distance minimization, UTF-8 boundary-aware string truncation, undirected graph traversal patterns for import relationships, and filtering of unparsed imports marked with sentinel prefixes. Together, these tests ensure the code_graph module correctly manages code structure metadata, generates safe parameterized queries, and handles edge cases without compromising data consistency.
 [crates/gcode/src/graph/code_graph/tests.rs:7-21]
 [crates/gcode/src/graph/code_graph/tests.rs:24-33]
 [crates/gcode/src/graph/code_graph/tests.rs:36-65]
 [crates/gcode/src/graph/code_graph/tests.rs:68-151]
 [crates/gcode/src/graph/code_graph/tests.rs:154-159]
-- [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - `crates/gcode/src/graph/code_graph/write.rs` exposes 59 indexed API symbols.
+- [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - This file implements write operations for the code-index graph projection, managing FalkorDB graph database writes for code structure data extracted from PostgreSQL index rows. The CodeGraph class provides the main interface with methods for syncing files (sync_file, sync_file_graph), deleting stale or complete file graphs, and clearing projects. Supporting the core sync operation are query-building functions that generate Cypher statements for creating/updating graph nodes and relationships: ensure_file_node_query builds file node creation, add_imports_query and add_definitions_query construct symbol and import relationships, and the add_*_calls_query functions handle different types of call relationships (symbol calls, external calls, unresolved calls). Helper classes like GraphCallTarget, SyncFileMutation, ImportGraphItem, and CallGraphItem encapsulate the data structures needed for graph operations. Lower-level utility functions (import_graph_items, partition_call_graph_items, symbol_rows, call_rows) transform code index data into graph-ready formats, while cleanup and deletion functions (cleanup_orphans_queries, delete_stale_file_graph_queries, clear_all_code_index_query) maintain graph consistency by removing stale nodes and edges with sync token tracking.
 [crates/gcode/src/graph/code_graph/write.rs:110-113]
 [crates/gcode/src/graph/code_graph/write.rs:116-118]
 [crates/gcode/src/graph/code_graph/write.rs:120-158]

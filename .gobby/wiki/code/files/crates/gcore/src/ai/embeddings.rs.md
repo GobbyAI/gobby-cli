@@ -27,7 +27,7 @@ Module: [[code/modules/crates/gcore/src/ai|crates/gcore/src/ai]]
 
 ## Purpose
 
-`crates/gcore/src/ai/embeddings.rs` exposes 12 indexed API symbols.
+Blocking OpenAI-compatible embeddings client for direct, non-daemon routes. It builds a fixed `EmbeddingConfig` for the `embed-small` model, sends single-text or batched `/embeddings` requests with optional bearer auth and a per-request timeout, then parses and validates the returned vectors so `embed_one` and `embed_batch` return ordered `Vec<f32>` results or `AiError` parse/http failures when the response is missing, malformed, duplicated, or status-failing.
 [crates/gcore/src/ai/embeddings.rs:19-38]
 [crates/gcore/src/ai/embeddings.rs:42-92]
 [crates/gcore/src/ai/embeddings.rs:94-105]

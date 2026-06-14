@@ -41,7 +41,7 @@ Module: [[code/modules/crates/gwiki/src/ingest/document|crates/gwiki/src/ingest/
 
 ## Purpose
 
-`crates/gwiki/src/ingest/document/office.rs` exposes 26 indexed API symbols.
+Implements office-document ingestion and bounded text extraction for `.docx`, `.pptx`, and spreadsheet formats. `extract_office_document` routes by file extension to the format-specific extractors, while the `office_max_*` helpers read environment overrides for limits on ZIP entry size, slide count, and spreadsheet dimensions. The rest of the file provides the low-level ZIP/XML parsing and markdown rendering machinery: it opens archives, reads entries safely, extracts XML paragraphs and slide numbers, converts spreadsheet rows into markdown tables, escapes cell text, and emits warnings when text is ignored or paragraphs are empty so the extractor can return truncated but structured document content.
 [crates/gwiki/src/ingest/document/office.rs:39-52]
 [crates/gwiki/src/ingest/document/office.rs:54-56]
 [crates/gwiki/src/ingest/document/office.rs:58-60]

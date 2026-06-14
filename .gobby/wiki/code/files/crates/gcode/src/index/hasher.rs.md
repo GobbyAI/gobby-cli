@@ -20,7 +20,7 @@ Module: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 
 ## Purpose
 
-`crates/gcode/src/index/hasher.rs` exposes 5 indexed API symbols.
+This module provides SHA-256 content hashing utilities for incremental indexing, wrapping gobby_core::indexing functions. It exports three hash functions: file_content_hash() for entire file contents, content_hash() for in-memory bytes, and symbol_content_hash() for extracting and hashing a specific byte range with bounds checking. All functions delegate to corresponding gobby_core implementations for actual hash computation. The tests verify proper delegation to gobby_core and correct error handling for invalid ranges.
 [crates/gcode/src/index/hasher.rs:7-9]
 [crates/gcode/src/index/hasher.rs:12-14]
 [crates/gcode/src/index/hasher.rs:17-27]

@@ -23,7 +23,7 @@ Module: [[code/modules/crates/gcode/src/search/fts|crates/gcode/src/search/fts]]
 
 ## Purpose
 
-`crates/gcode/src/search/fts/graph.rs` exposes 8 indexed API symbols.
+This file implements symbol resolution for graph search in a project: it starts with validated exact-match lookups against `code_symbols` by `id`, `qualified_name`, or `name`, then falls back through candidate handling to either return a single resolved symbol or a set of deduplicated suggestions when the match is ambiguous. The helpers support that flow by safely reading row fields for logging, formatting human-readable suggestion labels, converting `Symbol` records into `ResolvedGraphSymbol` values, and exposing a direct `resolve_graph_symbol_by_id` entry point plus the main cascading `resolve_graph_symbol` resolver.
 [crates/gcode/src/search/fts/graph.rs:16-50]
 [crates/gcode/src/search/fts/graph.rs:52-55]
 [crates/gcode/src/search/fts/graph.rs:57-62]

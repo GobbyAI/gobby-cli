@@ -4,7 +4,7 @@ type: code_module
 provenance:
 - file: crates/gwiki/contract/gwiki.contract.json
   ranges:
-  - 2-964
+  - 2-879
 - file: crates/gwiki/src/ai/chunk.rs
   ranges:
   - 24-30
@@ -48,49 +48,6 @@ provenance:
   - 574-584
   - 586-594
   - 596-617
-- file: crates/gwiki/src/ai/clients.rs
-  ranges:
-  - 20-23
-  - 25-27
-  - 29-33
-  - 35-153
-  - 155-199
-  - 201-219
-  - 221-254
-  - 256-270
-  - 272-274
-  - 276-280
-  - 282-302
-  - 304-313
-  - 315-322
-  - 324-329
-  - 331-357
-  - 359-372
-  - 384-439
-  - 442-451
-  - 453-469
-  - 471-484
-- file: crates/gwiki/src/ai/translate.rs
-  ranges:
-  - 6-29
-  - 31-55
-  - 57-87
-  - 89-93
-  - 95-97
-  - 99-110
-  - 112-122
-  - 124-129
-  - 131-133
-  - 135-137
-  - 147-154
-  - 156-170
-  - 172-207
-  - 210-236
-  - 239-259
-  - 262-290
-  - 293-316
-  - 318-325
-  - 327-349
 - file: crates/gwiki/src/api.rs
   ranges:
   - 11-121
@@ -220,49 +177,6 @@ provenance:
   - 863-873
   - 876-881
   - 884-893
-- file: crates/gwiki/src/citations.rs
-  ranges:
-  - 6-14
-  - 16-35
-  - 37-46
-  - 48-69
-  - 71-88
-  - 90-92
-  - 100-124
-  - 127-148
-  - 151-170
-- file: crates/gwiki/src/code_graph.rs
-  ranges:
-  - 15-18
-  - 21-28
-  - 31-34
-  - 37-40
-  - 43-47
-  - 49-68
-  - 70-79
-  - 81-124
-  - 126-132
-  - 134-162
-  - 164-167
-  - 169-172
-  - 174-181
-  - 183-194
-  - 196-208
-  - 210-220
-  - 222-243
-  - 245-249
-  - 251-253
-  - 255-260
-  - 262-275
-  - 277-291
-  - 299-301
-  - 304-315
-  - 318-331
-  - 334-345
-  - 348-356
-  - 359-424
-  - 427-466
-  - 469-492
 - file: crates/gwiki/src/collect.rs
   ranges:
   - 18-21
@@ -308,74 +222,6 @@ provenance:
   - 833-847
   - 850-866
   - 869-892
-- file: crates/gwiki/src/commands/ask.rs
-  ranges:
-  - 25-46
-  - 48-88
-  - 90-99
-  - 101-119
-  - 121-174
-  - 176-189
-  - 191-241
-  - 243-246
-  - 248-261
-  - 263-272
-  - 274-293
-  - 295-302
-  - 304-305
-  - 307-360
-  - 362-368
-  - 370-379
-  - 381-387
-  - 389-391
-  - 393-422
-  - 424-436
-  - 438-451
-  - 453-486
-  - 488-507
-  - 509-513
-  - 515-533
-  - 555-572
-  - 576-590
-  - 592-602
-  - 604-627
-  - 629-633
-  - 635-639
-  - 643-660
-  - 662-694
-  - 696-735
-  - 737-739
-  - 741-751
-  - 753-803
-  - 805-812
-  - 828-870
-  - 873-924
-  - 927-1029
-  - 1032-1050
-  - 1052-1071
-  - 1074-1117
-  - 1120-1142
-  - 1145-1151
-  - 1154-1171
-  - 1174-1203
-  - 1206-1220
-- file: crates/gwiki/src/commands/audit.rs
-  ranges:
-  - 3-13
-- file: crates/gwiki/src/commands/backlinks.rs
-  ranges:
-  - 10-18
-  - 20-28
-  - 30-53
-  - 55-78
-  - 80-99
-  - 101-126
-- file: crates/gwiki/src/commands/benchmark.rs
-  ranges:
-  - 11-44
-  - 46-73
-  - 75-81
-  - 83-121
 - file: crates/gwiki/src/commands/citation_quality.rs
   ranges:
   - 26-33
@@ -422,54 +268,6 @@ provenance:
   - 822-841
   - 843-847
   - 849-864
-- file: crates/gwiki/src/commands/citation_quality/contradictions.rs
-  ranges:
-  - 15-18
-  - 21-24
-  - 27-29
-  - 31-67
-  - 69-117
-  - 119-125
-  - 127-163
-  - 169-180
-  - 182-193
-  - 195-226
-  - 228-234
-  - 236-241
-- file: crates/gwiki/src/commands/collect.rs
-  ranges:
-  - 10-20
-  - 22-43
-- file: crates/gwiki/src/commands/compile.rs
-  ranges:
-  - 8-74
-- file: crates/gwiki/src/commands/export.rs
-  ranges:
-  - 4-30
-- file: crates/gwiki/src/commands/graph.rs
-  ranges:
-  - 13-52
-  - 54-67
-  - 69-90
-  - 93-118
-  - 129-131
-  - 133-138
-  - 140-148
-  - 150-158
-  - 160-162
-  - 164-168
-  - 172-180
-  - 184-186
-  - 190-195
-  - 199-204
-  - 208-217
-- file: crates/gwiki/src/commands/graph_context.rs
-  ranges:
-  - 13-83
-  - 85-98
-- file: crates/gwiki/src/commands/health.rs
-  ranges:
-  - 4-19
 - file: crates/gwiki/src/commands/index.rs
   ranges:
   - 35-38
@@ -506,21 +304,6 @@ provenance:
   - 703-727
   - 731-736
   - 738-746
-- file: crates/gwiki/src/commands/init.rs
-  ranges:
-  - 9-20
-  - 22-40
-- file: crates/gwiki/src/commands/librarian.rs
-  ranges:
-  - 3-11
-- file: crates/gwiki/src/commands/lint.rs
-  ranges:
-  - 3-11
-- file: crates/gwiki/src/commands/mod.rs
-  ranges:
-  - 31-100
-  - 102-113
-  - 115-139
 - file: crates/gwiki/src/commands/read.rs
   ranges:
   - 17-28
@@ -551,92 +334,6 @@ provenance:
   - 566-592
   - 595-608
   - 611-622
-- file: crates/gwiki/src/commands/refresh/candidate.rs
-  ranges:
-  - 15-74
-  - 76-173
-  - 175-214
-  - 216-224
-  - 226-245
-  - 247-273
-  - 275-310
-- file: crates/gwiki/src/commands/refresh/mod.rs
-  ranges:
-  - 29-37
-  - 39-49
-  - 51-140
-- file: crates/gwiki/src/commands/refresh/model.rs
-  ranges:
-  - 5-9
-  - 12-17
-  - 19-24
-  - 27-38
-  - 41-43
-  - 45-52
-  - 54-69
-  - 72-85
-  - 88-98
-  - 101-107
-  - 110-116
-  - 119-125
-  - 127-137
-  - 140-144
-  - 146-170
-- file: crates/gwiki/src/commands/refresh/render.rs
-  ranges:
-  - 3-49
-  - 51-68
-- file: crates/gwiki/src/commands/refresh/selection.rs
-  ranges:
-  - 4-75
-  - 79-82
-  - 85-112
-  - 115-118
-  - 121-124
-  - 126-138
-  - 140-146
-  - 148-152
-  - 155-169
-  - 171-184
-  - 186-209
-  - 211-219
-  - 221-223
-  - 225-231
-  - 233-238
-  - 247-293
-- file: crates/gwiki/src/commands/refresh/tests.rs
-  ranges:
-  - 7-13
-  - 15-31
-  - 33-49
-  - 51-103
-  - 105-121
-  - 123-131
-  - 134-160
-  - 163-185
-  - 188-214
-  - 217-250
-  - 253-316
-  - 319-342
-  - 345-362
-  - 365-370
-  - 373-386
-  - 389-406
-  - 409-420
-  - 423-434
-  - 437-445
-  - 448-464
-- file: crates/gwiki/src/commands/refresh/vault.rs
-  ranges:
-  - 7-9
-  - 16-49
-  - 51-66
-  - 68-101
-  - 103-112
-- file: crates/gwiki/src/commands/research.rs
-  ranges:
-  - 5-30
-  - 32-74
 - file: crates/gwiki/src/commands/review_report.rs
   ranges:
   - 28-105
@@ -674,41 +371,6 @@ provenance:
   - 734-741
   - 744-755
   - 758-771
-- file: crates/gwiki/src/commands/search.rs
-  ranges:
-  - 23-30
-  - 32-69
-  - 71-134
-  - 136-154
-  - 156-162
-  - 164-199
-  - 201-225
-  - 227-231
-  - 233-239
-  - 241-302
-  - 304-315
-  - 317-336
-  - 343-356
-  - 359-376
-- file: crates/gwiki/src/commands/setup.rs
-  ranges:
-  - '18'
-  - 20-92
-  - 94-111
-  - 113-123
-  - 125-127
-  - 129-180
-  - 182-198
-  - 200-233
-  - 235-242
-  - 244-248
-  - 250-276
-  - 278-292
-  - 302-310
-  - 313-355
-  - 358-386
-  - 389-412
-  - 415-434
 - file: crates/gwiki/src/commands/sources.rs
   ranges:
   - 15-23
@@ -750,216 +412,6 @@ provenance:
   - 831-839
   - 841-857
   - 859-874
-- file: crates/gwiki/src/commands/status.rs
-  ranges:
-  - 6-9
-  - 11-30
-  - 32-36
-  - 38-88
-  - 90-94
-- file: crates/gwiki/src/commands/trust.rs
-  ranges:
-  - 14-46
-  - 48-52
-  - 54-94
-  - 96-105
-  - 108-123
-  - 125-197
-  - 200-207
-  - 209-220
-  - 223-227
-  - 230-234
-  - 237-240
-  - 243-246
-  - 249-256
-  - 258-295
-  - 297-319
-  - 321-327
-  - 329-335
-  - 337-357
-  - 364-373
-  - 376-404
-  - 407-480
-- file: crates/gwiki/src/compile/collect.rs
-  ranges:
-  - 10-82
-  - 85-90
-  - 93-97
-  - 99-127
-  - 129-142
-  - 144-171
-  - 173-185
-  - 187-195
-  - 197-203
-  - 207-239
-  - 246-269
-  - 272-300
-- file: crates/gwiki/src/compile/index.rs
-  ranges:
-  - 16-63
-  - 65-94
-  - 96-98
-  - 100-102
-  - 104-106
-  - 108-117
-  - 119-128
-  - 130-132
-  - 134-193
-  - 195-217
-  - 219-245
-  - 247-250
-  - 252-262
-  - 264-270
-  - 272-290
-  - 292-294
-  - 296-330
-  - 337-344
-- file: crates/gwiki/src/compile/mod.rs
-  ranges:
-  - 27-32
-  - 35-38
-  - 41-44
-  - 46-53
-  - 56-63
-  - 66-77
-  - 80-85
-  - 88-91
-  - 94-99
-  - 101-191
-  - 193-267
-  - 270-275
-  - 277-290
-- file: crates/gwiki/src/compile/render.rs
-  ranges:
-  - 11-47
-  - 49-63
-  - 65-105
-  - 107-144
-  - 146-182
-  - 184-186
-  - 188-190
-- file: crates/gwiki/src/compile/tests.rs
-  ranges:
-  - 6-24
-  - 27-71
-  - 74-101
-  - 104-130
-  - 133-169
-  - 172-218
-  - 222-242
-  - 246-276
-  - 279-348
-  - 351-378
-  - 381-409
-  - 412-419
-  - 422-441
-- file: crates/gwiki/src/contract.rs
-  ranges:
-  - 6-499
-  - 501-503
-  - 505-515
-  - 517-520
-  - 522-528
-  - 530-534
-  - 536-546
-- file: crates/gwiki/src/credibility.rs
-  ranges:
-  - 7-13
-  - 16-22
-  - 25-30
-  - 33-36
-  - 38-58
-  - 60-89
-  - 91-118
-  - 120-135
-  - 137-152
-  - 154-175
-  - 177-189
-  - 196-223
-- file: crates/gwiki/src/daemon.rs
-  ranges:
-  - 11-18
-  - 26-31
-  - 34-40
-  - 43-50
-  - 53-62
-  - 65-74
-  - 77-80
-  - 82-84
-  - '86'
-  - 88-97
-  - 165-168
-  - 170-172
-  - 174-247
-  - 249-256
-  - 258-275
-  - 277-295
-  - 297-329
-  - 331-345
-  - 354-356
-  - 358-366
-  - 368-375
-  - 378-418
-  - 421-431
-  - 434-458
-  - 461-480
-- file: crates/gwiki/src/document.rs
-  ranges:
-  - 4-16
-  - 18-34
-  - 37-40
-  - 42-71
-  - 74-78
-  - 80-96
-  - '98'
-  - 100-126
-  - 133-217
-- file: crates/gwiki/src/error.rs
-  ranges:
-  - 10-66
-  - 68-100
-  - 102-159
-  - 161-176
-  - 178-190
-  - 192-196
-  - 198-202
-  - 204-208
-  - 216-227
-  - 230-240
-  - 243-254
-  - 257-275
-  - 278-287
-- file: crates/gwiki/src/events.rs
-  ranges:
-  - 14-20
-  - 23-25
-  - 27-75
-  - 77-105
-  - 114-147
-- file: crates/gwiki/src/exports.rs
-  ranges:
-  - 9-13
-  - 16-20
-  - 23-27
-  - 30-38
-  - 41-45
-  - 47-55
-  - 58-62
-  - 87-89
-  - 91-101
-  - 103-115
-  - 117-136
-  - 138-173
-  - 175-180
-  - 182-195
-  - 197-219
-  - 221-243
-  - 245-250
-  - 252-265
-  - 281-335
-  - 338-453
-  - 456-472
-  - 475-491
 - file: crates/gwiki/src/falkor_graph.rs
   ranges:
   - 29-31
@@ -1016,104 +468,6 @@ provenance:
   - 889-908
   - 911-923
   - 926-978
-- file: crates/gwiki/src/frontmatter.rs
-  ranges:
-  - 10-13
-  - 16-30
-  - 32-116
-  - 119-125
-  - 128-130
-  - 132-136
-  - '138'
-  - 140-170
-  - 173-191
-  - 193-199
-  - 201-205
-  - 207-221
-  - 223-232
-  - 234-264
-  - 266-286
-  - 289-303
-  - 306-314
-  - 316-329
-  - 331-344
-  - 346-394
-  - 396-398
-  - 400-406
-  - 408-415
-  - 419-434
-  - 436-450
-  - 457-524
-  - 527-546
-  - 549-578
-  - 581-626
-  - 629-659
-  - 662-691
-- file: crates/gwiki/src/graph/analytics.rs
-  ranges:
-  - 14-22
-  - 24-39
-  - '41'
-  - 44-51
-  - 54-58
-  - 61-65
-  - 68-71
-  - 74-78
-  - 81-85
-  - 87-91
-  - 94-98
-  - 100-158
-  - 160-181
-  - 183-218
-  - 220-232
-  - 234-242
-  - 244-252
-  - 254-261
-  - 263-271
-  - 285-316
-  - 319-344
-  - 347-362
-- file: crates/gwiki/src/graph/context.rs
-  ranges:
-  - 8-11
-  - 13-29
-  - 32-39
-  - 42-45
-  - 48-53
-  - 56-61
-  - 64-73
-  - 76-80
-  - 83-88
-  - 91-99
-  - 102-105
-  - 107-153
-  - 155-172
-  - 174-183
-  - 185-201
-  - 203-212
-  - 214-227
-  - 229-242
-  - 244-272
-  - 274-311
-  - 313-320
-  - 322-329
-  - 331-340
-  - 342-390
-  - 392-394
-  - 407-502
-  - 505-557
-  - 560-654
-  - 656-662
-  - 664-670
-  - 672-684
-  - 686-693
-  - 695-714
-- file: crates/gwiki/src/graph/export.rs
-  ranges:
-  - 11-112
-  - 114-190
-  - 204-317
-  - 320-349
 - file: crates/gwiki/src/graph/mod.rs
   ranges:
   - 22-26
@@ -1278,190 +632,30 @@ provenance:
   - 253-258
   - 261-286
   - 289-299
-  - 301-315
-  - 318-325
-  - 327-335
-  - 337-365
-  - 385-394
-  - 397-403
-  - '405'
-  - 407-430
-  - 433-438
-  - 441-463
-  - 466-500
-  - 502-530
-  - 533-537
-  - 540-548
-  - 551-577
-  - 581-587
-  - 591-625
-  - 629-663
-  - 667-693
-  - 697-734
-  - 738-776
-  - 779-810
-  - 813-848
-  - 851-886
-- file: crates/gwiki/src/ingest/document/html.rs
-  ranges:
-  - 8-39
-  - 41-51
-  - 53-76
-  - 78-96
-  - 98-110
-  - 112-140
-  - 142-148
-  - 150-199
-  - 201-213
-  - 215-223
-  - 230-235
-  - 238-242
-- file: crates/gwiki/src/ingest/document/mod.rs
-  ranges:
-  - 21-27
-  - 30-36
-  - 38-46
-  - 49-53
-  - 56-62
-  - 64-66
-  - 68-72
-  - '74'
-  - 77-86
-  - 88-100
-  - 103-114
-  - 116-191
-  - 193-201
-  - 203-214
-  - 216-218
-  - 220-222
-  - 224-229
-- file: crates/gwiki/src/ingest/document/office.rs
-  ranges:
-  - 39-52
-  - 54-56
-  - 58-60
-  - 62-64
-  - 66-68
-  - 70-81
-  - 83-94
-  - 96-109
-  - 111-176
-  - 178-262
-  - 264-267
-  - 269-309
-  - 311-314
-  - 316-393
-  - 395-402
-  - 404-414
-  - 416-430
-  - 432-450
-  - 452-462
-  - 464-469
-  - 471-473
-  - 475-479
-  - 481-486
-  - 493-502
-  - 505-513
-  - 516-521
-- file: crates/gwiki/src/ingest/document/render.rs
-  ranges:
-  - 11-33
-  - 36-67
-  - 69-93
-  - 95-122
-  - 124-211
-  - 213-228
-  - 230-241
-  - 248-260
-  - 263-274
-- file: crates/gwiki/src/ingest/document/tests.rs
-  ranges:
-  - 9-18
-  - 20-25
-  - 27-38
-  - 40-53
-  - 55-59
-  - 61-70
-  - 72-96
-  - 98-118
-  - 121-200
-  - 203-258
-  - 261-263
-  - 266-273
-  - 276-294
-  - 297-317
-  - 320-327
-  - 330-337
-- file: crates/gwiki/src/ingest/file.rs
-  ranges:
-  - 53-57
-  - 60-63
-  - 65-78
-  - 80-262
-  - 264-310
-  - 312-336
-  - 338-345
-  - 347-349
-  - 352-354
-  - 356-371
-  - 373-379
-  - 382-414
-  - 416-431
-  - 433-447
-  - 449-461
-  - 463-508
-  - 521-530
-  - 532-538
-  - 541-557
-  - 560-613
-  - 616-638
-  - 641-655
-  - 658-698
-  - 701-728
-  - 731-754
-  - 757-829
-  - 833-867
-  - 871-897
-  - 901-925
-  - 929-953
-- file: crates/gwiki/src/ingest/git.rs
-  ranges:
-  - 15-18
-  - 22-27
-  - 30-55
-  - 58-74
-  - 77-109
-  - 112-127
-  - 130-142
-  - 145-154
-  - 157-172
-  - 181-236
-  - 239-247
-  - 250-261
-- file: crates/gwiki/src/ingest/image.rs
-  ranges:
-  - 23-31
-  - 34-40
-  - 43-56
-  - 59-70
-  - 72-103
-  - 106-116
-  - 118-167
-  - 169-177
-  - 179-210
-  - 213-218
-  - 228-238
-  - 241-272
-  - 275-297
-  - 301-335
-  - 338-370
-  - 373-375
-- file: crates/gwiki/src/ingest/mediawiki.rs
-  ranges:
-  - 12-20
-  - 23-41
-  - 44-77
-  - 86-123
+  - 301-326
+  - 329-336
+  - 338-346
+  - 348-376
+  - 396-405
+  - 408-414
+  - '416'
+  - 418-441
+  - 444-449
+  - 452-474
+  - 477-511
+  - 513-541
+  - 544-548
+  - 551-559
+  - 562-588
+  - 592-598
+  - 602-636
+  - 640-674
+  - 678-704
+  - 708-745
+  - 749-787
+  - 790-821
+  - 824-859
+  - 862-897
 - file: crates/gwiki/src/ingest/mod.rs
   ranges:
   - 25-29
@@ -1513,87 +707,6 @@ provenance:
   - 729-746
   - 748-797
   - 800-833
-- file: crates/gwiki/src/ingest/pdf/ingest.rs
-  ranges:
-  - 23-37
-  - 41-52
-  - 55-108
-  - 111-128
-  - 131-146
-  - 149-220
-  - 223-247
-  - 250-257
-  - 260-266
-- file: crates/gwiki/src/ingest/pdf/markdown.rs
-  ranges:
-  - 15-89
-  - 92-107
-  - 110-135
-  - 138-156
-  - 159-239
-  - 242-264
-  - 267-272
-  - 275-295
-  - 298-319
-  - 322-328
-  - 331-335
-  - 338-344
-  - 351-360
-  - 363-375
-- file: crates/gwiki/src/ingest/pdf/mod.rs
-  ranges:
-  - 22-25
-  - 28-34
-  - 37-40
-- file: crates/gwiki/src/ingest/pdf/render.rs
-  ranges:
-  - 23-39
-  - 42-94
-  - 97-100
-  - 103-114
-  - 117-128
-  - 131-133
-  - 136-144
-  - 147-166
-  - 169-174
-  - 181-191
-  - 195-202
-- file: crates/gwiki/src/ingest/pdf/tests.rs
-  ranges:
-  - '21'
-  - 23-27
-  - 29-60
-  - 63-65
-  - 69-74
-  - 77-137
-  - 140-175
-  - 178-182
-  - 185-231
-  - 234-289
-  - 292-324
-  - 327-331
-  - 334-442
-  - 446-453
-- file: crates/gwiki/src/ingest/pdf/text.rs
-  ranges:
-  - 4-25
-  - 32-36
-  - 39-49
-  - 52-54
-  - 57-59
-  - 62-64
-  - 67-69
-  - 72-74
-  - 77-82
-- file: crates/gwiki/src/ingest/pdf/types.rs
-  ranges:
-  - 11-14
-  - 18-24
-  - 28-33
-  - 37-43
-  - 47-49
-  - 51-57
-  - 60-81
 - file: crates/gwiki/src/ingest/url.rs
   ranges:
   - 22-28
@@ -1648,49 +761,6 @@ provenance:
   - 918-934
   - 937-940
   - 942-983
-- file: crates/gwiki/src/ingest/video/assets.rs
-  ranges:
-  - 4-23
-  - 25-115
-  - 118-122
-  - 126-206
-  - 208-212
-  - 214-224
-  - 226-242
-- file: crates/gwiki/src/ingest/video/metadata.rs
-  ranges:
-  - 4-8
-  - 10-25
-  - 27-39
-  - 43-57
-  - 59-73
-  - 76-84
-  - 86-127
-  - 129-134
-- file: crates/gwiki/src/ingest/video/mod.rs
-  ranges:
-  - 32-45
-  - 48-61
-  - 64-73
-  - 76-94
-  - 97-104
-  - 107-126
-  - 128-163
-  - 166-179
-  - 181-235
-- file: crates/gwiki/src/ingest/video/processing.rs
-  ranges:
-  - 18-26
-  - '28'
-  - 30-42
-  - 45-64
-  - 66-179
-  - 181-197
-  - 199-209
-  - 212-216
-  - 218-223
-  - 225-329
-  - 331-335
 - file: crates/gwiki/src/ingest/video/tests.rs
   ranges:
   - 18-55
@@ -1724,39 +794,6 @@ provenance:
   - 813-843
   - 846-883
   - 886-922
-- file: crates/gwiki/src/ingest/wayback.rs
-  ranges:
-  - 18-25
-  - 28-47
-  - 50-60
-  - 63-75
-  - 78-98
-  - 101-108
-  - 111-118
-  - 121-129
-  - 132-139
-  - 142-145
-  - 148-153
-  - 156-163
-  - 166-171
-  - 174-180
-  - 183-185
-  - 188-215
-  - 218-226
-  - 229-238
-  - 241-266
-  - 269-292
-  - 295-304
-  - 307-313
-  - 316-352
-  - 361-400
-  - 403-413
-  - 416-430
-  - 433-465
-  - 468-475
-  - 478-491
-  - 494-511
-  - 513-516
 - file: crates/gwiki/src/librarian.rs
   ranges:
   - 15-20
@@ -1835,164 +872,41 @@ provenance:
   - 529-536
   - 539-553
   - 556-567
-- file: crates/gwiki/src/lint.rs
-  ranges:
-  - 13-22
-  - 25-30
-  - 33-36
-  - 38-103
-  - 105-126
-  - 129-135
-  - 137-169
-  - 171-173
-  - 175-181
-  - 183-195
-  - 197-254
-  - 256-262
-  - 264-270
-  - 272-282
-  - 284-290
-  - 292-306
-  - 308-316
-  - 318-347
-  - 349-365
-  - 367-376
-  - 378-397
-  - 399-433
-  - 435-440
-  - 442-461
-  - 463-476
-  - 478-484
-  - 487-493
-  - 500-532
-  - 535-552
-  - 555-560
-  - 563-568
-  - 571-587
-  - 589-593
-- file: crates/gwiki/src/log.rs
-  ranges:
-  - 9-15
-  - 19-22
-  - 25-49
-  - 52-90
-  - 93-108
-  - 111-117
-  - 121-128
-  - 131-150
-  - 153-155
-  - 158-164
-  - 167-174
-  - 183-211
-  - 214-233
 - file: crates/gwiki/src/main.rs
   ranges:
-  - 46-60
-  - 63-149
-  - 152-167
-  - 170-212
-  - 215-225
-  - 228-243
-  - 246-254
-  - 256-267
-  - 270-285
-  - 288-296
-  - 304-312
-  - 315-318
-  - 321-324
-  - 327-351
-  - 354-372
-  - 375-378
-  - 381-394
-  - 397-411
-  - 414-418
-  - '425'
-  - 429-441
-  - 443-450
-  - 452-456
-  - 458-510
-  - 517-536
-  - 538-540
-  - 542-556
-  - 558-709
-  - 712-718
-  - 722-732
-  - 736-743
-  - 746-756
-  - 758-775
-  - 778-794
-- file: crates/gwiki/src/markdown.rs
-  ranges:
-  - 11-19
-  - 22-29
-  - 32-35
-  - 38-41
-  - 43-55
-  - 57-68
-  - 70-77
-  - '79'
-  - 81-85
-  - 87-91
-  - 93-116
-  - 119-130
-  - 132-185
-  - 187-206
-  - 208-230
-  - 232-274
-  - 276-296
-  - 304-353
-  - 356-368
-  - 371-387
-  - 390-399
-- file: crates/gwiki/src/media.rs
-  ranges:
-  - 13-17
-  - 19-22
-  - 24-27
-  - 29-35
-  - 37-43
-  - 45-52
-  - 55-58
-  - 60-69
-  - 71-93
-  - 95-125
-  - 127-139
-  - 141-200
-  - 202-209
-  - 211-213
-  - 215-230
-  - 232-245
-  - 247-250
-  - 252-267
-  - 269-271
-  - 273-283
-  - 285-300
-  - 302-311
-  - 313-340
-  - 342-346
-  - 355-359
-  - 362-366
-  - 369-375
-  - 379-436
-  - 439-449
-- file: crates/gwiki/src/models.rs
-  ranges:
-  - 12-15
-  - 17-52
-  - 55-61
-  - 63-73
-  - 76-80
-  - 83-97
-  - 99-150
-  - 152-154
-  - 156-158
-  - 160-166
-  - 168-174
-  - 176-191
-  - 198-236
-  - 239-260
-  - 263-284
-  - 287-291
+  - 45-59
+  - 62-146
+  - 149-164
+  - 167-209
+  - 212-222
+  - 225-240
+  - 243-251
+  - 253-264
+  - 267-282
+  - 285-293
+  - 301-309
+  - 312-315
+  - 318-321
+  - 324-346
+  - 349-352
+  - 355-368
+  - 371-385
+  - 388-392
+  - '399'
+  - 403-415
+  - 417-424
+  - 426-430
+  - 432-484
+  - 491-510
+  - 512-514
+  - 516-530
+  - 532-659
+  - 662-668
+  - 672-682
+  - 686-693
+  - 696-706
+  - 708-725
+  - 728-744
 - file: crates/gwiki/src/output.rs
   ranges:
   - 10-13
@@ -2005,349 +919,28 @@ provenance:
   - 55-61
   - 63-66
   - 68-70
-  - 73-80
-  - 82-99
-  - 102-124
-  - 127-135
-  - 138-144
-  - 149-152
-  - 154-172
-  - 175-185
-  - 188-192
-  - 195-202
-  - 205-209
-  - 216-220
-  - 223-227
-  - 230-236
-  - 238-253
-  - 256-261
-  - 264-270
-  - 272-287
-  - 289-316
-  - 325-416
-  - 419-445
-- file: crates/gwiki/src/paths.rs
-  ranges:
-  - 6-22
-  - 24-27
-  - 29-34
-  - 42-47
-  - 50-55
-  - 58-69
-  - 71-86
-- file: crates/gwiki/src/provenance.rs
-  ranges:
-  - 14-22
-  - 25-29
-  - 32-36
-  - 39-47
-  - 49-168
-  - 170-172
-  - 174-205
-  - 207-223
-  - 230-278
-  - 281-304
-  - 307-313
-- file: crates/gwiki/src/registry.rs
-  ranges:
-  - 15-20
-  - 23-26
-  - 29-33
-  - 35-102
-  - 104-136
-  - 138-140
-  - 142-144
-  - 146-184
-  - 186-203
-  - 205-211
-  - 213-225
-  - 233-247
-  - 250-322
-  - 325-333
-- file: crates/gwiki/src/research/mod.rs
-  ranges:
-  - '41'
-  - 44-50
-  - 53-59
-  - 62-71
-  - '74'
-  - 77-83
-  - 86-97
-  - 100-122
-  - 126-130
-  - 134-142
-  - 145-152
-  - 156-160
-  - 163-166
-  - 168-287
-  - 289-336
-  - 338-353
-  - 355-366
-- file: crates/gwiki/src/research/model.rs
-  ranges:
-  - 21-24
-  - 26-33
-  - 35-97
-  - 99-101
-  - 103-114
-  - 116-118
-  - 120-136
-  - 138-159
-  - 161-163
-  - 165-173
-  - 175-177
-  - 179-209
-  - 211-214
-  - 217-224
-- file: crates/gwiki/src/research/notes.rs
-  ranges:
-  - 5-16
-  - 18-20
-  - 22-26
-  - 28-99
-  - 101-108
-  - 110-113
-  - 115-126
-  - 128-157
-  - 159-256
-  - 258-300
-  - 302-313
-  - 315-318
-  - 320-364
-  - 366-402
-  - 404-410
-  - 415-423
-  - 428-430
-  - 432-441
-  - 443-449
-  - 451-459
-- file: crates/gwiki/src/research/outcome.rs
-  ranges:
-  - 15-24
-  - 26-41
-  - 43-51
-  - 53-89
-  - 91-99
-  - 101-127
-  - 129-147
-  - 149-152
-  - 154-171
-  - 173-188
-  - 190-200
-  - 202-216
-  - 221-228
-  - 230-252
-  - 254-329
-  - 331-334
-  - 336-344
-  - 346-353
-  - 360-372
-  - 375-385
-  - 388-426
-  - 429-444
-  - 447-457
-  - 460-470
-  - 473-482
-- file: crates/gwiki/src/research/storage.rs
-  ranges:
-  - 12-59
-  - 61-91
-  - 93-95
-  - 97-135
-  - 137-151
-  - 153-155
-  - 157-159
-  - 168-177
-- file: crates/gwiki/src/research/tests.rs
-  ranges:
-  - 8-21
-  - 23-27
-  - 29-37
-  - 40-46
-  - 49-60
-  - 63-72
-  - 75-108
-  - 111-122
-  - 125-169
-  - 172-212
-  - 215-255
-  - 258-280
-  - 283-323
-  - 326-343
-  - 346-379
-  - 382-405
-- file: crates/gwiki/src/research_loop/engine.rs
-  ranges:
-  - 19-28
-  - 31-46
-  - 48-160
-  - 162-183
-  - 185-278
-  - 280-292
-  - 294-331
-  - 333-374
-  - 376-407
-  - 410-416
-  - 419-435
-  - 437-538
-  - 540-554
-  - 556-566
-  - 568-573
-  - 575-588
-  - 590-593
-  - 598-601
-  - 607-610
-  - 613-630
-- file: crates/gwiki/src/research_loop/helpers.rs
-  ranges:
-  - 8-19
-  - 21-80
-  - 82-85
-  - 90-102
-  - 104-106
-  - 108-119
-  - 121-137
-  - 139-175
-  - 177-187
-  - 189-203
-  - 205-209
-  - 211-221
-  - 228-237
-- file: crates/gwiki/src/research_loop/tests.rs
-  ranges:
-  - 12-14
-  - 16-22
-  - 24-33
-  - '35'
-  - 37-44
-  - '46'
-  - 48-57
-  - '59'
-  - 61-68
-  - '70'
-  - 72-76
-  - '78'
-  - 80-85
-  - '87'
-  - 89-100
-  - 103-106
-  - 108-122
-  - 124-141
-  - 144-168
-  - 171-200
-  - 202-210
-  - 213-299
-  - 302-363
-  - 366-444
-  - 447-503
-  - 506-561
-  - 564-601
-  - 604-614
-  - 617-628
-  - 631-642
-  - 645-656
-  - 659-662
-  - 665-668
-  - 671-688
-  - 692-706
-- file: crates/gwiki/src/research_loop/types.rs
-  ranges:
-  - 11-17
-  - 20-24
-  - 27-39
-  - 42-45
-  - 48-53
-  - 55-59
-  - 61-66
-  - 68-70
-  - 72-74
-  - 76-78
-  - 80-84
-  - 87-91
-  - 93-95
-  - 99-130
-  - 133-140
-  - 142-173
-  - 176-179
-  - 182-197
-  - 199-206
-  - 208-215
-  - 219-226
-  - 230-237
-  - 241-244
-  - 246-249
-  - 251-254
-  - 256-259
-  - 261-264
-  - 266-269
-  - 271-282
-- file: crates/gwiki/src/runner.rs
-  ranges:
-  - 7-9
-  - 12-17
-- file: crates/gwiki/src/schema.rs
-  ranges:
-  - '13'
-  - 15-24
-  - 26-28
-  - 30-36
-  - 38-57
-  - 59-61
-  - 63-75
-  - 83-118
-  - 121-126
-- file: crates/gwiki/src/scope.rs
-  ranges:
-  - 12-16
-  - 19-27
-  - 29-89
-  - 91-94
-  - 96-121
-  - 123-129
-  - 131-152
-  - 154-180
-  - 182-188
-  - 190-206
-  - 216-218
-  - 220-226
-  - 228-236
-  - 240-256
-  - 259-273
-  - 276-312
-  - 315-341
-- file: crates/gwiki/src/search/bm25.rs
-  ranges:
-  - 13-17
-  - 20-23
-  - 26-37
-  - 39-44
-  - 46-69
-  - 71-157
-  - 159-162
-  - 164-176
-  - 178-182
-  - 184-186
-  - 189-191
-  - 195-225
-  - 228-284
-  - 286-289
-  - 291-299
-  - 301-303
-  - 307-309
-  - 312-316
-  - 319-326
-  - 335-374
-  - 377-387
-  - 390-395
-  - 398-414
-  - 417-427
-  - 430-444
-  - 447-455
-  - 457-482
-  - 484-504
-  - 506-527
-  - 529-538
-  - 540-551
+  - 73-81
+  - 83-102
+  - 107-125
+  - 131-151
+  - 155-159
+  - 162-168
+  - 173-176
+  - 178-196
+  - 199-209
+  - 212-219
+  - 222-226
+  - 233-237
+  - 240-244
+  - 247-253
+  - 255-270
+  - 273-278
+  - 281-287
+  - 289-304
+  - 306-333
+  - 342-434
+  - 437-476
+  - 479-505
 - file: crates/gwiki/src/search/graph_boost.rs
   ranges:
   - 21-24
@@ -2414,15 +1007,6 @@ provenance:
   - 477-483
   - '485'
   - 487-502
-- file: crates/gwiki/src/search/rrf.rs
-  ranges:
-  - 8-92
-  - 94-96
-  - 98-108
-  - 119-180
-  - 183-225
-  - 229-240
-  - 242-267
 - file: crates/gwiki/src/search/semantic.rs
   ranges:
   - 18-22
@@ -2481,107 +1065,25 @@ provenance:
   - 68-76
   - 79-87
   - 89-95
-  - 97-160
-  - 163-170
-  - 173-183
-  - 186-198
-  - 200-317
-  - 319-338
-  - 340-349
-  - 351-356
-  - 358-365
-  - 367-369
-  - 371-387
-  - 394-427
-  - 430-441
-  - 444-456
-  - 459-467
-  - 470-478
-  - 481-506
-  - 509-530
-  - 533-554
-- file: crates/gwiki/src/setup.rs
-  ranges:
-  - 29-35
-  - 37-47
-  - 50-54
-  - 57-61
-  - 64-66
-  - 68-237
-  - 239-267
-  - 269-271
-  - 273-279
-  - 281-287
-  - 289-295
-  - 297-305
-  - 307-329
-  - 331-355
-  - 363-454
-  - 457-480
-  - 483-488
-  - 491-496
-- file: crates/gwiki/src/sources/atomic.rs
-  ranges:
-  - 7-44
-  - 46-56
-  - 58-83
-  - 85-104
-  - 111-116
-  - 120-129
-- file: crates/gwiki/src/sources/manifest.rs
-  ranges:
-  - 23-25
-  - 27-225
-  - 227-265
-  - 267-297
-  - 299-303
-  - 305-312
-  - 314-323
-- file: crates/gwiki/src/sources/render.rs
-  ranges:
-  - 15-45
-  - 47-58
-  - 60-70
-  - 72-75
-  - 77-124
-  - 126-133
-  - 135-137
-  - 139-145
-  - 147-166
-  - 168-183
-  - 185-190
-  - 192-197
-  - 199-204
-  - 206-208
-  - 215-221
-  - 224-229
-  - 232-234
-- file: crates/gwiki/src/sources/tests.rs
-  ranges:
-  - 8-50
-  - 53-113
-  - 116-121
-  - 124-140
-  - 143-160
-- file: crates/gwiki/src/sources/types.rs
-  ranges:
-  - 12-29
-  - 31-51
-  - 55-58
-  - 60-67
-  - 71-74
-  - 76-83
-  - 86-96
-  - 98-150
-  - 152-162
-  - 165-179
-  - 183-189
-  - 191-198
-  - 201-216
-  - 218-245
-  - 247-249
-  - 251-259
-  - 261-274
+  - 97-156
+  - 159-166
+  - 169-179
+  - 182-194
+  - 196-313
+  - 315-334
+  - 336-345
+  - 347-352
+  - 354-361
+  - 363-365
+  - 367-383
+  - 390-423
+  - 426-437
+  - 440-452
+  - 455-463
+  - 466-474
+  - 477-502
+  - 505-526
+  - 529-550
 - file: crates/gwiki/src/store.rs
   ranges:
   - 15-21
@@ -2635,212 +1137,49 @@ provenance:
   - 870-875
   - 878-922
   - 925-939
-- file: crates/gwiki/src/support/config.rs
-  ranges:
-  - 18-20
-  - 22-44
-  - 46-61
-  - 68-71
-  - 73-80
-  - 82-86
-  - 88-93
-  - 96-102
-  - 104-111
-  - 113-118
-  - 120-127
-  - 129-136
-  - 138-142
-  - 144-151
-  - 153-168
-  - 182-185
-  - 187-201
-  - 203-212
-  - 214-220
-  - 223-225
-  - 227-232
-  - 234-242
-  - 245-257
-  - 260-279
-  - 283-301
-  - 304-316
-  - 320-332
-  - 336-363
-- file: crates/gwiki/src/support/counts.rs
-  ranges:
-  - 4-10
-  - 12-20
-  - 22-33
-  - 36-42
-  - 44-54
-  - 56-72
-  - 79-85
-- file: crates/gwiki/src/support/env.rs
-  ranges:
-  - 21-24
-  - 27-30
-  - 32-49
-  - 51-55
-  - 57-66
-  - 68-75
-  - 77-89
-  - 91-98
-  - 100-109
-  - 111-142
-  - 144-154
-  - 156-180
-  - 182-188
-  - 190-200
-  - 202-218
-  - 220-224
-  - 226-234
-  - 236-238
-  - 251-257
-  - 261-285
-  - 288-297
-  - 299-322
-- file: crates/gwiki/src/support/graph.rs
-  ranges:
-  - 8-55
-  - 57-90
-  - 92-103
-  - 105-107
-  - 109-122
-  - 124-146
-  - 148-154
-  - 162-192
-  - 195-208
-  - 211-236
-  - 239-272
-- file: crates/gwiki/src/support/postgres.rs
-  ranges:
-  - 6-39
-  - 41-51
-- file: crates/gwiki/src/support/scope.rs
-  ranges:
-  - 12-36
-  - 38-42
-  - 44-55
-  - 60-66
-  - 68-76
-  - 78-87
-  - 89-96
-  - 98-104
-  - 106-111
-  - 114-118
-  - 120-131
-- file: crates/gwiki/src/support/search.rs
-  ranges:
-  - 11-13
-  - 15-22
-  - '24'
-  - 26-39
-  - 41-43
-  - 46-51
-  - 53-57
-  - 60-161
-- file: crates/gwiki/src/support/text.rs
-  ranges:
-  - 7-13
-  - 15-22
-  - 24-35
-  - 37-49
-  - 51-59
-  - 61-67
-  - 69-71
-  - 73-75
-  - 77-102
-  - 109-114
-  - 117-127
-- file: crates/gwiki/src/support/time.rs
-  ranges:
-  - 3-6
-  - 8-17
-  - 24-39
 - file: crates/gwiki/src/synthesis.rs
   ranges:
-  - 14-18
-  - 20-36
-  - 39-43
-  - 46-56
-  - 59-63
-  - 66-70
-  - 73-76
-  - 80-83
-  - 86-89
-  - 91-124
-  - 126-192
-  - 194-232
-  - 239-253
-  - 255-326
-  - 328-356
-  - 358-381
-  - 383-398
-  - 400-405
-  - 407-413
-  - 415-438
-  - 440-454
-  - 456-461
-  - 463-485
-  - 487-497
-  - 499-522
-  - 524-542
-  - 544-558
-  - 560-565
-  - 567-585
-  - 587-611
-  - 613-647
-  - 649-668
-  - 670-680
-  - 687-713
-  - 716-738
-  - 741-746
-  - 749-762
-  - 765-797
-  - 800-828
-  - 832-858
-  - 861-871
-- file: crates/gwiki/src/transcribe.rs
-  ranges:
-  - 14-18
-  - 21-24
-  - 27-39
-  - 42-45
-  - 47-60
-  - 62-90
-  - 93-98
-  - 100-110
-  - 113-116
-  - 119-122
-  - 124-159
-  - 161-185
-  - 187-214
-  - 216-235
-  - 237-367
-  - 369-375
-  - 377-383
-  - 392-394
-  - 396-427
-  - 429-445
-  - 448-504
-  - 507-566
-  - 569-609
-- file: crates/gwiki/src/vault.rs
-  ranges:
-  - 19-22
-  - 25-28
-  - 55-60
-  - 62-99
-  - 101-137
-  - 140-143
-  - 145-151
-  - 153-180
-  - 182-218
-  - 220-230
-  - 232-251
-  - 258-275
-  - 278-303
-  - 306-324
-  - 327-346
+  - 15-19
+  - 21-37
+  - 40-44
+  - 47-56
+  - 59-65
+  - 68-74
+  - 77-80
+  - 84-87
+  - 90-93
+  - 95-182
+  - 188-230
+  - 232-272
+  - 279-293
+  - 295-366
+  - 368-396
+  - 398-421
+  - 423-438
+  - 440-445
+  - 447-453
+  - 455-478
+  - 480-494
+  - 496-501
+  - 503-525
+  - 527-537
+  - 539-573
+  - 575-593
+  - 595-609
+  - 611-616
+  - 618-636
+  - 638-662
+  - 664-698
+  - 700-719
+  - 721-731
+  - 738-765
+  - 768-791
+  - 794-799
+  - 802-815
+  - 818-854
+  - 857-886
+  - 890-917
+  - 920-930
 - file: crates/gwiki/src/vector.rs
   ranges:
   - 17-26
@@ -2885,70 +1224,7 @@ provenance:
   - 657-660
   - 662-693
   - 695-704
-- file: crates/gwiki/src/video.rs
-  ranges:
-  - 18-21
-  - 24-29
-  - 32-36
-  - 39-43
-  - 46-49
-  - 52-55
-  - 58-61
-  - 64-68
-  - 70-94
-  - 96-103
-  - 105-163
-  - 165-168
-  - 170-178
-  - 180-195
-  - 197-222
-  - 224-280
-  - 282-292
-  - 294-313
-  - 315-326
-  - 328-586
-  - 588-603
-  - 605-612
-  - 614-619
-  - 621-627
-  - 636-663
-  - 666-676
-  - 679-714
-  - 717-752
-  - 755-848
-  - 851-893
-  - 895-911
-  - 913-927
-- file: crates/gwiki/src/vision.rs
-  ranges:
-  - 19-23
-  - 26-29
-  - 31-44
-  - 47-52
-  - 54-56
-  - 59-66
-  - 68-72
-  - 75-78
-  - 80-120
-  - 122-234
-  - 236-244
-  - 246-263
-  - 265-283
-  - 285-309
-  - 311-338
-  - 340-359
-  - 368-370
-  - '372'
-  - 374-383
-  - 385-392
-  - 394-410
-  - 413-457
-  - 460-488
-  - 491-513
-  - 516-558
-  - 561-592
-  - 595-648
-  - 651-662
+provenance_truncated: 109
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -2960,31 +1236,78 @@ Parent: [[code/modules/crates|crates]]
 
 ## Overview
 
-The crates/gwiki crate serves as the core research and knowledge engine of the GWiki system. It coordinates multi-format ingestion—including audio transcription, video frame analysis, and office document extraction—with an autonomous research loop and AI-driven synthesis to compile structured, fully cited wikis featuring bidirectional link validation and vector/graph-boosted search. The crate houses core asset definitions and Markdown skills for auditing, compiling, and querying, and implements a machine-readable CLI contract outlining commands, flags, multimodal degradation behaviors, and output schemas.
-[crates/gwiki/contract/gwiki.contract.json:2]
-[crates/gwiki/src/ai/chunk.rs:24-30]
-[crates/gwiki/src/ai/clients.rs:20-23]
-[crates/gwiki/src/ai/translate.rs:6-29]
-[crates/gwiki/src/api.rs:11-121]
+The `crates/gwiki` module is the local-first wiki system for the `gwiki` CLI, with its contract layer defining the public tool identity, version, command shape, global output flags, scope selectors, and current-directory project detection defaults [crates/gwiki/contract/gwiki.contract.json:2] [crates/gwiki/contract/gwiki.contract.json:3] [crates/gwiki/contract/gwiki.contract.json:4] [crates/gwiki/contract/gwiki.contract.json:5-25]. Its implementation layer provides the library and CLI entry point for scoped research/wiki vaults, covering scope resolution, vault initialization, source ingestion, indexing, manifest and registry persistence, search, provenance audits, and formatted outputs [crates/gwiki/src/lib.rs:1-60].
+
+The main flow begins by resolving a project or topic scope, establishing the vault layout, and routing commands through the implementation modules exported from the crate entry point [crates/gwiki/src/lib.rs:1-60]. Ingested material is represented through store models for documents, chunks, links, sources, ingestion events, and scope metadata, which gives the rest of the system a shared data contract for indexing, search, graph, audit, and synthesis workflows [crates/gwiki/src/store.rs:15-21].
+
+The contract and implementation collaborate as two halves of the same tool: the contract describes how callers invoke `gwiki`, while `src` performs the work behind those commands. Within `src`, ingestion and vault management feed Markdown files into the indexer, the indexer parses headings, chunks, and links, and shared memory or Postgres stores receive added, changed, and deleted rows for downstream search, provenance, upkeep, and synthesis flows.
+
+## Call Diagram
+
+```mermaid
+sequenceDiagram
+    participant m_00015808_7660_5129_8df1_45d4b9551ad1 as section_claim_comparisons &#91;function&#93;
+    participant m_00589531_b7ac_54da_a6ca_02d9c8ea1804 as ingest_image_with_vision &#91;function&#93;
+    participant m_01368509_6873_510a_9138_026736b2283e as frontmatter_migration_parses_shared_contract_keys &#91;function&#93;
+    participant m_014c2f03_e0e9_59cb_945c_7a8bb9c65a6b as source_kind_for_url_response &#91;function&#93;
+    participant m_017e301e_e617_58cc_b179_cb2195a4f3f0 as sanitize_pdf_page_markdown &#91;function&#93;
+    participant m_01a578a5_71ed_5a3f_a7a4_153605f04415 as english_one_pass_vs_target_first &#91;function&#93;
+    participant m_01a9eb77_3fbf_517f_aa3d_46928229f6d9 as analytics_graph_from_memory &#91;function&#93;
+    participant m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add as all_source_refresh_skips_unsupported_records &#91;function&#93;
+    participant m_02d14539_2527_53e3_a472_18449d0abb5d as ingest_audio_with_transcription_without_index &#91;function&#93;
+    participant m_038959ea_6f68_51a7_b28d_9b857beca386 as extract_docx &#91;function&#93;
+    participant m_04796375_e1a3_5fa7_af29_7b585d7764a4 as parse_frontmatter &#91;function&#93;
+    participant m_3543c95c_df70_5fa5_9de5_b2376e07fccc as transcribe_for_markdown &#91;function&#93;
+    participant m_38c2171b_952e_589f_a60c_c7c20cd5719d as content_type_media_type &#91;function&#93;
+    participant m_4a3322af_f8bc_5dc0_a366_6e5523d13c7c as is_markdown_horizontal_rule &#91;function&#93;
+    participant m_585c7602_49d9_56e7_bcb5_2c9d6e14f120 as parse_metadata &#91;function&#93;
+    participant m_5a5a8b89_8f80_5e29_911d_0e57b4729095 as seed_unsupported_connector &#91;function&#93;
+    participant m_67b04ae9_5316_58ad_8c9e_4345e12cef0e as extract_xml_paragraphs &#91;function&#93;
+    participant m_6a95a7e1_e58c_55a8_ac11_94f20e7abbc5 as neutralize_gwiki_page_marker_variants &#91;function&#93;
+    participant m_6bfcd22f_3c8b_56e6_950a_9a957044c969 as analytics_graph_from_facts &#91;function&#93;
+    participant m_6dabf274_5145_5116_ab12_740528a0b01d as find_closing_delimiter &#91;function&#93;
+    participant m_82f3e4f9_5e64_5f94_84ff_2c0e0dbef37e as normalize_claim &#91;function&#93;
+    participant m_89d5ac91_7ebb_524b_afcd_aef82ff7e4bd as seed_url &#91;function&#93;
+    participant m_8c66f12f_4bbb_5a85_b464_7dc9611dfb24 as request &#91;function&#93;
+    participant m_9076381c_f935_5c44_bf48_257b15ba9c62 as read_zip_entry &#91;function&#93;
+    participant m_a40abd46_665f_5ed9_bf15_40147ac6ba9f as snapshot &#91;function&#93;
+    participant m_abcbd023_5ca6_5268_8972_4c4d361d8fbe as render_raw_audio_markdown &#91;function&#93;
+    participant m_b904720c_a279_5107_93cd_ceb111199ebb as translate_audio &#91;function&#93;
+    participant m_c68dee89_e779_5e4f_998c_585372ffeab9 as output &#91;function&#93;
+    participant m_f0c37b2c_e586_5edd_83aa_ecf554126398 as test_scope &#91;function&#93;
+    participant m_f6fff319_9e6b_5d72_9655_068135e8ea16 as ingest_image_with_vision_without_index &#91;function&#93;
+    m_00015808_7660_5129_8df1_45d4b9551ad1->>m_82f3e4f9_5e64_5f94_84ff_2c0e0dbef37e: calls
+    m_00589531_b7ac_54da_a6ca_02d9c8ea1804->>m_f6fff319_9e6b_5d72_9655_068135e8ea16: calls
+    m_01368509_6873_510a_9138_026736b2283e->>m_04796375_e1a3_5fa7_af29_7b585d7764a4: calls
+    m_014c2f03_e0e9_59cb_945c_7a8bb9c65a6b->>m_38c2171b_952e_589f_a60c_c7c20cd5719d: calls
+    m_017e301e_e617_58cc_b179_cb2195a4f3f0->>m_4a3322af_f8bc_5dc0_a366_6e5523d13c7c: calls
+    m_017e301e_e617_58cc_b179_cb2195a4f3f0->>m_6a95a7e1_e58c_55a8_ac11_94f20e7abbc5: calls
+    m_01a578a5_71ed_5a3f_a7a4_153605f04415->>m_8c66f12f_4bbb_5a85_b464_7dc9611dfb24: calls
+    m_01a578a5_71ed_5a3f_a7a4_153605f04415->>m_b904720c_a279_5107_93cd_ceb111199ebb: calls
+    m_01a578a5_71ed_5a3f_a7a4_153605f04415->>m_c68dee89_e779_5e4f_998c_585372ffeab9: calls
+    m_01a9eb77_3fbf_517f_aa3d_46928229f6d9->>m_6bfcd22f_3c8b_56e6_950a_9a957044c969: calls
+    m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add->>m_5a5a8b89_8f80_5e29_911d_0e57b4729095: calls
+    m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add->>m_89d5ac91_7ebb_524b_afcd_aef82ff7e4bd: calls
+    m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add->>m_a40abd46_665f_5ed9_bf15_40147ac6ba9f: calls
+    m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add->>m_f0c37b2c_e586_5edd_83aa_ecf554126398: calls
+    m_02d14539_2527_53e3_a472_18449d0abb5d->>m_3543c95c_df70_5fa5_9de5_b2376e07fccc: calls
+    m_02d14539_2527_53e3_a472_18449d0abb5d->>m_abcbd023_5ca6_5268_8972_4c4d361d8fbe: calls
+    m_038959ea_6f68_51a7_b28d_9b857beca386->>m_67b04ae9_5316_58ad_8c9e_4345e12cef0e: calls
+    m_038959ea_6f68_51a7_b28d_9b857beca386->>m_9076381c_f935_5c44_bf48_257b15ba9c62: calls
+    m_04796375_e1a3_5fa7_af29_7b585d7764a4->>m_585c7602_49d9_56e7_bcb5_2c9d6e14f120: calls
+    m_04796375_e1a3_5fa7_af29_7b585d7764a4->>m_6dabf274_5145_5116_ab12_740528a0b01d: calls
+```
 
 ## Child Modules
 
-- [[code/modules/crates/gwiki/assets|crates/gwiki/assets]] - The crates/gwiki/assets module serves as the asset repository for the GWiki system, primarily housing Markdown skill definitions that define core auditing, compiling, querying, and research behaviors. 
-- [[code/modules/crates/gwiki/contract|crates/gwiki/contract]] - The `gwiki/contract` module defines the machine-readable API contract for the gwiki CLI tool, published as `gwiki.contract.json` (~448 indexed symbols). It declares the contract version, tool identity, summary, and global flags, then enumerates the full command surface—each command specifying its name, summary, positionals, flags (with `takes_value`, `value_name`, `allowed_values`, `required`, `repeatable` attributes), JSON output keys, and daemon-consumption status. Commands additionally describe dependency metadata (hard/optional dependencies), multimodal support, degradation behavior, output shape, and metadata keys. A top-level `error_codes` table and `identity_keys` round out the contract, providing a stable schema consumers can use to discover and validate gwiki's CLI capabilities.
-[crates/gwiki/contract/gwiki.contract.json:2]
-[crates/gwiki/contract/gwiki.contract.json:3]
-[crates/gwiki/contract/gwiki.contract.json:4]
-[crates/gwiki/contract/gwiki.contract.json:5-25]
-[crates/gwiki/contract/gwiki.contract.json:7]
-- [[code/modules/crates/gwiki/src|crates/gwiki/src]] - The `crates/gwiki/src` module is the core library of the GWiki research and knowledge engine, integrating note compilation, bidirectional link validation, and vector/graph-boosted search. It coordinates multi-format ingestion—including audio transcription, video frame analysis, and office document extraction—with an autonomous research loop and AI-driven synthesis to compile structured, fully cited wikis.
-[crates/gwiki/src/ai/chunk.rs:24-30]
-[crates/gwiki/src/ai/clients.rs:20-23]
-[crates/gwiki/src/ai/translate.rs:6-29]
-[crates/gwiki/src/api.rs:11-121]
-[crates/gwiki/src/audit.rs:33-35]
+- [[code/modules/crates/gwiki/contract|crates/gwiki/contract]] - The `crates/gwiki/contract` module is the schema source for the `gwiki` local-first wiki CLI. Its single contract file identifies the tool as `gwiki`, sets `contract_version` to 5, and frames the CLI around capture, search, upkeep, and synthesis responsibilities. It also defines shared invocation behavior: global `--format json|text` and `--quiet` flags, scope selectors for `--project` and `--topic`, current-directory project detection defaults, and identity keys used to resolve scoped contexts. [crates/gwiki/contract/gwiki.contract.json:2] [crates/gwiki/contract/gwiki.contract.json:3] [crates/gwiki/contract/gwiki.contract.json:4] [crates/gwiki/contract/gwiki.contract.json:5-25]
 
-## Files
+The main flow is contract-driven command dispatch. The `commands` array enumerates daemon-consumed operations, beginning with `contract`, which emits the full CLI contract including global flags, scope, commands, and error codes, then `index`, which indexes markdown and source notes for the selected scope and returns indexing status plus page/source counts, and `search`, which accepts a `QUERY` positional for scoped wiki search.  [crates/gwiki/contract/gwiki.contract.json:70-84] [crates/gwiki/contract/gwiki.contract.json:85-100]
 
-- [[code/files/crates/gwiki/Cargo.toml|crates/gwiki/Cargo.toml]] - `crates/gwiki/Cargo.toml` has no indexed API symbols. 
-- [[code/files/crates/gwiki/README.md|crates/gwiki/README.md]] - `crates/gwiki/README.md` has no indexed API symbols. 
+Because there are no child modules, collaboration happens inside the JSON contract structure itself: top-level metadata and shared scope rules provide defaults for every command, while each command declares its own positionals, flags, daemon consumption status, JSON output keys, dependency/degradation metadata, and error-code behavior. This keeps CLI, daemon, and downstream consumers aligned around one declarative artifact rather than duplicating command semantics elsewhere. [crates/gwiki/contract/gwiki.contract.json:5-25] 
+- [[code/modules/crates/gwiki/src|crates/gwiki/src]] - The `gwiki` crate is the library and CLI implementation for managing scoped research/wiki vaults: it defines the command API and CLI contract, resolves project or topic scope, initializes vault layout, ingests sources, indexes Markdown, persists manifests and registry state, searches content, audits provenance, and formats command output. Its public entry point wires the module set together and re-exports the main command/result types plus `WikiError` and `run` for embedders [crates/gwiki/src/lib.rs:1-60]. The core data path centers on store models for documents, chunks, links, sources, ingestion events, and scope metadata [crates/gwiki/src/store.rs:15-21] , with indexing walking vault files, parsing Markdown into headings/chunks/links, and writing added/changed/deleted rows through a shared memory or Postgres store  .
+
+The main flows layer specialized modules over that storage foundation. Ingestion accepts files, URLs, audio, images, PDFs, videos, Git snapshots, Wayback captures, and documents, writes immutable raw Markdown/assets, records source-manifest metadata, and then indexes the vault [crates/gwiki/src/ingest/audio.rs:40-54] [crates/gwiki/src/ingest/wayback.rs:28-47]. Compile and synthesis turn accepted source notes into handoff bundles and compiled wiki pages with grounded citations and safe atomic writes [crates/gwiki/src/compile/mod.rs:49-56] , while explainer, transcribe, vision, media, and video modules provide bounded AI or ffmpeg-backed derived content with degradation reporting    .
+
+Operationally, `commands` adapts parsed `Command` variants into scoped command outcomes and delegates to domain modules such as health, audit, lint, export, collect, and librarian . Health combines lint, page collection, source manifests, provenance, citation indexing, stale detection, broken links, duplicate concepts, and report persistence , while audit checks generated and prose claims against inline sources, frontmatter, provenance, and ignored-section rules . Search and graph support collaborate through BM25, semantic/Qdrant vectors, graph boosts, FalkorDB graph sync, and code-graph provenance mapping: vector sync batches indexed chunks into deterministic Qdrant points , and Falkor graph sync loads wiki facts plus capped shared code edges into the `gobby_wiki` graph for search, context, exports, and refresh decisions .
 

@@ -23,7 +23,7 @@ Module: [[code/modules/crates/gcode/src/graph/report|crates/gcode/src/graph/repo
 
 ## Purpose
 
-`crates/gcode/src/graph/report/render.rs` exposes 8 indexed API symbols.
+This file provides markdown rendering for graph analysis reports. The `RenderMarkdownInput` struct packages report data, and `render_markdown` orchestrates the output by building a markdown string containing project metadata, high-degree hotspots (files, modules, symbols), incoming-call hotspots, and target frequency information. Helper functions handle specific formatting: `append_hotspot_section` and `append_target_section` structure report sections, `inline_code` and `markdown_text` manage content escaping, `max_backtick_run` supports proper backtick fence generation, and `named_counts_inline` formats categorical counts inline.
 [crates/gcode/src/graph/report/render.rs:8-18]
 [crates/gcode/src/graph/report/render.rs:20-99]
 [crates/gcode/src/graph/report/render.rs:101-121]

@@ -7,24 +7,63 @@
   "root": "/Users/josh/Projects/gobby-cli/.gobby/wiki",
   "stale_pages": [],
   "stale_citations": [],
-  "uncited_sources": [],
-  "broken_links": [],
-  "duplicate_concepts": [],
-  "uncompiled_sources": [
+  "uncited_sources": [
     {
-      "source_id": "src-9171ba1efd048efb-https-en-wikipedia-org-wiki-mean-reciprocal-rank",
-      "path": "raw/src-9171ba1efd048efb-https-en-wikipedia-org-wiki-mean-reciprocal-rank.md",
-      "location": "https://en.wikipedia.org/wiki/Mean_reciprocal_rank"
+      "source_id": "src-495a2039993adc47-https-en-wikipedia-org-wiki-retrieval-augmented",
+      "path": "raw/src-495a2039993adc47-https-en-wikipedia-org-wiki-retrieval-augmented.md",
+      "location": "https://en.wikipedia.org/wiki/Retrieval-augmented_generation"
     },
     {
-      "source_id": "src-d4ddc9797f438586-users-josh-projects-gobby-cli-readme-md",
-      "path": "raw/src-d4ddc9797f438586-users-josh-projects-gobby-cli-readme-md.md",
+      "source_id": "src-d0009cf2de348320-users-josh-projects-gobby-cli-readme-md",
+      "path": "raw/src-d0009cf2de348320-users-josh-projects-gobby-cli-readme-md.md",
       "location": "/Users/josh/Projects/gobby-cli/README.md"
     },
     {
-      "source_id": "src-df96b663b72e1f6a-inbox-rrf-note-txt",
-      "path": "raw/src-df96b663b72e1f6a-inbox-rrf-note-txt.md",
-      "location": "inbox/rrf-note.txt"
+      "source_id": "src-a23d7939da1b175c-private-tmp-wp3-deposit-note-md",
+      "path": "raw/src-a23d7939da1b175c-private-tmp-wp3-deposit-note-md.md",
+      "location": "/private/tmp/wp3-deposit-note.md"
+    }
+  ],
+  "broken_links": [
+    {
+      "path": "code/files/crates/gwiki/src/compile/tests.rs.md",
+      "line": 75,
+      "target": "knowledge/topics/exact",
+      "kind": "wikilink"
+    },
+    {
+      "path": "code/files/crates/gwiki/src/synthesis.rs.md",
+      "line": 130,
+      "target": "relative_path",
+      "kind": "wikilink"
+    }
+  ],
+  "duplicate_concepts": [],
+  "uncompiled_sources": [
+    {
+      "source_id": "src-495a2039993adc47-https-en-wikipedia-org-wiki-retrieval-augmented",
+      "path": "raw/src-495a2039993adc47-https-en-wikipedia-org-wiki-retrieval-augmented.md",
+      "location": "https://en.wikipedia.org/wiki/Retrieval-augmented_generation"
+    },
+    {
+      "source_id": "src-d0009cf2de348320-users-josh-projects-gobby-cli-readme-md",
+      "path": "raw/src-d0009cf2de348320-users-josh-projects-gobby-cli-readme-md.md",
+      "location": "/Users/josh/Projects/gobby-cli/README.md"
+    },
+    {
+      "source_id": "src-cfe14a7625e12a59-private-tmp-wp3-logo-png",
+      "path": "raw/src-cfe14a7625e12a59-private-tmp-wp3-logo-png.md",
+      "location": "/private/tmp/wp3-logo.png"
+    },
+    {
+      "source_id": "src-ab36a0b101bf7f6f-inbox-wp3-rrf-note-md",
+      "path": "raw/src-ab36a0b101bf7f6f-inbox-wp3-rrf-note-md.md",
+      "location": "inbox/wp3-rrf-note.md"
+    },
+    {
+      "source_id": "src-a23d7939da1b175c-private-tmp-wp3-deposit-note-md",
+      "path": "raw/src-a23d7939da1b175c-private-tmp-wp3-deposit-note-md.md",
+      "location": "/private/tmp/wp3-deposit-note.md"
     }
   ],
   "json_path": "meta/health/latest.json",

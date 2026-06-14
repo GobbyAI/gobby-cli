@@ -18,7 +18,7 @@ Module: [[code/modules/crates/gwiki/src/ingest/pdf|crates/gwiki/src/ingest/pdf]]
 
 ## Purpose
 
-`crates/gwiki/src/ingest/pdf/mod.rs` exposes 3 indexed API symbols.
+This module is the PDF ingestion hub for `gwiki`, coordinating text-layer extraction, page rendering, markdown generation, and vision-merged output. It exposes the document-feature-gated PDF entry points and shared types, while keeping the implementation split across `ingest`, `markdown`, `render`, `text`, and `types`. The internal structs `PdfPageMarkdown`, `PdfMarkdownSummary`, and `PdfRenderOutcome` act as lightweight transport objects for per-page markdown, overall ingestion summary state, and rendered-page results plus any degradation detected during rendering.
 [crates/gwiki/src/ingest/pdf/mod.rs:22-25]
 [crates/gwiki/src/ingest/pdf/mod.rs:28-34]
 [crates/gwiki/src/ingest/pdf/mod.rs:37-40]

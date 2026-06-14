@@ -10,7 +10,6 @@ provenance:
   - 45-50
   - 53-56
   - 58-64
-  - 59-63
   - 66-78
   - 80-82
   - 84-89
@@ -25,7 +24,6 @@ provenance:
   - 279-281
   - '283'
   - 285-300
-  - 286-299
   - 309-361
   - 364-377
   - 380-389
@@ -35,10 +33,7 @@ provenance:
   - 469-495
   - 497-500
   - 502-515
-  - 503-510
-  - 512-514
   - 517-530
-  - 518-529
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -50,7 +45,7 @@ Module: [[code/modules/crates/gcore/src/ai|crates/gcore/src/ai]]
 
 ## Purpose
 
-`crates/gcore/src/ai/probe.rs` exposes 35 indexed API symbols.
+This file defines the AI capability probing layer for a daemon: it maps each `AiCapability` to a status endpoint, probes those endpoints with a timeouted HTTP transport, and classifies the result into structured availability and degradation reports. `CapabilityAvailability`, `CapabilityDegradation`, and `CapabilityProbeReport` hold the probing outcome, while `CapabilityProbeReport::availability` provides a lookup by capability. The probing flow uses `capability_status_route` to choose the route, `probe_daemon_capability(_at/_with)` to execute a single check, `probe_daemon_capabilities(_at/_with)` to collect all predefined capabilities, and helpers like `status_body_advertises`, `bool_at_path`, and `unavailable` to interpret JSON status bodies and build failure reasons. `UreqProbeTransport` implements the transport interface for real HTTP requests, and `FakeTransport` supports tests that verify route mapping and status-body interpretation.
 [crates/gcore/src/ai/probe.rs:20-23]
 [crates/gcore/src/ai/probe.rs:26-34]
 [crates/gcore/src/ai/probe.rs:37-42]

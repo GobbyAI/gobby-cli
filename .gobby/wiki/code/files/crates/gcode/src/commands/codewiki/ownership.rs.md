@@ -63,7 +63,17 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Purpose
 
-`crates/gcode/src/commands/codewiki/ownership.rs` exposes 50 indexed API symbols.
+This file implements code ownership tracking and documentation generation for the codewiki system. It combines two ownership sources: declared owners from CODEOWNERS files and derived owners from git blame history.
+
+The core workflow is orchestrated by `build_ownership_doc`, which:
+- Reads and parses CODEOWNERS file patterns via `read_codeowners` and `parse_codeowners`
+- Looks up declared owners for each file using `declared_owners_for_files` and pattern matching
+- Derives actual contributors using `derived_owners_for_files`, which runs git blame with `blame_file_contributors` and parses the porcelain output via `parse_git_blame_porcelain`
+- Caches blame results in `OwnershipMeta` keyed by file content hash to avoid redundant git operations
+- Tracks status with `OwnershipStatus` to flag partial results from timeouts or errors
+- Aggregates contributors and formats the final markdown via `ownership_frontmatter`, `write_modules`, and `write_files`
+
+Data structures include `OwnershipOptions` (configurable timeouts and file caps), `Codeowners` entries, `OwnershipContributor` records, and `FileOwnership` combining declared and derived sources. Helper functions like `contributor_id`, `degraded_sources`, and `content_hash` support deterministic contributor tracking and graceful degradation when sources are unavailable. Extensive unit tests validate behavior around precedence, caching, timeouts, and partial results.
 [crates/gcode/src/commands/codewiki/ownership.rs:17-20]
 [crates/gcode/src/commands/codewiki/ownership.rs:22-29]
 [crates/gcode/src/commands/codewiki/ownership.rs:23-28]

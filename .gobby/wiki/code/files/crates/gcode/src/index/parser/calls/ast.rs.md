@@ -22,7 +22,7 @@ Module: [[code/modules/crates/gcode/src/index/parser/calls|crates/gcode/src/inde
 
 ## Purpose
 
-`crates/gcode/src/index/parser/calls/ast.rs` exposes 7 indexed API symbols.
+This file implements AST-based call extraction for the gcode indexer. `extract_ast_calls` runs a language-specific tree-sitter call query over a parsed syntax tree, finds the `name` and optional `call` captures, filters out ignored names, and uses qualifier and semantic-resolution helpers to build `CallRelation` results. `extract_js_calls` is the JavaScript-specific entry point that parses JS, applies the shared extraction logic, and `js_bindings` parses import statements so qualified member calls can be resolved against module bindings. The tests cover query-capture requirements, keyword call filtering, and correct handling of member calls and imported qualified names.
 [crates/gcode/src/index/parser/calls/ast.rs:17-96]
 [crates/gcode/src/index/parser/calls/ast.rs:109-140]
 [crates/gcode/src/index/parser/calls/ast.rs:142-154]

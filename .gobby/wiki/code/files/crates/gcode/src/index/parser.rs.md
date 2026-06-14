@@ -21,7 +21,7 @@ Module: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 
 ## Purpose
 
-`crates/gcode/src/index/parser.rs` exposes 6 indexed API symbols.
+This file provides tree-sitter-based AST parsing for extracting code symbols, imports, calls, and documentation from source files. The main entry point `parse_file_with_semantic` orchestrates the full pipeline: it validates file security and size, detects the programming language, and parses the file using tree-sitter. Supporting functions extract specific code elements from the AST—`extract_symbols` retrieves symbol definitions, `extract_imports` captures import statements, `extract_docstring` pulls documentation comments, and `link_parents` establishes parent-child relationships between symbols. Utility functions like `strip_quotes` handle string normalization. The module integrates with language detection, security checks, and semantic call resolution to produce a complete `ParseResult` containing indexed symbols and their metadata.
 [crates/gcode/src/index/parser.rs:29-133]
 [crates/gcode/src/index/parser.rs:135-234]
 [crates/gcode/src/index/parser.rs:236-261]

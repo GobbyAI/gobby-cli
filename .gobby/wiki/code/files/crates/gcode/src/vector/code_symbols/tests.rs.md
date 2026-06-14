@@ -26,7 +26,6 @@ provenance:
   - 515-580
   - 583-653
   - 656-703
-  - 661-696
   - 705-762
   - 764-783
   - 785-796
@@ -51,7 +50,7 @@ Module: [[code/modules/crates/gcode/src/vector/code_symbols|crates/gcode/src/vec
 
 ## Purpose
 
-`crates/gcode/src/vector/code_symbols/tests.rs` exposes 36 indexed API symbols.
+This file is the test suite for `vector::code_symbols`, covering how Rust symbols are turned into vector payloads, how collections and Qdrant-backed operations are named and validated, and how embedding/sync workflows behave end to end. It uses small helper builders like `test_symbol`, `test_symbol_with_index`, and `test_context` to construct fixtures, then verifies provenance metadata, optional summaries, collection name rules, project/file vector deletion behavior, embedding batch ordering, sync error handling, dimension probing, HTTP lifecycle scoping, and Rust source masking/parsing helpers for comments, strings, chars, and raw literals.
 [crates/gcode/src/vector/code_symbols/tests.rs:13-34]
 [crates/gcode/src/vector/code_symbols/tests.rs:36-44]
 [crates/gcode/src/vector/code_symbols/tests.rs:47-74]

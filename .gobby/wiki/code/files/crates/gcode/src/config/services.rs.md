@@ -69,7 +69,7 @@ Module: [[code/modules/crates/gcode/src/config|crates/gcode/src/config]]
 
 ## Purpose
 
-`crates/gcode/src/config/services.rs` exposes 55 indexed API symbols.
+This file provides a trait-based configuration system for resolving service configs from multiple sources. The ServiceConfigSource trait defines a two-method interface (config_value, resolve_value) that various source implementations fulfill: PostgresConfigSource reads from a database, FallbackConfigSource chains PostgreSQL with standalone configs, TracingFallbackConfigSource and ErrorCapturingConfigSource add observability, and ClosureConfigSource/FallibleClosureConfigSource wrap custom resolution logic. Helper functions like service_env_value and config_store_missing handle environment lookups and error detection. Numerous resolution functions (resolve_falkordb_config, resolve_qdrant_config, resolve_embedding_config, resolve_code_vector_settings, etc.) compose these sources through fallback chains to build specific service configurations, often trying multiple key variants and applying validation. The system supports reading from PostgreSQL config tables, environment variables, standalone YAML files, and dynamic closures with built-in error capturing and tracing.
 [crates/gcode/src/config/services.rs:20-22]
 [crates/gcode/src/config/services.rs:24-27]
 [crates/gcode/src/config/services.rs:29-39]

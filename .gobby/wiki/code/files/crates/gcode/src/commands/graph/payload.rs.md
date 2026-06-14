@@ -23,7 +23,7 @@ Module: [[code/modules/crates/gcode/src/commands/graph|crates/gcode/src/commands
 
 ## Purpose
 
-`crates/gcode/src/commands/graph/payload.rs` exposes 8 indexed API symbols.
+This file provides a command layer for code graph analysis output and reporting. It defines formatting functions that convert GraphPayload and ProjectGraphReport structures into human-readable text (node/link counts, node definitions with types and paths, typed edges), then exposes public functions for generating and displaying various graph queries: project overview, file-specific graphs, neighboring symbol searches, blast radius dependency analysis, and summary reports. Each public function queries the underlying code graph module to generate the requested analysis, then dispatches the result through a unified print function that outputs in either JSON or text format based on the Format parameter.
 [crates/gcode/src/commands/graph/payload.rs:6-37]
 [crates/gcode/src/commands/graph/payload.rs:39-44]
 [crates/gcode/src/commands/graph/payload.rs:46-48]

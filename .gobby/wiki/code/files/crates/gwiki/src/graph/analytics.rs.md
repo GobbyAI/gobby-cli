@@ -37,7 +37,7 @@ Module: [[code/modules/crates/gwiki/src/graph|crates/gwiki/src/graph]]
 
 ## Purpose
 
-`crates/gwiki/src/graph/analytics.rs` exposes 29 indexed API symbols.
+This file defines the graph analytics layer for wiki memory data: it converts `MemoryWikiGraph`/`WikiGraphFacts` into a core `AnalyticsGraph`, runs analysis, and exports the result as serializable report types for communities, centrality, bridges, god nodes, unexpected links, and hotspots. It also defines `GraphAnalyticsError` for duplicate node metadata conflicts, plus helper builders like `insert_node` and `from_core`/`from` conversions that map core analytics structures into the export model, with tests covering conversion, missing resolved targets, and duplicate-node rejection.
 [crates/gwiki/src/graph/analytics.rs:14-22]
 [crates/gwiki/src/graph/analytics.rs:24-39]
 [crates/gwiki/src/graph/analytics.rs:25-38]

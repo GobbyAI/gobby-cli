@@ -28,7 +28,7 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-`crates/gcode/src/skill.rs` exposes 13 indexed API symbols.
+This file defines the embedded `gcode` skill installer for AI CLI agents. It stores the bundled `SKILL.md` content and a Claude Code `plugin.json` manifest, models each supported install destination with `SkillTarget` and the private `InstallKind`, and exposes `supported_targets()` plus `install_skill()` to route installation to either a Claude plugin layout or a CLI-specific skill directory. Helper functions resolve the expected manifest path and validate the plugin metadata, while the tests lock down the supported target list, confirm installs land in the right places, and ensure existing CLI files are left untouched.
 [crates/gcode/src/skill.rs:20-23]
 [crates/gcode/src/skill.rs:26-29]
 [crates/gcode/src/skill.rs:61-63]

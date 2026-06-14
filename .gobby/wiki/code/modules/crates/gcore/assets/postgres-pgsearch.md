@@ -4,12 +4,7 @@ type: code_module
 provenance:
 - file: crates/gcore/assets/postgres-pgsearch/version.json
   ranges:
-  - '2'
-  - '3'
-  - 4-7
-  - '5'
-  - '6'
-  - '8'
+  - 2-8
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -21,24 +16,13 @@ Parent: [[code/modules/crates/gcore/assets|crates/gcore/assets]]
 
 ## Overview
 
-This module packages a custom PostgreSQL container image with the `pg_search` (full-text search) and `pgaudit` (audit logging) extensions for the gcore crate.
+This module is a single asset manifest for the bundled `postgres-pgsearch` dependency. Its responsibility is to pin the pg_search release version and integrity hashes used by build or packaging code, with `pg_search_version` fixed at `0.23.4` and a default `pg_search_sha256` for artifact verification. It also records the target PostgreSQL major version as `18`, tying the asset to the expected database runtime compatibility range.  [crates/gcore/assets/postgres-pgsearch/version.json:8]
 
-A Dockerfile defines the image build, while `version.json` pins extension versions and per-architecture (amd64/arm64) SHA256 checksums alongside the target PostgreSQL major version. The `initdb.d` directory holds ordered SQL scripts that enable the required extensions on database startup, and the `scripts` directory provides `pg_audit_export.sh` for exporting audit data.
-[crates/gcore/assets/postgres-pgsearch/version.json:2]
-[crates/gcore/assets/postgres-pgsearch/version.json:3]
-[crates/gcore/assets/postgres-pgsearch/version.json:4-7]
-[crates/gcore/assets/postgres-pgsearch/version.json:5]
-[crates/gcore/assets/postgres-pgsearch/version.json:6]
-
-## Child Modules
-
-- [[code/modules/crates/gcore/assets/postgres-pgsearch/initdb.d|crates/gcore/assets/postgres-pgsearch/initdb.d]] - PostgreSQL initialization scripts for the pgsearch container. Contains ordered SQL files that run on database startup to enable required extensions: `pg_search` (full-text search) and `pgaudit` (audit logging). 
-- [[code/modules/crates/gcore/assets/postgres-pgsearch/scripts|crates/gcore/assets/postgres-pgsearch/scripts]] - This module provides a shell script (`pg_audit_export.sh`) for exporting PostgreSQL audit data, supporting the postgres-pgsearch asset configuration within the gcore crate. The script contains no indexed API symbols. 
+The key flow is artifact selection followed by checksum validation. Consumers can use the top-level checksum as the default value, or select an architecture-specific checksum from `pg_search_sha256_by_arch`, which currently differentiates `amd64` and `arm64` artifacts. This keeps the version pin, platform-specific binary verification data, and PostgreSQL compatibility target together in one compact manifest, with no child modules involved. [crates/gcore/assets/postgres-pgsearch/version.json:4-7]
 
 ## Files
 
-- [[code/files/crates/gcore/assets/postgres-pgsearch/Dockerfile|crates/gcore/assets/postgres-pgsearch/Dockerfile]] - `crates/gcore/assets/postgres-pgsearch/Dockerfile` has no indexed API symbols. 
-- [[code/files/crates/gcore/assets/postgres-pgsearch/version.json|crates/gcore/assets/postgres-pgsearch/version.json]] - `crates/gcore/assets/postgres-pgsearch/version.json` exposes 6 indexed API symbols.
+- [[code/files/crates/gcore/assets/postgres-pgsearch/version.json|crates/gcore/assets/postgres-pgsearch/version.json]] - This file is a version manifest for the `postgres-pgsearch` asset. It records the `pg_search_version`, a default `pg_search_sha256`, architecture-specific SHA-256 values for `amd64` and `arm64`, and the target `postgres_major` version so the build or packaging logic can select and verify the correct binary artifact.
 [crates/gcore/assets/postgres-pgsearch/version.json:2]
 [crates/gcore/assets/postgres-pgsearch/version.json:3]
 [crates/gcore/assets/postgres-pgsearch/version.json:4-7]

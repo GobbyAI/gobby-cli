@@ -6,9 +6,6 @@ provenance:
   ranges:
   - 11-18
   - 20-61
-  - 21-52
-  - 54-56
-  - 58-60
   - 68-74
   - 77-80
   - 83-88
@@ -27,7 +24,7 @@ Module: [[code/modules/crates/ghook/src|crates/ghook/src]]
 
 ## Purpose
 
-`crates/ghook/src/cli_config.rs` exposes 12 indexed API symbols.
+This file defines the compile-time `CliConfig` registry for Gobby’s hook dispatcher. It maps known CLI names to fixed per-host settings: a daemon source label, the set of hook types that must fail closed, and the malformed-JSON exit code. `for_cli` performs case-insensitive lookup for the supported CLIs, `for_dispatch` guarantees a usable config by falling back to `claude`, and `is_critical_hook` checks whether a hook should be treated as failure-critical. The tests lock in the expected CLI-specific critical-hook sets, exit codes, case-insensitive matching, and fallback behavior.
 [crates/ghook/src/cli_config.rs:11-18]
 [crates/ghook/src/cli_config.rs:20-61]
 [crates/ghook/src/cli_config.rs:21-52]

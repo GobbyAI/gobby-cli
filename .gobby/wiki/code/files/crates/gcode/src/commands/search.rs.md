@@ -53,7 +53,7 @@ Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Purpose
 
-`crates/gcode/src/commands/search.rs` exposes 38 indexed API symbols.
+This file implements a multi-source code symbol search system for the gcode command. The core `search` function orchestrates three ranking sources—exact matching, BM25 full-text indexing, and Qdrant semantic embeddings—merging them via reciprocal rank fusion with visibility-based filtering. Supporting search functions (`search_symbol`, `search_text`, `search_content`, `search_symbol_with_graph`) handle specific query types and optionally enrich results with graph-based relationships. Ranking and filtering helpers (`exact_tier`, `final_rank_score`, `symbol_matches_filters`, `path_matches_filters`) determine result relevance and apply constraints by language, symbol kind, and glob-pattern paths. Utility functions format output, generate user hints for query optimization, handle pagination, and collapse whitespace. The module also includes diagnostic functions that provide context-aware messages when results are empty or filtered. Overall, it provides a hybrid search experience balancing fuzzy concept matching with exact-match prioritization and scope-aware visibility controls.
 [crates/gcode/src/commands/search.rs:13-21]
 [crates/gcode/src/commands/search.rs:25-200]
 [crates/gcode/src/commands/search.rs:202-292]

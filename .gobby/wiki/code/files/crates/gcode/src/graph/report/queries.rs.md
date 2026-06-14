@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gcode/src/graph/report|crates/gcode/src/graph/repo
 
 ## Purpose
 
-`crates/gcode/src/graph/report/queries.rs` exposes 9 indexed API symbols.
+This file provides Cypher query builders for analyzing code graph metrics and patterns in Neo4j. It exposes helper functions that generate consistent SQL expressions for node type classification (`report_node_type_case`), identification (`report_node_id_expr`), and naming (`report_node_name_expr`). These helpers are composed into parameterized query functions that support various reporting operations: `report_node_counts_query` and `report_code_edge_counts_query` tally nodes and relationships by type, `report_hotspots_query` and `report_incoming_call_hotspots_query` identify highly-connected nodes ranked by degree or incoming calls, `report_target_frequencies_query` finds the most frequently called external or unresolved targets, and `report_bridge_edges_query` retrieves provenance metadata for RELATES_TO_CODE edges. Together these queries enable introspection of code graph structure across node types (CodeFile, CodeModule, CodeSymbol, UnresolvedCallee, ExternalSymbol) and relationship types (DEFINES, IMPORTS, CALLS) scoped to a project.
 [crates/gcode/src/graph/report/queries.rs:7-18]
 [crates/gcode/src/graph/report/queries.rs:20-22]
 [crates/gcode/src/graph/report/queries.rs:24-26]

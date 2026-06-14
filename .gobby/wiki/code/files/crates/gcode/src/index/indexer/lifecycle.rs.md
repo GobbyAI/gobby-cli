@@ -26,7 +26,7 @@ Module: [[code/modules/crates/gcode/src/index/indexer|crates/gcode/src/index/ind
 
 ## Purpose
 
-`crates/gcode/src/index/indexer/lifecycle.rs` exposes 11 indexed API symbols.
+This file manages the lifecycle operations of the code indexing system. It handles cleanup of deleted file projections (both code graph and vector database), tracks file changes by comparing current filesystem state against indexed records, and manages project-wide indexing operations. The core functions work together to: detect stale files (content changed) and orphaned files (deleted but still indexed), clean up projections when files are removed, invalidate entire project indices atomically, refresh project statistics, and coordinate synchronization of projections to external systems. Error conditions during projection cleanup are recorded as index degradations, allowing partial success when operations fail. The CurrentFileState struct and related functions provide efficient change detection by maintaining path-to-hash mappings for incremental indexing decisions.
 [crates/gcode/src/index/indexer/lifecycle.rs:16-54]
 [crates/gcode/src/index/indexer/lifecycle.rs:56-69]
 [crates/gcode/src/index/indexer/lifecycle.rs:71-81]

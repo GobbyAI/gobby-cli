@@ -17,20 +17,9 @@ provenance:
   - 90-94
   - 97-103
   - 105-374
-  - 106-178
-  - 180-222
-  - 224-239
-  - 241-300
-  - 302-315
-  - 317-326
-  - 328-366
-  - 368-373
   - 376-382
   - 384-390
   - 392-473
-  - 393-401
-  - 403-466
-  - 468-472
   - 475-480
   - 482-484
   - 490-518
@@ -46,7 +35,9 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-`crates/gcore/src/graph_analytics.rs` exposes 31 indexed API symbols.
+This file provides transport-free graph analytics for code and knowledge graphs. It defines the lightweight data model for nodes, edges, communities, centrality scores, hotspots, and the aggregate `GraphAnalytics` result, then exposes `analyze` as the entry point that runs the full pipeline.
+
+The implementation centers on `PreparedGraph`, which converts the input graph into indexed, weight-aware forms and computes each metric: centrality, bridge nodes and bridge edges, communities with bridges removed, “god nodes,” unexpected links, and hotspots. `BridgeSearch` supports the bridge-discovery pass, while helper functions such as `compare_edge_ref`, `weight_for`, and `seeded_graph` back the scoring and test coverage.
 [crates/gcore/src/graph_analytics.rs:7-11]
 [crates/gcore/src/graph_analytics.rs:14-18]
 [crates/gcore/src/graph_analytics.rs:21-24]

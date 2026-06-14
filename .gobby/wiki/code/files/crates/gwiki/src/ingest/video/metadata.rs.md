@@ -23,7 +23,7 @@ Module: [[code/modules/crates/gwiki/src/ingest/video|crates/gwiki/src/ingest/vid
 
 ## Purpose
 
-`crates/gwiki/src/ingest/video/metadata.rs` exposes 9 indexed API symbols.
+This module collects the small data-shaping helpers used by video ingestion. It defines `VideoDegradationContext` to carry degradation settings, `video_media_metadata` to stat the video asset and build `VideoMediaMetadata`, and `VideoSnapshotRef` plus its `from_snapshot`/`from_file_snapshot` constructors to expose borrowed views over full or file-backed video snapshots. It also provides `IngestResult::from`, `render_raw_video_markdown`, and `format_timestamp` to turn snapshot and transcript data into ingest output and formatted markdown.
 [crates/gwiki/src/ingest/video/metadata.rs:4-8]
 [crates/gwiki/src/ingest/video/metadata.rs:10-25]
 [crates/gwiki/src/ingest/video/metadata.rs:27-39]

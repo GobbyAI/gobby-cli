@@ -16,32 +16,28 @@ provenance:
   - 136-142
   - 145-151
   - 154-166
-  - 173-207
-  - 211-239
-  - 242-257
-  - 260-269
-  - 272-281
-  - 283-302
-  - 304-308
-  - 310-319
-  - 311-318
-  - 321-325
-  - 327-336
-  - 328-335
-  - 338-342
-  - 339-341
-  - 344-347
-  - 349-355
-  - 350-354
-  - 357-360
-  - 362-364
-  - 366-380
-  - 382-470
-  - 472-480
-  - 482-499
-  - 501-514
-  - 516-533
-  - 535-554
+  - 177-209
+  - 217-243
+  - 251-264
+  - 272-279
+  - 287-295
+  - 298-305
+  - 307-311
+  - 313-322
+  - 324-328
+  - 330-339
+  - 341-345
+  - 347-350
+  - 352-358
+  - 360-363
+  - 365-367
+  - 369-383
+  - 385-473
+  - 475-483
+  - 485-502
+  - 504-517
+  - 519-536
+  - 538-557
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -53,7 +49,7 @@ Module: [[code/modules/crates/gcode/src/search/fts|crates/gcode/src/search/fts]]
 
 ## Purpose
 
-`crates/gcode/src/search/fts/tests.rs` exposes 38 indexed API symbols.
+This file contains the unit and integration tests for the `gcode` full-text search and path-matching helpers, plus the PostgreSQL fixture utilities those tests need. The early tests verify query sanitization, glob/path expansion, pattern compilation, symbol/snippet behavior, and graph-symbol resolution, while the later helpers seed and clean up overlay-visibility test data, build temporary project/file/symbol/chunk rows, and construct an overlay-scoped `Context` so the database-backed visibility assertions can run in isolation.
 [crates/gcode/src/search/fts/tests.rs:17-26]
 [crates/gcode/src/search/fts/tests.rs:29-34]
 [crates/gcode/src/search/fts/tests.rs:37-43]
@@ -98,82 +94,82 @@ Module: [[code/modules/crates/gcode/src/search/fts|crates/gcode/src/search/fts]]
 - `snippet_handles_unicode_before_match` (function) component `snippet_handles_unicode_before_match [function]` (`1f5dc90a-1d58-5be8-8c77-426b53c26226`) lines 154-166 [crates/gcode/src/search/fts/tests.rs:154-166]
   - Signature: `fn snippet_handles_unicode_before_match() {`
   - Purpose: This function tests that `make_snippet` correctly extracts snippets containing a target substring while respecting a 180-character limit, even when Unicode characters precede the match in the source content. [crates/gcode/src/search/fts/tests.rs:154-166]
-- `overlay_visibility_counts_and_kinds_use_database_predicates` (function) component `overlay_visibility_counts_and_kinds_use_database_predicates [function]` (`e7a89329-186a-50f7-9f45-834cf3f5d189`) lines 173-207 [crates/gcode/src/search/fts/tests.rs:173-207]
+- `overlay_visibility_counts_and_kinds_use_database_predicates` (function) component `overlay_visibility_counts_and_kinds_use_database_predicates [function]` (`95a18355-c18b-5c69-a394-23e780c4de6e`) lines 177-209 [crates/gcode/src/search/fts/tests.rs:177-209]
   - Signature: `fn overlay_visibility_counts_and_kinds_use_database_predicates() {`
-  - Purpose: Tests overlay visibility database predicates by asserting correct visible kinds and text/content visibility counts across parent and overlay projects. [crates/gcode/src/search/fts/tests.rs:173-207]
-- `resolve_graph_symbol_by_id_resolves_exact_symbol` (function) component `resolve_graph_symbol_by_id_resolves_exact_symbol [function]` (`70ea9540-7e9c-556b-9125-c0d00efa1945`) lines 211-239 [crates/gcode/src/search/fts/tests.rs:211-239]
+  - Purpose: It verifies that overlay visibility queries use database-level predicates by asserting the visible kinds and text/content match counts for a seeded overlay fixture are exactly the expected values. [crates/gcode/src/search/fts/tests.rs:177-209]
+- `resolve_graph_symbol_by_id_resolves_exact_symbol` (function) component `resolve_graph_symbol_by_id_resolves_exact_symbol [function]` (`bc44041c-8be3-5fb7-a9d2-d3ec818abf0d`) lines 217-243 [crates/gcode/src/search/fts/tests.rs:217-243]
   - Signature: `fn resolve_graph_symbol_by_id_resolves_exact_symbol() {`
-  - Purpose: This unit test verifies that `resolve_graph_symbol_by_id` correctly retrieves a symbol from the database when queried by its fully-qualified identifier (project:file:name). [crates/gcode/src/search/fts/tests.rs:211-239]
-- `resolve_graph_symbol_by_id_returns_none_for_missing_uuid` (function) component `resolve_graph_symbol_by_id_returns_none_for_missing_uuid [function]` (`ac13df70-4a1b-5715-a138-bdff7efaae89`) lines 242-257 [crates/gcode/src/search/fts/tests.rs:242-257]
+  - Purpose: Verifies that 'resolve_graph_symbol_by_id' returns the exact symbol for a fully qualified symbol ID within a project, preserving the ID and resolving the expected display name. [crates/gcode/src/search/fts/tests.rs:217-243]
+- `resolve_graph_symbol_by_id_returns_none_for_missing_uuid` (function) component `resolve_graph_symbol_by_id_returns_none_for_missing_uuid [function]` (`896f406b-7be4-5da6-85a8-4085cc42dc40`) lines 251-264 [crates/gcode/src/search/fts/tests.rs:251-264]
   - Signature: `fn resolve_graph_symbol_by_id_returns_none_for_missing_uuid() {`
-  - Purpose: This test verifies that `resolve_graph_symbol_by_id` returns `None` when querying with a non-existent UUID. [crates/gcode/src/search/fts/tests.rs:242-257]
-- `resolve_graph_symbol_by_id_returns_none_for_empty_id` (function) component `resolve_graph_symbol_by_id_returns_none_for_empty_id [function]` (`6ce78df0-8b75-58cb-bff6-3a7a8d5c00c2`) lines 260-269 [crates/gcode/src/search/fts/tests.rs:260-269]
+  - Purpose: Verifies that 'resolve_graph_symbol_by_id' returns 'None' when called with a UUID that does not correspond to any graph symbol in the given project. [crates/gcode/src/search/fts/tests.rs:251-264]
+- `resolve_graph_symbol_by_id_returns_none_for_empty_id` (function) component `resolve_graph_symbol_by_id_returns_none_for_empty_id [function]` (`30d84ae4-7c0c-5f47-a008-8f41fb85f29c`) lines 272-279 [crates/gcode/src/search/fts/tests.rs:272-279]
   - Signature: `fn resolve_graph_symbol_by_id_returns_none_for_empty_id() {`
-  - Purpose: This is a unit test that asserts `resolve_graph_symbol_by_id()` returns `None` when invoked with an empty string as the symbol identifier. [crates/gcode/src/search/fts/tests.rs:260-269]
-- `resolve_graph_symbol_by_id_returns_none_for_malformed_id` (function) component `resolve_graph_symbol_by_id_returns_none_for_malformed_id [function]` (`adece121-7c6d-5c41-b9b1-559f2a896ed3`) lines 272-281 [crates/gcode/src/search/fts/tests.rs:272-281]
+  - Purpose: Verifies that 'resolve_graph_symbol_by_id' returns 'None' when called with an empty symbol ID, even though the database lookup itself succeeds. [crates/gcode/src/search/fts/tests.rs:272-279]
+- `resolve_graph_symbol_by_id_returns_none_for_malformed_id` (function) component `resolve_graph_symbol_by_id_returns_none_for_malformed_id [function]` (`abdac773-0971-5e6d-b3fc-40716f61a397`) lines 287-295 [crates/gcode/src/search/fts/tests.rs:287-295]
   - Signature: `fn resolve_graph_symbol_by_id_returns_none_for_malformed_id() {`
-  - Purpose: Unit test that asserts `resolve_graph_symbol_by_id` returns `None` when provided with malformed symbol identifiers. [crates/gcode/src/search/fts/tests.rs:272-281]
-- `connect_overlay_visibility_test_db` (function) component `connect_overlay_visibility_test_db [function]` (`0e326739-88d8-5971-8ddf-6a59511de529`) lines 283-302 [crates/gcode/src/search/fts/tests.rs:283-302]
-  - Signature: `fn connect_overlay_visibility_test_db() -> Option<(Client, String)> {`
-  - Purpose: Connects to a PostgreSQL test database from an environment variable, validates the runtime schema, and returns the connection client paired with the database URL, or None if connection or schema validation fails. [crates/gcode/src/search/fts/tests.rs:283-302]
-- `OverlayFixtureIds` (class) component `OverlayFixtureIds [class]` (`c2edb10a-2bc8-5649-8aa9-099f0aa14504`) lines 304-308 [crates/gcode/src/search/fts/tests.rs:304-308]
+  - Purpose: Verifies that 'resolve_graph_symbol_by_id' returns 'None' when given a malformed symbol ID, even though the call itself succeeds. [crates/gcode/src/search/fts/tests.rs:287-295]
+- `connect_overlay_visibility_test_db` (function) component `connect_overlay_visibility_test_db [function]` (`2b93fd1b-cb44-5f9c-80ff-ccaf43295cba`) lines 298-305 [crates/gcode/src/search/fts/tests.rs:298-305]
+  - Signature: `fn connect_overlay_visibility_test_db() -> (Client, String) {`
+  - Purpose: Reads 'GCODE_POSTGRES_TEST_DATABASE_URL', opens a read-write PostgreSQL client, validates the runtime schema, and returns the client together with the database URL. [crates/gcode/src/search/fts/tests.rs:298-305]
+- `OverlayFixtureIds` (class) component `OverlayFixtureIds [class]` (`f1d2919b-f385-5236-abce-442b1c16ae92`) lines 307-311 [crates/gcode/src/search/fts/tests.rs:307-311]
   - Signature: `struct OverlayFixtureIds {`
-  - Purpose: `OverlayFixtureIds` is a struct that bundles a database URL with parent and overlay project identifiers for managing fixture relationships between projects. [crates/gcode/src/search/fts/tests.rs:304-308]
-- `OverlayFixtureIds` (class) component `OverlayFixtureIds [class]` (`b0b511f1-9935-55ea-b891-a5baf8be77f4`) lines 310-319 [crates/gcode/src/search/fts/tests.rs:310-319]
+  - Purpose: 'OverlayFixtureIds' is a data struct that holds the database URL plus the parent and overlay project identifiers needed to associate an overlay fixture with its source project and derived project. [crates/gcode/src/search/fts/tests.rs:307-311]
+- `OverlayFixtureIds` (class) component `OverlayFixtureIds [class]` (`87e24284-9839-52c2-8e5a-37921d934fb4`) lines 313-322 [crates/gcode/src/search/fts/tests.rs:313-322]
   - Signature: `impl OverlayFixtureIds {`
-  - Purpose: OverlayFixtureIds initializes a test fixture that generates unique parent and overlay project identifiers derived from a common test suffix for overlay functionality testing. [crates/gcode/src/search/fts/tests.rs:310-319]
-- `OverlayFixtureIds.new` (method) component `OverlayFixtureIds.new [method]` (`f64b55f9-c0e7-5456-ac7e-0ae5d3bc289e`) lines 311-318 [crates/gcode/src/search/fts/tests.rs:311-318]
+  - Purpose: 'OverlayFixtureIds' is a test-fixture ID generator that stores a 'database_url' and derives unique 'parent_project_id' and 'overlay_project_id' values from a 'gcode-overlay-test'-prefixed suffix. [crates/gcode/src/search/fts/tests.rs:313-322]
+- `OverlayFixtureIds.new` (method) component `OverlayFixtureIds.new [method]` (`1ef9fbbf-bd96-512c-a476-ec5aafe30e6c`) lines 314-321 [crates/gcode/src/search/fts/tests.rs:314-321]
   - Signature: `fn new(database_url: String) -> Self {`
-  - Purpose: Constructs an instance with the provided database_url while generating unique parent and overlay project IDs derived from a test-specific suffix. [crates/gcode/src/search/fts/tests.rs:311-318]
-- `OverlayFixtureCleanup` (class) component `OverlayFixtureCleanup [class]` (`2c07fc55-be3f-569c-91a0-83656dbb6696`) lines 321-325 [crates/gcode/src/search/fts/tests.rs:321-325]
+  - Purpose: Constructs a new instance by generating a unique test suffix and using it to derive distinct 'parent_project_id' and 'overlay_project_id' values while storing the provided 'database_url'. [crates/gcode/src/search/fts/tests.rs:314-321]
+- `OverlayFixtureCleanup` (class) component `OverlayFixtureCleanup [class]` (`50604e3e-f024-5af9-a127-2c0ead9ef20d`) lines 324-328 [crates/gcode/src/search/fts/tests.rs:324-328]
   - Signature: `struct OverlayFixtureCleanup {`
-  - Purpose: OverlayFixtureCleanup is a struct that encapsulates a database URL and parent/overlay project identifiers required to perform fixture cleanup operations. [crates/gcode/src/search/fts/tests.rs:321-325]
-- `OverlayFixtureCleanup` (class) component `OverlayFixtureCleanup [class]` (`673b9448-55d0-5859-a47c-78489448e643`) lines 327-336 [crates/gcode/src/search/fts/tests.rs:327-336]
+  - Purpose: 'OverlayFixtureCleanup' is a cleanup record that stores the database URL and the parent and overlay project IDs needed to remove or reconcile an overlay test fixture. [crates/gcode/src/search/fts/tests.rs:324-328]
+- `OverlayFixtureCleanup` (class) component `OverlayFixtureCleanup [class]` (`e883fdff-942e-5381-a8f5-46d1a711aede`) lines 330-339 [crates/gcode/src/search/fts/tests.rs:330-339]
   - Signature: `impl OverlayFixtureCleanup {`
-  - Purpose: OverlayFixtureCleanup establishes a read-write PostgreSQL connection and removes visibility relationships between parent and overlay projects during cleanup operations. [crates/gcode/src/search/fts/tests.rs:327-336]
-- `OverlayFixtureCleanup.cleanup` (method) component `OverlayFixtureCleanup.cleanup [method]` (`26e8ab31-86ed-5ca5-b570-56b44149663c`) lines 328-335 [crates/gcode/src/search/fts/tests.rs:328-335]
+  - Purpose: 'OverlayFixtureCleanup' is a helper that opens a read-write PostgreSQL connection and invokes 'cleanup_overlay_visibility_projects' to remove overlay visibility state for a specific parent/overlay project pair. [crates/gcode/src/search/fts/tests.rs:330-339]
+- `OverlayFixtureCleanup.cleanup` (method) component `OverlayFixtureCleanup.cleanup [method]` (`46e6cb58-9078-5398-8946-6ac2285c6879`) lines 331-338 [crates/gcode/src/search/fts/tests.rs:331-338]
   - Signature: `fn cleanup(&self) -> anyhow::Result<()> {`
-  - Purpose: Establishes a read-write PostgreSQL connection and invokes cleanup_overlay_visibility_projects to remove visibility relationships between a parent and overlay project. [crates/gcode/src/search/fts/tests.rs:328-335]
-- `OverlayFixtureCleanup` (class) component `OverlayFixtureCleanup [class]` (`7d3cefe4-8506-50e3-8415-87819a836943`) lines 338-342 [crates/gcode/src/search/fts/tests.rs:338-342]
+  - Purpose: Opens a read-write PostgreSQL connection using 'database_url' and delegates cleanup of overlay visibility state for the parent and overlay project IDs to 'cleanup_overlay_visibility_projects', returning any resulting error. [crates/gcode/src/search/fts/tests.rs:331-338]
+- `OverlayFixtureCleanup` (class) component `OverlayFixtureCleanup [class]` (`31e2fc31-c40c-5bf1-9bf9-fcfe75b4496d`) lines 341-345 [crates/gcode/src/search/fts/tests.rs:341-345]
   - Signature: `impl Drop for OverlayFixtureCleanup {`
-  - Purpose: `OverlayFixtureCleanup` implements the `Drop` trait to invoke its `cleanup()` method when the value is deallocated. [crates/gcode/src/search/fts/tests.rs:338-342]
-- `OverlayFixtureCleanup.drop` (method) component `OverlayFixtureCleanup.drop [method]` (`069c92e4-0653-554c-96ec-e138369841ac`) lines 339-341 [crates/gcode/src/search/fts/tests.rs:339-341]
+  - Purpose: 'OverlayFixtureCleanup' is a RAII cleanup guard whose 'Drop' implementation invokes 'cleanup()' on destruction and deliberately discards any resulting error. [crates/gcode/src/search/fts/tests.rs:341-345]
+- `OverlayFixtureCleanup.drop` (method) component `OverlayFixtureCleanup.drop [method]` (`fcfc117f-effc-5cf1-becf-3f2e75903b65`) lines 342-344 [crates/gcode/src/search/fts/tests.rs:342-344]
   - Signature: `fn drop(&mut self) {`
-  - Purpose: The `drop` method implements Rust's `Drop` trait to invoke a cleanup operation when the value is deallocated, discarding any return value. [crates/gcode/src/search/fts/tests.rs:339-341]
-- `SingleProjectCleanup` (class) component `SingleProjectCleanup [class]` (`f8f6acf9-c230-59e0-a228-5dfbc798e605`) lines 344-347 [crates/gcode/src/search/fts/tests.rs:344-347]
+  - Purpose: Calls 'self.cleanup()' during drop and ignores its result, ensuring best-effort cleanup without propagating errors. [crates/gcode/src/search/fts/tests.rs:342-344]
+- `SingleProjectCleanup` (class) component `SingleProjectCleanup [class]` (`9c551ca8-6d1f-55a7-892a-3262b1c428e2`) lines 347-350 [crates/gcode/src/search/fts/tests.rs:347-350]
   - Signature: `struct SingleProjectCleanup {`
-  - Purpose: `SingleProjectCleanup` is a struct that encapsulates a database URL and project ID required to perform cleanup operations on a single project. [crates/gcode/src/search/fts/tests.rs:344-347]
-- `SingleProjectCleanup` (class) component `SingleProjectCleanup [class]` (`d4232e2f-aebe-52fb-ac05-20a32531a353`) lines 349-355 [crates/gcode/src/search/fts/tests.rs:349-355]
+  - Purpose: 'SingleProjectCleanup' is a data container holding a 'database_url' and a 'project_id' for cleanup operations scoped to a single project. [crates/gcode/src/search/fts/tests.rs:347-350]
+- `SingleProjectCleanup` (class) component `SingleProjectCleanup [class]` (`7057c908-bfc5-538d-9f58-449e1520909d`) lines 352-358 [crates/gcode/src/search/fts/tests.rs:352-358]
   - Signature: `impl Drop for SingleProjectCleanup {`
-  - Purpose: `SingleProjectCleanup` implements the `Drop` trait to execute project-specific PostgreSQL cleanup via a read-write database connection upon value deallocation. [crates/gcode/src/search/fts/tests.rs:349-355]
-- `SingleProjectCleanup.drop` (method) component `SingleProjectCleanup.drop [method]` (`ff80a57a-18f8-59af-b135-0efb3fe1dd44`) lines 350-354 [crates/gcode/src/search/fts/tests.rs:350-354]
+  - Purpose: 'SingleProjectCleanup' is a 'Drop' guard that, on destruction, attempts a read-write PostgreSQL connection using its 'database_url' and invokes 'cleanup_single_project' for its 'project_id' if the connection succeeds. [crates/gcode/src/search/fts/tests.rs:352-358]
+- `SingleProjectCleanup.drop` (method) component `SingleProjectCleanup.drop [method]` (`a3ac8493-2afd-57e2-bbd0-110b93040a3a`) lines 353-357 [crates/gcode/src/search/fts/tests.rs:353-357]
   - Signature: `fn drop(&mut self) {`
-  - Purpose: Drops the associated project from the PostgreSQL database by establishing a read-write connection and calling `cleanup_single_project` when the value is deallocated. [crates/gcode/src/search/fts/tests.rs:350-354]
-- `cleanup_overlay_visibility_fixture` (function) component `cleanup_overlay_visibility_fixture [function]` (`21f764c8-ccab-5311-975a-c3499cd9be81`) lines 357-360 [crates/gcode/src/search/fts/tests.rs:357-360]
+  - Purpose: On drop, it attempts to open a read-write PostgreSQL connection using 'self.database_url' and, if successful, calls 'cleanup_single_project' with that connection and 'self.project_id', otherwise it does nothing. [crates/gcode/src/search/fts/tests.rs:353-357]
+- `cleanup_overlay_visibility_fixture` (function) component `cleanup_overlay_visibility_fixture [function]` (`217b7e05-09d4-5acc-b8b3-459b8dcbde29`) lines 360-363 [crates/gcode/src/search/fts/tests.rs:360-363]
   - Signature: `fn cleanup_overlay_visibility_fixture(conn: &mut Client, ids: &OverlayFixtureIds) {`
-  - Purpose: Removes overlay visibility relationships between parent and overlay projects by delegating to `cleanup_overlay_visibility_projects` with the extracted project identifiers. [crates/gcode/src/search/fts/tests.rs:357-360]
-- `cleanup_single_project` (function) component `cleanup_single_project [function]` (`4254b793-3d52-581a-8a61-5f0134ac7d20`) lines 362-364 [crates/gcode/src/search/fts/tests.rs:362-364]
+  - Purpose: Removes the overlay visibility fixture by calling 'cleanup_overlay_visibility_projects' for the parent and overlay project IDs, discarding the result. [crates/gcode/src/search/fts/tests.rs:360-363]
+- `cleanup_single_project` (function) component `cleanup_single_project [function]` (`20a648c9-6128-5fe2-b489-05e1171388f2`) lines 365-367 [crates/gcode/src/search/fts/tests.rs:365-367]
   - Signature: `fn cleanup_single_project(conn: &mut Client, project_id: &str) {`
-  - Purpose: Delegates overlay visibility cleanup for a single project to `cleanup_overlay_visibility_projects`, passing the project ID as both source and target identifiers. [crates/gcode/src/search/fts/tests.rs:362-364]
-- `cleanup_overlay_visibility_projects` (function) component `cleanup_overlay_visibility_projects [function]` (`8d662aa4-aad8-52aa-b186-0cd53d1ddc13`) lines 366-380 [crates/gcode/src/search/fts/tests.rs:366-380]
+  - Purpose: Calls 'cleanup_overlay_visibility_projects(conn, project_id, project_id)' to clean up overlay visibility state for the given project, discarding any returned result. [crates/gcode/src/search/fts/tests.rs:365-367]
+- `cleanup_overlay_visibility_projects` (function) component `cleanup_overlay_visibility_projects [function]` (`41bebba3-96fa-5b65-bc0c-3f65881e72cf`) lines 369-383 [crates/gcode/src/search/fts/tests.rs:369-383]
   - Signature: `fn cleanup_overlay_visibility_projects(`
-  - Purpose: Transactionally deletes overlay visibility project records and their child table entries for two specified project IDs. [crates/gcode/src/search/fts/tests.rs:366-380]
-- `seed_overlay_visibility_fixture` (function) component `seed_overlay_visibility_fixture [function]` (`e7450bd9-79a8-5dc2-b73f-4e01dc4cbf3a`) lines 382-470 [crates/gcode/src/search/fts/tests.rs:382-470]
+  - Purpose: Within a transaction, this function deletes rows for both the parent and overlay project IDs from every 'OVERLAY_VISIBILITY_CHILD_TABLES' table and from 'OVERLAY_VISIBILITY_PROJECT_TABLE', then commits the transaction. [crates/gcode/src/search/fts/tests.rs:369-383]
+- `seed_overlay_visibility_fixture` (function) component `seed_overlay_visibility_fixture [function]` (`ad84a5d9-b175-5bc3-a1f8-4daec0cc72f5`) lines 385-473 [crates/gcode/src/search/fts/tests.rs:385-473]
   - Signature: `fn seed_overlay_visibility_fixture(conn: &mut Client, ids: &OverlayFixtureIds) {`
-  - Purpose: This function seeds a database with test fixtures comprising parent and overlay projects containing files, symbols, and chunks to validate visibility behavior when an overlay project shadows and deletes resources from a parent project. [crates/gcode/src/search/fts/tests.rs:382-470]
-- `insert_project` (function) component `insert_project [function]` (`9a5ed7b9-87d8-55c9-952f-9be23dd54838`) lines 472-480 [crates/gcode/src/search/fts/tests.rs:472-480]
+  - Purpose: Seeds a test fixture for overlay visibility by creating parent and overlay projects with files, symbols, and chunks that represent visible, shadowed, and tombstoned/deleted content. [crates/gcode/src/search/fts/tests.rs:385-473]
+- `insert_project` (function) component `insert_project [function]` (`3ed4b212-bb18-5901-8827-8aa5dfdbe854`) lines 475-483 [crates/gcode/src/search/fts/tests.rs:475-483]
   - Signature: `fn insert_project(conn: &mut Client, project_id: &str, root_path: &str) {`
-  - Purpose: Inserts a new project record into the `code_indexed_projects` table with the given project ID and root path, initializing file and symbol counts to zero and setting the last indexed timestamp to the current time. [crates/gcode/src/search/fts/tests.rs:472-480]
-- `insert_file` (function) component `insert_file [function]` (`c8eadff2-15a4-5099-b73d-9941c7866c77`) lines 482-499 [crates/gcode/src/search/fts/tests.rs:482-499]
+  - Purpose: 'insert_project' inserts a new row into 'code_indexed_projects' with the given 'id' and 'root_path', initializes file and symbol counts to '0', sets 'last_indexed_at' to 'NOW()', sets 'index_duration_ms' to '0', and panics if the database insert fails. [crates/gcode/src/search/fts/tests.rs:475-483]
+- `insert_file` (function) component `insert_file [function]` (`9862aa3f-335c-5433-a314-938b02cc821d`) lines 485-502 [crates/gcode/src/search/fts/tests.rs:485-502]
   - Signature: `fn insert_file(`
-  - Purpose: Inserts a code-indexed file metadata record into the database with provided language and symbol count, initializing both graph and vector sync status fields to false and setting the indexed timestamp to the current time. [crates/gcode/src/search/fts/tests.rs:482-499]
-- `insert_symbol` (function) component `insert_symbol [function]` (`0bf71dd4-c8a5-53ab-a576-33893c11c841`) lines 501-514 [crates/gcode/src/search/fts/tests.rs:501-514]
+  - Purpose: Inserts a new 'code_indexed_files' row for the given project file, using 'project_id:file_path' as the primary 'id', a fixed placeholder content hash and byte size '1', 'symbol_count' from the caller, 'graph_synced'/'vectors_synced' set to 'false', 'graph_sync_attempted_at' as 'NULL', and 'indexed_at' as 'NOW()', panicking if the database write fails. [crates/gcode/src/search/fts/tests.rs:485-502]
+- `insert_symbol` (function) component `insert_symbol [function]` (`1c8fb530-721e-5290-a7c8-66f7feebd56a`) lines 504-517 [crates/gcode/src/search/fts/tests.rs:504-517]
   - Signature: `fn insert_symbol(conn: &mut Client, project_id: &str, file_path: &str, name: &str, kind: &str) {`
-  - Purpose: Inserts a code symbol record into the `code_symbols` table with a composite ID key (project_id:file_path:name), hardcoded Rust language, and default placeholder values for parsing metadata (byte/line positions, signature, and docstring fields). [crates/gcode/src/search/fts/tests.rs:501-514]
-- `insert_chunk` (function) component `insert_chunk [function]` (`1983b58d-145c-5e2a-9bbf-85bdc4b3ddef`) lines 516-533 [crates/gcode/src/search/fts/tests.rs:516-533]
+  - Purpose: Inserts a 'code_symbols' row for the given Rust symbol using an ID derived from 'project_id:file_path:name', populating the key metadata fields with defaults and 'NOW()' timestamps, and panicking if the database insert fails. [crates/gcode/src/search/fts/tests.rs:504-517]
+- `insert_chunk` (function) component `insert_chunk [function]` (`3913a027-5b01-5cab-8046-309dd90b2606`) lines 519-536 [crates/gcode/src/search/fts/tests.rs:519-536]
   - Signature: `fn insert_chunk(`
-  - Purpose: Inserts a code chunk record into the `code_content_chunks` table with a composite ID derived from project_id:file_path:chunk_index, storing the content with hard-coded language ('rust') and fixed line boundaries. [crates/gcode/src/search/fts/tests.rs:516-533]
-- `overlay_visibility_context` (function) component `overlay_visibility_context [function]` (`ace6cf3e-47ec-5e0f-ba94-e00bc5fabbbb`) lines 535-554 [crates/gcode/src/search/fts/tests.rs:535-554]
+  - Purpose: Inserts a Rust code content chunk row into 'code_content_chunks' for the given project, file, and chunk index using a synthetic 'id', fixed 'line_start'/'line_end' of '1', 'language' set to ''rust'', and the current timestamp, failing on execution error. [crates/gcode/src/search/fts/tests.rs:519-536]
+- `overlay_visibility_context` (function) component `overlay_visibility_context [function]` (`01c42c68-8644-50f6-a2cb-96c57ad72f29`) lines 538-557 [crates/gcode/src/search/fts/tests.rs:538-557]
   - Signature: `fn overlay_visibility_context(ids: &OverlayFixtureIds) -> Context {`
-  - Purpose: Constructs a Context struct configured for overlay project indexing, initialized with provided fixture IDs and hardcoded temporary project paths, with external services disabled. [crates/gcode/src/search/fts/tests.rs:535-554]
+  - Purpose: Constructs and returns a 'Context' configured for an overlay project rooted at '/tmp/gcode-overlay', cloning the provided database and project IDs, disabling quiet-related services and daemon connection fields, and setting 'index_scope' to an 'Overlay' scope that includes both overlay and parent project/root paths. [crates/gcode/src/search/fts/tests.rs:538-557]
 

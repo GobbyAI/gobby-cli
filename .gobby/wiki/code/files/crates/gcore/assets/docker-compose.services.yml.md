@@ -5,62 +5,7 @@ provenance:
 - file: crates/gcore/assets/docker-compose.services.yml
   ranges:
   - 5-117
-  - 6-28
-  - '7'
-  - 8-10
-  - 11-16
-  - 17-18
-  - 19-26
-  - 21-23
-  - '24'
-  - '25'
-  - '26'
-  - '27'
-  - '28'
-  - 30-49
-  - '31'
-  - 32-34
-  - 35-38
-  - 39-40
-  - 41-45
-  - '42'
-  - '43'
-  - '44'
-  - '45'
-  - '46'
-  - 47-49
-  - 51-117
-  - 52-56
-  - '53'
-  - 54-56
-  - '55'
-  - '56'
-  - '57'
-  - '58'
-  - 59-82
-  - 83-87
-  - '84'
-  - '85'
-  - '86'
-  - '87'
-  - 88-89
-  - 90-92
-  - 93-113
-  - 94-110
-  - '111'
-  - '112'
-  - '113'
-  - '114'
-  - 115-117
   - 119-128
-  - 120-121
-  - '121'
-  - 122-123
-  - '123'
-  - 124-125
-  - '125'
-  - 126-128
-  - '127'
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -72,7 +17,7 @@ Module: [[code/modules/crates/gcore/assets|crates/gcore/assets]]
 
 ## Purpose
 
-`crates/gcore/assets/docker-compose.services.yml` exposes 57 indexed API symbols.
+This file defines the Docker Compose service bundle for Gobby’s local dependencies and persistence. It wires up three services: `falkordb` for Redis-compatible storage, `qdrant` for vector search, and `postgres` for the main database with pg_search/pgaudit support. Each service is configured with ports, environment variables, volumes, restart policy, and healthchecks so the daemon can start and stop them reliably through Compose profiles, while the bottom `volumes` section declares the named data volumes used to persist each service’s state.
 [crates/gcore/assets/docker-compose.services.yml:5-117]
 [crates/gcore/assets/docker-compose.services.yml:6-28]
 [crates/gcore/assets/docker-compose.services.yml:7]

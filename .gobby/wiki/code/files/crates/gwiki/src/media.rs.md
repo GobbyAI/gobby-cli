@@ -12,7 +12,6 @@ provenance:
   - 45-52
   - 55-58
   - 60-69
-  - 61-68
   - 71-93
   - 95-125
   - 127-139
@@ -45,7 +44,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/media.rs` exposes 30 indexed API symbols.
+This file provides the media-processing layer for Gwiki: it discovers `ffmpeg` and `ffprobe`, probes media duration, extracts audio to temporary WAV files, samples video frames at intervals, and splits audio into fixed or overlapping chunks. The `MediaTools` helper centralizes executable paths, while `Chunk` packages each audio segment’s time range with its temp file. Supporting helpers handle duration parsing and conversion, temp-file creation, command execution, and consistent error construction. The tests verify time formatting, duration parsing, frame-sampling limits, and temp-file cleanup behavior.
 [crates/gwiki/src/media.rs:13-17]
 [crates/gwiki/src/media.rs:19-22]
 [crates/gwiki/src/media.rs:24-27]

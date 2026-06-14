@@ -25,7 +25,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-`crates/gcore/src/cli_contract.rs` exposes 18 indexed API symbols.
+This file defines the serializable data model for a CLI contract: a top-level `CliContract` that describes a tool, its version, summary, global flags, scope, commands, and error codes, plus nested contract types for commands, flags, positionals, scope, and degradation metadata. `CommandContract::new` provides a validated base builder with empty defaults, and the `FlagContract` and `PositionalContract` helper constructors encode common CLI argument shapes while serde skip rules omit empty optional fields; the included test verifies that command contracts serialize to the expected builder-shaped JSON and leave out empty optional sections.
 [crates/gcore/src/cli_contract.rs:4-12]
 [crates/gcore/src/cli_contract.rs:15-30]
 [crates/gcore/src/cli_contract.rs:32-52]

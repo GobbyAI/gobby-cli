@@ -10,10 +10,8 @@ provenance:
   - 96-105
   - 108-123
   - 125-197
-  - 126-196
   - 200-207
   - 209-220
-  - 210-219
   - 223-227
   - 230-234
   - 237-240
@@ -38,7 +36,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-`crates/gwiki/src/commands/trust.rs` exposes 23 indexed API symbols.
+This file implements the `gwiki trust` command. `execute` resolves the selected scope, gathers runtime status, index counts, health inspection results, and audit diagnostics, then combines them into a `TrustReport`, serializes that report to JSON, and returns a scoped command outcome with rendered text output. The supporting helpers handle index-count loading with a PostgreSQL-first, memory-fallback strategy and track degradations, while the report and summary structs package trust-relevant state into structured sections for freshness, audit findings, links, graph configuration, health, and index metrics. The status helpers reduce those fields into degradation labels, audit state, and an overall trust classification, and the text renderer formats the final report for display. The tests verify that audit issues take precedence in trust status and that JSON output includes the full contract schema.
 [crates/gwiki/src/commands/trust.rs:14-46]
 [crates/gwiki/src/commands/trust.rs:48-52]
 [crates/gwiki/src/commands/trust.rs:54-94]

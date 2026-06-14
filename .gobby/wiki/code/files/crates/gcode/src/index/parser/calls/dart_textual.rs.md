@@ -13,14 +13,9 @@ provenance:
   - 218-223
   - 226-232
   - 234-244
-  - 235-237
-  - 239-243
   - 247-252
   - 255-259
   - 261-371
-  - 262-362
-  - 364-366
-  - 368-370
   - 373-375
   - 377-379
   - 381-391
@@ -38,7 +33,9 @@ Module: [[code/modules/crates/gcode/src/index/parser/calls|crates/gcode/src/inde
 
 ## Purpose
 
-`crates/gcode/src/index/parser/calls/dart_textual.rs` exposes 23 indexed API symbols.
+This file implements a textual Dart call extractor for the indexer. It scans source line by line, maintains Dart lexical state across lines, finds dot-notation call candidates, filters out false positives from comments, strings, declarations, and ignored callee names, then materializes valid `CallRelation` entries with optional semantic resolution.
+
+The supporting helpers split the source into line spans, recognize and validate candidate call syntax, detect generic angle brackets and string starts, and track per-byte scan state so the main extractor can make context-aware decisions while iterating through the file.
 [crates/gcode/src/index/parser/calls/dart_textual.rs:8-55]
 [crates/gcode/src/index/parser/calls/dart_textual.rs:57-77]
 [crates/gcode/src/index/parser/calls/dart_textual.rs:79-168]

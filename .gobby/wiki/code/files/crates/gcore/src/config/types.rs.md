@@ -35,7 +35,7 @@ Module: [[code/modules/crates/gcore/src/config|crates/gcore/src/config]]
 
 ## Purpose
 
-`crates/gcore/src/config/types.rs` exposes 35 indexed API symbols.
+Defines the core configuration and capability types used by gcore’s AI, indexing, and vector-store integrations. It provides simple config structs for FalkorDB, Qdrant, embedding endpoints, and indexing defaults, plus routing and capability enums that parse from strings and expose stable string/key accessors for registry and config lookup. It also includes error types, capability bindings, AI tuning metadata, and embedding resolution support so the surrounding code can map capabilities to providers, transport settings, and runtime behavior consistently.
 [crates/gcore/src/config/types.rs:5-9]
 [crates/gcore/src/config/types.rs:15-18]
 [crates/gcore/src/config/types.rs:22-28]

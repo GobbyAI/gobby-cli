@@ -6,42 +6,21 @@ provenance:
   ranges:
   - 18-22
   - 24-33
-  - 25-32
   - 37-50
   - 52-108
-  - 53-63
-  - 65-67
-  - 69-71
-  - 73-75
-  - 77-80
-  - 82-85
-  - 87-90
-  - 92-95
-  - 97-100
-  - 102-107
   - 112-138
   - 140-217
-  - 143-152
-  - 158-185
-  - 188-197
-  - 200-216
   - 219-222
   - 224-232
   - 236-245
   - 247-252
-  - 248-251
   - 256-266
   - 268-273
-  - 269-272
   - 277-280
   - 284-288
   - 290-298
-  - 291-297
   - 302-310
   - 312-346
-  - 313-328
-  - 330-334
-  - 336-345
   - 350-359
   - 363-381
   - 385-396
@@ -66,7 +45,7 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-`crates/gcode/src/models.rs` exposes 51 indexed API symbols.
+The file defines core domain models for a code indexing and search system. It provides artifacts (Symbol, IndexedFile, ContentChunk, IndexedProject), relationships (CallRelation, ImportRelation), and result types (SearchResult, GraphResult, PagedResponse) that represent indexed code structure. ProjectionProvenance and ProjectionMetadata track data provenance and confidence levels, with ProjectionMetadata supporting a builder pattern for constructing lineage metadata. Symbol generates deterministic UUID v5 identifiers from composite keys (project ID, file path, name, kind, offset) using CODE_INDEX_UUID_NAMESPACE, enabling cross-system compatibility; related functions make_unresolved_callee_id and make_external_symbol_id do the same for external and unresolved callees. CallRelation uses a builder pattern to resolve call targets to internal symbols or external modules. Symbol also deserializes from PostgreSQL rows and converts to OutlineSymbol and SearchResult forms. The models integrate Serde for JSON serialization with optional field skipping, and include tests validating UUID determinism against Python golden vectors, call relation construction, and JSON contract enforcement for optional metadata fields.
 [crates/gcode/src/models.rs:18-22]
 [crates/gcode/src/models.rs:24-33]
 [crates/gcode/src/models.rs:25-32]
