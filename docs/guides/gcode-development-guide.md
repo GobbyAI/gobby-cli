@@ -244,7 +244,7 @@ detection.
 1. **Hash comparison**: SHA-256 content hash per file, stored in `code_indexed_files`
 2. **Stale detection**: Compare current hashes against stored hashes; files with changed hashes are re-indexed.
 3. **Orphan cleanup**: Files in the DB that no longer exist on disk have their FalkorDB code graph projection and Qdrant code-symbol vectors cleaned first, then their hub rows are deleted. Cleanup failures are recorded in `IndexOutcome.degraded`; PostgreSQL deletes still proceed.
-4. **Per-file transactions**: PostgreSQL writes (delete old data, upsert symbols, upsert file, upsert content chunks, upsert imports/calls) are wrapped in a single transaction to prevent half-indexed files on crash.
+4. **Per-file transactions**: PostgreSQL writes are wrapped in a single transaction to prevent half-indexed files on crash. Parsed files write `upsert_symbols` -> `delete_stale_file_symbols` -> `delete_file_non_symbol_facts` -> `upsert_file` -> `upsert_imports` / `upsert_calls` -> `upsert_content_chunks`, so unchanged-symbol summaries survive stale cleanup. Content-only files have no current symbol set to reconcile, so they still use full `delete_file_facts` before rewriting file and chunk rows.
 5. **Projection sync flags**: Changed files are written with `graph_synced=false`, `vectors_synced=false`, and `graph_sync_attempted_at=NULL` so Rust projection sync can update FalkorDB and Qdrant code projections. The daemon may schedule or delegate this work, but the projection writes live in `projection::sync`, `graph::code_graph`, and `vector::code_symbols`.
 
 The `--full` flag skips the hash comparison and re-indexes all files, ensuring stale external index entries are cleaned up.
