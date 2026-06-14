@@ -578,3 +578,158 @@ not hidden: gobby#15816 (daemon must fail echoing candidates — until then `fea
 aggregates need the #696 override), #674/#700 (structural page-weight: provenance ranges,
 component-UUID listings), #686 (lenient action-JSON so local models complete research→compile),
 and editorial page-anatomy polish (direction, no stack change).
+
+---
+
+## Phase 4 — Live parity-plus proof: head-to-head bake-off (2026-06-14)
+
+_Task #734 (WP4 of the wiki parity+ program). Phase 2 was a paper feature-inventory; Phase 4 is
+the **live battery** — seven competitor tools actually run against gobby's three wiki/code
+surfaces, on this repo (or a scoped subtree), same inputs, evidence captured both ways._
+Lightweight evidence (per-tool scorecards + setup repro + the adoption log) committed under
+`docs/evidence/wiki-bakeoff-2026-06/`; full raw outputs (graphs, generated wikis, synth pages)
+held at `~/Projects/wiki-bakeoff/outputs/` as the **before-baseline for a re-run** after the
+adoption work below lands.
+
+### Method & fairness
+
+- **Three tracks, scored separately.** A tool can win one and be irrelevant to another.
+  - **A1 — code intelligence for agents** (gobby `gcode` ↔ **Graphify**).
+  - **A2 — code → documentation** (gobby `gcode codewiki` ↔ **DeepWiki-Open**, **CodeWiki**,
+    **OpenDeepWiki**).
+  - **B — sources → knowledge vault** (gobby `gwiki` ↔ **llm-wiki**).
+- **Backend quality only.** Content depth, coverage, grounding precision, agent-consumability,
+  honesty. **UI/UX is explicitly out of scope** — a deliberate later phase. Gobby's presentation
+  today is Obsidian-vault compatibility (backlinks/graph/search for free); competitors with web
+  UIs (DeepWiki, OpenDeepWiki) present better, but that dimension is parked, not conceded.
+- **Configure endpoint + key + model id only; tool defaults otherwise.** No prompt tuning, no
+  token coaxing for either side.
+- **Local-model caveat.** Competitors that need an LLM ran on local gemma-4 (LM Studio
+  `gemma-4-26b-a4b-qat`, or Ollama `gemma4:31b` for llm-wiki) — the same class gobby's codewiki
+  runs against locally. Several competitor failures below are **local-model artifacts** (agent
+  tool-call loops misfire on weak models), called out as such; they are not asserted as gobby
+  wins on frontier hardware.
+- **Docker stacks serialized**, one competitor up at a time; the four daemon containers never
+  touched.
+
+### Track A1 — code intelligence for agents (`gcode` ↔ Graphify)
+
+Graphify built a **10,842-node / 25,859-edge / 403-community** graph of this repo from local AST
+alone (no LLM for the graph) and answered a Q1–Q4 agent-question battery; gcode answered the same
+from PostgreSQL + FalkorDB + Qdrant. Evidence: `outputs/graphify/` (SCORECARD, SETUP, graph.json).
+
+| Dimension | Graphify | gcode | Verdict |
+| --- | --- | --- | --- |
+| Graph construction | AST → typed graph + Leiden communities, no LLM | AST → PostgreSQL hub + FalkorDB projection, UUID5-stable symbol ids | **Parity** |
+| Single-source traversal (callers/usages/blast-radius, file:line) | yes | yes | **Parity** — both ground each hop at file:line |
+| **Two-endpoint path** (`path "A" "B"`, honest "no path") | **yes** | **no** | **Graphify win → C6** (gobby has single-source only) |
+| **Per-edge confidence** (`EXTRACTED`/`INFERRED`/`AMBIGUOUS`) | **yes** | implicit (AST-certain, unlabeled) | **Graphify win → C7** (surfacing matters once inferred edges land) |
+| **Semantic communities** (named navigation layer) | **403 Leiden communities** | clusters exist (`cluster.rs`) but unnamed | **Graphify win → C5** (gobby clusters; lacks the naming pass) |
+| **Token-budget output** (`--budget N` + narrowing hint) | **yes** | `--limit` count only | **Graphify win → C8** (agents reason in tokens) |
+| Semantic ranking / per-symbol purpose / real source retrieval | weaker (name-level) | **stronger** (summaries, signatures, source bodies) | **gcode win** |
+| Hybrid retrieval (BM25 + semantic + graph via RRF) | client-side fuzzy index | **full hybrid stack** | **gcode win** |
+
+**Verdict A1: gcode wins overall** (richer grounded answers, hybrid retrieval, real source
+bodies) — but Graphify is **not a toy**: it contributes **four concrete adoptable primitives**
+(C5–C8), more than any other single tool. Honesty notes: Graphify's `--cargo` mode crashed on a
+subtree scope (logged); its win column is about *primitives gobby lacks*, not answer quality.
+
+### Track A2 — code → documentation (`gcode codewiki` ↔ DeepWiki-Open / CodeWiki / OpenDeepWiki)
+
+Two comparisons: full-repo Rust scope (DeepWiki-Open, OpenDeepWiki, CodeWiki-Rust) against
+gobby's Phase-3 full build (1,029 file + 75 module + aggregates, 55 mermaid); and a same-scope
+head-to-head on Python `src/gobby/agents` (65 files) — gobby codewiki vs CodeWiki.
+
+| Dimension | Best competitor showing | gobby codewiki | Verdict |
+| --- | --- | --- | --- |
+| Coverage / uniform depth | OpenDeepWiki 13 curated nodes; DeepWiki ~10 LLM-chosen pages; **none guarantee per-file** | deterministic **full coverage**, per-symbol API tables (630 symbols on the 65-file scope) | **gobby win** — structural, not model-discretionary |
+| Citation grounding precision | OpenDeepWiki line-anchored `#L9-L15` (but only 4/13 docs); DeepWiki emits `file:line` labels with **empty `()` link targets** (W1); CodeWiki **symbol-name only**, no file:line | dense inline `[file:line]` that **resolve**, lint-checked, on every page | **gobby win** — only tool with verifiable resolvable ranges |
+| **Diagrams** | OpenDeepWiki **19 mermaid across 11/13 docs**; DeepWiki a diagram on **all 10 pages**; CodeWiki LLM-invented + JS-validated | **0 on the agents scope** (graph-truncated → suppressed); 55 on full repo | **competitor win → C4** — dense modules are exactly where gobby suppresses |
+| **Curated narrative / navigation spine** | DeepWiki ~10 sectioned pages; **OpenDeepWiki a 5-section hierarchical catalog** (Overview→Architecture→Capabilities→Workflows→Getting-Started) | file-granular reference; `_architecture`/`_onboarding` aggregates gesture at it but aren't a deliberate top-down tree | **competitor win → C1 + C9** (two tools converge on a curated layer) |
+| **Semantic concept-modules** | CodeWiki clustered 65 files → **6 named concept-modules** (`monitoring_and_detection`, `recovery_and_cleanup`, …); Graphify's 403 communities echo it | directory-modules only (path-faithful, not conceptual) | **competitor win → C5** (cross-tool) |
+| Table density (scannable reference) | DeepWiki **114 tables / 10 pages** (whole CLI as one table) | prose-heavy module narratives | **competitor edge → C3** |
+| Collapsible per-page provenance header | DeepWiki `<details>Relevant source files</details>` up top | provenance in frontmatter (not surfaced inline) | **competitor ergonomics → C2** (gobby would do it *better* — real ranges) |
+| Incremental / resume / self-heal | CodeWiki git-diff invalidation; DeepWiki cache-or-regen | per-source-hash + mid-run resume + degraded-repair (#681/#687) | **gobby win** (uncontested) |
+| Search over own output | none search their own wiki | gwiki hybrid search over the vault | **gobby win** (uncontested) |
+| Model robustness (local gemma) | **CodeWiki-Rust honest FAIL** (Rust unsupported, validator gate excludes `.rs`); CodeWiki-Py **never completed** a wiki (600s timeout; 1800s-patched hung mid-run); OpenDeepWiki **bimodal** — 8 strong docs + flagship `gcode-search` a 20-line STUB (gemma WriteDoc miss) | completed full runs locally; aggregates need the daemon `feature_high` override (gobby#15816) | **mixed** — both sides have local-model scars; competitor agent-loops fail harder |
+
+**Verdict A2: gobby codewiki wins the dimensions that are hard** (guaranteed coverage, resolvable
+citations, search, incremental self-heal) and is **behind on reader-facing presentation**
+(diagrams on dense modules, a curated navigation spine, concept-module naming, table density).
+Every one of those gaps is **additive prompt/template/render work over data gobby already has** —
+not an architecture deficit. Six adoption candidates fall out: **C1, C2, C3, C4, C5, C9**.
+Honesty: CodeWiki's Rust failure and OpenDeepWiki's stub are partly local-model artifacts, and
+their web UIs read better (out of scope) — neither flips the backend verdict.
+
+### Track B — sources → knowledge vault (`gwiki` ↔ llm-wiki) — gap analysis
+
+Not a parity contest. llm-wiki is a **vertical specialist** (AI coding-session `.jsonl` → Karpathy
+vault); gwiki is a **horizontal generalist** (multimodal research sources → vault) with **no
+session-transcript feature at all**. Same 8 native Claude Code transcripts from *this very
+program* fed to both (`inputs/track-b-sessions/`, identical bytes).
+
+| Axis (same 8 jsonl) | gwiki 0.4.0 | llm-wiki v1.3.82 |
+| --- | --- | --- |
+| Format recognition | `kind: text`, **opaque** | per-CLI adapter parses the internal schema |
+| Per-session output | **525-byte stub** (frontmatter + asset pointer) | full turn-by-turn reconstruction |
+| Deterministic metadata | none | model, tool histogram, token totals, duration, hour buckets, subagent flag, gitBranch |
+| Secret redaction on ingest | n/a (not parsed) | `/Users/josh`→`USER`, `sk-` masked, emails masked |
+| LLM synthesis | `compile` **errors on fresh vault** (reproduces #733); nothing to compile anyway (0 extracted) | **8/8** source pages on gemma4:31b (Summary/Claims/Quotes/Connections, `[[wikilinks]]`) |
+| Agent-consumable exports | — | `llms.txt`, `llms-full.txt`, `graph.jsonld`, sitemap/rss/manifest |
+| Governance | lint | 16 lint rules + confidence + 5-state lifecycle |
+
+But the honest other direction: **gwiki owns general multimodal research** (URLs, PDFs, MediaWiki,
+git, audio/image/video) that **llm-wiki cannot touch**, and has a **deeper retrieval stack**
+(hybrid BM25+semantic+graph vs static wikilink graph). Notable architecture lesson: llm-wiki's
+synthesis is a **single bounded call per page** — no fragile tool-call loop — so it produced clean
+gemma4:31b prose **where the same gemma class sank CodeWiki and Graphify**.
+
+**Verdict B: llm-wiki decisively owns session-transcript → vault**, a capability gobby has **zero
+equivalent for** — and the strategic kicker is that gobby **already archives every attached-project
+transcript** (`~/.gobby/session_transcripts/*.jsonl.gz`, 3,750 sessions, 1.3 GB). The raw material
+exists; only the parse→synthesize→vault layer is missing → **C10**.
+
+### What competitors do better → what to adopt
+
+Ten deduped adoption candidates (collapsed across tools where two saw the same thing) plus one
+competitor weakness that confirms a gobby win. Full evidence per entry in
+`docs/evidence/wiki-bakeoff-2026-06/ADOPTION-CANDIDATES.md`.
+
+| # | Adopt | Source tool(s) | Gobby surface | Effort |
+| --- | --- | --- | --- | --- |
+| C1 | Curated narrative wiki layer (~10 sectioned reader-first pages linking into reference) | DeepWiki + OpenDeepWiki | codewiki aggregate tier | M |
+| C2 | Collapsible "Relevant source files" header from existing provenance | DeepWiki | codewiki render layer | **L** |
+| C3 | High table density for enumerable facts (CLI/config/API tables) | DeepWiki | codewiki aggregate prompts | L–M |
+| C4 | Bounded diagram fallback instead of full suppression when graph-truncated | OpenDeepWiki/DeepWiki contrast | codewiki graph/diagram path + `cluster.rs` | M |
+| C5 | Semantic concept-module naming pass over clusters | CodeWiki + Graphify | `cluster.rs` + concept-module view | M |
+| C6 | Shortest-path-between-two-symbols primitive (`gcode path A B`) | Graphify | gcode graph layer (FalkorDB) | L–M |
+| C7 | Per-edge confidence label on graph answers | Graphify | gcode `graph`/`callers`/`usages` output | L |
+| C8 | Token-budget-capped retrieval (`--token-budget N` + narrowing hint) | Graphify | gcode search/blast-radius/usages | L–M |
+| C9 | Hierarchical concept-page catalog (a tree, not a flat list) over per-file docs | OpenDeepWiki | codewiki aggregate tier + `cluster.rs` | M |
+| C10 | Session-transcript ingestion + synthesis pipeline | llm-wiki | new `crates/gwiki/src/ingest/` modality + daemon sync job | M–H |
+| W1 | _(gobby win)_ DeepWiki citation hrefs are empty `()` — confirms gobby's resolvable-range advantage | DeepWiki | — (proof, no task) | — |
+
+**Implementation note:** C1 + C5 + C9 are one **"curated navigation layer"** epic cluster — a
+single aggregate AI pass over the module/graph layer produces the catalog tree (C9), the sectioned
+narrative (C1), and the named concept-modules (C5) together, all linking into the existing
+file:line-grounded reference pages. C2/C3/C7 are low-effort render-layer wins. C6/C8 are new gcode
+graph/output primitives. C10 is a net-new gwiki input domain riding gobby's existing
+index/compile/search stack. These ten became **epic #761 ("Adopt wiki bake-off competitor
+strengths C1–C10"), one leaf task per candidate** — #762 (C1), #763 (C2), #764 (C3), #765 (C4),
+#766 (C5), #767 (C6), #768 (C7), #769 (C8), #770 (C9), #771 (C10) — created from this analysis as
+the WP5 deliverable.
+
+### Verdict — parity-plus holds, and the gaps are additive
+
+The live battery confirms the Phase 3 paper verdict against running tools: **gobby is at parity-plus
+on every dimension that is structurally hard** — guaranteed coverage, resolvable file:line
+citations, hybrid search over its own output, per-source-hash incremental self-heal, honest
+degradation — and **no competitor matches the last two at all**. Where competitors genuinely win
+they win on **presentation and breadth-of-primitive, not on correctness**: curated narrative
+spines, diagrams on dense modules, concept-module naming, two-endpoint path / confidence /
+token-budget query primitives, and one whole input domain gobby doesn't yet ingest (session
+transcripts). Every one of those is **additive** — prompt, render, a new traversal command, or a
+new ingest adapter over data and infrastructure gobby already owns. None requires reworking the
+grounding, coverage, or freshness guarantees that are the expensive part and are already ahead.
+The honest losses are real and now tracked as C1–C10; the wins are evidence-backed, not asserted;
+and the whole battery is reproducible from the committed scorecards.
