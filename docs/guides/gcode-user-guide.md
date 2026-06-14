@@ -322,6 +322,7 @@ gcode graph rebuild
 - No confirmation prompt is shown; these are project-scoped graph projection operators, not full index invalidation
 - Graph clears delete only code-index projection nodes and edges in FalkorDB; memory graph data is left untouched
 - `gcode graph sync-file --allow-missing-indexed-file` is daemon/background-worker only. It converts a missing indexed file into a skipped JSON payload with `reason: "indexed_file_not_found"`; strict human defaults return a typed error with exit code `2`.
+- `gcode graph sync-file` returns a terminal skipped payload with `reason: "no_graph_facts"` for indexed files with no imports, symbols, or calls after deleting any stale file projection and marking the file graph-synced.
 
 ### Callers
 

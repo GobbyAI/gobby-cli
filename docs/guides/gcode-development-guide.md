@@ -299,7 +299,9 @@ reads to `gcode`. Graph lifecycle operations are Rust-owned FalkorDB operations:
   in PostgreSQL before any FalkorDB access. Missing project/file contract
   failures return typed JSON with exit code `2`; `--allow-missing-indexed-file`
   is reserved for daemon/background workers and turns only a missing indexed
-  file into a skipped payload.
+  file into a skipped payload. Files with no imports, symbol definitions, or
+  calls delete any stale file projection, mark `graph_synced=true`, and return
+  `status: "skipped"` with `reason: "no_graph_facts"`.
 - `gcode graph rebuild` clears and rebuilds the current resolved project id from PostgreSQL graph facts.
 
 Graph clear uses `MATCH (n {project: $project})` plus the code-index label
