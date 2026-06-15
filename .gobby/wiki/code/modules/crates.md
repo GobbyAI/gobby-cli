@@ -4,113 +4,7 @@ type: code_module
 provenance:
 - file: crates/gcode/contract/gcode.contract.json
   ranges:
-  - 2-855
-- file: crates/gcode/src/commands/codewiki/ownership.rs
-  ranges:
-  - 17-20
-  - 22-29
-  - 32-35
-  - 38-41
-  - 44-50
-  - 53-57
-  - 60-62
-  - 65-68
-  - 71-76
-  - 79-82
-  - 84-129
-  - 131-141
-  - 143-161
-  - 163-182
-  - 184-219
-  - 221-285
-  - 287-289
-  - 291-302
-  - 304-308
-  - 310-331
-  - 333-363
-  - 365-370
-  - 372-425
-  - 427-434
-  - 436-445
-  - 447-461
-  - 463-487
-  - 489-521
-  - 523-525
-  - 527-553
-  - 555-567
-  - 569-579
-  - 581-625
-  - 627-633
-  - 635-657
-  - 672-699
-  - 702-726
-  - 729-746
-  - 749-770
-  - 773-796
-  - 799-818
-  - 821-856
-  - 859-883
-  - 885-890
-  - 892-911
-  - 913-922
-  - 924-940
-  - 942-950
-- file: crates/gcode/src/commands/codewiki/text.rs
-  ranges:
-  - 18-32
-  - 35-39
-  - 41-89
-  - 94-108
-  - 110-118
-  - 120-136
-  - 143-147
-  - 149-166
-  - 168-182
-  - 191-201
-  - 203-206
-  - 208-223
-  - 225-234
-  - 239-242
-  - 244-256
-  - 258-264
-  - 266-268
-  - 270-279
-  - 303-311
-  - 315-321
-  - 323-328
-  - 335-375
-  - 377-383
-  - 385-405
-  - 407-419
-  - 421-430
-  - 432-438
-  - 443-456
-  - 458-474
-  - 476-502
-  - 504-521
-  - 523-536
-  - 539-541
-  - 545-552
-  - 554-561
-  - 563-630
-  - 632-656
-  - 662-668
-  - 671-690
-  - 693-713
-  - 716-728
-  - 731-744
-  - 747-760
-  - 763-773
-  - 776-787
-  - 790-822
-  - 825-840
-  - 843-850
-  - 853-886
-  - 889-892
-  - 894-900
-  - 903-916
-  - 919-928
-  - 931-943
+  - 2-928
 - file: crates/gcode/src/commands/codewiki/types.rs
   ranges:
   - 11-21
@@ -151,6 +45,83 @@ provenance:
   - 386-402
   - 405-411
   - 413-433
+- file: crates/gcode/src/commands/grep.rs
+  ranges:
+  - 21-33
+  - 36-40
+  - 43-46
+  - 49-52
+  - 55-58
+  - 61-68
+  - 71-84
+  - 87-92
+  - 94-125
+  - 127-234
+  - 236-254
+  - 256-276
+  - 279-285
+  - 287-352
+  - 354-375
+  - 377-407
+  - 409-414
+  - 416-439
+  - 441-456
+  - 458-467
+  - 469-472
+  - 474-497
+  - 499-515
+  - 517-533
+  - 535-582
+  - 584-597
+  - 603-609
+  - 611-625
+  - 628-633
+  - 636-647
+  - 650-664
+  - 667-674
+  - 677-685
+  - 688-703
+  - 706-738
+  - 741-759
+  - 762-776
+  - 779-799
+  - 802-817
+  - 820-837
+  - 840-868
+  - 871-879
+- file: crates/gcode/src/config/context.rs
+  ranges:
+  - 26-31
+  - '34'
+  - '37'
+  - 51-53
+  - '55'
+  - 58-63
+  - 65-128
+  - 130-134
+  - 137-140
+  - 142-152
+  - '154'
+  - 156-164
+  - 168-191
+  - 194-203
+  - 206-209
+  - 212-219
+  - 222-229
+  - 231-335
+  - 337-390
+  - 392-446
+  - 448-456
+  - 458-466
+  - 468-476
+  - 478-509
+  - 511-518
+  - 523-547
+  - 549-551
+  - 559-562
+  - 564-600
+  - 609-611
+  - 613-621
 - file: crates/gcode/src/config/services.rs
   ranges:
   - 20-22
@@ -264,64 +235,6 @@ provenance:
   - 756-761
   - 763-765
   - 767-794
-- file: crates/gcode/src/graph/code_graph/write.rs
-  ranges:
-  - 110-113
-  - 116-118
-  - 120-158
-  - 160-165
-  - 167-177
-  - 179-195
-  - 197-216
-  - 218-249
-  - 251-266
-  - 268-277
-  - 279-284
-  - 286-290
-  - 292-297
-  - 299-301
-  - 304-315
-  - 317-326
-  - 328-336
-  - 338-342
-  - 344-346
-  - 348-352
-  - 354-377
-  - 379-383
-  - 385-392
-  - 394-400
-  - 402-406
-  - 409-412
-  - 415-422
-  - 425-429
-  - 431-438
-  - 440-455
-  - 457-462
-  - 464-492
-  - 494-507
-  - 509-511
-  - 513-518
-  - 520-528
-  - 530-566
-  - 568-586
-  - 588-618
-  - 620-654
-  - 656-660
-  - 662-694
-  - 696-702
-  - 704-723
-  - 725-743
-  - 745-765
-  - 767-778
-  - 780-791
-  - 793-804
-  - 806-864
-  - 866-933
-  - 935-947
-  - 949-957
-  - 959-975
-  - 977-986
-  - 988-997
 - file: crates/gcode/src/index/semantic.rs
   ranges:
   - 15-23
@@ -370,58 +283,6 @@ provenance:
   - 792-797
   - 802-826
   - 829-864
-- file: crates/gcode/src/index/walker.rs
-  ranges:
-  - 35-38
-  - 41-43
-  - 45-51
-  - 55-60
-  - 62-107
-  - 110-134
-  - 138-148
-  - 151-160
-  - 163-175
-  - 177-195
-  - 197-213
-  - 215-219
-  - 222-224
-  - 226-273
-  - 275-289
-  - 291-303
-  - 305-311
-  - 313-316
-  - 318-326
-  - 328-358
-  - 360-385
-  - 387-395
-  - 397-422
-  - 424-444
-  - 446-451
-  - 453-463
-  - 465-471
-  - 473-498
-  - 504-510
-  - 512-524
-  - 527-566
-  - 569-590
-  - 593-604
-  - 607-617
-  - 620-629
-  - 632-652
-  - 655-674
-  - 677-698
-  - 701-716
-  - 719-752
-  - 755-777
-  - 780-791
-  - 794-812
-  - 815-829
-  - 832-845
-  - 848-861
-  - 864-877
-  - 880-894
-  - 897-907
-  - 910-917
 - file: crates/gcode/src/models.rs
   ranges:
   - 18-22
@@ -458,53 +319,6 @@ provenance:
   ranges:
   - 5-117
   - 119-128
-- file: crates/gcore/src/ai/daemon.rs
-  ranges:
-  - 19-24
-  - 27-31
-  - 34-41
-  - 44-96
-  - 98-136
-  - 138-144
-  - 149-187
-  - 189-223
-  - 225-233
-  - 235-237
-  - 239-245
-  - 247-263
-  - 265-267
-  - 269-271
-  - 273-293
-  - 295-304
-  - 306-331
-  - 333-350
-  - 352-356
-  - 358-360
-  - 362-364
-  - 366-402
-  - 404-423
-  - 437-488
-  - 491-510
-  - 513-530
-  - 533-555
-  - 558-579
-  - 582-605
-  - 608-638
-  - 641-656
-  - 659-694
-  - 697-750
-  - 753-770
-  - 772-781
-  - 783-786
-  - 788-795
-  - 797-799
-  - 801-803
-  - 805-814
-  - 816-833
-  - 835-848
-  - 850-856
-  - 858-881
-  - 883-902
 - file: crates/gcore/src/ai_context.rs
   ranges:
   - 25-30
@@ -552,58 +366,34 @@ provenance:
   - 640-651
   - 654-713
   - 716-738
-- file: crates/gcore/src/config/tests.rs
+- file: crates/gcore/src/ai_types.rs
   ranges:
-  - 9-11
-  - 18-32
-  - 34-47
-  - 49-57
-  - 61-63
-  - 65-98
-  - 100-104
-  - 107-110
-  - 112-132
-  - 134-146
-  - 149-152
-  - 154-167
-  - 169-180
-  - 183-186
-  - 188-198
-  - 200-210
-  - 213-233
-  - 236-257
-  - 260-284
-  - 288-307
-  - 310-323
-  - 326-342
-  - 345-354
-  - 357-392
-  - 395-458
-  - 462-480
-  - 484-505
-  - 508-546
-  - 549-588
-  - 591-610
-  - 613-659
-  - 662-688
-  - 691-737
-  - 740-747
-  - 750-763
-  - 766-779
-  - 783-799
-  - 802-813
-  - 817-834
-  - 837-850
-  - 853-862
-  - 865-872
-  - 875-888
-  - 891-905
-  - 907-913
-  - 915-919
-  - 921-953
-  - 955-969
-  - 971-984
-  - 986-991
+  - 9-13
+  - 17-26
+  - 28-34
+  - 38-44
+  - 46-51
+  - 55-64
+  - 67-74
+  - 76-89
+  - 91-96
+  - 100-126
+  - 128-191
+  - 193-209
+  - '211'
+  - 214-231
+  - 234-238
+  - 240-261
+  - 263-280
+  - 282-295
+  - 297-299
+  - 306-313
+  - 316-324
+  - 327-341
+  - 344-375
+  - 378-389
+  - 392-404
+  - 407-419
 - file: crates/ghook/schemas/diagnose-output.v2.schema.json
   ranges:
   - 2-79
@@ -612,6 +402,46 @@ provenance:
   - 12-15
   - 17-204
   - 206-214
+- file: crates/gsqz/src/compressor.rs
+  ranges:
+  - 7-12
+  - 14-34
+  - 36-40
+  - 42-52
+  - 54-60
+  - 62-67
+  - 69-76
+  - 78-233
+  - 235-266
+  - 272-274
+  - 277-282
+  - 285-293
+  - 296-304
+  - 307-315
+  - 318-327
+  - 330-345
+  - 348-358
+  - 361-377
+  - 380-402
+  - 405-410
+  - 413-424
+  - 427-431
+  - 434-455
+  - 458-468
+  - 471-481
+  - 484-493
+  - 496-507
+  - 510-523
+  - 526-548
+  - 551-571
+  - 574-583
+  - 586-618
+  - 621-646
+  - 649-666
+  - 669-678
+  - 681-691
+  - 694-702
+  - 705-715
 - file: crates/gsqz/src/config.rs
   ranges:
   - 26-35
@@ -658,9 +488,56 @@ provenance:
   - 493-503
   - 506-513
   - 516-526
+- file: crates/gsqz/src/primitives/group.rs
+  ranges:
+  - 8-21
+  - 28-79
+  - 99-183
+  - 187-243
+  - 247-296
+  - 304-344
+  - 348-387
+  - 391-428
+  - 434-475
+  - 482-525
+  - 532-543
+  - 546-556
+  - 559-567
+  - 570-574
+  - 577-581
+  - 584-587
+  - 590-595
+  - 598-606
+  - 609-623
+  - 626-634
+  - 637-650
+  - 653-665
+  - 668-681
+  - 684-709
+  - 712-716
+  - 719-734
+  - 737-750
+  - 753-770
+  - 773-781
+  - 784-793
+  - 796-805
+  - 808-812
+  - 815-822
+  - 825-834
+  - 837-840
+  - 843-849
+  - 852-861
+  - 864-868
+  - 871-880
+  - 883-887
+  - 890-901
+  - 904-908
+  - 911-921
+  - 924-929
+  - 932-940
 - file: crates/gwiki/contract/gwiki.contract.json
   ranges:
-  - 2-879
+  - 2-887
 - file: crates/gwiki/src/ai/chunk.rs
   ranges:
   - 24-30
@@ -704,56 +581,6 @@ provenance:
   - 574-584
   - 586-594
   - 596-617
-- file: crates/gwiki/src/audit.rs
-  ranges:
-  - 33-35
-  - 37-73
-  - 75-84
-  - 87-93
-  - 96-103
-  - 106-111
-  - 114-116
-  - 118-141
-  - 143-172
-  - 174-186
-  - 188-195
-  - 197-226
-  - 228-237
-  - 239-244
-  - 246-255
-  - 257-262
-  - 264-280
-  - 282-288
-  - 290-327
-  - 330-335
-  - 338-341
-  - 348-425
-  - 427-433
-  - 435-444
-  - 446-450
-  - 452-454
-  - 456-463
-  - 465-477
-  - 479-487
-  - 489-502
-  - 504-509
-  - 511-516
-  - 518-529
-  - 531-553
-  - 561-595
-  - 598-664
-  - 667-692
-  - 695-722
-  - 725-744
-  - 747-767
-  - 770-778
-  - 781-794
-  - 797-834
-  - 837-844
-  - 847-876
-  - 879-932
-  - 934-943
-  - 946-965
 - file: crates/gwiki/src/benchmark.rs
   ranges:
   - 30-39
@@ -808,62 +635,138 @@ provenance:
   - 863-873
   - 876-881
   - 884-893
-- file: crates/gwiki/src/falkor_graph.rs
+- file: crates/gwiki/src/collect.rs
   ranges:
-  - 29-31
-  - 33-43
-  - 46-49
-  - 51-54
-  - 56-60
-  - 62-78
-  - 80-104
-  - 106-197
-  - 199-240
-  - 242-250
-  - 252-288
-  - 290-296
-  - 298-314
-  - 316-320
-  - 322-328
-  - 330-332
-  - 334-346
-  - 348-350
-  - 352-365
-  - 367-370
-  - 372-402
-  - 404-439
-  - 441-444
-  - 446-473
-  - 475-486
-  - 488-573
-  - 575-607
-  - 609-617
-  - 619-632
-  - 634-636
-  - 638-651
-  - 653-658
-  - 660-666
-  - 668-670
-  - 672-680
-  - 682-697
-  - 699-702
-  - 704-708
-  - 710-714
-  - 717-719
-  - 722-739
-  - 741-745
-  - 756-759
-  - 762-805
-  - 808-819
-  - 822-824
-  - 827-833
-  - 836-841
-  - 844-855
-  - 858-874
-  - 877-886
-  - 889-908
-  - 911-923
-  - 926-978
+  - 18-21
+  - 24-30
+  - 34-37
+  - 39-42
+  - 44-46
+  - 48-140
+  - 142-152
+  - 154-165
+  - 167-179
+  - 181-204
+  - 206-327
+  - 329-352
+  - 354-361
+  - 363-390
+  - 392-398
+  - 400-418
+  - 420-433
+  - 435-480
+  - 482-501
+  - 503-550
+  - 552-572
+  - 574-588
+  - 590-592
+  - 594-604
+  - 606-610
+  - 612-615
+  - 617-622
+  - 624-628
+  - 630-636
+  - 638-642
+  - 644-646
+  - 648-654
+  - 665-671
+  - 674-736
+  - 739-768
+  - 771-781
+  - 784-789
+  - 792-797
+  - 800-815
+  - 818-830
+  - 833-847
+  - 850-866
+  - 869-892
+- file: crates/gwiki/src/commands/citation_quality.rs
+  ranges:
+  - 26-33
+  - 36-40
+  - 43-49
+  - 52-56
+  - 59-64
+  - 67-70
+  - 73-76
+  - 79-83
+  - 86-89
+  - 92-95
+  - 98-101
+  - 104-107
+  - 110-114
+  - 116-146
+  - 148-162
+  - 164-175
+  - 177-222
+  - 224-264
+  - 266-276
+  - 278-285
+  - 287-302
+  - 304-335
+  - 337-349
+  - 351-383
+  - 385-395
+  - 397-403
+  - 405-416
+  - 418-428
+  - 430-454
+  - 456-470
+  - 472-483
+  - 485-504
+  - 506-517
+  - 519-532
+  - 534-548
+  - 562-572
+  - 575-639
+  - 642-716
+  - 719-769
+  - 772-786
+  - 789-818
+  - 822-841
+  - 843-847
+  - 849-864
+- file: crates/gwiki/src/commands/sources.rs
+  ranges:
+  - 15-23
+  - 25-122
+  - 125-138
+  - 141-146
+  - 148-172
+  - 175-181
+  - 183-193
+  - 195-205
+  - 208-213
+  - 216-219
+  - 221-230
+  - 232-260
+  - 262-301
+  - 303-316
+  - 318-340
+  - 342-363
+  - 365-396
+  - 398-441
+  - 443-462
+  - 464-486
+  - 488-490
+  - 492-525
+  - 527-566
+  - 568-573
+  - 575-585
+  - 587-593
+  - 595-616
+  - 618-657
+  - 659-661
+  - 669-695
+  - 698-716
+  - 719-730
+  - 733-738
+  - 741-767
+  - 770-812
+  - 815-828
+  - 831-839
+  - 841-857
+  - 859-874
 - file: crates/gwiki/src/graph/mod.rs
   ranges:
   - 22-26
@@ -1068,60 +971,42 @@ provenance:
   - 729-746
   - 748-797
   - 800-833
-- file: crates/gwiki/src/ingest/url.rs
+- file: crates/gwiki/src/search/graph_boost.rs
   ranges:
-  - 22-28
-  - 31-35
-  - 38-42
-  - 45-48
-  - 50-62
-  - 65-74
-  - 76-110
-  - 112-145
-  - 147-157
-  - 159-164
-  - 166-205
-  - 208-210
-  - 212-221
-  - 223-296
-  - 298-302
-  - 304-318
-  - 320-326
-  - 328-355
-  - 357-363
-  - 365-377
-  - 379-412
-  - 414-418
-  - 420-441
-  - 443-445
-  - 447-449
-  - 451-460
-  - 462-487
-  - 489-516
-  - 518-524
-  - 526-538
-  - 540-547
-  - 549-555
-  - 557-573
-  - 575-585
-  - 587-596
-  - 598-632
-  - 634-649
-  - 651-657
-  - 659-661
-  - 663-683
-  - 685-694
-  - 712-752
-  - 755-785
-  - 788-799
-  - 802-844
-  - 847-867
-  - 870-885
-  - 888-908
-  - 911-916
-  - 918-934
-  - 937-940
-  - 942-983
+  - 21-24
+  - 26-33
+  - 35-39
+  - 41-44
+  - 46-51
+  - '54'
+  - 56-66
+  - 68-70
+  - 72-78
+  - 80-90
+  - 93-98
+  - 101-103
+  - 105-109
+  - 111-124
+  - 126-129
+  - 131-146
+  - 148-185
+  - 188-191
+  - 194-197
+  - 199-264
+  - 266-277
+  - 279-301
+  - 303-308
+  - 310-347
+  - 349-362
+  - 364-384
+  - 386-392
+  - 399-427
+  - 430-452
+  - 455-473
+  - 476-489
+  - 492-512
+  - 514-519
+  - 521-526
 - file: crates/gwiki/src/search/semantic.rs
   ranges:
   - 18-22
@@ -1171,59 +1056,34 @@ provenance:
   - 605-614
   - 617-619
   - 622-638
-- file: crates/gwiki/src/store.rs
+- file: crates/gwiki/src/session.rs
   ranges:
-  - 15-21
-  - 24-30
-  - 33-40
-  - 43-49
-  - 52-57
-  - 60-66
-  - 69-73
-  - 76-78
-  - 80-112
-  - 115-121
-  - 123-134
-  - '136'
-  - 138-148
-  - 150-159
-  - 168-180
-  - 182-233
-  - 236-240
-  - 242-246
-  - 249-255
-  - 257-264
-  - 266-293
-  - 297-313
-  - 315-371
-  - 373-469
-  - 471-540
-  - 542-586
-  - 588-633
-  - 635-642
-  - 644-669
-  - 672-674
-  - 676-681
-  - 683-688
-  - 690-706
-  - 708-710
-  - 712-718
-  - 720-725
-  - 727-739
-  - 741-744
-  - 746-765
-  - 767-775
-  - 777-785
-  - 787-794
-  - 796-803
-  - 805-809
-  - 811-815
-  - 817-829
-  - 836-843
-  - 846-867
-  - 870-875
-  - 878-922
-  - 925-939
+  - 15-18
+  - 20-46
+  - 48-57
+  - 60-64
+  - 68-76
+  - 79-87
+  - 89-95
+  - 97-156
+  - 159-166
+  - 169-179
+  - 182-194
+  - 196-313
+  - 315-334
+  - 336-345
+  - 347-352
+  - 354-361
+  - 363-365
+  - 367-383
+  - 390-423
+  - 426-437
+  - 440-452
+  - 455-463
+  - 466-474
+  - 477-502
+  - 505-526
+  - 529-550
 - file: crates/gwiki/src/vector.rs
   ranges:
   - 17-26
@@ -1268,7 +1128,7 @@ provenance:
   - 657-660
   - 662-693
   - 695-704
-provenance_truncated: 339
+provenance_truncated: 409
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -1280,11 +1140,11 @@ Parent: [[code/repo|Repository Overview]]
 
 ## Overview
 
-The crates module is a container directory with no direct files of its own; it groups the Rust workspace's tooling crates and shared foundation that together make up the Gobby command-line surface. Its responsibilities are split across six child crates: gcode packages a code-indexing CLI and reusable library whose source root keeps command parsing, process dispatch, daemon-facing contract publication, and core indexing APIs separated, with tests guarding that the public library stays independent of CLI-specific code [crates/gcode/src/main.rs:4-6] [crates/gcode/src/cli.rs:21-44] [crates/gcode/src/contract.rs:5-259] [crates/gcode/src/lib.rs:34-42]; and gcore provides the shared foundation—bootstrap, daemon URL discovery, project lookup, layered configuration, CLI contracts, setup/provisioning, degradation vocabulary, and feature-gated storage/indexing integrations—alongside assets that package the Docker Compose service stack installed by `gobby install` [crates/gcore/src/lib.rs:27-34].
+The crates module is the Rust workspace container for Gobby’s command-line tools and shared libraries. Its children cover code indexing (`gcode`), shared runtime and integration primitives (`gcore`), host CLI hook delivery (`ghook`), local LLM launcher behavior (`gloc`), output compression for LLM consumption (`gsqz`), and the local-first wiki CLI (`gwiki`). Each package owns either a user-facing CLI contract or a reusable layer: `gcode` and `gwiki` pin public command shapes in contract JSON files  , while `gcore` exposes common bootstrap, daemon, project, config, AI, setup, degradation, datastore, search, and indexing capabilities with heavier integrations feature-gated for lighter consumers (crates/gcore/src/lib.rs:27-34).
 
-The remaining crates layer specific tools on top of that foundation. ghook is a hook-dispatcher crate plus strict draft-07 JSON schemas for diagnostic output and queued inbox envelopes, using `additionalProperties: false` so external surfaces reject unknown fields [crates/ghook/schemas/diagnose-output.v2.schema.json:19] [crates/ghook/schemas/inbox-envelope.v1.schema.json:16]. gloc is a launcher that auto-detects a local LLM backend and hands control to a supported AI CLI, with a built-in YAML defining configuration precedence and runtime defaults such as a 500 ms probe timeout and automatic model loading [crates/gloc/config.yaml:11-14]. gsqz compresses command output for LLM consumption, defining ordered first-match-wins pipeline matching in YAML and routing stdin or stripped-ANSI command output through the compressor with optional stats and daemon savings reporting [crates/gsqz/src/main.rs:25-48] [crates/gsqz/src/main.rs:67-139] [crates/gsqz/src/main.rs:186-276]. gwiki is the local-first wiki system, pairing a contract layer that declares tool identity, version, command shape, output flags, and scope selectors with a library/CLI layer covering scope resolution, vault initialization, ingestion, indexing, manifest and registry persistence, search, provenance audits, and formatted output [crates/gwiki/contract/gwiki.contract.json:2] [crates/gwiki/contract/gwiki.contract.json:5-25] [crates/gwiki/src/lib.rs:1-60].
+The main flows split along tool boundaries. `gcode` parses global flags and subcommands, then routes from its binary entry point into dispatch while supporting runtime config, daemon schemas, output formatting, and progress reporting [crates/gcode/src/main.rs:4-6]  [crates/gcode/src/config.rs:1-25] [crates/gcode/src/contract.rs:5-288]. `ghook` parses host CLI hook invocations, classifies diagnostics/version/owned-execution paths, and returns usage-style exit code 2 for validation failures  [crates/ghook/src/args.rs:9-33]. `gloc` uses layered configuration to probe local backends such as LM Studio and Ollama until a responding backend wins [crates/gloc/config.yaml:18-30], while `gsqz` matches command-output pipelines in order and applies compression steps under configurable thresholds.
 
-These crates collaborate through a consistent pattern established in gcode and gcore: each tool publishes a JSON CLI contract describing its tool identity, version, summary, global flags, project detection, and identity keys [crates/gcode/contract/gcode.contract.json:2] [crates/gcode/contract/gcode.contract.json:5-49], while depending on gcore for cross-cutting concerns like configuration layering, daemon discovery, and the provisioned service stack. The tool crates (gcode, gsqz, gloc, ghook, gwiki) thus remain focused on their domain logic and contract surfaces, deferring shared bootstrap, storage, and degradation handling to gcore so that the Gobby CLI ecosystem stays uniform in how it detects projects, reads configuration, and reports degraded behavior.
+These crates collaborate by sharing conventions and infrastructure while keeping product-specific behavior isolated. `gcore` supplies the cross-cutting foundations that let CLIs depend on common project identity, daemon access, AI routing, setup, degradation, and optional service integrations without duplicating service logic (crates/gcore/src/lib.rs:27-34). The CLI packages then layer their own contracts and orchestration on top: `gcode` focuses on code-indexing workflows and daemon-facing schemas [crates/gcode/contract/gcode.contract.json:4] [crates/gcode/src/contract.rs:5-288], `gwiki` defines wiki capture/search/upkeep/synthesis semantics and shared scope flags [crates/gwiki/contract/gwiki.contract.json:4] [crates/gwiki/contract/gwiki.contract.json:5-25], and the supporting tools (`ghook`, `gloc`, `gsqz`) feed runtime context, local AI execution, and compacted command output into those broader workflows.
 
 ## Call Diagram
 
@@ -1293,35 +1153,35 @@ sequenceDiagram
     participant m_00015808_7660_5129_8df1_45d4b9551ad1 as section_claim_comparisons &#91;function&#93;
     participant m_001e5557_abaf_5197_b5ac_897f6a6ad6bc as test_no_match_returns_none &#91;function&#93;
     participant m_00260bd3_7b94_5050_87e1_8f9d438367cd as test_on_empty_pipeline_overrides_global &#91;function&#93;
-    participant m_002737f5_f8fe_5e56_8173_de1610984978 as blame_file_contributors_with_timeout &#91;function&#93;
     participant m_00589531_b7ac_54da_a6ca_02d9c8ea1804 as ingest_image_with_vision &#91;function&#93;
     participant m_00c45c9b_0377_5f2c_b12f_360c8d9afc3b as marker_accepts_fresh_allowed_intents &#91;function&#93;
     participant m_00cbc729_855d_5862_882b_0eb46c04e2fb as normalize_sslmode_pair &#91;function&#93;
+    participant m_00f6cfc1_fef1_593a_8493_dc9f7c660663 as test_dedup_mixed_groups &#91;function&#93;
+    participant m_00fcb270_174d_5305_b915_713696c44cd6 as LayeredTestSource.resolve_value &#91;method&#93;
+    participant m_0109c774_ada4_5242_9e1c_a990394e462a as test_filter_removes_none &#91;function&#93;
+    participant m_0115ef12_fca2_59bd_a949_5d74551e9c6f as run_with_exit_code &#91;function&#93;
     participant m_011a0baa_dc8d_5b8e_b0e9_cb9f4295edb3 as falkor_password_reads_password_key &#91;function&#93;
-    participant m_012eaa3b_661d_5d53_9d81_3c47594e071f as find_callees_batch &#91;function&#93;
     participant m_01368509_6873_510a_9138_026736b2283e as frontmatter_migration_parses_shared_contract_keys &#91;function&#93;
-    participant m_014c2f03_e0e9_59cb_945c_7a8bb9c65a6b as source_kind_for_url_response &#91;function&#93;
     participant m_015125b2_7388_5621_8d0d_9cb2a00b81fb as ReusePlan.reusable_page_with_summary &#91;method&#93;
     participant m_01643f1a_bc6d_5aa0_b1c7_e24709829aa6 as TypedQuery.insert_param &#91;method&#93;
     participant m_017e301e_e617_58cc_b179_cb2195a4f3f0 as sanitize_pdf_page_markdown &#91;function&#93;
     participant m_01a578a5_71ed_5a3f_a7a4_153605f04415 as english_one_pass_vs_target_first &#91;function&#93;
     participant m_04796375_e1a3_5fa7_af29_7b585d7764a4 as parse_frontmatter &#91;function&#93;
-    participant m_2280ab06_6ecd_52db_a9c1_f33bbd0eb73c as find_callees_batch_query &#91;function&#93;
     participant m_32efbce0_fa3f_56fe_bc0f_f835fc242381 as check &#91;function&#93;
-    participant m_38c2171b_952e_589f_a60c_c7c20cd5719d as content_type_media_type &#91;function&#93;
+    participant m_4690ffe8_c1e2_5c70_9a9d_d5cb2ff5919b as dedup &#91;function&#93;
     participant m_4a3322af_f8bc_5dc0_a366_6e5523d13c7c as is_markdown_horizontal_rule &#91;function&#93;
     participant m_4d96cd0c_6125_510e_8a0c_be9ca181554f as test_config &#91;function&#93;
     participant m_60722538_2324_5c6e_ac3a_7e80a0c05e72 as normalize_sslmode_token &#91;function&#93;
     participant m_653f5cff_90ae_52e9_9bfb_ba0d78c31172 as validate_identifier &#91;function&#93;
     participant m_6a95a7e1_e58c_55a8_ac11_94f20e7abbc5 as neutralize_gwiki_page_marker_variants &#91;function&#93;
+    participant m_70465562_004d_5a80_b655_e6c8dc7455bd as run &#91;function&#93;
     participant m_74c91864_ce73_5e7a_bf1c_749773eb62dd as render_cypher_value &#91;function&#93;
     participant m_80b86ae0_52b6_557e_a3f7_fcd29acbffbd as with_service_env &#91;function&#93;
     participant m_82f3e4f9_5e64_5f94_84ff_2c0e0dbef37e as normalize_claim &#91;function&#93;
     participant m_8c66f12f_4bbb_5a85_b464_7dc9611dfb24 as request &#91;function&#93;
+    participant m_8faa2138_fa37_53b4_b21b_2dc80b2babf5 as filter_lines &#91;function&#93;
     participant m_99326af5_69bd_5565_bee6_cb3375d238ae as config_value_for &#91;function&#93;
     participant m_b790b565_784f_5385_819b_858e1b4a29e2 as write_marker &#91;function&#93;
-    participant m_b904720c_a279_5107_93cd_ceb111199ebb as translate_audio &#91;function&#93;
-    participant m_c0f1027b_eb47_565d_baf4_8dbc40908eee as blame_file_contributors &#91;function&#93;
     participant m_c4fae48a_685c_593e_831c_dab9e872d3af as ReusePlan.reusable_page &#91;method&#93;
     participant m_def86bb9_e734_5291_a0c0_043c8d384f39 as lines &#91;function&#93;
     participant m_f6fff319_9e6b_5d72_9655_068135e8ea16 as ingest_image_with_vision_without_index &#91;function&#93;
@@ -1329,54 +1189,59 @@ sequenceDiagram
     m_001e5557_abaf_5197_b5ac_897f6a6ad6bc->>m_32efbce0_fa3f_56fe_bc0f_f835fc242381: calls
     m_001e5557_abaf_5197_b5ac_897f6a6ad6bc->>m_def86bb9_e734_5291_a0c0_043c8d384f39: calls
     m_00260bd3_7b94_5050_87e1_8f9d438367cd->>m_4d96cd0c_6125_510e_8a0c_be9ca181554f: calls
-    m_002737f5_f8fe_5e56_8173_de1610984978->>m_c0f1027b_eb47_565d_baf4_8dbc40908eee: calls
     m_00589531_b7ac_54da_a6ca_02d9c8ea1804->>m_f6fff319_9e6b_5d72_9655_068135e8ea16: calls
     m_00c45c9b_0377_5f2c_b12f_360c8d9afc3b->>m_b790b565_784f_5385_819b_858e1b4a29e2: calls
     m_00cbc729_855d_5862_882b_0eb46c04e2fb->>m_60722538_2324_5c6e_ac3a_7e80a0c05e72: calls
+    m_00f6cfc1_fef1_593a_8493_dc9f7c660663->>m_4690ffe8_c1e2_5c70_9a9d_d5cb2ff5919b: calls
+    m_00fcb270_174d_5305_b915_713696c44cd6->>m_00fcb270_174d_5305_b915_713696c44cd6: calls
+    m_0109c774_ada4_5242_9e1c_a990394e462a->>m_8faa2138_fa37_53b4_b21b_2dc80b2babf5: calls
+    m_0115ef12_fca2_59bd_a949_5d74551e9c6f->>m_70465562_004d_5a80_b655_e6c8dc7455bd: calls
     m_011a0baa_dc8d_5b8e_b0e9_cb9f4295edb3->>m_80b86ae0_52b6_557e_a3f7_fcd29acbffbd: calls
     m_011a0baa_dc8d_5b8e_b0e9_cb9f4295edb3->>m_99326af5_69bd_5565_bee6_cb3375d238ae: calls
-    m_012eaa3b_661d_5d53_9d81_3c47594e071f->>m_2280ab06_6ecd_52db_a9c1_f33bbd0eb73c: calls
     m_01368509_6873_510a_9138_026736b2283e->>m_04796375_e1a3_5fa7_af29_7b585d7764a4: calls
-    m_014c2f03_e0e9_59cb_945c_7a8bb9c65a6b->>m_38c2171b_952e_589f_a60c_c7c20cd5719d: calls
     m_015125b2_7388_5621_8d0d_9cb2a00b81fb->>m_c4fae48a_685c_593e_831c_dab9e872d3af: calls
     m_01643f1a_bc6d_5aa0_b1c7_e24709829aa6->>m_653f5cff_90ae_52e9_9bfb_ba0d78c31172: calls
     m_01643f1a_bc6d_5aa0_b1c7_e24709829aa6->>m_74c91864_ce73_5e7a_bf1c_749773eb62dd: calls
     m_017e301e_e617_58cc_b179_cb2195a4f3f0->>m_4a3322af_f8bc_5dc0_a366_6e5523d13c7c: calls
     m_017e301e_e617_58cc_b179_cb2195a4f3f0->>m_6a95a7e1_e58c_55a8_ac11_94f20e7abbc5: calls
     m_01a578a5_71ed_5a3f_a7a4_153605f04415->>m_8c66f12f_4bbb_5a85_b464_7dc9611dfb24: calls
-    m_01a578a5_71ed_5a3f_a7a4_153605f04415->>m_b904720c_a279_5107_93cd_ceb111199ebb: calls
 ```
 
 ## Child Modules
 
-- [[code/modules/crates/gcode|crates/gcode]] - The crates/gcode module packages the Rust gcode tool as both a CLI and a reusable indexing library. Its source root keeps command parsing, process dispatch, daemon-facing contract publication, and core indexing APIs separated, with tests guarding that the public library surface remains independent of CLI-specific code [crates/gcode/src/main.rs:4-6] [crates/gcode/src/cli.rs:21-44] [crates/gcode/src/contract.rs:5-259] [crates/gcode/src/lib.rs:34-42]. The JSON contract submodule defines the external CLI shape for Gobby, including the “gcode” tool identity, contract version, summary, global flags, project detection, and project identity keys [crates/gcode/contract/gcode.contract.json:2] [crates/gcode/contract/gcode.contract.json:3] [crates/gcode/contract/gcode.contract.json:4] [crates/gcode/contract/gcode.contract.json:5-49].
+- [[code/modules/crates/gcode|crates/gcode]] - crates/gcode packages the `gcode` CLI as a code-indexing tool, with its contract module declaring the tool name, contract version, summary, and shared global flags such as `--project`, `--format`, `--quiet`, `--verbose`, and `--no-freshness` [crates/gcode/contract/gcode.contract.json:2] [crates/gcode/contract/gcode.contract.json:3] [crates/gcode/contract/gcode.contract.json:4] [crates/gcode/contract/gcode.contract.json:5-49]. Its main implementation lives under `src`, where the binary entry point delegates into dispatch, CLI parsing defines flags and subcommands, and supporting modules provide runtime configuration, daemon-facing schema, output formatting, and progress reporting [crates/gcode/src/main.rs:4-6] [crates/gcode/src/cli.rs:21-44] [crates/gcode/src/cli.rs:47-52] [crates/gcode/src/cli.rs:54-63] [crates/gcode/src/config.rs:1-25] [crates/gcode/src/contract.rs:5-288].
 
-The main flows center on indexing and querying code, with operational helpers around progress, output formatting, setup, secret handling, and skill installation [crates/gcode/src/progress.rs:16-71] [crates/gcode/src/secrets.rs:1-4] [crates/gcode/src/setup.rs:1-16]. Static assets support language analysis by mapping import roots, dependency names, and require paths to the symbols they introduce, while the contract and src modules collaborate to keep daemon invocation semantics aligned with the executable implementation.
+The module’s key flow starts with command-line invocation, passes through command and option resolution, then fans out into indexing, search, graph, vector, documentation, setup, and freshness-oriented operations exposed by the implementation surface. Static lookup data is kept separate in `assets`, currently through import-root mappings, so dependency-resolution logic can consume curated language-specific data without embedding those tables directly in command or parser code. The contract directory mirrors that runtime surface declaratively, letting daemon or integration consumers understand command shapes and JSON/text output expectations while the `src` code owns execution behavior.
 
-At build time, the crate also controls optional PostgreSQL-backed test coverage. The build script tells Cargo to rerun when GCODE_POSTGRES_TEST_DATABASE_URL changes, declares the gcode_postgres_tests cfg as valid, and enables that cfg only when the environment variable is present, allowing PostgreSQL-specific test code to compile conditionally .
-- [[code/modules/crates/gcore|crates/gcore]] - crates/gcore is the shared Rust foundation for Gobby tools, but the top-level module has no direct files of its own. Its implementation is split between assets and source modules: assets package the Docker Compose service stack installed by `gobby install`, while `src` exposes bootstrap, daemon URL discovery, project lookup, layered configuration, CLI contracts, setup/provisioning abstractions, degradation vocabulary, and feature-gated storage/indexing integrations [crates/gcore/src/lib.rs:27-34].
+At build time, `build.rs` adds the small amount of conditional compilation needed for Postgres-backed tests: Cargo is told to rerun when `GCODE_POSTGRES_TEST_DATABASE_URL` changes, the custom `gcode_postgres_tests` cfg is registered for checking, and the cfg is enabled only when that environment variable is present [crates/gcode/build.rs:1-8]. That keeps database-dependent test code available in configured environments without making it part of every build.
+- [[code/modules/crates/gcore|crates/gcore]] - crates/gcore is the shared core layer for Gobby’s Rust ecosystem. It has no direct files at the module root, but its src child module exposes bootstrap, daemon URL, project, configuration, AI context/types, setup, degradation, and optional datastore/search/indexing integrations, with heavier backends feature-gated so lighter consumers can depend on the same primitives without pulling in every service integration (crates/gcore/src/lib.rs:27-34).
 
-The main runtime flow starts from common state discovery: `gobby_home` resolves `GOBBY_HOME` or falls back to `~/.gobby`, then bootstrap reads `bootstrap.yaml` there and defaults to `127.0.0.1:60887` if the file is missing or invalid [crates/gcore/src/lib.rs:27-34] [crates/gcore/src/bootstrap.rs:33-36] [crates/gcore/src/bootstrap.rs:38-45]. Daemon URL resolution layers environment overrides above that bootstrap endpoint, trims/normalizes URL inputs, and maps wildcard bind hosts back to loopback so clients get a dialable local URL [crates/gcore/src/daemon_url.rs:28-34] [crates/gcore/src/daemon_url.rs:47-59].
+Its key flows center on stable, transport-neutral contracts. AI context resolution remains config-only while probe-backed routing is left to transport code, AI result and error types normalize transcription, vision, text generation, token usage, and parse failures across transports, and CLI/codewiki contracts provide stable serialized schemas for tools and generated pages (crates/gcore/src/ai_types.rs:9-13) (crates/gcore/src/ai_types.rs:17-26) (crates/gcore/src/ai_types.rs:38-44) (crates/gcore/src/cli_contract.rs:4-12) (crates/gcore/src/codewiki_contract.rs:64-86).
 
-The assets child module complements those library contracts by providing the managed local dependencies used by storage, search, and indexing integrations. Its Compose manifest defines profile-driven services for FalkorDB, Qdrant, and Postgres, with FalkorDB offering Redis-compatible persistent graph storage plus password and port configuration, and Qdrant offering local vector search over HTTP/gRPC with persistent storage and health checks [crates/gcore/assets/docker-compose.services.yml:5-28] [crates/gcore/assets/docker-compose.services.yml:30-51]. Together, the source crate resolves configuration and capability routing while the assets module supplies the concrete local services those higher-level flows can provision and validate.
-- [[code/modules/crates/ghook|crates/ghook]] - crates/ghook is organized as a Rust hook-dispatcher crate plus schema contracts for the data it exchanges with the rest of Gobby. Its schemas define strict draft-07 JSON interfaces for diagnostic output and queued inbox envelopes, using object validation and `additionalProperties: false` so external surfaces stay predictable and reject unknown fields [crates/ghook/schemas/diagnose-output.v2.schema.json:19] [crates/ghook/schemas/inbox-envelope.v1.schema.json:16].
+The assets child module complements those Rust primitives by packaging the local service stack needed at runtime. Its Docker Compose assets define FalkorDB, Qdrant, and a custom Postgres image, with profile gating that lets services start individually or through a shared all profile, while FalkorDB and Qdrant use upstream images with configurable ports, persisted volumes, healthchecks, restart policy, and environment-driven defaults (crates/gcore/assets/docker-compose.services.yml:5-117) (crates/gcore/assets/docker-compose.services.yml:6-28). Together, src defines the contracts and runtime boundaries, while assets supplies the concrete local dependencies those contracts can provision and target.
+[crates/gcore/src/ai/daemon/transport.rs:8-12]
+[crates/gcore/src/ai/daemon/types.rs:4-9]
+[crates/gcore/src/cli_contract.rs:4-12]
+[crates/gcore/src/codewiki_contract.rs:64-86]
+[crates/gcore/src/config/types.rs:5-9]
+- [[code/modules/crates/ghook|crates/ghook]] - The `crates/ghook` module is the hook-side bridge between supported host CLIs and Gobby’s daemon pipeline. Its source submodule parses invocations, identifies the host CLI, reports diagnostics, stamps runtime metadata, and executes owned hook calls; `main` routes parsed arguments into version, diagnostics, or owned-execution paths, with argument validation failures returning usage-style exit code 2 [crates/ghook/src/main.rs:40-63] [crates/ghook/src/main.rs:65-81]. The parsed `Args` carry the mode, CLI name, hook type, diagnostics flag, runtime stamp, and optional detachment settings that drive those flows [crates/ghook/src/args.rs:9-33].
 
-The implementation side, under crates/ghook/src, is responsible for sandbox-tolerant hook dispatch across supported host CLIs. Its main path handles owned hook dispatch, diagnostics, and version stamping; for normal dispatch it builds and enqueues an envelope, then attempts a daemon POST while preserving each host CLI’s stdout, stderr, and exit-code protocol. CLI-specific policy is concentrated in `cli_config`, which recognizes hosts, selects fallback behavior, and determines which hooks fail closed [crates/ghook/src/cli_config.rs:20-61].
+Host-specific behavior is concentrated behind `CliConfig`, which normalizes CLI names into canonical sources, critical-hook policy, and malformed-JSON exit-code behavior [crates/ghook/src/cli_config.rs:11-18] [crates/ghook/src/cli_config.rs:20-61]. Source detection adds Claude-only override handling, while detachment support provides best-effort process or session separation without changing the hook’s control flow [crates/ghook/src/source.rs:3-14] [crates/ghook/src/detach.rs:23-44]. The broader source submodule also builds daemon dispatch envelopes, captures terminal context for eligible hooks, handles statusline forwarding, enqueues durable inbox records, and maps daemon success or failure responses back into hook actions.
 
-The remaining source modules support that flow by resolving where a hook came from, normalizing dispatcher semantics, and keeping console I/O best-effort. `source` detects the dispatch source, `json_value` mirrors Python-style truthiness used by the dispatcher, and `output` handles stdout and stderr writes without making reporting failures dominate hook behavior [crates/ghook/src/source.rs] [crates/ghook/src/json_value.rs:3-20]. Together, the schemas, envelope queueing, daemon delivery, diagnostics, and CLI policy modules form a boundary layer between external coding tools and Gobby’s daemon.
-- [[code/modules/crates/gloc|crates/gloc]] - The `crates/gloc` module provides the default configuration surface for `gloc`, a launcher that auto-detects a local LLM backend and transfers control to a supported AI CLI. Its built-in YAML defines the configuration precedence, where explicit config paths, project config, global config, and built-in defaults are tried in order with no merging . It also owns runtime defaults for backend probing and model preparation, including a 500 ms probe timeout, automatic model loading, and disabled automatic Ollama pulls [crates/gloc/config.yaml:11-14].
+The `schemas` child module defines the external data contracts that make those flows stable for downstream consumers. One draft-07 schema validates `ghook --diagnose` output as a fixed-version object with required diagnostic fields, no extra top-level properties, and version 2 install-provenance additions. The other schema defines the v1 inbox envelope written by ghook for later daemon replay, also with required fields and `additionalProperties: false`, aligning the CLI dispatch path with the durable daemon-facing format.
+- [[code/modules/crates/gloc|crates/gloc]] - The `crates/gloc` module packages the default behavior for a local LLM CLI launcher: it auto-detects local backends, resolves a client and model, and then hands execution to an AI CLI tool. Its built-in configuration defines the layer order for config discovery, global settings such as `probe_timeout_ms`, `auto_load`, and `auto_pull`, and a priority-ordered backend list where `lmstudio` and `ollama` are probed by URL and path until the first responding backend wins  [crates/gloc/config.yaml:18-30].
 
-The main flow is driven by configuration-backed resolution: probe the listed backends in priority order, choose the first responding backend, resolve the requested client, resolve aliases before passing a model onward, optionally prepare the model, then exec into the selected CLI. The default backend list prefers LM Studio at `http://localhost:1234` before Ollama at `http://localhost:11434`, with each backend defining its probe path and auth token . The Rust source module implements the launcher around these concepts, exposing CLI options for client, backend, model, URL override, config path, status/init/dump modes, and passthrough arguments, then sequencing config loading, backend/client/model resolution, status reporting, readiness checks, and execution handoff [crates/gloc/src/main.rs:16-52] [crates/gloc/src/main.rs:54-100].
+The module’s runtime flow is driven by `crates/gloc/src`: the entry point parses options for client, backend, model, URL override, config path, status, initialization, config dumping, and passthrough arguments, then loads configuration and resolves the effective backend, client, and model before either reporting status or launching the selected binary [crates/gloc/src/main.rs:16-52] [crates/gloc/src/main.rs:54-118]. Startup keeps control actions early: `--init` runs before config loading, first-run config export can happen automatically, `--dump_config` exits after rendering the active config, and normal execution validates model readiness before process handoff [crates/gloc/src/main.rs:54-118].
 
-The files collaborate by keeping policy and defaults in `config.yaml` while `crates/gloc/src` turns those settings into execution behavior. Client definitions map supported tools to binaries, environment templates, model flags, defaults, and extra arguments: Claude receives Anthropic-style environment variables and Codex receives OpenAI-style variables plus `--provider openai` defaults . The configuration layer also supplies shorthand aliases such as `qwen` and `glm`, which are resolved before execution so user-facing model names stay concise while backend-facing names remain explicit .
-- [[code/modules/crates/gsqz|crates/gsqz]] - crates/gsqz provides the default configuration and implementation surface for `gsqz`, a command-output compression utility that makes shell output easier for LLMs to consume. Its YAML defaults define global compression thresholds, a maximum compressed length, and the empty-output message, then establish that pipeline matching is ordered, first-match-wins, and sequential, with later config layers overriding built-in, global, project, and explicit config files . The Rust CLI layer loads this configuration, parses compression-level defaults, and routes either stdin or stripped-ANSI command output through the compressor, optionally reporting stats and daemon savings [crates/gsqz/src/main.rs:25-48] [crates/gsqz/src/main.rs:67-139] [crates/gsqz/src/main.rs:186-276].
+The configuration file and source modules collaborate through templated client definitions. `claude` and `codex` each declare a binary, environment variables derived from the resolved backend URL and token, a model flag, default model, and default arguments, while aliases like `qwen` and `glm` are resolved before backend execution . The supporting source components cover config loading and dumping, alias and template resolution, backend probing and URL overrides, model readiness for backends such as Ollama, and final environment/argument construction for `exec_client`, giving the launcher a compact path from user intent to a configured local-client process.
+- [[code/modules/crates/gsqz|crates/gsqz]] - The `crates/gsqz` module provides the default configuration and CLI implementation for compressing verbose command or stdin output into shorter text intended for LLM consumption. Its built-in `config.yaml` defines global thresholds such as `min_output_length`, `max_compressed_lines`, and the empty-output message, and documents that config layers override built-ins through global, project, and explicit config files . Pipelines are matched against command strings in order, with the first match winning and each step feeding the next .
 
-The main flow is command classification followed by pipeline execution. Test commands such as pytest, cargo test, and generic runners first use `match_output` rules to collapse successful output to “All tests passed.” when failure markers are absent, then remove noisy pass/session lines and group remaining failures [crates/gsqz/config.yaml:17-67]. Linter pipelines deduplicate diagnostics, group them by rule, and truncate the result to keep the highest-value head and tail visible [crates/gsqz/config.yaml:69-100]. The broader default config extends the same pattern to build, package, container, download, listing, find, grep, and fallback cases with filters, grouping, replacement, deduplication, and truncation steps [crates/gsqz/config.yaml:17-204].
+The main flow is command-specific output reduction. Test-runner pipelines for pytest, cargo test, and generic JS/Go test commands first short-circuit successful runs with `match_output`, then remove routine pass/setup lines, then group remaining failures for concise reporting [crates/gsqz/config.yaml:17-72]. Linter pipelines match Python and JavaScript tooling, deduplicate repeated diagnostics, group lines by lint rule, and truncate around the most useful head and tail content [crates/gsqz/config.yaml:74-100]. The broader configuration continues this same pattern for build, package, Docker, download, search, and fallback outputs, combining matching, filtering, grouping, deduplication, replacement, and truncation to preserve failures and summaries while suppressing noise [crates/gsqz/config.yaml:17-204].
 
-The module’s files collaborate by keeping policy in YAML and behavior in `src`: `config.yaml` names command patterns and ordered step chains, while the source module deserializes settings, pipelines, fallback steps, exclusions, and step arguments into typed configuration and executes them through the compressor. Supporting helpers handle command tokenization and exclusions before compression, while step implementations perform filtering, grouping, replacement, prose compression, deduplication, match-output short-circuiting, and truncation; the test surface covers those behaviors across command matching, fallback use, empty-output handling, exclusions, and per-step transforms.
-- [[code/modules/crates/gwiki|crates/gwiki]] - The `crates/gwiki` module is the local-first wiki system for the `gwiki` CLI, with its contract layer defining the public tool identity, version, command shape, global output flags, scope selectors, and current-directory project detection defaults [crates/gwiki/contract/gwiki.contract.json:2] [crates/gwiki/contract/gwiki.contract.json:3] [crates/gwiki/contract/gwiki.contract.json:4] [crates/gwiki/contract/gwiki.contract.json:5-25]. Its implementation layer provides the library and CLI entry point for scoped research/wiki vaults, covering scope resolution, vault initialization, source ingestion, indexing, manifest and registry persistence, search, provenance audits, and formatted outputs [crates/gwiki/src/lib.rs:1-60].
+The `src` child module supplies the executable behavior around this configuration: `main.rs` handles argument parsing, config initialization and loading, stdin mode, command-output mode, ANSI stripping before compression, and optional daemon integration [crates/gsqz/src/main.rs:25-48] [crates/gsqz/src/main.rs:67-139] [crates/gsqz/src/main.rs:141-184] [crates/gsqz/src/main.rs:186-276]. `config.rs` defines the structured model used by the YAML, including `Config`, `Settings`, `Pipeline`, `Step`, fallback behavior, excluded commands, daemon URL overrides, and single-key YAML step deserialization, which lets the YAML pipelines map directly onto the compressor’s ordered processing steps [crates/gsqz/src/config.rs:26-35] [crates/gsqz/src/config.rs:38-47] [crates/gsqz/src/config.rs:49-58] [crates/gsqz/src/config.rs:60-62].
+- [[code/modules/crates/gwiki|crates/gwiki]] - The gwiki module is organized as a top-level CLI/library package with its behavior split between a contract definition and the Rust implementation under src. The contract submodule anchors the public command shape by naming the tool as gwiki, pinning the contract version, and describing it as a “Local-first wiki CLI for capture, search, upkeep, and synthesis” [crates/gwiki/contract/gwiki.contract.json:2] [crates/gwiki/contract/gwiki.contract.json:3] [crates/gwiki/contract/gwiki.contract.json:4]. It also standardizes invocation concerns shared across commands, including global format/quiet flags and scope flags whose default is current-project detection with kind and id as identity keys [crates/gwiki/contract/gwiki.contract.json:5-25].
 
-The main flow begins by resolving a project or topic scope, establishing the vault layout, and routing commands through the implementation modules exported from the crate entry point [crates/gwiki/src/lib.rs:1-60]. Ingested material is represented through store models for documents, chunks, links, sources, ingestion events, and scope metadata, which gives the rest of the system a shared data contract for indexing, search, graph, audit, and synthesis workflows [crates/gwiki/src/store.rs:15-21].
+The src submodule provides the executable and library surface that implement that contract. Its API layer defines command types and payloads, the binary parses CLI arguments into those commands, and the runner hands execution to a shared dispatcher [crates/gwiki/src/lib.rs:1-60] [crates/gwiki/src/main.rs:45-59] [crates/gwiki/src/main.rs:167-209] [crates/gwiki/src/runner.rs:7-9]. The resulting flows cover building, maintaining, querying, and exporting scoped wiki vaults, with ingestion, search, refresh, read, compile, audit, benchmark, export, and synthesis-style operations all routed through the same command model.
 
-The contract and implementation collaborate as two halves of the same tool: the contract describes how callers invoke `gwiki`, while `src` performs the work behind those commands. Within `src`, ingestion and vault management feed Markdown files into the indexer, the indexer parses headings, chunks, and links, and shared memory or Postgres stores receive added, changed, and deleted rows for downstream search, provenance, upkeep, and synthesis flows.
+Supporting modules in src establish the durable environment those commands operate on. Scope and vault code decide where work happens, while registry, setup, schema, store, and model components handle scope metadata, PostgreSQL objects, runtime validation, storage boundaries, and canonical IDs [crates/gwiki/src/scope.rs:12-16] [crates/gwiki/src/vault.rs:19-22] [crates/gwiki/src/registry.rs:15-20] [crates/gwiki/src/setup.rs:29-35] [crates/gwiki/src/store.rs:15-17]. Together, the contract supplies the CLI schema and src supplies the runtime machinery that maps scoped user requests into vault files, indexes, graph/vector integrations, and rendered command outputs.
 

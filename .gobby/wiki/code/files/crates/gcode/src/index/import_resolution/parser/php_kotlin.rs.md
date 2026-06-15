@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gcode/src/index/import_resolution/parser|crates/gc
 
 ## Purpose
 
-Parses PHP and Kotlin import statements for import resolution, turning raw `use`/`import` text into structured bindings in `ExtractedImports`. The PHP path handles local-symbol checks, import kind detection, grouped and ungrouped `use` forms, wildcard modules, path joining, alias splitting, and registration of function, const, and class-like imports. The Kotlin path records imports similarly, including alias handling and symbol-to-module bindings for external Java classes, while the small helpers keep PHP namespace matching and use-path normalization consistent.
+This file contains import-resolution parsers for PHP and Kotlin. It provides helpers to check whether a PHP local symbol exists case-insensitively, parse PHP `use` statements into class/function/const imports, and parse Kotlin `import` statements into extracted bindings. The PHP side handles grouped and ungrouped forms, wildcard imports, aliasing, and namespace path joining, while the Kotlin side records import targets and aliases and creates symbol-to-module bindings for external Java classes.
 [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:7-14]
 [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:16-59]
 [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:62-66]

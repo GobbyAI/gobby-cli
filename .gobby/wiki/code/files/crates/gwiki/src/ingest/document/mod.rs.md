@@ -32,9 +32,7 @@ Module: [[code/modules/crates/gwiki/src/ingest/document|crates/gwiki/src/ingest/
 
 ## Purpose
 
-This module defines the document-ingest pipeline for gwiki. It models an incoming document snapshot, a borrowed extraction request, and the resulting ingest/extraction records, then converts ingest results into the normalized `IngestResult` used elsewhere.
-
-The main flow ingests a `DocumentSnapshot` either through a supplied `DocumentEndpoint` or a local extractor, writes the raw markdown and asset files, records degradation metadata when extraction is limited or unavailable, and optionally reindexes the wiki afterward. `LocalDocumentExtractor` routes HTML and Office documents to specialized extraction paths, while small helpers handle filename extension lookup, HTML entity decoding, cleanup after failures, and consistent document-specific error creation.
+This module defines the document-ingest pipeline for `gwiki`: it models incoming snapshots, extraction requests, and ingest results, then turns a `DocumentSnapshot` into stored raw/asset content and source metadata, optionally extracting a title and markdown from the document itself. `ingest_document` and the endpoint-specific helpers coordinate the flow, with `ingest_document_with_endpoint_without_index` doing the actual work, falling back to markdown-derived metadata and degradation markers when extraction is unavailable or fails, while the `LocalDocumentExtractor` dispatches supported kinds to the HTML or office extractors and rejects unsupported kinds. Utility helpers handle extension lookup, XML entity decoding, error construction, and cleanup after failed writes.
 [crates/gwiki/src/ingest/document/mod.rs:21-27]
 [crates/gwiki/src/ingest/document/mod.rs:30-36]
 [crates/gwiki/src/ingest/document/mod.rs:38-46]

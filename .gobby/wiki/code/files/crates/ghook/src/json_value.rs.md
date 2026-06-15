@@ -17,7 +17,7 @@ Module: [[code/modules/crates/ghook/src|crates/ghook/src]]
 
 ## Purpose
 
-This file defines a small JSON utility for Python-style truthiness checks. `is_python_truthy` maps `serde_json::Value` to a boolean by treating `Null`, `false`, numeric zero, empty strings, empty arrays, and empty objects as false, while all other values are true. The test module verifies that behavior against the expected dispatcher semantics with representative falsy and truthy JSON values.
+Provides a small JSON utility for ghook that evaluates `serde_json::Value` using Python-style truthiness: `null`, `false`, zero numbers, empty strings, empty arrays, and empty objects are false, while booleans, nonzero numbers, nonempty strings, and nonempty collections are true. The test module confirms these dispatcher semantics with representative falsy and truthy cases.
 [crates/ghook/src/json_value.rs:3-20]
 [crates/ghook/src/json_value.rs:28-52]
 

@@ -29,7 +29,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-This file defines the serialized wiki registry model and the persistence logic for updating it safely on disk. `Registry` stores topic and project registrations in ordered maps, while `TopicRegistration` and `ProjectRegistration` capture the identifying metadata and paths for each scope. `register_scope` loads the current registry, inserts or replaces the entry for a topic or project, and writes the updated JSON atomically under an exclusive file lock. The supporting helpers handle lock acquisition with exponential backoff, generate lock and temporary file paths, perform durable atomic writes, and read the registry back with a default fallback when the file is missing. The tests cover lock backoff behavior, overwrite semantics, and temp-path uniqueness.
+This file defines the serialized registry for wiki scopes and the persistence logic around it. `Registry` stores topic and project registrations in ordered `BTreeMap`s, while `TopicRegistration` and `ProjectRegistration` capture the identifying metadata and filesystem paths for each entry. `register_scope` updates the appropriate map entry for a topic or project, using a file lock from `lock_registry` to serialize access, `read_registry` to load the current JSON state, and `write_registry_atomically` to persist the new registry safely. The remaining helpers build lock and temporary file paths, implement exponential backoff for lock acquisition, and the tests verify backoff behavior, overwrite semantics, and temporary-path uniqueness.
 [crates/gwiki/src/registry.rs:15-20]
 [crates/gwiki/src/registry.rs:23-26]
 [crates/gwiki/src/registry.rs:29-33]

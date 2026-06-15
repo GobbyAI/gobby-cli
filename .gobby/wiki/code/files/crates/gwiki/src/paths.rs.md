@@ -22,7 +22,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-Provides safe path construction for gwiki source files by validating source IDs before they are turned into filesystem paths. `validate_source_id` trims and rejects empty or traversal-like IDs, `raw_source_path` maps a safe ID to `raw/<id>.md`, and `derived_markdown_path` maps a safe `SourceRecord` ID to `knowledge/sources/<id>.md`; the tests cover trimming, rejection of unsafe inputs, and the derived-path case.
+This file centralizes safe path construction for wiki source IDs. `validate_source_id` trims an ID and rejects empty or path-traversal-like values, and both `raw_source_path` and `derived_markdown_path` build their respective filesystem locations only after that validation, returning `WikiError::InvalidInput` on unsafe input. The tests exercise the shared guard by confirming whitespace trimming, rejection of unsafe IDs, and correct derived-path generation from a valid `SourceRecord`.
 [crates/gwiki/src/paths.rs:6-22]
 [crates/gwiki/src/paths.rs:24-27]
 [crates/gwiki/src/paths.rs:29-34]

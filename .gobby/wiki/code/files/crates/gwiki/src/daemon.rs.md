@@ -40,7 +40,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-This file defines the daemon capability probing model for gwiki services: a set of capability enums, endpoint and degradation records, and a final report type that summarizes whether each daemon feature is available, required, and degraded. It ties those types together with static endpoint contracts, a transport abstraction, and probe helpers that inspect daemon endpoints, map HTTP or transport outcomes into `CapabilityAvailability` and `DaemonDegradation`, and assemble a `DaemonCapabilityReport`; the included test doubles and tests verify the fallback behavior for missing endpoints, method-not-allowed probes, transport failure, and probe panics.
+Probes the Gobby daemon’s required gwiki service endpoints and turns the results into a structured capability report. It defines the capability and endpoint data models, maps probe observations into per-feature availability plus degradation records, and exposes `probe_daemon_capabilities*` entry points that use a default `ureq` transport or a supplied test transport. The implementation checks each endpoint contract, treats transport failures and missing/unauthorized/unexpected HTTP results as degradations, and includes tests with fake transports to verify endpoint-missing, method-not-allowed, transport-failure, and panic paths.
 [crates/gwiki/src/daemon.rs:11-18]
 [crates/gwiki/src/daemon.rs:26-31]
 [crates/gwiki/src/daemon.rs:34-40]

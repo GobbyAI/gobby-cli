@@ -23,7 +23,7 @@ Module: [[code/modules/crates/gwiki/src/support|crates/gwiki/src/support]]
 
 ## Purpose
 
-This file provides support adapters for wiki search and config lookup. It wraps precomputed BM25 hits in `StoreBm25Backend` so the search trait can return a truncated cloned slice, defines `UnavailableSemanticBackend` as a stub semantic backend that reports Qdrant as not configured, and adapts a live PostgreSQL client through `PostgresConfigSource` to read and resolve configuration values, including `$secret:` references. The `store_search_hits` helper performs keyword-based ranking over in-memory wiki documents by tokenizing the query, scoring matching documents, and returning `WikiSearchResult` values.
+This file provides support adapters for search and configuration in `gwiki`. It wraps precomputed BM25 hits in `StoreBm25Backend`, supplies a no-op `UnavailableSemanticBackend` that reports semantic search as unavailable when Qdrant is not configured, and adapts a PostgreSQL client into a `ConfigSource` via `PostgresConfigSource` with helpers to read and resolve config values. It also implements `store_search_hits`, which tokenizes a query, scores documents in the in-memory wiki store with BM25-style keyword matching, and returns ranked `WikiSearchResult` values.
 [crates/gwiki/src/support/search.rs:11-13]
 [crates/gwiki/src/support/search.rs:15-22]
 [crates/gwiki/src/support/search.rs:16-21]

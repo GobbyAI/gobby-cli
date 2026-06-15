@@ -4,7 +4,7 @@ type: code_file
 provenance:
 - file: crates/gwiki/contract/gwiki.contract.json
   ranges:
-  - 2-879
+  - 2-887
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gwiki/contract|crates/gwiki/contract]]
 
 ## Purpose
 
-This file defines the JSON contract for the `gwiki` local-first wiki CLI. It records the contract version and top-level summary, then specifies shared global flags, scope selection rules, and identity keys used to resolve a project/topic context. The bulk of the file enumerates CLI commands with their summaries, whether the daemon consumes them, accepted positionals and flags, and the JSON keys each command emits, along with the command-level dependency/degradation metadata and error codes that shape runtime behavior.
+This file defines the JSON contract for the `gwiki` CLI, including the tool name, contract version, and high-level summary, plus the shared global flags and project/topic scope used to resolve command context. It also enumerates the available commands and their interfaces, describing each command’s summary, daemon consumption, positional arguments, flags, and JSON output shape, with error codes at the end for standardized failures.
 [crates/gwiki/contract/gwiki.contract.json:2]
 [crates/gwiki/contract/gwiki.contract.json:3]
 [crates/gwiki/contract/gwiki.contract.json:4]
@@ -121,9 +121,9 @@ This file defines the JSON contract for the `gwiki` local-first wiki CLI. It rec
 - `identity_keys` (property) component `identity_keys [property]` (`b20ee172-2804-5698-9e24-c4755ffb7684`) lines 46-49 [crates/gwiki/contract/gwiki.contract.json:46-49]
   - Signature: `"identity_keys": [`
   - Purpose: Indexed property `identity_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:46-49]
-- `commands` (property) component `commands [property]` (`40449839-5ca1-5d50-9ef4-a50837289a43`) lines 51-864 [crates/gwiki/contract/gwiki.contract.json:51-864]
+- `commands` (property) component `commands [property]` (`40449839-5ca1-5d50-9ef4-a50837289a43`) lines 51-872 [crates/gwiki/contract/gwiki.contract.json:51-872]
   - Signature: `"commands": [`
-  - Purpose: Indexed property `commands` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:51-864]
+  - Purpose: Indexed property `commands` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:51-872]
 - `name` (property) component `name [property]` (`5e40d585-357e-5d54-81ce-87bbe2816124`) lines 53-53 [crates/gwiki/contract/gwiki.contract.json:53]
   - Signature: `"name": "contract",`
   - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:53]
@@ -676,9 +676,9 @@ This file defines the JSON contract for the `gwiki` local-first wiki CLI. It rec
 - `repeatable` (property) component `repeatable [property]` (`6e56db03-af50-5769-8076-ebf32849c45b`) lines 437-437 [crates/gwiki/contract/gwiki.contract.json:437]
   - Signature: `"repeatable": false`
   - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:437]
-- `flags` (property) component `flags [property]` (`039bb434-6bc6-5eec-9dbf-319806239108`) lines 440-490 [crates/gwiki/contract/gwiki.contract.json:440-490]
+- `flags` (property) component `flags [property]` (`039bb434-6bc6-5eec-9dbf-319806239108`) lines 440-498 [crates/gwiki/contract/gwiki.contract.json:440-498]
   - Signature: `"flags": [`
-  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:440-490]
+  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:440-498]
 - `name` (property) component `name [property]` (`27c7ea6d-7b4c-5515-8d40-eb491b86d750`) lines 442-442 [crates/gwiki/contract/gwiki.contract.json:442]
   - Signature: `"name": "--outline",`
   - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:442]
@@ -698,537 +698,555 @@ This file defines the JSON contract for the `gwiki` local-first wiki CLI. It rec
   - Signature: `"repeatable": true`
   - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:447]
 - `name` (property) component `name [property]` (`a0fd65f6-640c-548f-9bf6-8e7448bf67e6`) lines 450-450 [crates/gwiki/contract/gwiki.contract.json:450]
-  - Signature: `"name": "--kind",`
+  - Signature: `"name": "--source",`
   - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:450]
-- `takes_value` (property) component `takes_value [property]` (`9e70f477-6850-5d5f-98d6-9dac72c97e83`) lines 451-451 [crates/gwiki/contract/gwiki.contract.json:451]
+- `takes_value` (property) component `takes_value [property]` (`94bd821c-5c67-5e65-8e2d-90b03391aba0`) lines 451-451 [crates/gwiki/contract/gwiki.contract.json:451]
   - Signature: `"takes_value": true,`
   - Purpose: Indexed property `takes_value` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:451]
-- `value_name` (property) component `value_name [property]` (`3ffd388d-9e40-57f3-9a4f-b19eb83070e5`) lines 452-452 [crates/gwiki/contract/gwiki.contract.json:452]
-  - Signature: `"value_name": "source|concept|topic",`
+- `value_name` (property) component `value_name [property]` (`f948eec2-c549-5612-bbd7-58e59bc698b3`) lines 452-452 [crates/gwiki/contract/gwiki.contract.json:452]
+  - Signature: `"value_name": "SOURCE_ID_OR_PATH",`
   - Purpose: Indexed property `value_name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:452]
-- `allowed_values` (property) component `allowed_values [property]` (`efecb0ca-60ac-5982-ae1c-d77ae5e51b9e`) lines 453-457 [crates/gwiki/contract/gwiki.contract.json:453-457]
-  - Signature: `"allowed_values": [`
-  - Purpose: Indexed property `allowed_values` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:453-457]
-- `required` (property) component `required [property]` (`eaee944e-a3c5-5e3c-972b-b6a2b686181f`) lines 458-458 [crates/gwiki/contract/gwiki.contract.json:458]
-  - Signature: `"required": false,`
-  - Purpose: Indexed property `required` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:458]
-- `repeatable` (property) component `repeatable [property]` (`43090029-bbde-552a-885d-2c8d0605e289`) lines 459-459 [crates/gwiki/contract/gwiki.contract.json:459]
-  - Signature: `"repeatable": false`
-  - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:459]
-- `name` (property) component `name [property]` (`be2dbdc8-48f5-53eb-971a-42f25c294073`) lines 462-462 [crates/gwiki/contract/gwiki.contract.json:462]
-  - Signature: `"name": "--target",`
-  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:462]
-- `takes_value` (property) component `takes_value [property]` (`57ca184f-ed10-5187-9711-1d522c9dc38b`) lines 463-463 [crates/gwiki/contract/gwiki.contract.json:463]
-  - Signature: `"takes_value": true,`
-  - Purpose: Indexed property `takes_value` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:463]
-- `value_name` (property) component `value_name [property]` (`57b5adda-40f7-595a-9f51-ae258db63a98`) lines 464-464 [crates/gwiki/contract/gwiki.contract.json:464]
-  - Signature: `"value_name": "PAGE",`
-  - Purpose: Indexed property `value_name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:464]
-- `allowed_values` (property) component `allowed_values [property]` (`3d66137f-0efb-5c8b-b5b8-4e7e8bc2da6e`) lines 465-465 [crates/gwiki/contract/gwiki.contract.json:465]
+- `allowed_values` (property) component `allowed_values [property]` (`cf06a0b1-cc97-522a-ad26-4b4786d8ef98`) lines 453-453 [crates/gwiki/contract/gwiki.contract.json:453]
   - Signature: `"allowed_values": [],`
-  - Purpose: Indexed property `allowed_values` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:465]
-- `required` (property) component `required [property]` (`894b71e3-9d2b-5df3-99e8-740443b8b77c`) lines 466-466 [crates/gwiki/contract/gwiki.contract.json:466]
+  - Purpose: Indexed property `allowed_values` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:453]
+- `required` (property) component `required [property]` (`be47ea71-2300-56ce-a340-60c2989e12a4`) lines 454-454 [crates/gwiki/contract/gwiki.contract.json:454]
+  - Signature: `"required": false,`
+  - Purpose: Indexed property `required` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:454]
+- `repeatable` (property) component `repeatable [property]` (`5413bb09-a3e7-52e5-b2df-3a1e279d9e6d`) lines 455-455 [crates/gwiki/contract/gwiki.contract.json:455]
+  - Signature: `"repeatable": true`
+  - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:455]
+- `name` (property) component `name [property]` (`1599f2a6-b06f-5e1d-a88f-d2b42b585aff`) lines 458-458 [crates/gwiki/contract/gwiki.contract.json:458]
+  - Signature: `"name": "--kind",`
+  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:458]
+- `takes_value` (property) component `takes_value [property]` (`0b2e588a-7ad4-5f25-b787-00b76a8ddf0c`) lines 459-459 [crates/gwiki/contract/gwiki.contract.json:459]
+  - Signature: `"takes_value": true,`
+  - Purpose: Indexed property `takes_value` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:459]
+- `value_name` (property) component `value_name [property]` (`7c6fbf2d-ad46-5104-bb9d-6d07c9d744e4`) lines 460-460 [crates/gwiki/contract/gwiki.contract.json:460]
+  - Signature: `"value_name": "source|concept|topic",`
+  - Purpose: Indexed property `value_name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:460]
+- `allowed_values` (property) component `allowed_values [property]` (`2d093d0d-95eb-5835-9b73-98cbd9cf9b7f`) lines 461-465 [crates/gwiki/contract/gwiki.contract.json:461-465]
+  - Signature: `"allowed_values": [`
+  - Purpose: Indexed property `allowed_values` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:461-465]
+- `required` (property) component `required [property]` (`cf689865-98a6-557b-ba18-94ebb70e22dc`) lines 466-466 [crates/gwiki/contract/gwiki.contract.json:466]
   - Signature: `"required": false,`
   - Purpose: Indexed property `required` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:466]
-- `repeatable` (property) component `repeatable [property]` (`1dea12f7-2b13-5fa8-a2cf-688ee495e7ab`) lines 467-467 [crates/gwiki/contract/gwiki.contract.json:467]
+- `repeatable` (property) component `repeatable [property]` (`8a932f9a-6dd1-5d45-a533-645e47281d19`) lines 467-467 [crates/gwiki/contract/gwiki.contract.json:467]
   - Signature: `"repeatable": false`
   - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:467]
-- `name` (property) component `name [property]` (`493ad81b-242e-554f-81e2-17024a63052a`) lines 470-470 [crates/gwiki/contract/gwiki.contract.json:470]
-  - Signature: `"name": "--write-intent",`
+- `name` (property) component `name [property]` (`c9c013f5-9ce3-5dba-aad1-0f67a1785888`) lines 470-470 [crates/gwiki/contract/gwiki.contract.json:470]
+  - Signature: `"name": "--target",`
   - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:470]
-- `takes_value` (property) component `takes_value [property]` (`d2556f0b-f11c-5d48-9b43-703a39cebf67`) lines 471-471 [crates/gwiki/contract/gwiki.contract.json:471]
-  - Signature: `"takes_value": false,`
+- `takes_value` (property) component `takes_value [property]` (`87a9093f-dfcf-5f12-8808-b3122c047e49`) lines 471-471 [crates/gwiki/contract/gwiki.contract.json:471]
+  - Signature: `"takes_value": true,`
   - Purpose: Indexed property `takes_value` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:471]
-- `value_name` (property) component `value_name [property]` (`faf48685-0877-5cf9-ac57-edcb3e07c7fb`) lines 472-472 [crates/gwiki/contract/gwiki.contract.json:472]
-  - Signature: `"value_name": null,`
+- `value_name` (property) component `value_name [property]` (`89d720aa-ae8d-5661-b4d5-43c52e481161`) lines 472-472 [crates/gwiki/contract/gwiki.contract.json:472]
+  - Signature: `"value_name": "PAGE",`
   - Purpose: Indexed property `value_name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:472]
-- `allowed_values` (property) component `allowed_values [property]` (`de7ee8ac-0106-5616-8fc6-8ad4643c5d9d`) lines 473-473 [crates/gwiki/contract/gwiki.contract.json:473]
+- `allowed_values` (property) component `allowed_values [property]` (`c7fa2bc8-2681-5b48-8587-9592d7fca7c0`) lines 473-473 [crates/gwiki/contract/gwiki.contract.json:473]
   - Signature: `"allowed_values": [],`
   - Purpose: Indexed property `allowed_values` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:473]
-- `required` (property) component `required [property]` (`bfa22a05-b5ba-58e3-85d0-ea857ef16306`) lines 474-474 [crates/gwiki/contract/gwiki.contract.json:474]
+- `required` (property) component `required [property]` (`98db2fda-6c97-5ec9-bd1f-d6a604f6ed85`) lines 474-474 [crates/gwiki/contract/gwiki.contract.json:474]
   - Signature: `"required": false,`
   - Purpose: Indexed property `required` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:474]
-- `repeatable` (property) component `repeatable [property]` (`99b988ad-66c2-5da2-acee-56d1b5aa7fd9`) lines 475-475 [crates/gwiki/contract/gwiki.contract.json:475]
+- `repeatable` (property) component `repeatable [property]` (`9d55836a-c197-5cc9-ab42-7d911b7ffa38`) lines 475-475 [crates/gwiki/contract/gwiki.contract.json:475]
   - Signature: `"repeatable": false`
   - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:475]
-- `name` (property) component `name [property]` (`078da00c-cf37-5404-9132-581ef922b049`) lines 478-478 [crates/gwiki/contract/gwiki.contract.json:478]
-  - Signature: `"name": "--ai",`
+- `name` (property) component `name [property]` (`5019fbe7-31ec-5250-8387-f63d1c40b4ad`) lines 478-478 [crates/gwiki/contract/gwiki.contract.json:478]
+  - Signature: `"name": "--write-intent",`
   - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:478]
-- `takes_value` (property) component `takes_value [property]` (`7a948cc0-304d-59aa-adad-ca7a405c46f3`) lines 479-479 [crates/gwiki/contract/gwiki.contract.json:479]
-  - Signature: `"takes_value": true,`
+- `takes_value` (property) component `takes_value [property]` (`1d67d2b6-60da-59fd-9e6a-ad2a5f3445cb`) lines 479-479 [crates/gwiki/contract/gwiki.contract.json:479]
+  - Signature: `"takes_value": false,`
   - Purpose: Indexed property `takes_value` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:479]
-- `value_name` (property) component `value_name [property]` (`57f5d522-bc42-5584-b0eb-df7664466183`) lines 480-480 [crates/gwiki/contract/gwiki.contract.json:480]
-  - Signature: `"value_name": "auto|daemon|direct|off",`
+- `value_name` (property) component `value_name [property]` (`5875b617-235b-5058-910a-7aedcf5511c1`) lines 480-480 [crates/gwiki/contract/gwiki.contract.json:480]
+  - Signature: `"value_name": null,`
   - Purpose: Indexed property `value_name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:480]
-- `allowed_values` (property) component `allowed_values [property]` (`c0051cf7-bcdf-5946-907b-e2f0b8b52bf8`) lines 481-486 [crates/gwiki/contract/gwiki.contract.json:481-486]
-  - Signature: `"allowed_values": [`
-  - Purpose: Indexed property `allowed_values` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:481-486]
-- `required` (property) component `required [property]` (`b78d0ee0-319b-51d7-ab83-a9084947ce75`) lines 487-487 [crates/gwiki/contract/gwiki.contract.json:487]
-  - Signature: `"required": false,`
-  - Purpose: Indexed property `required` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:487]
-- `repeatable` (property) component `repeatable [property]` (`2f3d0819-706f-536e-aa9f-a052fb6b66e3`) lines 488-488 [crates/gwiki/contract/gwiki.contract.json:488]
-  - Signature: `"repeatable": false`
-  - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:488]
-- `json_output_keys` (property) component `json_output_keys [property]` (`a37a4396-41fd-5c40-b389-9865ab6308c7`) lines 491-505 [crates/gwiki/contract/gwiki.contract.json:491-505]
-  - Signature: `"json_output_keys": [`
-  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:491-505]
-- `optional_dependencies` (property) component `optional_dependencies [property]` (`5a531ebf-9682-5495-b86c-94132850acf5`) lines 506-509 [crates/gwiki/contract/gwiki.contract.json:506-509]
-  - Signature: `"optional_dependencies": [`
-  - Purpose: Indexed property `optional_dependencies` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:506-509]
-- `multimodal` (property) component `multimodal [property]` (`1b1eb1eb-415e-51ae-bf79-c5ae359b5f9b`) lines 510-510 [crates/gwiki/contract/gwiki.contract.json:510]
-  - Signature: `"multimodal": "none",`
-  - Purpose: Indexed property `multimodal` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:510]
-- `degradation` (property) component `degradation [property]` (`d0321590-c144-57ac-893f-7d1c9b57e536`) lines 511-519 [crates/gwiki/contract/gwiki.contract.json:511-519]
-  - Signature: `"degradation": {`
-  - Purpose: Indexed property `degradation` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:511-519]
-- `output_shape` (property) component `output_shape [property]` (`f61db95a-f786-5100-ab5e-26f8a52bb5e4`) lines 512-512 [crates/gwiki/contract/gwiki.contract.json:512]
-  - Signature: `"output_shape": "explainer failure keeps the deterministic skeleton with degradation markers; AI off compiles the structural article without markers",`
-  - Purpose: Indexed property `output_shape` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:512]
-- `metadata_keys` (property) component `metadata_keys [property]` (`cd895c35-10ba-593d-84be-39651c35ec8b`) lines 513-518 [crates/gwiki/contract/gwiki.contract.json:513-518]
-  - Signature: `"metadata_keys": [`
-  - Purpose: Indexed property `metadata_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:513-518]
-- `name` (property) component `name [property]` (`ec2fb857-dcd7-51aa-938e-5a2736423418`) lines 522-522 [crates/gwiki/contract/gwiki.contract.json:522]
-  - Signature: `"name": "audit",`
-  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:522]
-- `summary` (property) component `summary [property]` (`348844bb-e014-5b97-b653-b44d89929192`) lines 523-523 [crates/gwiki/contract/gwiki.contract.json:523]
-  - Signature: `"summary": "Report claims that lack source support.",`
-  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:523]
-- `daemon_consumed` (property) component `daemon_consumed [property]` (`646cb0ce-78af-512e-be50-25d10f39a67b`) lines 524-524 [crates/gwiki/contract/gwiki.contract.json:524]
-  - Signature: `"daemon_consumed": true,`
-  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:524]
-- `positionals` (property) component `positionals [property]` (`e8fe0e21-dd01-5432-9b4a-361bfd2f8f83`) lines 525-525 [crates/gwiki/contract/gwiki.contract.json:525]
-  - Signature: `"positionals": [],`
-  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:525]
-- `flags` (property) component `flags [property]` (`d1da71ed-5d77-5b5c-8959-f9dee938004c`) lines 526-526 [crates/gwiki/contract/gwiki.contract.json:526]
-  - Signature: `"flags": [],`
-  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:526]
-- `json_output_keys` (property) component `json_output_keys [property]` (`a5380f51-aadd-5e18-8b06-c222453222d6`) lines 527-533 [crates/gwiki/contract/gwiki.contract.json:527-533]
-  - Signature: `"json_output_keys": [`
-  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:527-533]
-- `name` (property) component `name [property]` (`45d70b5a-ed41-5b22-8c5c-e4c9be72df8f`) lines 536-536 [crates/gwiki/contract/gwiki.contract.json:536]
-  - Signature: `"name": "graph",`
-  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:536]
-- `summary` (property) component `summary [property]` (`d349275a-f0cc-503d-8d4f-2a37d13cfd10`) lines 537-537 [crates/gwiki/contract/gwiki.contract.json:537]
-  - Signature: `"summary": "Export unified wiki graph artifacts under outputs.",`
-  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:537]
-- `daemon_consumed` (property) component `daemon_consumed [property]` (`ac8c6455-f531-5694-948d-3cea980de2c1`) lines 538-538 [crates/gwiki/contract/gwiki.contract.json:538]
-  - Signature: `"daemon_consumed": true,`
-  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:538]
-- `positionals` (property) component `positionals [property]` (`9124a65d-39be-58b2-8749-90ebf00a22d1`) lines 539-539 [crates/gwiki/contract/gwiki.contract.json:539]
-  - Signature: `"positionals": [],`
-  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:539]
-- `flags` (property) component `flags [property]` (`d9bc10b1-8cd9-58fe-9d52-82fd4f9777e8`) lines 540-540 [crates/gwiki/contract/gwiki.contract.json:540]
-  - Signature: `"flags": [],`
-  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:540]
-- `json_output_keys` (property) component `json_output_keys [property]` (`220f0605-3f71-5069-b96b-25a5ac265383`) lines 541-545 [crates/gwiki/contract/gwiki.contract.json:541-545]
-  - Signature: `"json_output_keys": [`
-  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:541-545]
-- `name` (property) component `name [property]` (`1271093b-59a7-5dfe-831e-b0fa7eb91667`) lines 548-548 [crates/gwiki/contract/gwiki.contract.json:548]
-  - Signature: `"name": "graph-context",`
-  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:548]
-- `summary` (property) component `summary [property]` (`544e8f05-feb4-5618-9565-f069a7b16e08`) lines 549-549 [crates/gwiki/contract/gwiki.contract.json:549]
-  - Signature: `"summary": "Build a compact wiki graph context pack.",`
-  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:549]
-- `daemon_consumed` (property) component `daemon_consumed [property]` (`cf70a834-c235-5625-8cfb-e28b9b823d6f`) lines 550-550 [crates/gwiki/contract/gwiki.contract.json:550]
-  - Signature: `"daemon_consumed": true,`
-  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:550]
-- `positionals` (property) component `positionals [property]` (`ca78bf8a-c7b3-5df2-819a-e967d84039d4`) lines 551-551 [crates/gwiki/contract/gwiki.contract.json:551]
-  - Signature: `"positionals": [],`
-  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:551]
-- `flags` (property) component `flags [property]` (`f7b80ad4-409e-5cec-ac09-7b842af0af55`) lines 552-552 [crates/gwiki/contract/gwiki.contract.json:552]
-  - Signature: `"flags": [],`
-  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:552]
-- `json_output_keys` (property) component `json_output_keys [property]` (`b1c9c79f-77ad-5054-b878-40b7e14b768c`) lines 553-565 [crates/gwiki/contract/gwiki.contract.json:553-565]
-  - Signature: `"json_output_keys": [`
-  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:553-565]
-- `hard_dependencies` (property) component `hard_dependencies [property]` (`e2d2720b-92f1-5e20-90b3-4ae4c55cbb81`) lines 566-568 [crates/gwiki/contract/gwiki.contract.json:566-568]
-  - Signature: `"hard_dependencies": [`
-  - Purpose: Indexed property `hard_dependencies` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:566-568]
-- `optional_dependencies` (property) component `optional_dependencies [property]` (`04653708-ae06-5de9-afba-a0133cda14ea`) lines 569-572 [crates/gwiki/contract/gwiki.contract.json:569-572]
-  - Signature: `"optional_dependencies": [`
-  - Purpose: Indexed property `optional_dependencies` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:569-572]
-- `multimodal` (property) component `multimodal [property]` (`cb7a493d-a7d6-524e-b125-98ecbf0e0654`) lines 573-573 [crates/gwiki/contract/gwiki.contract.json:573]
-  - Signature: `"multimodal": "none",`
-  - Purpose: Indexed property `multimodal` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:573]
-- `degradation` (property) component `degradation [property]` (`0c2fb2a9-b66f-5260-bda0-a545883f9094`) lines 574-583 [crates/gwiki/contract/gwiki.contract.json:574-583]
-  - Signature: `"degradation": {`
-  - Purpose: Indexed property `degradation` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:574-583]
-- `output_shape` (property) component `output_shape [property]` (`b1245090-8623-554f-9f33-bda6acd2703c`) lines 575-575 [crates/gwiki/contract/gwiki.contract.json:575]
-  - Signature: `"output_shape": "wiki-link-only neighborhood",`
-  - Purpose: Indexed property `output_shape` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:575]
-- `metadata_keys` (property) component `metadata_keys [property]` (`01f83757-b314-5fdd-8603-660c5125e2ab`) lines 576-582 [crates/gwiki/contract/gwiki.contract.json:576-582]
-  - Signature: `"metadata_keys": [`
-  - Purpose: Indexed property `metadata_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:576-582]
-- `name` (property) component `name [property]` (`73a7fec1-362a-5667-800c-ee12da56fb6e`) lines 586-586 [crates/gwiki/contract/gwiki.contract.json:586]
-  - Signature: `"name": "health",`
-  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:586]
-- `summary` (property) component `summary [property]` (`0626b594-3389-5044-8530-412b5d695429`) lines 587-587 [crates/gwiki/contract/gwiki.contract.json:587]
-  - Signature: `"summary": "Write wiki health snapshots under meta/health.",`
-  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:587]
-- `daemon_consumed` (property) component `daemon_consumed [property]` (`a30f6dc5-5004-56ed-80f2-4e41fba341ef`) lines 588-588 [crates/gwiki/contract/gwiki.contract.json:588]
-  - Signature: `"daemon_consumed": true,`
-  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:588]
-- `positionals` (property) component `positionals [property]` (`7c7b3a7d-140c-5297-88b7-ef29d9ae2157`) lines 589-589 [crates/gwiki/contract/gwiki.contract.json:589]
-  - Signature: `"positionals": [],`
-  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:589]
-- `flags` (property) component `flags [property]` (`30912242-b6ee-5d7b-a299-292f3c511341`) lines 590-590 [crates/gwiki/contract/gwiki.contract.json:590]
-  - Signature: `"flags": [],`
-  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:590]
-- `json_output_keys` (property) component `json_output_keys [property]` (`07956e83-7c38-51c1-a1ee-1a2e4615599d`) lines 591-597 [crates/gwiki/contract/gwiki.contract.json:591-597]
-  - Signature: `"json_output_keys": [`
-  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:591-597]
-- `name` (property) component `name [property]` (`bf58caea-8b50-58d3-9786-50a6b1d8bb9a`) lines 600-600 [crates/gwiki/contract/gwiki.contract.json:600]
-  - Signature: `"name": "librarian",`
-  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:600]
-- `summary` (property) component `summary [property]` (`e2d40eac-05c5-5e51-88aa-a04755ab802c`) lines 601-601 [crates/gwiki/contract/gwiki.contract.json:601]
-  - Signature: `"summary": "Emit wiki upkeep proposals without rewriting canonical content.",`
-  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:601]
-- `daemon_consumed` (property) component `daemon_consumed [property]` (`5223d30f-d86f-542e-98b1-498dd96ed78d`) lines 602-602 [crates/gwiki/contract/gwiki.contract.json:602]
-  - Signature: `"daemon_consumed": true,`
-  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:602]
-- `positionals` (property) component `positionals [property]` (`5e5f5304-8632-5785-91e2-d40b7ffd2f64`) lines 603-603 [crates/gwiki/contract/gwiki.contract.json:603]
-  - Signature: `"positionals": [],`
-  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:603]
-- `flags` (property) component `flags [property]` (`0ea2d13e-02c5-5a6c-9391-70cee99b0a9e`) lines 604-604 [crates/gwiki/contract/gwiki.contract.json:604]
-  - Signature: `"flags": [],`
-  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:604]
-- `json_output_keys` (property) component `json_output_keys [property]` (`2bc85fe5-a119-52cc-8506-d30b714c126e`) lines 605-618 [crates/gwiki/contract/gwiki.contract.json:605-618]
-  - Signature: `"json_output_keys": [`
-  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:605-618]
-- `hard_dependencies` (property) component `hard_dependencies [property]` (`a1a91d12-0d1f-55e0-bc38-bb23eddafc98`) lines 619-622 [crates/gwiki/contract/gwiki.contract.json:619-622]
-  - Signature: `"hard_dependencies": [`
-  - Purpose: Indexed property `hard_dependencies` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:619-622]
-- `optional_dependencies` (property) component `optional_dependencies [property]` (`b913bbc6-c888-51eb-ae87-7e5b980c1602`) lines 623-627 [crates/gwiki/contract/gwiki.contract.json:623-627]
-  - Signature: `"optional_dependencies": [`
-  - Purpose: Indexed property `optional_dependencies` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:623-627]
-- `multimodal` (property) component `multimodal [property]` (`6eb98093-dfd8-5482-9350-b7b9521b68a9`) lines 628-628 [crates/gwiki/contract/gwiki.contract.json:628]
-  - Signature: `"multimodal": "none",`
-  - Purpose: Indexed property `multimodal` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:628]
-- `degradation` (property) component `degradation [property]` (`e51ac349-6a8e-5f36-9218-657fcf60e9bb`) lines 629-634 [crates/gwiki/contract/gwiki.contract.json:629-634]
-  - Signature: `"degradation": {`
-  - Purpose: Indexed property `degradation` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:629-634]
-- `output_shape` (property) component `output_shape [property]` (`fb06b07b-af2b-5695-bb15-ec281c2557ee`) lines 630-630 [crates/gwiki/contract/gwiki.contract.json:630]
-  - Signature: `"output_shape": "each check skipped independently with a note",`
-  - Purpose: Indexed property `output_shape` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:630]
-- `metadata_keys` (property) component `metadata_keys [property]` (`b78c59e3-5888-5d01-a6a5-dcdd89c29d30`) lines 631-633 [crates/gwiki/contract/gwiki.contract.json:631-633]
-  - Signature: `"metadata_keys": [`
-  - Purpose: Indexed property `metadata_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:631-633]
-- `name` (property) component `name [property]` (`db197f0e-4e53-5cbf-9a33-379f7e5dd36f`) lines 637-637 [crates/gwiki/contract/gwiki.contract.json:637]
-  - Signature: `"name": "review-report",`
-  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:637]
-- `summary` (property) component `summary [property]` (`845db785-e585-5dcb-8c2a-ed2efd9016c8`) lines 638-638 [crates/gwiki/contract/gwiki.contract.json:638]
-  - Signature: `"summary": "Emit a review report for changed files, symbols, or a diff.",`
-  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:638]
-- `daemon_consumed` (property) component `daemon_consumed [property]` (`7ce32793-e60f-5724-88c4-2c2168db42b1`) lines 639-639 [crates/gwiki/contract/gwiki.contract.json:639]
-  - Signature: `"daemon_consumed": true,`
-  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:639]
-- `positionals` (property) component `positionals [property]` (`c76b8c75-eea2-5934-974f-f89e56b53e8b`) lines 640-640 [crates/gwiki/contract/gwiki.contract.json:640]
-  - Signature: `"positionals": [],`
-  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:640]
-- `flags` (property) component `flags [property]` (`c5a114d5-cac9-5131-a22b-0dd64a3d092d`) lines 641-674 [crates/gwiki/contract/gwiki.contract.json:641-674]
-  - Signature: `"flags": [`
-  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:641-674]
-- `name` (property) component `name [property]` (`364e8a05-c9e8-5736-be89-bc8ee50f4865`) lines 643-643 [crates/gwiki/contract/gwiki.contract.json:643]
-  - Signature: `"name": "--file",`
-  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:643]
-- `takes_value` (property) component `takes_value [property]` (`0ac5aeb6-24ef-5d98-a0a9-3feda9759f33`) lines 644-644 [crates/gwiki/contract/gwiki.contract.json:644]
-  - Signature: `"takes_value": true,`
-  - Purpose: Indexed property `takes_value` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:644]
-- `value_name` (property) component `value_name [property]` (`ba621ac1-7987-500a-a3b5-d662d388afcf`) lines 645-645 [crates/gwiki/contract/gwiki.contract.json:645]
-  - Signature: `"value_name": "PATH",`
-  - Purpose: Indexed property `value_name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:645]
-- `allowed_values` (property) component `allowed_values [property]` (`53575615-27b7-5ad8-bb2b-f85beb7186e3`) lines 646-646 [crates/gwiki/contract/gwiki.contract.json:646]
+- `allowed_values` (property) component `allowed_values [property]` (`da42f95e-ed0b-5755-9df7-b5c5e73bfa23`) lines 481-481 [crates/gwiki/contract/gwiki.contract.json:481]
   - Signature: `"allowed_values": [],`
-  - Purpose: Indexed property `allowed_values` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:646]
-- `required` (property) component `required [property]` (`83930b69-8933-5dd3-88ad-f26c303577ac`) lines 647-647 [crates/gwiki/contract/gwiki.contract.json:647]
+  - Purpose: Indexed property `allowed_values` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:481]
+- `required` (property) component `required [property]` (`b5dd75c9-1c25-5199-b144-32cbae110cdb`) lines 482-482 [crates/gwiki/contract/gwiki.contract.json:482]
   - Signature: `"required": false,`
-  - Purpose: Indexed property `required` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:647]
-- `repeatable` (property) component `repeatable [property]` (`733d96e9-154d-5e38-838b-9c3bc28edb53`) lines 648-648 [crates/gwiki/contract/gwiki.contract.json:648]
-  - Signature: `"repeatable": true`
-  - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:648]
-- `name` (property) component `name [property]` (`db1713db-3611-50a8-a132-9ccdc0bff5e5`) lines 651-651 [crates/gwiki/contract/gwiki.contract.json:651]
-  - Signature: `"name": "--symbol",`
+  - Purpose: Indexed property `required` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:482]
+- `repeatable` (property) component `repeatable [property]` (`08a4a180-01ec-5dbd-9f83-ebb137e1545e`) lines 483-483 [crates/gwiki/contract/gwiki.contract.json:483]
+  - Signature: `"repeatable": false`
+  - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:483]
+- `name` (property) component `name [property]` (`13bdb5cb-1906-56e6-a295-10cc997317d2`) lines 486-486 [crates/gwiki/contract/gwiki.contract.json:486]
+  - Signature: `"name": "--ai",`
+  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:486]
+- `takes_value` (property) component `takes_value [property]` (`85f6d234-0612-5b23-8f4c-0b9f9c600cf9`) lines 487-487 [crates/gwiki/contract/gwiki.contract.json:487]
+  - Signature: `"takes_value": true,`
+  - Purpose: Indexed property `takes_value` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:487]
+- `value_name` (property) component `value_name [property]` (`8c1f9197-1ab6-50a1-8cd7-72d0e76fb23c`) lines 488-488 [crates/gwiki/contract/gwiki.contract.json:488]
+  - Signature: `"value_name": "auto|daemon|direct|off",`
+  - Purpose: Indexed property `value_name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:488]
+- `allowed_values` (property) component `allowed_values [property]` (`7cb3f5d5-0310-5d5b-92c6-7032a5fc5c6a`) lines 489-494 [crates/gwiki/contract/gwiki.contract.json:489-494]
+  - Signature: `"allowed_values": [`
+  - Purpose: Indexed property `allowed_values` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:489-494]
+- `required` (property) component `required [property]` (`837552ae-fa6f-5d3d-85ae-04bad3c2e6f2`) lines 495-495 [crates/gwiki/contract/gwiki.contract.json:495]
+  - Signature: `"required": false,`
+  - Purpose: Indexed property `required` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:495]
+- `repeatable` (property) component `repeatable [property]` (`c9af9bc2-5189-513a-a185-126c1444f5c0`) lines 496-496 [crates/gwiki/contract/gwiki.contract.json:496]
+  - Signature: `"repeatable": false`
+  - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:496]
+- `json_output_keys` (property) component `json_output_keys [property]` (`0f5a21bf-0e1b-5f43-a431-684837d7d9bc`) lines 499-513 [crates/gwiki/contract/gwiki.contract.json:499-513]
+  - Signature: `"json_output_keys": [`
+  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:499-513]
+- `optional_dependencies` (property) component `optional_dependencies [property]` (`70f997c9-72dc-5dff-9fcf-f69a1a251e6b`) lines 514-517 [crates/gwiki/contract/gwiki.contract.json:514-517]
+  - Signature: `"optional_dependencies": [`
+  - Purpose: Indexed property `optional_dependencies` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:514-517]
+- `multimodal` (property) component `multimodal [property]` (`78c2c226-b212-5ea3-8283-1748f1464def`) lines 518-518 [crates/gwiki/contract/gwiki.contract.json:518]
+  - Signature: `"multimodal": "none",`
+  - Purpose: Indexed property `multimodal` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:518]
+- `degradation` (property) component `degradation [property]` (`b58bb236-7f43-5636-a37a-541b5809e50b`) lines 519-527 [crates/gwiki/contract/gwiki.contract.json:519-527]
+  - Signature: `"degradation": {`
+  - Purpose: Indexed property `degradation` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:519-527]
+- `output_shape` (property) component `output_shape [property]` (`a072a6fe-ed9b-5158-a69a-e1ee8d703e36`) lines 520-520 [crates/gwiki/contract/gwiki.contract.json:520]
+  - Signature: `"output_shape": "explainer failure keeps the deterministic skeleton with degradation markers; AI off compiles the structural article without markers",`
+  - Purpose: Indexed property `output_shape` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:520]
+- `metadata_keys` (property) component `metadata_keys [property]` (`58b19939-8e22-51a8-92b5-b87cd02eb620`) lines 521-526 [crates/gwiki/contract/gwiki.contract.json:521-526]
+  - Signature: `"metadata_keys": [`
+  - Purpose: Indexed property `metadata_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:521-526]
+- `name` (property) component `name [property]` (`7fd00b65-2e40-5615-a199-ae45665170bb`) lines 530-530 [crates/gwiki/contract/gwiki.contract.json:530]
+  - Signature: `"name": "audit",`
+  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:530]
+- `summary` (property) component `summary [property]` (`cd1e549c-fb88-5a6b-8ea3-6b7a9901356c`) lines 531-531 [crates/gwiki/contract/gwiki.contract.json:531]
+  - Signature: `"summary": "Report claims that lack source support.",`
+  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:531]
+- `daemon_consumed` (property) component `daemon_consumed [property]` (`0981f5ff-a59d-57e0-a9b5-c90adc515ac4`) lines 532-532 [crates/gwiki/contract/gwiki.contract.json:532]
+  - Signature: `"daemon_consumed": true,`
+  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:532]
+- `positionals` (property) component `positionals [property]` (`a32c2add-dad5-5623-9c98-be09a7bb8669`) lines 533-533 [crates/gwiki/contract/gwiki.contract.json:533]
+  - Signature: `"positionals": [],`
+  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:533]
+- `flags` (property) component `flags [property]` (`f266e787-2603-5cf2-b580-0a76ec9cf8a5`) lines 534-534 [crates/gwiki/contract/gwiki.contract.json:534]
+  - Signature: `"flags": [],`
+  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:534]
+- `json_output_keys` (property) component `json_output_keys [property]` (`ea22ad93-3561-5198-8239-0126e24e13dd`) lines 535-541 [crates/gwiki/contract/gwiki.contract.json:535-541]
+  - Signature: `"json_output_keys": [`
+  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:535-541]
+- `name` (property) component `name [property]` (`7a773094-9676-5dc5-8c76-890f8abd3f5b`) lines 544-544 [crates/gwiki/contract/gwiki.contract.json:544]
+  - Signature: `"name": "graph",`
+  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:544]
+- `summary` (property) component `summary [property]` (`d903517b-01a6-5418-bea9-9c3575d5f90b`) lines 545-545 [crates/gwiki/contract/gwiki.contract.json:545]
+  - Signature: `"summary": "Export unified wiki graph artifacts under outputs.",`
+  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:545]
+- `daemon_consumed` (property) component `daemon_consumed [property]` (`a4342b0f-884b-5fde-89bc-de4ab4fbe77f`) lines 546-546 [crates/gwiki/contract/gwiki.contract.json:546]
+  - Signature: `"daemon_consumed": true,`
+  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:546]
+- `positionals` (property) component `positionals [property]` (`18247da3-bcc9-59a2-ad78-57146bfef5ed`) lines 547-547 [crates/gwiki/contract/gwiki.contract.json:547]
+  - Signature: `"positionals": [],`
+  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:547]
+- `flags` (property) component `flags [property]` (`3dea9309-46a2-56ed-ab3a-f4fe968e58e3`) lines 548-548 [crates/gwiki/contract/gwiki.contract.json:548]
+  - Signature: `"flags": [],`
+  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:548]
+- `json_output_keys` (property) component `json_output_keys [property]` (`2dd05fa6-755e-5bc3-85c1-eaf462beb48d`) lines 549-553 [crates/gwiki/contract/gwiki.contract.json:549-553]
+  - Signature: `"json_output_keys": [`
+  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:549-553]
+- `name` (property) component `name [property]` (`512824e6-d5ff-56e8-a5cf-05cbdbb0d066`) lines 556-556 [crates/gwiki/contract/gwiki.contract.json:556]
+  - Signature: `"name": "graph-context",`
+  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:556]
+- `summary` (property) component `summary [property]` (`dd6daa2a-86aa-51d6-ba02-cb000ed6bbd5`) lines 557-557 [crates/gwiki/contract/gwiki.contract.json:557]
+  - Signature: `"summary": "Build a compact wiki graph context pack.",`
+  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:557]
+- `daemon_consumed` (property) component `daemon_consumed [property]` (`81cbd1c1-5dc9-51eb-a8b8-81c5f15bb5a3`) lines 558-558 [crates/gwiki/contract/gwiki.contract.json:558]
+  - Signature: `"daemon_consumed": true,`
+  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:558]
+- `positionals` (property) component `positionals [property]` (`bf694e23-ce65-55b3-88a3-c8c6f67ded67`) lines 559-559 [crates/gwiki/contract/gwiki.contract.json:559]
+  - Signature: `"positionals": [],`
+  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:559]
+- `flags` (property) component `flags [property]` (`76dc796b-55f8-50b9-aa45-64fb773399fc`) lines 560-560 [crates/gwiki/contract/gwiki.contract.json:560]
+  - Signature: `"flags": [],`
+  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:560]
+- `json_output_keys` (property) component `json_output_keys [property]` (`c86156b3-26be-545a-a9f6-2a79744154d0`) lines 561-573 [crates/gwiki/contract/gwiki.contract.json:561-573]
+  - Signature: `"json_output_keys": [`
+  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:561-573]
+- `hard_dependencies` (property) component `hard_dependencies [property]` (`3e952d41-8acc-569f-ab10-a768e4ce89a1`) lines 574-576 [crates/gwiki/contract/gwiki.contract.json:574-576]
+  - Signature: `"hard_dependencies": [`
+  - Purpose: Indexed property `hard_dependencies` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:574-576]
+- `optional_dependencies` (property) component `optional_dependencies [property]` (`caa02740-bef8-5755-971d-fa0ba66dab9e`) lines 577-580 [crates/gwiki/contract/gwiki.contract.json:577-580]
+  - Signature: `"optional_dependencies": [`
+  - Purpose: Indexed property `optional_dependencies` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:577-580]
+- `multimodal` (property) component `multimodal [property]` (`216b2991-9b30-52b3-8439-f8da325743a2`) lines 581-581 [crates/gwiki/contract/gwiki.contract.json:581]
+  - Signature: `"multimodal": "none",`
+  - Purpose: Indexed property `multimodal` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:581]
+- `degradation` (property) component `degradation [property]` (`9a51348f-4ca7-53e2-a5b0-41a97fb78d19`) lines 582-591 [crates/gwiki/contract/gwiki.contract.json:582-591]
+  - Signature: `"degradation": {`
+  - Purpose: Indexed property `degradation` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:582-591]
+- `output_shape` (property) component `output_shape [property]` (`933c039d-2f74-58dc-837a-834173ec8366`) lines 583-583 [crates/gwiki/contract/gwiki.contract.json:583]
+  - Signature: `"output_shape": "wiki-link-only neighborhood",`
+  - Purpose: Indexed property `output_shape` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:583]
+- `metadata_keys` (property) component `metadata_keys [property]` (`449f8820-955d-566a-a1bc-f6ba6e65e736`) lines 584-590 [crates/gwiki/contract/gwiki.contract.json:584-590]
+  - Signature: `"metadata_keys": [`
+  - Purpose: Indexed property `metadata_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:584-590]
+- `name` (property) component `name [property]` (`06845d6d-b030-5093-bb9c-266fc1878a7b`) lines 594-594 [crates/gwiki/contract/gwiki.contract.json:594]
+  - Signature: `"name": "health",`
+  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:594]
+- `summary` (property) component `summary [property]` (`78a5bc40-5e2e-5dab-825f-d251a318a8db`) lines 595-595 [crates/gwiki/contract/gwiki.contract.json:595]
+  - Signature: `"summary": "Write wiki health snapshots under meta/health.",`
+  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:595]
+- `daemon_consumed` (property) component `daemon_consumed [property]` (`4ef839d7-2289-5800-8576-0d9a854466d6`) lines 596-596 [crates/gwiki/contract/gwiki.contract.json:596]
+  - Signature: `"daemon_consumed": true,`
+  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:596]
+- `positionals` (property) component `positionals [property]` (`f63c5bfa-3167-55b9-a3bc-155b1e17670c`) lines 597-597 [crates/gwiki/contract/gwiki.contract.json:597]
+  - Signature: `"positionals": [],`
+  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:597]
+- `flags` (property) component `flags [property]` (`b5a33e3b-9c4c-5d47-a779-d1609776df55`) lines 598-598 [crates/gwiki/contract/gwiki.contract.json:598]
+  - Signature: `"flags": [],`
+  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:598]
+- `json_output_keys` (property) component `json_output_keys [property]` (`1a9275bd-ed26-5b46-8ea7-31809a9a61d1`) lines 599-605 [crates/gwiki/contract/gwiki.contract.json:599-605]
+  - Signature: `"json_output_keys": [`
+  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:599-605]
+- `name` (property) component `name [property]` (`d76b0bc7-0be3-5e2e-b603-9c30740600fc`) lines 608-608 [crates/gwiki/contract/gwiki.contract.json:608]
+  - Signature: `"name": "librarian",`
+  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:608]
+- `summary` (property) component `summary [property]` (`9f49a86a-ac44-5412-bb98-dc077db45d00`) lines 609-609 [crates/gwiki/contract/gwiki.contract.json:609]
+  - Signature: `"summary": "Emit wiki upkeep proposals without rewriting canonical content.",`
+  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:609]
+- `daemon_consumed` (property) component `daemon_consumed [property]` (`121e2264-2fd3-5b34-b0c4-343e88b8f6f3`) lines 610-610 [crates/gwiki/contract/gwiki.contract.json:610]
+  - Signature: `"daemon_consumed": true,`
+  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:610]
+- `positionals` (property) component `positionals [property]` (`3a999233-5dd3-5bee-a470-e696cdb5cad0`) lines 611-611 [crates/gwiki/contract/gwiki.contract.json:611]
+  - Signature: `"positionals": [],`
+  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:611]
+- `flags` (property) component `flags [property]` (`d1d630a9-2331-51a4-84d2-08bfd2d24c9d`) lines 612-612 [crates/gwiki/contract/gwiki.contract.json:612]
+  - Signature: `"flags": [],`
+  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:612]
+- `json_output_keys` (property) component `json_output_keys [property]` (`4c76bbbe-1e5b-5ee3-b8f7-0d70ab13ebaf`) lines 613-626 [crates/gwiki/contract/gwiki.contract.json:613-626]
+  - Signature: `"json_output_keys": [`
+  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:613-626]
+- `hard_dependencies` (property) component `hard_dependencies [property]` (`efa71ad0-db1b-5e5e-9ada-d4ac1afaad4a`) lines 627-630 [crates/gwiki/contract/gwiki.contract.json:627-630]
+  - Signature: `"hard_dependencies": [`
+  - Purpose: Indexed property `hard_dependencies` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:627-630]
+- `optional_dependencies` (property) component `optional_dependencies [property]` (`e4739ba9-aba4-56b7-9bfd-12f8f26fad9b`) lines 631-635 [crates/gwiki/contract/gwiki.contract.json:631-635]
+  - Signature: `"optional_dependencies": [`
+  - Purpose: Indexed property `optional_dependencies` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:631-635]
+- `multimodal` (property) component `multimodal [property]` (`e0c007c5-0b06-5173-b101-bf3fed14eb00`) lines 636-636 [crates/gwiki/contract/gwiki.contract.json:636]
+  - Signature: `"multimodal": "none",`
+  - Purpose: Indexed property `multimodal` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:636]
+- `degradation` (property) component `degradation [property]` (`ff5ccd88-b7de-5790-b087-e1b9a760e91a`) lines 637-642 [crates/gwiki/contract/gwiki.contract.json:637-642]
+  - Signature: `"degradation": {`
+  - Purpose: Indexed property `degradation` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:637-642]
+- `output_shape` (property) component `output_shape [property]` (`d27630d8-498c-591b-8b7a-1c9f0eecd91f`) lines 638-638 [crates/gwiki/contract/gwiki.contract.json:638]
+  - Signature: `"output_shape": "each check skipped independently with a note",`
+  - Purpose: Indexed property `output_shape` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:638]
+- `metadata_keys` (property) component `metadata_keys [property]` (`2a8f555d-68ff-57fa-8e80-c1e92644aa65`) lines 639-641 [crates/gwiki/contract/gwiki.contract.json:639-641]
+  - Signature: `"metadata_keys": [`
+  - Purpose: Indexed property `metadata_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:639-641]
+- `name` (property) component `name [property]` (`aa680676-081e-54fe-83b7-7307c23526be`) lines 645-645 [crates/gwiki/contract/gwiki.contract.json:645]
+  - Signature: `"name": "review-report",`
+  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:645]
+- `summary` (property) component `summary [property]` (`a8422b83-9fe1-5e76-93b6-4975f6c197bc`) lines 646-646 [crates/gwiki/contract/gwiki.contract.json:646]
+  - Signature: `"summary": "Emit a review report for changed files, symbols, or a diff.",`
+  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:646]
+- `daemon_consumed` (property) component `daemon_consumed [property]` (`ca4f29f8-8cb4-5186-b08f-31954aa9de2b`) lines 647-647 [crates/gwiki/contract/gwiki.contract.json:647]
+  - Signature: `"daemon_consumed": true,`
+  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:647]
+- `positionals` (property) component `positionals [property]` (`856ea514-37c8-520f-837a-f2dfbf3c6744`) lines 648-648 [crates/gwiki/contract/gwiki.contract.json:648]
+  - Signature: `"positionals": [],`
+  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:648]
+- `flags` (property) component `flags [property]` (`f945f4c2-7e4d-5cca-933c-9126b1833814`) lines 649-682 [crates/gwiki/contract/gwiki.contract.json:649-682]
+  - Signature: `"flags": [`
+  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:649-682]
+- `name` (property) component `name [property]` (`ad6d26cc-db6c-505b-9b8c-cae95ae29b6b`) lines 651-651 [crates/gwiki/contract/gwiki.contract.json:651]
+  - Signature: `"name": "--file",`
   - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:651]
-- `takes_value` (property) component `takes_value [property]` (`628e7bbf-6558-5a9c-8245-5dd9aa5ff2cc`) lines 652-652 [crates/gwiki/contract/gwiki.contract.json:652]
+- `takes_value` (property) component `takes_value [property]` (`cdb6919f-859d-511c-81ae-49dd720f509d`) lines 652-652 [crates/gwiki/contract/gwiki.contract.json:652]
   - Signature: `"takes_value": true,`
   - Purpose: Indexed property `takes_value` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:652]
-- `value_name` (property) component `value_name [property]` (`da493b4f-2358-5e4b-9824-8bc9a91bf579`) lines 653-653 [crates/gwiki/contract/gwiki.contract.json:653]
-  - Signature: `"value_name": "SYMBOL_ID",`
+- `value_name` (property) component `value_name [property]` (`53f7276d-56d8-5223-9a0e-4a66a08d627b`) lines 653-653 [crates/gwiki/contract/gwiki.contract.json:653]
+  - Signature: `"value_name": "PATH",`
   - Purpose: Indexed property `value_name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:653]
-- `allowed_values` (property) component `allowed_values [property]` (`a6a4de47-e6b3-5b6c-a2fd-9fc0c726fa18`) lines 654-654 [crates/gwiki/contract/gwiki.contract.json:654]
+- `allowed_values` (property) component `allowed_values [property]` (`65477559-ce84-5eae-a798-b55de1ba8eaf`) lines 654-654 [crates/gwiki/contract/gwiki.contract.json:654]
   - Signature: `"allowed_values": [],`
   - Purpose: Indexed property `allowed_values` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:654]
-- `required` (property) component `required [property]` (`dc44cec0-9e0a-57c2-959c-81e28b4c0220`) lines 655-655 [crates/gwiki/contract/gwiki.contract.json:655]
+- `required` (property) component `required [property]` (`600b48b1-2c3b-5541-bace-4a41e1d3cf88`) lines 655-655 [crates/gwiki/contract/gwiki.contract.json:655]
   - Signature: `"required": false,`
   - Purpose: Indexed property `required` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:655]
-- `repeatable` (property) component `repeatable [property]` (`c6744555-08b4-5c1d-8c31-7aa5979742e7`) lines 656-656 [crates/gwiki/contract/gwiki.contract.json:656]
+- `repeatable` (property) component `repeatable [property]` (`f737b47f-a4c6-546c-872d-078f20f899b2`) lines 656-656 [crates/gwiki/contract/gwiki.contract.json:656]
   - Signature: `"repeatable": true`
   - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:656]
-- `name` (property) component `name [property]` (`c12f3717-deb7-580d-91f2-e61ffa7da9b9`) lines 659-659 [crates/gwiki/contract/gwiki.contract.json:659]
-  - Signature: `"name": "--diff",`
+- `name` (property) component `name [property]` (`bece88ec-c576-5fde-956f-5b10493c0cd4`) lines 659-659 [crates/gwiki/contract/gwiki.contract.json:659]
+  - Signature: `"name": "--symbol",`
   - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:659]
-- `takes_value` (property) component `takes_value [property]` (`fd542157-5cfb-5944-8406-ff5201eee3ea`) lines 660-660 [crates/gwiki/contract/gwiki.contract.json:660]
+- `takes_value` (property) component `takes_value [property]` (`54e38d51-e11a-50e0-966b-35d61e5a6bf7`) lines 660-660 [crates/gwiki/contract/gwiki.contract.json:660]
   - Signature: `"takes_value": true,`
   - Purpose: Indexed property `takes_value` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:660]
-- `value_name` (property) component `value_name [property]` (`a6420563-5213-596c-a3c7-7db32060cffd`) lines 661-661 [crates/gwiki/contract/gwiki.contract.json:661]
-  - Signature: `"value_name": "PATH",`
+- `value_name` (property) component `value_name [property]` (`672dd59d-a985-526d-81db-86e4a74fe7dd`) lines 661-661 [crates/gwiki/contract/gwiki.contract.json:661]
+  - Signature: `"value_name": "SYMBOL_ID",`
   - Purpose: Indexed property `value_name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:661]
-- `allowed_values` (property) component `allowed_values [property]` (`b4395398-0afc-547e-b5f7-7ca33fa2d4f5`) lines 662-662 [crates/gwiki/contract/gwiki.contract.json:662]
+- `allowed_values` (property) component `allowed_values [property]` (`0af0bb87-f46d-58bb-833a-4de08295dc72`) lines 662-662 [crates/gwiki/contract/gwiki.contract.json:662]
   - Signature: `"allowed_values": [],`
   - Purpose: Indexed property `allowed_values` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:662]
-- `required` (property) component `required [property]` (`34e4b69e-e856-52ba-9fff-b3accc0a577c`) lines 663-663 [crates/gwiki/contract/gwiki.contract.json:663]
+- `required` (property) component `required [property]` (`8006a14c-c1f2-5564-96f2-42fd7c53484d`) lines 663-663 [crates/gwiki/contract/gwiki.contract.json:663]
   - Signature: `"required": false,`
   - Purpose: Indexed property `required` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:663]
-- `repeatable` (property) component `repeatable [property]` (`0ed51672-f30d-594f-a884-e0ae4c60ea8d`) lines 664-664 [crates/gwiki/contract/gwiki.contract.json:664]
-  - Signature: `"repeatable": false`
+- `repeatable` (property) component `repeatable [property]` (`08d72fba-6d91-5fb5-bb65-05c2e427d28b`) lines 664-664 [crates/gwiki/contract/gwiki.contract.json:664]
+  - Signature: `"repeatable": true`
   - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:664]
-- `name` (property) component `name [property]` (`1c38ac34-8f79-5011-9a2e-165b8e5b1614`) lines 667-667 [crates/gwiki/contract/gwiki.contract.json:667]
-  - Signature: `"name": "--output",`
+- `name` (property) component `name [property]` (`a33310c2-3aaf-50c6-a98d-ee6b9a72e091`) lines 667-667 [crates/gwiki/contract/gwiki.contract.json:667]
+  - Signature: `"name": "--diff",`
   - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:667]
-- `takes_value` (property) component `takes_value [property]` (`de9949bf-57c3-5be1-b8aa-2c2f31b8c7d2`) lines 668-668 [crates/gwiki/contract/gwiki.contract.json:668]
+- `takes_value` (property) component `takes_value [property]` (`c892a614-03e9-5fb0-bcb2-bc64dde499a5`) lines 668-668 [crates/gwiki/contract/gwiki.contract.json:668]
   - Signature: `"takes_value": true,`
   - Purpose: Indexed property `takes_value` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:668]
-- `value_name` (property) component `value_name [property]` (`878263f9-fe7c-5a48-87ed-4c80eefb52ca`) lines 669-669 [crates/gwiki/contract/gwiki.contract.json:669]
-  - Signature: `"value_name": "FILE",`
+- `value_name` (property) component `value_name [property]` (`65bdee9a-44fe-5169-aca2-cc5dbf5029b8`) lines 669-669 [crates/gwiki/contract/gwiki.contract.json:669]
+  - Signature: `"value_name": "PATH",`
   - Purpose: Indexed property `value_name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:669]
-- `allowed_values` (property) component `allowed_values [property]` (`6a87bb7b-869d-5370-af7d-40b22dcaad72`) lines 670-670 [crates/gwiki/contract/gwiki.contract.json:670]
+- `allowed_values` (property) component `allowed_values [property]` (`c4d89ebc-2434-5c4d-8904-54c92707871b`) lines 670-670 [crates/gwiki/contract/gwiki.contract.json:670]
   - Signature: `"allowed_values": [],`
   - Purpose: Indexed property `allowed_values` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:670]
-- `required` (property) component `required [property]` (`3abc1a28-2c35-55a0-9854-3b240b61828d`) lines 671-671 [crates/gwiki/contract/gwiki.contract.json:671]
+- `required` (property) component `required [property]` (`99dd48f3-5145-5f7f-9410-be4883f5f461`) lines 671-671 [crates/gwiki/contract/gwiki.contract.json:671]
   - Signature: `"required": false,`
   - Purpose: Indexed property `required` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:671]
-- `repeatable` (property) component `repeatable [property]` (`9cc24b5f-1753-57fa-886b-8ee23c601bab`) lines 672-672 [crates/gwiki/contract/gwiki.contract.json:672]
+- `repeatable` (property) component `repeatable [property]` (`9e26bf79-fd04-561e-93fc-45e7b9f7d165`) lines 672-672 [crates/gwiki/contract/gwiki.contract.json:672]
   - Signature: `"repeatable": false`
   - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:672]
-- `json_output_keys` (property) component `json_output_keys [property]` (`db6b3d5d-2950-5923-8096-c061c619efdf`) lines 675-690 [crates/gwiki/contract/gwiki.contract.json:675-690]
-  - Signature: `"json_output_keys": [`
-  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:675-690]
-- `hard_dependencies` (property) component `hard_dependencies [property]` (`3d5354f7-3a8c-5dc8-abfd-112b82de57e4`) lines 691-694 [crates/gwiki/contract/gwiki.contract.json:691-694]
-  - Signature: `"hard_dependencies": [`
-  - Purpose: Indexed property `hard_dependencies` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:691-694]
-- `optional_dependencies` (property) component `optional_dependencies [property]` (`78e33ce0-2661-56b7-9f19-ce02b51666f1`) lines 695-697 [crates/gwiki/contract/gwiki.contract.json:695-697]
-  - Signature: `"optional_dependencies": [`
-  - Purpose: Indexed property `optional_dependencies` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:695-697]
-- `multimodal` (property) component `multimodal [property]` (`c2fec130-8f42-5930-b3c4-17bc9132d658`) lines 698-698 [crates/gwiki/contract/gwiki.contract.json:698]
-  - Signature: `"multimodal": "none",`
-  - Purpose: Indexed property `multimodal` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:698]
-- `degradation` (property) component `degradation [property]` (`5dad1ff7-281c-562f-8284-7a0da1aeabdf`) lines 699-705 [crates/gwiki/contract/gwiki.contract.json:699-705]
-  - Signature: `"degradation": {`
-  - Purpose: Indexed property `degradation` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:699-705]
-- `output_shape` (property) component `output_shape [property]` (`96887894-0c66-52e7-b8d1-fc813d69885b`) lines 700-700 [crates/gwiki/contract/gwiki.contract.json:700]
-  - Signature: `"output_shape": "report without risky-shift section",`
-  - Purpose: Indexed property `output_shape` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:700]
-- `metadata_keys` (property) component `metadata_keys [property]` (`52d08eca-b550-5f61-abb2-410f3a850d0e`) lines 701-704 [crates/gwiki/contract/gwiki.contract.json:701-704]
-  - Signature: `"metadata_keys": [`
-  - Purpose: Indexed property `metadata_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:701-704]
-- `name` (property) component `name [property]` (`75c9badf-0332-5412-89a2-23f36a2ca5f6`) lines 708-708 [crates/gwiki/contract/gwiki.contract.json:708]
-  - Signature: `"name": "citation-quality",`
-  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:708]
-- `summary` (property) component `summary [property]` (`7b3c6491-5178-526a-bf2d-0c72e8a17aee`) lines 709-709 [crates/gwiki/contract/gwiki.contract.json:709]
-  - Signature: `"summary": "Emit source citation quality checks for wiki content.",`
-  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:709]
-- `daemon_consumed` (property) component `daemon_consumed [property]` (`7c3735b7-9a36-57cc-8d42-b6c74772da92`) lines 710-710 [crates/gwiki/contract/gwiki.contract.json:710]
-  - Signature: `"daemon_consumed": true,`
-  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:710]
-- `positionals` (property) component `positionals [property]` (`538374a4-d101-5007-bdf7-1a3116ae02ba`) lines 711-711 [crates/gwiki/contract/gwiki.contract.json:711]
-  - Signature: `"positionals": [],`
-  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:711]
-- `flags` (property) component `flags [property]` (`f17c909c-8971-538a-a62c-8c78700d1809`) lines 712-712 [crates/gwiki/contract/gwiki.contract.json:712]
-  - Signature: `"flags": [],`
-  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:712]
-- `json_output_keys` (property) component `json_output_keys [property]` (`dbf24e49-2811-5792-beac-c981bd10832c`) lines 713-720 [crates/gwiki/contract/gwiki.contract.json:713-720]
-  - Signature: `"json_output_keys": [`
-  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:713-720]
-- `hard_dependencies` (property) component `hard_dependencies [property]` (`4c4f81b2-5f33-523e-a020-21fce2aa4b83`) lines 721-723 [crates/gwiki/contract/gwiki.contract.json:721-723]
-  - Signature: `"hard_dependencies": [`
-  - Purpose: Indexed property `hard_dependencies` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:721-723]
-- `optional_dependencies` (property) component `optional_dependencies [property]` (`ff945215-aa38-5348-8875-bc6279fc8270`) lines 724-727 [crates/gwiki/contract/gwiki.contract.json:724-727]
-  - Signature: `"optional_dependencies": [`
-  - Purpose: Indexed property `optional_dependencies` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:724-727]
-- `multimodal` (property) component `multimodal [property]` (`f6f7c1e8-127a-5f58-bc60-18103c001173`) lines 728-728 [crates/gwiki/contract/gwiki.contract.json:728]
-  - Signature: `"multimodal": "none",`
-  - Purpose: Indexed property `multimodal` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:728]
-- `degradation` (property) component `degradation [property]` (`53d435c7-fad5-532b-a0f1-4302f6ee8502`) lines 729-738 [crates/gwiki/contract/gwiki.contract.json:729-738]
-  - Signature: `"degradation": {`
-  - Purpose: Indexed property `degradation` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:729-738]
-- `output_shape` (property) component `output_shape [property]` (`d9694c57-901f-520f-a821-9d017e06c584`) lines 730-730 [crates/gwiki/contract/gwiki.contract.json:730]
-  - Signature: `"output_shape": "per-section skipped with a note",`
-  - Purpose: Indexed property `output_shape` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:730]
-- `metadata_keys` (property) component `metadata_keys [property]` (`bb9a8a08-6de9-5c35-9237-21ff2836d015`) lines 731-737 [crates/gwiki/contract/gwiki.contract.json:731-737]
-  - Signature: `"metadata_keys": [`
-  - Purpose: Indexed property `metadata_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:731-737]
-- `name` (property) component `name [property]` (`6c6f09ea-3a71-5b35-8605-9bdf82f577c2`) lines 741-741 [crates/gwiki/contract/gwiki.contract.json:741]
-  - Signature: `"name": "sources",`
-  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:741]
-- `summary` (property) component `summary [property]` (`f1dcf2f4-ddab-56e8-914a-b59bc1cb9d5a`) lines 742-742 [crates/gwiki/contract/gwiki.contract.json:742]
-  - Signature: `"summary": "List raw source manifest entries in the selected scope.",`
-  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:742]
-- `daemon_consumed` (property) component `daemon_consumed [property]` (`fb9a4dbd-48fe-5d8a-98e7-1da0d0f0f864`) lines 743-743 [crates/gwiki/contract/gwiki.contract.json:743]
-  - Signature: `"daemon_consumed": true,`
-  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:743]
-- `positionals` (property) component `positionals [property]` (`cd1df415-7c5b-5eff-88a5-4ca35e88c5bc`) lines 744-744 [crates/gwiki/contract/gwiki.contract.json:744]
-  - Signature: `"positionals": [],`
-  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:744]
-- `flags` (property) component `flags [property]` (`ad255096-e4c9-50a5-8872-d6d6cb935d57`) lines 745-745 [crates/gwiki/contract/gwiki.contract.json:745]
-  - Signature: `"flags": [],`
-  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:745]
-- `json_output_keys` (property) component `json_output_keys [property]` (`46a140e9-0b33-5336-bfa0-afb801968146`) lines 746-755 [crates/gwiki/contract/gwiki.contract.json:746-755]
-  - Signature: `"json_output_keys": [`
-  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:746-755]
-- `name` (property) component `name [property]` (`b5ca15ad-20f8-5090-babc-5acaef284f4f`) lines 758-758 [crates/gwiki/contract/gwiki.contract.json:758]
-  - Signature: `"name": "backlinks",`
-  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:758]
-- `summary` (property) component `summary [property]` (`e437642a-fd66-53bf-bc4c-136d25a65d6b`) lines 759-759 [crates/gwiki/contract/gwiki.contract.json:759]
-  - Signature: `"summary": "Show backlinks for a wiki page.",`
-  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:759]
-- `daemon_consumed` (property) component `daemon_consumed [property]` (`49e59ccb-4a44-5a09-88a2-9ada708611f1`) lines 760-760 [crates/gwiki/contract/gwiki.contract.json:760]
-  - Signature: `"daemon_consumed": true,`
-  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:760]
-- `positionals` (property) component `positionals [property]` (`67153f16-358f-553e-83b2-bcb88899f4d3`) lines 761-767 [crates/gwiki/contract/gwiki.contract.json:761-767]
-  - Signature: `"positionals": [`
-  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:761-767]
-- `name` (property) component `name [property]` (`216f7773-c23c-5859-b3ce-282f4a561f5f`) lines 763-763 [crates/gwiki/contract/gwiki.contract.json:763]
-  - Signature: `"name": "PAGE",`
-  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:763]
-- `required` (property) component `required [property]` (`70dc77d6-ee3b-5909-af10-c860fb91cbc1`) lines 764-764 [crates/gwiki/contract/gwiki.contract.json:764]
-  - Signature: `"required": true,`
-  - Purpose: Indexed property `required` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:764]
-- `repeatable` (property) component `repeatable [property]` (`d4241f97-3bf5-53ae-9043-6c817f022c24`) lines 765-765 [crates/gwiki/contract/gwiki.contract.json:765]
-  - Signature: `"repeatable": false`
-  - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:765]
-- `flags` (property) component `flags [property]` (`f4adc2ee-98d5-501a-aeb8-02510e1efcf2`) lines 768-768 [crates/gwiki/contract/gwiki.contract.json:768]
-  - Signature: `"flags": [],`
-  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:768]
-- `json_output_keys` (property) component `json_output_keys [property]` (`668fde4d-3898-5f10-817f-3a83c51f9412`) lines 769-776 [crates/gwiki/contract/gwiki.contract.json:769-776]
-  - Signature: `"json_output_keys": [`
-  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:769-776]
-- `name` (property) component `name [property]` (`a0370e9f-3b80-585e-bd93-20085cc52edf`) lines 779-779 [crates/gwiki/contract/gwiki.contract.json:779]
-  - Signature: `"name": "status",`
-  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:779]
-- `summary` (property) component `summary [property]` (`4f8720bb-360e-5ddc-a6ce-eb774a9052de`) lines 780-780 [crates/gwiki/contract/gwiki.contract.json:780]
-  - Signature: `"summary": "Show shell readiness.",`
-  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:780]
-- `daemon_consumed` (property) component `daemon_consumed [property]` (`74709a20-a05e-57ff-980f-6aba9554653c`) lines 781-781 [crates/gwiki/contract/gwiki.contract.json:781]
-  - Signature: `"daemon_consumed": true,`
-  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:781]
-- `positionals` (property) component `positionals [property]` (`62c0a11c-3875-58e7-be3c-41089edbbc12`) lines 782-782 [crates/gwiki/contract/gwiki.contract.json:782]
-  - Signature: `"positionals": [],`
-  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:782]
-- `flags` (property) component `flags [property]` (`a87ff4b6-4851-5365-be3e-d710cd5b7dfc`) lines 783-783 [crates/gwiki/contract/gwiki.contract.json:783]
-  - Signature: `"flags": [],`
-  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:783]
-- `json_output_keys` (property) component `json_output_keys [property]` (`2e3f335c-4f16-597f-9639-6895a0b32793`) lines 784-791 [crates/gwiki/contract/gwiki.contract.json:784-791]
-  - Signature: `"json_output_keys": [`
-  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:784-791]
-- `name` (property) component `name [property]` (`527c4aad-5c64-527a-aae0-dd8621319b22`) lines 794-794 [crates/gwiki/contract/gwiki.contract.json:794]
-  - Signature: `"name": "trust",`
-  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:794]
-- `summary` (property) component `summary [property]` (`9e25f022-9359-5c14-b87a-acda8b963281`) lines 795-795 [crates/gwiki/contract/gwiki.contract.json:795]
-  - Signature: `"summary": "Show search, graph, freshness, and audit trust status.",`
-  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:795]
-- `daemon_consumed` (property) component `daemon_consumed [property]` (`9a4b0e87-bf66-511c-80fb-0f0ee5e9fcc2`) lines 796-796 [crates/gwiki/contract/gwiki.contract.json:796]
-  - Signature: `"daemon_consumed": true,`
-  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:796]
-- `positionals` (property) component `positionals [property]` (`3e99fea5-50fa-5206-8bd5-f1e1061d88d9`) lines 797-797 [crates/gwiki/contract/gwiki.contract.json:797]
-  - Signature: `"positionals": [],`
-  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:797]
-- `flags` (property) component `flags [property]` (`d5920509-efa8-5cc6-9182-25b4b8b2434a`) lines 798-798 [crates/gwiki/contract/gwiki.contract.json:798]
-  - Signature: `"flags": [],`
-  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:798]
-- `json_output_keys` (property) component `json_output_keys [property]` (`e824c97d-329e-50dc-9cc8-69fea7d8a1dc`) lines 799-814 [crates/gwiki/contract/gwiki.contract.json:799-814]
-  - Signature: `"json_output_keys": [`
-  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:799-814]
-- `name` (property) component `name [property]` (`2f3f6add-b030-5a5e-9c40-8a90ceb16da4`) lines 817-817 [crates/gwiki/contract/gwiki.contract.json:817]
-  - Signature: `"name": "remove-source",`
-  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:817]
-- `summary` (property) component `summary [property]` (`e3313ee2-da2e-5410-b578-ed6e456911a8`) lines 818-818 [crates/gwiki/contract/gwiki.contract.json:818]
-  - Signature: `"summary": "Remove a raw source, its manifest entry, and its raw asset.",`
-  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:818]
-- `daemon_consumed` (property) component `daemon_consumed [property]` (`21b97f56-c72d-5d3d-86d5-f128f20bd980`) lines 819-819 [crates/gwiki/contract/gwiki.contract.json:819]
-  - Signature: `"daemon_consumed": true,`
-  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:819]
-- `positionals` (property) component `positionals [property]` (`65049db6-a003-51ef-b271-412e41c5d12d`) lines 820-820 [crates/gwiki/contract/gwiki.contract.json:820]
-  - Signature: `"positionals": [],`
-  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:820]
-- `flags` (property) component `flags [property]` (`11b285ce-81da-5421-ab6e-ec50ba1a5582`) lines 821-854 [crates/gwiki/contract/gwiki.contract.json:821-854]
-  - Signature: `"flags": [`
-  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:821-854]
-- `name` (property) component `name [property]` (`367ea58b-93ae-5483-8227-24a89240b42a`) lines 823-823 [crates/gwiki/contract/gwiki.contract.json:823]
-  - Signature: `"name": "--id",`
-  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:823]
-- `takes_value` (property) component `takes_value [property]` (`3c2e6730-81a5-59b6-9a3d-a780ccde8cd6`) lines 824-824 [crates/gwiki/contract/gwiki.contract.json:824]
+- `name` (property) component `name [property]` (`c4e338d0-c5b1-5d45-87ee-eb9932d918b3`) lines 675-675 [crates/gwiki/contract/gwiki.contract.json:675]
+  - Signature: `"name": "--output",`
+  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:675]
+- `takes_value` (property) component `takes_value [property]` (`d4d3f5a3-f30c-5770-b084-8c345a1b3c50`) lines 676-676 [crates/gwiki/contract/gwiki.contract.json:676]
   - Signature: `"takes_value": true,`
-  - Purpose: Indexed property `takes_value` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:824]
-- `value_name` (property) component `value_name [property]` (`b1dc33f2-9b4d-59d7-bbe7-ec4d53f9ab43`) lines 825-825 [crates/gwiki/contract/gwiki.contract.json:825]
-  - Signature: `"value_name": "SOURCE_ID",`
-  - Purpose: Indexed property `value_name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:825]
-- `allowed_values` (property) component `allowed_values [property]` (`88ada234-680d-5c72-9fff-bf032fc20323`) lines 826-826 [crates/gwiki/contract/gwiki.contract.json:826]
+  - Purpose: Indexed property `takes_value` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:676]
+- `value_name` (property) component `value_name [property]` (`3ec232fc-ad6c-543b-99c3-d3557eab8b99`) lines 677-677 [crates/gwiki/contract/gwiki.contract.json:677]
+  - Signature: `"value_name": "FILE",`
+  - Purpose: Indexed property `value_name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:677]
+- `allowed_values` (property) component `allowed_values [property]` (`9e5d6406-3b6a-5b79-a83d-14dacfe88e69`) lines 678-678 [crates/gwiki/contract/gwiki.contract.json:678]
   - Signature: `"allowed_values": [],`
-  - Purpose: Indexed property `allowed_values` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:826]
-- `required` (property) component `required [property]` (`576d3b60-f582-57b0-a2cc-17f3d5a3f9fd`) lines 827-827 [crates/gwiki/contract/gwiki.contract.json:827]
-  - Signature: `"required": true,`
-  - Purpose: Indexed property `required` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:827]
-- `repeatable` (property) component `repeatable [property]` (`e87d5aee-9fa0-511b-b97b-602ace2797e8`) lines 828-828 [crates/gwiki/contract/gwiki.contract.json:828]
+  - Purpose: Indexed property `allowed_values` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:678]
+- `required` (property) component `required [property]` (`a2d37dff-cb05-5d6d-a177-96536490d9e0`) lines 679-679 [crates/gwiki/contract/gwiki.contract.json:679]
+  - Signature: `"required": false,`
+  - Purpose: Indexed property `required` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:679]
+- `repeatable` (property) component `repeatable [property]` (`c277457e-cbf1-5ac4-a3c0-ea5932f1d44e`) lines 680-680 [crates/gwiki/contract/gwiki.contract.json:680]
   - Signature: `"repeatable": false`
-  - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:828]
-- `name` (property) component `name [property]` (`a614fe95-19d8-5b70-a0ea-4fadbd1f3541`) lines 831-831 [crates/gwiki/contract/gwiki.contract.json:831]
-  - Signature: `"name": "--dry-run",`
+  - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:680]
+- `json_output_keys` (property) component `json_output_keys [property]` (`b05155dd-0d41-5cb4-aeb4-ff7bbac95319`) lines 683-698 [crates/gwiki/contract/gwiki.contract.json:683-698]
+  - Signature: `"json_output_keys": [`
+  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:683-698]
+- `hard_dependencies` (property) component `hard_dependencies [property]` (`f194a626-2dc9-5320-846d-48585806c49e`) lines 699-702 [crates/gwiki/contract/gwiki.contract.json:699-702]
+  - Signature: `"hard_dependencies": [`
+  - Purpose: Indexed property `hard_dependencies` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:699-702]
+- `optional_dependencies` (property) component `optional_dependencies [property]` (`4f091f4d-6ffb-5aa9-bbb4-5998cda9f572`) lines 703-705 [crates/gwiki/contract/gwiki.contract.json:703-705]
+  - Signature: `"optional_dependencies": [`
+  - Purpose: Indexed property `optional_dependencies` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:703-705]
+- `multimodal` (property) component `multimodal [property]` (`e3642f0e-e03a-5b8d-b70c-53387fd846c1`) lines 706-706 [crates/gwiki/contract/gwiki.contract.json:706]
+  - Signature: `"multimodal": "none",`
+  - Purpose: Indexed property `multimodal` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:706]
+- `degradation` (property) component `degradation [property]` (`2908c0ff-358c-5a23-bfef-c09d71fbe29e`) lines 707-713 [crates/gwiki/contract/gwiki.contract.json:707-713]
+  - Signature: `"degradation": {`
+  - Purpose: Indexed property `degradation` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:707-713]
+- `output_shape` (property) component `output_shape [property]` (`95515077-a235-5331-b3fb-b97141709211`) lines 708-708 [crates/gwiki/contract/gwiki.contract.json:708]
+  - Signature: `"output_shape": "report without risky-shift section",`
+  - Purpose: Indexed property `output_shape` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:708]
+- `metadata_keys` (property) component `metadata_keys [property]` (`5939f35a-8b41-50cd-84e7-d1a9adbae98d`) lines 709-712 [crates/gwiki/contract/gwiki.contract.json:709-712]
+  - Signature: `"metadata_keys": [`
+  - Purpose: Indexed property `metadata_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:709-712]
+- `name` (property) component `name [property]` (`4e5489c1-c9a2-5e08-909b-78a3e69cfda5`) lines 716-716 [crates/gwiki/contract/gwiki.contract.json:716]
+  - Signature: `"name": "citation-quality",`
+  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:716]
+- `summary` (property) component `summary [property]` (`28576837-be3e-5565-a2b9-13ee01c27d36`) lines 717-717 [crates/gwiki/contract/gwiki.contract.json:717]
+  - Signature: `"summary": "Emit source citation quality checks for wiki content.",`
+  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:717]
+- `daemon_consumed` (property) component `daemon_consumed [property]` (`2ebd995a-98f7-59fb-b645-dc3fdfc53754`) lines 718-718 [crates/gwiki/contract/gwiki.contract.json:718]
+  - Signature: `"daemon_consumed": true,`
+  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:718]
+- `positionals` (property) component `positionals [property]` (`336e8700-384d-5e79-bcde-69f814eb2245`) lines 719-719 [crates/gwiki/contract/gwiki.contract.json:719]
+  - Signature: `"positionals": [],`
+  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:719]
+- `flags` (property) component `flags [property]` (`76520377-6fb1-538a-9db1-6c137148871b`) lines 720-720 [crates/gwiki/contract/gwiki.contract.json:720]
+  - Signature: `"flags": [],`
+  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:720]
+- `json_output_keys` (property) component `json_output_keys [property]` (`2fdb5022-2c0a-58bd-9729-487560103304`) lines 721-728 [crates/gwiki/contract/gwiki.contract.json:721-728]
+  - Signature: `"json_output_keys": [`
+  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:721-728]
+- `hard_dependencies` (property) component `hard_dependencies [property]` (`33b9385c-316a-5201-84ef-f86471c2f8ea`) lines 729-731 [crates/gwiki/contract/gwiki.contract.json:729-731]
+  - Signature: `"hard_dependencies": [`
+  - Purpose: Indexed property `hard_dependencies` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:729-731]
+- `optional_dependencies` (property) component `optional_dependencies [property]` (`bfa6fa9b-b1b5-58db-94c4-eebb9fadd669`) lines 732-735 [crates/gwiki/contract/gwiki.contract.json:732-735]
+  - Signature: `"optional_dependencies": [`
+  - Purpose: Indexed property `optional_dependencies` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:732-735]
+- `multimodal` (property) component `multimodal [property]` (`abb2ab7d-1f20-53a4-b9d3-9d948680ae7e`) lines 736-736 [crates/gwiki/contract/gwiki.contract.json:736]
+  - Signature: `"multimodal": "none",`
+  - Purpose: Indexed property `multimodal` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:736]
+- `degradation` (property) component `degradation [property]` (`278089b1-73e2-5016-b813-f219494ebe1e`) lines 737-746 [crates/gwiki/contract/gwiki.contract.json:737-746]
+  - Signature: `"degradation": {`
+  - Purpose: Indexed property `degradation` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:737-746]
+- `output_shape` (property) component `output_shape [property]` (`d41da3e9-751e-5be2-a413-aec59c8ec7c4`) lines 738-738 [crates/gwiki/contract/gwiki.contract.json:738]
+  - Signature: `"output_shape": "per-section skipped with a note",`
+  - Purpose: Indexed property `output_shape` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:738]
+- `metadata_keys` (property) component `metadata_keys [property]` (`dcb04bac-b519-5080-ab40-e43564781a04`) lines 739-745 [crates/gwiki/contract/gwiki.contract.json:739-745]
+  - Signature: `"metadata_keys": [`
+  - Purpose: Indexed property `metadata_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:739-745]
+- `name` (property) component `name [property]` (`82bd5a9d-2727-572c-9fde-0875b3b4881c`) lines 749-749 [crates/gwiki/contract/gwiki.contract.json:749]
+  - Signature: `"name": "sources",`
+  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:749]
+- `summary` (property) component `summary [property]` (`4ae8c2f1-8418-5f41-811b-5e463e7f2018`) lines 750-750 [crates/gwiki/contract/gwiki.contract.json:750]
+  - Signature: `"summary": "List raw source manifest entries in the selected scope.",`
+  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:750]
+- `daemon_consumed` (property) component `daemon_consumed [property]` (`000beb0b-c78b-5b11-94ec-3c7be958fab8`) lines 751-751 [crates/gwiki/contract/gwiki.contract.json:751]
+  - Signature: `"daemon_consumed": true,`
+  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:751]
+- `positionals` (property) component `positionals [property]` (`577d94ab-caa3-5c86-9918-bbd0b98bd7c8`) lines 752-752 [crates/gwiki/contract/gwiki.contract.json:752]
+  - Signature: `"positionals": [],`
+  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:752]
+- `flags` (property) component `flags [property]` (`32433fe3-d360-5423-a874-e1cf14ea8053`) lines 753-753 [crates/gwiki/contract/gwiki.contract.json:753]
+  - Signature: `"flags": [],`
+  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:753]
+- `json_output_keys` (property) component `json_output_keys [property]` (`2c2b9ab7-48f7-5073-985a-41e43ad4bd1d`) lines 754-763 [crates/gwiki/contract/gwiki.contract.json:754-763]
+  - Signature: `"json_output_keys": [`
+  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:754-763]
+- `name` (property) component `name [property]` (`3c1bf2b6-92dc-54e4-b672-7ce5d5177886`) lines 766-766 [crates/gwiki/contract/gwiki.contract.json:766]
+  - Signature: `"name": "backlinks",`
+  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:766]
+- `summary` (property) component `summary [property]` (`22133b29-3daa-5b9c-953b-b5f91824ebb2`) lines 767-767 [crates/gwiki/contract/gwiki.contract.json:767]
+  - Signature: `"summary": "Show backlinks for a wiki page.",`
+  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:767]
+- `daemon_consumed` (property) component `daemon_consumed [property]` (`fc997681-4ece-5ef9-b4f0-ec71148a6ede`) lines 768-768 [crates/gwiki/contract/gwiki.contract.json:768]
+  - Signature: `"daemon_consumed": true,`
+  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:768]
+- `positionals` (property) component `positionals [property]` (`f3536473-de7e-5058-9951-d3e32d1ec51a`) lines 769-775 [crates/gwiki/contract/gwiki.contract.json:769-775]
+  - Signature: `"positionals": [`
+  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:769-775]
+- `name` (property) component `name [property]` (`58fa56cd-22c2-585b-a411-6467552270b8`) lines 771-771 [crates/gwiki/contract/gwiki.contract.json:771]
+  - Signature: `"name": "PAGE",`
+  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:771]
+- `required` (property) component `required [property]` (`43a7636d-2dd1-598d-ba08-d1cd32cf7e0d`) lines 772-772 [crates/gwiki/contract/gwiki.contract.json:772]
+  - Signature: `"required": true,`
+  - Purpose: Indexed property `required` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:772]
+- `repeatable` (property) component `repeatable [property]` (`45a78200-5c15-5919-a9ef-26988c9635e1`) lines 773-773 [crates/gwiki/contract/gwiki.contract.json:773]
+  - Signature: `"repeatable": false`
+  - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:773]
+- `flags` (property) component `flags [property]` (`9ad07ccc-1609-56f4-a8c8-dece93cc9d62`) lines 776-776 [crates/gwiki/contract/gwiki.contract.json:776]
+  - Signature: `"flags": [],`
+  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:776]
+- `json_output_keys` (property) component `json_output_keys [property]` (`73acd1e7-c553-57a5-ab03-40f3235216f5`) lines 777-784 [crates/gwiki/contract/gwiki.contract.json:777-784]
+  - Signature: `"json_output_keys": [`
+  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:777-784]
+- `name` (property) component `name [property]` (`227c2992-489b-5f4d-bdc6-ccca97d725ab`) lines 787-787 [crates/gwiki/contract/gwiki.contract.json:787]
+  - Signature: `"name": "status",`
+  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:787]
+- `summary` (property) component `summary [property]` (`1a4db3cc-70bd-5f57-b956-ce3175cbd8f7`) lines 788-788 [crates/gwiki/contract/gwiki.contract.json:788]
+  - Signature: `"summary": "Show shell readiness.",`
+  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:788]
+- `daemon_consumed` (property) component `daemon_consumed [property]` (`b99d04ad-aae3-5a5b-bf76-c0bfb9f166eb`) lines 789-789 [crates/gwiki/contract/gwiki.contract.json:789]
+  - Signature: `"daemon_consumed": true,`
+  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:789]
+- `positionals` (property) component `positionals [property]` (`ca4dc02d-6b8c-55b7-8997-f262fb102308`) lines 790-790 [crates/gwiki/contract/gwiki.contract.json:790]
+  - Signature: `"positionals": [],`
+  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:790]
+- `flags` (property) component `flags [property]` (`8c73ca9c-8fcc-5358-882f-5e96105a0cee`) lines 791-791 [crates/gwiki/contract/gwiki.contract.json:791]
+  - Signature: `"flags": [],`
+  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:791]
+- `json_output_keys` (property) component `json_output_keys [property]` (`a58593a1-525f-5448-9467-115ba7d4e7ef`) lines 792-799 [crates/gwiki/contract/gwiki.contract.json:792-799]
+  - Signature: `"json_output_keys": [`
+  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:792-799]
+- `name` (property) component `name [property]` (`a71c99de-7523-501b-80f9-3bb01e5490cf`) lines 802-802 [crates/gwiki/contract/gwiki.contract.json:802]
+  - Signature: `"name": "trust",`
+  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:802]
+- `summary` (property) component `summary [property]` (`2e226d24-464c-525c-b116-22ea59553cea`) lines 803-803 [crates/gwiki/contract/gwiki.contract.json:803]
+  - Signature: `"summary": "Show search, graph, freshness, and audit trust status.",`
+  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:803]
+- `daemon_consumed` (property) component `daemon_consumed [property]` (`e56d7894-1f74-5a01-8c27-b7432c4bcbe9`) lines 804-804 [crates/gwiki/contract/gwiki.contract.json:804]
+  - Signature: `"daemon_consumed": true,`
+  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:804]
+- `positionals` (property) component `positionals [property]` (`deb3389d-52c5-59e6-b39e-722f7b479735`) lines 805-805 [crates/gwiki/contract/gwiki.contract.json:805]
+  - Signature: `"positionals": [],`
+  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:805]
+- `flags` (property) component `flags [property]` (`2349b90e-a7a6-5dc3-9f49-50ae7a953200`) lines 806-806 [crates/gwiki/contract/gwiki.contract.json:806]
+  - Signature: `"flags": [],`
+  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:806]
+- `json_output_keys` (property) component `json_output_keys [property]` (`f5a24c43-ca5b-54ae-ae11-80983d8fd1e7`) lines 807-822 [crates/gwiki/contract/gwiki.contract.json:807-822]
+  - Signature: `"json_output_keys": [`
+  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:807-822]
+- `name` (property) component `name [property]` (`f69c1e3e-bfb8-545f-bb3e-6751276309c5`) lines 825-825 [crates/gwiki/contract/gwiki.contract.json:825]
+  - Signature: `"name": "remove-source",`
+  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:825]
+- `summary` (property) component `summary [property]` (`0aceb679-63ab-5a07-a442-e6d11b076ea6`) lines 826-826 [crates/gwiki/contract/gwiki.contract.json:826]
+  - Signature: `"summary": "Remove a raw source, its manifest entry, and its raw asset.",`
+  - Purpose: Indexed property `summary` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:826]
+- `daemon_consumed` (property) component `daemon_consumed [property]` (`4695f0a2-da5d-59ec-8b10-e33515014577`) lines 827-827 [crates/gwiki/contract/gwiki.contract.json:827]
+  - Signature: `"daemon_consumed": true,`
+  - Purpose: Indexed property `daemon_consumed` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:827]
+- `positionals` (property) component `positionals [property]` (`481e49bf-a373-5c89-8200-beef26c8ec42`) lines 828-828 [crates/gwiki/contract/gwiki.contract.json:828]
+  - Signature: `"positionals": [],`
+  - Purpose: Indexed property `positionals` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:828]
+- `flags` (property) component `flags [property]` (`440494a2-038e-5da6-aa53-de3289d81890`) lines 829-862 [crates/gwiki/contract/gwiki.contract.json:829-862]
+  - Signature: `"flags": [`
+  - Purpose: Indexed property `flags` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:829-862]
+- `name` (property) component `name [property]` (`8b035600-e25a-5db9-8be3-b3b5ac491274`) lines 831-831 [crates/gwiki/contract/gwiki.contract.json:831]
+  - Signature: `"name": "--id",`
   - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:831]
-- `takes_value` (property) component `takes_value [property]` (`b80a4672-e878-5a4a-88b6-7c77bb6806e7`) lines 832-832 [crates/gwiki/contract/gwiki.contract.json:832]
-  - Signature: `"takes_value": false,`
+- `takes_value` (property) component `takes_value [property]` (`e72c4368-e981-53da-9a0d-2dfc9290da50`) lines 832-832 [crates/gwiki/contract/gwiki.contract.json:832]
+  - Signature: `"takes_value": true,`
   - Purpose: Indexed property `takes_value` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:832]
-- `value_name` (property) component `value_name [property]` (`62bfc39f-e309-541f-bde9-b896f5892db3`) lines 833-833 [crates/gwiki/contract/gwiki.contract.json:833]
-  - Signature: `"value_name": null,`
+- `value_name` (property) component `value_name [property]` (`6e881d52-47d0-59cb-a7c0-5b1d278f1c1b`) lines 833-833 [crates/gwiki/contract/gwiki.contract.json:833]
+  - Signature: `"value_name": "SOURCE_ID",`
   - Purpose: Indexed property `value_name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:833]
-- `allowed_values` (property) component `allowed_values [property]` (`50021396-8b18-56e9-8ff2-acfc94045429`) lines 834-834 [crates/gwiki/contract/gwiki.contract.json:834]
+- `allowed_values` (property) component `allowed_values [property]` (`d2bc3ca8-6d94-5013-9061-a4897717812c`) lines 834-834 [crates/gwiki/contract/gwiki.contract.json:834]
   - Signature: `"allowed_values": [],`
   - Purpose: Indexed property `allowed_values` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:834]
-- `required` (property) component `required [property]` (`21d6a6b2-8084-56a2-bb56-6ff812a81d67`) lines 835-835 [crates/gwiki/contract/gwiki.contract.json:835]
-  - Signature: `"required": false,`
+- `required` (property) component `required [property]` (`d4a29869-d124-5e33-86dd-53bcc96d094c`) lines 835-835 [crates/gwiki/contract/gwiki.contract.json:835]
+  - Signature: `"required": true,`
   - Purpose: Indexed property `required` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:835]
-- `repeatable` (property) component `repeatable [property]` (`9079b9da-7ffe-57c6-8b17-95e5b11d2c59`) lines 836-836 [crates/gwiki/contract/gwiki.contract.json:836]
+- `repeatable` (property) component `repeatable [property]` (`c3016ddd-376d-583c-a5aa-830d58913d5e`) lines 836-836 [crates/gwiki/contract/gwiki.contract.json:836]
   - Signature: `"repeatable": false`
   - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:836]
-- `name` (property) component `name [property]` (`dd4b0d78-c4e8-5f6b-877b-9b2cfe1bdd89`) lines 839-839 [crates/gwiki/contract/gwiki.contract.json:839]
-  - Signature: `"name": "--yes",`
+- `name` (property) component `name [property]` (`de2f1556-10e4-58a5-b71f-56c7ab3cc35b`) lines 839-839 [crates/gwiki/contract/gwiki.contract.json:839]
+  - Signature: `"name": "--dry-run",`
   - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:839]
-- `takes_value` (property) component `takes_value [property]` (`a058cf0c-6103-5c93-aaff-f2118c58cdaf`) lines 840-840 [crates/gwiki/contract/gwiki.contract.json:840]
+- `takes_value` (property) component `takes_value [property]` (`eb93e580-ead1-54a8-97e5-980c65f7033f`) lines 840-840 [crates/gwiki/contract/gwiki.contract.json:840]
   - Signature: `"takes_value": false,`
   - Purpose: Indexed property `takes_value` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:840]
-- `value_name` (property) component `value_name [property]` (`45ad82ac-dca1-58b5-b69a-b5febba307eb`) lines 841-841 [crates/gwiki/contract/gwiki.contract.json:841]
+- `value_name` (property) component `value_name [property]` (`26877ff2-db17-5e21-bf73-07f4137ccf6d`) lines 841-841 [crates/gwiki/contract/gwiki.contract.json:841]
   - Signature: `"value_name": null,`
   - Purpose: Indexed property `value_name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:841]
-- `allowed_values` (property) component `allowed_values [property]` (`b97908c6-626b-5102-8cf8-f88367d4a893`) lines 842-842 [crates/gwiki/contract/gwiki.contract.json:842]
+- `allowed_values` (property) component `allowed_values [property]` (`210cc769-e676-5fc6-a6ec-425c61e4e8a1`) lines 842-842 [crates/gwiki/contract/gwiki.contract.json:842]
   - Signature: `"allowed_values": [],`
   - Purpose: Indexed property `allowed_values` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:842]
-- `required` (property) component `required [property]` (`a1d0d329-93e8-549c-ba88-2e27872ab7e8`) lines 843-843 [crates/gwiki/contract/gwiki.contract.json:843]
+- `required` (property) component `required [property]` (`faf45cba-b960-5429-8605-a927387e878a`) lines 843-843 [crates/gwiki/contract/gwiki.contract.json:843]
   - Signature: `"required": false,`
   - Purpose: Indexed property `required` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:843]
-- `repeatable` (property) component `repeatable [property]` (`908b15e5-7ffe-57cd-a662-129350bbc766`) lines 844-844 [crates/gwiki/contract/gwiki.contract.json:844]
+- `repeatable` (property) component `repeatable [property]` (`68ce900b-7717-5d0f-bca7-975bb7015ace`) lines 844-844 [crates/gwiki/contract/gwiki.contract.json:844]
   - Signature: `"repeatable": false`
   - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:844]
-- `name` (property) component `name [property]` (`c715d27f-ed8d-534f-b8cd-a5e29e95afea`) lines 847-847 [crates/gwiki/contract/gwiki.contract.json:847]
-  - Signature: `"name": "--keep-asset",`
+- `name` (property) component `name [property]` (`9042ca41-08f6-55a5-95e7-dee69a2ed1b9`) lines 847-847 [crates/gwiki/contract/gwiki.contract.json:847]
+  - Signature: `"name": "--yes",`
   - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:847]
-- `takes_value` (property) component `takes_value [property]` (`e8a542e2-3b3d-5244-8e7c-02566e55d717`) lines 848-848 [crates/gwiki/contract/gwiki.contract.json:848]
+- `takes_value` (property) component `takes_value [property]` (`46512799-bdbc-5a82-b0cf-ded9ee3cacb9`) lines 848-848 [crates/gwiki/contract/gwiki.contract.json:848]
   - Signature: `"takes_value": false,`
   - Purpose: Indexed property `takes_value` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:848]
-- `value_name` (property) component `value_name [property]` (`973feef6-eedd-51ae-a4de-606dcc0a02a0`) lines 849-849 [crates/gwiki/contract/gwiki.contract.json:849]
+- `value_name` (property) component `value_name [property]` (`4183c1ca-350d-5a13-8978-fb4a706cede9`) lines 849-849 [crates/gwiki/contract/gwiki.contract.json:849]
   - Signature: `"value_name": null,`
   - Purpose: Indexed property `value_name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:849]
-- `allowed_values` (property) component `allowed_values [property]` (`13731b9c-0185-5a28-b2bc-91df7a296e97`) lines 850-850 [crates/gwiki/contract/gwiki.contract.json:850]
+- `allowed_values` (property) component `allowed_values [property]` (`2015fb32-c512-503d-a8dd-e0656c263037`) lines 850-850 [crates/gwiki/contract/gwiki.contract.json:850]
   - Signature: `"allowed_values": [],`
   - Purpose: Indexed property `allowed_values` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:850]
-- `required` (property) component `required [property]` (`161d691e-365d-5895-b4da-8f919ea670d0`) lines 851-851 [crates/gwiki/contract/gwiki.contract.json:851]
+- `required` (property) component `required [property]` (`984a6ee9-3957-566d-a638-865f3020d2f2`) lines 851-851 [crates/gwiki/contract/gwiki.contract.json:851]
   - Signature: `"required": false,`
   - Purpose: Indexed property `required` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:851]
-- `repeatable` (property) component `repeatable [property]` (`7faf1bfe-4b99-5514-9f23-2df7c14ff61c`) lines 852-852 [crates/gwiki/contract/gwiki.contract.json:852]
+- `repeatable` (property) component `repeatable [property]` (`0d67ee47-4099-5849-8ae4-0cb7a9ffdc96`) lines 852-852 [crates/gwiki/contract/gwiki.contract.json:852]
   - Signature: `"repeatable": false`
   - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:852]
-- `json_output_keys` (property) component `json_output_keys [property]` (`1caa5290-ac86-56f3-a6d5-4f4760dbb855`) lines 855-862 [crates/gwiki/contract/gwiki.contract.json:855-862]
+- `name` (property) component `name [property]` (`240de03b-db22-5a73-afd6-b75ca714b634`) lines 855-855 [crates/gwiki/contract/gwiki.contract.json:855]
+  - Signature: `"name": "--keep-asset",`
+  - Purpose: Indexed property `name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:855]
+- `takes_value` (property) component `takes_value [property]` (`b32af8d7-4921-51e9-b479-1c1813a5dbd1`) lines 856-856 [crates/gwiki/contract/gwiki.contract.json:856]
+  - Signature: `"takes_value": false,`
+  - Purpose: Indexed property `takes_value` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:856]
+- `value_name` (property) component `value_name [property]` (`b0a49767-0902-5ce2-a558-632ded94574a`) lines 857-857 [crates/gwiki/contract/gwiki.contract.json:857]
+  - Signature: `"value_name": null,`
+  - Purpose: Indexed property `value_name` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:857]
+- `allowed_values` (property) component `allowed_values [property]` (`6bf8b7aa-feb7-5890-b02b-288fdb0a2086`) lines 858-858 [crates/gwiki/contract/gwiki.contract.json:858]
+  - Signature: `"allowed_values": [],`
+  - Purpose: Indexed property `allowed_values` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:858]
+- `required` (property) component `required [property]` (`43059b36-ebe0-5df9-ad07-ab45dbf9d8c2`) lines 859-859 [crates/gwiki/contract/gwiki.contract.json:859]
+  - Signature: `"required": false,`
+  - Purpose: Indexed property `required` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:859]
+- `repeatable` (property) component `repeatable [property]` (`44beed21-c7be-57af-9dd2-1cb0fb882c33`) lines 860-860 [crates/gwiki/contract/gwiki.contract.json:860]
+  - Signature: `"repeatable": false`
+  - Purpose: Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:860]
+- `json_output_keys` (property) component `json_output_keys [property]` (`c36f3457-d9a5-5cf5-9d5b-48c0dcca9503`) lines 863-870 [crates/gwiki/contract/gwiki.contract.json:863-870]
   - Signature: `"json_output_keys": [`
-  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:855-862]
-- `error_codes` (property) component `error_codes [property]` (`efa642f3-50ea-581b-82ff-1ba682bd333a`) lines 865-879 [crates/gwiki/contract/gwiki.contract.json:865-879]
+  - Purpose: Indexed property `json_output_keys` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:863-870]
+- `error_codes` (property) component `error_codes [property]` (`4a153b56-e51b-513e-9d1d-5d9d5a235abb`) lines 873-887 [crates/gwiki/contract/gwiki.contract.json:873-887]
   - Signature: `"error_codes": [`
-  - Purpose: Indexed property `error_codes` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:865-879]
+  - Purpose: Indexed property `error_codes` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:873-887]
 

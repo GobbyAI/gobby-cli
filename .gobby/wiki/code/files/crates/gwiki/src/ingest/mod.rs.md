@@ -64,9 +64,7 @@ Module: [[code/modules/crates/gwiki/src/ingest|crates/gwiki/src/ingest]]
 
 ## Purpose
 
-Helpers for ingesting immutable raw wiki sources into the vault, with the module organizing file-type submodules plus shared routines for writing raw markdown, storing assets, sanitizing names/extensions, and validating source hashes before indexing.
-
-The pieces work together in a raw-first flow: source text or binaries are written to stable `raw/...` paths, metadata values are converted into YAML-safe scalars, immutable writes are checked against existing content and declared hashes, and `RawFirstStore` plus `index_after_ingest` coordinate recording the ingestion and triggering indexing without rewriting wiki content.
+Provides ingestion utilities for immutable raw wiki sources and derived assets. It defines `IngestResult`, helpers for normalizing extensions and YAML/markdown metadata, and a set of write functions that place raw markdown or assets under the vault via immutable file writes, then optionally rebuild the index. The file also includes validation and path-sanitizing helpers plus the `RawFirstStore` test decorator and related tests to enforce the invariant that raw content is written before any derived indexing rows.
 [crates/gwiki/src/ingest/mod.rs:25-29]
 [crates/gwiki/src/ingest/mod.rs:31-36]
 [crates/gwiki/src/ingest/mod.rs:38-46]
@@ -77,185 +75,185 @@ The pieces work together in a raw-first flow: source text or binaries are writte
 
 - `IngestResult` (class) component `IngestResult [class]` (`4fef1039-56f8-52d8-9824-d9ae3d69d4d2`) lines 25-29 [crates/gwiki/src/ingest/mod.rs:25-29]
   - Signature: `pub struct IngestResult {`
-  - Purpose: Indexed class `IngestResult` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:25-29]
+  - Purpose: 'IngestResult' is a struct that captures the outcome of ingesting a source record by storing the parsed 'SourceRecord', the 'raw_path' of the ingested input, and an optional 'asset_path' for any derived asset output. [crates/gwiki/src/ingest/mod.rs:25-29]
 - `lowercase_extension` (function) component `lowercase_extension [function]` (`54fcfcf1-8ef3-56c7-8480-d078aaaf97cd`) lines 31-36 [crates/gwiki/src/ingest/mod.rs:31-36]
   - Signature: `pub(crate) fn lowercase_extension(path: impl AsRef<Path>) -> Option<String> {`
-  - Purpose: Indexed function `lowercase_extension` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:31-36]
+  - Purpose: Returns the file extension of 'path' as a lowercase 'String' if the extension exists and is valid UTF-8, otherwise 'None'. [crates/gwiki/src/ingest/mod.rs:31-36]
 - `write_raw_markdown` (function) component `write_raw_markdown [function]` (`c2d25784-c4d5-5929-8821-7de09490a327`) lines 38-46 [crates/gwiki/src/ingest/mod.rs:38-46]
   - Signature: `pub(crate) fn write_raw_markdown(`
-  - Purpose: Indexed function `write_raw_markdown` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:38-46]
+  - Purpose: Creates a 'raw/<record.id>.md' path, writes the provided markdown bytes there via 'write_immutable' under 'vault_root', and returns the relative 'PathBuf' on success. [crates/gwiki/src/ingest/mod.rs:38-46]
 - `write_asset` (function) component `write_asset [function]` (`a57054cd-8dca-5f03-8ba8-290fd63e55b4`) lines 48-57 [crates/gwiki/src/ingest/mod.rs:48-57]
   - Signature: `pub(crate) fn write_asset(`
-  - Purpose: Indexed function `write_asset` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:48-57]
+  - Purpose: Constructs an asset path from the source record and filename, writes the provided bytes immutably under 'vault_root' at that path, and returns the resulting 'PathBuf' on success. [crates/gwiki/src/ingest/mod.rs:48-57]
 - `write_asset_with_suffix` (function) component `write_asset_with_suffix [function]` (`596673d6-4dca-566c-8d9f-d6d7ac047925`) lines 59-73 [crates/gwiki/src/ingest/mod.rs:59-73]
   - Signature: `pub(crate) fn write_asset_with_suffix(`
-  - Purpose: Indexed function `write_asset_with_suffix` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:59-73]
+  - Purpose: Constructs a vault-relative immutable asset path under 'raw/assets' using the record ID, a sanitized suffix, and a sanitized file-extension derived from 'file_name', writes 'bytes' to that path via 'write_immutable', and returns the resulting 'PathBuf'. [crates/gwiki/src/ingest/mod.rs:59-73]
 - `write_asset_from_path` (function) component `write_asset_from_path [function]` (`5eef7bd8-030b-5de2-8adf-1543fd4a5ac4`) lines 75-85 [crates/gwiki/src/ingest/mod.rs:75-85]
   - Signature: `pub(crate) fn write_asset_from_path(`
-  - Purpose: Indexed function `write_asset_from_path` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:75-85]
+  - Purpose: Constructs an asset path from the given source record and file name, writes the source file there as an immutable file validated by the expected content hash, and returns the resulting 'PathBuf'. [crates/gwiki/src/ingest/mod.rs:75-85]
 - `sanitize_asset_suffix` (function) component `sanitize_asset_suffix [function]` (`0df6c0b0-0855-576d-b2f7-d34fcb9e3eab`) lines 87-107 [crates/gwiki/src/ingest/mod.rs:87-107]
   - Signature: `fn sanitize_asset_suffix(value: &str) -> String {`
-  - Purpose: Indexed function `sanitize_asset_suffix` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:87-107]
+  - Purpose: Returns a sanitized asset suffix by keeping only ASCII alphanumerics and underscores, collapsing any run of other characters into single hyphens between valid segments, trimming trailing hyphens, and defaulting to '"asset"' if nothing remains. [crates/gwiki/src/ingest/mod.rs:87-107]
 - `index_after_ingest` (function) component `index_after_ingest [function]` (`4a9a51b9-9de1-56a5-bf47-605349732406`) lines 109-117 [crates/gwiki/src/ingest/mod.rs:109-117]
   - Signature: `pub(crate) fn index_after_ingest(`
-  - Purpose: Indexed function `index_after_ingest` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:109-117]
+  - Purpose: Invokes 'indexer::index_vault' to index the vault at 'vault_root' into 'store', converting any indexing error into 'WikiError::InvalidInput' for the '"index"' field. [crates/gwiki/src/ingest/mod.rs:109-117]
 - `write_raw_then_index` (function) component `write_raw_then_index [function]` (`787733c7-0c89-5a05-98a2-b6e39b8f4d87`) lines 120-135 [crates/gwiki/src/ingest/mod.rs:120-135]
   - Signature: `pub(crate) fn write_raw_then_index(`
-  - Purpose: Indexed function `write_raw_then_index` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:120-135]
+  - Purpose: Writes the provided markdown to raw storage for 'record', rebuilds the wiki index, and returns an 'IngestResult' containing the record, raw path, and optional asset path. [crates/gwiki/src/ingest/mod.rs:120-135]
 - `markdown_metadata` (function) component `markdown_metadata [function]` (`de1b363b-24e0-5fe1-8424-e221cee442cc`) lines 137-143 [crates/gwiki/src/ingest/mod.rs:137-143]
   - Signature: `pub(crate) fn markdown_metadata(fields: &[(&str, String)]) -> String {`
-  - Purpose: Indexed function `markdown_metadata` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:137-143]
+  - Purpose: Converts a slice of '(key, String)' pairs into owned 'MetadataValue::string' entries and delegates to 'markdown_metadata_values' to render the resulting markdown metadata string. [crates/gwiki/src/ingest/mod.rs:137-143]
 - `MetadataValue` (type) component `MetadataValue [type]` (`381987e5-be6b-5262-b999-4bedd9ca2e25`) lines 146-149 [crates/gwiki/src/ingest/mod.rs:146-149]
   - Signature: `pub(crate) enum MetadataValue {`
   - Purpose: Indexed type `MetadataValue` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:146-149]
 - `MetadataValue` (class) component `MetadataValue [class]` (`39d96529-84de-57a5-b869-fdabf9dbd318`) lines 151-159 [crates/gwiki/src/ingest/mod.rs:151-159]
   - Signature: `impl MetadataValue {`
-  - Purpose: Indexed class `MetadataValue` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:151-159]
+  - Purpose: 'MetadataValue' is a Rust enum-wrapper helper that constructs 'String' or 'Number' metadata values by converting arbitrary string-like inputs into owned 'String' representations. [crates/gwiki/src/ingest/mod.rs:151-159]
 - `MetadataValue.string` (method) component `MetadataValue.string [method]` (`0e393fe5-59bd-57ea-8468-21f51a97bcbc`) lines 152-154 [crates/gwiki/src/ingest/mod.rs:152-154]
   - Signature: `pub(crate) fn string(value: impl Into<String>) -> Self {`
-  - Purpose: Indexed method `MetadataValue.string` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:152-154]
+  - Purpose: Converts the provided value into a 'String' and constructs 'Self::String' from it. [crates/gwiki/src/ingest/mod.rs:152-154]
 - `MetadataValue.number` (method) component `MetadataValue.number [method]` (`9fb50eba-06a2-52a9-a55c-f713ba3df418`) lines 156-158 [crates/gwiki/src/ingest/mod.rs:156-158]
   - Signature: `pub(crate) fn number(value: impl ToString) -> Self {`
-  - Purpose: Indexed method `MetadataValue.number` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:156-158]
+  - Purpose: Constructs and returns 'Self::Number' by converting the provided 'value' to a 'String' with 'ToString::to_string'. [crates/gwiki/src/ingest/mod.rs:156-158]
 - `markdown_metadata_values` (function) component `markdown_metadata_values [function]` (`2dd94593-ff10-5f9b-bd01-91e88cf8cd07`) lines 161-171 [crates/gwiki/src/ingest/mod.rs:161-171]
   - Signature: `pub(crate) fn markdown_metadata_values(fields: &[(&str, MetadataValue)]) -> String {`
-  - Purpose: Indexed function `markdown_metadata_values` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:161-171]
+  - Purpose: Builds a YAML front-matter block string by iterating over '(key, MetadataValue)' pairs, formatting each as 'key: <yaml value>' on its own line between '---' delimiters, and returning the complete markdown metadata header. [crates/gwiki/src/ingest/mod.rs:161-171]
 - `yaml_metadata_value` (function) component `yaml_metadata_value [function]` (`fee860ae-f37d-5cf8-850a-ca60200fa66a`) lines 173-178 [crates/gwiki/src/ingest/mod.rs:173-178]
   - Signature: `fn yaml_metadata_value(key: &str, value: &MetadataValue) -> String {`
-  - Purpose: Indexed function `yaml_metadata_value` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:173-178]
+  - Purpose: Returns a YAML-formatted scalar string for a 'MetadataValue', dispatching to 'yaml_metadata_scalar' for string values and 'yaml_numeric_scalar' for numeric values. [crates/gwiki/src/ingest/mod.rs:173-178]
 - `yaml_metadata_scalar` (function) component `yaml_metadata_scalar [function]` (`7838406b-8f27-512f-bcd1-6b7d48517e42`) lines 180-186 [crates/gwiki/src/ingest/mod.rs:180-186]
   - Signature: `fn yaml_metadata_scalar(key: &str, value: &str) -> String {`
-  - Purpose: Indexed function `yaml_metadata_scalar` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:180-186]
+  - Purpose: Returns a YAML-safe scalar for 'value', using 'single_line' plus YAML quoting when 'key' is 'content_type', and otherwise emitting a safe single-line scalar via 'yaml_safe_single_line_scalar'. [crates/gwiki/src/ingest/mod.rs:180-186]
 - `yaml_safe_single_line_scalar` (function) component `yaml_safe_single_line_scalar [function]` (`3393c00a-5513-57d7-aa8d-16833151dbf3`) lines 188-195 [crates/gwiki/src/ingest/mod.rs:188-195]
   - Signature: `fn yaml_safe_single_line_scalar(value: &str) -> String {`
-  - Purpose: Indexed function `yaml_safe_single_line_scalar` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:188-195]
+  - Purpose: Returns a normalized single-line version of 'value' and emits it as a plain YAML scalar when safe, otherwise YAML-quotes the string. [crates/gwiki/src/ingest/mod.rs:188-195]
 - `yaml_numeric_scalar` (function) component `yaml_numeric_scalar [function]` (`59944b46-ab75-5fb7-81d7-917431b1dbc4`) lines 197-204 [crates/gwiki/src/ingest/mod.rs:197-204]
   - Signature: `fn yaml_numeric_scalar(value: &str) -> String {`
-  - Purpose: Indexed function `yaml_numeric_scalar` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:197-204]
+  - Purpose: Returns a single-line version of 'value' unchanged when it is safe as a YAML numeric scalar, otherwise serializes it as a quoted YAML string. [crates/gwiki/src/ingest/mod.rs:197-204]
 - `yaml_plain_scalar_is_safe` (function) component `yaml_plain_scalar_is_safe [function]` (`9cc5980f-fa05-5595-befe-63b35008b094`) lines 206-226 [crates/gwiki/src/ingest/mod.rs:206-226]
   - Signature: `fn yaml_plain_scalar_is_safe(value: &str) -> bool {`
-  - Purpose: Indexed function `yaml_plain_scalar_is_safe` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:206-226]
+  - Purpose: Returns 'true' only for non-empty strings that are not YAML-reserved literals, numbers, timestamps, or syntactically unsafe due to colons, ' #', quotes, or leading indicator characters, and 'false' otherwise. [crates/gwiki/src/ingest/mod.rs:206-226]
 - `yaml_numeric_scalar_is_safe` (function) component `yaml_numeric_scalar_is_safe [function]` (`2faf1335-31c5-5046-b816-73b61802d9d4`) lines 228-230 [crates/gwiki/src/ingest/mod.rs:228-230]
   - Signature: `fn yaml_numeric_scalar_is_safe(value: &str) -> bool {`
-  - Purpose: Indexed function `yaml_numeric_scalar_is_safe` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:228-230]
+  - Purpose: Returns 'true' if 'value' parses as a valid 'i64' or as a finite 'f64', and 'false' otherwise. [crates/gwiki/src/ingest/mod.rs:228-230]
 - `yaml_plain_scalar_is_timestamp` (function) component `yaml_plain_scalar_is_timestamp [function]` (`92b30401-0fef-52c5-810e-592a46a1d3ac`) lines 232-235 [crates/gwiki/src/ingest/mod.rs:232-235]
   - Signature: `fn yaml_plain_scalar_is_timestamp(value: &str) -> bool {`
-  - Purpose: Indexed function `yaml_plain_scalar_is_timestamp` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:232-235]
+  - Purpose: Returns 'true' when the input has a YAML date prefix and the 11th byte is absent or is 'T', 't', or a space, indicating it may be a plain-scalar timestamp. [crates/gwiki/src/ingest/mod.rs:232-235]
 - `has_yaml_date_prefix` (function) component `has_yaml_date_prefix [function]` (`7267c008-8fc5-51d8-b844-4b4ef6db8a11`) lines 237-244 [crates/gwiki/src/ingest/mod.rs:237-244]
   - Signature: `fn has_yaml_date_prefix(bytes: &[u8]) -> bool {`
-  - Purpose: Indexed function `has_yaml_date_prefix` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:237-244]
+  - Purpose: Returns 'true' only when the byte slice is at least 10 bytes long and its first 10 bytes match the pattern 'YYYY-MM-DD' with ASCII digits in positions 0-3, 5-6, and 8-9 and hyphens at positions 4 and 7. [crates/gwiki/src/ingest/mod.rs:237-244]
 - `quote_yaml_string` (function) component `quote_yaml_string [function]` (`78abbb64-3eb6-5ed7-a4f0-7257c26ae65b`) lines 246-248 [crates/gwiki/src/ingest/mod.rs:246-248]
   - Signature: `fn quote_yaml_string(value: &str) -> String {`
-  - Purpose: Indexed function `quote_yaml_string` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:246-248]
+  - Purpose: Returns a JSON-encoded double-quoted YAML-safe string for 'value', falling back to '""' if serialization fails. [crates/gwiki/src/ingest/mod.rs:246-248]
 - `single_line` (function) component `single_line [function]` (`a368dd47-0eb6-5c65-abb0-c7580f08be8a`) lines 250-252 [crates/gwiki/src/ingest/mod.rs:250-252]
   - Signature: `pub(crate) fn single_line(value: &str) -> String {`
-  - Purpose: Indexed function `single_line` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:250-252]
+  - Purpose: Returns a new 'String' containing the input text with all whitespace collapsed to single spaces by splitting on whitespace and joining the tokens with '" "'. [crates/gwiki/src/ingest/mod.rs:250-252]
 - `markdown_title` (function) component `markdown_title [function]` (`2453d1ff-cee8-56db-a1bb-257ad1107707`) lines 254-256 [crates/gwiki/src/ingest/mod.rs:254-256]
   - Signature: `pub(crate) fn markdown_title(value: &str) -> String {`
-  - Purpose: Indexed function `markdown_title` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:254-256]
+  - Purpose: Returns a trimmed single-line version of 'value' with leading and trailing '#' characters removed and surrounding whitespace stripped. [crates/gwiki/src/ingest/mod.rs:254-256]
 - `text_from_utf8_lossy` (function) component `text_from_utf8_lossy [function]` (`3bc67998-ed2b-5c2e-b433-4b0e3ab41707`) lines 258-260 [crates/gwiki/src/ingest/mod.rs:258-260]
   - Signature: `pub(crate) fn text_from_utf8_lossy(bytes: &[u8]) -> String {`
-  - Purpose: Indexed function `text_from_utf8_lossy` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:258-260]
+  - Purpose: Converts a byte slice into a 'String' using UTF-8 lossless decoding with replacement characters for invalid sequences, then normalizes Windows CRLF line endings to '\n'. [crates/gwiki/src/ingest/mod.rs:258-260]
 - `path_to_string` (function) component `path_to_string [function]` (`eb5df925-00b6-535b-b839-7c7a67b0f41d`) lines 262-264 [crates/gwiki/src/ingest/mod.rs:262-264]
   - Signature: `pub(crate) fn path_to_string(path: &Path) -> String {`
-  - Purpose: Indexed function `path_to_string` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:262-264]
+  - Purpose: Converts a 'Path' to a UTF-8 string with lossy decoding and normalizes Windows separators by replacing '\' with '/'. [crates/gwiki/src/ingest/mod.rs:262-264]
 - `write_immutable` (function) component `write_immutable [function]` (`22dd1143-f6a1-575a-83e8-c561d6d6aa1a`) lines 266-305 [crates/gwiki/src/ingest/mod.rs:266-305]
   - Signature: `fn write_immutable(vault_root: &Path, relative: &Path, bytes: &[u8]) -> Result<(), WikiError> {`
-  - Purpose: Indexed function `write_immutable` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:266-305]
+  - Purpose: 'write_immutable' ensures the target file under 'vault_root/relative' contains the given bytes by creating parent directories, validating any preexisting file instead of overwriting it, otherwise writing to a synced temp file and atomically persisting it with no-clobber semantics, then syncing the parent directory. [crates/gwiki/src/ingest/mod.rs:266-305]
 - `write_immutable_file` (function) component `write_immutable_file [function]` (`203c5c46-1d47-5a6d-b927-8b81c9b13a50`) lines 307-357 [crates/gwiki/src/ingest/mod.rs:307-357]
   - Signature: `fn write_immutable_file(`
-  - Purpose: Indexed function `write_immutable_file` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:307-357]
+  - Purpose: Creates the target file under 'vault_root' from 'source_path' atomically and idempotently, after validating the source hash and either verifying an existing file or copying to a temporary file, syncing it, and persisting it with no-clobber semantics. [crates/gwiki/src/ingest/mod.rs:307-357]
 - `validate_existing_raw_bytes` (function) component `validate_existing_raw_bytes [function]` (`53d67764-5fcf-5edf-afde-a13d5fec3d6c`) lines 359-374 [crates/gwiki/src/ingest/mod.rs:359-374]
   - Signature: `fn validate_existing_raw_bytes(`
-  - Purpose: Indexed function `validate_existing_raw_bytes` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:359-374]
+  - Purpose: Computes the hash of the existing file at 'path' and returns 'Ok(())' only if it matches the hash of 'bytes', otherwise returns 'immutable_exists_error(relative)', mapping any hashing I/O failure into 'WikiError::Io' with action '"hash existing raw source"'. [crates/gwiki/src/ingest/mod.rs:359-374]
 - `validate_existing_raw_file` (function) component `validate_existing_raw_file [function]` (`28c43660-0952-5541-a882-4411fc7988a0`) lines 376-391 [crates/gwiki/src/ingest/mod.rs:376-391]
   - Signature: `fn validate_existing_raw_file(`
-  - Purpose: Indexed function `validate_existing_raw_file` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:376-391]
+  - Purpose: Computes the current content hash of 'path' and returns 'Ok(())' only if it matches 'source_hash', otherwise returns an immutable-exists 'WikiError' after mapping any hash I/O failure into a 'WikiError::Io' for the raw source path. [crates/gwiki/src/ingest/mod.rs:376-391]
 - `validate_source_file_hash` (function) component `validate_source_file_hash [function]` (`572a3f0b-2362-5104-849a-119115653848`) lines 393-410 [crates/gwiki/src/ingest/mod.rs:393-410]
   - Signature: `fn validate_source_file_hash(source_path: &Path, content_hash: &str) -> Result<String, WikiError> {`
-  - Purpose: Indexed function `validate_source_file_hash` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:393-410]
+  - Purpose: Computes the hash of 'source_path' and returns it if it exactly matches 'content_hash', otherwise maps hashing I/O failures to 'WikiError::Io' or returns 'WikiError::InvalidInput' for a mismatched declared hash. [crates/gwiki/src/ingest/mod.rs:393-410]
 - `immutable_exists_error` (function) component `immutable_exists_error [function]` (`dc4c8ae1-7303-536f-9744-9f6260396144`) lines 412-420 [crates/gwiki/src/ingest/mod.rs:412-420]
   - Signature: `fn immutable_exists_error(relative: &Path) -> WikiError {`
-  - Purpose: Indexed function `immutable_exists_error` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:412-420]
+  - Purpose: Creates a 'WikiError::InvalidInput' for the 'raw_path' field with a message stating that an immutable raw source already exists at the given relative path. [crates/gwiki/src/ingest/mod.rs:412-420]
 - `create_raw_temp_file` (function) component `create_raw_temp_file [function]` (`93120540-559d-5fa5-8b81-e4cc98c05e87`) lines 422-449 [crates/gwiki/src/ingest/mod.rs:422-449]
   - Signature: `fn create_raw_temp_file(path: &Path) -> Result<tempfile::NamedTempFile, WikiError> {`
-  - Purpose: Indexed function `create_raw_temp_file` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:422-449]
+  - Purpose: Creates a temporary file in the target path’s parent directory using a '.<filename>.' prefix and '.tmp' suffix, or returns a 'WikiError::Io' if the path has no valid parent or tempfile creation fails. [crates/gwiki/src/ingest/mod.rs:422-449]
 - `asset_path` (function) component `asset_path [function]` (`3269f5cd-c283-54af-9964-80cbe39e54cb`) lines 453-458 [crates/gwiki/src/ingest/mod.rs:453-458]
   - Signature: `pub(crate) fn asset_path(record: &SourceRecord, file_name: &str) -> PathBuf {`
-  - Purpose: Indexed function `asset_path` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:453-458]
+  - Purpose: Builds a 'PathBuf' for a raw asset by taking the sanitized extension from 'file_name' and joining 'raw/assets/{record.id}.{extension}'. [crates/gwiki/src/ingest/mod.rs:453-458]
 - `sanitized_extension_for_file_name` (function) component `sanitized_extension_for_file_name [function]` (`bad6d23c-4a28-518b-8be0-fd1065e0fe28`) lines 460-474 [crates/gwiki/src/ingest/mod.rs:460-474]
   - Signature: `fn sanitized_extension_for_file_name(file_name: &str) -> String {`
-  - Purpose: Indexed function `sanitized_extension_for_file_name` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:460-474]
+  - Purpose: Returns the sanitized file extension from the input’s basename, falling back to '"bin"' when no valid non-empty extension exists. [crates/gwiki/src/ingest/mod.rs:460-474]
 - `sanitize_extension` (function) component `sanitize_extension [function]` (`354d2b97-bcba-5d0b-8f19-f916f6a5a905`) lines 476-482 [crates/gwiki/src/ingest/mod.rs:476-482]
   - Signature: `fn sanitize_extension(extension: &str) -> String {`
-  - Purpose: Indexed function `sanitize_extension` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:476-482]
+  - Purpose: Returns a new 'String' containing only the input extension’s ASCII alphanumeric characters, converted to lowercase. [crates/gwiki/src/ingest/mod.rs:476-482]
 - `no_ai_context` (function) component `no_ai_context [function]` (`254d402b-c0df-53ca-90f1-d9b4a39d2c96`) lines 508-517 [crates/gwiki/src/ingest/mod.rs:508-517]
   - Signature: `fn no_ai_context() -> AiContext {`
-  - Purpose: Indexed function `no_ai_context` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:508-517]
+  - Purpose: Constructs an 'AiContext' by resolving it from an 'EnvOnlySource' and then applying 'IngestFileOptions { no_ai: true }' to mark the context as AI-disabled. [crates/gwiki/src/ingest/mod.rs:508-517]
 - `write_file` (function) component `write_file [function]` (`2dba5aa4-e981-531e-a24d-b2c02db7e8b8`) lines 519-525 [crates/gwiki/src/ingest/mod.rs:519-525]
   - Signature: `fn write_file(root: &std::path::Path, relative: &str, contents: &str) {`
-  - Purpose: Indexed function `write_file` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:519-525]
+  - Purpose: Creates the target path by joining 'relative' to 'root', ensures its parent directory exists with 'create_dir_all', and then writes 'contents' to the file, panicking on any I/O failure. [crates/gwiki/src/ingest/mod.rs:519-525]
 - `test_source_record` (function) component `test_source_record [function]` (`b25cad5b-a834-5ddd-be74-95d6d8d47b67`) lines 527-542 [crates/gwiki/src/ingest/mod.rs:527-542]
   - Signature: `fn test_source_record() -> SourceRecord {`
-  - Purpose: Indexed function `test_source_record` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:527-542]
+  - Purpose: Creates and returns a 'SourceRecord' fixture for a manually ingested PDF at '/tmp/report.pdf' with fixed metadata, pending compile status, no title/citation/license, and no replay data. [crates/gwiki/src/ingest/mod.rs:527-542]
 - `asset_path_uses_basename_before_extension_extraction` (function) component `asset_path_uses_basename_before_extension_extraction [function]` (`c05548e1-31f6-529b-8cab-ea22e5682610`) lines 545-556 [crates/gwiki/src/ingest/mod.rs:545-556]
   - Signature: `fn asset_path_uses_basename_before_extension_extraction() {`
-  - Purpose: Indexed function `asset_path_uses_basename_before_extension_extraction` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:545-556]
+  - Purpose: Verifies that 'asset_path' derives the output filename from the basename of the input path before stripping the extension, lowercases the extracted extension when present, and falls back to '.bin' when no extension exists. [crates/gwiki/src/ingest/mod.rs:545-556]
 - `markdown_metadata_quotes_yaml_sensitive_scalars` (function) component `markdown_metadata_quotes_yaml_sensitive_scalars [function]` (`4fb5d0ef-5c8c-5c64-9d75-7f6a0cda8a81`) lines 559-585 [crates/gwiki/src/ingest/mod.rs:559-585]
   - Signature: `fn markdown_metadata_quotes_yaml_sensitive_scalars() {`
-  - Purpose: Indexed function `markdown_metadata_quotes_yaml_sensitive_scalars` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:559-585]
+  - Purpose: Verifies that 'markdown_metadata' emits unquoted YAML plain scalars for safe values and double-quotes metadata values that are YAML-sensitive or ambiguous, including strings containing ':', '#', boolean-like values, '~', numeric/date/timestamp-like text, and slash-containing content types. [crates/gwiki/src/ingest/mod.rs:559-585]
 - `markdown_metadata_allows_explicit_numeric_values` (function) component `markdown_metadata_allows_explicit_numeric_values [function]` (`ada5c1f8-1083-5b7a-b3f5-ce5e014a29d3`) lines 588-598 [crates/gwiki/src/ingest/mod.rs:588-598]
   - Signature: `fn markdown_metadata_allows_explicit_numeric_values() {`
-  - Purpose: Indexed function `markdown_metadata_allows_explicit_numeric_values` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:588-598]
+  - Purpose: Verifies that 'markdown_metadata_values' emits explicit numeric metadata as unquoted numbers while preserving non-finite numeric strings like 'NaN' as quoted strings. [crates/gwiki/src/ingest/mod.rs:588-598]
 - `immutable_file_requires_declared_source_hash_before_copy` (function) component `immutable_file_requires_declared_source_hash_before_copy [function]` (`63c0ae4d-14b1-5f6c-91ba-29cac2cc3858`) lines 601-618 [crates/gwiki/src/ingest/mod.rs:601-618]
   - Signature: `fn immutable_file_requires_declared_source_hash_before_copy() {`
-  - Purpose: Indexed function `immutable_file_requires_declared_source_hash_before_copy` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:601-618]
+  - Purpose: Verifies that 'write_asset_from_path' rejects a copy when the declared source hash is stale, returns 'invalid_input', and does not create the asset file. [crates/gwiki/src/ingest/mod.rs:601-618]
 - `immutable_file_existing_match_requires_declared_hash` (function) component `immutable_file_existing_match_requires_declared_hash [function]` (`46901b3c-ec09-5052-b7fe-f12ab80b9fb7`) lines 621-670 [crates/gwiki/src/ingest/mod.rs:621-670]
   - Signature: `fn immutable_file_existing_match_requires_declared_hash() {`
-  - Purpose: Indexed function `immutable_file_existing_match_requires_declared_hash` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:621-670]
+  - Purpose: Verifies that writing an immutable asset is idempotent only when the existing file’s content matches the provided declared hash, and that both a stale declared hash and a different source file are rejected with 'invalid_input'. [crates/gwiki/src/ingest/mod.rs:621-670]
 - `ingest_indexes_raw_without_wiki_rewrite` (function) component `ingest_indexes_raw_without_wiki_rewrite [function]` (`82db261e-c96c-57b9-b986-222b277fabfa`) lines 673-719 [crates/gwiki/src/ingest/mod.rs:673-719]
   - Signature: `fn ingest_indexes_raw_without_wiki_rewrite() {`
-  - Purpose: Indexed function `ingest_indexes_raw_without_wiki_rewrite` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:673-719]
+  - Purpose: Verifies that ingesting a raw source file with 'no_ai' writes a raw 'INDEX.md' ingestion entry while leaving an existing wiki page’s contents and hash-tracked file untouched. [crates/gwiki/src/ingest/mod.rs:673-719]
 - `RawFirstStore` (class) component `RawFirstStore [class]` (`b15be3ac-c540-50ee-ba01-c4c820c479b3`) lines 722-727 [crates/gwiki/src/ingest/mod.rs:722-727]
   - Signature: `struct RawFirstStore {`
-  - Purpose: Indexed class `RawFirstStore` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:722-727]
+  - Purpose: 'RawFirstStore' is a wrapper store that tracks a vault root and expected raw-path location around an inner 'MemoryWikiStore', while recording whether an index write has been observed. [crates/gwiki/src/ingest/mod.rs:722-727]
 - `RawFirstStore` (class) component `RawFirstStore [class]` (`095562c7-9b36-5449-8829-baa9d3131765`) lines 729-746 [crates/gwiki/src/ingest/mod.rs:729-746]
   - Signature: `impl RawFirstStore {`
-  - Purpose: Indexed class `RawFirstStore` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:729-746]
+  - Purpose: 'RawFirstStore' is a wrapper around 'MemoryWikiStore' that tracks whether an index write has occurred and asserts, via 'assert_raw_exists_before_index', that the expected raw source file already exists under 'vault_root' before any derived index rows are written. [crates/gwiki/src/ingest/mod.rs:729-746]
 - `RawFirstStore.new` (method) component `RawFirstStore.new [method]` (`30aeeb1e-3e83-51de-8518-d03c9fd620b6`) lines 730-737 [crates/gwiki/src/ingest/mod.rs:730-737]
   - Signature: `fn new(vault_root: &Path, expected_raw_path: impl Into<PathBuf>) -> Self {`
-  - Purpose: Indexed method `RawFirstStore.new` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:730-737]
+  - Purpose: Constructs a new instance by cloning 'vault_root' into a 'PathBuf', converting 'expected_raw_path' into a 'PathBuf', initializing 'inner' with 'MemoryWikiStore::default()', and setting 'observed_index_write' to 'false'. [crates/gwiki/src/ingest/mod.rs:730-737]
 - `RawFirstStore.assert_raw_exists_before_index` (method) component `RawFirstStore.assert_raw_exists_before_index [method]` (`1ee63da9-9a82-5309-b840-10fb44fbc5fd`) lines 739-745 [crates/gwiki/src/ingest/mod.rs:739-745]
   - Signature: `fn assert_raw_exists_before_index(&mut self) {`
-  - Purpose: Indexed method `RawFirstStore.assert_raw_exists_before_index` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:739-745]
+  - Purpose: Sets 'observed_index_write' to 'true' and asserts that 'vault_root/expected_raw_path' exists as a file, enforcing that the external connector writes the raw source before any derived index rows. [crates/gwiki/src/ingest/mod.rs:739-745]
 - `RawFirstStore` (class) component `RawFirstStore [class]` (`cf597c10-61d5-56f2-a9da-aca1e9ff0924`) lines 748-797 [crates/gwiki/src/ingest/mod.rs:748-797]
   - Signature: `impl WikiIndexStore for RawFirstStore {`
-  - Purpose: Indexed class `RawFirstStore` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:748-797]
+  - Purpose: 'RawFirstStore' is a 'WikiIndexStore' decorator that forwards reads and all storage operations to an inner store but enforces 'assert_raw_exists_before_index()' before any mutation of derived or source records, ensuring raw content exists before indexing-related writes. [crates/gwiki/src/ingest/mod.rs:748-797]
 - `RawFirstStore.indexed_hashes` (method) component `RawFirstStore.indexed_hashes [method]` (`e4918867-a9a5-5d98-ab6e-ff95576a2142`) lines 749-753 [crates/gwiki/src/ingest/mod.rs:749-753]
   - Signature: `fn indexed_hashes(`
-  - Purpose: Indexed method `RawFirstStore.indexed_hashes` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:749-753]
+  - Purpose: Returns the inner store’s indexed hashes as a 'Result<BTreeMap<PathBuf, String>, StoreError>' by delegating directly to 'self.inner.indexed_hashes()'. [crates/gwiki/src/ingest/mod.rs:749-753]
 - `RawFirstStore.upsert_document` (method) component `RawFirstStore.upsert_document [method]` (`41a0c096-66bd-507b-b585-65477276ea75`) lines 755-758 [crates/gwiki/src/ingest/mod.rs:755-758]
   - Signature: `fn upsert_document(&mut self, document: WikiDocument) -> Result<(), StoreError> {`
-  - Purpose: Indexed method `RawFirstStore.upsert_document` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:755-758]
+  - Purpose: 'upsert_document' verifies that the raw backing store exists before indexing, then forwards the 'WikiDocument' to 'self.inner.upsert_document' and returns its 'Result<(), StoreError>'. [crates/gwiki/src/ingest/mod.rs:755-758]
 - `RawFirstStore.replace_chunks` (method) component `RawFirstStore.replace_chunks [method]` (`4a9eab20-e050-56b9-9553-3d406c7219bc`) lines 760-767 [crates/gwiki/src/ingest/mod.rs:760-767]
   - Signature: `fn replace_chunks(`
-  - Purpose: Indexed method `RawFirstStore.replace_chunks` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:760-767]
+  - Purpose: Ensures the raw store exists before replacing all wiki chunks for the given path in the inner store, then delegates the chunk replacement and returns any 'StoreError'. [crates/gwiki/src/ingest/mod.rs:760-767]
 - `RawFirstStore.replace_links` (method) component `RawFirstStore.replace_links [method]` (`11f4d2d5-6054-504e-9866-65db2bd9eb8c`) lines 769-772 [crates/gwiki/src/ingest/mod.rs:769-772]
   - Signature: `fn replace_links(&mut self, path: &Path, links: Vec<WikiLink>) -> Result<(), StoreError> {`
-  - Purpose: Indexed method `RawFirstStore.replace_links` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:769-772]
+  - Purpose: Ensures the raw store exists before delegating to 'self.inner.replace_links(path, links)' to replace the indexed wiki links for 'path', returning any 'StoreError'. [crates/gwiki/src/ingest/mod.rs:769-772]
 - `RawFirstStore.upsert_source` (method) component `RawFirstStore.upsert_source [method]` (`fd072986-038a-5bfd-ab7f-740433dbb110`) lines 774-777 [crates/gwiki/src/ingest/mod.rs:774-777]
   - Signature: `fn upsert_source(&mut self, source: WikiSource) -> Result<(), StoreError> {`
-  - Purpose: Indexed method `RawFirstStore.upsert_source` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:774-777]
+  - Purpose: Ensures the raw data exists before indexing, then delegates to 'inner.upsert_source(source)' to insert or update the 'WikiSource' in the store. [crates/gwiki/src/ingest/mod.rs:774-777]
 - `RawFirstStore.record_ingestion` (method) component `RawFirstStore.record_ingestion [method]` (`f20c3adc-5c7f-5147-a078-ff91b43d78a4`) lines 779-782 [crates/gwiki/src/ingest/mod.rs:779-782]
   - Signature: `fn record_ingestion(&mut self, ingestion: WikiIngestion) -> Result<(), StoreError> {`
-  - Purpose: Indexed method `RawFirstStore.record_ingestion` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:779-782]
+  - Purpose: Ensures the raw data exists before delegating the 'WikiIngestion' record operation to the inner store, returning 'Result<(), StoreError>'. [crates/gwiki/src/ingest/mod.rs:779-782]
 - `RawFirstStore.record_file_hash` (method) component `RawFirstStore.record_file_hash [method]` (`30d7cd51-2434-546d-a459-27544ade3e76`) lines 784-791 [crates/gwiki/src/ingest/mod.rs:784-791]
   - Signature: `fn record_file_hash(`
-  - Purpose: Indexed method `RawFirstStore.record_file_hash` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:784-791]
+  - Purpose: 'record_file_hash' asserts that the raw store exists before indexing, then forwards the given 'path' and 'content_hash' to 'self.inner.record_file_hash', returning its 'Result<(), StoreError>'. [crates/gwiki/src/ingest/mod.rs:784-791]
 - `RawFirstStore.delete_derived_rows` (method) component `RawFirstStore.delete_derived_rows [method]` (`ee5c377a-8d68-558f-abb0-d8f66046992e`) lines 793-796 [crates/gwiki/src/ingest/mod.rs:793-796]
   - Signature: `fn delete_derived_rows(&mut self, path: &Path) -> Result<(), StoreError> {`
-  - Purpose: Indexed method `RawFirstStore.delete_derived_rows` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:793-796]
+  - Purpose: Asserts that the raw data exists before indexing, then delegates deletion of all derived rows for the given 'path' to 'self.inner.delete_derived_rows(path)'. [crates/gwiki/src/ingest/mod.rs:793-796]
 - `external_connectors_write_raw_first` (function) component `external_connectors_write_raw_first [function]` (`e716b1c3-df2b-577b-8b69-e8f55fcc986a`) lines 800-833 [crates/gwiki/src/ingest/mod.rs:800-833]
   - Signature: `fn external_connectors_write_raw_first() {`
-  - Purpose: Indexed function `external_connectors_write_raw_first` in `crates/gwiki/src/ingest/mod.rs`. [crates/gwiki/src/ingest/mod.rs:800-833]
+  - Purpose: Verifies that ingesting a Wayback capture through 'RawFirstStore' writes the raw content before updating the index, as indicated by 'observed_index_write' being set. [crates/gwiki/src/ingest/mod.rs:800-833]
 

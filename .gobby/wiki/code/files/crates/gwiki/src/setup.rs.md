@@ -33,7 +33,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-This file defines the standalone PostgreSQL setup for the `gwiki` crate. It models the schema’s fixed table set and supported object kinds, then builds a sequence of setup objects consisting of a `pg_search` extension preflight check plus table and index DDL for the configured schema. `GwikiStandaloneSetup` generates the SQL for each table and index, quotes identifiers safely, converts each definition into an owned setup object that can execute its DDL against a PostgreSQL connection, and runs them in order while collecting a `SetupReport` and stopping on the first failure. The helper constructors and tests keep the published table/index lists aligned with the generated objects and verify the identifier-quoting and ownership constraints.
+Defines the standalone setup for the `gwiki` schema by naming the PostgreSQL tables and indexes, quoting identifiers safely, and generating the SQL objects needed to create them. `GwikiStandaloneSetup` ties this together by building a preflight `pg_search` check plus table and index DDL, exposing them as `OwnedObject`s, and creating them sequentially while recording success or the first failure.
 [crates/gwiki/src/setup.rs:29-35]
 [crates/gwiki/src/setup.rs:37-47]
 [crates/gwiki/src/setup.rs:38-46]

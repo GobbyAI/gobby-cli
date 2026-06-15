@@ -17,7 +17,7 @@ Module: [[code/modules/crates/gcode/src/setup|crates/gcode/src/setup]]
 
 ## Purpose
 
-This file provides PostgreSQL identifier formatting helpers for setup code. `quote_identifier` sanitizes a single identifier by trimming whitespace, rejecting empty values, NUL bytes, and names over 63 bytes, then escaping internal double quotes and wrapping the result in quotes. `qualified_relation` builds a schema-qualified name by quoting the schema and relation separately and joining them with a dot, so any validation or quoting failure is returned as a `SetupError`.
+This file provides PostgreSQL identifier helpers for setup code: it validates and double-quotes individual names, then combines a quoted schema and relation into a schema-qualified relation string. The quoting logic trims input, rejects empty or NUL-containing identifiers, enforces PostgreSQL’s 63-byte limit, escapes embedded double quotes, and returns `SetupError` when validation fails.
 [crates/gcode/src/setup/identifiers.rs:5-15]
 [crates/gcode/src/setup/identifiers.rs:17-41]
 

@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcode/src/search|crates/gcode/src/search]]
 
 ## Purpose
 
-Top-level search module for gcode, combining full-text search, semantic vectors, and graph boosting with Reciprocal Rank Fusion. It exposes the FTS, graph_boost, and rrf submodules, and notes that callers may fall back to fewer sources if a configured service is unavailable. [crates/gcode/src/search/mod.rs:1-11]
+Top-level search module that wires together full-text search, semantic vector search, and graph boosting, with reciprocal rank fusion for ranking. It exposes the `fts`, `graph_boost`, and `rrf` submodules and is designed to degrade gracefully when some configured search services are unavailable. [crates/gcode/src/search/mod.rs:1-11]
 
 ## API Symbols
 

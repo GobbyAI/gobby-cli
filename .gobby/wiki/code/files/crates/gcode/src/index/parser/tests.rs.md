@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcode/src/index/parser|crates/gcode/src/index/pars
 
 ## Purpose
 
-This file declares test modules for the GCode parser index functionality. It organizes test submodules by programming language groups (Go/Rust/Java/C#, Kotlin/Swift, PHP/Ruby/Dart/Elixir, Python/JavaScript/TypeScript) and testing categories (common, resolution, semantic). It serves as the main test module organization file for the parser index component. [crates/gcode/src/index/parser/tests.rs:1-8]
+Test module for the gcode index parser, organizing parser test suites into shared helpers and language-specific coverage for Go, Rust, Java, C#, Kotlin, Swift, PHP, Ruby, Dart, Elixir, Python, JavaScript, TypeScript, plus resolution and semantic tests. [crates/gcode/src/index/parser/tests.rs:1-8]
 
 ## API Symbols
 

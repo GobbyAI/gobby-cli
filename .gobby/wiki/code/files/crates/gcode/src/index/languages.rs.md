@@ -7,15 +7,17 @@ provenance:
   - 7-12
   - 326-338
   - 341-346
-  - 349-371
-  - 374-385
-  - 392-396
-  - 399-404
-  - 407-410
-  - 413-419
-  - 422-428
-  - 430-435
-  - 437-442
+  - 355-359
+  - 362-384
+  - 387-398
+  - 405-409
+  - 412-417
+  - 420-423
+  - 426-432
+  - 435-441
+  - 443-448
+  - 450-455
+  - 458-468
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -27,12 +29,12 @@ Module: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 
 ## Purpose
 
-This file is a language registry that manages tree-sitter query definitions and language detection for code indexing. It defines LanguageSpec structures that associate file extensions with tree-sitter query strings for extracting symbols, imports, and calls from different programming languages. The core functions work together to: detect a programming language from its file extension (detect_language), retrieve the corresponding LanguageSpec (get_spec), obtain the appropriate tree-sitter Language parser (get_ts_language), and handle special cases like TSX files (get_ts_language_for_path). Helper functions parses_without_error and parses_with_error validate whether source code parses correctly. Unit tests verify that language detection works as expected for JavaScript, TypeScript, and TSX files, and confirm markdown files are intentionally excluded from AST parsing.
+Registry of language-specific Tree-sitter query specs used by the indexer. It defines static `LanguageSpec` entries that map file extensions to symbol, import, and call queries, then provides helpers to detect a file’s language, look up a spec, classify data-only languages like JSON/YAML, and choose the correct Tree-sitter grammar, including TSX handling for `.tsx` paths. The test helpers and cases verify extension detection, parser selection, Markdown exclusion, and that only JSON/YAML are treated as data languages.
 [crates/gcode/src/index/languages.rs:7-12]
 [crates/gcode/src/index/languages.rs:326-338]
 [crates/gcode/src/index/languages.rs:341-346]
-[crates/gcode/src/index/languages.rs:349-371]
-[crates/gcode/src/index/languages.rs:374-385]
+[crates/gcode/src/index/languages.rs:355-359]
+[crates/gcode/src/index/languages.rs:362-384]
 
 ## API Symbols
 
@@ -45,31 +47,37 @@ This file is a language registry that manages tree-sitter query definitions and 
 - `get_spec` (function) component `get_spec [function]` (`f82e8aa9-4d3d-508d-9a91-81662aa61460`) lines 341-346 [crates/gcode/src/index/languages.rs:341-346]
   - Signature: `pub fn get_spec(lang: &str) -> Option<&'static LanguageSpec> {`
   - Purpose: Returns an optional reference to a static LanguageSpec by linearly searching an internal SPECS collection for a matching language name. [crates/gcode/src/index/languages.rs:341-346]
-- `get_ts_language` (function) component `get_ts_language [function]` (`c63491bd-6e5a-5dab-adeb-5049e67503b5`) lines 349-371 [crates/gcode/src/index/languages.rs:349-371]
+- `is_data_language` (function) component `is_data_language [function]` (`de1fed24-e69f-5440-9cd1-7ef2467c9a64`) lines 355-359 [crates/gcode/src/index/languages.rs:355-359]
+  - Signature: `pub fn is_data_language(lang: &str) -> bool {`
+  - Purpose: Returns 'true' when 'get_spec(lang)' finds a language whose 'import_query' and 'call_query' are both empty, and 'false' otherwise. [crates/gcode/src/index/languages.rs:355-359]
+- `get_ts_language` (function) component `get_ts_language [function]` (`a352da09-909e-5589-a05b-55a457160324`) lines 362-384 [crates/gcode/src/index/languages.rs:362-384]
   - Signature: `pub fn get_ts_language(lang: &str) -> Option<Language> {`
-  - Purpose: Maps a language identifier string to its corresponding tree-sitter Language parser, returning None if the language is unsupported. [crates/gcode/src/index/languages.rs:349-371]
-- `get_ts_language_for_path` (function) component `get_ts_language_for_path [function]` (`9d568e28-9d31-598c-b189-1750a40d5ac2`) lines 374-385 [crates/gcode/src/index/languages.rs:374-385]
+  - Purpose: Returns 'Some(Language)' by mapping a supported language name string to the corresponding Tree-sitter language constant, or 'None' if the input is not one of the recognized languages. [crates/gcode/src/index/languages.rs:362-384]
+- `get_ts_language_for_path` (function) component `get_ts_language_for_path [function]` (`a19f009e-52da-58a3-b1cb-39e6460e52d0`) lines 387-398 [crates/gcode/src/index/languages.rs:387-398]
   - Signature: `pub fn get_ts_language_for_path(lang: &str, file_path: &str) -> Option<Language> {`
-  - Purpose: Returns the Tree-sitter TSX language if the language parameter is "typescript" and the file extension is ".tsx", otherwise delegates to `get_ts_language` for standard TypeScript processing. [crates/gcode/src/index/languages.rs:374-385]
-- `markdown_extensions_are_not_detected` (function) component `markdown_extensions_are_not_detected [function]` (`a020d84d-57c1-56fc-a4a8-6cfd1bfe29f1`) lines 392-396 [crates/gcode/src/index/languages.rs:392-396]
+  - Purpose: Returns the TSX tree-sitter language for '.tsx' files when 'lang' is '"typescript"', otherwise delegates to 'get_ts_language(lang)' and returns its result. [crates/gcode/src/index/languages.rs:387-398]
+- `markdown_extensions_are_not_detected` (function) component `markdown_extensions_are_not_detected [function]` (`97fb135c-6a68-5912-a7e9-0aa66b98b4a8`) lines 405-409 [crates/gcode/src/index/languages.rs:405-409]
   - Signature: `fn markdown_extensions_are_not_detected() {`
-  - Purpose: This unit test asserts that the `detect_language` function returns `None` for markdown file extensions (.md, .markdown), confirming that markdown files are intentionally handled as plain text content rather than parsed into an AST. [crates/gcode/src/index/languages.rs:392-396]
-- `javascript_extensions_still_detect` (function) component `javascript_extensions_still_detect [function]` (`e8a63554-9bc6-5b69-9e77-8493f05d2479`) lines 399-404 [crates/gcode/src/index/languages.rs:399-404]
+  - Purpose: Verifies that Markdown files with '.md' and '.markdown' extensions are not assigned a detected language, since Markdown is treated as content-only text rather than an AST-backed language. [crates/gcode/src/index/languages.rs:405-409]
+- `javascript_extensions_still_detect` (function) component `javascript_extensions_still_detect [function]` (`04eca584-270a-52c3-bb74-d229935f2cf0`) lines 412-417 [crates/gcode/src/index/languages.rs:412-417]
   - Signature: `fn javascript_extensions_still_detect() {`
-  - Purpose: Unit test asserting that `detect_language` correctly identifies .js, .jsx, .cjs, and .mjs file extensions as `Some("javascript")`. [crates/gcode/src/index/languages.rs:399-404]
-- `typescript_extensions_still_detect` (function) component `typescript_extensions_still_detect [function]` (`75e296d5-1992-5a58-85a0-2472b4a4aff0`) lines 407-410 [crates/gcode/src/index/languages.rs:407-410]
+  - Purpose: Verifies that 'detect_language' returns 'Some("javascript")' for '.js', '.jsx', '.cjs', and '.mjs' file paths. [crates/gcode/src/index/languages.rs:412-417]
+- `typescript_extensions_still_detect` (function) component `typescript_extensions_still_detect [function]` (`3e65dc2a-6b89-5bd0-8fbc-514f60a3183a`) lines 420-423 [crates/gcode/src/index/languages.rs:420-423]
   - Signature: `fn typescript_extensions_still_detect() {`
-  - Purpose: Unit test asserting that `detect_language` returns `Some("typescript")` for both `.ts` and `.tsx` file extensions. [crates/gcode/src/index/languages.rs:407-410]
-- `tsx_paths_use_tsx_grammar` (function) component `tsx_paths_use_tsx_grammar [function]` (`469316ad-457d-5d65-9541-1a724765b4bc`) lines 413-419 [crates/gcode/src/index/languages.rs:413-419]
+  - Purpose: Verifies that 'detect_language' returns 'Some("typescript")' for both '.ts' and '.tsx' file paths. [crates/gcode/src/index/languages.rs:420-423]
+- `tsx_paths_use_tsx_grammar` (function) component `tsx_paths_use_tsx_grammar [function]` (`9da8762f-e2aa-5293-a07c-adf715368e5b`) lines 426-432 [crates/gcode/src/index/languages.rs:426-432]
   - Signature: `fn tsx_paths_use_tsx_grammar() {`
-  - Purpose: This test verifies that the TypeScript language grammar correctly parses JSX syntax when configured for `.tsx` file paths. [crates/gcode/src/index/languages.rs:413-419]
-- `ts_paths_keep_typescript_grammar` (function) component `ts_paths_keep_typescript_grammar [function]` (`a5014def-f98c-5923-abaa-216d22db3a22`) lines 422-428 [crates/gcode/src/index/languages.rs:422-428]
+  - Purpose: Verifies that the TypeScript parser selected for a '.tsx' file can successfully parse JSX syntax without errors. [crates/gcode/src/index/languages.rs:426-432]
+- `ts_paths_keep_typescript_grammar` (function) component `ts_paths_keep_typescript_grammar [function]` (`168734ef-e080-5a59-ad13-fc034d74f44e`) lines 435-441 [crates/gcode/src/index/languages.rs:435-441]
   - Signature: `fn ts_paths_keep_typescript_grammar() {`
-  - Purpose: Asserts that the TypeScript language parser configured for a specified file path correctly detects parsing errors in JSX syntax. [crates/gcode/src/index/languages.rs:422-428]
-- `parses_without_error` (function) component `parses_without_error [function]` (`c4562978-6c37-5d1d-a1f3-93509666db9e`) lines 430-435 [crates/gcode/src/index/languages.rs:430-435]
+  - Purpose: Verifies that the TypeScript grammar for '.ts' paths is preserved by asserting that a TS file containing JSX syntax ('<section />') parses with an error instead of being treated as TSX. [crates/gcode/src/index/languages.rs:435-441]
+- `parses_without_error` (function) component `parses_without_error [function]` (`dc2ae90b-488c-5b30-8ee8-3a1de563a92e`) lines 443-448 [crates/gcode/src/index/languages.rs:443-448]
   - Signature: `fn parses_without_error(language: Language, source: &str) -> bool {`
-  - Purpose: This function checks whether the given source code parses without syntax errors in the specified tree-sitter language. [crates/gcode/src/index/languages.rs:430-435]
-- `parses_with_error` (function) component `parses_with_error [function]` (`f864e9eb-ef9a-53cc-bc50-d64e949447db`) lines 437-442 [crates/gcode/src/index/languages.rs:437-442]
+  - Purpose: Creates a Tree-sitter parser for the given 'Language', parses the provided 'source', and returns 'true' only if the resulting syntax tree’s root node contains no parse errors. [crates/gcode/src/index/languages.rs:443-448]
+- `parses_with_error` (function) component `parses_with_error [function]` (`6d79c8a1-1d74-5a85-97c7-5519eee8459a`) lines 450-455 [crates/gcode/src/index/languages.rs:450-455]
   - Signature: `fn parses_with_error(language: Language, source: &str) -> bool {`
-  - Purpose: Parses source code using tree-sitter for a specified language and returns true if the resulting abstract syntax tree contains error nodes. [crates/gcode/src/index/languages.rs:437-442]
+  - Purpose: Returns 'true' if parsing 'source' with a Tree-sitter parser configured for 'language' produces a syntax tree whose root node reports an error, and 'false' otherwise. [crates/gcode/src/index/languages.rs:450-455]
+- `is_data_language_matches_only_json_and_yaml` (function) component `is_data_language_matches_only_json_and_yaml [function]` (`14bc4b1f-8719-51b2-91c4-0ff446dd439e`) lines 458-468 [crates/gcode/src/index/languages.rs:458-468]
+  - Signature: `fn is_data_language_matches_only_json_and_yaml() {`
+  - Purpose: Verifies that 'is_data_language' returns 'true' only for 'json' and 'yaml', and 'false' for AST languages like 'rust', 'python', 'dart', and unknown language names. [crates/gcode/src/index/languages.rs:458-468]
 

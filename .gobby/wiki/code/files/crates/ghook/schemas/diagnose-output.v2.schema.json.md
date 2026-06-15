@@ -16,7 +16,7 @@ Module: [[code/modules/crates/ghook/schemas|crates/ghook/schemas]]
 
 ## Purpose
 
-Defines the draft-07 JSON Schema for `ghook --diagnose` output version 2. The schema names the document, fixes `schema_version` to `2`, and requires the core diagnostic fields that describe the installed `ghook` binary, the selected CLI/hook type, daemon connection details, whether the command is critical, and whether the CLI was recognized. It also allows optional contextual fields like `source`, project identifiers, and terminal preview data, while forbidding unknown properties. Version 2 extends the v1 shape with `install_method` and `install_source_url` so diagnose output can report install provenance from the sidecar metadata.
+Defines the JSON Schema v2 for `ghook --diagnose` output, describing the structured object emitted by the CLI and pinning the schema metadata and version. It requires the core diagnostic fields, forbids extra properties, and validates each property’s shape and constraints, with v2 adding optional install provenance fields (`install_method` and `install_source_url`) while keeping the v1 output fields unchanged.
 [crates/ghook/schemas/diagnose-output.v2.schema.json:2]
 [crates/ghook/schemas/diagnose-output.v2.schema.json:3]
 [crates/ghook/schemas/diagnose-output.v2.schema.json:4]

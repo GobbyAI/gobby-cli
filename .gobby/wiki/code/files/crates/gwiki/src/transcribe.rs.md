@@ -40,7 +40,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-This file defines the transcription pipeline data model and Markdown output flow for audio notes. It includes the core structs for transcript segments, transcription results, time ranges, and degradation metadata, plus helpers that treat blank or segmentless output as empty and map AI routing state to a fallback reason. The `TranscriptionClient` trait is the transcription/translation abstraction, with translation methods intentionally disabled here; the main work happens in `write_audio_transcript_markdown`, which renders either successful transcript content or degradation fallback text into Markdown, writes it atomically, and syncs the parent directory. Formatting helpers and a fake client support timestamp/range rendering and tests that verify successful transcription, precomputed output, and degraded cases.
+Defines the transcription pipeline for audio sources: data types for transcript segments, transcription ranges, outputs, and degradation metadata; a `TranscriptionClient` trait with a disabled default translation path; and the markdown rendering/writing flow that turns either a successful transcription or a fallback degradation into a derived source note. The file also provides helpers for empty-output detection, timestamp/range formatting, atomic file creation and directory syncing, plus a fake client and test cases that verify successful transcription, precomputed output, and degraded cases when transcription is missing or empty.
 [crates/gwiki/src/transcribe.rs:14-18]
 [crates/gwiki/src/transcribe.rs:21-24]
 [crates/gwiki/src/transcribe.rs:27-39]

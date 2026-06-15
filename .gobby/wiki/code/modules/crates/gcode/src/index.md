@@ -216,39 +216,6 @@ provenance:
   - 79-86
   - 88-95
   - 97-99
-- file: crates/gcode/src/index/indexer/tests.rs
-  ranges:
-  - 24-30
-  - 32-40
-  - 43-62
-  - 65-84
-  - 87-105
-  - 108-152
-  - 155-164
-  - 166-235
-  - 238-314
-  - 325-396
-  - 399-405
-  - 407-413
-  - 415-418
-  - 420-426
-  - 428-459
-  - 461-488
-  - 490-517
-  - 519-527
-  - 529-539
-  - 542-564
-  - 567-603
-  - 606-642
-  - 645-675
-  - 678-704
-  - 707-729
-  - 732-747
-  - 750-799
-  - 802-830
-  - 833-883
-  - 886-923
-  - 926-952
 - file: crates/gcode/src/index/indexer/types.rs
   ranges:
   - 8-17
@@ -281,15 +248,17 @@ provenance:
   - 7-12
   - 326-338
   - 341-346
-  - 349-371
-  - 374-385
-  - 392-396
-  - 399-404
-  - 407-410
-  - 413-419
-  - 422-428
-  - 430-435
-  - 437-442
+  - 355-359
+  - 362-384
+  - 387-398
+  - 405-409
+  - 412-417
+  - 420-423
+  - 426-432
+  - 435-441
+  - 443-448
+  - 450-455
+  - 458-468
 - file: crates/gcode/src/index/parser.rs
   ranges:
   - 29-133
@@ -298,12 +267,6 @@ provenance:
   - 263-324
   - 326-333
   - 335-378
-- file: crates/gcode/src/index/parser/calls.rs
-  ranges:
-  - 23-32
-  - 35-42
-  - 44-55
-  - 57-132
 - file: crates/gcode/src/index/parser/calls/ast.rs
   ranges:
   - 17-96
@@ -437,59 +400,35 @@ provenance:
   - 792-797
   - 802-826
   - 829-864
-- file: crates/gcode/src/index/walker.rs
+- file: crates/gcode/src/index/walker/classification.rs
   ranges:
-  - 35-38
-  - 41-43
-  - 45-51
-  - 55-60
-  - 62-107
-  - 110-134
-  - 138-148
-  - 151-160
-  - 163-175
-  - 177-195
-  - 197-213
-  - 215-219
-  - 222-224
-  - 226-273
-  - 275-289
-  - 291-303
-  - 305-311
-  - 313-316
-  - 318-326
-  - 328-358
-  - 360-385
-  - 387-395
-  - 397-422
-  - 424-444
-  - 446-451
-  - 453-463
-  - 465-471
-  - 473-498
-  - 504-510
-  - 512-524
-  - 527-566
-  - 569-590
-  - 593-604
-  - 607-617
-  - 620-629
-  - 632-652
-  - 655-674
-  - 677-698
-  - 701-716
-  - 719-752
-  - 755-777
-  - 780-791
-  - 794-812
-  - 815-829
-  - 832-845
-  - 848-861
-  - 864-877
-  - 880-894
-  - 897-907
-  - 910-917
-provenance_truncated: 7
+  - 15-52
+  - 56-66
+  - 69-78
+  - 81-93
+  - 95-111
+  - 113-117
+  - 119-144
+- file: crates/gcode/src/index/walker/generated.rs
+  ranges:
+  - 18-38
+  - 40-45
+  - 47-57
+  - 59-65
+  - 67-92
+- file: crates/gcode/src/index/walker/hidden.rs
+  ranges:
+  - 13-15
+  - 17-64
+  - 66-80
+  - 82-94
+  - 96-102
+  - 104-107
+  - 109-117
+  - 119-149
+  - 151-176
+  - 178-186
+provenance_truncated: 13
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -501,11 +440,11 @@ Parent: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-The index module is the gcode crate’s code indexing subsystem: it discovers eligible project files, validates them, parses AST-backed languages, chunks text-only content, hashes content for incremental work, and persists resulting code facts. Its root wires together parsers, semantic analysis, security checks, import resolution, chunking, hashing, and related helpers while enforcing a 10 MB indexing limit [crates/gcode/src/index/mod.rs:1-16]. File discovery is git-aware and classifies paths into AST or content-only indexing using `DiscoveryOptions`, `FileClassification`, `.gitignore` handling, hidden allowlists, generated-file checks, language detection, and the shared `MAX_FILE_SIZE` limit .
+The `crates/gcode/src/index` module owns gcode’s code-indexing pipeline: discovering eligible files, parsing supported languages, extracting symbols/imports/calls/content chunks, and persisting those facts to PostgreSQL. Its top-level exports gather the indexing submodules and enforce size policy, including a 10 MB file cap and a smaller AST cap for large JSON/YAML data files [crates/gcode/src/index/mod.rs:1-26]. File eligibility starts with walker and security checks: paths must remain inside the root, symlinks must resolve safely, unreadable or NUL-containing files are treated as binary, and generated or secret-looking paths are excluded [crates/gcode/src/index/security.rs:26-31] [crates/gcode/src/index/security.rs:34-39] [crates/gcode/src/index/security.rs:42-54] [crates/gcode/src/index/security.rs:63-89]. The language registry then maps extensions to Tree-sitter symbol, import, and call queries through `LanguageSpec` [crates/gcode/src/index/languages.rs:7-12].
 
-The main flow starts with the indexer, which selects overlay, discovered-file, or explicit-file indexing, then performs per-file parsing, language detection, hashing, optional semantic resolver setup, content-only fallback, and transactional writes through a sink abstraction. Parsing is tree-sitter based: `parse_file_with_semantic` validates security and size, detects language, extracts symbols, imports, docstrings, and parent links, and integrates semantic call resolution into a `ParseResult` [crates/gcode/src/index/parser.rs:29-133] [crates/gcode/src/index/parser.rs:135-234] [crates/gcode/src/index/parser.rs:236-261] [crates/gcode/src/index/parser.rs:263-324]. The language registry supplies file-extension detection, tree-sitter parsers, and symbol/import/call query definitions through `LanguageSpec` [crates/gcode/src/index/languages.rs:7-12] [crates/gcode/src/index/languages.rs:326-338] [crates/gcode/src/index/languages.rs:349-371].
+The main indexing flow is orchestrated by `indexer`, which routes full, incremental, overlay, discovered-file, and explicit-file requests, cleans stale or skipped facts, and reports run outcomes [crates/gcode/src/index/indexer.rs:1-27] [crates/gcode/src/index/indexer/pipeline.rs:47-173] [crates/gcode/src/index/indexer/types.rs:8-17] [crates/gcode/src/index/indexer/types.rs:45-68]. Parsing rejects unsafe, excluded, secret, binary, empty, oversized, or unsupported files before loading the Tree-sitter grammar; successful parses feed symbol extraction, parent linking, docstring extraction, import extraction, and call extraction [crates/gcode/src/index/parser.rs:29-133] [crates/gcode/src/index/parser.rs:135-234] [crates/gcode/src/index/parser.rs:236-261] [crates/gcode/src/index/parser.rs:263-324]. Content-only indexing is handled by the chunker, which emits nonblank overlapping 100-line `ContentChunk` records with line ranges and timestamps [crates/gcode/src/index/chunker.rs:19-62] [crates/gcode/src/index/chunker.rs:64-72], while hashing helpers delegate incremental content hashes to `gobby_core::indexing` [crates/gcode/src/index/hasher.rs:7-9] [crates/gcode/src/index/hasher.rs:12-14] [crates/gcode/src/index/hasher.rs:17-27].
 
-The persistence layer in `api.rs` exposes the public indexing API and PostgreSQL CRUD operations for symbols, indexed files, chunks, imports, calls, and project stats, with write summaries tracking graph and vector sync state  . Import resolution turns raw imports into local or external bindings across many languages, feeding call resolution so local references can be distinguished from external targets [crates/gcode/src/index/import_resolution/context.rs:19-37] [crates/gcode/src/index/import_resolution/context.rs:39-53]. For C/C++, semantic analysis optionally launches clangd, discovers `compile_commands.json`, resolves definitions through LSP, and classifies external calls while gracefully disabling itself unless strict semantics are required [crates/gcode/src/index/semantic.rs:15-23] .
+Persistence and cross-file interpretation sit around that core flow. `api.rs` defines the public write request and summary types, marks graph/vector sync as pending for file writes, and provides cleanup plus conflict-aware upserts for files, symbols, chunks, imports, calls, and project stats over a `GenericClient` [crates/gcode/src/index/api.rs:16-23] [crates/gcode/src/index/api.rs:26-34] [crates/gcode/src/index/api.rs:36-48] [crates/gcode/src/index/api.rs:50-60]. `import_resolution` builds language-aware context for deciding whether imports and call targets are local or external, and exposes the unresolved `UNPARSED:` marker [crates/gcode/src/index/import_resolution.rs:1-17]. For C/C++, `semantic.rs` can optionally create a clangd-backed resolver: request and target structs describe the call site and resolved external module, the trait abstracts resolution, and setup discovers `compile_commands.json` plus `clangd`, failing only when strict semantics are required [crates/gcode/src/index/semantic.rs:15-23]  .
 
 ## Call Diagram
 
@@ -513,30 +452,32 @@ The persistence layer in `api.rs` exposes the public indexing API and PostgreSQL
 sequenceDiagram
     participant m_01ac953b_e521_5091_9d8e_d040ecc2e069 as file_uri_to_path_strips_windows_drive_leading_slash &#91;function&#93;
     participant m_01ec77cc_48df_5af6_ad42_b9d5800cf9ad as index_overlay_files &#91;function&#93;
-    participant m_028fe4bd_db40_553e_b5a7_ac83a4266eea as skips_root_build_directory &#91;function&#93;
     participant m_04100970_2a3d_502a_82a4_bd0881fb7586 as path_to_uri_encodes_absolute_path_components &#91;function&#93;
+    participant m_04d3e0ad_4aea_5464_8fbd_8105f151e398 as is_valid_allowlist_pattern &#91;function&#93;
     participant m_06f747c0_d77a_5408_802b_60d142616c74 as skew_margin_boundary_only_ever_makes_the_gate_more_eager &#91;function&#93;
-    participant m_08d29d34_cb96_533b_8e47_3b058d4d4bf8 as discover_files_respects_gitignore_by_default_and_option &#91;function&#93;
     participant m_094f1ee2_eaed_5f0a_a5ea_ec9ecdf5860b as read_clangd_stdout &#91;function&#93;
     participant m_09b2efc9_1277_55d5_bcd5_177f6318698b as parse_go_import_statement &#91;function&#93;
     participant m_10340c10_e576_5d26_badb_81bc9e42948a as indexed_file_states &#91;function&#93;
     participant m_1198e746_172a_5cb1_b20f_e9369afc0ee6 as non_use_rust_statement_does_not_record_raw_import &#91;function&#93;
     participant m_1458f6f6_a1e9_50b3_92b7_ff0e333b20d0 as is_elixir_alias &#91;function&#93;
+    participant m_15382db2_f08b_5852_8888_4ab3e02d012a as path_to_uri_preserves_windows_drive_prefix &#91;function&#93;
+    participant m_168734ef_e080_5a59_ad13_fc034d74f44e as ts_paths_keep_typescript_grammar &#91;function&#93;
+    participant m_16cf2279_1d9b_5be4_8298_44ac12773c32 as HiddenPathAllowlist.from_patterns &#91;method&#93;
+    participant m_1956789b_5753_5dd6_9aa9_07b8850d55d4 as ClangdResolver.initialize &#91;method&#93;
+    participant m_254c772c_7e65_55c7_b075_3ca2bf461b36 as ClangdResolver.read_response &#91;method&#93;
     participant m_2b097022_1ca0_54ab_9167_230f31715fe8 as set_mtime &#91;function&#93;
     participant m_42851f95_fa4f_5cbf_9f12_a9f8ea0efc38 as file_uri_to_path &#91;function&#93;
-    participant m_47390851_742b_5eb0_b55e_5ef0abf1ed42 as discover_files &#91;function&#93;
     participant m_4d80ef56_1326_501d_ad99_6e76e8e39313 as base_time &#91;function&#93;
-    participant m_4f32cb32_3983_5e2e_a133_2621571d3454 as write_file &#91;function&#93;
     participant m_4f70d13c_23e0_5f16_a6c6_69ce69537432 as parse_go_import_spec &#91;function&#93;
-    participant m_7520b232_4ec2_551e_827c_1239b0bae576 as rels &#91;function&#93;
+    participant m_597f0149_1a1c_59d6_ba8f_a47a427f0f7e as expand_zero_depth_globstar &#91;function&#93;
     participant m_88b739f7_a5b2_59eb_a658_877bd76e2526 as path_to_uri &#91;function&#93;
+    participant m_a19f009e_52da_58a3_b1cb_39e6460e52d0 as get_ts_language_for_path &#91;function&#93;
     participant m_be1729cf_c48d_5d6e_8ccf_bfee68ce411e as overlay_reconcile_action &#91;function&#93;
     participant m_c126060c_0243_5aef_8fd1_f7c452e6a874 as read_json_rpc_message &#91;function&#93;
     participant m_c37b5340_8902_5b1c_a469_944a66f25bf7 as write_tombstone &#91;function&#93;
     participant m_d0c535c9_f938_5584_99a0_02a2a7c3c113 as paths_by_relative &#91;function&#93;
     participant m_d4fc0ae1_b01a_5027_9c1c_91ce4e5a2e64 as write_file &#91;function&#93;
     participant m_d8a9fdbf_e6be_5cef_ba09_479c03c7e522 as overlay_reconcile_candidates &#91;function&#93;
-    participant m_ea8b8b11_3552_51c8_8938_c3cee3be607f as discover_files_with_options &#91;function&#93;
     participant m_ead7eba1_e088_5d34_ba91_e3ccc61cd99f as parse_rust_import_statement &#91;function&#93;
     participant m_f6a4f46d_0e79_54eb_b222_2cd0b7d7fb2d as rel_matches_filter &#91;function&#93;
     participant m_fc9f79bc_ed88_5926_b897_e76e0c08081d as is_uppercase_ascii_alnum_underscore_name &#91;function&#93;
@@ -547,94 +488,90 @@ sequenceDiagram
     m_01ec77cc_48df_5af6_ad42_b9d5800cf9ad->>m_d0c535c9_f938_5584_99a0_02a2a7c3c113: calls
     m_01ec77cc_48df_5af6_ad42_b9d5800cf9ad->>m_d8a9fdbf_e6be_5cef_ba09_479c03c7e522: calls
     m_01ec77cc_48df_5af6_ad42_b9d5800cf9ad->>m_f6a4f46d_0e79_54eb_b222_2cd0b7d7fb2d: calls
-    m_028fe4bd_db40_553e_b5a7_ac83a4266eea->>m_4f32cb32_3983_5e2e_a133_2621571d3454: calls
     m_04100970_2a3d_502a_82a4_bd0881fb7586->>m_88b739f7_a5b2_59eb_a658_877bd76e2526: calls
     m_06f747c0_d77a_5408_802b_60d142616c74->>m_2b097022_1ca0_54ab_9167_230f31715fe8: calls
     m_06f747c0_d77a_5408_802b_60d142616c74->>m_4d80ef56_1326_501d_ad99_6e76e8e39313: calls
     m_06f747c0_d77a_5408_802b_60d142616c74->>m_d4fc0ae1_b01a_5027_9c1c_91ce4e5a2e64: calls
-    m_08d29d34_cb96_533b_8e47_3b058d4d4bf8->>m_47390851_742b_5eb0_b55e_5ef0abf1ed42: calls
-    m_08d29d34_cb96_533b_8e47_3b058d4d4bf8->>m_4f32cb32_3983_5e2e_a133_2621571d3454: calls
-    m_08d29d34_cb96_533b_8e47_3b058d4d4bf8->>m_7520b232_4ec2_551e_827c_1239b0bae576: calls
-    m_08d29d34_cb96_533b_8e47_3b058d4d4bf8->>m_ea8b8b11_3552_51c8_8938_c3cee3be607f: calls
     m_094f1ee2_eaed_5f0a_a5ea_ec9ecdf5860b->>m_c126060c_0243_5aef_8fd1_f7c452e6a874: calls
     m_09b2efc9_1277_55d5_bcd5_177f6318698b->>m_4f70d13c_23e0_5f16_a6c6_69ce69537432: calls
     m_1198e746_172a_5cb1_b20f_e9369afc0ee6->>m_ead7eba1_e088_5d34_ba91_e3ccc61cd99f: calls
     m_1458f6f6_a1e9_50b3_92b7_ff0e333b20d0->>m_fc9f79bc_ed88_5926_b897_e76e0c08081d: calls
+    m_15382db2_f08b_5852_8888_4ab3e02d012a->>m_88b739f7_a5b2_59eb_a658_877bd76e2526: calls
+    m_168734ef_e080_5a59_ad13_fc034d74f44e->>m_a19f009e_52da_58a3_b1cb_39e6460e52d0: calls
+    m_16cf2279_1d9b_5be4_8298_44ac12773c32->>m_04d3e0ad_4aea_5464_8fbd_8105f151e398: calls
+    m_16cf2279_1d9b_5be4_8298_44ac12773c32->>m_597f0149_1a1c_59d6_ba8f_a47a427f0f7e: calls
+    m_1956789b_5753_5dd6_9aa9_07b8850d55d4->>m_254c772c_7e65_55c7_b075_3ca2bf461b36: calls
 ```
 
 ## Child Modules
 
-- [[code/modules/crates/gcode/src/index/import_resolution|crates/gcode/src/index/import_resolution]] - The import_resolution module turns raw multi-language import syntax into dependency and binding data that later indexing can use to distinguish local references from external calls. Its central state is ImportResolutionContext, which tracks local and external roots for Python, JavaScript, Go, Rust, Java, C#, PHP, Ruby, Swift, Dart, and Elixir, including self-package names, manifest-derived dependencies, and override maps for Ruby and Elixir resolution [crates/gcode/src/index/import_resolution/context.rs:19-37]. The context exposes targeted lookup flows such as Ruby require root resolution and Elixir external root resolution, where explicit overrides are checked before bundled or manifest-derived defaults [crates/gcode/src/index/import_resolution/context.rs:39-53].
+- [[code/modules/crates/gcode/src/index/import_resolution|crates/gcode/src/index/import_resolution]] - The import_resolution module builds the language-aware context and parsing support needed to turn raw import syntax into indexed external relationships. Its central `ImportResolutionContext` aggregates local module/class/symbol indexes, self package names, dependency roots, and override maps for many ecosystems, with Ruby and Elixir lookups explicitly preferring override maps before bundled/default roots . Predicate logic then decides whether a candidate is local or external: Python compares against indexed local modules, JavaScript rejects relative and self-package paths while accepting builtins and known external packages, Go excludes the current module path, and Rust merges external crates with standard crates while removing the self crate .
 
-Parsing and classification are split across collaborating layers. The parser child module dispatches parse_import_statement by language to specialized parsers and preserves unsupported imports as fallback data, while each parser appends ImportRelation records and fills ExtractedImports bindings for later call resolution [crates/gcode/src/index/import_resolution/parser/mod.rs:29-54] [crates/gcode/src/index/import_resolution/parser/mod.rs:56-74]. helpers.rs provides the shared low-level parsing utilities used by those parsers, including whitespace normalization, JavaScript module and clause extraction, quoted-string parsing with template interpolation handling, and balanced top-level splitting .
+The parser child module is the front door for import indexing: `parse_import_statement` dispatches each raw import line to language-specific parsers and preserves unsupported imports as unparsed records for visibility [crates/gcode/src/index/import_resolution/parser/mod.rs:29-54]. Those parsers normalize statements, create `ImportRelation` edges from the current file to the imported module or path, and register bindings only when the target passes the appropriate external predicate and context checks [crates/gcode/src/index/import_resolution/parser/go_rust.rs:12-40] [crates/gcode/src/index/import_resolution/parser/java_csharp.rs:8-60] [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:16-59]. Shared binding structures in the context layer track bare imports, wildcard modules, member bindings, and external roots for later resolution .
 
-predicates.rs applies the populated context to decide whether imports are external. It rejects Python relative imports and local module overlaps, treats JavaScript relative/path aliases as internal while recognizing node builtins and package.json dependencies, handles Go self-module prefixes, and builds Rust external roots from manifest crates plus standard crates while excluding the current crate . Tests are organized around the subsystem’s collaboration points: context loading, helper parsing, import statement parsing, and language predicate behavior [crates/gcode/src/index/import_resolution/tests.rs:1-6].
-- [[code/modules/crates/gcode/src/index/indexer|crates/gcode/src/index/indexer]] - The indexer module is the orchestration layer for turning project files into persisted code facts and reporting a structured indexing result. Its public contract is centered on `IndexRequest`, which carries the project root, optional path filter, explicit files, full-index flag, C++ semantic requirement, and projection sync flag, and `IndexOutcome`, which aggregates scanned, indexed, skipped, symbol/import/call/chunk counts, tombstones, durations, degradations, projection sync, and overlay metadata . The pipeline entry points choose between overlay indexing, discovered-file indexing, and explicit-file indexing, while file-level indexing handles parsing, language detection, content hashing, semantic resolver setup, content-only fallback, and transactional writes through the sink abstraction  .
+The helper and predicate files keep the language parsers small by centralizing syntax utilities and source-derived classification data. Helpers collapse whitespace, extract JavaScript import specifiers and clauses, parse quoted strings including template interpolation, and provide balanced top-level splitting plus language-specific alias/path utilities . Predicates also include lightweight source scanners for declared Java, C#, PHP, Ruby, Elixir, Dart, Rust, JavaScript, Python, and Go symbols, feeding the context with local declarations and known external roots . The test entry point mirrors this collaboration by separating coverage for context loading, helper parsing, import statement parsing, and language predicates [crates/gcode/src/index/import_resolution/tests.rs:1-6].
+- [[code/modules/crates/gcode/src/index/indexer|crates/gcode/src/index/indexer]] - The indexer module owns the end-to-end mechanics of turning project files into persisted code facts and run diagnostics. `pipeline.rs` opens the database connection and routes each request through overlay indexing, discovered-file indexing, or explicit-file indexing depending on scope and request contents, while cleanup helpers remove stale facts for skipped or deleted files and accumulate an `IndexOutcome` for the run [crates/gcode/src/index/indexer/pipeline.rs:27-30] [crates/gcode/src/index/indexer/pipeline.rs:32-45] [crates/gcode/src/index/indexer/pipeline.rs:47-173] [crates/gcode/src/index/indexer/pipeline.rs:175-302]. The request and result contract is defined in `types.rs`: `IndexRequest` carries root, filters, explicit files, full-indexing, C++ semantics, and projection-sync flags, while `IndexOutcome` reports scanned/indexed/skipped files, entity counts, unsupported types, degradations, projection sync status, and overlay metadata [crates/gcode/src/index/indexer/types.rs:8-17] [crates/gcode/src/index/indexer/types.rs:45-68].
 
-The main flows collaborate around discovery, reconciliation, persistence, and cleanup. Discovered indexing uses walker options and utility path filtering, including default excludes such as `node_modules`, `.git`, build directories, caches, and `target` . Explicit routing decides whether a file should be parsed, indexed as content only, skipped, or cleaned up, while unsupported file types are grouped for outcome reporting  [crates/gcode/src/index/indexer/util.rs:70-93]. Overlay indexing reconciles parent, overlay, and current filesystem state into actions such as Index, Inherit, Tombstone, DeleteOverlay, or Skip, based on file existence, hashes, tombstone state, and indexability . Freshness probing provides a fast pre-index gate by checking mtimes and deleted indexed paths without locks or hashing, using the same discovery exclusions and a skew margin to avoid missing changes .
+Per-file work is handled by `file.rs`, which classifies each path as skipped, AST-backed, or content-only, then resolves paths, detects language, hashes content, records size, and writes facts transactionally [crates/gcode/src/index/indexer/file.rs:15-91] [crates/gcode/src/index/indexer/file.rs:130-177]. Parsed files can use semantic import resolution when required and persist symbols, imports, calls, metadata, and chunks, while content-only files store raw file facts and chunks without parsing [crates/gcode/src/index/indexer/file.rs:93-108] [crates/gcode/src/index/indexer/file.rs:117-127]. Database writes are abstracted behind `CodeFactSink`, with `PostgresCodeFactSink` forwarding cleanup and upsert operations to the index API through a mutable Postgres client [crates/gcode/src/index/indexer/sink.rs:6-34] .
 
-Persistence and lifecycle code keep the indexed database and projections consistent as files change. `CodeFactSink` separates indexing logic from PostgreSQL writes by exposing deletion and upsert operations for file facts, symbols, imports, calls, and content chunks, with `PostgresCodeFactSink` delegating those operations to the API layer . Lifecycle utilities detect stale and orphaned files, invalidate project indexes, refresh project statistics, attach projection sync results, and record projection cleanup failures as degradations rather than failing the whole run . The test suite ties these behaviors together with CLI-independence checks, recording sinks, explicit-route and gitignore cases, overlay reconciliation coverage, symbol-summary preservation, and cleanup behavior for skipped or deleted files .
-- [[code/modules/crates/gcode/src/index/parser|crates/gcode/src/index/parser]] - The parser module’s call-indexing responsibility is to extract syntactic call sites from source files and turn them into `CallRelation` records. Its public flow is centered on `extract_calls`, which receives the tree-sitter parse tree, raw source, language spec, extraction context, and optional semantic resolver, then routes Dart through a textual extractor while other languages use the AST extractor [crates/gcode/src/index/parser/calls.rs:44-55]. The shared `CallExtractionContext` carries the language, tree-sitter language, relative and filesystem paths, file symbols, import resolution context, and import bindings needed to interpret a source file , while `CallSite` stores the detected callee, qualifier, byte positions, line, and syntax kind before resolution .
+The surrounding files keep indexing aligned with project state. `freshness_probe.rs` provides a lock-free pre-gate that mirrors discovery rules and quickly detects modified, added, or deleted indexed files before doing heavier reconciliation [crates/gcode/src/index/indexer/freshness_probe.rs:37-81]. `overlay.rs` reconciles overlay projects against parent and overlay state, choosing whether to index, inherit, tombstone, delete overlay facts, or skip based on file existence, hashes, indexability, and Git status [crates/gcode/src/index/indexer/overlay.rs:32-35]  [crates/gcode/src/index/indexer/overlay.rs:84-255]. `lifecycle.rs` handles deleted-file projection cleanup, project invalidation, daemon notification, stats refresh, stale/orphan detection, current file state, and row counting, while `util.rs` supplies shared path filtering, default excludes, unsupported-type grouping, relative path formatting, and timestamp helpers used across the pipeline [crates/gcode/src/index/indexer/lifecycle.rs:16-54]  [crates/gcode/src/index/indexer/util.rs:28-66] .
+- [[code/modules/crates/gcode/src/index/parser|crates/gcode/src/index/parser]] - The parser module’s call-indexing path converts parsed source locations into `CallRelation` records. Its top-level `calls.rs` defines the shared extraction context, including language, tree-sitter language, relative path, symbols, import state, and filesystem roots, plus `CallSite` records carrying callee name, optional qualifier, byte offsets, line, and syntax kind . `extract_calls` is the dispatcher: Dart is routed to a textual extractor, while all other languages use the AST extractor .
 
-Once a call candidate is found, `materialize_call` performs the resolution-heavy part of the flow. It locates the enclosing caller symbol, resolves same-file callees for the current language, extracts a root alias from qualified calls, checks whether an external target is shadowed, and can fall back to semantic resolution when syntax and import-based resolution are insufficient [crates/gcode/src/index/parser/calls.rs:57-100]. The module is split into focused submodules for AST extraction, Dart textual scanning, resolution, shadowing, and text utilities, with `calls.rs` coordinating those pieces through `mod ast`, `mod dart_textual`, `mod resolution`, `mod shadowing`, and `mod text` .
+The central materialization flow resolves each call from a syntactic candidate into an indexed relationship. It finds the enclosing caller symbol, tries same-file resolution for the callee, derives a qualifier root alias when present, and checks whether an apparent external call is shadowed by local bindings before continuing through import and semantic resolution paths [crates/gcode/src/index/parser/calls.rs:57-100]. The child call parser modules feed this shared flow: AST extraction runs language-specific tree-sitter queries, validates call/name captures, filters ignored names, handles qualified and member-call syntax, and can attach semantic resolution; JavaScript has a specialized source/import-binding entry point; Dart instead scans text line by line while skipping imports, exports, declarations, comments, strings, and other ignored contexts before emitting dot-notation call candidates.
 
-The child `calls` implementation handles both general tree-sitter query extraction and Dart-specific textual parsing. The AST path runs call queries, requires usable name captures, filters ignored names, handles qualifier paths, and supports JavaScript import bindings for qualified member-call resolution; the Dart path scans source line by line, carries lexical state, skips import/export/type declarations, and rejects candidates from comments, strings, declarations, or ignored keyword contexts before using the same materialization flow. Tests are organized by language families and behavior categories, with `tests.rs` grouping common, resolution, semantic, and language-specific suites for Go/Rust/Java/C#, Kotlin/Swift, PHP/Ruby/Dart/Elixir, and Python/JavaScript/TypeScript coverage [crates/gcode/src/index/parser/tests.rs:1-8].
+Tests are grouped as a parser-wide suite with shared helpers and language-specific coverage for Go, Rust, Java, C#, Kotlin, Swift, PHP, Ruby, Dart, Elixir, Python, JavaScript, and TypeScript, plus focused resolution and semantic tests [crates/gcode/src/index/parser/tests.rs:1-8]. This layout reflects the module’s collaboration model: language-specific extraction lives below `calls`, shared resolution/shadowing/text helpers normalize behavior, and the broader parser tests verify both per-language parsing and cross-language call-resolution semantics.
+- [[code/modules/crates/gcode/src/index/walker|crates/gcode/src/index/walker]] - The walker module owns the policy for turning project files into index inputs. Its core output is `FileClassification`, which distinguishes parsed AST indexing from content-only indexing, while `DiscoveryOptions` controls whether discovery honors `.gitignore` by default . Classification is centralized in `classify_file`: it rejects unsafe text, generated wiki metadata, and generated JavaScript bundles, routes hidden metadata and oversized data-language files to content-only, sends recognized languages to AST indexing, and treats unknown safe text as content-only [crates/gcode/src/index/walker/classification.rs:15-52].
+
+Discovery builds on that classification policy rather than duplicating it. `discover_files_with_options` walks the root with hidden-file and gitignore behavior configured from `DiscoveryOptions`, supplements normal traversal with hidden allowlist matches, then feeds every candidate through `push_classified_file` for deduplication, exclude-pattern handling, and final placement into AST or content-only buckets . Explicit-file classification follows the same path-level rules, adding a visibility check when gitignore handling is enabled before delegating back to `classify_file` [crates/gcode/src/index/walker/classification.rs:56-66].
+
+The supporting files narrow the policy boundaries. `HiddenPathAllowlist` loads default hidden patterns such as `.gobby` plans/wiki markdown and GitHub workflow YAML, merges project configuration, validates and expands patterns, discovers matching hidden files, and checks individual paths . Generated JavaScript detection is isolated in `generated.rs`, where JS-family files are screened by extension, bounded prefix reads, generated-code marker scans, file size, and minification heuristics before classification excludes them . The test module ties these areas together by aggregating classification, discovery, generated, and hidden tests and providing helpers for writing fixtures and comparing relative paths .
 
 ## Files
 
-- [[code/files/crates/gcode/src/index/api.rs|crates/gcode/src/index/api.rs]] - This file provides the database API layer for persisting code analysis facts to PostgreSQL. It defines two main data structures: CodeFactWriteRequest captures the counts of code elements to write for a file, while CodeFactWriteSummary tracks write statistics and sync state. The file implements deletion functions (delete_file_facts, delete_file_non_symbol_facts, delete_stale_file_symbols) to clean up stale index data and upsert functions (upsert_symbols, upsert_file, upsert_content_chunks, upsert_project_stats, upsert_imports, upsert_calls) to incrementally write code analysis results into various database tables including code_symbols, code_indexed_files, code_content_chunks, code_imports, and code_calls. These components work together to provide a complete CRUD interface for managing indexed code metadata.
+- [[code/files/crates/gcode/src/index/api.rs|crates/gcode/src/index/api.rs]] - This file defines the API for writing and cleaning up code-index facts for a single file or project. It exposes request and summary types for tracking how many symbols, imports, calls, and chunks were processed, plus whether graph/vector sync still needs to happen, and provides helpers to delete stale or complete file facts, check whether any facts exist, and upsert the underlying database records for symbols, indexed files, content chunks, imports, calls, and project stats. The pieces work together around a `GenericClient` by clearing old rows where needed, batching symbol writes, using conflict-aware inserts/updates, and converting oversized counts safely with `to_i32`.
 [crates/gcode/src/index/api.rs:16-23]
 [crates/gcode/src/index/api.rs:26-34]
 [crates/gcode/src/index/api.rs:36-48]
 [crates/gcode/src/index/api.rs:37-47]
 [crates/gcode/src/index/api.rs:50-60]
-- [[code/files/crates/gcode/src/index/chunker.rs|crates/gcode/src/index/chunker.rs]] - This module implements line-based content chunking for full-text search indexing. chunk_file_content splits UTF-8 file content into overlapping 100-line chunks (with 10-line overlap) and wraps each in a ContentChunk object containing project identifier, file path, line ranges, language, and timestamp. The epoch_secs_str utility provides current Unix timestamps for chunk metadata. A test function verifies the module maintains intentional independence from gobby_core's generic byte-range Chunk primitives, since gcode needs domain-specific line-based records and derives state from PostgreSQL content hashes rather than core IndexEvent snapshots. This separation keeps the indexing abstraction layers cleanly isolated.
+- [[code/files/crates/gcode/src/index/chunker.rs|crates/gcode/src/index/chunker.rs]] - This file implements gcode’s content chunker for full-text indexing: it splits UTF-8 file bytes into 100-line chunks with 10-line overlap, skips blank chunks, and builds `ContentChunk` records with project/file identifiers, line ranges, language, content, and creation timestamp. The helper `epoch_secs_str` supplies the current Unix time as a string for those records, and the test verifies the module stays gcode-owned by keeping the documented `ContentChunk`-based design rather than importing the generic core indexing types.
 [crates/gcode/src/index/chunker.rs:19-62]
 [crates/gcode/src/index/chunker.rs:64-72]
 [crates/gcode/src/index/chunker.rs:77-90]
-- [[code/files/crates/gcode/src/index/hasher.rs|crates/gcode/src/index/hasher.rs]] - This module provides SHA-256 content hashing utilities for incremental indexing, wrapping gobby_core::indexing functions. It exports three hash functions: file_content_hash() for entire file contents, content_hash() for in-memory bytes, and symbol_content_hash() for extracting and hashing a specific byte range with bounds checking. All functions delegate to corresponding gobby_core implementations for actual hash computation. The tests verify proper delegation to gobby_core and correct error handling for invalid ranges.
+- [[code/files/crates/gcode/src/index/hasher.rs|crates/gcode/src/index/hasher.rs]] - Provides content-hashing helpers for incremental indexing by delegating SHA-256 hashing to `gobby_core::indexing`. It exposes wrappers for hashing an entire file, hashing an in-memory byte slice, and hashing a validated subrange of a byte slice for symbol content, returning an error when the requested range is out of bounds. The tests verify these wrappers match `gobby_core`’s behavior and that the file-level helper does not reimplement buffering locally.
 [crates/gcode/src/index/hasher.rs:7-9]
 [crates/gcode/src/index/hasher.rs:12-14]
 [crates/gcode/src/index/hasher.rs:17-27]
 [crates/gcode/src/index/hasher.rs:35-49]
 [crates/gcode/src/index/hasher.rs:52-59]
-- [[code/files/crates/gcode/src/index/import_resolution.rs|crates/gcode/src/index/import_resolution.rs]] - This file is the main module for import resolution functionality in the gcode crate. It organizes submodules (context, helpers, parser, predicates) that handle parsing and resolving import statements, extracting import bindings, and building import resolution contexts. It exposes public APIs for creating import resolution contexts and marks unparsed imports with a "UNPARSED:" prefix. [crates/gcode/src/index/import_resolution.rs:1-17]
-- [[code/files/crates/gcode/src/index/indexer.rs|crates/gcode/src/index/indexer.rs]] - This module is a full and incremental indexing orchestrator that writes files, symbols, imports, calls, unresolved targets, and content chunks to PostgreSQL. It coordinates indexing operations across multiple submodules (file, freshness_probe, lifecycle, overlay, pipeline, sink, types, util) and delegates external synchronization with Qdrant vectors and FalkorDB graph to other components. It exposes public APIs for checking project freshness, invalidating indexes, and performing file indexing operations. [crates/gcode/src/index/indexer.rs:1-27]
-- [[code/files/crates/gcode/src/index/languages.rs|crates/gcode/src/index/languages.rs]] - This file is a language registry that manages tree-sitter query definitions and language detection for code indexing. It defines LanguageSpec structures that associate file extensions with tree-sitter query strings for extracting symbols, imports, and calls from different programming languages. The core functions work together to: detect a programming language from its file extension (detect_language), retrieve the corresponding LanguageSpec (get_spec), obtain the appropriate tree-sitter Language parser (get_ts_language), and handle special cases like TSX files (get_ts_language_for_path). Helper functions parses_without_error and parses_with_error validate whether source code parses correctly. Unit tests verify that language detection works as expected for JavaScript, TypeScript, and TSX files, and confirm markdown files are intentionally excluded from AST parsing.
+- [[code/files/crates/gcode/src/index/import_resolution.rs|crates/gcode/src/index/import_resolution.rs]] - Defines the import-resolution entry point for the `gcode` index module: it wires together the `context`, `helpers`, `parser`, and `predicates` submodules, exposes the public context-building APIs and related types, and defines the `UNPARSED:` marker used for unresolved imports. [crates/gcode/src/index/import_resolution.rs:1-17]
+- [[code/files/crates/gcode/src/index/indexer.rs|crates/gcode/src/index/indexer.rs]] - Orchestrator for full and incremental indexing. It coordinates writing files, symbols, imports, calls, unresolved targets, and content chunks to the PostgreSQL hub, while leaving external sync to other layers; it also re-exports the main indexing, invalidation, freshness, and outcome types. [crates/gcode/src/index/indexer.rs:1-27]
+- [[code/files/crates/gcode/src/index/languages.rs|crates/gcode/src/index/languages.rs]] - Registry of language-specific Tree-sitter query specs used by the indexer. It defines static `LanguageSpec` entries that map file extensions to symbol, import, and call queries, then provides helpers to detect a file’s language, look up a spec, classify data-only languages like JSON/YAML, and choose the correct Tree-sitter grammar, including TSX handling for `.tsx` paths. The test helpers and cases verify extension detection, parser selection, Markdown exclusion, and that only JSON/YAML are treated as data languages.
 [crates/gcode/src/index/languages.rs:7-12]
 [crates/gcode/src/index/languages.rs:326-338]
 [crates/gcode/src/index/languages.rs:341-346]
-[crates/gcode/src/index/languages.rs:349-371]
-[crates/gcode/src/index/languages.rs:374-385]
-- [[code/files/crates/gcode/src/index/mod.rs|crates/gcode/src/index/mod.rs]] - This file is the root module definition for the gcode indexing system. It organizes and exports submodules for code indexing and analysis, including parsers, semantic analysis, security checks, import resolution, file chunking, and hashing. It defines a constant MAX_FILE_SIZE (10 MB) that limits the file sizes processed by the indexer. [crates/gcode/src/index/mod.rs:1-16]
-- [[code/files/crates/gcode/src/index/parser.rs|crates/gcode/src/index/parser.rs]] - This file provides tree-sitter-based AST parsing for extracting code symbols, imports, calls, and documentation from source files. The main entry point `parse_file_with_semantic` orchestrates the full pipeline: it validates file security and size, detects the programming language, and parses the file using tree-sitter. Supporting functions extract specific code elements from the AST—`extract_symbols` retrieves symbol definitions, `extract_imports` captures import statements, `extract_docstring` pulls documentation comments, and `link_parents` establishes parent-child relationships between symbols. Utility functions like `strip_quotes` handle string normalization. The module integrates with language detection, security checks, and semantic call resolution to produce a complete `ParseResult` containing indexed symbols and their metadata.
+[crates/gcode/src/index/languages.rs:355-359]
+[crates/gcode/src/index/languages.rs:362-384]
+- [[code/files/crates/gcode/src/index/mod.rs|crates/gcode/src/index/mod.rs]] - Exports the gcode indexing submodules and defines indexing size limits, including a 10 MB max file size and a 1 MiB AST parsing cap for data-language files so large JSON/YAML blobs are indexed as content only. [crates/gcode/src/index/mod.rs:1-26]
+- [[code/files/crates/gcode/src/index/parser.rs|crates/gcode/src/index/parser.rs]] - Parses source files into indexable syntax data, but only after strict safety and size checks: it rejects unsafe, excluded, secret, binary, empty, oversized, or unsupported files, then detects the language, loads the Tree-sitter parser, and returns an optional `ParseResult` when parsing succeeds. The helper functions build the rest of the index from that tree: `extract_symbols` collects de-duplicated symbol definitions, `link_parents` assigns enclosing class/type parents and rewrites child function names as methods, `extract_docstring` pulls a leading docstring from Python/JS/TS function bodies, `strip_quotes` normalizes quoted string text, and `extract_imports` parses language-specific import statements into an `ExtractedImports` accumulator.
 [crates/gcode/src/index/parser.rs:29-133]
 [crates/gcode/src/index/parser.rs:135-234]
 [crates/gcode/src/index/parser.rs:236-261]
 [crates/gcode/src/index/parser.rs:263-324]
 [crates/gcode/src/index/parser.rs:326-333]
-- [[code/files/crates/gcode/src/index/security.rs|crates/gcode/src/index/security.rs]] - This file implements security validation for code indexing, preventing sensitive or unwanted files from being indexed. It provides several layers of protection: path validation functions (validate_path, is_symlink_safe) guard against directory traversal and unsafe symbolic links; binary file detection (is_binary) checks for null bytes in the first 8KB to skip non-text content; secret file identification (has_secret_extension) matches against predefined lists of sensitive extension, prefix, and substring patterns stored in constants; and path exclusion logic (should_exclude_path, is_root_generated_dir) filters directories using both literal matching for root-level generated directories and glob pattern matching (glob_match, glob_inner) for broader exclusions. The functions work together in an indexing pipeline to validate, filter, and safely process filesystem paths.
+- [[code/files/crates/gcode/src/index/security.rs|crates/gcode/src/index/security.rs]] - Provides security filters for the code indexer. The file verifies that paths stay within the indexing root, rejects unsafe symlinks, treats unreadable or NUL-containing files as binary, and decides whether to skip a path based on glob patterns with special handling for root-level generated directories. It also flags secret-looking filenames and extensions, and includes a small recursive glob matcher that powers the exclusion checks.
 [crates/gcode/src/index/security.rs:26-31]
 [crates/gcode/src/index/security.rs:34-39]
 [crates/gcode/src/index/security.rs:42-54]
 [crates/gcode/src/index/security.rs:63-89]
 [crates/gcode/src/index/security.rs:91-93]
-- [[code/files/crates/gcode/src/index/semantic.rs|crates/gcode/src/index/semantic.rs]] - This file implements semantic analysis for C/C++ code by spawning and communicating with a clangd language server to resolve whether function calls are external to a project. The core flow is: `SemanticCallRequest` (encapsulating call location and source context) → `create_cpp_semantic_resolver` (discovers compile_commands.json, resolves clangd executable, instantiates `ClangdResolver`) → `ClangdResolver` (manages clangd subprocess via LSP JSON-RPC protocol) → `classify_definition` (determines if definition is external). Key supporting functions handle file URI conversion for cross-platform compatibility, macro detection to avoid resolving preprocessor symbols, logical line reconstruction for backslash continuations, and clangd process lifecycle management. The `ClangdResolver` spawns a background thread reading clangd's stdout, bidirectionally communicates via stdin, tracks opened files, correlates requests by ID, and enforces a 30-second timeout for responses. Extensive test coverage validates compilation discovery, LSP parsing, macro detection, path encoding, and end-to-end clangd integration.
+- [[code/files/crates/gcode/src/index/semantic.rs|crates/gcode/src/index/semantic.rs]] - This file implements semantic call resolution for C/C++ indexing, centered on a `SemanticCallResolver` trait and a `ClangdResolver` backend that talks to `clangd` over JSON-RPC/LSP to map a call site to an external definition. `SemanticCallRequest`, `DefinitionLocation`, and `SemanticCallTarget` carry the input, resolved location, and output classification, while `create_cpp_semantic_resolver` wires everything together by finding `compile_commands.json`, locating `clangd`, and optionally failing fast when semantics are required. The remaining helpers handle command parsing, executable discovery, URI/path conversion, macro and source-line inspection, response parsing, and timeout handling, with tests covering those behaviors and the resolver integration.
 [crates/gcode/src/index/semantic.rs:15-23]
 [crates/gcode/src/index/semantic.rs:26-29]
 [crates/gcode/src/index/semantic.rs:31-36]
 [crates/gcode/src/index/semantic.rs:39-41]
 [crates/gcode/src/index/semantic.rs:43-71]
-- [[code/files/crates/gcode/src/index/walker.rs|crates/gcode/src/index/walker.rs]] - This file implements git-aware file discovery and classification for the gcode indexer. It discovers files eligible for indexing under a root directory while respecting .gitignore patterns, then classifies each file as either Ast (for syntactic analysis) or ContentOnly (for text search).
-
-The core discovery flow uses `discover_files_with_options` to walk the filesystem with configurable gitignore respect, yielding two result lists of file candidates. Each discovered file is classified via `classify_file`, which applies a layered set of heuristics: it checks for hidden paths against an allowlist (managed by `HiddenPathAllowlist`), detects auto-generated markers in JavaScript files, identifies minified bundles by file size and line characteristics, recognizes generated metadata patterns (wiki, build artifacts), and validates file extension and content safety.
-
-Helper predicates like `is_hidden_metadata_content_only`, `is_generated_js_bundle`, `looks_minified_js_bundle`, and `is_safe_text_file` work together to exclude generated or non-indexable content while preserving legitimate source code. The `HiddenPathAllowlist` class loads default allowlist patterns and project-specific overrides from `.gobby/gcode.json`, using glob pattern matching to determine which hidden files to include. Auxiliary utilities handle language detection, file prefix reading for marker scanning, and path visibility logic. The file also contains comprehensive test cases validating that discovery respects gitignore, classification handles various file types correctly, and special cases like generated wiki metadata and minified JS bundles are properly filtered.
-[crates/gcode/src/index/walker.rs:35-38]
-[crates/gcode/src/index/walker.rs:41-43]
-[crates/gcode/src/index/walker.rs:45-51]
-[crates/gcode/src/index/walker.rs:46-50]
-[crates/gcode/src/index/walker.rs:55-60]
+- [[code/files/crates/gcode/src/index/walker.rs|crates/gcode/src/index/walker.rs]] - Git-aware file discovery and classification entry point for the index walker, built on the `ignore` crate. It wires together discovery, hidden-file handling, generated-file checks, and file classification, while re-exporting the main discovery and classification APIs plus their option/type definitions. [crates/gcode/src/index/walker.rs:1-18]
 
 ## Components
 
@@ -664,15 +601,17 @@ Helper predicates like `is_hidden_metadata_content_only`, `is_generated_js_bundl
 - `45cbe260-2ed9-563d-9e08-950506b427fa`
 - `010132ff-e730-54ef-a005-f15a8a1ce9c8`
 - `f82e8aa9-4d3d-508d-9a91-81662aa61460`
-- `c63491bd-6e5a-5dab-adeb-5049e67503b5`
-- `9d568e28-9d31-598c-b189-1750a40d5ac2`
-- `a020d84d-57c1-56fc-a4a8-6cfd1bfe29f1`
-- `e8a63554-9bc6-5b69-9e77-8493f05d2479`
-- `75e296d5-1992-5a58-85a0-2472b4a4aff0`
-- `469316ad-457d-5d65-9541-1a724765b4bc`
-- `a5014def-f98c-5923-abaa-216d22db3a22`
-- `c4562978-6c37-5d1d-a1f3-93509666db9e`
-- `f864e9eb-ef9a-53cc-bc50-d64e949447db`
+- `de1fed24-e69f-5440-9cd1-7ef2467c9a64`
+- `a352da09-909e-5589-a05b-55a457160324`
+- `a19f009e-52da-58a3-b1cb-39e6460e52d0`
+- `97fb135c-6a68-5912-a7e9-0aa66b98b4a8`
+- `04eca584-270a-52c3-bb74-d229935f2cf0`
+- `3e65dc2a-6b89-5bd0-8fbc-514f60a3183a`
+- `9da8762f-e2aa-5293-a07c-adf715368e5b`
+- `168734ef-e080-5a59-ad13-fc034d74f44e`
+- `dc2ae90b-488c-5b30-8ee8-3a1de563a92e`
+- `6d79c8a1-1d74-5a85-97c7-5519eee8459a`
+- `14bc4b1f-8719-51b2-91c4-0ff446dd439e`
 - `bc988700-71a5-5773-9ba4-992db3c7e9ab`
 - `5812f687-c705-512d-9b61-0a67f0b75d18`
 - `59a940c5-8e00-5ced-9a83-db39df6bd55e`
@@ -743,59 +682,4 @@ Helper predicates like `is_hidden_metadata_content_only`, `is_generated_js_bundl
 - `28f40819-acd4-5df8-a3e5-2364b7507701`
 - `c7470037-d167-5fe4-9ae4-cdceddb1157f`
 - `595c299e-c54d-5587-ae28-0a789c21d026`
-- `69cfe4a5-80d2-57f4-aa68-395d80cebfd4`
-- `4748de9d-5491-57eb-b326-b6ad2d11ba46`
-- `da85b727-fa31-5519-8801-4f06e3d24f3b`
-- `3b285eea-d96e-5f35-9248-e17ad2f737bf`
-- `47390851-742b-5eb0-b55e-5ef0abf1ed42`
-- `ea8b8b11-3552-51c8-8938-c3cee3be607f`
-- `26923437-8608-5cf9-bb59-cbfb4d927ddc`
-- `a0063a2e-95ea-59c5-8f16-8356d37e46e2`
-- `0b88cb41-07fd-5a0a-a543-22790912c897`
-- `3557648e-a019-57c9-a9e0-8b5bc7980d5e`
-- `dc03a8f4-8f27-5898-a5d2-c99163111a4a`
-- `5ce009c8-0464-51ba-8c3f-a1e103137069`
-- `1c829310-9ad1-5ff4-999a-144f4c068f94`
-- `90bdece1-60bc-595d-939c-ed3b5adc18c6`
-- `a314e373-a29a-59a7-8a31-fd36d0ee77f5`
-- `ddb1b68e-e813-5aae-8846-7dffd00a5dcf`
-- `c52093f3-c1cb-52d8-9a45-387fe3e92fcc`
-- `80b69712-5867-5225-9a42-ac488f266cc5`
-- `2bbcbe91-2491-594a-8b36-8f902927df29`
-- `69260939-f520-573f-8754-e62e11bc4d25`
-- `48a5999b-b3a6-564c-9f79-f619aad46f00`
-- `72ce852a-cd0b-58b3-a6a3-120e7b5ca487`
-- `8318bbb3-6948-5a2e-8bf2-77fa5a9106eb`
-- `6ffb19bb-2dd5-5e60-bc21-0ef673affe0d`
-- `c48c8d73-4a4e-53ec-a431-0c4ab551fb08`
-- `6cfb259e-88fe-5cd5-8f07-9d1d937beafc`
-- `35a9da7f-ccf4-55b1-8420-1b81b750e70d`
-- `1290a317-e1b5-5ae1-9591-72bae183b995`
-- `9d2bd1ca-20e9-5109-8cc8-382095e793d9`
-- `1dfbfb1d-e01a-5383-955c-6b8d0ee22c03`
-- `05a0b07e-e66b-5235-9ef0-b08c23f899ca`
-- `a5b9a7b6-31d4-5066-af8e-231447281a69`
-- `04b03c7b-c55e-5fb1-8b00-ca1d09b5d824`
-- `4f32cb32-3983-5e2e-a133-2621571d3454`
-- `7520b232-4ec2-551e-827c-1239b0bae576`
-- `e6505c73-f69d-5454-b519-3e819caaa4cf`
-- `08d29d34-cb96-533b-8e47-3b058d4d4bf8`
-- `4042cde5-4beb-5122-a590-7e48a43d09b5`
-- `07a71ef5-4c54-5822-b4fb-2653002cec29`
-- `6c0f08de-e6c4-5b33-a8ca-002a4b4fe53f`
-- `365abe5e-24c8-557d-97b7-4c01f4c3463a`
-- `ecd69d6f-b2b0-5906-92de-344f4b5beca8`
-- `25b2fd3e-3e6e-56f4-bd19-4b088b6c15e0`
-- `685ba7af-8a9b-52b9-ac48-362104f0e044`
-- `c47755d6-e715-597e-94e8-8cdbb682a177`
-- `f44731a2-d1c3-59f9-bd27-e7bea963361f`
-- `3f5d47c8-48b1-51fa-8347-569529ec5d07`
-- `ed8fecda-00f7-5621-abfa-8817d9297112`
-- `d6c260a7-3e2b-5344-a333-f59672f1aa51`
-- `5e242768-9019-5c80-a76b-727f2584ea57`
-- `d3cbc94c-0d89-57a4-8b0a-797312c148e8`
-- `79191789-6434-53ff-814b-85d04c64d7ae`
-- `b90a4156-2aab-5583-910c-728f5cf0236c`
-- `028fe4bd-db40-553e-b5a7-ac83a4266eea`
-- `9ba94745-c010-5fd9-b1df-f5d86cf4f307`
 

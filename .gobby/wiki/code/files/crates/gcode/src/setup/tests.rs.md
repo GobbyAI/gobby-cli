@@ -38,7 +38,7 @@ Module: [[code/modules/crates/gcode/src/setup|crates/gcode/src/setup]]
 
 ## Purpose
 
-This file is the test suite for `gcode` standalone setup behavior. It checks that `GcodeStandaloneSetup` exposes the right public code-index objects and Postgres-backed contract, that its DDL and overwrite/reset SQL match the expected catalog rules, and that helper functions and request/status types handle identifier limits, timeouts, redaction, serialization, and destructive-Postgres safeguards correctly.
+This file is a test suite for `GcodeStandaloneSetup` and related setup utilities. It checks that the standalone setup targets the `public` schema, declares the expected code-indexing Postgres objects while excluding sensitive/internal ones, satisfies the `StandaloneSetup` contract, and emits DDL that matches the table/index contracts. It also verifies request/status serialization redaction, identifier quoting and URL timeout helpers, overwrite/reset SQL allowlisting, and destructive-Postgres guard behavior, with small helper functions used to normalize SQL, extract table columns, and apply cleanup/reset logic.
 [crates/gcode/src/setup/tests.rs:12-55]
 [crates/gcode/src/setup/tests.rs:58-84]
 [crates/gcode/src/setup/tests.rs:59]
@@ -102,23 +102,23 @@ This file is the test suite for `gcode` standalone setup behavior. It checks tha
 This test verifies that `quote_identifier` validates the raw input length (not the post-escaping length) when enforcing identifier length limits, allowing a 62-character identifier with a trailing quote character to pass validation even though escaping doubles the quote in the output. [crates/gcode/src/setup/tests.rs:324-329]
 - `overwrite_recreates_incompatible_code_index_and_preserves_sentinel_table` (function) component `overwrite_recreates_incompatible_code_index_and_preserves_sentinel_table [function]` (`5b29f6f8-b8fb-5aea-9096-ccb9e71da0c1`) lines 340-407 [crates/gcode/src/setup/tests.rs:340-407]
   - Signature: `fn overwrite_recreates_incompatible_code_index_and_preserves_sentinel_table() {`
-  - Purpose: Indexed function `overwrite_recreates_incompatible_code_index_and_preserves_sentinel_table` in `crates/gcode/src/setup/tests.rs`. [crates/gcode/src/setup/tests.rs:340-407]
+  - Purpose: This test seeds an incompatible 'public.code_symbols' table alongside a 'gobby_owned_sentinel' row, verifies standalone setup fails without 'overwrite_code_index', then confirms overwrite mode recreates the code index while preserving the sentinel table and its data. [crates/gcode/src/setup/tests.rs:340-407]
 - `destructive_postgres_test_allowed` (function) component `destructive_postgres_test_allowed [function]` (`a8708006-b143-57ac-8ea7-a7d766ad09ee`) lines 410-422 [crates/gcode/src/setup/tests.rs:410-422]
   - Signature: `fn destructive_postgres_test_allowed(database_url: &str) -> Result<(), String> {`
-  - Purpose: Indexed function `destructive_postgres_test_allowed` in `crates/gcode/src/setup/tests.rs`. [crates/gcode/src/setup/tests.rs:410-422]
+  - Purpose: Returns 'Ok(())' only when a destructive Postgres test override is enabled or the parsed database URL names a database ending in '_test'; otherwise it returns an error for parse failures, missing database names, or non-'_test' database names. [crates/gcode/src/setup/tests.rs:410-422]
 - `destructive_postgres_test_override_enabled` (function) component `destructive_postgres_test_override_enabled [function]` (`904f2572-f1c8-5101-8733-89e0659c09a4`) lines 424-428 [crates/gcode/src/setup/tests.rs:424-428]
   - Signature: `fn destructive_postgres_test_override_enabled() -> bool {`
-  - Purpose: Indexed function `destructive_postgres_test_override_enabled` in `crates/gcode/src/setup/tests.rs`. [crates/gcode/src/setup/tests.rs:424-428]
+  - Purpose: Returns 'true' only when the 'GCODE_POSTGRES_TEST_ALLOW_DESTRUCTIVE' environment variable is set to '1' or a case-insensitive 'true', and 'false' otherwise. [crates/gcode/src/setup/tests.rs:424-428]
 - `database_url_with_connect_timeout` (function) component `database_url_with_connect_timeout [function]` (`da5ff6a6-14ef-5c25-a891-84f4d333e60f`) lines 430-436 [crates/gcode/src/setup/tests.rs:430-436]
   - Signature: `fn database_url_with_connect_timeout(database_url: &str) -> String {`
-  - Purpose: Indexed function `database_url_with_connect_timeout` in `crates/gcode/src/setup/tests.rs`. [crates/gcode/src/setup/tests.rs:430-436]
+  - Purpose: Returns the input database URL unchanged if it already contains 'connect_timeout=', otherwise appends 'connect_timeout=5' using '?' or '&' depending on whether the URL already has query parameters. [crates/gcode/src/setup/tests.rs:430-436]
 - `cleanup_code_index_relations` (function) component `cleanup_code_index_relations [function]` (`40902f66-8497-5989-b560-fdf1f294aa39`) lines 438-443 [crates/gcode/src/setup/tests.rs:438-443]
   - Signature: `fn cleanup_code_index_relations(client: &mut Client) {`
-  - Purpose: Indexed function `cleanup_code_index_relations` in `crates/gcode/src/setup/tests.rs`. [crates/gcode/src/setup/tests.rs:438-443]
+  - Purpose: Resets all objects in the 'public' schema using the generated PostgreSQL overwrite-reset SQL, then executes it on the provided client to clean up code index relations. [crates/gcode/src/setup/tests.rs:438-443]
 - `destructive_postgres_guard_requires_test_database_name` (function) component `destructive_postgres_guard_requires_test_database_name [function]` (`67c8249e-ec85-5b2b-b71e-7f1e5073e638`) lines 447-458 [crates/gcode/src/setup/tests.rs:447-458]
   - Signature: `fn destructive_postgres_guard_requires_test_database_name() {`
-  - Purpose: Indexed function `destructive_postgres_guard_requires_test_database_name` in `crates/gcode/src/setup/tests.rs`. [crates/gcode/src/setup/tests.rs:447-458]
+  - Purpose: Verifies that destructive PostgreSQL operations are permitted for a '*_test' database URI but rejected for a non-test database name, producing an error that says it does not end with ''_test''. [crates/gcode/src/setup/tests.rs:447-458]
 - `destructive_postgres_guard_accepts_explicit_override_values` (function) component `destructive_postgres_guard_accepts_explicit_override_values [function]` (`4e5cf3ef-d937-5eb7-bfab-2b61c84a53eb`) lines 462-471 [crates/gcode/src/setup/tests.rs:462-471]
   - Signature: `fn destructive_postgres_guard_accepts_explicit_override_values() {`
-  - Purpose: Indexed function `destructive_postgres_guard_accepts_explicit_override_values` in `crates/gcode/src/setup/tests.rs`. [crates/gcode/src/setup/tests.rs:462-471]
+  - Purpose: Verifies that 'destructive_postgres_test_allowed("postgresql://localhost/gcode")' returns 'Ok' when 'GCODE_POSTGRES_TEST_ALLOW_DESTRUCTIVE' is explicitly set to '"1"', '"true"', or '"TRUE"', and returns 'Err' when it is set to '"0"'. [crates/gcode/src/setup/tests.rs:462-471]
 

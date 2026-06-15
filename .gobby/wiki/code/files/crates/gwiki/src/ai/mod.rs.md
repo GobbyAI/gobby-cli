@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gwiki/src/ai|crates/gwiki/src/ai]]
 
 ## Purpose
 
-Module declaration file for the `ai` package, exposing internal submodules for chunk handling, client integrations, and translation logic. [crates/gwiki/src/ai/mod.rs:1-4]
+Defines the `ai` module namespace for `gwiki` and exposes its internal `chunk`, `clients`, and `translate` submodules. [crates/gwiki/src/ai/mod.rs:1-4]
 
 ## API Symbols
 

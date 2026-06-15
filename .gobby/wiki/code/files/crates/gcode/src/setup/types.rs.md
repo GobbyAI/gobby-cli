@@ -26,7 +26,7 @@ Module: [[code/modules/crates/gcode/src/setup|crates/gcode/src/setup]]
 
 ## Purpose
 
-This file defines setup-time data types for standalone Gobby provisioning, centered on a `Redacted` newtype that wraps optional secrets and hides their contents in `Debug` output while still allowing basic access and cloning. It then uses that wrapper in `StandaloneSetupRequest`, which collects standalone mode, database, embedding, and FalkorDB/Qdrant configuration, with a constructor that fills defaults like `DEFAULT_SCHEMA` and leaves optional fields unset unless provided. The rest of the file defines status and error structs for reporting provisioning progress and outcomes, including service health, embedding configuration, individual failures, and the overall setup result.
+This file defines the setup data types for standalone GCode provisioning. It introduces a `Redacted` newtype around `Option<String>` that behaves like the inner value for basic queries and cloning, converts from `Option<String>`, and customizes `Debug` so present secrets print as `<redacted>` while `None` stays visible. It also defines `StandaloneSetupRequest`, which bundles standalone-mode flags, schema, optional embedding and vector-store settings, and setup-only credentials with serde skipping and redaction, plus a constructor that fills in defaults such as `DEFAULT_SCHEMA`. The remaining structs model setup outcomes and state: service provisioning status, embedding provider status, individual failures, and the overall `StandaloneSetupStatus` that collects created or skipped resources, failures, and optional service/embedding status.
 [crates/gcode/src/setup/types.rs:5]
 [crates/gcode/src/setup/types.rs:7-23]
 [crates/gcode/src/setup/types.rs:8-10]

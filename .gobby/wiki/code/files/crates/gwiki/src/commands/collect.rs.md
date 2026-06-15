@@ -17,7 +17,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-Implements the `collect` command for a wiki scope. `execute` resolves the requested scope, initializes the vault so required paths exist, creates a fresh `MemoryWikiStore`, captures a collect timestamp, and runs `collect_inbox_and_index` against the scope root to produce a `CollectReport`. `render` turns that report into a `CommandOutcome` with a ready status, the scope and root path, accepted/skipped counts, and the full report payload, emitting both JSON and human-readable text through the shared scoped outcome helper.
+Implements the `collect` command for a wiki scope. `execute` resolves the requested scope, ensures the vault exists, creates an in-memory wiki store, captures a collection timestamp, and runs collection over the scope root to gather inbox and index content into a `CollectReport`. `render` turns that report into a `CommandOutcome` with both JSON and human-readable text, including the scope, root path, and accepted/skipped item counts, then wraps it as the scoped command result.
 [crates/gwiki/src/commands/collect.rs:10-20]
 [crates/gwiki/src/commands/collect.rs:22-43]
 

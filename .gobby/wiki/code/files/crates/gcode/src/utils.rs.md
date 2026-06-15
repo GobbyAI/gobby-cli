@@ -23,7 +23,7 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-Provides small utility helpers for `gcode`: `api_key_fingerprint` turns an API key into a stable 16-character SHA-256 fingerprint, `short_id` trims identifiers to the first eight Unicode characters, and `i64_to_usize` converts signed counts to `usize` with contextual error reporting. The tests lock in truncation behavior, Unicode handling, and deterministic fingerprint output.
+Utility helpers for `gcode`: it provides `api_key_fingerprint` to produce a deterministic 16-character SHA-256-based fingerprint from an API key, `short_id` to return the first 8 Unicode scalar characters of an identifier, and `i64_to_usize` to convert signed integers to `usize` with column-aware error context on failure. The tests verify truncation behavior, Unicode handling, and that the API key fingerprint is stable.
 [crates/gcode/src/utils.rs:4-12]
 [crates/gcode/src/utils.rs:14-16]
 [crates/gcode/src/utils.rs:18-22]

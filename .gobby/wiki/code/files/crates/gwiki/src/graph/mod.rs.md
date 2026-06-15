@@ -66,7 +66,7 @@ Module: [[code/modules/crates/gwiki/src/graph|crates/gwiki/src/graph]]
 
 ## Purpose
 
-Defines the core wiki-graph model and export helpers for `gwiki`: typed records capture documents, sources, links, code edges, and the aggregated fact set; export structs turn those facts into serializable graph nodes, grouped edge categories, and Cypher statements; `GraphExportOptions` carries degraded-source state; `MemoryWikiGraph` stores facts in memory and derives backlinks, link suggestions, and related-path rankings from them; and the helper functions build scope-qualified IDs, normalize paths and labels for graph backends, and provide a few test constructors for documents and links.
+Defines the wiki graph core model and utility layer for `gwiki`: scoped document, source, link, edge, and export DTO types plus constants for the wiki-owned graph labels and relationship names. It also provides constructors and helpers to normalize paths, generate scoped IDs and Mermaid/Falkor-safe strings, build Cypher export statements and export nodes from facts, and query an in-memory `WikiGraphFacts` store for backlinks, link suggestions, and related paths.
 [crates/gwiki/src/graph/mod.rs:22-26]
 [crates/gwiki/src/graph/mod.rs:29-33]
 [crates/gwiki/src/graph/mod.rs:36-39]

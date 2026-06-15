@@ -20,7 +20,7 @@ Module: [[code/modules/crates/gsqz/src|crates/gsqz/src]]
 
 ## Purpose
 
-Command-line entry point for `gsqz`, a utility that runs compression workflows on either stdin or a shell command’s output for LLM use. It defines the CLI flags and subcommand dispatch, parses `--level` into a prose compression level with a standard default, loads and auto-initializes config on first run, then routes to `run_input_mode` or `run_output_mode`; the output path also strips ANSI escape codes before compression and can report stats or daemon-backed metrics.
+`main.rs` is the CLI entry point for `gsqz`, a tool that runs a command or reads stdin and compresses the resulting text for LLM use. `Cli` defines the top-level flags for config handling, stats, and subcommand dispatch; `parse_input_level` extracts a `--level` setting for stdin compression, defaulting to `Standard` when absent or invalid. `main` loads configuration, auto-initializes a default config file on first run, and routes execution to `run_input_mode` or `run_output_mode`, which either compress stdin directly or run a shell command, strip ANSI escape codes, and compress the cleaned output with optional config and daemon integration.
 [crates/gsqz/src/main.rs:25-48]
 [crates/gsqz/src/main.rs:50-65]
 [crates/gsqz/src/main.rs:67-139]

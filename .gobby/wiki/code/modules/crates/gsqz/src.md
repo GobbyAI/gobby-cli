@@ -273,11 +273,11 @@ Parent: [[code/modules/crates/gsqz|crates/gsqz]]
 
 ## Overview
 
-The `crates/gsqz/src` module implements `gsqz`, a command-output compression utility for making shell output more suitable for LLM consumption. Its CLI entry point defines flags and dispatch, parses compression level defaults, initializes and loads configuration, and routes either stdin or a command’s stripped-ANSI output through the compression path with optional stats and daemon reporting [crates/gsqz/src/main.rs:25-48] [crates/gsqz/src/main.rs:67-139] [crates/gsqz/src/main.rs:186-276]. Configuration is YAML-backed: `Config` combines global `Settings`, named pipelines, fallback steps, and excluded commands, while the built-in config and built-in exclusions provide first-run defaults and commands that should bypass compression  .
+The `crates/gsqz/src` module implements the `gsqz` CLI for turning command or stdin output into shorter LLM-oriented text. `main.rs` owns argument parsing, config initialization/loading, stdin mode, and command-output mode, including ANSI stripping before compression and optional daemon integration [crates/gsqz/src/main.rs:25-48] [crates/gsqz/src/main.rs:67-139] [crates/gsqz/src/main.rs:141-184] [crates/gsqz/src/main.rs:186-276]. Configuration is defined in `config.rs`, where `Config`, `Settings`, `Pipeline`, and `Step` describe pipeline matching, fallback behavior, excluded commands, default sizing, daemon URL overrides, and custom single-key YAML step deserialization [crates/gsqz/src/config.rs:26-35] [crates/gsqz/src/config.rs:38-47] [crates/gsqz/src/config.rs:49-58] [crates/gsqz/src/config.rs:60-62].
 
-The central flow lives in `Compressor`: it compiles configured pipelines, tracks fallback steps and exclusion regexes, uses helper logic to identify the real command token after shell environment assignments, and reports savings or passthrough status through `CompressionResult`  . Compound command handling is delegated to `split_compound`, which scans command text while tracking quote state and parenthesis depth so top-level `&&`, `||`, and `;` split into segments while pipelines and quoted or grouped operators remain intact . The compressor then applies matched pipeline steps or fallback behavior, including low-savings and exclusion passthrough handling [crates/gsqz/src/compressor.rs:14-34].
+The central compression flow lives in `compressor.rs`: it compiles configured regex pipelines, applies built-in and configured command exclusions, skips short output, selects a matching pipeline or fallback, executes steps, and records original/compressed sizes plus the strategy name [crates/gsqz/src/compressor.rs:7-12] [crates/gsqz/src/compressor.rs:14-34] [crates/gsqz/src/compressor.rs:36-40]. Compound command handling is delegated to `command_split.rs`, which splits only top-level `&&`, `||`, and `;` while preserving pipes, quoted operators, escapes inside double quotes, and parenthesized subexpressions, so exclusion and pipeline decisions can reason about individual command segments without corrupting shell syntax .
 
-The primitive submodule supplies the reusable transformations used by configured steps: filtering, replacement, deduplication, grouping, full-output matching, prose compression, and truncation are exported together for the compressor to compose [crates/gsqz/src/primitives/mod.rs:1-8] . These primitives generally operate over line vectors, such as regex-based filtering that skips invalid patterns, sequential replacement rules where earlier edits feed later ones, and adjacent-repeat deduplication with repetition markers [crates/gsqz/src/primitives/filter.rs:4-15] [crates/gsqz/src/primitives/replace.rs:7-30] [crates/gsqz/src/primitives/dedup.rs:9-45]. Daemon integration is isolated and feature-gated: when enabled it fetches compression settings, reports savings, and resolves daemon URLs with config and shared defaults; when disabled, the same APIs become no-ops or return `None`, keeping compression independent of daemon availability   [crates/gsqz/src/daemon.rs:62-76].
+Compression steps are implemented by the `primitives` child module, which provides focused reducers for filtering, grouping, truncation, adjacent deduplication, regex replacement, output matching, and prose compression [crates/gsqz/src/primitives/mod.rs:1-8]. These primitives remove known noise, summarize repeated structures, and preserve useful boundary content through operations such as invalid-regex-tolerant filtering, sequential replacements, section-aware truncation, and adjacent duplicate collapse [crates/gsqz/src/primitives/filter.rs:4-15] [crates/gsqz/src/primitives/replace.rs:7-30] [crates/gsqz/src/primitives/truncate.rs:5-27] [crates/gsqz/src/primitives/dedup.rs:9-45]. `daemon.rs` adds best-effort, feature-gated Gobby integration for fetching compression settings, reporting savings, and resolving daemon URLs from config or shared bootstrap/env sources, while compiling to no-op behavior when the feature is disabled [crates/gsqz/src/daemon.rs:11-23] [crates/gsqz/src/daemon.rs:26-28] [crates/gsqz/src/daemon.rs:32-43] [crates/gsqz/src/daemon.rs:46-53] [crates/gsqz/src/daemon.rs:62-76].
 
 ## Call Diagram
 
@@ -285,90 +285,88 @@ The primitive submodule supplies the reusable transformations used by configured
 sequenceDiagram
     participant m_001e5557_abaf_5197_b5ac_897f6a6ad6bc as test_no_match_returns_none &#91;function&#93;
     participant m_00260bd3_7b94_5050_87e1_8f9d438367cd as test_on_empty_pipeline_overrides_global &#91;function&#93;
+    participant m_00f6cfc1_fef1_593a_8493_dc9f7c660663 as test_dedup_mixed_groups &#91;function&#93;
+    participant m_0109c774_ada4_5242_9e1c_a990394e462a as test_filter_removes_none &#91;function&#93;
+    participant m_035c2b73_fa04_5199_8c00_6aa232714c78 as test_dedup_different &#91;function&#93;
     participant m_08488e18_4735_5d3a_82ee_5bf7d5f46d2e as test_test_failures_captures_fail_lines &#91;function&#93;
+    participant m_08ca6a31_4880_55be_9fb6_fb381b93f51b as test_filter_empty_patterns &#91;function&#93;
+    participant m_09f3939e_f6f8_5881_841b_e008c8f8a527 as test_multiple_matches_per_line &#91;function&#93;
+    participant m_0ca60299_497e_512f_92c6_30cf0e95505d as test_filter_removes_all &#91;function&#93;
+    participant m_0fd9af53_3342_5461_8496_8c5e90555988 as replace &#91;function&#93;
     participant m_10e4d22b_0b39_5ef2_a0a7_d255fa00f24e as test_good_compression_has_no_marker &#91;function&#93;
+    participant m_10e633e0_a676_5e67_9492_70f800426bca as test_empty_lines &#91;function&#93;
     participant m_1d237b01_a52b_586f_8553_230e2304698f as test_errors_warnings_only_errors &#91;function&#93;
+    participant m_1e9421bd_6c46_5041_ad56_06265939d31e as test_filter_invalid_regex_skipped &#91;function&#93;
     participant m_229484c2_5086_5772_b8fa_2bb9eee8dc2b as test_git_status_many_files_truncated &#91;function&#93;
     participant m_25be7ab4_68f7_58ee_b58b_f9777d5d464c as test_compound_falls_back_to_earlier_segment &#91;function&#93;
     participant m_266e5f64_482b_55c8_b7b5_9d67b90ef67a as test_fallback_used_when_no_pipeline_matches &#91;function&#93;
-    participant m_28637dfe_e848_5dd1_92f9_9d8d4f738053 as test_first_rule_wins &#91;function&#93;
-    participant m_32305f32_7ea1_5474_9381_c4024de06ea4 as test_low_savings_fallback_keeps_passthrough_marker &#91;function&#93;
-    participant m_32b44318_1705_5255_851a_70fd9d140cb5 as test_errors_warnings_grouping &#91;function&#93;
+    participant m_27c68279_175d_5913_a390_a0b61a6c6fb4 as test_dedup_single_line &#91;function&#93;
     participant m_32efbce0_fa3f_56fe_bc0f_f835fc242381 as check &#91;function&#93;
     participant m_3870c8ea_daae_5054_97ec_c28cb949a695 as group_git_status &#91;function&#93;
-    participant m_3d78adca_c8bc_599e_b8b2_3f9e690b7473 as test_git_status_is_excluded &#91;function&#93;
-    participant m_3e5399e7_8362_507e_b212_3deb4fd101b3 as test_lint_by_rule_no_rules &#91;function&#93;
-    participant m_4213e21c_d950_5fba_9fb1_4b502a646071 as test_git_diff_binary_collapsed &#91;function&#93;
-    participant m_42e7086f_b4c2_5a60_93c6_30c01c7dd3df as test_low_savings_pipeline_gets_marker &#91;function&#93;
-    participant m_4414b78e_2214_5ab9_a3d7_f34c460e7d82 as test_lint_by_rule_groups &#91;function&#93;
-    participant m_46a62353_d5f2_5d00_9101_be5762be5a46 as group_git_diff &#91;function&#93;
+    participant m_4690ffe8_c1e2_5c70_9a9d_d5cb2ff5919b as dedup &#91;function&#93;
     participant m_4d96cd0c_6125_510e_8a0c_be9ca181554f as test_config &#91;function&#93;
-    participant m_4defbe90_0372_54ee_930d_e20f4b9bc88c as test_pytest_failures_no_failures_delegates &#91;function&#93;
-    participant m_4e69c744_2191_55fe_9fbd_9a69144fd1fd as test_checks_full_blob_not_per_line &#91;function&#93;
-    participant m_66cb62e2_31a9_51ab_9093_71614885da97 as group_pytest_failures &#91;function&#93;
-    participant m_71101fc0_db55_51a8_91df_d07e93649273 as group_lint_by_rule &#91;function&#93;
+    participant m_51e5d958_0fc2_5f5a_99f8_d2dafac5d86a as rule &#91;function&#93;
     participant m_8918cfc8_ed39_5d2d_9338_b2c301df4d96 as group_errors_warnings &#91;function&#93;
+    participant m_8faa2138_fa37_53b4_b21b_2dc80b2babf5 as filter_lines &#91;function&#93;
     participant m_def86bb9_e734_5291_a0c0_043c8d384f39 as lines &#91;function&#93;
     participant m_efd37613_da20_5fbf_9c5d_1ab33c9053a6 as group_test_failures &#91;function&#93;
     m_001e5557_abaf_5197_b5ac_897f6a6ad6bc->>m_32efbce0_fa3f_56fe_bc0f_f835fc242381: calls
     m_001e5557_abaf_5197_b5ac_897f6a6ad6bc->>m_def86bb9_e734_5291_a0c0_043c8d384f39: calls
     m_00260bd3_7b94_5050_87e1_8f9d438367cd->>m_4d96cd0c_6125_510e_8a0c_be9ca181554f: calls
+    m_00f6cfc1_fef1_593a_8493_dc9f7c660663->>m_4690ffe8_c1e2_5c70_9a9d_d5cb2ff5919b: calls
+    m_0109c774_ada4_5242_9e1c_a990394e462a->>m_8faa2138_fa37_53b4_b21b_2dc80b2babf5: calls
+    m_035c2b73_fa04_5199_8c00_6aa232714c78->>m_4690ffe8_c1e2_5c70_9a9d_d5cb2ff5919b: calls
     m_08488e18_4735_5d3a_82ee_5bf7d5f46d2e->>m_efd37613_da20_5fbf_9c5d_1ab33c9053a6: calls
+    m_08ca6a31_4880_55be_9fb6_fb381b93f51b->>m_8faa2138_fa37_53b4_b21b_2dc80b2babf5: calls
+    m_09f3939e_f6f8_5881_841b_e008c8f8a527->>m_0fd9af53_3342_5461_8496_8c5e90555988: calls
+    m_09f3939e_f6f8_5881_841b_e008c8f8a527->>m_51e5d958_0fc2_5f5a_99f8_d2dafac5d86a: calls
+    m_0ca60299_497e_512f_92c6_30cf0e95505d->>m_8faa2138_fa37_53b4_b21b_2dc80b2babf5: calls
     m_10e4d22b_0b39_5ef2_a0a7_d255fa00f24e->>m_4d96cd0c_6125_510e_8a0c_be9ca181554f: calls
+    m_10e633e0_a676_5e67_9492_70f800426bca->>m_0fd9af53_3342_5461_8496_8c5e90555988: calls
+    m_10e633e0_a676_5e67_9492_70f800426bca->>m_51e5d958_0fc2_5f5a_99f8_d2dafac5d86a: calls
     m_1d237b01_a52b_586f_8553_230e2304698f->>m_8918cfc8_ed39_5d2d_9338_b2c301df4d96: calls
+    m_1e9421bd_6c46_5041_ad56_06265939d31e->>m_8faa2138_fa37_53b4_b21b_2dc80b2babf5: calls
     m_229484c2_5086_5772_b8fa_2bb9eee8dc2b->>m_3870c8ea_daae_5054_97ec_c28cb949a695: calls
     m_25be7ab4_68f7_58ee_b58b_f9777d5d464c->>m_4d96cd0c_6125_510e_8a0c_be9ca181554f: calls
     m_266e5f64_482b_55c8_b7b5_9d67b90ef67a->>m_4d96cd0c_6125_510e_8a0c_be9ca181554f: calls
-    m_28637dfe_e848_5dd1_92f9_9d8d4f738053->>m_32efbce0_fa3f_56fe_bc0f_f835fc242381: calls
-    m_28637dfe_e848_5dd1_92f9_9d8d4f738053->>m_def86bb9_e734_5291_a0c0_043c8d384f39: calls
-    m_32305f32_7ea1_5474_9381_c4024de06ea4->>m_4d96cd0c_6125_510e_8a0c_be9ca181554f: calls
-    m_32b44318_1705_5255_851a_70fd9d140cb5->>m_8918cfc8_ed39_5d2d_9338_b2c301df4d96: calls
-    m_3d78adca_c8bc_599e_b8b2_3f9e690b7473->>m_4d96cd0c_6125_510e_8a0c_be9ca181554f: calls
-    m_3e5399e7_8362_507e_b212_3deb4fd101b3->>m_71101fc0_db55_51a8_91df_d07e93649273: calls
-    m_4213e21c_d950_5fba_9fb1_4b502a646071->>m_46a62353_d5f2_5d00_9101_be5762be5a46: calls
-    m_42e7086f_b4c2_5a60_93c6_30c01c7dd3df->>m_4d96cd0c_6125_510e_8a0c_be9ca181554f: calls
-    m_4414b78e_2214_5ab9_a3d7_f34c460e7d82->>m_71101fc0_db55_51a8_91df_d07e93649273: calls
-    m_4defbe90_0372_54ee_930d_e20f4b9bc88c->>m_66cb62e2_31a9_51ab_9093_71614885da97: calls
-    m_4e69c744_2191_55fe_9fbd_9a69144fd1fd->>m_32efbce0_fa3f_56fe_bc0f_f835fc242381: calls
+    m_27c68279_175d_5913_a390_a0b61a6c6fb4->>m_4690ffe8_c1e2_5c70_9a9d_d5cb2ff5919b: calls
 ```
 
 ## Child Modules
 
-- [[code/modules/crates/gsqz/src/primitives|crates/gsqz/src/primitives]] - The `primitives` module is the line- and text-normalization toolbox for `gsqz`, re-exporting focused submodules for deduplication, filtering, grouping, full-output matching, prose compression, replacement, and truncation through its module declaration [crates/gsqz/src/primitives/mod.rs:1-8]. Most primitives operate on command output as `Vec<String>`: `filter_lines` removes lines matching valid regex patterns while silently skipping invalid ones [crates/gsqz/src/primitives/filter.rs:4-15], `replace` applies compiled regex replacement rules sequentially so earlier substitutions feed later rules [crates/gsqz/src/primitives/replace.rs:7-30], and `dedup` collapses only adjacent exact or number-normalized repeats with a repetition marker [crates/gsqz/src/primitives/dedup.rs:9-45].
+- [[code/modules/crates/gsqz/src/primitives|crates/gsqz/src/primitives]] - The `primitives` module is the core text-reduction toolkit for `gsqz`, exported as a collection of focused operations for deduplication, filtering, grouping, output matching, prose compression, replacement, and truncation [crates/gsqz/src/primitives/mod.rs:1-8]. Its line-oriented primitives either remove noise, summarize repeated structure, or preserve the most useful boundary content: `dedup` collapses only adjacent duplicate or number-normalized runs [crates/gsqz/src/primitives/dedup.rs:9-45], `filter_lines` drops lines matching any valid configured regex while ignoring invalid patterns [crates/gsqz/src/primitives/filter.rs:4-15], `replace` applies compiled regex replacement rules sequentially across every line [crates/gsqz/src/primitives/replace.rs:7-30], and `truncate` keeps head and tail lines or delegates to section-aware truncation when a marker is configured [crates/gsqz/src/primitives/truncate.rs:5-27].
 
-The higher-level output flows are handled by `group`, `truncate`, and `match_output`. `group_lines` is a dispatcher from mode names to specialized summarizers for git status, git diff, pytest failures, generic test failures, lint rules, path grouping, and error/warning aggregation, falling back to passthrough for unknown modes [crates/gsqz/src/primitives/group.rs:8-21]. `truncate` keeps configurable head and tail slices with an omission marker, or delegates to section-aware truncation when a marker regex is configured [crates/gsqz/src/primitives/truncate.rs:5-27] [crates/gsqz/src/primitives/truncate.rs:29-67]. `match_output::check` treats output as a single concatenated blob, evaluates rules in order, skips invalid regexes, honors optional `unless` suppressors, and returns the first matching message [crates/gsqz/src/primitives/match_output.rs:8-33].
+The module’s heavier summarization flow lives in `group.rs`, where `group_lines` dispatches by mode to specialized aggregators for git status, git diff, pytest failures, generic test failures, lint rules, extensions, directories, files, and error/warning logs [crates/gsqz/src/primitives/group.rs:8-21]. These helpers parse common CLI-output shapes into labeled counts and representative samples, with truncation when groups grow large [crates/gsqz/src/primitives/group.rs:28-79] [crates/gsqz/src/primitives/group.rs:99-183] [crates/gsqz/src/primitives/group.rs:187-243]. Separately, `match_output::check` treats the entire output as one blob, evaluates configured `MatchOutputRule`s in order, skips invalid regexes, honors optional `unless` blockers, and returns the first matching message [crates/gsqz/src/primitives/match_output.rs:8-33].
 
-`prose` complements the line-oriented primitives with document compression. It defines `Lite`, `Standard`, and `Aggressive` levels plus string parsing , then routes `compress_prose` through protected-region extraction, level-specific compression, and restoration so YAML frontmatter, fenced code blocks, inline code, URLs, XML tags, and file paths survive transformation [crates/gsqz/src/primitives/prose.rs:23-34] [crates/gsqz/src/primitives/prose.rs:50-100]. Together, these files collaborate as small composable passes: regex filtering and replacement clean raw lines, grouping and truncation reshape large outputs, dedup reduces repeated noise, match rules summarize full results, and prose compression handles narrative text without damaging structured regions.
+`prose.rs` handles document-style compression rather than line filtering: callers choose `Lite`, `Standard`, or `Aggressive` via `Level::from_str`, then `compress_prose` protects YAML frontmatter, code blocks, inline code, URLs, XML tags, and file paths before applying the selected compression strategy and restoring protected spans  [crates/gsqz/src/primitives/prose.rs:50-100]. Across the module, tests exercise empty inputs, invalid regex fallback, passthrough cases, truncation boundaries, preservation behavior, and mode-specific grouping, showing that these primitives are meant to compose safely in configurable output-squeezing pipelines  .
 
 ## Files
 
-- [[code/files/crates/gsqz/src/command_split.rs|crates/gsqz/src/command_split.rs]] - This file provides `split_compound`, a small parser that breaks a shell command string into trimmed top-level segments on `&&`, `||`, and `;` while leaving `|` pipelines intact and ignoring operators inside single quotes, double quotes, and parenthesized groups. It scans the input byte by byte, tracks quote state and parenthesis depth to decide when a separator is real, collects each segment, and falls back to returning the original command as a single element when nothing is split. The test module exercises the edge cases and core cases together: plain commands, each separator type, mixed operators, quoted and parenthesized operators, empty input, trailing operators, and whitespace trimming.
+- [[code/files/crates/gsqz/src/command_split.rs|crates/gsqz/src/command_split.rs]] - Implements `split_compound`, a shell-command splitter that breaks a command string into trimmed segments at top-level `&&`, `||`, and `;` delimiters while preserving quoted text, escaped characters in double quotes, nested parentheses, and pipe chains. If no split points are found, it returns the original command as a single-element vector. The test module exercises the splitter across plain commands, each supported operator, mixed operators, quoted and parenthesized subexpressions, empty input, trailing operators, and whitespace trimming.
 [crates/gsqz/src/command_split.rs:5-85]
 [crates/gsqz/src/command_split.rs:92-94]
 [crates/gsqz/src/command_split.rs:97-102]
 [crates/gsqz/src/command_split.rs:105-107]
 [crates/gsqz/src/command_split.rs:110-112]
-- [[code/files/crates/gsqz/src/compressor.rs|crates/gsqz/src/compressor.rs]] - This file implements the `gsqz` compression engine for command output. It defines `CompressionResult` for reporting the compressed text, size stats, savings, and passthrough classification; helper functions to identify the first real command token, skip shell environment assignments, and normalize command basenames; `CompiledPipeline` to hold precompiled config rules; and `Compressor`, which builds those pipelines, applies matching step sequences and fallback steps, honors excluded commands, and decides when to emit a low-savings marker or keep the original output unchanged.
+- [[code/files/crates/gsqz/src/compressor.rs|crates/gsqz/src/compressor.rs]] - Implements the `gsqz` text compressor: it decides when command output should be passed through, excluded, or compressed, then applies a regex-selected pipeline or fallback steps to shorten verbose output while tracking the original and compressed sizes. The file also includes helpers for parsing command tokens and shell-style basenames, plus the step executor that performs filtering, grouping, truncation, deduplication, replacement, and prose compression, with tests covering pipeline selection, exclusions, savings calculations, and empty-output fallback behavior.
 [crates/gsqz/src/compressor.rs:7-12]
 [crates/gsqz/src/compressor.rs:14-34]
 [crates/gsqz/src/compressor.rs:15-20]
 [crates/gsqz/src/compressor.rs:29-33]
 [crates/gsqz/src/compressor.rs:36-40]
-- [[code/files/crates/gsqz/src/config.rs|crates/gsqz/src/config.rs]] - This file defines the gsqz configuration model and its YAML deserialization/serialization behavior. `Config` ties together global `Settings`, a named pipeline map, fallback behavior, and excluded commands, while `DEFAULT_CONFIG_YAML` exposes the compiled-in config for initialization and `BUILTIN_EXCLUDED_COMMANDS` lists commands that should not be processed.
-
-`Settings` provides compression and daemon-related defaults, `Pipeline` describes a match pattern plus an ordered list of processing `Step`s, and `Fallback` supplies a default truncate-based recovery path when a pipeline has no steps. `Step` uses a custom serde visitor to decode single-key YAML maps into typed variants like filter, group, truncate, dedup, replace, match_output, and compress_prose, with dedicated argument structs and helper defaults supporting each operation.
+- [[code/files/crates/gsqz/src/config.rs|crates/gsqz/src/config.rs]] - Defines the gsqz configuration schema and its serde behavior. The file ties together top-level `Config`, `Settings`, `Pipeline`, and `Step` types, supplies defaults for output sizing and fallback truncation, and implements custom step deserialization from single-key YAML maps into the appropriate operation-specific argument structs.
 [crates/gsqz/src/config.rs:26-35]
 [crates/gsqz/src/config.rs:38-47]
 [crates/gsqz/src/config.rs:49-58]
 [crates/gsqz/src/config.rs:50-57]
 [crates/gsqz/src/config.rs:60-62]
-- [[code/files/crates/gsqz/src/daemon.rs|crates/gsqz/src/daemon.rs]] - This file provides feature-gated integration with the Gobby daemon for best-effort compression support: it can fetch output-compression settings from the daemon’s HTTP API, report compression savings back to an admin endpoint, and resolve the daemon URL from config or shared defaults. When the `gobby` feature is disabled, each API is replaced with a no-op or `None`-returning stub, and the tests verify URL pass-through, `${GOBBY_PORT}` expansion, and bootstrap-based resolution when env vars are absent.
+- [[code/files/crates/gsqz/src/daemon.rs|crates/gsqz/src/daemon.rs]] - This module provides best-effort integration with the Gobby daemon behind the `gobby` feature flag: it fetches compression settings from the daemon’s config endpoint, reports compression savings to an admin endpoint, and resolves the daemon base URL from either a config override with `${GOBBY_PORT}` expansion or a shared fallback resolver. When the feature is disabled, the same APIs degrade to no-ops that return `None` or do nothing, and the tests verify passthrough behavior, environment-variable expansion, and bootstrap-based URL resolution.
 [crates/gsqz/src/daemon.rs:11-23]
 [crates/gsqz/src/daemon.rs:26-28]
 [crates/gsqz/src/daemon.rs:32-43]
 [crates/gsqz/src/daemon.rs:46-53]
 [crates/gsqz/src/daemon.rs:62-76]
-- [[code/files/crates/gsqz/src/main.rs|crates/gsqz/src/main.rs]] - Command-line entry point for `gsqz`, a utility that runs compression workflows on either stdin or a shell command’s output for LLM use. It defines the CLI flags and subcommand dispatch, parses `--level` into a prose compression level with a standard default, loads and auto-initializes config on first run, then routes to `run_input_mode` or `run_output_mode`; the output path also strips ANSI escape codes before compression and can report stats or daemon-backed metrics.
+- [[code/files/crates/gsqz/src/main.rs|crates/gsqz/src/main.rs]] - `main.rs` is the CLI entry point for `gsqz`, a tool that runs a command or reads stdin and compresses the resulting text for LLM use. `Cli` defines the top-level flags for config handling, stats, and subcommand dispatch; `parse_input_level` extracts a `--level` setting for stdin compression, defaulting to `Standard` when absent or invalid. `main` loads configuration, auto-initializes a default config file on first run, and routes execution to `run_input_mode` or `run_output_mode`, which either compress stdin directly or run a shell command, strip ANSI escape codes, and compress the cleaned output with optional config and daemon integration.
 [crates/gsqz/src/main.rs:25-48]
 [crates/gsqz/src/main.rs:50-65]
 [crates/gsqz/src/main.rs:67-139]

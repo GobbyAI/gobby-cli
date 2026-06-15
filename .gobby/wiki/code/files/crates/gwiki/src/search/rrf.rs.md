@@ -22,7 +22,7 @@ Module: [[code/modules/crates/gwiki/src/search|crates/gwiki/src/search]]
 
 ## Purpose
 
-Implements reciprocal-rank fusion for wiki search results by combining BM25, semantic, and graph hit lists into a single `WikiSearchResponse`. `fuse_sources` first collects ranked fusion keys from each source, deduplicates hits in a `BTreeMap` keyed by canonical document identity, merges missing metadata across duplicate hits, then feeds the ranked key lists into the core RRF merge to assign final scores plus ordered source and explanation provenance; `ranked_keys` and `merge_hit_metadata` support that pipeline, while the tests verify duplicate coalescing, canonical page-key behavior, invalid-path rejection, and preservation of degradation metadata.
+Implements reciprocal-rank fusion for wiki search results by collecting BM25, semantic, and graph hits, deduplicating them by canonical fusion key, merging missing metadata across duplicate hits, and then assigning fused scores plus source and explanation provenance into a `WikiSearchResponse`, preserving any requested degradations and returning no results when `limit == 0`. The helper `ranked_keys` extracts fusion keys from ranked hit lists, `merge_hit_metadata` backfills incomplete result fields during deduplication, and the tests verify duplicate coalescing, canonical page-key behavior, and invalid-path rejection.
 [crates/gwiki/src/search/rrf.rs:8-92]
 [crates/gwiki/src/search/rrf.rs:94-96]
 [crates/gwiki/src/search/rrf.rs:98-108]

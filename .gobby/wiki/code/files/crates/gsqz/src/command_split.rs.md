@@ -28,7 +28,7 @@ Module: [[code/modules/crates/gsqz/src|crates/gsqz/src]]
 
 ## Purpose
 
-This file provides `split_compound`, a small parser that breaks a shell command string into trimmed top-level segments on `&&`, `||`, and `;` while leaving `|` pipelines intact and ignoring operators inside single quotes, double quotes, and parenthesized groups. It scans the input byte by byte, tracks quote state and parenthesis depth to decide when a separator is real, collects each segment, and falls back to returning the original command as a single element when nothing is split. The test module exercises the edge cases and core cases together: plain commands, each separator type, mixed operators, quoted and parenthesized operators, empty input, trailing operators, and whitespace trimming.
+Implements `split_compound`, a shell-command splitter that breaks a command string into trimmed segments at top-level `&&`, `||`, and `;` delimiters while preserving quoted text, escaped characters in double quotes, nested parentheses, and pipe chains. If no split points are found, it returns the original command as a single-element vector. The test module exercises the splitter across plain commands, each supported operator, mixed operators, quoted and parenthesized subexpressions, empty input, trailing operators, and whitespace trimming.
 [crates/gsqz/src/command_split.rs:5-85]
 [crates/gsqz/src/command_split.rs:92-94]
 [crates/gsqz/src/command_split.rs:97-102]

@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcode/assets/import_roots|crates/gcode/assets/impo
 
 ## Purpose
 
-This file is a JSON configuration that maps Ruby require paths to their root module namespaces. It contains entries for common Ruby standard library modules (json, fileutils, net/http, net/https) and third-party gems (faraday, nokogiri, rspec and its submodules), each paired with their corresponding top-level constant names. The mapping enables gcode to resolve which root module a given Ruby require statement belongs to, supporting code analysis and import tracking for Ruby projects.
+This JSON file maps Ruby `require` roots to the top-level constants they introduce, giving the importer a lookup table for resolving common libraries. It groups related paths to shared constants where needed, such as `net/http` and `net/https` both mapping to `Net`, and the various RSpec entries mapping to `RSpec`, while also covering standalone roots like `json`, `fileutils`, `faraday`, and `nokogiri`.
 [crates/gcode/assets/import_roots/ruby_require_roots.json:2]
 [crates/gcode/assets/import_roots/ruby_require_roots.json:3]
 [crates/gcode/assets/import_roots/ruby_require_roots.json:4]

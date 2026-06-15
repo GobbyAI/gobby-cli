@@ -7,37 +7,8 @@
   "root": "/Users/josh/Projects/gobby-cli/.gobby/wiki",
   "stale_pages": [],
   "stale_citations": [],
-  "uncited_sources": [
-    {
-      "source_id": "src-495a2039993adc47-https-en-wikipedia-org-wiki-retrieval-augmented",
-      "path": "raw/src-495a2039993adc47-https-en-wikipedia-org-wiki-retrieval-augmented.md",
-      "location": "https://en.wikipedia.org/wiki/Retrieval-augmented_generation"
-    },
-    {
-      "source_id": "src-d0009cf2de348320-users-josh-projects-gobby-cli-readme-md",
-      "path": "raw/src-d0009cf2de348320-users-josh-projects-gobby-cli-readme-md.md",
-      "location": "/Users/josh/Projects/gobby-cli/README.md"
-    },
-    {
-      "source_id": "src-a23d7939da1b175c-private-tmp-wp3-deposit-note-md",
-      "path": "raw/src-a23d7939da1b175c-private-tmp-wp3-deposit-note-md.md",
-      "location": "/private/tmp/wp3-deposit-note.md"
-    }
-  ],
-  "broken_links": [
-    {
-      "path": "code/files/crates/gwiki/src/compile/tests.rs.md",
-      "line": 75,
-      "target": "knowledge/topics/exact",
-      "kind": "wikilink"
-    },
-    {
-      "path": "code/files/crates/gwiki/src/synthesis.rs.md",
-      "line": 130,
-      "target": "relative_path",
-      "kind": "wikilink"
-    }
-  ],
+  "uncited_sources": [],
+  "broken_links": [],
   "duplicate_concepts": [],
   "uncompiled_sources": [
     {

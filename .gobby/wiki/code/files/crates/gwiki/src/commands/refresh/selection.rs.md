@@ -31,7 +31,7 @@ Module: [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/comman
 
 ## Purpose
 
-This file contains the refresh-selection logic for wiki sources. It builds a `Selection` by either scanning all source records or resolving an explicit list of source IDs, deduplicates requested IDs, and splits results into planned refreshes, skipped sources, and failures based on each record’s replay contract and `RefreshPlan::from_record`. It also supports change-triggered refreshes by finding markdown-capable local-file sources in affected pages, returning the source IDs to refresh and the page paths to mark stale. The remaining helpers classify records by replay kind and source kind, detect HTTP URLs and local-file replays, and convert selection or planning errors into structured refresh failures.
+This file builds refresh selections for wiki sources and turns source records into refreshable plans, skipped items, or structured failures. `select_sources` handles explicit source ID requests or full scans, uses `replay_kind` and `RefreshPlan::from_record` to decide what can be refreshed, and reports missing, unsupported, or invalid sources with consistent error objects. The change-triggered path uses `select_change_triggered_refresh` and `ChangeTriggeredSelection` to collect markdown-backed local-file sources from affected pages, while helpers like `is_markdown_replay`, `is_url_source`, `refresh_url`, and the failure mappers centralize source classification and error formatting.
 [crates/gwiki/src/commands/refresh/selection.rs:4-75]
 [crates/gwiki/src/commands/refresh/selection.rs:79-82]
 [crates/gwiki/src/commands/refresh/selection.rs:85-112]

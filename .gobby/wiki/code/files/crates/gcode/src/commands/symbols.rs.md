@@ -39,25 +39,7 @@ Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Purpose
 
-This file implements symbol querying and outline commands for a code index. It provides:
-
-**Core Commands:**
-- `outline` queries visible symbols for a file, reports size savings vs full file, and emits results as JSON or rendered text outline
-- `symbol`/`symbols` retrieve and display specific symbols by ID from the database
-- `kinds` lists available symbol kinds for the project
-- `tree` displays the visible file tree with language and symbol counts
-
-**Outline Rendering:**
-The outline system computes symbol hierarchies (via `outline_depth` following parent chains) and formats them with proper indentation using `render_outline_text` and `format_outline_text_line`.
-
-**AI Summarization:**
-When enabled, `summarize_outline` invokes AI generation by building a prompt (`outline_summary_prompt`) from file content and symbol inventory, delegating to `summarize_outline_with`, which coordinates with an `AiContext` resolved from Postgres-backed config (`resolve_outline_ai_context`). Falls back to AST-based rendering when summarization unavailable or file exceeds `OUTLINE_SUMMARY_MAX_BYTES` (1 MiB).
-
-**Diagnostics:**
-`outline_missing_diagnostic` and `unsupported_file_type_diagnostic` provide context-sensitive messages for why symbols are missing or unavailable.
-
-**Format Support:**
-All commands support JSON and text output modes, with optional verbose details and file path/byte-range metadata.
+This file implements the gcode commands for inspecting project symbols and file structure, centered on `outline` plus related `symbol`, `symbols`, `kinds`, and `tree` entry points. It normalizes paths, queries the read-only database for visible symbols or file metadata, emits context-sensitive diagnostics when files are missing or unsupported, and formats results as either JSON or human-readable text. The outline path can optionally generate an AI summary for small project files by building a prompt from the file, symbols, and source, otherwise it falls back to an indented AST outline rendered from parent-child symbol depth. Helper functions handle line formatting, depth calculation, tree grouping by directory, AI context resolution, and unsupported-file diagnostics, with tests covering formatting, fallback, and summary behavior.
 [crates/gcode/src/commands/symbols.rs:21-78]
 [crates/gcode/src/commands/symbols.rs:80-103]
 [crates/gcode/src/commands/symbols.rs:105-126]
@@ -137,5 +119,5 @@ All commands support JSON and text output modes, with optional verbose details a
   - Purpose: Constructs three file-metadata JSON entries and asserts that `format_tree_text` renders them as a directory-grouped tree rooted at `.`, with each file listed under its parent directory and annotated with language and symbol count. [crates/gcode/src/commands/symbols.rs:534-557]
 - `tree_text_treats_absolute_root_files_as_root_group` (function) component `tree_text_treats_absolute_root_files_as_root_group [function]` (`a74c1fe5-3e4d-53f8-a764-9aeaf39d607a`) lines 560-568 [crates/gcode/src/commands/symbols.rs:560-568]
   - Signature: `fn tree_text_treats_absolute_root_files_as_root_group() {`
-  - Purpose: Indexed function `tree_text_treats_absolute_root_files_as_root_group` in `crates/gcode/src/commands/symbols.rs`. [crates/gcode/src/commands/symbols.rs:560-568]
+  - Purpose: Verifies that 'format_tree_text' renders an absolute root file path like '"/lib.rs"' under the root group, producing '".\n lib.rs [rust] (1 symbols)"'. [crates/gcode/src/commands/symbols.rs:560-568]
 

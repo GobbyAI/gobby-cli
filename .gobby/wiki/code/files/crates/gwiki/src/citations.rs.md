@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-This file filters source manifest entries by vault-relative or absolute paths and renders them into human-readable citation strings. `source_records_for_paths` loads the manifest and selects matching `SourceRecord`s, `source_record_matches_path` handles normalized path comparison, and `render_source_citations` maps the selected records through `render_source_citation` to produce the final list. The renderer assembles each citation from the record’s primary identifier, optional source location, kind, fetched timestamp, license, and content hash, while `join_citation_parts` keeps the output punctuated cleanly without duplicating punctuation. The tests verify citation formatting, punctuation handling, and that locations are not repeated when already used as the primary citation.
+Builds formatted source citations from a vault’s source manifest. `render_source_citations` reads matching `SourceRecord`s via `source_records_for_paths`, `source_record_matches_path` normalizes absolute and vault-relative path comparisons, and `render_source_citation` assembles each record’s citation text from its primary identifier plus source, kind, fetched time, optional license, and hash using `join_citation_parts` to keep punctuation clean; the tests verify formatting, punctuation handling, and avoiding duplicated paths.
 [crates/gwiki/src/citations.rs:6-14]
 [crates/gwiki/src/citations.rs:16-35]
 [crates/gwiki/src/citations.rs:37-46]

@@ -36,7 +36,9 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-This file parses a Markdown document into a structured domain record for indexing: it extracts frontmatter, wiki links, headings, and content chunks for a given path, and wraps frontmatter or I/O failures in a single `MarkdownParseError`. The helper types and functions work together in a pipeline: fence detection keeps heading scanning out of code blocks, ATX heading parsing normalizes heading text and hierarchy paths, section ranges are tracked as byte offsets, and chunk building turns the body into ordered indexed spans tied to file path and heading metadata. The included tests verify heading range assignment, code-fence exclusion, read-only file parsing, and ATX heading trimming behavior.
+This file parses Markdown wiki pages into an indexed domain record. It defines `MarkdownHeading` and `MarkdownDomainRecord` to capture the document structure, content offsets, links, and chunks, and wraps frontmatter and I/O failures in `MarkdownParseError` for uniform propagation.
+
+The parsing flow starts with `parse_markdown` and `parse_index_file`, which read a page, extract frontmatter, links, and the body start, then derive headings and chunk ranges from the markdown body. Helpers like `markdown_fence_start` and `markdown_fence_closes` detect fenced code blocks so heading scanning can ignore code, while `parse_atx_heading` and `strip_atx_closing_sequence` normalize ATX headings. `extract_headings`, `build_chunks`, and `push_chunk` then turn the body into ordered heading and chunk metadata with byte ranges and heading paths, and the tests verify range calculation, fence handling, read-only parsing, and heading text normalization.
 [crates/gwiki/src/markdown.rs:11-19]
 [crates/gwiki/src/markdown.rs:22-29]
 [crates/gwiki/src/markdown.rs:32-35]

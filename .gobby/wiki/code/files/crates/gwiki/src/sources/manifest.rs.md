@@ -22,7 +22,7 @@ Module: [[code/modules/crates/gwiki/src/sources|crates/gwiki/src/sources]]
 
 ## Purpose
 
-`manifest.rs` manages the wiki vault’s source manifest as a persisted list of `SourceRecord` entries. It can read the manifest from the index file by scanning lines for generated source markers and deserializing the embedded JSON, or return an empty manifest when the file is missing. The registration methods turn `SourceDraft`s into records, compute or reuse content hashes, and deduplicate by canonical location plus content hash before writing changes back. Updates, removals, and writes all go through a manifest lock so the file is rewritten atomically while preserving non-generated prefix/suffix content around the rendered manifest block. The lock helpers and `SourceRecordParts` support that flow by coordinating exclusive access, retry timing, and record decomposition for persistence.
+Maintains the vault’s source manifest in `raw/INDEX.md`: it loads existing `SourceRecord` entries from `gwiki`-marked JSON lines, registers new `SourceDraft` inputs by hashing and deduplicating them against canonical location and content, and persists the manifest back as a generated block while preserving surrounding user content. The file also provides the manifest lock and timeout logic to make reads, writes, removals, and updates safe under concurrent access, plus the `SourceRecordParts` helper used to assemble stored records.
 [crates/gwiki/src/sources/manifest.rs:23-25]
 [crates/gwiki/src/sources/manifest.rs:27-213]
 [crates/gwiki/src/sources/manifest.rs:28-66]
@@ -36,7 +36,7 @@ Module: [[code/modules/crates/gwiki/src/sources|crates/gwiki/src/sources]]
   - Purpose: `SourceManifest` is a public struct that encapsulates a collection of `SourceRecord` entries in a vector. [crates/gwiki/src/sources/manifest.rs:23-25]
 - `SourceManifest` (class) component `SourceManifest [class]` (`0ba6eb85-a319-5ace-afbc-8150a665165f`) lines 27-213 [crates/gwiki/src/sources/manifest.rs:27-213]
   - Signature: `impl SourceManifest {`
-  - Purpose: Indexed class `SourceManifest` in `crates/gwiki/src/sources/manifest.rs`. [crates/gwiki/src/sources/manifest.rs:27-213]
+  - Purpose: 'SourceManifest' is a vault-scoped manifest of source records that can load existing indexed entries from disk and register new 'SourceDraft' inputs by computing a content hash and persisting them as 'SourceRecord's. [crates/gwiki/src/sources/manifest.rs:27-213]
 - `SourceManifest.read` (method) component `SourceManifest.read [method]` (`21efa115-c306-574d-a89a-dd384f131a47`) lines 28-66 [crates/gwiki/src/sources/manifest.rs:28-66]
   - Signature: `pub fn read(vault_root: &Path) -> Result<Self, WikiError> {`
   - Purpose: This method reads a vault index file and deserializes a collection of source records by extracting and parsing JSON entries delimited by markers from each line, returning a default instance if the file is absent. [crates/gwiki/src/sources/manifest.rs:28-66]
@@ -66,20 +66,20 @@ Module: [[code/modules/crates/gwiki/src/sources|crates/gwiki/src/sources]]
   - Purpose: Acquires a manifest lock, reads the SourceManifest, applies a mutation closure, and conditionally persists changes to disk if the closure returns true. [crates/gwiki/src/sources/manifest.rs:197-208]
 - `SourceManifest.index_path` (method) component `SourceManifest.index_path [method]` (`2dc6ff46-1f6f-5b0b-a679-b845877e7cde`) lines 210-212 [crates/gwiki/src/sources/manifest.rs:210-212]
   - Signature: `pub fn index_path(vault_root: &Path) -> PathBuf {`
-  - Purpose: Indexed method `SourceManifest.index_path` in `crates/gwiki/src/sources/manifest.rs`. [crates/gwiki/src/sources/manifest.rs:210-212]
+  - Purpose: 'index_path' returns the path to the vault’s raw index file by appending 'raw/INDEX.md' to the given 'vault_root'. [crates/gwiki/src/sources/manifest.rs:210-212]
 - `with_manifest_lock` (function) component `with_manifest_lock [function]` (`dcab3658-49b7-53f5-8248-d07e6a9f3e35`) lines 215-253 [crates/gwiki/src/sources/manifest.rs:215-253]
   - Signature: `fn with_manifest_lock<T>(`
-  - Purpose: Indexed function `with_manifest_lock` in `crates/gwiki/src/sources/manifest.rs`. [crates/gwiki/src/sources/manifest.rs:215-253]
+  - Purpose: 'with_manifest_lock' creates and locks '.gwiki/source-manifest.lock' under 'vault_root', runs the provided closure while holding that file lock, then unlocks the file and returns either the closure result or any I/O error encountered while managing the lock. [crates/gwiki/src/sources/manifest.rs:215-253]
 - `lock_source_manifest` (function) component `lock_source_manifest [function]` (`1fe0585a-5198-590d-b63c-0fe3dc6d0c88`) lines 255-285 [crates/gwiki/src/sources/manifest.rs:255-285]
   - Signature: `fn lock_source_manifest(lock: &File, lock_path: &Path) -> Result<(), WikiError> {`
-  - Purpose: Indexed function `lock_source_manifest` in `crates/gwiki/src/sources/manifest.rs`. [crates/gwiki/src/sources/manifest.rs:255-285]
+  - Purpose: Attempts to acquire an exclusive file lock on 'lock' by retrying until 'source_manifest_lock_timeout()' expires, returning 'Ok(())' on success or a 'WikiError::Io' for timeout or any other locking error. [crates/gwiki/src/sources/manifest.rs:255-285]
 - `try_lock_exclusive` (function) component `try_lock_exclusive [function]` (`bb5c9d2b-b880-56ce-9d80-142eeb0eb048`) lines 287-291 [crates/gwiki/src/sources/manifest.rs:287-291]
   - Signature: `fn try_lock_exclusive(lock: &File) -> Result<(), fs4::TryLockError> {`
-  - Purpose: Indexed function `try_lock_exclusive` in `crates/gwiki/src/sources/manifest.rs`. [crates/gwiki/src/sources/manifest.rs:287-291]
+  - Purpose: Attempts to acquire a non-blocking exclusive file lock on 'lock' via 'fs4::FileExt::try_lock', returning 'Ok(())' on success or 'fs4::TryLockError' if the lock cannot be obtained. [crates/gwiki/src/sources/manifest.rs:287-291]
 - `source_manifest_lock_timeout` (function) component `source_manifest_lock_timeout [function]` (`11efb02f-d9a8-57e5-9544-9e2d23c9ee47`) lines 293-300 [crates/gwiki/src/sources/manifest.rs:293-300]
   - Signature: `fn source_manifest_lock_timeout() -> Duration {`
-  - Purpose: Indexed function `source_manifest_lock_timeout` in `crates/gwiki/src/sources/manifest.rs`. [crates/gwiki/src/sources/manifest.rs:293-300]
+  - Purpose: Returns a 'Duration' parsed from the 'SOURCE_MANIFEST_LOCK_TIMEOUT_ENV' environment variable as a positive 'u64' millisecond value, or falls back to 'DEFAULT_SOURCE_MANIFEST_LOCK_TIMEOUT' if the variable is unset, invalid, or non-positive. [crates/gwiki/src/sources/manifest.rs:293-300]
 - `SourceRecordParts` (class) component `SourceRecordParts [class]` (`c60f671f-3407-5aff-93d4-a72477521cca`) lines 302-311 [crates/gwiki/src/sources/manifest.rs:302-311]
   - Signature: `struct SourceRecordParts {`
-  - Purpose: Indexed class `SourceRecordParts` in `crates/gwiki/src/sources/manifest.rs`. [crates/gwiki/src/sources/manifest.rs:302-311]
+  - Purpose: 'SourceRecordParts' is a data-only Rust struct that captures the metadata for a source record, including its location, kind, fetch timestamp, optional title/citation/license, ingestion method, and compile status. [crates/gwiki/src/sources/manifest.rs:302-311]
 

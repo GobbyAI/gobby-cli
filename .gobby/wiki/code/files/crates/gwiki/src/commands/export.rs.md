@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-Implements the wiki export command by resolving the requested scope, running the export against that scope’s root, and packaging the result into a command outcome. It converts the export output into JSON for structured payload data, while also building a human-readable summary that includes the resolved scope and exported artifact paths. [crates/gwiki/src/commands/export.rs:4-30]
+Implements the `export` command entry point: it resolves the selected wiki scope, runs the export against that root, and packages the result into an `ExportOutput` plus a human-readable status message. The pieces work together by deriving the scope identity for output, serializing the export result to JSON for the command payload, collecting artifact file paths for the summary text, and returning a scoped `CommandOutcome`. [crates/gwiki/src/commands/export.rs:4-30]
 
 ## API Symbols
 

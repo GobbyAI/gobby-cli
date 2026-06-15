@@ -21,7 +21,7 @@ Module: [[code/modules/crates/gcode/src/setup|crates/gcode/src/setup]]
 
 ## Purpose
 
-This file defines `GcodeStandaloneSetup`, a schema-aware PostgreSQL setup helper for gcode. It builds a list of schema-qualified DDL objects for the `pg_search` extension and the code-indexing tables, wraps them as `OwnedObject`s, and implements `StandaloneSetup` so those objects can be created sequentially with `SetupContext`, producing a `SetupReport` that records successes, failures, and skipped follow-on objects.
+This file defines `GcodeStandaloneSetup`, a schema-aware installer for the gcode database schema, and a small `PostgresObjectDefinition` helper for pairing object names with their SQL DDL. It builds the schema-qualified PostgreSQL objects needed for code indexing, including the `pg_search` extension and the core tables, then implements `StandaloneSetup` to turn those definitions into owned objects and create them sequentially while collecting a `SetupReport` that records successes, failures, and skipped follow-on objects; `owned_object` and `execute_postgres_ddl` provide the closure-based execution path against the PostgreSQL connection in the setup context.
 [crates/gcode/src/setup/ddl.rs:8-10]
 [crates/gcode/src/setup/ddl.rs:13-16]
 [crates/gcode/src/setup/ddl.rs:18-279]

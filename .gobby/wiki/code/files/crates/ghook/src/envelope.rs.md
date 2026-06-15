@@ -23,7 +23,7 @@ Module: [[code/modules/crates/ghook/src|crates/ghook/src]]
 
 ## Purpose
 
-Defines the v1 inbox webhook envelope that `ghook` enqueues and the daemon later replays, with a frozen `SCHEMA_VERSION` and a serialized `Envelope` struct carrying enqueue time, critical flag, hook type, raw `input_data`, source, and ordered headers. `Envelope::new` fills in the schema version and current UTC RFC3339 timestamp, while the test helpers build sample envelopes and verify JSON serialization and Draft 7 schema conformance, including the behavior of present and absent headers.
+Defines the v1 inbox envelope format that ghook enqueues and the daemon replays, with a fixed schema version, enqueue timestamp, priority flag, hook type, raw JSON input, source, and ordered headers. `Envelope::new` builds instances with the current UTC RFC3339 timestamp and constant schema version, while the test module checks serialization and schema validation, including correct handling of optional headers as an omitted object rather than empty strings.
 [crates/ghook/src/envelope.rs:24-32]
 [crates/ghook/src/envelope.rs:34-52]
 [crates/ghook/src/envelope.rs:35-51]

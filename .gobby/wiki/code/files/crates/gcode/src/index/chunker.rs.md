@@ -18,7 +18,7 @@ Module: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 
 ## Purpose
 
-This module implements line-based content chunking for full-text search indexing. chunk_file_content splits UTF-8 file content into overlapping 100-line chunks (with 10-line overlap) and wraps each in a ContentChunk object containing project identifier, file path, line ranges, language, and timestamp. The epoch_secs_str utility provides current Unix timestamps for chunk metadata. A test function verifies the module maintains intentional independence from gobby_core's generic byte-range Chunk primitives, since gcode needs domain-specific line-based records and derives state from PostgreSQL content hashes rather than core IndexEvent snapshots. This separation keeps the indexing abstraction layers cleanly isolated.
+This file implements gcode’s content chunker for full-text indexing: it splits UTF-8 file bytes into 100-line chunks with 10-line overlap, skips blank chunks, and builds `ContentChunk` records with project/file identifiers, line ranges, language, content, and creation timestamp. The helper `epoch_secs_str` supplies the current Unix time as a string for those records, and the test verifies the module stays gcode-owned by keeping the documented `ContentChunk`-based design rather than importing the generic core indexing types.
 [crates/gcode/src/index/chunker.rs:19-62]
 [crates/gcode/src/index/chunker.rs:64-72]
 [crates/gcode/src/index/chunker.rs:77-90]

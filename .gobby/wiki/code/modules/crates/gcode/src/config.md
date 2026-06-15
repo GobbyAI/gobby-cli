@@ -10,31 +10,31 @@ provenance:
   - 51-53
   - '55'
   - 58-63
-  - 65-110
-  - 112-116
-  - 119-122
-  - 124-134
-  - '136'
-  - 138-146
-  - 150-173
-  - 176-185
-  - 188-191
-  - 194-201
-  - 204-211
-  - 213-317
-  - 319-372
-  - 374-428
-  - 430-438
-  - 440-448
-  - 450-458
-  - 460-491
-  - 493-500
-  - 505-529
-  - 531-533
-  - 541-544
-  - 546-582
-  - 591-593
-  - 595-603
+  - 65-128
+  - 130-134
+  - 137-140
+  - 142-152
+  - '154'
+  - 156-164
+  - 168-191
+  - 194-203
+  - 206-209
+  - 212-219
+  - 222-229
+  - 231-335
+  - 337-390
+  - 392-446
+  - 448-456
+  - 458-466
+  - 468-476
+  - 478-509
+  - 511-518
+  - 523-547
+  - 549-551
+  - 559-562
+  - 564-600
+  - 609-611
+  - 613-621
 - file: crates/gcode/src/config/services.rs
   ranges:
   - 20-22
@@ -128,11 +128,11 @@ Parent: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-The config module is responsible for building gcode’s runtime configuration from layered sources: bootstrap.yaml, the PostgreSQL hub, config stores, standalone service config, environment variables, and secret references. Its context layer defines the public configuration shapes for FalkorDB, Qdrant, embeddings, vector settings, indexing, and service selection, then drives resolution through Context and project identity helpers; the module-level docs explicitly describe the flow as “bootstrap.yaml → PostgreSQL hub → config_store → service configs” with `$secret:NAME` and `${VAR}` expansion . Core types and constants for FalkorDB, Qdrant, embeddings, graph naming, env vars, config keys, and service selection are centralized in context.rs .
+The config module is responsible for turning bootstrap, database, config-store, standalone file, environment, Git, filesystem, and `.gobby` metadata into the runtime configuration used by `gcode`. Its central `context.rs` types define the runtime-facing shapes for FalkorDB, Qdrant, embeddings, code-vector settings, indexing settings, and service-selection presets, including constants for graph names, collection prefixes, environment keys, and config-store keys . `Context` resolution then combines those service settings with project identity and project-root discovery, including helpers for isolated overlays, parent roots, normalized IDs, project-name lookup, and absolute-path fallbacks.
 
-The services layer supplies the source abstraction that makes those resolution flows composable. ServiceConfigSource exposes config_value and resolve_value, while PostgresConfigSource reads decoded config values from PostgreSQL and resolves secrets through the shared secrets path  . Environment overrides are mapped for FalkorDB and Qdrant keys, and missing config-store tables are treated as absent data rather than fatal errors [crates/gcode/src/config/services.rs:29-39] [crates/gcode/src/config/services.rs:41-48]. Context delegates to services.rs for resolving FalkorDB, Qdrant, embedding, indexing, and code-vector settings, keeping project and execution-context decisions separate from per-service credential and setting lookup .
+The service flow lives in `services.rs`, where a shared `ServiceConfigSource` interface lets the module read raw config values and resolve secret or variable references through different backing stores [crates/gcode/src/config/services.rs:20-22]. PostgreSQL-backed reads decode config-store values, treat a missing config table as an absent value, and resolve stored secrets through the database connection . Environment overrides are mapped for FalkorDB and Qdrant keys up front, while fallback source adapters layer PostgreSQL, optional `gcore.yaml` standalone config, tracing, closure sources, and error capture so concrete resolvers can consistently choose defaults, propagate failures, and report which source supplied a value .
 
-The tests exercise both halves together: they create project metadata, git repositories, linked worktrees, and scoped environment overrides to validate identity resolution and service configuration behavior . The suite covers precedence, JSON decoding, daemon URL fallback and normalization, secret-backed service credentials, embedding/vector parsing, invalid ports, and project identity edge cases such as isolated markers, parent metadata, missing parent paths, and linked worktrees, ensuring the collaboration between context discovery and service source resolution remains explicit and predictable  .
+The files collaborate with tests that exercise the same boundaries the runtime code depends on: service-value parsing, environment precedence, secret resolution, missing or invalid ports, embedding error propagation, daemon URL fallback, and project-identity edge cases. `tests.rs` builds realistic fixtures by writing `.gobby/project.json`, initializing Git repositories, creating linked worktrees, and scoping service environment variables so project ID and service config behavior can be verified across normal repos, copied metadata, isolated overlays, and generated identities [crates/gcode/src/config/tests.rs:14-22]  .
 
 ## Call Diagram
 
@@ -142,64 +142,67 @@ sequenceDiagram
     participant m_025b4846_7970_5700_99f0_0ccabc7ebfc4 as resolve_embedding_config &#91;function&#93;
     participant m_037d8ca9_2112_5a2a_a6d8_fc5b94b97da4 as self_referential_parent_marker_keeps_project_json_id &#91;function&#93;
     participant m_0726e300_44c4_51cc_abca_bed13666836f as vector_dim_setting_reads_ai_config_no_env &#91;function&#93;
+    participant m_080a3cf9_226c_583b_84d1_37d8144cf37d as Context.resolve_for_project_id &#91;method&#93;
+    participant m_0ba6c756_8d10_575b_adba_be13dedfe9cf as is_self_referential_isolation_marker &#91;function&#93;
     participant m_1c0fa5fa_a8b0_5b8b_8d48_e43da3c43b16 as config_value &#91;function&#93;
     participant m_1f13e8b8_ed66_50e9_99cf_6e6a742d4c0c as resolve_falkordb_config_from_source &#91;function&#93;
-    participant m_23acf395_4676_5a04_8dc0_73b6dbc090c5 as detect_project_root_from &#91;function&#93;
     participant m_28c47d46_bd7b_5133_b7c7_372cfc12895e as resolve_embedding_config_from_source &#91;function&#93;
     participant m_2ac646f0_7ad2_54bd_969e_9f0be46734dc as main_repo_keeps_project_json_id &#91;function&#93;
+    participant m_3279a046_bbbe_594e_83d8_f146c1faea61 as resolve_project_id &#91;function&#93;
     participant m_3308f5d4_fe0e_5ddd_86b0_1a239ad5cbc4 as config_value &#91;function&#93;
     participant m_3a3fcf9e_3bc0_592a_936a_6c4014fc535f as resolve_code_vector_settings &#91;function&#93;
     participant m_3ece38b5_268b_5b8a_9823_117d1d053be8 as phase7_config_resolution_returns_gcode_falkor_config_with_core_fields_and_graph_name &#91;function&#93;
     participant m_43346b4a_a439_52fb_b995_db9d5f53bc03 as embedding_binding_uses_openai_http &#91;function&#93;
     participant m_481ab8e0_920d_5092_82f8_60e726ec5b68 as config_value &#91;function&#93;
-    participant m_4d74e04a_7a2f_562c_89bb_95dadec574fb as absolute_fallback &#91;function&#93;
-    participant m_4df88ecd_d98f_5d27_9a58_10523f89bb89 as invalid_service_port_warns_and_uses_default &#91;function&#93;
     participant m_595fac55_0d4e_55e5_b2fd_69fe49196253 as write_project_json &#91;function&#93;
     participant m_73a8e787_c170_5e1d_82eb_c9430da704fd as embedding_binding_routes_direct &#91;function&#93;
+    participant m_7cfbc9d2_c867_5ffb_87d4_54932a1df488 as resolve_project_identity &#91;function&#93;
     participant m_80b86ae0_52b6_557e_a3f7_fcd29acbffbd as with_service_env &#91;function&#93;
     participant m_8c73cf1c_116b_549f_a285_656fb12318b7 as service_env_value &#91;function&#93;
     participant m_9138da44_4687_593a_95c5_29b8cbd7391a as resolve_service_port &#91;function&#93;
+    participant m_9685df1c_b537_5fd4_a2a4_296cabc2ea30 as resolve_parent_project_root &#91;function&#93;
     participant m_99326af5_69bd_5565_bee6_cb3375d238ae as config_value_for &#91;function&#93;
     participant m_a3104df3_262f_55d2_b96d_e90615651334 as resolve_code_vector_settings_from_source &#91;function&#93;
     participant m_a5a01ca9_8086_52b4_97c9_132d324c6f85 as resolve_service_setting &#91;function&#93;
     participant m_ac53669b_29ee_5344_acd8_336ad0104d53 as resolve_embedding_config_from_service_source &#91;function&#93;
+    participant m_df11b4d5_8541_54fe_ab58_fe0a5ac0557b as normalize_project_id &#91;function&#93;
     m_011a0baa_dc8d_5b8e_b0e9_cb9f4295edb3->>m_80b86ae0_52b6_557e_a3f7_fcd29acbffbd: calls
     m_011a0baa_dc8d_5b8e_b0e9_cb9f4295edb3->>m_99326af5_69bd_5565_bee6_cb3375d238ae: calls
     m_025b4846_7970_5700_99f0_0ccabc7ebfc4->>m_ac53669b_29ee_5344_acd8_336ad0104d53: calls
     m_037d8ca9_2112_5a2a_a6d8_fc5b94b97da4->>m_595fac55_0d4e_55e5_b2fd_69fe49196253: calls
     m_0726e300_44c4_51cc_abca_bed13666836f->>m_80b86ae0_52b6_557e_a3f7_fcd29acbffbd: calls
     m_0726e300_44c4_51cc_abca_bed13666836f->>m_99326af5_69bd_5565_bee6_cb3375d238ae: calls
+    m_080a3cf9_226c_583b_84d1_37d8144cf37d->>m_df11b4d5_8541_54fe_ab58_fe0a5ac0557b: calls
+    m_0ba6c756_8d10_575b_adba_be13dedfe9cf->>m_9685df1c_b537_5fd4_a2a4_296cabc2ea30: calls
     m_1c0fa5fa_a8b0_5b8b_8d48_e43da3c43b16->>m_8c73cf1c_116b_549f_a285_656fb12318b7: calls
     m_1f13e8b8_ed66_50e9_99cf_6e6a742d4c0c->>m_9138da44_4687_593a_95c5_29b8cbd7391a: calls
     m_1f13e8b8_ed66_50e9_99cf_6e6a742d4c0c->>m_a5a01ca9_8086_52b4_97c9_132d324c6f85: calls
-    m_23acf395_4676_5a04_8dc0_73b6dbc090c5->>m_4d74e04a_7a2f_562c_89bb_95dadec574fb: calls
     m_28c47d46_bd7b_5133_b7c7_372cfc12895e->>m_43346b4a_a439_52fb_b995_db9d5f53bc03: calls
     m_28c47d46_bd7b_5133_b7c7_372cfc12895e->>m_73a8e787_c170_5e1d_82eb_c9430da704fd: calls
     m_2ac646f0_7ad2_54bd_969e_9f0be46734dc->>m_595fac55_0d4e_55e5_b2fd_69fe49196253: calls
+    m_3279a046_bbbe_594e_83d8_f146c1faea61->>m_7cfbc9d2_c867_5ffb_87d4_54932a1df488: calls
     m_3308f5d4_fe0e_5ddd_86b0_1a239ad5cbc4->>m_8c73cf1c_116b_549f_a285_656fb12318b7: calls
     m_3a3fcf9e_3bc0_592a_936a_6c4014fc535f->>m_a3104df3_262f_55d2_b96d_e90615651334: calls
     m_3ece38b5_268b_5b8a_9823_117d1d053be8->>m_80b86ae0_52b6_557e_a3f7_fcd29acbffbd: calls
     m_3ece38b5_268b_5b8a_9823_117d1d053be8->>m_99326af5_69bd_5565_bee6_cb3375d238ae: calls
     m_481ab8e0_920d_5092_82f8_60e726ec5b68->>m_8c73cf1c_116b_549f_a285_656fb12318b7: calls
-    m_4df88ecd_d98f_5d27_9a58_10523f89bb89->>m_80b86ae0_52b6_557e_a3f7_fcd29acbffbd: calls
-    m_4df88ecd_d98f_5d27_9a58_10523f89bb89->>m_99326af5_69bd_5565_bee6_cb3375d238ae: calls
 ```
 
 ## Files
 
-- [[code/files/crates/gcode/src/config/context.rs|crates/gcode/src/config/context.rs]] - This file manages configuration resolution for gcode, orchestrating the reading and resolution of settings from bootstrap.yaml, PostgreSQL, and service configuration stores while expanding environment variables and secret references. It defines configuration structures for FalkorDB connections, Qdrant, embeddings, and code vector indexing, along with ServiceConfigSelection to enable/disable specific service configurations. The core Context class provides methods to resolve full configurations with optional service selection via resolve_with_services(). Supporting functions handle project identity resolution from filesystem markers, parent project hierarchies, and configuration stores, with detect_project_root variants discovering project boundaries through manifest files. Utility functions normalize project IDs, validate parent code indices, and resolve projects by name, working together to establish execution contexts for isolated or non-isolated project scopes. Error handling through CodeVectorConfigError ensures configuration issues surface clearly during resolution.
+- [[code/files/crates/gcode/src/config/context.rs|crates/gcode/src/config/context.rs]] - Configuration resolution for `gcode`: it defines the service and indexing config types used to load FalkorDB, Qdrant, embedding, and code-vector settings from bootstrap/database/config-store sources, then combines them into a runtime `Context`. `ServiceConfigSelection` provides preset feature combinations for selectively enabling config groups, while `FalkorConfig`, `CodeVectorSettings`, and the related error type adapt and validate individual settings. The rest of the file resolves project identity and project roots from CLI, filesystem, Git, and `.gobby` metadata, validates overlay parents, and exposes helpers for name lookup, ID normalization, and absolute-path fallback so `Context` can be assembled consistently.
 [crates/gcode/src/config/context.rs:26-31]
 [crates/gcode/src/config/context.rs:34]
 [crates/gcode/src/config/context.rs:37]
 [crates/gcode/src/config/context.rs:51-53]
 [crates/gcode/src/config/context.rs:55]
-- [[code/files/crates/gcode/src/config/services.rs|crates/gcode/src/config/services.rs]] - This file provides a trait-based configuration system for resolving service configs from multiple sources. The ServiceConfigSource trait defines a two-method interface (config_value, resolve_value) that various source implementations fulfill: PostgresConfigSource reads from a database, FallbackConfigSource chains PostgreSQL with standalone configs, TracingFallbackConfigSource and ErrorCapturingConfigSource add observability, and ClosureConfigSource/FallibleClosureConfigSource wrap custom resolution logic. Helper functions like service_env_value and config_store_missing handle environment lookups and error detection. Numerous resolution functions (resolve_falkordb_config, resolve_qdrant_config, resolve_embedding_config, resolve_code_vector_settings, etc.) compose these sources through fallback chains to build specific service configurations, often trying multiple key variants and applying validation. The system supports reading from PostgreSQL config tables, environment variables, standalone YAML files, and dynamic closures with built-in error capturing and tracing.
+- [[code/files/crates/gcode/src/config/services.rs|crates/gcode/src/config/services.rs]] - This file provides the service-configuration plumbing for Gobby, layering environment variables, PostgreSQL-backed config, and optional standalone `gcore.yaml` settings to resolve service-specific values. It defines small config-source adapters (`PostgresConfigSource`, `FallbackConfigSource`, `TracingFallbackConfigSource`, `ErrorCapturingConfigSource`, and closure-based variants) that implement a common read/resolve interface, plus helpers for reading standalone config and reporting detailed read errors. On top of that, it builds the concrete resolvers for FalkorDB, Qdrant, embedding, code vector, and indexing settings, handling defaults, fallback order, tracing which source won, and preserving or surfacing configuration errors where needed.
 [crates/gcode/src/config/services.rs:20-22]
 [crates/gcode/src/config/services.rs:24-27]
 [crates/gcode/src/config/services.rs:29-39]
 [crates/gcode/src/config/services.rs:41-48]
 [crates/gcode/src/config/services.rs:51-57]
-- [[code/files/crates/gcode/src/config/tests.rs|crates/gcode/src/config/tests.rs]] - This file is a test suite for the gcode configuration system. It provides utility functions to set up test environments (write_project_json, run_git, create_linked_worktree, with_service_env) and manage test configuration state. The test functions validate multiple aspects of configuration resolution: environment variable precedence, JSON decoding, project ID persistence across different repository contexts (main repos, linked worktrees, isolated markers with parent metadata), daemon URL normalization and fallback behavior, service credential resolution (Falkordb, Qdrant secrets), embedding and vector configuration parsing, and error propagation through config sources. Tests also verify validation logic that rejects incomplete metadata, missing paths, and invalid service ports while applying sensible defaults.
+- [[code/files/crates/gcode/src/config/tests.rs|crates/gcode/src/config/tests.rs]] - This file contains integration-style tests for `gcode` configuration resolution, especially how project identity, daemon URL selection, and service-specific settings are derived from on-disk config and environment variables. It also defines small test helpers for writing `.gobby/project.json`, running `git`, creating linked worktrees, and scoping service environment overrides so the tests can exercise precedence, secret resolution, error propagation, and project-identity edge cases consistently.
 [crates/gcode/src/config/tests.rs:14-22]
 [crates/gcode/src/config/tests.rs:24-38]
 [crates/gcode/src/config/tests.rs:40-70]
@@ -218,38 +221,40 @@ sequenceDiagram
 - `c9a1cb62-7c8b-5590-91d0-babf0631b4b8`
 - `b42e3e41-716a-5888-9afa-b816f1a85ee2`
 - `41215555-256a-53a5-8d44-c0787823aade`
-- `a4c1f2d9-c41a-5cc3-98b1-e00f4ab47425`
-- `5b7522d5-3026-5c24-8928-ec469fc6df71`
-- `dd4f67d9-d274-5a58-a881-bd28e73acd40`
-- `a4e17f61-3949-5078-9372-85c6c48ce886`
-- `af12f40d-1d4d-5085-9f4f-7290f4a41fce`
-- `0e37688d-ceb6-5676-8dbd-7221a7970f7b`
-- `6da2a5dd-5190-5e5b-918d-782ba3edb87e`
-- `19890a79-3fe2-53d9-8d1f-f9123bb32ec5`
-- `552aaab0-c0e5-52e0-b933-b3dc69d52831`
-- `1a50772c-a7b4-53dd-8641-b7664ce043f8`
-- `7032577f-b11e-5c5d-abab-db0b71de4cdd`
-- `46d8d301-b9e3-5346-9c0e-28f3b7dda935`
-- `cc6ed12b-94b2-53a7-bbfe-eeada184d113`
-- `90458d54-1a28-5701-9b35-d51a64d8ab85`
-- `c47ec3db-5553-5238-823a-156d04d3a0f6`
-- `df0b5059-b1bc-50e0-b6d6-7bc99f0b4fe5`
-- `3228ad40-0817-52f7-88a9-afca5418ea28`
-- `a2db489f-4ae5-57c7-8ed2-d96c19b2e3e1`
-- `8925270f-fc9a-5228-be3a-cdfeb82d97c2`
-- `ad7fe1e5-649e-5f27-bc03-74afdc142c75`
-- `6ba92acc-ba28-5a91-8869-73c1cf10c4d6`
-- `f811dfcb-2ee3-5ad0-a838-22e770e06aad`
-- `c65c753f-2a9a-57c2-969a-17f2332f836e`
-- `333f3f6e-ca4f-5144-a592-03f2b3dc57ed`
-- `44e72b20-3011-5fcc-9159-0aed0561089c`
-- `cd92b4a3-a201-5d1a-8007-b3d9f7378989`
-- `b120d217-6932-535c-8f35-469a34721d30`
-- `dee35a40-bd82-52ef-97d8-51250e249dbc`
-- `e5e06d33-9c2c-5658-8719-dfa876c4c58d`
-- `23acf395-4676-5a04-8dc0-73b6dbc090c5`
-- `a654028b-aee7-5326-9f1e-69f3bcfbce62`
-- `4d74e04a-7a2f-562c-89bb-95dadec574fb`
+- `d44cbbc0-04e9-56bf-91ba-8ba562319e21`
+- `3349fe55-9b04-504a-a9e7-3bdfb5e169b9`
+- `03212a41-cc6c-5713-b627-83a209fc66e2`
+- `d131f6ff-2354-5288-bd28-36e855c70efe`
+- `b5535775-36d5-51ed-bb74-2a52131f014d`
+- `308f7c78-476f-5d36-850a-328dc71dc624`
+- `3d9e9087-b154-567a-8eb9-dad0ec7045f5`
+- `302c98c3-e822-5869-af5b-11a58358b9e8`
+- `c28ef263-af5a-5965-8ea5-195137ce9fb8`
+- `22983480-0fe3-5146-94ff-d38f0fd5232b`
+- `7421db62-9042-544c-8a54-78e90e700f95`
+- `e024baa0-26a9-57fd-8f01-3454080ca15f`
+- `f57e9fb3-ef45-5bc0-8ec7-a20ecf40b698`
+- `7a5353d3-da7f-5160-9017-b32e9548aab8`
+- `d0fce310-84e4-5d23-bbaa-1e8dc55ac538`
+- `bff5f934-378e-5722-a8c7-aa3e45ab5c5f`
+- `4328c2c8-aef6-57af-8d4d-acda4afbab80`
+- `43ccda88-4c91-59a6-83b2-13e434748844`
+- `79949d65-3a16-5c20-bbf0-6e5df87b1e62`
+- `e95640c9-aa2f-5ba7-bba7-48ae9a58781d`
+- `080a3cf9-226c-583b-84d1-37d8144cf37d`
+- `7cfbc9d2-c867-5ffb-87d4-54932a1df488`
+- `18d3460c-76db-5074-b3af-d86fcd0683f7`
+- `0ba6c756-8d10-575b-adba-be13dedfe9cf`
+- `9685df1c-b537-5fd4-a2a4-296cabc2ea30`
+- `df11b4d5-8541-54fe-ab58-fe0a5ac0557b`
+- `41088d8a-c2ff-5f50-9475-d89b67da6e6c`
+- `0910fc74-98a8-5ac5-923e-ae7c433cae75`
+- `56db3f05-eb61-57d2-bfa1-b4122a9fe790`
+- `fb177664-5c95-501e-835e-de9ee8b4ac6a`
+- `63d19fa3-f4c6-587c-b5d2-842b7825f487`
+- `50faa516-22bd-5620-8886-6625ef4f17ad`
+- `3279a046-bbbe-594e-83d8-f146c1faea61`
+- `ded563af-79a7-5b37-a1c0-90957a3d93d1`
 - `2b5627ba-b022-5c99-835a-10b3270e595a`
 - `376426c5-af74-5515-b43e-71c79b27ab8e`
 - `8c73cf1c-116b-549f-a285-656fb12318b7`

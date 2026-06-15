@@ -2,12 +2,57 @@
 title: docs/evidence
 type: code_module
 provenance:
+- file: docs/evidence/wiki-parity-2026-06/wp3-audit.json
+  ranges:
+  - 1-100
 - file: docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json
   ranges:
   - 3-47
 - file: docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json
   ranges:
-  - 3-47
+  - 3-44
+- file: docs/evidence/wiki-parity-2026-06/wp3-compile-source.json
+  ranges:
+  - 2-3
+- file: docs/evidence/wiki-parity-2026-06/wp3-deposit-ingest.json
+  ranges:
+  - 3-24
+- file: docs/evidence/wiki-parity-2026-06/wp3-deposit-search.json
+  ranges:
+  - 2-90
+- file: docs/evidence/wiki-parity-2026-06/wp3-health.json
+  ranges:
+  - 3-71
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-daemon.json
+  ranges:
+  - 3-299
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json
+  ranges:
+  - 3-295
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-search.json
+  ranges:
+  - 2-113
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q2-rrf-ask-daemon.json
+  ranges:
+  - 3-341
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q2-rrf-search.json
+  ranges:
+  - 2-84
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json
+  ranges:
+  - 3-327
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-search.json
+  ranges:
+  - 2-78
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q4-falkor-ask-daemon.json
+  ranges:
+  - 3-341
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q4-falkor-search.json
+  ranges:
+  - 2-84
+- file: docs/evidence/wiki-parity-2026-06/wp3-search-hybrid.json
+  ranges:
+  - 3-137
 - file: docs/evidence/wiki-parity-2026-06/wp3-search-sources.json
   ranges:
   - 3-227
@@ -22,27 +67,17 @@ Parent: [[code/modules/docs|docs]]
 
 ## Overview
 
-docs/evidence is an evidence container rather than a source module: it has no direct files of its own, and its documented behavior currently comes through child evidence sets. The visible child, docs/evidence/wiki-parity-2026-06, stores proof artifacts for a gwiki parity workflow that first searches a resolved project scope and then uses selected sources to compile a grounded explainer.
+The docs/evidence module has no direct files of its own; it serves as the parent container for generated evidence bundles. Its current child, docs/evidence/wiki-parity-2026-06, captures the 2026-06 wiki-parity workstream for the wp3 scope, preserving auditable outputs from gwiki and ghook flows across compilation, ingestion, search, and ask operations [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:3-12] [docs/evidence/wiki-parity-2026-06/wp3-search-sources.json:3-16] [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-daemon.json:3-10].
 
-The key flow is search-to-synthesis evidence capture. The search artifact records the query, limit, command invocation, degradations, code citation targets, and ranked hybrid results for “reciprocal rank fusion hybrid search,” preserving both BM25 and semantic explanations along with fusion keys, snippets, source paths, titles, and wiki pages (docs/evidence/wiki-parity-2026-06/wp3-search-sources.json:1-49).
+The key flow begins with compile records that retain AI synthesis metadata, prompts, article and index paths, and page writes, then ingestion records bind markdown source notes to raw paths, content hashes, and indexed totals. Search records add query metadata, degradation state, ranked results, snippets, scores, source paths, wiki pages, and code citations, while ask records capture route status, cited evidence, ranked hits, final synthesis, citation checks, truncation, and warnings [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:3-12] [docs/evidence/wiki-parity-2026-06/wp3-search-sources.json:3-16] [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-daemon.json:3-10].
 
-The module’s collaboration pattern is therefore archival: docs/evidence groups dated evidence submodules, while the child artifact files hold the structured fields needed to audit how a wiki answer was grounded. Properties such as command, scope, source_paths, status, article_path, outline, page_writes, and citation-tracking fields indicate that search metadata, source selection, synthesis availability, and final write outputs are captured together so later reviewers can trace the workflow from inputs through generated documentation.
-[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:3-12]
-[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:3-12]
-[docs/evidence/wiki-parity-2026-06/wp3-search-sources.json:3-16]
-[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:4]
-[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:5]
+Together these generated JSON artifacts collaborate as a traceable evidence ledger: compile outputs describe what was written, ingestion outputs describe what source material entered the index, search outputs explain how evidence was retrieved and ranked, and ask outputs show how the retrieved evidence was used and checked in final answers. The parent module’s responsibility is therefore organizational rather than executable, grouping the evidence bundle so downstream reviewers can audit wiki parity behavior from source capture through synthesis.
 
 ## Child Modules
 
-- [[code/modules/docs/evidence/wiki-parity-2026-06|docs/evidence/wiki-parity-2026-06]] - This evidence module captures wiki-parity proof artifacts for a `gwiki` workflow: first searching a resolved project scope, then compiling a grounded explainer from the selected sources. The search artifact records the query, limit, command, degradations, code citation targets, and ranked hybrid results for “reciprocal rank fusion hybrid search,” including per-result BM25 and semantic explanations, fusion keys, snippets, source paths, titles, and wiki pages (docs/evidence/wiki-parity-2026-06/wp3-search-sources.json:1-49).
+- [[code/modules/docs/evidence/wiki-parity-2026-06|docs/evidence/wiki-parity-2026-06]] - This module is a generated evidence bundle for the 2026-06 wiki-parity workstream, centered on the `wp3` project scope. Its files record auditable outputs from `gwiki` and `ghook` flows: compile runs that preserve AI synthesis metadata, prompts, article/index paths, and page writes; ingestion runs that tie markdown source notes to raw paths, content hashes, and indexed totals; search runs that store query metadata, degradations, ranked results, snippets, scores, source paths, wiki pages, and code citations; and ask runs that capture AI route status, cited evidence, ranked hits, final synthesis, citation checks, truncation, and warnings [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:3-12]  [docs/evidence/wiki-parity-2026-06/wp3-search-sources.json:3-16] [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-daemon.json:3-10].
 
-The compile artifacts document two runs that generated the “gsqz compression shipping decision” explainer. Both runs show daemon-routed AI synthesis using the `haiku` model with successful generated status, no errors, no fallback sections, and no stripped citations, then tie the compile command to the article path, wiki index path, handoff id, outline, and created page writes for the topic article and supporting source page (docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:1-30) (docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:1-30).
+The key flows are parity verification, retrieval auditability, and generated-article traceability. Search evidence files capture the command, query, limit, degradations, and ranked result explanations, while ask evidence files layer daemon or direct AI metadata over citations, evidence excerpts, hits, and synthesis; the source excerpts show daemon ask records resolving the same project scope, using `gpt-5.4-mini`, routing through `daemon`, and marking the route available before listing code citations and evidence entries    .
 
-Together, the files preserve the collaboration between `gwiki search` evidence and `gwiki compile` output: search results make source discovery traceable back to code documentation pages, while compile records the exact explainer prompt, daemon synthesis availability, estimated token budget, source truncation count, and requested sections used to produce the final wiki page (docs/evidence/wiki-parity-2026-06/wp3-search-sources.json:3-16) (docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:31-49) (docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:31-49).
-[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:3-12]
-[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:3-12]
-[docs/evidence/wiki-parity-2026-06/wp3-search-sources.json:3-16]
-[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:4]
-[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:5]
+The files collaborate as a flat, no-child-module evidence directory: compile and ingest records establish what content was produced or indexed, search and ask bundles show how answers were retrieved and synthesized, and health/audit reports summarize quality gaps such as broken links, stale or uncited sources, uncompiled sources, and unsupported claims. Error capture is also part of the contract, with `wp3-compile-source.json` recording an `io_error` when `research-session.json` is missing, so failed pipeline steps remain machine-readable alongside successful evidence artifacts [docs/evidence/wiki-parity-2026-06/wp3-health.json:3-16] [docs/evidence/wiki-parity-2026-06/wp3-audit.json:1-100] .
 

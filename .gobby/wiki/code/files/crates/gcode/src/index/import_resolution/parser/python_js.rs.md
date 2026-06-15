@@ -17,7 +17,7 @@ Module: [[code/modules/crates/gcode/src/index/import_resolution/parser|crates/gc
 
 ## Purpose
 
-This file parses import statements for Python and JavaScript and turns them into import-dependency records plus binding maps. The Python parser handles both `import ...` and `from ... import ...`, splitting top-level entries, normalizing aliases, recording each module in `ExtractedImports.imports`, and registering member bindings only when the module is external; unrecognized forms are sent to the unparsed-import fallback. The JavaScript parser does the same for JS import syntax, extracting the module specifier and classifying namespace and named imports into member or bare bindings while tracking the module dependency.
+This file contains import-resolution parsers for Python and JavaScript source text. `parse_python_import_statement` recognizes `import` and `from ... import ...` forms, records module dependencies, and registers aliases for external Python modules, while `parse_js_import_statement` extracts a JS module specifier and classifies namespace and named imports into binding maps; both rely on shared helpers, external-module predicates, and fallback handling for imports they cannot fully parse.
 [crates/gcode/src/index/import_resolution/parser/python_js.rs:11-98]
 [crates/gcode/src/index/import_resolution/parser/python_js.rs:100-194]
 

@@ -47,79 +47,29 @@ provenance:
   - 596-617
 - file: crates/gwiki/src/api.rs
   ranges:
-  - 11-121
-  - 124-127
-  - 130-144
-  - 147-149
-  - 151-154
-  - 156-162
-  - 166-174
-  - 177-182
-  - 184-214
-  - 218-222
-  - 224-262
-  - 264-268
-  - 272-276
-  - 278-286
-  - 289-292
-  - 294-315
-  - 317-321
-  - 324-328
-  - 331-334
-  - 343-359
-  - 362-383
-  - 386-416
-  - 419-436
-- file: crates/gwiki/src/audit.rs
-  ranges:
-  - 33-35
-  - 37-73
-  - 75-84
-  - 87-93
-  - 96-103
-  - 106-111
-  - 114-116
-  - 118-141
-  - 143-172
-  - 174-186
-  - 188-195
-  - 197-226
-  - 228-237
-  - 239-244
-  - 246-255
-  - 257-262
-  - 264-280
-  - 282-288
-  - 290-327
-  - 330-335
-  - 338-341
-  - 348-425
-  - 427-433
-  - 435-444
-  - 446-450
-  - 452-454
-  - 456-463
-  - 465-477
-  - 479-487
-  - 489-502
-  - 504-509
-  - 511-516
-  - 518-529
-  - 531-553
-  - 561-595
-  - 598-664
-  - 667-692
-  - 695-722
-  - 725-744
-  - 747-767
-  - 770-778
-  - 781-794
-  - 797-834
-  - 837-844
-  - 847-876
-  - 879-932
-  - 934-943
-  - 946-965
+  - 11-122
+  - 125-128
+  - 131-145
+  - 148-150
+  - 152-155
+  - 157-163
+  - 167-175
+  - 178-183
+  - 185-215
+  - 219-223
+  - 225-263
+  - 265-269
+  - 273-277
+  - 279-287
+  - 290-293
+  - 295-316
+  - 318-322
+  - 325-329
+  - 332-335
+  - 344-360
+  - 363-384
+  - 387-417
+  - 420-437
 - file: crates/gwiki/src/benchmark.rs
   ranges:
   - 30-39
@@ -348,26 +298,26 @@ provenance:
   - 268-294
   - 296-321
   - 323-362
-  - 364-398
-  - 400-429
-  - 431-455
-  - 457-470
-  - 472-483
-  - 485-492
-  - 494-529
-  - 531-533
-  - 535-545
-  - 547-561
-  - 563-571
-  - 573-587
-  - 589-602
-  - 604-611
-  - 613-625
-  - 639-706
-  - 709-731
-  - 734-741
-  - 744-755
-  - 758-771
+  - 364-399
+  - 401-430
+  - 432-456
+  - 458-471
+  - 473-484
+  - 486-493
+  - 495-530
+  - 532-534
+  - 536-546
+  - 548-562
+  - 564-572
+  - 574-588
+  - 590-603
+  - 605-612
+  - 614-626
+  - 642-711
+  - 714-736
+  - 739-746
+  - 749-760
+  - 763-776
 - file: crates/gwiki/src/commands/sources.rs
   ranges:
   - 15-23
@@ -409,62 +359,66 @@ provenance:
   - 831-839
   - 841-857
   - 859-874
-- file: crates/gwiki/src/falkor_graph.rs
+- file: crates/gwiki/src/daemon.rs
   ranges:
-  - 29-31
-  - 33-43
-  - 46-49
-  - 51-54
-  - 56-60
-  - 62-78
-  - 80-104
-  - 106-197
-  - 199-240
-  - 242-250
-  - 252-288
-  - 290-296
-  - 298-314
-  - 316-320
-  - 322-328
-  - 330-332
-  - 334-346
-  - 348-350
-  - 352-365
-  - 367-370
-  - 372-402
-  - 404-439
-  - 441-444
-  - 446-473
-  - 475-486
-  - 488-573
-  - 575-607
-  - 609-617
-  - 619-632
-  - 634-636
-  - 638-651
-  - 653-658
-  - 660-666
-  - 668-670
-  - 672-680
-  - 682-697
-  - 699-702
-  - 704-708
-  - 710-714
-  - 717-719
-  - 722-739
-  - 741-745
-  - 756-759
-  - 762-805
-  - 808-819
-  - 822-824
-  - 827-833
-  - 836-841
-  - 844-855
-  - 858-874
-  - 877-886
-  - 889-908
-  - 911-923
-  - 926-978
+  - 11-18
+  - 26-31
+  - 34-40
+  - 43-50
+  - 53-62
+  - 65-74
+  - 77-80
+  - 82-84
+  - '86'
+  - 88-97
+  - 165-168
+  - 170-172
+  - 174-247
+  - 249-256
+  - 258-275
+  - 277-295
+  - 297-329
+  - 331-345
+  - 354-356
+  - 358-366
+  - 368-375
+  - 378-418
+  - 421-431
+  - 434-458
+  - 461-480
+- file: crates/gwiki/src/frontmatter.rs
+  ranges:
+  - 10-13
+  - 16-30
+  - 32-116
+  - 119-125
+  - 128-130
+  - 132-136
+  - '138'
+  - 140-170
+  - 173-191
+  - 193-199
+  - 201-205
+  - 207-221
+  - 223-232
+  - 234-264
+  - 266-286
+  - 289-303
+  - 306-314
+  - 316-329
+  - 331-344
+  - 346-394
+  - 396-398
+  - 400-406
+  - 408-415
+  - 419-434
+  - 436-450
+  - 457-524
+  - 527-546
+  - 549-578
+  - 581-626
+  - 629-659
+  - 662-691
 - file: crates/gwiki/src/graph/context.rs
   ranges:
   - 8-11
@@ -739,93 +693,6 @@ provenance:
   - 729-746
   - 748-797
   - 800-833
-- file: crates/gwiki/src/ingest/url.rs
-  ranges:
-  - 22-28
-  - 31-35
-  - 38-42
-  - 45-48
-  - 50-62
-  - 65-74
-  - 76-110
-  - 112-145
-  - 147-157
-  - 159-164
-  - 166-205
-  - 208-210
-  - 212-221
-  - 223-296
-  - 298-302
-  - 304-318
-  - 320-326
-  - 328-355
-  - 357-363
-  - 365-377
-  - 379-412
-  - 414-418
-  - 420-441
-  - 443-445
-  - 447-449
-  - 451-460
-  - 462-487
-  - 489-516
-  - 518-524
-  - 526-538
-  - 540-547
-  - 549-555
-  - 557-573
-  - 575-585
-  - 587-596
-  - 598-632
-  - 634-649
-  - 651-657
-  - 659-661
-  - 663-683
-  - 685-694
-  - 712-752
-  - 755-785
-  - 788-799
-  - 802-844
-  - 847-867
-  - 870-885
-  - 888-908
-  - 911-916
-  - 918-934
-  - 937-940
-  - 942-983
-- file: crates/gwiki/src/ingest/video/tests.rs
-  ranges:
-  - 18-55
-  - 57-62
-  - 64-89
-  - 91-111
-  - '113'
-  - 115-131
-  - '133'
-  - 135-144
-  - '146'
-  - 148-160
-  - '162'
-  - 164-170
-  - 172-198
-  - 201-273
-  - 276-323
-  - 326-329
-  - 332-350
-  - 354-446
-  - 449-451
-  - 454-461
-  - 464-617
-  - 620-638
-  - 641-656
-  - 659-707
-  - 710-765
-  - 767-799
-  - 801-803
-  - 805-810
-  - 813-843
-  - 846-883
-  - 886-922
 - file: crates/gwiki/src/librarian.rs
   ranges:
   - 15-20
@@ -904,6 +771,41 @@ provenance:
   - 529-536
   - 539-553
   - 556-567
+- file: crates/gwiki/src/lint.rs
+  ranges:
+  - 13-22
+  - 25-30
+  - 33-36
+  - 38-103
+  - 105-126
+  - 129-135
+  - 137-169
+  - 171-173
+  - 175-181
+  - 183-195
+  - 197-254
+  - 256-262
+  - 264-270
+  - 272-282
+  - 284-290
+  - 292-306
+  - 308-316
+  - 318-347
+  - 349-365
+  - 367-376
+  - 378-397
+  - 399-433
+  - 435-440
+  - 442-461
+  - 463-476
+  - 478-484
+  - 487-493
+  - 500-532
+  - 535-552
+  - 555-560
+  - 563-568
+  - 571-587
+  - 589-593
 - file: crates/gwiki/src/main.rs
   ranges:
   - 45-59
@@ -919,26 +821,26 @@ provenance:
   - 301-309
   - 312-315
   - 318-321
-  - 324-346
-  - 349-352
-  - 355-368
-  - 371-385
-  - 388-392
-  - '399'
-  - 403-415
-  - 417-424
-  - 426-430
-  - 432-484
-  - 491-510
-  - 512-514
-  - 516-530
-  - 532-659
-  - 662-668
-  - 672-682
-  - 686-693
-  - 696-706
-  - 708-725
-  - 728-744
+  - 324-349
+  - 352-355
+  - 358-371
+  - 374-388
+  - 391-395
+  - '402'
+  - 406-418
+  - 420-427
+  - 429-433
+  - 435-487
+  - 494-513
+  - 515-517
+  - 519-533
+  - 535-663
+  - 666-672
+  - 676-686
+  - 690-697
+  - 700-710
+  - 712-729
+  - 732-748
 - file: crates/gwiki/src/output.rs
   ranges:
   - 10-13
@@ -973,6 +875,39 @@ provenance:
   - 342-434
   - 437-476
   - 479-505
+- file: crates/gwiki/src/search/bm25.rs
+  ranges:
+  - 13-17
+  - 20-23
+  - 26-37
+  - 39-44
+  - 46-69
+  - 71-157
+  - 159-162
+  - 164-176
+  - 178-182
+  - 184-186
+  - 189-191
+  - 195-225
+  - 228-284
+  - 286-289
+  - 291-299
+  - 301-303
+  - 307-309
+  - 312-316
+  - 319-326
+  - 335-374
+  - 377-387
+  - 390-395
+  - 398-414
+  - 417-427
+  - 430-444
+  - 447-455
+  - 457-482
+  - 484-504
+  - 506-527
+  - 529-538
+  - 540-551
 - file: crates/gwiki/src/search/graph_boost.rs
   ranges:
   - 21-24
@@ -1116,102 +1051,36 @@ provenance:
   - 477-502
   - 505-526
   - 529-550
-- file: crates/gwiki/src/store.rs
+- file: crates/gwiki/src/support/config.rs
   ranges:
-  - 15-21
-  - 24-30
-  - 33-40
-  - 43-49
-  - 52-57
-  - 60-66
-  - 69-73
-  - 76-78
-  - 80-112
-  - 115-121
-  - 123-134
-  - '136'
-  - 138-148
-  - 150-159
-  - 168-180
-  - 182-233
-  - 236-240
-  - 242-246
-  - 249-255
-  - 257-264
-  - 266-293
-  - 297-313
-  - 315-371
-  - 373-469
-  - 471-540
-  - 542-586
-  - 588-633
-  - 635-642
-  - 644-669
-  - 672-674
-  - 676-681
-  - 683-688
-  - 690-706
-  - 708-710
-  - 712-718
-  - 720-725
-  - 727-739
-  - 741-744
-  - 746-765
-  - 767-775
-  - 777-785
-  - 787-794
-  - 796-803
-  - 805-809
-  - 811-815
-  - 817-829
-  - 836-843
-  - 846-867
-  - 870-875
-  - 878-922
-  - 925-939
-- file: crates/gwiki/src/synthesis.rs
-  ranges:
-  - 15-19
-  - 21-37
-  - 40-44
-  - 47-56
-  - 59-65
-  - 68-74
-  - 77-80
-  - 84-87
-  - 90-93
-  - 95-182
-  - 188-230
-  - 232-272
-  - 279-293
-  - 295-366
-  - 368-396
-  - 398-421
-  - 423-438
-  - 440-445
-  - 447-453
-  - 455-478
-  - 480-494
-  - 496-501
-  - 503-525
-  - 527-537
-  - 539-573
-  - 575-593
-  - 595-609
-  - 611-616
-  - 618-636
-  - 638-662
-  - 664-698
-  - 700-719
-  - 721-731
-  - 738-765
-  - 768-791
-  - 794-799
-  - 802-815
-  - 818-854
-  - 857-886
-  - 890-917
-  - 920-930
+  - 18-20
+  - 22-44
+  - 46-61
+  - 68-71
+  - 73-80
+  - 82-86
+  - 88-93
+  - 96-102
+  - 104-111
+  - 113-118
+  - 120-127
+  - 129-136
+  - 138-142
+  - 144-151
+  - 153-168
+  - 182-185
+  - 187-201
+  - 203-212
+  - 214-220
+  - 223-225
+  - 227-232
+  - 234-242
+  - 245-257
+  - 260-279
+  - 283-301
+  - 304-316
+  - 320-332
+  - 336-363
 - file: crates/gwiki/src/vector.rs
   ranges:
   - 17-26
@@ -1256,7 +1125,41 @@ provenance:
   - 657-660
   - 662-693
   - 695-704
-provenance_truncated: 108
+- file: crates/gwiki/src/vision.rs
+  ranges:
+  - 19-23
+  - 26-29
+  - 31-44
+  - 47-52
+  - 58-65
+  - 67-69
+  - 72-79
+  - 81-85
+  - 88-91
+  - 93-140
+  - 142-254
+  - 256-264
+  - 266-283
+  - 285-303
+  - 305-329
+  - 331-358
+  - 360-379
+  - 388-390
+  - '392'
+  - 394-403
+  - 405-412
+  - '414'
+  - 416-426
+  - 428-444
+  - 447-491
+  - 494-522
+  - 525-547
+  - 550-592
+  - 595-626
+  - 629-659
+  - 662-715
+  - 718-729
+provenance_truncated: 144
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -1268,11 +1171,11 @@ Parent: [[code/modules/crates/gwiki|crates/gwiki]]
 
 ## Overview
 
-The `gwiki` crate is the library and CLI implementation for managing scoped research/wiki vaults: it defines the command API and CLI contract, resolves project or topic scope, initializes vault layout, ingests sources, indexes Markdown, persists manifests and registry state, searches content, audits provenance, and formats command output. Its public entry point wires the module set together and re-exports the main command/result types plus `WikiError` and `run` for embedders [crates/gwiki/src/lib.rs:1-60]. The core data path centers on store models for documents, chunks, links, sources, ingestion events, and scope metadata [crates/gwiki/src/store.rs:15-21] , with indexing walking vault files, parsing Markdown into headings/chunks/links, and writing added/changed/deleted rows through a shared memory or Postgres store  .
+The `gwiki` crate is the library and CLI surface for building, maintaining, querying, and exporting scoped wiki vaults. Its API layer defines the command contract and command payloads, while the binary parses CLI arguments into those command types and the runner forwards execution through the shared command dispatcher [crates/gwiki/src/lib.rs:1-60] [crates/gwiki/src/main.rs:45-59] [crates/gwiki/src/main.rs:167-209] [crates/gwiki/src/runner.rs:7-9]. Scope and vault modules establish where work happens, with registry, setup, schema, store, and model files providing durable scope metadata, PostgreSQL objects, runtime validation, storage boundaries, and canonical IDs [crates/gwiki/src/scope.rs:12-16] [crates/gwiki/src/vault.rs:19-22] [crates/gwiki/src/registry.rs:15-20] [crates/gwiki/src/setup.rs:29-35] [crates/gwiki/src/store.rs:15-17].
 
-The main flows layer specialized modules over that storage foundation. Ingestion accepts files, URLs, audio, images, PDFs, videos, Git snapshots, Wayback captures, and documents, writes immutable raw Markdown/assets, records source-manifest metadata, and then indexes the vault [crates/gwiki/src/ingest/audio.rs:40-54] [crates/gwiki/src/ingest/wayback.rs:28-47]. Compile and synthesis turn accepted source notes into handoff bundles and compiled wiki pages with grounded citations and safe atomic writes [crates/gwiki/src/compile/mod.rs:49-56] , while explainer, transcribe, vision, media, and video modules provide bounded AI or ffmpeg-backed derived content with degradation reporting    .
+The main flows move content from raw sources into searchable and reviewable wiki knowledge. Collection and ingest paths classify inbox items or external inputs, persist raw records first, generate derived markdown for media, documents, images, audio, video, URLs, and PDFs, then index markdown into documents, chunks, links, sources, and ingestion events [crates/gwiki/src/collect.rs:18-21] [crates/gwiki/src/indexer.rs:16-18] [crates/gwiki/src/transcribe.rs:14-18] [crates/gwiki/src/vision.rs:19-23] [crates/gwiki/src/video.rs:1-16]. Search, vector sync, Falkor graph loading, and code graph mapping collaborate to retrieve pages through BM25, semantic vectors, graph expansion, and code-provenance relationships, with benchmark and daemon probes reporting degraded optional services [crates/gwiki/src/vector.rs:17-26] [crates/gwiki/src/falkor_graph.rs:30-32] [crates/gwiki/src/code_graph.rs:15-18] [crates/gwiki/src/benchmark.rs:30-39] [crates/gwiki/src/daemon.rs:11-18].
 
-Operationally, `commands` adapts parsed `Command` variants into scoped command outcomes and delegates to domain modules such as health, audit, lint, export, collect, and librarian . Health combines lint, page collection, source manifests, provenance, citation indexing, stale detection, broken links, duplicate concepts, and report persistence , while audit checks generated and prose claims against inline sources, frontmatter, provenance, and ignored-section rules . Search and graph support collaborate through BM25, semantic/Qdrant vectors, graph boosts, FalkorDB graph sync, and code-graph provenance mapping: vector sync batches indexed chunks into deterministic Qdrant points , and Falkor graph sync loads wiki facts plus capped shared code edges into the `gobby_wiki` graph for search, context, exports, and refresh decisions .
+Maintenance and synthesis modules keep the vault trustworthy and usable after ingestion. Lint, health, audit, credibility, librarian, and citation helpers inspect markdown links, source freshness, provenance support, unsupported claims, and reportable quality signals, persisting or rendering structured results for CLI output [crates/gwiki/src/lint.rs:13-22] [crates/gwiki/src/health.rs:22-34] [crates/gwiki/src/audit.rs:36-38] [crates/gwiki/src/credibility.rs:7-13] [crates/gwiki/src/librarian.rs:15-20] [crates/gwiki/src/citations.rs:6-14]. Research sessions, compilation, synthesis, and explainer generation then turn accepted notes and grounded sources into vault-safe pages while provenance and frontmatter preserve support links and metadata across read, write, export, and review workflows [crates/gwiki/src/session.rs:15-18] [crates/gwiki/src/synthesis.rs:1-19] [crates/gwiki/src/explainer.rs:24-26] [crates/gwiki/src/provenance.rs:14-22] [crates/gwiki/src/frontmatter.rs:10-13] [crates/gwiki/src/exports.rs:9-13].
 
 ## Call Diagram
 
@@ -1281,27 +1184,27 @@ sequenceDiagram
     participant m_00015808_7660_5129_8df1_45d4b9551ad1 as section_claim_comparisons &#91;function&#93;
     participant m_00589531_b7ac_54da_a6ca_02d9c8ea1804 as ingest_image_with_vision &#91;function&#93;
     participant m_01368509_6873_510a_9138_026736b2283e as frontmatter_migration_parses_shared_contract_keys &#91;function&#93;
-    participant m_014c2f03_e0e9_59cb_945c_7a8bb9c65a6b as source_kind_for_url_response &#91;function&#93;
     participant m_017e301e_e617_58cc_b179_cb2195a4f3f0 as sanitize_pdf_page_markdown &#91;function&#93;
     participant m_01a578a5_71ed_5a3f_a7a4_153605f04415 as english_one_pass_vs_target_first &#91;function&#93;
-    participant m_01a9eb77_3fbf_517f_aa3d_46928229f6d9 as analytics_graph_from_memory &#91;function&#93;
+    participant m_01a66b80_f006_5fb4_8c35_1312f7b68adb as CountingStore.record_ingestion &#91;method&#93;
     participant m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add as all_source_refresh_skips_unsupported_records &#91;function&#93;
+    participant m_0263f169_28eb_5daf_af73_0e82de1a1e71 as synthesize_article &#91;function&#93;
     participant m_02d14539_2527_53e3_a472_18449d0abb5d as ingest_audio_with_transcription_without_index &#91;function&#93;
     participant m_038959ea_6f68_51a7_b28d_9b857beca386 as extract_docx &#91;function&#93;
+    participant m_041f849e_720e_500c_8373_09cf0694550f as scoped_text_id &#91;function&#93;
     participant m_04796375_e1a3_5fa7_af29_7b585d7764a4 as parse_frontmatter &#91;function&#93;
     participant m_3543c95c_df70_5fa5_9de5_b2376e07fccc as transcribe_for_markdown &#91;function&#93;
-    participant m_38c2171b_952e_589f_a60c_c7c20cd5719d as content_type_media_type &#91;function&#93;
     participant m_4a3322af_f8bc_5dc0_a366_6e5523d13c7c as is_markdown_horizontal_rule &#91;function&#93;
+    participant m_4cc01a9b_4cd0_5f77_a008_49c7410cf3d0 as ground_article_explainer &#91;function&#93;
     participant m_585c7602_49d9_56e7_bcb5_2c9d6e14f120 as parse_metadata &#91;function&#93;
     participant m_5a5a8b89_8f80_5e29_911d_0e57b4729095 as seed_unsupported_connector &#91;function&#93;
     participant m_67b04ae9_5316_58ad_8c9e_4345e12cef0e as extract_xml_paragraphs &#91;function&#93;
     participant m_6a95a7e1_e58c_55a8_ac11_94f20e7abbc5 as neutralize_gwiki_page_marker_variants &#91;function&#93;
-    participant m_6bfcd22f_3c8b_56e6_950a_9a957044c969 as analytics_graph_from_facts &#91;function&#93;
-    participant m_6dabf274_5145_5116_ab12_740528a0b01d as find_closing_delimiter &#91;function&#93;
     participant m_82f3e4f9_5e64_5f94_84ff_2c0e0dbef37e as normalize_claim &#91;function&#93;
     participant m_89d5ac91_7ebb_524b_afcd_aef82ff7e4bd as seed_url &#91;function&#93;
     participant m_8c66f12f_4bbb_5a85_b464_7dc9611dfb24 as request &#91;function&#93;
     participant m_9076381c_f935_5c44_bf48_257b15ba9c62 as read_zip_entry &#91;function&#93;
+    participant m_9aa33ced_929a_54ad_a23d_84bb6d6291d4 as cap_scoped_id &#91;function&#93;
     participant m_a40abd46_665f_5ed9_bf15_40147ac6ba9f as snapshot &#91;function&#93;
     participant m_abcbd023_5ca6_5268_8972_4c4d361d8fbe as render_raw_audio_markdown &#91;function&#93;
     participant m_b904720c_a279_5107_93cd_ceb111199ebb as translate_audio &#91;function&#93;
@@ -1311,322 +1214,326 @@ sequenceDiagram
     m_00015808_7660_5129_8df1_45d4b9551ad1->>m_82f3e4f9_5e64_5f94_84ff_2c0e0dbef37e: calls
     m_00589531_b7ac_54da_a6ca_02d9c8ea1804->>m_f6fff319_9e6b_5d72_9655_068135e8ea16: calls
     m_01368509_6873_510a_9138_026736b2283e->>m_04796375_e1a3_5fa7_af29_7b585d7764a4: calls
-    m_014c2f03_e0e9_59cb_945c_7a8bb9c65a6b->>m_38c2171b_952e_589f_a60c_c7c20cd5719d: calls
     m_017e301e_e617_58cc_b179_cb2195a4f3f0->>m_4a3322af_f8bc_5dc0_a366_6e5523d13c7c: calls
     m_017e301e_e617_58cc_b179_cb2195a4f3f0->>m_6a95a7e1_e58c_55a8_ac11_94f20e7abbc5: calls
     m_01a578a5_71ed_5a3f_a7a4_153605f04415->>m_8c66f12f_4bbb_5a85_b464_7dc9611dfb24: calls
     m_01a578a5_71ed_5a3f_a7a4_153605f04415->>m_b904720c_a279_5107_93cd_ceb111199ebb: calls
     m_01a578a5_71ed_5a3f_a7a4_153605f04415->>m_c68dee89_e779_5e4f_998c_585372ffeab9: calls
-    m_01a9eb77_3fbf_517f_aa3d_46928229f6d9->>m_6bfcd22f_3c8b_56e6_950a_9a957044c969: calls
+    m_01a66b80_f006_5fb4_8c35_1312f7b68adb->>m_01a66b80_f006_5fb4_8c35_1312f7b68adb: calls
     m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add->>m_5a5a8b89_8f80_5e29_911d_0e57b4729095: calls
     m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add->>m_89d5ac91_7ebb_524b_afcd_aef82ff7e4bd: calls
     m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add->>m_a40abd46_665f_5ed9_bf15_40147ac6ba9f: calls
     m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add->>m_f0c37b2c_e586_5edd_83aa_ecf554126398: calls
+    m_0263f169_28eb_5daf_af73_0e82de1a1e71->>m_4cc01a9b_4cd0_5f77_a008_49c7410cf3d0: calls
     m_02d14539_2527_53e3_a472_18449d0abb5d->>m_3543c95c_df70_5fa5_9de5_b2376e07fccc: calls
     m_02d14539_2527_53e3_a472_18449d0abb5d->>m_abcbd023_5ca6_5268_8972_4c4d361d8fbe: calls
     m_038959ea_6f68_51a7_b28d_9b857beca386->>m_67b04ae9_5316_58ad_8c9e_4345e12cef0e: calls
     m_038959ea_6f68_51a7_b28d_9b857beca386->>m_9076381c_f935_5c44_bf48_257b15ba9c62: calls
+    m_041f849e_720e_500c_8373_09cf0694550f->>m_9aa33ced_929a_54ad_a23d_84bb6d6291d4: calls
     m_04796375_e1a3_5fa7_af29_7b585d7764a4->>m_585c7602_49d9_56e7_bcb5_2c9d6e14f120: calls
-    m_04796375_e1a3_5fa7_af29_7b585d7764a4->>m_6dabf274_5145_5116_ab12_740528a0b01d: calls
 ```
 
 ## Child Modules
 
-- [[code/modules/crates/gwiki/src/ai|crates/gwiki/src/ai]] - The `ai` module is the `gwiki` integration layer for audio transcription, audio translation, and vision extraction. Its module surface is split into chunk handling, production client adapters, and translation orchestration through `chunk`, `clients`, and `translate` submodules [crates/gwiki/src/ai/mod.rs:1-4]. The chunking side defines upload limits, fixed audio constants, default 10-minute windows, 3-second overlap, the `AudioChunk` model, chunked output wrapper, chunk transcription modes, and an `AudioChunker` trait with a media-backed implementation that reads split audio bytes from generated chunk files   .
+- [[code/modules/crates/gwiki/src/ai|crates/gwiki/src/ai]] - The `ai` module is the internal namespace for gwiki’s audio and vision AI support, exposing `chunk`, `clients`, and `translate` as sibling submodules rather than adding its own orchestration logic [crates/gwiki/src/ai/mod.rs:1-4]. Its responsibilities center on adapting crate-level transcription and vision workflows onto core AI backends, handling upload-size constraints, and providing translation behavior on top of transcription outputs. The client layer wraps `AiContext`, selects daemon or direct routes per capability, and maps core AI transcription/vision results and errors back into gwiki types  .
 
-The main transcription flow starts from a `TranscriptionRequest`, decides whether chunking is needed, and either sends one request or splits audio into overlapping chunks, then merges metadata, offsets segment ranges, and removes overlap duplicates. Chunk modes let the same pipeline run raw transcription, direct English translation, or segment translation for a target language [crates/gwiki/src/ai/chunk.rs:38-47]. Translation orchestration sits above the client trait: `translate_audio` normalizes the requested target, prefers `translate_to_english` for English output, falls back to transcription plus segment translation when that fails, and otherwise transcribes first before translating transcript segments [crates/gwiki/src/ai/translate.rs:6-29]. Segment translation resolves the source language, skips translation when source and target match, replaces segment text, and updates language/task metadata to mark translated output [crates/gwiki/src/ai/translate.rs:31-55].
+The chunking flow in `chunk.rs` defines the shared chunk data model, transcription modes, and `AudioChunker` abstraction, with `MediaAudioChunker` splitting media into overlapping chunks and loading their bytes from disk  [crates/gwiki/src/ai/chunk.rs:58]. It enforces constants such as a 24 MiB upload threshold, a default ten-minute chunk window, and a three-second overlap, then routes work through normal transcription, English translation, or segment translation depending on the selected `ChunkTranscriptionMode`  [crates/gwiki/src/ai/chunk.rs:38-47]. The surrounding helpers merge chunk outputs by offsetting timestamps, deduplicating overlap regions, preserving metadata, and tolerating partial failures according to the summarized tests.
 
-The production clients wrap `gobby_core` AI facilities behind `gwiki`’s `TranscriptionClient` and `VisionClient` traits. `ProductionTranscriptionClient` stores a shared `AiContext`, chooses daemon or direct execution from `effective_route`, sends audio requests with the proper capability and MIME type, and maps core transcription results and AI errors into `TranscriptionOutput` and `WikiError`  . The same file also owns indexed segment-translation support and the production vision adapter, while tests across `chunk.rs` and `translate.rs` use fake chunkers and fake clients to validate chunk boundaries, fallback behavior, language precedence, and retry behavior.
-- [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]] - The commands module is the gwiki CLI execution layer: `mod.rs` routes each top-level `Command` variant to a focused command file and provides shared helpers for scoped outcomes and analysis-style commands that resolve scope, run a closure, serialize JSON, and render text [crates/gwiki/src/commands/mod.rs:30-100] [crates/gwiki/src/commands/mod.rs:102-113] [crates/gwiki/src/commands/mod.rs:115-139]. Most command files follow that pattern by resolving a `ScopeSelection`, producing a structured report or payload, and wrapping it as a `CommandOutcome`; examples include health, init, collect, export, audit, lint, and librarian [crates/gwiki/src/commands/health.rs:4-19]   [crates/gwiki/src/commands/export.rs:4-30] [crates/gwiki/src/commands/audit.rs:3-13] [crates/gwiki/src/commands/lint.rs:3-11] [crates/gwiki/src/commands/librarian.rs:3-11].
+Translation is layered separately in `translate.rs`: `translate_audio` normalizes the target language, uses the direct `translate_to_english` path when the target is English, and falls back to transcription plus segment translation if that direct path fails [crates/gwiki/src/ai/translate.rs:6-29]. `translate_transcription_segments` detects or applies the source language, skips translation when source and target match, rewrites segment text, and marks the output with target language and translate task metadata [crates/gwiki/src/ai/translate.rs:31-55]. Together, the files collaborate through the `TranscriptionClient` trait: production clients provide backend access, chunking decides whether and how to split requests, and translation post-processes transcription outputs without owning backend routing itself.
+- [[code/modules/crates/gwiki/src/audit|crates/gwiki/src/audit]] - The audit module identifies unsupported factual claims in wiki pages and renders those findings into a compact text report. Its core flow starts in `unsupported_claims`, which extracts candidate claim lines, computes lines supported by provenance, detects page-level CodeWiki source-span support, and filters out claims that are structural, already provenance-backed, or contain inline source support before emitting `UnsupportedClaim` records with path, line, heading, reason, and source context [crates/gwiki/src/audit/claims.rs:15-44]. Generated CodeWiki pages get special handling: source context is cleared for generated pages, and page-level frontmatter source spans can support structural claims without implying broad support for prose .
 
-The more stateful flows coordinate indexing, retrieval, graph context, source management, and AI-backed synthesis. Search can run against an attached database or local indexed store, chooses graph and semantic backends, bounds snippets, and feeds `ask`, whose child modules plan evidence under a prompt budget and assemble answer output with hits, citations, degradations, sources, and truncation metadata   [crates/gwiki/src/commands/ask/evidence.rs:33-83] [crates/gwiki/src/commands/ask/assembly.rs:6-39]. Indexing validates roots, selects PostgreSQL or memory stores, synchronizes optional Qdrant and FalkorDB services, and reports degradations; graph and graph-context commands reuse PostgreSQL facts and optional Falkor configuration to export artifacts or augment context while degrading cleanly when integrations are absent   .
+Claim extraction and validation are centered in `claims.rs`, which classifies lines, tracks headings, recognizes ignored sections and lines, and validates inline citation-like tokens and CodeWiki source spans. It collaborates with lint page parsing, Markdown heading/fence helpers, provenance graphs, and synthesis slugging to distinguish prose claims from structural Markdown and generated CodeWiki metadata  . The report layer is deliberately simple: `render_text` writes the audit scope, then either `- none` or one line per unsupported claim as `path:line claim`, appending source IDs when source context is available [crates/gwiki/src/audit/render.rs:3-32].
 
-Several commands form higher-level quality and maintenance workflows over the same scope, manifest, provenance, and graph primitives. Citation quality defines report sections for credibility, coverage gaps, contradictions, stale sources, and confidence, with a child contradiction stage that only runs AI detection when available and sanitizes findings against compared source IDs  . Source listing/removal and refresh manage manifest-backed raw sources and assets with validation, dry-run planning, rollback, and re-index outcomes   . Review-report and trust combine runtime status, PostgreSQL/Falkor graph data, provenance, health, audit, and index metrics into markdown or structured trust summaries, so the command layer acts as the integration point between storage, analysis modules, optional services, and user-facing output [crates/gwiki/src/commands/review_report.rs:28-105] .
-- [[code/modules/crates/gwiki/src/compile|crates/gwiki/src/compile]] - The compile module owns the path from accepted research notes to wiki-ready compilation artifacts. Its public surface defines requests, options, outcomes, bundles, and accepted source records, including defaults for topic articles and daemon synthesis availability, while `compile_to_wiki` delegates into the option-aware flow and `prepare_handoff` validates the request, normalizes targets, collects sources, and emits a `.gwiki/compile/{handoff_id}.md` bundle . The bundle carries the user topic and outline alongside accepted source chunks, citations, conflicts, missing evidence, target-page intent, and output paths, giving downstream synthesis a structured handoff rather than raw notes [crates/gwiki/src/compile/mod.rs:49-56].
+The test module exercises the module as an end-to-end audit surface and as smaller claim-parsing helpers. It verifies that `run` preserves scope, paths, headings, source context, and line numbers for unsupported claims, while also covering generated CodeWiki behavior, frontmatter parsing, multiline comments, inline source validation, configured ignored sections, and equivalence between legacy and shared frontmatter provenance forms [crates/gwiki/src/audit/tests.rs:14-48] [crates/gwiki/src/audit/tests.rs:51-117] .
+- [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]] - The commands module is the CLI orchestration layer for gwiki: `mod.rs` dispatches each `Command` variant to a command-specific `execute` function and centralizes scoped outcome construction plus JSON serialization error handling [crates/gwiki/src/commands/mod.rs:30-102] [crates/gwiki/src/commands/mod.rs:104-115] [crates/gwiki/src/commands/mod.rs:117-141]. Most files follow the same shape: resolve a `ScopeSelection`, run domain work against the resolved vault or configured services, and return a `CommandOutcome` with structured JSON and display text, as seen in sources listing/removal [crates/gwiki/src/commands/sources.rs:15-23], path/title reading [crates/gwiki/src/commands/read.rs:17-28], initialization , collection , export [crates/gwiki/src/commands/export.rs:4-30], health [crates/gwiki/src/commands/health.rs:4-19], and status [crates/gwiki/src/commands/status.rs:11-30].
 
-Source collection is handled by `collect.rs`: it walks `session.accepted_notes`, resolves each note path, checks that it exists, enforces scope safety, reads it, parses the note into sections, and appends accepted chunks with their offsets [crates/gwiki/src/compile/collect.rs:10-82]. During that pass it merges citations, conflicting claims, and evidence gaps with order-preserving deduplication, so later rendering and synthesis receive a consolidated source view [crates/gwiki/src/compile/collect.rs:10-82]. Rendering then turns the bundle into Markdown, formats repeated list sections, and writes target pages only after rejecting unsafe destinations such as absolute, escaping, existing, or symlink-mediated paths [crates/gwiki/src/compile/render.rs:11-47] .
+Its heavier flows connect wiki content to search, graph, provenance, AI, and service-backed indexing. Search resolves local or PostgreSQL-backed retrieval and preserves raw evidence for consumers [crates/gwiki/src/commands/search.rs:41-78] [crates/gwiki/src/commands/search.rs:80-143]; `ask` builds on that by rejecting unavailable LLM routing, planning bounded evidence, assembling a grounded answer, and optionally synthesizing with AI [crates/gwiki/src/commands/ask.rs:20-41] [crates/gwiki/src/commands/ask/evidence.rs:31-83] [crates/gwiki/src/commands/ask/assembly.rs:6-39]. Index, setup, graph, graph-context, benchmark, review-report, citation-quality, and trust handle the operational side: connecting to PostgreSQL, Qdrant, FalkorDB, provenance, and AI context; detecting degradations; and rendering reports or artifacts [crates/gwiki/src/commands/index.rs:54-86] [crates/gwiki/src/commands/setup.rs:20-92] [crates/gwiki/src/commands/graph.rs:13-52] [crates/gwiki/src/commands/graph_context.rs:13-83] [crates/gwiki/src/commands/review_report.rs:28-105]  [crates/gwiki/src/commands/trust.rs:14-46].
 
-The index side keeps compiled content connected back into the vault. `update_wiki_index` creates and locks `.gwiki/index.lock`, loads or initializes `_index.md`, generates the article wiki link, inserts it under “Compiled pages” when missing, and writes the index back [crates/gwiki/src/compile/index.rs:16-63]. The same file also supports provenance and synchronization by mapping chunks and articles to section IDs, writing provenance, marking sources compiled, and using file/index locks around shared wiki state . The test suite ties these flows together with fixtures for research sessions and coverage for bundle contents, non-destructive handoff behavior, write-path validation, index maintenance, Obsidian Markdown output, and degraded or skipped explainer synthesis [crates/gwiki/src/compile/tests.rs:7-25] .
-- [[code/modules/crates/gwiki/src/graph|crates/gwiki/src/graph]] - The `crates/gwiki/src/graph` module owns the wiki graph data model and the exported views built from it. Its core types represent documents, sources, resolved or unresolved links, code edges, and the aggregate `WikiGraphFacts`, while export-facing structures carry graph nodes, edge groups, analytics, and degradation metadata for serialization  . The module also defines shared graph labels, relationship constants, helper IDs, and `MemoryWikiGraph`, which keeps facts in memory and derives backlinks, link suggestions, and related-path rankings from the same fact set .
+The files collaborate by keeping command entry points thin while sharing common runners and domain helpers. Analysis-style commands such as audit, lint, and librarian delegate to `run_analysis_command` with a label, analyzer, and renderer [crates/gwiki/src/commands/audit.rs:3-13] [crates/gwiki/src/commands/lint.rs:3-11] [crates/gwiki/src/commands/librarian.rs:3-11], while specialized commands own their local render models and validation paths, such as safe source removal with rollback support [crates/gwiki/src/commands/sources.rs:25-122] or read diagnostics for invalid, missing, ambiguous, and found content . Child modules extend the larger commands where separation matters: `ask` splits evidence planning from output assembly [crates/gwiki/src/commands/ask/evidence.rs:14-16] [crates/gwiki/src/commands/ask/assembly.rs:6-39], `citation_quality` isolates AI-backed contradiction checks and explicit AI-disabled behavior [crates/gwiki/src/commands/citation_quality/contradictions.rs:31-43], and `refresh` carries selection, planning, dry-run, and execution state through its own command pipeline  .
+- [[code/modules/crates/gwiki/src/compile|crates/gwiki/src/compile]] - The `compile` module turns accepted research-session notes into a wiki compilation handoff and, when enabled, synthesized wiki pages. Its top-level types carry the request topic, outline, target page, write intent, accepted source chunks, citations, conflicts, gaps, and resulting wiki write metadata through the pipeline, with `compile_to_wiki`, `compile_to_wiki_with_options`, and `prepare_handoff` coordinating collection, rendering, handoff writing, optional target-page writing, and synthesis inputs .
 
-The export flow starts from `WikiGraphFacts::export_graph`, deduplicating document, source, citation, target, and code endpoint nodes while building directed trust, audit, link, and code relationships. Sources produce `supports` and `cites` edges, resolved links can add placeholder document nodes, and unresolved links become target nodes so missing wiki targets remain visible in the graph [crates/gwiki/src/graph/export.rs:11-100]. `render_graph_report` then formats that export into a markdown report with counts, degradation state, analytics, and Mermaid output, while the analytics layer converts `MemoryWikiGraph` or `WikiGraphFacts` into `gobby_core`’s `AnalyticsGraph`, rejects duplicate node metadata conflicts, runs analysis, and maps communities, centrality, bridges, god nodes, unexpected links, and hotspots back into serializable export types  .
+The first flow is source collection: `collect_accepted_sources` walks `ResearchSession.accepted_notes`, resolves each note relative to the session scope, rejects out-of-scope paths, reports missing notes as `WikiError::NotFound`, reads note text, parses body chunks and metadata, and deduplicates citations, conflicts, and missing-evidence entries while preserving order . Rendering then converts the resulting `CompileBundle` into a markdown compile page with topic, outline, accepted chunks, citations, conflicting claims, and gaps, while target-page helpers normalize paths, create only vault-contained parent directories, and reject unsafe write locations [crates/gwiki/src/compile/render.rs:11-47] [crates/gwiki/src/compile/render.rs:65-105] [crates/gwiki/src/compile/render.rs:107-144].
 
-The context path builds a separate JSON-friendly payload for search and ask workflows. `GraphContextOptions` records degraded and truncated components, and `GraphContextPack` combines scope, degradation, warnings, neighborhoods, and recommendations into one response shape  . Neighborhood entries merge wiki neighbors, document links, citations, calls, and imports, so consumers can inspect both documentation relationships and code-derived relationships around a path without reassembling the graph themselves .
-- [[code/modules/crates/gwiki/src/ingest|crates/gwiki/src/ingest]] - The ingest module is the raw-source intake layer for gwiki: it exposes file-type submodules for audio, documents, git, images, MediaWiki, PDFs, URLs, videos, and Wayback captures, while centralizing the shared `IngestResult` shape and immutable write helpers for raw markdown and assets  . Its common flow is to create a source record from a snapshot or local input, write a raw markdown representation under `raw/`, optionally persist original or derived assets, and then index the vault through helpers such as `index_after_ingest` or `write_raw_then_index`  [crates/gwiki/src/ingest/audio.rs:40-54] [crates/gwiki/src/ingest/wayback.rs:28-47].
+The wiki bookkeeping flow is handled by `index.rs`: it locks `.gwiki/index.lock`, reads or initializes `_index.md`, inserts a synthesized article link under “Compiled pages” only if absent, and writes the updated index . The same file also records provenance under its own lock by deriving article sections, mapping source chunks to sections, and marking matching source manifest entries as compiled [crates/gwiki/src/compile/index.rs:16-63] [crates/gwiki/src/compile/index.rs:65-94]. The test module ties these pieces together with fixtures that verify required bundle sections, Obsidian-style output, index preservation, provenance, path-safety rejection, symlink traversal defense, and non-destructive write behavior  [crates/gwiki/src/compile/tests.rs:28-72] [crates/gwiki/src/compile/tests.rs:134-170].
+- [[code/modules/crates/gwiki/src/falkor_graph|crates/gwiki/src/falkor_graph]] - The `falkor_graph` module bridges wiki search data, Postgres facts, and FalkorDB graph storage. It can load scoped wiki documents and links from Postgres into `WikiGraphFacts`, resolving raw link targets through path normalization, title slug lookup, unresolved-target preservation, and external-link filtering before sync writes are generated [crates/gwiki/src/falkor_graph/wiki_facts.rs:13-98] [crates/gwiki/src/falkor_graph/wiki_facts.rs:100-132]. The sync path then opens the configured Falkor graph, clears existing scoped wiki nodes, and replays generated Cypher statements, converting connection and write failures into configuration errors [crates/gwiki/src/falkor_graph/sync.rs:13-29] .
 
-The local file entry point acts as a dispatcher: it detects whether an input is generic text, media, PDF, office/HTML document, or stdin, then routes it into the specialized no-index pipelines before replay metadata and degradation summaries are attached [crates/gwiki/src/ingest/file.rs:53-57] [crates/gwiki/src/ingest/file.rs:65-78] [crates/gwiki/src/ingest/file.rs:80-262]. Specialized modules own their own snapshot/result types and enrichment steps: audio stores the original bytes and transcript markdown with production transcription or fallback degradation  [crates/gwiki/src/ingest/audio.rs:56-87], image ingestion records raw, asset, and vision-derived outputs  , and video coordinates assets, transcripts, frame samples, and optional production processing through indexed and without-index variants [crates/gwiki/src/ingest/video/mod.rs:32-45] .
+For search-time use, the module reads graph boost data and shared code-graph edges from FalkorDB. `load_graph_boost_data` runs separate document and link queries, supports global or scope-filtered Cypher, applies a limit-plus-sentinel pattern through `query_limited`, and reports partial-data degradation when either side is capped [crates/gwiki/src/falkor_graph/boost.rs:11-35]  [crates/gwiki/src/falkor_graph/boost.rs:111-138]. `load_code_graph_edges` filters wiki documents down to source-backed code files, queries call and import relationships from the code graph, spends a shared total edge budget, and records component-specific truncation markers for call, import, or total caps [crates/gwiki/src/falkor_graph/code_edges.rs:18-21] [crates/gwiki/src/falkor_graph/code_edges.rs:23-114] .
 
-Connector-style ingests follow the same raw-first contract but adapt external formats into markdown. URL ingestion fetches snapshots, validates redirects and unsafe addresses, limits response size, then splits HTML extraction from non-HTML asset preservation while reporting batch success or failure status  . Git and MediaWiki register provenance-rich source manifests and render stable markdown from repository files or page revisions  [crates/gwiki/src/ingest/git.rs:30-55] [crates/gwiki/src/ingest/mediawiki.rs:12-20] [crates/gwiki/src/ingest/mediawiki.rs:23-41]. Wayback ingestion similarly validates and decodes archived HTML, derives a title, registers the capture, renders markdown, and writes/indexes it, with helpers for charset handling, title fallback, text extraction, and metadata preservation  .
-- [[code/modules/crates/gwiki/src/search|crates/gwiki/src/search]] - The `crates/gwiki/src/search` module defines the shared wiki-search model and coordinates the concrete retrieval layers. Its root module exposes BM25, graph boost, reciprocal-rank fusion, and semantic search, while defining common scope, source, hit kind, provenance, result, response, path normalization, and error types used across those layers  [crates/gwiki/src/search/mod.rs:20-60]. `SearchScope` provides global, project, and topic filtering with reusable scope-kind/value helpers, and `SearchSource` standardizes source names for BM25, graph, and semantic hits .
+The smaller files provide the glue that keeps those flows consistent. `query.rs` centralizes scope parameter construction and typed row extraction so boost and code-edge queries share the same Cypher literal and optional-field behavior . The tests pin the module’s namespace separation, target resolution behavior, scope escaping, truncation accounting, degradation reporting, and graph-write labeling so wiki graph data does not leak into code-graph concerns and capped query behavior remains explicit .
+- [[code/modules/crates/gwiki/src/graph|crates/gwiki/src/graph]] - The graph module owns the wiki graph data model and the shared utilities used to turn wiki facts into scoped graph outputs. Its core types describe documents, sources, links, code edges, and export payloads, while constants define the wiki-owned graph labels and relationship names used across exporters and queries   . The module exposes `analytics` and `context`, keeps `export` internal, and re-exports `render_graph_report`, so callers work through a small public surface while the files share common ID, node, and formatting helpers .
 
-The main flow starts with source-specific retrieval. BM25 builds sanitized, parameterized PostgreSQL search SQL from a query, scope, and limit, fetches extra candidates, then keeps only keyword-searchable paths carrying BM25 provenance before truncating to the requested limit . Semantic search separates embedding generation from vector lookup: `search_semantic` short-circuits empty queries and invalid limits, chooses a scoped Qdrant collection, embeds the query, searches vectors, and returns hits with optional degradation status . Graph boost accepts seed paths and a scope, then uses graph backends to rank linked neighborhoods, with no-op and unavailable implementations supporting graceful fallback .
+Export flow starts from `WikiGraphFacts::export_graph`, which deduplicates document, source, citation, and link-target nodes, then emits trust and audit edges such as source-to-document `supports` and citation-to-source `cites`; resolved links create document placeholder nodes when needed, while unresolved targets use unresolved-target IDs [crates/gwiki/src/graph/export.rs:11-58] [crates/gwiki/src/graph/export.rs:59-100]. Analytics builds on the same facts and ID helpers, converting wiki documents, sources, citations, and link targets into a core `AnalyticsGraph`; it rejects conflicting duplicate node metadata through `GraphAnalyticsError`, then maps core communities, centrality, bridges, hotspots, and edge refs into serialized export structs  [crates/gwiki/src/graph/analytics.rs:24-39] .
 
-The files collaborate by producing the same `WikiSearchResult` shape with consistent `SearchSource`, `SearchHitKind`, and provenance metadata, then fusing those independent result streams. Graph boost reuses BM25 path-searchability rules so graph-sourced pages remain compatible with keyword-search result constraints . RRF combines BM25, semantic, and graph lists by canonical document identity, merges metadata from duplicate hits, assigns final fusion scores, and preserves degradation details in the final `WikiSearchResponse` [crates/gwiki/src/search/rrf.rs:8-92] [crates/gwiki/src/search/rrf.rs:119-180].
-- [[code/modules/crates/gwiki/src/sources|crates/gwiki/src/sources]] - The `sources` module owns the raw source manifest for a `gwiki` vault: it defines the source data model, renders persisted records into the wiki index, reads that index back, and writes updates durably. Its types cover source kind, ingestion method, compile status, drafts, records, and replay options, with string serialization for persisted metadata and routing conversion for replay flows . The module root ties these pieces together and exposes the public manifest/type APIs plus shared constants for generated markers, source IDs, and lock timing [crates/gwiki/src/sources/mod.rs:1-24].
+Context flow packages the same graph facts for user-facing graph context. `GraphContextOptions` records degraded sources and truncated components, and `GraphContextPack` combines scope, degradation status, warnings, neighborhoods, and recommendations  . Neighborhood records merge wiki relationships with citations and code edges, so the context layer collaborates with the core model by consuming `WikiGraphFacts`, `WikiGraphLinkTarget`, and `WikiGraphCodeEdge` while export/reporting and analytics provide graph-wide serialization and interpretation  .
+- [[code/modules/crates/gwiki/src/ingest|crates/gwiki/src/ingest]] - The ingest module is the common gateway for bringing external material into a gwiki vault as immutable raw source records, optional assets, generated markdown, and index rows. Its root module exposes the concrete ingest families for audio, file, git, image, mediawiki, pdf, url, video, wayback, and document ingestion, and provides the shared `IngestResult` plus low-level helpers for lowercase extensions, raw markdown writes, asset writes, suffixed assets, file-backed assets, metadata rendering, and indexing  . The central invariant is raw-first persistence: sources are registered through the source manifest, bytes or rendered markdown are written under `raw` or `raw/assets`, and indexing is triggered only after the durable content exists  [crates/gwiki/src/ingest/file.rs:46-59] [crates/gwiki/src/ingest/file.rs:62-94].
 
-The main flow starts with a `SourceDraft`, which `SourceManifest` registers into a persisted `SourceRecord`. Registration canonicalizes the source location, computes or reuses a content hash, deduplicates by canonical identity plus hash, assigns a deterministic source ID, and rewrites the manifest when needed . Reading performs the inverse: it scans the raw source index for generated `gwiki-source` markers, deserializes their embedded JSON, and returns an empty manifest if the index file does not exist [crates/gwiki/src/sources/manifest.rs:27-66]. Updates, removals, and writes are coordinated through manifest locking so concurrent writers do not corrupt the index [crates/gwiki/src/sources/manifest.rs:73-92].
+Each source-specific file adapts a different input shape into that same storage/indexing contract. Local file ingestion classifies filesystem or stdin inputs, dispatching path-based content through audio, image, video, document, PDF, or generic pipelines before reindexing, while stdin is rendered as raw markdown and registered as a draft  [crates/gwiki/src/ingest/file/dispatch.rs:42-224]. Remote and structured sources follow parallel flows: URL ingest fetches snapshots, splits HTML from non-HTML assets, records batch successes/failures, and indexes accepted batches; MediaWiki and Wayback ingestion normalize page or capture metadata, render markdown around raw source text or extracted visible HTML text, and write/index the result   [crates/gwiki/src/ingest/wayback.rs:28-47].
 
-Rendering and persistence are split across helper modules. `render_entry` formats each record as a markdown list item with escaped text, inline fields, and JSON metadata in an HTML comment, while location helpers normalize URLs by trimming fragments, lowercasing scheme and authority, sorting query parameters, and trimming trailing slashes for stable IDs and references . Preserved-index helpers keep manual prefix and suffix content around the regenerated manifest block, which the manifest writer combines with rendered entries [crates/gwiki/src/sources/render.rs:77-124]. The final write path goes through `write_atomic`, which creates a sibling temp file, writes and syncs bytes, renames it into place, and fsyncs the parent directory for durability, with platform-specific replacement behavior on Windows .
-- [[code/modules/crates/gwiki/src/support|crates/gwiki/src/support]] - The `support` module gathers gwiki’s shared adapters and normalization helpers behind focused submodules for configuration, counting, environment, graph, Postgres access, scoping, search, text, and time, with `mod.rs` wiring those pieces together for the rest of the crate. Its configuration path can build AI config sources from local Gobby home state or a PostgreSQL hub, with `HubPrimary` resolving regular config values and `$secret:` references through an optional database connection, while local and connection-backed helpers resolve indexing options and shared code graph limits with defaults and config precedence. crates/gwiki/src/support/mod.rs:1-12 crates/gwiki/src/support/config.rs:18-20 crates/gwiki/src/support/config.rs:22-44 crates/gwiki/src/support/config.rs:46-61
+Media-heavy submodules extend the same pattern with derived content and graceful degradation. Audio and image ingestion store the original bytes as assets plus raw markdown, then optionally route through AI transcription, translation, OCR, or vision extraction selected from `AiContext`; when routing is unavailable, they still preserve the original source and record degradation metadata  [crates/gwiki/src/ingest/audio.rs:56-87]  . Document, PDF, and video child modules collaborate with this layer by accepting richer snapshots, writing assets and derived markdown, recording extraction/rendering/transcription degradations, and using indexed wrappers that refresh the wiki index after no-index write paths complete   .
+- [[code/modules/crates/gwiki/src/search|crates/gwiki/src/search]] - The search module defines the shared wiki search API and coordinates three result sources: BM25 keyword search, semantic vector search, and graph-based expansion. Its central model covers scopes, source attribution, hit kinds, provenance, request/response shapes, path normalization, and errors, with `SearchScope` mapping global, project, and topic searches into reusable scope filters and values . The module exposes the four implementation files as submodules and uses `SearchSource` to normalize attribution across `"bm25"`, `"graph"`, and `"semantic"` results  .
 
-The main runtime flows revolve around finding the right backing data and converting it into stable gwiki views. `env.rs` resolves the PostgreSQL URL by preferring direct environment variables, then brokered lookup through the user’s Gobby home bootstrap file, then bootstrap and gcore config fallbacks; it also validates loopback daemon URLs, headers, database URLs, timeouts, and inbox byte limits. `postgres.rs` uses that resolution to require an attached PostgreSQL index, open a readonly client, and run schema validation, while `counts.rs` presents the same `IndexCounts` shape for either memory stores or scoped PostgreSQL tables. crates/gwiki/src/support/env.rs:27-30 crates/gwiki/src/support/env.rs:32-49 crates/gwiki/src/support/env.rs:51-55 crates/gwiki/src/support/postgres.rs:6-39 crates/gwiki/src/support/counts.rs:4-10 crates/gwiki/src/support/counts.rs:22-33
+BM25 owns ranked keyword retrieval: it validates empty or zero-limit work away, sanitizes PostgreSQL full-text queries, builds scoped or global SQL parameters, fetches extra candidates to survive later filtering, then keeps only keyword-searchable BM25-attributed results before truncating to the requested limit   [crates/gwiki/src/search/bm25.rs:46-69]. Semantic search owns embedding-backed retrieval: it defines embedding and vector backend traits, short-circuits empty queries and zero limits, resolves search scope to a Qdrant collection, embeds the query, and returns wiki hits plus optional degradation metadata when embedding or vector services are unavailable   .
 
-The in-memory support flow is built from small reusable collaborators: `scope.rs` resolves user scope selections into identities, search scopes, and optional indexed stores; `graph.rs` turns a memory store into graph facts by copying documents and sources, resolving internal links, rejecting URL-like targets, and using slug or relative-path fallbacks; `search.rs` adapts precomputed BM25 hits, unavailable semantic search, Postgres config lookup, and keyword ranking; and `text.rs` supplies shared tokenization, scoring, safe path normalization, snippets, labels, and slugification. `time.rs` rounds out the package with Unix millisecond timestamps and the downstream `unix-ms:<millis>` collection format. crates/gwiki/src/support/scope.rs:12-36 crates/gwiki/src/support/graph.rs:8-55 crates/gwiki/src/support/graph.rs:57-90 crates/gwiki/src/support/search.rs:15-22 crates/gwiki/src/support/search.rs:26-39 crates/gwiki/src/support/text.rs:7-13 crates/gwiki/src/support/text.rs:26-46 crates/gwiki/src/support/time.rs:8-17
-[crates/gwiki/src/support/config.rs:18-20]
-[crates/gwiki/src/support/counts.rs:4-10]
-[crates/gwiki/src/support/env.rs:21-24]
-[crates/gwiki/src/support/graph.rs:8-55]
-[crates/gwiki/src/support/mod.rs:1-12]
+Graph boosting adds neighboring wiki pages from link structure. It defines graph request/outcome types and backend implementations ranging from no-op to unavailable and Falkor-backed, ranking seed-path neighborhoods from outbound links and backlinks while returning degradation information when graph search cannot run  . The orchestration layer gathers source results and graph seeds, then `rrf.rs` fuses BM25, semantic, and graph hits with reciprocal-rank fusion, deduplicating by canonical key, merging missing metadata, preserving degradation notices, and producing a unified `WikiSearchResponse` [crates/gwiki/src/search/rrf.rs:8-92] [crates/gwiki/src/search/rrf.rs:98-108].
+- [[code/modules/crates/gwiki/src/sources|crates/gwiki/src/sources]] - The `sources` module owns `gwiki`’s raw-source manifest workflow: it defines the metadata model for fetched content, exposes the module API, and manages the generated `raw/INDEX.md` manifest for immutable source records. `types.rs` supplies the shared vocabulary for source kinds, ingestion methods, compile state, drafts, persisted records, and replay options, with serialized snake-case enums and display forms used throughout the manifest and renderer . The module entry point ties these pieces together by wiring the atomic, manifest, render, and type submodules, re-exporting the manifest/type APIs, and defining shared constants for source IDs, lock timing, and generated marker strings [crates/gwiki/src/sources/mod.rs:1-24].
+
+The main flow starts in `SourceManifest`: reads scan `raw/INDEX.md` for embedded `gwiki` JSON markers, deserialize them into `SourceRecord` entries, and return an empty manifest when the index is absent . Registration normalizes source identity through render helpers, hashes and deduplicates drafts by canonical location and content, then writes generated manifest output while preserving user-authored content around it [crates/gwiki/src/sources/manifest.rs:27-213] [crates/gwiki/src/sources/render.rs:47-58] [crates/gwiki/src/sources/render.rs:77-124]. Manifest operations are guarded by lock and timeout helpers so reads, writes, removals, and updates remain safe under concurrent access [crates/gwiki/src/sources/manifest.rs:68-92].
+
+Rendering and persistence are split cleanly from manifest logic. `render.rs` formats each record as a markdown list item with escaped link text/destinations, inline citation/license fields, stable IDs, canonical locations, content hashes, and embedded JSON metadata markers [crates/gwiki/src/sources/render.rs:15-45]. `atomic.rs` then makes writes durable by creating a temporary sibling file, writing and syncing contents, atomically replacing the target, and syncing the parent directory, with platform-specific handling for replacement and directory syncing [crates/gwiki/src/sources/atomic.rs:7-44] [crates/gwiki/src/sources/atomic.rs:46-56] [crates/gwiki/src/sources/atomic.rs:85-104]. Tests cover the expected collaboration points: canonical deduplication, replay metadata round trips, URL normalization, and preservation or stripping of generated manifest sections in mixed manual/generated indexes .
+- [[code/modules/crates/gwiki/src/store|crates/gwiki/src/store]] - The store module defines the persistence boundary for wiki indexing. Its shared model types cover documents, chunks, links, sources, ingestion events, and scoped store identity, with `WikiStoreScope` wrapping project and topic scopes and exposing scope kind, identity, project ID, and topic name for backends to use [crates/gwiki/src/store/types.rs:8-14] [crates/gwiki/src/store/types.rs:17-23] [crates/gwiki/src/store/types.rs:26-33] [crates/gwiki/src/store/types.rs:36-42] [crates/gwiki/src/store/types.rs:45-50]. The helper layer keeps backend behavior consistent by normalizing paths to display form, validating that replacement chunks and links belong to the path being updated, converting display paths back to platform paths, and building scoped IDs from a prefix, scope, path, and optional suffixes [crates/gwiki/src/store/helpers.rs:12-14] [crates/gwiki/src/store/helpers.rs:16-21] [crates/gwiki/src/store/helpers.rs:23-28] [crates/gwiki/src/store/helpers.rs:30-46].
+
+There are two concrete store flows behind the same `WikiIndexStore` interface. `MemoryWikiStore` is the local/test implementation: it retains documents, chunks, links, sources, file hashes, ingestions, deleted paths, and write counters in maps and vectors, then clones or inserts data as trait calls arrive [crates/gwiki/src/store/memory.rs:16-28] [crates/gwiki/src/store/memory.rs:30-81]. Its chunk and link replacement paths call the shared validators before updating derived rows, so even the in-memory backend enforces path consistency [crates/gwiki/src/store/memory.rs:35-46].
+
+`PostgresWikiStore` is the scoped database implementation, wrapping a mutable Postgres client plus a local document metadata cache . It derives scope parameters from `WikiStoreScope`, resolves document metadata from the cache or `gwiki_documents`, and reports missing indexed documents as store data errors . Its implementation imports the same helper functions for path display, scoped ID construction, status/kind mapping, validation, platform path conversion, and transaction rollback handling, so the persistent backend shares the same normalization and integrity rules as the memory backend while adding database-backed upserts, atomic replacement of derived chunks and links, ingestion recording, and deletion of related rows .
+- [[code/modules/crates/gwiki/src/support|crates/gwiki/src/support]] - The support module is the internal utility layer for `gwiki`, grouping helpers for configuration, environment discovery, PostgreSQL access, scope resolution, search, graph construction, text normalization, counting, and timestamps behind `support/mod.rs` [crates/gwiki/src/support/mod.rs:1-12]. Configuration and environment handling are central responsibilities: `HubPrimary` reads hub-backed config from PostgreSQL and resolves `$secret:` values when a connection is available, while `hub_ai_config_source` combines that hub layer with local Gobby-home configuration . The environment path resolves the PostgreSQL DSN from explicit env vars first, then brokered local runtime discovery, bootstrap config, and gcore config, wrapping command-facing failures through `database_url_for` [crates/gwiki/src/support/env.rs:21-24] [crates/gwiki/src/support/env.rs:27-30] [crates/gwiki/src/support/env.rs:32-49] [crates/gwiki/src/support/env.rs:51-55].
+
+For index-facing commands, the module supplies both local and database-backed support flows. PostgreSQL helpers resolve the configured database URL, open read-only clients, and validate attached index schema before command handlers proceed [crates/gwiki/src/support/postgres.rs:6-39] [crates/gwiki/src/support/postgres.rs:41-51]. Count helpers expose a shared `IndexCounts` shape for documents, chunks, links, sources, and ingestions, deriving those totals either from `MemoryWikiStore` or fixed `gwiki_*` PostgreSQL tables through centralized table identifiers [crates/gwiki/src/support/counts.rs:4-10] [crates/gwiki/src/support/counts.rs:12-20] [crates/gwiki/src/support/counts.rs:22-33] [crates/gwiki/src/support/counts.rs:36-42]. Scope support turns a `ScopeSelection` into vault, identity, search, and store scope data, applying topic-over-project precedence and filtering pages before building an indexed in-memory store [crates/gwiki/src/support/scope.rs:12-36] [crates/gwiki/src/support/scope.rs:44-55] [crates/gwiki/src/support/scope.rs:68-76].
+
+The in-memory search and graph pieces collaborate through shared store data and text utilities. `store_search_hits` tokenizes queries and scores documents with normalized keyword matching, while adapters expose precomputed BM25 hits, an unavailable semantic backend, and PostgreSQL-backed config reads [crates/gwiki/src/support/search.rs:11-13] [crates/gwiki/src/support/search.rs:15-22] [crates/gwiki/src/support/search.rs:26-39]. `memory_graph_from_store` copies documents and sources into graph facts, precomputes slug targets, and resolves stored links by rejecting external or empty targets, normalizing relative paths, checking documents, and falling back to slug lookup [crates/gwiki/src/support/graph.rs:8-55] [crates/gwiki/src/support/graph.rs:57-90]. Text helpers provide the normalization primitives used across these flows, including query tokenization, keyword scoring, safe code-path sanitization, snippets, labels, display paths, and slugs, while time helpers provide Unix-millisecond collection for timestamped support behavior [crates/gwiki/src/support/text.rs:7-13] [crates/gwiki/src/support/text.rs:15-22] [crates/gwiki/src/support/text.rs:26-46] [crates/gwiki/src/support/time.rs:3-6] [crates/gwiki/src/support/time.rs:8-17].
+- [[code/modules/crates/gwiki/src/synthesis|crates/gwiki/src/synthesis]] - The synthesis module is responsible for turning accepted research material into vault-safe wiki pages and then writing them without trampling user-authored content. Its central data model classifies generated articles as source, concept, or topic, mapping each kind to a knowledge directory and source label, while `SynthesisInput`, `SynthesisSource`, `SynthesisPrompt`, and `SynthesizedPage` carry job metadata, source chunks, prompt accounting, rendered markdown, and optional explainer reports through the pipeline . The main generation flow builds the article path, validates it remains inside the vault, resolves source pages and citation links, grounds explainer text, and renders markdown with frontmatter, sources, and generated or fallback body content [crates/gwiki/src/synthesis/generate.rs:13-100].
+
+Path handling and rendering are separated into focused helpers. `paths.rs` canonicalizes the vault root and the longest existing target prefix so new files can be checked before they exist, rejects parent-directory/root/prefix escapes, and supplies slugging, relative path, wiki-link, markdown-extension, and unique source-page allocation utilities [crates/gwiki/src/synthesis/paths.rs:10-38] [crates/gwiki/src/synthesis/paths.rs:40-63] . `render.rs` formats YAML frontmatter, source excerpts, list sections, and safely escaped YAML scalars, giving `generate.rs` reusable Markdown building blocks for both article pages and source pages .
+
+Writing is the final safety boundary. `write.rs` offers an advisory merge-intent preflight, then validates the destination inside the vault, checks the existing parent path, creates directories, and either creates a new file or atomically replaces an existing one according to `WritePolicy` . Its tests cover overwrite protection, create-versus-overwrite classification, slug collision behavior, source path reservation, path escape rejection, symlinked parent rejection, and YAML escaping, tying together the module’s invariants around durable writes, safe naming, and predictable generated content [crates/gwiki/src/synthesis/tests.rs:15-42] [crates/gwiki/src/synthesis/tests.rs:45-67] .
+- [[code/modules/crates/gwiki/src/video|crates/gwiki/src/video]] - The video module owns the video-to-markdown data path: it defines the shared types for sampling plans, sampled frames, frame descriptions, aligned transcript/frame groups, audio references, media metadata, degradation records, and markdown requests/results in `types.rs` . Timestamp helpers provide the common conversion layer between transcript milliseconds and human-readable video timestamps, including clamped transcript start seconds, parsing `SS`, `MM:SS`, and `HH:MM:SS` forms, formatting zero-padded timestamps, and serializing transcription ranges .
+
+The main flow starts by building media references: `sample_frames` emits frame zero, then advances by the requested interval until the duration is exceeded, returns no samples for a zero interval, and falls back to only frame zero when duration is unknown . Each sample is assembled by `frame_sample`, which formats the timestamp and creates a `path#t=<timestamp>` source reference, while `audio_reference_for_video` creates a matching `#audio` reference for the same asset . Alignment then combines transcript segments with frame descriptions by timestamp, assigning each transcript segment to the latest frame at or before its start time, with fallbacks for missing or unparsable frame timestamps and for videos with no frames .
+
+Markdown generation is the integration point: `write_video_derived_markdown` aligns transcript and frame data, resolves and creates the output path, renders markdown, and writes it atomically, returning both the relative markdown path and ordered aligned segments [crates/gwiki/src/video/markdown.rs:15-40]. `render_video_derived_markdown` collects normalized metadata from the scope, source record, request paths, audio reference, frame samples, frame images, frame descriptions, transcript data, and degradation information into the derived document [crates/gwiki/src/video/markdown.rs:42-300]. The atomic writer stages bytes in a hidden sibling temp file, flushes and syncs them, renames into place with overwrite handling, cleans up on failure, and syncs the parent directory on Unix ; tests cover frame sampling, alignment, partial failure metadata, and helper fixture construction for source records and transcription output .
 
 ## Files
 
-- [[code/files/crates/gwiki/src/api.rs|crates/gwiki/src/api.rs]] - This file defines the gwiki command API: a `Command` enum for all supported CLI actions, plus the option and result types those actions use. It also centralizes scope modeling with `ScopeSelection`, `ScopeKind`, and `ScopeIdentity`, giving constructors, accessors, and string/display conversions so commands can carry either detected, project, or topic scope consistently.
+- [[code/files/crates/gwiki/src/api.rs|crates/gwiki/src/api.rs]] - This file defines the public API for `gwiki` commands and their supporting configuration types. `Command` enumerates every supported subcommand and carries the scoped inputs and options needed to drive setup, indexing, ingestion, search, reading, graphing, compiling, exporting, and review workflows.
 
-The other structs support configuration and output wiring: `SetupOptions` and `IngestFileOptions` control backend setup and AI-routing behavior, `BenchmarkOptions` sets retrieval benchmark parameters, `ReviewReportOptions` configures report generation, and `CommandOutcome`/`CommandResult` represent execution results. The tests at the end verify the scope constructors, AI option routing, and crate dependency expectations.
-[crates/gwiki/src/api.rs:11-121]
-[crates/gwiki/src/api.rs:124-127]
-[crates/gwiki/src/api.rs:130-144]
-[crates/gwiki/src/api.rs:147-149]
-[crates/gwiki/src/api.rs:151-154]
-- [[code/files/crates/gwiki/src/audit.rs|crates/gwiki/src/audit.rs]] - This file implements the wiki audit logic for checking claim provenance and reporting unsupported content. `AuditOptions` builds the audit configuration, seeding a default set of ignored section headings and optionally extending it from the `GOBBY_WIKI_AUDIT_IGNORED_SECTIONS` environment variable or caller-provided sections; its helper methods normalize headings before matching. `AuditReport`, `UnsupportedClaim`, `AuditSourceContext`, and `ClaimLine` model the structured audit output, while `run` and `run_with_options` drive the audit over collected pages and provenance data. The remaining functions break the audit into focused checks: they render reports, derive source context, identify generated Codewiki pages and valid source spans, classify claim lines and kinds, filter out ignored or structural claims, and decide whether claims are supported by inline sources, frontmatter, or path/scope rules. The tests at the bottom encode the contract for those rules, especially around generated pages, frontmatter handling, ignored sections, and which claims should or should not be reported.
-[crates/gwiki/src/audit.rs:33-35]
-[crates/gwiki/src/audit.rs:37-73]
-[crates/gwiki/src/audit.rs:38-44]
-[crates/gwiki/src/audit.rs:47-54]
-[crates/gwiki/src/audit.rs:56-59]
-- [[code/files/crates/gwiki/src/benchmark.rs|crates/gwiki/src/benchmark.rs]] - This file builds a structured benchmark report for Gobby’s wiki/search systems, combining token compression, graph coverage, retrieval precision, source mix, and model-provider availability into one serializable `BenchmarkReport`. The helper functions gather and normalize data from Postgres, the graph backend, Qdrant, and embedding/model configuration, while the small backend types and report structs package the results; the test cases verify that optional sources are marked degraded only when appropriate, configured backends are not incorrectly degraded, candidate counts are configurable, and negative counts are rejected.
+The rest of the file provides the small types that make those commands consistent: `ReadTarget` for read destinations, option structs for setup/benchmark/ingest/review behavior, and the scope model (`ScopeSelection`, `ScopeKind`, `ScopeIdentity`) used to represent global, project, or topic context. `IngestFileOptions` also knows how to project its AI-routing settings into an `AiContext`, while the tests verify scope construction, translation-target handling, routing application, and crate dependency constraints.
+[crates/gwiki/src/api.rs:11-122]
+[crates/gwiki/src/api.rs:125-128]
+[crates/gwiki/src/api.rs:131-145]
+[crates/gwiki/src/api.rs:148-150]
+[crates/gwiki/src/api.rs:152-155]
+- [[code/files/crates/gwiki/src/audit.rs|crates/gwiki/src/audit.rs]] - Implements the wiki audit pipeline: it defines `AuditOptions` for building a case-insensitive ignored-section set from defaults, environment, or extra inputs, and data types for the resulting `AuditReport`, `UnsupportedClaim`, and `AuditSourceContext`. The top-level `run`/`run_with_options` flow collects scoped pages, loads source context and provenance, computes unsupported claims using the audit options, and returns a consolidated report; `source_context` and `load_provenance` provide the supporting metadata sources.
+[crates/gwiki/src/audit.rs:36-38]
+[crates/gwiki/src/audit.rs:40-76]
+[crates/gwiki/src/audit.rs:41-47]
+[crates/gwiki/src/audit.rs:50-57]
+[crates/gwiki/src/audit.rs:59-62]
+- [[code/files/crates/gwiki/src/benchmark.rs|crates/gwiki/src/benchmark.rs]] - This file builds benchmark summaries for a command and scope by loading scoped or global data from Postgres, measuring token compression, graph coverage, retrieval precision, source mix, and model-provider availability, then combining those subreports into a single `BenchmarkReport` with a sorted list of degraded sources. The helpers split the work into database count/query utilities, optional source resolution, semantic retrieval candidate generation, graph and token metrics, and small test stubs for embedding and vector search backends.
 [crates/gwiki/src/benchmark.rs:30-39]
 [crates/gwiki/src/benchmark.rs:42-48]
 [crates/gwiki/src/benchmark.rs:51-58]
 [crates/gwiki/src/benchmark.rs:61-67]
 [crates/gwiki/src/benchmark.rs:70-75]
-- [[code/files/crates/gwiki/src/citations.rs|crates/gwiki/src/citations.rs]] - This file filters source manifest entries by vault-relative or absolute paths and renders them into human-readable citation strings. `source_records_for_paths` loads the manifest and selects matching `SourceRecord`s, `source_record_matches_path` handles normalized path comparison, and `render_source_citations` maps the selected records through `render_source_citation` to produce the final list. The renderer assembles each citation from the record’s primary identifier, optional source location, kind, fetched timestamp, license, and content hash, while `join_citation_parts` keeps the output punctuated cleanly without duplicating punctuation. The tests verify citation formatting, punctuation handling, and that locations are not repeated when already used as the primary citation.
+- [[code/files/crates/gwiki/src/citations.rs|crates/gwiki/src/citations.rs]] - Builds formatted source citations from a vault’s source manifest. `render_source_citations` reads matching `SourceRecord`s via `source_records_for_paths`, `source_record_matches_path` normalizes absolute and vault-relative path comparisons, and `render_source_citation` assembles each record’s citation text from its primary identifier plus source, kind, fetched time, optional license, and hash using `join_citation_parts` to keep punctuation clean; the tests verify formatting, punctuation handling, and avoiding duplicated paths.
 [crates/gwiki/src/citations.rs:6-14]
 [crates/gwiki/src/citations.rs:16-35]
 [crates/gwiki/src/citations.rs:37-46]
 [crates/gwiki/src/citations.rs:48-69]
 [crates/gwiki/src/citations.rs:71-88]
-- [[code/files/crates/gwiki/src/code_graph.rs|crates/gwiki/src/code_graph.rs]] - This file provides the code-graph layer for gwiki: it queries a Falkor-backed graph for file or symbol relationships, converts raw rows into structured `CodeGraphEdge` records, and wraps service availability into degradation signals. It also defines change-set and affected-page models, then uses them to map modified files and symbols through the code graph and a provenance graph to the pages that should be refreshed. Helper functions handle query construction, row extraction, path/source normalization, and graceful fallback when graph data is unavailable or malformed.
+- [[code/files/crates/gwiki/src/code_graph.rs|crates/gwiki/src/code_graph.rs]] - This file links the code graph to provenance so the wiki can find which pages are affected by code changes. It defines the query and edge/page data types, builds Cypher for file or symbol targets, fetches and normalizes graph rows into `CodeGraphEdge` values with degradation tracking, and then combines changed files and symbols with graph edges and provenance links to produce deduplicated `AffectedPages` results.
 [crates/gwiki/src/code_graph.rs:15-18]
 [crates/gwiki/src/code_graph.rs:21-28]
 [crates/gwiki/src/code_graph.rs:31-34]
 [crates/gwiki/src/code_graph.rs:37-40]
 [crates/gwiki/src/code_graph.rs:43-47]
-- [[code/files/crates/gwiki/src/collect.rs|crates/gwiki/src/collect.rs]] - Implements inbox collection for a wiki vault: it scans `vault_root/inbox`, skips sidecars, directories, oversized or ambiguous items, classifies each file or URL, and either accepts it into the source manifest or records a skipped action in a `CollectReport`. Accepted items are rendered into raw markdown or stored as assets, status sidecars and `log.md` are updated, and failures trigger cleanup and rollback helpers that preserve error context.
-
-It also includes the supporting plumbing for URL extraction and validation, path and status-sidecar utilities, file writing, and tests that cover routing, indexing, skip behavior, logging, URL parsing, and cleanup error handling.
+- [[code/files/crates/gwiki/src/collect.rs|crates/gwiki/src/collect.rs]] - This file implements inbox collection for a wiki vault: it scans `inbox`, classifies each entry as a URL or file, enforces size limits, writes accepted content into the vault’s raw/indexed structure, and records skipped items with sidecar status files and a markdown log. `CollectReport`, `CollectAction`, and `CollectStatus` model the outcome of a collection run, while helpers like `ensure_collect_paths`, `classify_inbox_item`, `accept_item`, `skip_item`, and the rendering/write utilities handle directory setup, routing, persistence, cleanup, and error reporting. URL parsing and path helpers support the classification and storage flow, and the tests verify routing, indexing, skipping, logging, URL extraction, and rollback/error-context behavior.
 [crates/gwiki/src/collect.rs:18-21]
 [crates/gwiki/src/collect.rs:24-30]
 [crates/gwiki/src/collect.rs:34-37]
 [crates/gwiki/src/collect.rs:39-42]
 [crates/gwiki/src/collect.rs:44-46]
-- [[code/files/crates/gwiki/src/contract.rs|crates/gwiki/src/contract.rs]] - Defines the `gwiki` CLI contract and its reusable contract-building helpers. `contract()` assembles the top-level `CliContract` with version, summary, global and scope flags, and the daemon-backed commands, each paired with its positional/flag requirements and JSON output keys. The helper functions factor out common pieces: `format_flag()` and `ai_flag()` constrain repeated flag values, `ingest_file_flags()` bundles ingestion-related switches and routing flags, `optional_positional()` builds non-required positionals, and `scoped_keys()`/`contract_keys()` generate the shared JSON field lists used by command schemas.
-[crates/gwiki/src/contract.rs:6-469]
-[crates/gwiki/src/contract.rs:471-473]
-[crates/gwiki/src/contract.rs:475-485]
-[crates/gwiki/src/contract.rs:487-490]
-[crates/gwiki/src/contract.rs:492-498]
-- [[code/files/crates/gwiki/src/credibility.rs|crates/gwiki/src/credibility.rs]] - Implements explainable credibility scoring for raw wiki sources. `CredibilityInput` captures the source metadata used in scoring, `CredibilityScore::evaluate` starts from a baseline score and combines weighted signals for source type, freshness, authorship, publisher, and corroboration, then clamps the result to 0-100. The helper functions each translate one aspect of the input into a `CredibilitySignal` with a weight and explanation, and the test verifies the score includes all five explanatory signals.
+- [[code/files/crates/gwiki/src/contract.rs|crates/gwiki/src/contract.rs]] - Defines the `gwiki` CLI contract in one place. `contract()` builds the top-level `CliContract` for the tool, setting its version, summary, global flags, scope handling, and the full command list. The helper functions provide reusable pieces for that schema: `format_flag()` and `ai_flag()` define constrained enum flags, `ingest_file_flags()` groups ingest-related options, `optional_positional()` builds optional positional arguments, and `scoped_keys()` / `contract_keys()` assemble the JSON output key sets used by commands. Together these functions keep the command definitions consistent and make the CLI contract easy to extend.
+[crates/gwiki/src/contract.rs:6-470]
+[crates/gwiki/src/contract.rs:472-474]
+[crates/gwiki/src/contract.rs:476-486]
+[crates/gwiki/src/contract.rs:488-491]
+[crates/gwiki/src/contract.rs:493-499]
+- [[code/files/crates/gwiki/src/credibility.rs|crates/gwiki/src/credibility.rs]] - Defines an explainable credibility scoring model for raw wiki sources. It introduces input and output types plus a `CredibilitySourceType` enum, then evaluates a `CredibilityInput` by combining weighted signals for source type, freshness, author, publisher, and corroboration into a normalized `CredibilityScore` with per-signal explanations. Helper functions build each signal consistently, and the test checks that the score stays high and all signal explanations are present.
 [crates/gwiki/src/credibility.rs:7-13]
 [crates/gwiki/src/credibility.rs:16-22]
 [crates/gwiki/src/credibility.rs:25-30]
 [crates/gwiki/src/credibility.rs:33-36]
 [crates/gwiki/src/credibility.rs:38-58]
-- [[code/files/crates/gwiki/src/daemon.rs|crates/gwiki/src/daemon.rs]] - This file defines the daemon capability probing model for gwiki services: a set of capability enums, endpoint and degradation records, and a final report type that summarizes whether each daemon feature is available, required, and degraded. It ties those types together with static endpoint contracts, a transport abstraction, and probe helpers that inspect daemon endpoints, map HTTP or transport outcomes into `CapabilityAvailability` and `DaemonDegradation`, and assemble a `DaemonCapabilityReport`; the included test doubles and tests verify the fallback behavior for missing endpoints, method-not-allowed probes, transport failure, and probe panics.
+- [[code/files/crates/gwiki/src/daemon.rs|crates/gwiki/src/daemon.rs]] - Probes the Gobby daemon’s required gwiki service endpoints and turns the results into a structured capability report. It defines the capability and endpoint data models, maps probe observations into per-feature availability plus degradation records, and exposes `probe_daemon_capabilities*` entry points that use a default `ureq` transport or a supplied test transport. The implementation checks each endpoint contract, treats transport failures and missing/unauthorized/unexpected HTTP results as degradations, and includes tests with fake transports to verify endpoint-missing, method-not-allowed, transport-failure, and panic paths.
 [crates/gwiki/src/daemon.rs:11-18]
 [crates/gwiki/src/daemon.rs:26-31]
 [crates/gwiki/src/daemon.rs:34-40]
 [crates/gwiki/src/daemon.rs:43-50]
 [crates/gwiki/src/daemon.rs:53-62]
-- [[code/files/crates/gwiki/src/document.rs|crates/gwiki/src/document.rs]] - This file defines the document degradation model used to describe and report parse failures. `DocumentFailureMode` names the supported failure cases and maps each one to a stable string key; `DocumentUnitCount` tags a numeric count with the relevant document unit label (`page_count`, `sheet_count`, or `slide_count`). `DocumentDegradation` combines a failure mode, unit count, and fallback text into one record, while `DocumentDegradationMatrix` formats that record into key-value metadata and a markdown section for human-readable failure reporting. The `document_degradation_matrix` test setup covers the failure modes across office, HTML, and PDF paths.
+- [[code/files/crates/gwiki/src/document.rs|crates/gwiki/src/document.rs]] - This file defines the document degradation model used to describe and report parse failures. `DocumentFailureMode` enumerates the supported failure cases across source, Office, HTML, and PDF handling and maps each variant to a stable string key with `as_str()`. `DocumentUnitCount` wraps a named unit metric such as page, sheet, or slide count, with constructors and accessors for the metric key and value. `DocumentDegradation` combines a failure mode, the relevant unit count, and a fallback string, and exposes the failure reason as the mode’s string label. `DocumentDegradationMatrix` provides helpers to turn a degradation into metadata pairs and a markdown section for reporting, and the `document_degradation_matrix` function builds a test matrix of failure scenarios and their expected unit-count identifiers.
 [crates/gwiki/src/document.rs:4-16]
 [crates/gwiki/src/document.rs:18-34]
 [crates/gwiki/src/document.rs:19-33]
 [crates/gwiki/src/document.rs:37-40]
 [crates/gwiki/src/document.rs:42-71]
-- [[code/files/crates/gwiki/src/error.rs|crates/gwiki/src/error.rs]] - Defines the `WikiError` error model for the wiki crate, collecting all failure modes into a typed enum for config, I/O, JSON/YAML parsing, registry, daemon, invalid input, not found, timeout, indexing, search, and setup errors. Its `code()` method turns each variant into a stable string code, while `is_ffmpeg_unavailable()` recognizes the specific config or I/O patterns that mean ffmpeg is missing. The remaining impls handle formatting, source chaining, and conversions from wrapped errors so higher-level code can preserve root causes and present consistent diagnostics. The tests verify that typed sources are retained, wrapped errors get specific codes, timeouts stay typed, ffmpeg-missing detection works for config and I/O paths, and setup error sources are preserved.
+- [[code/files/crates/gwiki/src/error.rs|crates/gwiki/src/error.rs]] - Defines `WikiError`, the central error enum for `gwiki`, with variants for validation, config, I/O, parsing, registry/daemon, missing resources, timeouts, and wrapped index/search/setup failures. The type ties those cases together by mapping each variant to a stable string code with `code()`, rendering user-facing messages in `Display` with contextual details, exposing underlying causes through `Error::source()` for wrapped/system errors, and providing `is_ffmpeg_unavailable()` to detect a specific missing-ffmpeg failure from either config text or an `io::ErrorKind::NotFound` while running ffmpeg. It also implements `From` conversions for `IndexError`, `SearchError`, and `SetupError` so those errors flow into `WikiError` with their sources preserved, and the tests verify source preservation, code specificity, timeout formatting, and ffmpeg-unavailable detection.
 [crates/gwiki/src/error.rs:10-66]
 [crates/gwiki/src/error.rs:68-100]
 [crates/gwiki/src/error.rs:69-86]
 [crates/gwiki/src/error.rs:88-99]
 [crates/gwiki/src/error.rs:102-159]
-- [[code/files/crates/gwiki/src/explainer.rs|crates/gwiki/src/explainer.rs]] - This file implements bounded LLM explainer synthesis for compiled wiki articles. It defines the prompt and response data types, a token-budgeted prompt builder that formats the topic, outline sections, and accepted source excerpts, and a generation seam that either skips synthesis, returns a trimmed model response, or marks failure. After generation, it grounds the prose by validating and rewriting `[source: ...]` markers against accepted sources, stripping invented citations, and adding section-level fallback source notes when needed. Supporting helpers handle token estimation, excerpt truncation, citation matching, fallback target selection, and source-token heuristics.
+- [[code/files/crates/gwiki/src/explainer.rs|crates/gwiki/src/explainer.rs]] - This file implements bounded, citation-grounded explainer synthesis for compiled wiki articles. It defines the prompt/response/report data types and the transport seam for generation, builds a single token-budgeted prompt from a `SynthesisInput` by listing requested sections and excerpting accepted sources, then runs generation only when sources are available. After generation, it grounds the model output by rewriting valid `[source: ...]` markers to real links, stripping invented citations, and adding fallback source citations to uncited sections using token-overlap heuristics. Helper functions handle token estimation, excerpt truncation, citation matching, and fallback target selection, and the included tests verify prompt construction, budget enforcement, grounding behavior, and generation skip/fail/success cases.
 [crates/gwiki/src/explainer.rs:24-26]
 [crates/gwiki/src/explainer.rs:39-45]
 [crates/gwiki/src/explainer.rs:49-53]
 [crates/gwiki/src/explainer.rs:57-58]
 [crates/gwiki/src/explainer.rs:64-74]
-- [[code/files/crates/gwiki/src/exports.rs|crates/gwiki/src/exports.rs]] - This file defines the export model and execution path for gwiki. It introduces `ExportKind`, `ExportRequest`, `ExportArtifact`, `ExportCommand`, and `ExportOutput` to describe what is being exported, what gets written, and how results are reported. `WorkflowAsset` plus `bundled_workflow_assets()` provide the built-in workflow templates, while `run()` dispatches export commands to the specific exporters.
-
-The exporters handle writing workflow assets, copying report files, and producing graph exports and markdown reports. Helper functions such as `write_export()`, `export_relative_path()`, `invalid_export_filename()`, and `workflow_assets_bundle()` enforce safe output paths and bundle layout, and the graph-specific helpers convert graph facts/options into report artifacts or structured errors. The tests verify exports do not mutate wiki state, graph exports include expected degradation and Mermaid output, failed report writes clean up partial JSON output, and graph export errors map to invalid input.
+- [[code/files/crates/gwiki/src/exports.rs|crates/gwiki/src/exports.rs]] - This file implements the export pipeline for GWiki, defining the export kinds, request/output data types, and command variants used to produce filesystem artifacts. It bundles static workflow assets, exports report content or graph data under `outputs/`, validates filenames to keep writes inside that directory, and turns filesystem or graph-analysis failures into `WikiError` values. The main `run` dispatcher routes commands to the appropriate export helper, while the tests verify that exports write the expected artifacts, clean up on partial failure, and do not mutate wiki state.
 [crates/gwiki/src/exports.rs:9-13]
 [crates/gwiki/src/exports.rs:16-20]
 [crates/gwiki/src/exports.rs:23-27]
 [crates/gwiki/src/exports.rs:30-38]
 [crates/gwiki/src/exports.rs:41-45]
-- [[code/files/crates/gwiki/src/falkor_graph.rs|crates/gwiki/src/falkor_graph.rs]] - This file manages the wiki graph’s FalkorDB integration and the helper logic that loads, trims, resolves, and writes graph data. It defines truncation and edge wrapper types for tracking when shared code graph results are capped, then uses them in query/load paths for code edges, boost data, and wiki facts. The core flow is: load wiki documents and links from PostgreSQL-backed graph data, resolve link targets and paths, build Cypher parameters and queries, enforce per-query and global edge limits with sentinel-based truncation tracking, and write or clear scoped data in FalkorDB. The test functions validate the graph name, target resolution, scope parameter formatting, path conversion, Cypher escaping, degradation reporting, truncation behavior, and the required wiki graph write statements.
-[crates/gwiki/src/falkor_graph.rs:29-31]
-[crates/gwiki/src/falkor_graph.rs:33-43]
-[crates/gwiki/src/falkor_graph.rs:34-38]
-[crates/gwiki/src/falkor_graph.rs:40-42]
-[crates/gwiki/src/falkor_graph.rs:46-49]
-- [[code/files/crates/gwiki/src/frontmatter.rs|crates/gwiki/src/frontmatter.rs]] - Defines the wiki frontmatter model and its parse/serialize pipeline. `FrontmatterFormat` selects YAML or TOML, `WikiFrontmatter` holds the canonical metadata fields plus an `unknown` map to preserve legacy or tool-specific keys, and `empty`/`as_json` provide a normalized default and JSON export. The parser side splits out frontmatter delimiters, parses metadata into typed fields, converts generic objects into `WikiFrontmatter`, and reports failures through `FrontmatterError`/`ParsedFrontmatter`. The helper serializers and tests cover round-tripping, stale-markdown marking, legacy unknown-field preservation, and migration of shared contract keys into the wiki metadata shape.
+- [[code/files/crates/gwiki/src/falkor_graph.rs|crates/gwiki/src/falkor_graph.rs]] - This file is the shared entry point for FalkorDB-backed wiki graph loading, wiring together the code-edge, graph-boost, sync, and wiki-facts submodules and re-exporting their loaders. It also defines small data containers for code-graph edge results and graph-boost input: `SharedCodeGraphTruncation` tracks which edge components were truncated, `SharedCodeGraphEdges` pairs the loaded `WikiGraphCodeEdge` list with that truncation state, and `GraphBoostData` groups documents, links, and an optional degradation flag for search-driven graph boost processing.
+[crates/gwiki/src/falkor_graph.rs:30-32]
+[crates/gwiki/src/falkor_graph.rs:34-44]
+[crates/gwiki/src/falkor_graph.rs:35-39]
+[crates/gwiki/src/falkor_graph.rs:41-43]
+[crates/gwiki/src/falkor_graph.rs:47-50]
+- [[code/files/crates/gwiki/src/frontmatter.rs|crates/gwiki/src/frontmatter.rs]] - Defines the frontmatter model and parsing/serialization pipeline for wiki markdown, supporting YAML or TOML delimiters, extracting known metadata fields into `WikiFrontmatter`, and preserving all unknown keys so legacy or tool-specific data survives round trips. The helpers work together to locate the opening and closing delimiters, parse raw frontmatter into structured JSON-backed metadata, serialize it back in the original format, and update documents with stale markers while leaving the body unchanged; `FrontmatterError` provides the common error path.
 [crates/gwiki/src/frontmatter.rs:10-13]
 [crates/gwiki/src/frontmatter.rs:16-30]
 [crates/gwiki/src/frontmatter.rs:32-116]
 [crates/gwiki/src/frontmatter.rs:33-48]
 [crates/gwiki/src/frontmatter.rs:51-115]
-- [[code/files/crates/gwiki/src/health.rs|crates/gwiki/src/health.rs]] - Implements the wiki health check pipeline: it inspects a vault, assembles a `HealthReport`, and can persist both JSON and text summaries. `run` is the entry point that calls `inspect` and then `persist_report`; `inspect` combines lint results, page collection, source manifest/provenance loading, citation indexing, stale-page and stale-citation detection, uncited/uncompiled source tracking, broken-link and duplicate-concept aggregation, and path generation for output files. The rest of the file is helper logic for staleness rules, source-citation matching, markdown/link pattern checks, regex caching, duplicate concept grouping, and report rendering/writing.
+- [[code/files/crates/gwiki/src/health.rs|crates/gwiki/src/health.rs]] - Implements the wiki health-check pipeline: it runs linting and provenance/source analysis for a vault scope, aggregates stale pages, stale citations, uncited sources, broken links, duplicate concepts, and uncompiled sources into a `HealthReport`, then persists JSON and Markdown snapshots under `meta/health`. The supporting functions do the work: stale-page and stale-citation detectors classify issues from page frontmatter and source timestamps, citation indexing and regex helpers find referenced sources in markdown, duplicate-concept scanning groups concept pages by title, and renderers format each issue set into the report text.
 [crates/gwiki/src/health.rs:22-34]
 [crates/gwiki/src/health.rs:37-41]
 [crates/gwiki/src/health.rs:44-47]
 [crates/gwiki/src/health.rs:49-53]
 [crates/gwiki/src/health.rs:55-95]
-- [[code/files/crates/gwiki/src/indexer.rs|crates/gwiki/src/indexer.rs]] - This file implements the wiki vault indexing pipeline: it walks a vault, optionally respects `.gitignore`, hashes files to detect added/changed/deleted/unchanged content, parses markdown documents into indexed chunks and links, and writes the resulting documents, sources, chunks, links, and ingestion events into a `WikiIndexStore`. It also defines the indexing configuration and error types, plus helpers for path classification, heading and link extraction, file writing, and a set of tests covering gitignore handling, deletion behavior, raw source immutability, idempotency, provenance, and memory-limit rejection.
+- [[code/files/crates/gwiki/src/indexer.rs|crates/gwiki/src/indexer.rs]] - This file implements the wiki vault indexer: it walks a vault, discovers indexable markdown files, parses them into documents/chunks/links/sources, and writes the resulting derived rows and ingestion events into a `WikiIndexStore`. `IndexOptions` controls whether `.gitignore` rules are respected, while `IndexError` centralizes I/O, traversal, store, path-boundary, and memory-limit failures with conversion and source chaining support. The helper functions split the work into path filtering, document-kind detection, markdown heading and link extraction, and file writing, and the tests verify incremental indexing behavior, deletion handling, raw-source immutability, provenance preservation, and memory-limit enforcement.
 [crates/gwiki/src/indexer.rs:16-18]
 [crates/gwiki/src/indexer.rs:20-26]
 [crates/gwiki/src/indexer.rs:21-25]
 [crates/gwiki/src/indexer.rs:29-35]
 [crates/gwiki/src/indexer.rs:37-58]
-- [[code/files/crates/gwiki/src/lib.rs|crates/gwiki/src/lib.rs]] - Library entry point for `gwiki`, wiring together the crate’s modules for API, errors, execution, indexing, graph/search, ingestion, media, synthesis, and related wiki/document-processing features. It also re-exports the main command/result types, setup and ingest options, the `WikiError`, and the `run` function for external use. [crates/gwiki/src/lib.rs:1-60]
-- [[code/files/crates/gwiki/src/librarian.rs|crates/gwiki/src/librarian.rs]] - This file defines the librarian’s configuration, report model, analysis helpers, and persistence path for documentation-quality inspection. `Options` controls which dependencies are available, with `offline()` disabling everything and `Default` enabling the PostgreSQL index requirement while otherwise staying offline. `run` gathers health, audit, and lint signals over a scoped vault, then assembles a `ProposalsReport` containing availability checks, suggested remediation tasks, suggested patch diffs, artifact locations, and dependency classifications. The helper functions break that work into small pieces: they detect missing citations, weak provenance, stale or outdated codewiki pages, build check/task/diff records, deduplicate and sort paths, render the report as text, and persist the results to JSON and Markdown artifacts.
+- [[code/files/crates/gwiki/src/lib.rs|crates/gwiki/src/lib.rs]] - Crate root for `gwiki`, declaring the library’s internal modules for wiki ingestion, indexing, search, graph, media, synthesis, and related subsystems, with feature-gated AI and test HTTP support. It also re-exports the main command/API types, `WikiError`, and the `run` entry point for external use. [crates/gwiki/src/lib.rs:1-60]
+- [[code/files/crates/gwiki/src/librarian.rs|crates/gwiki/src/librarian.rs]] - Builds and persists a “librarian” report for a scoped documentation vault: it inspects availability and quality signals, turns them into structured checks, tasks, patch suggestions, and artifact paths, then renders or writes the resulting report to disk. `Options` controls which resources are available, `run` orchestrates the health/audit/lint passes and assembles a `ProposalsReport`, helper functions classify page conditions and generate suggested tasks or patch diffs, and the persistence/rendering helpers serialize the report into JSON, Markdown, and text outputs under the librarian metadata directory.
 [crates/gwiki/src/librarian.rs:15-20]
 [crates/gwiki/src/librarian.rs:22-31]
 [crates/gwiki/src/librarian.rs:23-30]
 [crates/gwiki/src/librarian.rs:33-40]
 [crates/gwiki/src/librarian.rs:34-39]
-- [[code/files/crates/gwiki/src/links.rs|crates/gwiki/src/links.rs]] - This file implements wiki-style and Markdown link extraction for markdown text, producing `WikiLink` records that capture link kind, raw and normalized targets, optional anchors and aliases, byte offsets, and whether the target resolves against a known set. The main `extract_links` scan skips over fenced and inline code ranges, then delegates to specialized parsers for `[[wikilinks]]` and `[label](destination)` links, while helper functions handle escaping, bracket/parenthesis matching, destination parsing, and path normalization. Normalization logic also deduplicates known targets, preserves URL-like paths, and strips or collapses vault-relative path noise so links can be matched consistently. The tests cover link-shape parsing, alias and bracket edge cases, code-block exclusion, and normalization behavior for suffixes and URL-like targets.
+- [[code/files/crates/gwiki/src/links.rs|crates/gwiki/src/links.rs]] - Implements markdown link extraction and normalization for wiki-style content. The file defines `LinkKind` and `WikiLink` to represent parsed links, then provides `extract_links` plus helpers that scan markdown, skip code spans and fenced blocks, parse `[[wikilink]]` and `[label](dest)` forms, split aliases and anchors, normalize targets against vault-style paths, and mark whether each link resolves against a known target set.
 [crates/gwiki/src/links.rs:4-7]
 [crates/gwiki/src/links.rs:10-19]
 [crates/gwiki/src/links.rs:21-23]
 [crates/gwiki/src/links.rs:25-61]
 [crates/gwiki/src/links.rs:63-72]
-- [[code/files/crates/gwiki/src/lint.rs|crates/gwiki/src/lint.rs]] - This file implements the wiki linter: it scans a vault, parses pages, and produces a `LintReport` summarizing broken links, orphan pages, missing frontmatter, duplicate aliases, and missing backlinks. `run` orchestrates the analysis by collecting pages, building lookup maps, counting inbound and outbound links, and assembling issues, while the helper functions handle markdown discovery, path normalization, target resolution, backlink/orphan checks, and report rendering.
+- [[code/files/crates/gwiki/src/lint.rs|crates/gwiki/src/lint.rs]] - This file implements the wiki linter: it scans Markdown pages under a vault root, resolves page and link targets, and assembles a `LintReport` covering broken links, orphan pages, missing frontmatter, duplicate aliases, and missing backlinks. The core `run` function builds the page/target index and link graph, while helper functions handle path normalization, target extraction, orphan and alias detection, and plain-text report rendering. It also includes small test utilities and regression tests that verify relative link resolution, external-link skipping, read-only behavior, and report contents.
 [crates/gwiki/src/lint.rs:13-22]
 [crates/gwiki/src/lint.rs:25-30]
 [crates/gwiki/src/lint.rs:33-36]
 [crates/gwiki/src/lint.rs:38-103]
 [crates/gwiki/src/lint.rs:105-126]
-- [[code/files/crates/gwiki/src/log.rs|crates/gwiki/src/log.rs]] - This file defines the log-writing model for `gwiki`: `LogEntry` captures a timestamped scoped action with a summary and artifact paths, and `LogWriteReport` returns the scope log path plus an optional mirrored global log path. `append_logs` writes each entry to the scope `log.md` first, then mirrors it to the global log only if configured and not the same file, so the scope log remains the source of truth. The lower-level helpers handle creating parent directories, opening/appending the file, writing the log header and rendered entry text, comparing paths and file identities, and resolving fallback paths; the tests verify that scope and global logs are both written when distinct and only written once when they refer to the same underlying file.
+- [[code/files/crates/gwiki/src/log.rs|crates/gwiki/src/log.rs]] - This file defines the log data model and write path for gwiki. `LogEntry` captures a timestamped scope action with summary text and artifact paths, while `append_logs` writes that entry to the scope’s `log.md` and, if configured, mirrors it to a global hub log unless both paths resolve to the same file. The lower-level `append_log` helper creates parent directories, opens the log in append mode, inserts the `# Log` header for new files, and appends the rendered Markdown entry. `render_entry` turns an entry into the final Markdown format, and the path/identity helpers prevent duplicate writes by comparing canonical paths or filesystem identities across platforms. The tests verify both the dual-write behavior and the single-write case when scope and global logs alias the same file.
 [crates/gwiki/src/log.rs:9-15]
 [crates/gwiki/src/log.rs:19-22]
 [crates/gwiki/src/log.rs:25-49]
 [crates/gwiki/src/log.rs:52-90]
 [crates/gwiki/src/log.rs:93-108]
-- [[code/files/crates/gwiki/src/main.rs|crates/gwiki/src/main.rs]] - `crates/gwiki/src/main.rs` defines the `gwiki` command-line entrypoint: it parses global CLI flags, scope selection, and a large subcommand enum, then turns those parsed arguments into internal `gobby_wiki::Command` values and runs the wiki workflow. It also normalizes `--project` usage, initializes stderr-based logging from `RUST_LOG` and `--quiet`, formats errors and exit codes, and provides small `From` conversions that map CLI-specific structs like compile, export, review-report, and setup arguments into the internal command model.
+- [[code/files/crates/gwiki/src/main.rs|crates/gwiki/src/main.rs]] - This file is the `gwiki` binary entrypoint and CLI definition. It uses `clap` to parse global scope and output options plus a large subcommand enum, then maps those parsed arguments into internal `gobby_wiki::Command` and related config types. It also normalizes `--project` usage, selects the active wiki scope, initializes a stderr logger, formats errors and exit codes, and runs `main` to execute the chosen command or print the CLI contract.
 [crates/gwiki/src/main.rs:45-59]
 [crates/gwiki/src/main.rs:62-146]
 [crates/gwiki/src/main.rs:149-164]
 [crates/gwiki/src/main.rs:167-209]
 [crates/gwiki/src/main.rs:212-222]
-- [[code/files/crates/gwiki/src/markdown.rs|crates/gwiki/src/markdown.rs]] - This file parses a Markdown document into a structured domain record for indexing: it extracts frontmatter, wiki links, headings, and content chunks for a given path, and wraps frontmatter or I/O failures in a single `MarkdownParseError`. The helper types and functions work together in a pipeline: fence detection keeps heading scanning out of code blocks, ATX heading parsing normalizes heading text and hierarchy paths, section ranges are tracked as byte offsets, and chunk building turns the body into ordered indexed spans tied to file path and heading metadata. The included tests verify heading range assignment, code-fence exclusion, read-only file parsing, and ATX heading trimming behavior.
+- [[code/files/crates/gwiki/src/markdown.rs|crates/gwiki/src/markdown.rs]] - This file parses Markdown wiki pages into an indexed domain record. It defines `MarkdownHeading` and `MarkdownDomainRecord` to capture the document structure, content offsets, links, and chunks, and wraps frontmatter and I/O failures in `MarkdownParseError` for uniform propagation.
+
+The parsing flow starts with `parse_markdown` and `parse_index_file`, which read a page, extract frontmatter, links, and the body start, then derive headings and chunk ranges from the markdown body. Helpers like `markdown_fence_start` and `markdown_fence_closes` detect fenced code blocks so heading scanning can ignore code, while `parse_atx_heading` and `strip_atx_closing_sequence` normalize ATX headings. `extract_headings`, `build_chunks`, and `push_chunk` then turn the body into ordered heading and chunk metadata with byte ranges and heading paths, and the tests verify range calculation, fence handling, read-only parsing, and heading text normalization.
 [crates/gwiki/src/markdown.rs:11-19]
 [crates/gwiki/src/markdown.rs:22-29]
 [crates/gwiki/src/markdown.rs:32-35]
 [crates/gwiki/src/markdown.rs:38-41]
 [crates/gwiki/src/markdown.rs:43-55]
-- [[code/files/crates/gwiki/src/media.rs|crates/gwiki/src/media.rs]] - This file provides the media-processing layer for Gwiki: it discovers `ffmpeg` and `ffprobe`, probes media duration, extracts audio to temporary WAV files, samples video frames at intervals, and splits audio into fixed or overlapping chunks. The `MediaTools` helper centralizes executable paths, while `Chunk` packages each audio segment’s time range with its temp file. Supporting helpers handle duration parsing and conversion, temp-file creation, command execution, and consistent error construction. The tests verify time formatting, duration parsing, frame-sampling limits, and temp-file cleanup behavior.
+- [[code/files/crates/gwiki/src/media.rs|crates/gwiki/src/media.rs]] - Utilities for media processing built around `ffmpeg` and `ffprobe`: this file probes durations, extracts audio, samples video frames, and splits audio into fixed or overlapping chunks, storing outputs in temporary files. The public functions are thin wrappers that discover the required tools on `PATH` and delegate to shared helpers that run commands, format time arguments, and convert durations between milliseconds and public second-based values. `Chunk` represents one extracted audio segment with its millisecond range and temp-file payload, while the tests verify time formatting, duration parsing, frame-sampling limits, and temp-file cleanup behavior.
 [crates/gwiki/src/media.rs:13-17]
 [crates/gwiki/src/media.rs:19-22]
 [crates/gwiki/src/media.rs:24-27]
 [crates/gwiki/src/media.rs:29-35]
 [crates/gwiki/src/media.rs:37-43]
-- [[code/files/crates/gwiki/src/models.rs|crates/gwiki/src/models.rs]] - This file defines the core wiki data models and naming helpers used by `gwiki`: `WikiScope` represents either a project or topic namespace and provides variant introspection plus derived vector collection names, `WikiSourceKind` normalizes source categories to stable strings, `WikiProvenance` records where a document came from, and `WikiDocumentRow` stores the denormalized database row for a wiki document. The supporting functions validate scope identifiers and map scopes to namespaced storage keys, while the tests verify that those derived names stay properly scoped and that document rows keep their cached scope fields internally consistent.
+- [[code/files/crates/gwiki/src/models.rs|crates/gwiki/src/models.rs]] - This file defines the core wiki data models and storage helpers for `gwiki`: fixed labels, the `WikiScope` and `WikiSourceKind` enums, a `WikiProvenance` record, and the PostgreSQL-facing `WikiDocumentRow` persistence model. The pieces work together by turning a scope into canonical identifiers and vector collection names, normalizing and validating scope IDs, keeping denormalized scope columns consistent with the active variant, and providing tests that confirm the derived names and row validation behave as expected.
 [crates/gwiki/src/models.rs:12-15]
 [crates/gwiki/src/models.rs:17-52]
 [crates/gwiki/src/models.rs:18-23]
 [crates/gwiki/src/models.rs:25-30]
 [crates/gwiki/src/models.rs:32-37]
-- [[code/files/crates/gwiki/src/output.rs|crates/gwiki/src/output.rs]] - This file defines the output layer for `gwiki`: it formats command results for stdout/stderr and provides the serializable response types used by search, query, audit, and ask workflows. The `Format` enum selects JSON or text output, `OutputError` unifies I/O and JSON serialization failures, and `print_result` delegates to `print_json` or `print_text` while `print_status` writes prefixed status messages to stderr. The rest of the file is a set of output models and small constructors: `SearchOutput` derives code citations from code-only hits, `SearchResultType` classifies wiki pages as code or wiki, `QueryOutput` and `AuditOutput` capture their respective command responses, and helpers like `render_query_text` turn structured results back into human-readable text. The tests at the end verify stable JSON shapes and that citation derivation/rendering behave as expected.
+- [[code/files/crates/gwiki/src/output.rs|crates/gwiki/src/output.rs]] - This file defines gwiki’s output layer: a `Format` switch, a unified `OutputError`, and helpers for printing results as JSON, plain text, or status messages. It also contains the serializable response structs for `search`, `ask`, `query`, and `audit` commands, along with citation and search-hit metadata types used to shape stable CLI output. The pieces work together by building command-specific output records, deriving citations from search hits where needed, and rendering those records through the shared print functions and text formatter.
 [crates/gwiki/src/output.rs:10-13]
 [crates/gwiki/src/output.rs:16-19]
 [crates/gwiki/src/output.rs:21-28]
 [crates/gwiki/src/output.rs:22-27]
 [crates/gwiki/src/output.rs:30]
-- [[code/files/crates/gwiki/src/paths.rs|crates/gwiki/src/paths.rs]] - Provides safe path construction for gwiki source files by validating source IDs before they are turned into filesystem paths. `validate_source_id` trims and rejects empty or traversal-like IDs, `raw_source_path` maps a safe ID to `raw/<id>.md`, and `derived_markdown_path` maps a safe `SourceRecord` ID to `knowledge/sources/<id>.md`; the tests cover trimming, rejection of unsafe inputs, and the derived-path case.
+- [[code/files/crates/gwiki/src/paths.rs|crates/gwiki/src/paths.rs]] - This file centralizes safe path construction for wiki source IDs. `validate_source_id` trims an ID and rejects empty or path-traversal-like values, and both `raw_source_path` and `derived_markdown_path` build their respective filesystem locations only after that validation, returning `WikiError::InvalidInput` on unsafe input. The tests exercise the shared guard by confirming whitespace trimming, rejection of unsafe IDs, and correct derived-path generation from a valid `SourceRecord`.
 [crates/gwiki/src/paths.rs:6-22]
 [crates/gwiki/src/paths.rs:24-27]
 [crates/gwiki/src/paths.rs:29-34]
 [crates/gwiki/src/paths.rs:42-47]
 [crates/gwiki/src/paths.rs:50-55]
-- [[code/files/crates/gwiki/src/provenance.rs|crates/gwiki/src/provenance.rs]] - Defines the provenance model for gwiki, linking raw source-note chunks to synthesized wiki sections and persisting those links as an indexed graph. `SourceChunkRef`, `WikiSectionRef`, and `ProvenanceLink` capture the source chunk, target section, and optional claim, while `ProvenanceGraph` stores links in memory and maintains lookup indexes by section ID, page-plus-section, and source ID for fast retrieval. The module also provides a page/section key helper, durable save/load routines for `meta/provenance.json` with JSON and I/O error mapping, and tests that verify linking, round-trip persistence, and empty loads when the file is missing.
+- [[code/files/crates/gwiki/src/provenance.rs|crates/gwiki/src/provenance.rs]] - Defines the provenance model for tracking how raw source chunks support synthesized wiki sections. It introduces `SourceChunkRef`, `WikiSectionRef`, and `ProvenanceLink` as serializable records, then wraps them in `ProvenanceGraph`, which stores links and maintains secondary indexes by section ID, page-plus-section, and source ID so lookups stay fast. The graph can add links, query them through each index, rebuild indexes after deserialization, and persist itself to or restore itself from `<vault_root>/meta/provenance.json` with durable file writes. Helper functions handle page/section key निर्माण and Unix directory syncing, and the tests verify linking, save/load roundtrips, and empty loads when the provenance file is missing.
 [crates/gwiki/src/provenance.rs:14-22]
 [crates/gwiki/src/provenance.rs:25-29]
 [crates/gwiki/src/provenance.rs:32-36]
 [crates/gwiki/src/provenance.rs:39-47]
 [crates/gwiki/src/provenance.rs:49-168]
-- [[code/files/crates/gwiki/src/registry.rs|crates/gwiki/src/registry.rs]] - This file defines the serialized wiki registry model and the persistence logic for updating it safely on disk. `Registry` stores topic and project registrations in ordered maps, while `TopicRegistration` and `ProjectRegistration` capture the identifying metadata and paths for each scope. `register_scope` loads the current registry, inserts or replaces the entry for a topic or project, and writes the updated JSON atomically under an exclusive file lock. The supporting helpers handle lock acquisition with exponential backoff, generate lock and temporary file paths, perform durable atomic writes, and read the registry back with a default fallback when the file is missing. The tests cover lock backoff behavior, overwrite semantics, and temp-path uniqueness.
+- [[code/files/crates/gwiki/src/registry.rs|crates/gwiki/src/registry.rs]] - This file defines the serialized registry for wiki scopes and the persistence logic around it. `Registry` stores topic and project registrations in ordered `BTreeMap`s, while `TopicRegistration` and `ProjectRegistration` capture the identifying metadata and filesystem paths for each entry. `register_scope` updates the appropriate map entry for a topic or project, using a file lock from `lock_registry` to serialize access, `read_registry` to load the current JSON state, and `write_registry_atomically` to persist the new registry safely. The remaining helpers build lock and temporary file paths, implement exponential backoff for lock acquisition, and the tests verify backoff behavior, overwrite semantics, and temporary-path uniqueness.
 [crates/gwiki/src/registry.rs:15-20]
 [crates/gwiki/src/registry.rs:23-26]
 [crates/gwiki/src/registry.rs:29-33]
 [crates/gwiki/src/registry.rs:35-102]
 [crates/gwiki/src/registry.rs:104-136]
-- [[code/files/crates/gwiki/src/runner.rs|crates/gwiki/src/runner.rs]] - Provides the public library entry point for executing a parsed `gwiki` command. It is a thin passthrough that forwards the `Command` to `commands::run` so embedders use the same dispatch path as the CLI and receive a `Result<CommandOutcome, WikiError>`. [crates/gwiki/src/runner.rs:7-9]
-- [[code/files/crates/gwiki/src/schema.rs|crates/gwiki/src/schema.rs]] - This file defines the runtime schema validator for `gwiki`’s PostgreSQL-backed datastore. `GwikiRuntimeSchema` is a zero-sized `AttachedValidator` that collects every required table and index from `GWIKI_POSTGRES_TABLES` and `GWIKI_POSTGRES_INDEXES`, wraps each one as a `RequiredObject`, and validates them through `validate_runtime_schema`. Validation checks for an available PostgreSQL connection, resolves each relation as `public.<name>` with `to_regclass`, and returns a `SetupIssue` with migration/setup guidance if the connection is missing, the query fails, or the relation does not exist. The tests verify that missing schema objects produce explicit setup failures and that relation names are qualified against the public schema.
+- [[code/files/crates/gwiki/src/runner.rs|crates/gwiki/src/runner.rs]] - Thin public entry point for executing a parsed `gwiki` command. It simply forwards the `Command` to `commands::run`, returning the resulting `CommandOutcome` or `WikiError` so embedders use the same dispatch path as the CLI. [crates/gwiki/src/runner.rs:7-9]
+- [[code/files/crates/gwiki/src/schema.rs|crates/gwiki/src/schema.rs]] - This file defines the runtime schema validator for `gwiki`, centered on a zero-sized `GwikiRuntimeSchema` marker that enumerates every required PostgreSQL table and index as attached validation targets. Each required relation is wrapped as a `RequiredObject` whose validator checks for a live PostgreSQL connection, verifies the relation exists via `to_regclass` in the `public` schema, and turns failures into a guided `SetupIssue` that points users to run migrations and `gwiki setup`. The public helper `validate_runtime_schema` runs that validation, and the tests confirm both the expected missing-object behavior and the schema-qualified relation naming.
 [crates/gwiki/src/schema.rs:13]
 [crates/gwiki/src/schema.rs:15-24]
 [crates/gwiki/src/schema.rs:16-23]
 [crates/gwiki/src/schema.rs:26-28]
 [crates/gwiki/src/schema.rs:30-36]
-- [[code/files/crates/gwiki/src/scope.rs|crates/gwiki/src/scope.rs]] - This file resolves a wiki scope selection into a concrete `ResolvedScope` for either a topic or a project. `ResolvedScope` stores the scope kind plus its root and registry path, while accessor methods expose the active variant and derived identity data such as topic name, project ID, and project root. The resolver functions use config and environment-based hub-path lookup, validate topic/project names, expand `~` in paths, and derive the project wiki root and registry file location; the tests verify global-topic resolution, invalid-name rejection, read-only project scope resolution, and that `.` maps to the absolute project wiki root.
+- [[code/files/crates/gwiki/src/scope.rs|crates/gwiki/src/scope.rs]] - This file defines the scope model and resolution logic for wiki locations. `ResolvedScope` is an immutable wrapper that represents either a topic or a project, carrying the scope kind plus resolved root and registry paths, while `ScopeKind` distinguishes those two variants and supports typed accessors and stable identity strings like `topic:...` or `project:...`. The resolver functions build a scope from a selection by preferring an explicit topic, then an explicit project root, then the nearest project found from the current directory, with helpers for validating names, locating the hub path from environment/config/fallbacks, expanding `~`, and mapping failures to `WikiError`. The test-only `TestConfig` provides a minimal `ConfigSource` stub, and the unit tests cover topic resolution, invalid names, and project-root canonicalization behavior.
 [crates/gwiki/src/scope.rs:12-16]
 [crates/gwiki/src/scope.rs:19-27]
 [crates/gwiki/src/scope.rs:29-89]
 [crates/gwiki/src/scope.rs:30-36]
 [crates/gwiki/src/scope.rs:38-48]
-- [[code/files/crates/gwiki/src/session.rs|crates/gwiki/src/session.rs]] - `session.rs` defines the core serialized state for a research wiki session: scopes, daemon dispatch metadata, code citations, compile state, and the session record itself. It also provides constructors, scope/root normalization helpers, checkpoint save/load logic, and validation so persisted sessions and citations stay consistent and reject invalid or legacy paths.
+- [[code/files/crates/gwiki/src/session.rs|crates/gwiki/src/session.rs]] - This file defines the serialized session state and helper types for gwiki’s research workflow. It models research scope as either a project or topic with a shared root path, validates and normalizes code citations, and stores dispatch, accepted notes, and compile-state metadata for a research run. `ResearchSession` ties these pieces together by generating a new session with a prompt, persisting checkpoints atomically under `.gwiki/research-session.json`, and restoring them with scope-root validation against the vault root.
 [crates/gwiki/src/session.rs:15-18]
 [crates/gwiki/src/session.rs:20-46]
 [crates/gwiki/src/session.rs:21-26]
 [crates/gwiki/src/session.rs:28-33]
 [crates/gwiki/src/session.rs:35-39]
-- [[code/files/crates/gwiki/src/setup.rs|crates/gwiki/src/setup.rs]] - This file defines the standalone PostgreSQL setup for the `gwiki` crate. It models the schema’s fixed table set and supported object kinds, then builds a sequence of setup objects consisting of a `pg_search` extension preflight check plus table and index DDL for the configured schema. `GwikiStandaloneSetup` generates the SQL for each table and index, quotes identifiers safely, converts each definition into an owned setup object that can execute its DDL against a PostgreSQL connection, and runs them in order while collecting a `SetupReport` and stopping on the first failure. The helper constructors and tests keep the published table/index lists aligned with the generated objects and verify the identifier-quoting and ownership constraints.
+- [[code/files/crates/gwiki/src/setup.rs|crates/gwiki/src/setup.rs]] - Defines the standalone setup for the `gwiki` schema by naming the PostgreSQL tables and indexes, quoting identifiers safely, and generating the SQL objects needed to create them. `GwikiStandaloneSetup` ties this together by building a preflight `pg_search` check plus table and index DDL, exposing them as `OwnedObject`s, and creating them sequentially while recording success or the first failure.
 [crates/gwiki/src/setup.rs:29-35]
 [crates/gwiki/src/setup.rs:37-47]
 [crates/gwiki/src/setup.rs:38-46]
 [crates/gwiki/src/setup.rs:50-54]
 [crates/gwiki/src/setup.rs:57-61]
-- [[code/files/crates/gwiki/src/store.rs|crates/gwiki/src/store.rs]] - This file defines the core data model and storage layer for gwiki, covering wiki documents, chunks, links, sources, ingestion records, and scope metadata. It ties together an in-memory `MemoryWikiStore` and a PostgreSQL-backed `PostgresWikiStore` through shared store operations: validating paths, upserting and replacing derived rows, recording ingestions and hashes, normalizing scoped IDs and paths, and mapping document and ingestion kinds to storage-friendly strings, with `StoreError` used to surface validation and database failures.
-[crates/gwiki/src/store.rs:15-21]
-[crates/gwiki/src/store.rs:24-30]
-[crates/gwiki/src/store.rs:33-40]
-[crates/gwiki/src/store.rs:43-49]
-[crates/gwiki/src/store.rs:52-57]
-- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - This file implements the wiki synthesis pipeline for turning an explainer and accepted source material into compiled Markdown pages inside a vault. `ArticleKind` maps article types to their target directories and source-kind tags, while `SynthesisSource`, `SynthesisInput`, `SynthesisPrompt`, `SynthesizedPage`, `WritePolicy`, `PageWriteKind`, and `PageWriteOutcome` carry the data flowing through synthesis and writeback. The main entry points, `synthesize_article` and `ground_article_explainer`, build a grounded article from citations and accepted sources, generate companion source pages, and attach explainer/report metadata when available. Supporting helpers handle unique slug generation, vault-relative wiki links, frontmatter and excerpt rendering, YAML escaping, and strict path validation so synthesized pages stay inside the vault and are written atomically with create/overwrite behavior controlled by policy.
-[crates/gwiki/src/synthesis.rs:15-19]
-[crates/gwiki/src/synthesis.rs:21-37]
-[crates/gwiki/src/synthesis.rs:22-28]
-[crates/gwiki/src/synthesis.rs:30-36]
-[crates/gwiki/src/synthesis.rs:40-44]
-- [[code/files/crates/gwiki/src/transcribe.rs|crates/gwiki/src/transcribe.rs]] - This file defines the transcription pipeline data model and Markdown output flow for audio notes. It includes the core structs for transcript segments, transcription results, time ranges, and degradation metadata, plus helpers that treat blank or segmentless output as empty and map AI routing state to a fallback reason. The `TranscriptionClient` trait is the transcription/translation abstraction, with translation methods intentionally disabled here; the main work happens in `write_audio_transcript_markdown`, which renders either successful transcript content or degradation fallback text into Markdown, writes it atomically, and syncs the parent directory. Formatting helpers and a fake client support timestamp/range rendering and tests that verify successful transcription, precomputed output, and degraded cases.
+- [[code/files/crates/gwiki/src/store.rs|crates/gwiki/src/store.rs]] - This module is the store entry point for `gwiki`: it wires together the `helpers`, `memory`, `postgres`, and `types` submodules, re-exports the main store APIs and data types, and exposes small wrappers for reading the configured in-memory index limit and classifying link targets. Its tests verify the helper behavior for link classification and scoped ID capping, and the memory store’s validation rules for chunk/link path mismatches and source indexing by `document_path`.
+[crates/gwiki/src/store.rs:15-17]
+[crates/gwiki/src/store.rs:19-21]
+[crates/gwiki/src/store.rs:32-39]
+[crates/gwiki/src/store.rs:42-63]
+[crates/gwiki/src/store.rs:66-71]
+- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - Defines the `gwiki` synthesis module as a coordination layer that pulls in generate, path, render, type, and write submodules, then re-exports the main synthesis, path-handling, page-writing, and data types used to build synthesized wiki articles and pages. [crates/gwiki/src/synthesis.rs:1-19]
+- [[code/files/crates/gwiki/src/transcribe.rs|crates/gwiki/src/transcribe.rs]] - Defines the transcription pipeline for audio sources: data types for transcript segments, transcription ranges, outputs, and degradation metadata; a `TranscriptionClient` trait with a disabled default translation path; and the markdown rendering/writing flow that turns either a successful transcription or a fallback degradation into a derived source note. The file also provides helpers for empty-output detection, timestamp/range formatting, atomic file creation and directory syncing, plus a fake client and test cases that verify successful transcription, precomputed output, and degraded cases when transcription is missing or empty.
 [crates/gwiki/src/transcribe.rs:14-18]
 [crates/gwiki/src/transcribe.rs:21-24]
 [crates/gwiki/src/transcribe.rs:27-39]
 [crates/gwiki/src/transcribe.rs:42-45]
 [crates/gwiki/src/transcribe.rs:47-60]
-- [[code/files/crates/gwiki/src/vault.rs|crates/gwiki/src/vault.rs]] - This file defines the canonical gwiki vault layout and the helpers that materialize and tear it down. `VaultPaths` and `CreatedVaultPaths` describe the required directory/file shape and what was newly created, `required_paths()` exposes the fixed manifest, and `initialize()` ensures every required directory and default file exists before atomically writing `.gwiki/scope.json` from the resolved scope identity and root. The lower-level helpers support that lifecycle: `create_dir()` wraps recursive directory creation, `ensure_file()` creates default files only when missing, `write_scope_file_atomically()` handles durable temp-file write and rename for the scope file, `temp_sibling_path()` generates the temp filename, `sync_parent_dir()` flushes parent metadata on Unix, and `cleanup_created()` removes only paths recorded as created, ignoring expected missing/not-empty cases while surfacing other I/O errors.
+- [[code/files/crates/gwiki/src/vault.rs|crates/gwiki/src/vault.rs]] - Defines and maintains the shared gwiki/codewiki vault shape. It declares the required directory manifest and default index files, exposes `required_paths()` for callers that need the expected layout, and implements `initialize()` to create missing directories and files under a resolved scope root while tracking which ones were newly created. It also writes `.gwiki/scope.json` atomically from the scope identity and root, provides `cleanup_created()` to remove only the paths that were created during setup, and includes small helpers for directory creation, conditional file creation, atomic temp-file replacement, and parent-directory syncing.
 [crates/gwiki/src/vault.rs:19-22]
 [crates/gwiki/src/vault.rs:25-28]
 [crates/gwiki/src/vault.rs:55-60]
 [crates/gwiki/src/vault.rs:62-99]
 [crates/gwiki/src/vault.rs:101-137]
-- [[code/files/crates/gwiki/src/vector.rs|crates/gwiki/src/vector.rs]] - Implements the wiki vector synchronization layer for `gwiki`: it defines the chunk and point records, a sync result type, and a unified error type, then provides traits and concrete adapters for reading wiki chunks from Postgres, generating embeddings, and writing/deleting vectors in Qdrant. The main `sync_scope_vectors` flow resolves the collection for a `SearchScope`, loads current chunks and stale paths, batches chunk content through the embedder, validates embedding shape, builds payloads and deterministic point IDs, upserts the vectors, and removes vectors for deleted paths. The file also includes helpers for scope-based collection/filter mapping, payload construction, UUID/snippet generation, row parsing, and test doubles plus tests that verify collection selection, batching, embedding, upserts, deletions, and error handling.
+- [[code/files/crates/gwiki/src/vector.rs|crates/gwiki/src/vector.rs]] - This file implements wiki vector indexing and sync support: it defines the chunk, point, and sync-outcome data shapes, a unified `WikiVectorError`, and traits for reading chunks, embedding text, and writing vectors. The main sync flow resolves the target collection for a `SearchScope`, loads current chunks and stale paths, batches chunk content through an embedder, validates the embedding results, builds Qdrant-ready points with rich payload metadata, and then upserts new vectors while deleting stale ones. It also provides PostgreSQL-backed and Qdrant-backed adapters plus test doubles and helper functions for payload construction, deterministic point IDs, snippet generation, filter building, and row parsing.
 [crates/gwiki/src/vector.rs:17-26]
 [crates/gwiki/src/vector.rs:29-33]
 [crates/gwiki/src/vector.rs:36-40]
 [crates/gwiki/src/vector.rs:43-48]
 [crates/gwiki/src/vector.rs:50-59]
-- [[code/files/crates/gwiki/src/video.rs|crates/gwiki/src/video.rs]] - This file manages video-to-markdown conversion, providing data structures and utilities for sampling video frames, aligning transcripts with frame timestamps, and generating structured markdown documentation of video content.
-
-The core workflow: `FrameSamplingPlan` configures periodic frame extraction via `sample_frames()`, which produces `VideoFrameSample` objects containing timestamps and media references. `align_transcript_and_frames()` correlates these sampled frames with `TranscriptSegment` objects to create time-synchronized `AlignedVideoSegment` pairs. `write_video_derived_markdown()` orchestrates this alignment process and invokes `render_video_derived_markdown()` to generate a markdown representation containing metadata fields (file size, duration, degradation info, audio references, and aligned frame/transcript data).
-
-Supporting utilities handle timestamp parsing/formatting across multiple formats (colon-separated, numeric seconds, milliseconds), construct video audio references, and manage durable file I/O through atomic writes with fsync operations and temporary sibling file patterns. Comprehensive unit tests validate frame sampling intervals, transcript-frame alignment, markdown generation with partial failures, and metadata inclusion.
-[crates/gwiki/src/video.rs:18-21]
-[crates/gwiki/src/video.rs:24-29]
-[crates/gwiki/src/video.rs:32-36]
-[crates/gwiki/src/video.rs:39-43]
-[crates/gwiki/src/video.rs:46-49]
-- [[code/files/crates/gwiki/src/vision.rs|crates/gwiki/src/vision.rs]] - Provides the vision-to-markdown pipeline for image sources: it defines the extraction payload, degradation metadata, request/client interface, and the helpers that render derived markdown, sanitize and deduplicate vision metadata, and write the result atomically on disk. It also includes fallback clients and tests that cover successful extraction, empty or failing vision responses, metadata normalization, and safe overwrite behavior.
+- [[code/files/crates/gwiki/src/video.rs|crates/gwiki/src/video.rs]] - Declares the video-related submodules and re-exports the public API for generating video-derived markdown, sampling frames, and working with video segment, frame, metadata, and degradation types. [crates/gwiki/src/video.rs:1-16]
+- [[code/files/crates/gwiki/src/vision.rs|crates/gwiki/src/vision.rs]] - This file defines the vision ingestion layer for image-derived wiki content. It models raw vision output with `VisionExtraction`, records fallback state with `VisionDegradation`, and exposes a `VisionClient` interface plus request/result types so callers can extract image text or degrade cleanly when vision is unavailable or empty. The core flow is `write_image_derived_markdown`, which runs extraction when possible, falls back to a degradation reason otherwise, renders markdown with front matter via `render_image_derived_markdown`, and writes it atomically with temp-file and directory-sync helpers. Supporting functions normalize and deduplicate vision metadata into safe front-matter keys, while the test clients and test cases exercise success, failure, empty-output handling, metadata sanitization, and atomic overwrite behavior.
 [crates/gwiki/src/vision.rs:19-23]
 [crates/gwiki/src/vision.rs:26-29]
 [crates/gwiki/src/vision.rs:31-44]
@@ -1636,96 +1543,58 @@ Supporting utilities handle timestamp parsing/formatting across multiple formats
 ## Components
 
 - `410214b3-aa48-5813-b83e-3e668eb3249c`
-- `67e095dd-d30e-53ea-a3a7-649f4587514e`
-- `fb1d5625-577a-5626-b4b6-1aef419dd499`
-- `1644b539-deeb-5108-8364-309b17bd094f`
-- `c8518de4-17f2-55be-b666-56e9019f00c7`
-- `eb850b0c-5f6f-5d5e-b59f-76328ddd8b31`
-- `789ee749-ac45-5bc3-858e-529d8fb19dc6`
-- `a536e535-0ec3-520f-aeaa-b769e180f989`
-- `4423e5a3-60b5-517f-bb00-d147f308e32d`
-- `776cae82-8455-520f-a0c7-063119de1077`
-- `7c4bd883-0123-5074-bdff-f4728fbc357a`
-- `aef2e4b8-ca21-5280-a477-6c88c39fe70e`
-- `26876ee0-74f6-5038-b692-7684b7a23429`
-- `08dbb894-f305-5266-bed1-c43cdfd8b2f1`
-- `e6a2e082-d49b-57ee-a465-081cb7595ffd`
-- `f3b69bcf-2bde-5c50-aacb-9707ca43bc62`
-- `1a48ac14-1fe8-51b0-acac-a2b61ab4f6f3`
-- `408e5c75-0f02-503e-afc6-0463e13ca519`
-- `53acedf8-a6fc-5e5f-91d9-966ad6b26f59`
-- `8db351e8-a52c-51fb-9c6d-c85626420409`
-- `fbbb4c2b-16c4-5d67-9619-45f93a4af4b1`
-- `b74db015-df9d-5865-97a2-bb224408deb0`
-- `59f7cb4b-2b86-5bcf-aa87-43e8f9013e64`
-- `5ecd8f27-5724-5213-964a-21635d6a0144`
-- `7118f8e6-dd0c-5a43-8445-21ab0f99d529`
-- `a29cc12c-69a5-59fd-a40f-6cc9c7083afa`
-- `36296235-7b99-5a23-a466-fa82cc5b0406`
-- `f8f16407-87ff-54e4-b747-0afeb5d767e3`
-- `582b75ae-cd5e-5c5e-8e18-086e73364942`
-- `ed30d4c0-3875-5ca3-9403-27486249532d`
-- `18cd64e4-9318-5eb6-b49b-70e887aefcf7`
-- `db8b26be-c852-537a-8746-c3aab8b8fef7`
-- `1413b515-b5b1-5116-b765-2b262d1f416a`
-- `c0a77f88-c718-5ffb-ace6-a158956e885a`
-- `db6b20fb-cda3-5672-95f6-b20446aaae4a`
-- `9a622aca-9ee1-5d73-b8a7-3fe1ccd12615`
-- `cfa649d0-3af3-583b-a299-a4ce1f64b0a3`
-- `a8c990fa-2870-54fe-ba8b-24f5f38eaa44`
-- `962b6a4c-e33b-5686-aa38-1699c9cd8005`
-- `5662f13d-2458-5b0d-9fd3-8aea928a23b4`
-- `1c519df6-86e8-57cd-b97c-ee12e75c6ea3`
-- `b859bdeb-9413-5ae4-8d9b-c15b7cfa4c98`
-- `dcde16b8-964d-5c4f-ab33-dddcf3a5883c`
-- `d4d64256-21a8-5aa4-975f-ab0106fcb60a`
-- `5e1efccb-ad24-5d5c-9a3b-697587f1f195`
-- `908d6750-a06a-51a8-82cb-8ceea1479abc`
-- `a785c503-904f-543d-b13b-b1a4def6ff79`
-- `9e360145-a461-5c3c-baac-f93d8ea4e49b`
-- `a22bfb9d-a06c-5984-ae6f-b460d19b96ee`
-- `86557e81-e8f0-519d-8859-18555ca2ed1c`
-- `8b19636c-46b2-5ba5-a426-e439b948746d`
-- `dbe9e3fb-74b1-59a9-b799-1f7873dfb188`
-- `45f40063-8b04-5a0d-b04a-25fecd2361a0`
-- `8a6eb2f8-14df-567b-8c72-9af5e092a8bd`
-- `a38fa861-0f28-51d6-a56d-9050e3d69ec6`
-- `da75cadc-0ebe-5f00-9243-457b7263aa37`
-- `2bdecda5-796c-585b-8cb5-204d5ae29da1`
-- `ebe69580-0827-5ea0-b0c4-453baa3f6aef`
-- `d851249c-e81d-5af8-806d-c6cb9b1c979f`
-- `85cb60bb-8a32-59e4-b6ea-5215dedebb45`
-- `9ff4a594-eaf1-5d30-9521-72434c2018f0`
-- `d2389b0b-da4c-5107-9967-a4497ff2a73a`
-- `219e963d-c1be-5399-abf2-7b72310e7153`
-- `a6627f7e-abd5-5efa-947c-7e55e747912f`
-- `f4cad0e4-6ad4-5a4a-b5a1-4fc5d2826fdd`
-- `34110589-f133-5afe-9270-50b447e28285`
-- `85baf4b1-c821-5810-a2c5-ca2d0c3db419`
-- `edbd4ed0-6091-52f5-9d01-40fd09c6dc5c`
-- `f3fe9ac9-162b-55a0-845a-ba5c4c8443f5`
-- `a74809f7-30d2-5169-aadb-561f93ee93f6`
-- `0256b916-bc81-59b8-b45c-e48473ca15c3`
-- `a6c70cfb-3b92-5374-8f48-8987c0e28ef8`
-- `10fcb562-7e3c-5e37-9ede-ecc681613a02`
-- `dd410d9d-b2b5-5272-9ef6-4f03bd40a0f8`
-- `68063c70-e6d4-5af4-a6ef-bd3f990d5291`
-- `58128a56-baba-5558-b95c-d833ee901a6a`
-- `3c6a7276-5881-50e7-b607-1cb6d3ac5fef`
-- `4abd0b7a-92d4-515c-b166-0193712b50c0`
-- `517021ae-ebae-5855-9939-ae30a8055ddf`
-- `b6b1b6b9-e89f-5049-9080-d384d3670a00`
-- `74cdeb38-9e7e-53ab-9985-4d806c429cc3`
-- `17e6af57-789c-52d9-8e98-a6a727e47366`
-- `792872e7-5cf1-5ccc-9ca5-407dbf3adfb3`
-- `ceb6491a-cdc1-550f-85df-eb58f77a79fb`
-- `83236681-2ead-5824-8253-f1257516685f`
-- `fe95c6cb-d29b-57d4-ad2f-bdfc629ec021`
-- `56231cb8-6a5d-5147-950f-a37c096dbd95`
-- `836fab09-3c2b-5689-bc89-efffdb1a7458`
-- `f72e2881-c772-563c-ba16-1838ba334956`
-- `e43e591b-9b8e-5555-a1b3-19045f705e18`
-- `2eaaf991-75bd-5db3-abe6-4a1d6da37cff`
+- `7b418672-ae93-5e52-b295-edf04d9cb89f`
+- `0895fad2-f88e-5331-b6d3-67acd01cca47`
+- `dac94230-ae15-584d-9040-cbeeabc29227`
+- `62587416-d748-5c04-a1ad-38556256ba26`
+- `4d72bbdd-e7af-5d60-a646-c742d8cb374a`
+- `d1b1198a-701e-5dbd-8262-dbd542c96d2f`
+- `b99021db-3183-501c-98cf-cd75e293473b`
+- `3f3800ef-b44a-50d9-b4ef-e39641dc585f`
+- `b8ca1b51-747b-55f7-a8e9-7af32a6b7675`
+- `1addaf5d-5bfd-5192-8082-48701de197dd`
+- `b677bde7-6f0b-57e2-9c7d-801d3c764f61`
+- `32390077-9ae2-5c75-8e35-b5b9da9ed946`
+- `5f70a942-b763-51f5-a7e9-5f336511f1c0`
+- `b0f015a1-cc14-539b-8473-3c0c028a449a`
+- `eb787157-5d99-5d65-b3ae-62c99c8b2de1`
+- `bc293dfc-0cc3-5a77-b7c3-1ca660a8335a`
+- `56bd4cf1-e8c0-581d-ad56-a53c50f930f6`
+- `1ed96646-f9a1-531a-8432-c06dba94e484`
+- `8996b7ad-6a05-591f-bf33-577389512d0f`
+- `27edf9c5-644f-5d11-a462-e449221fdfe1`
+- `37b10230-533d-5aff-b52f-464c0ad4e8b8`
+- `76c69d03-ebf1-5a52-b8ff-359d52f17662`
+- `c3b2628a-b81f-52fc-8c99-d958a7d1a3ba`
+- `c0890894-3e6f-51d2-b3e2-8391c88dcd76`
+- `03df46e5-3012-5b93-87f3-479704b6c831`
+- `054bd410-b19c-5f98-8f79-f1958c3851d2`
+- `4f2f1ef8-20f6-5218-9710-108501aed06d`
+- `321aec9d-e756-53b7-b50f-d134b2ea232e`
+- `4451fcdb-96fb-5796-ac7c-a712ff1305c2`
+- `b7dc03dc-4ff5-5790-8311-22fe7fc08aa0`
+- `e6dc5e72-91af-512a-b281-2f942eeb0319`
+- `9824bed2-2da0-576c-b687-bb73bb121570`
+- `db5dfff1-f011-548d-a18f-2c6a625bd860`
+- `f2af94f9-8936-5037-8272-a0bc7f5442d3`
+- `91352f2a-445c-519f-8196-b08384bc6b08`
+- `69f90c5f-77a5-53ee-b0da-640f513f1944`
+- `9eb8e3cc-89f0-5ce7-9ff9-4de462a94255`
+- `7a00edb9-9f8d-5551-843e-2d4802cbd8ad`
+- `f73b01b2-de57-5b3b-967a-b445e16e1fb9`
+- `371ed3e0-ab16-5a4a-96a9-6a176f597d03`
+- `88810d0b-1b77-5926-943f-99ad7c1220d7`
+- `8e563f04-b752-5466-ad68-0d84fe8338ab`
+- `cf416c70-9547-5894-ade2-0c2ad1b6a299`
+- `31191875-e3a0-556d-82e7-8fad03434b29`
+- `8e9122ed-c1e5-56ea-a4b1-b8adca9e4e0d`
+- `b61e26c0-467b-54f4-8d69-3f8e249e87d8`
+- `9c60ef97-0ca7-500c-bb42-9bc21b3800ca`
+- `c952655e-97b5-55fb-9bca-a0affd123eb6`
+- `3cc18e77-0373-5498-b0df-cf4a483e6b23`
+- `ba746a57-9125-54df-be6d-695d4bb6024d`
+- `db356499-0beb-5310-bffa-13a9fcb90ab0`
+- `b2b4bcd1-ab2e-5461-8c36-d6eacdffbac3`
 - `dc3ebecc-2146-5e02-8d18-1006f660f755`
 - `69f3524f-b33b-53da-beda-f01f202e997b`
 - `a75c5987-536a-5f92-b7cc-0962118c024a`
@@ -1864,12 +1733,12 @@ Supporting utilities handle timestamp parsing/formatting across multiple formats
 - `23dc38f9-8e0a-5ce8-bffe-b69cd802cccd`
 - `93c73948-fc3a-5b6b-be41-64c0fe135b29`
 - `ae8a750d-02f6-54a2-9816-7bc541ecc75a`
-- `abdf6692-4a93-5b35-a191-e38f93c6726d`
-- `d295b3b7-a976-5eb8-83df-3d5e9a190538`
-- `5987f6ae-1fb5-55da-baa8-5b9a8a49b696`
-- `fcd368a2-ecd3-5797-bde6-2af7e6294c42`
-- `5454c1e4-e30d-5f6a-aa0c-2a066a92f83f`
-- `1a63ad46-6c27-5ab7-ae2f-72d6cef416c3`
+- `38f684e0-9e71-5365-8875-f347c08808db`
+- `76bd4494-1744-5755-9eff-ed080f723564`
+- `8655ca9e-7cff-537e-94da-501fba4a5080`
+- `074a83b8-5744-5f0a-896a-1d6a1d2dcf5c`
+- `af56d771-d9ae-54e6-8f3a-b3842cc9c124`
+- `f8bdcc62-1187-50c5-ab24-0779e9c910e1`
 - `114b1727-7880-57c7-a00c-dbc815575552`
 - `22762a00-0ffa-5a24-aed3-5d5930132a5a`
 - `b3fd920b-fd0b-5e09-9bb0-957d9379ccab`
@@ -2006,64 +1875,14 @@ Supporting utilities handle timestamp parsing/formatting across multiple formats
 - `8543f843-5cb4-5fa3-9e9e-4cb36833f6a7`
 - `a52d1077-e788-59d5-a6e4-d2706db2c634`
 - `f13a7e08-a4f0-59aa-87f7-edf0a4d3e3d5`
-- `a006216b-379c-5722-ad6e-3ba38479b67d`
-- `bf83b70c-53e2-5115-894f-5a474b383830`
-- `69a3ab04-5d4a-5d74-a6ca-f87fea95ac73`
-- `cf143add-c9ff-5468-acc8-9d2fff479423`
-- `621d8578-6ef8-513c-bfcf-5b6bb10a39d3`
-- `206766fb-8c1a-572a-904d-7b9b49795825`
-- `ce92d77c-65a3-505b-96be-f3f078a39158`
-- `e563cd50-b372-5093-a5b3-1e55277135b7`
-- `de8a1f8c-e141-5fff-a7f7-32559e404007`
-- `c21f11b5-8376-5e3a-be3d-b82dbfe434d8`
-- `c7baf74a-98e2-5284-9203-0e4c8659f8fb`
-- `8e5ef180-3f2c-5637-867c-53a04f2ce546`
-- `cc910344-3638-5610-9542-35621556eee5`
-- `7531ab0d-8c04-5d4c-a2d7-d7497abe1d2f`
-- `37c8b381-055b-50da-8e60-1bce3861752a`
-- `fbe9714e-66a0-576b-b329-b881451641e3`
-- `5949c735-f368-552a-9179-0f89a140d327`
-- `c803ed80-3d42-5e5b-a563-93204e1a04ed`
-- `7b01def8-5288-56cc-a301-d15e5de5a62b`
-- `124b1407-f7a4-58c3-970a-71fd4f7363a6`
-- `99474ed0-9f15-5798-a7d9-935bd802409a`
-- `73986137-22f1-5eb0-9b44-bdcf3fb01416`
-- `876468d0-6666-5ecd-bc9e-152fb394f62e`
-- `a135d49e-1ee8-5e61-a7f6-88454e434184`
-- `b49bc1b0-eb12-549b-ae29-f3ec54db3f98`
-- `e154fc8c-c0f3-57e6-81bd-1ac738be31a5`
-- `047e5fad-9a50-5f8f-ba46-27b6ada0b762`
-- `b24b8c59-e0a6-54b4-a62a-ced84bebb8c5`
-- `a884a7f2-a962-5f02-bda3-c868392b389f`
-- `391d7b3f-7e8a-58cb-80b9-c02c331c99d0`
-- `72f0064f-d5bf-5e6e-a03e-4245dbd56609`
-- `7b7ba0ac-0c26-5730-911c-9830ff1fff39`
-- `69fe9a26-e786-51dd-be61-5c7ccd05d188`
-- `9e22ee27-856d-5636-82b6-e44e8d989c4f`
-- `d4a38969-fe7d-5829-b62d-55da64b6f49f`
-- `a2fb716d-c983-53b0-8c79-4f0d19c4d825`
-- `922f15fd-1267-589f-a066-76db372f589d`
-- `576e25d8-cf55-5bc5-8ae8-6ef7cd391b57`
-- `4c19e976-3a5a-51d6-9e66-bd049b75cdea`
-- `a60b910d-6a37-5ead-99c0-41c76ddf38bd`
-- `51ab7fad-ad2f-58ec-a36e-14338f20e119`
-- `24089d0c-03f3-552a-b116-1e992cb3260b`
-- `1ce14acf-427e-51f8-b12f-4f3fad2fe9f6`
-- `8b4a9cac-352b-590b-9742-34c9e50dcf85`
-- `1ea7fde2-76b0-59b8-8ea6-faa3075d1b03`
-- `183433d6-60e6-5508-b0a4-d5784158831f`
-- `3c3c5114-7cea-5537-8479-efa867d5256b`
-- `30b708f3-2338-5a44-94fb-5fb80193f3ef`
-- `e381b8ed-cbaa-5266-858c-81d20215a7af`
-- `5d974222-e6fe-5bfb-8e99-b71ceb0f0114`
-- `a4361bcc-55b6-5c76-b719-9c291a3c833d`
-- `2f877716-2825-59bb-82f5-33b897035530`
-- `07d8082a-b9f2-5b67-a6c4-dcb496472f9d`
-- `c3a2d43a-83ba-59fa-82e0-3ce6b20e5f21`
-- `00263a8c-4fba-5775-8ac6-5285148853a5`
-- `255e1e3b-14b6-550a-826a-cc1bf49a1e89`
-- `2abbd0b3-22d8-55df-a006-665245a40d7e`
-- `bb1a8622-bcd5-59c0-aebb-8d9e84e9ac2f`
+- `14cb20da-f658-598b-bb61-ec65a69f2385`
+- `60d3b867-5f9a-5085-afa2-7d8377d41454`
+- `67dccd58-9748-507d-8f26-11964234f1bd`
+- `c3ce656d-2864-5a0b-9882-bf139af4eec1`
+- `13ca50bb-1550-53d7-8123-7863b14ac381`
+- `dcf621dd-689e-522c-b4a8-4741f6bde6c6`
+- `1c2569ac-fea1-5805-98e9-8962f5de4a48`
+- `6b9b3c0b-9446-55db-b959-89d74ea2b865`
 - `7d7d2878-4616-50b7-b364-5d25d085c2ff`
 - `862372eb-ec1d-56e0-9087-7b29b27353b9`
 - `23ca6438-a0eb-5b47-93a0-09260ef6a965`
@@ -2332,29 +2151,29 @@ Supporting utilities handle timestamp parsing/formatting across multiple formats
 - `064c9253-eac5-581d-af3c-c77bf62a2667`
 - `ae2b3938-35dc-52d5-b988-a3bd036caa07`
 - `bc6d427d-7dbb-5bc3-a948-4538a3792977`
-- `830dbf0a-2138-5dd0-92df-4cede3379069`
-- `7b67eba6-4bda-571e-8f51-18663c190975`
-- `1242b798-6e1c-5f45-a8b7-96ba7939a89b`
-- `1dfddad6-9ceb-5b05-a17b-1bb5ffa7765b`
-- `84e6dbf1-3699-5d7e-97cd-bb6012b86d2a`
-- `4a8798b7-b238-54e2-a185-7c424ae2000c`
-- `9b1bc4dc-df14-56a1-95bf-0b6d5543cce1`
-- `fb321d7c-1106-5955-a8a0-a441da28b063`
-- `c4787935-ddc2-5184-b8a5-05901135e989`
-- `d24ff0fb-c427-52e1-9699-c50aac3ffd84`
-- `ac9023f0-7424-584b-9f97-3836e01617e2`
-- `3f7d20d5-0a03-5f7d-ac15-6f9e8392f184`
-- `26cb2358-900f-51c8-be14-0a611063cc4b`
-- `4e2963ff-426e-50d2-bd31-f09e9aedb472`
-- `a8308966-0f68-5cfa-ad43-0fc74f84a18b`
-- `d513c18f-7899-5308-9605-2a8ae40e75de`
-- `a79cdc88-cc62-5b5d-bc5c-175e3547a041`
-- `868d2cb7-b94a-52b3-b0bc-e6170dd29a74`
-- `abbe9b98-5e2f-540e-a43f-e749f133f748`
-- `8afe00d1-13b2-55cf-aef3-a93909df4db6`
-- `7e668ebe-36ce-523f-bc55-f7e5694e3377`
-- `4bf5358c-b177-5f00-8c16-34757680b2af`
-- `20087995-ae54-5e0e-b070-74d2cd8550ab`
+- `085f610e-6c34-5454-8f33-8615f672c50f`
+- `a4016c1e-da5c-5af1-94e3-728bb8b2be91`
+- `54aab7a6-b37d-5cde-a79b-0cae98d467ab`
+- `9cf6eb93-0dd9-55aa-99ee-b8deaa1f1c19`
+- `68df5012-f8bc-52f1-9b4e-d54301f3b356`
+- `a374035c-1882-5a86-98db-a7b0594cb601`
+- `4bd62c3a-8283-5aaf-99a8-bede6114fad9`
+- `8388e620-88ac-5d17-8ff9-25662519313d`
+- `cad07935-ecac-5d19-866a-c4faad6211b3`
+- `9e2c65de-80dd-57ae-8fe3-82b356b8a6da`
+- `dd8c671d-c4b2-552e-a789-fe523f31ef98`
+- `25498bb2-221c-5ac1-bce9-5d59a7480ecf`
+- `07fb5f5e-ec02-5463-834d-140ba5081d8a`
+- `ad93918c-b867-5af0-9d41-2059558e624d`
+- `a1dfbac8-0a57-5866-a4c0-46a611343e23`
+- `7317f4b6-d3bc-5d0e-b87d-18df80a3dcb9`
+- `4b1470ad-4514-5652-b046-e2702016efad`
+- `cab483bb-d571-5f3e-82ae-f059c391ce47`
+- `a1cd11cc-4250-564a-bec3-d87e53ec7d55`
+- `5229a1ee-cf2b-518f-9f32-b7d05c65cfc4`
+- `9ab30698-6ae5-5135-901c-c9f6408c7c53`
+- `4e872ca4-4ab8-59f4-b12b-1ec5fe037b29`
+- `99f6613a-35c0-56a6-aaf2-b61db1d7c1ad`
 - `f8871d89-a4b9-577d-b70c-8fe152ce549d`
 - `fd0bda02-0120-5a4f-a4fe-ca4ee8bf1e32`
 - `e71121cc-2253-570c-977e-c9f8ab9a36fe`
@@ -2625,116 +2444,13 @@ Supporting utilities handle timestamp parsing/formatting across multiple formats
 - `3bf2176d-60c2-5a29-b92b-8004812c4e9d`
 - `d89634df-9b72-5370-87c9-1f24ef9a975e`
 - `dbee1402-9bbf-58a0-9d8d-72065361df9e`
-- `49f38590-ef48-55e1-af4a-3987297716b2`
-- `603dabc4-c727-56b3-8fe0-9ae3dfa9c9fe`
-- `093b41cf-99c7-506e-bece-9f9435eceeb4`
-- `9321b59e-0c6a-53af-b1a4-ee83b0f2b813`
-- `6a9e158c-1b96-52ec-9bae-d740a0415f57`
-- `35b0deb9-c4c8-5cbc-ad9a-a84d8bd6e53f`
-- `7ced74b9-88ff-59d9-904f-0bee8e3a6272`
-- `7cb6d937-577b-5da8-bef2-cec47b21aec0`
-- `2f4c6d2e-68bb-5f12-a1e9-4073126f9de7`
-- `5e845bb4-557b-5c2b-aafa-ece5f0626e68`
-- `04450893-5f96-517c-9b28-467197de83d8`
-- `cb46d713-b344-5ec2-ad7a-66738df4fdb3`
-- `d973900d-6fd1-554f-ab98-cd93f1d1a123`
-- `292e5717-d026-5aa9-906d-3d2e97975ff1`
-- `84f83c5e-4382-594d-902b-c81df5b14664`
-- `a56f6531-447d-5f24-9472-bc27361abbc3`
-- `8f34bb54-e31f-5969-a317-044c52ce990a`
-- `a9504022-73f9-513d-88fd-6ef99b4d82d3`
-- `09e9fe7f-6481-5261-b79b-b15ab25ffc2e`
-- `2d893467-f1c7-55a9-bc15-1e1f5aa849d3`
-- `f19d51ab-99d7-5e97-b568-487e3217e4e2`
-- `35d10b4c-0496-56b7-99a2-7cbc5e7419c1`
-- `3c28f059-bb0d-5c72-afea-39d96d572848`
-- `83578ce9-1219-555b-8d73-2a802ec36028`
-- `5d011d60-89f1-5ad5-8c31-45d1c174d0d8`
-- `8cfb61d5-20ca-5390-a506-7a7bbf369b64`
-- `a4b3964c-ebe9-5da4-a0af-41cdd83ac5f7`
-- `13e8b723-a3b1-5dd8-830f-138093ad24a9`
-- `07ba44ed-8271-5f7d-9586-e045ab1edb60`
-- `4bf61a17-02dd-5c6e-90cc-aee88490b2fb`
-- `77d8c4f0-1be0-535a-b179-92a8ce4f6624`
-- `b67522a2-2d97-5c0b-b384-6ace3d263e5c`
-- `b50a0e54-2b98-5b81-b1da-ef578c3619d4`
-- `cd18b8f2-a7d0-5d22-9466-01159a81ac2c`
-- `906ba13f-15e6-5329-aff5-23fa36bedf62`
-- `a58a512c-301d-5e97-9553-69c0c94ded8b`
-- `d3d9448f-c2a5-57f2-acf4-5f7097362563`
-- `d6fbb3c1-841e-583d-8320-44add3d902ff`
-- `0a089877-1d33-5aaf-8616-19fdaed5d1b5`
-- `c067578a-9702-53b6-8d9d-aa78a4320cc0`
-- `2ccbfb1e-bc96-59c6-93b7-0fd99a500e88`
-- `a6a99bc1-2a87-5af2-97d7-7b42b46e7fae`
-- `1697a825-e4c1-5c5c-aed7-dfd0d604c0a9`
-- `af0591e1-f443-58d5-9fab-36d4af999ffa`
-- `a8a463aa-3026-5b7f-a5c4-03a811e3e536`
-- `4acb551d-32f8-5dd9-bbcc-3c73255985b5`
-- `6f02548c-c616-5fe7-887a-17b46b1790ad`
-- `379b0772-578c-531b-a882-8c56a24e829f`
-- `db2bc823-fb37-58fd-a458-12a5ec538384`
-- `aadb447a-ae0b-52ef-b7a4-88aef2d61b32`
-- `c050836e-3c66-5228-86bd-2c7a1967168f`
-- `a75aa5fe-da63-54a2-b016-7ba1c7d00f8b`
-- `b7f8743d-c229-5035-b166-c5a14f8d901c`
-- `a17fca60-009e-5bb8-93b8-08e9f15bb819`
-- `3aed8223-13db-51f4-bba7-8e964d78320e`
-- `63083e48-42d9-532e-9211-d411c2d6c932`
-- `c731ff15-e18a-571a-93d4-46515a58b2e8`
-- `b2c18be7-0694-5d2d-8292-d33e65f9541f`
-- `88a6ff83-9920-5f20-be5a-63a340bfcb18`
-- `1c2bef5c-92e0-5ee4-a132-c274efda5150`
-- `ff7ce857-0b67-5e29-9d3a-62b40b1d0b01`
-- `b2e96a04-6e8d-53cf-a6fc-4e9bf3eaab00`
-- `eabd208d-d354-55fa-94e4-7010e6b1c731`
-- `150521cc-09fa-58ce-b46b-8de723ab1a07`
-- `b5a36516-209a-582c-8b23-747fa2a8ef39`
-- `cdf0d778-392a-5aca-95a6-31c7c241c591`
-- `52508373-e4f6-59e0-a8ad-a3bd4dbebcf2`
-- `19201efc-f03a-5593-8a20-25edc3910e5f`
-- `a11d7589-14d2-595c-8072-2bbde3593e86`
-- `73f5f698-fae1-5315-a7b9-5b0721f28420`
-- `98e8ad4a-343a-5577-8662-7e821d736003`
-- `9a31ede1-3f03-567e-91b6-6b557bfc76c2`
-- `17a9a841-ab48-535c-94e2-a4ab0e25eaed`
-- `f672ee3b-c1d5-54ce-ad84-936272f8a510`
-- `79bd60df-d583-50e6-823a-dc4c51748ade`
-- `a7e8e5c9-b18d-541b-9b7e-f7f10b858b10`
-- `5d58f29f-9ec1-5426-b2f7-af425204f876`
-- `522b7da9-75ae-52e7-b78f-64de1e4c01dd`
-- `70b1b8fa-9dfc-5b46-8a13-4864deb734c9`
-- `a5dfc249-b85d-50ad-9d76-e7e17cc089ea`
-- `b2787b84-0357-5d47-ae4d-b042e4a936f2`
-- `b1e5441c-7815-5af1-b3b2-d47abad81902`
-- `671b2930-7ccd-5cfc-9ad9-35ecd9d05d67`
-- `66672f5f-0307-5809-a7e8-1ee0a86573f2`
-- `1a72ed39-22f7-50c9-9143-511b254c2059`
-- `430d12c7-0bb9-5df9-930d-ebe6a0265d66`
-- `31369524-6b67-55af-addc-5dce8b8d3bd8`
-- `d2301d12-66b5-5b05-978e-1d65437afd9c`
-- `021b8958-d6c8-50b4-9afd-0b4c3c03eec4`
-- `50c8937f-1ac5-5510-965b-6d4aa141c995`
-- `84552683-159a-52a9-a61c-7aca44b2b576`
-- `15fa2277-0a1d-5b11-a194-7b92f031f7a6`
-- `ac4840df-b980-5700-b615-28a660c7be23`
-- `bebd3eef-5b44-5232-9f55-4f778b0043a5`
-- `423c60ca-4042-5587-97ac-0fe173da8f01`
-- `157dc583-2735-5e2c-8986-ceb2dcc5687a`
-- `d062d6b6-3399-56f5-ba6a-21a75116dcd9`
-- `9bd198a2-f37c-5bc6-93e0-d44367121152`
-- `b4e1e7f1-e648-5852-895f-fdea9f4c5c67`
-- `7db36eef-8cb9-5d5b-9c77-d405e72b3575`
-- `93cf934e-d4cd-514f-8819-e39eacc3c41f`
-- `537af723-d179-53cf-a55f-f0edf7ddb705`
-- `d1f0c5af-0b51-56e8-ad89-a78eab1a8d23`
-- `1f8723b8-f79a-5cd9-998e-a4f7e8739e96`
-- `0abda041-d4ca-58fc-8200-9312615db2fb`
-- `fa27bdc3-f450-5486-9c34-6f633251a369`
-- `475f9de9-6580-5157-b639-6ac5e2501326`
-- `0babc2f3-ab27-5657-be81-3d8bcdcdef07`
-- `5293fcdc-d725-545c-ab01-308996f4ff3c`
-- `699c8e12-cceb-50c3-89bf-4c0414ef5139`
+- `b4a82717-6d65-51fb-89cd-7bec1c14edd0`
+- `17b104d1-ddac-557b-87e9-27a7332aa0d0`
+- `3635b710-928e-52ad-ad11-21bd4a8a3821`
+- `9ec7a45e-c25f-566f-af7d-ec2916bbeb43`
+- `7f31af68-9a9d-55cf-b210-616592e29a83`
+- `c6663743-909d-5d51-9d8a-c5d1c2f430db`
+- `d610ff6c-0810-53db-99d9-710d3d014ee7`
 - `7fbd01fa-4e31-5535-9145-e0aef5f10e56`
 - `a1f1230b-7287-58cb-b5f2-2d3d552e8398`
 - `afc1dbc8-231d-5afa-84c7-ecfd0b0b7efe`
@@ -2836,38 +2552,6 @@ Supporting utilities handle timestamp parsing/formatting across multiple formats
 - `3c44c2bb-954d-5612-8787-8bb97bffecbd`
 - `a5dd24c3-e627-5214-8c65-f8326959bd94`
 - `c8e9e71d-978e-5281-91dd-190c26c6c90a`
-- `d0f2d47c-2e6f-5706-b30c-ac596664547f`
-- `2a88a901-9d79-5811-b8a6-6c3e87baed44`
-- `149a6fb8-3ffb-59bd-bbb0-2d51344f70fd`
-- `1b16f91c-f47f-5cd2-9bff-7949fa2728e9`
-- `0efa446c-3614-5459-932c-f9b00ec6c809`
-- `4f92ff6a-8d3c-5f09-9eeb-f138e4286704`
-- `cf9f500a-4c93-534e-b363-7ee467d2f0bd`
-- `c40ae7e0-1054-5cca-8b7f-6a0c2749e59b`
-- `eeda002c-4818-5091-8a0a-5d594d14ed3d`
-- `c9090ac8-7375-5727-9da6-b4c3a029e231`
-- `d9d9324e-7d2a-58da-aab3-043f02a67dcb`
-- `b081830f-1b4e-57ac-8972-4cb069a76990`
-- `4258d3fc-bf86-555b-80e6-20d340157adb`
-- `afe4dc74-f6fd-5fe6-8be2-fa2723794124`
-- `8c81b61f-d00f-5108-bede-57a48beaf518`
-- `a391ee85-e936-5ecc-a4fb-19d42cd8f17a`
-- `0180c287-f318-541e-b5b8-418691f8fd8c`
-- `dd9b2a2c-6eb5-5e8a-a3ae-5d9926dd73b5`
-- `06daa396-97fe-5de7-b5ab-3b11625878ba`
-- `cd796e9c-3b86-53c4-aec1-cd8170bab155`
-- `e3b939d9-f8ab-5a0a-87d5-4ea5a3f75a47`
-- `a67cdb5e-18e6-5bd6-b266-9f8aabdf7610`
-- `2552f9f8-f7cc-585e-873a-bb503d319586`
-- `52f0a97b-37c9-5901-b698-5ae69562936a`
-- `75ebc35c-75f3-53bd-bc81-1ae1d08fe05c`
-- `7abf4a0e-d83a-528f-a254-875884fa9f46`
-- `a8b58fbb-0d2a-5497-af95-79876ab0c14a`
-- `475e3973-e502-5d1a-901b-3277d8968ac8`
-- `988cb5b4-bc54-56d2-9fb6-c3b9025411f8`
-- `ede4372c-ac09-50a3-a1a9-1b7d64e1484a`
-- `0dda79d0-958f-5b1c-8335-84fe6077d802`
-- `7b6d8ccc-859e-5ce1-ad48-fe5e2a3e4811`
 - `22cadf56-b6b1-50ce-b558-dce67f342d4c`
 - `ebc4963b-c395-5a64-9482-00e4933775e4`
 - `fbc1675d-865d-5235-a4d9-06e53fc8508b`

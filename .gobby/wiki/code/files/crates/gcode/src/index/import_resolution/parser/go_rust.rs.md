@@ -22,7 +22,7 @@ Module: [[code/modules/crates/gcode/src/index/import_resolution/parser|crates/gc
 
 ## Purpose
 
-This file implements import extraction for Go and Rust source text. `parse_go_import_statement` validates Go `import` syntax, handles single imports and parenthesized blocks, and delegates each entry to `parse_go_import_spec`, which records the file-to-module relation and, for external Go modules, registers a usable local alias binding. The Rust side mirrors that role: `parse_rust_import_statement` dispatches `use` parsing into `register_rust_group_imports` for nested group imports and `register_rust_path_import` for individual paths, where external roots are validated and bindings are created for the root, imported symbol, and any alias. The tests confirm that non-import Go and Rust statements are ignored and do not produce extracted imports.
+This file parses import statements for both Go and Rust and records them into the import-resolution context. The Go side accepts single or parenthesized import blocks, strips comments, extracts quoted module paths, tracks file-to-module relations, and registers local aliases for external modules. The Rust side handles `use` statements by either recursing through grouped imports or registering a specific path, validating external roots and filling in root, member, and optional alias bindings. The tests confirm that non-import Go and Rust statements do not produce extracted imports.
 [crates/gcode/src/index/import_resolution/parser/go_rust.rs:12-40]
 [crates/gcode/src/index/import_resolution/parser/go_rust.rs:42-77]
 [crates/gcode/src/index/import_resolution/parser/go_rust.rs:79-106]

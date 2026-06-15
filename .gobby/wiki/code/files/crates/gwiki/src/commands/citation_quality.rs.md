@@ -59,7 +59,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-Builds and executes the `citation-quality` command for a wiki scope, producing a report artifact plus serialized metadata that summarize citation health. The file defines the report and section data models, computes credibility, coverage gaps, contradictions, stale sources, and confidence from the source manifest, provenance graph, and health report, renders those results into markdown, and writes the artifact; the helper functions handle source scoring, section-ID and slug derivation, AI availability checks, and file output, while the tests verify PostgreSQL attachment requirements, scope filtering, contradiction detection, and report degradation behavior.
+Builds and tests a citation-quality analysis command for `gwiki`: it gathers source, provenance, and health data for a selected scope, computes credibility, coverage-gap, contradiction, stale-source, and confidence sections, renders them into a markdown report, writes the artifact, and returns a `CommandOutcome` plus structured JSON-friendly report data. The file is organized around a top-level `CitationQualityReport` payload and a set of section records plus helper functions that derive each section, format the markdown, and handle AI-backed contradiction detection when available.
 [crates/gwiki/src/commands/citation_quality.rs:26-33]
 [crates/gwiki/src/commands/citation_quality.rs:36-40]
 [crates/gwiki/src/commands/citation_quality.rs:43-49]

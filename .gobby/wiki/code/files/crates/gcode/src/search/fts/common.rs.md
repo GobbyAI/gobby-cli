@@ -39,7 +39,9 @@ Module: [[code/modules/crates/gcode/src/search/fts|crates/gcode/src/search/fts]]
 
 ## Purpose
 
-This file provides utilities for full-text search queries against PostgreSQL symbol records. It defines core types like `ResolvedGraphSymbol` and `SymbolFilters`, and exports a central `query_symbols_by_conditions` function that executes parameterized queries with dynamic SQL WHERE/ORDER BY clauses. Supporting functions build SQL fragments: `push_symbol_filters` adds kind/language/path conditions, `push_path_filter` handles glob-pattern matching via SQL LIKE expressions, and `push_visible_project_file_filter` excludes tombstoned files while enforcing project scope visibility. The `SymbolOrder` enum generates ORDER BY clauses for BM25 relevance, lexicographic name ordering, or case-sensitive exact-match prioritization. Helper functions like `push_param`, `param_refs`, and `trusted_row_id` manage parameter binding to prevent SQL injection, while path utilities (`escape_like`, `glob_to_like_prefix`, `expand_paths`, `compile_patterns`) transform glob patterns into SQL-safe prefixes. The module centralizes FTS SQL construction to keep query sanitation consistent across the codebase.
+Shared helper module for gcode full-text symbol search. It centralizes PostgreSQL parameter handling and query execution, defines the small data types used by search (`ResolvedGraphSymbol`, `SymbolFilters`, `SymbolOrder`, `PgParam`), and builds safe SQL fragments for ordering, visibility scoping, path glob filtering, and symbol selection.
+
+The pieces work together by turning user-facing filters into parameterized WHERE/ORDER BY clauses, expanding and compiling path patterns as needed, optionally falling back to post-query filtering when glob prefixes are too broad, and deduplicating or counting results before returning bounded symbol lists. The tests at the end verify the BM25 ordering uses the trusted `pdb.score` path rather than the untrusted `pg_search` expression.
 [crates/gcode/src/search/fts/common.rs:16]
 [crates/gcode/src/search/fts/common.rs:19-22]
 [crates/gcode/src/search/fts/common.rs:25-29]

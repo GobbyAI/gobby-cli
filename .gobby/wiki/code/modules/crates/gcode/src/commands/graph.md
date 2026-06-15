@@ -4,26 +4,28 @@ type: code_module
 provenance:
 - file: crates/gcode/src/commands/graph/lifecycle.rs
   ranges:
-  - 11-13
-  - 15-53
-  - 55-64
-  - '66'
-  - 68-75
-  - 77-83
-  - '85'
-  - 87-98
-  - 100-114
-  - 116-128
-  - 130-137
-  - 139-146
-  - 148-160
-  - 162-164
-  - 166-204
-  - 206-227
-  - 229-307
-  - 309-316
-  - 318-325
-  - 327-390
+  - 12-14
+  - 16-54
+  - 56-65
+  - '67'
+  - 69-76
+  - 78-84
+  - '86'
+  - 88-99
+  - 101-115
+  - 117-129
+  - 131-138
+  - 140-147
+  - 149-161
+  - 163-165
+  - 167-211
+  - 213-234
+  - 236-314
+  - 316-323
+  - 325-332
+  - 339-359
+  - 361-369
+  - 371-434
 - file: crates/gcode/src/commands/graph/payload.rs
   ranges:
   - 6-37
@@ -98,11 +100,16 @@ Parent: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Overview
 
-The `crates/gcode/src/commands/graph` module is the command-facing layer for graph operations in `gcode`. It covers lifecycle commands that clear, rebuild, and sync graph projections through a `LifecycleBackend`, including typed JSON contract errors for missing indexed project or file states and success text formatting for completed lifecycle actions  . It also exposes graph payload and reporting commands that call into the underlying `code_graph` and report modules, then render either JSON or text output for overviews, file graphs, neighboring symbols, blast-radius analysis, and project graph reports .
+The graph command module is the CLI-facing layer for code-graph operations: it handles lifecycle mutations, read queries, and payload/report rendering. Lifecycle commands sync individual files, clear or rebuild a project graph, clean orphaned graph data, and return typed contract errors for missing indexed projects or files, including a fixed sync-contract exit code and JSON payloads for automation consumers (crates/gcode/src/commands/graph/lifecycle.rs:1-100). Read commands protect callers from unavailable graph infrastructure by detecting missing or unreachable FalkorDB, emitting hints, and returning empty paginated JSON or quiet text-mode degradation instead of failing hard for configured read paths (crates/gcode/src/commands/graph/reads.rs:1-100).
 
-The read side is responsible for making graph-backed commands usable even when the FalkorDB backend is absent or unavailable. It detects missing configuration or unreachable graph reads, converts those cases into hints or empty paginated responses, and preserves JSON response shape while avoiding hard failures for unavailable graph reads  [crates/gcode/src/commands/graph/reads.rs:50-73]. It also resolves symbols from UUIDs or full-text search before driving paginated callers, usages, imports, and blast-radius queries, with text grouping and JSON output handled centrally by shared helpers [crates/gcode/src/commands/graph/reads.rs:14-20] .
+The main flows split cleanly between building graph data and presenting it. `payload.rs` turns `GraphPayload` values into either JSON or concise text that reports node/link counts, optional centers, nodes, and links, then reuses that output helper for project overviews, file graphs, neighbors, and blast-radius payloads; it also renders project reports from their markdown text or preserves their JSON shape (crates/gcode/src/commands/graph/payload.rs:1-97). `reads.rs` supplies the shared machinery behind symbol-oriented commands such as imports, callers, usages, and blast radius, including backend hints, empty response construction, and grouped plaintext formatting for graph results (crates/gcode/src/commands/graph/reads.rs:14-73).
 
-The files collaborate by keeping formatting, lifecycle dispatch, and read fallback behavior separate while sharing the same `Context`, `Format`, graph model, and output abstractions. `payload.rs` handles graph visualization and report payload presentation, `lifecycle.rs` handles mutating graph projection flows and their contract-shaped results, and `reads.rs` handles graph lookup commands and graceful degradation paths. The test module exercises those boundaries together: it verifies missing-FalkorDB degradation, markdown report formatting, grouped graph text output, lifecycle backend dispatch, typed lifecycle error payloads, URL/error formatting, and top-level read response shapes [crates/gcode/src/commands/graph/tests.rs:16-30]  [crates/gcode/src/commands/graph/tests.rs:53-89].
+The files collaborate by keeping command orchestration thin and pushing backend work into `crate::graph::code_graph` and report generation into `crate::graph::report`. `lifecycle.rs` abstracts mutation dispatch through `LifecycleBackend`, which lets the command layer call concrete graph lifecycle actions while tests substitute a spy backend (crates/gcode/src/commands/graph/lifecycle.rs:1-100; crates/gcode/src/commands/graph/tests.rs:1-100). The test module anchors these contracts by checking graceful degradation without FalkorDB, markdown report text, grouped and sorted graph text, lifecycle dispatch, sync error payloads, daemon/HTTP handling, success-text formatting, and JSON shape preservation (crates/gcode/src/commands/graph/tests.rs:16-100).
+[crates/gcode/src/commands/graph/lifecycle.rs:12-14]
+[crates/gcode/src/commands/graph/payload.rs:6-37]
+[crates/gcode/src/commands/graph/reads.rs:14-20]
+[crates/gcode/src/commands/graph/tests.rs:16-30]
+[crates/gcode/src/commands/graph/lifecycle.rs:16-54]
 
 ## Call Diagram
 
@@ -112,28 +119,25 @@ sequenceDiagram
     participant m_088ce1b3_b2ca_506f_b95e_31536517658b as file &#91;function&#93;
     participant m_0898e987_94f4_5adc_90e8_c49c29878b76 as ambiguous_name_behavior_remains_unchanged &#91;function&#93;
     participant m_097b1a01_832f_549f_9c7b_f6951d1a8b56 as callers &#91;function&#93;
-    participant m_1312cd99_2d27_5fac_b353_a18cb2ce9ba6 as rebuild_project_graph &#91;function&#93;
+    participant m_0daae913_bbc7_51cf_aa40_e6223b20d7fa as rebuild_project_graph &#91;function&#93;
     participant m_170c2f8c_d4cc_50b2_94de_6fde03ebf677 as no_graph_facts_skip_payload_is_terminal_success_shape &#91;function&#93;
     participant m_1bab4f0f_16c6_52e8_9e2b_62d90e03e8a7 as make_ctx_no_falkordb &#91;function&#93;
     participant m_27d7bda8_e0ec_506f_97a8_12381bc44b0e as GraphResolutionProjectCleanup.new &#91;method&#93;
     participant m_341d23ea_9423_5cfb_8d7c_f1ad44f093cd as insert_project &#91;function&#93;
-    participant m_39f592a9_5a73_58fc_afd8_f179f4e324ff as sync_file &#91;function&#93;
     participant m_3e037ddf_301a_5d33_8762_fadad06ccd4f as GraphResolutionProjectCleanup.drop &#91;method&#93;
-    participant m_430cb271_d063_54c4_8bed_9d55ac16e6d0 as skipped_missing_indexed_file_payload &#91;function&#93;
+    participant m_436e92eb_f8d0_5124_b88c_b8b470021ac9 as uuid_input_resolves_exact_symbol_for_active_project &#91;function&#93;
     participant m_471d1cdf_3a26_5a63_8d83_6a61f1adb340 as print_graph_hint_text &#91;function&#93;
     participant m_4ba4991e_2360_5330_9915_272f1cca68ef as insert_file &#91;function&#93;
     participant m_4d854215_1cde_583b_b7a4_e833897eca0e as cleanup_graph_resolution_project &#91;function&#93;
-    participant m_4ff376f4_d80f_5b7f_b3b2_e61a4cd1e71b as sync_file_graph &#91;function&#93;
     participant m_51dfaae5_102c_51ac_8069_eed715c6b054 as try_cleanup_graph_resolution_project &#91;function&#93;
     participant m_59948c24_5dfd_5eb7_a5a3_f9a57bf054b8 as graph_resolution_database_url &#91;function&#93;
     participant m_5ab8b804_fe94_55c5_8c25_f494ab365c8e as format_grouped_graph_results &#91;function&#93;
-    participant m_805d6a74_75a2_58c9_8312_701a4294d130 as skipped_no_graph_facts_payload &#91;function&#93;
     participant m_9cacd81a_39c9_56e8_b693_fba43062a725 as resolve_symbol_with_connection &#91;function&#93;
     participant m_9d5664b7_3f0a_5321_98ee_9c7152968aef as resolve_symbol_or_empty_response &#91;function&#93;
     participant m_b2f5cf93_e7c6_5c8a_ba42_407285c5e862 as insert_symbol &#91;function&#93;
     participant m_b36b364f_b9cf_5d04_a9d3_51567ffaa393 as connect_graph_resolution_test_db &#91;function&#93;
-    participant m_c53a32d7_43a2_5c19_b3e5_3aafb3902d5d as lifecycle_output &#91;function&#93;
     participant m_c77c4fac_f2a7_5572_8a3e_164d5de7cf72 as hint_for &#91;function&#93;
+    participant m_d5e3a602_cee7_596d_8bad_4eec33f4b381 as lifecycle_output &#91;function&#93;
     participant m_e6475e3f_066b_50f9_83e6_657e73cdc6c6 as unique_uuid &#91;function&#93;
     participant m_eae59979_bc5d_5c0f_a67b_fadf5ff52825 as print_graph_payload &#91;function&#93;
     m_073de07c_31ba_547c_8306_03fe619f12ce->>m_9d5664b7_3f0a_5321_98ee_9c7152968aef: calls
@@ -149,36 +153,38 @@ sequenceDiagram
     m_097b1a01_832f_549f_9c7b_f6951d1a8b56->>m_471d1cdf_3a26_5a63_8d83_6a61f1adb340: calls
     m_097b1a01_832f_549f_9c7b_f6951d1a8b56->>m_5ab8b804_fe94_55c5_8c25_f494ab365c8e: calls
     m_097b1a01_832f_549f_9c7b_f6951d1a8b56->>m_c77c4fac_f2a7_5572_8a3e_164d5de7cf72: calls
-    m_1312cd99_2d27_5fac_b353_a18cb2ce9ba6->>m_c53a32d7_43a2_5c19_b3e5_3aafb3902d5d: calls
+    m_0daae913_bbc7_51cf_aa40_e6223b20d7fa->>m_d5e3a602_cee7_596d_8bad_4eec33f4b381: calls
     m_170c2f8c_d4cc_50b2_94de_6fde03ebf677->>m_1bab4f0f_16c6_52e8_9e2b_62d90e03e8a7: calls
     m_27d7bda8_e0ec_506f_97a8_12381bc44b0e->>m_59948c24_5dfd_5eb7_a5a3_f9a57bf054b8: calls
-    m_39f592a9_5a73_58fc_afd8_f179f4e324ff->>m_430cb271_d063_54c4_8bed_9d55ac16e6d0: calls
-    m_39f592a9_5a73_58fc_afd8_f179f4e324ff->>m_4ff376f4_d80f_5b7f_b3b2_e61a4cd1e71b: calls
-    m_39f592a9_5a73_58fc_afd8_f179f4e324ff->>m_805d6a74_75a2_58c9_8312_701a4294d130: calls
     m_3e037ddf_301a_5d33_8762_fadad06ccd4f->>m_51dfaae5_102c_51ac_8069_eed715c6b054: calls
+    m_436e92eb_f8d0_5124_b88c_b8b470021ac9->>m_341d23ea_9423_5cfb_8d7c_f1ad44f093cd: calls
+    m_436e92eb_f8d0_5124_b88c_b8b470021ac9->>m_4ba4991e_2360_5330_9915_272f1cca68ef: calls
+    m_436e92eb_f8d0_5124_b88c_b8b470021ac9->>m_4d854215_1cde_583b_b7a4_e833897eca0e: calls
 ```
 
 ## Files
 
-- [[code/files/crates/gcode/src/commands/graph/lifecycle.rs|crates/gcode/src/commands/graph/lifecycle.rs]] - This file implements the command-side lifecycle flow for code graphs: it defines `GraphSyncContractError` for JSON-formatted contract failures, helpers for success/error output shaping, and a `LifecycleBackend` abstraction with `CodeGraphLifecycleBackend` as the concrete dispatcher. The backend routes `GraphLifecycleAction` variants to clear, rebuild, or sync operations, while `run_lifecycle_action_with_backend` and related helpers package the result into either JSON or formatted text.
-[crates/gcode/src/commands/graph/lifecycle.rs:11-13]
-[crates/gcode/src/commands/graph/lifecycle.rs:15-53]
-[crates/gcode/src/commands/graph/lifecycle.rs:16-27]
-[crates/gcode/src/commands/graph/lifecycle.rs:29-40]
-[crates/gcode/src/commands/graph/lifecycle.rs:42-44]
-- [[code/files/crates/gcode/src/commands/graph/payload.rs|crates/gcode/src/commands/graph/payload.rs]] - This file provides a command layer for code graph analysis output and reporting. It defines formatting functions that convert GraphPayload and ProjectGraphReport structures into human-readable text (node/link counts, node definitions with types and paths, typed edges), then exposes public functions for generating and displaying various graph queries: project overview, file-specific graphs, neighboring symbol searches, blast radius dependency analysis, and summary reports. Each public function queries the underlying code graph module to generate the requested analysis, then dispatches the result through a unified print function that outputs in either JSON or text format based on the Format parameter.
+- [[code/files/crates/gcode/src/commands/graph/lifecycle.rs|crates/gcode/src/commands/graph/lifecycle.rs]] - Implements the code-graph lifecycle command layer for a project: syncing individual files, clearing the graph, rebuilding it, and cleaning up orphaned graph data. It uses a `LifecycleBackend` abstraction so lifecycle actions can be dispatched to the concrete code-graph operations, then formats the resulting `GraphLifecycleOutput` as either JSON or success text.
+
+The file also defines `GraphSyncContractError`, a JSON-backed error type for contract failures such as “project not indexed” and “indexed file not found,” with a fixed exit code and printable payload. Helper functions build skip/success payloads, detect files with no graph facts, and assemble per-file sync results and orphan cleanup reports.
+[crates/gcode/src/commands/graph/lifecycle.rs:12-14]
+[crates/gcode/src/commands/graph/lifecycle.rs:16-54]
+[crates/gcode/src/commands/graph/lifecycle.rs:17-28]
+[crates/gcode/src/commands/graph/lifecycle.rs:30-41]
+[crates/gcode/src/commands/graph/lifecycle.rs:43-45]
+- [[code/files/crates/gcode/src/commands/graph/payload.rs|crates/gcode/src/commands/graph/payload.rs]] - This file is the output layer for graph-related commands: it takes generated graph payloads and reports and renders them as either JSON or a simple newline-delimited text form. It centralizes the shared formatting and printing logic, then exposes command helpers for project reports, project overviews, per-file graphs, neighbor queries, and blast-radius graphs so each command only has to build the right graph data and choose the output format.
 [crates/gcode/src/commands/graph/payload.rs:6-37]
 [crates/gcode/src/commands/graph/payload.rs:39-44]
 [crates/gcode/src/commands/graph/payload.rs:46-48]
 [crates/gcode/src/commands/graph/payload.rs:50-59]
 [crates/gcode/src/commands/graph/payload.rs:61-64]
-- [[code/files/crates/gcode/src/commands/graph/reads.rs|crates/gcode/src/commands/graph/reads.rs]] - Provides the read-side support for graph-backed `gcode` commands. It centralizes user-facing fallback behavior when the FalkorDB graph backend is missing or unreachable, including context-sensitive hints, empty paginated responses, and a wrapper that turns graph-read failures into `None` instead of hard errors. It also handles symbol resolution from either UUIDs or full-text lookup, then uses that resolved symbol to power paginated commands for callers, usages, imports, and blast-radius queries, with grouped text output or JSON responses. The bottom of the file contains graph-resolution database test/cleanup helpers plus targeted tests that verify UUID resolution, non-fallback behavior for unknown UUID-shaped input, and ambiguous-name handling.
+- [[code/files/crates/gcode/src/commands/graph/reads.rs|crates/gcode/src/commands/graph/reads.rs]] - This file implements the graph-read side of `gcode`: it centralizes backend-availability hints, turns graph-read failures into empty paginated responses with optional user guidance, and provides the shared symbol-resolution and result-formatting machinery used by commands like callers, usages, imports, and blast radius. It resolves inputs either by UUID or full-text search, gates reads when graph data or symbol lookup is unavailable, and emits either JSON `PagedResponse` output or grouped plaintext. The lower half also contains test-only PostgreSQL setup and cleanup helpers plus a small suite of resolution behavior tests.
 [crates/gcode/src/commands/graph/reads.rs:14-20]
 [crates/gcode/src/commands/graph/reads.rs:22-30]
 [crates/gcode/src/commands/graph/reads.rs:32-38]
 [crates/gcode/src/commands/graph/reads.rs:40-48]
 [crates/gcode/src/commands/graph/reads.rs:50-73]
-- [[code/files/crates/gcode/src/commands/graph/tests.rs|crates/gcode/src/commands/graph/tests.rs]] - Tests for the `gcode` graph command layer, covering read and report behavior, lifecycle command dispatch, URL/error/payload formatting, and the shape of top-level read responses. The file builds a minimal `Context` without FalkorDB to verify graceful degradation, uses grouping/markdown helpers to check output formatting, and exercises lifecycle helpers with a `SpyLifecycleBackend` plus payload constructors to ensure graph clear/rebuild/read flows produce the expected typed results and messages.
+- [[code/files/crates/gcode/src/commands/graph/tests.rs|crates/gcode/src/commands/graph/tests.rs]] - Tests for the graph command layer, covering read/report formatting, lifecycle dispatch, sync contract payloads, daemon URL and HTTP error handling, success-text formatting, and JSON shape preservation. The file builds a minimal `Context` without FalkorDB for degradation checks, uses a `SpyLifecycleBackend` to verify backend calls and outputs, and exercises helper functions to ensure graph features fail, skip, or render consistently under the expected edge cases.
 [crates/gcode/src/commands/graph/tests.rs:16-30]
 [crates/gcode/src/commands/graph/tests.rs:33-39]
 [crates/gcode/src/commands/graph/tests.rs:42-50]
@@ -187,33 +193,35 @@ sequenceDiagram
 
 ## Components
 
-- `f408e6ee-9e37-5222-9f4a-97e83ab4ef79`
-- `6a10a7ef-2f67-5752-9496-a02b1c6e8878`
-- `e61b355b-e387-5510-a122-2476709e1ca4`
-- `ae650cad-6cda-5fa3-9148-d5ebdc6ea6d6`
-- `b21d67eb-1f56-54de-bcdf-0134c438955e`
-- `87a60057-f56e-55c4-8a92-504dddd268d9`
-- `8935ff8f-44f6-5ec6-adb0-7bfe253eed4c`
-- `c43650c1-dd83-55e1-abde-3068f935b61c`
-- `7efe44a7-e662-5fe1-8572-35021f46ee22`
-- `e3a73218-b774-5088-8fa2-bf7cb062a0e0`
-- `7eb80600-b72c-54d5-8a48-5df3e060db3e`
-- `4342ff37-f20b-5c4f-b35d-f3cd002c6de8`
-- `947a81f1-a4e7-5882-9300-39550e9e1ca6`
-- `6a419f48-0344-5014-aa8c-c4aab948eb78`
-- `fa45bf46-0cc5-583c-915d-73a47381f4b4`
-- `40b17f53-5fae-58a5-9895-e56ca7f153be`
-- `c53a32d7-43a2-5c19-b3e5-3aafb3902d5d`
-- `072f681f-19cb-55b6-b525-dd0ea38472ac`
-- `430cb271-d063-54c4-8bed-9d55ac16e6d0`
-- `805d6a74-75a2-58c9-8312-701a4294d130`
-- `ed99b437-50e8-50cc-80ee-6bdd442fd1d2`
-- `4ff376f4-d80f-5b7f-b3b2-e61a4cd1e71b`
-- `eccf3bf4-37e8-5b8f-a537-d5310af2cbc5`
-- `1312cd99-2d27-5fac-b353-a18cb2ce9ba6`
-- `fa4bcfeb-225c-50e9-adec-d64525c4b162`
-- `ec55216b-5ceb-531f-8f67-7acaadf762e4`
-- `39f592a9-5a73-58fc-afd8-f179f4e324ff`
+- `95cb25f4-e1f7-5eea-af0c-64c37790e5b9`
+- `89bc6492-53fc-52b2-907c-2dd79e2c3210`
+- `3aa2684d-396b-57d6-81db-823ce9abf938`
+- `f8d135df-c390-5217-a73d-cd34d187be0f`
+- `eae964ca-8fdf-5d8a-913a-0cf46102e75f`
+- `71bea680-d940-53c1-9aa5-03725ed26611`
+- `0109de40-7324-5f91-99e9-6fd1ba08e599`
+- `6e74b847-7897-5195-95e7-636950a5a575`
+- `71ed0210-42e4-56e8-a5ba-944001bfa546`
+- `903d9eca-7459-5870-968d-02badf67b6f9`
+- `14a613ca-e60f-5141-b5e0-cb157a7ca83d`
+- `2d492478-1988-5e01-9da7-4dbc99adc638`
+- `4d7bf3ce-41fb-5d3a-95a5-c71856a19da3`
+- `c5832706-13d5-584e-9bed-38536a1da44f`
+- `695f7fd4-361e-5210-a0b2-5129e506f4d3`
+- `d1f7ee77-88a6-5ae8-a267-120a6efe9b93`
+- `d5e3a602-cee7-596d-8bad-4eec33f4b381`
+- `5a6558a1-f41d-5c2f-801e-781a9cedc834`
+- `52ece424-9c84-5199-ac7d-5d3ff5d3322d`
+- `f6fb9a38-c7e7-538f-910b-c9aaf7cc197a`
+- `a43cb306-e69a-52a2-8edd-1be74a962e82`
+- `a23f30e5-ed7a-5f1a-b189-db940072bad9`
+- `4825b611-0875-5fa0-af2e-f2af16d203d5`
+- `0daae913-bbc7-51cf-aa40-e6223b20d7fa`
+- `df581428-dbb1-5074-b8bd-7a28c79f67f0`
+- `b016447a-9065-54a6-8a96-1c6c12ab8a50`
+- `d5560d58-e40c-579f-a5bc-54ef690f4a64`
+- `c4ad36b1-0fb2-5705-ae09-525c0925b01b`
+- `a134a0d0-6853-5961-b973-f3d6727efa59`
 - `3d28836a-3131-57ef-9d9d-7b47405155cc`
 - `eae59979-bc5d-5c0f-a67b-fadf5ff52825`
 - `b1011ef1-d6a0-5841-bf9e-aea33a9feaf8`

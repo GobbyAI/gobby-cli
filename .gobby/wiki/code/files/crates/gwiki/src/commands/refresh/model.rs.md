@@ -30,7 +30,7 @@ Module: [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/comman
 
 ## Purpose
 
-This file defines the internal data model for refresh operations in `gwiki`: it separates a refresh run into planned, skipped, failed, refreshed, unchanged, and degraded outcomes, then bundles those pieces into a renderable result. `RefreshPlan` validates and wraps a `SourceRecord` before refresh, and its custom serialization emits the key source metadata plus a derived `raw_path` and replay kind. `ChangedRefresh`, `RefreshedSource`, `RefreshResult`, `RefreshFailure`, and `SkippedRefresh` carry the detailed per-item state for successes, no-ops, errors, and skips, while `RefreshSinks` provides mutable buckets for collecting those results during processing. `IndexedCounts` and `IndexStatus` capture indexing telemetry and lifecycle state, with constructors for not run, indexed, and degraded cases, and `RefreshRender` ties everything together into the final scoped refresh summary.
+This file defines the data model for refresh operations in `gwiki`, covering planning, execution results, failures, skips, and index state. `RefreshPlan` validates and wraps source records for refresh, `RefreshRender` and `RefreshSinks` collect the outcomes across refreshed, unchanged, failed, skipped, and degraded items, and supporting structs like `ChangedRefresh`, `RefreshedSource`, `RefreshResult`, `RefreshFailure`, `SkippedRefresh`, `IndexedCounts`, and `IndexStatus` capture the detailed metadata and status used to report and serialize a refresh run.
 [crates/gwiki/src/commands/refresh/model.rs:5-9]
 [crates/gwiki/src/commands/refresh/model.rs:12-17]
 [crates/gwiki/src/commands/refresh/model.rs:19-24]

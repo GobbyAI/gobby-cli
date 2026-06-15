@@ -28,7 +28,7 @@ Module: [[code/modules/crates/gcode/src/setup|crates/gcode/src/setup]]
 
 ## Purpose
 
-This file implements PostgreSQL-backed standalone setup for gcode. `run_standalone_setup` validates the request, optionally resets or compatibility-checks the existing code-index schema, runs the setup inside a transaction, and converts the resulting `SetupReport` into a `StandaloneSetupStatus`; the rest of the file is the support layer for that flow, including status mapping, schema-contract inspection, catalog queries for tables and indexes, reset SQL generation, and request validation against the required standalone/public schema.
+Implements the PostgreSQL-backed standalone setup flow for gcode: it validates that a request is allowed, opens a transaction, either resets or compatibility-checks the existing code-index schema, then runs `GcodeStandaloneSetup::create` and commits on success. The helper functions support that flow by building the final `StandaloneSetupStatus`, generating overwrite-reset SQL, and probing PostgreSQL system catalogs to verify tables and indexes match the expected contracts before adoption.
 [crates/gcode/src/setup/postgres.rs:12-57]
 [crates/gcode/src/setup/postgres.rs:59-77]
 [crates/gcode/src/setup/postgres.rs:85-101]

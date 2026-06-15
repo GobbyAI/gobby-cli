@@ -35,7 +35,7 @@ Module: [[code/modules/crates/gcode/src/index/import_resolution|crates/gcode/src
 
 ## Purpose
 
-This file provides language-agnostic predicates for determining whether imports and symbol references are external to a codebase. It implements external/internal checks for Python, JavaScript, Go, Java, C#, PHP, Rust, and Dart by comparing imports against locally-declared modules, classes, and symbols tracked in an ImportResolutionContext. Supporting utilities extract declared types and symbols from source code by first stripping comments and string literals, identify package names from module paths, and access bundled dependency registries for Ruby and Elixir. These predicates enable the import resolution system to distinguish between internal and external references across multi-language codebases.
+This file defines language-specific predicates for import resolution, mainly deciding whether a module, package, or symbol should be treated as external versus local. It also provides helpers for deriving the local/external name sets these checks depend on, plus lightweight parsers that strip comments and string literals and extract declared type or symbol names from Java, C#, PHP, Ruby, Elixir, Dart, Rust, JavaScript, Python, and Go source context. Together, these functions feed the import-resolution context by normalizing source text, loading bundled root mappings, and comparing candidate imports against local declarations, self-package/module names, and known standard or external roots.
 [crates/gcode/src/index/import_resolution/predicates.rs:8-21]
 [crates/gcode/src/index/import_resolution/predicates.rs:23-53]
 [crates/gcode/src/index/import_resolution/predicates.rs:55-68]

@@ -43,7 +43,9 @@ Module: [[code/modules/crates/gwiki/src/support|crates/gwiki/src/support]]
 
 ## Purpose
 
-This file centralizes gwiki support configuration: it builds AI config sources from either the PostgreSQL hub or local Gobby home settings, resolves indexing options, and loads shared code graph edge limits with fallback/default behavior. `HubPrimary` bridges config reads and `$secret:` resolution to Postgres when available, while the `local_*` and `*_from_conn` helpers layer standalone config with database-backed overrides and map failures into `WikiError`. It also includes small test-support utilities like a scoped `GOBBY_HOME` guard, file writing, and an in-memory `TestSource`, plus tests that verify default limits, config precedence, YAML parsing, and indexing behavior.
+This file centralizes gwiki configuration resolution. It defines a hub-backed `ConfigSource` that can read config values from PostgreSQL and resolve `$secret:` entries when a hub connection is available, plus helpers for building AI config sources, loading indexing options and shared code graph limits from layered local or database-backed config, and a few small utilities for checking Qdrant URLs and reading standalone config files.
+
+It also includes test support for scoped `GOBBY_HOME` overrides and writing fixture files, along with an in-memory `TestSource` and unit tests that verify default limits, precedence rules, YAML loading, invalid-value handling, and that local indexing options affect vault indexing behavior.
 [crates/gwiki/src/support/config.rs:18-20]
 [crates/gwiki/src/support/config.rs:22-44]
 [crates/gwiki/src/support/config.rs:23-29]

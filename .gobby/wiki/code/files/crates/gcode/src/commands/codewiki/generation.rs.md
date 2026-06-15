@@ -21,7 +21,7 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Purpose
 
-This module provides the orchestration layer for hierarchical codewiki document generation. The top-level `generate_hierarchical_docs` converts generated `BuiltDoc` values into `(path, content)` pairs, while the wrapper helpers choose different execution modes: with no graph/ownership data, with ownership metadata, with progress tracking, or with reuse collection. All of them delegate to `generate_hierarchical_docs_core`, which performs the real work by filtering scoped core files and symbols, grouping and sorting them by file, clustering modules, reporting progress, and incrementally building and emitting the final hierarchical docs.
+This file provides the hierarchical codewiki generation pipeline. The top-level helpers are thin adapters: one returns `(path, content)` pairs, others configure generation for different contexts such as graph-available fallback, ownership-aware runs, or progress-aware reuse, while all road to `generate_hierarchical_docs_core`, which does the real work of filtering core files and symbols, grouping and clustering them by module/file, reporting progress, and incrementally emitting `BuiltDoc` outputs through the supplied generator, reuse plan, ownership metadata, and AI depth settings.
 [crates/gcode/src/commands/codewiki/generation.rs:15-23]
 [crates/gcode/src/commands/codewiki/generation.rs:25-49]
 [crates/gcode/src/commands/codewiki/generation.rs:52-72]

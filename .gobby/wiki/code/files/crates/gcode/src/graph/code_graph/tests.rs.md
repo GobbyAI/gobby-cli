@@ -19,10 +19,11 @@ provenance:
   - 272-282
   - 285-324
   - 327-374
-  - 377-396
-  - 399-409
-  - 412-439
-  - 442-454
+  - 377-424
+  - 427-446
+  - 449-459
+  - 462-489
+  - 492-504
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -34,13 +35,7 @@ Module: [[code/modules/crates/gcode/src/graph/code_graph|crates/gcode/src/graph/
 
 ## Purpose
 
-This test file validates the code_graph module's core functionality through a suite of unit tests. It provides a `test_context` helper that instantiates a Context struct with test configuration values, then exercises multiple aspects of code graph operations:
-
-The tests verify data integrity by checking that code edge metadata (provenance, confidence, source file path, line numbers) is correctly extracted and preserved through serialization and GraphPayload transformations. They validate query generation by asserting that SQL and Cypher queries use proper column aliasing to prevent shadowing, maintain distinct metadata field references, and employ correct filtering patterns.
-
-The tests ensure safety constraints including project-scoped operations (all deletions and cleanup queries filter by project ID), label targeting (distinguishing code index labels from memory graph labels), and selective preservation (stale symbols are deleted while current symbols are retained through parameterized ID filters). They also verify graceful degradation—when FalkorDB is not configured, read guards fail strictly while public query APIs return empty responses rather than erroring.
-
-Additional tests confirm support operations like row deduplication by node_id with distance minimization, UTF-8 boundary-aware string truncation, undirected graph traversal patterns for import relationships, and filtering of unparsed imports marked with sentinel prefixes. Together, these tests ensure the code_graph module correctly manages code structure metadata, generates safe parameterized queries, and handles edge cases without compromising data consistency.
+This file is a test module for the code-graph layer in `gcode`. It builds a reusable `Context` for tests, then verifies that code-edge metadata and graph payloads preserve provenance, source-system, and link details; that read APIs and projection helpers serialize and choose the correct metadata fields; and that graph/query helpers generate the expected Cypher/SQL for imports, blast-radius traversal, file deletion, cleanup, and project-wide clearing while staying properly scoped and filtering out invalid or stale data.
 [crates/gcode/src/graph/code_graph/tests.rs:7-21]
 [crates/gcode/src/graph/code_graph/tests.rs:24-33]
 [crates/gcode/src/graph/code_graph/tests.rs:36-65]
@@ -94,16 +89,19 @@ Additional tests confirm support operations like row deduplication by node_id wi
 - `cleanup_orphans_is_project_scoped` (function) component `cleanup_orphans_is_project_scoped [function]` (`ce7ca738-08aa-5842-9990-a7ca372ce079`) lines 327-374 [crates/gcode/src/graph/code_graph/tests.rs:327-374]
   - Signature: `fn cleanup_orphans_is_project_scoped() {`
   - Purpose: Verifies that `cleanup_orphans_queries` generates exactly three Cypher deletion queries, each correctly scoped to a specified project via parameterized project ID filters on CodeModule and CodeSymbol nodes and their relationships. [crates/gcode/src/graph/code_graph/tests.rs:327-374]
-- `delete_file_node_is_project_and_path_scoped` (function) component `delete_file_node_is_project_and_path_scoped [function]` (`857fdb88-cc01-5819-8aab-af2d64f54df1`) lines 377-396 [crates/gcode/src/graph/code_graph/tests.rs:377-396]
+- `deleted_file_cleanup_queries_are_project_scoped_and_count_file_nodes` (function) component `deleted_file_cleanup_queries_are_project_scoped_and_count_file_nodes [function]` (`026a895b-7eee-5215-931f-f6331f1b791b`) lines 377-424 [crates/gcode/src/graph/code_graph/tests.rs:377-424]
+  - Signature: `fn deleted_file_cleanup_queries_are_project_scoped_and_count_file_nodes() {`
+  - Purpose: Verifies that deleted-file cleanup builds project-scoped Cypher queries for both 'CodeFile' and 'CodeSymbol' path lookups, and that the file-projection node count query filters by 'project' and 'file_path' while counting matching nodes. [crates/gcode/src/graph/code_graph/tests.rs:377-424]
+- `delete_file_node_is_project_and_path_scoped` (function) component `delete_file_node_is_project_and_path_scoped [function]` (`f2e89055-cd5f-5c54-be1c-b8db276d2a4c`) lines 427-446 [crates/gcode/src/graph/code_graph/tests.rs:427-446]
   - Signature: `fn delete_file_node_is_project_and_path_scoped() {`
-  - Purpose: Verifies that `delete_file_node_query` generates a parameterized Cypher deletion query scoped to a specific project and file path, ensuring the MATCH clause filters by both properties and the query uses DETACH DELETE. [crates/gcode/src/graph/code_graph/tests.rs:377-396]
-- `clear_project_is_project_scoped` (function) component `clear_project_is_project_scoped [function]` (`804f63f1-5045-51c2-9265-d3ca6260aac1`) lines 399-409 [crates/gcode/src/graph/code_graph/tests.rs:399-409]
+  - Purpose: Verifies that 'delete_file_node_query' builds a Cypher statement that matches a 'CodeFile' by both 'project' and 'path', uses 'DETACH DELETE f', and binds the 'project' and 'file_path' parameters to the expected quoted values. [crates/gcode/src/graph/code_graph/tests.rs:427-446]
+- `clear_project_is_project_scoped` (function) component `clear_project_is_project_scoped [function]` (`67996168-6a6e-5a07-8ed0-1a08a1ccc8fe`) lines 449-459 [crates/gcode/src/graph/code_graph/tests.rs:449-459]
   - Signature: `fn clear_project_is_project_scoped() {`
-  - Purpose: This test verifies that `clear_project_query` generates a project-scoped Cypher query that targets both CodeFile and CodeSymbol nodes with correct parameterization of the project identifier. [crates/gcode/src/graph/code_graph/tests.rs:399-409]
-- `clear_project_targets_only_code_index_labels` (function) component `clear_project_targets_only_code_index_labels [function]` (`481f99d7-57e7-5aea-85d4-59608b548f84`) lines 412-439 [crates/gcode/src/graph/code_graph/tests.rs:412-439]
+  - Purpose: Verifies that 'clear_project_query("project-1")' generates a project-scoped Cypher query matching nodes by 'project: $project', includes both 'CodeFile' and 'CodeSymbol' labels, and binds the 'project' parameter to ''project-1''. [crates/gcode/src/graph/code_graph/tests.rs:449-459]
+- `clear_project_targets_only_code_index_labels` (function) component `clear_project_targets_only_code_index_labels [function]` (`762c119a-f95c-535f-a140-a39ad5ee4a18`) lines 462-489 [crates/gcode/src/graph/code_graph/tests.rs:462-489]
   - Signature: `fn clear_project_targets_only_code_index_labels() {`
-  - Purpose: This function validates that a project clear query targets all code index labels (CodeFile, CodeSymbol, CodeModule, UnresolvedCallee, ExternalSymbol) while excluding all memory graph labels. [crates/gcode/src/graph/code_graph/tests.rs:412-439]
-- `clear_all_code_index_targets_only_code_index_labels` (function) component `clear_all_code_index_targets_only_code_index_labels [function]` (`dfeb388c-a61b-5d1e-b8c7-5b7657895be1`) lines 442-454 [crates/gcode/src/graph/code_graph/tests.rs:442-454]
+  - Purpose: Verifies that the clear-project query for 'project-1' includes only code-index labels ('CodeFile', 'CodeSymbol', 'CodeModule', 'UnresolvedCallee', 'ExternalSymbol') and excludes all memory-graph labels and relationships. [crates/gcode/src/graph/code_graph/tests.rs:462-489]
+- `clear_all_code_index_targets_only_code_index_labels` (function) component `clear_all_code_index_targets_only_code_index_labels [function]` (`933c7846-8838-5dcf-835d-c5a8c3443205`) lines 492-504 [crates/gcode/src/graph/code_graph/tests.rs:492-504]
   - Signature: `fn clear_all_code_index_targets_only_code_index_labels() {`
-  - Purpose: Asserts that `clear_all_code_index_query()` generates an unparameterized Cypher query matching all code index node types (CodeFile, CodeSymbol, CodeModule, UnresolvedCallee, ExternalSymbol) without project-scoped filtering or config store references. [crates/gcode/src/graph/code_graph/tests.rs:442-454]
+  - Purpose: Asserts that 'clear_all_code_index_query()' generates a parameterless Cypher 'MATCH (n)' query targeting the 'CodeFile', 'CodeSymbol', 'CodeModule', 'UnresolvedCallee', and 'ExternalSymbol' labels, without referencing 'config_store' or a project-scoped match. [crates/gcode/src/graph/code_graph/tests.rs:492-504]
 

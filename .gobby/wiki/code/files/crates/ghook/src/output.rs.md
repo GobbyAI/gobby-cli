@@ -17,7 +17,7 @@ Module: [[code/modules/crates/ghook/src|crates/ghook/src]]
 
 ## Purpose
 
-Provides two tiny output helpers for the crate: `stdout` writes formatted `Arguments` to a locked standard output stream, and `stderr` does the same for standard error. Both ignore any I/O error from `write_fmt`, so the file centralizes best-effort console logging without propagating failures.
+Provides tiny helper functions for writing formatted output to the process streams. `stdout` and `stderr` each lock the corresponding standard handle, call `write_fmt` with the supplied `Arguments`, and deliberately ignore any I/O error, giving the rest of the crate a simple, fire-and-forget way to print to standard output or error.
 [crates/ghook/src/output.rs:3-5]
 [crates/ghook/src/output.rs:7-9]
 

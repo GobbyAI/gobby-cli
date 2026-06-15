@@ -154,104 +154,103 @@ Parent: [[code/modules/crates/gsqz/src|crates/gsqz/src]]
 
 ## Overview
 
-The `primitives` module is the line- and text-normalization toolbox for `gsqz`, re-exporting focused submodules for deduplication, filtering, grouping, full-output matching, prose compression, replacement, and truncation through its module declaration [crates/gsqz/src/primitives/mod.rs:1-8]. Most primitives operate on command output as `Vec<String>`: `filter_lines` removes lines matching valid regex patterns while silently skipping invalid ones [crates/gsqz/src/primitives/filter.rs:4-15], `replace` applies compiled regex replacement rules sequentially so earlier substitutions feed later rules [crates/gsqz/src/primitives/replace.rs:7-30], and `dedup` collapses only adjacent exact or number-normalized repeats with a repetition marker [crates/gsqz/src/primitives/dedup.rs:9-45].
+The `primitives` module is the core text-reduction toolkit for `gsqz`, exported as a collection of focused operations for deduplication, filtering, grouping, output matching, prose compression, replacement, and truncation [crates/gsqz/src/primitives/mod.rs:1-8]. Its line-oriented primitives either remove noise, summarize repeated structure, or preserve the most useful boundary content: `dedup` collapses only adjacent duplicate or number-normalized runs [crates/gsqz/src/primitives/dedup.rs:9-45], `filter_lines` drops lines matching any valid configured regex while ignoring invalid patterns [crates/gsqz/src/primitives/filter.rs:4-15], `replace` applies compiled regex replacement rules sequentially across every line [crates/gsqz/src/primitives/replace.rs:7-30], and `truncate` keeps head and tail lines or delegates to section-aware truncation when a marker is configured [crates/gsqz/src/primitives/truncate.rs:5-27].
 
-The higher-level output flows are handled by `group`, `truncate`, and `match_output`. `group_lines` is a dispatcher from mode names to specialized summarizers for git status, git diff, pytest failures, generic test failures, lint rules, path grouping, and error/warning aggregation, falling back to passthrough for unknown modes [crates/gsqz/src/primitives/group.rs:8-21]. `truncate` keeps configurable head and tail slices with an omission marker, or delegates to section-aware truncation when a marker regex is configured [crates/gsqz/src/primitives/truncate.rs:5-27] [crates/gsqz/src/primitives/truncate.rs:29-67]. `match_output::check` treats output as a single concatenated blob, evaluates rules in order, skips invalid regexes, honors optional `unless` suppressors, and returns the first matching message [crates/gsqz/src/primitives/match_output.rs:8-33].
+The module’s heavier summarization flow lives in `group.rs`, where `group_lines` dispatches by mode to specialized aggregators for git status, git diff, pytest failures, generic test failures, lint rules, extensions, directories, files, and error/warning logs [crates/gsqz/src/primitives/group.rs:8-21]. These helpers parse common CLI-output shapes into labeled counts and representative samples, with truncation when groups grow large [crates/gsqz/src/primitives/group.rs:28-79] [crates/gsqz/src/primitives/group.rs:99-183] [crates/gsqz/src/primitives/group.rs:187-243]. Separately, `match_output::check` treats the entire output as one blob, evaluates configured `MatchOutputRule`s in order, skips invalid regexes, honors optional `unless` blockers, and returns the first matching message [crates/gsqz/src/primitives/match_output.rs:8-33].
 
-`prose` complements the line-oriented primitives with document compression. It defines `Lite`, `Standard`, and `Aggressive` levels plus string parsing , then routes `compress_prose` through protected-region extraction, level-specific compression, and restoration so YAML frontmatter, fenced code blocks, inline code, URLs, XML tags, and file paths survive transformation [crates/gsqz/src/primitives/prose.rs:23-34] [crates/gsqz/src/primitives/prose.rs:50-100]. Together, these files collaborate as small composable passes: regex filtering and replacement clean raw lines, grouping and truncation reshape large outputs, dedup reduces repeated noise, match rules summarize full results, and prose compression handles narrative text without damaging structured regions.
+`prose.rs` handles document-style compression rather than line filtering: callers choose `Lite`, `Standard`, or `Aggressive` via `Level::from_str`, then `compress_prose` protects YAML frontmatter, code blocks, inline code, URLs, XML tags, and file paths before applying the selected compression strategy and restoring protected spans  [crates/gsqz/src/primitives/prose.rs:50-100]. Across the module, tests exercise empty inputs, invalid regex fallback, passthrough cases, truncation boundaries, preservation behavior, and mode-specific grouping, showing that these primitives are meant to compose safely in configurable output-squeezing pipelines  .
 
 ## Call Diagram
 
 ```mermaid
 sequenceDiagram
     participant m_001e5557_abaf_5197_b5ac_897f6a6ad6bc as test_no_match_returns_none &#91;function&#93;
+    participant m_00f6cfc1_fef1_593a_8493_dc9f7c660663 as test_dedup_mixed_groups &#91;function&#93;
+    participant m_0109c774_ada4_5242_9e1c_a990394e462a as test_filter_removes_none &#91;function&#93;
+    participant m_035c2b73_fa04_5199_8c00_6aa232714c78 as test_dedup_different &#91;function&#93;
     participant m_08488e18_4735_5d3a_82ee_5bf7d5f46d2e as test_test_failures_captures_fail_lines &#91;function&#93;
+    participant m_08ca6a31_4880_55be_9fb6_fb381b93f51b as test_filter_empty_patterns &#91;function&#93;
+    participant m_09f3939e_f6f8_5881_841b_e008c8f8a527 as test_multiple_matches_per_line &#91;function&#93;
+    participant m_0ca60299_497e_512f_92c6_30cf0e95505d as test_filter_removes_all &#91;function&#93;
+    participant m_0fd9af53_3342_5461_8496_8c5e90555988 as replace &#91;function&#93;
+    participant m_10e633e0_a676_5e67_9492_70f800426bca as test_empty_lines &#91;function&#93;
     participant m_1d237b01_a52b_586f_8553_230e2304698f as test_errors_warnings_only_errors &#91;function&#93;
+    participant m_1e9421bd_6c46_5041_ad56_06265939d31e as test_filter_invalid_regex_skipped &#91;function&#93;
     participant m_229484c2_5086_5772_b8fa_2bb9eee8dc2b as test_git_status_many_files_truncated &#91;function&#93;
+    participant m_27c68279_175d_5913_a390_a0b61a6c6fb4 as test_dedup_single_line &#91;function&#93;
     participant m_28637dfe_e848_5dd1_92f9_9d8d4f738053 as test_first_rule_wins &#91;function&#93;
     participant m_32b44318_1705_5255_851a_70fd9d140cb5 as test_errors_warnings_grouping &#91;function&#93;
     participant m_32efbce0_fa3f_56fe_bc0f_f835fc242381 as check &#91;function&#93;
+    participant m_3473bef7_fa16_5abe_a674_cf0d526f8f73 as test_basic_replacement &#91;function&#93;
     participant m_3870c8ea_daae_5054_97ec_c28cb949a695 as group_git_status &#91;function&#93;
-    participant m_3e5399e7_8362_507e_b212_3deb4fd101b3 as test_lint_by_rule_no_rules &#91;function&#93;
-    participant m_4213e21c_d950_5fba_9fb1_4b502a646071 as test_git_diff_binary_collapsed &#91;function&#93;
-    participant m_4414b78e_2214_5ab9_a3d7_f34c460e7d82 as test_lint_by_rule_groups &#91;function&#93;
-    participant m_460b6fc4_fcd9_5560_93c9_d110e3325708 as group_by_file &#91;function&#93;
-    participant m_46a62353_d5f2_5d00_9101_be5762be5a46 as group_git_diff &#91;function&#93;
-    participant m_4defbe90_0372_54ee_930d_e20f4b9bc88c as test_pytest_failures_no_failures_delegates &#91;function&#93;
-    participant m_4e69c744_2191_55fe_9fbd_9a69144fd1fd as test_checks_full_blob_not_per_line &#91;function&#93;
-    participant m_56c442da_f3c8_5e2c_8598_f4d0a151fb2f as test_by_file_grep_style &#91;function&#93;
-    participant m_5a215062_b14d_51e0_ba2a_234f936ca139 as test_by_extension_empty &#91;function&#93;
-    participant m_5ecd8770_276f_5dc1_a5b0_605d48854279 as test_by_extension_no_extension &#91;function&#93;
-    participant m_64330604_ba12_5581_b56e_966e832fd592 as test_pytest_failures_extracts_sections &#91;function&#93;
-    participant m_66cb62e2_31a9_51ab_9093_71614885da97 as group_pytest_failures &#91;function&#93;
-    participant m_6932038a_07bd_5b03_8be6_22913ed0ec6a as test_git_status_empty &#91;function&#93;
-    participant m_71101fc0_db55_51a8_91df_d07e93649273 as group_lint_by_rule &#91;function&#93;
+    participant m_4690ffe8_c1e2_5c70_9a9d_d5cb2ff5919b as dedup &#91;function&#93;
+    participant m_51e5d958_0fc2_5f5a_99f8_d2dafac5d86a as rule &#91;function&#93;
     participant m_8918cfc8_ed39_5d2d_9338_b2c301df4d96 as group_errors_warnings &#91;function&#93;
-    participant m_d3c60b51_d1f1_58ff_9372_db73d73b6e9f as group_by_extension &#91;function&#93;
+    participant m_8faa2138_fa37_53b4_b21b_2dc80b2babf5 as filter_lines &#91;function&#93;
     participant m_def86bb9_e734_5291_a0c0_043c8d384f39 as lines &#91;function&#93;
     participant m_efd37613_da20_5fbf_9c5d_1ab33c9053a6 as group_test_failures &#91;function&#93;
     m_001e5557_abaf_5197_b5ac_897f6a6ad6bc->>m_32efbce0_fa3f_56fe_bc0f_f835fc242381: calls
     m_001e5557_abaf_5197_b5ac_897f6a6ad6bc->>m_def86bb9_e734_5291_a0c0_043c8d384f39: calls
+    m_00f6cfc1_fef1_593a_8493_dc9f7c660663->>m_4690ffe8_c1e2_5c70_9a9d_d5cb2ff5919b: calls
+    m_0109c774_ada4_5242_9e1c_a990394e462a->>m_8faa2138_fa37_53b4_b21b_2dc80b2babf5: calls
+    m_035c2b73_fa04_5199_8c00_6aa232714c78->>m_4690ffe8_c1e2_5c70_9a9d_d5cb2ff5919b: calls
     m_08488e18_4735_5d3a_82ee_5bf7d5f46d2e->>m_efd37613_da20_5fbf_9c5d_1ab33c9053a6: calls
+    m_08ca6a31_4880_55be_9fb6_fb381b93f51b->>m_8faa2138_fa37_53b4_b21b_2dc80b2babf5: calls
+    m_09f3939e_f6f8_5881_841b_e008c8f8a527->>m_0fd9af53_3342_5461_8496_8c5e90555988: calls
+    m_09f3939e_f6f8_5881_841b_e008c8f8a527->>m_51e5d958_0fc2_5f5a_99f8_d2dafac5d86a: calls
+    m_0ca60299_497e_512f_92c6_30cf0e95505d->>m_8faa2138_fa37_53b4_b21b_2dc80b2babf5: calls
+    m_10e633e0_a676_5e67_9492_70f800426bca->>m_0fd9af53_3342_5461_8496_8c5e90555988: calls
+    m_10e633e0_a676_5e67_9492_70f800426bca->>m_51e5d958_0fc2_5f5a_99f8_d2dafac5d86a: calls
     m_1d237b01_a52b_586f_8553_230e2304698f->>m_8918cfc8_ed39_5d2d_9338_b2c301df4d96: calls
+    m_1e9421bd_6c46_5041_ad56_06265939d31e->>m_8faa2138_fa37_53b4_b21b_2dc80b2babf5: calls
     m_229484c2_5086_5772_b8fa_2bb9eee8dc2b->>m_3870c8ea_daae_5054_97ec_c28cb949a695: calls
+    m_27c68279_175d_5913_a390_a0b61a6c6fb4->>m_4690ffe8_c1e2_5c70_9a9d_d5cb2ff5919b: calls
     m_28637dfe_e848_5dd1_92f9_9d8d4f738053->>m_32efbce0_fa3f_56fe_bc0f_f835fc242381: calls
     m_28637dfe_e848_5dd1_92f9_9d8d4f738053->>m_def86bb9_e734_5291_a0c0_043c8d384f39: calls
     m_32b44318_1705_5255_851a_70fd9d140cb5->>m_8918cfc8_ed39_5d2d_9338_b2c301df4d96: calls
-    m_3e5399e7_8362_507e_b212_3deb4fd101b3->>m_71101fc0_db55_51a8_91df_d07e93649273: calls
-    m_4213e21c_d950_5fba_9fb1_4b502a646071->>m_46a62353_d5f2_5d00_9101_be5762be5a46: calls
-    m_4414b78e_2214_5ab9_a3d7_f34c460e7d82->>m_71101fc0_db55_51a8_91df_d07e93649273: calls
-    m_4defbe90_0372_54ee_930d_e20f4b9bc88c->>m_66cb62e2_31a9_51ab_9093_71614885da97: calls
-    m_4e69c744_2191_55fe_9fbd_9a69144fd1fd->>m_32efbce0_fa3f_56fe_bc0f_f835fc242381: calls
-    m_4e69c744_2191_55fe_9fbd_9a69144fd1fd->>m_def86bb9_e734_5291_a0c0_043c8d384f39: calls
-    m_56c442da_f3c8_5e2c_8598_f4d0a151fb2f->>m_460b6fc4_fcd9_5560_93c9_d110e3325708: calls
-    m_5a215062_b14d_51e0_ba2a_234f936ca139->>m_d3c60b51_d1f1_58ff_9372_db73d73b6e9f: calls
-    m_5ecd8770_276f_5dc1_a5b0_605d48854279->>m_d3c60b51_d1f1_58ff_9372_db73d73b6e9f: calls
-    m_64330604_ba12_5581_b56e_966e832fd592->>m_66cb62e2_31a9_51ab_9093_71614885da97: calls
-    m_66cb62e2_31a9_51ab_9093_71614885da97->>m_efd37613_da20_5fbf_9c5d_1ab33c9053a6: calls
-    m_6932038a_07bd_5b03_8be6_22913ed0ec6a->>m_3870c8ea_daae_5054_97ec_c28cb949a695: calls
+    m_3473bef7_fa16_5abe_a674_cf0d526f8f73->>m_0fd9af53_3342_5461_8496_8c5e90555988: calls
 ```
 
 ## Files
 
-- [[code/files/crates/gsqz/src/primitives/dedup.rs|crates/gsqz/src/primitives/dedup.rs]] - Provides a line deduplication primitive that collapses only consecutive runs of identical or number-only-different strings. It normalizes each trimmed line by replacing digit sequences with a placeholder, groups adjacent matches, and emits the first line of each run followed by a `[repeated N times]` annotation when a run has multiple entries. The test module exercises the main behaviors: collapsing exact and near-identical duplicates, preserving distinct and non-consecutive lines, and handling empty, single-line, two-line, and mixed-group inputs.
+- [[code/files/crates/gsqz/src/primitives/dedup.rs|crates/gsqz/src/primitives/dedup.rs]] - Provides a line deduplication primitive that collapses only consecutive duplicates, including near-identical lines that differ only by numbers. It normalizes digits with a shared regex, tracks each run’s first line and count, and when a run ends emits either the original line or the line plus a `"[repeated N times]"` annotation. The tests cover identical, numeric-variant, distinct, empty, single-line, mixed-group, and non-consecutive cases to confirm it only merges adjacent runs.
 [crates/gsqz/src/primitives/dedup.rs:9-45]
 [crates/gsqz/src/primitives/dedup.rs:52-58]
 [crates/gsqz/src/primitives/dedup.rs:61-70]
 [crates/gsqz/src/primitives/dedup.rs:73-77]
 [crates/gsqz/src/primitives/dedup.rs:80-83]
-- [[code/files/crates/gsqz/src/primitives/filter.rs|crates/gsqz/src/primitives/filter.rs]] - Provides a small line-filtering utility for `gsqz`: `filter_lines` takes owned strings and a slice of regex pattern strings, compiles only the valid patterns, and returns a new vector excluding any line that matches at least one compiled regex. The implementation is simple and data-flow oriented: it fast-paths empty pattern lists by returning the input unchanged, then uses `filter_map` to skip invalid regexes silently before filtering lines against the compiled set. The tests cover the main behaviors together: removing matching lines, preserving input when patterns are empty or match nothing, handling empty input, supporting multiple patterns, and ignoring invalid regex patterns.
+- [[code/files/crates/gsqz/src/primitives/filter.rs|crates/gsqz/src/primitives/filter.rs]] - Provides `filter_lines`, which compiles the supplied regex patterns, skips any invalid ones, and returns only the input lines that do not match any valid pattern. The tests cover matching and non-matching filters, empty inputs and patterns, multiple patterns, removing all lines, and the invalid-regex fallback.
 [crates/gsqz/src/primitives/filter.rs:4-15]
 [crates/gsqz/src/primitives/filter.rs:22-32]
 [crates/gsqz/src/primitives/filter.rs:35-39]
 [crates/gsqz/src/primitives/filter.rs:42-45]
 [crates/gsqz/src/primitives/filter.rs:48-52]
-- [[code/files/crates/gsqz/src/primitives/group.rs|crates/gsqz/src/primitives/group.rs]] - Provides a small output-normalization layer for grouping and summarizing line-oriented command results. `group_lines` dispatches to mode-specific helpers, and those helpers reshape common noisy outputs into compact, human-readable sections: git status and diff summaries, pytest and test failure extraction, lint grouping by rule, and file/path grouping by extension, directory, or filename, plus generic error/warning aggregation. The file also includes unit tests that verify the dispatcher behavior, grouping classification, truncation limits, and passthrough cases.
+- [[code/files/crates/gsqz/src/primitives/group.rs|crates/gsqz/src/primitives/group.rs]] - Provides line-grouping and summarization helpers for common CLI outputs, with a `group_lines` dispatcher that routes to mode-specific aggregators for git status/diff, pytest and test failures, lint rules, file extension/directory/file grouping, and error/warning logs. Each helper parses or classifies input lines, collapses related entries into labeled summaries with counts and truncation for large groups, and the test module exercises each mode’s grouping, fallback, and truncation behavior.
 [crates/gsqz/src/primitives/group.rs:8-21]
 [crates/gsqz/src/primitives/group.rs:28-79]
 [crates/gsqz/src/primitives/group.rs:99-183]
 [crates/gsqz/src/primitives/group.rs:187-243]
 [crates/gsqz/src/primitives/group.rs:247-296]
-- [[code/files/crates/gsqz/src/primitives/match_output.rs|crates/gsqz/src/primitives/match_output.rs]] - This file implements full-blob output matching against an ordered list of `MatchOutputRule`s. `check` concatenates all output lines, evaluates each rule’s regex with first-match-wins semantics, skips invalid patterns, and suppresses a match when a valid `unless` regex also matches; it returns the matched rule’s message or `None`. The local `rule` and `lines` helpers make test setup ergonomic, and the tests cover matching, negative conditions, empty/invalid rules, rule ordering, and matching across newline boundaries.
+- [[code/files/crates/gsqz/src/primitives/match_output.rs|crates/gsqz/src/primitives/match_output.rs]] - This file implements output-matching helpers for `MatchOutputRule`. `check` joins all input lines into one blob, then scans rules in order, compiling each regex and returning the first rule message whose pattern matches unless an optional `unless` regex also matches; invalid regexes are skipped. The local `rule` and `lines` helpers build test fixtures, and the tests cover basic matching, `unless` blocking, no-match behavior, first-match-wins semantics, invalid regex handling, empty-rule input, and matching across the full multi-line blob.
 [crates/gsqz/src/primitives/match_output.rs:8-33]
 [crates/gsqz/src/primitives/match_output.rs:39-45]
 [crates/gsqz/src/primitives/match_output.rs:47-49]
 [crates/gsqz/src/primitives/match_output.rs:52-56]
 [crates/gsqz/src/primitives/match_output.rs:59-63]
-- [[code/files/crates/gsqz/src/primitives/mod.rs|crates/gsqz/src/primitives/mod.rs]] - Module घोषणापत्र for `primitives`, exposing the primitive submodules `dedup`, `filter`, `group`, `match_output`, `prose`, `replace`, and `truncate` for use elsewhere in the crate. [crates/gsqz/src/primitives/mod.rs:1-8]
-- [[code/files/crates/gsqz/src/primitives/prose.rs|crates/gsqz/src/primitives/prose.rs]] - This file defines prose-compression primitives for three levels, `Lite`, `Standard`, and `Aggressive`, plus a small parser that maps their string names to the enum. The main `compress_prose` entry point protects YAML frontmatter and fenced code blocks before dispatching to the selected compression strategy, then restores the protected regions afterward. Supporting helpers extract and replace protected placeholders, perform the lite/standard/aggressive text reductions, and split sentences so aggressive mode can truncate lists and paragraphs without damaging preserved structure.
+- [[code/files/crates/gsqz/src/primitives/mod.rs|crates/gsqz/src/primitives/mod.rs]] - Exports the `primitives` submodules for the `gsqz` crate, grouping the core primitive operations such as deduplication, filtering, grouping, match output handling, prose, replacement, and truncation. [crates/gsqz/src/primitives/mod.rs:1-8]
+- [[code/files/crates/gsqz/src/primitives/prose.rs|crates/gsqz/src/primitives/prose.rs]] - Defines a prose-compression utility with three levels, `Lite`, `Standard`, and `Aggressive`, plus a string parser for selecting a level from `"lite"`, `"standard"`, or `"aggressive"`. The main `compress_prose` pipeline first extracts and protects YAML frontmatter, fenced code blocks, inline code, URLs, XML tags, and file paths, then applies the chosen compression strategy, and finally restores the protected spans. `Lite` does basic cleanup, `Standard` adds filler-phrase and filler-word reduction while preserving structure, and `Aggressive` truncates lists and multi-sentence paragraphs more heavily; the tests cover level parsing, preservation behavior, and each compression mode’s core transformations.
 [crates/gsqz/src/primitives/prose.rs:5-9]
 [crates/gsqz/src/primitives/prose.rs:11-20]
 [crates/gsqz/src/primitives/prose.rs:12-19]
 [crates/gsqz/src/primitives/prose.rs:23-34]
 [crates/gsqz/src/primitives/prose.rs:50-100]
-- [[code/files/crates/gsqz/src/primitives/replace.rs|crates/gsqz/src/primitives/replace.rs]] - This file defines a small regex-based line replacer that takes a vector of strings and a slice of `ReplaceRule`s, compiles the valid patterns once, and then applies each rule sequentially to every line so earlier substitutions feed into later ones. It also includes a helper for constructing owned rules in tests, and the tests verify basic substitution, backreferences, chained rules, skipping invalid regexes, no-op behavior for empty rules or non-matching patterns, empty input handling, and replacing multiple matches within a line.
+- [[code/files/crates/gsqz/src/primitives/replace.rs|crates/gsqz/src/primitives/replace.rs]] - Provides sequential regex-based string replacement over a vector of lines. It compiles each `ReplaceRule` pattern up front, skips invalid regexes, then applies the surviving rules in order to every line so each rule can build on the previous rule’s output; the local `rule` helper and tests exercise basic substitution, backreferences, chained replacements, unchanged input cases, empty inputs, and multiple matches per line.
 [crates/gsqz/src/primitives/replace.rs:7-30]
 [crates/gsqz/src/primitives/replace.rs:36-41]
 [crates/gsqz/src/primitives/replace.rs:44-48]
 [crates/gsqz/src/primitives/replace.rs:51-55]
 [crates/gsqz/src/primitives/replace.rs:58-63]
-- [[code/files/crates/gsqz/src/primitives/truncate.rs|crates/gsqz/src/primitives/truncate.rs]] - This file provides line-truncation utilities for `Vec<String>` output. `truncate` keeps a configurable head and tail, inserts an omission marker when content is shortened, and can switch to regex-based section truncation when `per_file_lines` and `file_marker` are set. `truncate_per_section` groups lines by section markers, truncates oversized sections independently, and preserves smaller sections unchanged; the test module exercises empty, boundary, head/tail-only, and per-section cases, plus invalid-regex fallback.
+- [[code/files/crates/gsqz/src/primitives/truncate.rs|crates/gsqz/src/primitives/truncate.rs]] - Provides truncation helpers for line-based text. `truncate` keeps the first `head` and last `tail` lines and inserts an omission marker when the input is longer than the requested boundary, or delegates to `truncate_per_section` when section-based truncation is enabled via `per_file_lines` and a non-empty `file_marker`. `truncate_per_section` uses a regex marker to split the input into sections, preserves small sections unchanged, and shortens oversized sections by keeping the top and bottom halves around a section omission message. The tests cover short, empty, exact-boundary, head-only, tail-only, long-input, and per-section cases, including invalid regex handling and preservation of section content.
 [crates/gsqz/src/primitives/truncate.rs:5-27]
 [crates/gsqz/src/primitives/truncate.rs:29-67]
 [crates/gsqz/src/primitives/truncate.rs:74-78]

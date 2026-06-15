@@ -32,7 +32,7 @@ Module: [[code/modules/crates/gwiki/src/sources|crates/gwiki/src/sources]]
 
 ## Purpose
 
-This file renders and preserves the raw source index for the wiki. `render_entry` formats each `SourceRecord` as a markdown list item with escaped title and destination, inline metadata fields, and serialized JSON metadata embedded in an HTML comment. The URL helpers `canonicalize_location`, `split_sorted_query`, and `lower_url_scheme_and_authority` normalize locations by removing fragments, lowercasing scheme/authority, sorting query parameters, and trimming trailing slashes so source IDs and stored references stay stable. `source_id` builds a deterministic identifier from a hash prefix plus an optional slugified canonical location. The preserved-index helpers read an existing index file, extract the non-generated prefix/suffix around the source-manifest section, and normalize those boundaries so regenerated output can be merged without losing surrounding content. Supporting text utilities escape markdown, collapse inline text whitespace, and normalize newlines, and the tests verify the escaping, whitespace normalization, and empty-hash sentinel behavior.
+This file builds and preserves the rendered raw-source index for `SourceRecord` entries. It serializes each entry into a markdown list item with escaped link text and destination, inline citation/license text, and embedded JSON metadata, and it also provides URL and text normalization helpers that canonicalize source locations, generate stable source IDs, and extract or preserve the non-manifest portions of an existing index so regenerated output can retain surrounding content.
 [crates/gwiki/src/sources/render.rs:15-45]
 [crates/gwiki/src/sources/render.rs:47-58]
 [crates/gwiki/src/sources/render.rs:60-70]

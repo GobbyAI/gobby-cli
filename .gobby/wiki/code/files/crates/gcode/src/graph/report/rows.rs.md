@@ -26,11 +26,7 @@ Module: [[code/modules/crates/gcode/src/graph/report|crates/gcode/src/graph/repo
 
 ## Purpose
 
-This file provides row-to-object conversion utilities for graph reporting, transforming database Row objects into domain models with sensible defaults and fallback values.
-
-The main converters are `rows_to_named_counts`, which collects rows into a sorted name-to-count map; `row_to_graph_hotspot`, which extracts id/name (mandatory) and node type, degree, and directional metrics (with defaults); `row_to_target_frequency`, which builds a frequency struct from id, name, and optional count; and `row_to_bridge_edge_hypothesis`, which deserializes complex edge data including source/target identifiers, relation type, and optional metadata like confidence and provenance.
-
-Supporting the converters are three low-level extractors: `row_string` returns the first non-empty string from candidate keys; `row_usize` attempts multi-type numeric conversions (u64, i64, f64) in sequence; and `row_f64` retrieves and converts floating-point values. Unit tests verify that extractors skip invalid or missing values, returning only valid conversions.
+Provides row-conversion helpers for graph reporting, turning `gobby_core::falkor::Row` values into the report types used elsewhere in the graph layer. The main functions map query rows into a `BTreeMap<String, usize>`, `GraphHotspot`, `TargetFrequency`, and `BridgeEdgeHypothesis`, applying defaults and skipping rows when required fields are missing. The shared extractors `row_string`, `row_usize`, and `row_f64` centralize tolerant field lookup and type conversion, and the tests verify that empty or invalid candidate values are skipped and that missing counts are excluded.
 [crates/gcode/src/graph/report/rows.rs:11-19]
 [crates/gcode/src/graph/report/rows.rs:21-31]
 [crates/gcode/src/graph/report/rows.rs:33-39]

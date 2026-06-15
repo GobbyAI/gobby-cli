@@ -34,7 +34,7 @@ Module: [[code/modules/crates/gwiki/src/ai|crates/gwiki/src/ai]]
 
 ## Purpose
 
-Orchestrates audio transcription and translation for wiki content, choosing between direct English translation and segment-by-segment translation based on the target language and client support. The main path normalizes the requested language, prefers `translate_to_english` for English targets with a transcription fallback, and otherwise transcribes first then rewrites the output via `translate_transcription_segments`, which resolves the source language, skips work when source and target match, and updates translation metadata after replacing segment text. Supporting helpers normalize and compare language codes, emit batch-translation warnings, and mark English translation outputs. The file also includes a `FakeTranslationClient` plus test fixtures and cases that verify fallback behavior, language precedence, and batch retry logic.
+Orchestrates audio translation for transcription outputs: `translate_audio` normalizes the requested target language, prefers a direct English-translation path when appropriate, and falls back to plain transcription plus segment-by-segment translation when needed. `translate_transcription_segments` applies language detection, skips work when source and target match, rewrites segment text and translation metadata, and marks the output as translated. The helper functions handle language normalization/comparison and translation warnings, while `FakeTranslationClient`, request/output builders, and the tests exercise the direct, fallback, and retry paths.
 [crates/gwiki/src/ai/translate.rs:6-29]
 [crates/gwiki/src/ai/translate.rs:31-55]
 [crates/gwiki/src/ai/translate.rs:57-87]

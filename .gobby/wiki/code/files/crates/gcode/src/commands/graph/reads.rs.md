@@ -44,7 +44,7 @@ Module: [[code/modules/crates/gcode/src/commands/graph|crates/gcode/src/commands
 
 ## Purpose
 
-Provides the read-side support for graph-backed `gcode` commands. It centralizes user-facing fallback behavior when the FalkorDB graph backend is missing or unreachable, including context-sensitive hints, empty paginated responses, and a wrapper that turns graph-read failures into `None` instead of hard errors. It also handles symbol resolution from either UUIDs or full-text lookup, then uses that resolved symbol to power paginated commands for callers, usages, imports, and blast-radius queries, with grouped text output or JSON responses. The bottom of the file contains graph-resolution database test/cleanup helpers plus targeted tests that verify UUID resolution, non-fallback behavior for unknown UUID-shaped input, and ambiguous-name handling.
+This file implements the graph-read side of `gcode`: it centralizes backend-availability hints, turns graph-read failures into empty paginated responses with optional user guidance, and provides the shared symbol-resolution and result-formatting machinery used by commands like callers, usages, imports, and blast radius. It resolves inputs either by UUID or full-text search, gates reads when graph data or symbol lookup is unavailable, and emits either JSON `PagedResponse` output or grouped plaintext. The lower half also contains test-only PostgreSQL setup and cleanup helpers plus a small suite of resolution behavior tests.
 [crates/gcode/src/commands/graph/reads.rs:14-20]
 [crates/gcode/src/commands/graph/reads.rs:22-30]
 [crates/gcode/src/commands/graph/reads.rs:32-38]

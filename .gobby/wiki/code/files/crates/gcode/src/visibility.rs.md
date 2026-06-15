@@ -43,7 +43,9 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-Implements visibility and lookup logic for indexed code data in a project context, including the tombstone-language marker, visible project scoping, and conversion of a context to the appropriate source-project view. It provides helpers to determine whether files, content chunks, symbols, symbol kinds, and the file tree are visible in either single-project or overlay mode, with overlay handling that respects shadowing by the overlay project and excludes tombstoned files. The file also builds the SQL used to fetch visible symbols from the database and includes tests that verify project ordering, query shape, and overlay shadowing behavior.
+This file implements visibility rules and query helpers for gcode’s indexed projects, files, and symbols. It defines `VisibleFile` and tombstone markers, then uses `Context` and `ProjectIndexScope` to decide which project IDs, file paths, and symbol rows are visible in either single-project or overlay mode, including parent-vs-overlay shadowing and exclusion of tombstoned files.
+
+The helpers build on each other: low-level checks like `is_tombstone_language`, `indexed_file_exists`, `project_path_is_visible`, and `overlay_has_row` feed symbol filtering routines such as `visible_symbol_by_id`, `visible_symbols_by_ids`, `filter_visible_symbols`, and `symbol_visible_from_file_languages`. Higher-level entry points like `visible_symbols_for_file(s)`, `visible_kinds`, `visible_tree`, and `tombstone_count` then expose the visible contents of the current context, while the SQL builder functions and tests ensure the queries preserve overlay semantics and correct parameterization.
 [crates/gcode/src/visibility.rs:13-17]
 [crates/gcode/src/visibility.rs:19-21]
 [crates/gcode/src/visibility.rs:23-32]

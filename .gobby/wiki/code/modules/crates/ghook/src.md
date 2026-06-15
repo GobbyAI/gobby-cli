@@ -2,6 +2,37 @@
 title: crates/ghook/src
 type: code_module
 provenance:
+- file: crates/ghook/src/action.rs
+  ranges:
+  - 8-12
+  - 14-20
+  - 22-24
+  - 26-34
+  - 36-106
+  - 108-127
+  - 129-189
+  - 191-213
+  - 215-243
+  - 252-273
+  - 276-292
+  - 295-311
+  - 314-331
+  - 334-352
+  - 355-371
+  - 374-390
+  - 393-404
+  - 407-413
+  - 416-432
+  - 435-449
+  - 452-467
+  - 470-483
+  - 486-496
+  - 499-512
+  - 515-528
+  - 531-540
+- file: crates/ghook/src/args.rs
+  ranges:
+  - 9-33
 - file: crates/ghook/src/cli_config.rs
   ranges:
   - 11-18
@@ -15,7 +46,7 @@ provenance:
   - 111-116
 - file: crates/ghook/src/detach.rs
   ranges:
-  - 23-43
+  - 23-44
 - file: crates/ghook/src/diagnose.rs
   ranges:
   - 15-32
@@ -36,6 +67,16 @@ provenance:
   - 224-246
   - 249-256
   - 259-266
+- file: crates/ghook/src/dispatch.rs
+  ranges:
+  - 16-179
+  - 181-183
+  - 185-213
+  - 223-226
+  - 229-241
+  - 244-252
+  - 255-295
+  - 298-330
 - file: crates/ghook/src/envelope.rs
   ranges:
   - 24-32
@@ -52,44 +93,8 @@ provenance:
   - 28-52
 - file: crates/ghook/src/main.rs
   ranges:
-  - 45-49
-  - 57-81
-  - 83-106
-  - 108-124
-  - 126-289
-  - 291-297
-  - 299-301
-  - 303-305
-  - 307-335
-  - 337-345
-  - 347-417
-  - 419-438
-  - 440-500
-  - 502-524
-  - 526-554
-  - 556-568
-  - 579-582
-  - 585-597
-  - 600-608
-  - 611-651
-  - 654-675
-  - 678-694
-  - 697-713
-  - 716-733
-  - 736-754
-  - 757-773
-  - 776-792
-  - 795-806
-  - 809-815
-  - 818-834
-  - 837-851
-  - 854-869
-  - 872-885
-  - 888-898
-  - 901-914
-  - 917-930
-  - 933-965
-  - 968-977
+  - 40-63
+  - 65-81
 - file: crates/ghook/src/output.rs
   ranges:
   - 3-5
@@ -127,6 +132,9 @@ provenance:
   - 356-366
   - 369-399
   - 402-408
+- file: crates/ghook/src/runtime.rs
+  ranges:
+  - 4-16
 - file: crates/ghook/src/source.rs
   ranges:
   - 3-14
@@ -215,11 +223,11 @@ Parent: [[code/modules/crates/ghook|crates/ghook]]
 
 ## Overview
 
-The `crates/ghook/src` module is the Rust implementation of `ghook`, Gobby’s sandbox-tolerant hook dispatcher. Its entry point supports normal owned hook dispatch, diagnostics, and version stamping, with the normal path enqueueing an envelope before attempting a daemon POST while preserving each host CLI’s stdout, stderr, and exit-code protocol . CLI-specific behavior is centralized in `cli_config`, which recognizes supported hosts, chooses fallback dispatch settings, and marks which hooks fail closed; `source` resolves the dispatch source, `json_value` mirrors Python-style truthiness for dispatcher semantics, and `output` provides best-effort console writes [crates/ghook/src/cli_config.rs:20-61] [crates/ghook/src/source.rs] [crates/ghook/src/json_value.rs:3-20] .
+The `ghook` module is the CLI-side hook bridge for Gobby: it parses invocation mode, recognizes host CLIs, diagnoses what a hook would do, and dispatches owned hook calls into a durable daemon-facing envelope. `main` routes parsed arguments to version stamping, diagnostics, or owned execution, with validation failures returning usage-style exit code 2; `Args` supplies the mode, CLI name, hook type, diagnostics, runtime stamp, and optional detachment settings that drive those paths. [crates/ghook/src/main.rs:40-63] [crates/ghook/src/main.rs:65-81] [crates/ghook/src/args.rs:9-33] Host-specific behavior is centralized in `CliConfig`, which maps CLI names to canonical sources, critical hooks, and malformed-JSON exit codes, while `source` adds Claude-only source overrides and `detach` offers best-effort process/session detachment without affecting control flow. [crates/ghook/src/cli_config.rs:11-18] [crates/ghook/src/cli_config.rs:20-61] [crates/ghook/src/source.rs:3-14] [crates/ghook/src/detach.rs:23-44]
 
-The core dispatch flow starts in `main`, parses `--gobby-owned`, `--diagnose`, `--version`, CLI name, hook type, and optional detachment flags, then routes to the appropriate execution path . Normal dispatch builds a versioned `Envelope` containing hook metadata, criticality, source, raw input JSON, ordered headers, and enqueue time, optionally enriches session-start input with terminal context, and sends it through the enqueue-first transport   . The transport writes lexicographically sortable inbox files atomically under `~/.gobby/hooks/inbox/`, posts to `/api/hooks/execute`, deletes successful deliveries, and leaves or quarantines failed/malformed envelopes so the daemon can replay them later  .
+The normal dispatch flow is enqueue-first. `run_gobby_owned` validates the CLI and hook type, honors disabled-hooks and planned-shutdown gates, handles Claude statusline as a separate path, then gathers stdin and project context to build an `Envelope`. [crates/ghook/src/dispatch.rs:16-179] [crates/ghook/src/envelope.rs:24-32] `build_dispatch_envelope` enriches the envelope with headers and terminal/session context when available, using `terminal_context` only for session-start hooks and preserving existing terminal context in the input. [crates/ghook/src/dispatch.rs:185-213] [crates/ghook/src/terminal_context.rs:18-23] [crates/ghook/src/terminal_context.rs:25-32] [crates/ghook/src/terminal_context.rs:34-65] Transport then writes the envelope atomically to `~/.gobby/hooks/inbox`, posts it to `/api/hooks/execute`, deletes it only after a 2xx response, and otherwise leaves it for replay; malformed stdin can be quarantined with payload and metadata.  [crates/ghook/src/transport.rs:31-36] [crates/ghook/src/transport.rs:40-45] 
 
-Several supporting paths keep hook behavior resilient around special cases. `diagnose` emits a schema-versioned, network-free JSON report about the current invocation, daemon context, CLI recognition, terminal-context eligibility, and install provenance sidecar metadata [crates/ghook/src/diagnose.rs:15-32] [crates/ghook/src/diagnose.rs:72-120]. `planned_shutdown` prevents intentional daemon stop or restart windows from blocking Stop hooks by detecting fresh shutdown markers, probing daemon health, and deleting queued stop envelopes only for connection or timeout races  . `statusline` is a separate Claude-only path because Claude consumes statusline stdout directly: it extracts and posts session status payloads best-effort, forwards optional downstream stdout byte-for-byte, and times out or terminates lingering downstream work without surfacing daemon transport failures as hook errors  .
+Result handling is split between live daemon responses and host-facing hook behavior. `action` converts successful daemon JSON and transport failures into `HookAction` values, using source-specific handling for Claude, Droid, blocked decisions, critical hooks, stderr, JSON stdout, and exit codes.  [crates/ghook/src/action.rs:36-100] Planned shutdown handling narrows suppression to `Stop` hooks during fresh shutdown markers when the daemon is unreachable, including post-enqueue suppression for connect and timeout races.   The diagnostic, runtime, statusline, JSON truthiness, and output helpers round out the module: diagnostics emit schema-shaped introspection without network I/O, runtime stamping records schema and ghook version, statusline best-effort posts session payloads while preserving downstream stdout and success exits, `json_value` mirrors dispatcher truthiness, and `output` provides fire-and-forget stdout/stderr writes. [crates/ghook/src/diagnose.rs:15-32] [crates/ghook/src/diagnose.rs:72-120] [crates/ghook/src/runtime.rs:4-16]   [crates/ghook/src/json_value.rs:3-20]
 
 ## Call Diagram
 
@@ -227,116 +235,127 @@ Several supporting paths keep hook behavior resilient around special cases. `dia
 sequenceDiagram
     participant m_00c45c9b_0377_5f2c_b12f_360c8d9afc3b as marker_accepts_fresh_allowed_intents &#91;function&#93;
     participant m_00e9dfcb_4c8a_5ce3_9fb1_8c1101e1e67b as compile_v2_schema &#91;function&#93;
+    participant m_01ba2b47_3993_5e79_a5c4_b1d9417b1295 as action_from_success_claude_stop_with_permission_deny_no_exit_two &#91;function&#93;
     participant m_032ab45d_17a0_5053_a16d_21bf4a58cdb3 as capture &#91;function&#93;
     participant m_03ff381b_511e_56de_96af_0cb6557a25d5 as unknown_cli_marked_not_recognized &#91;function&#93;
-    participant m_094be0ed_401a_5f46_9e62_a10b029f7c39 as action_from_success_response &#91;function&#93;
+    participant m_0897e27e_b9c0_58f8_8cfd_fe2c0131f65a as parse_tmux_socket_path &#91;function&#93;
     participant m_0a673d02_fe70_5e9d_97c3_8401533286eb as SourceEnvGuard.new &#91;method&#93;
-    participant m_0be42067_4564_5016_b8ad_82238c6b08cb as dispatch_envelope_injects_valid_tmux_pane_for_session_start &#91;function&#93;
-    participant m_0d89e513_ac43_50de_a5a4_d4fdd54101ea as with_tmux_env &#91;function&#93;
-    participant m_0e95b086_3657_5dd3_82a6_4b6591f5b018 as action_from_failure_returns_stderr_for_droid_transport_errors &#91;function&#93;
+    participant m_0ebbc49b_d873_572f_b040_a9df9661de4d as action_from_failure_blocks_critical_hooks &#91;function&#93;
     participant m_1037de6b_5f5f_50b7_861d_9f1d9a9a8ffa as install_provenance_absent_when_no_sidecar &#91;function&#93;
-    participant m_11ef1c20_6ac4_5c90_82fd_b8ed5c6e2dd2 as action_from_success_treats_codex_pretool_deny_as_json_block &#91;function&#93;
     participant m_122bbc33_3e69_5b6e_8aef_f4faf1b67741 as posts_statusline_payload_to_daemon_endpoint &#91;function&#93;
     participant m_14ae6661_fb9d_5b9e_95dd_ffd3a5d7a474 as droid_session_start_is_recognized_noncritical_with_terminal_context_enabled &#91;function&#93;
-    participant m_18168f09_19dd_51df_a93c_0d919181cb35 as main &#91;function&#93;
     participant m_23646fad_b5d5_5ed2_aa07_56333505a4a7 as diagnose_output_for_unknown_cli_validates &#91;function&#93;
+    participant m_271dfe9e_f471_5360_abc1_ec4df58efec4 as statusline_post_honors_gobby_daemon_url_override &#91;function&#93;
+    participant m_2ab1c8cb_1a26_526b_97e2_c3ced80e7439 as codex_pre_tool_use_noncritical_without_terminal_context &#91;function&#93;
     participant m_2e89661f_cc0d_5e6c_a0a0_8d2b5c0a111e as build_context &#91;function&#93;
-    participant m_4fa09064_905f_5260_a275_4a70fd4ea731 as extract_reason &#91;function&#93;
-    participant m_528d15bd_7d26_5e92_8a1d_9898be9c4048 as action_from_droid_success &#91;function&#93;
-    participant m_568e6201_8996_51fe_80e1_fd4a9426321f as is_blocked &#91;function&#93;
+    participant m_2f2bbcab_d802_53cd_a5ff_3df416ab975e as dispatch_envelope_omits_terminal_context_for_tool_hooks &#91;function&#93;
+    participant m_4e51d57c_e47d_5e20_9b1a_797318e05011 as handle &#91;function&#93;
     participant m_6162c40d_ddf8_5812_bd34_5902c76f6b62 as assert_validates &#91;function&#93;
-    participant m_8574adfe_9f39_5b74_82f7_ad71301bd635 as write_runtime_stamp &#91;function&#93;
+    participant m_70194d1e_f9d9_5d3f_a7f0_91efdfaf18a8 as tty_name_or_null &#91;function&#93;
+    participant m_7943af65_4575_5a6f_9788_0a7d2baa60b5 as action_from_success_response &#91;function&#93;
     participant m_8ad675ee_8102_5b17_9be0_596b651dfb2d as read_install_provenance &#91;function&#93;
     participant m_97af9d03_cbf7_57d6_9a35_24425c730f05 as clear_source_env &#91;function&#93;
-    participant m_a7cdbeb5_469f_58f0_9dc7_5f4cc7a9b8ea as run_diagnose &#91;function&#93;
+    participant m_9a03c200_a64a_5b13_8149_3aad1b137c89 as parent_pid_or_null &#91;function&#93;
     participant m_a992c00e_a5b1_52d1_95fe_4a2da82f0ca7 as diagnose &#91;function&#93;
     participant m_b790b565_784f_5385_819b_858e1b4a29e2 as write_marker &#91;function&#93;
-    participant m_bd3daea7_e3c6_5498_87b0_2b83a2eec2af as action_from_failure &#91;function&#93;
-    participant m_beb7d475_755e_535a_943d_7f52fdafdee3 as run_gobby_owned &#91;function&#93;
-    participant m_dfe102a7_844a_58d7_a61a_2ddfd8af78c5 as build_dispatch_envelope &#91;function&#93;
+    participant m_ba1c1670_6c09_5a0f_9888_a0b28c8418bb as is_valid_tmux_pane &#91;function&#93;
+    participant m_cedf4a3a_8ca0_5584_98f4_a65a36cf6613 as build_dispatch_envelope &#91;function&#93;
     participant m_e54362c6_30f4_5525_be69_4cd83ede2126 as handle_with &#91;function&#93;
+    participant m_f3e134e5_9f40_5b9e_80cc_5c148e09d975 as action_from_failure &#91;function&#93;
+    participant m_fb84c468_93b9_5ab0_8408_49a199163341 as env_or_null &#91;function&#93;
     m_00c45c9b_0377_5f2c_b12f_360c8d9afc3b->>m_b790b565_784f_5385_819b_858e1b4a29e2: calls
+    m_01ba2b47_3993_5e79_a5c4_b1d9417b1295->>m_7943af65_4575_5a6f_9788_0a7d2baa60b5: calls
     m_032ab45d_17a0_5053_a16d_21bf4a58cdb3->>m_2e89661f_cc0d_5e6c_a0a0_8d2b5c0a111e: calls
     m_03ff381b_511e_56de_96af_0cb6557a25d5->>m_a992c00e_a5b1_52d1_95fe_4a2da82f0ca7: calls
-    m_094be0ed_401a_5f46_9e62_a10b029f7c39->>m_4fa09064_905f_5260_a275_4a70fd4ea731: calls
-    m_094be0ed_401a_5f46_9e62_a10b029f7c39->>m_528d15bd_7d26_5e92_8a1d_9898be9c4048: calls
-    m_094be0ed_401a_5f46_9e62_a10b029f7c39->>m_568e6201_8996_51fe_80e1_fd4a9426321f: calls
     m_0a673d02_fe70_5e9d_97c3_8401533286eb->>m_97af9d03_cbf7_57d6_9a35_24425c730f05: calls
-    m_0be42067_4564_5016_b8ad_82238c6b08cb->>m_0d89e513_ac43_50de_a5a4_d4fdd54101ea: calls
-    m_0be42067_4564_5016_b8ad_82238c6b08cb->>m_dfe102a7_844a_58d7_a61a_2ddfd8af78c5: calls
-    m_0e95b086_3657_5dd3_82a6_4b6591f5b018->>m_bd3daea7_e3c6_5498_87b0_2b83a2eec2af: calls
+    m_0ebbc49b_d873_572f_b040_a9df9661de4d->>m_f3e134e5_9f40_5b9e_80cc_5c148e09d975: calls
     m_1037de6b_5f5f_50b7_861d_9f1d9a9a8ffa->>m_8ad675ee_8102_5b17_9be0_596b651dfb2d: calls
-    m_11ef1c20_6ac4_5c90_82fd_b8ed5c6e2dd2->>m_094be0ed_401a_5f46_9e62_a10b029f7c39: calls
     m_122bbc33_3e69_5b6e_8aef_f4faf1b67741->>m_e54362c6_30f4_5525_be69_4cd83ede2126: calls
     m_14ae6661_fb9d_5b9e_95dd_ffd3a5d7a474->>m_a992c00e_a5b1_52d1_95fe_4a2da82f0ca7: calls
-    m_18168f09_19dd_51df_a93c_0d919181cb35->>m_8574adfe_9f39_5b74_82f7_ad71301bd635: calls
-    m_18168f09_19dd_51df_a93c_0d919181cb35->>m_a7cdbeb5_469f_58f0_9dc7_5f4cc7a9b8ea: calls
-    m_18168f09_19dd_51df_a93c_0d919181cb35->>m_beb7d475_755e_535a_943d_7f52fdafdee3: calls
     m_23646fad_b5d5_5ed2_aa07_56333505a4a7->>m_00e9dfcb_4c8a_5ce3_9fb1_8c1101e1e67b: calls
     m_23646fad_b5d5_5ed2_aa07_56333505a4a7->>m_6162c40d_ddf8_5812_bd34_5902c76f6b62: calls
     m_23646fad_b5d5_5ed2_aa07_56333505a4a7->>m_a992c00e_a5b1_52d1_95fe_4a2da82f0ca7: calls
+    m_271dfe9e_f471_5360_abc1_ec4df58efec4->>m_4e51d57c_e47d_5e20_9b1a_797318e05011: calls
+    m_2ab1c8cb_1a26_526b_97e2_c3ced80e7439->>m_a992c00e_a5b1_52d1_95fe_4a2da82f0ca7: calls
+    m_2e89661f_cc0d_5e6c_a0a0_8d2b5c0a111e->>m_0897e27e_b9c0_58f8_8cfd_fe2c0131f65a: calls
+    m_2e89661f_cc0d_5e6c_a0a0_8d2b5c0a111e->>m_70194d1e_f9d9_5d3f_a7f0_91efdfaf18a8: calls
+    m_2e89661f_cc0d_5e6c_a0a0_8d2b5c0a111e->>m_9a03c200_a64a_5b13_8149_3aad1b137c89: calls
+    m_2e89661f_cc0d_5e6c_a0a0_8d2b5c0a111e->>m_ba1c1670_6c09_5a0f_9888_a0b28c8418bb: calls
+    m_2e89661f_cc0d_5e6c_a0a0_8d2b5c0a111e->>m_fb84c468_93b9_5ab0_8408_49a199163341: calls
+    m_2f2bbcab_d802_53cd_a5ff_3df416ab975e->>m_cedf4a3a_8ca0_5584_98f4_a65a36cf6613: calls
 ```
 
 ## Files
 
-- [[code/files/crates/ghook/src/cli_config.rs|crates/ghook/src/cli_config.rs]] - This file defines the compile-time `CliConfig` registry for Gobby’s hook dispatcher. It maps known CLI names to fixed per-host settings: a daemon source label, the set of hook types that must fail closed, and the malformed-JSON exit code. `for_cli` performs case-insensitive lookup for the supported CLIs, `for_dispatch` guarantees a usable config by falling back to `claude`, and `is_critical_hook` checks whether a hook should be treated as failure-critical. The tests lock in the expected CLI-specific critical-hook sets, exit codes, case-insensitive matching, and fallback behavior.
+- [[code/files/crates/ghook/src/action.rs|crates/ghook/src/action.rs]] - Defines the hook-action layer for `ghook`: a small crate-visible `HookAction` record carries an exit code plus optional JSON stdout and stderr text, and helper functions build, emit, and translate hook outcomes into that form. Successful responses are trimmed, parsed as JSON, and mapped differently for `droid`, `claude`, and other sources, with special handling for blocked/denied payloads and extracted reasons; delivery failures are converted into fail-safe actions based on source, hook criticality, and failure kind. The rest of the file is a focused test suite that checks these mappings preserve the expected JSON fields, stderr messages, and exit codes.
+[crates/ghook/src/action.rs:8-12]
+[crates/ghook/src/action.rs:14-20]
+[crates/ghook/src/action.rs:22-24]
+[crates/ghook/src/action.rs:26-34]
+[crates/ghook/src/action.rs:36-106]
+- [[code/files/crates/ghook/src/args.rs|crates/ghook/src/args.rs]] - Defines the `ghook` CLI argument type used to configure hook dispatch behavior. `Args` is a `clap::Parser` struct for the crate-visible entrypoint, collecting flags for owned invocation mode, diagnostic output, version stamping, host CLI name, hook type, and optional process-group detachment. These fields work together to steer whether the hook runs normally, emits diagnostics, records a runtime version stamp, and how it identifies the calling CLI and hook kind before posting. [crates/ghook/src/args.rs:9-33]
+- [[code/files/crates/ghook/src/cli_config.rs|crates/ghook/src/cli_config.rs]] - `cli_config.rs` defines a compile-time `CliConfig` registry for supported host CLIs, mapping each known CLI name to a source identifier, a set of fail-closed critical hooks, and the malformed-JSON exit code expected by the dispatcher. `CliConfig::for_cli` does the case-insensitive lookup and returns `None` for unknown CLIs, `for_dispatch` applies a Claude fallback when dispatch needs a guaranteed config, and `is_critical_hook` checks whether a hook should block on failure. The tests lock in the per-CLI mappings, case-insensitive matching, unknown-CLI behavior, and the Claude fallback path.
 [crates/ghook/src/cli_config.rs:11-18]
 [crates/ghook/src/cli_config.rs:20-61]
 [crates/ghook/src/cli_config.rs:21-52]
 [crates/ghook/src/cli_config.rs:54-56]
 [crates/ghook/src/cli_config.rs:58-60]
-- [[code/files/crates/ghook/src/detach.rs|crates/ghook/src/detach.rs]] - Provides a small cross-platform process-detachment helper for the `ghook` crate. `detach()` uses `setsid()` on Unix to leave the controlling terminal and process group, and `FreeConsole()` on Windows to drop the current console, with both paths treated as best-effort so the caller can continue even if detachment does nothing. [crates/ghook/src/detach.rs:23-43]
-- [[code/files/crates/ghook/src/diagnose.rs|crates/ghook/src/diagnose.rs]] - Builds the `ghook --diagnose` introspection output: it assembles a schema-versioned JSON report describing the current CLI/hook invocation, daemon connection details, project context, terminal-context state, CLI recognition, and install provenance for the running binary. The helper functions read optional `.ghook-install.json` sidecar metadata and locate it beside the executable, while the tests verify CLI-specific criticality/source behavior and that the output and provenance parsing conform to the v2 schema and failure-tolerant sidecar rules.
+- [[code/files/crates/ghook/src/detach.rs|crates/ghook/src/detach.rs]] - Provides a small cross-platform helper for detaching the current process from its controlling terminal or console. On Unix, `detach()` calls `setsid()` to start a new session and leave the parent process group; on Windows, it calls `FreeConsole()` as a best-effort way to drop console attachment. The function is intentionally lightweight and non-fatal: failures are ignored so callers can request detachment without changing control flow. [crates/ghook/src/detach.rs:23-44]
+- [[code/files/crates/ghook/src/diagnose.rs|crates/ghook/src/diagnose.rs]] - Implements `ghook --diagnose`, a pure introspection command that emits a JSON report describing what a Git hook invocation would do, without network I/O or envelope writes. `DiagnoseOutput` defines the schema-shaped payload, `read_install_provenance` and `install_provenance_for_running_binary` load optional installer sidecar metadata, and `diagnose` combines CLI config, daemon/project context, hook criticality, terminal context, and install provenance into the final result. The tests exercise CLI recognition, criticality, provenance fallback behavior, and validation against the v2 JSON schema.
 [crates/ghook/src/diagnose.rs:15-32]
 [crates/ghook/src/diagnose.rs:42-45]
 [crates/ghook/src/diagnose.rs:51-60]
 [crates/ghook/src/diagnose.rs:62-70]
 [crates/ghook/src/diagnose.rs:72-120]
-- [[code/files/crates/ghook/src/envelope.rs|crates/ghook/src/envelope.rs]] - Defines the v1 inbox webhook envelope that `ghook` enqueues and the daemon later replays, with a frozen `SCHEMA_VERSION` and a serialized `Envelope` struct carrying enqueue time, critical flag, hook type, raw `input_data`, source, and ordered headers. `Envelope::new` fills in the schema version and current UTC RFC3339 timestamp, while the test helpers build sample envelopes and verify JSON serialization and Draft 7 schema conformance, including the behavior of present and absent headers.
+- [[code/files/crates/ghook/src/dispatch.rs|crates/ghook/src/dispatch.rs]] - This file implements the owned gobby hook dispatch path: `run_gobby_owned` validates the CLI and hook type, handles special cases first (`GOBBY_HOOKS_DISABLED`, planned shutdown, and statusline hooks), then gathers project context and stdin so the hook can be dispatched safely. `build_dispatch_envelope` assembles the JSON envelope for that dispatch, enriching it with terminal context and project/session headers when available, while `with_tmux_env` provides a controlled way for tests to simulate tmux state. The tests verify the environment gate and the envelope’s tmux/terminal-context behavior across valid, missing, and malformed inputs.
+[crates/ghook/src/dispatch.rs:16-179]
+[crates/ghook/src/dispatch.rs:181-183]
+[crates/ghook/src/dispatch.rs:185-213]
+[crates/ghook/src/dispatch.rs:223-226]
+[crates/ghook/src/dispatch.rs:229-241]
+- [[code/files/crates/ghook/src/envelope.rs|crates/ghook/src/envelope.rs]] - Defines the v1 inbox envelope format that ghook enqueues and the daemon replays, with a fixed schema version, enqueue timestamp, priority flag, hook type, raw JSON input, source, and ordered headers. `Envelope::new` builds instances with the current UTC RFC3339 timestamp and constant schema version, while the test module checks serialization and schema validation, including correct handling of optional headers as an omitted object rather than empty strings.
 [crates/ghook/src/envelope.rs:24-32]
 [crates/ghook/src/envelope.rs:34-52]
 [crates/ghook/src/envelope.rs:35-51]
 [crates/ghook/src/envelope.rs:59-70]
 [crates/ghook/src/envelope.rs:73-84]
-- [[code/files/crates/ghook/src/json_value.rs|crates/ghook/src/json_value.rs]] - This file defines a small JSON utility for Python-style truthiness checks. `is_python_truthy` maps `serde_json::Value` to a boolean by treating `Null`, `false`, numeric zero, empty strings, empty arrays, and empty objects as false, while all other values are true. The test module verifies that behavior against the expected dispatcher semantics with representative falsy and truthy JSON values.
+- [[code/files/crates/ghook/src/json_value.rs|crates/ghook/src/json_value.rs]] - Provides a small JSON utility for ghook that evaluates `serde_json::Value` using Python-style truthiness: `null`, `false`, zero numbers, empty strings, empty arrays, and empty objects are false, while booleans, nonzero numbers, nonempty strings, and nonempty collections are true. The test module confirms these dispatcher semantics with representative falsy and truthy cases.
 [crates/ghook/src/json_value.rs:3-20]
 [crates/ghook/src/json_value.rs:28-52]
-- [[code/files/crates/ghook/src/main.rs|crates/ghook/src/main.rs]] - `crates/ghook/src/main.rs` is the `ghook` CLI entry point for Gobby’s sandbox-tolerant hook dispatcher. It parses hook-runtime flags, routes into version, diagnose, or normal `gobby_owned` execution, writes the runtime stamp, builds dispatch envelopes with project/session and terminal context, and converts successful or failed daemon responses into `HookAction` exit codes plus stdout/stderr output, with helpers handling blocked decisions, disabled hooks, tmux environment, and related integration tests.
-[crates/ghook/src/main.rs:45-49]
-[crates/ghook/src/main.rs:57-81]
-[crates/ghook/src/main.rs:83-106]
-[crates/ghook/src/main.rs:108-124]
-[crates/ghook/src/main.rs:126-289]
-- [[code/files/crates/ghook/src/output.rs|crates/ghook/src/output.rs]] - Provides two tiny output helpers for the crate: `stdout` writes formatted `Arguments` to a locked standard output stream, and `stderr` does the same for standard error. Both ignore any I/O error from `write_fmt`, so the file centralizes best-effort console logging without propagating failures.
+- [[code/files/crates/ghook/src/main.rs|crates/ghook/src/main.rs]] - This file is the `ghook` CLI entrypoint and mode dispatcher. `main` parses command-line arguments, then routes to version handling, diagnostics, or gobby-owned hook execution; if no valid mode is selected, it prints a usage error and exits with code 2. `run_diagnose` implements the diagnostic path by requiring both `--cli` and `--type`, calling `diagnose::diagnose`, and printing the result as pretty JSON on stdout, or reporting an error and returning exit code 2 if validation or serialization fails.
+[crates/ghook/src/main.rs:40-63]
+[crates/ghook/src/main.rs:65-81]
+- [[code/files/crates/ghook/src/output.rs|crates/ghook/src/output.rs]] - Provides tiny helper functions for writing formatted output to the process streams. `stdout` and `stderr` each lock the corresponding standard handle, call `write_fmt` with the supplied `Arguments`, and deliberately ignore any I/O error, giving the rest of the crate a simple, fire-and-forget way to print to standard output or error.
 [crates/ghook/src/output.rs:3-5]
 [crates/ghook/src/output.rs:7-9]
-- [[code/files/crates/ghook/src/planned_shutdown.rs|crates/ghook/src/planned_shutdown.rs]] - This file implements planned shutdown handling for Gobby’s Stop hooks. It detects short-lived shutdown markers in the Gobby home directory, checks whether they are fresh and allowed, probes daemon reachability, and uses that combination to decide when a Stop hook should skip dispatch or suppress a failed post. The helper functions work together to parse and validate marker JSON, derive the freshness window from an environment override, read the current time, probe `/api/admin/health`, and delete enqueued items when suppression is warranted. The tests cover stop-hook matching, marker validation rules, daemon probing behavior, environment parsing, and the suppression/skip decision paths.
+- [[code/files/crates/ghook/src/planned_shutdown.rs|crates/ghook/src/planned_shutdown.rs]] - This file implements planned shutdown handling for `Stop` hooks. It detects a fresh shutdown marker in the Gobby home directory, checks daemon reachability through a short health probe, and uses those two signals to decide when a `Stop` hook dispatch should be skipped because the daemon has intentionally gone away. It also handles failed post-enqueue cases by suppressing only `Stop` hook `Connect`/`Timeout` races during an active shutdown marker, deleting the queued item when suppression applies. The rest of the file is support code for reading and validating marker JSON, enforcing freshness and allowed intents/sources, parsing the freshness timeout from the environment, and providing small helpers and tests for those behaviors.
 [crates/ghook/src/planned_shutdown.rs:21-27]
 [crates/ghook/src/planned_shutdown.rs:29-37]
 [crates/ghook/src/planned_shutdown.rs:39-50]
 [crates/ghook/src/planned_shutdown.rs:52-54]
 [crates/ghook/src/planned_shutdown.rs:56-62]
-- [[code/files/crates/ghook/src/source.rs|crates/ghook/src/source.rs]] - This file resolves the active source name for ghook dispatch. `detect_source` returns the configured source by default, but for `claude` it can be overridden by a non-empty `GOBBY_SOURCE` environment variable; `CLAUDE_CODE_ENTRYPOINT` is intentionally ignored here.
-
-The rest of the file is test support for that behavior. `clear_source_env` and `set_source_env` manage the process-wide variables safely within tests, and `SourceEnvGuard` resets them on creation and drop so `detect_source_respects_override_only_for_claude` can verify override handling and the rule that only `GOBBY_SOURCE` changes the detected source.
+- [[code/files/crates/ghook/src/runtime.rs|crates/ghook/src/runtime.rs]] - Provides `write_runtime_stamp`, which initializes `~/.gobby/bin`, builds a `.ghook-runtime.json` stamp containing the current envelope schema version and `ghook` version, writes it atomically, and prints `ghook <version>` to stdout. The function ties together `gobby_core` path resolution, `envelope` metadata, `diagnose` version info, `transport` atomic persistence, and `output` reporting, returning any I/O or serialization error. [crates/ghook/src/runtime.rs:4-16]
+- [[code/files/crates/ghook/src/source.rs|crates/ghook/src/source.rs]] - This file resolves the effective CLI source name, with a special override path only for `claude`: `detect_source` returns the configured source unchanged for non-`claude` CLIs, but can substitute `GOBBY_SOURCE` when that environment variable is set to a non-empty value. The test-only helpers `clear_source_env`, `set_source_env`, and `SourceEnvGuard` manage process-wide environment state safely across tests by clearing it on setup and drop. The unit test verifies the override behavior, including that `CLAUDE_CODE_ENTRYPOINT` is ignored, empty overrides are skipped, and non-`claude` sources are left alone.
 [crates/ghook/src/source.rs:3-14]
 [crates/ghook/src/source.rs:20-27]
 [crates/ghook/src/source.rs:29-35]
 [crates/ghook/src/source.rs:37]
 [crates/ghook/src/source.rs:39-44]
-- [[code/files/crates/ghook/src/statusline.rs|crates/ghook/src/statusline.rs]] - Claude Code statusline hook handler that reads JSON from stdin, extracts a statusline payload when the input looks like a valid session event, and best-effort posts it to the daemon’s `/api/sessions/statusline` endpoint without surfacing transport failures as hook errors. It also optionally runs a downstream command and mirrors its stdout back to Claude exactly, with timeout and process-group termination helpers to keep the pipeline responsive and to clean up surviving child processes; the tests cover hook recognition, payload extraction, daemon posting, stdout passthrough, and timeout/kill behavior.
+- [[code/files/crates/ghook/src/statusline.rs|crates/ghook/src/statusline.rs]] - Implements the Claude Code statusline hook path for `ghook`: it accepts raw JSON from stdin, validates that the input is a JSON object, and then best-effort posts a derived session payload to the daemon while preserving the hook’s success exit behavior even on malformed input or transport failures. If `GOBBY_STATUSLINE_DOWNSTREAM` is set, it also forwards the original stdin bytes to a downstream shell command and relays that command’s stdout back unchanged, with timeout and process-group cleanup logic to avoid hanging or leaving survivors.
+
+The supporting pieces split this into small responsibilities: `is_statusline_hook` gates the handler to Claude’s `statusline` hook, `extract_payload` pulls out the session/model/token metadata only when `session_id` is truthy, and the downstream helpers spawn, wait on, and terminate the child process tree safely on non-Windows platforms.
 [crates/ghook/src/statusline.rs:25-27]
 [crates/ghook/src/statusline.rs:29-35]
 [crates/ghook/src/statusline.rs:37-67]
 [crates/ghook/src/statusline.rs:69-104]
 [crates/ghook/src/statusline.rs:106-119]
-- [[code/files/crates/ghook/src/terminal_context.rs|crates/ghook/src/terminal_context.rs]] - Builds and injects a terminal/process context payload for session-start hooks so the daemon can reconcile spawned terminal agents with their environment. `capture()` gathers `TMUX` and `TMUX_PANE` from the process environment and delegates to `build_context()`, while `enabled_for_hook()` gates the logic to `sessionstart` hook names after normalizing case and separators. `build_context()` assembles a JSON object with safe process, terminal, tmux, and `GOBBY_*` metadata, only filling tmux fields when `TMUX` is present and the pane matches the daemon’s `%<digits>` contract. The helper functions handle environment lookup, parent PID and TTY discovery, tmux pane validation, and tmux socket-path parsing, and `inject()` adds the resulting `terminal_context` to a JSON object only when it is missing.
+- [[code/files/crates/ghook/src/terminal_context.rs|crates/ghook/src/terminal_context.rs]] - Builds and injects a `terminal_context` JSON object for session-start hooks so the daemon can reconcile spawned-terminal agents. `capture` gathers `TMUX` and `TMUX_PANE` from the environment and delegates to `build_context`, while `enabled_for_hook` gates the logic to `sessionstart` hook types. `build_context` always records process and terminal data such as parent PID, TTY, `TERM_PROGRAM`, and `GOBBY_*` identifiers, but only includes tmux pane and socket path when `TMUX` is present and `TMUX_PANE` matches the expected `%<digits>` format. The helper functions handle environment lookup, Unix parent PID and TTY capture, tmux pane validation, and tmux socket-path parsing, and `inject` adds the computed context to an input JSON object only when `terminal_context` is missing.
 [crates/ghook/src/terminal_context.rs:18-23]
 [crates/ghook/src/terminal_context.rs:25-32]
 [crates/ghook/src/terminal_context.rs:34-65]
 [crates/ghook/src/terminal_context.rs:71-77]
 [crates/ghook/src/terminal_context.rs:79-84]
-- [[code/files/crates/ghook/src/transport.rs|crates/ghook/src/transport.rs]] - Implements the enqueue-first transport for `ghook --gobby-owned`: it names inbox envelopes with lexicographically sortable `prefix-ts13-uuid.json` filenames, writes them atomically into `~/.gobby/hooks/inbox/`, posts them to the daemon, and either deletes the inbox file on a 2xx response or leaves/quarantines it for later drain replay on failure. `DeliveryOutcome`, `DeliveryFailureKind`, and `DeliveryReport` model the result of the live POST so callers can distinguish successful delivery from queued replay and classify HTTP, connection, timeout, or other transport failures. The helper functions derive inbox/quarantine paths, generate timestamps and filenames, perform atomic writes, enqueue envelopes, extract envelope IDs from paths, classify transport errors, and move malformed envelopes into quarantine; the tests verify filename format, atomic write behavior, enqueue/quarantine writes, and that `post_and_cleanup` captures success bodies, error bodies, and special endpoint behavior.
+- [[code/files/crates/ghook/src/transport.rs|crates/ghook/src/transport.rs]] - This file implements the enqueue-first transport path for `ghook`: it computes the inbox and quarantine locations under `~/.gobby/hooks/inbox`, generates lexicographically sortable envelope filenames with a critical/noncritical prefix, timestamp, and UUID, and persists envelopes atomically via temp-write, fsync, and rename before attempting delivery. It then posts the queued envelope to the daemon’s `/api/hooks/execute` endpoint, classifies failures as HTTP/connect/timeout/other, and deletes the inbox file only on a 2xx response; otherwise it leaves the file for replay and returns a `DeliveryReport` with diagnostics. It also provides quarantine helpers for malformed stdin, storing both the payload and metadata, plus tests that verify filename format, atomic writes, enqueueing, quarantine output, and post/cleanup behavior.
 [crates/ghook/src/transport.rs:31-36]
 [crates/ghook/src/transport.rs:40-45]
 [crates/ghook/src/transport.rs:49-55]
@@ -345,6 +364,33 @@ The rest of the file is test support for that behavior. `clear_source_env` and `
 
 ## Components
 
+- `f5dd5560-82fb-5444-90ec-c52f14453103`
+- `f7f34afc-91e9-5d08-9c85-a1d2c956cfd8`
+- `a0e2dc98-470a-5a92-b323-c3897cdac1bd`
+- `53a2cebe-fa56-5b23-b6e2-aff808c32b5b`
+- `7943af65-4575-5a6f-9788-0a7d2baa60b5`
+- `878d10af-1a06-51a8-8f6d-d3bba3752a2a`
+- `f3e134e5-9f40-5b9e-80cc-5c148e09d975`
+- `7f389900-230b-5d25-9703-a26670c58474`
+- `508c1c2e-6c93-5d01-9766-ce34b69ade39`
+- `b0f88c8a-e48b-5c3e-9a97-e372b2692a29`
+- `7f885d7d-c804-5a80-8084-03cd78960082`
+- `f62c6e5c-cd61-5335-b502-c6d8ec2b044f`
+- `4d4e6520-a366-57ba-816c-e2850ac098ed`
+- `386ef81c-1c92-53f0-9b74-7a8e9de97905`
+- `6c09b433-2e48-5a35-8569-597437823e71`
+- `d26f5a56-d6d1-5b4b-a9d4-bba1710f7a37`
+- `01ba2b47-3993-5e79-a5c4-b1d9417b1295`
+- `81126c57-cc7f-59bc-a418-b5e6d245b775`
+- `b9db8a12-d623-524a-9dab-0ece537db020`
+- `ac7a2683-4f39-53e9-8fed-8bf949abe7b8`
+- `0ebbc49b-d873-572f-b040-a9df9661de4d`
+- `8c567c91-48d2-57b8-bf80-8b01cbf75b4e`
+- `b560222e-c106-56c2-b2d5-5767deb0befb`
+- `46b23092-7854-5a75-a3c3-64a9bb32ab49`
+- `8ecf33c0-a92d-5b09-9597-2c43d1f64282`
+- `8c4d5e40-b536-5aa5-85cf-cd46e8578cf5`
+- `154c6c0f-2312-50d9-a91b-7174eaa8d2a6`
 - `dfe7d451-73f4-539e-9b59-32c8c9291990`
 - `8ee0a776-cf79-5255-b0fd-2f7f365b159d`
 - `c38c936b-fd31-5b98-9447-8cbc0e7c09af`
@@ -376,6 +422,14 @@ The rest of the file is test support for that behavior. `clear_source_env` and `
 - `e7a32469-b625-5e77-a884-390c699de709`
 - `68f07533-2835-53d4-ae83-6b840dffd509`
 - `99ed98ac-6741-5da6-b9d6-23c91e3b0c19`
+- `862baaa6-b74c-51be-a87d-4dcbb6f21965`
+- `f2c73a2d-1c53-506d-a354-4e94eb6967f8`
+- `cedf4a3a-8ca0-5584-98f4-a65a36cf6613`
+- `f06761bf-55c8-50f1-a59b-de439e47366e`
+- `7a9c79a8-0887-5c95-bee8-9edbf5ad760c`
+- `2f2bbcab-d802-53cd-a5ff-3df416ab975e`
+- `93e5c8ff-70cd-5df6-9754-ff0e410415de`
+- `abf502a8-9127-50c3-aa41-b3bcec08825b`
 - `134b0274-548a-57f1-a2ae-2e1ade34d42b`
 - `a20c2033-1b4a-5cbf-a028-ad84070bc7c9`
 - `e9dd6b5a-9f95-533d-9247-b9d353b78915`
@@ -387,44 +441,8 @@ The rest of the file is test support for that behavior. `clear_source_env` and `
 - `2361477e-62f9-5d3e-bb73-98b600aea6fa`
 - `5d14c0ef-39c5-5653-9867-265c50d0ac2b`
 - `ff170581-95ff-5889-acf6-7e3482709df8`
-- `b7deea92-b69e-59db-b0f9-aa74c3168cf2`
-- `6aae9f18-b7ef-5eef-b421-a457b7ea5592`
-- `18168f09-19dd-51df-a93c-0d919181cb35`
-- `a7cdbeb5-469f-58f0-9dc7-5f4cc7a9b8ea`
-- `beb7d475-755e-535a-943d-7f52fdafdee3`
-- `2d8783f2-188c-535b-baf8-4e63d7a73614`
-- `b5520f3a-fb3a-5d17-9567-35b8f83eec78`
-- `40e9878e-caeb-5d05-a21a-48bc8e156a0c`
-- `dfe102a7-844a-58d7-a61a-2ddfd8af78c5`
-- `d8b40289-d659-593d-bd9c-72f619ffc3bb`
-- `094be0ed-401a-5f46-9e62-a10b029f7c39`
-- `528d15bd-7d26-5e92-8a1d-9898be9c4048`
-- `bd3daea7-e3c6-5498-87b0-2b83a2eec2af`
-- `568e6201-8996-51fe-80e1-fd4a9426321f`
-- `4fa09064-905f-5260-a275-4a70fd4ea731`
-- `8574adfe-9f39-5b74-82f7-ad71301bd635`
-- `0d89e513-ac43-50de-a5a4-d4fdd54101ea`
-- `0be42067-4564-5016-b8ad-82238c6b08cb`
-- `23d1368a-e0f1-511f-8973-6a04cbe0fc05`
-- `c1b47df2-70e8-5f71-ad8e-80786ead4fc9`
-- `ac6569ae-6f86-5e82-8370-849fe970183a`
-- `11ef1c20-6ac4-5c90-82fd-b8ed5c6e2dd2`
-- `e18a39e3-96c8-54b4-a254-e8f9746a3826`
-- `c1f2a53d-2ed2-519d-8ee3-ed1b31b2e341`
-- `cca571b4-04b3-5e30-8816-4128d1e7af44`
-- `61ca3292-9088-5897-966a-8615c61d1415`
-- `5edf6eae-00a3-51fb-a7b9-5a3c805ba829`
-- `30a4cf12-d637-5607-8d0a-9d8520bc3b95`
-- `cc9082e3-997d-5d3a-b1f6-7edcc3da3471`
-- `39462197-82e3-502a-802a-f1a5f1a173b5`
-- `e783c0c2-0253-555f-a8b2-a868f36fd9a7`
-- `a31fb368-b0a5-5c99-9e21-f286d81af118`
-- `804d5e24-a7e0-52b8-b29c-8c4618af6521`
-- `b51d61f6-7bcb-5340-ab70-87c7ea88bc96`
-- `9a5f8dc2-b6f0-57bd-ab50-2d67d3fa5a14`
-- `0e95b086-3657-5dd3-82a6-4b6591f5b018`
-- `bf61da7f-1260-5c67-9825-5f6ac4fa364f`
-- `cbd0ca63-2a53-549c-8040-49c22eb9e129`
+- `dee4d56b-3252-5af3-b9d2-b1548601bf33`
+- `80fd2295-eda8-5a6e-88af-12217cc3aa17`
 - `677ea6dd-6742-544e-9bff-64bd94b6a6b1`
 - `0a198369-26e3-55ef-a139-d04ae0c5fa76`
 - `e42c0c01-e1ab-56b4-87ca-42cd184ae834`
@@ -458,6 +476,7 @@ The rest of the file is test support for that behavior. `clear_source_env` and `
 - `a6e7ff0c-3d6c-5139-9be1-d9e3b7673cdc`
 - `c17e17be-8228-5d89-99cf-f00b69e83031`
 - `3f702f5f-5ce6-5a7b-b47b-8ed9c339a049`
+- `56de4550-bc82-5099-9930-43415fd43d07`
 - `32182b88-ac1b-5a85-8084-efc7eee1e0c3`
 - `97af9d03-cbf7-57d6-9a35-24425c730f05`
 - `7dd4ad00-7abe-5ed9-b923-e7646a56aca6`

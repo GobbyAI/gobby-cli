@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-This file defines the `librarian` command entry point. Its `execute` function delegates to the shared `run_analysis_command` helper, passing the command name, a description, the selected scope, the librarian analysis runner with default options, and the text renderer so the command produces a serialized proposals report as text. [crates/gwiki/src/commands/librarian.rs:3-11]
+This file defines the `librarian` command entry point. `execute` delegates to the shared analysis-command runner with the command name, selected scope, a fixed report description, the default `librarian` analysis options, and `librarian::render_text` to turn the serialized proposals report into text output. [crates/gwiki/src/commands/librarian.rs:3-11]
 
 ## API Symbols
 

@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 
 ## Purpose
 
-This file is the main module for import resolution functionality in the gcode crate. It organizes submodules (context, helpers, parser, predicates) that handle parsing and resolving import statements, extracting import bindings, and building import resolution contexts. It exposes public APIs for creating import resolution contexts and marks unparsed imports with a "UNPARSED:" prefix. [crates/gcode/src/index/import_resolution.rs:1-17]
+Defines the import-resolution entry point for the `gcode` index module: it wires together the `context`, `helpers`, `parser`, and `predicates` submodules, exposes the public context-building APIs and related types, and defines the `UNPARSED:` marker used for unresolved imports. [crates/gcode/src/index/import_resolution.rs:1-17]
 
 ## API Symbols
 

@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-Provides the `lint` command entry point for the wiki CLI. It accepts a `ScopeSelection` and forwards the work to the shared analysis-command runner, supplying the `lint` analysis name, a lint-report serialization label, and the lint-specific `run` and `render_text` functions so execution and text output stay centralized. [crates/gwiki/src/commands/lint.rs:3-11]
+This file defines the `lint` command entry point for the wiki CLI. Its `execute` function takes a `ScopeSelection` and hands off to the shared analysis-command runner with the `lint` label, the lint analyzer, and the text renderer so lint results are generated and formatted consistently. [crates/gwiki/src/commands/lint.rs:3-11]
 
 ## API Symbols
 

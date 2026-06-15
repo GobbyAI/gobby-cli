@@ -4,7 +4,7 @@ type: code_module
 provenance:
 - file: crates/gcode/src/graph/code_graph.rs
   ranges:
-  - 1-46
+  - 1-47
 - file: crates/gcode/src/graph/code_graph/connection.rs
   ranges:
   - 7-12
@@ -35,65 +35,75 @@ provenance:
 - file: crates/gcode/src/graph/code_graph/payload.rs
   ranges:
   - 10-19
-  - 21-82
-  - 84-88
-  - 90-109
-  - 111-113
-  - 116-135
-  - 137-200
-  - 203-214
-  - 216-243
-  - 246-262
-  - 264-290
-  - 292-297
-  - 299-316
-  - 318-322
-  - 324-328
-  - 330-339
+  - 21-86
+  - 88-92
+  - 94-113
+  - 115-117
+  - 120-139
+  - 141-204
+  - 207-218
+  - 220-247
+  - 250-266
+  - 268-294
+  - 296-301
+  - 303-320
+  - 322-326
+  - 328-332
+  - 334-343
 - file: crates/gcode/src/graph/code_graph/read.rs
   ranges:
-  - 45-93
-  - 95-97
-  - 99-111
-  - 113-128
-  - 130-149
-  - 151-170
-  - 172-188
-  - 190-206
-  - 208-227
-  - 229-246
-  - 248-267
-  - 269-286
-  - 288-298
-  - 300-317
-  - 319-338
-  - 340-356
-  - 358-377
-  - 379-399
-  - 401-412
-  - 414-436
-  - 438-459
-  - 461-475
-  - 477-501
-  - 503-525
-  - 527-553
-  - 555-564
-  - 566-645
-  - 647-673
-  - 675-711
-  - 713-786
-  - 788-798
-  - 800-810
-  - 812-823
-  - 825-836
-  - 838-851
-  - 853-862
-  - 864-877
-  - 879-895
-  - 897-910
-  - 912-928
-  - 930-936
-  - 938-949
+  - 1-21
+- file: crates/gcode/src/graph/code_graph/read/graph_payloads.rs
+  ranges:
+  - 19-98
+  - 100-126
+  - 128-164
+  - 166-239
+- file: crates/gcode/src/graph/code_graph/read/payload_queries.rs
+  ranges:
+  - 10-29
+  - 31-47
+  - 49-68
+  - 70-90
+  - 92-106
+  - 108-130
+  - 132-153
+  - 155-169
+  - 171-195
+  - 197-219
+- file: crates/gcode/src/graph/code_graph/read/relationship_queries.rs
+  ranges:
+  - 7-19
+  - 21-36
+  - 38-57
+  - 59-78
+  - 80-96
+  - 98-114
+  - 116-135
+  - 137-154
+  - 156-175
+  - 177-194
+  - 196-206
+  - 208-225
+- file: crates/gcode/src/graph/code_graph/read/relationships.rs
+  ranges:
+  - 16-26
+  - 28-38
+  - 40-51
+  - 53-64
+  - 66-79
+  - 81-90
+  - 92-105
+  - 107-123
+  - 125-138
+  - 140-156
+  - 158-164
+  - 166-177
+- file: crates/gcode/src/graph/code_graph/read/support.rs
+  ranges:
+  - 38-86
+  - 88-120
+  - 122-131
 - file: crates/gcode/src/graph/code_graph/tests.rs
   ranges:
   - 7-21
@@ -111,68 +121,85 @@ provenance:
   - 272-282
   - 285-324
   - 327-374
-  - 377-396
-  - 399-409
-  - 412-439
-  - 442-454
+  - 377-424
+  - 427-446
+  - 449-459
+  - 462-489
+  - 492-504
 - file: crates/gcode/src/graph/code_graph/write.rs
   ranges:
-  - 110-113
-  - 116-118
-  - 120-158
-  - 160-165
-  - 167-177
-  - 179-195
-  - 197-216
-  - 218-249
-  - 251-266
-  - 268-277
-  - 279-284
-  - 286-290
-  - 292-297
-  - 299-301
-  - 304-315
-  - 317-326
-  - 328-336
-  - 338-342
-  - 344-346
-  - 348-352
-  - 354-377
-  - 379-383
-  - 385-392
-  - 394-400
-  - 402-406
-  - 409-412
-  - 415-422
-  - 425-429
-  - 431-438
-  - 440-455
-  - 457-462
-  - 464-492
-  - 494-507
-  - 509-511
-  - 513-518
-  - 520-528
-  - 530-566
-  - 568-586
-  - 588-618
-  - 620-654
-  - 656-660
-  - 662-694
-  - 696-702
-  - 704-723
-  - 725-743
-  - 745-765
-  - 767-778
-  - 780-791
-  - 793-804
-  - 806-864
-  - 866-933
-  - 935-947
-  - 949-957
-  - 959-975
-  - 977-986
-  - 988-997
+  - 47-50
+  - 53-56
+  - 59-61
+  - 63-101
+  - 103-108
+  - 110-120
+  - 122-138
+  - 140-159
+  - 161-192
+  - 194-203
+  - 205-214
+  - 216-221
+  - 223-227
+  - 229-234
+  - 236-258
+  - 260-271
+  - 273-282
+  - 284-286
+  - 289-294
+  - 296-307
+  - 309-318
+  - 320-328
+  - 330-334
+  - 336-338
+  - 340-345
+  - 347-351
+  - 353-376
+- file: crates/gcode/src/graph/code_graph/write/deletion.rs
+  ranges:
+  - 8-66
+  - 68-113
+  - 115-127
+  - 129-145
+  - 147-161
+  - 163-171
+  - 173-189
+  - 191-200
+  - 202-211
+- file: crates/gcode/src/graph/code_graph/write/mutation.rs
+  ranges:
+  - 89-96
+  - 99-102
+  - 105-112
+  - 115-119
+  - 121-128
+  - 130-145
+  - 147-152
+  - 154-182
+  - 184-197
+  - 199-207
+  - 209-227
+  - 229-259
+  - 261-295
+  - 297-301
+  - 303-335
+  - 337-343
+  - 345-364
+  - 366-377
+  - 379-390
+  - 392-403
+- file: crates/gcode/src/graph/code_graph/write/support.rs
+  ranges:
+  - 6-13
+  - 15-21
+  - 23-27
+  - 29-31
+- file: crates/gcode/src/graph/code_graph/write/sync_plan.rs
+  ranges:
+  - 30-81
+  - 89-110
+  - 113-156
+  - 159-177
 - file: crates/gcode/src/graph/mod.rs
   ranges:
   - 1-4
@@ -238,13 +265,12 @@ provenance:
   - 158-195
   - 197-231
   - 233-237
-  - 239-275
-  - 277-317
-  - 319-329
-  - 333-347
-  - 349-378
-  - 380-388
-  - 390-395
+  - 239-248
+  - 250-290
+  - 294-308
+  - 310-339
+  - 341-349
+  - 351-356
 - file: crates/gcode/src/graph/report/tests.rs
   ranges:
   - 15-65
@@ -257,6 +283,7 @@ provenance:
   - 252-277
   - 280-317
   - 320-342
+  - 345-390
 - file: crates/gcode/src/graph/report/time.rs
   ranges:
   - 3-5
@@ -324,87 +351,85 @@ Parent: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-The graph module is the gcode crate’s entry point for code graph functionality, exposing the code graph projection, graph reports, and typed query construction as sibling public modules [crates/gcode/src/graph/mod.rs:1-4]. Its code graph facade gathers connection, lifecycle, payload, read, and write concerns behind one API: it re-exports graph access guards, lifecycle request/output types, node/link payload types, read queries such as callers, usages, imports, blast radius, and overview graphs, plus write operations for syncing, cleanup, deletion, and project clearing [crates/gcode/src/graph/code_graph.rs:1-46].
+The `graph` module is the crate’s public organizing point for graph functionality: it exposes `code_graph`, `report`, and `typed_query` as sibling submodules [crates/gcode/src/graph/mod.rs:1-4]. `code_graph` is the FalkorDB-backed code index surface, wiring connection, lifecycle, payload, read, and write internals and re-exporting the main lifecycle APIs, read queries, mutation/sync operations, and serializable graph payload types [crates/gcode/src/graph/code_graph.rs:1-24]. Its child modules split ownership cleanly: writes keep `gcode`-owned `Code*` nodes and edges synchronized from indexed PostgreSQL data, reads project those structures back into graph payloads and analytics views, and the payload layer carries nodes, links, optional centers, duplicate-ID checks, and weighted analytics conversion [crates/gcode/src/graph/code_graph/payload.rs:44-64].
 
-The main operational flow starts with indexed code being projected into graph storage by the code_graph write side, which manages CodeFile, CodeSymbol, CodeModule, UnresolvedCallee, and ExternalSymbol nodes and their relationships with sync tokens and provenance. Read APIs then convert query rows into GraphPayload node/link structures for callers, callees, usages, imports, file graphs, symbol neighborhoods, and blast radius analysis. Lifecycle and connection helpers sit around those flows so graph reads can be required or degraded depending on service availability, while scoped deletion and cleanup keep per-project projections current.
+The reporting side turns graph data into project-level summaries and Markdown. `report.rs` composes generation, loading, Cypher query, rendering, row parsing, summary, time, and type modules, then re-exports the report builders and public report model types while defining shared reporting constants like `RELATES_TO_CODE` and the default top-N limit [crates/gcode/src/graph/report.rs:1-21]. Report generation can start from a configured FalkorDB project or an already materialized `ReportGraphSnapshot`; it normalizes options, checks service availability, loads snapshots, handles query/service degradation, derives missing analysis, and produces a `ProjectGraphReport` containing identity, timestamp, summary, hotspots, unresolved/external targets, bridge hypotheses, suggested questions, degradation details, and rendered Markdown [crates/gcode/src/graph/report/generation.rs:25-59] [crates/gcode/src/graph/report/generation.rs:78-159].
 
-The report submodule consumes that graph data to produce structured project analysis and rendered markdown. Its public facade re-exports generation entry points and the report schema types, while internal generation, loading, queries, render, rows, summary, time, and types modules collaborate to load snapshots, compute summaries and hotspots, track unresolved and external target frequencies, summarize bridge relationships, and render results [crates/gcode/src/graph/report.rs:1-21]. Typed queries support both graph reads and writes by pairing Cypher text with validated rendered parameters: TypedQuery stores the query and parameter map, TypedValue covers nulls, strings, numbers, booleans, lists, and maps, and insertion validates parameter identifiers before rendering safe Cypher literals .
+`typed_query` provides the shared safe-query construction layer used by graph reads, writes, and reports. `TypedQuery` stores Cypher text plus rendered string parameters, `TypedValue` models supported parameter values, and insertion validates parameter identifiers before rendering values into Cypher literals  [crates/gcode/src/graph/typed_query.rs:40-64]. Its renderer handles nulls, strings, numbers, booleans, lists, and maps while surfacing typed errors for invalid identifiers or non-finite floats, giving the higher-level graph modules a common serialization and validation boundary  .
 
 ## Call Diagram
 
 ```mermaid
 sequenceDiagram
-    participant m_009b304a_4e55_5816_99ea_938130de7ee9 as edge_degree_stats &#91;function&#93;
-    participant m_012eaa3b_661d_5d53_9d81_3c47594e071f as find_callees_batch &#91;function&#93;
     participant m_01643f1a_bc6d_5aa0_b1c7_e24709829aa6 as TypedQuery.insert_param &#91;method&#93;
-    participant m_0657608d_6a60_5abe_be90_563a2c3ea467 as ensure_file_node_query &#91;function&#93;
     participant m_07d606ca_c504_5800_9a55_25109e41cbee as empty_report &#91;function&#93;
-    participant m_08f81370_6f2e_5152_8fb0_4017d6ac1ff0 as project_overview_calls_query &#91;function&#93;
     participant m_09dd73ce_4ab9_5002_95a7_5dde362c9bfb as string_literals_escape_control_characters &#91;function&#93;
-    participant m_0bbcb310_a597_58b6_8d06_2ed7658e1b9b as typed_query &#91;function&#93;
-    participant m_0dc0ac75_ddc3_54e1_b384_bdfb58f0077d as ensure_file_node &#91;function&#93;
     participant m_1217d1cb_e173_540c_be3d_1b8fa3699c23 as row_to_target_frequency &#91;function&#93;
-    participant m_123ef69e_6051_5e0f_9ee9_494551e7e4a1 as find_usages &#91;function&#93;
-    participant m_13119f1a_8c60_51b2_bfa3_640751db91e1 as execute_write_query &#91;function&#93;
+    participant m_18e47e6e_97a7_57d8_a61d_916d57d82b9b as GraphLink.from_row &#91;method&#93;
+    participant m_1b4c649e_57ea_5272_bbb7_b3aa184e7fc0 as analytics_top_hotspots &#91;function&#93;
+    participant m_1cc48fe7_57c1_552b_87be_3a25312cbdbd as gcore_hotspots_for_code_graph &#91;function&#93;
     participant m_1d3aae22_c86e_5f25_b30d_fa181fa82726 as generate_report_from_snapshot &#91;function&#93;
-    participant m_2280ab06_6ecd_52db_a9c1_f33bbd0eb73c as find_callees_batch_query &#91;function&#93;
+    participant m_1de0cc23_e279_5d38_88a0_b3899851944a as sync_file_graph &#91;function&#93;
     participant m_22d472bb_0e6e_553b_8160_09db28c2ce94 as generate_report_with_options &#91;function&#93;
-    participant m_23753c47_43dc_5968_b295_595699d8fb38 as find_usages_query &#91;function&#93;
-    participant m_256697eb_3260_5da6_8730_b028b9a3d578 as gcore_hotspots_for_code_graph &#91;function&#93;
-    participant m_31036c05_4460_545e_8265_ea402c0e12a0 as sync_token_param &#91;function&#93;
-    participant m_5ee1320e_2e49_5c1c_b8b7_2cbb7a1adc50 as clamp_limit &#91;function&#93;
+    participant m_284b67d6_d34b_5105_9685_d0b95fd6e276 as plans_header_then_one_definition_batch_per_chunk &#91;function&#93;
+    participant m_2e342435_0b6b_52b8_a5a2_7b5d60d0aa52 as render_markdown &#91;function&#93;
+    participant m_2e82aca5_7fdb_588e_a360_b3a64ee080aa as row_to_projection_metadata &#91;function&#93;
+    participant m_3328327f_db95_569d_b43b_e21f8dbab0db as append_hotspot_section &#91;function&#93;
+    participant m_5a0d8348_6520_5220_8a67_4e7ee729f212 as append_target_section &#91;function&#93;
     participant m_5f45b090_aa30_584f_a6d1_47f0e0b97a39 as row_string &#91;function&#93;
+    participant m_60221519_fb12_5c2c_8ad3_84919acb4fcf as with_code_graph &#91;function&#93;
+    participant m_64ba56fa_910b_5fd2_bfa0_ce613e729704 as sort_hotspots &#91;function&#93;
     participant m_653f5cff_90ae_52e9_9bfb_ba0d78c31172 as validate_identifier &#91;function&#93;
+    participant m_6a038b6e_5b0f_509f_ab0e_2c4d36366a30 as edge_degree_stats &#91;function&#93;
     participant m_6b4d0e55_9ec2_5842_9ff3_fe81a05ec714 as row_usize &#91;function&#93;
+    participant m_6bd8d0a9_f677_5035_9a9b_4a79920c778b as plan_sync_batches &#91;function&#93;
     participant m_74c91864_ce73_5e7a_bf1c_749773eb62dd as render_cypher_value &#91;function&#93;
-    participant m_8fddca91_0b91_5e28_9fe4_be965c020eec as usize_value &#91;function&#93;
-    participant m_c2c5846c_da6e_516d_ba8c_aec079725d4b as clamp_offset &#91;function&#93;
+    participant m_9939443a_02fa_51f8_8ddc_d352cb095bde as is_symbol_node &#91;function&#93;
+    participant m_b93d8daf_0360_5930_b283_c7cac27dd5fe as gcore_incoming_call_hotspots &#91;function&#93;
+    participant m_d89d3ab9_ad0a_58d2_9645_87a1b3e2929a as row_usize &#91;function&#93;
+    participant m_e62c0138_29fb_5919_86bf_453bb4f023d4 as row_string_owned &#91;function&#93;
     participant m_f0e586e1_4d76_5191_b194_c8fd1efd03ff as generate_report_from_snapshot_with_options &#91;function&#93;
-    m_012eaa3b_661d_5d53_9d81_3c47594e071f->>m_2280ab06_6ecd_52db_a9c1_f33bbd0eb73c: calls
     m_01643f1a_bc6d_5aa0_b1c7_e24709829aa6->>m_653f5cff_90ae_52e9_9bfb_ba0d78c31172: calls
     m_01643f1a_bc6d_5aa0_b1c7_e24709829aa6->>m_74c91864_ce73_5e7a_bf1c_749773eb62dd: calls
-    m_0657608d_6a60_5abe_be90_563a2c3ea467->>m_0bbcb310_a597_58b6_8d06_2ed7658e1b9b: calls
-    m_0657608d_6a60_5abe_be90_563a2c3ea467->>m_31036c05_4460_545e_8265_ea402c0e12a0: calls
-    m_0657608d_6a60_5abe_be90_563a2c3ea467->>m_8fddca91_0b91_5e28_9fe4_be965c020eec: calls
     m_07d606ca_c504_5800_9a55_25109e41cbee->>m_1d3aae22_c86e_5f25_b30d_fa181fa82726: calls
-    m_08f81370_6f2e_5152_8fb0_4017d6ac1ff0->>m_5ee1320e_2e49_5c1c_b8b7_2cbb7a1adc50: calls
     m_09dd73ce_4ab9_5002_95a7_5dde362c9bfb->>m_74c91864_ce73_5e7a_bf1c_749773eb62dd: calls
-    m_0dc0ac75_ddc3_54e1_b384_bdfb58f0077d->>m_0657608d_6a60_5abe_be90_563a2c3ea467: calls
-    m_0dc0ac75_ddc3_54e1_b384_bdfb58f0077d->>m_13119f1a_8c60_51b2_bfa3_640751db91e1: calls
     m_1217d1cb_e173_540c_be3d_1b8fa3699c23->>m_5f45b090_aa30_584f_a6d1_47f0e0b97a39: calls
     m_1217d1cb_e173_540c_be3d_1b8fa3699c23->>m_6b4d0e55_9ec2_5842_9ff3_fe81a05ec714: calls
-    m_123ef69e_6051_5e0f_9ee9_494551e7e4a1->>m_23753c47_43dc_5968_b295_595699d8fb38: calls
+    m_18e47e6e_97a7_57d8_a61d_916d57d82b9b->>m_2e82aca5_7fdb_588e_a360_b3a64ee080aa: calls
+    m_18e47e6e_97a7_57d8_a61d_916d57d82b9b->>m_d89d3ab9_ad0a_58d2_9645_87a1b3e2929a: calls
+    m_18e47e6e_97a7_57d8_a61d_916d57d82b9b->>m_e62c0138_29fb_5919_86bf_453bb4f023d4: calls
+    m_1b4c649e_57ea_5272_bbb7_b3aa184e7fc0->>m_64ba56fa_910b_5fd2_bfa0_ce613e729704: calls
+    m_1cc48fe7_57c1_552b_87be_3a25312cbdbd->>m_1b4c649e_57ea_5272_bbb7_b3aa184e7fc0: calls
+    m_1cc48fe7_57c1_552b_87be_3a25312cbdbd->>m_6a038b6e_5b0f_509f_ab0e_2c4d36366a30: calls
+    m_1cc48fe7_57c1_552b_87be_3a25312cbdbd->>m_9939443a_02fa_51f8_8ddc_d352cb095bde: calls
+    m_1cc48fe7_57c1_552b_87be_3a25312cbdbd->>m_b93d8daf_0360_5930_b283_c7cac27dd5fe: calls
     m_1d3aae22_c86e_5f25_b30d_fa181fa82726->>m_f0e586e1_4d76_5191_b194_c8fd1efd03ff: calls
-    m_2280ab06_6ecd_52db_a9c1_f33bbd0eb73c->>m_5ee1320e_2e49_5c1c_b8b7_2cbb7a1adc50: calls
+    m_1de0cc23_e279_5d38_88a0_b3899851944a->>m_60221519_fb12_5c2c_8ad3_84919acb4fcf: calls
     m_22d472bb_0e6e_553b_8160_09db28c2ce94->>m_f0e586e1_4d76_5191_b194_c8fd1efd03ff: calls
-    m_23753c47_43dc_5968_b295_595699d8fb38->>m_5ee1320e_2e49_5c1c_b8b7_2cbb7a1adc50: calls
-    m_23753c47_43dc_5968_b295_595699d8fb38->>m_c2c5846c_da6e_516d_ba8c_aec079725d4b: calls
-    m_256697eb_3260_5da6_8730_b028b9a3d578->>m_009b304a_4e55_5816_99ea_938130de7ee9: calls
+    m_284b67d6_d34b_5105_9685_d0b95fd6e276->>m_6bd8d0a9_f677_5035_9a9b_4a79920c778b: calls
+    m_2e342435_0b6b_52b8_a5a2_7b5d60d0aa52->>m_3328327f_db95_569d_b43b_e21f8dbab0db: calls
+    m_2e342435_0b6b_52b8_a5a2_7b5d60d0aa52->>m_5a0d8348_6520_5220_8a67_4e7ee729f212: calls
 ```
 
 ## Child Modules
 
-- [[code/modules/crates/gcode/src/graph/code_graph|crates/gcode/src/graph/code_graph]] - The code_graph module owns the code-index graph projection: it writes FalkorDB CodeFile, CodeSymbol, CodeModule, UnresolvedCallee, and ExternalSymbol nodes and edges derived from PostgreSQL index rows, despite the broader rule that Gobby-owned stores are externally managed . Its write side builds and executes Cypher for file nodes, imports, definitions, calls, stale graph deletion, orphan cleanup, and project clearing, with sync tokens and provenance metadata keeping projections scoped and current  . Connection helpers gate access to the core graph client, while tests cover strict read guards, degraded public reads, scoped deletion, provenance, import handling, and graph cleanup behavior.
+- [[code/modules/crates/gcode/src/graph/code_graph|crates/gcode/src/graph/code_graph]] - The code graph module owns `gcode`’s FalkorDB-backed code-index projection from both directions: it writes `Code*` nodes and edges derived from indexed PostgreSQL data, then reads those graph structures back into serializable payloads and analytics views. The write side is explicitly scoped as `gcode`-owned graph state, centered on `CodeGraph`, which wraps a project-scoped `GraphClient` and syncs imports, symbol definitions, and call relations with sync tokens and batched mutations  . The payload layer provides the common transport shape: `GraphPayload` stores nodes, links, and an optional center, rejects duplicate or empty node IDs through a lazy cache, and can build weighted analytics graphs from node and edge tuples   [crates/gcode/src/graph/code_graph/payload.rs:44-64].
 
-The read and payload layers turn stored graph data back into query results and API payloads. read.rs defines query builders and public graph reads for callers, usages, imports, project overviews, file graphs, symbol neighbors, and blast radius analysis, using optional graph access and row conversion helpers from payload.rs  . payload.rs provides GraphPayload as the shared node/link container, deduplicating nodes through an internal cache and optionally marking a center node for focused graph views  [crates/gcode/src/graph/code_graph/payload.rs:21-43]. It also converts graph pieces into analytics nodes and edges for dependency analysis [crates/gcode/src/graph/code_graph/payload.rs:45-66].
+Its read flows are guarded by connection helpers and lifecycle request types. `connection.rs` distinguishes required graph reads from optional public reads, mapping missing or failed graph access into `GraphReadError` or degrading to a caller-provided default when appropriate [crates/gcode/src/graph/code_graph/connection.rs:7-12] [crates/gcode/src/graph/code_graph/connection.rs:14-40] [crates/gcode/src/graph/code_graph/connection.rs:42-68]. `lifecycle.rs` models clear and rebuild operations, binding each action to its CLI command, daemon endpoint, success prefix, and timeout configuration, with requests built from shared context and environment-derived timeout settings [crates/gcode/src/graph/code_graph/lifecycle.rs:18-21] [crates/gcode/src/graph/code_graph/lifecycle.rs:23-44] .
 
-Lifecycle support wraps graph-wide clear and rebuild operations as daemon-backed requests. GraphLifecycleAction maps each operation to its CLI command, REST endpoint, and success prefix, while GraphLifecycleRequest carries project, daemon URL, and timeout configuration from Context  . GraphLifecycleTimeouts supplies defaults and environment overrides for clear and rebuild durations, letting lifecycle commands use short clear windows and longer rebuild windows without hard-coding call-site behavior .
-- [[code/modules/crates/gcode/src/graph/report|crates/gcode/src/graph/report]] - The graph report module turns a project’s code graph into a structured and rendered analysis report. Its public generation flow starts with `generate_report`, delegates through option-aware entry points, loads a filtered graph snapshot when needed, and can also operate directly from a supplied snapshot to compute summaries, hotspots, unresolved or external target frequencies, bridge relationship data, recommendations, timestamps, and markdown output [crates/gcode/src/graph/report/generation.rs:21-23] [crates/gcode/src/graph/report/generation.rs:25-59] [crates/gcode/src/graph/report/generation.rs:78-159]. The report schema is centralized in `types.rs`, where `ProjectGraphReport` aggregates project metadata, summary counts, hotspot groups, target lists, optional bridge summaries, bridge hypotheses, degradation details, suggested questions, and rendered markdown [crates/gcode/src/graph/report/types.rs:36-49].
+The read submodule is the query and projection layer: it assembles project overviews, file graphs, symbol neighborhoods, and blast-radius views from bounded FalkorDB queries, while `read.rs` re-exports those graph payload helpers plus caller/callee, usage, import, query, and deduplication utilities [crates/gcode/src/graph/code_graph/read.rs:1-21] [crates/gcode/src/graph/code_graph/read/graph_payloads.rs:19-98] . The test module ties these layers together by checking provenance-rich edge metadata, node/link serialization, optional-read degradation, lifecycle detail handling, scoped cleanup and deletion queries, and graph write behavior for imports, calls, stale files, project clears, and code-index labels [crates/gcode/src/graph/code_graph/tests.rs:7-21]  .
+- [[code/modules/crates/gcode/src/graph/report|crates/gcode/src/graph/report]] - The graph report module owns the end-to-end shape of project graph reporting: it defines the serialized report and snapshot data model, constructs or loads report inputs, derives summary analytics, and renders the final Markdown payload. `ProjectGraphReport` bundles project identity, timestamp, graph summary, hotspot groups, unresolved and external targets, optional bridge summaries and degradation details, suggested investigation questions, and rendered Markdown, while `ProjectGraphReportOptions` normalizes report limits around the default top-N setting . Report generation starts from either a configured FalkorDB-backed project or an already materialized `ReportGraphSnapshot`; the generation layer normalizes options, checks service availability, loads snapshots when needed, handles service/query failures, and fills in missing analysis before producing a complete report [crates/gcode/src/graph/report/generation.rs:25-59] [crates/gcode/src/graph/report/generation.rs:78-159].
 
-Database-backed reporting is split between query construction, loading, and row conversion. `queries.rs` builds the scoped Cypher used to classify nodes, count nodes and edges, rank hotspots, find frequent targets, and retrieve provenance for bridge edges [crates/gcode/src/graph/report/queries.rs:7-18] [crates/gcode/src/graph/report/queries.rs:28-38] [crates/gcode/src/graph/report/queries.rs:40-49]. `loading.rs` orchestrates those queries through `load_report_snapshot`, assembling aggregate statistics, high-degree and incoming-call hotspots, and target frequencies, while helper loaders and `collect_report_rows` keep per-query mapping and error handling consistent [crates/gcode/src/graph/report/loading.rs:18-78] . `rows.rs` then converts raw database rows into domain types, including named counts, graph hotspots, target frequencies, and bridge edge hypotheses with provenance and confidence metadata .
+Snapshot loading and query execution are split across `loading`, `queries`, and `rows`. `load_report_snapshot` coordinates graph queries for node and edge counts, hotspot rankings, target frequencies, incoming call hotspots, and bridge-edge hypotheses, then packages the results into `ReportGraphSnapshot`; malformed query rows are dropped through a shared fallible conversion path [crates/gcode/src/graph/report/loading.rs:18-78] [crates/gcode/src/graph/report/loading.rs:130-146]. Query builders centralize Cypher text, project filtering, typed parameters, and report-friendly node metadata expressions, while row converters turn Falkor rows into named counts, `GraphHotspot`, `TargetFrequency`, and `BridgeEdgeHypothesis` values with tolerant defaults and required-field checks  .
 
-Snapshot analysis and presentation are handled by the summary and render layers. `summary.rs` computes node and relationship counts, runs graph analytics for high-degree files, symbols, and modules, derives incoming-call hotspots and target frequencies, and summarizes bridge hypotheses using shared degree statistics and ranking helpers [crates/gcode/src/graph/report/summary.rs:14-17] [crates/gcode/src/graph/report/summary.rs:19-41] [crates/gcode/src/graph/report/summary.rs:51-91]. `render.rs` packages the resulting data into markdown sections for metadata, hotspot groups, incoming calls, and target frequencies, with helpers for escaping inline code and text safely [crates/gcode/src/graph/report/render.rs:8-18] [crates/gcode/src/graph/report/render.rs:20-99] . Tests exercise the collaboration end to end with synthetic snapshots containing files, modules, symbols, call edges, unresolved and external targets, and bridge hypotheses, validating JSON shape, hotspot algorithms, bridge behavior, degradation contracts, and CommonMark rendering details [crates/gcode/src/graph/report/tests.rs:15-65] .
+The analytics and presentation path is handled by `summary` and `render`. `summary` counts node and edge types, builds an analytics graph from report nodes and code edges, computes degree and centrality based hotspots across files, symbols, modules, and incoming calls, summarizes bridge hypotheses, and generates review questions from hotspots, unresolved or external targets, and inferred bridges  [crates/gcode/src/graph/report/summary.rs:93-100]. `render_markdown` then assembles the report header, counts, ranked hotspot and target sections, bridge summary, and degradation details with formatting helpers for inline code and safe Markdown text . Tests cover the integrated contract with synthetic snapshots, asserting serialized report shape, hotspot summaries, bridge aggregation, Markdown behavior, and degradation handling .
 
 ## Files
 
-- [[code/files/crates/gcode/src/graph/code_graph.rs|crates/gcode/src/graph/code_graph.rs]] - This file is the public interface module for a code graph system. It aggregates and re-exports functionality from submodules (connection, lifecycle, payload, read, write) to provide a unified API for creating, managing, and querying code dependency graphs. The exports include data structures for graph nodes and links, lifecycle management functions for the graph, query operations to find callers/callees/usages and analyze blast radius, and write operations to synchronize and manipulate the code graph. It serves as the main entry point for code analysis and graph manipulation functionality. [crates/gcode/src/graph/code_graph.rs:1-46]
-- [[code/files/crates/gcode/src/graph/mod.rs|crates/gcode/src/graph/mod.rs]] - This is a Rust module file that serves as the public interface for the graph subpackage. It re-exports three submodules: code_graph, report, and typed_query, organizing graph-related functionality for the gcode crate. [crates/gcode/src/graph/mod.rs:1-4]
-- [[code/files/crates/gcode/src/graph/report.rs|crates/gcode/src/graph/report.rs]] - This is the main module file for a graph report system in the gcode library. It organizes submodules handling report generation, loading, querying, rendering, and data structures. It re-exports core public APIs including report generation functions (generate_report, empty_report) and key types for representing graph analysis results (ProjectGraphReport, GraphReportSummary, GraphHotspot, BridgeReportSummary, etc.), serving as the entry point for consumers needing to create and analyze project graph reports. [crates/gcode/src/graph/report.rs:1-21]
-- [[code/files/crates/gcode/src/graph/typed_query.rs|crates/gcode/src/graph/typed_query.rs]] - This file implements a type-safe Cypher query builder for Neo4j database operations. The TypedQuery struct combines a Cypher query string with a HashMap of validated parameters, while the TypedValue enum represents different value types (strings, numbers, booleans, lists, and maps) that can be safely rendered into Cypher literals.
-
-The core rendering pipeline converts TypedValue instances into properly escaped Cypher syntax through render_cypher_value, which recursively handles nested structures. String values are escaped via escape_string_contents and cypher_string_literal to prevent injection attacks. The TypedQuery methods—new, with_params, and insert_param—build queries by validating parameter identifiers through validate_identifier before storing their rendered values.
-
-Helper functions provide utilities for parameter clamping (clamp_limit, clamp_offset), list generation (id_list_literal), and float handling (render_float), which rejects non-finite values. Error handling is standardized through TypedQueryError enum variants with Display implementations that describe InvalidIdentifier and NonFiniteFloat failures with the specific constraint violated. Comprehensive tests verify that nested parameters, special characters, control characters, and invalid identifiers are properly handled and reported.
+- [[code/files/crates/gcode/src/graph/code_graph.rs|crates/gcode/src/graph/code_graph.rs]] - Top-level module for the code graph subsystem. It wires together the connection, lifecycle, payload, read, and write submodules, then re-exports the main graph types and operations for lifecycle management, graph queries, and graph mutation/synchronization, with test-only helpers exposed under `cfg(test)`. [crates/gcode/src/graph/code_graph.rs:1-47]
+- [[code/files/crates/gcode/src/graph/mod.rs|crates/gcode/src/graph/mod.rs]] - Module declaration file for the `graph` crate area, exposing the `code_graph`, `report`, and `typed_query` submodules so the graph-related functionality is organized and available to the rest of the crate. [crates/gcode/src/graph/mod.rs:1-4]
+- [[code/files/crates/gcode/src/graph/report.rs|crates/gcode/src/graph/report.rs]] - Defines the graph report module for `gcode`, wiring together report generation, loading, queries, rendering, row and summary helpers, time handling, types, and tests. It re-exports the main report-building APIs and report-related types, and sets a couple of internal constants used by reporting logic. [crates/gcode/src/graph/report.rs:1-21]
+- [[code/files/crates/gcode/src/graph/typed_query.rs|crates/gcode/src/graph/typed_query.rs]] - Defines typed Cypher query construction and serialization for graph queries. `TypedQuery` stores a query string plus a parameter map, `TypedValue` models the allowed parameter value shapes, and helpers like `render_cypher_value`, `validate_identifier`, and `cypher_string_literal` turn typed values into safe Cypher literals while rejecting invalid parameter names or non-finite floats; `TypedQueryError` and `IdentifierKind` provide the validation errors used throughout.
 [crates/gcode/src/graph/typed_query.rs:7-10]
 [crates/gcode/src/graph/typed_query.rs:13-21]
 [crates/gcode/src/graph/typed_query.rs:24-27]

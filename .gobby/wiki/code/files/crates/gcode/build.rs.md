@@ -16,11 +16,11 @@ Module: [[code/modules/crates/gcode|crates/gcode]]
 
 ## Purpose
 
-This is a Cargo build script that conditionally enables PostgreSQL-related tests. The main function instructs Cargo to rerun the build whenever the GCODE_POSTGRES_TEST_DATABASE_URL environment variable changes, and it sets the gcode_postgres_tests conditional compilation flag when that variable is present, allowing test code guarded by that cfg attribute to be compiled into the binary. [crates/gcode/build.rs:1-8]
+Cargo build script that watches `GCODE_POSTGRES_TEST_DATABASE_URL`, registers the custom `gcode_postgres_tests` cfg with Rust, and enables that cfg when the environment variable is present so Postgres test-only code can be conditionally compiled. [crates/gcode/build.rs:1-8]
 
 ## API Symbols
 
 - `main` (function) component `main [function]` (`a0d760c2-abd5-5181-9527-a7b6ba1d6e27`) lines 1-8 [crates/gcode/build.rs:1-8]
   - Signature: `fn main() {`
-  - Purpose: Indexed function `main` in `crates/gcode/build.rs`. [crates/gcode/build.rs:1-8]
+  - Purpose: Emits Cargo build-script directives to rerun when 'GCODE_POSTGRES_TEST_DATABASE_URL' changes, declare the custom 'gcode_postgres_tests' cfg as valid, and enable that cfg when the environment variable is set. [crates/gcode/build.rs:1-8]
 

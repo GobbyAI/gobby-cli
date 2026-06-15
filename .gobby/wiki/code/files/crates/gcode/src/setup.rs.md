@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-Exports the standalone GCode setup API surface by wiring together internal setup modules and re-exporting the main setup type, request/status types, and helper functions for running and validating standalone setup. [crates/gcode/src/setup.rs:1-16]
+Entry-point module for Gcode standalone setup, wiring together setup-related submodules and re-exporting the main schema constant, setup type, request/status types, and PostgreSQL helpers used to validate and run standalone setup requests. [crates/gcode/src/setup.rs:1-16]
 
 ## API Symbols
 

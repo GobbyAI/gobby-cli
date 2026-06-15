@@ -19,7 +19,7 @@ Module: [[code/modules/crates/gwiki/src/graph|crates/gwiki/src/graph]]
 
 ## Purpose
 
-This file defines wiki graph export and reporting for `WikiGraphFacts`. `export_graph` builds a deduplicated `GraphExport` by collecting document, source, and citation nodes, then wiring them with directed `supports` and `cites` edges while also handling link targets, including unresolved and placeholder nodes for missing documents. `render_graph_report` turns that export into a markdown summary with graph counts, degraded-source and analytics sections, and a Mermaid visualization. The tests exercise scope-aware ID generation, unresolved targets, and placeholder creation for missing resolved targets.
+This file defines graph export and reporting for wiki facts. `WikiGraphFacts::export_graph` builds a deduplicated `GraphExport` by collecting document, source, citation, and link-target nodes, then wiring them with `supports` edges from sources to documents and `cites` edges from citations to sources, while tracking node IDs to avoid duplicates and to add placeholder nodes for unresolved or missing targets. `render_graph_report` turns that export into a markdown report with graph statistics, degraded-source and analytics sections, and a Mermaid visualization; the tests verify handling of unresolved targets and placeholder nodes.
 [crates/gwiki/src/graph/export.rs:11-112]
 [crates/gwiki/src/graph/export.rs:12-111]
 [crates/gwiki/src/graph/export.rs:114-190]

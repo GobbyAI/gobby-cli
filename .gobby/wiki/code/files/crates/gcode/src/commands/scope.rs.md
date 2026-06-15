@@ -27,7 +27,7 @@ Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Purpose
 
-This file provides utilities for managing file path scope and validation within indexed projects. It defines the ProjectMatch struct to pair project identifiers with filesystem roots, and implements functions for normalizing file paths relative to project roots, validating file existence within current or overlay project scopes, and querying the database to locate which indexed project contains a given file path. The core functions normalize file arguments to relative paths, check path existence under specified root directories (supporting overlay project configurations with fallback to parent roots), validate that indexed files exist in the current project context, and retrieve project metadata from the database. The implementation enables multi-project codebase support by allowing files to be traced back to their owning indexed projects and handling complex project structures where overlay projects may reference parent project files.
+Provides path-scope helpers for gcode commands: it normalizes incoming file arguments relative to the active project, checks whether a path exists in the current project or overlay scope, validates that an indexed file is also present on disk, and resolves a file to another indexed project when it belongs outside the current one. `ProjectMatch` carries the matched project ID and root path, and the unit tests cover absolute-path normalization, relative-path cleanup, and overlay-parent path lookup.
 [crates/gcode/src/commands/scope.rs:9-12]
 [crates/gcode/src/commands/scope.rs:14-27]
 [crates/gcode/src/commands/scope.rs:29-45]

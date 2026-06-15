@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcode/src/index/import_resolution|crates/gcode/src
 
 ## Purpose
 
-This is a Rust test module organization file for the import resolution subsystem in the gcode project. It declares and includes five test submodules (common, context_loading, helper_parsing, import_statement_parsing, and language_predicates) that contain unit tests for various aspects of import resolution functionality, such as parsing import statements, loading context, and evaluating language predicates. [crates/gcode/src/index/import_resolution/tests.rs:1-6]
+Test module entry point for import-resolution tests, organizing submodules for common helpers, context loading, helper parsing, import statement parsing, and language predicates. [crates/gcode/src/index/import_resolution/tests.rs:1-6]
 
 ## API Symbols
 

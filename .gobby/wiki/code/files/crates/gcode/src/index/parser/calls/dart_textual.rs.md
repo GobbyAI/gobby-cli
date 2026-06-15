@@ -33,9 +33,7 @@ Module: [[code/modules/crates/gcode/src/index/parser/calls|crates/gcode/src/inde
 
 ## Purpose
 
-This file implements a textual Dart call extractor for the indexer. It scans source line by line, maintains Dart lexical state across lines, finds dot-notation call candidates, filters out false positives from comments, strings, declarations, and ignored callee names, then materializes valid `CallRelation` entries with optional semantic resolution.
-
-The supporting helpers split the source into line spans, recognize and validate candidate call syntax, detect generic angle brackets and string starts, and track per-byte scan state so the main extractor can make context-aware decisions while iterating through the file.
+This file implements a text-based Dart call extractor that scans source line by line, tracks lexical state for comments, strings, class scope, and line boundaries, then finds dot-notation call candidates and filters out false positives from declarations, comments, strings, imports/exports, and other ignored names before materializing `CallRelation` records with optional semantic resolution. The helper routines support that pipeline by splitting source into line spans, recognizing textual call syntax, handling generic angle brackets, detecting Dart string starts, and distinguishing function or type declarations from real call sites.
 [crates/gcode/src/index/parser/calls/dart_textual.rs:8-55]
 [crates/gcode/src/index/parser/calls/dart_textual.rs:57-77]
 [crates/gcode/src/index/parser/calls/dart_textual.rs:79-168]

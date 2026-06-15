@@ -28,7 +28,7 @@ Module: [[code/modules/crates/gcode/src/search/fts|crates/gcode/src/search/fts]]
 
 ## Purpose
 
-This module provides full-text search (BM25) counting functions for a PostgreSQL-backed code search system. It includes core BM25 counting operations (count_text, count_content) that query code_symbols and code_content tables with filters for project ID, language, and file paths. Visibility-aware wrapper functions (count_text_visible, count_content_visible, count_symbols_fts_visible, count_content_bm25_visible) apply project context constraints for access control. Helper utilities manage SQL condition building (push_symbol_filters, push_content_filters), convert glob patterns to PostgreSQL regex expressions (glob_to_pg_regex, push_pg_regex_path_filter), and handle parameterized query construction. Lower-level functions (count_visible_symbols_by_conditions, count_visible_content_by_conditions, count_symbol_file_path_rows) support arbitrary SQL condition application. The functions coordinate to enable filtered, context-aware full-text search counting across indexed code symbols and content chunks using parameterized queries and glob-to-regex path matching.
+Provides PostgreSQL BM25 count helpers for search results over code symbols and content. The main entry points count symbol text matches and content chunk matches, with visible-context variants that apply project, language, and file-path filtering. Supporting helpers build SQL conditions, convert glob paths to anchored PostgreSQL regexes, and fall back to post-filtering when needed; a test verifies the glob-to-regex conversion.
 [crates/gcode/src/search/fts/counts.rs:10-66]
 [crates/gcode/src/search/fts/counts.rs:69-113]
 [crates/gcode/src/search/fts/counts.rs:115-146]

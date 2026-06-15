@@ -4,7 +4,7 @@ type: code_file
 provenance:
 - file: crates/gcode/src/index/mod.rs
   ranges:
-  - 1-16
+  - 1-26
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 
 ## Purpose
 
-This file is the root module definition for the gcode indexing system. It organizes and exports submodules for code indexing and analysis, including parsers, semantic analysis, security checks, import resolution, file chunking, and hashing. It defines a constant MAX_FILE_SIZE (10 MB) that limits the file sizes processed by the indexer. [crates/gcode/src/index/mod.rs:1-16]
+Exports the gcode indexing submodules and defines indexing size limits, including a 10 MB max file size and a 1 MiB AST parsing cap for data-language files so large JSON/YAML blobs are indexed as content only. [crates/gcode/src/index/mod.rs:1-26]
 
 ## API Symbols
 

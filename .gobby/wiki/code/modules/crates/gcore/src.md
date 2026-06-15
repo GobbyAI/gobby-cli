@@ -2,53 +2,6 @@
 title: crates/gcore/src
 type: code_module
 provenance:
-- file: crates/gcore/src/ai/daemon.rs
-  ranges:
-  - 19-24
-  - 27-31
-  - 34-41
-  - 44-96
-  - 98-136
-  - 138-144
-  - 149-187
-  - 189-223
-  - 225-233
-  - 235-237
-  - 239-245
-  - 247-263
-  - 265-267
-  - 269-271
-  - 273-293
-  - 295-304
-  - 306-331
-  - 333-350
-  - 352-356
-  - 358-360
-  - 362-364
-  - 366-402
-  - 404-423
-  - 437-488
-  - 491-510
-  - 513-530
-  - 533-555
-  - 558-579
-  - 582-605
-  - 608-638
-  - 641-656
-  - 659-694
-  - 697-750
-  - 753-770
-  - 772-781
-  - 783-786
-  - 788-795
-  - 797-799
-  - 801-803
-  - 805-814
-  - 816-833
-  - 835-848
-  - 850-856
-  - 858-881
-  - 883-902
 - file: crates/gcore/src/ai/mod.rs
   ranges:
   - 31-35
@@ -290,56 +243,22 @@ provenance:
   - 487-491
 - file: crates/gcore/src/config/tests.rs
   ranges:
-  - 9-11
-  - 18-32
-  - 34-47
-  - 49-57
-  - 61-63
-  - 65-98
-  - 100-104
-  - 107-110
-  - 112-132
-  - 134-146
-  - 149-152
-  - 154-167
-  - 169-180
-  - 183-186
-  - 188-198
-  - 200-210
-  - 213-233
-  - 236-257
-  - 260-284
-  - 288-307
-  - 310-323
-  - 326-342
-  - 345-354
-  - 357-392
-  - 395-458
-  - 462-480
-  - 484-505
-  - 508-546
-  - 549-588
-  - 591-610
-  - 613-659
-  - 662-688
-  - 691-737
-  - 740-747
-  - 750-763
-  - 766-779
-  - 783-799
-  - 802-813
-  - 817-834
-  - 837-850
-  - 853-862
-  - 865-872
-  - 875-888
-  - 891-905
-  - 907-913
-  - 915-919
-  - 921-953
-  - 955-969
-  - 971-984
-  - 986-991
+  - 5-7
+  - 14-28
+  - 30-43
+  - 45-53
+  - 57-59
+  - 61-94
+  - 96-100
+  - 103-106
+  - 108-128
+  - 130-142
+  - 145-148
+  - 150-163
+  - 165-176
+  - 179-182
+  - 184-194
+  - 196-206
 - file: crates/gcore/src/config/types.rs
   ranges:
   - 5-9
@@ -438,26 +357,68 @@ provenance:
   - 477-481
 - file: crates/gcore/src/graph_analytics.rs
   ranges:
-  - 7-11
-  - 14-18
-  - 21-24
-  - 27-31
-  - 34-38
-  - 41-44
-  - 47-51
-  - 54-58
-  - 61-68
-  - 70-87
-  - 90-94
-  - 97-103
-  - 105-374
-  - 376-382
-  - 384-390
-  - 392-473
-  - 475-480
-  - 482-484
-  - 490-518
-  - 521-582
+  - 9-13
+  - 21-26
+  - 29-32
+  - 35-39
+  - 42-46
+  - 49-52
+  - 55-59
+  - 62-66
+  - 69-76
+  - 78-95
+  - 105-116
+  - 119-124
+  - 127-133
+  - 135-421
+  - 423-429
+  - 431-437
+  - 439-520
+  - 522-527
+  - 529-531
+  - 537-566
+  - 569-630
+  - 633-659
+  - 662-670
+  - 673-690
+- file: crates/gcore/src/graph_analytics/leiden.rs
+  ranges:
+  - 32-40
+  - 42-73
+  - 76-79
+  - 81-88
+  - 94-184
+  - 195-277
+  - 282-336
+  - 339-359
+  - 366-407
+  - 410-425
+  - 433-440
+  - 443-477
+  - 479-482
+  - 484-486
+  - 488-494
+  - 496-504
+  - 511-531
+  - 536-570
+  - 577-595
+  - 598-610
+  - 613-628
+  - 631-634
+  - 637-639
+  - 642-644
+  - 647-654
+  - 657-666
+  - 669-676
+  - 679-687
+  - 690-704
+  - 707-726
+  - 729-737
+  - 740-752
+  - 755-764
+  - 767-784
+  - 787-806
+  - 809-845
 - file: crates/gcore/src/indexing.rs
   ranges:
   - 17-26
@@ -773,7 +734,7 @@ provenance:
   - 190-245
   - 248-274
   - 277-315
-provenance_truncated: 8
+provenance_truncated: 15
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -785,42 +746,48 @@ Parent: [[code/modules/crates/gcore|crates/gcore]]
 
 ## Overview
 
-gcore is the shared foundation crate for Gobby’s Rust tools: it centralizes bootstrap and daemon URL discovery, project lookup, layered configuration, CLI contracts, setup/provisioning abstractions, degradation vocabulary, and feature-gated storage/indexing integrations. Its root exposes these primitives while keeping heavier datastore and indexing integrations behind feature flags, with `gobby_home` providing the common state directory from `GOBBY_HOME` or `~/.gobby` [crates/gcore/src/lib.rs:27-34]. Bootstrap and URL resolution collaborate by reading `bootstrap.yaml` under that home directory, falling back to `127.0.0.1:60887` when missing or invalid, then composing a dialable URL whose environment overrides take precedence and whose wildcard hosts normalize to loopback [crates/gcore/src/bootstrap.rs:33-36] [crates/gcore/src/bootstrap.rs:38-45] [crates/gcore/src/daemon_url.rs:28-34] [crates/gcore/src/daemon_url.rs:47-59].
+`crates/gcore/src` is the shared primitives layer for Gobby Rust crates: it exposes bootstrap, daemon URL, project, configuration, AI context/types, setup, degradation, and optional datastore/search/indexing integrations while keeping heavier backends feature-gated for lightweight consumers [crates/gcore/src/lib.rs:27-34]. Its core responsibility is to define transport-neutral contracts and boundaries: AI context resolution stays config-only and leaves probe-backed routing to transport code , AI result/error types normalize transcription, vision, text, token usage, and parse failures across transports [crates/gcore/src/ai_types.rs:9-13] [crates/gcore/src/ai_types.rs:17-26] [crates/gcore/src/ai_types.rs:38-44], and CLI/codewiki contracts pin stable serialized schemas for tools and generated pages [crates/gcore/src/cli_contract.rs:4-12] [crates/gcore/src/codewiki_contract.rs:64-86].
 
-The AI path is split between a transport-free context layer and feature-gated transport modules. `ai_context` resolves per-capability bindings and tuning from `ConfigSource`, applies command overrides such as `no_ai` or forced routing, clamps concurrency to at least one, and stores the result with a shared limiter and optional project id  . The `ai` child module then collapses those bindings into effective direct, daemon, auto, or off routes, while `ai_types` provides normalized transport-independent outputs for transcription, vision, and text generation, plus token usage and parseable AI errors  [crates/gcore/src/ai_types.rs:38-44].
+The main flows start with resolving runtime authority and configuration. `layered_config` loads the first valid YAML layer from CLI, current project, `GOBBY_HOME`, or none, treating malformed config as an error instead of falling through [crates/gcore/src/layered_config.rs:17-25] [crates/gcore/src/layered_config.rs:32-63]. Project and daemon helpers then discover `.gobby` roots, project IDs, bootstrap endpoints, and dial URLs with environment overrides taking precedence over persisted bootstrap state [crates/gcore/src/project.rs:12-24] [crates/gcore/src/project.rs:28-51] [crates/gcore/src/bootstrap.rs:38-45] [crates/gcore/src/daemon_url.rs:28-34]. AI resolution builds per-capability bindings and tuning, applies command-scoped `no_ai` or forced-route overrides, and clamps concurrency before constructing the shared limiter [crates/gcore/src/ai_context.rs:25-30] [crates/gcore/src/ai_context.rs:32-69].
 
-The datastore and indexing files act as adapter boundaries rather than domain owners. PostgreSQL helpers connect in read-only or read-write modes, read raw config-store values, and run consumer-supplied schema validators without mutating externally managed schemas  . FalkorDB wraps `SyncGraph` in `GraphClient` and `ReadOnlySyncGraph`, leaving Cypher ownership to domain crates while handling connection lifecycle and result parsing  . Qdrant, search, graph analytics, indexing, secrets, setup, and provisioning round this out with typed service boundaries: collection/search/upsert APIs, RRF and BM25 primitives, graph analysis models, parser-agnostic file walking and hash events, secret expansion, reusable validation/setup reports, and standalone Docker-backed service configuration.
+The files collaborate by keeping shared contracts in `gcore` and pushing domain-specific behavior to consumers or feature modules. Backend adapters such as PostgreSQL, FalkorDB, and Qdrant provide connection, validation, query, collection, and error boundaries without owning higher-level domain schemas  [crates/gcore/src/falkor.rs:28-30] [crates/gcore/src/qdrant.rs:20-36], while setup/degradation types let callers report unavailable services and required objects without treating every partial outage as fatal [crates/gcore/src/setup.rs:11-18] [crates/gcore/src/degradation.rs:12-22]. Analytics and search remain transport-free utilities: graph analysis prepares a graph and combines communities, centrality, bridges, god nodes, unexpected links, and hotspots into one result [crates/gcore/src/graph_analytics.rs:9-13] , while search supplies generic row IDs, BM25 expression formatting, RRF merge output, and query sanitization for consuming crates [crates/gcore/src/search.rs:20] [crates/gcore/src/search.rs:22-36].
 
 ## Call Diagram
 
 ```mermaid
 sequenceDiagram
     participant m_00cbc729_855d_5862_882b_0eb46c04e2fb as normalize_sslmode_pair &#91;function&#93;
+    participant m_00fcb270_174d_5305_b915_713696c44cd6 as LayeredTestSource.resolve_value &#91;method&#93;
     participant m_03177fc3_a65a_553d_89df_cae5f70ccc6f as probe_daemon_capability_with &#91;function&#93;
     participant m_04f6fb3c_7427_5b7f_a517_ae402df5d8ba as resolve_hub_database_urls &#91;function&#93;
     participant m_05fbd161_d826_560f_aa35_03f822224722 as sslmode_value &#91;function&#93;
-    participant m_09f6bb39_7d40_5fc9_b75c_86642c544ea9 as explicit_provider_model_suppresses_profile_override &#91;function&#93;
     participant m_0e53fcb4_e8a7_591d_b886_954df10640cd as TcpDockerHealthChecker.wait_postgres &#91;method&#93;
+    participant m_0f89d0b7_8ab9_5d37_9ce1_1c26fdc370eb as test_context &#91;function&#93;
     participant m_0fa50ba7_0ca4_598a_966c_2b00eaee5f8a as ensure_hub &#91;function&#93;
     participant m_0fcc2a50_b69d_5539_a83c_b340710a09d2 as capability_status_route &#91;function&#93;
-    participant m_1046d96e_a58d_5957_928b_7fa50a164102 as parse_daemon_embeddings &#91;function&#93;
-    participant m_105fdbc7_4236_5718_a78a_9c5d67ff92d1 as empty_embedding_batch_parses_daemon_model_and_dim &#91;function&#93;
+    participant m_108599d3_d343_56f4_8e4e_43da727d4e7e as tls_connector_construction_verify_ca_keeps_peer_verification_without_hostname &#91;function&#93;
+    participant m_119bed32_45c6_5a8b_8310_640afcd38d33 as StandaloneConfig.get &#91;method&#93;
+    participant m_121a4f74_0310_5cc0_9249_4d77f94eca97 as endpoint_to_url &#91;function&#93;
+    participant m_122d1e68_9f53_55bf_bb58_95f7ae245556 as reachable_env_database_url_conflicts_with_recorded_hub &#91;function&#93;
+    participant m_1338db81_b929_5bef_b2af_e5882ca9b540 as divergent_hubs_surface_conflict &#91;function&#93;
+    participant m_13411b3b_9058_531e_ad27_b27d9e85e922 as text_request_body &#91;function&#93;
     participant m_1a20a85b_4eb8_5056_8b13_57f778074bd0 as ensure_hub_with_identity &#91;function&#93;
-    participant m_2c4f50e8_a084_5f3a_96da_34b5e3586b3c as spawn_server &#91;function&#93;
+    participant m_24d98d32_a558_5a78_958e_f80a981a7a0a as tls_connector &#91;function&#93;
+    participant m_26a0f0e6_7e8c_5b93_97e1_3a8787a6a30f as binding &#91;function&#93;
+    participant m_3a1d922a_7aa6_5d16_8fac_0dd37efa0d4f as write_services_stack &#91;function&#93;
+    participant m_43a2555f_0663_593c_a564_0a04e7a891c6 as insert_optional &#91;function&#93;
     participant m_46462147_3f5c_5912_99ef_8aaece7a0c4e as non_empty_trimmed &#91;function&#93;
     participant m_4b57ee25_c217_531b_912e_8d2fec0a4168 as unavailable &#91;function&#93;
-    participant m_4dd15874_95ea_5090_a1af_a5a7feee5644 as request_body_json &#91;function&#93;
-    participant m_51653529_1ebf_5764_8485_705de7077402 as test_context &#91;function&#93;
     participant m_60722538_2324_5c6e_ac3a_7e80a0c05e72 as normalize_sslmode_token &#91;function&#93;
-    participant m_639814da_47a4_528f_9763_5d60e7bbfae9 as write_daemon_files &#91;function&#93;
     participant m_ab081c43_b0e1_5f80_ae69_899d13885151 as wait_for_tcp &#91;function&#93;
     participant m_cc00b96c_d159_59ea_806d_dbe460fe29f5 as resolve_database_url_from_bootstrap_file &#91;function&#93;
-    participant m_d05d6301_bbec_50aa_94b7_4887e115e98d as parse_daemon_embedding &#91;function&#93;
     participant m_d406e49b_658d_58a4_a073_ac9929ff28e9 as resolve_database_url_from_gcore_config &#91;function&#93;
-    participant m_f475c60b_885a_5c8f_b098_6857aacba69b as temp_home &#91;function&#93;
+    participant m_e6102bbd_d2ea_59e7_8b82_2b6273b47e29 as dial_host &#91;function&#93;
+    participant m_e9056a8b_a2e7_5f31_9947_177252a6aa16 as tls_connector_builder &#91;function&#93;
+    participant m_ebe764cc_8b41_5a31_a4dc_62b4bfaf59ec as non_empty &#91;function&#93;
     participant m_f5b1ae31_d8ba_5980_98a9_a916753b17c8 as status_body_advertises &#91;function&#93;
-    participant m_fc924f08_7212_584c_994d_5ec9121f6793 as generate_via_daemon_with_max_tokens &#91;function&#93;
     m_00cbc729_855d_5862_882b_0eb46c04e2fb->>m_60722538_2324_5c6e_ac3a_7e80a0c05e72: calls
+    m_00fcb270_174d_5305_b915_713696c44cd6->>m_00fcb270_174d_5305_b915_713696c44cd6: calls
     m_03177fc3_a65a_553d_89df_cae5f70ccc6f->>m_0fcc2a50_b69d_5539_a83c_b340710a09d2: calls
     m_03177fc3_a65a_553d_89df_cae5f70ccc6f->>m_4b57ee25_c217_531b_912e_8d2fec0a4168: calls
     m_03177fc3_a65a_553d_89df_cae5f70ccc6f->>m_f5b1ae31_d8ba_5980_98a9_a916753b17c8: calls
@@ -828,155 +795,161 @@ sequenceDiagram
     m_04f6fb3c_7427_5b7f_a517_ae402df5d8ba->>m_cc00b96c_d159_59ea_806d_dbe460fe29f5: calls
     m_04f6fb3c_7427_5b7f_a517_ae402df5d8ba->>m_d406e49b_658d_58a4_a073_ac9929ff28e9: calls
     m_05fbd161_d826_560f_aa35_03f822224722->>m_60722538_2324_5c6e_ac3a_7e80a0c05e72: calls
-    m_09f6bb39_7d40_5fc9_b75c_86642c544ea9->>m_2c4f50e8_a084_5f3a_96da_34b5e3586b3c: calls
-    m_09f6bb39_7d40_5fc9_b75c_86642c544ea9->>m_4dd15874_95ea_5090_a1af_a5a7feee5644: calls
-    m_09f6bb39_7d40_5fc9_b75c_86642c544ea9->>m_51653529_1ebf_5764_8485_705de7077402: calls
-    m_09f6bb39_7d40_5fc9_b75c_86642c544ea9->>m_639814da_47a4_528f_9763_5d60e7bbfae9: calls
-    m_09f6bb39_7d40_5fc9_b75c_86642c544ea9->>m_f475c60b_885a_5c8f_b098_6857aacba69b: calls
-    m_09f6bb39_7d40_5fc9_b75c_86642c544ea9->>m_fc924f08_7212_584c_994d_5ec9121f6793: calls
     m_0e53fcb4_e8a7_591d_b886_954df10640cd->>m_ab081c43_b0e1_5f80_ae69_899d13885151: calls
+    m_0f89d0b7_8ab9_5d37_9ce1_1c26fdc370eb->>m_26a0f0e6_7e8c_5b93_97e1_3a8787a6a30f: calls
     m_0fa50ba7_0ca4_598a_966c_2b00eaee5f8a->>m_1a20a85b_4eb8_5056_8b13_57f778074bd0: calls
-    m_1046d96e_a58d_5957_928b_7fa50a164102->>m_d05d6301_bbec_50aa_94b7_4887e115e98d: calls
-    m_105fdbc7_4236_5718_a78a_9c5d67ff92d1->>m_2c4f50e8_a084_5f3a_96da_34b5e3586b3c: calls
-    m_105fdbc7_4236_5718_a78a_9c5d67ff92d1->>m_4dd15874_95ea_5090_a1af_a5a7feee5644: calls
-    m_105fdbc7_4236_5718_a78a_9c5d67ff92d1->>m_51653529_1ebf_5764_8485_705de7077402: calls
+    m_108599d3_d343_56f4_8e4e_43da727d4e7e->>m_24d98d32_a558_5a78_958e_f80a981a7a0a: calls
+    m_108599d3_d343_56f4_8e4e_43da727d4e7e->>m_e9056a8b_a2e7_5f31_9947_177252a6aa16: calls
+    m_119bed32_45c6_5a8b_8310_640afcd38d33->>m_119bed32_45c6_5a8b_8310_640afcd38d33: calls
+    m_121a4f74_0310_5cc0_9249_4d77f94eca97->>m_e6102bbd_d2ea_59e7_8b82_2b6273b47e29: calls
+    m_122d1e68_9f53_55bf_bb58_95f7ae245556->>m_3a1d922a_7aa6_5d16_8fac_0dd37efa0d4f: calls
+    m_1338db81_b929_5bef_b2af_e5882ca9b540->>m_3a1d922a_7aa6_5d16_8fac_0dd37efa0d4f: calls
+    m_13411b3b_9058_531e_ad27_b27d9e85e922->>m_43a2555f_0663_593c_a564_0a04e7a891c6: calls
+    m_13411b3b_9058_531e_ad27_b27d9e85e922->>m_ebe764cc_8b41_5a31_a4dc_62b4bfaf59ec: calls
 ```
 
 ## Child Modules
 
-- [[code/modules/crates/gcore/src/ai|crates/gcore/src/ai]] - The `crates/gcore/src/ai` module is the AI transport and routing layer for `gcore`. Its root module exposes the daemon, direct embeddings, probing, text, transcription, and vision submodules, while `effective_route` resolves each capability from `AiContext`: explicit `Off`, `Direct`, and `Daemon` bindings are honored, and `Auto` probes daemon availability before falling back to a configured direct route or `Off`  . It also centralizes shared transport concerns such as capability-specific timeouts, retry limits, and backoff constants for generation, vision, embeddings, and speech-to-text paths .
+- [[code/modules/crates/gcore/src/ai|crates/gcore/src/ai]] - The `crates/gcore/src/ai` module centralizes gcore’s AI capabilities across direct OpenAI-compatible calls and daemon-backed routes. Its top-level module declares the daemon, embeddings, probe, text, transcription, and vision submodules, defines capability-specific timeout and retry constants, and resolves each `AiCapability` to `Off`, `Direct`, `Daemon`, or `Auto` routing from the current `AiContext`   . In `Auto`, daemon availability is probed first and the module falls back to a configured direct route or `Off`, making routing depend on both local config and live daemon status [crates/gcore/src/ai/mod.rs:50-62]. The shared `AiTransport` layer owns the blocking HTTP client and context-bound helpers for authenticated JSON or multipart requests, timeout selection, retry/backoff, and typed parsing for transcription, vision, and text responses .
 
-The daemon path adapts local Gobby daemon APIs into typed AI results. `daemon.rs` defines daemon endpoint paths for voice transcription, vision extraction, text generation, and embeddings, reads the local CLI token, builds authenticated multipart or JSON requests, applies the context limiter, retries with backoff, and parses daemon replies into transcription, vision, text, or embedding outputs   . Direct provider flows use the shared `AiTransport`: text generation builds chat-completions payloads with optional system context, model, and max-token limits, then normalizes returned content and usage; vision sends a base64 data URI plus a structured extraction prompt and parses JSON, delimited, or plain text responses; transcription switches between transcribe and translate tasks using a task enum that owns the operation name, capability, and endpoint path   .
+Each capability file handles its request shape and response normalization while relying on the shared transport. `text.rs` builds chat-completions requests with optional system prompt, model, and max-token settings, then returns generated text plus model and usage details  . `vision.rs` sends image bytes as an inline base64 data URI in a chat-completions payload, then parses either compact JSON or labeled text into `VisionResult`, preserving raw descriptions when structured parsing fails  [crates/gcore/src/ai/vision.rs:65-90]. `transcription.rs` maps transcribe and translate tasks to their capabilities and `/v1/audio/...` endpoints, builds authenticated multipart uploads, uses the limiter and retry flow, and parses JSON into `TranscriptionResult`  . `embeddings.rs` provides the direct, blocking embeddings path through `embed_one` and `embed_batch`, posting to `{api_base}/embeddings` and validating returned `f32` vectors [crates/gcore/src/ai/embeddings.rs:19-38] .
 
-Capability probing ties the router and daemon transport together. `probe.rs` maps each `AiCapability` to a daemon status endpoint, probes those routes with a short timeout, and records either availability or structured degradation reasons such as unauthorized, unreachable, not advertised, or invalid status body   . The direct embeddings client fills the non-daemon embedding path by posting OpenAI-compatible `/embeddings` requests for single or batched inputs, preserving response order and rejecting malformed, missing, duplicate, or failed responses before returning `Vec<f32>` vectors [crates/gcore/src/ai/embeddings.rs:19-38] .
-- [[code/modules/crates/gcore/src/config|crates/gcore/src/config]] - The config module is the shared public boundary for lightweight configuration contracts used across Gobby Rust crates. Its `mod.rs` keeps the surface small by wiring together `resolve` and `types`, exporting the code graph name constant, resolver APIs, config source abstractions, and core config/capability types from one place [crates/gcore/src/config/mod.rs:1-31]. The type layer defines the data carried through the rest of the system: FalkorDB, Qdrant, embedding, and indexing configs, plus AI routing and capability enums with parsing and stable key accessors so registry, lookup, and runtime behavior use the same vocabulary .
+The daemon and probe submodules provide the local-service collaboration layer. `probe.rs` defines status routes for embed, audio, vision, and text capabilities, aggregates results into `CapabilityProbeReport`, and classifies unavailable daemon capabilities with degradation reasons such as unauthorized, unreachable, missing routes, or invalid status bodies   . The `daemon` module re-exports daemon-backed operations and types for image description, embeddings, generation, and transcription [crates/gcore/src/ai/daemon.rs:1-15]; its child operations select the active context binding, build daemon requests, read the local CLI token, acquire the shared limiter, retry with backoff, and parse JSON into the same typed result structures used by direct routes [crates/gcore/src/ai/daemon/operations.rs:20-72] [crates/gcore/src/ai/daemon/operations.rs:74-112] .
+- [[code/modules/crates/gcore/src/config|crates/gcore/src/config]] - The `config` module is the shared configuration-resolution boundary for Gobby Rust crates, keeping the public API small while splitting implementation between `resolve` and `types` (`mod resolve; mod types;`) and re-exporting the contracts and resolver functions that consumers use (`crates/gcore/src/config/mod.rs:1-22`). It also defines the code graph projection’s FalkorDB graph name as `CODE_GRAPH_NAME` and exposes test-only support behind `cfg(test)`, including a shared environment lock and the local tests module (`crates/gcore/src/config/mod.rs:9-31`).
 
-Resolution flows are centralized in `resolve.rs`. It starts with decoding persisted config-store values, then resolves `${VAR}` and `${VAR:-default}` environment patterns, and builds on `ConfigSource`, `LayeredConfigSource`, and `EnvOnlySource` to support different precedence strategies . Domain-specific resolvers compose those primitives into FalkorDB, Qdrant, embedding, indexing, AI tuning, routing, boolean, port, and non-empty-value outputs, with defaults such as the FalkorDB port, embedding model, embedding timeout, and indexing gitignore behavior defined alongside the resolver code .
+The resolution flow centers on `resolve.rs`: stored values are decoded from config-store JSON or raw strings by `decode_config_value`, then values can be expanded through `${VAR}` and `${VAR:-default}` environment patterns by `resolve_env_pattern` (`crates/gcore/src/config/resolve.rs:1-55`). That layer also owns defaults and keys for common services and behavior, including FalkorDB’s default port, embedding defaults, AI concurrency defaults, and indexing gitignore configuration (`crates/gcore/src/config/resolve.rs:3-8`). Its exported source abstractions and resolver functions let callers resolve FalkorDB, Qdrant, embeddings, indexing, AI routing, capability bindings, and tuning through a consistent `ConfigSource` boundary (`crates/gcore/src/config/mod.rs:12-18`).
 
-The tests collaborate with both layers by exercising the public config boundary through synthetic sources and guarded process-environment mutation. `tests.rs` installs a scoped warning logger, serializes environment changes through `EnvGuard`, and covers precedence, secret resolution, provider and binding behavior, indexing defaults, fallback handling, and guardrails around embedding-key literals . Together, the module’s files separate stable configuration shapes from resolution mechanics while keeping test-only synchronization and regression coverage local to the module [crates/gcore/src/config/mod.rs:24-31] .
-- [[code/modules/crates/gcore/src/provisioning|crates/gcore/src/provisioning]] - The provisioning module owns standalone local-service setup for gcore: it bundles Docker service templates and default connection settings, manages `gcore.yaml`, and exposes paths for config, services, and compose assets. Its root module defines the service filenames, default PostgreSQL, FalkorDB, Qdrant, and embedding constants, embeds the compose and PostgreSQL asset templates, and centers configuration around `StandaloneConfig`, a dotted-key string map used for reading, writing, resolving, and mutating persisted bootstrap values. This matches the module comment that runtime callers copy bundled assets into `~/.gobby/services`, start daemon-equivalent profiles, and persist daemon-style bootstrap keys in `gcore.yaml`   .
+The type layer provides the structured outputs that those resolvers populate: connection structs for FalkorDB and Qdrant, embedding endpoint settings, indexing behavior with a default of respecting `.gitignore`, plus AI routing and capability enums with parsing and registry-key helpers (`crates/gcore/src/config/types.rs:1-100`). The test support collaborates with this by isolating environment mutation through `EnvGuard`, capturing warning logs via `TestLogger`, and providing configurable source doubles for raw values, failures, environment expansion, and layered fallback scenarios (`crates/gcore/src/config/tests.rs:5-100`).
+[crates/gcore/src/config/mod.rs:1-31]
+[crates/gcore/src/config/resolve.rs:11-21]
+[crates/gcore/src/config/tests.rs:5-7]
+[crates/gcore/src/config/types.rs:5-9]
+[crates/gcore/src/config/resolve.rs:24-75]
+- [[code/modules/crates/gcore/src/graph_analytics|crates/gcore/src/graph_analytics]] - The `graph_analytics` module is currently centered on a single Leiden implementation that provides a deterministic, std-only weighted community detection kernel over dense integer node IDs. Its graph model normalizes an edge list into sorted adjacency lists, folds duplicate edges, tracks weighted vertex strength, and preserves the invariant that total strength equals twice the graph’s total edge weight; self-loops count once toward total weight and twice toward node strength   [crates/gcore/src/graph_analytics/leiden.rs:42-73].
 
-The main flows split between bootstrap generation, Docker provisioning, and hub selection. Bootstrap code builds a standalone config from database, service, compose-file, and optional embedding inputs, with preset embedding providers for LM Studio and Ollama and YAML flattening helpers for converting nested config into dotted-path values [crates/gcore/src/provisioning/bootstrap.rs:8-15] [crates/gcore/src/provisioning/bootstrap.rs:17-39] [crates/gcore/src/provisioning/bootstrap.rs:41-71]. Docker provisioning starts from `DockerServiceOptions`, whose defaults derive local ports, hosts, passwords, and URLs, then prepares service assets, constructs a compose command through the `CommandRunner` abstraction, starts containers, and reports assets and health-check outcomes  . Hub provisioning coordinates those pieces by collecting candidate database URLs, probing reachable PostgreSQL identity when possible, and invoking Docker provisioning only when no verified hub can be reused  .
+The main flow follows the three Leiden phases: local moving, refinement to keep communities internally connected, and aggregation, repeating until the graph no longer coarsens . `LeidenGraph` supplies the stable weighted graph representation, `Partition` represents node-to-community assignments, and functions such as `local_moving`, `refine_partition`, `aggregate_graph`, and `renumber_dense` collaborate inside `detect_communities` to build multilevel communities and project the final result back to original nodes [crates/gcore/src/graph_analytics/leiden.rs:32-40] .
 
-The tests document how the files collaborate: `EnvGuard` serializes and clears the relevant Gobby environment variables, `write_services_stack` fabricates a services directory and compose file, and the config tests verify flat and nested YAML keys both resolve to dotted `StandaloneConfig` entries  . Later tests, per the supplied summaries, cover serialization edge cases, embedding API key persistence, compose-template lookup, Docker asset preparation with mocked command and health runners, and hub behavior for reuse, provisioning, conflict reporting, and insufficient identity privilege.
-- [[code/modules/crates/gcore/src/qdrant|crates/gcore/src/qdrant]] - The `crates/gcore/src/qdrant` module covers Qdrant collection naming and the integration behavior expected around search, upsert, lifecycle, schema, and degradation paths. Its naming surface lets callers choose project-scoped, topic-scoped, or verbatim custom collection names through `CollectionScope`, with `collection_name` applying namespace prefixes for scoped collections and preserving custom names after validation  [crates/gcore/src/qdrant/naming.rs:25-43]. Validation rejects empty names, reserved `.`/`..`, surrounding whitespace, ASCII control or whitespace characters, and path-like separators such as `/`, `\`, and `:`; those failures are represented by typed `CollectionNameError` variants [crates/gcore/src/qdrant/naming.rs:13-22] [crates/gcore/src/qdrant/naming.rs:45-70].
+The implementation is intentionally reproducible: it avoids RNG and uses ascending, strict-improvement greedy choices with a small gain threshold, plus a maximum aggregation depth as a recursion backstop . Supporting helpers cover dense relabeling, strength and connectivity invariants, modularity calculation, small graph fixtures, and a public `detect` wrapper, while the test suite exercises determinism, edge folding, self-loop handling, aggregation invariants, back-projection, and planted or common graph structures.
+- [[code/modules/crates/gcore/src/provisioning|crates/gcore/src/provisioning]] - The provisioning module owns standalone GCore bootstrap and local service setup. It defines daemon-compatible defaults for PostgreSQL, FalkorDB, Qdrant, and embedding providers, embeds the Docker compose and PostgreSQL asset templates, and stores persisted bootstrap state in `gcore.yaml` via `StandaloneConfig` and path helpers for the services directory and compose file . Bootstrap support packages LM Studio or Ollama embedding settings and writes a standalone config containing database, graph, vector, optional embedding, and compose-file references, while YAML flattening converts nested keys into dotted config entries with path-aware validation [crates/gcore/src/provisioning/bootstrap.rs:8-15] [crates/gcore/src/provisioning/bootstrap.rs:17-39] [crates/gcore/src/provisioning/bootstrap.rs:41-71].
 
-The test coverage describes the broader integration contract around those helpers and the Qdrant HTTP layer. Request payloads remain opaque JSON maps for upsert and filters for search, preserving caller-provided fields instead of imposing a fixed schema [crates/gcore/src/qdrant/tests.rs:12-30]. Configuration is mediated through `with_qdrant`, which returns fallback values with `ServiceState::NotConfigured` when no usable Qdrant URL is present, marks the service available when configured, and propagates closure failures unchanged [crates/gcore/src/qdrant/tests.rs:33-59]. The CLI search path uses a mocked Qdrant response to verify dispatch against the expected HTTP contract, including result IDs, scores, payloads, and API-key configuration [crates/gcore/src/qdrant/tests.rs:62-99].
+The Docker path centers on `DockerServiceOptions`, which carries local ports, hosts, and credentials and derives service URLs such as the default Postgres DSN and Qdrant HTTP endpoint [crates/gcore/src/provisioning/docker.rs:9-18] [crates/gcore/src/provisioning/docker.rs:20-41]. Provisioning then reports generated service assets and startup results, wraps external compose execution behind `CommandRunner`, and uses health-check abstractions to wait for PostgreSQL, Qdrant, and FalkorDB before returning a usable local stack [crates/gcore/src/provisioning/docker.rs:38-40].
 
-Together, the files split responsibilities between a small, deterministic naming module and an integration test module that anchors the behavior of the surrounding Qdrant client API. The naming functions protect collection boundaries before callers reach Qdrant, while tests exercise the flows that consume those names and request types: search composition, batched upserts, completed-operation checks, typed HTTP error mapping, schema validation, collection lifecycle cleanup, and point counts through mocked HTTP endpoints .
+Hub provisioning ties those pieces together. `EnsureHubOptions` combines the Gobby home, Docker service options, explicit candidate database URLs, and a flag controlling whether services may be provisioned . `ensure_hub` resolves candidate PostgreSQL URLs from environment, config, and bootstrap sources, checks reachability and hub identity, and either reuses a compatible database or provisions the Docker stack . The tests cover config parsing and writing, service asset generation, hub URL resolution, and Docker orchestration using environment guards and recording test doubles instead of real services .
+- [[code/modules/crates/gcore/src/qdrant|crates/gcore/src/qdrant]] - The Qdrant module owns the client-facing conventions around collection identity and the behavior contracts for talking to Qdrant. Its naming layer exposes `CollectionScope` for project, topic, and custom collections, then uses `collection_name` to turn scoped inputs into `{namespace}_project_{id}` or `{namespace}_topic_{name}` while leaving custom names verbatim after validation (crates/gcore/src/qdrant/naming.rs:1-10, crates/gcore/src/qdrant/naming.rs:25-39). Validation is intentionally strict: empty strings, surrounding whitespace, reserved dot segments, ASCII control or whitespace characters, and path-like delimiters are rejected with typed `CollectionNameError` variants (crates/gcore/src/qdrant/naming.rs:12-22, crates/gcore/src/qdrant/naming.rs:42-67).
+
+The test module documents the wider Qdrant client flow: payloads remain opaque JSON across upsert and search requests, search accepts filters, and the client can be driven from the CLI path against mocked HTTP responses (crates/gcore/src/qdrant/tests.rs:10-28, crates/gcore/src/qdrant/tests.rs:55-100). It also defines the degradation boundary for optional Qdrant configuration: missing or absent URLs return default values with `ServiceState::NotConfigured`, configured successful calls report `Available`, and closure errors propagate normally (crates/gcore/src/qdrant/tests.rs:30-53).
+
+Together, the files split responsibilities between small deterministic naming helpers and broader integration-style contract tests. `naming.rs` constrains the collection names that other Qdrant operations can safely consume, while `tests.rs` verifies that search, upsert, collection lifecycle, schema validation, point counts, HTTP error typing, batching, and mocked server helpers behave as expected across the client layer (crates/gcore/src/qdrant/naming.rs:25-67, crates/gcore/src/qdrant/tests.rs:12-30, crates/gcore/src/qdrant/tests.rs:33-59, crates/gcore/src/qdrant/tests.rs:62-99, crates/gcore/src/qdrant/tests.rs:102-128, crates/gcore/src/qdrant/tests.rs:131-161).
+[crates/gcore/src/qdrant/naming.rs:3-10]
+[crates/gcore/src/qdrant/tests.rs:12-30]
+[crates/gcore/src/qdrant/naming.rs:13-22]
+[crates/gcore/src/qdrant/naming.rs:25-43]
+[crates/gcore/src/qdrant/naming.rs:45-70]
 
 ## Files
 
-- [[code/files/crates/gcore/src/ai_context.rs|crates/gcore/src/ai_context.rs]] - This file defines the transport-free AI context layer for gcore: it resolves per-capability AI bindings and tuning from layered config sources, applies command-scoped overrides like `no_ai` or forced routing, and packages the result into an `AiContext` with a shared concurrency limiter and optional `project_id` scope.
-
-The core pieces work together as follows: `AiBindings` loads and manages bindings for each `AiCapability`, `AiContextOptions` controls override behavior, and `AiLimiter`/`AiPermit` enforce runtime concurrency. The file also includes config-source adapters for primary, standalone, and Postgres-backed resolution, plus test-only helpers and guards for exercising config lookup and filesystem-dependent behavior.
+- [[code/files/crates/gcore/src/ai_context.rs|crates/gcore/src/ai_context.rs]] - `ai_context.rs` defines the shared, transport-free AI configuration layer for gcore. It resolves an `AiContext` from layered config sources, collecting per-capability bindings, tuning, an optional `project_id`, and an `AiLimiter` that clamps concurrency to at least 1; `resolve_with_options` can also force all AI routing off or to a specific route. `AiBindings` provides per-capability lookup, mutation, and bulk routing overrides across the core AI capabilities, while `route` reads the effective routing for a capability. The file also contains config-source adapters for primary, standalone, Postgres, and test-backed resolution, plus an RAII `CurrentDirGuard` and file-writing helper used by tests and config loading.
 [crates/gcore/src/ai_context.rs:25-30]
 [crates/gcore/src/ai_context.rs:32-69]
 [crates/gcore/src/ai_context.rs:34-36]
 [crates/gcore/src/ai_context.rs:39-64]
 [crates/gcore/src/ai_context.rs:66-68]
-- [[code/files/crates/gcore/src/ai_types.rs|crates/gcore/src/ai_types.rs]] - Defines shared AI result and error types for gcore. It models normalized transcription output, vision analysis output, and text-generation output, plus token-usage accounting, and provides `from_wire_json` helpers to deserialize transport-specific JSON into these domain structs. The file also defines `AiError` constructors and accessors for capability, configuration, transport, rate-limit, HTTP-status, and parse failures, along with conversion helpers that normalize transcription segment timestamps from floating-point seconds into validated integer milliseconds.
+- [[code/files/crates/gcore/src/ai_types.rs|crates/gcore/src/ai_types.rs]] - Defines the shared AI data model for gcore: normalized transcription, vision, and text-generation result structs plus token-usage accounting and a transport-neutral `AiError` type. It also includes wire-format counterparts and conversion helpers that deserialize JSON into domain types, convert transcription timestamps from seconds to integer milliseconds with validation, expose status/retry metadata on errors, and provide tests covering token counting and transcription conversion edge cases.
 [crates/gcore/src/ai_types.rs:9-13]
 [crates/gcore/src/ai_types.rs:17-26]
 [crates/gcore/src/ai_types.rs:28-34]
 [crates/gcore/src/ai_types.rs:29-33]
 [crates/gcore/src/ai_types.rs:38-44]
-- [[code/files/crates/gcore/src/bootstrap.rs|crates/gcore/src/bootstrap.rs]] - This file resolves Gobby’s bootstrap configuration and turns it into a daemon endpoint. It defines `DaemonEndpoint` as the raw advertised host and port, with a `Default` that falls back to `127.0.0.1:60887`. `bootstrap_path()` builds `bootstrap.yaml` under `GOBBY_HOME` or `~/.gobby`, and `read_daemon_endpoint()` uses that path to load the endpoint, returning defaults whenever the file is missing, unreadable, malformed, or incomplete. `read_daemon_endpoint_at()` does the YAML parsing and field extraction, while the tests verify the fallback behavior and that custom host/port values and `GOBBY_HOME` resolution are handled correctly.
+- [[code/files/crates/gcore/src/bootstrap.rs|crates/gcore/src/bootstrap.rs]] - This file resolves the Gobby daemon bootstrap configuration. It defines `DaemonEndpoint` as the raw host/port advertised by `bootstrap.yaml`, with a default of `127.0.0.1:60887` when config is missing or unusable. `bootstrap_path()` locates `~/.gobby/bootstrap.yaml` or `GOBBY_HOME/bootstrap.yaml`, `read_daemon_endpoint()` uses that path to load the config, and `read_daemon_endpoint_at()` parses YAML into a `DaemonEndpoint` while falling back to defaults on missing files, malformed input, missing fields, or invalid ports. The tests verify all of those fallback and parsing cases, including custom host and port handling and path resolution.
 [crates/gcore/src/bootstrap.rs:33-36]
 [crates/gcore/src/bootstrap.rs:38-45]
 [crates/gcore/src/bootstrap.rs:39-44]
 [crates/gcore/src/bootstrap.rs:52-54]
 [crates/gcore/src/bootstrap.rs:60-65]
-- [[code/files/crates/gcore/src/cli_contract.rs|crates/gcore/src/cli_contract.rs]] - This file defines the serializable data model for a CLI contract: a top-level `CliContract` that describes a tool, its version, summary, global flags, scope, commands, and error codes, plus nested contract types for commands, flags, positionals, scope, and degradation metadata. `CommandContract::new` provides a validated base builder with empty defaults, and the `FlagContract` and `PositionalContract` helper constructors encode common CLI argument shapes while serde skip rules omit empty optional fields; the included test verifies that command contracts serialize to the expected builder-shaped JSON and leave out empty optional sections.
+- [[code/files/crates/gcore/src/cli_contract.rs|crates/gcore/src/cli_contract.rs]] - Defines the serializable contract schema for a CLI: `CliContract` describes the overall tool, version, global flags, optional scope, commands, and error codes, while `CommandContract` models each command’s identity, runtime behavior, arguments, outputs, dependencies, and optional multimodal/degradation metadata. The helper impls on `CommandContract`, `FlagContract`, and `PositionalContract` enforce basic invariants and provide builder-style constructors for common flag and positional forms, with `ScopeContract` and `DegradationContract` supplying shared substructures. A test verifies that `CommandContract` serializes into the expected builder-shaped JSON and omits empty optional fields.
 [crates/gcore/src/cli_contract.rs:4-12]
 [crates/gcore/src/cli_contract.rs:15-30]
 [crates/gcore/src/cli_contract.rs:32-52]
 [crates/gcore/src/cli_contract.rs:33-51]
 [crates/gcore/src/cli_contract.rs:55-58]
-- [[code/files/crates/gcore/src/codewiki_contract.rs|crates/gcore/src/codewiki_contract.rs]] - Defines the shared frontmatter contract for `codewiki`-generated wiki vault pages: the canonical keys and marker values that gcode writes and gwiki reads, plus a golden page fixture that freezes the expected degraded-page output. The test ties the fixture to the contract by asserting the golden page includes every required key and marker value, preventing producer/consumer drift. [crates/gcore/src/codewiki_contract.rs:64-86]
-- [[code/files/crates/gcore/src/daemon_url.rs|crates/gcore/src/daemon_url.rs]] - Resolves the dialable daemon URL for all Gobby binaries. `daemon_url` applies the shared precedence rules, using `GOBBY_DAEMON_URL` first, then `GOBBY_PORT`, and finally the advertised endpoint from `bootstrap.yaml`; `daemon_url_at` does the same for an explicit bootstrap path without env overrides. The helper functions implement the contract: `env_override` trims and validates env values, normalizes a URL override by removing trailing slashes, and turns a valid port into a loopback `http://127.0.0.1:<port>` URL; `endpoint_to_url` and `dial_host` convert a raw daemon endpoint into a connectable URL, including bracketed IPv6 handling and normalization of wildcard listen addresses like `0.0.0.0` and `::` to loopback. The remaining functions are tests that verify the default fallback, host normalization, URL composition, and that env overrides win or are ignored as intended.
+- [[code/files/crates/gcore/src/codewiki_contract.rs|crates/gcore/src/codewiki_contract.rs]] - This file defines the shared frontmatter contract for codewiki-generated gwiki pages, keeping the key names, marker values, and a golden page fixture in one place so gcode and gwiki can verify they stay in sync. The constants enumerate the exact YAML fields and marker strings codewiki emits and reads back, while `GOLDEN_PAGE` captures a canonical degraded file page that tests use to pin the emitter/parser behavior and prevent drift between the two crates. [crates/gcore/src/codewiki_contract.rs:64-86]
+- [[code/files/crates/gcore/src/daemon_url.rs|crates/gcore/src/daemon_url.rs]] - Resolves the daemon’s dial URL for Gobby binaries, applying a shared precedence order: `GOBBY_DAEMON_URL` first, then `GOBBY_PORT`, then the persisted `bootstrap.yaml` endpoint. `daemon_url` and `daemon_url_at` provide the public entry points, `env_override` normalizes and validates environment overrides, and `endpoint_to_url` plus `dial_host` turn a bootstrap `DaemonEndpoint` into a usable `http://host:port` address by mapping unroutable wildcard hosts to loopback and formatting IPv6 correctly. The test helpers and cases verify the fallback order and host normalization rules.
 [crates/gcore/src/daemon_url.rs:28-34]
 [crates/gcore/src/daemon_url.rs:40-42]
 [crates/gcore/src/daemon_url.rs:47-59]
 [crates/gcore/src/daemon_url.rs:61-64]
 [crates/gcore/src/daemon_url.rs:72-78]
-- [[code/files/crates/gcore/src/degradation.rs|crates/gcore/src/degradation.rs]] - This file defines the shared degradation and error vocabulary for `gcore`: service availability states, setup diagnostics, and fatal core errors that let callers distinguish partial availability from real failures. `ServiceState`, `SetupIssue`, and `Guidance` model service health and actionable remediation, while `CoreError` captures invalid config, hub conflicts, missing services, and related fatal conditions.
-
-It also includes redaction helpers for database URLs so sensitive credentials are stripped before serialization or display, including support for both URL-style and keyword-style DSNs. `ModalityDegradationReason` and `DegradationKind` provide stable, serde-friendly markers for degradation categories, and the tests enforce that serialization, `Display`, and redaction behavior stay consistent.
+- [[code/files/crates/gcore/src/degradation.rs|crates/gcore/src/degradation.rs]] - This file defines the shared degradation and error vocabulary for `gcore`: it models service availability (`ServiceState`), structured setup problems (`SetupIssue` and `Guidance`), and fatal core errors (`CoreError`) so callers can represent partial outages without treating every failure as fatal. It also includes database URL redaction helpers used by error serialization and display to strip credentials, queries, fragments, and sensitive keyword-style DSN values, plus `ModalityDegradationReason` and `DegradationKind` enums for stable, serde-compatible degradation codes. The tests verify these contracts stay aligned, especially that serialization, `Display`, availability checks, and URL redaction all preserve the intended semantics.
 [crates/gcore/src/degradation.rs:12-22]
 [crates/gcore/src/degradation.rs:24-29]
 [crates/gcore/src/degradation.rs:26-28]
 [crates/gcore/src/degradation.rs:33-40]
 [crates/gcore/src/degradation.rs:46-53]
-- [[code/files/crates/gcore/src/falkor.rs|crates/gcore/src/falkor.rs]] - This file defines the FalkorDB adapter boundary for `gcore`: it wraps a blocking `SyncGraph` in `GraphClient`, provides a constrained `ReadOnlySyncGraph` for read-only access, and exposes helpers to build clients from config, run Cypher queries, parse results into `Row` maps, and manage exact node indexes. It also centralizes identifier and string escaping plus error classification so duplicate-index failures can be suppressed safely, and includes degradation helpers that return `ServiceState`-tagged defaults when FalkorDB is unavailable or unconfigured.
+- [[code/files/crates/gcore/src/falkor.rs|crates/gcore/src/falkor.rs]] - `falkor.rs` is the FalkorDB adapter boundary for `gcore`: it builds a blocking `GraphClient` from `FalkorConfig`, wraps the underlying `SyncGraph` in a constrained read-only view when needed, runs Cypher queries, and handles duplicate-index creation and service-state degradation. It also provides identifier/string escaping plus result parsing helpers that convert FalkorDB values into `serde_json::Value` rows, with tests covering connection behavior, token escaping, index-error detection, and live read access.
 [crates/gcore/src/falkor.rs:22]
 [crates/gcore/src/falkor.rs:28-30]
 [crates/gcore/src/falkor.rs:36-38]
 [crates/gcore/src/falkor.rs:42-44]
 [crates/gcore/src/falkor.rs:47-52]
-- [[code/files/crates/gcore/src/graph_analytics.rs|crates/gcore/src/graph_analytics.rs]] - This file provides transport-free graph analytics for code and knowledge graphs. It defines the lightweight data model for nodes, edges, communities, centrality scores, hotspots, and the aggregate `GraphAnalytics` result, then exposes `analyze` as the entry point that runs the full pipeline.
+- [[code/files/crates/gcore/src/graph_analytics.rs|crates/gcore/src/graph_analytics.rs]] - Implements transport-free graph analytics for code and knowledge graphs. It defines the core graph data model (`AnalyticsNode`, `AnalyticsEdge`, `AnalyticsGraph`) plus analysis outputs (`Community`, `CentralityScore`, `Hotspot`, `GraphAnalytics`) and lightweight references (`NodeRef`, `EdgeRef`). The `analyze` entry point normalizes an input graph into a `PreparedGraph`, then combines community detection, degree centrality, articulation/bridge detection, high-degree “god” nodes, cross-community links, and hotspots into one `GraphAnalytics` result. Supporting helpers map edge kinds to weights, compare and weight references, and build a seeded test graph with tests that verify the analysis behavior and empty-graph handling.
+[crates/gcore/src/graph_analytics.rs:9-13]
+[crates/gcore/src/graph_analytics.rs:21-26]
+[crates/gcore/src/graph_analytics.rs:29-32]
+[crates/gcore/src/graph_analytics.rs:35-39]
+[crates/gcore/src/graph_analytics.rs:42-46]
+- [[code/files/crates/gcore/src/indexing.rs|crates/gcore/src/indexing.rs]] - This file defines the generic indexing primitives shared by consumer crates. It provides `WalkerSettings` for configuring an `ignore::WalkBuilder` over a root path with gitignore handling, file-size limits, and extra ignore overrides; SHA-256 helpers for hashing bytes and file contents; and `Chunk`/`ChunkIdentity` types for describing file slices by path and byte range, with `Chunk::identity()` reducing a chunk to its stable locator.
 
-The implementation centers on `PreparedGraph`, which converts the input graph into indexed, weight-aware forms and computes each metric: centrality, bridge nodes and bridge edges, communities with bridges removed, “god nodes,” unexpected links, and hotspots. `BridgeSearch` supports the bridge-discovery pass, while helper functions such as `compare_edge_ref`, `weight_for`, and `seeded_graph` back the scoring and test coverage.
-[crates/gcore/src/graph_analytics.rs:7-11]
-[crates/gcore/src/graph_analytics.rs:14-18]
-[crates/gcore/src/graph_analytics.rs:21-24]
-[crates/gcore/src/graph_analytics.rs:27-31]
-[crates/gcore/src/graph_analytics.rs:34-38]
-- [[code/files/crates/gcore/src/indexing.rs|crates/gcore/src/indexing.rs]] - Generic indexing utilities shared by consumer crates. It defines `WalkerSettings` to configure an `ignore::WalkBuilder` with gitignore handling, file-size limits, and extra ignore patterns; hashing helpers for file content and whole files to drive incremental change detection; `Chunk` and `ChunkIdentity` to represent indexed file slices and their stable identity; and `IndexEvent` plus `index_events_from_hashes` to classify hash differences into indexing actions. The remaining helpers write indexed file output, build relationship data, and the tests verify the defaults, hashing behavior, opaque chunk metadata, identity rules, incremental event coverage, and that the feature stays parser-agnostic.
+It also includes incremental indexing support via `IndexEvent` and `index_events_from_hashes`, which compares previous and current path-hash maps to classify files as added, changed, unchanged, deleted, or skipped. Supporting helpers like `write_file` and `rels` are used by tests, and the test module verifies walker defaults and ignore behavior, hashing correctness, chunk identity semantics, incremental event classification, and that the indexing feature stays generic without domain parser dependencies.
 [crates/gcore/src/indexing.rs:17-26]
 [crates/gcore/src/indexing.rs:28-67]
 [crates/gcore/src/indexing.rs:30-37]
 [crates/gcore/src/indexing.rs:43-46]
 [crates/gcore/src/indexing.rs:49-66]
-- [[code/files/crates/gcore/src/layered_config.rs|crates/gcore/src/layered_config.rs]] - This file implements layered YAML configuration loading for tool binaries, with a strict precedence order: explicit CLI override, current-directory `.gobby/<tool>.yaml`, project-root `.gobby/<tool>.yaml`, then `<gobby_home>/<tool>.yaml`, otherwise `None` so callers can use built-in defaults. `load_layered_yaml` drives that search, `try_layer` handles per-path read-and-parse attempts while skipping missing files, and `parse` turns YAML into a generic deserialized type while preserving file-path context on errors.
-
-`LayeredConfigError` distinguishes read failures from parse failures, and the test-only `CwdGuard` plus `project_with_config` helpers set up isolated filesystem state and environment for exercising resolution behavior. The tests verify the key contracts: project-root discovery from subdirectories, current-directory precedence without a project marker, CLI override dominance, errors for unreadable overrides and malformed YAML, fallback to `GOBBY_HOME`, and `None` when no layer exists.
+- [[code/files/crates/gcore/src/layered_config.rs|crates/gcore/src/layered_config.rs]] - This file implements layered YAML configuration loading for tool binaries, with precedence from an explicit CLI override to the current directory `.gobby/<tool>.yaml`, then the project root `.gobby` layer, then the `GOBBY_HOME` layer, and finally `None` so callers can use built-in defaults. `LayeredConfigError` distinguishes read failures from YAML parse failures, and the helper functions `try_layer` and `parse` enforce the “first valid layer wins” behavior while treating malformed config as a hard error instead of falling through. The rest of the file is test support and coverage: `CwdGuard` temporarily swaps the working directory and `GOBBY_HOME` for serialized tests, `project_with_config` builds a temp project fixture, and the tests verify each resolution path and failure mode.
 [crates/gcore/src/layered_config.rs:17-25]
 [crates/gcore/src/layered_config.rs:32-63]
 [crates/gcore/src/layered_config.rs:65-70]
 [crates/gcore/src/layered_config.rs:72-77]
 [crates/gcore/src/layered_config.rs:88-90]
-- [[code/files/crates/gcore/src/lib.rs|crates/gcore/src/lib.rs]] - Shared foundation crate for Gobby CLI tools. It exposes the always-available primitives for bootstrap, CLI contracts, daemon URLs, project handling, provisioning, config, and local backend/setup logic, while keeping heavier datastore and indexing integrations behind feature flags. The one concrete utility here is `gobby_home`, which resolves the Gobby home directory by honoring `GOBBY_HOME` first and otherwise falling back to `~/.gobby`, so the rest of the crate can share a consistent state location. [crates/gcore/src/lib.rs:27-34]
-- [[code/files/crates/gcore/src/libpq.rs|crates/gcore/src/libpq.rs]] - This file provides a single helper for parsing libpq-style keyword DSN strings into whitespace-separated tokens while respecting quoting and escaping. `split_keyword_dsn_tokens` scans the input by character index, skips leading whitespace, tracks whether it is inside single quotes, honors backslash escapes, and only splits on whitespace when not quoted. It returns string slices into the original DSN so callers can process the parsed tokens without allocating new substrings. [crates/gcore/src/libpq.rs:1-39]
-- [[code/files/crates/gcore/src/local_backend.rs|crates/gcore/src/local_backend.rs]] - Implements feature-gated local backend discovery and health checking. `Backend` is the deserialized config for a candidate backend, and `detect_backend` walks a list in order, returning the first clone that passes `validate_backend`. Validation turns the backend’s probe path into a URL, parses it as an HTTP target, sends a bounded TCP probe with the trimmed auth token and timeout, and accepts only 2xx responses while tracing failures. The supporting helpers handle URL authority parsing, request construction, status parsing, probe URL formatting, and reusable reachable/unreachable backend predicates used by the detection tests.
+- [[code/files/crates/gcore/src/lib.rs|crates/gcore/src/lib.rs]] - Root library for the Gobby shared primitives crate. It exposes always-available modules for bootstrap, CLI contracts, daemon URLs, project/provisioning, config, AI/context types, backend setup, and related foundation code, while keeping datastore/search/indexing integrations behind feature gates so lightweight consumers avoid extra dependencies. The one utility function, `gobby_home`, resolves the app data directory by preferring `GOBBY_HOME` and otherwise falling back to `~/.gobby`, returning an error if no home directory can be determined. [crates/gcore/src/lib.rs:27-34]
+- [[code/files/crates/gcore/src/libpq.rs|crates/gcore/src/libpq.rs]] - This file provides `split_keyword_dsn_tokens`, a small parser for PostgreSQL-style keyword DSN strings. It scans the input once, skipping leading whitespace, then splits on unescaped whitespace that occurs outside single-quoted sections while preserving backslash-escaped characters and quoted spaces. The function returns borrowed `&str` slices into the original URL string, so it can tokenize without allocating new substrings. [crates/gcore/src/libpq.rs:1-39]
+- [[code/files/crates/gcore/src/local_backend.rs|crates/gcore/src/local_backend.rs]] - This file implements optional local-backend discovery and probing for the `local-backend` feature. It defines a serializable `Backend` descriptor, then `detect_backend` walks a list in order and returns the first backend that passes `validate_backend`, which builds the probe URL, parses it into an HTTP target, sends a timed GET probe with an optional Bearer token, and accepts only 2xx responses. The supporting `HttpProbeTarget`, authority/URL parsing, status parsing, and probe-request helpers handle HTTP formatting details such as IPv6 bracket syntax, `Host` header construction, and normalizing `url + probe` joins, while the test helpers exercise reachability, header injection, and URL normalization.
 [crates/gcore/src/local_backend.rs:14-20]
 [crates/gcore/src/local_backend.rs:24-31]
 [crates/gcore/src/local_backend.rs:35-68]
 [crates/gcore/src/local_backend.rs:72-76]
 [crates/gcore/src/local_backend.rs:79-108]
-- [[code/files/crates/gcore/src/postgres.rs|crates/gcore/src/postgres.rs]] - Postgres adapter boundary and hub connection helpers for the `postgres` feature. The file provides read-only and read-write connection entry points, config value lookup from `config_store`, and a small `SchemaCheck` result type plus validator plumbing for checking externally managed schemas without mutating them. It also normalizes `sslmode` handling from URLs or libpq DSNs, maps that policy into TLS connector modes, and builds PostgreSQL clients with the appropriate OpenSSL verification and hostname-check behavior.
+- [[code/files/crates/gcore/src/postgres.rs|crates/gcore/src/postgres.rs]] - This file provides the PostgreSQL adapter boundary for Gobby: it opens read-only or read-write hub connections, reads raw values from `config_store`, and runs caller-supplied schema validation checks without mutating the database. The rest of the module is dedicated to connection policy plumbing, including `sslmode` parsing/normalization, mapping those settings to internal TLS modes, building OpenSSL-backed connectors, and verifying the behavior with tests for schema validation and TLS handling.
 [crates/gcore/src/postgres.rs:16-22]
 [crates/gcore/src/postgres.rs:25-27]
 [crates/gcore/src/postgres.rs:36-45]
 [crates/gcore/src/postgres.rs:49-58]
 [crates/gcore/src/postgres.rs:66-71]
-- [[code/files/crates/gcore/src/project.rs|crates/gcore/src/project.rs]] - This file provides non-mutating helpers for locating a Gobby project and reading its project ID. `find_project_root` walks upward from a starting path until it finds a `.gobby` directory containing either `project.json` or `gcode.json`, while `read_project_id` prefers `.gobby/project.json` and falls back to `.gobby/gcode.json` for standalone code-index roots. The private `read_project_id_from` handles the shared file read, JSON parse, and `"id"` extraction logic, and the tests verify that lookup is non-destructive, that fallback to `gcode.json` works when needed, and that error messages mention the missing `id` field clearly.
+- [[code/files/crates/gcore/src/project.rs|crates/gcore/src/project.rs]] - This file provides shared, non-mutating helpers for locating a Gobby project root and reading its project ID. `find_project_root` walks upward from a starting path until it finds a `.gobby` directory containing either `project.json` or `gcode.json`, while `read_project_id` prefers `.gobby/project.json` but falls back to `.gobby/gcode.json` when the primary file is missing, unreadable, malformed, or lacks an `id`. The private `read_project_id_from` does the actual UTF-8 JSON parse and `id` extraction, and the tests verify root discovery, non-destructive reads, fallback behavior, and error messaging.
 [crates/gcore/src/project.rs:12-24]
 [crates/gcore/src/project.rs:28-51]
 [crates/gcore/src/project.rs:53-62]
 [crates/gcore/src/project.rs:70-89]
 [crates/gcore/src/project.rs:92-113]
-- [[code/files/crates/gcore/src/qdrant.rs|crates/gcore/src/qdrant.rs]] - This file defines the Qdrant adapter boundary for vector storage and search behind the `qdrant` feature, with a 5-second request timeout and a default upsert batch size. It centers on typed error handling in `QdrantError`, schema/request/result structs for collection management, upserts, and search, and helper functions that build Qdrant request paths, send HTTP calls, and parse responses into those domain types. The collection helpers validate or create compatible vector collections, while the upsert helpers support single and batched writes and the search helpers return parsed hits; together they turn raw Qdrant HTTP/API behavior into a small, typed service layer with degraded-service handling for unreachable or missing vector backends.
+- [[code/files/crates/gcore/src/qdrant.rs|crates/gcore/src/qdrant.rs]] - This file is the Qdrant adapter boundary for the `gcore` crate, providing typed wrappers around vector collection, search, upsert, and maintenance operations behind the `qdrant` feature. It defines request/response/schema types plus `QdrantError` for HTTP and operation-status failures, then uses small helpers to build encoded collection paths, construct authenticated blocking `reqwest` calls, and format error context. Higher-level functions check whether Qdrant is configured and reachable, ensure collections exist and match the expected schema, read collection metadata and point counts, perform searches and batched upserts, delete by filter, and parse raw JSON responses into the typed structs used by the rest of the crate.
 [crates/gcore/src/qdrant.rs:20-36]
 [crates/gcore/src/qdrant.rs:38-47]
 [crates/gcore/src/qdrant.rs:50-53]
 [crates/gcore/src/qdrant.rs:56-59]
 [crates/gcore/src/qdrant.rs:63-67]
-- [[code/files/crates/gcore/src/search.rs|crates/gcore/src/search.rs]] - This file defines the shared search primitives used by the `search` feature: a trusted wrapper for SQL row identifiers, helpers for building BM25 score expressions, result and explanation structs for fused search output, and a degradation record for missing sources. It also implements Reciprocal Rank Fusion and Postgres search-query sanitization, with tests that verify RRF preserves metadata, deduplicates and orders sources deterministically, BM25 wiring matches the runtime schema, and sanitized queries follow the project’s rules.
+- [[code/files/crates/gcore/src/search.rs|crates/gcore/src/search.rs]] - Defines generic search and rank-fusion helpers for the `search` feature, keeping domain-specific query logic in consuming crates. It provides a `TrustedRowId` wrapper for SQL-safe, caller-validated row identifiers and a `bm25_score_expr` formatter for building `pdb.score(...)` expressions, along with serde-serializable `SearchResult`, `SourceExplanation`, and `SearchDegradation` types for merged search output and availability metadata. The core `rrf_merge` logic combines per-source ranked IDs with reciprocal rank fusion, deduplicates and orders explanations deterministically, and `sanitize_pg_search_query` normalizes PostgreSQL full-text queries by collapsing whitespace and escaping leading negation. The tests lock down these behaviors, including fusion ordering, serialization, query sanitization rules, and the expected BM25/runtime schema contract.
 [crates/gcore/src/search.rs:20]
 [crates/gcore/src/search.rs:22-36]
 [crates/gcore/src/search.rs:29-31]
 [crates/gcore/src/search.rs:33-35]
 [crates/gcore/src/search.rs:39-41]
-- [[code/files/crates/gcore/src/secrets.rs|crates/gcore/src/secrets.rs]] - This file implements Gobby’s secret resolution pipeline. It derives a Fernet key from the local machine ID and salt with PBKDF2-HMAC-SHA256, decrypts encrypted secret values, and looks up named secrets from the PostgreSQL `secrets` table before decrypting them. It also resolves configuration strings by expanding `$secret:NAME` placeholders first, then environment-variable patterns, and rejects any unresolved references.
-
-The helper functions support that flow: `validate_secret_name` and the boundary/character predicates enforce safe secret names and placeholder parsing, while `resolve_config_value_with` drives substitution using a caller-provided secret resolver. The test functions cover deterministic key derivation, salt sensitivity, Fernet round-trips, secret and environment expansion behavior, unresolved-reference errors, and protection against leaking secret values in error messages.
+- [[code/files/crates/gcore/src/secrets.rs|crates/gcore/src/secrets.rs]] - Implements Gobby’s secret resolution pipeline: it derives a Fernet key from `~/.gobby/machine_id` and `~/.gobby/.secret_salt`, decrypts `secrets.encrypted_value` rows from Postgres, and expands `$secret:NAME` references inside config strings before resolving environment variables. The helper functions enforce secret-name syntax and reference boundaries so only valid names are accepted and unresolved patterns fail safely, while the tests cover key derivation, decryption round-trips, substitution order, and rejection of invalid or leaky inputs.
 [crates/gcore/src/secrets.rs:18-22]
 [crates/gcore/src/secrets.rs:24-30]
 [crates/gcore/src/secrets.rs:33-63]
 [crates/gcore/src/secrets.rs:66-68]
 [crates/gcore/src/secrets.rs:70-103]
-- [[code/files/crates/gcore/src/setup.rs|crates/gcore/src/setup.rs]] - This file defines the shared setup boundary for gobby: it classifies setup resources by `StoreKind`, provides validation and setup contexts that carry optional datastore/config handles, and wraps validation results in `ValidationReport` with an `is_healthy` check. It also defines the callback types and object descriptors for consumer-supplied validation and creation (`RequiredValidator`, `RequiredObject`, `AttachedValidator`, `OwnedObject`, `SetupPostgresExecutor`, `StandaloneSetup`, `SetupError`, `SetupReport`), so attached-mode checks and standalone provisioning can share the same setup abstractions. The included tests verify runtime validation guidance, mutable-context access inside validator closures, and creator closures executing without moving shared ownership.
+- [[code/files/crates/gcore/src/setup.rs|crates/gcore/src/setup.rs]] - This file defines the shared setup boundary for attached and standalone setup workflows, separating runtime validation from object creation. It provides the core types for classifying datastores (`StoreKind`), passing optional backend connections into validator callbacks (`ValidationContext`), collecting validation results (`ValidationReport`), and describing consumer-declared required objects via boxed validators (`RequiredObject`/`RequiredValidator`), while the owned-object and setup executor types support the complementary creation path and the tests verify validator behavior and setup guidance.
 [crates/gcore/src/setup.rs:11-18]
 [crates/gcore/src/setup.rs:26-34]
 [crates/gcore/src/setup.rs:38-43]
@@ -1203,37 +1176,41 @@ The helper functions support that flow: `validate_secret_name` and the boundary/
 - `642bd3d3-baea-5129-995d-712111ef62ae`
 - `6deda299-f372-52f7-a747-a26ff569d896`
 - `1bc452ad-d5e3-5238-91e4-07cae0cbe6d3`
-- `3f45be99-f663-502f-9aca-7f7ed8a9c5b3`
-- `e7a03d44-3e53-50d5-a12d-76a59159e7ef`
-- `30b8c60a-ec5a-59d5-a6f7-cb6c6b59ffe7`
-- `f2e4de63-6edd-5ac2-b59d-f29b5473d7b1`
-- `91cb98ba-cc6d-5991-af6d-5f77a315a950`
-- `fbefcd01-841e-56f0-87a9-bd526cb71031`
-- `a9f11f30-a26b-594f-b069-ed65f209697d`
-- `4ff88788-2d80-546d-b0c9-079022bc6ce9`
-- `8c8d1383-2a90-5bf8-956b-016261a6cdd2`
-- `71ffb821-56d0-5a6f-b3d6-61672244c7ac`
-- `f93223b1-65fc-5675-ac15-96824f28af75`
-- `bbf51435-6f8a-560f-a315-f61acd3c2e9d`
-- `8a58a122-7814-5037-88b2-9970b61d294f`
-- `fbc2e7fc-9c99-5c91-bf8a-50a6a3a84876`
-- `6e001d5e-3b64-5d8b-9d3b-70ef1322b49d`
-- `8f674ffe-5f30-5aa4-857e-433c4e8ad8bb`
-- `2931f514-8861-54bf-893d-6014ed8ad249`
-- `1aec6ffd-90e9-5301-a4aa-e13742cb5930`
-- `889e5085-aae6-5dc1-836a-3a7ea9b24de3`
-- `6d11d325-9ae1-5bd2-9c65-6221702da6d3`
-- `29ea3e94-9809-5fdd-9e9e-a24a7e67ddc3`
-- `d2ba720b-0648-541d-9030-cf0a293c7a9f`
-- `dd1a1ecd-3a8f-55cb-8cad-35ebc7adc8fa`
-- `8f53bf1c-cd4d-5535-9d15-dc4b497d3b7b`
-- `4cd8ea08-ad33-5eb7-8547-db19dffc6cec`
-- `b25514e8-1cf3-5564-9e8f-369a7f7b5109`
-- `b95ab736-c23f-591f-a1c8-f23803b50934`
-- `0780a2e0-f4c7-5366-98ee-b5902f20803c`
-- `92034e6b-ffa5-5ec8-b302-1968c61f4a39`
-- `2170090c-35df-57e1-b0b0-b83a0d1a23c6`
-- `a7c67947-c722-52a7-bf17-255c8508b132`
+- `5e0cf63a-589e-50e3-9bb9-42837c1eedc7`
+- `6eb388ec-c0a7-5a5a-a5e8-030d4384bf53`
+- `d11e1b70-fe8d-5c7a-98a1-af504b477f43`
+- `d5f16621-8500-5034-953c-5f704ffcd800`
+- `1c408331-ae69-5696-86a8-675523a6795d`
+- `71827d8a-5c74-5403-a858-97ca13253f48`
+- `98d3e18b-1132-5441-8b1c-637cfc53bf18`
+- `f24c9da2-6f9f-59e6-acb3-846de6988f49`
+- `ff6bff83-9b95-5659-8303-4621c59922ad`
+- `35b571b4-8fcb-5b27-9e9b-037ae3c50996`
+- `6f3d1805-00e5-51a3-be16-cbfc63427445`
+- `82a41ccd-56af-58db-97d1-6eddb45c6604`
+- `9c2c7e3e-044d-5250-9b3a-86f053f32ffa`
+- `693d78b7-ac94-56cb-a23a-3998508db90b`
+- `9c078bda-644e-5951-a52d-07481e385f08`
+- `24f1352d-2038-5bf9-b7bc-dfef25743902`
+- `3b687583-dd6b-523d-b7b4-6117a5ac9de5`
+- `36111feb-be2f-5e91-9445-a0c841b6fbaa`
+- `90354b31-e48b-54e0-afc2-250bbd650897`
+- `ea991c5f-08fe-50ff-90ff-a6088c580e44`
+- `acb4db68-fb8d-5850-ad86-a1e1e2a2e661`
+- `f9ffbd77-582f-5028-adad-0cbe1fab8419`
+- `2b234826-9765-550d-ac74-98871171dedb`
+- `99ec7137-9c5a-5c59-9c03-10ee27e32d04`
+- `e375b350-005c-5aa8-9fe6-99b5a5f017c2`
+- `c8b3c92b-8d3e-5f8d-9e50-d859ab4d156d`
+- `db4fdfff-9f45-5b09-8edc-1697d8776568`
+- `56e27dc2-9f4d-54b5-9d35-cb85f6c23add`
+- `5522b0f0-648c-5d2d-8287-16bd0ced6cd3`
+- `695ff75f-453b-5b22-923d-43c9827b7f9f`
+- `95554fea-f1c8-5ea9-953b-0df9dcbd30d1`
+- `26bda180-baaa-50c6-b44d-d2b3f356e29b`
+- `e0f1139d-88df-53f0-8dbd-c60492ba6709`
+- `26d97f79-c73e-5731-9dee-94fd8150a390`
+- `7fe49062-e349-5a75-9cd1-ab45ff873c5b`
 - `d7ac6eae-f122-5d46-bb09-757ed4e27fc5`
 - `0ffb7807-7c0e-5e36-9781-3c849bf9f7be`
 - `4ceaa24c-a90c-5d5d-a607-fed9f6f177b1`

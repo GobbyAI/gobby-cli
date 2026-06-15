@@ -16,11 +16,11 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-Shared foundation crate for Gobby CLI tools. It exposes the always-available primitives for bootstrap, CLI contracts, daemon URLs, project handling, provisioning, config, and local backend/setup logic, while keeping heavier datastore and indexing integrations behind feature flags. The one concrete utility here is `gobby_home`, which resolves the Gobby home directory by honoring `GOBBY_HOME` first and otherwise falling back to `~/.gobby`, so the rest of the crate can share a consistent state location. [crates/gcore/src/lib.rs:27-34]
+Root library for the Gobby shared primitives crate. It exposes always-available modules for bootstrap, CLI contracts, daemon URLs, project/provisioning, config, AI/context types, backend setup, and related foundation code, while keeping datastore/search/indexing integrations behind feature gates so lightweight consumers avoid extra dependencies. The one utility function, `gobby_home`, resolves the app data directory by preferring `GOBBY_HOME` and otherwise falling back to `~/.gobby`, returning an error if no home directory can be determined. [crates/gcore/src/lib.rs:27-34]
 
 ## API Symbols
 
 - `gobby_home` (function) component `gobby_home [function]` (`7be10c65-7ad1-53f1-b7f7-51baa21a6df7`) lines 27-34 [crates/gcore/src/lib.rs:27-34]
   - Signature: `pub fn gobby_home() -> anyhow::Result<std::path::PathBuf> {`
-  - Purpose: Indexed function `gobby_home` in `crates/gcore/src/lib.rs`. [crates/gcore/src/lib.rs:27-34]
+  - Purpose: Returns the 'GOBBY_HOME' environment variable as a 'PathBuf' if set, otherwise resolves the user’s home directory and appends '.gobby', failing with an error if no home directory can be determined. [crates/gcore/src/lib.rs:27-34]
 

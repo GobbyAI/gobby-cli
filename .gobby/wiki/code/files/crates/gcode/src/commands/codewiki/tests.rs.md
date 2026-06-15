@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Purpose
 
-This file contains tests for the codewiki command’s file-selection and related IO helpers. It pulls in shared support plus topic-specific test modules, and its main check verifies that `should_document_file` documents code and structured config files by default, skips content-only files like Markdown and licenses unless `include_docs` is enabled, and then includes those docs files when requested. [crates/gcode/src/commands/codewiki/tests.rs:24-42]
+Test module for the codewiki command. It pulls in shared IO helpers and a set of focused submodules, then defines a coverage test for `should_document_file`: code and structured config files are documented by default, content-only files like Markdown and licenses are excluded unless `include_docs` is enabled. [crates/gcode/src/commands/codewiki/tests.rs:24-42]
 
 ## API Symbols
 

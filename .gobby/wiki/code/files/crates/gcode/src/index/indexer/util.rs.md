@@ -29,7 +29,7 @@ Module: [[code/modules/crates/gcode/src/index/indexer|crates/gcode/src/index/ind
 
 ## Purpose
 
-This utility module supports the code indexer's path handling and file discovery operations. It provides path filtering that uses lexical prefix matching with canonical path fallback to identify files within specified directories, file type categorization that aggregates unsupported files by extension with example collection, and relative path computation supporting multiple strategies: absolute path prefix stripping, lexical path component diffing for cross-directory cases, and path normalization. The functions compose to enable directory-scoped indexing with proper symlink and cross-platform path handling, while tracking unsupported file types for reporting. Constants define default exclusion patterns, and tests verify behavior across platform-specific cases like UNC paths, mixed separators, and cross-drive scenarios.
+This file provides indexing-path utilities for the GCode indexer. It filters discovered paths to a requested subtree, groups unsupported files by extension with a few relative-path examples, and computes path/extension/time helpers for consistent relative-path formatting and metadata.
 [crates/gcode/src/index/indexer/util.rs:28-66]
 [crates/gcode/src/index/indexer/util.rs:70-93]
 [crates/gcode/src/index/indexer/util.rs:95-101]

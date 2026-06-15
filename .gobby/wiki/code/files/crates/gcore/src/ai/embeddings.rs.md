@@ -27,7 +27,7 @@ Module: [[code/modules/crates/gcore/src/ai|crates/gcore/src/ai]]
 
 ## Purpose
 
-Blocking OpenAI-compatible embeddings client for direct, non-daemon routes. It builds a fixed `EmbeddingConfig` for the `embed-small` model, sends single-text or batched `/embeddings` requests with optional bearer auth and a per-request timeout, then parses and validates the returned vectors so `embed_one` and `embed_batch` return ordered `Vec<f32>` results or `AiError` parse/http failures when the response is missing, malformed, duplicated, or status-failing.
+Blocking OpenAI-compatible embeddings client for direct, non-daemon routes. It provides `embed_one` and `embed_batch` to POST text inputs to `{api_base}/embeddings` with the configured model, timeout, and optional bearer auth, then parse and validate the returned embedding vectors into `f32` results. Shared helpers handle request sending and embedding parsing, while `config` supplies the fixed default embedding settings and the tests cover request shape, ordering, empty batches, and parse/error handling.
 [crates/gcore/src/ai/embeddings.rs:19-38]
 [crates/gcore/src/ai/embeddings.rs:42-92]
 [crates/gcore/src/ai/embeddings.rs:94-105]

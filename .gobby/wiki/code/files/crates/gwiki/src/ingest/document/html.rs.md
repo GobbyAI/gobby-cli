@@ -27,7 +27,9 @@ Module: [[code/modules/crates/gwiki/src/ingest/document|crates/gwiki/src/ingest/
 
 ## Purpose
 
-Parses HTML documents into normalized markdown for wiki ingestion. It reads bytes into a scraper DOM, extracts a decoded/formatted `<title>`, then walks the body or root element to gather visible text while skipping head/script/style content. Block-level elements split text into separate parts, inline text is spaced and trimmed carefully, and the collected text is normalized by decoding entities and standardizing whitespace before being returned as `DocumentExtraction`. If no readable content is found, it emits a degraded extraction with `HtmlNoContent` metadata. The included tests lock in whitespace normalization and block-element classification behavior.
+Parses HTML documents into normalized markdown text and an optional title for ingestion. `extract_html_document` decodes the bytes, parses the DOM, pulls the `<title>`, finds the body or root element, and uses the traversal helpers to collect visible text into block-separated parts before normalizing it; if no readable content remains, it returns a degraded `DocumentExtraction` that records `HtmlNoContent` instead of a normal section count.
+
+The helper functions split the work by concern: `extract_html_title` formats the page title, `collect_visible_text` walks the DOM while skipping `head`, `script`, and `style` and respecting block boundaries, `collect_inline_text` and `append_inline_text` handle inline text spacing and punctuation, `push_visible_part` flushes collected text into single-line segments, `is_block_element` defines which tags break paragraphs, and the normalization helpers decode entities, clean whitespace, and collapse duplicate empty or repeated lines.
 [crates/gwiki/src/ingest/document/html.rs:8-39]
 [crates/gwiki/src/ingest/document/html.rs:41-51]
 [crates/gwiki/src/ingest/document/html.rs:53-76]

@@ -24,7 +24,7 @@ Module: [[code/modules/crates/ghook/src|crates/ghook/src]]
 
 ## Purpose
 
-This file defines the compile-time `CliConfig` registry for Gobby’s hook dispatcher. It maps known CLI names to fixed per-host settings: a daemon source label, the set of hook types that must fail closed, and the malformed-JSON exit code. `for_cli` performs case-insensitive lookup for the supported CLIs, `for_dispatch` guarantees a usable config by falling back to `claude`, and `is_critical_hook` checks whether a hook should be treated as failure-critical. The tests lock in the expected CLI-specific critical-hook sets, exit codes, case-insensitive matching, and fallback behavior.
+`cli_config.rs` defines a compile-time `CliConfig` registry for supported host CLIs, mapping each known CLI name to a source identifier, a set of fail-closed critical hooks, and the malformed-JSON exit code expected by the dispatcher. `CliConfig::for_cli` does the case-insensitive lookup and returns `None` for unknown CLIs, `for_dispatch` applies a Claude fallback when dispatch needs a guaranteed config, and `is_critical_hook` checks whether a hook should block on failure. The tests lock in the per-CLI mappings, case-insensitive matching, unknown-CLI behavior, and the Claude fallback path.
 [crates/ghook/src/cli_config.rs:11-18]
 [crates/ghook/src/cli_config.rs:20-61]
 [crates/ghook/src/cli_config.rs:21-52]

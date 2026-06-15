@@ -18,7 +18,7 @@ Module: [[code/modules/crates/gwiki/src/support|crates/gwiki/src/support]]
 
 ## Purpose
 
-Provides timestamp helpers for the wiki crate. `unix_timestamp_ms` reads the current system time, converts it to Unix epoch milliseconds, and returns a `u64` or a `WikiError` if the clock is before the epoch or the value does not fit in `u64`. `collect_timestamp` wraps that value in the `unix-ms:<millis>` string format for downstream use. The test verifies the millisecond timestamp falls within a reasonable range between a fixed minimum date and the current time.
+Provides timestamp utilities for wiki support code: `unix_timestamp_ms` reads the current system time and converts it to a `u64` Unix epoch millisecond value with `WikiError` handling for pre-epoch clocks or overflow, and `collect_timestamp` wraps that value in the `unix-ms:` string format. The test verifies the millisecond timestamp falls between a fixed minimum and the current time.
 [crates/gwiki/src/support/time.rs:3-6]
 [crates/gwiki/src/support/time.rs:8-17]
 [crates/gwiki/src/support/time.rs:24-39]

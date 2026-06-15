@@ -32,7 +32,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-This file implements the `gwiki setup` command. It resolves the requested scope, gathers the default PostgreSQL-backed objects the wiki needs, and then either runs a standalone Docker-based setup or uses an attached database URL from options or the environment. In standalone mode it validates embedding dimensions, applies service overrides, provisions Hub-dependent services, and writes the merged gCore config; in non-standalone mode it prepares the database connection and records the setup outcome. The helper functions handle config path lookup, merging PostgreSQL/FalkorDB/Qdrant settings into existing standalone config, embedding option validation, error conversion, outcome rendering, and status selection from created/skipped/failed results. The tests verify config merging, preserving existing database settings, standalone PostgreSQL-only persistence, and rejecting invalid embedding dimensions without mutating config.
+Implements the `gwiki setup` command: it resolves the requested scope, gathers Postgres object metadata, and either runs a normal Postgres setup or, in standalone mode, validates embedding settings, provisions or reuses services, merges database and service credentials into gCore config, and reports the result as a `CommandOutcome` or `WikiError`. The helper functions break that flow into pieces for service overrides, home-path lookup, config writing, service diagnostics, embedding validation, error conversion, status classification, and final rendering, with tests covering config merging and status behavior.
 [crates/gwiki/src/commands/setup.rs:18]
 [crates/gwiki/src/commands/setup.rs:20-92]
 [crates/gwiki/src/commands/setup.rs:94-111]
@@ -46,13 +46,13 @@ This file implements the `gwiki setup` command. It resolves the requested scope,
   - Purpose: Indexed type `PostgresSetupResult` in `crates/gwiki/src/commands/setup.rs`. [crates/gwiki/src/commands/setup.rs:18]
 - `execute` (function) component `execute [function]` (`23fa4ad1-0818-57b6-9aad-f22e75ebe5c7`) lines 20-92 [crates/gwiki/src/commands/setup.rs:20-92]
   - Signature: `pub(crate) fn execute(`
-  - Purpose: Indexed function `execute` in `crates/gwiki/src/commands/setup.rs`. [crates/gwiki/src/commands/setup.rs:20-92]
+  - Purpose: 'execute' resolves the requested scope, prepares Postgres object metadata, conditionally validates standalone embedding settings, selects or provisions a database URL/service environment, runs the GWiki Postgres setup, and returns the resulting 'CommandOutcome' or 'WikiError'. [crates/gwiki/src/commands/setup.rs:20-92]
 - `run_gwiki_postgres_setup` (function) component `run_gwiki_postgres_setup [function]` (`6c9c3ed4-350d-50e4-9cc1-f37a77bee11a`) lines 94-111 [crates/gwiki/src/commands/setup.rs:94-111]
   - Signature: `fn run_gwiki_postgres_setup(`
-  - Purpose: Indexed function `run_gwiki_postgres_setup` in `crates/gwiki/src/commands/setup.rs`. [crates/gwiki/src/commands/setup.rs:94-111]
+  - Purpose: Connects to the PostgreSQL database in read-write mode, builds a non-interactive 'SetupContext' with that client, runs 'StandaloneSetup::create', and returns the created/skipped/failed counts as 'PostgresSetupResult', mapping connection or setup errors into 'WikiError'. [crates/gwiki/src/commands/setup.rs:94-111]
 - `apply_service_overrides` (function) component `apply_service_overrides [function]` (`d27fca9a-b375-5fc4-97cf-e208bbfd7b6e`) lines 113-123 [crates/gwiki/src/commands/setup.rs:113-123]
   - Signature: `fn apply_service_overrides(options: &SetupOptions, service_options: &mut DockerServiceOptions) {`
-  - Purpose: Indexed function `apply_service_overrides` in `crates/gwiki/src/commands/setup.rs`. [crates/gwiki/src/commands/setup.rs:113-123]
+  - Purpose: 'apply_service_overrides' copies any present 'falkordb_host', 'falkordb_port', and 'falkordb_password' values from 'SetupOptions' into the mutable 'DockerServiceOptions', overwriting the corresponding service fields only when each option is set. [crates/gwiki/src/commands/setup.rs:113-123]
 - `gobby_home` (function) component `gobby_home [function]` (`552f3deb-def6-55fd-b7dc-8200d700b354`) lines 125-127 [crates/gwiki/src/commands/setup.rs:125-127]
   - Signature: `fn gobby_home() -> anyhow::Result<PathBuf> {`
   - Purpose: Returns the gobby home directory path as a `PathBuf` or an error by delegating to `gobby_core::gobby_home()`. [crates/gwiki/src/commands/setup.rs:125-127]
@@ -61,10 +61,10 @@ This file implements the `gwiki setup` command. It resolves the requested scope,
   - Purpose: Generates a gCore configuration file by merging PostgreSQL and database service credentials from Docker provisioning results or explicit setup options, validates it, and persists to disk. [crates/gwiki/src/commands/setup.rs:129-180]
 - `diagnose_required_service_config` (function) component `diagnose_required_service_config [function]` (`4434861f-627d-5966-9e9c-5e58f2596f3f`) lines 182-198 [crates/gwiki/src/commands/setup.rs:182-198]
   - Signature: `fn diagnose_required_service_config(config: &mut StandaloneConfig) {`
-  - Purpose: Indexed function `diagnose_required_service_config` in `crates/gwiki/src/commands/setup.rs`. [crates/gwiki/src/commands/setup.rs:182-198]
+  - Purpose: Logs warnings when a 'StandaloneConfig' lacks a resolvable FalkorDB configuration or a non-empty Qdrant URL, indicating graph and semantic functionality are unavailable until those services are configured. [crates/gwiki/src/commands/setup.rs:182-198]
 - `apply_embedding_options` (function) component `apply_embedding_options [function]` (`9dfee5d3-21df-5e6e-b378-2446560efaad`) lines 200-233 [crates/gwiki/src/commands/setup.rs:200-233]
   - Signature: `fn apply_embedding_options(`
-  - Purpose: Indexed function `apply_embedding_options` in `crates/gwiki/src/commands/setup.rs`. [crates/gwiki/src/commands/setup.rs:200-233]
+  - Purpose: 'apply_embedding_options' validates the requested embedding vector dimension, no-ops if no embedding-related CLI options are set, and otherwise copies each provided embedding setting from 'SetupOptions' into the 'StandaloneConfig' under the corresponding AI config keys. [crates/gwiki/src/commands/setup.rs:200-233]
 - `validate_embedding_vector_dim` (function) component `validate_embedding_vector_dim [function]` (`2c60d4a1-a51c-5ac7-acaa-8a5839bbce9d`) lines 235-242 [crates/gwiki/src/commands/setup.rs:235-242]
   - Signature: `fn validate_embedding_vector_dim(options: &SetupOptions) -> anyhow::Result<()> {`
   - Purpose: Validates that if `embedding_vector_dim` is specified in `SetupOptions`, its value falls within the inclusive range [1, 8192], returning an `anyhow::Error` otherwise. [crates/gwiki/src/commands/setup.rs:235-242]
@@ -79,7 +79,7 @@ This file implements the `gwiki setup` command. It resolves the requested scope,
   - Purpose: `setup_status` returns a static status string based on priority-ordered evaluation of operation results, returning "failed" if any failures occurred, otherwise "created", "already_present", or "ready" depending on which operation type has non-empty results. [crates/gwiki/src/commands/setup.rs:278-292]
 - `setup_status_reports_specific_outcome` (function) component `setup_status_reports_specific_outcome [function]` (`b5cb35d8-a1d4-57e3-8763-5a390ddaa261`) lines 302-310 [crates/gwiki/src/commands/setup.rs:302-310]
   - Signature: `fn setup_status_reports_specific_outcome() {`
-  - Purpose: Indexed function `setup_status_reports_specific_outcome` in `crates/gwiki/src/commands/setup.rs`. [crates/gwiki/src/commands/setup.rs:302-310]
+  - Purpose: Asserts that 'setup_status' maps the given input cases to the expected outcomes: 'failed' for a bad specific-outcome entry, 'created' when a created item is present, 'already_present' when an existing item is present, and 'ready' when all inputs are empty. [crates/gwiki/src/commands/setup.rs:302-310]
 - `standalone_provisions_and_merges_config` (function) component `standalone_provisions_and_merges_config [function]` (`3e2348b2-edf7-5cca-878f-b9bb05fadeb2`) lines 313-355 [crates/gwiki/src/commands/setup.rs:313-355]
   - Signature: `fn standalone_provisions_and_merges_config() {`
   - Purpose: Tests that `write_gwiki_gcore_config` properly merges PostgreSQL, FalkorDB, and Qdrant configurations into an existing `StandaloneConfig` while preserving pre-existing configuration values. [crates/gwiki/src/commands/setup.rs:313-355]

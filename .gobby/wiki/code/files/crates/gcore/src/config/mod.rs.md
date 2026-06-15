@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcore/src/config|crates/gcore/src/config]]
 
 ## Purpose
 
-Public configuration boundary for shared Gobby Rust crates, defining the code graph name constant and re-exporting config resolution helpers and core config types; it also includes test-only env locking and the module test suite. [crates/gcore/src/config/mod.rs:1-31]
+Public configuration boundary for shared Gobby Rust crates, exposing the core config-resolution API, shared config types, and the `CODE_GRAPH_NAME` constant for the code graph projection. It also wires in test support and keeps the lower-level resolution/type details split into `resolve` and `types` modules. [crates/gcore/src/config/mod.rs:1-31]
 
 ## API Symbols
 

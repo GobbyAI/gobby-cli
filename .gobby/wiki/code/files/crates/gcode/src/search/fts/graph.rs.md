@@ -23,7 +23,7 @@ Module: [[code/modules/crates/gcode/src/search/fts|crates/gcode/src/search/fts]]
 
 ## Purpose
 
-This file implements symbol resolution for graph search in a project: it starts with validated exact-match lookups against `code_symbols` by `id`, `qualified_name`, or `name`, then falls back through candidate handling to either return a single resolved symbol or a set of deduplicated suggestions when the match is ambiguous. The helpers support that flow by safely reading row fields for logging, formatting human-readable suggestion labels, converting `Symbol` records into `ResolvedGraphSymbol` values, and exposing a direct `resolve_graph_symbol_by_id` entry point plus the main cascading `resolve_graph_symbol` resolver.
+This file implements graph-symbol resolution for a project by querying `code_symbols` and turning database rows into `ResolvedGraphSymbol` values. The helper functions support that flow: `exact_symbol_matches_result` runs validated exact-match lookups and filters malformed rows with warnings, `row_string` safely formats row data for logs, `suggestion_label` builds human-readable candidate labels, and `resolved_symbol` maps a full `Symbol` to the lighter resolved form. `resolve_graph_symbol_by_id`, `resolve_from_candidates`, `decisive_resolution`, and `resolve_graph_symbol` then compose these pieces into a cascade that tries exact matches first, falls back through candidate-based resolution, and surfaces either a resolved symbol or suggestion list.
 [crates/gcode/src/search/fts/graph.rs:16-50]
 [crates/gcode/src/search/fts/graph.rs:52-55]
 [crates/gcode/src/search/fts/graph.rs:57-62]

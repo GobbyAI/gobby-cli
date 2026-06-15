@@ -26,7 +26,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-Defines the provenance model for gwiki, linking raw source-note chunks to synthesized wiki sections and persisting those links as an indexed graph. `SourceChunkRef`, `WikiSectionRef`, and `ProvenanceLink` capture the source chunk, target section, and optional claim, while `ProvenanceGraph` stores links in memory and maintains lookup indexes by section ID, page-plus-section, and source ID for fast retrieval. The module also provides a page/section key helper, durable save/load routines for `meta/provenance.json` with JSON and I/O error mapping, and tests that verify linking, round-trip persistence, and empty loads when the file is missing.
+Defines the provenance model for tracking how raw source chunks support synthesized wiki sections. It introduces `SourceChunkRef`, `WikiSectionRef`, and `ProvenanceLink` as serializable records, then wraps them in `ProvenanceGraph`, which stores links and maintains secondary indexes by section ID, page-plus-section, and source ID so lookups stay fast. The graph can add links, query them through each index, rebuild indexes after deserialization, and persist itself to or restore itself from `<vault_root>/meta/provenance.json` with durable file writes. Helper functions handle page/section key निर्माण and Unix directory syncing, and the tests verify linking, save/load roundtrips, and empty loads when the provenance file is missing.
 [crates/gwiki/src/provenance.rs:14-22]
 [crates/gwiki/src/provenance.rs:25-29]
 [crates/gwiki/src/provenance.rs:32-36]

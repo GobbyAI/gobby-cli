@@ -45,7 +45,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-Postgres adapter boundary and hub connection helpers for the `postgres` feature. The file provides read-only and read-write connection entry points, config value lookup from `config_store`, and a small `SchemaCheck` result type plus validator plumbing for checking externally managed schemas without mutating them. It also normalizes `sslmode` handling from URLs or libpq DSNs, maps that policy into TLS connector modes, and builds PostgreSQL clients with the appropriate OpenSSL verification and hostname-check behavior.
+This file provides the PostgreSQL adapter boundary for Gobby: it opens read-only or read-write hub connections, reads raw values from `config_store`, and runs caller-supplied schema validation checks without mutating the database. The rest of the module is dedicated to connection policy plumbing, including `sslmode` parsing/normalization, mapping those settings to internal TLS modes, building OpenSSL-backed connectors, and verifying the behavior with tests for schema validation and TLS handling.
 [crates/gcore/src/postgres.rs:16-22]
 [crates/gcore/src/postgres.rs:25-27]
 [crates/gcore/src/postgres.rs:36-45]
@@ -128,29 +128,29 @@ Postgres adapter boundary and hub connection helpers for the `postgres` feature.
   - Purpose: Builds a `MakeTlsConnector` from the `TlsConnectorMode`-specific builder and, if hostname verification is disabled, installs a callback that turns off `verify_hostname` on each TLS config before returning the connector. [crates/gcore/src/postgres.rs:249-260]
 - `tls_connector_builder` (function) component `tls_connector_builder [function]` (`e9056a8b-a2e7-5f31-9947-177252a6aa16`) lines 262-278 [crates/gcore/src/postgres.rs:262-278]
   - Signature: `fn tls_connector_builder(mode: TlsConnectorMode) -> anyhow::Result<TlsConnectorBuilder> {`
-  - Purpose: Indexed function `tls_connector_builder` in `crates/gcore/src/postgres.rs`. [crates/gcore/src/postgres.rs:262-278]
+  - Purpose: Creates a PostgreSQL 'TlsConnectorBuilder' by initializing an OpenSSL TLS connector, optionally loading the default CA verify paths, applying the 'TlsConnectorMode'-derived verification settings, and returning the configured builder or an error. [crates/gcore/src/postgres.rs:262-278]
 - `run_schema_validator` (function) component `run_schema_validator [function]` (`2114f89b-0f4f-50de-a6fb-c12ff92b3522`) lines 280-285 [crates/gcore/src/postgres.rs:280-285]
   - Signature: `fn run_schema_validator<C>(`
-  - Purpose: Indexed function `run_schema_validator` in `crates/gcore/src/postgres.rs`. [crates/gcore/src/postgres.rs:280-285]
+  - Purpose: 'run_schema_validator' simply invokes the provided one-time validator closure with the mutable connection 'conn' and returns the resulting 'Vec<SchemaCheck>', acting as a thin pass-through wrapper. [crates/gcore/src/postgres.rs:280-285]
 - `attached_validation_is_non_destructive` (function) component `attached_validation_is_non_destructive [function]` (`a0101ac9-c087-5188-a4dd-9520d70f81c4`) lines 292-310 [crates/gcore/src/postgres.rs:292-310]
   - Signature: `fn attached_validation_is_non_destructive() {`
-  - Purpose: Indexed function `attached_validation_is_non_destructive` in `crates/gcore/src/postgres.rs`. [crates/gcore/src/postgres.rs:292-310]
+  - Purpose: Verifies that 'run_schema_validator' executes its attached validation closure without destroying preexisting connection state, while returning the emitted 'SchemaCheck' results. [crates/gcore/src/postgres.rs:292-310]
 - `schema_validator_is_domain_supplied` (function) component `schema_validator_is_domain_supplied [function]` (`9973ea29-fcaf-53e7-9636-7b2a8ff42cae`) lines 313-334 [crates/gcore/src/postgres.rs:313-334]
   - Signature: `fn schema_validator_is_domain_supplied() {`
-  - Purpose: Indexed function `schema_validator_is_domain_supplied` in `crates/gcore/src/postgres.rs`. [crates/gcore/src/postgres.rs:313-334]
+  - Purpose: Verifies that 'run_schema_validator' passes through the supplied domain object names unchanged and yields checks for 'domain_symbols' and 'domain_bm25_idx' in the same order. [crates/gcore/src/postgres.rs:313-334]
 - `sslmode_parser_selects_tls_modes` (function) component `sslmode_parser_selects_tls_modes [function]` (`de0e8b90-1c62-54f9-a294-b8fa7fb5d4b9`) lines 337-347 [crates/gcore/src/postgres.rs:337-347]
   - Signature: `fn sslmode_parser_selects_tls_modes() {`
-  - Purpose: Indexed function `sslmode_parser_selects_tls_modes` in `crates/gcore/src/postgres.rs`. [crates/gcore/src/postgres.rs:337-347]
+  - Purpose: Parses PostgreSQL connection URLs with 'sslmode=require' and 'sslmode=disable' into 'postgres::Config' values and asserts that 'get_ssl_mode()' returns 'SslMode::Require' and 'SslMode::Disable', respectively. [crates/gcore/src/postgres.rs:337-347]
 - `quoted_verify_sslmodes_normalize_for_postgres_parser` (function) component `quoted_verify_sslmodes_normalize_for_postgres_parser [function]` (`21c1fd46-c1e5-5055-9930-2e6e0f37b10c`) lines 350-381 [crates/gcore/src/postgres.rs:350-381]
   - Signature: `fn quoted_verify_sslmodes_normalize_for_postgres_parser() {`
-  - Purpose: Indexed function `quoted_verify_sslmodes_normalize_for_postgres_parser` in `crates/gcore/src/postgres.rs`. [crates/gcore/src/postgres.rs:350-381]
+  - Purpose: Verifies that quoted 'sslmode' values are parsed correctly and normalized for PostgreSQL connection strings, including mapping 'verify-ca' and 'verify-full' to 'require' in parser output while still recognizing 'verify-full' as 'RequestedSslMode::VerifyFull'. [crates/gcore/src/postgres.rs:350-381]
 - `tls_connector_construction_unverified_disables_peer_verification` (function) component `tls_connector_construction_unverified_disables_peer_verification [function]` (`7e15a212-70e7-595a-8be9-2bfbcb15b436`) lines 384-391 [crates/gcore/src/postgres.rs:384-391]
   - Signature: `fn tls_connector_construction_unverified_disables_peer_verification() -> anyhow::Result<()> {`
-  - Purpose: Indexed function `tls_connector_construction_unverified_disables_peer_verification` in `crates/gcore/src/postgres.rs`. [crates/gcore/src/postgres.rs:384-391]
+  - Purpose: Verifies that constructing a TLS connector in 'TlsConnectorMode::Unverified' sets 'verify_mode' to 'SslVerifyMode::NONE', leaves 'disables_hostname_verification' false, and successfully creates a connector. [crates/gcore/src/postgres.rs:384-391]
 - `tls_connector_construction_verify_ca_keeps_peer_verification_without_hostname` (function) component `tls_connector_construction_verify_ca_keeps_peer_verification_without_hostname [function]` (`108599d3-d343-56f4-8e4e-43da727d4e7e`) lines 394-402 [crates/gcore/src/postgres.rs:394-402]
   - Signature: `fn tls_connector_construction_verify_ca_keeps_peer_verification_without_hostname()`
-  - Purpose: Indexed function `tls_connector_construction_verify_ca_keeps_peer_verification_without_hostname` in `crates/gcore/src/postgres.rs`. [crates/gcore/src/postgres.rs:394-402]
+  - Purpose: Verifies that building a TLS connector in 'VerifyCa' mode sets 'SslVerifyMode::PEER', disables hostname verification, and that constructing the connector succeeds. [crates/gcore/src/postgres.rs:394-402]
 - `tls_connector_construction_verify_full_keeps_peer_and_hostname_verification` (function) component `tls_connector_construction_verify_full_keeps_peer_and_hostname_verification [function]` (`f8bbb66d-bddc-5792-a149-6ce0e370fc79`) lines 405-413 [crates/gcore/src/postgres.rs:405-413]
   - Signature: `fn tls_connector_construction_verify_full_keeps_peer_and_hostname_verification()`
-  - Purpose: Indexed function `tls_connector_construction_verify_full_keeps_peer_and_hostname_verification` in `crates/gcore/src/postgres.rs`. [crates/gcore/src/postgres.rs:405-413]
+  - Purpose: Verifies that constructing a TLS connector in 'VerifyFull' mode preserves peer verification ('SslVerifyMode::PEER') and does not disable hostname verification, and that the connector can be created successfully. [crates/gcore/src/postgres.rs:405-413]
 

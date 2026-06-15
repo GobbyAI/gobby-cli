@@ -4,113 +4,7 @@ type: code_architecture
 provenance:
 - file: crates/gcode/contract/gcode.contract.json
   ranges:
-  - 2-855
-- file: crates/gcode/src/commands/codewiki/ownership.rs
-  ranges:
-  - 17-20
-  - 22-29
-  - 32-35
-  - 38-41
-  - 44-50
-  - 53-57
-  - 60-62
-  - 65-68
-  - 71-76
-  - 79-82
-  - 84-129
-  - 131-141
-  - 143-161
-  - 163-182
-  - 184-219
-  - 221-285
-  - 287-289
-  - 291-302
-  - 304-308
-  - 310-331
-  - 333-363
-  - 365-370
-  - 372-425
-  - 427-434
-  - 436-445
-  - 447-461
-  - 463-487
-  - 489-521
-  - 523-525
-  - 527-553
-  - 555-567
-  - 569-579
-  - 581-625
-  - 627-633
-  - 635-657
-  - 672-699
-  - 702-726
-  - 729-746
-  - 749-770
-  - 773-796
-  - 799-818
-  - 821-856
-  - 859-883
-  - 885-890
-  - 892-911
-  - 913-922
-  - 924-940
-  - 942-950
-- file: crates/gcode/src/commands/codewiki/text.rs
-  ranges:
-  - 18-32
-  - 35-39
-  - 41-89
-  - 94-108
-  - 110-118
-  - 120-136
-  - 143-147
-  - 149-166
-  - 168-182
-  - 191-201
-  - 203-206
-  - 208-223
-  - 225-234
-  - 239-242
-  - 244-256
-  - 258-264
-  - 266-268
-  - 270-279
-  - 303-311
-  - 315-321
-  - 323-328
-  - 335-375
-  - 377-383
-  - 385-405
-  - 407-419
-  - 421-430
-  - 432-438
-  - 443-456
-  - 458-474
-  - 476-502
-  - 504-521
-  - 523-536
-  - 539-541
-  - 545-552
-  - 554-561
-  - 563-630
-  - 632-656
-  - 662-668
-  - 671-690
-  - 693-713
-  - 716-728
-  - 731-744
-  - 747-760
-  - 763-773
-  - 776-787
-  - 790-822
-  - 825-840
-  - 843-850
-  - 853-886
-  - 889-892
-  - 894-900
-  - 903-916
-  - 919-928
-  - 931-943
+  - 2-928
 - file: crates/gcode/src/commands/codewiki/types.rs
   ranges:
   - 11-21
@@ -264,64 +158,6 @@ provenance:
   - 756-761
   - 763-765
   - 767-794
-- file: crates/gcode/src/graph/code_graph/write.rs
-  ranges:
-  - 110-113
-  - 116-118
-  - 120-158
-  - 160-165
-  - 167-177
-  - 179-195
-  - 197-216
-  - 218-249
-  - 251-266
-  - 268-277
-  - 279-284
-  - 286-290
-  - 292-297
-  - 299-301
-  - 304-315
-  - 317-326
-  - 328-336
-  - 338-342
-  - 344-346
-  - 348-352
-  - 354-377
-  - 379-383
-  - 385-392
-  - 394-400
-  - 402-406
-  - 409-412
-  - 415-422
-  - 425-429
-  - 431-438
-  - 440-455
-  - 457-462
-  - 464-492
-  - 494-507
-  - 509-511
-  - 513-518
-  - 520-528
-  - 530-566
-  - 568-586
-  - 588-618
-  - 620-654
-  - 656-660
-  - 662-694
-  - 696-702
-  - 704-723
-  - 725-743
-  - 745-765
-  - 767-778
-  - 780-791
-  - 793-804
-  - 806-864
-  - 866-933
-  - 935-947
-  - 949-957
-  - 959-975
-  - 977-986
-  - 988-997
 - file: crates/gcode/src/index/semantic.rs
   ranges:
   - 15-23
@@ -370,58 +206,6 @@ provenance:
   - 792-797
   - 802-826
   - 829-864
-- file: crates/gcode/src/index/walker.rs
-  ranges:
-  - 35-38
-  - 41-43
-  - 45-51
-  - 55-60
-  - 62-107
-  - 110-134
-  - 138-148
-  - 151-160
-  - 163-175
-  - 177-195
-  - 197-213
-  - 215-219
-  - 222-224
-  - 226-273
-  - 275-289
-  - 291-303
-  - 305-311
-  - 313-316
-  - 318-326
-  - 328-358
-  - 360-385
-  - 387-395
-  - 397-422
-  - 424-444
-  - 446-451
-  - 453-463
-  - 465-471
-  - 473-498
-  - 504-510
-  - 512-524
-  - 527-566
-  - 569-590
-  - 593-604
-  - 607-617
-  - 620-629
-  - 632-652
-  - 655-674
-  - 677-698
-  - 701-716
-  - 719-752
-  - 755-777
-  - 780-791
-  - 794-812
-  - 815-829
-  - 832-845
-  - 848-861
-  - 864-877
-  - 880-894
-  - 897-907
-  - 910-917
 - file: crates/gcode/src/models.rs
   ranges:
   - 18-22
@@ -505,58 +289,6 @@ provenance:
   - 640-651
   - 654-713
   - 716-738
-- file: crates/gcore/src/config/tests.rs
-  ranges:
-  - 9-11
-  - 18-32
-  - 34-47
-  - 49-57
-  - 61-63
-  - 65-98
-  - 100-104
-  - 107-110
-  - 112-132
-  - 134-146
-  - 149-152
-  - 154-167
-  - 169-180
-  - 183-186
-  - 188-198
-  - 200-210
-  - 213-233
-  - 236-257
-  - 260-284
-  - 288-307
-  - 310-323
-  - 326-342
-  - 345-354
-  - 357-392
-  - 395-458
-  - 462-480
-  - 484-505
-  - 508-546
-  - 549-588
-  - 591-610
-  - 613-659
-  - 662-688
-  - 691-737
-  - 740-747
-  - 750-763
-  - 766-779
-  - 783-799
-  - 802-813
-  - 817-834
-  - 837-850
-  - 853-862
-  - 865-872
-  - 875-888
-  - 891-905
-  - 907-913
-  - 915-919
-  - 921-953
-  - 955-969
-  - 971-984
-  - 986-991
 - file: crates/ghook/schemas/diagnose-output.v2.schema.json
   ranges:
   - 2-79
@@ -613,100 +345,7 @@ provenance:
   - 516-526
 - file: crates/gwiki/contract/gwiki.contract.json
   ranges:
-  - 2-879
-- file: crates/gwiki/src/ai/chunk.rs
-  ranges:
-  - 24-30
-  - 33-35
-  - 38-47
-  - 49-56
-  - '58'
-  - 60-91
-  - 93-99
-  - 101-113
-  - 115-117
-  - 120-131
-  - 133-197
-  - 199-214
-  - 216-229
-  - 231-245
-  - 247-265
-  - 267-272
-  - 274-281
-  - 283-289
-  - 291-293
-  - '301'
-  - 304-310
-  - 313-319
-  - 322-324
-  - 335-343
-  - 346-351
-  - 354-385
-  - 388-403
-  - 406-432
-  - 435-487
-  - 489-492
-  - 494-501
-  - 503-513
-  - 515-517
-  - 519-525
-  - 527-534
-  - 536-539
-  - 541-562
-  - 564-571
-  - 574-584
-  - 586-594
-  - 596-617
-- file: crates/gwiki/src/audit.rs
-  ranges:
-  - 33-35
-  - 37-73
-  - 75-84
-  - 87-93
-  - 96-103
-  - 106-111
-  - 114-116
-  - 118-141
-  - 143-172
-  - 174-186
-  - 188-195
-  - 197-226
-  - 228-237
-  - 239-244
-  - 246-255
-  - 257-262
-  - 264-280
-  - 282-288
-  - 290-327
-  - 330-335
-  - 338-341
-  - 348-425
-  - 427-433
-  - 435-444
-  - 446-450
-  - 452-454
-  - 456-463
-  - 465-477
-  - 479-487
-  - 489-502
-  - 504-509
-  - 511-516
-  - 518-529
-  - 531-553
-  - 561-595
-  - 598-664
-  - 667-692
-  - 695-722
-  - 725-744
-  - 747-767
-  - 770-778
-  - 781-794
-  - 797-834
-  - 837-844
-  - 847-876
-  - 879-932
-  - 934-943
-  - 946-965
+  - 2-887
 - file: crates/gwiki/src/benchmark.rs
   ranges:
   - 30-39
@@ -761,62 +400,6 @@ provenance:
   - 863-873
   - 876-881
   - 884-893
-- file: crates/gwiki/src/falkor_graph.rs
-  ranges:
-  - 29-31
-  - 33-43
-  - 46-49
-  - 51-54
-  - 56-60
-  - 62-78
-  - 80-104
-  - 106-197
-  - 199-240
-  - 242-250
-  - 252-288
-  - 290-296
-  - 298-314
-  - 316-320
-  - 322-328
-  - 330-332
-  - 334-346
-  - 348-350
-  - 352-365
-  - 367-370
-  - 372-402
-  - 404-439
-  - 441-444
-  - 446-473
-  - 475-486
-  - 488-573
-  - 575-607
-  - 609-617
-  - 619-632
-  - 634-636
-  - 638-651
-  - 653-658
-  - 660-666
-  - 668-670
-  - 672-680
-  - 682-697
-  - 699-702
-  - 704-708
-  - 710-714
-  - 717-719
-  - 722-739
-  - 741-745
-  - 756-759
-  - 762-805
-  - 808-819
-  - 822-824
-  - 827-833
-  - 836-841
-  - 844-855
-  - 858-874
-  - 877-886
-  - 889-908
-  - 911-923
-  - 926-978
 - file: crates/gwiki/src/graph/mod.rs
   ranges:
   - 22-26
@@ -1021,60 +604,6 @@ provenance:
   - 729-746
   - 748-797
   - 800-833
-- file: crates/gwiki/src/ingest/url.rs
-  ranges:
-  - 22-28
-  - 31-35
-  - 38-42
-  - 45-48
-  - 50-62
-  - 65-74
-  - 76-110
-  - 112-145
-  - 147-157
-  - 159-164
-  - 166-205
-  - 208-210
-  - 212-221
-  - 223-296
-  - 298-302
-  - 304-318
-  - 320-326
-  - 328-355
-  - 357-363
-  - 365-377
-  - 379-412
-  - 414-418
-  - 420-441
-  - 443-445
-  - 447-449
-  - 451-460
-  - 462-487
-  - 489-516
-  - 518-524
-  - 526-538
-  - 540-547
-  - 549-555
-  - 557-573
-  - 575-585
-  - 587-596
-  - 598-632
-  - 634-649
-  - 651-657
-  - 659-661
-  - 663-683
-  - 685-694
-  - 712-752
-  - 755-785
-  - 788-799
-  - 802-844
-  - 847-867
-  - 870-885
-  - 888-908
-  - 911-916
-  - 918-934
-  - 937-940
-  - 942-983
 - file: crates/gwiki/src/search/semantic.rs
   ranges:
   - 18-22
@@ -1124,59 +653,6 @@ provenance:
   - 605-614
   - 617-619
   - 622-638
-- file: crates/gwiki/src/store.rs
-  ranges:
-  - 15-21
-  - 24-30
-  - 33-40
-  - 43-49
-  - 52-57
-  - 60-66
-  - 69-73
-  - 76-78
-  - 80-112
-  - 115-121
-  - 123-134
-  - '136'
-  - 138-148
-  - 150-159
-  - 168-180
-  - 182-233
-  - 236-240
-  - 242-246
-  - 249-255
-  - 257-264
-  - 266-293
-  - 297-313
-  - 315-371
-  - 373-469
-  - 471-540
-  - 542-586
-  - 588-633
-  - 635-642
-  - 644-669
-  - 672-674
-  - 676-681
-  - 683-688
-  - 690-706
-  - 708-710
-  - 712-718
-  - 720-725
-  - 727-739
-  - 741-744
-  - 746-765
-  - 767-775
-  - 777-785
-  - 787-794
-  - 796-803
-  - 805-809
-  - 811-815
-  - 817-829
-  - 836-843
-  - 846-867
-  - 870-875
-  - 878-922
-  - 925-939
 - file: crates/gwiki/src/vector.rs
   ranges:
   - 17-26
@@ -1221,10 +697,40 @@ provenance:
   - 657-660
   - 662-693
   - 695-704
+- file: docs/evidence/wiki-parity-2026-06/wp3-deposit-search.json
+  ranges:
+  - 2-90
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-daemon.json
+  ranges:
+  - 3-299
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json
+  ranges:
+  - 3-295
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-search.json
+  ranges:
+  - 2-113
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q2-rrf-ask-daemon.json
+  ranges:
+  - 3-341
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q2-rrf-search.json
+  ranges:
+  - 2-84
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json
+  ranges:
+  - 3-327
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q4-falkor-ask-daemon.json
+  ranges:
+  - 3-341
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q4-falkor-search.json
+  ranges:
+  - 2-84
+- file: docs/evidence/wiki-parity-2026-06/wp3-search-hybrid.json
+  ranges:
+  - 3-137
 - file: docs/evidence/wiki-parity-2026-06/wp3-search-sources.json
   ranges:
   - 3-227
-provenance_truncated: 342
+provenance_truncated: 427
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -1234,71 +740,71 @@ freshness: indexed
 
 ## Overview
 
-At the foundation are the shared local contracts and infrastructure surfaces. `crates/gcore` provides the common bootstrap, configuration, daemon discovery, provisioning, degradation, AI context, and optional storage/indexing integrations that other tools can stand on. Around that base, `crates/gcode`, `crates/gwiki`, `crates/ghook`, `crates/gloc`, and `crates/gsqz` are independent subsystem tools rather than a tightly coupled call graph; the supplied dependency edges show no cross-subsystem dependencies, so their collaboration happens through stable CLI contracts, shared state locations, daemon-facing envelopes, and common backend services such as Postgres, FalkorDB, Qdrant, memory stores, and AI services.
+The foundation is `crates/gcore`, which defines shared, transport-neutral contracts for configuration, AI context, daemon/bootstrap behavior, setup and degradation handling, and optional datastore, search, and indexing primitives. Its schemas and packaged service assets give the rest of the repository a common vocabulary for daemon requests, local services, and feature-gated integrations without forcing direct subsystem coupling.
 
-The next layer is made of domain tools that produce or transform local knowledge and execution context. `crates/gcode` indexes code and projects, writes code-index facts, and projects them into graph and vector services for search, graph, vector, and codewiki workflows. `crates/gwiki` performs a parallel role for local-first documentation and wiki content: it captures sources, resolves scopes, indexes Markdown and wiki material, searches provenance, and can synthesize richer answers using optional graph, vector, memory, Postgres, and AI services. `docs/evidence` sits alongside these documentation paths as the proof layer, storing reproducible artifacts that verify search, compile, citation, and synthesis behavior.
+On top of that shared contract layer sit independent tool subsystems. `crates/gcode` provides the fast code indexing CLI and owns project resolution, indexing, search, graph and vector projection, output, and progress behavior. `crates/gwiki` provides local-first wiki capture, storage, indexing, search, synthesis, and export. `crates/ghook` bridges host CLI hook invocations into durable daemon-facing envelopes, while `crates/gloc` launches AI CLI clients against detected local backends, and `crates/gsqz` compresses command output into concise LLM-oriented summaries. These tools interact through stable contracts, configuration conventions, daemon-facing envelopes, and optional shared services such as Postgres, FalkorDB, Qdrant, clangd, graph storage, and vector search rather than through direct cross-subsystem dependencies.
 
-At the interaction layer, the remaining tools adapt Gobby’s environment to user and agent workflows. `crates/ghook` translates host CLI hook calls into validated diagnostics and replayable daemon inbox envelopes while preserving each host’s output contract. `crates/gloc` launches local LLM-backed clients by resolving layered configuration, probing backends, preparing models, and translating backend choices into client-specific execution environments. `crates/gsqz` compresses verbose command output into concise summaries for LLM consumption and can report savings back to the daemon. Together these layers keep the core services local and shared, the indexing and wiki systems independently productive, and the outer tools focused on reliable integration with CLIs, hooks, model launchers, and agent-readable output.
-[crates/gcode/src/vector/code_symbols/qdrant.rs:18-24]
+The outer evidence layer is `docs/evidence`, which records auditable generated artifacts from wiki-parity workflows. It preserves compile, ingestion, search, validation, and ask outputs, including metadata, hashes, citations, rankings, and warning states. This layer does not drive runtime behavior; it documents and verifies the behavior of subsystems such as `gwiki` and `ghook`, making generated content and synthesized answers traceable back to concrete source paths and code citations.
+[crates/gcode/src/vector/code_symbols/qdrant.rs:21-27]
+[crates/gcode/src/vector/code_symbols/repository.rs:6-18]
 [crates/gcode/src/vector/code_symbols/search.rs:8-14]
-[crates/gcode/src/commands/codewiki/graph.rs:4-109]
-[crates/gcode/src/commands/codewiki/paths.rs:3-14]
-[crates/gcode/src/graph/code_graph.rs:1-46]
+[crates/gcode/src/graph/code_graph.rs:1-47]
+[crates/gcode/src/graph/code_graph/connection.rs:7-12]
 
 ## Subsystems
 
-- [[code/modules/crates/gcode|crates/gcode]] - crates/gcode provides Gobby’s fast code index CLI and library surface: it discovers projects, indexes code and content, exposes search/graph/vector/codewiki commands through a daemon-consumed contract, and gates PostgreSQL-backed test behavior at build time. It collaborates with the rest of Gobby by reading and writing code-index facts in PostgreSQL, projecting those facts into FalkorDB and vector services, and supplying stable CLI contracts and lookup assets that other daemon workflows consume.
-[crates/gcode/src/commands/codewiki/build.rs:1-25]
-[crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-168]
-[crates/gcode/src/commands/codewiki/build_parts/changes.rs:5-101]
-[crates/gcode/src/commands/codewiki/build_parts/file.rs:12-15]
-[crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-131]
+- [[code/modules/crates/gcode|crates/gcode]] - crates/gcode implements the `gcode` CLI, a fast code indexing interface for Gobby that owns command contracts, project/config resolution, indexing, search, graph/vector projection, output, and progress behavior. It collaborates with the rest of the system through its daemon-consumed contract, shared project identity and service configuration, static import-root assets, Postgres-backed test/config gates, and optional external services such as clangd, graph storage, and vector search.
+[crates/gcode/src/index/import_resolution/parser/rest.rs:10-54]
+[crates/gcode/src/vector/code_symbols/search.rs:8-14]
+[crates/gcode/src/config/services.rs:20-22]
+[crates/gcode/src/graph/code_graph.rs:1-47]
+[crates/gcode/src/graph/code_graph/connection.rs:7-12]
   - [[code/modules/crates/gcode/assets|crates/gcode/assets]]
   - [[code/modules/crates/gcode/contract|crates/gcode/contract]]
   - [[code/modules/crates/gcode/src|crates/gcode/src]]
-- [[code/modules/crates/gcore|crates/gcore]] - crates/gcore is the shared Rust foundation for Gobby tools, providing common bootstrap, daemon URL discovery, configuration resolution, CLI contracts, provisioning, degradation types, AI context, and optional storage/indexing integrations. It collaborates with the daemon, CLI, and feature-gated backends by resolving local state and config from GOBBY_HOME/project layers, routing AI capabilities without owning transport by default, and packaging Docker-managed FalkorDB, Qdrant, and Postgres services for install/start workflows.
-[crates/gcore/src/config/types.rs:5-9]
-[crates/gcore/src/daemon_url.rs:28-34]
-[crates/gcore/src/provisioning/bootstrap.rs:8-15]
-[crates/gcore/src/provisioning/docker.rs:9-18]
-[crates/gcore/src/ai/daemon.rs:19-24]
+- [[code/modules/crates/gcore|crates/gcore]] - crates/gcore is Gobby’s shared core layer, defining transport-neutral configuration, AI context/types, daemon/bootstrap contracts, setup/degradation handling, and optional datastore/search/indexing primitives. It collaborates with higher-level crates by supplying stable schemas and feature-gated integrations, while its packaged assets provision the local FalkorDB, Qdrant, and Postgres services those consumers can depend on.
+[crates/gcore/src/ai/daemon/transport.rs:8-12]
+[crates/gcore/src/ai/daemon/types.rs:4-9]
+[crates/gcore/src/ai/daemon.rs:1-15]
+[crates/gcore/src/ai/daemon/operations.rs:20-72]
+[crates/gcore/src/ai/daemon/request.rs:11-19]
   - [[code/modules/crates/gcore/assets|crates/gcore/assets]]
   - [[code/modules/crates/gcore/src|crates/gcore/src]]
-- [[code/modules/crates/ghook|crates/ghook]] - `crates/ghook` provides Gobby’s Rust hook dispatcher, translating supported host CLI hook invocations into validated diagnostic output and queued inbox envelopes while preserving each CLI’s stdout, stderr, and exit-code contract. It collaborates with the daemon by enqueueing replayable hook envelopes and best-effort POSTing them, using strict JSON schemas so the daemon drain worker and diagnostic consumers can reject malformed or unknown data predictably.
+- [[code/modules/crates/ghook|crates/ghook]] - crates/ghook is the CLI-side hook bridge that recognizes host CLIs, diagnoses hook behavior, and converts owned hook invocations into durable daemon-facing envelopes. It collaborates with the daemon through fixed JSON-schema contracts for diagnose output and inbox replay, preserving host-specific hook semantics, criticality, source mapping, headers, and optional terminal context.
+[crates/ghook/src/terminal_context.rs:18-23]
 [crates/ghook/src/cli_config.rs:11-18]
+[crates/ghook/src/diagnose.rs:15-32]
 [crates/ghook/src/json_value.rs:3-20]
 [crates/ghook/src/output.rs:3-5]
-[crates/ghook/src/detach.rs:23-43]
-[crates/ghook/src/diagnose.rs:15-32]
   - [[code/modules/crates/ghook/schemas|crates/ghook/schemas]]
   - [[code/modules/crates/ghook/src|crates/ghook/src]]
-- [[code/modules/crates/gloc|crates/gloc]] - `crates/gloc` provides the local LLM launcher configuration and runtime that selects a backend, client CLI, and model, ensures local model readiness when configured, and then execs into tools like Claude or Codex. It collaborates with shared Gobby core config/backend utilities for layered config loading and backend probing while translating the chosen backend into each client’s expected environment, flags, aliases, and passthrough arguments.
+- [[code/modules/crates/gloc|crates/gloc]] - `crates/gloc` provides a configurable launcher that detects a local LLM backend, resolves client/model settings, validates readiness, and execs into AI CLI tools such as Claude or Codex. It collaborates with shared core configuration and backend probing facilities while exposing project/global/built-in config layers, status/init/dump commands, model aliases, and environment/argument templating for downstream client processes.
 [crates/gloc/src/backend.rs:7-12]
 [crates/gloc/src/config.rs:13-22]
 [crates/gloc/src/exec.rs:9-21]
 [crates/gloc/src/main.rs:16-52]
 [crates/gloc/config.yaml:11-17]
   - [[code/modules/crates/gloc/src|crates/gloc/src]]
-- [[code/modules/crates/gsqz|crates/gsqz]] - crates/gsqz provides the configurable command-output compression layer that turns verbose shell, test, lint, build, package, container, and download output into concise LLM-friendly summaries. It collaborates with the rest of Gobby through a CLI that loads layered YAML configuration, applies first-match pipelines or fallback steps to stdin or command output, respects built-in exclusions for inspection tools, and can report compression savings back to the daemon.
-[crates/gsqz/src/primitives/match_output.rs:8-33]
+- [[code/modules/crates/gsqz|crates/gsqz]] - `crates/gsqz` provides the configurable output-compression subsystem and CLI, turning command or stdin output into concise LLM-oriented summaries while preserving failures, diagnostics, and important results. It collaborates through layered YAML configuration and command-matched pipelines, applying reusable steps such as filtering, grouping, deduplication, replacement, truncation, prose compression, fallback handling, exclusions, and optional daemon-provided config.
 [crates/gsqz/src/command_split.rs:5-85]
-[crates/gsqz/src/daemon.rs:11-23]
-[crates/gsqz/src/compressor.rs:7-12]
 [crates/gsqz/src/config.rs:26-35]
+[crates/gsqz/src/daemon.rs:11-23]
+[crates/gsqz/src/primitives/match_output.rs:8-33]
+[crates/gsqz/src/primitives/prose.rs:5-9]
   - [[code/modules/crates/gsqz/src|crates/gsqz/src]]
-- [[code/modules/crates/gwiki|crates/gwiki]] - crates/gwiki implements the local-first wiki CLI: it defines the gwiki command contract, resolves project/topic scopes, captures and ingests sources, indexes Markdown/wiki content, searches and audits provenance, and formats command output. It collaborates with the rest of the system through daemon-consumed CLI contracts, shared scope identities, memory/Postgres index stores, source manifests, and optional graph/vector/AI services for richer search, upkeep, and synthesis.
-[crates/gwiki/src/search/graph_boost.rs:21-24]
-[crates/gwiki/src/code_graph.rs:15-18]
-[crates/gwiki/src/commands/ask/synthesis.rs:15-45]
-[crates/gwiki/src/commands/graph.rs:13-52]
-[crates/gwiki/src/commands/graph_context.rs:13-83]
+- [[code/modules/crates/gwiki|crates/gwiki]] - crates/gwiki provides the local-first wiki CLI and library surface for capturing, indexing, searching, maintaining, synthesizing, and exporting scoped wiki vaults. It collaborates with the rest of the system through a pinned CLI contract, shared command dispatch, scope/vault resolution, PostgreSQL-backed storage and schema setup, and optional search/AI integrations such as embeddings and Qdrant.
+[crates/gwiki/src/commands/refresh/vault.rs:7-9]
+[crates/gwiki/src/commands/search.rs:27-30]
+[crates/gwiki/src/commands/setup.rs:18]
+[crates/gwiki/src/contract.rs:6-470]
+[crates/gwiki/src/falkor_graph/wiki_facts.rs:13-98]
   - [[code/modules/crates/gwiki/contract|crates/gwiki/contract]]
   - [[code/modules/crates/gwiki/src|crates/gwiki/src]]
-- [[code/modules/docs/evidence|docs/evidence]] - docs/evidence stores reproducible proof artifacts for documentation and wiki workflows, especially `gwiki` search and compile parity checks. It collaborates with the search, indexing, citation, and daemon synthesis paths by recording resolved scope, commands, ranked hybrid results, source citations, generated outputs, and write metadata used to verify grounded documentation behavior.
+- [[code/modules/docs/evidence|docs/evidence]] - docs/evidence stores generated, auditable evidence bundles for wiki-parity workstreams, capturing compile, ingestion, search, validation, and ask outputs with AI metadata, source hashes, citations, rankings, and warning states. It collaborates with gwiki and ghook by preserving their run artifacts so generated wiki content, search behavior, and synthesized answers can be traced back to source paths and code citations.
+[docs/evidence/wiki-parity-2026-06/wp3-compile-source.json:2]
+[docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-daemon.json:3-10]
+[docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:3-10]
+[docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-search.json:2-15]
 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:3-12]
-[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:3-12]
-[docs/evidence/wiki-parity-2026-06/wp3-search-sources.json:3-16]
-[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:4]
-[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:5]
   - [[code/modules/docs/evidence/wiki-parity-2026-06|docs/evidence/wiki-parity-2026-06]]
 

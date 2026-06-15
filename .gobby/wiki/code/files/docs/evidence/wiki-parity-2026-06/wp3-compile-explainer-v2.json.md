@@ -16,7 +16,7 @@ Module: [[code/modules/docs/evidence/wiki-parity-2026-06|docs/evidence/wiki-pari
 
 ## Purpose
 
-Records the result of a `gwiki compile` run for the “gsqz compression shipping decision” explainer. It ties together the resolved project scope, AI synthesis metadata, target article and index paths, the requested outline, created wiki pages, and the prompt and source-scope details used to generate the article.
+Records the outcome of a `gwiki compile` run for the gsqz compression shipping decision explainer. It bundles AI synthesis metadata, the resolved project scope, output/article and index paths, the requested outline, created page writes, and the prompt used to generate the wiki article, so the compile pipeline can audit how the explainer was produced and where its outputs landed.
 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:3-12]
 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:4]
 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:5]

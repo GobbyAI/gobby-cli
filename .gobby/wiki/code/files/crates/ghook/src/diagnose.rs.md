@@ -33,7 +33,7 @@ Module: [[code/modules/crates/ghook/src|crates/ghook/src]]
 
 ## Purpose
 
-Builds the `ghook --diagnose` introspection output: it assembles a schema-versioned JSON report describing the current CLI/hook invocation, daemon connection details, project context, terminal-context state, CLI recognition, and install provenance for the running binary. The helper functions read optional `.ghook-install.json` sidecar metadata and locate it beside the executable, while the tests verify CLI-specific criticality/source behavior and that the output and provenance parsing conform to the v2 schema and failure-tolerant sidecar rules.
+Implements `ghook --diagnose`, a pure introspection command that emits a JSON report describing what a Git hook invocation would do, without network I/O or envelope writes. `DiagnoseOutput` defines the schema-shaped payload, `read_install_provenance` and `install_provenance_for_running_binary` load optional installer sidecar metadata, and `diagnose` combines CLI config, daemon/project context, hook criticality, terminal context, and install provenance into the final result. The tests exercise CLI recognition, criticality, provenance fallback behavior, and validation against the v2 JSON schema.
 [crates/ghook/src/diagnose.rs:15-32]
 [crates/ghook/src/diagnose.rs:42-45]
 [crates/ghook/src/diagnose.rs:51-60]

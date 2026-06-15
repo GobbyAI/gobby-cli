@@ -43,7 +43,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-Implements the `read` command for gwiki. `execute` resolves the selected command scope, dispatches to either path-based or title-based lookup, and renders the result as a `CommandOutcome` or `WikiError`. The path flow normalizes and validates vault-relative paths, rejects unreadable locations, checks file existence, then reads markdown content with a byte cap, extracting the first heading and truncation metadata. The title flow searches the scoped wiki tree for matching first headings with bounded depth and scan limits, returning either the unique document, a not-found result, or an ambiguous result with candidates. Supporting types model the requested target, candidate documents, read output, and structured degradation/error messages used to report invalid input, missing documents, and ambiguity.
+Implements the `read` command for a wiki scope: it resolves the active scope, then reads either a requested path or a title and turns the result into a `CommandOutcome` or `WikiError`. Path reads are validated against vault-relative, readable Markdown locations before opening the file, while title reads search the scoped tree for matching first headings and return found, not found, invalid, or ambiguous results. The supporting types and helpers (`ReadRequested`, `ReadOutput`, `ReadCandidate`, `ReadDegradation`, and rendering functions) package content, diagnostics, and user-facing guidance into a structured response.
 [crates/gwiki/src/commands/read.rs:17-28]
 [crates/gwiki/src/commands/read.rs:30-57]
 [crates/gwiki/src/commands/read.rs:59-85]

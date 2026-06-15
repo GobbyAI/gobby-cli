@@ -23,8 +23,8 @@ provenance:
   - 18-166
 - file: crates/gcode/src/commands/codewiki/build_parts/hotspots.rs
   ranges:
-  - 5-131
-  - 133-157
+  - 5-134
+  - 136-160
 - file: crates/gcode/src/commands/codewiki/build_parts/modules.rs
   ranges:
   - 6-27
@@ -36,13 +36,13 @@ provenance:
   ranges:
   - 7-52
   - 54-109
-  - 111-200
-  - 202-208
-  - 210-212
-  - 214-219
-  - 225-246
-  - 249-255
-  - 258-268
+  - 111-201
+  - 203-209
+  - 211-213
+  - 215-220
+  - 226-247
+  - 250-256
+  - 259-269
 - file: crates/gcode/src/commands/codewiki/build_parts/snapshot.rs
   ranges:
   - 6-84
@@ -78,10 +78,10 @@ provenance:
   - 118-306
 - file: crates/gcode/src/commands/codewiki/graph.rs
   ranges:
-  - 4-109
-  - 113-142
-  - 148-163
-  - 165-180
+  - 5-110
+  - 114-143
+  - 149-164
+  - 166-181
 - file: crates/gcode/src/commands/codewiki/io.rs
   ranges:
   - 3-9
@@ -109,59 +109,64 @@ provenance:
   - 407-437
   - 440-447
   - 449-459
-- file: crates/gcode/src/commands/codewiki/mod.rs
-  ranges:
-  - 1-100
 - file: crates/gcode/src/commands/codewiki/ownership.rs
   ranges:
-  - 17-20
-  - 22-29
-  - 32-35
-  - 38-41
-  - 44-50
-  - 53-57
-  - 60-62
-  - 65-68
-  - 71-76
-  - 79-82
-  - 84-129
-  - 131-141
-  - 143-161
-  - 163-182
-  - 184-219
-  - 221-285
-  - 287-289
-  - 291-302
-  - 304-308
-  - 310-331
-  - 333-363
-  - 365-370
-  - 372-425
-  - 427-434
-  - 436-445
-  - 447-461
-  - 463-487
-  - 489-521
-  - 523-525
-  - 527-553
-  - 555-567
-  - 569-579
-  - 581-625
-  - 627-633
-  - 635-657
-  - 672-699
-  - 702-726
-  - 729-746
-  - 749-770
-  - 773-796
-  - 799-818
-  - 821-856
-  - 859-883
-  - 885-890
-  - 892-911
-  - 913-922
-  - 924-940
-  - 942-950
+  - 20-23
+  - 25-32
+  - 35-38
+  - 41-44
+  - 47-53
+  - 56-61
+  - 64-67
+  - 69-114
+- file: crates/gcode/src/commands/codewiki/ownership/analysis.rs
+  ranges:
+  - 17-21
+  - 23-87
+  - 89-91
+  - 93-104
+  - 106-110
+  - 112-133
+  - 135-165
+  - 167-172
+  - 174-227
+  - 229-236
+  - 238-247
+  - 249-263
+- file: crates/gcode/src/commands/codewiki/ownership/codeowners.rs
+  ranges:
+  - 5-7
+  - 10-13
+  - 15-25
+  - 27-45
+  - 47-66
+  - 68-103
+- file: crates/gcode/src/commands/codewiki/ownership/render.rs
+  ranges:
+  - 10-34
+  - 36-68
+  - 70-72
+  - 74-100
+  - 102-114
+  - 116-126
+  - 128-172
+  - 174-180
+  - 182-204
+- file: crates/gcode/src/commands/codewiki/ownership/tests.rs
+  ranges:
+  - 8-35
+  - 38-62
+  - 65-82
+  - 85-106
+  - 109-131
+  - 134-153
+  - 156-191
+  - 194-218
+  - 220-225
+  - 227-246
+  - 248-257
+  - 259-275
+  - 277-285
 - file: crates/gcode/src/commands/codewiki/paths.rs
   ranges:
   - 3-14
@@ -235,7 +240,7 @@ provenance:
   - 693-752
   - 755-761
   - 763-827
-  - 829-872
+  - 829-876
 - file: crates/gcode/src/commands/codewiki/reuse.rs
   ranges:
   - 11-19
@@ -249,82 +254,99 @@ provenance:
   - 204-206
   - 208-215
   - 220-266
-- file: crates/gcode/src/commands/codewiki/tests.rs
-  ranges:
-  - 24-42
 - file: crates/gcode/src/commands/codewiki/text.rs
   ranges:
-  - 18-32
-  - 35-39
-  - 41-89
-  - 94-108
-  - 110-118
-  - 120-136
-  - 143-147
-  - 149-166
-  - 168-182
-  - 191-201
-  - 203-206
+  - 45-51
+  - 54-73
+  - 76-96
+  - 99-111
+  - 114-127
+  - 130-143
+  - 146-156
+  - 159-170
+  - 173-205
   - 208-223
-  - 225-234
-  - 239-242
-  - 244-256
-  - 258-264
-  - 266-268
-  - 270-279
-  - 303-311
-  - 315-321
-  - 323-328
-  - 335-375
-  - 377-383
-  - 385-405
-  - 407-419
-  - 421-430
-  - 432-438
-  - 443-456
-  - 458-474
-  - 476-502
-  - 504-521
-  - 523-536
-  - 539-541
-  - 545-552
-  - 554-561
-  - 563-630
-  - 632-656
-  - 662-668
-  - 671-690
-  - 693-713
-  - 716-728
-  - 731-744
-  - 747-760
-  - 763-773
-  - 776-787
-  - 790-822
-  - 825-840
-  - 843-850
-  - 853-886
-  - 889-892
-  - 894-900
-  - 903-916
-  - 919-928
-  - 931-943
+  - 226-233
+  - 236-269
+  - 272-275
+  - 277-283
+  - 286-299
+  - 302-311
+  - 314-326
+- file: crates/gcode/src/commands/codewiki/text/citations.rs
+  ranges:
+  - 26-34
+  - 38-44
+  - 46-51
+  - 58-98
+  - 100-106
+  - 108-128
+  - 130-142
+  - 144-153
+  - 155-161
+  - 166-179
+  - 181-197
+  - 199-225
+  - 227-244
+  - 246-259
+- file: crates/gcode/src/commands/codewiki/text/frontmatter.rs
+  ranges:
+  - 6-20
+  - 23-27
+  - 35-37
+  - 41-48
+  - 50-57
+  - 59-126
+  - 128-152
+- file: crates/gcode/src/commands/codewiki/text/generation.rs
+  ranges:
+  - 20-68
+  - 73-87
+  - 89-97
+  - 99-112
+  - 119-123
+  - 125-142
+  - 144-158
+  - 167-177
+  - 179-182
 - file: crates/gcode/src/commands/codewiki/text/sanitize.rs
   ranges:
-  - 5-24
-  - 27-30
-  - 33-36
-  - 38-82
-  - 84-88
-  - 90-112
-  - 114-120
-  - 122-132
-  - 134-137
-  - 139-143
-  - 151-157
-  - 160-175
-  - 178-190
-  - 193-205
-  - 208-219
+  - 7-10
+  - 12-17
+  - 19-27
+  - 29-37
+  - 39-62
+  - 64-69
+  - 71-75
+  - 77-81
+  - 83-102
+  - 105-108
+  - 111-114
+  - 116-156
+  - 158-162
+  - 164-186
+  - 188-194
+  - 196-206
+  - 208-211
+  - 213-217
+  - 225-231
+  - 234-249
+  - 252-264
+  - 267-279
+  - 282-293
+  - 296-303
+  - 306-313
+  - 316-326
+  - 329-333
+- file: crates/gcode/src/commands/codewiki/text/structural.rs
+  ranges:
+  - 7-22
+  - 24-33
+  - 38-41
+  - 43-55
+  - 57-63
+  - 65-67
+  - 69-78
 - file: crates/gcode/src/commands/codewiki/types.rs
   ranges:
   - 11-21
@@ -365,6 +387,7 @@ provenance:
   - 386-402
   - 405-411
   - 413-433
+provenance_truncated: 2
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -376,186 +399,166 @@ Parent: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Overview
 
-The codewiki command owns end-to-end repository documentation generation: `run` gathers scoped files, symbols, leading content chunks, and dependency graph data into `CodewikiInput`, while `types` defines that shared input model, graph edge metadata, document structs, provenance spans, AI options, and excerpt helpers used downstream [crates/gcode/src/commands/codewiki/run.rs:22-186] [crates/gcode/src/commands/codewiki/types.rs:11-21] [crates/gcode/src/commands/codewiki/types.rs:33-45]. Its generation layer then filters and groups core files, clusters modules, reports progress, and emits hierarchical docs through wrapper modes for ownership, graph availability, progress, and reuse [crates/gcode/src/commands/codewiki/generation.rs:15-23] [crates/gcode/src/commands/codewiki/generation.rs:25-49] [crates/gcode/src/commands/codewiki/generation.rs:86-112].
+The `codewiki` module is the documentation generation system for the gcode crate, tying together input collection, graph analysis, clustering, prompt construction, rendering, reuse, ownership, and output persistence. Its top-level module defines shared constants and re-exports the main document-building APIs for module, file, architecture, onboarding, hotspot, and change summaries, while `build.rs` wires the concrete build helpers into one facade for the rest of the command code [crates/gcode/src/commands/codewiki/mod.rs:1-100] [crates/gcode/src/commands/codewiki/build.rs:1-25]. The central data model is `CodewikiInput`, which carries files, graph edges, graph availability, symbols, and leading content chunks; those chunks are converted into prompt excerpts and ranked by symbol density so aggregate prompts receive representative source context [crates/gcode/src/commands/codewiki/types.rs:11-21] .
 
-The module’s core flow combines structural analysis, graph lookup, AI prompting, rendering, and persistence. `cluster` derives subsystem roots and file/module clusters while respecting subsystem boundaries [crates/gcode/src/commands/codewiki/cluster.rs:8-43] [crates/gcode/src/commands/codewiki/cluster.rs:63-123] [crates/gcode/src/commands/codewiki/cluster.rs:125-149], and `graph` queries FalkorDB for call/import edges before converting them into typed `CodewikiGraph` edges [crates/gcode/src/commands/codewiki/graph.rs:4-109] . Prompt builders assemble symbol, file, module, repo, architecture, and narrative prompts with child summaries and bounded source excerpts [crates/gcode/src/commands/codewiki/prompts.rs:13-35] , while `text` resolves the active generator route, retries transient failures with bounded backoff, rejects prompt echoes, grounds citations, and sanitizes unsafe Markdown links  [crates/gcode/src/commands/codewiki/text/sanitize.rs:5-24].
+The main flow starts in `run.rs`, which validates limits, opens the read-only index, filters documentable files, loads symbols and leading chunks, fetches graph edges, and configures generation and output [crates/gcode/src/commands/codewiki/run.rs:22-186]. Graph fetching builds available, truncated, or unavailable graph state from FalkorDB call edges and derived import edges, while `cluster.rs` uses subsystem roots and same-root call edges to group files into deterministic module clusters [crates/gcode/src/commands/codewiki/graph.rs:5-110] [crates/gcode/src/commands/codewiki/cluster.rs:63-123]. `generation.rs` then funnels the public helpers into `generate_hierarchical_docs_core`, which filters core files and symbols, groups/clusters the source set, reports progress, applies reuse and ownership metadata, and emits `BuiltDoc` outputs through the supplied generator and AI-depth configuration [crates/gcode/src/commands/codewiki/generation.rs:15-23] [crates/gcode/src/commands/codewiki/generation.rs:86-112].
 
-The submodules collaborate as a pipeline of builders and sinks. `build` re-exports the shared doc-building surface and wires specialized builders for architecture, changes, file docs, hotspots, modules, onboarding, and index snapshots [crates/gcode/src/commands/codewiki/build.rs:1-25], with `build_parts` producing file/module bases and aggregate artifacts such as architecture, onboarding, hotspots, and changes [crates/gcode/src/commands/codewiki/build_parts/file.rs:18-166]. `render` turns those typed docs and graph slices into repository, module, file, architecture, onboarding, hotspot, and Mermaid dependency pages [crates/gcode/src/commands/codewiki/render.rs:5-60] . Finally, `reuse` avoids unnecessary regeneration by validating prior metadata, AI mode, source hashes, health, and persisted outputs [crates/gcode/src/commands/codewiki/reuse.rs:21-101], while `io` writes plain or incremental `BuiltDoc` sets through `DocSink`, applies scoped pruning, and finalizes metadata and snapshots .
+The surrounding submodules each own one stage of document production. `prompts.rs` defines the system instructions and prompt builders for symbols, files, modules, repositories, and architecture, including the module brief contract used here [crates/gcode/src/commands/codewiki/prompts.rs:13-35]; the `text` child module handles AI generation, structural fallbacks, citations, frontmatter, sanitization, and retry behavior [crates/gcode/src/commands/codewiki/text/generation.rs:20-68]. `render.rs` turns analyzed data into Markdown pages and Mermaid diagrams, aggregating dependency endpoints to the current page depth so module diagrams remain useful across hierarchy levels [crates/gcode/src/commands/codewiki/render.rs:5-60]. Finally, `io.rs` persists complete or incremental doc sets through `DocSink`, scopes pruning with `DocPruneScope`, and maintains metadata for reuse and source-hash tracking, while `reuse.rs` decides whether prior pages can be reused and `ownership` combines CODEOWNERS with cached blame-derived contributors for ownership reports [crates/gcode/src/commands/codewiki/io.rs:3-9]  [crates/gcode/src/commands/codewiki/reuse.rs:21-101] [crates/gcode/src/commands/codewiki/ownership.rs:41-44].
 
 ## Call Diagram
 
 ```mermaid
 sequenceDiagram
-    participant m_002737f5_f8fe_5e56_8173_de1610984978 as blame_file_contributors_with_timeout &#91;function&#93;
     participant m_015125b2_7388_5621_8d0d_9cb2a00b81fb as ReusePlan.reusable_page_with_summary &#91;method&#93;
-    participant m_04624067_ddd4_5413_b34d_7ceb7854842f as declared_owners_for_files &#91;function&#93;
     participant m_047568ab_a97a_5cc9_ad62_05261b3df3e7 as should_document_file &#91;function&#93;
     participant m_06031d7b_3b13_58a4_909d_07b21071ee19 as render_module_doc &#91;function&#93;
-    participant m_0c3c0665_ca87_520d_91c3_e67e6d760e3e as ground_text &#91;function&#93;
     participant m_0d0aa7f7_5f56_5f1c_9eb2_ec5d81bd56a5 as write_doc &#91;function&#93;
-    participant m_11f49d8b_0cfd_5c49_b009_a2141fb61a2f as fallback_citations_rank_lexically_relevant_files_first &#91;function&#93;
-    participant m_1380b187_b9be_5a8e_9d33_94bf69a6b979 as frontmatter_caps_provenance_and_records_truncation &#91;function&#93;
+    participant m_0dc90579_6e54_5bc4_964e_47624afcd042 as contains_valid_citation &#91;function&#93;
+    participant m_0eb87879_c0f9_507c_8a1b_b76628a55cd2 as read_codeowners &#91;function&#93;
+    participant m_0f7d3ab4_1f09_56bf_af1c_ff0fcfa63755 as citation_list_emits_one_fallback_range_per_line &#91;function&#93;
+    participant m_1076ddc3_1d5d_5db2_83b1_774040ebbf48 as write_files &#91;function&#93;
+    participant m_13288144_4044_50dd_b2d6_2b8851b516e1 as codewiki_ownership_without_sources_degrades_to_unknown &#91;function&#93;
+    participant m_13e52dd1_8d41_5a95_b61c_f7b3d69bcd29 as citation_markers_are_capped_and_keep_reference_numbering &#91;function&#93;
+    participant m_156596e0_3ae6_5225_b8cd_0f3f2e625c51 as codewiki_ownership_blame_error_marks_partial_without_caching &#91;function&#93;
     participant m_15e8a6d0_30dd_5fb6_a46f_b75cfc35f5e5 as short_summaries_pass_through_untruncated &#91;function&#93;
-    participant m_1653d1e5_3ac6_5f4e_96de_bb46fd727b1f as fetch_codewiki_graph_edges &#91;function&#93;
     participant m_1682064a_d77e_5fe5_83a6_f98ae8223308 as render_hotspots_doc &#91;function&#93;
-    participant m_16c53d91_6fbf_5921_96ff_85583dc4317c as bounded_retry_gives_up_after_bounded_attempts &#91;function&#93;
+    participant m_16ed05cb_f0ea_5d15_b151_f8a5bb191548 as is_unsafe_link_target &#91;function&#93;
     participant m_19b093ab_6a44_5d93_b901_6bba04a9cffc as write_hotspot_section_with_cross_refs &#91;function&#93;
-    participant m_25e0fcbe_8878_5172_8478_152037daff2c as transport_failure &#91;function&#93;
-    participant m_2e7d9dce_e017_558b_90e5_bafe7364263b as fallback_spans &#91;function&#93;
-    participant m_4912a584_cc76_5735_80de_0cb286e853c4 as codewiki_call_edges_query &#91;function&#93;
-    participant m_4e862278_2391_5e0a_8b76_f04cf8df3287 as import_edges_from_pairs &#91;function&#93;
+    participant m_384dc2ca_c42f_5ae2_b6a6_4ffc836578a9 as parse_codeowners &#91;function&#93;
+    participant m_485b0a91_7b90_5150_83cd_3daedfcdaa7c as has_uri_scheme &#91;function&#93;
+    participant m_509b1b6c_9fa0_50a5_9032_e7cc2466c478 as contains_parent_dir_segment &#91;function&#93;
+    participant m_5cc4dab4_5ea3_5dc4_8bc3_313129bfb514 as modules &#91;function&#93;
     participant m_61e7c25e_451c_5bee_9570_406582a1b661 as safe_doc_path &#91;function&#93;
-    participant m_6cd166ff_9928_5901_91a6_59dff8b908e3 as strip_invalid_citations &#91;function&#93;
+    participant m_77306155_d2df_548d_a1df_889d0b0e27c0 as write_owner_line &#91;function&#93;
     participant m_77486849_9a8c_52bf_86ba_865da53e0b74 as model_degraded_sources &#91;function&#93;
     participant m_7956b170_5fdf_53d6_a346_4e145348c943 as write_hotspot_section &#91;function&#93;
-    participant m_79b102e6_70e2_587e_8983_e545855e8178 as span &#91;function&#93;
     participant m_8ca60bc0_a8a7_54db_90d5_5f32c19e02d9 as reject_symlinked_doc_path &#91;function&#93;
     participant m_a33b704c_1a1b_5ce3_a770_69648187e83a as module_prompt &#91;function&#93;
-    participant m_c0f1027b_eb47_565d_baf4_8dbc40908eee as blame_file_contributors &#91;function&#93;
-    participant m_c2474b4a_3816_5e4d_9f13_a1a296986eb3 as query_or_unavailable &#91;function&#93;
+    participant m_b2017898_cf41_5719_973f_42e381dfec57 as is_windows_absolute_path &#91;function&#93;
+    participant m_c26c2e95_c4af_53b5_8b8e_106e5065ccc1 as citation_parts &#91;function&#93;
     participant m_c4fae48a_685c_593e_831c_dab9e872d3af as ReusePlan.reusable_page &#91;method&#93;
-    participant m_d515c347_b86d_5297_9803_cc692b841646 as codewiki_import_edges_query &#91;function&#93;
+    participant m_c83cd9cd_1a0a_5c86_ba58_a092d2295ad1 as git_project_with_history &#91;function&#93;
+    participant m_d03702cc_9c07_5411_9449_1d95784cae8d as span &#91;function&#93;
     participant m_d55d19d4_1102_5a6d_90df_433edf040936 as documents_file &#91;function&#93;
-    participant m_d702d49a_2f11_571b_91d3_19e14a1112af as codeowners_pattern_matches &#91;function&#93;
-    participant m_dea54e31_468f_5014_ab03_07982e80d172 as contains_valid_citation &#91;function&#93;
-    participant m_f2213013_83d6_5e0d_b0c2_2f7d395ac0fa as frontmatter &#91;function&#93;
-    m_002737f5_f8fe_5e56_8173_de1610984978->>m_c0f1027b_eb47_565d_baf4_8dbc40908eee: calls
+    participant m_e2c7f95a_4bce_5b63_8701_8a5dc000af1a as write_contributor_line &#91;function&#93;
     m_015125b2_7388_5621_8d0d_9cb2a00b81fb->>m_c4fae48a_685c_593e_831c_dab9e872d3af: calls
-    m_04624067_ddd4_5413_b34d_7ceb7854842f->>m_d702d49a_2f11_571b_91d3_19e14a1112af: calls
     m_047568ab_a97a_5cc9_ad62_05261b3df3e7->>m_d55d19d4_1102_5a6d_90df_433edf040936: calls
     m_06031d7b_3b13_58a4_909d_07b21071ee19->>m_77486849_9a8c_52bf_86ba_865da53e0b74: calls
-    m_0c3c0665_ca87_520d_91c3_e67e6d760e3e->>m_6cd166ff_9928_5901_91a6_59dff8b908e3: calls
-    m_0c3c0665_ca87_520d_91c3_e67e6d760e3e->>m_dea54e31_468f_5014_ab03_07982e80d172: calls
     m_0d0aa7f7_5f56_5f1c_9eb2_ec5d81bd56a5->>m_61e7c25e_451c_5bee_9570_406582a1b661: calls
     m_0d0aa7f7_5f56_5f1c_9eb2_ec5d81bd56a5->>m_8ca60bc0_a8a7_54db_90d5_5f32c19e02d9: calls
-    m_11f49d8b_0cfd_5c49_b009_a2141fb61a2f->>m_2e7d9dce_e017_558b_90e5_bafe7364263b: calls
-    m_1380b187_b9be_5a8e_9d33_94bf69a6b979->>m_79b102e6_70e2_587e_8983_e545855e8178: calls
-    m_1380b187_b9be_5a8e_9d33_94bf69a6b979->>m_f2213013_83d6_5e0d_b0c2_2f7d395ac0fa: calls
+    m_0dc90579_6e54_5bc4_964e_47624afcd042->>m_c26c2e95_c4af_53b5_8b8e_106e5065ccc1: calls
+    m_0eb87879_c0f9_507c_8a1b_b76628a55cd2->>m_384dc2ca_c42f_5ae2_b6a6_4ffc836578a9: calls
+    m_0f7d3ab4_1f09_56bf_af1c_ff0fcfa63755->>m_d03702cc_9c07_5411_9449_1d95784cae8d: calls
+    m_1076ddc3_1d5d_5db2_83b1_774040ebbf48->>m_77306155_d2df_548d_a1df_889d0b0e27c0: calls
+    m_1076ddc3_1d5d_5db2_83b1_774040ebbf48->>m_e2c7f95a_4bce_5b63_8701_8a5dc000af1a: calls
+    m_13288144_4044_50dd_b2d6_2b8851b516e1->>m_5cc4dab4_5ea3_5dc4_8bc3_313129bfb514: calls
+    m_13e52dd1_8d41_5a95_b61c_f7b3d69bcd29->>m_d03702cc_9c07_5411_9449_1d95784cae8d: calls
+    m_156596e0_3ae6_5225_b8cd_0f3f2e625c51->>m_5cc4dab4_5ea3_5dc4_8bc3_313129bfb514: calls
+    m_156596e0_3ae6_5225_b8cd_0f3f2e625c51->>m_c83cd9cd_1a0a_5c86_ba58_a092d2295ad1: calls
     m_15e8a6d0_30dd_5fb6_a46f_b75cfc35f5e5->>m_a33b704c_1a1b_5ce3_a770_69648187e83a: calls
-    m_1653d1e5_3ac6_5f4e_96de_bb46fd727b1f->>m_4912a584_cc76_5735_80de_0cb286e853c4: calls
-    m_1653d1e5_3ac6_5f4e_96de_bb46fd727b1f->>m_4e862278_2391_5e0a_8b76_f04cf8df3287: calls
-    m_1653d1e5_3ac6_5f4e_96de_bb46fd727b1f->>m_c2474b4a_3816_5e4d_9f13_a1a296986eb3: calls
-    m_1653d1e5_3ac6_5f4e_96de_bb46fd727b1f->>m_d515c347_b86d_5297_9803_cc692b841646: calls
     m_1682064a_d77e_5fe5_83a6_f98ae8223308->>m_19b093ab_6a44_5d93_b901_6bba04a9cffc: calls
     m_1682064a_d77e_5fe5_83a6_f98ae8223308->>m_7956b170_5fdf_53d6_a346_4e145348c943: calls
-    m_16c53d91_6fbf_5921_96ff_85583dc4317c->>m_25e0fcbe_8878_5172_8478_152037daff2c: calls
+    m_16ed05cb_f0ea_5d15_b151_f8a5bb191548->>m_485b0a91_7b90_5150_83cd_3daedfcdaa7c: calls
+    m_16ed05cb_f0ea_5d15_b151_f8a5bb191548->>m_509b1b6c_9fa0_50a5_9032_e7cc2466c478: calls
+    m_16ed05cb_f0ea_5d15_b151_f8a5bb191548->>m_b2017898_cf41_5719_973f_42e381dfec57: calls
 ```
 
 ## Child Modules
 
-- [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gcode/src/commands/codewiki/build_parts]] - The `build_parts` module assembles the major generated artifacts that make up Codewiki documentation: per-file docs, module docs, architecture narratives, onboarding guidance, hotspot analysis, change reports, and index snapshots. Its file-level and module-level builders establish the documentation base: `build_file_doc` handles reuse, progress reporting, symbol documentation, and fallback structural summaries for individual files, while `build_module_docs_with_filter` derives module ancestors from files, orders modules deepest-first, accumulates summaries and source spans, and emits each `ModuleDoc` through the caller’s callback [crates/gcode/src/commands/codewiki/build_parts/file.rs:18-166] .
+- [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gcode/src/commands/codewiki/build_parts]] - This module is the Codewiki document-building layer: it turns analyzed inputs into file, module, architecture, onboarding, hotspot, snapshot, and change artifacts. At the per-file and per-module levels, `build_file_doc` handles reuse, progress reporting, symbol documentation, AI-depth fallbacks, leading chunks, and generation hooks, while `build_module_docs_with_filter` gathers ancestor modules from file metadata and inferred paths, processes deepest modules first, and assembles each module from direct files, child modules, accumulated summaries, source spans, and prompt component IDs. [crates/gcode/src/commands/codewiki/build_parts/file.rs:18-166] [crates/gcode/src/commands/codewiki/build_parts/modules.rs:30-175]
 
-The higher-level builders reuse those file and module products to explain the codebase from different angles. `build_architecture_doc` starts from subsystem roots, records graph degradation, gathers direct file and child module summaries, and uses module component IDs plus structural fallbacks to produce subsystem architecture documentation [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-168]. `build_onboarding_doc` identifies entry points, ranks modules through dependency analytics when available, and gathers source spans for the resulting reading order, while `build_hotspots_doc` builds a weighted analytics graph from symbols and dependency edges to identify important nodes, degrading cleanly when analytics are unavailable [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:7-52] .
+The higher-level builders compose those outputs into reader-facing sections. `build_architecture_doc` identifies subsystem roots from file paths, marks graph-derived content as degraded when analytics are truncated or unavailable, and uses module direct-file summaries, child-module summaries, source spans, prompt component IDs, and structural fallbacks to produce subsystem documentation; its dependency helpers derive unique inter-module edges and deterministic topology ordering for dependency-aware narratives. [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-168] [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:174-189] [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:192-242] `build_onboarding_doc` collaborates with the architecture dependency helpers to combine discovered Rust entry files and public API symbols with a graph-ranked reading order, recording degraded sources when graph data is unavailable or truncated. [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:7-52] [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:54-109]
 
-Snapshot and change generation provide the persistence and comparison layer for the rest of the system. `build_codewiki_index_snapshot` filters files and symbols, hashes file contents with path validation, and fingerprints graph neighborhoods for deterministic dependency-change detection . `build_codewiki_changes_doc` then compares a current snapshot with an optional previous one, emits baseline or degradation metadata, counts files, symbols, and graph neighborhoods, and formats added, removed, and changed items into a markdown change report .
-- [[code/modules/crates/gcode/src/commands/codewiki/text|crates/gcode/src/commands/codewiki/text]] - This module provides model-facing Markdown sanitization for codewiki text. Its main responsibility is to remove unsafe Markdown link targets without discarding the visible label: `sanitize_model_markdown_links` computes unsafe replacements, returns the original text when none are needed, and otherwise rebuilds the string by splicing each unsafe link range into its accumulated label text [crates/gcode/src/commands/codewiki/text/sanitize.rs:5-24].
+The remaining files provide index and analytics support around those docs. `build_codewiki_index_snapshot` filters to core files and symbols, hashes validated project-root files, records per-symbol snapshots, and adds graph neighborhood fingerprints when graph data is usable; `build_codewiki_changes_doc` compares snapshots to report baseline status, file additions/removals/content changes, symbol additions/removals, and degraded metadata. [crates/gcode/src/commands/codewiki/build_parts/snapshot.rs:6-84] [crates/gcode/src/commands/codewiki/build_parts/snapshot.rs:101-134] [crates/gcode/src/commands/codewiki/build_parts/changes.rs:5-101] `build_hotspots_doc` uses the completed file docs plus graph edges to construct analytics nodes, run graph analytics, and emit hotspots, bridges, god nodes, source spans, and degraded-source markers, or an empty degraded document when analytics are unavailable. [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-134]
+- [[code/modules/crates/gcode/src/commands/codewiki/ownership|crates/gcode/src/commands/codewiki/ownership]] - The ownership module synthesizes Codewiki’s code ownership report from two sources: declared CODEOWNERS rules and derived git blame contributors. `codeowners.rs` looks for the first CODEOWNERS file in the standard locations, parses non-comment lines with owners, and maps each requested file to the last matching rule, including directory and glob-style patterns [crates/gcode/src/commands/codewiki/ownership/codeowners.rs:15-25] [crates/gcode/src/commands/codewiki/ownership/codeowners.rs:27-45] [crates/gcode/src/commands/codewiki/ownership/codeowners.rs:47-66]. In parallel, `analysis.rs` discovers the git repository and head, marks blame as available, then walks requested files while respecting a global timeout and file-cap, reusing cached contributor summaries when the content hash matches and refreshing cache entries when blame succeeds [crates/gcode/src/commands/codewiki/ownership/analysis.rs:23-87].
 
-The key flow is parser-driven rather than regex-based. `unsafe_link_replacements` walks `pulldown_cmark` events with source offsets, pushes a `LinkFrame` when a link destination is classified unsafe, accumulates visible label content from text, code, math, HTML, footnote, and break events, and emits a `Replacement` when the matching unsafe link closes [crates/gcode/src/commands/codewiki/text/sanitize.rs:27-30] [crates/gcode/src/commands/codewiki/text/sanitize.rs:33-36] [crates/gcode/src/commands/codewiki/text/sanitize.rs:38-82].
+The derived-ownership flow is deliberately guarded and deterministic: blame work is split into helpers for hashing content, running blame under a per-file timeout, reading temporary output, parsing porcelain blame, extracting emails, and retaining stable contributor identities so metadata does not leak or depend on display-name variation [crates/gcode/src/commands/codewiki/ownership/analysis.rs:89-91] [crates/gcode/src/commands/codewiki/ownership/analysis.rs:93-104] [crates/gcode/src/commands/codewiki/ownership/analysis.rs:106-110]. Once declared and derived ownership have been collected, `render.rs` turns status into degraded provenance flags such as unavailable CODEOWNERS, unavailable blame, blame errors, partial blame, or fully unknown ownership, then emits YAML frontmatter with stable generated metadata and optional degraded/partial markers [crates/gcode/src/commands/codewiki/ownership/render.rs:10-34] [crates/gcode/src/commands/codewiki/ownership/render.rs:36-68].
 
-The file is self-contained: small structs carry active link state and final replacement ranges, helper functions classify unsafe targets such as absolute paths, URI schemes, traversal, Windows/UNC, file, and tilde paths, and tests cover both stripping unsafe links and preserving valid citations, anchors, relative links, plain brackets, and code links [crates/gcode/src/commands/codewiki/text/sanitize.rs:84-88].
+The render layer also writes the body of the report by grouping ownership into module and file sections, choosing primary ownership, aggregating contributors, and formatting owner and contributor lines [crates/gcode/src/commands/codewiki/ownership/render.rs:70-72] [crates/gcode/src/commands/codewiki/ownership/render.rs:74-100]. The test coverage exercises these collaborations end to end: CODEOWNERS-only ownership, git-blame top contributors, degraded unknown ownership when sources are missing, partial results from caps or errors, declared-owner precedence over contributors, cache behavior, and compatibility failure when cached contributor IDs are absent [crates/gcode/src/commands/codewiki/ownership/tests.rs:8-35] [crates/gcode/src/commands/codewiki/ownership/tests.rs:38-62] [crates/gcode/src/commands/codewiki/ownership/tests.rs:65-82] [crates/gcode/src/commands/codewiki/ownership/tests.rs:85-106] [crates/gcode/src/commands/codewiki/ownership/tests.rs:109-131].
+- [[code/modules/crates/gcode/src/commands/codewiki/text|crates/gcode/src/commands/codewiki/text]] - The `crates/gcode/src/commands/codewiki/text` module owns the text layer of Codewiki page production: AI-backed prose generation, AST-only structural fallback text, citation grounding, link sanitization, and page frontmatter. `generation.rs` resolves whether text generation is available for the active AI route, chooses daemon or direct generation, applies aggregate profiles for aggregate prompts, retries transient failures with bounded backoff, and normalizes failed, skipped, echoed, or empty output so callers can fall back cleanly to degraded structural content when needed [crates/gcode/src/commands/codewiki/text/generation.rs:20-68] [crates/gcode/src/commands/codewiki/text/generation.rs:73-87] [crates/gcode/src/commands/codewiki/text/generation.rs:89-97].
+
+The module then protects and grounds generated text before it becomes documentation. `sanitize.rs` strips unsafe Markdown link targets and neutralizes Markdown links or `[[wikilinks]]` in symbol-purpose text while preserving code spans and blocks, using `pulldown_cmark` ranges plus one-pass replacements to keep readable labels without unsafe destinations   [crates/gcode/src/commands/codewiki/text/sanitize.rs:39-62]. `citations.rs` validates and strips bracketed citations, detects existing valid citations, ranks fallback `SourceSpan`s by lexical overlap with the generated text, deprioritizes asset/data files, caps fallback citations, and renders citation lists, numbered markers, or reference sections as needed [crates/gcode/src/commands/codewiki/text/citations.rs:26-34]  [crates/gcode/src/commands/codewiki/text/citations.rs:58-98].
+
+Structural and metadata helpers complete the collaboration. `structural.rs` builds concise symbol, file, module, and repository summaries from available summaries or docstrings, filters boilerplate child summaries, writes trimmed Markdown sections, and collects unique link spans for clean listings [crates/gcode/src/commands/codewiki/text/structural.rs:7-22] [crates/gcode/src/commands/codewiki/text/structural.rs:24-33] . `frontmatter.rs` serializes the provenance envelope around those pages, deduplicating spans by file and line range, capping listed files to the top contributors, recording omitted provenance, and including trust, freshness, generator, and degradation metadata [crates/gcode/src/commands/codewiki/text/frontmatter.rs:6-20] [crates/gcode/src/commands/codewiki/text/frontmatter.rs:23-27] .
 
 ## Files
 
-- [[code/files/crates/gcode/src/commands/codewiki/build.rs|crates/gcode/src/commands/codewiki/build.rs]] - Builds the Codewiki command’s documentation pieces by wiring in separate builders for architecture, changes, file docs, hotspots, modules, onboarding, and index snapshots, then re-exports the shared doc-building functions and types for use elsewhere in the command. [crates/gcode/src/commands/codewiki/build.rs:1-25]
-- [[code/files/crates/gcode/src/commands/codewiki/cluster.rs|crates/gcode/src/commands/codewiki/cluster.rs]] - This file provides utilities for organizing code into subsystem hierarchies based on directory structure and file locations. The `subsystem_roots` function identifies top-level decomposition units from the file tree, expanding container directories one level to reveal meaningful units. Supporting functions like `subsystem_root_for_file`, `module_is_within`, and `path_components` validate and navigate these hierarchies. The file clustering logic (`cluster_file_modules`, `union_files`, `common_module_for_files`) groups related files by their module structure and symbol relationships, while constraint functions like `call_edges_never_merge_clusters_across_subsystem_roots` enforce organizational boundaries that prevent clustering across different subsystems.
+- [[code/files/crates/gcode/src/commands/codewiki/build.rs|crates/gcode/src/commands/codewiki/build.rs]] - Re-exports the codewiki build helpers by wiring in the architecture, changes, file, hotspots, modules, onboarding, and snapshot submodules, providing the doc-building functions used to generate various Codewiki outputs. [crates/gcode/src/commands/codewiki/build.rs:1-25]
+- [[code/files/crates/gcode/src/commands/codewiki/cluster.rs|crates/gcode/src/commands/codewiki/cluster.rs]] - This file groups repository files into subsystem-aware clusters for codewiki decomposition. It first derives subsystem roots from file paths, treating container directories as expandable to meaningful child roots when they have no direct files, then uses those roots to keep clustering local to each subsystem. The main clustering logic unions files connected by `Call` edges within the same root, resolves disjoint-set representatives with deterministic union/find behavior, and assigns each resulting cluster a module path from its common module or lone file. Supporting helpers split and compare module/path components, map symbols to files, and select the files relevant to an import target.
 [crates/gcode/src/commands/codewiki/cluster.rs:8-43]
 [crates/gcode/src/commands/codewiki/cluster.rs:46-55]
 [crates/gcode/src/commands/codewiki/cluster.rs:57-61]
 [crates/gcode/src/commands/codewiki/cluster.rs:63-123]
 [crates/gcode/src/commands/codewiki/cluster.rs:125-149]
-- [[code/files/crates/gcode/src/commands/codewiki/generation.rs|crates/gcode/src/commands/codewiki/generation.rs]] - This module provides the orchestration layer for hierarchical codewiki document generation. The top-level `generate_hierarchical_docs` converts generated `BuiltDoc` values into `(path, content)` pairs, while the wrapper helpers choose different execution modes: with no graph/ownership data, with ownership metadata, with progress tracking, or with reuse collection. All of them delegate to `generate_hierarchical_docs_core`, which performs the real work by filtering scoped core files and symbols, grouping and sorting them by file, clustering modules, reporting progress, and incrementally building and emitting the final hierarchical docs.
+- [[code/files/crates/gcode/src/commands/codewiki/generation.rs|crates/gcode/src/commands/codewiki/generation.rs]] - This file provides the hierarchical codewiki generation pipeline. The top-level helpers are thin adapters: one returns `(path, content)` pairs, others configure generation for different contexts such as graph-available fallback, ownership-aware runs, or progress-aware reuse, while all road to `generate_hierarchical_docs_core`, which does the real work of filtering core files and symbols, grouping and clustering them by module/file, reporting progress, and incrementally emitting `BuiltDoc` outputs through the supplied generator, reuse plan, ownership metadata, and AI depth settings.
 [crates/gcode/src/commands/codewiki/generation.rs:15-23]
 [crates/gcode/src/commands/codewiki/generation.rs:25-49]
 [crates/gcode/src/commands/codewiki/generation.rs:52-72]
 [crates/gcode/src/commands/codewiki/generation.rs:75-82]
 [crates/gcode/src/commands/codewiki/generation.rs:86-112]
-- [[code/files/crates/gcode/src/commands/codewiki/graph.rs|crates/gcode/src/commands/codewiki/graph.rs]] - This file manages code dependency graph operations by querying FalkorDB and transforming results into graph edge representations. The primary function fetch_codewiki_graph_edges orchestrates the process: it filters symbols from core files, establishes a FalkorDB connection, executes parametric Cypher queries to retrieve both call and import edges, and returns a CodewikiGraph structure. Helper function query_or_unavailable handles query execution with error handling and optional logging. The query generator functions codewiki_call_edges_query and codewiki_import_edges_query create parameterized Cypher strings that retrieve CALLS relationships between CodeSymbols and IMPORTS relationships between CodeFile and CodeModule nodes respectively, bounded by the specified project and edge limit. The import_edges_from_pairs function transforms raw file-module import pairs into typed CodewikiGraphEdge instances by resolving files to their component IDs and filtering for imports originating from core files.
-[crates/gcode/src/commands/codewiki/graph.rs:4-109]
-[crates/gcode/src/commands/codewiki/graph.rs:34-49]
-[crates/gcode/src/commands/codewiki/graph.rs:113-142]
-[crates/gcode/src/commands/codewiki/graph.rs:148-163]
-[crates/gcode/src/commands/codewiki/graph.rs:165-180]
-- [[code/files/crates/gcode/src/commands/codewiki/io.rs|crates/gcode/src/commands/codewiki/io.rs]] - Provides the I/O layer for Codewiki document generation, incremental persistence, pruning, and metadata handling. The top-level write helpers either write a plain set of docs to disk or convert raw `(path, content)` pairs into `BuiltDoc`s and stream them through a `DocSink`, which handles opening, persisting, flushing, and finalizing with an optional index snapshot.
-
-`DocPruneScope` models which files, modules, or docs are in scope for pruning. It supports unscoped defaults, validation of scope inputs, and inclusion checks used by the sink to decide whether a doc should be kept or removed. The remaining helpers cover path safety, symlink rejection, pruning empty directories, reading and writing Codewiki and ownership metadata, extracting source-file hashes from doc frontmatter, and parsing YAML-style path strings into safe source-file references.
+- [[code/files/crates/gcode/src/commands/codewiki/graph.rs|crates/gcode/src/commands/codewiki/graph.rs]] - Fetches Codewiki graph edges for core symbols and assembles a `CodewikiGraph` from FalkorDB data, falling back to an unavailable graph when config, connection, or query execution fails. It first builds a core-symbol ID set and, if there are no core symbols, returns an empty available graph. It then queries call edges, filters rows to valid core symbol source/target pairs, tracks truncation when the result count reaches the limit, and separately derives import edges by mapping core file imports through file-to-symbol relationships. The file also contains the Cypher query builders and a small query wrapper that centralizes FalkorDB error handling and quiet-mode warning suppression.
+[crates/gcode/src/commands/codewiki/graph.rs:5-110]
+[crates/gcode/src/commands/codewiki/graph.rs:35-50]
+[crates/gcode/src/commands/codewiki/graph.rs:114-143]
+[crates/gcode/src/commands/codewiki/graph.rs:149-164]
+[crates/gcode/src/commands/codewiki/graph.rs:166-181]
+- [[code/files/crates/gcode/src/commands/codewiki/io.rs|crates/gcode/src/commands/codewiki/io.rs]] - This file handles codewiki documentation I/O and pruning. It provides helpers to write whole doc sets or incremental updates, with `DocSink` coordinating metadata loading, doc persistence, and finalization. `DocPruneScope` normalizes scope selectors and decides which file, module, or doc paths are included for pruning. The lower-level helpers enforce safe output paths, reject symlinked targets, prune empty directories, read/write codewiki and ownership metadata, and parse frontmatter source provenance to compute source hashes for doc change tracking.
 [crates/gcode/src/commands/codewiki/io.rs:3-9]
 [crates/gcode/src/commands/codewiki/io.rs:11-28]
 [crates/gcode/src/commands/codewiki/io.rs:30-43]
 [crates/gcode/src/commands/codewiki/io.rs:46-48]
 [crates/gcode/src/commands/codewiki/io.rs:50-93]
-- [[code/files/crates/gcode/src/commands/codewiki/mod.rs|crates/gcode/src/commands/codewiki/mod.rs]] - Command module for the `codewiki` feature, defining output paths and limits, wiring AI context/config helpers, and re-exporting the submodules that build, generate, cluster, query graph data, track progress, and render repository documentation such as module, file, architecture, onboarding, hotspots, changes, and ownership docs. [crates/gcode/src/commands/codewiki/mod.rs:1-100]
-- [[code/files/crates/gcode/src/commands/codewiki/ownership.rs|crates/gcode/src/commands/codewiki/ownership.rs]] - This file implements code ownership tracking and documentation generation for the codewiki system. It combines two ownership sources: declared owners from CODEOWNERS files and derived owners from git blame history.
-
-The core workflow is orchestrated by `build_ownership_doc`, which:
-- Reads and parses CODEOWNERS file patterns via `read_codeowners` and `parse_codeowners`
-- Looks up declared owners for each file using `declared_owners_for_files` and pattern matching
-- Derives actual contributors using `derived_owners_for_files`, which runs git blame with `blame_file_contributors` and parses the porcelain output via `parse_git_blame_porcelain`
-- Caches blame results in `OwnershipMeta` keyed by file content hash to avoid redundant git operations
-- Tracks status with `OwnershipStatus` to flag partial results from timeouts or errors
-- Aggregates contributors and formats the final markdown via `ownership_frontmatter`, `write_modules`, and `write_files`
-
-Data structures include `OwnershipOptions` (configurable timeouts and file caps), `Codeowners` entries, `OwnershipContributor` records, and `FileOwnership` combining declared and derived sources. Helper functions like `contributor_id`, `degraded_sources`, and `content_hash` support deterministic contributor tracking and graceful degradation when sources are unavailable. Extensive unit tests validate behavior around precedence, caching, timeouts, and partial results.
-[crates/gcode/src/commands/codewiki/ownership.rs:17-20]
-[crates/gcode/src/commands/codewiki/ownership.rs:22-29]
-[crates/gcode/src/commands/codewiki/ownership.rs:23-28]
-[crates/gcode/src/commands/codewiki/ownership.rs:32-35]
-[crates/gcode/src/commands/codewiki/ownership.rs:38-41]
-- [[code/files/crates/gcode/src/commands/codewiki/paths.rs|crates/gcode/src/commands/codewiki/paths.rs]] - This file provides utility functions for a code documentation wiki generator. It contains three categories of helpers:
-
-**Markdown formatting** (`inline_code`, `max_backtick_run`, `plural`, `component_label`) handle converting code metadata into properly-formatted Markdown text, including intelligent backtick delimiting for inline code.
-
-**File classification and scoping** (`is_core_file`, `in_scope`) filter files to identify core project code by excluding hidden paths, tests, generated code, and auxiliary directories like vendor or node_modules.
-
-**Module hierarchy utilities** (`module_for_file`, `module_ancestors`, `parent_module`, `module_is_ancestor`, `direct_child_modules`, `module_depth`) manage module path operations—extracting parents, finding ancestors, checking relationships, and counting nesting depth.
-
-**Documentation path generation** (`file_doc_path`, `module_doc_path`, `file_wikilink`, `module_wikilink`) construct wiki documentation file paths and link syntax by templating filenames and module names into standardized locations.
-
-Together, these functions support building a searchable code documentation system by normalizing file metadata, determining what code to document, organizing it hierarchically, and generating consistent wiki cross-references.
+- [[code/files/crates/gcode/src/commands/codewiki/mod.rs|crates/gcode/src/commands/codewiki/mod.rs]] - Top-level `codewiki` module for the gcode crate’s documentation system, defining shared constants and wiring together submodules for building, clustering, graph queries, ownership, paths, progress, rendering, reuse, prompts, and text handling. It also re-exports the main APIs used to generate CodeWiki docs such as module, file, architecture, onboarding, hotspots, and change summaries. [crates/gcode/src/commands/codewiki/mod.rs:1-100]
+- [[code/files/crates/gcode/src/commands/codewiki/ownership.rs|crates/gcode/src/commands/codewiki/ownership.rs]] - Builds a codewiki ownership document for a set of files by combining declared CODEOWNERS data with derived blame-based ownership, then rendering the result into markdown/text. `OwnershipOptions` controls blame limits and timeout, `OwnershipMeta` caches per-file blame summaries by content hash, `OwnershipContributor` and `CachedBlameSummary` carry the ownership data, and `OwnershipStatus` tracks whether CODEOWNERS, blame, or partial data were available. `build_ownership_doc` ties the pieces together: it loads CODEOWNERS, computes declared and derived owners, organizes them per file, and passes the assembled ownership model to the render helpers to produce the final document.
+[crates/gcode/src/commands/codewiki/ownership.rs:20-23]
+[crates/gcode/src/commands/codewiki/ownership.rs:25-32]
+[crates/gcode/src/commands/codewiki/ownership.rs:26-31]
+[crates/gcode/src/commands/codewiki/ownership.rs:35-38]
+[crates/gcode/src/commands/codewiki/ownership.rs:41-44]
+- [[code/files/crates/gcode/src/commands/codewiki/paths.rs|crates/gcode/src/commands/codewiki/paths.rs]] - Provides path and naming utilities for the codewiki command. It formats values for Markdown and wikilinks, labels symbols with their kind, and builds doc-file paths for files and modules. It also classifies “core” source files by excluding hidden, generated, test, and auxiliary directories, and offers module helpers for scope checks, parent/ancestor traversal, child discovery, and depth calculation.
 [crates/gcode/src/commands/codewiki/paths.rs:3-14]
 [crates/gcode/src/commands/codewiki/paths.rs:16-28]
 [crates/gcode/src/commands/codewiki/paths.rs:30-32]
 [crates/gcode/src/commands/codewiki/paths.rs:34-41]
 [crates/gcode/src/commands/codewiki/paths.rs:43-98]
-- [[code/files/crates/gcode/src/commands/codewiki/progress.rs|crates/gcode/src/commands/codewiki/progress.rs]] - This file implements a configurable progress reporting system for codewiki commands. CodewikiProgressSink is an enum defining three output targets: Silent (discards messages), Stderr (writes to standard error), and Capture (test-only, stores in a vector). CodewikiProgress wraps a sink and provides factory methods—silent(), stderr(), and capture()—to instantiate the reporter in different modes. The emit method formats messages with a "codewiki:" prefix and routes them through the active sink based on its variant. The into_lines method retrieves captured messages for testing. This design allows a single progress interface to seamlessly switch between suppressed, live stderr, and in-memory capture outputs without branching at call sites.
+- [[code/files/crates/gcode/src/commands/codewiki/progress.rs|crates/gcode/src/commands/codewiki/progress.rs]] - This file defines `CodewikiProgress`, a small progress-reporting wrapper with an internal sink enum that can suppress output, write prefixed `codewiki:` messages to stderr, or, in tests, capture them in memory. The constructors choose the sink mode (`silent`, `stderr`, `capture`), `emit` formats and dispatches each message through the selected sink, and `into_lines` exposes captured lines for tests while returning nothing for non-capture modes.
 [crates/gcode/src/commands/codewiki/progress.rs:2-7]
 [crates/gcode/src/commands/codewiki/progress.rs:10-12]
 [crates/gcode/src/commands/codewiki/progress.rs:14-55]
 [crates/gcode/src/commands/codewiki/progress.rs:15-19]
 [crates/gcode/src/commands/codewiki/progress.rs:21-29]
-- [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - This file defines prompt templates and builders for an AI-driven code documentation system. It provides seven system prompts (SYMBOL_SYSTEM, FILE_SYSTEM, CONTENT_FILE_SYSTEM, MODULE_SYSTEM, REPO_SYSTEM, ARCHITECTURE_SYSTEM, ARCHITECTURE_NARRATIVE_SYSTEM) that instruct an LLM on how to generate different types of documentation. The core functions—symbol_prompt, file_prompt, content_file_prompt, module_prompt, repo_prompt, architecture_prompt, and architecture_narrative_prompt—construct complete prompts by combining these system instructions with code context like Symbol objects, file metadata, and excerpts. Supporting functions handle excerpt extraction (summary_excerpt, bounded_excerpt), child-summary aggregation (append_child_summary_sections), source-excerpt embedding (append_source_excerpt_section, aggregate_prompts_embed_bounded_source_excerpts), and formatting constraints (aggregate_prompts_bound_each_child_summary, oversized_child). Data structures SymbolSummary, ChildSummary, and SourceExcerpt organize the contextual information that gets composed into prompts. Test functions validate that summarization, truncation, and excerpt handling work correctly.
+- [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - This file defines the prompt-building layer for `codewiki` documentation generation. It provides system instructions and helper functions that assemble prompts for symbols, files, modules, repositories, and architecture overviews by combining names, kinds, line ranges, child summaries, and bounded source excerpts into consistent text templates. The small data structs (`SymbolSummary`, `ChildSummary`, `SourceExcerpt`) carry the metadata these builders format, while the tests verify that summaries and excerpts are truncated, flattened, and omitted with explicit placeholders when empty.
 [crates/gcode/src/commands/codewiki/prompts.rs:13-35]
 [crates/gcode/src/commands/codewiki/prompts.rs:37-59]
 [crates/gcode/src/commands/codewiki/prompts.rs:64-69]
 [crates/gcode/src/commands/codewiki/prompts.rs:71-87]
 [crates/gcode/src/commands/codewiki/prompts.rs:89-124]
-- [[code/files/crates/gcode/src/commands/codewiki/render.rs|crates/gcode/src/commands/codewiki/render.rs]] - This file renders various forms of code documentation and dependency visualizations for a code wiki system. It generates Mermaid diagrams for module and subsystem dependencies, call graphs, and comprehensive documentation pages covering repository structure, architecture, onboarding guides, and code hotspots. The functions work together by: collecting and filtering dependency edges from code graph data (collect_import_module_edges, collect_subsystem_dependency_edges), aggregating modules for relevant page contexts (aggregate_module_for_page), bounding edge counts to manageable sizes (bounded_module_dependency_edges, bounded_component_edges), formatting these edges as Mermaid diagram syntax with proper node IDs and labels (mermaid_node_id, mermaid_label), and finally rendering complete documentation pages that combine these diagrams with extracted source excerpts and cross-referenced analysis (render_repo_doc, render_module_doc, render_file_doc, and specialized doc generators). The rendering functions apply different aggregation and filtering strategies depending on diagram type and context to balance comprehensiveness with readability.
+- [[code/files/crates/gcode/src/commands/codewiki/render.rs|crates/gcode/src/commands/codewiki/render.rs]] - Builds the Codewiki rendering layer for repository documentation: it turns graph and index data into Markdown pages for repo, architecture, onboarding, hotspots, module, and file views, and generates Mermaid dependency/call diagrams when available. The helper functions support that output by collecting and bounding import/call edges, aggregating paths to the current page depth, formatting safe node IDs and labels, and assembling hotspot sections, source excerpts, and degradation metadata into the final documents.
 [crates/gcode/src/commands/codewiki/render.rs:5-60]
 [crates/gcode/src/commands/codewiki/render.rs:65-85]
 [crates/gcode/src/commands/codewiki/render.rs:90-120]
 [crates/gcode/src/commands/codewiki/render.rs:124-151]
 [crates/gcode/src/commands/codewiki/render.rs:153-176]
-- [[code/files/crates/gcode/src/commands/codewiki/reuse.rs|crates/gcode/src/commands/codewiki/reuse.rs]] - This file implements a documentation reuse cache for codewiki generation. The ReusePlan struct encapsulates logic to determine whether previously generated documentation pages can be safely reused without LLM regeneration by verifying AI mode consistency, source file integrity via content hashing, document health status, and output file persistence. It maintains a lazy-loaded current_hashes cache to avoid repeatedly hashing unchanged files and stores prior CodewikiDocMeta to compare against the current generation state. The reusable() method performs comprehensive multi-factor validation: checking cached doc existence, non-degraded status, matching AI mode, source file set equality, and current hash agreement with stored hashes. The reusable_page() and reusable_page_with_summary() methods retrieve the on-disk documentation contents verbatim if validation passes, returning None to trigger regeneration on any failure. The current_hash() method provides lazy hash computation and caching, treating unhashable files as one-time-probed non-reusable inputs by storing None. The span_files() helper extracts distinct file names from SourceSpan data for source set comparison.
+- [[code/files/crates/gcode/src/commands/codewiki/reuse.rs|crates/gcode/src/commands/codewiki/reuse.rs]] - This file implements reuse checks for generated codewiki docs. `ReusePlan` loads prior metadata from `out_dir`, caches current source hashes, and only reuses an existing page when the doc exists, is not degraded, matches the current AI mode and source set, all source hashes still match, and the output file is still on disk; `reusable_page_with_summary` pairs that disk content with the saved summary, and `span_files` collects unique source file paths from spans.
 [crates/gcode/src/commands/codewiki/reuse.rs:11-19]
 [crates/gcode/src/commands/codewiki/reuse.rs:21-101]
 [crates/gcode/src/commands/codewiki/reuse.rs:22-31]
 [crates/gcode/src/commands/codewiki/reuse.rs:36-46]
 [crates/gcode/src/commands/codewiki/reuse.rs:49-57]
-- [[code/files/crates/gcode/src/commands/codewiki/run.rs|crates/gcode/src/commands/codewiki/run.rs]] - Orchestrates the `codewiki` command: it validates the requested edge limit, opens the readonly database, filters visible files by scope and documentation settings, loads matching symbols and leading content chunks, fetches graph edges, and then packages everything into `CodewikiInput` for the text generator and output sink. The helper functions support that pipeline by enforcing the edge-limit bounds, identifying document files, deciding whether a file should be included, reporting symbol-load progress, and collecting each file’s first content chunk into a path-keyed map.
+- [[code/files/crates/gcode/src/commands/codewiki/run.rs|crates/gcode/src/commands/codewiki/run.rs]] - Orchestrates the `codewiki` command: it validates the edge limit, opens the readonly database, filters visible files by document support and user scope, loads symbols and leading content chunks, fetches graph edges, then bundles everything into a `CodewikiInput` and configures the text generator and output destination for document generation. The helpers split that flow into small steps: `validate_edge_limit` enforces bounds, `documents_file` and `should_document_file` decide which files to include, `load_symbols_for_codewiki` wraps symbol collection with progress reporting, and `load_leading_chunks` gathers the first content chunk per file for inclusion in the generated wiki.
 [crates/gcode/src/commands/codewiki/run.rs:22-186]
 [crates/gcode/src/commands/codewiki/run.rs:188-193]
 [crates/gcode/src/commands/codewiki/run.rs:198-200]
 [crates/gcode/src/commands/codewiki/run.rs:204-206]
 [crates/gcode/src/commands/codewiki/run.rs:208-215]
-- [[code/files/crates/gcode/src/commands/codewiki/tests.rs|crates/gcode/src/commands/codewiki/tests.rs]] - This file contains tests for the codewiki command’s file-selection and related IO helpers. It pulls in shared support plus topic-specific test modules, and its main check verifies that `should_document_file` documents code and structured config files by default, skips content-only files like Markdown and licenses unless `include_docs` is enabled, and then includes those docs files when requested. [crates/gcode/src/commands/codewiki/tests.rs:24-42]
-- [[code/files/crates/gcode/src/commands/codewiki/text.rs|crates/gcode/src/commands/codewiki/text.rs]] - Provides the text-generation and citation-grounding pipeline for codewiki output. It resolves an AI text generator from the current routing, retries transient generation failures with bounded backoff, detects prompt-echo failures, and sanitizes generated text before returning it.
-
-The rest of the file builds the document structure around that output: it serializes frontmatter with provenance, degradation, and truncation metadata; computes structural summaries and fallback citation spans; emits citation markers, references, and wrapping within line-width limits; and includes tests covering provenance coalescing, citation ranking/capping, asset-file handling, and retry behavior.
-[crates/gcode/src/commands/codewiki/text.rs:18-32]
-[crates/gcode/src/commands/codewiki/text.rs:35-39]
-[crates/gcode/src/commands/codewiki/text.rs:41-89]
-[crates/gcode/src/commands/codewiki/text.rs:94-108]
-[crates/gcode/src/commands/codewiki/text.rs:110-118]
-- [[code/files/crates/gcode/src/commands/codewiki/types.rs|crates/gcode/src/commands/codewiki/types.rs]] - Defines the data model and small helper routines for codewiki generation. `CodewikiInput` bundles the files, symbols, graph edges, graph availability, and per-file leading chunks that feed prompt assembly. `LeadingChunk`, `source_excerpt_for_file`, and `ranked_source_excerpts` turn indexed file content into prompt excerpts, preferring symbol-dense files and falling back to summaries when content is missing. The rest of the file is a set of serde-friendly document and snapshot types for graph metadata, architecture and onboarding docs, hotspots, build/run summaries, AI depth/options, and `SourceSpan` utilities so generated codewiki output can carry structured provenance, citations, and availability state.
+- [[code/files/crates/gcode/src/commands/codewiki/tests.rs|crates/gcode/src/commands/codewiki/tests.rs]] - Test module for the codewiki command. It pulls in shared IO helpers and a set of focused submodules, then defines a coverage test for `should_document_file`: code and structured config files are documented by default, content-only files like Markdown and licenses are excluded unless `include_docs` is enabled. [crates/gcode/src/commands/codewiki/tests.rs:24-42]
+- [[code/files/crates/gcode/src/commands/codewiki/text.rs|crates/gcode/src/commands/codewiki/text.rs]] - This file is the `codewiki/text` module’s public facade: it re-exports text-generation helpers for citations, frontmatter, generation, sanitization, and structural summaries so other code can assemble CodeWiki prose from source spans and prompts. Its test module ties those pieces together by exercising span construction, provenance frontmatter formatting and truncation, citation marker/list generation, fallback span selection and ranking, reference emission, line wrapping, prompt-echo rejection, and bounded retry behavior for transient generation failures.
+[crates/gcode/src/commands/codewiki/text.rs:45-51]
+[crates/gcode/src/commands/codewiki/text.rs:54-73]
+[crates/gcode/src/commands/codewiki/text.rs:76-96]
+[crates/gcode/src/commands/codewiki/text.rs:99-111]
+[crates/gcode/src/commands/codewiki/text.rs:114-127]
+- [[code/files/crates/gcode/src/commands/codewiki/types.rs|crates/gcode/src/commands/codewiki/types.rs]] - This file defines the data model and small helpers that codewiki generation uses to move source, graph, and documentation metadata through the pipeline. It bundles file lists, symbols, graph edges, and leading source chunks in `CodewikiInput`; represents graph connectivity and availability with `CodewikiGraphEdge`, `CodewikiGraph`, and their availability/kind enums; and models the generated documents, links, snapshots, run summaries, and AI configuration used to assemble and reuse codewiki output. The helper functions turn leading chunks into prompt source excerpts and rank candidate files by symbol density so the most informative source text is fed into aggregate prompts, while `SourceSpan` and related types provide file-and-line provenance and citation support throughout.
 [crates/gcode/src/commands/codewiki/types.rs:11-21]
 [crates/gcode/src/commands/codewiki/types.rs:26-30]
 [crates/gcode/src/commands/codewiki/types.rs:33-45]
@@ -588,11 +591,11 @@ The rest of the file builds the document structure around that output: it serial
 - `b229958b-946d-59db-bb55-da33469129a4`
 - `ccc5e752-9c46-5262-a364-856d5de7feee`
 - `08c84254-a46d-5eac-ad20-4d07c94a686f`
-- `1653d1e5-3ac6-5f4e-96de-bb46fd727b1f`
-- `c2474b4a-3816-5e4d-9f13-a1a296986eb3`
-- `4e862278-2391-5e0a-8b76-f04cf8df3287`
-- `4912a584-cc76-5735-80de-0cb286e853c4`
-- `d515c347-b86d-5297-9803-cc692b841646`
+- `44dfe8d0-2fa6-573e-9ce3-ec77e5bfd076`
+- `f32e2489-a73a-5598-bcd0-f56db06d0742`
+- `ea534b97-87ed-523b-a237-0630b2735f70`
+- `9c90a7ea-835e-5fa5-a2f8-ee25e4dfbabf`
+- `664e6e45-ca66-5fb8-8554-b30b5f396afa`
 - `da03a0d9-08a1-5f2c-848f-855e55517a86`
 - `fa8a9d60-b906-5015-bfaa-0440a7025e2d`
 - `ee37fea1-7784-545c-95d5-aa8f3ba13aaf`
@@ -625,56 +628,15 @@ The rest of the file builds the document structure around that output: it serial
 - `8f64df88-ee28-5f7f-983a-541fed360f92`
 - `4fe425b7-6ca2-542c-a09b-97298b2f7bd8`
 - `61e7c25e-451c-5bee-9570-406582a1b661`
-- `f1c95e56-1717-5cfe-aa80-ad90615fcfb3`
-- `3e9985ef-2e8b-579d-a221-160fe0095481`
-- `0ef0c316-237b-5246-8059-e1bb3f01c7d4`
-- `a8f53471-a5ba-539b-94d0-e28a6ec53bc9`
-- `6e5136b8-a84b-5d66-b762-86232739f4e3`
-- `71238014-b946-5095-8472-57991498d611`
-- `63c0874a-c1ef-5d38-ae1d-f1dd3d329c55`
-- `200c3aa1-f85a-5886-bba7-b5b159e49355`
-- `ed949dd4-29c7-5a4d-8c3a-4fb5cb8d2c71`
-- `c2ad385c-fcc5-54fb-a950-71feb8e6cade`
-- `cb533d89-0ec9-54bc-b68b-b5c8ca6140a3`
-- `467073f4-1af0-5125-b2b7-c563dc5d1700`
-- `374463e0-f2e5-5d76-b896-ef93a2df4a24`
-- `e02b9ca5-7840-5218-ab73-a856c6ca50c1`
-- `04624067-ddd4-5413-b34d-7ceb7854842f`
-- `d702d49a-2f11-571b-91d3-19e14a1112af`
-- `646b6022-58a1-5ac1-a866-a631a6ab7908`
-- `7fea7799-93c5-5240-84f5-8a17dbf60dca`
-- `002737f5-f8fe-5e56-8173-de1610984978`
-- `f1eb451f-f91b-57c4-b0a8-c14351383c4f`
-- `c0f1027b-eb47-565d-baf4-8dbc40908eee`
-- `b0b9609f-c63a-5714-8aff-0fcf6e5ceb17`
-- `a3f7840a-b145-517b-a0f9-18df1be8f52c`
-- `2feb5f64-46d9-5b5a-b5ea-624cf030d080`
-- `014a522e-0e1c-557b-86f3-181c23820302`
-- `5fd2545a-0ba6-51f4-8578-ec8937b047d4`
-- `38a4f97f-d12d-5c0a-a190-6d05519f958f`
-- `6acd8c2b-fa20-5a0c-a4ce-2dbfc209b082`
-- `b05da78a-8d4f-51d4-b93a-412ef929302b`
-- `9fc527a4-2021-59e6-b821-d4488dac8ed2`
-- `f74a7a37-247b-5a68-acb6-8c7218131501`
-- `9c3f9c1c-6ae0-5fc0-b75d-1300d884f572`
-- `9834a64b-f291-505a-be28-06dfb74ce8a8`
-- `77270e0e-921e-5616-92ef-4442b3c23cc0`
-- `9acb73b3-dacc-5de1-b3c9-9d47a2f97893`
-- `be6602c5-e83f-5d57-8a08-d789aa445d1b`
-- `0d376088-be59-5b21-b76d-67c0cf9640ed`
-- `daff5bf8-3a9e-570a-98af-902db6682b3f`
-- `194dcb6e-9304-5441-98d7-8dc64ff210df`
-- `4f1c1f06-4627-50b0-9d6d-fc7948f2d185`
-- `26e55ee7-242d-5aa0-be88-0d38fef4bcf1`
-- `c2a5d05b-09a8-56bf-b92b-cea65845b304`
-- `97b73bdb-b610-5996-abb9-9a3616688fdb`
-- `7f0ac9f3-d476-5736-9272-1820340103ed`
-- `7c0cc8e0-8958-5da9-9416-901e3dfb17e5`
-- `bb0af3c7-701f-5b6f-b1aa-21eb069986be`
-- `e626342b-0d01-5252-94fe-7b1d1b674002`
-- `c8b798c2-1b51-5bfc-9bbc-9d859234e5e8`
-- `cc8b024c-a7d5-5111-905c-05355111cc58`
-- `0ff395e3-9676-5d64-8fb4-b4428157f7ef`
+- `f41a0ee8-5e30-5962-a6fb-bb079a5b36b8`
+- `a3b0bc5e-15fe-5b41-9b29-4435c0965707`
+- `4fe0c950-0a3c-524e-9fb1-ad035344a41c`
+- `f9a0d7ef-2830-5d6b-8691-8ac8d9f7476b`
+- `d3e6d1e4-66e2-588a-9508-207dffc42659`
+- `7a605b7c-826c-5b65-953b-4f59f3d86866`
+- `c4dedc5e-dffe-59cb-b219-51ea84f31d3f`
+- `64ffa3e8-436f-501f-9115-9509d5832639`
+- `7932c4da-b0ee-5354-baf2-3b7467af10dc`
 - `2482ea17-b327-536d-96d8-3904bc42d195`
 - `ec4098a0-25ed-5493-b157-ed20fa7aeb45`
 - `316a2e47-3aca-54d4-b838-e50b108b9a97`
@@ -761,62 +723,23 @@ The rest of the file builds the document structure around that output: it serial
 - `cca5bdb4-2c1a-52a5-b898-fd0e22d8a124`
 - `0bbf118d-cc4b-5561-a44c-d34f79006439`
 - `33b1829b-f941-5402-8436-e1b029711bfa`
-- `70d27c9e-91e5-5027-af65-007cbd41eb95`
-- `7b3c6d04-93db-5fda-bbfb-9fd57e5f9fba`
-- `60556538-4dd8-5007-b9f9-b71962ac8b85`
-- `a3303708-f5eb-579c-8889-395203d1ef18`
-- `c4b2a34d-4e61-5fab-85f3-84e7f283ada9`
-- `44a31795-e989-5481-94dd-8656b8715981`
-- `0aa2407e-d7dc-5fae-b6f3-6c83090d7ceb`
-- `abc0cfbd-901c-5816-aa5b-8b89ecfb0b3d`
-- `b4d40701-420e-536d-8475-eb8b5aa14609`
-- `6a96976b-15a7-59af-95dc-be35580a8157`
-- `20be3d0a-783c-5091-80fe-51dfeb57c8b4`
-- `5b034170-eb58-5289-b882-ee8b8995ccfd`
-- `3d19ff2f-28e4-5289-b85e-912dcfbba363`
-- `c93d9602-c72b-51c1-842f-f10ab8059aac`
-- `d4852aa7-7d1d-54fc-a7a8-1aea05dbac4e`
-- `826753a6-bf85-5737-8878-9232f02140e6`
-- `abf80200-01ed-53d5-930c-df01093c7ecd`
-- `237bdbab-8ab9-5330-93b5-4ec8d42f2caf`
-- `0c72521d-6f0e-5ac2-9cf8-493ce1f9cff9`
-- `f51f54af-3a0b-5c3a-aae9-d0aee54cdcf0`
-- `20c5af58-c905-59cb-911a-f183685184e9`
-- `bed50496-03bb-5db3-a42b-152f2dfc568c`
-- `7cecc22d-32b4-5c35-a5b9-c434a2c97bde`
-- `2e7d9dce-e017-558b-90e5-bafe7364263b`
-- `bea9be6a-0ed5-541e-b97d-c0f9dfea3eb1`
-- `9020efaa-77cf-579d-b341-268a8aba2211`
-- `f16fd9ef-77be-59d5-b73a-a520eccc7463`
-- `9220de91-1fd1-5899-9253-bab1776ede3d`
-- `cf380792-cd80-5189-b3a0-5bece0b90854`
-- `63df8e5e-833b-54ff-9205-d50d9ee87d05`
-- `0c3c0665-ca87-520d-91c3-e67e6d760e3e`
-- `6cd166ff-9928-5901-91a6-59dff8b908e3`
-- `dea54e31-468f-5014-ab03-07982e80d172`
-- `d23186e5-3c2c-5b90-a2eb-b104de1004a4`
-- `f2213013-83d6-5e0d-b0c2-2f7d395ac0fa`
-- `bf2e3709-b7d2-5007-aaea-874370ed65c8`
-- `9b59fac5-35fa-5d34-98ac-cbc282c5c41b`
-- `82c65b8d-81b1-5198-b011-95ce2674e8f3`
-- `bde7b8c9-185f-58c5-8fa0-092a251de2dd`
-- `79b102e6-70e2-587e-8983-e545855e8178`
-- `5f4d51e3-8117-5689-8737-6b48b05eed5b`
-- `e3ddd4ae-d8c5-54ea-ad92-cc6c04ddc55e`
-- `ad203f44-05ee-5bed-9ed9-7349fba80606`
-- `4ce0bbc2-8c41-51e3-bd2e-56be2d46d4f6`
-- `ee2204e7-a0aa-5a02-8104-7c2f8e00c3b2`
-- `11f49d8b-0cfd-5c49-b009-a2141fb61a2f`
-- `5c66940a-4ee7-5543-a93e-4df28438ad01`
-- `1380b187-b9be-5a8e-9d33-94bf69a6b979`
-- `f0b4757d-f694-5900-8e37-94d875dd584e`
-- `b6732f37-b441-59a3-996f-29edd572b030`
-- `729b4ad6-213c-5142-972a-f6ba7b1046c4`
-- `80d78791-24c9-5923-b7e7-1266b5fcd982`
-- `25e0fcbe-8878-5172-8478-152037daff2c`
-- `c91b7807-fba1-5bbf-9d77-63e2aef38c53`
-- `16c53d91-6fbf-5921-96ff-85583dc4317c`
-- `f37cdd69-44ed-5606-97d4-b64db59dbe68`
+- `d03702cc-9c07-5411-9449-1d95784cae8d`
+- `f086fc1a-927c-5cb4-b8c3-70510af1b4bd`
+- `0f7d3ab4-1f09-56bf-af1c-ff0fcfa63755`
+- `dcad9469-e964-5eb2-b4d3-c6395927371f`
+- `81a8f8f4-2122-5337-8170-8c7db3bed8cf`
+- `13e52dd1-8d41-5a95-b61c-f7b3d69bcd29`
+- `c6b44493-1d50-5a77-828a-5ced88fe5c08`
+- `1f74cba0-5227-5243-bbcc-dac9326dcd5c`
+- `faf2699c-67e4-533f-ab9d-92c3bb3e8fae`
+- `360a4b2d-e775-5a44-b54f-25be7f901e9a`
+- `67b72f03-182e-51f3-afe5-25698bef4d53`
+- `532815ef-2ca4-53ec-b3f2-a7a41039de20`
+- `4c468d6c-dbd7-5fdf-8544-ae463a85b5e7`
+- `8797dcbf-4983-5b9b-8aaf-233a45647f07`
+- `217a697b-84e4-516f-9a0e-6fde2af5c1c3`
+- `b9d15450-b4dc-5d19-baf7-59e19f7b2165`
+- `1aa3c17f-bd7c-57ec-8785-c01a7f958014`
 - `b6d93a42-87d9-5f50-8b57-7c348d37760b`
 - `e6ff09c9-e115-545b-b60e-57571e920938`
 - `c4a94f1e-8ff9-570f-9607-04ed9b695c6b`

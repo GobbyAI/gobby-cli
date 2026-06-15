@@ -37,13 +37,9 @@ Module: [[code/modules/crates/gcode/src/projection|crates/gcode/src/projection]]
 
 ## Purpose
 
-This file implements projection synchronization for a code indexing system. It defines structures and functions to track and execute synchronization of code graph and vector projections to a database.
+Defines the projection-sync data model and orchestration helpers for synchronizing graph and vector projections for a project. It introduces request/status/report types, target and status enums, and a typed error wrapper so callers can track which projections are pending, how many files and symbols synced, and whether a run completed cleanly or degraded.
 
-The core data types include ProjectionSyncRequest (specifying which targets to sync), ProjectionSyncStatus (tracking pending operations), and ProjectionSyncReport (capturing outcomes with file/symbol counts and error details). ProjectionTarget enumerates the two projection types: Graph and Vectors.
-
-Synchronization flows through several layers: pending_after_code_fact_write determines what needs syncing based on a request, sync_after_index orchestrates both graph and vector syncs, and sync_files_with_state applies a stateful closure to each file while accumulating metrics. Graph synchronization (sync_graph_files, sync_graph_file) handles lexical facts from PostgreSQL into CodeGraph objects. Vector synchronization (sync_vector_files, sync_file, mark_synced) manages code symbol embeddings through a lifecycle manager extracted from context.
-
-Error handling converts anyhow::Error into typed ProjectionSyncError through graph_error_kind and vector_error_kind mappers. ProjectionSyncReport factory methods (ok, degraded, degraded_from_error) construct outcome reports tracking partial success, with ProjectionSyncReports aggregating both projection types' reports together.
+The sync helpers split the work by projection type: `pending_after_code_fact_write` decides what needs syncing from a request, `sync_after_index` runs both branches, and `sync_files_with_state` aggregates per-file progress and partial failures into a `ProjectionSyncReport`. Lower-level functions handle the actual graph and vector sync paths, including DB access, lifecycle initialization from `Context`, marking files synced, and mapping internal graph/vector errors into stable error kinds.
 [crates/gcode/src/projection/sync.rs:11-14]
 [crates/gcode/src/projection/sync.rs:17-21]
 [crates/gcode/src/projection/sync.rs:24-29]

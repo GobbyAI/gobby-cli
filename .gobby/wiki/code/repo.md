@@ -3,36 +3,36 @@ title: Repository Overview
 type: code_repo
 provenance:
 - file: crates/gcode/contract/gcode.contract.json
-- file: crates/gcode/src/commands/codewiki/ownership.rs
-- file: crates/gcode/src/commands/codewiki/text.rs
 - file: crates/gcode/src/commands/codewiki/types.rs
 - file: crates/gcode/src/config/services.rs
 - file: crates/gcode/src/db/resolution.rs
-- file: crates/gcode/src/graph/code_graph/write.rs
 - file: crates/gcode/src/index/semantic.rs
-- file: crates/gcode/src/index/walker.rs
 - file: crates/gcode/src/models.rs
 - file: crates/gcore/assets/docker-compose.services.yml
 - file: crates/gcore/src/ai_context.rs
-- file: crates/gcore/src/config/tests.rs
 - file: crates/ghook/schemas/diagnose-output.v2.schema.json
 - file: crates/gsqz/config.yaml
 - file: crates/gsqz/src/config.rs
 - file: crates/gwiki/contract/gwiki.contract.json
-- file: crates/gwiki/src/ai/chunk.rs
-- file: crates/gwiki/src/audit.rs
 - file: crates/gwiki/src/benchmark.rs
-- file: crates/gwiki/src/falkor_graph.rs
 - file: crates/gwiki/src/graph/mod.rs
 - file: crates/gwiki/src/health.rs
 - file: crates/gwiki/src/ingest/audio.rs
 - file: crates/gwiki/src/ingest/mod.rs
-- file: crates/gwiki/src/ingest/url.rs
 - file: crates/gwiki/src/search/semantic.rs
-- file: crates/gwiki/src/store.rs
 - file: crates/gwiki/src/vector.rs
+- file: docs/evidence/wiki-parity-2026-06/wp3-deposit-search.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-daemon.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-search.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q2-rrf-ask-daemon.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q2-rrf-search.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q4-falkor-ask-daemon.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q4-falkor-search.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-search-hybrid.json
 - file: docs/evidence/wiki-parity-2026-06/wp3-search-sources.json
-provenance_truncated: 342
+provenance_truncated: 427
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -42,50 +42,36 @@ freshness: indexed
 
 ## Overview
 
-Gobby is organized as a Rust workspace whose top-level `crates` directory groups the command-line tooling and shared foundation rather than owning direct source files itself. The main CLI-facing pieces are split between `gcode`, which provides a code-indexing command-line tool plus reusable library APIs, and `gcore`, which supplies shared infrastructure such as bootstrap, daemon URL discovery, project lookup, layered configuration, CLI contracts, setup/provisioning, degradation terminology, and optional storage/indexing integrations [2336] [491] [2330] [3527].
+Gobby is a Rust workspace organized around command-line tools and shared local-first infrastructure. The `crates` tree is the main implementation area: it contains user-facing CLIs for code indexing, hook delivery, local LLM launching, LLM-oriented output compression, and wiki workflows, alongside shared runtime primitives in `gcore`. The shared crate centralizes bootstrap, daemon, project, config, AI, setup, degradation, datastore, search, and indexing capabilities, with heavier integrations gated behind features for lighter consumers (crates/gcore/src/lib.rs:27-34).
 
-The major pieces fit together around a clean separation between CLI concerns, daemon-facing contracts, and reusable indexing foundations. `gcode` keeps command parsing, process dispatch, contract publication, and core indexing APIs separated, with tests protecting the public library from depending on CLI-specific code [1370] [2330]. `gcore` sits underneath as the common layer used to discover projects and daemon endpoints, manage configuration, describe command contracts, and package the Docker Compose service stack installed by `gobby install` [3527].
+The major pieces fit together as separate packages with clear contracts: `gcode` and `gwiki` define public command shapes through contract JSON files, while `gcore` provides the reusable substrate used by tools that need common project, indexing, search, or integration behavior. Documentation is lighter-weight in the current snapshot: `docs` is mostly a container, and its active evidence area stores generated bundles such as the 2026-06 wiki-parity workstream for the wp3 scope [7913].
 
-A reader should start in `crates/gcore/src/lib.rs` to understand the shared vocabulary and services that support the workspace, then move to `crates/gcode/src/lib.rs` for the reusable indexing API surface and `crates/gcode/src/cli.rs` or `crates/gcode/src/main.rs` for how that functionality is exposed as a command-line program [3527] [2330] [491] [2336]. The `docs` tree is presently just a documentation namespace, with `docs/evidence` serving as a container for proof artifacts rather than executable code or authored documentation.
+A reader should start in `crates`, especially `gcore` to understand the shared capabilities and then the individual CLI crates to see how those capabilities are exposed. For current documentation context, inspect the generated evidence bundle under `docs/evidence/wiki-parity-2026-06`, since the docs tree itself does not yet appear to hold direct implementation-bearing files.
 
 ## Modules
 
-- [[code/modules/crates|crates]] - The crates module is a container directory with no direct files of its own; it groups the Rust workspace's tooling crates and shared foundation that together make up the Gobby command-line surface. Its responsibilities are split across six child crates: gcode packages a code-indexing CLI and reusable library whose source root keeps command parsing, process dispatch, daemon-facing contract publication, and core indexing APIs separated, with tests guarding that the public library stays independent of CLI-specific code [2336] [491] [1370] [2330]; and gcore provides the shared foundation—bootstrap, daemon URL discovery, project lookup, layered configuration, CLI contracts, setup/provisioning, degradation vocabulary, and feature-gated storage/indexing integrations—alongside assets that package the Docker Compose service stack installed by `gobby install` [3527].
+- [[code/modules/crates|crates]] - The crates module is the Rust workspace container for Gobby’s command-line tools and shared libraries. Its children cover code indexing (`gcode`), shared runtime and integration primitives (`gcore`), host CLI hook delivery (`ghook`), local LLM launcher behavior (`gloc`), output compression for LLM consumption (`gsqz`), and the local-first wiki CLI (`gwiki`). Each package owns either a user-facing CLI contract or a reusable layer: `gcode` and `gwiki` pin public command shapes in contract JSON files  , while `gcore` exposes common bootstrap, daemon, project, config, AI, setup, degradation, datastore, search, and indexing capabilities with heavier integrations feature-gated for lighter consumers (crates/gcore/src/lib.rs:27-34).
 
-The remaining crates layer specific tools on top of that foundation. ghook is a hook-dispatcher crate plus strict draft-07 JSON schemas for diagnostic output and queued inbox envelopes, using `additionalProperties: false` so external surfaces reject unknown fields [3843] [3893]. gloc is a launcher that auto-detects a local LLM backend and hands control to a supported AI CLI, with a built-in YAML defining configuration precedence and runtime defaults such as a 500 ms probe timeout and automatic model loading [crates/gloc/config.yaml:11-14]. gsqz compresses command output for LLM consumption, defining ordered first-match-wins pipeline matching in YAML and routing stdin or stripped-ANSI command output through the compressor with optional stats and daemon savings reporting [4487] [4489] [4491]. gwiki is the local-first wiki system, pairing a contract layer that declares tool identity, version, command shape, output flags, and scope selectors with a library/CLI layer covering scope resolution, vault initialization, ingestion, indexing, manifest and registry persistence, search, provenance audits, and formatted output [4618] [4621] [6828].
+The main flows split along tool boundaries. `gcode` parses global flags and subcommands, then routes from its binary entry point into dispatch while supporting runtime config, daemon schemas, output formatting, and progress reporting [2315]  [1268] [1393]. `ghook` parses host CLI hook invocations, classifies diagnostics/version/owned-execution paths, and returns usage-style exit code 2 for validation failures  [3902]. `gloc` uses layered configuration to probe local backends such as LM Studio and Ollama until a responding backend wins [4064], while `gsqz` matches command-output pipelines in order and applies compression steps under configurable thresholds.
 
-These crates collaborate through a consistent pattern established in gcode and gcore: each tool publishes a JSON CLI contract describing its tool identity, version, summary, global flags, project detection, and identity keys [28] [31], while depending on gcore for cross-cutting concerns like configuration layering, daemon discovery, and the provisioned service stack. The tool crates (gcode, gsqz, gloc, ghook, gwiki) thus remain focused on their domain logic and contract surfaces, deferring shared bootstrap, storage, and degradation handling to gcore so that the Gobby CLI ecosystem stays uniform in how it detects projects, reads configuration, and reports degraded behavior.
-- [[code/modules/docs|docs]] - The docs module is currently a documentation namespace with no direct files of its own. Its responsibilities are expressed through child modules, especially docs/evidence, which acts as a container for proof artifacts rather than executable source or authored documentation.
+These crates collaborate by sharing conventions and infrastructure while keeping product-specific behavior isolated. `gcore` supplies the cross-cutting foundations that let CLIs depend on common project identity, daemon access, AI routing, setup, degradation, and optional service integrations without duplicating service logic (crates/gcore/src/lib.rs:27-34). The CLI packages then layer their own contracts and orchestration on top: `gcode` focuses on code-indexing workflows and daemon-facing schemas [30] [1393], `gwiki` defines wiki capture/search/upkeep/synthesis semantics and shared scope flags [4567] [4568], and the supporting tools (`ghook`, `gloc`, `gsqz`) feed runtime context, local AI execution, and compacted command output into those broader workflows.
+- [[code/modules/docs|docs]] - The docs module is currently a container rather than an implementation-bearing package: it has no direct files, and its documented responsibility is expressed through child documentation artifacts. Its active child path, docs/evidence, is likewise a parent for generated evidence bundles, with the current docs/evidence/wiki-parity-2026-06 bundle preserving the 2026-06 wiki-parity workstream for the wp3 scope [7913].
 
-The visible flow is evidence-driven: docs/evidence/wiki-parity-2026-06 records artifacts for a gwiki parity workflow that resolves a project scope, searches within that scope, selects relevant sources, and uses those sources to compile a grounded explainer. The stable component IDs show the shape of those artifacts, including search inputs and results, selected source paths, prompts, synthesis metadata, citation handling, page writes, and generated article/index paths.
+The key flow captured under this module is audit evidence collection across wiki-parity operations. The evidence bundle records outputs from gwiki and ghook flows spanning compilation, ingestion, search, and ask behavior, so the docs tree functions as a traceable documentation and verification surface rather than runtime code [7913] [9331] [8066].
 
-Because the docs module has no direct files or source excerpts in the supplied input, collaboration is organized by containment rather than code calls: docs owns the top-level documentation area, docs/evidence groups evidence sets, and the wiki parity child set carries the concrete workflow records and metadata. No file:line spans were supplied for citation.
-[7917]
-[7949]
-[7981]
-[7918]
-[7919]
+The collaboration model is simple: docs delegates all current responsibility to docs/evidence, and docs/evidence organizes timestamped or workstream-specific bundles beneath it. Those bundles carry structured records with shared fields such as command, status, source paths, search results, synthesis, citation checks, and warnings, allowing compile, search, and ask outputs to be inspected together as an auditable chain for the wiki-parity scope [7913] [9331] [8066].
 
 ## References
 
-- [28] [crates/gcode/contract/gcode.contract.json:2]
-- [31] [crates/gcode/contract/gcode.contract.json:5-49]
-- [491] [crates/gcode/src/cli.rs:21-44]
-- [1370] [crates/gcode/src/contract.rs:5-259]
-- [2330] [crates/gcode/src/lib.rs:34-42]
-- [2336] [crates/gcode/src/main.rs:4-6]
-- [3527] [crates/gcore/src/lib.rs:27-34]
-- [3843] [crates/ghook/schemas/diagnose-output.v2.schema.json:19]
-- [3893] [crates/ghook/schemas/inbox-envelope.v1.schema.json:16]
-- [4487] [crates/gsqz/src/main.rs:25-48]
-- [4489] [crates/gsqz/src/main.rs:67-139]
-- [4491] [crates/gsqz/src/main.rs:186-276]
-- [4618] [crates/gwiki/contract/gwiki.contract.json:2]
-- [4621] [crates/gwiki/contract/gwiki.contract.json:5-25]
-- [6828] [crates/gwiki/src/lib.rs:1-60]
-- [7917] [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:3-12]
-- [7918] [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:4]
-- [7919] [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json:5]
-- [7949] [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:3-12]
-- [7981] [docs/evidence/wiki-parity-2026-06/wp3-search-sources.json:3-16]
+- [30] [crates/gcode/contract/gcode.contract.json:4]
+- [1268] [crates/gcode/src/config.rs:1-25]
+- [1393] [crates/gcode/src/contract.rs:5-288]
+- [2315] [crates/gcode/src/main.rs:4-6]
+- [3902] [crates/ghook/src/args.rs:9-33]
+- [4064] [crates/gloc/config.yaml:18-30]
+- [4567] [crates/gwiki/contract/gwiki.contract.json:4]
+- [4568] [crates/gwiki/contract/gwiki.contract.json:5-25]
+- [7913] [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:3-12]
+- [8066] [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-daemon.json:3-10]
+- [9331] [docs/evidence/wiki-parity-2026-06/wp3-search-sources.json:3-16]
 

@@ -17,7 +17,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-Implements the `init` command for wiki setup. `execute` resolves the requested scope, initializes the vault, and then registers that scope in the registry; if registration fails, it cleans up any newly created vault paths before returning the error. `render` packages the successful result into a structured JSON payload and a human-readable status message, then delegates to the shared scoped outcome formatter so the command reports the initialized scope, root path, and created directories/files consistently.
+Implements the `init` command for a wiki scope: `execute` resolves the requested scope, initializes the vault, and if scope registration fails it rolls back the created paths before returning the error. On success it derives the resolved scope identity and hands the root path plus created directories/files to `render`, which packages them into a JSON payload, formats the initialization status text, and delegates to `super::scoped_outcome` to produce the final `CommandOutcome`.
 [crates/gwiki/src/commands/init.rs:9-20]
 [crates/gwiki/src/commands/init.rs:22-40]
 
@@ -25,8 +25,8 @@ Implements the `init` command for wiki setup. `execute` resolves the requested s
 
 - `execute` (function) component `execute [function]` (`14fc1143-adc3-5c81-adf6-f1b4513f3b65`) lines 9-20 [crates/gwiki/src/commands/init.rs:9-20]
   - Signature: `pub(crate) fn execute(selection: ScopeSelection) -> Result<CommandOutcome, WikiError> {`
-  - Purpose: Indexed function `execute` in `crates/gwiki/src/commands/init.rs`. [crates/gwiki/src/commands/init.rs:9-20]
+  - Purpose: Resolves the command scope from the selection, initializes the vault for that scope, rolls back created paths if scope registration fails, and otherwise returns a rendered 'CommandOutcome' for the resolved scope identity and created paths. [crates/gwiki/src/commands/init.rs:9-20]
 - `render` (function) component `render [function]` (`b2ef46a2-b1e1-5219-af7c-0bbd643befb0`) lines 22-40 [crates/gwiki/src/commands/init.rs:22-40]
   - Signature: `fn render(scope: ScopeIdentity, root: &Path, created_paths: &CreatedVaultPaths) -> CommandOutcome {`
-  - Purpose: Indexed function `render` in `crates/gwiki/src/commands/init.rs`. [crates/gwiki/src/commands/init.rs:22-40]
+  - Purpose: Builds an 'init' command outcome by serializing the scope, root path, and created directories/files into a JSON payload, formatting an initialization status message, and delegating to 'super::scoped_outcome'. [crates/gwiki/src/commands/init.rs:22-40]
 

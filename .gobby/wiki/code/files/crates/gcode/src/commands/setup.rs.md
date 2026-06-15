@@ -33,7 +33,9 @@ Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Purpose
 
-Implements the standalone `gcode setup` flow: it validates the request, applies any explicit FalkorDB service overrides, resolves or provisions the database and supporting services, connects to Postgres with retry, optionally clears existing code-index projections, runs the standalone setup, and then writes the resulting `gcore` config and status output. The helper functions split that work into projection cleanup, service/database resolution, embedding bootstrap selection and endpoint probing, config writing, and embedding-key removal, while the tests verify config persistence, provider validation, and isolated setup behavior.
+This file implements the standalone `gcode setup` flow. `run` validates the request, prepares Docker service options, resolves or provisions the database and services, optionally clears existing code-index projections, runs the standalone setup, reports failures in JSON or text, and on success writes `gcore.yaml` and records the resulting service, embedding, and config-file status.
+
+The helper functions break that workflow into pieces: they apply request-specific FalkorDB overrides, derive projection configs from home plus provisioning state, connect to Postgres with retry, build or clear embedding bootstrap settings, check endpoint reachability, and persist or clean embedding-related config keys. The tests verify config writing, embedding-provider validation, and that standalone setup installs only the expected public code-index subset.
 [crates/gcode/src/commands/setup.rs:22-94]
 [crates/gcode/src/commands/setup.rs:96-99]
 [crates/gcode/src/commands/setup.rs:101-117]
@@ -47,7 +49,7 @@ Implements the standalone `gcode setup` flow: it validates the request, applies 
   - Purpose: Validates a standalone setup request, provisions or connects to the required database and services, optionally clears code-index projections, runs the setup, reports any failures in the requested format, and on success writes the gcore config and records the resulting service, embedding, and config-file status. [crates/gcode/src/commands/setup.rs:22-94]
 - `OverwriteProjectionConfigs` (class) component `OverwriteProjectionConfigs [class]` (`1059a619-b0f5-53ff-b42c-12e3ad77c4f5`) lines 96-99 [crates/gcode/src/commands/setup.rs:96-99]
   - Signature: `struct OverwriteProjectionConfigs {`
-  - Purpose: 'OverwriteProjectionConfigs' is a configuration overlay struct that optionally provides replacement settings for FalkorDB and Qdrant projection backends via 'falkordb: Option<config::FalkorConfig>' and 'qdrant: Option<QdrantConfig>'. [crates/gcode/src/commands/setup.rs:96-99]
+  - Purpose: 'OverwriteProjectionConfigs' is a configuration overlay struct that optionally provides replacement settings for FalkorDB and Qdrant projection backends via 'falkordb: Option`<config::FalkorConfig>`' and 'qdrant: Option<QdrantConfig>'. [crates/gcode/src/commands/setup.rs:96-99]
 - `clear_overwrite_projections` (function) component `clear_overwrite_projections [function]` (`b75a2915-26c4-5465-93ad-03f319e7ddd8`) lines 101-117 [crates/gcode/src/commands/setup.rs:101-117]
   - Signature: `fn clear_overwrite_projections(`
   - Purpose: Clears any existing overwrite projections by resolving the configured FalkorDB and Qdrant targets and, if present, wiping the FalkorDB code index and deleting Qdrant code-symbol collections, returning an error if either cleanup step fails. [crates/gcode/src/commands/setup.rs:101-117]

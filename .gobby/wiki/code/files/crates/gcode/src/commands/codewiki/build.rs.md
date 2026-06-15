@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Purpose
 
-Builds the Codewiki command’s documentation pieces by wiring in separate builders for architecture, changes, file docs, hotspots, modules, onboarding, and index snapshots, then re-exports the shared doc-building functions and types for use elsewhere in the command. [crates/gcode/src/commands/codewiki/build.rs:1-25]
+Re-exports the codewiki build helpers by wiring in the architecture, changes, file, hotspots, modules, onboarding, and snapshot submodules, providing the doc-building functions used to generate various Codewiki outputs. [crates/gcode/src/commands/codewiki/build.rs:1-25]
 
 ## API Symbols
 

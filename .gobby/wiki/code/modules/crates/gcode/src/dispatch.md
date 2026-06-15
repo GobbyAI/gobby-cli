@@ -10,7 +10,7 @@ provenance:
   - 25-27
   - 30-70
   - 73-87
-  - 90-107
+  - 90-115
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -22,20 +22,15 @@ Parent: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-The dispatch module is responsible for turning parsed `gcode` CLI commands into the right early actions, logger settings, and service initialization requirements. Its tests show that dispatch treats stderr logging as warning-only by default, honors a plain `RUST_LOG` level such as `debug`, and lets the quiet flag hard-mute stderr logging even when an environment level is supplied. The `services_for` helper parses CLI arguments through `Cli::try_parse_from` and passes the parsed command into `service_config_selection`, making service resolution a direct consequence of the command variant rather than a separate ad hoc path  .
+The dispatch module is responsible for turning parsed CLI intent into the right runtime behavior without doing unnecessary setup. Its stderr logging policy defaults normal runs to warnings, honors a plain Rust log level when one is supplied, and treats quiet mode as a hard mute even if a level is provided. The tests capture those behaviors through `stderr_log_level(false, None)`, `stderr_log_level(false, Some("debug"))`, and `stderr_log_level(true, Some("warn"))`. 
 
-A key flow is early command dispatch for setup: the parsed `Cli` is passed to `dispatch_early_command` along with the effective output format and a callback that receives the setup request. The test confirms this path uses only the parsed request fields, including standalone mode, database URL, schema, overwrite behavior, and embedding API base, and succeeds without resolving project context first . This keeps setup-style commands independent from the normal project/service bootstrapping path.
+A key flow is early handling for `setup`: the test builds a parsed `Cli` with project path, standalone mode, database URL, index overwrite, and embedding API base, then calls `dispatch_early_command` with `effective_format(cli.format, &cli.command)`. The closure receives the already-parsed request and asserts the request fields directly, showing that setup can dispatch successfully before resolving broader project context. 
 
-The module also distinguishes lookup commands from graph and AI commands when deciding which services to request. Lookup-oriented commands such as `grep`, `tree`, `symbol-at`, and search variants are tested as skipping service config resolution, while separate coverage verifies graph and AI command families request only the services they actually need . Since there are no child modules, collaboration is primarily between dispatch functions, CLI parsing, format selection, and configuration selection within this module’s test surface.
-[crates/gcode/src/dispatch/tests.rs:5-9]
-[crates/gcode/src/dispatch/tests.rs:12-14]
-[crates/gcode/src/dispatch/tests.rs:17-22]
-[crates/gcode/src/dispatch/tests.rs:25-27]
-[crates/gcode/src/dispatch/tests.rs:30-70]
+The module also decides which backend services a command needs. The local `services_for` helper parses synthetic CLI arguments into `Cli` and passes `cli.command` to `service_config_selection`, giving tests a compact way to verify command-to-service selection. Lookup-oriented commands such as `grep`, `tree`, `symbol-at`, and search variants are covered as commands that skip service config resolution, while the file summary notes that graph and AI commands are separately checked to request only the minimal services they require. [crates/gcode/src/dispatch/tests.rs:5-9] [crates/gcode/src/dispatch/tests.rs:62-70]
 
 ## Files
 
-- [[code/files/crates/gcode/src/dispatch/tests.rs|crates/gcode/src/dispatch/tests.rs]] - This is a test module for the dispatch functionality that verifies command handling, service resolution, and logging configuration. The file contains helper function `services_for` which parses CLI arguments to extract service configuration, and multiple test functions that validate: stderr logger behavior respects quiet flags and RUST_LOG environment variables; early command dispatch processes parsed requests without resolving project context; and different command types correctly determine which services to request during initialization. The tests collectively ensure the dispatch layer properly routes commands with appropriate service and logging configurations.
+- [[code/files/crates/gcode/src/dispatch/tests.rs|crates/gcode/src/dispatch/tests.rs]] - Tests dispatch behavior in `gcode`, covering stderr log-level selection, early `setup` dispatch from parsed CLI input, and command-to-service selection logic. The helper `services_for` parses CLI args into a `Cli` and maps the resulting command to a `ServiceConfigSelection`, and the tests verify that lookup, graph, and AI commands request only the minimal backend services they need.
 [crates/gcode/src/dispatch/tests.rs:5-9]
 [crates/gcode/src/dispatch/tests.rs:12-14]
 [crates/gcode/src/dispatch/tests.rs:17-22]

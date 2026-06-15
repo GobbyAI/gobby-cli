@@ -49,7 +49,7 @@ Module: [[code/modules/crates/gcode/src/search/fts|crates/gcode/src/search/fts]]
 
 ## Purpose
 
-This file contains the unit and integration tests for the `gcode` full-text search and path-matching helpers, plus the PostgreSQL fixture utilities those tests need. The early tests verify query sanitization, glob/path expansion, pattern compilation, symbol/snippet behavior, and graph-symbol resolution, while the later helpers seed and clean up overlay-visibility test data, build temporary project/file/symbol/chunk rows, and construct an overlay-scoped `Context` so the database-backed visibility assertions can run in isolation.
+This file is a test suite for `crates/gcode/src/search/fts`, covering full-text search query sanitization, glob/path pattern normalization, snippet generation, overlay visibility filtering, and graph-symbol resolution. It also defines small test helpers for generating unique IDs, connecting to the test database, seeding and cleaning up overlay fixtures, inserting projects/files/symbols/chunks, and building an overlay-scoped `Context`, so the tests can exercise the search and visibility logic against realistic PostgreSQL-backed fixtures.
 [crates/gcode/src/search/fts/tests.rs:17-26]
 [crates/gcode/src/search/fts/tests.rs:29-34]
 [crates/gcode/src/search/fts/tests.rs:37-43]

@@ -32,7 +32,7 @@ Module: [[code/modules/crates/gcode/src/index/indexer|crates/gcode/src/index/ind
 
 ## Purpose
 
-The file implements overlay project file indexing and reconciliation. It determines which files to index in an overlay project by reconciling file states between parent and overlay indices using the `overlay_reconcile_action` function, which evaluates file existence, content hashes, and indexability to decide whether to Index, Inherit, Tombstone, DeleteOverlay, or Skip each file. The main entry point `index_overlay_files` discovers candidate files through multiple sources (git status, database queries, explicit paths), reconciles them against parent and overlay indexed states, and separates results for AST parsing versus content-only processing. Supporting functions handle git integration (status parsing with timeouts, porcelain format validation), database queries for file states, relative path mapping and filtering, soft-delete operations via tombstone records, and configuration of git operation timeouts.
+Implements overlay index reconciliation for project files, deciding whether each path should be indexed, inherited from the parent, tombstoned, deleted from the overlay, or skipped based on file existence, content hashes, indexability, and parent/overlay state. It also gathers candidate paths from multiple sources, filters them by scope and relative path rules, loads existing indexed-file state from the database, inspects Git status for modified/untracked files, and provides small helpers for timeout parsing, porcelain-status validation, path matching, and transactional tombstone writes.
 [crates/gcode/src/index/indexer/overlay.rs:32-35]
 [crates/gcode/src/index/indexer/overlay.rs:38-44]
 [crates/gcode/src/index/indexer/overlay.rs:46-82]

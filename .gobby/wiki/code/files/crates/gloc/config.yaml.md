@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gloc|crates/gloc]]
 
 ## Purpose
 
-This file defines the built-in default `gloc` configuration: global settings, backend discovery, client launch templates, and model aliases. The `settings` block tunes probing and pull behavior, `backends` lists local LLM servers to probe in priority order, `clients` maps supported CLIs (`claude` and `codex`) to their binaries, environment variables, model flags, and defaults, and `aliases` provides shorthand model names that resolve before execution.
+This file defines gloc’s built-in default configuration for detecting local LLM backends and launching AI CLI clients. It sets global behavior under `settings` like probe timeout and auto-load/auto-pull, lists backends to probe in priority order with their URLs, probe paths, and auth tokens, configures two clients (`claude` and `codex`) with the binaries, environment variables, model flags, defaults, and per-client args, and provides model aliases that are resolved before backend execution.
 [crates/gloc/config.yaml:11-17]
 [crates/gloc/config.yaml:12]
 [crates/gloc/config.yaml:13]

@@ -19,9 +19,11 @@ Parent: [[code/modules/crates/gcode|crates/gcode]]
 
 ## Overview
 
-The crates/gcode/assets module is an asset container rather than an implementation module: it has no direct files of its own, and its responsibilities are carried by the import_roots child module. That child module supplies static lookup tables used by gcode’s language analysis to connect dependency names or require paths to the top-level symbols they introduce.
+crates/gcode/assets is an asset-only module with no direct source files of its own. Its responsibility is to group static lookup data used by gcode tooling, currently through the import_roots child module, so dependency-resolution logic can consume curated language-specific mappings rather than hard-coding them elsewhere.
 
-The key flow is language-specific import-root resolution. For Elixir, package names such as jason, httpoison, phoenix, telemetry, and ex_doc map to PascalCase module roots such as Jason, HTTPoison, Phoenix, Telemetry, and ExDoc. For Ruby, require paths such as json, fileutils, net/http, faraday, nokogiri, and rspec subpaths map to their corresponding root constants. The stable component IDs show these mappings are tracked as individual properties, including Elixir entries like phoenix and telemetry and Ruby entries like net/http, rspec/core, and rspec/mocks.
+The key flow is lookup-oriented: a dependency package name is normalized to the lowercase key used in the asset table, then resolved to one or more canonical import roots. The Elixir import-root asset maps packages such as `jason`, `httpoison`, `ecto`, and `phoenix` to roots like `Jason`, `HTTPoison`, `Ecto`, and `Phoenix`, with values stored as arrays so dependencies can expose multiple roots when needed (crates/gcode/assets/import_roots/elixir_dependency_roots.json:2-18).
+
+The parent module acts as the bundle boundary, while crates/gcode/assets/import_roots owns the actual language tables. This keeps asset ownership separated from the resolver code that reads it, and gives the module a stable catalog of dependency-name properties spanning Elixir and Ruby-style package identifiers for downstream import inference.
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
 [crates/gcode/assets/import_roots/ruby_require_roots.json:2]
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:3]
@@ -30,11 +32,11 @@ The key flow is language-specific import-root resolution. For Elixir, package na
 
 ## Child Modules
 
-- [[code/modules/crates/gcode/assets/import_roots|crates/gcode/assets/import_roots]] - This module provides static import-root lookup assets for gcode’s language analysis. The Elixir asset maps dependency package names to the top-level modules they provide, covering packages such as jason, httpoison, phoenix, telemetry, and ex_doc with PascalCase module roots like Jason, HTTPoison, Phoenix, Telemetry, and ExDoc . The Ruby asset performs the same role for require paths, mapping standard library and gem requires such as json, fileutils, net/http, faraday, nokogiri, and rspec subpaths to their root constants .
+- [[code/modules/crates/gcode/assets/import_roots|crates/gcode/assets/import_roots]] - This module is a small asset bundle that centralizes import-root lookup data for language-specific dependency resolution. Its Elixir table maps lowercase package names to canonical module roots, covering libraries such as `jason` to `Jason`, `httpoison` to `HTTPoison`, `ecto` to `Ecto`, and `phoenix` to `Phoenix` in an array-valued format suitable for dependencies that may expose one or more roots (crates/gcode/assets/import_roots/elixir_dependency_roots.json:2-18).
 
-The key flow is data-driven: when gcode encounters a dependency or require path, these JSON files let the import-root analysis resolve that external name to the namespace that should appear in code. Elixir uses package-to-array mappings because a dependency can conceptually provide one or more module roots, while the current table assigns each listed dependency a single root module . Ruby uses require-path-to-constant mappings, including aliases where multiple require paths resolve to the same namespace, such as net/http and net/https both resolving to Net, and rspec plus its submodules resolving to RSpec  .
+The Ruby table performs the parallel role for `require` paths, mapping each require root to the top-level constant it introduces. It handles both direct one-to-one roots like `json` to `JSON`, `fileutils` to `FileUtils`, `faraday` to `Faraday`, and `nokogiri` to `Nokogiri`, and grouped paths where multiple requires share a namespace, such as `net/http` and `net/https` both resolving to `Net`, plus several RSpec require paths resolving to `RSpec` (crates/gcode/assets/import_roots/ruby_require_roots.json:2-11).
 
-There are no child modules here; collaboration is simply between two parallel language-specific configuration files. Together they give the broader gcode asset system a compact, stable vocabulary for recognizing external import roots across Elixir and Ruby projects without embedding those package-specific conventions directly in analyzer code.
+There are no child modules; collaboration here is by convention across the two JSON assets. Together, they give the importer stable, language-aware dictionaries for converting dependency or require identifiers into the symbols that downstream analysis should treat as introduced import roots.
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
 [crates/gcode/assets/import_roots/ruby_require_roots.json:2]
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:3]

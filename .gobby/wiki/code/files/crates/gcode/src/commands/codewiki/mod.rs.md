@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Purpose
 
-Command module for the `codewiki` feature, defining output paths and limits, wiring AI context/config helpers, and re-exporting the submodules that build, generate, cluster, query graph data, track progress, and render repository documentation such as module, file, architecture, onboarding, hotspots, changes, and ownership docs. [crates/gcode/src/commands/codewiki/mod.rs:1-100]
+Top-level `codewiki` module for the gcode crate’s documentation system, defining shared constants and wiring together submodules for building, clustering, graph queries, ownership, paths, progress, rendering, reuse, prompts, and text handling. It also re-exports the main APIs used to generate CodeWiki docs such as module, file, architecture, onboarding, hotspots, and change summaries. [crates/gcode/src/commands/codewiki/mod.rs:1-100]
 
 ## API Symbols
 

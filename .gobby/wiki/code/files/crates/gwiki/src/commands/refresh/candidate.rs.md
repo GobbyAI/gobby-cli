@@ -22,7 +22,9 @@ Module: [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/comman
 
 ## Purpose
 
-This file implements refresh handling for candidate sources in the wiki command pipeline. `refresh_url_candidate` and `refresh_local_candidate` are the entry points: they verify a candidate against its stored `SourceRecord`, compute or fetch current content, and then classify the result as unchanged, successfully refreshed, or failed by pushing structured results into the provided sink vectors. The helper functions support that flow by hashing local files with validation and producing consistent `RefreshFailure` values, while `refresh_changed_url_source`, `refresh_changed_local_source`, and `finalize_changed_refresh` perform the actual re-ingest/update path for changed sources, including staging new content, computing deltas against the prior record, removing obsolete vault paths, and returning the updated refresh metadata.
+This file implements refresh handling for candidate sources, splitting the work between URL-backed and local-file-backed records. It first checks whether a source’s current content hash matches the stored record: unchanged items are recorded as such, changed URL sources are re-fetched and re-ingested, and changed local files are validated, replayed, and re-ingested with resolved ingest context.
+
+The helper functions support that flow by reading and hashing local files, constructing structured `RefreshFailure` values, and finalizing successful refreshes by cleaning up obsolete raw and asset paths and removing the previous manifest entry.
 [crates/gwiki/src/commands/refresh/candidate.rs:15-74]
 [crates/gwiki/src/commands/refresh/candidate.rs:76-173]
 [crates/gwiki/src/commands/refresh/candidate.rs:175-214]

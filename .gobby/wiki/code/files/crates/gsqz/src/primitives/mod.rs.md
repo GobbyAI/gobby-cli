@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gsqz/src/primitives|crates/gsqz/src/primitives]]
 
 ## Purpose
 
-Module घोषणापत्र for `primitives`, exposing the primitive submodules `dedup`, `filter`, `group`, `match_output`, `prose`, `replace`, and `truncate` for use elsewhere in the crate. [crates/gsqz/src/primitives/mod.rs:1-8]
+Exports the `primitives` submodules for the `gsqz` crate, grouping the core primitive operations such as deduplication, filtering, grouping, match output handling, prose, replacement, and truncation. [crates/gsqz/src/primitives/mod.rs:1-8]
 
 ## API Symbols
 

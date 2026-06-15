@@ -4,62 +4,33 @@ type: code_file
 provenance:
 - file: crates/gcode/src/graph/code_graph/write.rs
   ranges:
-  - 110-113
-  - 116-118
-  - 120-158
-  - 160-165
-  - 167-177
-  - 179-195
-  - 197-216
-  - 218-249
-  - 251-266
-  - 268-277
-  - 279-284
-  - 286-290
-  - 292-297
-  - 299-301
-  - 304-315
-  - 317-326
-  - 328-336
-  - 338-342
-  - 344-346
-  - 348-352
-  - 354-377
-  - 379-383
-  - 385-392
-  - 394-400
-  - 402-406
-  - 409-412
-  - 415-422
-  - 425-429
-  - 431-438
-  - 440-455
-  - 457-462
-  - 464-492
-  - 494-507
-  - 509-511
-  - 513-518
-  - 520-528
-  - 530-566
-  - 568-586
-  - 588-618
-  - 620-654
-  - 656-660
-  - 662-694
-  - 696-702
-  - 704-723
-  - 725-743
-  - 745-765
-  - 767-778
-  - 780-791
-  - 793-804
-  - 806-864
-  - 866-933
-  - 935-947
-  - 949-957
-  - 959-975
-  - 977-986
-  - 988-997
+  - 47-50
+  - 53-56
+  - 59-61
+  - 63-101
+  - 103-108
+  - 110-120
+  - 122-138
+  - 140-159
+  - 161-192
+  - 194-203
+  - 205-214
+  - 216-221
+  - 223-227
+  - 229-234
+  - 236-258
+  - 260-271
+  - 273-282
+  - 284-286
+  - 289-294
+  - 296-307
+  - 309-318
+  - 320-328
+  - 330-334
+  - 336-338
+  - 340-345
+  - 347-351
+  - 353-376
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -71,190 +42,96 @@ Module: [[code/modules/crates/gcode/src/graph/code_graph|crates/gcode/src/graph/
 
 ## Purpose
 
-This file implements write operations for the code-index graph projection, managing FalkorDB graph database writes for code structure data extracted from PostgreSQL index rows. The CodeGraph class provides the main interface with methods for syncing files (sync_file, sync_file_graph), deleting stale or complete file graphs, and clearing projects. Supporting the core sync operation are query-building functions that generate Cypher statements for creating/updating graph nodes and relationships: ensure_file_node_query builds file node creation, add_imports_query and add_definitions_query construct symbol and import relationships, and the add_*_calls_query functions handle different types of call relationships (symbol calls, external calls, unresolved calls). Helper classes like GraphCallTarget, SyncFileMutation, ImportGraphItem, and CallGraphItem encapsulate the data structures needed for graph operations. Lower-level utility functions (import_graph_items, partition_call_graph_items, symbol_rows, call_rows) transform code index data into graph-ready formats, while cleanup and deletion functions (cleanup_orphans_queries, delete_stale_file_graph_queries, clear_all_code_index_query) maintain graph consistency by removing stale nodes and edges with sync token tracking.
-[crates/gcode/src/graph/code_graph/write.rs:110-113]
-[crates/gcode/src/graph/code_graph/write.rs:116-118]
-[crates/gcode/src/graph/code_graph/write.rs:120-158]
-[crates/gcode/src/graph/code_graph/write.rs:160-165]
-[crates/gcode/src/graph/code_graph/write.rs:167-177]
+This file implements the write path for the code-index graph projection owned by `gcode`: it wraps a project-scoped `GraphClient` in `CodeGraph` and provides methods to sync file-level imports, symbol definitions, and call relations into FalkorDB, using per-file sync tokens and batched writes to keep the graph aligned with PostgreSQL-derived index data.
+
+Its pieces work together around that sync flow: `ensure_project_indexes` and `ensure_file_node` prepare graph state, `add_imports`, `add_definitions`, and `add_calls` write the per-file relationship groups, `sync_file` coordinates the full update and optional orphan cleanup, and the deletion/cleanup helpers support stale-file removal, project clearing, projection node counting, and whole-project reset operations.
+[crates/gcode/src/graph/code_graph/write.rs:47-50]
+[crates/gcode/src/graph/code_graph/write.rs:53-56]
+[crates/gcode/src/graph/code_graph/write.rs:59-61]
+[crates/gcode/src/graph/code_graph/write.rs:63-101]
+[crates/gcode/src/graph/code_graph/write.rs:103-108]
 
 ## API Symbols
 
-- `CodeGraph` (class) component `CodeGraph [class]` (`0cd2965d-8a90-59fe-b817-b02ed37141d5`) lines 110-113 [crates/gcode/src/graph/code_graph/write.rs:110-113]
+- `CodeGraph` (class) component `CodeGraph [class]` (`a109fa3c-aa08-53d9-97b6-bec8732a396e`) lines 47-50 [crates/gcode/src/graph/code_graph/write.rs:47-50]
   - Signature: `pub struct CodeGraph<'a> {`
-  - Purpose: Indexed class `CodeGraph` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:110-113]
-- `new` (function) component `new [function]` (`665a3ed2-351e-541b-b7c7-48ea49122acd`) lines 116-118 [crates/gcode/src/graph/code_graph/write.rs:116-118]
+  - Purpose: 'CodeGraph<'a>' is a borrowed wrapper over a 'project_id' string slice and a mutable 'GraphClient' reference, likely used to operate on a specific project's code graph through the client. [crates/gcode/src/graph/code_graph/write.rs:47-50]
+- `GraphOrphanCleanup` (class) component `GraphOrphanCleanup [class]` (`a42dac11-4842-5b29-b51e-69d6a802eb22`) lines 53-56 [crates/gcode/src/graph/code_graph/write.rs:53-56]
+  - Signature: `pub struct GraphOrphanCleanup {`
+  - Purpose: 'GraphOrphanCleanup' is a struct that records cleanup results by counting how many stale files were deleted and how many graph nodes were deleted. [crates/gcode/src/graph/code_graph/write.rs:53-56]
+- `new` (function) component `new [function]` (`a309a89b-2829-5b12-8717-54bb07d6915b`) lines 59-61 [crates/gcode/src/graph/code_graph/write.rs:59-61]
   - Signature: `pub fn new(project_id: &'a str, client: &'a mut GraphClient) -> Self {`
-  - Purpose: Indexed function `new` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:116-118]
-- `sync_file` (function) component `sync_file [function]` (`6ed40537-fddc-5438-a9a3-e07eeb743420`) lines 120-158 [crates/gcode/src/graph/code_graph/write.rs:120-158]
+  - Purpose: Constructs and returns a new instance by storing the provided 'project_id' string slice and mutable 'GraphClient' reference in the struct. [crates/gcode/src/graph/code_graph/write.rs:59-61]
+- `sync_file` (function) component `sync_file [function]` (`611d801b-0921-5cc8-ac7f-9d804b1ff3c2`) lines 63-101 [crates/gcode/src/graph/code_graph/write.rs:63-101]
   - Signature: `pub fn sync_file(`
-  - Purpose: Indexed function `sync_file` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:120-158]
-- `ensure_project_indexes` (function) component `ensure_project_indexes [function]` (`f13ecbc0-6fa2-52e0-bd12-b584e4348268`) lines 160-165 [crates/gcode/src/graph/code_graph/write.rs:160-165]
+  - Purpose: Synchronizes a file’s import, symbol, and call graph data into the backing database in bounded write batches, deletes stale rows using a per-file sync token, optionally cleans up orphaned graph records, and returns the total number of relationships processed. [crates/gcode/src/graph/code_graph/write.rs:63-101]
+- `ensure_project_indexes` (function) component `ensure_project_indexes [function]` (`ed4ee3be-8ccb-5439-850d-a7a74301091a`) lines 103-108 [crates/gcode/src/graph/code_graph/write.rs:103-108]
   - Signature: `pub fn ensure_project_indexes(&mut self) -> anyhow::Result<()> {`
-  - Purpose: Indexed function `ensure_project_indexes` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:160-165]
-- `ensure_file_node` (function) component `ensure_file_node [function]` (`0dc0ac75-ddc3-54e1-b384-bdfb58f0077d`) lines 167-177 [crates/gcode/src/graph/code_graph/write.rs:167-177]
+  - Purpose: Iterates over 'PROJECT_INDEXED_LABELS' and calls 'self.client.ensure_exact_node_index(label, "project")' for each label, returning any error encountered. [crates/gcode/src/graph/code_graph/write.rs:103-108]
+- `ensure_file_node` (function) component `ensure_file_node [function]` (`6adcdb5d-c3ba-5a78-ad41-f9cb96881c0c`) lines 110-120 [crates/gcode/src/graph/code_graph/write.rs:110-120]
   - Signature: `pub fn ensure_file_node(`
-  - Purpose: Indexed function `ensure_file_node` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:167-177]
-- `add_imports` (function) component `add_imports [function]` (`75faa18d-3d18-5c59-9ad2-7cf88c5cdf21`) lines 179-195 [crates/gcode/src/graph/code_graph/write.rs:179-195]
+  - Purpose: Executes a write query that ensures a file node exists or is updated for the given 'file_path' with the provided 'symbol_count' and 'sync_token' in the current project, returning any query execution error as 'anyhow::Result<()>'. [crates/gcode/src/graph/code_graph/write.rs:110-120]
+- `add_imports` (function) component `add_imports [function]` (`aab36050-4992-591f-92e7-e2e79ce5367a`) lines 122-138 [crates/gcode/src/graph/code_graph/write.rs:122-138]
   - Signature: `pub fn add_imports(`
-  - Purpose: Indexed function `add_imports` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:179-195]
-- `add_definitions` (function) component `add_definitions [function]` (`888d7c01-2d25-53f3-9eee-0c8efe0cc9c9`) lines 197-216 [crates/gcode/src/graph/code_graph/write.rs:197-216]
+  - Purpose: Builds the import-graph items for a file, returns 'Ok(0)' if none exist, otherwise writes them to the database with a sync token and returns the number of imported items. [crates/gcode/src/graph/code_graph/write.rs:122-138]
+- `add_definitions` (function) component `add_definitions [function]` (`2bce886f-78eb-5947-861a-d9c9128d6249`) lines 140-159 [crates/gcode/src/graph/code_graph/write.rs:140-159]
   - Signature: `pub fn add_definitions(`
-  - Purpose: Indexed function `add_definitions` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:197-216]
-- `add_calls` (function) component `add_calls [function]` (`e96f8d28-f28d-52d0-83fe-38d9c860f598`) lines 218-249 [crates/gcode/src/graph/code_graph/write.rs:218-249]
+  - Purpose: Filters the provided 'Symbol' definitions to those with non-empty 'id' and 'name', writes them to the database via 'add_definitions_query' using 'file_path' and 'sync_token', and returns the number of valid definitions written (or '0' if none). [crates/gcode/src/graph/code_graph/write.rs:140-159]
+- `add_calls` (function) component `add_calls [function]` (`722ffbeb-9b3c-5d5a-adff-d5ca059b4f70`) lines 161-192 [crates/gcode/src/graph/code_graph/write.rs:161-192]
   - Signature: `pub fn add_calls(`
-  - Purpose: Indexed function `add_calls` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:218-249]
-- `delete_stale_file_graph` (function) component `delete_stale_file_graph [function]` (`58e6f988-8b96-57f3-ae6c-0df18da3ddb2`) lines 251-266 [crates/gcode/src/graph/code_graph/write.rs:251-266]
+  - Purpose: Partitions the provided 'CallRelation' slice for a file into symbol, external, and unresolved groups, writes each non-empty group to the database with the given 'sync_token', and returns the total number of call records written. [crates/gcode/src/graph/code_graph/write.rs:161-192]
+- `delete_stale_file_graph` (function) component `delete_stale_file_graph [function]` (`60941c19-4097-5c04-a2a3-727d62ac52ee`) lines 194-203 [crates/gcode/src/graph/code_graph/write.rs:194-203]
   - Signature: `pub fn delete_stale_file_graph(`
-  - Purpose: Indexed function `delete_stale_file_graph` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:251-266]
-- `delete_file_graph` (function) component `delete_file_graph [function]` (`8dcb5a81-5800-5b94-9afb-f8a3bb7fdb00`) lines 268-277 [crates/gcode/src/graph/code_graph/write.rs:268-277]
+  - Purpose: Indexed function `delete_stale_file_graph` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:194-203]
+- `delete_file_graph` (function) component `delete_file_graph [function]` (`2c73ee74-78f9-526f-b6f1-8317a891b14c`) lines 205-214 [crates/gcode/src/graph/code_graph/write.rs:205-214]
   - Signature: `pub fn delete_file_graph(`
-  - Purpose: Indexed function `delete_file_graph` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:268-277]
-- `delete_file_node` (function) component `delete_file_node [function]` (`b8f12ee8-d96e-587b-b3de-093730be90fc`) lines 279-284 [crates/gcode/src/graph/code_graph/write.rs:279-284]
+  - Purpose: Indexed function `delete_file_graph` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:205-214]
+- `delete_file_node` (function) component `delete_file_node [function]` (`140b6784-d8e2-503e-af1a-8ce1e1cb50af`) lines 216-221 [crates/gcode/src/graph/code_graph/write.rs:216-221]
   - Signature: `pub fn delete_file_node(&mut self, file_path: &str) -> anyhow::Result<()> {`
-  - Purpose: Indexed function `delete_file_node` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:279-284]
-- `delete_file_projection` (function) component `delete_file_projection [function]` (`70cca93c-9857-5a43-80f7-ea18df80f991`) lines 286-290 [crates/gcode/src/graph/code_graph/write.rs:286-290]
+  - Purpose: Indexed function `delete_file_node` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:216-221]
+- `delete_file_projection` (function) component `delete_file_projection [function]` (`3bcf7942-b6d9-5515-a008-2559f5f89f45`) lines 223-227 [crates/gcode/src/graph/code_graph/write.rs:223-227]
   - Signature: `pub fn delete_file_projection(&mut self, file_path: &str) -> anyhow::Result<()> {`
-  - Purpose: Indexed function `delete_file_projection` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:286-290]
-- `cleanup_orphans` (function) component `cleanup_orphans [function]` (`536aee97-c9e9-5de7-a6b4-da258605d8e3`) lines 292-297 [crates/gcode/src/graph/code_graph/write.rs:292-297]
+  - Purpose: Indexed function `delete_file_projection` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:223-227]
+- `cleanup_orphans` (function) component `cleanup_orphans [function]` (`5a811e4e-2633-5631-a3c8-98c52714ebd7`) lines 229-234 [crates/gcode/src/graph/code_graph/write.rs:229-234]
   - Signature: `pub fn cleanup_orphans(&mut self) -> anyhow::Result<()> {`
-  - Purpose: Indexed function `cleanup_orphans` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:292-297]
-- `clear_project` (function) component `clear_project [function]` (`f8f85f97-3190-58e8-80c3-29dd87c920a9`) lines 299-301 [crates/gcode/src/graph/code_graph/write.rs:299-301]
+  - Purpose: Indexed function `cleanup_orphans` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:229-234]
+- `cleanup_deleted_files` (function) component `cleanup_deleted_files [function]` (`6935a390-95e7-5bdd-9688-a5dc13cd2ea1`) lines 236-258 [crates/gcode/src/graph/code_graph/write.rs:236-258]
+  - Signature: `pub fn cleanup_deleted_files(`
+  - Purpose: Indexed function `cleanup_deleted_files` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:236-258]
+- `project_file_paths` (function) component `project_file_paths [function]` (`1f9d6b97-1bac-5988-ba86-51dd414df08a`) lines 260-271 [crates/gcode/src/graph/code_graph/write.rs:260-271]
+  - Signature: `fn project_file_paths(&mut self) -> anyhow::Result<BTreeSet<String>> {`
+  - Purpose: Executes each query returned by 'project_file_path_queries(self.project_id)', extracts any string 'path' values from the returned rows via 'self.client.query(...)', deduplicates them in a 'BTreeSet<String>', and returns the set. [crates/gcode/src/graph/code_graph/write.rs:260-271]
+- `count_file_projection_nodes` (function) component `count_file_projection_nodes [function]` (`7abef7d6-9982-5593-a1bc-ccd35458f6af`) lines 273-282 [crates/gcode/src/graph/code_graph/write.rs:273-282]
+  - Signature: `fn count_file_projection_nodes(&mut self, file_path: &str) -> anyhow::Result<usize> {`
+  - Purpose: Builds a typed Cypher query for the given 'file_path' and current 'project_id', executes it against the graph client, and returns the first row’s '"nodes"' value as a 'usize' count, defaulting to '0' if absent or unparseable. [crates/gcode/src/graph/code_graph/write.rs:273-282]
+- `clear_project` (function) component `clear_project [function]` (`a8ec0f97-48f8-5647-8e4a-ec190bab444f`) lines 284-286 [crates/gcode/src/graph/code_graph/write.rs:284-286]
   - Signature: `pub fn clear_project(&mut self) -> anyhow::Result<()> {`
-  - Purpose: Indexed function `clear_project` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:299-301]
-- `sync_file_graph` (function) component `sync_file_graph [function]` (`784936a7-609a-5664-b2b1-2693e51e21ce`) lines 304-315 [crates/gcode/src/graph/code_graph/write.rs:304-315]
+  - Purpose: Indexed function `clear_project` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:284-286]
+- `value_to_usize` (function) component `value_to_usize [function]` (`644596c2-6215-561b-99b8-de283458d035`) lines 289-294 [crates/gcode/src/graph/code_graph/write.rs:289-294]
+  - Signature: `fn value_to_usize(value: &Value) -> Option<usize> {`
+  - Purpose: Returns 'Some(usize)' when the 'Value' can be losslessly converted from either a 'u64' or a nonnegative 'i64' within 'usize' range, otherwise returns 'None'. [crates/gcode/src/graph/code_graph/write.rs:289-294]
+- `sync_file_graph` (function) component `sync_file_graph [function]` (`1de0cc23-e279-5d38-88a0-b3899851944a`) lines 296-307 [crates/gcode/src/graph/code_graph/write.rs:296-307]
   - Signature: `pub fn sync_file_graph(`
-  - Purpose: Indexed function `sync_file_graph` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:304-315]
-- `with_code_graph` (function) component `with_code_graph [function]` (`05fb8057-3d64-5567-94b1-9c56afda95d7`) lines 317-326 [crates/gcode/src/graph/code_graph/write.rs:317-326]
+  - Purpose: 'sync_file_graph' acquires the code graph from 'ctx' and delegates to 'graph.sync_file' to synchronize the specified file’s imports, definitions, and call relations, optionally cleaning up orphaned nodes, returning the resulting 'usize' count or an error. [crates/gcode/src/graph/code_graph/write.rs:296-307]
+- `with_code_graph` (function) component `with_code_graph [function]` (`60221519-fb12-5c2c-8ad3-84919acb4fcf`) lines 309-318 [crates/gcode/src/graph/code_graph/write.rs:309-318]
   - Signature: `pub fn with_code_graph<T>(`
-  - Purpose: Indexed function `with_code_graph` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:317-326]
-- `delete_file_graph` (function) component `delete_file_graph [function]` (`c56794bf-bb59-5bb2-a271-8645f5cea6be`) lines 328-336 [crates/gcode/src/graph/code_graph/write.rs:328-336]
+  - Purpose: Indexed function `with_code_graph` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:309-318]
+- `delete_file_graph` (function) component `delete_file_graph [function]` (`2966cd9b-ed49-5b76-ab6a-28affe2b73cc`) lines 320-328 [crates/gcode/src/graph/code_graph/write.rs:320-328]
   - Signature: `pub fn delete_file_graph(`
-  - Purpose: Indexed function `delete_file_graph` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:328-336]
-- `delete_file_projection` (function) component `delete_file_projection [function]` (`dd68b005-77de-54be-b0a6-8721c78af907`) lines 338-342 [crates/gcode/src/graph/code_graph/write.rs:338-342]
+  - Purpose: Indexed function `delete_file_graph` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:320-328]
+- `delete_file_projection` (function) component `delete_file_projection [function]` (`8d341c07-d57c-567a-879a-267e1f913aeb`) lines 330-334 [crates/gcode/src/graph/code_graph/write.rs:330-334]
   - Signature: `pub fn delete_file_projection(ctx: &Context, file_path: &str) -> anyhow::Result<()> {`
-  - Purpose: Indexed function `delete_file_projection` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:338-342]
-- `cleanup_orphans` (function) component `cleanup_orphans [function]` (`f1318b3e-014e-5e51-a43c-12eb816e3543`) lines 344-346 [crates/gcode/src/graph/code_graph/write.rs:344-346]
+  - Purpose: Indexed function `delete_file_projection` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:330-334]
+- `cleanup_orphans` (function) component `cleanup_orphans [function]` (`c136afbd-097c-5f63-bcbc-65ba1587dece`) lines 336-338 [crates/gcode/src/graph/code_graph/write.rs:336-338]
   - Signature: `pub fn cleanup_orphans(ctx: &Context) -> anyhow::Result<()> {`
-  - Purpose: Indexed function `cleanup_orphans` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:344-346]
-- `clear_project` (function) component `clear_project [function]` (`1aae9e8e-4e0a-591d-b0ab-fd081c1d2aff`) lines 348-352 [crates/gcode/src/graph/code_graph/write.rs:348-352]
+  - Purpose: Indexed function `cleanup_orphans` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:336-338]
+- `cleanup_deleted_files` (function) component `cleanup_deleted_files [function]` (`58f587c8-526e-515f-85fe-9f45f06fa899`) lines 340-345 [crates/gcode/src/graph/code_graph/write.rs:340-345]
+  - Signature: `pub fn cleanup_deleted_files(`
+  - Purpose: Indexed function `cleanup_deleted_files` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:340-345]
+- `clear_project` (function) component `clear_project [function]` (`a1d50423-9318-5ad2-bd1b-4bf0d39a808a`) lines 347-351 [crates/gcode/src/graph/code_graph/write.rs:347-351]
   - Signature: `pub fn clear_project(ctx: &Context) -> anyhow::Result<()> {`
-  - Purpose: Indexed function `clear_project` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:348-352]
-- `clear_all_code_index` (function) component `clear_all_code_index [function]` (`c7e4841b-4279-538c-9373-74dd25cf1dcc`) lines 354-377 [crates/gcode/src/graph/code_graph/write.rs:354-377]
+  - Purpose: Indexed function `clear_project` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:347-351]
+- `clear_all_code_index` (function) component `clear_all_code_index [function]` (`4b2d0303-7c2b-5327-a394-70d8431654db`) lines 353-376 [crates/gcode/src/graph/code_graph/write.rs:353-376]
   - Signature: `pub fn clear_all_code_index(config: &crate::config::FalkorConfig) -> anyhow::Result<()> {`
-  - Purpose: Indexed function `clear_all_code_index` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:354-377]
-- `execute_write_query` (function) component `execute_write_query [function]` (`13119f1a-8c60-51b2-bfa3-640751db91e1`) lines 379-383 [crates/gcode/src/graph/code_graph/write.rs:379-383]
-  - Signature: `fn execute_write_query(client: &mut GraphClient, query: TypedQuery) -> anyhow::Result<()> {`
-  - Purpose: Indexed function `execute_write_query` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:379-383]
-- `new_sync_token` (function) component `new_sync_token [function]` (`c9c2debf-97c8-5323-93a2-c1e630283c50`) lines 385-392 [crates/gcode/src/graph/code_graph/write.rs:385-392]
-  - Signature: `fn new_sync_token(file_path: &str) -> String {`
-  - Purpose: Indexed function `new_sync_token` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:385-392]
-- `typed_query` (function) component `typed_query [function]` (`0bbcb310-a597-58b6-8d06-2ed7658e1b9b`) lines 394-400 [crates/gcode/src/graph/code_graph/write.rs:394-400]
-  - Signature: `fn typed_query<I, K>(cypher: impl Into<String>, params: I) -> anyhow::Result<TypedQuery>`
-  - Purpose: Indexed function `typed_query` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:394-400]
-- `usize_value` (function) component `usize_value [function]` (`8fddca91-0b91-5e28-9fe4-be965c020eec`) lines 402-406 [crates/gcode/src/graph/code_graph/write.rs:402-406]
-  - Signature: `fn usize_value(value: usize) -> anyhow::Result<TypedValue> {`
-  - Purpose: Indexed function `usize_value` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:402-406]
-- `ImportGraphItem` (class) component `ImportGraphItem [class]` (`17d0a6b6-f9de-5b04-ac67-cd2eff0a48ca`) lines 409-412 [crates/gcode/src/graph/code_graph/write.rs:409-412]
-  - Signature: `pub(super) struct ImportGraphItem {`
-  - Purpose: Indexed class `ImportGraphItem` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:409-412]
-- `CallGraphItem` (class) component `CallGraphItem [class]` (`504bc3c1-69bf-5167-b6d5-1d0779fa0099`) lines 415-422 [crates/gcode/src/graph/code_graph/write.rs:415-422]
-  - Signature: `pub(super) struct CallGraphItem {`
-  - Purpose: Indexed class `CallGraphItem` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:415-422]
-- `CallGraphItems` (class) component `CallGraphItems [class]` (`04b8aaf8-a6e2-5640-a16b-0b8683e7b579`) lines 425-429 [crates/gcode/src/graph/code_graph/write.rs:425-429]
-  - Signature: `pub(super) struct CallGraphItems {`
-  - Purpose: Indexed class `CallGraphItems` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:425-429]
-- `map_value` (function) component `map_value [function]` (`37af5f55-cd13-51cd-b5a0-aa6ce73be869`) lines 431-438 [crates/gcode/src/graph/code_graph/write.rs:431-438]
-  - Signature: `fn map_value(values: impl IntoIterator<Item = (&'static str, TypedValue)>) -> TypedValue {`
-  - Purpose: Indexed function `map_value` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:431-438]
-- `import_graph_items` (function) component `import_graph_items [function]` (`ac47fc6c-c3a5-5893-a871-4d402bd0c074`) lines 440-455 [crates/gcode/src/graph/code_graph/write.rs:440-455]
-  - Signature: `pub(super) fn import_graph_items(`
-  - Purpose: Indexed function `import_graph_items` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:440-455]
-- `definition_graph_symbols` (function) component `definition_graph_symbols [function]` (`81ee02dc-1fa7-5f69-a502-819ffb6e33a3`) lines 457-462 [crates/gcode/src/graph/code_graph/write.rs:457-462]
-  - Signature: `fn definition_graph_symbols(definitions: &[Symbol]) -> Vec<&Symbol> {`
-  - Purpose: Indexed function `definition_graph_symbols` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:457-462]
-- `partition_call_graph_items` (function) component `partition_call_graph_items [function]` (`00a5a6ee-3091-5539-91b4-f10a5f28b790`) lines 464-492 [crates/gcode/src/graph/code_graph/write.rs:464-492]
-  - Signature: `pub(super) fn partition_call_graph_items(`
-  - Purpose: Indexed function `partition_call_graph_items` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:464-492]
-- `metadata_params` (function) component `metadata_params [function]` (`7cce972a-9ab0-548e-adbf-5ce8f5ee3b65`) lines 494-507 [crates/gcode/src/graph/code_graph/write.rs:494-507]
-  - Signature: `fn metadata_params(sync_token: &str) -> Vec<(&'static str, TypedValue)> {`
-  - Purpose: Indexed function `metadata_params` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:494-507]
-- `sync_token_param` (function) component `sync_token_param [function]` (`31036c05-4460-545e-8265-ea402c0e12a0`) lines 509-511 [crates/gcode/src/graph/code_graph/write.rs:509-511]
-  - Signature: `fn sync_token_param(sync_token: &str) -> (&'static str, TypedValue) {`
-  - Purpose: Indexed function `sync_token_param` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:509-511]
-- `append_sync_segment` (function) component `append_sync_segment [function]` (`b1402759-23a5-5c28-9707-e3177eecb460`) lines 513-518 [crates/gcode/src/graph/code_graph/write.rs:513-518]
-  - Signature: `fn append_sync_segment(cypher: &mut String, segment: &str) {`
-  - Purpose: Indexed function `append_sync_segment` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:513-518]
-- `SyncFileMutation` (class) component `SyncFileMutation [class]` (`70394379-8fca-570f-90c2-faba76115b2c`) lines 520-528 [crates/gcode/src/graph/code_graph/write.rs:520-528]
-  - Signature: `struct SyncFileMutation<'a> {`
-  - Purpose: Indexed class `SyncFileMutation` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:520-528]
-- `sync_file_mutation_query` (function) component `sync_file_mutation_query [function]` (`fce4944f-78df-5155-97f4-cd9e08cd3673`) lines 530-566 [crates/gcode/src/graph/code_graph/write.rs:530-566]
-  - Signature: `fn sync_file_mutation_query(input: SyncFileMutation<'_>) -> anyhow::Result<TypedQuery> {`
-  - Purpose: Indexed function `sync_file_mutation_query` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:530-566]
-- `ensure_file_node_query` (function) component `ensure_file_node_query [function]` (`0657608d-6a60-5abe-be90-563a2c3ea467`) lines 568-586 [crates/gcode/src/graph/code_graph/write.rs:568-586]
-  - Signature: `pub(crate) fn ensure_file_node_query(`
-  - Purpose: Indexed function `ensure_file_node_query` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:568-586]
-- `add_imports_query` (function) component `add_imports_query [function]` (`978e6027-4c28-59c2-ab6c-276fe55ec90e`) lines 588-618 [crates/gcode/src/graph/code_graph/write.rs:588-618]
-  - Signature: `fn add_imports_query(`
-  - Purpose: Indexed function `add_imports_query` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:588-618]
-- `add_definitions_query` (function) component `add_definitions_query [function]` (`b35cfe49-47b8-540d-aaf7-448d7555f7a4`) lines 620-654 [crates/gcode/src/graph/code_graph/write.rs:620-654]
-  - Signature: `fn add_definitions_query(`
-  - Purpose: Indexed function `add_definitions_query` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:620-654]
-- `GraphCallTarget` (type) component `GraphCallTarget [type]` (`bf1e68bc-6a9c-521a-9e22-494e78014151`) lines 656-660 [crates/gcode/src/graph/code_graph/write.rs:656-660]
-  - Signature: `enum GraphCallTarget {`
-  - Purpose: Indexed type `GraphCallTarget` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:656-660]
-- `GraphCallTarget` (class) component `GraphCallTarget [class]` (`35fa8bd6-176e-5720-abda-415dd08feac5`) lines 662-694 [crates/gcode/src/graph/code_graph/write.rs:662-694]
-  - Signature: `impl GraphCallTarget {`
-  - Purpose: Indexed class `GraphCallTarget` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:662-694]
-- `GraphCallTarget.from_call` (method) component `GraphCallTarget.from_call [method]` (`c88d3906-f777-5885-bae1-c48fee1b71db`) lines 663-680 [crates/gcode/src/graph/code_graph/write.rs:663-680]
-  - Signature: `fn from_call(project_id: &str, call: &CallRelation) -> Option<Self> {`
-  - Purpose: Indexed method `GraphCallTarget.from_call` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:663-680]
-- `GraphCallTarget.id` (method) component `GraphCallTarget.id [method]` (`fe22ca38-c5ed-53cf-9098-382678c79df3`) lines 682-686 [crates/gcode/src/graph/code_graph/write.rs:682-686]
-  - Signature: `fn id(&self) -> &str {`
-  - Purpose: Indexed method `GraphCallTarget.id` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:682-686]
-- `GraphCallTarget.module` (method) component `GraphCallTarget.module [method]` (`9ac55836-978c-5653-b105-94ad38e61095`) lines 688-693 [crates/gcode/src/graph/code_graph/write.rs:688-693]
-  - Signature: `fn module(&self) -> Option<&str> {`
-  - Purpose: Indexed method `GraphCallTarget.module` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:688-693]
-- `call_target_id` (function) component `call_target_id [function]` (`0c2f5228-e2fe-58fb-9d89-7e8f943e6325`) lines 696-702 [crates/gcode/src/graph/code_graph/write.rs:696-702]
-  - Signature: `pub fn call_target_id(project_id: &str, call: &CallRelation) -> Option<String> {`
-  - Purpose: Indexed function `call_target_id` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:696-702]
-- `call_rows` (function) component `call_rows [function]` (`b7000339-cd8a-5a47-8b65-fdc8b535dc7a`) lines 704-723 [crates/gcode/src/graph/code_graph/write.rs:704-723]
-  - Signature: `fn call_rows(calls: &[CallGraphItem]) -> anyhow::Result<TypedValue> {`
-  - Purpose: Indexed function `call_rows` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:704-723]
-- `import_rows` (function) component `import_rows [function]` (`83262748-ae8e-52ff-89c0-d09e85be107d`) lines 725-743 [crates/gcode/src/graph/code_graph/write.rs:725-743]
-  - Signature: `fn import_rows(imports: &[ImportGraphItem]) -> TypedValue {`
-  - Purpose: Indexed function `import_rows` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:725-743]
-- `symbol_rows` (function) component `symbol_rows [function]` (`8cfa7e9c-cbaf-5f49-930c-fcac5ee849ea`) lines 745-765 [crates/gcode/src/graph/code_graph/write.rs:745-765]
-  - Signature: `fn symbol_rows(symbols: &[&Symbol]) -> anyhow::Result<TypedValue> {`
-  - Purpose: Indexed function `symbol_rows` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:745-765]
-- `add_symbol_calls_query` (function) component `add_symbol_calls_query [function]` (`de62f113-0f66-5fd9-bee8-4693d762c0ef`) lines 767-778 [crates/gcode/src/graph/code_graph/write.rs:767-778]
-  - Signature: `fn add_symbol_calls_query(`
-  - Purpose: Indexed function `add_symbol_calls_query` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:767-778]
-- `add_external_calls_query` (function) component `add_external_calls_query [function]` (`fe3ef795-5fda-59f9-ac2e-f7df6045ee33`) lines 780-791 [crates/gcode/src/graph/code_graph/write.rs:780-791]
-  - Signature: `fn add_external_calls_query(`
-  - Purpose: Indexed function `add_external_calls_query` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:780-791]
-- `add_unresolved_calls_query` (function) component `add_unresolved_calls_query [function]` (`68b61a5c-7343-5a2e-a588-e04f94462441`) lines 793-804 [crates/gcode/src/graph/code_graph/write.rs:793-804]
-  - Signature: `fn add_unresolved_calls_query(`
-  - Purpose: Indexed function `add_unresolved_calls_query` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:793-804]
-- `delete_file_graph_queries` (function) component `delete_file_graph_queries [function]` (`92f5c27b-d465-52f3-a18b-529b9c8f5a5b`) lines 806-864 [crates/gcode/src/graph/code_graph/write.rs:806-864]
-  - Signature: `pub(crate) fn delete_file_graph_queries(`
-  - Purpose: Indexed function `delete_file_graph_queries` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:806-864]
-- `delete_stale_file_graph_queries` (function) component `delete_stale_file_graph_queries [function]` (`f3c28db8-4fa0-5766-9f15-15a3a6cdfabf`) lines 866-933 [crates/gcode/src/graph/code_graph/write.rs:866-933]
-  - Signature: `pub(crate) fn delete_stale_file_graph_queries(`
-  - Purpose: Indexed function `delete_stale_file_graph_queries` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:866-933]
-- `delete_file_node_query` (function) component `delete_file_node_query [function]` (`81753bf0-c6bc-542e-8812-a9f04f815774`) lines 935-947 [crates/gcode/src/graph/code_graph/write.rs:935-947]
-  - Signature: `pub(crate) fn delete_file_node_query(`
-  - Purpose: Indexed function `delete_file_node_query` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:935-947]
-- `cleanup_orphans_queries` (function) component `cleanup_orphans_queries [function]` (`6f681259-716a-58fd-afd2-5b3b55e5ccb1`) lines 949-957 [crates/gcode/src/graph/code_graph/write.rs:949-957]
-  - Signature: `pub(crate) fn cleanup_orphans_queries(project_id: &str) -> anyhow::Result<Vec<TypedQuery>> {`
-  - Purpose: Indexed function `cleanup_orphans_queries` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:949-957]
-- `cleanup_orphans_cypher_segments` (function) component `cleanup_orphans_cypher_segments [function]` (`c0a382c4-9160-5eb9-becb-aab2708ea5ea`) lines 959-975 [crates/gcode/src/graph/code_graph/write.rs:959-975]
-  - Signature: `fn cleanup_orphans_cypher_segments() -> [&'static str; 3] {`
-  - Purpose: Indexed function `cleanup_orphans_cypher_segments` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:959-975]
-- `clear_project_query` (function) component `clear_project_query [function]` (`806e9eb7-2379-5f2b-b4fb-b6fa84deab44`) lines 977-986 [crates/gcode/src/graph/code_graph/write.rs:977-986]
-  - Signature: `pub(crate) fn clear_project_query(project_id: &str) -> anyhow::Result<TypedQuery> {`
-  - Purpose: Indexed function `clear_project_query` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:977-986]
-- `clear_all_code_index_query` (function) component `clear_all_code_index_query [function]` (`74a69779-cace-5e27-ba5d-b634bab74ed2`) lines 988-997 [crates/gcode/src/graph/code_graph/write.rs:988-997]
-  - Signature: `pub(crate) fn clear_all_code_index_query() -> anyhow::Result<TypedQuery> {`
-  - Purpose: Indexed function `clear_all_code_index_query` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:988-997]
+  - Purpose: Indexed function `clear_all_code_index` in `crates/gcode/src/graph/code_graph/write.rs`. [crates/gcode/src/graph/code_graph/write.rs:353-376]
 

@@ -21,7 +21,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Purpose
 
-This file implements the wiki backlink and link-suggestion commands. Both entry points first resolve the selected scope into an indexed store, build a memory graph from that store, and query it either for backlinks to a page or for link suggestions up to a limit. The rendering helpers then package those results into scoped `CommandOutcome` values with JSON payloads for machine use and formatted text summaries for human output, using separate text renderers for backlinks and suggestions.
+This file implements the `backlinks` and `link-suggest` commands for the wiki. The two `execute` entry points resolve the selected scope, build an in-memory graph from the indexed store, query either backlinks for a page or link suggestions up to a limit, and then hand the results to renderer helpers. The renderer functions package the results into scoped `CommandOutcome` values with JSON payloads and matching human-readable text summaries, so the command output is available in both machine- and text-friendly forms.
 [crates/gwiki/src/commands/backlinks.rs:10-18]
 [crates/gwiki/src/commands/backlinks.rs:20-28]
 [crates/gwiki/src/commands/backlinks.rs:30-53]

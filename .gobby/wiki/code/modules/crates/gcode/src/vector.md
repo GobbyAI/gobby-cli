@@ -4,7 +4,7 @@ type: code_module
 provenance:
 - file: crates/gcode/src/vector/code_symbols.rs
   ranges:
-  - 1-28
+  - 1-29
 - file: crates/gcode/src/vector/code_symbols/embedding.rs
   ranges:
   - 21-23
@@ -41,25 +41,29 @@ provenance:
   - 391-393
 - file: crates/gcode/src/vector/code_symbols/qdrant.rs
   ranges:
-  - 18-24
-  - 26-28
-  - 30-37
-  - 39-47
-  - 49-76
-  - 78-99
-  - 101-111
-  - 113-124
-  - 126-141
-  - 143-152
-  - 154-164
-  - 166-173
-  - 175-194
-  - 196-217
-  - 219-227
-  - 229-299
-  - 301-311
-  - 318-323
-  - 326-336
+  - 21-27
+  - 29-35
+  - 37-39
+  - 41-48
+  - 50-58
+  - 60-85
+  - 87-143
+  - 145-163
+  - 165-192
+  - 194-215
+  - 217-227
+  - 229-240
+  - 242-257
+  - 259-268
+  - 270-280
+  - 282-289
+  - 291-310
+  - 312-333
+  - 335-343
+  - 345-415
+  - 417-427
+  - 434-439
+  - 442-452
 - file: crates/gcode/src/vector/code_symbols/repository.rs
   ranges:
   - 6-18
@@ -77,41 +81,12 @@ provenance:
   - 63-81
 - file: crates/gcode/src/vector/code_symbols/tests.rs
   ranges:
-  - 13-34
-  - 36-44
-  - 47-74
-  - 77-86
-  - 89-94
-  - 97-102
-  - 105-117
-  - 120-137
-  - 139-153
-  - 156-167
-  - 170-184
-  - 187-236
-  - 239-256
-  - 259-321
-  - 324-364
-  - 367-390
-  - 393-422
-  - 425-463
-  - 466-512
-  - 515-580
-  - 583-653
-  - 656-703
-  - 705-762
-  - 764-783
-  - 785-796
-  - 798-803
-  - 805-819
-  - 821-838
-  - 840-849
-  - 851-859
-  - 862-873
-  - 876-884
-  - 886-915
-  - 917-937
-  - 939-979
+  - 20-41
+  - 43-51
+  - 53-67
+  - 69-98
+  - 100-120
+  - 122-162
 - file: crates/gcode/src/vector/code_symbols/types.rs
   ranges:
   - 7-12
@@ -143,77 +118,80 @@ Parent: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-The `crates/gcode/src/vector` module is a small entry point that exposes vector functionality through its `code_symbols` submodule, making semantic code-symbol indexing available to the rest of the crate via `pub mod code_symbols` [crates/gcode/src/vector/mod.rs:1-2]. The `code_symbols` facade gathers the public API from its internal embedding, lifecycle, Qdrant, repository, search, and type modules, so callers can use one namespace for embedding text and queries, probing dimensions, resolving embedding sources, fetching repository symbols, managing vector collections, deleting project or file vectors, and running semantic searches [crates/gcode/src/vector/code_symbols.rs:1-21].
+The vector module is a thin entry point for code-symbol vector functionality: `mod.rs` exposes the `code_symbols` submodule, while `code_symbols.rs` assembles the internal implementation areas for embedding, lifecycle, Qdrant access, repository reads, search, and shared types (`crates/gcode/src/vector/mod.rs:1-2`, `crates/gcode/src/vector/code_symbols.rs:1-6`). Its public surface re-exports embedding backends and helpers, lifecycle orchestration, Qdrant collection and cleanup operations, symbol repository fetches, semantic search APIs, and the request, hit, payload, schema, status, output, and error types consumed by callers (`crates/gcode/src/vector/code_symbols.rs:8-24`).
 
-Its key flow starts with repository symbol extraction, turns `Symbol` records into vector text and payloads, embeds that text, and stores or searches the resulting vectors in Qdrant-backed collections. The child module summaries show that shared types carry search requests and hits, payload provenance, source locations, symbol identity, lifecycle status/output/schema data, and lifecycle errors, with tests covering preserved metadata and optional summary enrichment [crates/gcode/src/vector/code_symbols/tests.rs:47-74]. Embedding support sits at the front of that flow by abstracting daemon-backed AI contexts and direct embedding configs, validating direct configuration, caching blocking clients, applying query prefixes, supporting single and batch embeddings, and providing a fixed probe text for dimension checks [crates/gcode/src/vector/code_symbols/embedding.rs:58-100].
+The main flow starts with repository helpers loading extracted `Symbol` rows for a project or file through a shared predicate-based fetch path, so indexing and lifecycle operations work from consistent symbol inputs (`crates/gcode/src/vector/code_symbols/repository.rs:6-18`, `crates/gcode/src/vector/code_symbols/repository.rs:27-35`, `crates/gcode/src/vector/code_symbols/repository.rs:45-56`). Those symbols are converted into vector text and payload records, embedded by the configured backend, and then managed by `CodeSymbolVectorLifecycle`, which can ensure collections, sync file symbols, rebuild project vectors, clear vectors, and report lifecycle status through the exported lifecycle APIs (`crates/gcode/src/vector/code_symbols.rs:8-15`, `crates/gcode/src/vector/code_symbols/types.rs:7-12`, `crates/gcode/src/vector/code_symbols/types.rs:21-26`).
 
-The files collaborate through `code_symbols.rs` as a public facade rather than exposing each implementation module directly. Lifecycle APIs coordinate collection setup, schema compatibility, sync, rebuild, and status reporting; Qdrant APIs handle collection naming, deletion, vector search, and distance configuration; repository APIs fetch symbols at file or project scope; search APIs provide higher-level semantic lookup and error handling; and the type exports define the request, hit, payload, lifecycle, schema, and error structures shared across those operations [crates/gcode/src/vector/code_symbols.rs:7-21].
+The submodules collaborate around Qdrant as the vector store: lifecycle code creates or validates collection schema and upserts or deletes points, Qdrant helpers provide naming, search, project/file deletion, orphan cleanup, and prefix cleanup, and search combines query embedding with vector lookup to return structured code-symbol hits (`crates/gcode/src/vector/code_symbols.rs:12-20`). Shared types keep these boundaries explicit by defining search requests and hits, vector payloads derived from symbols with projection metadata, schema descriptors, lifecycle status/output records, and lifecycle errors (`crates/gcode/src/vector/code_symbols/types.rs:7-12`, `crates/gcode/src/vector/code_symbols/types.rs:21-26`).
+[crates/gcode/src/vector/code_symbols/embedding.rs:21-23]
+[crates/gcode/src/vector/code_symbols/lifecycle.rs:29-37]
+[crates/gcode/src/vector/code_symbols/qdrant.rs:21-27]
+[crates/gcode/src/vector/code_symbols/repository.rs:6-18]
+[crates/gcode/src/vector/code_symbols/search.rs:8-14]
 
 ## Call Diagram
 
 ```mermaid
 sequenceDiagram
-    participant m_068f6d68_9c77_52ed_b5a6_7f2c8768040e as payloads_carry_provenance_metadata &#91;function&#93;
-    participant m_08abaa70_62f0_5531_b9e1_6d5eb0ab736b as char_literal_end &#91;function&#93;
-    participant m_0bad8712_4896_5d24_b607_9c25e4d63188 as rust_code_without_comments_and_literals &#91;function&#93;
-    participant m_0e7c1d57_7114_50e2_84a9_1682d3a28e18 as delete_qdrant_collection &#91;function&#93;
     participant m_11d61977_239b_50f6_bf35_94bb6e9f1977 as direct_source_uses_resolved_embedding_config &#91;function&#93;
-    participant m_12b82731_a570_5519_941a_7ecf340f9c75 as skip_block_comment &#91;function&#93;
-    participant m_1789414f_d055_5920_9aa3_af279ef7de96 as delete_file_vectors_skips_delete_when_count_is_zero &#91;function&#93;
+    participant m_14f1aeb3_0e63_5585_be0e_6155b73488e0 as test_symbol_with_index &#91;function&#93;
     participant m_1e1583c9_745e_5c42_856e_5e1b261b64fd as EmbeddingBackend.new &#91;method&#93;
-    participant m_207703c8_c51f_58dc_a2dd_7cecf74d1cfc as delete_file_vectors &#91;function&#93;
-    participant m_2107d03f_8e95_51cc_a7a8_05371b1b45a2 as lifecycle_http_scoped_to_module &#91;function&#93;
     participant m_24dee124_d569_52ac_a227_d502192f3000 as fetch_symbols_for_project &#91;function&#93;
-    participant m_2891b793_606c_5557_b81f_6fba2da95d75 as sync_rejects_embedding_vectors_with_wrong_dimension &#91;function&#93;
-    participant m_55b43c4d_6aaf_578e_b5ef_eceb572052da as skip_quoted_string &#91;function&#93;
-    participant m_6ab7845d_4731_546c_a29b_8405430b3241 as raw_hashes_match &#91;function&#93;
+    participant m_2c99769c_4862_54e7_8c30_dfffa699cf7b as list_project_vector_file_paths &#91;function&#93;
+    participant m_2d5fcd0e_7e48_5b32_92f7_dd6f6121265f as collect_file_paths_from_scroll_page &#91;function&#93;
+    participant m_2d629473_f8c0_53a3_9dc5_ee8dd8f143c6 as qdrant_request_for_config &#91;function&#93;
+    participant m_2daa5684_3b05_5ba6_b777_674423274d01 as delete_code_symbol_collections_with_prefix &#91;function&#93;
+    participant m_2fc6618f_0bf1_5c56_8370_379c9de3e029 as qdrant_http_client &#91;function&#93;
+    participant m_35d81eea_765a_5536_863c_8248cc076670 as cleanup_orphan_file_vectors &#91;function&#93;
+    participant m_36c0a6fd_6714_55a7_b782_849121b553c1 as test_symbol &#91;function&#93;
+    participant m_39317108_df4d_5b14_beaf_e702c0a04cb8 as embedding_source_from_context &#91;function&#93;
+    participant m_4823c87d_a6d3_59cf_b6af_37e143e37284 as resolve_embedding_ai_context &#91;function&#93;
     participant m_701ba072_c2f3_5035_8c2f_eca788ac5617 as embedding_source_from_resolved_ai_context &#91;function&#93;
-    participant m_753537a7_c2e6_552d_b8ef_08f7def1f99b as collection_name &#91;function&#93;
-    participant m_79becebc_7348_56eb_b09e_07ea3974921b as spawn_http_responses &#91;function&#93;
-    participant m_7f9161ad_3ab2_5577_8ac0_3562563d9937 as qdrant_request_for_config &#91;function&#93;
-    participant m_823584ac_ee4f_5a77_9d40_ad2f95e4988f as test_symbol &#91;function&#93;
-    participant m_86e32944_ff07_5f89_aac1_3be7ffc98412 as push_masked &#91;function&#93;
-    participant m_9e348111_a612_5af1_97d4_c9447ffde82c as escaped_char_literal_payload_end &#91;function&#93;
-    participant m_ae80a1c0_b3d5_5643_82c4_37a9507a9d52 as visit &#91;function&#93;
+    participant m_7ff829ec_3e2b_5228_9bea_85d06192aa3c as qdrant_delete_timeout &#91;function&#93;
+    participant m_907f6d44_8027_5ca2_a6d3_358dc9baa609 as qdrant_http_error &#91;function&#93;
+    participant m_90ccda4e_368e_5519_ad73_5916cb2b0908 as delete_qdrant_collection &#91;function&#93;
     participant m_bb5add13_83d0_5d5f_97a5_b318647215f4 as fetch_symbols_where &#91;function&#93;
-    participant m_d1f6ab42_05ef_5849_b9c8_27615e3b516b as collection_path &#91;function&#93;
-    participant m_d35c16dd_7eb0_5a67_b10f_6ae70cac681b as qdrant_http_error &#91;function&#93;
-    participant m_ec0b0c90_cf56_5a49_bea0_b8c2fabb962a as delete_vectors_for_filter &#91;function&#93;
+    participant m_d2946e16_3bb3_54c5_8039_26e48445cc97 as parse_collection_names &#91;function&#93;
+    participant m_de7217ce_0632_57fb_9d09_0de63cfa80f2 as delete_file_vectors &#91;function&#93;
+    participant m_e84efa11_2d2f_59c6_8703_1e73819a2c05 as collection_name &#91;function&#93;
     participant m_f036e431_77ef_5476_a9a5_af731616f618 as embedding_client &#91;function&#93;
-    participant m_f3d7949d_38d5_5480_9aed_dbc8c0d1f455 as raw_string_prefix &#91;function&#93;
-    participant m_f9ba033c_f3c6_5bc3_8b1f_e7b40ad825f4 as qdrant_http_client &#91;function&#93;
-    m_068f6d68_9c77_52ed_b5a6_7f2c8768040e->>m_823584ac_ee4f_5a77_9d40_ad2f95e4988f: calls
-    m_08abaa70_62f0_5531_b9e1_6d5eb0ab736b->>m_9e348111_a612_5af1_97d4_c9447ffde82c: calls
-    m_0bad8712_4896_5d24_b607_9c25e4d63188->>m_08abaa70_62f0_5531_b9e1_6d5eb0ab736b: calls
-    m_0bad8712_4896_5d24_b607_9c25e4d63188->>m_12b82731_a570_5519_941a_7ecf340f9c75: calls
-    m_0bad8712_4896_5d24_b607_9c25e4d63188->>m_55b43c4d_6aaf_578e_b5ef_eceb572052da: calls
-    m_0bad8712_4896_5d24_b607_9c25e4d63188->>m_6ab7845d_4731_546c_a29b_8405430b3241: calls
-    m_0bad8712_4896_5d24_b607_9c25e4d63188->>m_86e32944_ff07_5f89_aac1_3be7ffc98412: calls
-    m_0bad8712_4896_5d24_b607_9c25e4d63188->>m_f3d7949d_38d5_5480_9aed_dbc8c0d1f455: calls
-    m_0e7c1d57_7114_50e2_84a9_1682d3a28e18->>m_7f9161ad_3ab2_5577_8ac0_3562563d9937: calls
-    m_0e7c1d57_7114_50e2_84a9_1682d3a28e18->>m_d1f6ab42_05ef_5849_b9c8_27615e3b516b: calls
-    m_0e7c1d57_7114_50e2_84a9_1682d3a28e18->>m_d35c16dd_7eb0_5a67_b10f_6ae70cac681b: calls
     m_11d61977_239b_50f6_bf35_94bb6e9f1977->>m_701ba072_c2f3_5035_8c2f_eca788ac5617: calls
-    m_1789414f_d055_5920_9aa3_af279ef7de96->>m_79becebc_7348_56eb_b09e_07ea3974921b: calls
+    m_14f1aeb3_0e63_5585_be0e_6155b73488e0->>m_36c0a6fd_6714_55a7_b782_849121b553c1: calls
     m_1e1583c9_745e_5c42_856e_5e1b261b64fd->>m_f036e431_77ef_5476_a9a5_af731616f618: calls
-    m_207703c8_c51f_58dc_a2dd_7cecf74d1cfc->>m_753537a7_c2e6_552d_b8ef_08f7def1f99b: calls
-    m_207703c8_c51f_58dc_a2dd_7cecf74d1cfc->>m_ec0b0c90_cf56_5a49_bea0_b8c2fabb962a: calls
-    m_207703c8_c51f_58dc_a2dd_7cecf74d1cfc->>m_f9ba033c_f3c6_5bc3_8b1f_e7b40ad825f4: calls
-    m_2107d03f_8e95_51cc_a7a8_05371b1b45a2->>m_ae80a1c0_b3d5_5643_82c4_37a9507a9d52: calls
     m_24dee124_d569_52ac_a227_d502192f3000->>m_bb5add13_83d0_5d5f_97a5_b318647215f4: calls
-    m_2891b793_606c_5557_b81f_6fba2da95d75->>m_79becebc_7348_56eb_b09e_07ea3974921b: calls
+    m_2c99769c_4862_54e7_8c30_dfffa699cf7b->>m_2d5fcd0e_7e48_5b32_92f7_dd6f6121265f: calls
+    m_2c99769c_4862_54e7_8c30_dfffa699cf7b->>m_2d629473_f8c0_53a3_9dc5_ee8dd8f143c6: calls
+    m_2c99769c_4862_54e7_8c30_dfffa699cf7b->>m_2fc6618f_0bf1_5c56_8370_379c9de3e029: calls
+    m_2c99769c_4862_54e7_8c30_dfffa699cf7b->>m_907f6d44_8027_5ca2_a6d3_358dc9baa609: calls
+    m_2c99769c_4862_54e7_8c30_dfffa699cf7b->>m_e84efa11_2d2f_59c6_8703_1e73819a2c05: calls
+    m_2daa5684_3b05_5ba6_b777_674423274d01->>m_2d629473_f8c0_53a3_9dc5_ee8dd8f143c6: calls
+    m_2daa5684_3b05_5ba6_b777_674423274d01->>m_2fc6618f_0bf1_5c56_8370_379c9de3e029: calls
+    m_2daa5684_3b05_5ba6_b777_674423274d01->>m_907f6d44_8027_5ca2_a6d3_358dc9baa609: calls
+    m_2daa5684_3b05_5ba6_b777_674423274d01->>m_90ccda4e_368e_5519_ad73_5916cb2b0908: calls
+    m_2daa5684_3b05_5ba6_b777_674423274d01->>m_d2946e16_3bb3_54c5_8039_26e48445cc97: calls
+    m_2fc6618f_0bf1_5c56_8370_379c9de3e029->>m_7ff829ec_3e2b_5228_9bea_85d06192aa3c: calls
+    m_35d81eea_765a_5536_863c_8248cc076670->>m_2c99769c_4862_54e7_8c30_dfffa699cf7b: calls
+    m_35d81eea_765a_5536_863c_8248cc076670->>m_de7217ce_0632_57fb_9d09_0de63cfa80f2: calls
+    m_35d81eea_765a_5536_863c_8248cc076670->>m_e84efa11_2d2f_59c6_8703_1e73819a2c05: calls
+    m_39317108_df4d_5b14_beaf_e702c0a04cb8->>m_4823c87d_a6d3_59cf_b6af_37e143e37284: calls
+    m_39317108_df4d_5b14_beaf_e702c0a04cb8->>m_701ba072_c2f3_5035_8c2f_eca788ac5617: calls
 ```
 
 ## Child Modules
 
-- [[code/modules/crates/gcode/src/vector/code_symbols|crates/gcode/src/vector/code_symbols]] - The `code_symbols` vector module owns semantic indexing and lookup for extracted code symbols. Its shared types define search requests and hits, vector payloads built from `Symbol` records, lifecycle status/output/schema structs, and common lifecycle errors, while tests show payloads preserving provenance, source location, symbol identity, and optional enrichment like summaries  [crates/gcode/src/vector/code_symbols/tests.rs:47-74]. Embedding support abstracts over daemon-backed AI contexts and direct embedding configs, validates direct configuration, caches blocking clients, applies query prefixes, and exposes both single-text and batch embedding paths plus the fixed probe text used for dimensionality checks   [crates/gcode/src/vector/code_symbols/embedding.rs:58-100].
+- [[code/modules/crates/gcode/src/vector/code_symbols|crates/gcode/src/vector/code_symbols]] - The code_symbols module owns vector indexing and semantic lookup for extracted code symbols. Its shared types define search requests and hits, vector payloads, lifecycle status/output records, schema descriptors, and lifecycle errors, with payloads derived directly from `Symbol` records and enriched with projection metadata for storage (`crates/gcode/src/vector/code_symbols/types.rs:7-12`, `crates/gcode/src/vector/code_symbols/types.rs:26`, `crates/gcode/src/vector/code_symbols/types.rs:21-23`). Repository helpers supply the raw symbols from Postgres for either a project or file, using `SymbolPredicate` and a shared fetch path so lifecycle operations consume consistently ordered symbol rows (`crates/gcode/src/vector/code_symbols/repository.rs:6-18`, `crates/gcode/src/vector/code_symbols/repository.rs:27-35`, `crates/gcode/src/vector/code_symbols/repository.rs:45-56`).
 
-The lifecycle flow centers on `CodeSymbolVectorLifecycle`, which combines a project id, derived Qdrant collection name, Qdrant config, embedding backend, vector settings, probed vector size, and blocking HTTP client . Creation validates the Qdrant boundary config, derives a stable code-symbol collection from the configured prefix and project id, constructs the embedding backend, and prepares a timeout-scoped client . Repository helpers feed that lifecycle by selecting symbols for a project or file through a shared predicate path, binding the appropriate SQL parameters, materializing `Symbol` rows, and ordering them by file path, byte offset, and id .
+Embedding and lifecycle form the main indexing flow. `embedding.rs` abstracts embedding sources as either daemon-routed AI context or direct embedding config, builds an `EmbeddingBackend`, caches direct HTTP clients, and formats symbols into vector text before embedding (`crates/gcode/src/vector/code_symbols/embedding.rs:21-23`, `crates/gcode/src/vector/code_symbols/embedding.rs:26-29`, `crates/gcode/src/vector/code_symbols/embedding.rs:31-35`, `crates/gcode/src/vector/code_symbols/embedding.rs:37-41`). `lifecycle.rs` then combines project identity, Qdrant config, embedding backend, vector settings, and HTTP client into `CodeSymbolVectorLifecycle`, which validates Qdrant boundaries, computes collection names and schemas, embeds symbols into upsert points, syncs or rebuilds collections, deletes stale vectors, clears project vectors, and reports status/output (`crates/gcode/src/vector/code_symbols/lifecycle.rs:29-37`, `crates/gcode/src/vector/code_symbols/lifecycle.rs:39-43`, `crates/gcode/src/vector/code_symbols/lifecycle.rs:45-56`, `crates/gcode/src/vector/code_symbols/lifecycle.rs:58-376`).
 
-Qdrant integration provides the storage boundary used by lifecycle and search: it normalizes collection names through `gobby_core::qdrant`, builds encoded collection paths, caches HTTP clients, deletes whole project collections or per-file vectors, deletes all prefixed code-symbol collections, parses Qdrant responses, and reports degraded search behavior when Qdrant is missing or unreachable  . The search layer wraps this with user-facing errors for missing configuration, embedding failures, invalid collection naming, and transport failures, while the test suite exercises naming, deletion scoping, batch embedding order, sync validation, dimension probing, and HTTP lifecycle scoping across the collaborating files  .
+Qdrant-specific behavior is isolated in `qdrant.rs`, which constructs project collection names and paths, owns the shared blocking client, and exposes project, file, orphan cleanup, collection deletion, and vector search helpers while parsing Qdrant responses and producing lifecycle errors (`crates/gcode/src/vector/code_symbols/qdrant.rs:21-27`, `crates/gcode/src/vector/code_symbols/qdrant.rs:29-35`, `crates/gcode/src/vector/code_symbols/qdrant.rs:41-48`, `crates/gcode/src/vector/code_symbols/qdrant.rs:50-58`). Search code wires the read-side flow by validating configuration, embedding the query, deriving the collection name, calling Qdrant vector search, and returning `CodeSymbolVectorSearchHit` results, with a higher-level semantic wrapper that logs or handles degradation by returning an empty result set (`crates/gcode/src/vector/code_symbols/search.rs:8-14`, `crates/gcode/src/vector/code_symbols/search.rs:16-26`, `crates/gcode/src/vector/code_symbols/search.rs:30-58`). Tests are organized around shared fixtures for sample symbols, contexts, and HTTP responses, with focused submodules covering collection, deletion, embedding, payload, scope, and sync behavior (`crates/gcode/src/vector/code_symbols/tests.rs:20-41`, `crates/gcode/src/vector/code_symbols/tests.rs:53-67`, `crates/gcode/src/vector/code_symbols/tests.rs:100-120`).
+[crates/gcode/src/vector/code_symbols/embedding.rs:21-23]
+[crates/gcode/src/vector/code_symbols/lifecycle.rs:29-37]
+[crates/gcode/src/vector/code_symbols/qdrant.rs:21-27]
+[crates/gcode/src/vector/code_symbols/repository.rs:6-18]
+[crates/gcode/src/vector/code_symbols/search.rs:8-14]
 
 ## Files
 
-- [[code/files/crates/gcode/src/vector/code_symbols.rs|crates/gcode/src/vector/code_symbols.rs]] - Re-exports the public API for code-symbol vector indexing and semantic search, wiring together embedding, lifecycle, Qdrant storage, repository symbol extraction, search, and shared vector types for the `gcode` vector module. [crates/gcode/src/vector/code_symbols.rs:1-28]
-- [[code/files/crates/gcode/src/vector/mod.rs|crates/gcode/src/vector/mod.rs]] - Module entry point for the `vector` package, declaring the `code_symbols` submodule so vector-related code symbols are available to the crate. [crates/gcode/src/vector/mod.rs:1-2]
+- [[code/files/crates/gcode/src/vector/code_symbols.rs|crates/gcode/src/vector/code_symbols.rs]] - Re-exports the main vector code-symbol indexing and search APIs for the `gcode` crate, including embedding, lifecycle management, Qdrant-backed vector storage and cleanup, symbol repository access, semantic search, and shared vector/lifecycle types. [crates/gcode/src/vector/code_symbols.rs:1-29]
+- [[code/files/crates/gcode/src/vector/mod.rs|crates/gcode/src/vector/mod.rs]] - Declares the `code_symbols` submodule for the `gcode` crate’s `vector` module, serving as the module entry point that exposes vector-related code symbol functionality. [crates/gcode/src/vector/mod.rs:1-2]
 

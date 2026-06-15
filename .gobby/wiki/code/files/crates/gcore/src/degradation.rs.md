@@ -35,9 +35,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-This file defines the shared degradation and error vocabulary for `gcore`: service availability states, setup diagnostics, and fatal core errors that let callers distinguish partial availability from real failures. `ServiceState`, `SetupIssue`, and `Guidance` model service health and actionable remediation, while `CoreError` captures invalid config, hub conflicts, missing services, and related fatal conditions.
-
-It also includes redaction helpers for database URLs so sensitive credentials are stripped before serialization or display, including support for both URL-style and keyword-style DSNs. `ModalityDegradationReason` and `DegradationKind` provide stable, serde-friendly markers for degradation categories, and the tests enforce that serialization, `Display`, and redaction behavior stay consistent.
+This file defines the shared degradation and error vocabulary for `gcore`: it models service availability (`ServiceState`), structured setup problems (`SetupIssue` and `Guidance`), and fatal core errors (`CoreError`) so callers can represent partial outages without treating every failure as fatal. It also includes database URL redaction helpers used by error serialization and display to strip credentials, queries, fragments, and sensitive keyword-style DSN values, plus `ModalityDegradationReason` and `DegradationKind` enums for stable, serde-compatible degradation codes. The tests verify these contracts stay aligned, especially that serialization, `Display`, availability checks, and URL redaction all preserve the intended semantics.
 [crates/gcore/src/degradation.rs:12-22]
 [crates/gcore/src/degradation.rs:24-29]
 [crates/gcore/src/degradation.rs:26-28]

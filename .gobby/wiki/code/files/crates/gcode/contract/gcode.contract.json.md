@@ -4,7 +4,7 @@ type: code_file
 provenance:
 - file: crates/gcode/contract/gcode.contract.json
   ranges:
-  - 2-855
+  - 2-928
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcode/contract|crates/gcode/contract]]
 
 ## Purpose
 
-This file defines the JSON contract for the `gcode` CLI, including its contract version, top-level summary, global flags, project scoping rules, command definitions, and error codes. The `global_flags` and `scope` sections establish shared invocation options and how a project is identified, while each entry under `commands` describes a CLI subcommand with its summary, whether the daemon consumes it, its positional arguments and flags, and the JSON keys it can emit.
+Defines the JSON contract for the `gcode` CLI, including the contract version, top-level summary, shared global flags, and scope resolution rules for locating a project by `--project` or the current working directory. It then enumerates the CLI commands and their per-command metadata, with each command specifying its summary, whether it is daemon-consumed, accepted flags and positionals, and any JSON output keys, while `error_codes` captures the contract’s failure modes.
 [crates/gcode/contract/gcode.contract.json:2]
 [crates/gcode/contract/gcode.contract.json:3]
 [crates/gcode/contract/gcode.contract.json:4]
@@ -157,9 +157,9 @@ This file defines the JSON contract for the `gcode` CLI, including its contract 
 - `identity_keys` (property) component `identity_keys [property]` (`cdf47efa-581b-5e56-b3b2-73467d0ff4a6`) lines 62-65 [crates/gcode/contract/gcode.contract.json:62-65]
   - Signature: `"identity_keys": [`
   - Purpose: Indexed property `identity_keys` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:62-65]
-- `commands` (property) component `commands [property]` (`4c5a6d7f-cc16-5ff9-a69d-d339b0f29b2f`) lines 67-848 [crates/gcode/contract/gcode.contract.json:67-848]
+- `commands` (property) component `commands [property]` (`4c5a6d7f-cc16-5ff9-a69d-d339b0f29b2f`) lines 67-921 [crates/gcode/contract/gcode.contract.json:67-921]
   - Signature: `"commands": [`
-  - Purpose: Indexed property `commands` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:67-848]
+  - Purpose: Indexed property `commands` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:67-921]
 - `name` (property) component `name [property]` (`b5376306-6ce4-5185-9970-ed1b268133e4`) lines 69-69 [crates/gcode/contract/gcode.contract.json:69]
   - Signature: `"name": "contract",`
   - Purpose: Indexed property `name` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:69]
@@ -1411,7 +1411,115 @@ This file defines the JSON contract for the `gcode` CLI, including its contract 
 - `json_output_keys` (property) component `json_output_keys [property]` (`a9b71d73-f574-5957-9d43-4c0450e9e2b8`) lines 836-846 [crates/gcode/contract/gcode.contract.json:836-846]
   - Signature: `"json_output_keys": [`
   - Purpose: Indexed property `json_output_keys` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:836-846]
-- `error_codes` (property) component `error_codes [property]` (`7e946b04-e543-55d2-81d3-2c5a361d2caf`) lines 849-855 [crates/gcode/contract/gcode.contract.json:849-855]
+- `name` (property) component `name [property]` (`4cef0fc5-43a1-5526-bd20-4f7e833c1ec9`) lines 849-849 [crates/gcode/contract/gcode.contract.json:849]
+  - Signature: `"name": "graph cleanup-orphans",`
+  - Purpose: Indexed property `name` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:849]
+- `summary` (property) component `summary [property]` (`0f24d654-c755-5eb1-ae43-2c089198ba63`) lines 850-850 [crates/gcode/contract/gcode.contract.json:850]
+  - Signature: `"summary": "Remove graph projection data for files missing from PostgreSQL.",`
+  - Purpose: Indexed property `summary` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:850]
+- `daemon_consumed` (property) component `daemon_consumed [property]` (`ae913817-64bd-500d-b2c9-5d222d9364ee`) lines 851-851 [crates/gcode/contract/gcode.contract.json:851]
+  - Signature: `"daemon_consumed": true,`
+  - Purpose: Indexed property `daemon_consumed` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:851]
+- `positionals` (property) component `positionals [property]` (`59754f54-f3b7-582e-979a-8d23619a31a3`) lines 852-852 [crates/gcode/contract/gcode.contract.json:852]
+  - Signature: `"positionals": [],`
+  - Purpose: Indexed property `positionals` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:852]
+- `flags` (property) component `flags [property]` (`2a799de1-a07a-533f-b026-39a6b7a1134f`) lines 853-865 [crates/gcode/contract/gcode.contract.json:853-865]
+  - Signature: `"flags": [`
+  - Purpose: Indexed property `flags` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:853-865]
+- `name` (property) component `name [property]` (`acfc712c-1a65-58a7-b2ed-cbec8d1c1408`) lines 855-855 [crates/gcode/contract/gcode.contract.json:855]
+  - Signature: `"name": "--format",`
+  - Purpose: Indexed property `name` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:855]
+- `takes_value` (property) component `takes_value [property]` (`4702909f-ac74-59aa-949e-f3fbccc7c564`) lines 856-856 [crates/gcode/contract/gcode.contract.json:856]
+  - Signature: `"takes_value": true,`
+  - Purpose: Indexed property `takes_value` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:856]
+- `value_name` (property) component `value_name [property]` (`b7ef6100-29e1-5923-9fc0-aa8754ec5278`) lines 857-857 [crates/gcode/contract/gcode.contract.json:857]
+  - Signature: `"value_name": "json|text",`
+  - Purpose: Indexed property `value_name` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:857]
+- `allowed_values` (property) component `allowed_values [property]` (`cca3f216-4433-5130-838e-e4100baac8c2`) lines 858-861 [crates/gcode/contract/gcode.contract.json:858-861]
+  - Signature: `"allowed_values": [`
+  - Purpose: Indexed property `allowed_values` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:858-861]
+- `required` (property) component `required [property]` (`5f1031bc-bff8-5118-8510-db557fc6924e`) lines 862-862 [crates/gcode/contract/gcode.contract.json:862]
+  - Signature: `"required": false,`
+  - Purpose: Indexed property `required` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:862]
+- `repeatable` (property) component `repeatable [property]` (`fb470573-f17c-5675-8ed2-0d381c32ecca`) lines 863-863 [crates/gcode/contract/gcode.contract.json:863]
+  - Signature: `"repeatable": false`
+  - Purpose: Indexed property `repeatable` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:863]
+- `json_output_keys` (property) component `json_output_keys [property]` (`978b9313-7651-5014-9311-903a2fab15d7`) lines 866-872 [crates/gcode/contract/gcode.contract.json:866-872]
+  - Signature: `"json_output_keys": [`
+  - Purpose: Indexed property `json_output_keys` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:866-872]
+- `name` (property) component `name [property]` (`cb5a75ef-6e24-508a-9120-b2e758ee6b05`) lines 875-875 [crates/gcode/contract/gcode.contract.json:875]
+  - Signature: `"name": "vector cleanup-orphans",`
+  - Purpose: Indexed property `name` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:875]
+- `summary` (property) component `summary [property]` (`536b1e0f-7376-5b84-9dfc-1e427b89979f`) lines 876-876 [crates/gcode/contract/gcode.contract.json:876]
+  - Signature: `"summary": "Remove Qdrant code-symbol vectors for files missing from PostgreSQL.",`
+  - Purpose: Indexed property `summary` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:876]
+- `daemon_consumed` (property) component `daemon_consumed [property]` (`631255a4-605d-5285-87c9-93f9e6a4a90b`) lines 877-877 [crates/gcode/contract/gcode.contract.json:877]
+  - Signature: `"daemon_consumed": true,`
+  - Purpose: Indexed property `daemon_consumed` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:877]
+- `positionals` (property) component `positionals [property]` (`c9eeb25b-1026-5e4c-be13-741df588fd65`) lines 878-878 [crates/gcode/contract/gcode.contract.json:878]
+  - Signature: `"positionals": [],`
+  - Purpose: Indexed property `positionals` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:878]
+- `flags` (property) component `flags [property]` (`fb0a17cd-101f-5e12-9001-d45115752cfe`) lines 879-891 [crates/gcode/contract/gcode.contract.json:879-891]
+  - Signature: `"flags": [`
+  - Purpose: Indexed property `flags` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:879-891]
+- `name` (property) component `name [property]` (`3f0dee93-76ae-5841-82d2-90a2b620064e`) lines 881-881 [crates/gcode/contract/gcode.contract.json:881]
+  - Signature: `"name": "--format",`
+  - Purpose: Indexed property `name` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:881]
+- `takes_value` (property) component `takes_value [property]` (`d21428ab-d55a-5b22-a455-cf8af31d91ad`) lines 882-882 [crates/gcode/contract/gcode.contract.json:882]
+  - Signature: `"takes_value": true,`
+  - Purpose: Indexed property `takes_value` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:882]
+- `value_name` (property) component `value_name [property]` (`b8c59762-51a8-5949-9ec9-051b8f4b4b00`) lines 883-883 [crates/gcode/contract/gcode.contract.json:883]
+  - Signature: `"value_name": "json|text",`
+  - Purpose: Indexed property `value_name` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:883]
+- `allowed_values` (property) component `allowed_values [property]` (`9669e24f-b1d7-5912-9a62-a1d3e923fe75`) lines 884-887 [crates/gcode/contract/gcode.contract.json:884-887]
+  - Signature: `"allowed_values": [`
+  - Purpose: Indexed property `allowed_values` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:884-887]
+- `required` (property) component `required [property]` (`132e03a5-c8f0-55b5-9ceb-7abaf96f6426`) lines 888-888 [crates/gcode/contract/gcode.contract.json:888]
+  - Signature: `"required": false,`
+  - Purpose: Indexed property `required` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:888]
+- `repeatable` (property) component `repeatable [property]` (`222d8654-e2f1-5dd2-9881-a5f7600579cd`) lines 889-889 [crates/gcode/contract/gcode.contract.json:889]
+  - Signature: `"repeatable": false`
+  - Purpose: Indexed property `repeatable` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:889]
+- `json_output_keys` (property) component `json_output_keys [property]` (`af9fb529-0db3-5370-ade9-fbe78f200c17`) lines 892-902 [crates/gcode/contract/gcode.contract.json:892-902]
+  - Signature: `"json_output_keys": [`
+  - Purpose: Indexed property `json_output_keys` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:892-902]
+- `name` (property) component `name [property]` (`458080de-5212-52af-93fc-9f18504c77ea`) lines 905-905 [crates/gcode/contract/gcode.contract.json:905]
+  - Signature: `"name": "prune",`
+  - Purpose: Indexed property `name` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:905]
+- `summary` (property) component `summary [property]` (`b7182175-dd45-531d-a5dd-23337a2da8b6`) lines 906-906 [crates/gcode/contract/gcode.contract.json:906]
+  - Signature: `"summary": "Remove stale project records and reconcile current-project projections.",`
+  - Purpose: Indexed property `summary` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:906]
+- `daemon_consumed` (property) component `daemon_consumed [property]` (`1380d949-5ca2-58c3-958c-65f081be2663`) lines 907-907 [crates/gcode/contract/gcode.contract.json:907]
+  - Signature: `"daemon_consumed": false,`
+  - Purpose: Indexed property `daemon_consumed` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:907]
+- `positionals` (property) component `positionals [property]` (`24fa125e-b957-5130-9d65-687fc213c6d1`) lines 908-908 [crates/gcode/contract/gcode.contract.json:908]
+  - Signature: `"positionals": [],`
+  - Purpose: Indexed property `positionals` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:908]
+- `flags` (property) component `flags [property]` (`aa1d63ef-bf83-5bed-aca0-51901fa8ee4a`) lines 909-918 [crates/gcode/contract/gcode.contract.json:909-918]
+  - Signature: `"flags": [`
+  - Purpose: Indexed property `flags` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:909-918]
+- `name` (property) component `name [property]` (`63e1e798-0ffb-519c-bb5e-2fbd16f7749c`) lines 911-911 [crates/gcode/contract/gcode.contract.json:911]
+  - Signature: `"name": "--force",`
+  - Purpose: Indexed property `name` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:911]
+- `takes_value` (property) component `takes_value [property]` (`77996292-3227-5057-8501-569cce3651c3`) lines 912-912 [crates/gcode/contract/gcode.contract.json:912]
+  - Signature: `"takes_value": false,`
+  - Purpose: Indexed property `takes_value` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:912]
+- `value_name` (property) component `value_name [property]` (`8782092b-f8e7-52a3-b75f-0afa1d3e673d`) lines 913-913 [crates/gcode/contract/gcode.contract.json:913]
+  - Signature: `"value_name": null,`
+  - Purpose: Indexed property `value_name` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:913]
+- `allowed_values` (property) component `allowed_values [property]` (`0004d24b-cc58-5e95-bb01-3180b50972e1`) lines 914-914 [crates/gcode/contract/gcode.contract.json:914]
+  - Signature: `"allowed_values": [],`
+  - Purpose: Indexed property `allowed_values` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:914]
+- `required` (property) component `required [property]` (`ee866710-95d1-506a-976c-a7b437329e19`) lines 915-915 [crates/gcode/contract/gcode.contract.json:915]
+  - Signature: `"required": false,`
+  - Purpose: Indexed property `required` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:915]
+- `repeatable` (property) component `repeatable [property]` (`605e6c2a-5136-5e61-9015-f6cb4306756d`) lines 916-916 [crates/gcode/contract/gcode.contract.json:916]
+  - Signature: `"repeatable": false`
+  - Purpose: Indexed property `repeatable` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:916]
+- `json_output_keys` (property) component `json_output_keys [property]` (`baa4dccb-8c4d-59a0-b897-d2abf50b94ec`) lines 919-919 [crates/gcode/contract/gcode.contract.json:919]
+  - Signature: `"json_output_keys": []`
+  - Purpose: Indexed property `json_output_keys` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:919]
+- `error_codes` (property) component `error_codes [property]` (`eb387dea-ded9-56d8-a88b-8c3c0756d729`) lines 922-928 [crates/gcode/contract/gcode.contract.json:922-928]
   - Signature: `"error_codes": [`
-  - Purpose: Indexed property `error_codes` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:849-855]
+  - Purpose: Indexed property `error_codes` in `crates/gcode/contract/gcode.contract.json`. [crates/gcode/contract/gcode.contract.json:922-928]
 

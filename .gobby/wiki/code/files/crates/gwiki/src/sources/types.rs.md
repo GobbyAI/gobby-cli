@@ -32,7 +32,7 @@ Module: [[code/modules/crates/gwiki/src/sources|crates/gwiki/src/sources]]
 
 ## Purpose
 
-Defines the source ingestion data model for `gwiki`, including enums for source kind, ingestion method, and compile status, plus their string serialization. It also provides the draft/replay/record types and helper constructors/converters that move source data through the pipeline: `SourceDraft` builds an in-memory fetched source with optional metadata, `SourceDraftRef` offers a borrowed view, `SourceRecord` stores the persisted record, and `SourceReplay`/`SourceReplayOptions` translate replay settings to and from ingest options, with `routing_name` and `parse_routing` handling routing conversion and validation.
+This file defines the core source metadata and replay types used by `gwiki` to track how content is fetched, attributed, ingested, and compiled. It provides serialized enums for source kind, ingestion method, and compile status with `Display` impls for their lowercase string forms, a `SourceDraft` builder for constructing fetched source records with optional title/citation/license and processing state, a borrowed `SourceDraftRef` view, a serializable `SourceRecord` for persisted source metadata and hash/state, and `SourceReplay`/`SourceReplayOptions` helpers to build replay requests and convert routing configuration to and from `IngestFileOptions`, with small utilities for boolean filtering and routing name parsing.
 [crates/gwiki/src/sources/types.rs:12-29]
 [crates/gwiki/src/sources/types.rs:31-51]
 [crates/gwiki/src/sources/types.rs:32-50]

@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcode/assets/import_roots|crates/gcode/assets/impo
 
 ## Purpose
 
-This JSON configuration file defines a mapping of Elixir package dependency names to their corresponding module root names. It contains sixteen entries, each pairing a snake_case package name (jason, httpoison, tesla, req, finch, mint, ecto, phoenix, plug, oban, broadway, nimble_options, nimble_parsec, telemetry, benchee, ex_doc) with an array containing the PascalCase module name for that package. This mapping serves as a lookup table to resolve which top-level modules are provided by each Elixir dependency, supporting import root analysis and code generation tooling in the gcode asset system.
+This JSON file maps lowercase Elixir package/dependency names to their canonical module/import root names, providing a lookup table for resolving common libraries like `jason` -> `Jason` and `phoenix` -> `Phoenix`. Each property is a single dependency key, and the file as a whole serves as a centralized import-root index for Elixir dependencies.
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:3]
 [crates/gcode/assets/import_roots/elixir_dependency_roots.json:4]

@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-This file defines the document degradation model used to describe and report parse failures. `DocumentFailureMode` names the supported failure cases and maps each one to a stable string key; `DocumentUnitCount` tags a numeric count with the relevant document unit label (`page_count`, `sheet_count`, or `slide_count`). `DocumentDegradation` combines a failure mode, unit count, and fallback text into one record, while `DocumentDegradationMatrix` formats that record into key-value metadata and a markdown section for human-readable failure reporting. The `document_degradation_matrix` test setup covers the failure modes across office, HTML, and PDF paths.
+This file defines the document degradation model used to describe and report parse failures. `DocumentFailureMode` enumerates the supported failure cases across source, Office, HTML, and PDF handling and maps each variant to a stable string key with `as_str()`. `DocumentUnitCount` wraps a named unit metric such as page, sheet, or slide count, with constructors and accessors for the metric key and value. `DocumentDegradation` combines a failure mode, the relevant unit count, and a fallback string, and exposes the failure reason as the mode’s string label. `DocumentDegradationMatrix` provides helpers to turn a degradation into metadata pairs and a markdown section for reporting, and the `document_degradation_matrix` function builds a test matrix of failure scenarios and their expected unit-count identifiers.
 [crates/gwiki/src/document.rs:4-16]
 [crates/gwiki/src/document.rs:18-34]
 [crates/gwiki/src/document.rs:19-33]

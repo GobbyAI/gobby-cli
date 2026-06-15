@@ -21,7 +21,7 @@ Module: [[code/modules/crates/gwiki/src/sources|crates/gwiki/src/sources]]
 
 ## Purpose
 
-This file provides atomic file-write helpers for wiki source updates. `write_atomic` is the main entry point: it creates a uniquely named sibling temp file, writes and `sync_all`s the bytes, then atomically swaps it into place with `replace_atomic` and fsyncs the parent directory via `sync_parent_dir` for durability. `replace_atomic` handles the platform-specific rename behavior, including deleting an existing destination on Windows first. `temp_sibling_path` builds a safe temp path from the target file name plus process ID, UUID, and timestamp, and returns config errors for missing or non-UTF-8 file names. The tests cover those path-validation failures.
+This module implements durable atomic file writes for wiki sources. `write_atomic` creates a uniquely named temporary sibling with `temp_sibling_path`, writes and syncs the bytes, replaces the target with `replace_atomic`, and then syncs the parent directory with `sync_parent_dir` so the update is persisted; the helpers handle path validation, Windows-specific replacement behavior, and platform-specific directory syncing, with tests covering invalid temp-path cases.
 [crates/gwiki/src/sources/atomic.rs:7-44]
 [crates/gwiki/src/sources/atomic.rs:46-56]
 [crates/gwiki/src/sources/atomic.rs:58-83]

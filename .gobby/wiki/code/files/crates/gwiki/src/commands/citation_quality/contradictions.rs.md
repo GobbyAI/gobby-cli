@@ -27,9 +27,7 @@ Module: [[code/modules/crates/gwiki/src/commands/citation_quality|crates/gwiki/s
 
 ## Purpose
 
-This file builds the contradiction-detection pipeline for citation quality checks. It defines small comparison records for section-level claims, groups provenance links into deduplicated multi-source section comparisons, and either returns an unavailable/empty contradiction section or runs an AI-backed detector over those comparisons.
-
-The detector path serializes section comparisons into a prompt, parses the model’s JSON response into contradiction findings, and then sanitizes those findings against the known source IDs by trimming, normalizing, and deduplicating claims before producing the final `ContradictionSection`. An AI error is converted into a `WikiError::Daemon` so failures surface through the wiki error type.
+Implements contradiction detection for citation-quality checks. It groups provenance links into per-section `SectionClaimComparison` batches of `SourceClaim`s, keeps only sections with multiple distinct sources and claims, and either returns an unavailable/note-only `ContradictionSection` when AI is off or runs a detector/model path to produce contradiction findings. The AI path serializes comparisons into a prompt, parses JSON model output, then sanitizes findings against known source IDs by normalizing claims, deduplicating duplicates, and dropping invalid entries before assembling the final section result.
 [crates/gwiki/src/commands/citation_quality/contradictions.rs:15-18]
 [crates/gwiki/src/commands/citation_quality/contradictions.rs:21-24]
 [crates/gwiki/src/commands/citation_quality/contradictions.rs:27-29]

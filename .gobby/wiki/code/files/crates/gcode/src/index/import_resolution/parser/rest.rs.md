@@ -19,7 +19,7 @@ Module: [[code/modules/crates/gcode/src/index/import_resolution/parser|crates/gc
 
 ## Purpose
 
-`crates/gcode/src/index/import_resolution/parser/rest.rs` implements language-specific import parsing for the import-resolution indexer. It handles Swift, Ruby, Dart, and Elixir import-like statements, extracts the imported module or root binding, records an `ImportRelation`, and registers external dependencies when the target is not a local module or language keyword.
+This file contains language-specific import parsers used by the import-resolution indexer for Swift, Ruby, Dart, and Elixir. Each function normalizes a statement, extracts the relevant module or path information, records an `ImportRelation` for the source file, and then updates extracted bindings or external root dependencies when the import refers to something outside the local module set. The Swift and Ruby handlers filter out keywords and local modules, the Dart handler distinguishes external URI imports and aliases, and the Elixir handler handles alias/import/require forms to capture member aliases, wildcard imports, and external module roots for dependency resolution.
 [crates/gcode/src/index/import_resolution/parser/rest.rs:10-54]
 [crates/gcode/src/index/import_resolution/parser/rest.rs:56-92]
 [crates/gcode/src/index/import_resolution/parser/rest.rs:94-121]

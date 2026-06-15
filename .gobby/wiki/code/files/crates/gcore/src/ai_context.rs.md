@@ -60,9 +60,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-This file defines the transport-free AI context layer for gcore: it resolves per-capability AI bindings and tuning from layered config sources, applies command-scoped overrides like `no_ai` or forced routing, and packages the result into an `AiContext` with a shared concurrency limiter and optional `project_id` scope.
-
-The core pieces work together as follows: `AiBindings` loads and manages bindings for each `AiCapability`, `AiContextOptions` controls override behavior, and `AiLimiter`/`AiPermit` enforce runtime concurrency. The file also includes config-source adapters for primary, standalone, and Postgres-backed resolution, plus test-only helpers and guards for exercising config lookup and filesystem-dependent behavior.
+`ai_context.rs` defines the shared, transport-free AI configuration layer for gcore. It resolves an `AiContext` from layered config sources, collecting per-capability bindings, tuning, an optional `project_id`, and an `AiLimiter` that clamps concurrency to at least 1; `resolve_with_options` can also force all AI routing off or to a specific route. `AiBindings` provides per-capability lookup, mutation, and bulk routing overrides across the core AI capabilities, while `route` reads the effective routing for a capability. The file also contains config-source adapters for primary, standalone, Postgres, and test-backed resolution, plus an RAII `CurrentDirGuard` and file-writing helper used by tests and config loading.
 [crates/gcore/src/ai_context.rs:25-30]
 [crates/gcore/src/ai_context.rs:32-69]
 [crates/gcore/src/ai_context.rs:34-36]

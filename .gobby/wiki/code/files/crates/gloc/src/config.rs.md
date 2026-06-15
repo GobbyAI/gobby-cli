@@ -40,9 +40,7 @@ Module: [[code/modules/crates/gloc/src|crates/gloc/src]]
 
 ## Purpose
 
-This file defines the gloc configuration schema and loading logic. `Config` groups settings, backend definitions, named client configs, and model aliases, while `Settings` and `Client` describe the per-section values and defaults used during serde deserialization.
-
-The implementation ties those pieces together by loading a single YAML config through layered first-found-wins resolution, falling back to the compiled-in `DEFAULT_CONFIG` when needed. It also supports alias lookup, pretty dumping of the resolved config, template interpolation for backend/model placeholders, and tests that pin the built-in defaults and substitution behavior.
+Defines the `gloc` configuration schema and loading logic. It models top-level `Config` data as settings, backend definitions, named client configs, and model aliases, with serde defaults and a `Settings` type that supplies the probe timeout and auto-load/pull defaults. The `Config` impl loads a layered YAML file with built-in fallback, resolves model aliases, formats the effective configuration for display, and exposes the compiled-in default YAML; `resolve_template` fills backend and model placeholders inside client templates.
 [crates/gloc/src/config.rs:13-22]
 [crates/gloc/src/config.rs:25-32]
 [crates/gloc/src/config.rs:34-42]

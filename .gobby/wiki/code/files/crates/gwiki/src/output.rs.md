@@ -47,7 +47,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-This file defines the output layer for `gwiki`: it formats command results for stdout/stderr and provides the serializable response types used by search, query, audit, and ask workflows. The `Format` enum selects JSON or text output, `OutputError` unifies I/O and JSON serialization failures, and `print_result` delegates to `print_json` or `print_text` while `print_status` writes prefixed status messages to stderr. The rest of the file is a set of output models and small constructors: `SearchOutput` derives code citations from code-only hits, `SearchResultType` classifies wiki pages as code or wiki, `QueryOutput` and `AuditOutput` capture their respective command responses, and helpers like `render_query_text` turn structured results back into human-readable text. The tests at the end verify stable JSON shapes and that citation derivation/rendering behave as expected.
+This file defines gwiki’s output layer: a `Format` switch, a unified `OutputError`, and helpers for printing results as JSON, plain text, or status messages. It also contains the serializable response structs for `search`, `ask`, `query`, and `audit` commands, along with citation and search-hit metadata types used to shape stable CLI output. The pieces work together by building command-specific output records, deriving citations from search hits where needed, and rendering those records through the shared print functions and text formatter.
 [crates/gwiki/src/output.rs:10-13]
 [crates/gwiki/src/output.rs:16-19]
 [crates/gwiki/src/output.rs:21-28]

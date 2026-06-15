@@ -26,7 +26,7 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-This module inspects and classifies Git repository worktrees. It defines a `WorktreeKind` enum and `WorktreeInfo` struct to represent git directory metadata. The core `worktree_info()` function resolves repository paths using git commands, canonicalizes them, and classifies the worktree as Main (standard repo), Linked (created with git worktree), or NotGit (not a repository). Supporting functions handle git command execution with error handling, relative path resolution fallbacks, and absolute path conversion. The file includes helper functions for test setup (`run_git`, `commit_initial`) and three test cases validating correct detection of main worktrees, linked worktrees, and repos with separate git directories.
+This file provides Git worktree detection and path normalization for a repository path. `worktree_info()` shells out to `git` to determine the top-level directory, absolute git directory, and common git directory, then classifies the path as `Main`, `Linked`, or `NotGit` in `WorktreeInfo`; helper functions handle command execution, resolving relative git metadata paths, and producing an absolute fallback when Git is unavailable. The included tests verify detection for a normal repository, a linked worktree, and a repository using a separate git directory.
 [crates/gcode/src/git.rs:5-9]
 [crates/gcode/src/git.rs:12-17]
 [crates/gcode/src/git.rs:19-51]

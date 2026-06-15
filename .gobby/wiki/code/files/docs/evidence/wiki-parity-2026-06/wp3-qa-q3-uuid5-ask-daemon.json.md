@@ -1,0 +1,616 @@
+---
+title: docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json
+type: code_file
+provenance:
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json
+  ranges:
+  - 3-327
+generated_by: gcode-codewiki
+trust: generated
+freshness: indexed
+---
+
+# docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json
+
+Module: [[code/modules/docs/evidence/wiki-parity-2026-06|docs/evidence/wiki-parity-2026-06]]
+
+## Purpose
+
+This file is a generated evidence record for a `gwiki ask` query in the wiki-parity 2026-06 set. It captures the daemon-mode AI request metadata (`ai`, `command`, `status`, `degraded`), lists the code citations and supporting evidence sources, and then organizes the retrieval results into ranked `hits` with snippets, source paths, fusion keys, and titles. The later `scope` and `synthesis` sections summarize the query context and final answer, while `citation_check`, `truncated`, and `warnings` document whether the claims were supported and whether any parts of the record were incomplete.
+[docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:3-10]
+[docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:4]
+[docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:5]
+[docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:6]
+[docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:7]
+
+## API Symbols
+
+- `ai` (property) component `ai [property]` (`ece032d6-7f11-52a0-b4b0-32ac8dad7b7e`) lines 3-10 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:3-10]
+  - Signature: `"ai": {`
+  - Purpose: Indexed property `ai` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:3-10]
+- `error` (property) component `error [property]` (`3a399911-e333-5ba4-b479-64d45cfc588f`) lines 4-4 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:4]
+  - Signature: `"error": null,`
+  - Purpose: Indexed property `error` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:4]
+- `model` (property) component `model [property]` (`60025a74-fb0f-59c3-a1e3-423f7863c103`) lines 5-5 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:5]
+  - Signature: `"model": "gpt-5.4-mini",`
+  - Purpose: Indexed property `model` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:5]
+- `requested` (property) component `requested [property]` (`4429ad06-116f-56e1-8e86-bb9986bee9b0`) lines 6-6 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:6]
+  - Signature: `"requested": true,`
+  - Purpose: Indexed property `requested` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:6]
+- `requested_mode` (property) component `requested_mode [property]` (`5f95a78e-a78f-5e74-ae1e-950297651a6c`) lines 7-7 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:7]
+  - Signature: `"requested_mode": "daemon",`
+  - Purpose: Indexed property `requested_mode` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:7]
+- `route` (property) component `route [property]` (`b40973ea-e82c-5b78-a74f-3da36a8a4746`) lines 8-8 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:8]
+  - Signature: `"route": "daemon",`
+  - Purpose: Indexed property `route` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:8]
+- `status` (property) component `status [property]` (`1187947e-9d4b-5ad3-b401-4fa8aa662aed`) lines 9-9 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:9]
+  - Signature: `"status": "available"`
+  - Purpose: Indexed property `status` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:9]
+- `code_citations` (property) component `code_citations [property]` (`dfead62e-24d5-517b-837c-c0ce4ff441c7`) lines 11-36 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:11-36]
+  - Signature: `"code_citations": [`
+  - Purpose: Indexed property `code_citations` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:11-36]
+- `file` (property) component `file [property]` (`ee4faf97-3b1a-58e3-8a32-0b2a8c299ef9`) lines 13-13 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:13]
+  - Signature: `"file": "code/files/docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json.md",`
+  - Purpose: Indexed property `file` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:13]
+- `symbol` (property) component `symbol [property]` (`0a36e2a4-8135-5101-a0a8-e52193184021`) lines 14-14 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:14]
+  - Signature: `"symbol": "docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json"`
+  - Purpose: Indexed property `symbol` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:14]
+- `file` (property) component `file [property]` (`0b025b09-d2ed-5987-ada0-af5e1d398ebf`) lines 17-17 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:17]
+  - Signature: `"file": "code/files/crates/gcode/src/commands/codewiki/build_parts/snapshot.rs.md",`
+  - Purpose: Indexed property `file` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:17]
+- `symbol` (property) component `symbol [property]` (`8166df91-78ff-5f95-b109-568a4cec2e5f`) lines 18-18 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:18]
+  - Signature: `"symbol": "crates/gcode/src/commands/codewiki/build_parts/snapshot.rs"`
+  - Purpose: Indexed property `symbol` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:18]
+- `file` (property) component `file [property]` (`130c6203-7318-5e57-b253-2bf243e5551f`) lines 21-21 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:21]
+  - Signature: `"file": "code/files/crates/gcode/src/commands/codewiki/build_parts/changes.rs.md",`
+  - Purpose: Indexed property `file` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:21]
+- `symbol` (property) component `symbol [property]` (`a29f5fcd-2095-5564-8c8e-af9b034f84e0`) lines 22-22 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:22]
+  - Signature: `"symbol": "crates/gcode/src/commands/codewiki/build_parts/changes.rs"`
+  - Purpose: Indexed property `symbol` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:22]
+- `file` (property) component `file [property]` (`e48dfb9c-4723-5e5e-8a28-a5092f62ce96`) lines 25-25 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:25]
+  - Signature: `"file": "code/files/crates/gcode/src/commands/codewiki/io.rs.md",`
+  - Purpose: Indexed property `file` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:25]
+- `symbol` (property) component `symbol [property]` (`e199e68a-05cb-53f1-8466-4c176dd63c69`) lines 26-26 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:26]
+  - Signature: `"symbol": "crates/gcode/src/commands/codewiki/io.rs"`
+  - Purpose: Indexed property `symbol` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:26]
+- `file` (property) component `file [property]` (`58898eac-6142-5fe8-b409-6780b81d59e0`) lines 29-29 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:29]
+  - Signature: `"file": "code/files/crates/gcode/src/models.rs.md",`
+  - Purpose: Indexed property `file` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:29]
+- `symbol` (property) component `symbol [property]` (`a5df0de0-9fb4-566c-acbf-9e4788156c27`) lines 30-30 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:30]
+  - Signature: `"symbol": "crates/gcode/src/models.rs"`
+  - Purpose: Indexed property `symbol` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:30]
+- `file` (property) component `file [property]` (`b279eff1-77cb-5440-b7c1-4fe07178afe2`) lines 33-33 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:33]
+  - Signature: `"file": "code/files/crates/gwiki/src/sources/render.rs.md",`
+  - Purpose: Indexed property `file` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:33]
+- `symbol` (property) component `symbol [property]` (`71661f49-eaf9-5e70-82dc-80be39a226f7`) lines 34-34 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:34]
+  - Signature: `"symbol": "crates/gwiki/src/sources/render.rs"`
+  - Purpose: Indexed property `symbol` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:34]
+- `command` (property) component `command [property]` (`19ec544d-5ca4-5172-8050-76beb8811cfb`) lines 37-37 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:37]
+  - Signature: `"command": "ask",`
+  - Purpose: Indexed property `command` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:37]
+- `degraded` (property) component `degraded [property]` (`2ac95cd1-0672-535e-805b-1d99ad4ba38b`) lines 38-38 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:38]
+  - Signature: `"degraded": false,`
+  - Purpose: Indexed property `degraded` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:38]
+- `degraded_sources` (property) component `degraded_sources [property]` (`16cd425a-a6c1-558f-a499-12d1cf699f3b`) lines 39-39 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:39]
+  - Signature: `"degraded_sources": [],`
+  - Purpose: Indexed property `degraded_sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:39]
+- `evidence` (property) component `evidence [property]` (`99d055d1-fa8b-5919-b9e7-6299a98ad93c`) lines 40-91 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:40-91]
+  - Signature: `"evidence": [`
+  - Purpose: Indexed property `evidence` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:40-91]
+- `excerpt_chars` (property) component `excerpt_chars [property]` (`e92d14ec-2461-5b6a-b26d-7af9dad44124`) lines 42-42 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:42]
+  - Signature: `"excerpt_chars": 3230,`
+  - Purpose: Indexed property `excerpt_chars` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:42]
+- `source_path` (property) component `source_path [property]` (`1f5670d2-bc94-57e5-b9b0-4d94377febec`) lines 43-43 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:43]
+  - Signature: `"source_path": "code/files/docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:43]
+- `wiki_page` (property) component `wiki_page [property]` (`38591541-ec75-5f14-98b4-67dd522ab6f1`) lines 44-44 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:44]
+  - Signature: `"wiki_page": "code/files/docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:44]
+- `excerpt_chars` (property) component `excerpt_chars [property]` (`4a7f21b8-712a-5c25-8508-00ff7fd505a6`) lines 47-47 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:47]
+  - Signature: `"excerpt_chars": 14,`
+  - Purpose: Indexed property `excerpt_chars` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:47]
+- `source_path` (property) component `source_path [property]` (`a7d44978-e712-5c1e-8de4-7ec63eb45384`) lines 48-48 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:48]
+  - Signature: `"source_path": "code/files/crates/gcode/src/commands/codewiki/build_parts/snapshot.rs.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:48]
+- `wiki_page` (property) component `wiki_page [property]` (`dded417a-d1df-51c0-8928-cb13ef78a31b`) lines 49-49 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:49]
+  - Signature: `"wiki_page": "code/files/crates/gcode/src/commands/codewiki/build_parts/snapshot.rs.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:49]
+- `excerpt_chars` (property) component `excerpt_chars [property]` (`3057cea1-97d4-511c-8132-472681768b89`) lines 52-52 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:52]
+  - Signature: `"excerpt_chars": 3247,`
+  - Purpose: Indexed property `excerpt_chars` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:52]
+- `source_path` (property) component `source_path [property]` (`393c96b3-d9ab-50fb-ac5b-55a7429b3f38`) lines 53-53 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:53]
+  - Signature: `"source_path": "code/repo.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:53]
+- `wiki_page` (property) component `wiki_page [property]` (`816a08f9-b55c-5d94-a4cb-4586d01cc667`) lines 54-54 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:54]
+  - Signature: `"wiki_page": "code/repo.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:54]
+- `excerpt_chars` (property) component `excerpt_chars [property]` (`5bd80641-c235-550e-82e1-704be7faba3e`) lines 57-57 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:57]
+  - Signature: `"excerpt_chars": 14,`
+  - Purpose: Indexed property `excerpt_chars` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:57]
+- `source_path` (property) component `source_path [property]` (`2c5f7a80-1181-56de-849d-410192062be8`) lines 58-58 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:58]
+  - Signature: `"source_path": "code/files/crates/gcode/src/commands/codewiki/build_parts/changes.rs.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:58]
+- `wiki_page` (property) component `wiki_page [property]` (`d14ba7ce-8fc8-56de-ae13-e011e50c3745`) lines 59-59 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:59]
+  - Signature: `"wiki_page": "code/files/crates/gcode/src/commands/codewiki/build_parts/changes.rs.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:59]
+- `excerpt_chars` (property) component `excerpt_chars [property]` (`77822cb5-7a6e-5610-8050-b2f1eab5ccfb`) lines 62-62 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:62]
+  - Signature: `"excerpt_chars": 3251,`
+  - Purpose: Indexed property `excerpt_chars` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:62]
+- `source_path` (property) component `source_path [property]` (`4901efac-2aa3-514c-8827-8d291682f96a`) lines 63-63 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:63]
+  - Signature: `"source_path": "code/modules/crates/gcode/src/commands/codewiki/build_parts.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:63]
+- `wiki_page` (property) component `wiki_page [property]` (`7032255c-073f-5135-8208-f429854a6122`) lines 64-64 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:64]
+  - Signature: `"wiki_page": "code/modules/crates/gcode/src/commands/codewiki/build_parts.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:64]
+- `excerpt_chars` (property) component `excerpt_chars [property]` (`bab87333-10d6-510a-be2b-2587ec33b483`) lines 67-67 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:67]
+  - Signature: `"excerpt_chars": 3279,`
+  - Purpose: Indexed property `excerpt_chars` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:67]
+- `source_path` (property) component `source_path [property]` (`01552b5f-dd57-5c43-a0ef-11fb3028092b`) lines 68-68 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:68]
+  - Signature: `"source_path": "code/modules/crates/gcode.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:68]
+- `wiki_page` (property) component `wiki_page [property]` (`5b79d38f-444c-5cd7-a0d0-275f20edf0ce`) lines 69-69 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:69]
+  - Signature: `"wiki_page": "code/modules/crates/gcode.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:69]
+- `excerpt_chars` (property) component `excerpt_chars [property]` (`11b6b1dd-ee12-543a-a1e8-5522b2e0dc70`) lines 72-72 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:72]
+  - Signature: `"excerpt_chars": 1113,`
+  - Purpose: Indexed property `excerpt_chars` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:72]
+- `source_path` (property) component `source_path [property]` (`a2df56a1-6fc9-5f30-8ea6-277d09fdb85b`) lines 73-73 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:73]
+  - Signature: `"source_path": "code/files/crates/gcode/src/commands/codewiki/io.rs.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:73]
+- `wiki_page` (property) component `wiki_page [property]` (`ea9d9627-3377-5acd-bee8-8065216cc7e5`) lines 74-74 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:74]
+  - Signature: `"wiki_page": "code/files/crates/gcode/src/commands/codewiki/io.rs.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:74]
+- `excerpt_chars` (property) component `excerpt_chars [property]` (`9e5eeeae-becc-5df8-9142-fa23b80b48e3`) lines 77-77 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:77]
+  - Signature: `"excerpt_chars": 10,`
+  - Purpose: Indexed property `excerpt_chars` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:77]
+- `source_path` (property) component `source_path [property]` (`45f05001-fee3-5777-a06a-dd5be6dd35e8`) lines 78-78 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:78]
+  - Signature: `"source_path": "code/files/crates/gcode/src/models.rs.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:78]
+- `wiki_page` (property) component `wiki_page [property]` (`2e12ae6e-2db8-56da-a82c-1cfb695de472`) lines 79-79 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:79]
+  - Signature: `"wiki_page": "code/files/crates/gcode/src/models.rs.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:79]
+- `excerpt_chars` (property) component `excerpt_chars [property]` (`4d7e364b-ca30-53b0-9456-5605d0d39fa8`) lines 82-82 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:82]
+  - Signature: `"excerpt_chars": 3301,`
+  - Purpose: Indexed property `excerpt_chars` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:82]
+- `source_path` (property) component `source_path [property]` (`e4f45938-3c5c-5468-91b4-c30bf8f6bfa4`) lines 83-83 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:83]
+  - Signature: `"source_path": "code/_architecture.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:83]
+- `wiki_page` (property) component `wiki_page [property]` (`f6e102e9-67e2-57a4-a558-765f576daf72`) lines 84-84 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:84]
+  - Signature: `"wiki_page": "code/_architecture.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:84]
+- `excerpt_chars` (property) component `excerpt_chars [property]` (`5ccd0fa1-f4bd-54f1-bd61-081935fd172b`) lines 87-87 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:87]
+  - Signature: `"excerpt_chars": 10,`
+  - Purpose: Indexed property `excerpt_chars` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:87]
+- `source_path` (property) component `source_path [property]` (`05cbeacb-e4db-526f-9551-e4103c269339`) lines 88-88 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:88]
+  - Signature: `"source_path": "code/files/crates/gwiki/src/sources/render.rs.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:88]
+- `wiki_page` (property) component `wiki_page [property]` (`8debd354-b68d-59ae-8fe9-bc62a6cac41a`) lines 89-89 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:89]
+  - Signature: `"wiki_page": "code/files/crates/gwiki/src/sources/render.rs.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:89]
+- `hits` (property) component `hits [property]` (`6ef6d732-2f4f-5330-a7dd-d52e1b66c989`) lines 92-289 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:92-289]
+  - Signature: `"hits": [`
+  - Purpose: Indexed property `hits` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:92-289]
+- `explanations` (property) component `explanations [property]` (`f7a1b2e9-51cf-5086-a867-09dd0900afec`) lines 94-105 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:94-105]
+  - Signature: `"explanations": [`
+  - Purpose: Indexed property `explanations` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:94-105]
+- `rank` (property) component `rank [property]` (`b80fb141-0c55-564d-94b7-e1ad0c8ee1dc`) lines 96-96 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:96]
+  - Signature: `"rank": 4,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:96]
+- `score` (property) component `score [property]` (`14ab5d20-e2ec-55bb-ac76-0d0f8eab6b6a`) lines 97-97 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:97]
+  - Signature: `"score": 0.015625,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:97]
+- `source` (property) component `source [property]` (`340ec278-b14c-593d-9ecb-6d301379b083`) lines 98-98 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:98]
+  - Signature: `"source": "bm25"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:98]
+- `rank` (property) component `rank [property]` (`18948214-3838-50c9-b0bf-95cef1c77857`) lines 101-101 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:101]
+  - Signature: `"rank": 3,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:101]
+- `score` (property) component `score [property]` (`1a6bf30b-021b-57a1-bd98-9b9db4d4923a`) lines 102-102 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:102]
+  - Signature: `"score": 0.015873015873015872,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:102]
+- `source` (property) component `source [property]` (`556a45fc-ef3f-5ec9-ad64-0f4654719f93`) lines 103-103 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:103]
+  - Signature: `"source": "semantic"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:103]
+- `fusion_key` (property) component `fusion_key [property]` (`ef1cb917-8f42-5977-97f3-79527134a4a2`) lines 106-106 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:106]
+  - Signature: `"fusion_key": "project:3bf57fe7-2a0c-4074-8912-a83d9cd4df01:code/files/docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json.md",`
+  - Purpose: Indexed property `fusion_key` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:106]
+- `result_type` (property) component `result_type [property]` (`d98c0758-c952-5a46-a6cc-6eec264a4213`) lines 107-107 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:107]
+  - Signature: `"result_type": "code",`
+  - Purpose: Indexed property `result_type` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:107]
+- `score` (property) component `score [property]` (`20e20321-6787-524a-82d0-5bccc885f67e`) lines 108-108 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:108]
+  - Signature: `"score": 0.03149801587301587,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:108]
+- `snippet` (property) component `snippet [property]` (`936eb20f-1d7f-5a86-82d9-721ac93e2ef2`) lines 109-109 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:109]
+  - Signature: `"snippet": "--- title: docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json type: code_file provenance: - file: docs/evidence/wiki-parity-2026-06/wp3-comp",`
+  - Purpose: Indexed property `snippet` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:109]
+- `source_path` (property) component `source_path [property]` (`99505daf-c025-51c3-bad5-de3d654d0b45`) lines 110-110 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:110]
+  - Signature: `"source_path": "code/files/docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:110]
+- `sources` (property) component `sources [property]` (`066c7c78-b363-53c5-ada5-0aab9506f6eb`) lines 111-114 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:111-114]
+  - Signature: `"sources": [`
+  - Purpose: Indexed property `sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:111-114]
+- `title` (property) component `title [property]` (`612140e8-f449-5300-82b8-e1eda66515f9`) lines 115-115 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:115]
+  - Signature: `"title": "docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json",`
+  - Purpose: Indexed property `title` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:115]
+- `wiki_page` (property) component `wiki_page [property]` (`5f059d35-a6ce-56f1-96c8-713785e8cca4`) lines 116-116 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:116]
+  - Signature: `"wiki_page": "code/files/docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:116]
+- `explanations` (property) component `explanations [property]` (`55b38ea9-a961-551f-ad94-957db5a4840c`) lines 119-125 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:119-125]
+  - Signature: `"explanations": [`
+  - Purpose: Indexed property `explanations` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:119-125]
+- `rank` (property) component `rank [property]` (`f4e4b061-2830-5cb2-b8f1-5f01fe73026b`) lines 121-121 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:121]
+  - Signature: `"rank": 0,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:121]
+- `score` (property) component `score [property]` (`2c89b5e7-7df8-5b67-a744-53010cee3f61`) lines 122-122 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:122]
+  - Signature: `"score": 0.016666666666666666,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:122]
+- `source` (property) component `source [property]` (`4709db7f-c4b1-54a6-b4be-6be6ac8c0464`) lines 123-123 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:123]
+  - Signature: `"source": "semantic"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:123]
+- `fusion_key` (property) component `fusion_key [property]` (`5e7145a6-654c-5d7b-a94c-be343a19bd15`) lines 126-126 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:126]
+  - Signature: `"fusion_key": "project:3bf57fe7-2a0c-4074-8912-a83d9cd4df01:code/files/crates/gcode/src/commands/codewiki/build_parts/snapshot.rs.md",`
+  - Purpose: Indexed property `fusion_key` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:126]
+- `result_type` (property) component `result_type [property]` (`4b15cd81-7dee-5845-bb0b-e8d15ee60110`) lines 127-127 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:127]
+  - Signature: `"result_type": "code",`
+  - Purpose: Indexed property `result_type` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:127]
+- `score` (property) component `score [property]` (`c29bd4f5-8be9-5b52-b04c-22e105cd1201`) lines 128-128 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:128]
+  - Signature: `"score": 0.016666666666666666,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:128]
+- `snippet` (property) component `snippet [property]` (`33a9e496-0798-55e4-bdf0-dcd96e4f118f`) lines 129-129 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:129]
+  - Signature: `"snippet": "## API Symbols",`
+  - Purpose: Indexed property `snippet` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:129]
+- `source_path` (property) component `source_path [property]` (`4612adc5-0a09-55e8-99e1-76dc6e09f586`) lines 130-130 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:130]
+  - Signature: `"source_path": "code/files/crates/gcode/src/commands/codewiki/build_parts/snapshot.rs.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:130]
+- `sources` (property) component `sources [property]` (`b4e617af-f9d6-52a6-94a9-f2b66fa8f837`) lines 131-133 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:131-133]
+  - Signature: `"sources": [`
+  - Purpose: Indexed property `sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:131-133]
+- `title` (property) component `title [property]` (`e18f556d-57a0-5f6a-8199-44392f91f31e`) lines 134-134 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:134]
+  - Signature: `"title": "crates/gcode/src/commands/codewiki/build_parts/snapshot.rs",`
+  - Purpose: Indexed property `title` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:134]
+- `wiki_page` (property) component `wiki_page [property]` (`d49c64fc-1a24-510d-af26-65379c330fe6`) lines 135-135 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:135]
+  - Signature: `"wiki_page": "code/files/crates/gcode/src/commands/codewiki/build_parts/snapshot.rs.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:135]
+- `explanations` (property) component `explanations [property]` (`4abc7876-4205-53cc-abec-27c82c19ab30`) lines 138-144 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:138-144]
+  - Signature: `"explanations": [`
+  - Purpose: Indexed property `explanations` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:138-144]
+- `rank` (property) component `rank [property]` (`59f2426f-b3bf-5bef-b6c0-fcdc860175d9`) lines 140-140 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:140]
+  - Signature: `"rank": 0,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:140]
+- `score` (property) component `score [property]` (`13210ce6-4944-5413-904e-dcd50dfd88c5`) lines 141-141 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:141]
+  - Signature: `"score": 0.016666666666666666,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:141]
+- `source` (property) component `source [property]` (`e75de7e3-c345-590c-9af3-b79e0ace8f9a`) lines 142-142 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:142]
+  - Signature: `"source": "bm25"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:142]
+- `fusion_key` (property) component `fusion_key [property]` (`677f0c42-2a75-5cbb-b9c2-9d0cfab0816b`) lines 145-145 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:145]
+  - Signature: `"fusion_key": "project:3bf57fe7-2a0c-4074-8912-a83d9cd4df01:code/repo.md",`
+  - Purpose: Indexed property `fusion_key` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:145]
+- `result_type` (property) component `result_type [property]` (`9b737f4e-7f2f-539f-94dc-09552d65bebd`) lines 146-146 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:146]
+  - Signature: `"result_type": "wiki",`
+  - Purpose: Indexed property `result_type` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:146]
+- `score` (property) component `score [property]` (`ed05ab25-0331-5a34-955d-4b43d9acad8a`) lines 147-147 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:147]
+  - Signature: `"score": 0.016666666666666666,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:147]
+- `snippet` (property) component `snippet [property]` (`8837794e-f1a7-5fe7-9726-07f496bee365`) lines 148-148 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:148]
+  - Signature: `"snippet": "## Modules - [[code/modules/crates|crates]] - The crates module is a container directory with no direct files of its own; it groups the Rust workspace's tooling crate",`
+  - Purpose: Indexed property `snippet` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:148]
+- `source_path` (property) component `source_path [property]` (`d196e462-1817-541c-be59-4fdb0a5e782e`) lines 149-149 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:149]
+  - Signature: `"source_path": "code/repo.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:149]
+- `sources` (property) component `sources [property]` (`1e5530c8-eaea-5457-b5c5-62ef836c2cda`) lines 150-152 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:150-152]
+  - Signature: `"sources": [`
+  - Purpose: Indexed property `sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:150-152]
+- `title` (property) component `title [property]` (`308110e2-9153-51b6-8608-8899db3a11fc`) lines 153-153 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:153]
+  - Signature: `"title": "Repository Overview",`
+  - Purpose: Indexed property `title` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:153]
+- `wiki_page` (property) component `wiki_page [property]` (`fa711e88-406b-568d-a6b2-cde1d99d6e5c`) lines 154-154 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:154]
+  - Signature: `"wiki_page": "code/repo.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:154]
+- `explanations` (property) component `explanations [property]` (`fbaba8e7-380f-55c1-a6b6-1b724a90ca96`) lines 157-163 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:157-163]
+  - Signature: `"explanations": [`
+  - Purpose: Indexed property `explanations` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:157-163]
+- `rank` (property) component `rank [property]` (`996a5680-7ee7-505a-9d90-91a94a6c5269`) lines 159-159 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:159]
+  - Signature: `"rank": 1,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:159]
+- `score` (property) component `score [property]` (`0aef4645-1708-5f04-b330-3acb38b19d24`) lines 160-160 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:160]
+  - Signature: `"score": 0.01639344262295082,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:160]
+- `source` (property) component `source [property]` (`cdc04d22-37c8-59d7-8348-43e8e6efa642`) lines 161-161 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:161]
+  - Signature: `"source": "semantic"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:161]
+- `fusion_key` (property) component `fusion_key [property]` (`f0c9069e-2043-5565-876e-082c4b4bc7ff`) lines 164-164 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:164]
+  - Signature: `"fusion_key": "project:3bf57fe7-2a0c-4074-8912-a83d9cd4df01:code/files/crates/gcode/src/commands/codewiki/build_parts/changes.rs.md",`
+  - Purpose: Indexed property `fusion_key` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:164]
+- `result_type` (property) component `result_type [property]` (`ad871058-c063-5b6c-94ff-3565be323110`) lines 165-165 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:165]
+  - Signature: `"result_type": "code",`
+  - Purpose: Indexed property `result_type` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:165]
+- `score` (property) component `score [property]` (`85bb477e-b088-5c24-b997-182ac3029ff2`) lines 166-166 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:166]
+  - Signature: `"score": 0.01639344262295082,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:166]
+- `snippet` (property) component `snippet [property]` (`f64c3d51-fe18-5105-a0d2-72dbfc5c1309`) lines 167-167 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:167]
+  - Signature: `"snippet": "## API Symbols",`
+  - Purpose: Indexed property `snippet` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:167]
+- `source_path` (property) component `source_path [property]` (`fabe44fd-901d-5a0a-b909-1a8499a3a99f`) lines 168-168 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:168]
+  - Signature: `"source_path": "code/files/crates/gcode/src/commands/codewiki/build_parts/changes.rs.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:168]
+- `sources` (property) component `sources [property]` (`12ca53bd-cab8-5ce7-a836-0c90bbc4a79e`) lines 169-171 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:169-171]
+  - Signature: `"sources": [`
+  - Purpose: Indexed property `sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:169-171]
+- `title` (property) component `title [property]` (`30fd7020-1b40-5485-83d4-cbad0547e6a1`) lines 172-172 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:172]
+  - Signature: `"title": "crates/gcode/src/commands/codewiki/build_parts/changes.rs",`
+  - Purpose: Indexed property `title` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:172]
+- `wiki_page` (property) component `wiki_page [property]` (`f1bc7026-b7bd-5689-b342-cb0097e31002`) lines 173-173 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:173]
+  - Signature: `"wiki_page": "code/files/crates/gcode/src/commands/codewiki/build_parts/changes.rs.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:173]
+- `explanations` (property) component `explanations [property]` (`af260e7c-aa09-5469-9468-d8d3b8a60641`) lines 176-182 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:176-182]
+  - Signature: `"explanations": [`
+  - Purpose: Indexed property `explanations` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:176-182]
+- `rank` (property) component `rank [property]` (`09062880-8ea1-587c-bba9-d41cb85ed781`) lines 178-178 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:178]
+  - Signature: `"rank": 1,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:178]
+- `score` (property) component `score [property]` (`10b8c47b-b192-5254-af89-1df4e987608e`) lines 179-179 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:179]
+  - Signature: `"score": 0.01639344262295082,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:179]
+- `source` (property) component `source [property]` (`0a2e9d99-9815-51d2-9ede-c6732d0fb107`) lines 180-180 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:180]
+  - Signature: `"source": "bm25"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:180]
+- `fusion_key` (property) component `fusion_key [property]` (`58780e4c-1bc3-5fdb-887f-293e641c35a1`) lines 183-183 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:183]
+  - Signature: `"fusion_key": "project:3bf57fe7-2a0c-4074-8912-a83d9cd4df01:code/modules/crates/gcode/src/commands/codewiki/build_parts.md",`
+  - Purpose: Indexed property `fusion_key` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:183]
+- `result_type` (property) component `result_type [property]` (`d0e5dfed-53d2-57e4-b281-01c6ed3d68fa`) lines 184-184 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:184]
+  - Signature: `"result_type": "wiki",`
+  - Purpose: Indexed property `result_type` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:184]
+- `score` (property) component `score [property]` (`fd5f9bf3-f471-5102-8faf-810127535c1f`) lines 185-185 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:185]
+  - Signature: `"score": 0.01639344262295082,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:185]
+- `snippet` (property) component `snippet [property]` (`6959555a-0b09-53c8-8c49-212bd8bd384a`) lines 186-186 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:186]
+  - Signature: `"snippet": "## Files - [[code/files/crates/gcode/src/commands/codewiki/build_parts/architecture.rs|crates/gcode/src/commands/codewiki/build_parts/architecture.rs]] - This file builds",`
+  - Purpose: Indexed property `snippet` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:186]
+- `source_path` (property) component `source_path [property]` (`c287f884-26b4-5651-a6f6-3fadef6ad409`) lines 187-187 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:187]
+  - Signature: `"source_path": "code/modules/crates/gcode/src/commands/codewiki/build_parts.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:187]
+- `sources` (property) component `sources [property]` (`a1e0d2e1-9701-5b48-9af3-b4173398ac23`) lines 188-190 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:188-190]
+  - Signature: `"sources": [`
+  - Purpose: Indexed property `sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:188-190]
+- `title` (property) component `title [property]` (`ec6aa83d-d0bd-561a-919d-be3b633d172e`) lines 191-191 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:191]
+  - Signature: `"title": "crates/gcode/src/commands/codewiki/build_parts",`
+  - Purpose: Indexed property `title` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:191]
+- `wiki_page` (property) component `wiki_page [property]` (`ca7f4d89-d495-5a5d-b3e1-1863f8c67766`) lines 192-192 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:192]
+  - Signature: `"wiki_page": "code/modules/crates/gcode/src/commands/codewiki/build_parts.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:192]
+- `explanations` (property) component `explanations [property]` (`03c07f75-0815-5101-bcf2-51703565d0be`) lines 195-201 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:195-201]
+  - Signature: `"explanations": [`
+  - Purpose: Indexed property `explanations` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:195-201]
+- `rank` (property) component `rank [property]` (`d8f47d10-152d-555a-9719-e7970ee45e05`) lines 197-197 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:197]
+  - Signature: `"rank": 2,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:197]
+- `score` (property) component `score [property]` (`c192e665-5e1a-5ef9-95c6-1396d4e09dbd`) lines 198-198 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:198]
+  - Signature: `"score": 0.016129032258064516,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:198]
+- `source` (property) component `source [property]` (`8c51e510-deb6-5da0-811a-784cc046e649`) lines 199-199 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:199]
+  - Signature: `"source": "bm25"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:199]
+- `fusion_key` (property) component `fusion_key [property]` (`0b1b1815-7b0e-5b4f-8722-69fa2d1e091b`) lines 202-202 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:202]
+  - Signature: `"fusion_key": "project:3bf57fe7-2a0c-4074-8912-a83d9cd4df01:code/modules/crates/gcode.md",`
+  - Purpose: Indexed property `fusion_key` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:202]
+- `result_type` (property) component `result_type [property]` (`56a9c6f3-2b8d-5e05-90fe-723295de4cb9`) lines 203-203 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:203]
+  - Signature: `"result_type": "wiki",`
+  - Purpose: Indexed property `result_type` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:203]
+- `score` (property) component `score [property]` (`eee96c4b-d629-5347-954b-267374766292`) lines 204-204 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:204]
+  - Signature: `"score": 0.016129032258064516,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:204]
+- `snippet` (property) component `snippet [property]` (`5cf6baec-ef54-541b-a591-76f803eceab7`) lines 205-205 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:205]
+  - Signature: `"snippet": "[[code/modules/crates/gcode/assets|crates/gcode/assets]] - The crates/gcode/assets module is an asset container rather than an implementation module: it has no direct files of its",`
+  - Purpose: Indexed property `snippet` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:205]
+- `source_path` (property) component `source_path [property]` (`66a90347-fb6b-5aa4-99e9-9ceadaf5abb9`) lines 206-206 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:206]
+  - Signature: `"source_path": "code/modules/crates/gcode.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:206]
+- `sources` (property) component `sources [property]` (`69352644-059f-5f97-9d0a-35bb64592fc0`) lines 207-209 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:207-209]
+  - Signature: `"sources": [`
+  - Purpose: Indexed property `sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:207-209]
+- `title` (property) component `title [property]` (`f04d2c68-db77-552b-8cf4-23b3081a1922`) lines 210-210 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:210]
+  - Signature: `"title": "crates/gcode",`
+  - Purpose: Indexed property `title` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:210]
+- `wiki_page` (property) component `wiki_page [property]` (`38176073-82a3-5e73-b118-97093ff2f906`) lines 211-211 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:211]
+  - Signature: `"wiki_page": "code/modules/crates/gcode.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:211]
+- `explanations` (property) component `explanations [property]` (`00fc352e-bb1e-52db-9395-34cf0645e46d`) lines 214-220 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:214-220]
+  - Signature: `"explanations": [`
+  - Purpose: Indexed property `explanations` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:214-220]
+- `rank` (property) component `rank [property]` (`38f8ee8a-6c68-5e47-a9a1-e0428162b740`) lines 216-216 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:216]
+  - Signature: `"rank": 3,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:216]
+- `score` (property) component `score [property]` (`badf17c2-95d1-5b93-9cb3-56f395144ed3`) lines 217-217 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:217]
+  - Signature: `"score": 0.015873015873015872,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:217]
+- `source` (property) component `source [property]` (`bf3db847-b954-580b-8968-47a8dcf96778`) lines 218-218 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:218]
+  - Signature: `"source": "bm25"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:218]
+- `fusion_key` (property) component `fusion_key [property]` (`d3e9db52-715f-5159-9bab-36c4f348f2be`) lines 221-221 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:221]
+  - Signature: `"fusion_key": "project:3bf57fe7-2a0c-4074-8912-a83d9cd4df01:code/files/crates/gcode/src/commands/codewiki/io.rs.md",`
+  - Purpose: Indexed property `fusion_key` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:221]
+- `result_type` (property) component `result_type [property]` (`23aac8c1-86d4-52b2-997d-0717ae797f0a`) lines 222-222 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:222]
+  - Signature: `"result_type": "code",`
+  - Purpose: Indexed property `result_type` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:222]
+- `score` (property) component `score [property]` (`fbe5817f-4c34-54ad-b4ef-8ab1ed7b3180`) lines 223-223 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:223]
+  - Signature: `"score": 0.015873015873015872,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:223]
+- `snippet` (property) component `snippet [property]` (`a0d90def-5e56-574b-8ae6-647e96ea23dd`) lines 224-224 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:224]
+  - Signature: `"snippet": "## Purpose Provides the I/O layer for Codewiki document generation, incremental persistence, pruning, and metadata handling. The top-level w",`
+  - Purpose: Indexed property `snippet` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:224]
+- `source_path` (property) component `source_path [property]` (`77cedf2d-3103-52da-be39-55c50a9cff6b`) lines 225-225 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:225]
+  - Signature: `"source_path": "code/files/crates/gcode/src/commands/codewiki/io.rs.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:225]
+- `sources` (property) component `sources [property]` (`2e7bb7c9-babe-5a0d-9c4f-85a5a4fd33eb`) lines 226-228 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:226-228]
+  - Signature: `"sources": [`
+  - Purpose: Indexed property `sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:226-228]
+- `title` (property) component `title [property]` (`e55ee19c-97f8-5295-b931-f036ff321d40`) lines 229-229 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:229]
+  - Signature: `"title": "crates/gcode/src/commands/codewiki/io.rs",`
+  - Purpose: Indexed property `title` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:229]
+- `wiki_page` (property) component `wiki_page [property]` (`a824b1b6-6a91-5639-a5b9-6f3e048f9b17`) lines 230-230 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:230]
+  - Signature: `"wiki_page": "code/files/crates/gcode/src/commands/codewiki/io.rs.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:230]
+- `explanations` (property) component `explanations [property]` (`980b68a8-e675-59fa-8eb8-f4630369161e`) lines 233-239 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:233-239]
+  - Signature: `"explanations": [`
+  - Purpose: Indexed property `explanations` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:233-239]
+- `rank` (property) component `rank [property]` (`acf60eff-c0aa-50b8-9d30-82c1b95551e6`) lines 235-235 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:235]
+  - Signature: `"rank": 4,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:235]
+- `score` (property) component `score [property]` (`3e4ebca3-5b51-5166-bb75-4210ad4fcc51`) lines 236-236 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:236]
+  - Signature: `"score": 0.015625,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:236]
+- `source` (property) component `source [property]` (`94e89d34-e8d7-5b3f-9595-8bbde8c82414`) lines 237-237 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:237]
+  - Signature: `"source": "semantic"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:237]
+- `fusion_key` (property) component `fusion_key [property]` (`0d6b86f0-ae01-5baa-b89b-d5a427e68aa9`) lines 240-240 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:240]
+  - Signature: `"fusion_key": "project:3bf57fe7-2a0c-4074-8912-a83d9cd4df01:code/files/crates/gcode/src/models.rs.md",`
+  - Purpose: Indexed property `fusion_key` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:240]
+- `result_type` (property) component `result_type [property]` (`ccb9c81c-4dc3-53a2-89e9-99ff25e25e80`) lines 241-241 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:241]
+  - Signature: `"result_type": "code",`
+  - Purpose: Indexed property `result_type` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:241]
+- `score` (property) component `score [property]` (`3374c76c-981b-547c-9d73-d5daf495a179`) lines 242-242 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:242]
+  - Signature: `"score": 0.015625,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:242]
+- `snippet` (property) component `snippet [property]` (`5fb3de8a-e16b-5a3b-8bc0-d2ccc5c4c76d`) lines 243-243 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:243]
+  - Signature: `"snippet": "## Purpose",`
+  - Purpose: Indexed property `snippet` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:243]
+- `source_path` (property) component `source_path [property]` (`b164f718-7b65-5290-9219-aca7148a753e`) lines 244-244 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:244]
+  - Signature: `"source_path": "code/files/crates/gcode/src/models.rs.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:244]
+- `sources` (property) component `sources [property]` (`d125132a-fdf3-58e8-b40a-b0a8e9fbbbc3`) lines 245-247 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:245-247]
+  - Signature: `"sources": [`
+  - Purpose: Indexed property `sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:245-247]
+- `title` (property) component `title [property]` (`137a93b3-6b8e-5057-9701-1f91e7698adf`) lines 248-248 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:248]
+  - Signature: `"title": "crates/gcode/src/models.rs",`
+  - Purpose: Indexed property `title` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:248]
+- `wiki_page` (property) component `wiki_page [property]` (`2c2fe987-217a-59b1-98ee-ca0e8b4b3865`) lines 249-249 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:249]
+  - Signature: `"wiki_page": "code/files/crates/gcode/src/models.rs.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:249]
+- `explanations` (property) component `explanations [property]` (`255c9187-8ec4-5cbb-85f3-a602187455f1`) lines 252-258 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:252-258]
+  - Signature: `"explanations": [`
+  - Purpose: Indexed property `explanations` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:252-258]
+- `rank` (property) component `rank [property]` (`5508bb46-cd33-53e2-94d6-c73b0687a5e0`) lines 254-254 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:254]
+  - Signature: `"rank": 5,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:254]
+- `score` (property) component `score [property]` (`8ffb53ed-6cb2-56b7-992d-0932e7e6ddd0`) lines 255-255 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:255]
+  - Signature: `"score": 0.015384615384615385,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:255]
+- `source` (property) component `source [property]` (`9bde8af1-06db-534e-8da3-3ec92ca67b0b`) lines 256-256 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:256]
+  - Signature: `"source": "bm25"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:256]
+- `fusion_key` (property) component `fusion_key [property]` (`a332b9e0-57ca-5749-8d55-7295d2bdf8f3`) lines 259-259 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:259]
+  - Signature: `"fusion_key": "project:3bf57fe7-2a0c-4074-8912-a83d9cd4df01:code/_architecture.md",`
+  - Purpose: Indexed property `fusion_key` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:259]
+- `result_type` (property) component `result_type [property]` (`870bc9b6-7a6e-519b-999e-e0c985a65579`) lines 260-260 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:260]
+  - Signature: `"result_type": "wiki",`
+  - Purpose: Indexed property `result_type` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:260]
+- `score` (property) component `score [property]` (`d865b55f-ea7a-5d79-a5b8-0d80f9364dbc`) lines 261-261 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:261]
+  - Signature: `"score": 0.015384615384615385,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:261]
+- `snippet` (property) component `snippet [property]` (`b449bde7-3fb1-5c0d-801f-cdb45d49805b`) lines 262-262 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:262]
+  - Signature: `"snippet": "de|crates/gcode]] - crates/gcode provides Gobby’s fast code index CLI and library surface: it discovers projects, indexes code and content, exposes search/graph/vector/codewiki com",`
+  - Purpose: Indexed property `snippet` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:262]
+- `source_path` (property) component `source_path [property]` (`4dd6f28b-b985-539f-a5c5-bda3756acc04`) lines 263-263 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:263]
+  - Signature: `"source_path": "code/_architecture.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:263]
+- `sources` (property) component `sources [property]` (`f90bab02-9c11-563f-a3c9-bbf510e7a156`) lines 264-266 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:264-266]
+  - Signature: `"sources": [`
+  - Purpose: Indexed property `sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:264-266]
+- `title` (property) component `title [property]` (`3d6942d6-c3fd-5b4f-b4fb-37e872dd7efc`) lines 267-267 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:267]
+  - Signature: `"title": "Architecture Overview",`
+  - Purpose: Indexed property `title` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:267]
+- `wiki_page` (property) component `wiki_page [property]` (`cf903a91-96e4-5264-bce7-0318bfa8b5aa`) lines 268-268 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:268]
+  - Signature: `"wiki_page": "code/_architecture.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:268]
+- `explanations` (property) component `explanations [property]` (`3c24972c-9c3d-5ffd-b201-1badead769c5`) lines 271-277 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:271-277]
+  - Signature: `"explanations": [`
+  - Purpose: Indexed property `explanations` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:271-277]
+- `rank` (property) component `rank [property]` (`5c088a8f-8bd6-56ca-8a20-f88015386bed`) lines 273-273 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:273]
+  - Signature: `"rank": 5,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:273]
+- `score` (property) component `score [property]` (`6be231d9-b368-525e-b56c-a124b59dfdbe`) lines 274-274 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:274]
+  - Signature: `"score": 0.015384615384615385,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:274]
+- `source` (property) component `source [property]` (`aaa1aa4d-971e-5cff-a40b-48925b69e472`) lines 275-275 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:275]
+  - Signature: `"source": "semantic"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:275]
+- `fusion_key` (property) component `fusion_key [property]` (`6ef308a2-a74e-549e-a3ee-0f4bccdeb78a`) lines 278-278 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:278]
+  - Signature: `"fusion_key": "project:3bf57fe7-2a0c-4074-8912-a83d9cd4df01:code/files/crates/gwiki/src/sources/render.rs.md",`
+  - Purpose: Indexed property `fusion_key` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:278]
+- `result_type` (property) component `result_type [property]` (`24f09d10-56a4-5324-9182-a45ac2ab5902`) lines 279-279 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:279]
+  - Signature: `"result_type": "code",`
+  - Purpose: Indexed property `result_type` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:279]
+- `score` (property) component `score [property]` (`88071a95-2931-5297-94ac-377c6b01b76c`) lines 280-280 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:280]
+  - Signature: `"score": 0.015384615384615385,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:280]
+- `snippet` (property) component `snippet [property]` (`272a92a1-ca9f-5dd7-9a62-8886f74f3ce1`) lines 281-281 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:281]
+  - Signature: `"snippet": "## Purpose",`
+  - Purpose: Indexed property `snippet` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:281]
+- `source_path` (property) component `source_path [property]` (`6edde548-8d4c-5c6a-94dc-a0948dee6668`) lines 282-282 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:282]
+  - Signature: `"source_path": "code/files/crates/gwiki/src/sources/render.rs.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:282]
+- `sources` (property) component `sources [property]` (`6cd5e766-a49f-50c5-8181-fa239875b80f`) lines 283-285 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:283-285]
+  - Signature: `"sources": [`
+  - Purpose: Indexed property `sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:283-285]
+- `title` (property) component `title [property]` (`a0d13e78-4a9b-57ec-9744-2138aee7f15d`) lines 286-286 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:286]
+  - Signature: `"title": "crates/gwiki/src/sources/render.rs",`
+  - Purpose: Indexed property `title` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:286]
+- `wiki_page` (property) component `wiki_page [property]` (`4907d2df-1660-54fc-a9fa-e4bb596b2bf3`) lines 287-287 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:287]
+  - Signature: `"wiki_page": "code/files/crates/gwiki/src/sources/render.rs.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:287]
+- `prompt_token_budget` (property) component `prompt_token_budget [property]` (`fa748351-3e90-5ea8-9780-0edd81ced29b`) lines 290-290 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:290]
+  - Signature: `"prompt_token_budget": 12000,`
+  - Purpose: Indexed property `prompt_token_budget` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:290]
+- `prompt_tokens_estimated` (property) component `prompt_tokens_estimated [property]` (`9bd68690-fe96-58e2-ae7b-30d2db7e0b91`) lines 291-291 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:291]
+  - Signature: `"prompt_tokens_estimated": 4789,`
+  - Purpose: Indexed property `prompt_tokens_estimated` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:291]
+- `query` (property) component `query [property]` (`4fe3f10c-fa7f-567a-a05a-2512040b4fb0`) lines 292-292 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:292]
+  - Signature: `"query": "How are codewiki symbol IDs kept in parity with the Python daemon make_id?",`
+  - Purpose: Indexed property `query` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:292]
+- `scope` (property) component `scope [property]` (`15a2dc41-7aca-5e31-af3d-d3bac82c57ce`) lines 293-296 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:293-296]
+  - Signature: `"scope": {`
+  - Purpose: Indexed property `scope` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:293-296]
+- `id` (property) component `id [property]` (`9e85566d-7631-56ad-96b2-7dfa7c231fe3`) lines 294-294 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:294]
+  - Signature: `"id": "3bf57fe7-2a0c-4074-8912-a83d9cd4df01",`
+  - Purpose: Indexed property `id` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:294]
+- `kind` (property) component `kind [property]` (`4a88161f-1783-5ef9-ac2a-58db7c53e76e`) lines 295-295 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:295]
+  - Signature: `"kind": "project"`
+  - Purpose: Indexed property `kind` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:295]
+- `sources` (property) component `sources [property]` (`3e13a49f-d4a8-53f5-927c-fa968ece6ab1`) lines 297-310 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:297-310]
+  - Signature: `"sources": [`
+  - Purpose: Indexed property `sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:297-310]
+- `status` (property) component `status [property]` (`5a6a703f-2ed9-517e-b59f-4859562c3e5d`) lines 311-311 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:311]
+  - Signature: `"status": "answered",`
+  - Purpose: Indexed property `status` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:311]
+- `synthesis` (property) component `synthesis [property]` (`f487c203-55a3-54aa-8e6c-97980e1a91ff`) lines 312-322 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:312-322]
+  - Signature: `"synthesis": {`
+  - Purpose: Indexed property `synthesis` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:312-322]
+- `answer` (property) component `answer [property]` (`44fa9c86-1bb7-5c7c-86b8-35dea198e5e6`) lines 313-313 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:313]
+  - Signature: `"answer": "The provided evidence is insufficient to explain the parity mechanism. It shows that Codewiki records stable component IDs and generated wiki-parity artifacts, but it does not include the P...`
+  - Purpose: Indexed property `answer` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:313]
+- `citation_check` (property) component `citation_check [property]` (`9e67647f-310b-57db-8887-2f30dcf1e8a7`) lines 314-320 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:314-320]
+  - Signature: `"citation_check": {`
+  - Purpose: Indexed property `citation_check` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:314-320]
+- `checked_claims` (property) component `checked_claims [property]` (`fb0c5b41-1e8f-56bd-af5d-764a06b6ea1e`) lines 315-315 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:315]
+  - Signature: `"checked_claims": 4,`
+  - Purpose: Indexed property `checked_claims` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:315]
+- `status` (property) component `status [property]` (`ac0af016-4ae0-51b4-b96a-c6786227916e`) lines 316-316 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:316]
+  - Signature: `"status": "unsupported_claims",`
+  - Purpose: Indexed property `status` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:316]
+- `unsupported_claims` (property) component `unsupported_claims [property]` (`4d86b707-cfec-5f6a-950b-304a0510b228`) lines 317-319 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:317-319]
+  - Signature: `"unsupported_claims": [`
+  - Purpose: Indexed property `unsupported_claims` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:317-319]
+- `model` (property) component `model [property]` (`d0408135-4b60-5067-861b-123e2aedab75`) lines 321-321 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:321]
+  - Signature: `"model": "gpt-5.4-mini"`
+  - Purpose: Indexed property `model` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:321]
+- `truncated` (property) component `truncated [property]` (`17f595f0-096b-5d33-a316-927bd86d81e8`) lines 323-323 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:323]
+  - Signature: `"truncated": false,`
+  - Purpose: Indexed property `truncated` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:323]
+- `truncated_components` (property) component `truncated_components [property]` (`7e74b0ae-9e30-5a2d-aecc-c27d0bc7a5f5`) lines 324-324 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:324]
+  - Signature: `"truncated_components": [],`
+  - Purpose: Indexed property `truncated_components` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:324]
+- `warnings` (property) component `warnings [property]` (`50a9b0bf-a601-5761-830c-57e77499d89e`) lines 325-327 [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:325-327]
+  - Signature: `"warnings": [`
+  - Purpose: Indexed property `warnings` in `docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json:325-327]
+

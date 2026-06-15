@@ -22,7 +22,7 @@ Module: [[code/modules/crates/gwiki/src/compile|crates/gwiki/src/compile]]
 
 ## Purpose
 
-This file turns a `CompileBundle` into a Markdown handoff page and writes it safely into the vault. `render_bundle` assembles the document structure, `render_list_section` formats repeated bullet-list sections with a fallback when empty, and `write_target_page` creates the target file only after validating the destination stays inside the vault root and the file does not already exist. The path helpers enforce safe relative targeting: `ensure_compile_target_parent_inside_vault` checks the parent directory or nearest existing canonical ancestor, `normalize_target_page` rejects absolute or traversal-based paths and joins valid ones to the vault root, `slugify` wraps the shared slugification helper with fixed options, and `unix_timestamp_ms` provides a timestamp utility for compile output or filenames.
+Renders a `CompileBundle` into a markdown compile page and writes it safely into the vault. `render_bundle` assembles the page from the topic, outline, accepted sources and chunks, citations, conflicting claims, and missing evidence, while `render_list_section` standardizes repeated list-style sections. The file-writing path is guarded by `write_target_page`, `ensure_compile_target_parent_inside_vault`, and `normalize_target_page`, which create parent directories only inside the vault root and reject invalid target paths; `slugify` and `unix_timestamp_ms` provide supporting utilities for topic slugs and timestamps.
 [crates/gwiki/src/compile/render.rs:11-47]
 [crates/gwiki/src/compile/render.rs:49-63]
 [crates/gwiki/src/compile/render.rs:65-105]

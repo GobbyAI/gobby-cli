@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcode/src/graph|crates/gcode/src/graph]]
 
 ## Purpose
 
-This is a Rust module file that serves as the public interface for the graph subpackage. It re-exports three submodules: code_graph, report, and typed_query, organizing graph-related functionality for the gcode crate. [crates/gcode/src/graph/mod.rs:1-4]
+Module declaration file for the `graph` crate area, exposing the `code_graph`, `report`, and `typed_query` submodules so the graph-related functionality is organized and available to the rest of the crate. [crates/gcode/src/graph/mod.rs:1-4]
 
 ## API Symbols
 

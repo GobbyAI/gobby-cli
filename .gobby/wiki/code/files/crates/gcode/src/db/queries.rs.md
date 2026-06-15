@@ -36,7 +36,7 @@ Module: [[code/modules/crates/gcode/src/db|crates/gcode/src/db]]
 
 ## Purpose
 
-This file provides a database query layer for a code indexing system. It exports GraphFileFacts, a struct that aggregates imports, symbol definitions, and function calls for a source file. The read_graph_file_facts function composes three data retrieval queries—read_imports_for_file, read_symbols_for_file, and read_calls_for_file—to populate this struct from the database. Project-level utilities include list_indexed_file_paths, indexed_project_exists, and reset_graph_sync_for_project, while file-level operations manage synchronization state through mark_graph_sync_attempted, mark_graph_synced, mark_vectors_synced, and related status checkers. Helper functions support type conversions via call_target_kind_from_str and provide SQL generation through symbol_select_columns with injection-safe alias validation via safe_symbol_select_alias. Unit tests verify the SQL generation and reject unsafe aliases.
+This file defines the database query helpers for the code graph/indexing layer. It provides read-side functions to list indexed files, check project/file existence, and assemble a `GraphFileFacts` record by pulling imports, symbols, and calls for a file, plus write-side helpers that update graph/vector sync flags and reset them at project scope. It also includes small SQL-safety and conversion helpers for building symbol queries and parsing call target kinds, with tests covering alias handling and injection resistance.
 [crates/gcode/src/db/queries.rs:8-13]
 [crates/gcode/src/db/queries.rs:15-26]
 [crates/gcode/src/db/queries.rs:28-38]

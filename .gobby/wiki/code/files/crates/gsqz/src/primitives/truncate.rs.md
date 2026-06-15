@@ -28,7 +28,7 @@ Module: [[code/modules/crates/gsqz/src/primitives|crates/gsqz/src/primitives]]
 
 ## Purpose
 
-This file provides line-truncation utilities for `Vec<String>` output. `truncate` keeps a configurable head and tail, inserts an omission marker when content is shortened, and can switch to regex-based section truncation when `per_file_lines` and `file_marker` are set. `truncate_per_section` groups lines by section markers, truncates oversized sections independently, and preserves smaller sections unchanged; the test module exercises empty, boundary, head/tail-only, and per-section cases, plus invalid-regex fallback.
+Provides truncation helpers for line-based text. `truncate` keeps the first `head` and last `tail` lines and inserts an omission marker when the input is longer than the requested boundary, or delegates to `truncate_per_section` when section-based truncation is enabled via `per_file_lines` and a non-empty `file_marker`. `truncate_per_section` uses a regex marker to split the input into sections, preserves small sections unchanged, and shortens oversized sections by keeping the top and bottom halves around a section omission message. The tests cover short, empty, exact-boundary, head-only, tail-only, long-input, and per-section cases, including invalid regex handling and preservation of section content.
 [crates/gsqz/src/primitives/truncate.rs:5-27]
 [crates/gsqz/src/primitives/truncate.rs:29-67]
 [crates/gsqz/src/primitives/truncate.rs:74-78]

@@ -21,7 +21,7 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Purpose
 
-Orchestrates the `codewiki` command: it validates the requested edge limit, opens the readonly database, filters visible files by scope and documentation settings, loads matching symbols and leading content chunks, fetches graph edges, and then packages everything into `CodewikiInput` for the text generator and output sink. The helper functions support that pipeline by enforcing the edge-limit bounds, identifying document files, deciding whether a file should be included, reporting symbol-load progress, and collecting each file’s first content chunk into a path-keyed map.
+Orchestrates the `codewiki` command: it validates the edge limit, opens the readonly database, filters visible files by document support and user scope, loads symbols and leading content chunks, fetches graph edges, then bundles everything into a `CodewikiInput` and configures the text generator and output destination for document generation. The helpers split that flow into small steps: `validate_edge_limit` enforces bounds, `documents_file` and `should_document_file` decide which files to include, `load_symbols_for_codewiki` wraps symbol collection with progress reporting, and `load_leading_chunks` gathers the first content chunk per file for inclusion in the generated wiki.
 [crates/gcode/src/commands/codewiki/run.rs:22-186]
 [crates/gcode/src/commands/codewiki/run.rs:188-193]
 [crates/gcode/src/commands/codewiki/run.rs:198-200]

@@ -4,7 +4,7 @@ type: code_module
 provenance:
 - file: crates/gcode/contract/gcode.contract.json
   ranges:
-  - 2-855
+  - 2-928
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -16,15 +16,15 @@ Parent: [[code/modules/crates/gcode|crates/gcode]]
 
 ## Overview
 
-The contract module is the single JSON specification for the gcode CLI, identifying the tool as “gcode,” versioning the contract, and summarizing it as a fast code index CLI for Gobby. It defines shared invocation behavior through global flags such as project selection, output format, quiet/verbose modes, and freshness control, then separately describes project scoping: callers may pass --project, otherwise the project is detected from the current working directory, with project_id and project_root used as identity keys. [crates/gcode/contract/gcode.contract.json:2] [crates/gcode/contract/gcode.contract.json:3] [crates/gcode/contract/gcode.contract.json:4] [crates/gcode/contract/gcode.contract.json:5-49]
+The `crates/gcode/contract` module is the declarative interface contract for the `gcode` CLI, identifying the tool as `gcode`, versioning the contract, and summarizing it as a “Fast code index CLI for Gobby” [crates/gcode/contract/gcode.contract.json:2] [crates/gcode/contract/gcode.contract.json:3] [crates/gcode/contract/gcode.contract.json:4]. It centralizes shared invocation behavior through global flags such as `--project`, `--format`, `--quiet`, `--verbose`, and `--no-freshness`, including value requirements, accepted values, and repeatability metadata [crates/gcode/contract/gcode.contract.json:5-49].
 
-Its key flow is contract-driven command discovery. The commands array records each subcommand’s name, summary, whether the daemon consumes it, accepted positionals and flags, and the JSON keys it can emit. The contract command is itself daemon-consumed and emits the full schema surface, including tool metadata, global flags, scope, command definitions, and error codes, making this file both the CLI’s declared interface and the machine-readable source for daemon integration. 
+The contract also defines how commands resolve project scope: callers may pass `--project ROOT`, otherwise the tool detects the project from the current working directory, with `project_id` and `project_root` acting as identity keys . Command entries then describe the CLI surface consumed by both humans and daemon integrations, including command names, summaries, positionals, flags, daemon consumption status, and JSON output keys; for example, `contract` emits the contract itself and exposes output keys for the top-level schema fields .
 
-There are no child modules; collaboration is internal to the JSON structure. The top-level metadata establishes the CLI identity, global_flags provide common option definitions, scope describes how invocations bind to a project, commands enumerate callable behaviors such as contract and index, and error_codes completes the shared failure vocabulary for consumers. [crates/gcode/contract/gcode.contract.json:2] [crates/gcode/contract/gcode.contract.json:5-49]
+Because this module has no child modules, collaboration is contained within the single JSON file: top-level metadata establishes the CLI identity, shared flags and scope rules provide consistent invocation semantics, and command definitions enumerate the supported operational flows. The surrounding contract structure also includes error code definitions for expected failure modes, making the file the shared schema boundary for clients that need to discover, validate, or automate `gcode` behavior [crates/gcode/contract/gcode.contract.json:7].
 
 ## Files
 
-- [[code/files/crates/gcode/contract/gcode.contract.json|crates/gcode/contract/gcode.contract.json]] - This file defines the JSON contract for the `gcode` CLI, including its contract version, top-level summary, global flags, project scoping rules, command definitions, and error codes. The `global_flags` and `scope` sections establish shared invocation options and how a project is identified, while each entry under `commands` describes a CLI subcommand with its summary, whether the daemon consumes it, its positional arguments and flags, and the JSON keys it can emit.
+- [[code/files/crates/gcode/contract/gcode.contract.json|crates/gcode/contract/gcode.contract.json]] - Defines the JSON contract for the `gcode` CLI, including the contract version, top-level summary, shared global flags, and scope resolution rules for locating a project by `--project` or the current working directory. It then enumerates the CLI commands and their per-command metadata, with each command specifying its summary, whether it is daemon-consumed, accepted flags and positionals, and any JSON output keys, while `error_codes` captures the contract’s failure modes.
 [crates/gcode/contract/gcode.contract.json:2]
 [crates/gcode/contract/gcode.contract.json:3]
 [crates/gcode/contract/gcode.contract.json:4]
@@ -495,5 +495,41 @@ There are no child modules; collaboration is internal to the JSON structure. The
 - `1c9477ce-c974-5a90-861b-9a76e723acc6`
 - `b8c344f0-d930-57b8-ab09-1452013e0567`
 - `a9b71d73-f574-5957-9d43-4c0450e9e2b8`
-- `7e946b04-e543-55d2-81d3-2c5a361d2caf`
+- `4cef0fc5-43a1-5526-bd20-4f7e833c1ec9`
+- `0f24d654-c755-5eb1-ae43-2c089198ba63`
+- `ae913817-64bd-500d-b2c9-5d222d9364ee`
+- `59754f54-f3b7-582e-979a-8d23619a31a3`
+- `2a799de1-a07a-533f-b026-39a6b7a1134f`
+- `acfc712c-1a65-58a7-b2ed-cbec8d1c1408`
+- `4702909f-ac74-59aa-949e-f3fbccc7c564`
+- `b7ef6100-29e1-5923-9fc0-aa8754ec5278`
+- `cca3f216-4433-5130-838e-e4100baac8c2`
+- `5f1031bc-bff8-5118-8510-db557fc6924e`
+- `fb470573-f17c-5675-8ed2-0d381c32ecca`
+- `978b9313-7651-5014-9311-903a2fab15d7`
+- `cb5a75ef-6e24-508a-9120-b2e758ee6b05`
+- `536b1e0f-7376-5b84-9dfc-1e427b89979f`
+- `631255a4-605d-5285-87c9-93f9e6a4a90b`
+- `c9eeb25b-1026-5e4c-be13-741df588fd65`
+- `fb0a17cd-101f-5e12-9001-d45115752cfe`
+- `3f0dee93-76ae-5841-82d2-90a2b620064e`
+- `d21428ab-d55a-5b22-a455-cf8af31d91ad`
+- `b8c59762-51a8-5949-9ec9-051b8f4b4b00`
+- `9669e24f-b1d7-5912-9a62-a1d3e923fe75`
+- `132e03a5-c8f0-55b5-9ceb-7abaf96f6426`
+- `222d8654-e2f1-5dd2-9881-a5f7600579cd`
+- `af9fb529-0db3-5370-ade9-fbe78f200c17`
+- `458080de-5212-52af-93fc-9f18504c77ea`
+- `b7182175-dd45-531d-a5dd-23337a2da8b6`
+- `1380d949-5ca2-58c3-958c-65f081be2663`
+- `24fa125e-b957-5130-9d65-687fc213c6d1`
+- `aa1d63ef-bf83-5bed-aca0-51901fa8ee4a`
+- `63e1e798-0ffb-519c-bb5e-2fbd16f7749c`
+- `77996292-3227-5057-8501-569cce3651c3`
+- `8782092b-f8e7-52a3-b75f-0afa1d3e673d`
+- `0004d24b-cc58-5e95-bb01-3180b50972e1`
+- `ee866710-95d1-506a-976c-a7b437329e19`
+- `605e6c2a-5136-5e61-9015-f6cb4306756d`
+- `baa4dccb-8c4d-59a0-b897-d2abf50b94ec`
+- `eb387dea-ded9-56d8-a88b-8c3c0756d729`
 

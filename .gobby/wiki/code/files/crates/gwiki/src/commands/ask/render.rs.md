@@ -18,9 +18,7 @@ Module: [[code/modules/crates/gwiki/src/commands/ask|crates/gwiki/src/commands/a
 
 ## Purpose
 
-This file turns an `AskOutput` into a command result for the `ask` command. `render` clones the scope, builds the human-readable text with `render_text`, serializes the full output to JSON for the structured payload, and wraps both in a scoped `CommandOutcome`.
-
-`render_text` is the formatter: it emits either a synthesized answer with an `[unverified]` notice when citation checking reports unsupported claims, or a wiki-hit report when no synthesis is present. In the wiki-hit path it includes degraded-source warnings, handles empty results, lists matching pages, and appends any code citations with file, line, and symbol details.
+This file turns an `AskOutput` into a scoped `CommandOutcome` for the `ask` command. `render` clones the scope, builds the user-facing text with `render_text`, serializes the full output to JSON for the payload, and maps serialization failures to `WikiError::Json`; `render_text` formats either a synthesized answer with an `[unverified]` warning when citation support is insufficient, or a wiki-hit report that includes degraded sources, empty-result handling, and code citations.
 [crates/gwiki/src/commands/ask/render.rs:6-16]
 [crates/gwiki/src/commands/ask/render.rs:18-68]
 [crates/gwiki/src/commands/ask/render.rs:79-114]
@@ -35,5 +33,5 @@ This file turns an `AskOutput` into a command result for the `ask` command. `ren
   - Purpose: 'render_text' formats an 'AskOutput' into a plain-text report for a given query and scope, emitting either a synthesized answer with an optional unverified-claims notice when synthesis exists, or a wiki-hit listing with degraded-source, empty-result, and code-citation sections otherwise. [crates/gwiki/src/commands/ask/render.rs:18-68]
 - `unverified_synthesis_is_flagged_in_text_render` (function) component `unverified_synthesis_is_flagged_in_text_render [function]` (`3757f62e-aee8-5fc0-8be3-59c018a9fd64`) lines 79-114 [crates/gwiki/src/commands/ask/render.rs:79-114]
   - Signature: `fn unverified_synthesis_is_flagged_in_text_render() {`
-  - Purpose: Indexed function `unverified_synthesis_is_flagged_in_text_render` in `crates/gwiki/src/commands/ask/render.rs`. [crates/gwiki/src/commands/ask/render.rs:79-114]
+  - Purpose: Verifies that 'render_text' emits an '[unverified]' warning when synthesis contains an unsupported claim and omits that marker when the synthesis is citation-grounded. [crates/gwiki/src/commands/ask/render.rs:79-114]
 

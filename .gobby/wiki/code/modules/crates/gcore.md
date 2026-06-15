@@ -6,53 +6,6 @@ provenance:
   ranges:
   - 5-117
   - 119-128
-- file: crates/gcore/src/ai/daemon.rs
-  ranges:
-  - 19-24
-  - 27-31
-  - 34-41
-  - 44-96
-  - 98-136
-  - 138-144
-  - 149-187
-  - 189-223
-  - 225-233
-  - 235-237
-  - 239-245
-  - 247-263
-  - 265-267
-  - 269-271
-  - 273-293
-  - 295-304
-  - 306-331
-  - 333-350
-  - 352-356
-  - 358-360
-  - 362-364
-  - 366-402
-  - 404-423
-  - 437-488
-  - 491-510
-  - 513-530
-  - 533-555
-  - 558-579
-  - 582-605
-  - 608-638
-  - 641-656
-  - 659-694
-  - 697-750
-  - 753-770
-  - 772-781
-  - 783-786
-  - 788-795
-  - 797-799
-  - 801-803
-  - 805-814
-  - 816-833
-  - 835-848
-  - 850-856
-  - 858-881
-  - 883-902
 - file: crates/gcore/src/ai/mod.rs
   ranges:
   - 31-35
@@ -294,56 +247,22 @@ provenance:
   - 487-491
 - file: crates/gcore/src/config/tests.rs
   ranges:
-  - 9-11
-  - 18-32
-  - 34-47
-  - 49-57
-  - 61-63
-  - 65-98
-  - 100-104
-  - 107-110
-  - 112-132
-  - 134-146
-  - 149-152
-  - 154-167
-  - 169-180
-  - 183-186
-  - 188-198
-  - 200-210
-  - 213-233
-  - 236-257
-  - 260-284
-  - 288-307
-  - 310-323
-  - 326-342
-  - 345-354
-  - 357-392
-  - 395-458
-  - 462-480
-  - 484-505
-  - 508-546
-  - 549-588
-  - 591-610
-  - 613-659
-  - 662-688
-  - 691-737
-  - 740-747
-  - 750-763
-  - 766-779
-  - 783-799
-  - 802-813
-  - 817-834
-  - 837-850
-  - 853-862
-  - 865-872
-  - 875-888
-  - 891-905
-  - 907-913
-  - 915-919
-  - 921-953
-  - 955-969
-  - 971-984
-  - 986-991
+  - 5-7
+  - 14-28
+  - 30-43
+  - 45-53
+  - 57-59
+  - 61-94
+  - 96-100
+  - 103-106
+  - 108-128
+  - 130-142
+  - 145-148
+  - 150-163
+  - 165-176
+  - 179-182
+  - 184-194
+  - 196-206
 - file: crates/gcore/src/config/types.rs
   ranges:
   - 5-9
@@ -442,26 +361,68 @@ provenance:
   - 477-481
 - file: crates/gcore/src/graph_analytics.rs
   ranges:
-  - 7-11
-  - 14-18
-  - 21-24
-  - 27-31
-  - 34-38
-  - 41-44
-  - 47-51
-  - 54-58
-  - 61-68
-  - 70-87
-  - 90-94
-  - 97-103
-  - 105-374
-  - 376-382
-  - 384-390
-  - 392-473
-  - 475-480
-  - 482-484
-  - 490-518
-  - 521-582
+  - 9-13
+  - 21-26
+  - 29-32
+  - 35-39
+  - 42-46
+  - 49-52
+  - 55-59
+  - 62-66
+  - 69-76
+  - 78-95
+  - 105-116
+  - 119-124
+  - 127-133
+  - 135-421
+  - 423-429
+  - 431-437
+  - 439-520
+  - 522-527
+  - 529-531
+  - 537-566
+  - 569-630
+  - 633-659
+  - 662-670
+  - 673-690
+- file: crates/gcore/src/graph_analytics/leiden.rs
+  ranges:
+  - 32-40
+  - 42-73
+  - 76-79
+  - 81-88
+  - 94-184
+  - 195-277
+  - 282-336
+  - 339-359
+  - 366-407
+  - 410-425
+  - 433-440
+  - 443-477
+  - 479-482
+  - 484-486
+  - 488-494
+  - 496-504
+  - 511-531
+  - 536-570
+  - 577-595
+  - 598-610
+  - 613-628
+  - 631-634
+  - 637-639
+  - 642-644
+  - 647-654
+  - 657-666
+  - 669-676
+  - 679-687
+  - 690-704
+  - 707-726
+  - 729-737
+  - 740-752
+  - 755-764
+  - 767-784
+  - 787-806
+  - 809-845
 - file: crates/gcore/src/indexing.rs
   ranges:
   - 17-26
@@ -763,7 +724,7 @@ provenance:
   - 190-245
   - 248-274
   - 277-315
-provenance_truncated: 10
+provenance_truncated: 17
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -775,42 +736,53 @@ Parent: [[code/modules/crates|crates]]
 
 ## Overview
 
-crates/gcore is the shared Rust foundation for Gobby tools, but the top-level module has no direct files of its own. Its implementation is split between assets and source modules: assets package the Docker Compose service stack installed by `gobby install`, while `src` exposes bootstrap, daemon URL discovery, project lookup, layered configuration, CLI contracts, setup/provisioning abstractions, degradation vocabulary, and feature-gated storage/indexing integrations [crates/gcore/src/lib.rs:27-34].
+crates/gcore is the shared core layer for Gobby’s Rust ecosystem. It has no direct files at the module root, but its src child module exposes bootstrap, daemon URL, project, configuration, AI context/types, setup, degradation, and optional datastore/search/indexing integrations, with heavier backends feature-gated so lighter consumers can depend on the same primitives without pulling in every service integration (crates/gcore/src/lib.rs:27-34).
 
-The main runtime flow starts from common state discovery: `gobby_home` resolves `GOBBY_HOME` or falls back to `~/.gobby`, then bootstrap reads `bootstrap.yaml` there and defaults to `127.0.0.1:60887` if the file is missing or invalid [crates/gcore/src/lib.rs:27-34] [crates/gcore/src/bootstrap.rs:33-36] [crates/gcore/src/bootstrap.rs:38-45]. Daemon URL resolution layers environment overrides above that bootstrap endpoint, trims/normalizes URL inputs, and maps wildcard bind hosts back to loopback so clients get a dialable local URL [crates/gcore/src/daemon_url.rs:28-34] [crates/gcore/src/daemon_url.rs:47-59].
+Its key flows center on stable, transport-neutral contracts. AI context resolution remains config-only while probe-backed routing is left to transport code, AI result and error types normalize transcription, vision, text generation, token usage, and parse failures across transports, and CLI/codewiki contracts provide stable serialized schemas for tools and generated pages (crates/gcore/src/ai_types.rs:9-13) (crates/gcore/src/ai_types.rs:17-26) (crates/gcore/src/ai_types.rs:38-44) (crates/gcore/src/cli_contract.rs:4-12) (crates/gcore/src/codewiki_contract.rs:64-86).
 
-The assets child module complements those library contracts by providing the managed local dependencies used by storage, search, and indexing integrations. Its Compose manifest defines profile-driven services for FalkorDB, Qdrant, and Postgres, with FalkorDB offering Redis-compatible persistent graph storage plus password and port configuration, and Qdrant offering local vector search over HTTP/gRPC with persistent storage and health checks [crates/gcore/assets/docker-compose.services.yml:5-28] [crates/gcore/assets/docker-compose.services.yml:30-51]. Together, the source crate resolves configuration and capability routing while the assets module supplies the concrete local services those higher-level flows can provision and validate.
+The assets child module complements those Rust primitives by packaging the local service stack needed at runtime. Its Docker Compose assets define FalkorDB, Qdrant, and a custom Postgres image, with profile gating that lets services start individually or through a shared all profile, while FalkorDB and Qdrant use upstream images with configurable ports, persisted volumes, healthchecks, restart policy, and environment-driven defaults (crates/gcore/assets/docker-compose.services.yml:5-117) (crates/gcore/assets/docker-compose.services.yml:6-28). Together, src defines the contracts and runtime boundaries, while assets supplies the concrete local dependencies those contracts can provision and target.
+[crates/gcore/src/ai/daemon/transport.rs:8-12]
+[crates/gcore/src/ai/daemon/types.rs:4-9]
+[crates/gcore/src/cli_contract.rs:4-12]
+[crates/gcore/src/codewiki_contract.rs:64-86]
+[crates/gcore/src/config/types.rs:5-9]
 
 ## Call Diagram
 
 ```mermaid
 sequenceDiagram
     participant m_00cbc729_855d_5862_882b_0eb46c04e2fb as normalize_sslmode_pair &#91;function&#93;
+    participant m_00fcb270_174d_5305_b915_713696c44cd6 as LayeredTestSource.resolve_value &#91;method&#93;
     participant m_03177fc3_a65a_553d_89df_cae5f70ccc6f as probe_daemon_capability_with &#91;function&#93;
     participant m_04f6fb3c_7427_5b7f_a517_ae402df5d8ba as resolve_hub_database_urls &#91;function&#93;
     participant m_05fbd161_d826_560f_aa35_03f822224722 as sslmode_value &#91;function&#93;
-    participant m_09f6bb39_7d40_5fc9_b75c_86642c544ea9 as explicit_provider_model_suppresses_profile_override &#91;function&#93;
     participant m_0e53fcb4_e8a7_591d_b886_954df10640cd as TcpDockerHealthChecker.wait_postgres &#91;method&#93;
+    participant m_0f89d0b7_8ab9_5d37_9ce1_1c26fdc370eb as test_context &#91;function&#93;
     participant m_0fa50ba7_0ca4_598a_966c_2b00eaee5f8a as ensure_hub &#91;function&#93;
     participant m_0fcc2a50_b69d_5539_a83c_b340710a09d2 as capability_status_route &#91;function&#93;
-    participant m_1046d96e_a58d_5957_928b_7fa50a164102 as parse_daemon_embeddings &#91;function&#93;
-    participant m_105fdbc7_4236_5718_a78a_9c5d67ff92d1 as empty_embedding_batch_parses_daemon_model_and_dim &#91;function&#93;
+    participant m_108599d3_d343_56f4_8e4e_43da727d4e7e as tls_connector_construction_verify_ca_keeps_peer_verification_without_hostname &#91;function&#93;
+    participant m_119bed32_45c6_5a8b_8310_640afcd38d33 as StandaloneConfig.get &#91;method&#93;
+    participant m_121a4f74_0310_5cc0_9249_4d77f94eca97 as endpoint_to_url &#91;function&#93;
+    participant m_122d1e68_9f53_55bf_bb58_95f7ae245556 as reachable_env_database_url_conflicts_with_recorded_hub &#91;function&#93;
+    participant m_1338db81_b929_5bef_b2af_e5882ca9b540 as divergent_hubs_surface_conflict &#91;function&#93;
+    participant m_13411b3b_9058_531e_ad27_b27d9e85e922 as text_request_body &#91;function&#93;
     participant m_1a20a85b_4eb8_5056_8b13_57f778074bd0 as ensure_hub_with_identity &#91;function&#93;
-    participant m_2c4f50e8_a084_5f3a_96da_34b5e3586b3c as spawn_server &#91;function&#93;
+    participant m_24d98d32_a558_5a78_958e_f80a981a7a0a as tls_connector &#91;function&#93;
+    participant m_26a0f0e6_7e8c_5b93_97e1_3a8787a6a30f as binding &#91;function&#93;
+    participant m_3a1d922a_7aa6_5d16_8fac_0dd37efa0d4f as write_services_stack &#91;function&#93;
+    participant m_43a2555f_0663_593c_a564_0a04e7a891c6 as insert_optional &#91;function&#93;
     participant m_46462147_3f5c_5912_99ef_8aaece7a0c4e as non_empty_trimmed &#91;function&#93;
     participant m_4b57ee25_c217_531b_912e_8d2fec0a4168 as unavailable &#91;function&#93;
-    participant m_4dd15874_95ea_5090_a1af_a5a7feee5644 as request_body_json &#91;function&#93;
-    participant m_51653529_1ebf_5764_8485_705de7077402 as test_context &#91;function&#93;
     participant m_60722538_2324_5c6e_ac3a_7e80a0c05e72 as normalize_sslmode_token &#91;function&#93;
-    participant m_639814da_47a4_528f_9763_5d60e7bbfae9 as write_daemon_files &#91;function&#93;
     participant m_ab081c43_b0e1_5f80_ae69_899d13885151 as wait_for_tcp &#91;function&#93;
     participant m_cc00b96c_d159_59ea_806d_dbe460fe29f5 as resolve_database_url_from_bootstrap_file &#91;function&#93;
-    participant m_d05d6301_bbec_50aa_94b7_4887e115e98d as parse_daemon_embedding &#91;function&#93;
     participant m_d406e49b_658d_58a4_a073_ac9929ff28e9 as resolve_database_url_from_gcore_config &#91;function&#93;
-    participant m_f475c60b_885a_5c8f_b098_6857aacba69b as temp_home &#91;function&#93;
+    participant m_e6102bbd_d2ea_59e7_8b82_2b6273b47e29 as dial_host &#91;function&#93;
+    participant m_e9056a8b_a2e7_5f31_9947_177252a6aa16 as tls_connector_builder &#91;function&#93;
+    participant m_ebe764cc_8b41_5a31_a4dc_62b4bfaf59ec as non_empty &#91;function&#93;
     participant m_f5b1ae31_d8ba_5980_98a9_a916753b17c8 as status_body_advertises &#91;function&#93;
-    participant m_fc924f08_7212_584c_994d_5ec9121f6793 as generate_via_daemon_with_max_tokens &#91;function&#93;
     m_00cbc729_855d_5862_882b_0eb46c04e2fb->>m_60722538_2324_5c6e_ac3a_7e80a0c05e72: calls
+    m_00fcb270_174d_5305_b915_713696c44cd6->>m_00fcb270_174d_5305_b915_713696c44cd6: calls
     m_03177fc3_a65a_553d_89df_cae5f70ccc6f->>m_0fcc2a50_b69d_5539_a83c_b340710a09d2: calls
     m_03177fc3_a65a_553d_89df_cae5f70ccc6f->>m_4b57ee25_c217_531b_912e_8d2fec0a4168: calls
     m_03177fc3_a65a_553d_89df_cae5f70ccc6f->>m_f5b1ae31_d8ba_5980_98a9_a916753b17c8: calls
@@ -818,30 +790,34 @@ sequenceDiagram
     m_04f6fb3c_7427_5b7f_a517_ae402df5d8ba->>m_cc00b96c_d159_59ea_806d_dbe460fe29f5: calls
     m_04f6fb3c_7427_5b7f_a517_ae402df5d8ba->>m_d406e49b_658d_58a4_a073_ac9929ff28e9: calls
     m_05fbd161_d826_560f_aa35_03f822224722->>m_60722538_2324_5c6e_ac3a_7e80a0c05e72: calls
-    m_09f6bb39_7d40_5fc9_b75c_86642c544ea9->>m_2c4f50e8_a084_5f3a_96da_34b5e3586b3c: calls
-    m_09f6bb39_7d40_5fc9_b75c_86642c544ea9->>m_4dd15874_95ea_5090_a1af_a5a7feee5644: calls
-    m_09f6bb39_7d40_5fc9_b75c_86642c544ea9->>m_51653529_1ebf_5764_8485_705de7077402: calls
-    m_09f6bb39_7d40_5fc9_b75c_86642c544ea9->>m_639814da_47a4_528f_9763_5d60e7bbfae9: calls
-    m_09f6bb39_7d40_5fc9_b75c_86642c544ea9->>m_f475c60b_885a_5c8f_b098_6857aacba69b: calls
-    m_09f6bb39_7d40_5fc9_b75c_86642c544ea9->>m_fc924f08_7212_584c_994d_5ec9121f6793: calls
     m_0e53fcb4_e8a7_591d_b886_954df10640cd->>m_ab081c43_b0e1_5f80_ae69_899d13885151: calls
+    m_0f89d0b7_8ab9_5d37_9ce1_1c26fdc370eb->>m_26a0f0e6_7e8c_5b93_97e1_3a8787a6a30f: calls
     m_0fa50ba7_0ca4_598a_966c_2b00eaee5f8a->>m_1a20a85b_4eb8_5056_8b13_57f778074bd0: calls
-    m_1046d96e_a58d_5957_928b_7fa50a164102->>m_d05d6301_bbec_50aa_94b7_4887e115e98d: calls
-    m_105fdbc7_4236_5718_a78a_9c5d67ff92d1->>m_2c4f50e8_a084_5f3a_96da_34b5e3586b3c: calls
-    m_105fdbc7_4236_5718_a78a_9c5d67ff92d1->>m_4dd15874_95ea_5090_a1af_a5a7feee5644: calls
-    m_105fdbc7_4236_5718_a78a_9c5d67ff92d1->>m_51653529_1ebf_5764_8485_705de7077402: calls
+    m_108599d3_d343_56f4_8e4e_43da727d4e7e->>m_24d98d32_a558_5a78_958e_f80a981a7a0a: calls
+    m_108599d3_d343_56f4_8e4e_43da727d4e7e->>m_e9056a8b_a2e7_5f31_9947_177252a6aa16: calls
+    m_119bed32_45c6_5a8b_8310_640afcd38d33->>m_119bed32_45c6_5a8b_8310_640afcd38d33: calls
+    m_121a4f74_0310_5cc0_9249_4d77f94eca97->>m_e6102bbd_d2ea_59e7_8b82_2b6273b47e29: calls
+    m_122d1e68_9f53_55bf_bb58_95f7ae245556->>m_3a1d922a_7aa6_5d16_8fac_0dd37efa0d4f: calls
+    m_1338db81_b929_5bef_b2af_e5882ca9b540->>m_3a1d922a_7aa6_5d16_8fac_0dd37efa0d4f: calls
+    m_13411b3b_9058_531e_ad27_b27d9e85e922->>m_43a2555f_0663_593c_a564_0a04e7a891c6: calls
+    m_13411b3b_9058_531e_ad27_b27d9e85e922->>m_ebe764cc_8b41_5a31_a4dc_62b4bfaf59ec: calls
 ```
 
 ## Child Modules
 
-- [[code/modules/crates/gcore/assets|crates/gcore/assets]] - The assets module packages the local service dependencies that Gobby installs and manages through Docker Compose. Its main manifest defines a profile-driven service bundle for FalkorDB, Qdrant, and Postgres, with comments indicating that it is “installed via: gobby install” and managed by daemon start/stop through Compose profiles . FalkorDB provides Redis-compatible storage with configurable data and browser ports, password injection through `REDIS_ARGS`, a persistent `/data` volume, and a Redis PING healthcheck [crates/gcore/assets/docker-compose.services.yml:5-28]. Qdrant provides vector search on HTTP and gRPC ports, uses local-only default auth assumptions, persists `/qdrant/storage`, and validates readiness through its `/healthz` endpoint [crates/gcore/assets/docker-compose.services.yml:30-51].
+- [[code/modules/crates/gcore/assets|crates/gcore/assets]] - The `crates/gcore/assets` module packages the local service assets Gobby needs to install and run its dependency stack. Its Docker Compose file defines services for FalkorDB, Qdrant, and a custom Postgres image, with profile gating so each dependency can be started individually or through the shared `all` profile (`crates/gcore/assets/docker-compose.services.yml:5-117`). FalkorDB and Qdrant use upstream images with configurable host ports, local persistence volumes, healthchecks, restart behavior, and environment-driven defaults (`crates/gcore/assets/docker-compose.services.yml:6-28`).
 
-The Postgres service is the most customized flow in the bundle: Compose builds it from the `postgres-pgsearch` asset context, passes `PG_SEARCH_VERSION` and `PG_SEARCH_SHA256` build arguments, tags the resulting image as `gobby-postgres-local:18-pgsearch`, and starts Postgres with `pg_search` and `pgaudit` preloaded [crates/gcore/assets/docker-compose.services.yml:53-75]. The child `postgres-pgsearch` module supplies the version manifest that pins the bundled pg_search release to `0.23.4`, records integrity hashes for verification, and ties the asset to PostgreSQL major version `18` [crates/gcore/assets/postgres-pgsearch/version.json:8].
+The main runtime flow is daemon-managed Docker Compose startup and shutdown: services expose local ports, mount named volumes for durable data, report readiness through healthchecks, and stay running with `unless-stopped` restart policy. FalkorDB wires Redis authentication through `REDIS_ARGS` and reuses the same password inside its healthcheck (`crates/gcore/assets/docker-compose.services.yml:11-16`), while Qdrant keeps local auth disabled and exposes HTTP and gRPC ports with a simple health probe (`crates/gcore/assets/docker-compose.services.yml:30-50`). Postgres is built from the bundled `postgres-pgsearch` context, taking `PG_SEARCH_VERSION` and `PG_SEARCH_SHA256` build args before running with `pg_search` and `pgaudit` preloaded (`crates/gcore/assets/docker-compose.services.yml:52-75`).
 
-Together, these files let higher-level install and daemon lifecycle code treat infrastructure as a reproducible local dependency set. The Compose file owns runtime wiring such as ports, environment, restart policy, profiles, healthchecks, and named persistence volumes, while the pg_search asset manifest owns the build-time database extension contract and checksum data needed to produce the customized Postgres image [crates/gcore/assets/docker-compose.services.yml:5-117] [crates/gcore/assets/postgres-pgsearch/version.json:8].
-- [[code/modules/crates/gcore/src|crates/gcore/src]] - gcore is the shared foundation crate for Gobby’s Rust tools: it centralizes bootstrap and daemon URL discovery, project lookup, layered configuration, CLI contracts, setup/provisioning abstractions, degradation vocabulary, and feature-gated storage/indexing integrations. Its root exposes these primitives while keeping heavier datastore and indexing integrations behind feature flags, with `gobby_home` providing the common state directory from `GOBBY_HOME` or `~/.gobby` [crates/gcore/src/lib.rs:27-34]. Bootstrap and URL resolution collaborate by reading `bootstrap.yaml` under that home directory, falling back to `127.0.0.1:60887` when missing or invalid, then composing a dialable URL whose environment overrides take precedence and whose wildcard hosts normalize to loopback [crates/gcore/src/bootstrap.rs:33-36] [crates/gcore/src/bootstrap.rs:38-45] [crates/gcore/src/daemon_url.rs:28-34] [crates/gcore/src/daemon_url.rs:47-59].
+The child `postgres-pgsearch` module supplies the identity metadata for that custom Postgres build rather than runtime orchestration. Its version manifest pins the packaged extension to `pg_search` `0.23.4`, records top-level and architecture-specific SHA-256 checksums, and targets Postgres major version `18` (`crates/gcore/assets/postgres-pgsearch/version.json:2-9`). Together, the compose asset and manifest keep local infrastructure reproducible: Compose describes how services run, while the Postgres asset manifest constrains the binary extension used by the custom image.
+[crates/gcore/assets/docker-compose.services.yml:5-117]
+[crates/gcore/assets/postgres-pgsearch/version.json:2]
+[crates/gcore/assets/docker-compose.services.yml:6-28]
+[crates/gcore/assets/docker-compose.services.yml:7]
+[crates/gcore/assets/docker-compose.services.yml:8-10]
+- [[code/modules/crates/gcore/src|crates/gcore/src]] - `crates/gcore/src` is the shared primitives layer for Gobby Rust crates: it exposes bootstrap, daemon URL, project, configuration, AI context/types, setup, degradation, and optional datastore/search/indexing integrations while keeping heavier backends feature-gated for lightweight consumers [crates/gcore/src/lib.rs:27-34]. Its core responsibility is to define transport-neutral contracts and boundaries: AI context resolution stays config-only and leaves probe-backed routing to transport code , AI result/error types normalize transcription, vision, text, token usage, and parse failures across transports [crates/gcore/src/ai_types.rs:9-13] [crates/gcore/src/ai_types.rs:17-26] [crates/gcore/src/ai_types.rs:38-44], and CLI/codewiki contracts pin stable serialized schemas for tools and generated pages [crates/gcore/src/cli_contract.rs:4-12] [crates/gcore/src/codewiki_contract.rs:64-86].
 
-The AI path is split between a transport-free context layer and feature-gated transport modules. `ai_context` resolves per-capability bindings and tuning from `ConfigSource`, applies command overrides such as `no_ai` or forced routing, clamps concurrency to at least one, and stores the result with a shared limiter and optional project id  . The `ai` child module then collapses those bindings into effective direct, daemon, auto, or off routes, while `ai_types` provides normalized transport-independent outputs for transcription, vision, and text generation, plus token usage and parseable AI errors  [crates/gcore/src/ai_types.rs:38-44].
+The main flows start with resolving runtime authority and configuration. `layered_config` loads the first valid YAML layer from CLI, current project, `GOBBY_HOME`, or none, treating malformed config as an error instead of falling through [crates/gcore/src/layered_config.rs:17-25] [crates/gcore/src/layered_config.rs:32-63]. Project and daemon helpers then discover `.gobby` roots, project IDs, bootstrap endpoints, and dial URLs with environment overrides taking precedence over persisted bootstrap state [crates/gcore/src/project.rs:12-24] [crates/gcore/src/project.rs:28-51] [crates/gcore/src/bootstrap.rs:38-45] [crates/gcore/src/daemon_url.rs:28-34]. AI resolution builds per-capability bindings and tuning, applies command-scoped `no_ai` or forced-route overrides, and clamps concurrency before constructing the shared limiter [crates/gcore/src/ai_context.rs:25-30] [crates/gcore/src/ai_context.rs:32-69].
 
-The datastore and indexing files act as adapter boundaries rather than domain owners. PostgreSQL helpers connect in read-only or read-write modes, read raw config-store values, and run consumer-supplied schema validators without mutating externally managed schemas  . FalkorDB wraps `SyncGraph` in `GraphClient` and `ReadOnlySyncGraph`, leaving Cypher ownership to domain crates while handling connection lifecycle and result parsing  . Qdrant, search, graph analytics, indexing, secrets, setup, and provisioning round this out with typed service boundaries: collection/search/upsert APIs, RRF and BM25 primitives, graph analysis models, parser-agnostic file walking and hash events, secret expansion, reusable validation/setup reports, and standalone Docker-backed service configuration.
+The files collaborate by keeping shared contracts in `gcore` and pushing domain-specific behavior to consumers or feature modules. Backend adapters such as PostgreSQL, FalkorDB, and Qdrant provide connection, validation, query, collection, and error boundaries without owning higher-level domain schemas  [crates/gcore/src/falkor.rs:28-30] [crates/gcore/src/qdrant.rs:20-36], while setup/degradation types let callers report unavailable services and required objects without treating every partial outage as fatal [crates/gcore/src/setup.rs:11-18] [crates/gcore/src/degradation.rs:12-22]. Analytics and search remain transport-free utilities: graph analysis prepares a graph and combines communities, centrality, bridges, god nodes, unexpected links, and hotspots into one result [crates/gcore/src/graph_analytics.rs:9-13] , while search supplies generic row IDs, BM25 expression formatting, RRF merge output, and query sanitization for consuming crates [crates/gcore/src/search.rs:20] [crates/gcore/src/search.rs:22-36].
 

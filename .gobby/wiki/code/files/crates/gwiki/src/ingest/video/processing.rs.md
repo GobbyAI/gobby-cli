@@ -26,7 +26,7 @@ Module: [[code/modules/crates/gwiki/src/ingest/video|crates/gwiki/src/ingest/vid
 
 ## Purpose
 
-This file defines the video-processing pipeline used during ingest: a `VideoMediaExtractor` abstraction with a production implementation that delegates audio extraction and frame sampling to `crate::media`, plus entry points that ingest a video with processing and optionally reindex the vault afterward. The main ingest path derives frame intervals, runs transcription and vision-based frame description work, records media degradations when extraction fails or FFmpeg is unavailable, and packages the results into a `VideoIngestResult`; helper types and functions support frame-description assembly, error classification, timestamp labeling, and best-effort cleanup of kept temporary frame files.
+This file implements the video-ingest processing pipeline for `gwiki`: it defines a `VideoMediaExtractor` abstraction, a production extractor that delegates to `crate::media` for audio extraction and frame sampling, and the main ingest entry points that process a video, optionally reindex the vault, and return a `VideoIngestResult`. It also includes helpers for recording media degradation, detecting FFmpeg-missing errors, describing sampled frame images through the vision endpoint, and cleaning up retained temporary frame files.
 [crates/gwiki/src/ingest/video/processing.rs:18-26]
 [crates/gwiki/src/ingest/video/processing.rs:28]
 [crates/gwiki/src/ingest/video/processing.rs:30-42]

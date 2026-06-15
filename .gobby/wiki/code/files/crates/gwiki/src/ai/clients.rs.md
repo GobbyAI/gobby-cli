@@ -35,9 +35,9 @@ Module: [[code/modules/crates/gwiki/src/ai|crates/gwiki/src/ai]]
 
 ## Purpose
 
-This file defines the production AI clients for the `gwiki` crate, wrapping a shared `AiContext` and exposing transcription and vision services through the crate’s `TranscriptionClient` and `VisionClient` traits. The transcription client routes work between daemon-backed and direct AI paths based on the effective capability routing, supports raw transcription and translation to English, and includes a segment-translation pipeline that batches transcript segments, retries with smaller chunks when needed, and validates JSON-indexed translation output. The vision client follows the same routing model to extract image information and converts core AI errors and results into crate-level `WikiError`, `TranscriptionOutput`, and `VisionExtraction` types.
+This file defines the production AI client layer for `gwiki`, wrapping an `AiContext` and implementing the transcription and vision client traits with capability-aware routing. The transcription client can transcribe audio, translate to English, and translate transcript segments in batches, switching between daemon-backed and direct AI calls based on the resolved `AiRouting`; it also builds translation prompts, parses indexed JSON translation responses, falls back to smaller batches on failures, and maps core AI errors and results into `WikiError` and crate-level output types.
 
-Supporting helpers build the translation prompt, parse indexed translation responses, warn on batch mismatches, map routing and errors into local representations, and convert core transcription/vision results into the crate’s output types. The tests at the end verify routing behavior for off/direct modes, validate indexed-translation parsing failures, and provide shared test context and capability binding fixtures.
+It also provides the production vision client, which routes image extraction through the same daemon/direct split and converts the core vision result into `VisionExtraction`. Helper functions handle route naming, unavailable-route errors, and result conversion, while tests cover routing behavior, indexed-translation parsing validation, and shared test-context setup.
 [crates/gwiki/src/ai/clients.rs:20-23]
 [crates/gwiki/src/ai/clients.rs:25-27]
 [crates/gwiki/src/ai/clients.rs:29-33]

@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gwiki/src/commands/ask|crates/gwiki/src/commands/a
 
 ## Purpose
 
-This file strips leading model-generated narration from an answer before it is returned to the user. It does this by trimming initial whitespace, scanning up to a fixed sentence limit, detecting sentence boundaries, classifying each leading sentence as narration or content, and then removing either the contiguous narration prefix or an interleaved narration run when narration still dominates the skipped region. The helper functions handle sentence boundary detection, narration-sentence classification via discourse-marker and opener matching, and repeated removal of leading discourse markers, while the tests cover content openers, narration-only answers, partial stripping, and classification edge cases.
+Provides narration-stripping logic for `ask` responses: it trims leading whitespace, scans up to `NARRATION_SCAN_LIMIT` sentence boundaries, and removes a leading preamble of model narration only when the output opens with narration and the skipped prefix is still mostly narration. `leading_sentence_end` finds sentence boundaries, `strip_narration_discourse_markers` normalizes and removes leading discourse markers, and `is_model_narration_sentence` identifies narration by matching cleaned sentence openers plus required process markers. The tests cover the main cases: stripping an interleaved narration preamble, leaving substantive answers unchanged, preserving later narration-like sentences, keeping plain answers verbatim, and classifying discourse-marked first-person openers as narration.
 [crates/gwiki/src/commands/ask/narration.rs:7-58]
 [crates/gwiki/src/commands/ask/narration.rs:60-64]
 [crates/gwiki/src/commands/ask/narration.rs:89-103]

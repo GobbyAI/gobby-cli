@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gwiki/src/sources|crates/gwiki/src/sources]]
 
 ## Purpose
 
-Defines the source-manifest subsystem for immutable raw wiki sources, wiring together atomic operations, manifest handling, rendering, and shared types. It also exposes manifest/type APIs and centralizes constants for source IDs, lock timing, and generated source markers. [crates/gwiki/src/sources/mod.rs:1-24]
+Module entry point for `gwiki` source-manifest handling for immutable raw wiki sources. It wires together the atomic, manifest, render, and type submodules, re-exports manifest and type APIs, and defines constants for source ID hashing, manifest lock timing, and the marker strings used to identify and generate source manifests. [crates/gwiki/src/sources/mod.rs:1-24]
 
 ## API Symbols
 

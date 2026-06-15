@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-Shared secret-resolution module for the Gobby CLI crates, re-exporting `resolve_config_value` and `resolve_secret` from `gobby_core::secrets`. [crates/gcode/src/secrets.rs:1-4]
+Shared secret-resolution re-exports for the Gobby CLI crates, exposing `resolve_config_value` and `resolve_secret` from `gobby_core::secrets`. [crates/gcode/src/secrets.rs:1-4]
 
 ## API Symbols
 

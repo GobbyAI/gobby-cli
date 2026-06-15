@@ -46,7 +46,7 @@ Module: [[code/modules/crates/ghook/src|crates/ghook/src]]
 
 ## Purpose
 
-This file implements planned shutdown handling for Gobby’s Stop hooks. It detects short-lived shutdown markers in the Gobby home directory, checks whether they are fresh and allowed, probes daemon reachability, and uses that combination to decide when a Stop hook should skip dispatch or suppress a failed post. The helper functions work together to parse and validate marker JSON, derive the freshness window from an environment override, read the current time, probe `/api/admin/health`, and delete enqueued items when suppression is warranted. The tests cover stop-hook matching, marker validation rules, daemon probing behavior, environment parsing, and the suppression/skip decision paths.
+This file implements planned shutdown handling for `Stop` hooks. It detects a fresh shutdown marker in the Gobby home directory, checks daemon reachability through a short health probe, and uses those two signals to decide when a `Stop` hook dispatch should be skipped because the daemon has intentionally gone away. It also handles failed post-enqueue cases by suppressing only `Stop` hook `Connect`/`Timeout` races during an active shutdown marker, deleting the queued item when suppression applies. The rest of the file is support code for reading and validating marker JSON, enforcing freshness and allowed intents/sources, parsing the freshness timeout from the environment, and providing small helpers and tests for those behaviors.
 [crates/ghook/src/planned_shutdown.rs:21-27]
 [crates/ghook/src/planned_shutdown.rs:29-37]
 [crates/ghook/src/planned_shutdown.rs:39-50]

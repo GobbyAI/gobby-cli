@@ -38,9 +38,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-This file implements Gobby’s secret resolution pipeline. It derives a Fernet key from the local machine ID and salt with PBKDF2-HMAC-SHA256, decrypts encrypted secret values, and looks up named secrets from the PostgreSQL `secrets` table before decrypting them. It also resolves configuration strings by expanding `$secret:NAME` placeholders first, then environment-variable patterns, and rejects any unresolved references.
-
-The helper functions support that flow: `validate_secret_name` and the boundary/character predicates enforce safe secret names and placeholder parsing, while `resolve_config_value_with` drives substitution using a caller-provided secret resolver. The test functions cover deterministic key derivation, salt sensitivity, Fernet round-trips, secret and environment expansion behavior, unresolved-reference errors, and protection against leaking secret values in error messages.
+Implements Gobby’s secret resolution pipeline: it derives a Fernet key from `~/.gobby/machine_id` and `~/.gobby/.secret_salt`, decrypts `secrets.encrypted_value` rows from Postgres, and expands `$secret:NAME` references inside config strings before resolving environment variables. The helper functions enforce secret-name syntax and reference boundaries so only valid names are accepted and unresolved patterns fail safely, while the tests cover key derivation, decryption round-trips, substitution order, and rejection of invalid or leaky inputs.
 [crates/gcore/src/secrets.rs:18-22]
 [crates/gcore/src/secrets.rs:24-30]
 [crates/gcore/src/secrets.rs:33-63]

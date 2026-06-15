@@ -25,7 +25,7 @@ Module: [[code/modules/crates/gwiki/src/support|crates/gwiki/src/support]]
 
 ## Purpose
 
-Provides scope-resolution helpers for gwiki commands: it turns a user’s `ScopeSelection` into a resolved wiki scope, an output `ScopeIdentity`, and a matching search scope, then optionally indexes the vault root into an in-memory wiki store. The helpers keep topic/project precedence consistent across search and storage, map resolved scopes back to identities, and enforce that global search scopes are not converted into scoped stores.
+This file resolves a `ScopeSelection` into the vault scope, output identity, and search scope needed for indexing, then builds an in-memory wiki store from the resolved vault root when it is a directory. Its helpers translate between resolved vault scope, search/store scope, and scope identity, apply topic-over-project precedence, handle command-directory resolution and error conversion, and filter whether a page belongs in a given scope.
 [crates/gwiki/src/support/scope.rs:12-36]
 [crates/gwiki/src/support/scope.rs:38-42]
 [crates/gwiki/src/support/scope.rs:44-55]

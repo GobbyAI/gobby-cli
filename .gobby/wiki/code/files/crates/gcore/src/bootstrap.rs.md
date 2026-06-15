@@ -28,7 +28,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-This file resolves Gobby’s bootstrap configuration and turns it into a daemon endpoint. It defines `DaemonEndpoint` as the raw advertised host and port, with a `Default` that falls back to `127.0.0.1:60887`. `bootstrap_path()` builds `bootstrap.yaml` under `GOBBY_HOME` or `~/.gobby`, and `read_daemon_endpoint()` uses that path to load the endpoint, returning defaults whenever the file is missing, unreadable, malformed, or incomplete. `read_daemon_endpoint_at()` does the YAML parsing and field extraction, while the tests verify the fallback behavior and that custom host/port values and `GOBBY_HOME` resolution are handled correctly.
+This file resolves the Gobby daemon bootstrap configuration. It defines `DaemonEndpoint` as the raw host/port advertised by `bootstrap.yaml`, with a default of `127.0.0.1:60887` when config is missing or unusable. `bootstrap_path()` locates `~/.gobby/bootstrap.yaml` or `GOBBY_HOME/bootstrap.yaml`, `read_daemon_endpoint()` uses that path to load the config, and `read_daemon_endpoint_at()` parses YAML into a `DaemonEndpoint` while falling back to defaults on missing files, malformed input, missing fields, or invalid ports. The tests verify all of those fallback and parsing cases, including custom host and port handling and path resolution.
 [crates/gcore/src/bootstrap.rs:33-36]
 [crates/gcore/src/bootstrap.rs:38-45]
 [crates/gcore/src/bootstrap.rs:39-44]

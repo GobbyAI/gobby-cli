@@ -27,7 +27,7 @@ Module: [[code/modules/crates/gsqz/src/primitives|crates/gsqz/src/primitives]]
 
 ## Purpose
 
-This file implements full-blob output matching against an ordered list of `MatchOutputRule`s. `check` concatenates all output lines, evaluates each rule’s regex with first-match-wins semantics, skips invalid patterns, and suppresses a match when a valid `unless` regex also matches; it returns the matched rule’s message or `None`. The local `rule` and `lines` helpers make test setup ergonomic, and the tests cover matching, negative conditions, empty/invalid rules, rule ordering, and matching across newline boundaries.
+This file implements output-matching helpers for `MatchOutputRule`. `check` joins all input lines into one blob, then scans rules in order, compiling each regex and returning the first rule message whose pattern matches unless an optional `unless` regex also matches; invalid regexes are skipped. The local `rule` and `lines` helpers build test fixtures, and the tests cover basic matching, `unless` blocking, no-match behavior, first-match-wins semantics, invalid regex handling, empty-rule input, and matching across the full multi-line blob.
 [crates/gsqz/src/primitives/match_output.rs:8-33]
 [crates/gsqz/src/primitives/match_output.rs:39-45]
 [crates/gsqz/src/primitives/match_output.rs:47-49]

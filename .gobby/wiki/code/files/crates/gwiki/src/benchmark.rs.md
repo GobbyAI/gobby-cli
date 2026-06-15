@@ -67,7 +67,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-This file builds a structured benchmark report for Gobby’s wiki/search systems, combining token compression, graph coverage, retrieval precision, source mix, and model-provider availability into one serializable `BenchmarkReport`. The helper functions gather and normalize data from Postgres, the graph backend, Qdrant, and embedding/model configuration, while the small backend types and report structs package the results; the test cases verify that optional sources are marked degraded only when appropriate, configured backends are not incorrectly degraded, candidate counts are configurable, and negative counts are rejected.
+This file builds benchmark summaries for a command and scope by loading scoped or global data from Postgres, measuring token compression, graph coverage, retrieval precision, source mix, and model-provider availability, then combining those subreports into a single `BenchmarkReport` with a sorted list of degraded sources. The helpers split the work into database count/query utilities, optional source resolution, semantic retrieval candidate generation, graph and token metrics, and small test stubs for embedding and vector search backends.
 [crates/gwiki/src/benchmark.rs:30-39]
 [crates/gwiki/src/benchmark.rs:42-48]
 [crates/gwiki/src/benchmark.rs:51-58]
@@ -78,167 +78,167 @@ This file builds a structured benchmark report for Gobby’s wiki/search systems
 
 - `BenchmarkReport` (class) component `BenchmarkReport [class]` (`dc3ebecc-2146-5e02-8d18-1006f660f755`) lines 30-39 [crates/gwiki/src/benchmark.rs:30-39]
   - Signature: `pub struct BenchmarkReport {`
-  - Purpose: Indexed class `BenchmarkReport` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:30-39]
+  - Purpose: 'BenchmarkReport' is a Rust struct that aggregates benchmark metadata and evaluation subreports for a command/scope pair, including token compression, graph coverage, retrieval precision, source mix, model provider availability, and a list of degraded source names. [crates/gwiki/src/benchmark.rs:30-39]
 - `TokenCompressionReport` (class) component `TokenCompressionReport [class]` (`69f3524f-b33b-53da-beda-f01f202e997b`) lines 42-48 [crates/gwiki/src/benchmark.rs:42-48]
   - Signature: `pub struct TokenCompressionReport {`
-  - Purpose: Indexed class `TokenCompressionReport` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:42-48]
+  - Purpose: 'TokenCompressionReport' is a summary record of a token-compression result, indicating whether compression is available and capturing original document token count, compressed chunk token count, optional compression ratio, and an optional reason for unavailability or failure. [crates/gwiki/src/benchmark.rs:42-48]
 - `GraphCoverageReport` (class) component `GraphCoverageReport [class]` (`a75c5987-536a-5f92-b7cc-0962118c024a`) lines 51-58 [crates/gwiki/src/benchmark.rs:51-58]
   - Signature: `pub struct GraphCoverageReport {`
-  - Purpose: Indexed class `GraphCoverageReport` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:51-58]
+  - Purpose: 'GraphCoverageReport' captures whether graph coverage data is available and records PostgreSQL document/link counts alongside optional graph document/link counts and an optional unavailability reason. [crates/gwiki/src/benchmark.rs:51-58]
 - `RetrievalPrecisionReport` (class) component `RetrievalPrecisionReport [class]` (`2e27830e-0112-5219-be8f-12120ff0d21f`) lines 61-67 [crates/gwiki/src/benchmark.rs:61-67]
   - Signature: `pub struct RetrievalPrecisionReport {`
-  - Purpose: Indexed class `RetrievalPrecisionReport` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:61-67]
+  - Purpose: 'RetrievalPrecisionReport' is a serializable report struct indicating whether retrieval precision data is available, carrying a list of 'RetrievalPrecisionExample' records plus an optional unavailability reason and a skipped-in-serialization list of degraded backend sources. [crates/gwiki/src/benchmark.rs:61-67]
 - `RetrievalPrecisionExample` (class) component `RetrievalPrecisionExample [class]` (`9d87475c-12ea-5858-a02b-c2b43e40229d`) lines 70-75 [crates/gwiki/src/benchmark.rs:70-75]
   - Signature: `pub struct RetrievalPrecisionExample {`
-  - Purpose: Indexed class `RetrievalPrecisionExample` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:70-75]
+  - Purpose: 'RetrievalPrecisionExample' is a record of a retrieval test case containing the search 'query', the 'expected_path', an optional 'returned_path', and an optional 'precision_at_1' score. [crates/gwiki/src/benchmark.rs:70-75]
 - `SourceMixReport` (class) component `SourceMixReport [class]` (`aa999454-a443-529c-a468-5b390bd16d36`) lines 78-85 [crates/gwiki/src/benchmark.rs:78-85]
   - Signature: `pub struct SourceMixReport {`
-  - Purpose: Indexed class `SourceMixReport` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:78-85]
+  - Purpose: 'SourceMixReport' is a summary struct that reports whether source-mix data is available and, if so, tracks total documents and sources, per-kind counts for documents and sources, and an optional explanatory reason. [crates/gwiki/src/benchmark.rs:78-85]
 - `AvailabilityReport` (class) component `AvailabilityReport [class]` (`14cda561-b0fa-594b-a066-6c6a4d2c7087`) lines 88-91 [crates/gwiki/src/benchmark.rs:88-91]
   - Signature: `pub struct AvailabilityReport {`
-  - Purpose: Indexed class `AvailabilityReport` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:88-91]
+  - Purpose: 'AvailabilityReport' is a Rust struct that models a binary availability status with an 'available: bool' flag and an optional 'reason: Option<String>' explaining unavailability. [crates/gwiki/src/benchmark.rs:88-91]
 - `OptionalBenchmarkSources` (class) component `OptionalBenchmarkSources [class]` (`e8a6fbe3-b92d-5cf6-bb30-e35a7575f49f`) lines 94-99 [crates/gwiki/src/benchmark.rs:94-99]
   - Signature: `pub struct OptionalBenchmarkSources {`
-  - Purpose: Indexed class `OptionalBenchmarkSources` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:94-99]
+  - Purpose: 'OptionalBenchmarkSources' is a configuration container that optionally holds Falkor, Qdrant, and embedding source settings, plus a boolean flag indicating whether a model provider is available. [crates/gwiki/src/benchmark.rs:94-99]
 - `BenchmarkRows` (class) component `BenchmarkRows [class]` (`bea10379-8027-5c5b-b2af-07c4d65ac9fe`) lines 104-114 [crates/gwiki/src/benchmark.rs:104-114]
   - Signature: `struct BenchmarkRows {`
-  - Purpose: Indexed class `BenchmarkRows` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:104-114]
+  - Purpose: 'BenchmarkRows' is a data-carrying struct that aggregates benchmark input rows and summary counts for documents, links, sources, and per-kind frequencies, alongside parallel vectors of document and chunk paths/bodies/contents. [crates/gwiki/src/benchmark.rs:104-114]
 - `RetrievalPrecisionCandidate` (class) component `RetrievalPrecisionCandidate [class]` (`91c4cc32-cfa3-584f-a0ac-594d9fd228c8`) lines 117-120 [crates/gwiki/src/benchmark.rs:117-120]
   - Signature: `struct RetrievalPrecisionCandidate {`
-  - Purpose: Indexed class `RetrievalPrecisionCandidate` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:117-120]
+  - Purpose: 'RetrievalPrecisionCandidate' is a data-only struct that stores a search 'query' and the 'expected_path' used to evaluate retrieval precision against a known target path. [crates/gwiki/src/benchmark.rs:117-120]
 - `report_from_postgres` (function) component `report_from_postgres [function]` (`e1deb6c0-02f5-5275-bb15-0e7e808b1083`) lines 122-145 [crates/gwiki/src/benchmark.rs:122-145]
   - Signature: `pub fn report_from_postgres(`
-  - Purpose: Indexed function `report_from_postgres` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:122-145]
+  - Purpose: Loads benchmark rows from Postgres for the given search scope, computes token compression, source mix, graph coverage, retrieval precision, and model provider metadata, then assembles and returns a 'BenchmarkReport'. [crates/gwiki/src/benchmark.rs:122-145]
 - `resolve_optional_sources` (function) component `resolve_optional_sources [function]` (`821da7a0-d172-528f-8f11-06f2175d702f`) lines 147-157 [crates/gwiki/src/benchmark.rs:147-157]
   - Signature: `pub fn resolve_optional_sources(`
-  - Purpose: Indexed function `resolve_optional_sources` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:147-157]
+  - Purpose: Constructs and returns an 'OptionalBenchmarkSources' by resolving FalkorDB, Qdrant, and benchmark embedding configuration from the provided config source while also recording whether a model provider is available from 'ai_context'. [crates/gwiki/src/benchmark.rs:147-157]
 - `build_report` (function) component `build_report [function]` (`67485ffa-d2bc-5bda-9e01-d4de2223db6e`) lines 159-193 [crates/gwiki/src/benchmark.rs:159-193]
   - Signature: `fn build_report(`
-  - Purpose: Indexed function `build_report` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:159-193]
+  - Purpose: 'build_report' assembles and returns a 'BenchmarkReport' from the provided benchmark subreports and scope, while computing a sorted 'degraded_sources' list by marking unavailable graph coverage, unconfigured Qdrant, missing embeddings, any backend-degraded retrieval sources, and an unavailable model provider. [crates/gwiki/src/benchmark.rs:159-193]
 - `load_benchmark_rows` (function) component `load_benchmark_rows [function]` (`fc7adc22-d8ea-53ed-9951-aee353499e75`) lines 195-249 [crates/gwiki/src/benchmark.rs:195-249]
   - Signature: `fn load_benchmark_rows(conn: &mut Client, scope: &SearchScope) -> Result<BenchmarkRows, WikiError> {`
-  - Purpose: Indexed function `load_benchmark_rows` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:195-249]
+  - Purpose: 'load_benchmark_rows' fetches scoped-or-global benchmark data from 'gwiki_documents', 'gwiki_chunks', 'gwiki_documents' source-kind counts, 'gwiki_sources' source-kind counts, and wiki/mention link counts, then returns them as a 'BenchmarkRows' aggregate or propagates 'WikiError'. [crates/gwiki/src/benchmark.rs:195-249]
 - `query_scoped_or_global` (function) component `query_scoped_or_global [function]` (`73a4f5ee-fce3-5729-9d36-a7e723ce8e6f`) lines 251-264 [crates/gwiki/src/benchmark.rs:251-264]
   - Signature: `fn query_scoped_or_global(`
-  - Purpose: Indexed function `query_scoped_or_global` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:251-264]
+  - Purpose: Executes either the scoped SQL with 'scope_kind' and 'scope_id' parameters or the global SQL with no parameters, returning the resulting 'postgres::Row' vector while mapping any query error through 'postgres_error(action)'. [crates/gwiki/src/benchmark.rs:251-264]
 - `grouped_counts` (function) component `grouped_counts [function]` (`9df6a6f1-158a-5725-8b54-c9ee780ad126`) lines 266-281 [crates/gwiki/src/benchmark.rs:266-281]
   - Signature: `fn grouped_counts(`
-  - Purpose: Indexed function `grouped_counts` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:266-281]
+  - Purpose: Executes either the scoped or global SQL query, converts each returned '(kind, count)' row into a '(String, u64)' pair by validating the signed count with 'count_to_u64', and collects the results into a 'BTreeMap<String, u64>' or returns a 'WikiError'. [crates/gwiki/src/benchmark.rs:266-281]
 - `scalar_count` (function) component `scalar_count [function]` (`af2a9545-b2c0-5a02-9ac8-a945e940a771`) lines 283-299 [crates/gwiki/src/benchmark.rs:283-299]
   - Signature: `fn scalar_count(`
-  - Purpose: Indexed function `scalar_count` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:283-299]
+  - Purpose: Executes either 'scoped_sql' with the scope kind/id parameters or 'global_sql' with no parameters, reads the first column as an 'i64' count from the single returned row, and converts it to 'u64' via 'count_to_u64', propagating database errors as 'WikiError' tagged with 'action'. [crates/gwiki/src/benchmark.rs:283-299]
 - `count_to_u64` (function) component `count_to_u64 [function]` (`670429ea-2066-59b0-a7e9-0d91d65cc056`) lines 301-305 [crates/gwiki/src/benchmark.rs:301-305]
   - Signature: `fn count_to_u64(count: i64, action: &'static str) -> Result<u64, WikiError> {`
-  - Purpose: Indexed function `count_to_u64` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:301-305]
+  - Purpose: Converts a signed 'i64' count to 'u64', returning 'WikiError::Config' with a formatted message if the count is negative and cannot be converted. [crates/gwiki/src/benchmark.rs:301-305]
 - `token_compression` (function) component `token_compression [function]` (`fd4b61e8-3841-5160-afed-aedd7aefc9f4`) lines 307-331 [crates/gwiki/src/benchmark.rs:307-331]
   - Signature: `fn token_compression(rows: &BenchmarkRows) -> TokenCompressionReport {`
-  - Purpose: Indexed function `token_compression` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:307-331]
+  - Purpose: Computes total token counts for document bodies and chunk contents, derives a rounded chunk-to-document compression ratio when document tokens are nonzero, and returns a 'TokenCompressionReport' indicating availability plus an optional reason when no indexed document tokens exist. [crates/gwiki/src/benchmark.rs:307-331]
 - `source_mix` (function) component `source_mix [function]` (`cc68181e-1213-5ee6-ba23-df2988a063a5`) lines 333-342 [crates/gwiki/src/benchmark.rs:333-342]
   - Signature: `fn source_mix(rows: &BenchmarkRows) -> SourceMixReport {`
-  - Purpose: Indexed function `source_mix` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:333-342]
+  - Purpose: 'source_mix' constructs and returns a 'SourceMixReport' marked available, copying document and source totals plus cloned kind maps from 'BenchmarkRows', with 'reason' set to 'None'. [crates/gwiki/src/benchmark.rs:333-342]
 - `graph_coverage` (function) component `graph_coverage [function]` (`e0db096c-94eb-5675-8e85-e741adc30267`) lines 344-377 [crates/gwiki/src/benchmark.rs:344-377]
   - Signature: `fn graph_coverage(`
-  - Purpose: Indexed function `graph_coverage` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:344-377]
+  - Purpose: 'graph_coverage' builds a 'GraphCoverageReport' by copying PostgreSQL document/link counts from 'rows' and, if a 'FalkorConfig' is present, querying graph counts for 'scope' to populate graph totals and mark the report available, otherwise returning unavailable with a reason indicating FalkorDB is not configured or the graph query failed. [crates/gwiki/src/benchmark.rs:344-377]
 - `retrieval_precision` (function) component `retrieval_precision [function]` (`d24b58ff-daef-501d-a209-d562bbb04ddc`) lines 379-395 [crates/gwiki/src/benchmark.rs:379-395]
   - Signature: `fn retrieval_precision(`
-  - Purpose: Indexed function `retrieval_precision` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:379-395]
+  - Purpose: Creates default OpenAI embedding and Gobby Qdrant backends, then delegates to 'retrieval_precision_with_backends' to compute a 'RetrievalPrecisionReport' for the given benchmark rows, search scope, optional sources, and candidate limit. [crates/gwiki/src/benchmark.rs:379-395]
 - `retrieval_precision_with_backends` (function) component `retrieval_precision_with_backends [function]` (`3a0d94e5-67c1-560a-ac41-486201ee5806`) lines 397-489 [crates/gwiki/src/benchmark.rs:397-489]
   - Signature: `fn retrieval_precision_with_backends<E, V>(`
-  - Purpose: Indexed function `retrieval_precision_with_backends` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:397-489]
+  - Purpose: 'retrieval_precision_with_backends' evaluates retrieval precision by running each seeded benchmark query through semantic search against the configured Qdrant/embedding backends, short-circuiting to an unavailable report on missing configuration, empty candidates, search errors, or degradation, and otherwise aggregating the results into a 'RetrievalPrecisionReport'. [crates/gwiki/src/benchmark.rs:397-489]
 - `unavailable_retrieval_precision` (function) component `unavailable_retrieval_precision [function]` (`7a948f5d-68ec-5b3e-be16-dd4f26768d03`) lines 491-501 [crates/gwiki/src/benchmark.rs:491-501]
   - Signature: `fn unavailable_retrieval_precision(`
-  - Purpose: Indexed function `unavailable_retrieval_precision` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:491-501]
+  - Purpose: Constructs a 'RetrievalPrecisionReport' marked unavailable by setting 'available' to 'false', leaving 'examples' empty, storing the provided reason, and attaching the supplied 'backend_degraded_sources'. [crates/gwiki/src/benchmark.rs:491-501]
 - `semantic_degraded_sources` (function) component `semantic_degraded_sources [function]` (`e7c671ba-dd06-5638-b8fa-32e62f2317c0`) lines 503-509 [crates/gwiki/src/benchmark.rs:503-509]
   - Signature: `fn semantic_degraded_sources(degradation: &DegradationKind) -> Vec<String> {`
-  - Purpose: Indexed function `semantic_degraded_sources` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:503-509]
+  - Purpose: Returns a 'Vec<String>' of the semantic source names degraded by a 'DegradationKind', cloning the affected service for 'ServiceUnavailable', cloning the unavailable list for 'PartialSearch', and returning an empty vector for all other variants. [crates/gwiki/src/benchmark.rs:503-509]
 - `qdrant_source_configured` (function) component `qdrant_source_configured [function]` (`1c3d1859-1720-543e-845e-7f64963c5119`) lines 511-513 [crates/gwiki/src/benchmark.rs:511-513]
   - Signature: `fn qdrant_source_configured(optional: &OptionalBenchmarkSources) -> bool {`
-  - Purpose: Indexed function `qdrant_source_configured` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:511-513]
+  - Purpose: Returns 'true' when 'optional.qdrant' is 'Some' and the contained Qdrant config satisfies 'qdrant_config_has_url', otherwise 'false'. [crates/gwiki/src/benchmark.rs:511-513]
 - `resolve_benchmark_embedding` (function) component `resolve_benchmark_embedding [function]` (`019603f0-3413-58b6-ac27-7f12031c6c45`) lines 515-534 [crates/gwiki/src/benchmark.rs:515-534]
   - Signature: `fn resolve_benchmark_embedding(`
-  - Purpose: Indexed function `resolve_benchmark_embedding` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:515-534]
+  - Purpose: Returns an optional 'SemanticEmbedding' for benchmark embedding by routing on 'AiCapability::Embed': 'Off' and 'Auto' yield 'None', 'Daemon' yields a cloned-context daemon embedding when the 'ai' feature is enabled, and 'Direct' maps the resolved embedding config into 'SemanticEmbedding::Direct'. [crates/gwiki/src/benchmark.rs:515-534]
 - `seeded_retrieval_candidates` (function) component `seeded_retrieval_candidates [function]` (`0e45e0da-1248-553c-bcfd-816d56a7314b`) lines 536-554 [crates/gwiki/src/benchmark.rs:536-554]
   - Signature: `fn seeded_retrieval_candidates(`
-  - Purpose: Indexed function `seeded_retrieval_candidates` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:536-554]
+  - Purpose: Builds up to 'max_candidates' retrieval-precision candidates by scanning 'rows.document_paths', finding the first matching non-empty chunk in 'rows.chunk_paths'/'rows.chunk_contents' for each path, and emitting a candidate with 'benchmark_query(content)' as the query and the path as 'expected_path'. [crates/gwiki/src/benchmark.rs:536-554]
 - `benchmark_query` (function) component `benchmark_query [function]` (`24eb17c4-fb28-5a47-ac4e-815c8b4f5bf8`) lines 556-562 [crates/gwiki/src/benchmark.rs:556-562]
   - Signature: `fn benchmark_query(content: &str) -> String {`
-  - Purpose: Indexed function `benchmark_query` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:556-562]
+  - Purpose: Returns a string containing the first up to eight whitespace-separated words from 'content', joined by single spaces. [crates/gwiki/src/benchmark.rs:556-562]
 - `model_provider` (function) component `model_provider [function]` (`e3382820-f4ea-515d-a0dd-8894096fd1d5`) lines 564-570 [crates/gwiki/src/benchmark.rs:564-570]
   - Signature: `fn model_provider(optional: &OptionalBenchmarkSources) -> AvailabilityReport {`
-  - Purpose: Indexed function `model_provider` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:564-570]
+  - Purpose: Returns an 'AvailabilityReport' that mirrors 'optional.model_provider_available' and, when that flag is false, sets 'reason' to '"text model provider is not configured"'. [crates/gwiki/src/benchmark.rs:564-570]
 - `model_provider_available` (function) component `model_provider_available [function]` (`15bfaf4b-694d-5b7a-a167-d07cc768bc97`) lines 572-584 [crates/gwiki/src/benchmark.rs:572-584]
   - Signature: `fn model_provider_available(context: &AiContext) -> bool {`
-  - Purpose: Indexed function `model_provider_available` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:572-584]
+  - Purpose: Returns 'true' only when text generation is routed to the daemon, or when routed directly and both 'api_base' and 'model' are present and non-empty; otherwise it returns 'false'. [crates/gwiki/src/benchmark.rs:572-584]
 - `query_graph_counts` (function) component `query_graph_counts [function]` (`74cca271-7296-5435-bd4c-174233b539a1`) lines 586-602 [crates/gwiki/src/benchmark.rs:586-602]
   - Signature: `fn query_graph_counts(config: &FalkorConfig, scope: &SearchScope) -> anyhow::Result<(u64, u64)> {`
-  - Purpose: Indexed function `query_graph_counts` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:586-602]
+  - Purpose: 'query_graph_counts' opens a FalkorDB graph client, builds optional scope-filtered Cypher queries to count 'WikiDoc' nodes and 'WIKI_LINKS_TO'/'MENTIONS_TARGET' relationships, executes both queries, and returns the two counts as a '(u64, u64)' result. [crates/gwiki/src/benchmark.rs:586-602]
 - `graph_scope_params` (function) component `graph_scope_params [function]` (`5768972f-9628-5805-929a-5e4ad2f2c15d`) lines 604-611 [crates/gwiki/src/benchmark.rs:604-611]
   - Signature: `fn graph_scope_params(scope: &SearchScope) -> Option<HashMap<String, String>> {`
-  - Purpose: Indexed function `graph_scope_params` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:604-611]
+  - Purpose: Returns 'Some(HashMap)' containing '"scope_kind"' and '"scope_id"' string parameters derived from 'scope.scope_filter()', or 'None' if the scope has no filter. [crates/gwiki/src/benchmark.rs:604-611]
 - `falkor_count` (function) component `falkor_count [function]` (`22b76c11-d475-563d-87ac-2a0cd3eca820`) lines 613-626 [crates/gwiki/src/benchmark.rs:613-626]
   - Signature: `fn falkor_count(rows: &[HashMap<String, Value>]) -> anyhow::Result<u64> {`
-  - Purpose: Indexed function `falkor_count` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:613-626]
+  - Purpose: Returns the first row’s '"count"' field as a 'u64' by accepting either an unsigned integer or converting a nonnegative signed integer, defaulting to '0' when absent, and propagating conversion errors via 'anyhow::Result'. [crates/gwiki/src/benchmark.rs:613-626]
 - `i64_count_to_u64` (function) component `i64_count_to_u64 [function]` (`ccb17156-eaff-59a3-8849-4118c608df30`) lines 628-631 [crates/gwiki/src/benchmark.rs:628-631]
   - Signature: `fn i64_count_to_u64(count: i64) -> anyhow::Result<u64> {`
-  - Purpose: Indexed function `i64_count_to_u64` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:628-631]
+  - Purpose: Converts an 'i64' count to 'u64', returning an error if the input is negative. [crates/gwiki/src/benchmark.rs:628-631]
 - `token_count` (function) component `token_count [function]` (`762e2c25-cdc4-55ae-85db-499ebf33dfd5`) lines 633-635 [crates/gwiki/src/benchmark.rs:633-635]
   - Signature: `fn token_count(text: &str) -> u64 {`
-  - Purpose: Indexed function `token_count` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:633-635]
+  - Purpose: Returns the number of whitespace-delimited tokens in 'text' by splitting on Unicode whitespace and casting the resulting segment count to 'u64'. [crates/gwiki/src/benchmark.rs:633-635]
 - `round_ratio` (function) component `round_ratio [function]` (`56fc1640-f377-5b5a-8970-41ae702a31e1`) lines 637-639 [crates/gwiki/src/benchmark.rs:637-639]
   - Signature: `fn round_ratio(value: f64) -> f64 {`
-  - Purpose: Indexed function `round_ratio` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:637-639]
+  - Purpose: Returns 'value' rounded to three decimal places by multiplying by 1000, applying 'round()', and dividing by 1000. [crates/gwiki/src/benchmark.rs:637-639]
 - `non_empty` (function) component `non_empty [function]` (`18ac5935-db2f-5e5d-8e8a-3fe9c967a5fe`) lines 641-643 [crates/gwiki/src/benchmark.rs:641-643]
   - Signature: `fn non_empty(value: &str) -> bool {`
-  - Purpose: Indexed function `non_empty` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:641-643]
+  - Purpose: Returns 'true' if 'value' contains any non-whitespace characters after trimming, otherwise 'false'. [crates/gwiki/src/benchmark.rs:641-643]
 - `postgres_error` (function) component `postgres_error [function]` (`6d67b0e0-611f-5a4f-bd3a-c8d3e7ee1ae5`) lines 645-649 [crates/gwiki/src/benchmark.rs:645-649]
   - Signature: `fn postgres_error(action: &'static str) -> impl FnOnce(postgres::Error) -> WikiError {`
-  - Purpose: Indexed function `postgres_error` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:645-649]
+  - Purpose: Returns a closure that converts a 'postgres::Error' into 'WikiError::Config' with a 'detail' string formatted as '"{action}: {error}"'. [crates/gwiki/src/benchmark.rs:645-649]
 - `FixedEmbedder` (class) component `FixedEmbedder [class]` (`a6f6a98a-f25d-5ca2-99cc-a1aac34921c8`) lines 657-657 [crates/gwiki/src/benchmark.rs:657]
   - Signature: `struct FixedEmbedder;`
-  - Purpose: Indexed class `FixedEmbedder` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:657]
+  - Purpose: 'FixedEmbedder' is an opaque struct declaration representing a fixed embedding component, with no fields, methods, or behavior exposed in the provided signature. [crates/gwiki/src/benchmark.rs:657]
 - `FixedEmbedder` (class) component `FixedEmbedder [class]` (`a7b6e1cb-e404-5d3f-8207-c17afcbffaa5`) lines 659-667 [crates/gwiki/src/benchmark.rs:659-667]
   - Signature: `impl QueryEmbedder for FixedEmbedder {`
-  - Purpose: Indexed class `FixedEmbedder` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:659-667]
+  - Purpose: 'FixedEmbedder' is a 'QueryEmbedder' implementation whose 'embed_query' method ignores both the input embedding and query and always returns a successful single-element vector '[1.0]'. [crates/gwiki/src/benchmark.rs:659-667]
 - `FixedEmbedder.embed_query` (method) component `FixedEmbedder.embed_query [method]` (`8fefb24b-2d21-58fb-8b15-bce0619eb839`) lines 660-666 [crates/gwiki/src/benchmark.rs:660-666]
   - Signature: `fn embed_query(`
-  - Purpose: Indexed method `FixedEmbedder.embed_query` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:660-666]
+  - Purpose: 'embed_query' is a mutable method that takes a 'SemanticEmbedding' and query string but ignores both inputs and always returns 'Ok(vec![1.0])' as a 'Vec<f32>' wrapped in 'Result', never producing an error. [crates/gwiki/src/benchmark.rs:660-666]
 - `SequenceVectorBackend` (class) component `SequenceVectorBackend [class]` (`9e50876b-6b59-57c5-a37c-cd26f5ac32c5`) lines 669-671 [crates/gwiki/src/benchmark.rs:669-671]
   - Signature: `struct SequenceVectorBackend {`
-  - Purpose: Indexed class `SequenceVectorBackend` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:669-671]
+  - Purpose: 'SequenceVectorBackend' is a struct that encapsulates a 'Vec<String>' of path entries used as the backing store for sequence vector data. [crates/gwiki/src/benchmark.rs:669-671]
 - `SequenceVectorBackend` (class) component `SequenceVectorBackend [class]` (`044d76fa-38e7-5c07-b372-13b53dfe141b`) lines 673-679 [crates/gwiki/src/benchmark.rs:673-679]
   - Signature: `impl SequenceVectorBackend {`
-  - Purpose: Indexed class `SequenceVectorBackend` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:673-679]
+  - Purpose: 'SequenceVectorBackend' is a constructor-only backend wrapper that takes a vector of '&str' path inputs and stores them as owned 'String's in its internal 'paths' field. [crates/gwiki/src/benchmark.rs:673-679]
 - `SequenceVectorBackend.new` (method) component `SequenceVectorBackend.new [method]` (`5203b03d-8924-5968-9220-4b98e296a8d0`) lines 674-678 [crates/gwiki/src/benchmark.rs:674-678]
   - Signature: `fn new(paths: Vec<&str>) -> Self {`
-  - Purpose: Indexed method `SequenceVectorBackend.new` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:674-678]
+  - Purpose: Creates a 'Self' instance by converting each '&str' in 'paths' into an owned 'String' and storing the resulting 'Vec<String>' in the 'paths' field. [crates/gwiki/src/benchmark.rs:674-678]
 - `SequenceVectorBackend` (class) component `SequenceVectorBackend [class]` (`0361246a-8e2c-5e82-8e88-ebba81d49165`) lines 681-702 [crates/gwiki/src/benchmark.rs:681-702]
   - Signature: `impl VectorSearchBackend for SequenceVectorBackend {`
-  - Purpose: Indexed class `SequenceVectorBackend` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:681-702]
+  - Purpose: 'SequenceVectorBackend' is a 'VectorSearchBackend' test stub that ignores the Qdrant config, collection, and search request, pops the next path from an internal sequence, and returns a single fixed 'SearchHit' with score '1.0' and a payload populated with hardcoded namespace/topic/project/source metadata plus that path. [crates/gwiki/src/benchmark.rs:681-702]
 - `SequenceVectorBackend.search` (method) component `SequenceVectorBackend.search [method]` (`728325e2-d73a-583e-84c9-eec9486fb2b6`) lines 682-701 [crates/gwiki/src/benchmark.rs:682-701]
   - Signature: `fn search(`
-  - Purpose: Indexed method `SequenceVectorBackend.search` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:682-701]
+  - Purpose: Pops the first path from 'self.paths', constructs a fixed JSON payload with 'namespace=gwiki', 'scope_kind=topic', 'topic=rust', 'project_id=rust', 'path', and 'source_kind=wiki', and returns a single 'SearchHit' with id 'hit' and score '1.0' wrapped in 'Ok'. [crates/gwiki/src/benchmark.rs:682-701]
 - `rows` (function) component `rows [function]` (`fea8cada-6972-5bbd-8a09-71095f0b4d5b`) lines 704-719 [crates/gwiki/src/benchmark.rs:704-719]
   - Signature: `fn rows() -> BenchmarkRows {`
-  - Purpose: Indexed function `rows` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:704-719]
+  - Purpose: Constructs and returns a 'BenchmarkRows' value populated with two document paths and bodies, two chunk paths and contents, fixed counts for 'documents', 'links', and 'sources', and 'BTreeMap' tallies for 'document_kinds' ('wiki: 2') and 'source_kinds' ('file: 1'). [crates/gwiki/src/benchmark.rs:704-719]
 - `configured_optional_sources` (function) component `configured_optional_sources [function]` (`b68d0a8b-f52d-5002-ac4e-772025781ade`) lines 721-737 [crates/gwiki/src/benchmark.rs:721-737]
   - Signature: `fn configured_optional_sources() -> OptionalBenchmarkSources {`
-  - Purpose: Indexed function `configured_optional_sources` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:721-737]
+  - Purpose: Returns an 'OptionalBenchmarkSources' instance with 'falkor' unset, 'qdrant' configured to 'http://qdrant.local' without an API key, a direct semantic embedding configured against 'http://embeddings.local/v1' using 'embed-model' with a 'query: ' prefix and 10-second timeout, and 'model_provider_available' set to 'false'. [crates/gwiki/src/benchmark.rs:721-737]
 - `retrieval_precision_available_path_includes_examples` (function) component `retrieval_precision_available_path_includes_examples [function]` (`bee98aa7-0d07-568e-aae0-d3612b8edf51`) lines 740-771 [crates/gwiki/src/benchmark.rs:740-771]
   - Signature: `fn retrieval_precision_available_path_includes_examples() {`
-  - Purpose: Indexed function `retrieval_precision_available_path_includes_examples` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:740-771]
+  - Purpose: Verifies that 'retrieval_precision_with_backends' marks retrieval precision as available for the 'rust' scope and returns two exact-match examples with 'precision_at_1 == Some(1.0)' and no failure reason. [crates/gwiki/src/benchmark.rs:740-771]
 - `benchmark_report_marks_optional_sources_degraded_without_zero_fill` (function) component `benchmark_report_marks_optional_sources_degraded_without_zero_fill [function]` (`16c5e92e-bb06-5a58-a0f0-5d37df68d97f`) lines 774-818 [crates/gwiki/src/benchmark.rs:774-818]
   - Signature: `fn benchmark_report_marks_optional_sources_degraded_without_zero_fill() {`
-  - Purpose: Indexed function `benchmark_report_marks_optional_sources_degraded_without_zero_fill` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:774-818]
+  - Purpose: Builds a benchmark report with all optional benchmark sources unavailable and verifies that non-available metrics remain unavailable without zero-filled fields, while 'degraded_sources' lists 'embeddings', 'falkordb', 'model_provider', and 'qdrant'. [crates/gwiki/src/benchmark.rs:774-818]
 - `benchmark_report_does_not_degrade_configured_backends_without_examples` (function) component `benchmark_report_does_not_degrade_configured_backends_without_examples [function]` (`45a2bbf0-ae36-5291-b19e-6e0a2a7618e4`) lines 821-860 [crates/gwiki/src/benchmark.rs:821-860]
   - Signature: `fn benchmark_report_does_not_degrade_configured_backends_without_examples() {`
-  - Purpose: Indexed function `benchmark_report_does_not_degrade_configured_backends_without_examples` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:821-860]
+  - Purpose: Verifies that 'build_report' does not mark configured backends like 'qdrant' or 'embeddings' as degraded when there are no example chunks, while 'retrieval_precision' reports the expected “no path-backed chunks” reason. [crates/gwiki/src/benchmark.rs:821-860]
 - `retrieval_precision_candidate_count_is_configurable` (function) component `retrieval_precision_candidate_count_is_configurable [function]` (`369190f8-f893-5123-9348-4b40d37eb085`) lines 863-873 [crates/gwiki/src/benchmark.rs:863-873]
   - Signature: `fn retrieval_precision_candidate_count_is_configurable() {`
-  - Purpose: Indexed function `retrieval_precision_candidate_count_is_configurable` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:863-873]
+  - Purpose: Verifies that 'seeded_retrieval_candidates(&rows(), 1)' returns exactly one 'RetrievalPrecisionCandidate' with query '"one two"' and expected path '"ownership.md"', demonstrating the candidate count is configurable. [crates/gwiki/src/benchmark.rs:863-873]
 - `count_to_u64_rejects_negative_counts` (function) component `count_to_u64_rejects_negative_counts [function]` (`6b989364-950f-55d0-84f0-57be4fe41737`) lines 876-881 [crates/gwiki/src/benchmark.rs:876-881]
   - Signature: `fn count_to_u64_rejects_negative_counts() {`
-  - Purpose: Indexed function `count_to_u64_rejects_negative_counts` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:876-881]
+  - Purpose: Verifies that 'count_to_u64(-1, "count benchmark rows")' returns a 'WikiError::Config' and formats an error message containing 'negative count -1'. [crates/gwiki/src/benchmark.rs:876-881]
 - `falkor_count_rejects_negative_counts` (function) component `falkor_count_rejects_negative_counts [function]` (`c8b9f82a-1f7e-5268-917e-04e7774a4049`) lines 884-893 [crates/gwiki/src/benchmark.rs:884-893]
   - Signature: `fn falkor_count_rejects_negative_counts() {`
-  - Purpose: Indexed function `falkor_count_rejects_negative_counts` in `crates/gwiki/src/benchmark.rs`. [crates/gwiki/src/benchmark.rs:884-893]
+  - Purpose: Verifies that 'falkor_count' rejects a row with 'count = -1' by returning an error whose message contains 'negative value -1'. [crates/gwiki/src/benchmark.rs:884-893]
 

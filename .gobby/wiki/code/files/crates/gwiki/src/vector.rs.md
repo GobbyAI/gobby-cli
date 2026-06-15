@@ -57,7 +57,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-Implements the wiki vector synchronization layer for `gwiki`: it defines the chunk and point records, a sync result type, and a unified error type, then provides traits and concrete adapters for reading wiki chunks from Postgres, generating embeddings, and writing/deleting vectors in Qdrant. The main `sync_scope_vectors` flow resolves the collection for a `SearchScope`, loads current chunks and stale paths, batches chunk content through the embedder, validates embedding shape, builds payloads and deterministic point IDs, upserts the vectors, and removes vectors for deleted paths. The file also includes helpers for scope-based collection/filter mapping, payload construction, UUID/snippet generation, row parsing, and test doubles plus tests that verify collection selection, batching, embedding, upserts, deletions, and error handling.
+This file implements wiki vector indexing and sync support: it defines the chunk, point, and sync-outcome data shapes, a unified `WikiVectorError`, and traits for reading chunks, embedding text, and writing vectors. The main sync flow resolves the target collection for a `SearchScope`, loads current chunks and stale paths, batches chunk content through an embedder, validates the embedding results, builds Qdrant-ready points with rich payload metadata, and then upserts new vectors while deleting stale ones. It also provides PostgreSQL-backed and Qdrant-backed adapters plus test doubles and helper functions for payload construction, deterministic point IDs, snippet generation, filter building, and row parsing.
 [crates/gwiki/src/vector.rs:17-26]
 [crates/gwiki/src/vector.rs:29-33]
 [crates/gwiki/src/vector.rs:36-40]
@@ -89,7 +89,7 @@ Implements the wiki vector synchronization layer for `gwiki`: it defines the chu
   - Purpose: 'WikiVectorError' is a Rust error type that implements the 'std::error::Error' trait, allowing it to participate in standard error handling and propagation. [crates/gwiki/src/vector.rs:61]
 - `WikiVectorError` (class) component `WikiVectorError [class]` (`a9105d24-683c-55b4-a9c1-d0c51e865ceb`) lines 63-67 [crates/gwiki/src/vector.rs:63-67]
   - Signature: `impl From<postgres::Error> for WikiVectorError {`
-  - Purpose: 'WikiVectorError' implements 'From<postgres::Error>' by converting any PostgreSQL error into 'WikiVectorError::Store' containing the error’s string representation. [crates/gwiki/src/vector.rs:63-67]
+  - Purpose: 'WikiVectorError' implements 'From`<postgres::Error>`' by converting any PostgreSQL error into 'WikiVectorError::Store' containing the error’s string representation. [crates/gwiki/src/vector.rs:63-67]
 - `WikiVectorError.from` (method) component `WikiVectorError.from [method]` (`2d9f8282-93da-5a3e-875c-0068eddccbe2`) lines 64-66 [crates/gwiki/src/vector.rs:64-66]
   - Signature: `fn from(error: postgres::Error) -> Self {`
   - Purpose: Converts a 'postgres::Error' into this type by wrapping the error’s string representation in 'Self::Store'. [crates/gwiki/src/vector.rs:64-66]

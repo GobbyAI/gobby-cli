@@ -17,7 +17,7 @@ Module: [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/comman
 
 ## Purpose
 
-Builds the command output for a refresh run. `render_refresh` gathers the refresh results, derives a status string with `refresh_status`, and packages everything into a scoped `CommandOutcome` containing both JSON and human-readable text. The JSON payload includes the command name, scope, dry-run flag, planned/refreshed/unchanged/failed/skipped lists, indexed data, index status, and degradations, while the text summary reports counts for the main result buckets. It only returns exit code `1` for an explicit non-dry-run single-source refresh that failed completely; all other cases exit successfully. `refresh_status` encodes the outcome priority as `dry_run`, `failed`, `partial`, `refreshed`, or `unchanged` based on the counts.
+Builds the refresh command result for output and process status. `render_refresh` takes a `RefreshRender`, derives a high-level status with `refresh_status`, assembles a JSON payload plus a human-readable summary, and wraps both in a scoped `CommandOutcome`. It only returns exit code `1` for an explicit, non-dry-run single-source refresh where every attempted source failed; all other refresh cases report success through the outcome payload. `refresh_status` maps the dry-run and result counts to a static status string, prioritizing `dry_run`, then total failure, partial failure, refreshed, and unchanged.
 [crates/gwiki/src/commands/refresh/render.rs:3-49]
 [crates/gwiki/src/commands/refresh/render.rs:51-68]
 

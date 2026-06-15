@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gsqz/src/primitives|crates/gsqz/src/primitives]]
 
 ## Purpose
 
-Provides a line deduplication primitive that collapses only consecutive runs of identical or number-only-different strings. It normalizes each trimmed line by replacing digit sequences with a placeholder, groups adjacent matches, and emits the first line of each run followed by a `[repeated N times]` annotation when a run has multiple entries. The test module exercises the main behaviors: collapsing exact and near-identical duplicates, preserving distinct and non-consecutive lines, and handling empty, single-line, two-line, and mixed-group inputs.
+Provides a line deduplication primitive that collapses only consecutive duplicates, including near-identical lines that differ only by numbers. It normalizes digits with a shared regex, tracks each run’s first line and count, and when a run ends emits either the original line or the line plus a `"[repeated N times]"` annotation. The tests cover identical, numeric-variant, distinct, empty, single-line, mixed-group, and non-consecutive cases to confirm it only merges adjacent runs.
 [crates/gsqz/src/primitives/dedup.rs:9-45]
 [crates/gsqz/src/primitives/dedup.rs:52-58]
 [crates/gsqz/src/primitives/dedup.rs:61-70]

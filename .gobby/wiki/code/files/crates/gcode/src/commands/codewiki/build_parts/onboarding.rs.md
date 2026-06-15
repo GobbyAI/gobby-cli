@@ -6,13 +6,13 @@ provenance:
   ranges:
   - 7-52
   - 54-109
-  - 111-200
-  - 202-208
-  - 210-212
-  - 214-219
-  - 225-246
-  - 249-255
-  - 258-268
+  - 111-201
+  - 203-209
+  - 211-213
+  - 215-220
+  - 226-247
+  - 250-256
+  - 259-269
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -24,12 +24,12 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gco
 
 ## Purpose
 
-This file generates an ordered onboarding guide for a Rust codebase by identifying entry points and ranking modules by importance. The main function `build_onboarding_doc` orchestrates the process: it extracts entry points (main.rs, lib.rs, and public API symbols) via `onboarding_entry_points`, computes a reading order by ranking modules via their dependency graph centrality using `ranked_onboarding_steps`, and gracefully degrades when graph analytics are unavailable or truncated. Supporting functions classify files as Rust entry points with `is_rust_entry_file`, identify public API symbols with `is_public_api_symbol`, retrieve source spans for ranked steps via `step_source_spans`, and construct Symbol metadata with `symbol_with_signature`. The file includes unit tests validating public visibility detection.
+Builds the onboarding section of a codewiki document by combining entry-point discovery with an ordered reading path through the project. It collects Rust entry files and public API symbols as onboarding entry points, then computes a ranked module reading order from dependency graph data, falling back gracefully when graph analytics are unavailable or truncated. Helper routines support this by identifying Rust entry files, filtering public API symbols, looking up module source spans, and the tests verify the public-API detection rules.
 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:7-52]
 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:54-109]
-[crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:111-200]
-[crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:202-208]
-[crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:210-212]
+[crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:111-201]
+[crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:203-209]
+[crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:211-213]
 
 ## API Symbols
 
@@ -39,25 +39,25 @@ This file generates an ordered onboarding guide for a Rust codebase by identifyi
 - `onboarding_entry_points` (function) component `onboarding_entry_points [function]` (`512b74da-d547-5cf0-85b9-f47e18a6abf8`) lines 54-109 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:54-109]
   - Signature: `fn onboarding_entry_points(files: &[FileDoc]) -> Vec<OnboardingEntryPoint> {`
   - Purpose: Extracts and deduplicates onboarding entry points from Rust entry files (main.rs and library files) and public API symbols, annotating each with source spans, descriptions, and wikilinks. [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:54-109]
-- `ranked_onboarding_steps` (function) component `ranked_onboarding_steps [function]` (`4f8ee865-ff5d-5abc-83e5-4cb632aa0108`) lines 111-200 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:111-200]
+- `ranked_onboarding_steps` (function) component `ranked_onboarding_steps [function]` (`4f8ee865-ff5d-5abc-83e5-4cb632aa0108`) lines 111-201 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:111-201]
   - Signature: `fn ranked_onboarding_steps(`
-  - Purpose: Generates an ordered onboarding sequence by constructing a module dependency graph and ranking modules by their centrality scores computed via graph analytics. [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:111-200]
-- `step_source_spans` (function) component `step_source_spans [function]` (`35d266e1-588c-5922-be7b-59c73aac0fe6`) lines 202-208 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:202-208]
+  - Purpose: Builds a ranked list of onboarding steps for non-empty modules by deriving module dependency edges from file symbols, analyzing the resulting import graph for topology and centrality, and using those metrics plus module summaries to order the steps. [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:111-201]
+- `step_source_spans` (function) component `step_source_spans [function]` (`37f458fa-507d-5795-8688-a9b9c8ee27ad`) lines 203-209 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:203-209]
   - Signature: `fn step_source_spans(module: &str, modules: &[ModuleDoc]) -> Vec<SourceSpan> {`
-  - Purpose: Returns the cloned source spans for a module identified by name from a ModuleDoc slice, or an empty vector if no matching module exists. [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:202-208]
-- `is_rust_entry_file` (function) component `is_rust_entry_file [function]` (`d18447d0-e856-5eee-8b40-6724ee638f03`) lines 210-212 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:210-212]
+  - Purpose: Returns the cloned 'source_spans' for the first 'ModuleDoc' whose 'module' matches the input string, or an empty 'Vec<SourceSpan>' if no match is found. [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:203-209]
+- `is_rust_entry_file` (function) component `is_rust_entry_file [function]` (`76cd4247-f50b-54dc-8728-c1af6e567f71`) lines 211-213 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:211-213]
   - Signature: `fn is_rust_entry_file(file: &str) -> bool {`
-  - Purpose: Returns `true` if the file path is or ends with a Rust crate entry point (`main.rs` or `lib.rs`). [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:210-212]
-- `is_public_api_symbol` (function) component `is_public_api_symbol [function]` (`84030109-023b-567c-ba3d-5f7793a04cd6`) lines 214-219 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:214-219]
+  - Purpose: Returns 'true' if the path is exactly 'main.rs' or 'lib.rs', or if it ends with '/main.rs' or '/lib.rs', identifying Rust entry-point source files. [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:211-213]
+- `is_public_api_symbol` (function) component `is_public_api_symbol [function]` (`283593cc-043a-536d-9125-e7561752335b`) lines 215-220 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:215-220]
   - Signature: `fn is_public_api_symbol(symbol: &Symbol) -> bool {`
-  - Purpose: Determines whether a symbol is a public API member by checking if its signature, after trimming leading whitespace, is exactly "pub" or begins with "pub ". [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:214-219]
-- `symbol_with_signature` (function) component `symbol_with_signature [function]` (`c329e461-dea4-5cd0-8053-478bd08fe594`) lines 225-246 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:225-246]
+  - Purpose: Returns 'true' when the symbol’s signature, after leading whitespace is trimmed, begins with 'pub' as a standalone keyword or 'pub ', indicating it is a public API symbol. [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:215-220]
+- `symbol_with_signature` (function) component `symbol_with_signature [function]` (`144ef92a-220f-5fda-9231-ff7ec414a43a`) lines 226-247 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:226-247]
   - Signature: `fn symbol_with_signature(signature: &str) -> Symbol {`
-  - Purpose: Creates a Symbol struct with hardcoded metadata fields (id, project, file path, etc.) and the provided signature string as the sole variable parameter. [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:225-246]
-- `public_api_symbol_accepts_plain_public_visibility` (function) component `public_api_symbol_accepts_plain_public_visibility [function]` (`05c77be0-fc54-5ebc-8aea-e4920a40c314`) lines 249-255 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:249-255]
+  - Purpose: Constructs and returns a 'Symbol' for the Rust function 'crate::run' with fixed metadata, zeroed source spans, and the provided 'signature' stored as 'Some(signature.to_string())'. [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:226-247]
+- `public_api_symbol_accepts_plain_public_visibility` (function) component `public_api_symbol_accepts_plain_public_visibility [function]` (`01b794a3-d6cf-5d0f-a631-c7bea199c9de`) lines 250-256 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:250-256]
   - Signature: `fn public_api_symbol_accepts_plain_public_visibility() {`
-  - Purpose: Unit test verifying that `is_public_api_symbol()` correctly identifies items with plain `pub` visibility as public API symbols. [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:249-255]
-- `public_api_symbol_rejects_restricted_visibility` (function) component `public_api_symbol_rejects_restricted_visibility [function]` (`0e815d94-2c0b-56d5-b834-0d9d89a09442`) lines 258-268 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:258-268]
+  - Purpose: Verifies that 'is_public_api_symbol' classifies bare 'pub' visibility and public item declarations like 'pub fn' and 'pub struct' as public API symbols. [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:250-256]
+- `public_api_symbol_rejects_restricted_visibility` (function) component `public_api_symbol_rejects_restricted_visibility [function]` (`b7a92ce8-6196-5ff7-9295-e6d6aa7c170b`) lines 259-269 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:259-269]
   - Signature: `fn public_api_symbol_rejects_restricted_visibility() {`
-  - Purpose: This test verifies that the `is_public_api_symbol()` function returns false for symbols with restricted visibility modifiers (`pub(crate)`, `pub(super)`, and `pub(in path)`). [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:258-268]
+  - Purpose: Verifies that 'is_public_api_symbol' returns 'false' for symbols with restricted visibility such as 'pub(crate)', 'pub(super)', and 'pub(in ...)'. [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:259-269]
 

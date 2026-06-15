@@ -32,65 +32,75 @@ provenance:
 - file: crates/gcode/src/graph/code_graph/payload.rs
   ranges:
   - 10-19
-  - 21-82
-  - 84-88
-  - 90-109
-  - 111-113
-  - 116-135
-  - 137-200
-  - 203-214
-  - 216-243
-  - 246-262
-  - 264-290
-  - 292-297
-  - 299-316
-  - 318-322
-  - 324-328
-  - 330-339
+  - 21-86
+  - 88-92
+  - 94-113
+  - 115-117
+  - 120-139
+  - 141-204
+  - 207-218
+  - 220-247
+  - 250-266
+  - 268-294
+  - 296-301
+  - 303-320
+  - 322-326
+  - 328-332
+  - 334-343
 - file: crates/gcode/src/graph/code_graph/read.rs
   ranges:
-  - 45-93
-  - 95-97
-  - 99-111
-  - 113-128
-  - 130-149
-  - 151-170
-  - 172-188
-  - 190-206
-  - 208-227
-  - 229-246
-  - 248-267
-  - 269-286
-  - 288-298
-  - 300-317
-  - 319-338
-  - 340-356
-  - 358-377
-  - 379-399
-  - 401-412
-  - 414-436
-  - 438-459
-  - 461-475
-  - 477-501
-  - 503-525
-  - 527-553
-  - 555-564
-  - 566-645
-  - 647-673
-  - 675-711
-  - 713-786
-  - 788-798
-  - 800-810
-  - 812-823
-  - 825-836
-  - 838-851
-  - 853-862
-  - 864-877
-  - 879-895
-  - 897-910
-  - 912-928
-  - 930-936
-  - 938-949
+  - 1-21
+- file: crates/gcode/src/graph/code_graph/read/graph_payloads.rs
+  ranges:
+  - 19-98
+  - 100-126
+  - 128-164
+  - 166-239
+- file: crates/gcode/src/graph/code_graph/read/payload_queries.rs
+  ranges:
+  - 10-29
+  - 31-47
+  - 49-68
+  - 70-90
+  - 92-106
+  - 108-130
+  - 132-153
+  - 155-169
+  - 171-195
+  - 197-219
+- file: crates/gcode/src/graph/code_graph/read/relationship_queries.rs
+  ranges:
+  - 7-19
+  - 21-36
+  - 38-57
+  - 59-78
+  - 80-96
+  - 98-114
+  - 116-135
+  - 137-154
+  - 156-175
+  - 177-194
+  - 196-206
+  - 208-225
+- file: crates/gcode/src/graph/code_graph/read/relationships.rs
+  ranges:
+  - 16-26
+  - 28-38
+  - 40-51
+  - 53-64
+  - 66-79
+  - 81-90
+  - 92-105
+  - 107-123
+  - 125-138
+  - 140-156
+  - 158-164
+  - 166-177
+- file: crates/gcode/src/graph/code_graph/read/support.rs
+  ranges:
+  - 38-86
+  - 88-120
+  - 122-131
 - file: crates/gcode/src/graph/code_graph/tests.rs
   ranges:
   - 7-21
@@ -108,68 +118,85 @@ provenance:
   - 272-282
   - 285-324
   - 327-374
-  - 377-396
-  - 399-409
-  - 412-439
-  - 442-454
+  - 377-424
+  - 427-446
+  - 449-459
+  - 462-489
+  - 492-504
 - file: crates/gcode/src/graph/code_graph/write.rs
   ranges:
-  - 110-113
-  - 116-118
-  - 120-158
-  - 160-165
-  - 167-177
-  - 179-195
-  - 197-216
-  - 218-249
-  - 251-266
-  - 268-277
-  - 279-284
-  - 286-290
-  - 292-297
-  - 299-301
-  - 304-315
-  - 317-326
-  - 328-336
-  - 338-342
-  - 344-346
-  - 348-352
-  - 354-377
-  - 379-383
-  - 385-392
-  - 394-400
-  - 402-406
-  - 409-412
-  - 415-422
-  - 425-429
-  - 431-438
-  - 440-455
-  - 457-462
-  - 464-492
-  - 494-507
-  - 509-511
-  - 513-518
-  - 520-528
-  - 530-566
-  - 568-586
-  - 588-618
-  - 620-654
-  - 656-660
-  - 662-694
-  - 696-702
-  - 704-723
-  - 725-743
-  - 745-765
-  - 767-778
-  - 780-791
-  - 793-804
-  - 806-864
-  - 866-933
-  - 935-947
-  - 949-957
-  - 959-975
-  - 977-986
-  - 988-997
+  - 47-50
+  - 53-56
+  - 59-61
+  - 63-101
+  - 103-108
+  - 110-120
+  - 122-138
+  - 140-159
+  - 161-192
+  - 194-203
+  - 205-214
+  - 216-221
+  - 223-227
+  - 229-234
+  - 236-258
+  - 260-271
+  - 273-282
+  - 284-286
+  - 289-294
+  - 296-307
+  - 309-318
+  - 320-328
+  - 330-334
+  - 336-338
+  - 340-345
+  - 347-351
+  - 353-376
+- file: crates/gcode/src/graph/code_graph/write/deletion.rs
+  ranges:
+  - 8-66
+  - 68-113
+  - 115-127
+  - 129-145
+  - 147-161
+  - 163-171
+  - 173-189
+  - 191-200
+  - 202-211
+- file: crates/gcode/src/graph/code_graph/write/mutation.rs
+  ranges:
+  - 89-96
+  - 99-102
+  - 105-112
+  - 115-119
+  - 121-128
+  - 130-145
+  - 147-152
+  - 154-182
+  - 184-197
+  - 199-207
+  - 209-227
+  - 229-259
+  - 261-295
+  - 297-301
+  - 303-335
+  - 337-343
+  - 345-364
+  - 366-377
+  - 379-390
+  - 392-403
+- file: crates/gcode/src/graph/code_graph/write/support.rs
+  ranges:
+  - 6-13
+  - 15-21
+  - 23-27
+  - 29-31
+- file: crates/gcode/src/graph/code_graph/write/sync_plan.rs
+  ranges:
+  - 30-81
+  - 89-110
+  - 113-156
+  - 159-177
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -181,115 +208,110 @@ Parent: [[code/modules/crates/gcode/src/graph|crates/gcode/src/graph]]
 
 ## Overview
 
-The code_graph module owns the code-index graph projection: it writes FalkorDB CodeFile, CodeSymbol, CodeModule, UnresolvedCallee, and ExternalSymbol nodes and edges derived from PostgreSQL index rows, despite the broader rule that Gobby-owned stores are externally managed . Its write side builds and executes Cypher for file nodes, imports, definitions, calls, stale graph deletion, orphan cleanup, and project clearing, with sync tokens and provenance metadata keeping projections scoped and current  . Connection helpers gate access to the core graph client, while tests cover strict read guards, degraded public reads, scoped deletion, provenance, import handling, and graph cleanup behavior.
+The code graph module owns `gcode`’s FalkorDB-backed code-index projection from both directions: it writes `Code*` nodes and edges derived from indexed PostgreSQL data, then reads those graph structures back into serializable payloads and analytics views. The write side is explicitly scoped as `gcode`-owned graph state, centered on `CodeGraph`, which wraps a project-scoped `GraphClient` and syncs imports, symbol definitions, and call relations with sync tokens and batched mutations  . The payload layer provides the common transport shape: `GraphPayload` stores nodes, links, and an optional center, rejects duplicate or empty node IDs through a lazy cache, and can build weighted analytics graphs from node and edge tuples   [crates/gcode/src/graph/code_graph/payload.rs:44-64].
 
-The read and payload layers turn stored graph data back into query results and API payloads. read.rs defines query builders and public graph reads for callers, usages, imports, project overviews, file graphs, symbol neighbors, and blast radius analysis, using optional graph access and row conversion helpers from payload.rs  . payload.rs provides GraphPayload as the shared node/link container, deduplicating nodes through an internal cache and optionally marking a center node for focused graph views  [crates/gcode/src/graph/code_graph/payload.rs:21-43]. It also converts graph pieces into analytics nodes and edges for dependency analysis [crates/gcode/src/graph/code_graph/payload.rs:45-66].
+Its read flows are guarded by connection helpers and lifecycle request types. `connection.rs` distinguishes required graph reads from optional public reads, mapping missing or failed graph access into `GraphReadError` or degrading to a caller-provided default when appropriate [crates/gcode/src/graph/code_graph/connection.rs:7-12] [crates/gcode/src/graph/code_graph/connection.rs:14-40] [crates/gcode/src/graph/code_graph/connection.rs:42-68]. `lifecycle.rs` models clear and rebuild operations, binding each action to its CLI command, daemon endpoint, success prefix, and timeout configuration, with requests built from shared context and environment-derived timeout settings [crates/gcode/src/graph/code_graph/lifecycle.rs:18-21] [crates/gcode/src/graph/code_graph/lifecycle.rs:23-44] .
 
-Lifecycle support wraps graph-wide clear and rebuild operations as daemon-backed requests. GraphLifecycleAction maps each operation to its CLI command, REST endpoint, and success prefix, while GraphLifecycleRequest carries project, daemon URL, and timeout configuration from Context  . GraphLifecycleTimeouts supplies defaults and environment overrides for clear and rebuild durations, letting lifecycle commands use short clear windows and longer rebuild windows without hard-coding call-site behavior .
+The read submodule is the query and projection layer: it assembles project overviews, file graphs, symbol neighborhoods, and blast-radius views from bounded FalkorDB queries, while `read.rs` re-exports those graph payload helpers plus caller/callee, usage, import, query, and deduplication utilities [crates/gcode/src/graph/code_graph/read.rs:1-21] [crates/gcode/src/graph/code_graph/read/graph_payloads.rs:19-98] . The test module ties these layers together by checking provenance-rich edge metadata, node/link serialization, optional-read degradation, lifecycle detail handling, scoped cleanup and deletion queries, and graph write behavior for imports, calls, stale files, project clears, and code-index labels [crates/gcode/src/graph/code_graph/tests.rs:7-21]  .
 
 ## Call Diagram
 
 ```mermaid
 sequenceDiagram
-    participant m_012eaa3b_661d_5d53_9d81_3c47594e071f as find_callees_batch &#91;function&#93;
-    participant m_0657608d_6a60_5abe_be90_563a2c3ea467 as ensure_file_node_query &#91;function&#93;
-    participant m_08f81370_6f2e_5152_8fb0_4017d6ac1ff0 as project_overview_calls_query &#91;function&#93;
-    participant m_0bbcb310_a597_58b6_8d06_2ed7658e1b9b as typed_query &#91;function&#93;
-    participant m_0dc0ac75_ddc3_54e1_b384_bdfb58f0077d as ensure_file_node &#91;function&#93;
-    participant m_123ef69e_6051_5e0f_9ee9_494551e7e4a1 as find_usages &#91;function&#93;
-    participant m_13119f1a_8c60_51b2_bfa3_640751db91e1 as execute_write_query &#91;function&#93;
-    participant m_2280ab06_6ecd_52db_a9c1_f33bbd0eb73c as find_callees_batch_query &#91;function&#93;
-    participant m_23753c47_43dc_5968_b295_595699d8fb38 as find_usages_query &#91;function&#93;
-    participant m_262a2e33_8e04_5f40_9886_1c9aaed12ca6 as blast_radius_center_query &#91;function&#93;
-    participant m_2aa33b89_b550_5e1a_8fbb_2c941b585662 as blast_radius_graph &#91;function&#93;
-    participant m_2e283c0b_5213_51ac_acab_4e551320c9ba as find_callers_query &#91;function&#93;
-    participant m_31036c05_4460_545e_8265_ea402c0e12a0 as sync_token_param &#91;function&#93;
+    participant m_18e47e6e_97a7_57d8_a61d_916d57d82b9b as GraphLink.from_row &#91;method&#93;
+    participant m_1de0cc23_e279_5d38_88a0_b3899851944a as sync_file_graph &#91;function&#93;
+    participant m_284b67d6_d34b_5105_9685_d0b95fd6e276 as plans_header_then_one_definition_batch_per_chunk &#91;function&#93;
+    participant m_2e82aca5_7fdb_588e_a360_b3a64ee080aa as row_to_projection_metadata &#91;function&#93;
     participant m_3108b7ef_9759_5509_9018_0af9cfdc2368 as run_lifecycle_action &#91;function&#93;
+    participant m_319a1033_0bd7_575d_a7ba_7f6ebc24f235 as small_file_plans_header_and_single_definition_batch &#91;function&#93;
     participant m_3e63418d_91be_587f_b332_34986e97cdf6 as extract_summary_text &#91;function&#93;
     participant m_4453d99f_2fe2_5bc1_85ca_333d7d74a4e7 as build_lifecycle_url &#91;function&#93;
-    participant m_5ee1320e_2e49_5c1c_b8b7_2cbb7a1adc50 as clamp_limit &#91;function&#93;
-    participant m_6c9bb637_f396_5be1_bfb5_a902c9953ff2 as blast_radius_file_import_query &#91;function&#93;
-    participant m_7281c24b_2a5b_5ed2_90f0_d958adebdbac as blast_radius_query &#91;function&#93;
-    participant m_73c30320_453a_5537_81c5_3a818ac4ebf5 as blast_radius_file_call_query &#91;function&#93;
-    participant m_8fddca91_0b91_5e28_9fe4_be965c020eec as usize_value &#91;function&#93;
-    participant m_c2c5846c_da6e_516d_ba8c_aec079725d4b as clamp_offset &#91;function&#93;
-    participant m_e02e9136_83d4_522c_aa86_32c89bb17ea9 as dedupe_limited_blast_rows &#91;function&#93;
-    m_012eaa3b_661d_5d53_9d81_3c47594e071f->>m_2280ab06_6ecd_52db_a9c1_f33bbd0eb73c: calls
-    m_0657608d_6a60_5abe_be90_563a2c3ea467->>m_0bbcb310_a597_58b6_8d06_2ed7658e1b9b: calls
-    m_0657608d_6a60_5abe_be90_563a2c3ea467->>m_31036c05_4460_545e_8265_ea402c0e12a0: calls
-    m_0657608d_6a60_5abe_be90_563a2c3ea467->>m_8fddca91_0b91_5e28_9fe4_be965c020eec: calls
-    m_08f81370_6f2e_5152_8fb0_4017d6ac1ff0->>m_5ee1320e_2e49_5c1c_b8b7_2cbb7a1adc50: calls
-    m_0dc0ac75_ddc3_54e1_b384_bdfb58f0077d->>m_0657608d_6a60_5abe_be90_563a2c3ea467: calls
-    m_0dc0ac75_ddc3_54e1_b384_bdfb58f0077d->>m_13119f1a_8c60_51b2_bfa3_640751db91e1: calls
-    m_123ef69e_6051_5e0f_9ee9_494551e7e4a1->>m_23753c47_43dc_5968_b295_595699d8fb38: calls
-    m_2280ab06_6ecd_52db_a9c1_f33bbd0eb73c->>m_5ee1320e_2e49_5c1c_b8b7_2cbb7a1adc50: calls
-    m_23753c47_43dc_5968_b295_595699d8fb38->>m_5ee1320e_2e49_5c1c_b8b7_2cbb7a1adc50: calls
-    m_23753c47_43dc_5968_b295_595699d8fb38->>m_c2c5846c_da6e_516d_ba8c_aec079725d4b: calls
-    m_2aa33b89_b550_5e1a_8fbb_2c941b585662->>m_262a2e33_8e04_5f40_9886_1c9aaed12ca6: calls
-    m_2aa33b89_b550_5e1a_8fbb_2c941b585662->>m_6c9bb637_f396_5be1_bfb5_a902c9953ff2: calls
-    m_2aa33b89_b550_5e1a_8fbb_2c941b585662->>m_7281c24b_2a5b_5ed2_90f0_d958adebdbac: calls
-    m_2aa33b89_b550_5e1a_8fbb_2c941b585662->>m_73c30320_453a_5537_81c5_3a818ac4ebf5: calls
-    m_2aa33b89_b550_5e1a_8fbb_2c941b585662->>m_e02e9136_83d4_522c_aa86_32c89bb17ea9: calls
-    m_2e283c0b_5213_51ac_acab_4e551320c9ba->>m_5ee1320e_2e49_5c1c_b8b7_2cbb7a1adc50: calls
-    m_2e283c0b_5213_51ac_acab_4e551320c9ba->>m_c2c5846c_da6e_516d_ba8c_aec079725d4b: calls
+    participant m_45a21f8f_94ab_56c8_9b13_6fb807f974b0 as require_daemon_url &#91;function&#93;
+    participant m_49f95909_a463_50da_9751_9357d42e4a2f as add_imports_query &#91;function&#93;
+    participant m_4e2fbd55_4044_59e2_9786_dde50ef49b0c as add_symbol_calls_query &#91;function&#93;
+    participant m_4fb93f1c_f232_5c21_8be7_8d95aa2cd3ee as parse_success_payload &#91;function&#93;
+    participant m_543fee1e_5dcf_583b_bd05_92afc9859200 as GraphPayload.refresh_node_cache &#91;method&#93;
+    participant m_58f587c8_526e_515f_85fe_9f45f06fa899 as cleanup_deleted_files &#91;function&#93;
+    participant m_60221519_fb12_5c2c_8ad3_84919acb4fcf as with_code_graph &#91;function&#93;
+    participant m_6bd8d0a9_f677_5035_9a9b_4a79920c778b as plan_sync_batches &#91;function&#93;
+    participant m_725a13c0_675c_5b80_9cc9_dc1245885fa9 as add_external_calls_query &#91;function&#93;
+    participant m_765d28f7_393f_59be_aca8_959d4b707d10 as GraphNode.from_prefixed_row &#91;method&#93;
+    participant m_81ab65e5_5c6e_5d40_860b_9184c8ef5b60 as GraphPayload.push_node &#91;method&#93;
+    participant m_864a1f4a_cf4f_5883_b05e_dd0041dbc58f as format_http_error &#91;function&#93;
+    participant m_960701ce_7cd6_5b9e_b83d_2b9cdb44976e as compact_detail &#91;function&#93;
+    participant m_d728f3c4_1807_51af_b706_28a7394d375d as metadata_params &#91;function&#93;
+    participant m_d89d3ab9_ad0a_58d2_9645_87a1b3e2929a as row_usize &#91;function&#93;
+    participant m_e62c0138_29fb_5919_86bf_453bb4f023d4 as row_string_owned &#91;function&#93;
+    m_18e47e6e_97a7_57d8_a61d_916d57d82b9b->>m_2e82aca5_7fdb_588e_a360_b3a64ee080aa: calls
+    m_18e47e6e_97a7_57d8_a61d_916d57d82b9b->>m_d89d3ab9_ad0a_58d2_9645_87a1b3e2929a: calls
+    m_18e47e6e_97a7_57d8_a61d_916d57d82b9b->>m_e62c0138_29fb_5919_86bf_453bb4f023d4: calls
+    m_1de0cc23_e279_5d38_88a0_b3899851944a->>m_60221519_fb12_5c2c_8ad3_84919acb4fcf: calls
+    m_284b67d6_d34b_5105_9685_d0b95fd6e276->>m_6bd8d0a9_f677_5035_9a9b_4a79920c778b: calls
+    m_2e82aca5_7fdb_588e_a360_b3a64ee080aa->>m_e62c0138_29fb_5919_86bf_453bb4f023d4: calls
     m_3108b7ef_9759_5509_9018_0af9cfdc2368->>m_3e63418d_91be_587f_b332_34986e97cdf6: calls
     m_3108b7ef_9759_5509_9018_0af9cfdc2368->>m_4453d99f_2fe2_5bc1_85ca_333d7d74a4e7: calls
+    m_3108b7ef_9759_5509_9018_0af9cfdc2368->>m_45a21f8f_94ab_56c8_9b13_6fb807f974b0: calls
+    m_3108b7ef_9759_5509_9018_0af9cfdc2368->>m_4fb93f1c_f232_5c21_8be7_8d95aa2cd3ee: calls
+    m_319a1033_0bd7_575d_a7ba_7f6ebc24f235->>m_6bd8d0a9_f677_5035_9a9b_4a79920c778b: calls
+    m_49f95909_a463_50da_9751_9357d42e4a2f->>m_d728f3c4_1807_51af_b706_28a7394d375d: calls
+    m_4e2fbd55_4044_59e2_9786_dde50ef49b0c->>m_d728f3c4_1807_51af_b706_28a7394d375d: calls
+    m_4fb93f1c_f232_5c21_8be7_8d95aa2cd3ee->>m_960701ce_7cd6_5b9e_b83d_2b9cdb44976e: calls
+    m_58f587c8_526e_515f_85fe_9f45f06fa899->>m_60221519_fb12_5c2c_8ad3_84919acb4fcf: calls
+    m_725a13c0_675c_5b80_9cc9_dc1245885fa9->>m_d728f3c4_1807_51af_b706_28a7394d375d: calls
+    m_765d28f7_393f_59be_aca8_959d4b707d10->>m_d89d3ab9_ad0a_58d2_9645_87a1b3e2929a: calls
+    m_765d28f7_393f_59be_aca8_959d4b707d10->>m_e62c0138_29fb_5919_86bf_453bb4f023d4: calls
+    m_81ab65e5_5c6e_5d40_860b_9184c8ef5b60->>m_543fee1e_5dcf_583b_bd05_92afc9859200: calls
+    m_864a1f4a_cf4f_5883_b05e_dd0041dbc58f->>m_960701ce_7cd6_5b9e_b83d_2b9cdb44976e: calls
 ```
+
+## Child Modules
+
+- [[code/modules/crates/gcode/src/graph/code_graph/read|crates/gcode/src/graph/code_graph/read]] - This read module is the code graph’s query and projection layer. It builds higher-level graph payloads for project, file, symbol-neighborhood, and blast-radius views, all against an optional core graph: project overview starts from file nodes and expands through imports, definitions, modules, and symbols; file views attach defined symbols and call relations; symbol views center on a symbol and directed call edges; blast-radius views choose or synthesize a center node and annotate bounded neighbors by distance. These responsibilities are concentrated in `graph_payloads.rs` and supported by bounded query construction in `payload_queries.rs` [crates/gcode/src/graph/code_graph/read/graph_payloads.rs:19-98] [crates/gcode/src/graph/code_graph/read/graph_payloads.rs:100-126] [crates/gcode/src/graph/code_graph/read/graph_payloads.rs:128-164] [crates/gcode/src/graph/code_graph/read/graph_payloads.rs:166-239] .
+
+Relationship reads are split between Cypher builders and execution helpers. `relationship_queries.rs` defines project-scoped `CALLS` lookups for counts, callers, usages, batches, imports, and blast-radius traversal, reusing shared predicates and clamping offsets and limits before embedding pagination into query text . `relationships.rs` wraps those builders with `with_optional_core_graph`, using `Context.project_id`, returning empty vectors or `0` when the core graph is unavailable, and converting raw rows into counts, IDs, or `GraphResult` records .
+
+`support.rs` is the common normalization layer that keeps the query files aligned. It defines shared Cypher fragments for valid call targets, neighbor typing, node typing, link metadata, and the module-wide maximum graph limit, then provides helpers for resilient row-to-result conversion, clamped limits and offsets, blast-row deduplication, and count extraction  [crates/gcode/src/graph/code_graph/read/support.rs:38-83] . Together, the files form a read-only pipeline: query builders produce consistent Cypher and parameters, relationship and payload functions execute them through the optional graph connection, and support helpers normalize the result shape for the API.
+- [[code/modules/crates/gcode/src/graph/code_graph/write|crates/gcode/src/graph/code_graph/write]] - The write module owns the mutation and cleanup side of the code graph persistence layer. Its mutation path turns a parsed file graph into typed Cypher writes: imports become `CodeFile` to `CodeModule` `IMPORTS` edges, definitions merge `CodeSymbol` nodes and `DEFINES` edges, and calls are split across symbol, external, and unresolved targets while carrying provenance, confidence, source system, file path, and sync-token metadata . The support layer keeps those writes uniform by wrapping `TypedQuery` construction, executing prepared queries through `GraphClient`, converting `usize` values to FalkorDB-compatible integers with overflow protection, and standardizing the `sync_token` parameter .
+
+The main sync flow is planned by `sync_plan`: `plan_sync_batches` first emits a header query that merges the `CodeFile` with its final `symbol_count` and `sync_token`, then emits import, definition, symbol-call, external-call, and unresolved-call write queries in bounded chunks of `GRAPH_SYNC_BATCH_SIZE` rows . This keeps large file syncs from producing oversized FalkorDB requests while preserving idempotence because the mutation builders self-merge their graph nodes and relationships . Tests cover both large and small-file planning shapes, ensuring the module produces the expected header-plus-batches query sequence .
+
+Deletion complements the sync path by removing stale graph state before or after file updates. It deletes file-local `IMPORTS`, `DEFINES`, and outgoing `CALLS` relationships, then either removes all symbols for a file or only symbols no longer present in the current ID set [crates/gcode/src/graph/code_graph/write/deletion.rs:8-66]. Additional deletion helpers clean stale rows by sync token, detach-delete file nodes, enumerate project file paths and projection counts, remove orphaned graph nodes, and clear project or global code-index data using shared typed-query construction .
 
 ## Files
 
-- [[code/files/crates/gcode/src/graph/code_graph/connection.rs|crates/gcode/src/graph/code_graph/connection.rs]] - This file provides utilities for managing FalkorDB graph client connections with configurable error handling semantics. It contains three functions that work together to validate and access graph clients from a Context object.
-
-`require_graph_reads` serves as a guard that fails early if FalkorDB is not configured. `with_required_core_graph` wraps graph operations that must succeed, executing a provided closure with a graph client and explicitly mapping service state outcomes (unavailable, unreachable, query failures) to domain-specific GraphReadError types. `with_optional_core_graph` provides a fallback pattern for operations that can gracefully degrade—it either executes the closure on an available client or returns a default value when the service is unconfigured or unreachable, only failing on actual query execution errors.
-
-Together, these functions allow callers to express whether graph reads are mandatory or optional, with the appropriate error behavior for each case.
+- [[code/files/crates/gcode/src/graph/code_graph/connection.rs|crates/gcode/src/graph/code_graph/connection.rs]] - This file provides small graph-connection helpers for code-graph reads against FalkorDB. `require_graph_reads` checks that graph reads are configured, `with_required_core_graph` runs a closure against a required graph client and maps missing, unreachable, or failed reads to `GraphReadError`, and `with_optional_core_graph` does the same work but falls back to a caller-supplied default when the graph is unavailable or unconfigured.
 [crates/gcode/src/graph/code_graph/connection.rs:7-12]
 [crates/gcode/src/graph/code_graph/connection.rs:14-40]
 [crates/gcode/src/graph/code_graph/connection.rs:42-68]
-- [[code/files/crates/gcode/src/graph/code_graph/lifecycle.rs|crates/gcode/src/graph/code_graph/lifecycle.rs]] - This file manages graph lifecycle operations (clear and rebuild) for a code-indexing system. GraphLifecycleAction is an enum that maps two operations to their CLI commands, REST API endpoints, and success messages. GraphLifecycleRequest encapsulates the project context and timeout configuration needed for lifecycle operations, constructible from environment variables via from_context. GraphLifecycleTimeouts provides configurable timeout durations loaded from environment variables with sensible defaults, and maps actions to their corresponding timeout values. The file includes helper functions that handle HTTP communication with a Gobby daemon: require_daemon_url validates daemon configuration, build_lifecycle_url constructs request URLs, format_http_error and parse_success_payload handle responses, extract_summary_text finds summary information in JSON payloads, and run_lifecycle_action orchestrates the full HTTP POST workflow. GraphReadRequest and GraphReadError support querying graph data and reporting read failures respectively. Together these components enable remote execution of graph lifecycle operations with configurable timeouts and detailed error reporting.
+- [[code/files/crates/gcode/src/graph/code_graph/lifecycle.rs|crates/gcode/src/graph/code_graph/lifecycle.rs]] - Defines the graph lifecycle request/response plumbing for the code index daemon. It models the two lifecycle actions, `clear` and `rebuild`, and maps each one to its CLI command, HTTP endpoint, success-message prefix, and timeout value. `GraphLifecycleRequest` captures the project ID, optional daemon URL, and action timeouts, with a helper that builds it from the shared config context and environment-driven timeout settings. The file also provides `GraphLifecycleOutput` for describing a lifecycle event, `GraphReadRequest` and `GraphReadError` for graph read operations, and a set of helpers that validate the daemon URL, build the request URL, normalize error details, parse successful JSON payloads, extract a summary string, and execute the blocking POST request against the daemon.
 [crates/gcode/src/graph/code_graph/lifecycle.rs:18-21]
 [crates/gcode/src/graph/code_graph/lifecycle.rs:23-44]
 [crates/gcode/src/graph/code_graph/lifecycle.rs:24-29]
 [crates/gcode/src/graph/code_graph/lifecycle.rs:31-36]
 [crates/gcode/src/graph/code_graph/lifecycle.rs:38-43]
-- [[code/files/crates/gcode/src/graph/code_graph/payload.rs|crates/gcode/src/graph/code_graph/payload.rs]] - This file defines the core data structures and utilities for building and managing code dependency graphs with analytics integration. `GraphPayload` is the main container holding collections of `GraphNode` (vertices) and `GraphLink` (edges), with an optional center reference and an internal cache of node IDs to prevent duplicates. Its methods manage node insertion, graph construction, and node caching. `GraphNode` and `GraphLink` encapsulate vertex and edge data respectively, with factory methods to construct instances from database rows. The `AnalyticsGraph` struct converts the internal graph representation into `gobby_core`'s analytics framework for dependency analysis. Supporting utility functions extract and parse row data into node/link/edge metadata components, calculate node weights, and populate graph structures. This enables the codebase to represent code dependencies as queryable graphs suitable for impact analysis.
+- [[code/files/crates/gcode/src/graph/code_graph/payload.rs|crates/gcode/src/graph/code_graph/payload.rs]] - This file defines the graph payload model used by `gcode` to move code graphs between storage, serialization, and analytics. `GraphPayload` holds deduplicated `GraphNode` entries, `GraphLink` edges, and an optional center node, lazily maintains a node-ID cache to reject duplicate inserts, and exposes helpers to build analytics graphs from node/edge tuples.
+
+The rest of the file provides the supporting record types and parsing utilities: `GraphNode` and `GraphLink` constructors plus row deserializers for Falkor query results, metadata parsing helpers, and small adapters that add nodes or links from rows into a payload.
 [crates/gcode/src/graph/code_graph/payload.rs:10-19]
-[crates/gcode/src/graph/code_graph/payload.rs:21-82]
+[crates/gcode/src/graph/code_graph/payload.rs:21-86]
 [crates/gcode/src/graph/code_graph/payload.rs:22-30]
 [crates/gcode/src/graph/code_graph/payload.rs:32-43]
 [crates/gcode/src/graph/code_graph/payload.rs:45-47]
-- [[code/files/crates/gcode/src/graph/code_graph/read.rs|crates/gcode/src/graph/code_graph/read.rs]] - This file provides a query layer for analyzing code call graphs stored in Neo4j. It contains three main categories of functions working together:
-
-**Query builders** generate parameterized Cypher queries for different analysis patterns: single-symbol queries (find callers, usages, neighbors), batch queries (multiple symbols at once), file-level analysis (symbols and calls within files), import graph navigation, and transitive dependency analysis (blast radius queries). These builders use constants like CALL_TARGET_PREDICATE and NEIGHBOR_TYPE_CASE to handle multiple Neo4j node types (CodeSymbol, UnresolvedCallee, ExternalSymbol).
-
-**Execution wrappers** are the public API that run these queries against an optional core graph database using `with_optional_core_graph`, executing operations like `count_callers`, `find_usages`, and `blast_radius`. They map query results to GraphResult objects via `row_to_graph_result`.
-
-**Payload builders** (`project_overview_graph`, `file_graph`, `symbol_neighbors`, `blast_radius_graph`) transform raw query rows into structured GraphPayload objects containing nodes and links for visualization. Helper functions like `row_usize`, `count_from_rows`, and `dedupe_limited_blast_rows` process raw database results, with `clamp_limit` and `clamp_offset` enforcing the MAX_GRAPH_LIMIT (100) boundary on all result sets.
-
-Together these components enable exploring code relationships from multiple perspectives: direct caller/callee relationships, project-wide file and module imports, file-level function definitions and calls, and impact analysis showing all symbols that transitively depend on a given target.
-[crates/gcode/src/graph/code_graph/read.rs:45-90]
-[crates/gcode/src/graph/code_graph/read.rs:91-93]
-[crates/gcode/src/graph/code_graph/read.rs:95-97]
-[crates/gcode/src/graph/code_graph/read.rs:99-111]
-[crates/gcode/src/graph/code_graph/read.rs:113-128]
-- [[code/files/crates/gcode/src/graph/code_graph/tests.rs|crates/gcode/src/graph/code_graph/tests.rs]] - This test file validates the code_graph module's core functionality through a suite of unit tests. It provides a `test_context` helper that instantiates a Context struct with test configuration values, then exercises multiple aspects of code graph operations:
-
-The tests verify data integrity by checking that code edge metadata (provenance, confidence, source file path, line numbers) is correctly extracted and preserved through serialization and GraphPayload transformations. They validate query generation by asserting that SQL and Cypher queries use proper column aliasing to prevent shadowing, maintain distinct metadata field references, and employ correct filtering patterns.
-
-The tests ensure safety constraints including project-scoped operations (all deletions and cleanup queries filter by project ID), label targeting (distinguishing code index labels from memory graph labels), and selective preservation (stale symbols are deleted while current symbols are retained through parameterized ID filters). They also verify graceful degradation—when FalkorDB is not configured, read guards fail strictly while public query APIs return empty responses rather than erroring.
-
-Additional tests confirm support operations like row deduplication by node_id with distance minimization, UTF-8 boundary-aware string truncation, undirected graph traversal patterns for import relationships, and filtering of unparsed imports marked with sentinel prefixes. Together, these tests ensure the code_graph module correctly manages code structure metadata, generates safe parameterized queries, and handles edge cases without compromising data consistency.
+- [[code/files/crates/gcode/src/graph/code_graph/read.rs|crates/gcode/src/graph/code_graph/read.rs]] - Re-exports read-side graph query and payload helpers for the code graph module, providing functions for building graph views like project overviews, file graphs, symbol neighbors, blast-radius data, caller/callee and usage lookups, plus test-only query and deduplication utilities. [crates/gcode/src/graph/code_graph/read.rs:1-21]
+- [[code/files/crates/gcode/src/graph/code_graph/tests.rs|crates/gcode/src/graph/code_graph/tests.rs]] - This file is a test module for the code-graph layer in `gcode`. It builds a reusable `Context` for tests, then verifies that code-edge metadata and graph payloads preserve provenance, source-system, and link details; that read APIs and projection helpers serialize and choose the correct metadata fields; and that graph/query helpers generate the expected Cypher/SQL for imports, blast-radius traversal, file deletion, cleanup, and project-wide clearing while staying properly scoped and filtering out invalid or stale data.
 [crates/gcode/src/graph/code_graph/tests.rs:7-21]
 [crates/gcode/src/graph/code_graph/tests.rs:24-33]
 [crates/gcode/src/graph/code_graph/tests.rs:36-65]
 [crates/gcode/src/graph/code_graph/tests.rs:68-151]
 [crates/gcode/src/graph/code_graph/tests.rs:154-159]
-- [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - This file implements write operations for the code-index graph projection, managing FalkorDB graph database writes for code structure data extracted from PostgreSQL index rows. The CodeGraph class provides the main interface with methods for syncing files (sync_file, sync_file_graph), deleting stale or complete file graphs, and clearing projects. Supporting the core sync operation are query-building functions that generate Cypher statements for creating/updating graph nodes and relationships: ensure_file_node_query builds file node creation, add_imports_query and add_definitions_query construct symbol and import relationships, and the add_*_calls_query functions handle different types of call relationships (symbol calls, external calls, unresolved calls). Helper classes like GraphCallTarget, SyncFileMutation, ImportGraphItem, and CallGraphItem encapsulate the data structures needed for graph operations. Lower-level utility functions (import_graph_items, partition_call_graph_items, symbol_rows, call_rows) transform code index data into graph-ready formats, while cleanup and deletion functions (cleanup_orphans_queries, delete_stale_file_graph_queries, clear_all_code_index_query) maintain graph consistency by removing stale nodes and edges with sync token tracking.
-[crates/gcode/src/graph/code_graph/write.rs:110-113]
-[crates/gcode/src/graph/code_graph/write.rs:116-118]
-[crates/gcode/src/graph/code_graph/write.rs:120-158]
-[crates/gcode/src/graph/code_graph/write.rs:160-165]
-[crates/gcode/src/graph/code_graph/write.rs:167-177]
+- [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - This file implements the write path for the code-index graph projection owned by `gcode`: it wraps a project-scoped `GraphClient` in `CodeGraph` and provides methods to sync file-level imports, symbol definitions, and call relations into FalkorDB, using per-file sync tokens and batched writes to keep the graph aligned with PostgreSQL-derived index data.
+
+Its pieces work together around that sync flow: `ensure_project_indexes` and `ensure_file_node` prepare graph state, `add_imports`, `add_definitions`, and `add_calls` write the per-file relationship groups, `sync_file` coordinates the full update and optional orphan cleanup, and the deletion/cleanup helpers support stale-file removal, project clearing, projection node counting, and whole-project reset operations.
+[crates/gcode/src/graph/code_graph/write.rs:47-50]
+[crates/gcode/src/graph/code_graph/write.rs:53-56]
+[crates/gcode/src/graph/code_graph/write.rs:59-61]
+[crates/gcode/src/graph/code_graph/write.rs:63-101]
+[crates/gcode/src/graph/code_graph/write.rs:103-108]
 
 ## Components
 
@@ -324,79 +346,36 @@ Additional tests confirm support operations like row deduplication by node_id wi
 - `4fb93f1c-f232-5c21-8be7-8d95aa2cd3ee`
 - `3e63418d-91be-587f-b332-34986e97cdf6`
 - `3108b7ef-9759-5509-9018-0af9cfdc2368`
-- `b6ce4f8f-620e-5843-bf9b-0bdd6218d53e`
-- `df198b8a-8f88-5019-8fc0-e7a246b8e828`
-- `7d3749b7-41d2-5478-910b-2689e57f92c4`
-- `9a6c7bf6-a2bc-506f-8207-d0ea83981d02`
-- `72a7b60d-95c7-5304-a5a0-066a668a52a7`
-- `8c438192-3140-57af-a36c-cf156753fb70`
-- `bd10be28-d77f-5822-bc76-b287fc7ed611`
-- `48bdb900-86fb-5ed0-ba01-dbc8d611af7a`
-- `f6a6730e-342b-5566-b52b-f9ece2db04b3`
-- `8e653bba-18cc-5cd5-bd28-2c8489928b76`
-- `450dbc97-6f90-52ba-8995-bbb35d4c7a65`
-- `6af8553a-586c-57c1-b509-962b15b6cba4`
-- `de9e32b9-3ca6-5ccb-b15b-c99f15deb36c`
-- `285bf827-eeac-54e3-9599-5ac737692107`
-- `ea771c32-df61-5d69-9c62-234d101d926e`
-- `b2733cef-3d40-5a43-95f8-fecbe032c555`
-- `c4b69336-b2ff-5244-a040-4a0d88caf971`
-- `88357457-6f31-5970-b20b-4075a316ce46`
-- `4b3fb968-81d6-5c00-9fa3-b93223eb6a45`
-- `9d5463ba-e6f5-5bb9-bb4e-1c557a9cc64e`
-- `0ae7f4d0-4dcf-528a-bc41-dad45f95dfd5`
-- `83a203fa-d966-5cb8-ae62-627e46dd9323`
-- `c3e83663-569b-534e-939a-ad1b05617fe0`
-- `85ac5fd4-9bd7-554b-b380-1d6c58a4cc10`
-- `9c8a8bb8-3659-53cd-b76f-38d9901d25b1`
-- `8fc344e4-c8e3-53db-8d35-6e2813a6d439`
-- `5b2e343b-f802-504d-88c8-6ca297fba2bf`
-- `6c18fcf6-4109-5765-a289-5c8c146b2f49`
-- `c5e6b7f2-467e-563f-a84d-a475e7c01d25`
-- `84131c3f-68d4-5c25-a711-53aabf8ad89b`
-- `4a77dc3d-2ed0-5ea4-9b83-c099cfe94f94`
-- `5ee1320e-2e49-5c1c-b8b7-2cbb7a1adc50`
-- `c2c5846c-da6e-516d-ba8c-aec079725d4b`
-- `947df2c3-4e25-5192-a7fe-f91ebec51657`
-- `9b3ee435-9157-5583-bb9c-52593d59bf64`
-- `2e283c0b-5213-51ac-acab-4e551320c9ba`
-- `23753c47-43dc-5968-b295-595699d8fb38`
-- `a90a1b19-e2c4-5f45-aa1f-dffac723aaab`
-- `80914974-32bb-5651-b04e-40673403e891`
-- `b3c4580a-e2b4-5d89-9dda-c0ada4b56e08`
-- `94d28483-6e5e-5319-bac6-4064ac82b702`
-- `2280ab06-6ecd-52db-a9c1-f33bbd0eb73c`
-- `4e980fea-090b-56e8-81e9-ea910d31d297`
-- `753e67e2-a227-5261-9c26-e75e046b0ff2`
-- `7281c24b-2a5b-5ed2-90f0-d958adebdbac`
-- `781eab46-0a56-55c3-9f71-65a1f5699927`
-- `549f79f5-c9f5-59b6-a967-814716cd3d63`
-- `dacc64d4-cd96-5be4-ba7a-ef0466d00c9b`
-- `08f81370-6f2e-5152-8fb0-4017d6ac1ff0`
-- `935f63b4-e712-5177-854a-28a8a67e0f29`
-- `616c9984-e531-5527-bac8-1a89c15149b3`
-- `df7a8d96-eb1c-5655-a488-c233bdcbe631`
-- `262a2e33-8e04-5f40-9886-1c9aaed12ca6`
-- `73c30320-453a-5537-81c5-3a818ac4ebf5`
-- `6c9bb637-f396-5be1-bfb5-a902c9953ff2`
-- `e02e9136-83d4-522c-aa86-32c89bb17ea9`
-- `99f413e0-edfe-5119-8e72-191a20e73aca`
-- `6ecab80b-a13c-5f86-a65b-b85d453fe648`
-- `6ae9710e-d584-5253-8e5a-bc68334d5c13`
-- `c623ca8d-407a-5735-bbe9-9f6d63e3d5a5`
-- `2aa33b89-b550-5e1a-8fbb-2c941b585662`
-- `33f555c1-e680-5b0d-9bda-37989270b502`
-- `4b7701b1-c6b2-5ef0-8966-5fcde6677cc5`
-- `ee5d723d-639e-5469-88a0-1bda04d72888`
-- `123ef69e-6051-5e0f-9ee9-494551e7e4a1`
-- `8b4f038e-63dc-562a-b860-c527dc966ae3`
-- `93feef96-c223-5590-9af4-8e95dbb1c21f`
-- `c3b3335e-8ad0-590f-95f9-c38a8dad1b24`
-- `7cb6c81f-0649-5b8b-8c6d-ca1d161be669`
-- `012eaa3b-661d-5d53-9d81-3c47594e071f`
-- `6ac6bb29-2cd6-50da-b870-5b41e6d5a100`
-- `a676e7bd-4c78-54ec-981e-1774d22d7da5`
-- `768dc91e-d2a4-586c-81a3-4f937d599f2a`
+- `59acbb71-b370-54d6-ba65-1c3d9c88e1cb`
+- `2fadce14-8b9b-5d57-883b-dd6701bff7b8`
+- `66f22962-9d4e-5c1a-a2d8-0a280e19cf4c`
+- `81ab65e5-5c6e-5d40-860b-9184c8ef5b60`
+- `1645c6d6-98e2-5b25-9fd6-a744b131f2fe`
+- `40bb6569-53e5-5f36-bd7f-7371b7ed6168`
+- `eb23c4e5-aa26-56fd-aee5-06dc7acd9964`
+- `543fee1e-5dcf-583b-bd05-92afc9859200`
+- `7e78e2f1-f454-5ff6-b333-a4c327d74c56`
+- `5dfa87e0-7f0c-58a3-95ff-63471039010e`
+- `37c2a4dc-1124-5023-b110-05fb248398f6`
+- `89749514-64eb-5602-9484-518182453bc0`
+- `3a2ef6ba-832d-5404-9e7d-ea65551068a9`
+- `f084c167-85f8-5ab9-8b1a-168a2c6af1a5`
+- `df2ddf8e-744c-5571-906b-6ab34a4631e4`
+- `7c8f5bff-550a-5077-b256-c43b1eedf9b7`
+- `d9d38321-f19f-5c23-af74-48fac3d49eef`
+- `765d28f7-393f-59be-aca8-959d4b707d10`
+- `582adffe-7460-55ed-9016-f77bcade5426`
+- `c9696acc-0c13-5d87-97ca-f25570c82fb2`
+- `f2fe7253-6bad-5c3e-b67d-a44f9a09d0a7`
+- `18e47e6e-97a7-57d8-a61d-916d57d82b9b`
+- `30b07a2a-7b46-5d59-ad55-62de25a0947c`
+- `207ca297-f0bd-54c4-bc52-d0fe71f91047`
+- `2e82aca5-7fdb-588e-a360-b3a64ee080aa`
+- `e62c0138-29fb-5919-86bf-453bb4f023d4`
+- `d89d3ab9-ad0a-58d2-9645-87a1b3e2929a`
+- `316b191e-843c-5997-af74-bb6649eb2d9c`
+- `4f8faa12-96dd-5138-a79d-f172aeb84990`
+- `9d11ce7c-21ed-5948-b738-b3d53511ecd3`
 - `6ada5f13-a01c-502f-a972-3217233985d9`
 - `997a6ff7-0182-55be-a78f-6a99981cb933`
 - `db7e66a2-5c4e-51ca-9ce3-cbe0a451bada`
@@ -412,67 +391,36 @@ Additional tests confirm support operations like row deduplication by node_id wi
 - `e08e8955-4908-52b8-8c51-37b8262ad4db`
 - `6f57dbfe-ec7a-5dc2-9a7d-240d117f6dfa`
 - `ce7ca738-08aa-5842-9990-a7ca372ce079`
-- `857fdb88-cc01-5819-8aab-af2d64f54df1`
-- `804f63f1-5045-51c2-9265-d3ca6260aac1`
-- `481f99d7-57e7-5aea-85d4-59608b548f84`
-- `dfeb388c-a61b-5d1e-b8c7-5b7657895be1`
-- `0cd2965d-8a90-59fe-b817-b02ed37141d5`
-- `665a3ed2-351e-541b-b7c7-48ea49122acd`
-- `6ed40537-fddc-5438-a9a3-e07eeb743420`
-- `f13ecbc0-6fa2-52e0-bd12-b584e4348268`
-- `0dc0ac75-ddc3-54e1-b384-bdfb58f0077d`
-- `75faa18d-3d18-5c59-9ad2-7cf88c5cdf21`
-- `888d7c01-2d25-53f3-9eee-0c8efe0cc9c9`
-- `e96f8d28-f28d-52d0-83fe-38d9c860f598`
-- `58e6f988-8b96-57f3-ae6c-0df18da3ddb2`
-- `8dcb5a81-5800-5b94-9afb-f8a3bb7fdb00`
-- `b8f12ee8-d96e-587b-b3de-093730be90fc`
-- `70cca93c-9857-5a43-80f7-ea18df80f991`
-- `536aee97-c9e9-5de7-a6b4-da258605d8e3`
-- `f8f85f97-3190-58e8-80c3-29dd87c920a9`
-- `784936a7-609a-5664-b2b1-2693e51e21ce`
-- `05fb8057-3d64-5567-94b1-9c56afda95d7`
-- `c56794bf-bb59-5bb2-a271-8645f5cea6be`
-- `dd68b005-77de-54be-b0a6-8721c78af907`
-- `f1318b3e-014e-5e51-a43c-12eb816e3543`
-- `1aae9e8e-4e0a-591d-b0ab-fd081c1d2aff`
-- `c7e4841b-4279-538c-9373-74dd25cf1dcc`
-- `13119f1a-8c60-51b2-bfa3-640751db91e1`
-- `c9c2debf-97c8-5323-93a2-c1e630283c50`
-- `0bbcb310-a597-58b6-8d06-2ed7658e1b9b`
-- `8fddca91-0b91-5e28-9fe4-be965c020eec`
-- `17d0a6b6-f9de-5b04-ac67-cd2eff0a48ca`
-- `504bc3c1-69bf-5167-b6d5-1d0779fa0099`
-- `04b8aaf8-a6e2-5640-a16b-0b8683e7b579`
-- `37af5f55-cd13-51cd-b5a0-aa6ce73be869`
-- `ac47fc6c-c3a5-5893-a871-4d402bd0c074`
-- `81ee02dc-1fa7-5f69-a502-819ffb6e33a3`
-- `00a5a6ee-3091-5539-91b4-f10a5f28b790`
-- `7cce972a-9ab0-548e-adbf-5ce8f5ee3b65`
-- `31036c05-4460-545e-8265-ea402c0e12a0`
-- `b1402759-23a5-5c28-9707-e3177eecb460`
-- `70394379-8fca-570f-90c2-faba76115b2c`
-- `fce4944f-78df-5155-97f4-cd9e08cd3673`
-- `0657608d-6a60-5abe-be90-563a2c3ea467`
-- `978e6027-4c28-59c2-ab6c-276fe55ec90e`
-- `b35cfe49-47b8-540d-aaf7-448d7555f7a4`
-- `bf1e68bc-6a9c-521a-9e22-494e78014151`
-- `35fa8bd6-176e-5720-abda-415dd08feac5`
-- `c88d3906-f777-5885-bae1-c48fee1b71db`
-- `fe22ca38-c5ed-53cf-9098-382678c79df3`
-- `9ac55836-978c-5653-b105-94ad38e61095`
-- `0c2f5228-e2fe-58fb-9d89-7e8f943e6325`
-- `b7000339-cd8a-5a47-8b65-fdc8b535dc7a`
-- `83262748-ae8e-52ff-89c0-d09e85be107d`
-- `8cfa7e9c-cbaf-5f49-930c-fcac5ee849ea`
-- `de62f113-0f66-5fd9-bee8-4693d762c0ef`
-- `fe3ef795-5fda-59f9-ac2e-f7df6045ee33`
-- `68b61a5c-7343-5a2e-a588-e04f94462441`
-- `92f5c27b-d465-52f3-a18b-529b9c8f5a5b`
-- `f3c28db8-4fa0-5766-9f15-15a3a6cdfabf`
-- `81753bf0-c6bc-542e-8812-a9f04f815774`
-- `6f681259-716a-58fd-afd2-5b3b55e5ccb1`
-- `c0a382c4-9160-5eb9-becb-aab2708ea5ea`
-- `806e9eb7-2379-5f2b-b4fb-b6fa84deab44`
-- `74a69779-cace-5e27-ba5d-b634bab74ed2`
+- `026a895b-7eee-5215-931f-f6331f1b791b`
+- `f2e89055-cd5f-5c54-be1c-b8db276d2a4c`
+- `67996168-6a6e-5a07-8ed0-1a08a1ccc8fe`
+- `762c119a-f95c-535f-a140-a39ad5ee4a18`
+- `933c7846-8838-5dcf-835d-c5a8c3443205`
+- `a109fa3c-aa08-53d9-97b6-bec8732a396e`
+- `a42dac11-4842-5b29-b51e-69d6a802eb22`
+- `a309a89b-2829-5b12-8717-54bb07d6915b`
+- `611d801b-0921-5cc8-ac7f-9d804b1ff3c2`
+- `ed4ee3be-8ccb-5439-850d-a7a74301091a`
+- `6adcdb5d-c3ba-5a78-ad41-f9cb96881c0c`
+- `aab36050-4992-591f-92e7-e2e79ce5367a`
+- `2bce886f-78eb-5947-861a-d9c9128d6249`
+- `722ffbeb-9b3c-5d5a-adff-d5ca059b4f70`
+- `60941c19-4097-5c04-a2a3-727d62ac52ee`
+- `2c73ee74-78f9-526f-b6f1-8317a891b14c`
+- `140b6784-d8e2-503e-af1a-8ce1e1cb50af`
+- `3bcf7942-b6d9-5515-a008-2559f5f89f45`
+- `5a811e4e-2633-5631-a3c8-98c52714ebd7`
+- `6935a390-95e7-5bdd-9688-a5dc13cd2ea1`
+- `1f9d6b97-1bac-5988-ba86-51dd414df08a`
+- `7abef7d6-9982-5593-a1bc-ccd35458f6af`
+- `a8ec0f97-48f8-5647-8e4a-ec190bab444f`
+- `644596c2-6215-561b-99b8-de283458d035`
+- `1de0cc23-e279-5d38-88a0-b3899851944a`
+- `60221519-fb12-5c2c-8ad3-84919acb4fcf`
+- `2966cd9b-ed49-5b76-ab6a-28affe2b73cc`
+- `8d341c07-d57c-567a-879a-267e1f913aeb`
+- `c136afbd-097c-5f63-bcbc-65ba1587dece`
+- `58f587c8-526e-515f-85fe-9f45f06fa899`
+- `a1d50423-9318-5ad2-bd1b-4bf0d39a808a`
+- `4b2d0303-7c2b-5327-a394-70d8431654db`
 

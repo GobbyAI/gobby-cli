@@ -17,7 +17,7 @@ Module: [[code/modules/crates/gcore/assets|crates/gcore/assets]]
 
 ## Purpose
 
-This file defines the Docker Compose service bundle for Gobby’s local dependencies and persistence. It wires up three services: `falkordb` for Redis-compatible storage, `qdrant` for vector search, and `postgres` for the main database with pg_search/pgaudit support. Each service is configured with ports, environment variables, volumes, restart policy, and healthchecks so the daemon can start and stop them reliably through Compose profiles, while the bottom `volumes` section declares the named data volumes used to persist each service’s state.
+Defines the Docker Compose stack for Gobby’s local service dependencies, managed through compose profiles and daemon start/stop. It wires up `falkordb`, `qdrant`, and a custom `postgres` build with their images/build args, ports, environment, persistent volumes, healthchecks, restart policy, and profile gating, and finishes by declaring the named volumes those services use for stored data.
 [crates/gcore/assets/docker-compose.services.yml:5-117]
 [crates/gcore/assets/docker-compose.services.yml:6-28]
 [crates/gcore/assets/docker-compose.services.yml:7]

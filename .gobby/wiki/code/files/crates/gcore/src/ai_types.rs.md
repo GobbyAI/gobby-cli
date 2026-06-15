@@ -41,7 +41,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-Defines shared AI result and error types for gcore. It models normalized transcription output, vision analysis output, and text-generation output, plus token-usage accounting, and provides `from_wire_json` helpers to deserialize transport-specific JSON into these domain structs. The file also defines `AiError` constructors and accessors for capability, configuration, transport, rate-limit, HTTP-status, and parse failures, along with conversion helpers that normalize transcription segment timestamps from floating-point seconds into validated integer milliseconds.
+Defines the shared AI data model for gcore: normalized transcription, vision, and text-generation result structs plus token-usage accounting and a transport-neutral `AiError` type. It also includes wire-format counterparts and conversion helpers that deserialize JSON into domain types, convert transcription timestamps from seconds to integer milliseconds with validation, expose status/retry metadata on errors, and provide tests covering token counting and transcription conversion edge cases.
 [crates/gcore/src/ai_types.rs:9-13]
 [crates/gcore/src/ai_types.rs:17-26]
 [crates/gcore/src/ai_types.rs:28-34]

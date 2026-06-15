@@ -31,7 +31,7 @@ Module: [[code/modules/crates/gwiki/src/compile|crates/gwiki/src/compile]]
 
 ## Purpose
 
-This file contains the compile-module test suite for wiki handoff and article generation. It defines a shared `session_with_note` fixture builder, then exercises `prepare_handoff`, `write_target_page`, `compile_to_wiki`, `compile_to_wiki_with_options`, `update_wiki_index`, and `insert_compiled_page_link` to verify bundle contents, non-destructive write behavior, path and symlink validation, Obsidian markdown output, index maintenance, and explainer-driven degraded or skipped synthesis modes.
+Test module for the compile/handoff pipeline in the wiki compiler. It builds a reusable `ResearchSession` fixture and then exercises `prepare_handoff`, `compile_to_wiki`, `compile_to_wiki_with_options`, `update_wiki_index`, `insert_compiled_page_link`, and `write_target_page` across success and failure cases. The tests check that generated bundles preserve required sections and provenance, that wiki output is written in the expected Obsidian-style format, and that path safety and overwrite rules are enforced for accepted notes and target pages, including symlink traversal and non-destructive write intent behavior.
 [crates/gwiki/src/compile/tests.rs:7-25]
 [crates/gwiki/src/compile/tests.rs:28-72]
 [crates/gwiki/src/compile/tests.rs:75-102]
@@ -72,7 +72,7 @@ This file contains the compile-module test suite for wiki handoff and article ge
   - Purpose: Verifies that compiling a wiki article updates '_index.md' to add the new topic entry without removing existing unrelated index links. [crates/gwiki/src/compile/tests.rs:352-379]
 - `index_update_uses_structural_heading_and_link_checks` (function) component `index_update_uses_structural_heading_and_link_checks [function]` (`cadb477d-cd23-51f1-87cf-e57053166d5d`) lines 382-411 [crates/gwiki/src/compile/tests.rs:382-411]
   - Signature: `fn index_update_uses_structural_heading_and_link_checks() {`
-  - Purpose: Verifies that 'update_wiki_index' normalizes an existing '## Compiled pages archive' heading to '## Compiled pages' and ensures the article link '- [[knowledge/topics/exact|Exact]]' appears exactly once in '_index.md'. [crates/gwiki/src/compile/tests.rs:382-411]
+  - Purpose: Verifies that 'update_wiki_index' normalizes an existing '## Compiled pages archive' heading to '## Compiled pages' and ensures the article link '- `[[knowledge/topics/exact|Exact]]`' appears exactly once in '_index.md'. [crates/gwiki/src/compile/tests.rs:382-411]
 - `insert_compiled_page_link_creates_missing_compiled_heading` (function) component `insert_compiled_page_link_creates_missing_compiled_heading [function]` (`e4379204-bef0-5cbf-96fe-71220cab3675`) lines 414-421 [crates/gwiki/src/compile/tests.rs:414-421]
   - Signature: `fn insert_compiled_page_link_creates_missing_compiled_heading() {`
   - Purpose: Verifies that 'insert_compiled_page_link' creates a missing '## Compiled pages' section in the wiki index and inserts the given compiled page link into it. [crates/gwiki/src/compile/tests.rs:414-421]

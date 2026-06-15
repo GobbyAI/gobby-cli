@@ -24,9 +24,7 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-This file validates that a PostgreSQL Gobby hub has the expected runtime schema before gcode uses it. `validate_runtime_schema` checks for the `pg_search` extension, the BM25 score procedure, required code-index tables, and required BM25 indexes, failing fast with a migration hint if anything is missing.
-
-The helper functions each probe one part of the database catalog: `extension_exists` checks `pg_extension`, `procedure_exists` resolves a `regprocedure`, and `missing_relations` looks up tables or indexes via `to_regclass`, with `required_relation_regclass_name` providing the schema-qualified names used by the checks. The tests verify that missing schema is reported clearly and that relation checks target the expected schema.
+Validates that a PostgreSQL runtime schema has the Gobby code-index prerequisites in place: the `pg_search` extension, the BM25 score procedure, the required tables, and the BM25 indexes. `validate_runtime_schema` orchestrates those checks and bails with a migration hint if anything is missing, while helper functions probe `pg_extension`, `to_regprocedure`, and `to_regclass` to detect specific objects and normalize schema-qualified relation names. The file also includes tests that cover successful validation against a test DSN, the setup guidance in the migration hint, and qualification of `public.code_symbols`.
 [crates/gcode/src/schema.rs:24-52]
 [crates/gcode/src/schema.rs:54-63]
 [crates/gcode/src/schema.rs:65-71]
@@ -55,11 +53,11 @@ The helper functions each probe one part of the database catalog: `extension_exi
   - Purpose: This function verifies that the schema contract includes the `code_symbols` and `code_content_chunks` tables, the `code_symbols_search_bm25` and `code_content_search_bm25` BM25 indexes, and that `BM25_SCORE_REGPROCEDURE` equals `pdb.score(anyelement)`. [crates/gcode/src/schema.rs:99-105]
 - `validates_runtime_schema_when_postgres_test_dsn_is_set` (function) component `validates_runtime_schema_when_postgres_test_dsn_is_set [function]` (`52413b93-42d7-5ac0-9eae-8ec893e60908`) lines 116-123 [crates/gcode/src/schema.rs:116-123]
   - Signature: `fn validates_runtime_schema_when_postgres_test_dsn_is_set() {`
-  - Purpose: Indexed function `validates_runtime_schema_when_postgres_test_dsn_is_set` in `crates/gcode/src/schema.rs`. [crates/gcode/src/schema.rs:116-123]
+  - Purpose: Reads 'GCODE_POSTGRES_TEST_DATABASE_URL', connects to the test PostgreSQL database with read-write access, and asserts that 'validate_runtime_schema' succeeds for that client. [crates/gcode/src/schema.rs:116-123]
 - `missing_schema_requires_setup` (function) component `missing_schema_requires_setup [function]` (`ed4a76b3-0990-507d-be46-0068f4883db9`) lines 127-132 [crates/gcode/src/schema.rs:127-132]
   - Signature: `fn missing_schema_requires_setup() {`
-  - Purpose: Indexed function `missing_schema_requires_setup` in `crates/gcode/src/schema.rs`. [crates/gcode/src/schema.rs:127-132]
+  - Purpose: Asserts that 'MIGRATION_HINT' includes the string 'gcode setup --standalone', ensuring missing runtime schema guidance directs standalone users to explicit setup instructions. [crates/gcode/src/schema.rs:127-132]
 - `relation_validation_qualifies_public_schema` (function) component `relation_validation_qualifies_public_schema [function]` (`cebd5590-90dd-56e5-8214-eba948346301`) lines 135-140 [crates/gcode/src/schema.rs:135-140]
   - Signature: `fn relation_validation_qualifies_public_schema() {`
-  - Purpose: Indexed function `relation_validation_qualifies_public_schema` in `crates/gcode/src/schema.rs`. [crates/gcode/src/schema.rs:135-140]
+  - Purpose: Verifies that 'required_relation_regclass_name("code_symbols")' resolves to the fully qualified 'public.code_symbols' relation name. [crates/gcode/src/schema.rs:135-140]
 

@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gwiki/src/support|crates/gwiki/src/support]]
 
 ## Purpose
 
-Module declaration file that organizes the `support` package for `gwiki`, exposing internal helper submodules for configuration, counting, environment, graph, Postgres access, scoping, search, text, and time, plus a test-only environment module. [crates/gwiki/src/support/mod.rs:1-12]
+Internal support module that groups the crate’s helper submodules for configuration, counting, environment, graph, PostgreSQL, scoping, search, text, and time, with a test-only environment module included under `cfg(test)`. [crates/gwiki/src/support/mod.rs:1-12]
 
 ## API Symbols
 

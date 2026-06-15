@@ -4,7 +4,7 @@ type: code_file
 provenance:
 - file: docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json
   ranges:
-  - 3-47
+  - 3-44
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -16,7 +16,7 @@ Module: [[code/modules/docs/evidence/wiki-parity-2026-06|docs/evidence/wiki-pari
 
 ## Purpose
 
-Records the result of a `gwiki compile` run for the wiki-parity task, tying a resolved project scope to the generated article and its supporting index/source writes. The `ai` block captures the daemon-synthesized compilation metadata, while `command`, `handoff_id`, `outline`, `page_writes`, `article_path`, and `index_path` show what was compiled and where the output landed. The nested `prompt` and `scope` fields document the requested explainer format, token estimate, source coverage, and source path set used to generate the final wiki page.
+This JSON records a `compile` run for a wiki explainer, including the AI generation status, routing, and citation retention, plus the output artifacts it wrote. Its fields connect the synthesis metadata (`ai`, `daemon_synthesis_available`, `handoff_id`), the requested prompt and scope, and the resulting page writes that created the target article and its source note under the wiki tree.
 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:3-12]
 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:4]
 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:5]
@@ -29,7 +29,7 @@ Records the result of a `gwiki compile` run for the wiki-parity task, tying a re
   - Signature: `"ai": {`
   - Purpose: Indexed property `ai` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:3-12]
 - `citations_kept` (property) component `citations_kept [property]` (`e0eb2ba5-aea5-591a-9412-8390d4f264f5`) lines 4-4 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:4]
-  - Signature: `"citations_kept": 6,`
+  - Signature: `"citations_kept": 2,`
   - Purpose: Indexed property `citations_kept` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:4]
 - `citations_stripped` (property) component `citations_stripped [property]` (`1cddca69-c198-5a13-8f62-9d15dfb454c9`) lines 5-5 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:5]
   - Signature: `"citations_stripped": 0,`
@@ -41,84 +41,84 @@ Records the result of a `gwiki compile` run for the wiki-parity task, tying a re
   - Signature: `"fallback_sections": 0,`
   - Purpose: Indexed property `fallback_sections` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:7]
 - `model` (property) component `model [property]` (`d87b3229-4d10-54a9-9d56-a50f0b84506e`) lines 8-8 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:8]
-  - Signature: `"model": "haiku",`
+  - Signature: `"model": "gpt-5.4-mini",`
   - Purpose: Indexed property `model` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:8]
-- `requested_mode` (property) component `requested_mode [property]` (`7daed047-73de-5a94-8781-498e91004172`) lines 9-9 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:9]
+- `requested_mode` (property) component `requested_mode [property]` (`db951409-4f6b-514b-b85b-f17d3eb53f4f`) lines 9-9 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:9]
   - Signature: `"requested_mode": "daemon",`
   - Purpose: Indexed property `requested_mode` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:9]
-- `route` (property) component `route [property]` (`6313a0f7-198b-5efa-b2e2-b2e1046c386c`) lines 10-10 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:10]
+- `route` (property) component `route [property]` (`e5c2e451-f898-55b2-bb77-6c05509e2c77`) lines 10-10 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:10]
   - Signature: `"route": "daemon",`
   - Purpose: Indexed property `route` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:10]
-- `status` (property) component `status [property]` (`43041662-59a9-5c67-814d-02ec81b2957b`) lines 11-11 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:11]
+- `status` (property) component `status [property]` (`619df09b-da56-5b8d-b4a8-4a83dedaf908`) lines 11-11 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:11]
   - Signature: `"status": "generated"`
   - Purpose: Indexed property `status` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:11]
-- `article_path` (property) component `article_path [property]` (`7f88a36d-fee9-5180-8980-633e032b9d6d`) lines 13-13 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:13]
-  - Signature: `"article_path": "/Users/josh/Projects/gobby-cli/.gobby/wiki/knowledge/topics/gsqz-compression-shipping-decision.md",`
+- `article_path` (property) component `article_path [property]` (`ac241998-8f99-5af6-8407-861c62441a50`) lines 13-13 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:13]
+  - Signature: `"article_path": "/Users/josh/Projects/gobby-cli/.gobby/wiki/knowledge/topics/hybrid-search-result-merging.md",`
   - Purpose: Indexed property `article_path` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:13]
-- `command` (property) component `command [property]` (`7601c43d-fd24-521a-94a5-cb92cba92af7`) lines 14-14 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:14]
+- `command` (property) component `command [property]` (`87654abe-8830-5bdc-be61-0919f024c23c`) lines 14-14 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:14]
   - Signature: `"command": "compile",`
   - Purpose: Indexed property `command` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:14]
-- `daemon_synthesis_available` (property) component `daemon_synthesis_available [property]` (`24f8f6dd-1d92-5d8a-9576-898f9ca1ed59`) lines 15-15 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:15]
+- `daemon_synthesis_available` (property) component `daemon_synthesis_available [property]` (`0f92794c-ced9-5237-b97f-d25fdbe17d95`) lines 15-15 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:15]
   - Signature: `"daemon_synthesis_available": true,`
   - Purpose: Indexed property `daemon_synthesis_available` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:15]
-- `handoff_id` (property) component `handoff_id [property]` (`b70134f2-4ef0-5827-8238-53768bbb6d59`) lines 16-16 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:16]
-  - Signature: `"handoff_id": "compile-gsqz-compression-shipping-decision-1781313357326",`
+- `handoff_id` (property) component `handoff_id [property]` (`193fecbb-6e7a-5adc-93b9-9f469241f5c9`) lines 16-16 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:16]
+  - Signature: `"handoff_id": "compile-hybrid-search-result-merging-1781420467017",`
   - Purpose: Indexed property `handoff_id` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:16]
-- `index_path` (property) component `index_path [property]` (`c08d03cb-8da7-5cdc-9dd0-4fd2808704d3`) lines 17-17 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:17]
+- `index_path` (property) component `index_path [property]` (`0465e26e-4e20-5823-be50-172baa98339c`) lines 17-17 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:17]
   - Signature: `"index_path": "/Users/josh/Projects/gobby-cli/.gobby/wiki/_index.md",`
   - Purpose: Indexed property `index_path` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:17]
-- `outline` (property) component `outline [property]` (`4c1f1f13-0893-5f50-b3ff-79654033ed57`) lines 18-21 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:18-21]
-  - Signature: `"outline": [`
-  - Purpose: Indexed property `outline` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:18-21]
-- `page_writes` (property) component `page_writes [property]` (`25edd7d6-d82c-5da7-8662-dbcbf154c88d`) lines 22-31 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:22-31]
+- `outline` (property) component `outline [property]` (`f4d599a5-08b5-5a94-ac87-16e81593e200`) lines 18-18 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:18]
+  - Signature: `"outline": [],`
+  - Purpose: Indexed property `outline` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:18]
+- `page_writes` (property) component `page_writes [property]` (`a038c63d-a4cd-5ec5-9470-283c69f443c4`) lines 19-28 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:19-28]
   - Signature: `"page_writes": [`
-  - Purpose: Indexed property `page_writes` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:22-31]
-- `kind` (property) component `kind [property]` (`1f73b2e8-0d88-5fc5-ab55-31790458e445`) lines 24-24 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:24]
+  - Purpose: Indexed property `page_writes` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:19-28]
+- `kind` (property) component `kind [property]` (`5f1dc944-05b6-5b37-95e7-423302d1dc29`) lines 21-21 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:21]
   - Signature: `"kind": "created",`
-  - Purpose: Indexed property `kind` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:24]
-- `path` (property) component `path [property]` (`80db9cde-e37c-5097-8bb4-dcd5ade0b7c3`) lines 25-25 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:25]
-  - Signature: `"path": "/Users/josh/Projects/gobby-cli/.gobby/wiki/knowledge/topics/gsqz-compression-shipping-decision.md"`
-  - Purpose: Indexed property `path` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:25]
-- `kind` (property) component `kind [property]` (`b1a24ee9-7df2-5c02-ad92-53477234ed0f`) lines 28-28 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:28]
+  - Purpose: Indexed property `kind` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:21]
+- `path` (property) component `path [property]` (`3521eca8-e055-5a74-b981-8e5ab3ca8e7c`) lines 22-22 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:22]
+  - Signature: `"path": "/Users/josh/Projects/gobby-cli/.gobby/wiki/knowledge/topics/hybrid-search-result-merging.md"`
+  - Purpose: Indexed property `path` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:22]
+- `kind` (property) component `kind [property]` (`4cded764-d2cd-5df9-8666-ca6af5695622`) lines 25-25 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:25]
   - Signature: `"kind": "created",`
-  - Purpose: Indexed property `kind` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:28]
-- `path` (property) component `path [property]` (`63777d74-62e7-54e4-b490-fbfbf8106380`) lines 29-29 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:29]
-  - Signature: `"path": "/Users/josh/Projects/gobby-cli/.gobby/wiki/knowledge/sources/how-gsqz-decides-whether-compressed-output-ships.md"`
-  - Purpose: Indexed property `path` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:29]
-- `prompt` (property) component `prompt [property]` (`b5ddd8c5-3c0a-5581-9866-09bd3439967d`) lines 32-38 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:32-38]
+  - Purpose: Indexed property `kind` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:25]
+- `path` (property) component `path [property]` (`08cee95c-b0a8-5043-8090-0fd535f604a3`) lines 26-26 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:26]
+  - Signature: `"path": "/Users/josh/Projects/gobby-cli/.gobby/wiki/knowledge/sources/how-gobby-cli-merges-hybrid-search-results.md"`
+  - Purpose: Indexed property `path` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:26]
+- `prompt` (property) component `prompt [property]` (`ed5c69eb-9978-58fb-b588-48019a3ffc56`) lines 29-35 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:29-35]
   - Signature: `"prompt": {`
-  - Purpose: Indexed property `prompt` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:32-38]
-- `daemon_synthesis_available` (property) component `daemon_synthesis_available [property]` (`da06ba6f-35f1-5068-b8c3-462c8d5a2f34`) lines 33-33 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:33]
+  - Purpose: Indexed property `prompt` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:29-35]
+- `daemon_synthesis_available` (property) component `daemon_synthesis_available [property]` (`ab492f2f-de26-5c77-8814-514c904502fd`) lines 30-30 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:30]
   - Signature: `"daemon_synthesis_available": true,`
-  - Purpose: Indexed property `daemon_synthesis_available` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:33]
-- `system` (property) component `system [property]` (`4aa87082-b97f-5063-8daf-c461e9c88cac`) lines 34-34 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:34]
+  - Purpose: Indexed property `daemon_synthesis_available` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:30]
+- `system` (property) component `system [property]` (`3a76c58b-af45-5cba-9b1d-f6fc63517266`) lines 31-31 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:31]
   - Signature: `"system": "You write a grounded wiki explainer from supplied source excerpts. Use only facts stated in the excerpts. Write each requested section as a markdown '## <section>' heading followed by one o...`
-  - Purpose: Indexed property `system` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:34]
-- `tokens_estimated` (property) component `tokens_estimated [property]` (`c852e05d-e930-572c-92d2-03174a1ef0b4`) lines 35-35 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:35]
-  - Signature: `"tokens_estimated": 550,`
-  - Purpose: Indexed property `tokens_estimated` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:35]
-- `truncated_sources` (property) component `truncated_sources [property]` (`d3b8af24-bb88-56af-bc07-08b0894b0ea4`) lines 36-36 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:36]
+  - Purpose: Indexed property `system` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:31]
+- `tokens_estimated` (property) component `tokens_estimated [property]` (`4c722d2e-a38e-572a-92bf-fc5bcfa414db`) lines 32-32 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:32]
+  - Signature: `"tokens_estimated": 340,`
+  - Purpose: Indexed property `tokens_estimated` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:32]
+- `truncated_sources` (property) component `truncated_sources [property]` (`f1444637-1f22-5592-a3a2-c543951ae0da`) lines 33-33 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:33]
   - Signature: `"truncated_sources": 0,`
-  - Purpose: Indexed property `truncated_sources` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:36]
-- `user` (property) component `user [property]` (`9d61ccae-28d7-5720-a28d-db55d161e658`) lines 37-37 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:37]
-  - Signature: `"user": "Topic: gsqz compression shipping decision\nWrite the explainer with exactly these sections:\n- Overview\n- Shipping thresholds\n\nSource excerpts:\n1. How gsqz decides whether compressed outp...`
-  - Purpose: Indexed property `user` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:37]
-- `scope` (property) component `scope [property]` (`ace3d794-89ad-533a-a7a3-951c80702798`) lines 39-42 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:39-42]
+  - Purpose: Indexed property `truncated_sources` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:33]
+- `user` (property) component `user [property]` (`992a3baf-e24f-5909-9bf1-df8aa9c4b213`) lines 34-34 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:34]
+  - Signature: `"user": "Topic: hybrid search result merging\nWrite the explainer with exactly these sections:\n- Overview\n\nSource excerpts:\n1. How gobby-cli merges hybrid search results [source: raw/src-ab36a0b10...`
+  - Purpose: Indexed property `user` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:34]
+- `scope` (property) component `scope [property]` (`5888338d-a902-54d6-9157-36a219f35aa3`) lines 36-39 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:36-39]
   - Signature: `"scope": {`
-  - Purpose: Indexed property `scope` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:39-42]
-- `id` (property) component `id [property]` (`3b2d1f35-998f-55b8-9ae3-160c56a02045`) lines 40-40 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:40]
+  - Purpose: Indexed property `scope` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:36-39]
+- `id` (property) component `id [property]` (`946f58d5-745a-577b-84bc-640a6c010fec`) lines 37-37 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:37]
   - Signature: `"id": "3bf57fe7-2a0c-4074-8912-a83d9cd4df01",`
-  - Purpose: Indexed property `id` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:40]
-- `kind` (property) component `kind [property]` (`7ba31266-a20a-5a10-bae0-a5786c5e9e7b`) lines 41-41 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:41]
+  - Purpose: Indexed property `id` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:37]
+- `kind` (property) component `kind [property]` (`51a43768-c395-5d03-82df-377d748e7477`) lines 38-38 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:38]
   - Signature: `"kind": "project"`
-  - Purpose: Indexed property `kind` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:41]
-- `source_paths` (property) component `source_paths [property]` (`bf026c56-8963-5293-8d8d-c25317c4132b`) lines 43-45 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:43-45]
+  - Purpose: Indexed property `kind` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:38]
+- `source_paths` (property) component `source_paths [property]` (`dcfeb2bc-cb32-5195-9ea1-cfe1d0f8c10a`) lines 40-42 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:40-42]
   - Signature: `"source_paths": [`
-  - Purpose: Indexed property `source_paths` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:43-45]
-- `status` (property) component `status [property]` (`3a8d6e39-d6c4-59d9-93b8-e66d3e62f261`) lines 46-46 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:46]
+  - Purpose: Indexed property `source_paths` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:40-42]
+- `status` (property) component `status [property]` (`7dab8fca-efa8-51af-916f-95ad8ffc6d6f`) lines 43-43 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:43]
   - Signature: `"status": "compiled",`
-  - Purpose: Indexed property `status` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:46]
-- `target_kind` (property) component `target_kind [property]` (`f8c0b405-61c0-5912-bde8-3ee43732cf2b`) lines 47-47 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:47]
+  - Purpose: Indexed property `status` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:43]
+- `target_kind` (property) component `target_kind [property]` (`c4850d94-13e6-5a9b-90f2-c76a39b55e02`) lines 44-44 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:44]
   - Signature: `"target_kind": "topic"`
-  - Purpose: Indexed property `target_kind` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:47]
+  - Purpose: Indexed property `target_kind` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:44]
 

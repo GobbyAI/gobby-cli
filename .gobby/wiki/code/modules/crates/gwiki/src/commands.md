@@ -140,11 +140,27 @@ provenance:
   - 22-43
 - file: crates/gwiki/src/commands/compile.rs
   ranges:
-  - 14-104
-  - 109-119
-  - 121-155
-  - 160-190
-  - 192-199
+  - 18-100
+  - 102-110
+  - 112-132
+  - 134-142
+  - 144-151
+  - 153-167
+  - 169-203
+  - 205-237
+  - 242-252
+  - 254-288
+  - 293-323
+  - 325-332
+  - 340-360
+  - 362-366
+  - 369-423
+  - 426-458
+  - 461-479
+  - 482-501
+  - 504-525
+  - 528-538
+  - 541-557
 - file: crates/gwiki/src/commands/graph.rs
   ranges:
   - 13-52
@@ -204,9 +220,9 @@ provenance:
   - 738-746
 - file: crates/gwiki/src/commands/mod.rs
   ranges:
-  - 30-100
-  - 102-113
-  - 115-139
+  - 30-102
+  - 104-115
+  - 117-141
 - file: crates/gwiki/src/commands/read.rs
   ranges:
   - 17-28
@@ -332,26 +348,26 @@ provenance:
   - 268-294
   - 296-321
   - 323-362
-  - 364-398
-  - 400-429
-  - 431-455
-  - 457-470
-  - 472-483
-  - 485-492
-  - 494-529
-  - 531-533
-  - 535-545
-  - 547-561
-  - 563-571
-  - 573-587
-  - 589-602
-  - 604-611
-  - 613-625
-  - 639-706
-  - 709-731
-  - 734-741
-  - 744-755
-  - 758-771
+  - 364-399
+  - 401-430
+  - 432-456
+  - 458-471
+  - 473-484
+  - 486-493
+  - 495-530
+  - 532-534
+  - 536-546
+  - 548-562
+  - 564-572
+  - 574-588
+  - 590-603
+  - 605-612
+  - 614-626
+  - 642-711
+  - 714-736
+  - 739-746
+  - 749-760
+  - 763-776
 - file: crates/gwiki/src/commands/search.rs
   ranges:
   - 27-30
@@ -476,11 +492,11 @@ Parent: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-The commands module is the gwiki CLI execution layer: `mod.rs` routes each top-level `Command` variant to a focused command file and provides shared helpers for scoped outcomes and analysis-style commands that resolve scope, run a closure, serialize JSON, and render text [crates/gwiki/src/commands/mod.rs:30-100] [crates/gwiki/src/commands/mod.rs:102-113] [crates/gwiki/src/commands/mod.rs:115-139]. Most command files follow that pattern by resolving a `ScopeSelection`, producing a structured report or payload, and wrapping it as a `CommandOutcome`; examples include health, init, collect, export, audit, lint, and librarian [crates/gwiki/src/commands/health.rs:4-19]   [crates/gwiki/src/commands/export.rs:4-30] [crates/gwiki/src/commands/audit.rs:3-13] [crates/gwiki/src/commands/lint.rs:3-11] [crates/gwiki/src/commands/librarian.rs:3-11].
+The commands module is the CLI orchestration layer for gwiki: `mod.rs` dispatches each `Command` variant to a command-specific `execute` function and centralizes scoped outcome construction plus JSON serialization error handling [crates/gwiki/src/commands/mod.rs:30-102] [crates/gwiki/src/commands/mod.rs:104-115] [crates/gwiki/src/commands/mod.rs:117-141]. Most files follow the same shape: resolve a `ScopeSelection`, run domain work against the resolved vault or configured services, and return a `CommandOutcome` with structured JSON and display text, as seen in sources listing/removal [crates/gwiki/src/commands/sources.rs:15-23], path/title reading [crates/gwiki/src/commands/read.rs:17-28], initialization , collection , export [crates/gwiki/src/commands/export.rs:4-30], health [crates/gwiki/src/commands/health.rs:4-19], and status [crates/gwiki/src/commands/status.rs:11-30].
 
-The more stateful flows coordinate indexing, retrieval, graph context, source management, and AI-backed synthesis. Search can run against an attached database or local indexed store, chooses graph and semantic backends, bounds snippets, and feeds `ask`, whose child modules plan evidence under a prompt budget and assemble answer output with hits, citations, degradations, sources, and truncation metadata   [crates/gwiki/src/commands/ask/evidence.rs:33-83] [crates/gwiki/src/commands/ask/assembly.rs:6-39]. Indexing validates roots, selects PostgreSQL or memory stores, synchronizes optional Qdrant and FalkorDB services, and reports degradations; graph and graph-context commands reuse PostgreSQL facts and optional Falkor configuration to export artifacts or augment context while degrading cleanly when integrations are absent   .
+Its heavier flows connect wiki content to search, graph, provenance, AI, and service-backed indexing. Search resolves local or PostgreSQL-backed retrieval and preserves raw evidence for consumers [crates/gwiki/src/commands/search.rs:41-78] [crates/gwiki/src/commands/search.rs:80-143]; `ask` builds on that by rejecting unavailable LLM routing, planning bounded evidence, assembling a grounded answer, and optionally synthesizing with AI [crates/gwiki/src/commands/ask.rs:20-41] [crates/gwiki/src/commands/ask/evidence.rs:31-83] [crates/gwiki/src/commands/ask/assembly.rs:6-39]. Index, setup, graph, graph-context, benchmark, review-report, citation-quality, and trust handle the operational side: connecting to PostgreSQL, Qdrant, FalkorDB, provenance, and AI context; detecting degradations; and rendering reports or artifacts [crates/gwiki/src/commands/index.rs:54-86] [crates/gwiki/src/commands/setup.rs:20-92] [crates/gwiki/src/commands/graph.rs:13-52] [crates/gwiki/src/commands/graph_context.rs:13-83] [crates/gwiki/src/commands/review_report.rs:28-105]  [crates/gwiki/src/commands/trust.rs:14-46].
 
-Several commands form higher-level quality and maintenance workflows over the same scope, manifest, provenance, and graph primitives. Citation quality defines report sections for credibility, coverage gaps, contradictions, stale sources, and confidence, with a child contradiction stage that only runs AI detection when available and sanitizes findings against compared source IDs  . Source listing/removal and refresh manage manifest-backed raw sources and assets with validation, dry-run planning, rollback, and re-index outcomes   . Review-report and trust combine runtime status, PostgreSQL/Falkor graph data, provenance, health, audit, and index metrics into markdown or structured trust summaries, so the command layer acts as the integration point between storage, analysis modules, optional services, and user-facing output [crates/gwiki/src/commands/review_report.rs:28-105] .
+The files collaborate by keeping command entry points thin while sharing common runners and domain helpers. Analysis-style commands such as audit, lint, and librarian delegate to `run_analysis_command` with a label, analyzer, and renderer [crates/gwiki/src/commands/audit.rs:3-13] [crates/gwiki/src/commands/lint.rs:3-11] [crates/gwiki/src/commands/librarian.rs:3-11], while specialized commands own their local render models and validation paths, such as safe source removal with rollback support [crates/gwiki/src/commands/sources.rs:25-122] or read diagnostics for invalid, missing, ambiguous, and found content . Child modules extend the larger commands where separation matters: `ask` splits evidence planning from output assembly [crates/gwiki/src/commands/ask/evidence.rs:14-16] [crates/gwiki/src/commands/ask/assembly.rs:6-39], `citation_quality` isolates AI-backed contradiction checks and explicit AI-disabled behavior [crates/gwiki/src/commands/citation_quality/contradictions.rs:31-43], and `refresh` carries selection, planning, dry-run, and execution state through its own command pipeline  .
 
 ## Call Diagram
 
@@ -500,6 +516,7 @@ sequenceDiagram
     participant m_1d60d254_ff75_5230_8498_90ed128697c9 as resolve_semantic_embedding &#91;function&#93;
     participant m_2d257661_3897_5002_9e2e_b72190f1030e as run_search_with_backends &#91;function&#93;
     participant m_2db59a9d_6f61_5685_828d_27626cb26cc3 as read_source_asset &#91;function&#93;
+    participant m_3695bdd7_6b70_580a_8f3e_6b4430b84492 as changed_node_ids &#91;function&#93;
     participant m_379f6256_1fc9_586d_9383_6ca5fb30b562 as seed_manifest_source &#91;function&#93;
     participant m_4e165778_be8b_52dd_a920_3a0ad80950f1 as gobby_home &#91;function&#93;
     participant m_5a5a8b89_8f80_5e29_911d_0e57b4729095 as seed_unsupported_connector &#91;function&#93;
@@ -511,7 +528,6 @@ sequenceDiagram
     participant m_9c9623fa_6398_5989_ac54_83c7fee1fd7a as finalize_changed_refresh &#91;function&#93;
     participant m_a40abd46_665f_5ed9_bf15_40147ac6ba9f as snapshot &#91;function&#93;
     participant m_c6e5cf0a_22d4_516e_aafb_098525a544f2 as required_search_config &#91;function&#93;
-    participant m_c724a678_1b84_56ad_8ff5_3dd6726d72bc as changed_node_ids &#91;function&#93;
     participant m_d7676da4_be25_5d7a_ac13_fb52966d8da1 as is_http_url &#91;function&#93;
     participant m_e6235d82_80a4_5ec7_8bc1_7f802ee05a9b as graph_backend_from_falkor_config &#91;function&#93;
     participant m_f0c37b2c_e586_5edd_83aa_ecf554126398 as test_scope &#91;function&#93;
@@ -522,7 +538,7 @@ sequenceDiagram
     m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add->>m_f0c37b2c_e586_5edd_83aa_ecf554126398: calls
     m_04a320e4_7c1f_538b_b5f1_cecdbc496e5c->>m_5f8b3c2f_05cc_54c1_942f_7ec0b0943520: calls
     m_04a320e4_7c1f_538b_b5f1_cecdbc496e5c->>m_9c58c938_e5bf_52bb_89c3_12635742da40: calls
-    m_05dcb72b_1931_5544_9025_91a3b0f3f7f0->>m_c724a678_1b84_56ad_8ff5_3dd6726d72bc: calls
+    m_05dcb72b_1931_5544_9025_91a3b0f3f7f0->>m_3695bdd7_6b70_580a_8f3e_6b4430b84492: calls
     m_0617c338_79c5_5ba3_8339_0cbf68291f33->>m_9c9623fa_6398_5989_ac54_83c7fee1fd7a: calls
     m_070eb4f5_ea2c_51b8_84ce_02f81627b736->>m_1d60d254_ff75_5230_8498_90ed128697c9: calls
     m_070eb4f5_ea2c_51b8_84ce_02f81627b736->>m_2d257661_3897_5002_9e2e_b72190f1030e: calls
@@ -539,122 +555,117 @@ sequenceDiagram
 
 ## Child Modules
 
-- [[code/modules/crates/gwiki/src/commands/ask|crates/gwiki/src/commands/ask]] - The `ask` command module turns search retrieval into a bounded, optionally AI-synthesized answer. Evidence planning starts from ranked `SearchRetrieval` hits, builds a single prompt headed by the user question, slices each hit through a query-centered window, and stops before exceeding the 12,000-token prompt budget; empty retrievals are represented explicitly as missing evidence rather than passed through silently  [crates/gwiki/src/commands/ask/evidence.rs:33-83]. Assembly then converts the retrieval and `EvidencePlan` into `AskOutput`, preserving hits, planned evidence, code citations, degradation warnings, deduplicated sources, status, and truncation metadata when hits were dropped [crates/gwiki/src/commands/ask/assembly.rs:6-39] .
+- [[code/modules/crates/gwiki/src/commands/ask|crates/gwiki/src/commands/ask]] - The `ask` module turns wiki search results into grounded answers or, when synthesis is unavailable, a structured retrieval report. Its flow starts by planning bounded evidence from ranked search results: `plan_evidence` builds a single prompt around the query, selects chunk-sized excerpts with `query_window`, stops before the 12,000-token hard budget, and records dropped hits for truncation reporting [crates/gwiki/src/commands/ask/evidence.rs:14-16] [crates/gwiki/src/commands/ask/evidence.rs:31-83]. `ask_output_from_retrieval` then normalizes the retrieval into `AskOutput`, carrying hits, evidence, prompt-budget metadata, unique source paths, warning/degradation strings, and derived status/truncation fields [crates/gwiki/src/commands/ask/assembly.rs:6-39] .
 
-When AI synthesis is enabled, `synthesis.rs` resolves the effective route through shared AI configuration, initializes the output’s AI status, and dispatches to either direct text generation, daemon-backed generation, or unavailable handling [crates/gwiki/src/commands/ask/synthesis.rs:15-45]. Successful generations are recorded with route and model metadata after stripping leading model narration, so user-facing answers do not include preamble text  [crates/gwiki/src/commands/ask/narration.rs:7-58]. Citation checking then verifies sentence-level claims against retrieved evidence tokens, returning supported or unsupported-claims status plus the unsupported claim list .
+When AI synthesis is requested, `synthesize` resolves the effective route through the shared hub AI config, marks AI as requested, and dispatches either to the direct text endpoint or daemon path; `Auto`/`Off` and generation failures are handled by marking AI unavailable, optionally as an error when AI is required [crates/gwiki/src/commands/ask/synthesis.rs:15-45] . Successful model output is cleaned by the narration module, whose scanner only strips a leading model-process preamble when the answer opens with narration and the skipped region remains narration-dominant, preserving substantive or later narration-like content [crates/gwiki/src/commands/ask/narration.rs:7-58]. The cleaned answer is then citation-checked: `citation_check` builds evidence tokens from hits, excerpts, and code citations, splits the answer into sentence-level claims, and flags unsupported claims when token overlap falls below the grounding threshold .
 
-The files collaborate as a pipeline: `evidence` bounds and formats source material, `assembly` creates the structured response shell, `synthesis` optionally fills in a generated answer, `narration` cleans that answer, `citation` validates grounding, and `render` emits both readable text and structured JSON as the scoped command result. Tests across the module pin the important behavior: bounded retrieval shape, prompt budgeting and chunk-sized excerpts, narration stripping edge cases, grounded versus ungrounded synthesis, unavailable AI degradation, and rendering of unverified synthesis  [crates/gwiki/src/commands/ask/narration.rs:130-162] [crates/gwiki/src/commands/ask/synthesis.rs:113-145].
-- [[code/modules/crates/gwiki/src/commands/citation_quality|crates/gwiki/src/commands/citation_quality]] - The citation_quality contradiction module assembles and runs the citation contradiction-detection stage. Its public flow is `contradiction_section`, which first reports AI detection as unavailable without inventing findings when AI is off, then builds section-level comparisons, returns an empty available result when no usable multi-source differing claims exist, or runs a supplied detector and sanitizes its findings against the compared source IDs before returning a `ContradictionSection` (crates/gwiki/src/commands/citation_quality/contradictions.rs:30-68).
+Rendering is the final collaboration point. `render` wraps the scoped `AskOutput` into a `CommandOutcome`, serializes the full structure as JSON, and delegates the human text to `render_text` [crates/gwiki/src/commands/ask/render.rs:6-16]. That text path either prints the synthesized answer with an `[unverified]` warning when citation support is insufficient, or falls back to a wiki-hit report that includes degraded sources, empty-result handling, and code citations [crates/gwiki/src/commands/ask/render.rs:18-68] [crates/gwiki/src/commands/ask/render.rs:79-114].
+- [[code/modules/crates/gwiki/src/commands/citation_quality|crates/gwiki/src/commands/citation_quality]] - The citation_quality contradiction module turns provenance data into section-scoped contradiction checks. It defines serializable comparison inputs made of a section name and its source-backed claims, plus a deserializable model output wrapper for findings . Its main entry point, `contradiction_section`, returns an explicit unavailable result when AI is disabled, with a note that no contradictions were fabricated [crates/gwiki/src/commands/citation_quality/contradictions.rs:31-43].
 
-The module’s data model is deliberately small: `SectionClaimComparison` groups a section name with source claims, `SourceClaim` records each source ID and claim text, and `ContradictionModelOutput` represents the AI response shape containing `ContradictionFinding` values (crates/gwiki/src/commands/citation_quality/contradictions.rs:13-28). It collaborates with `ProvenanceGraph` by scanning provenance links, trimming and filtering claim text, and organizing claims in ordered maps/sets so comparisons are deduplicated and deterministic (crates/gwiki/src/commands/citation_quality/contradictions.rs:1-10, 70-100).
+When AI is available, the module builds comparisons from the provenance graph, short-circuiting with a note if there are no multi-source sections with differing claims to evaluate [crates/gwiki/src/commands/citation_quality/contradictions.rs:45-56]. Otherwise it collects the valid source IDs, runs the supplied detector over the comparison batches, sanitizes returned contradiction findings against those source IDs, and assembles an available `ContradictionSection` containing the cleaned findings [crates/gwiki/src/commands/citation_quality/contradictions.rs:58-67].
 
-AI integration is kept behind helper flows summarized by the module: `model_contradiction_findings` invokes the configured AI route, `parse_contradiction_findings` and `extract_json_payload` recover structured model output, `sanitize_contradiction_findings` filters or normalizes model results, and `ai_error_to_wiki_error` adapts AI failures into the wiki command’s error type. Together these helpers turn provenance-derived multi-source section claims into bounded, validated contradiction findings rather than trusting raw model output directly.
-[crates/gwiki/src/commands/citation_quality/contradictions.rs:15-18]
-[crates/gwiki/src/commands/citation_quality/contradictions.rs:21-24]
-[crates/gwiki/src/commands/citation_quality/contradictions.rs:27-29]
-[crates/gwiki/src/commands/citation_quality/contradictions.rs:31-67]
-[crates/gwiki/src/commands/citation_quality/contradictions.rs:69-117]
-- [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/commands/refresh]] - The refresh module owns gwiki source re-ingestion and index maintenance. Its command entry points resolve scope and URL fetching, validate the requested scope, read the source manifest, select sources, support dry-run rendering, and coordinate the update flow through the module’s selection, candidate, vault, model, and render helpers [crates/gwiki/src/commands/refresh/mod.rs:29-37] [crates/gwiki/src/commands/refresh/mod.rs:39-49] [crates/gwiki/src/commands/refresh/mod.rs:51-140]. Its internal model keeps the run structured as planned, skipped, failed, refreshed, unchanged, degraded, and indexed outcomes; `RefreshPlan` validates records by deriving a raw source path before refresh, while serialization exposes source metadata, replay kind, raw path, and content hash for command output [crates/gwiki/src/commands/refresh/model.rs:5-9] [crates/gwiki/src/commands/refresh/model.rs:19-24] [crates/gwiki/src/commands/refresh/model.rs:41-43].
+The file’s helper flow supports that orchestration: `section_claim_comparisons` walks provenance links and groups trimmed, non-empty claims by section and source/claim pair, while later helpers cover source-id extraction, model invocation, JSON payload parsing, finding sanitization, claim normalization, and AI-error conversion as summarized for the same file [crates/gwiki/src/commands/citation_quality/contradictions.rs:69-117]. Since this module has no child modules, collaboration happens within the single file between the provenance-to-comparison preparation, the detector/model boundary, and the cleanup step that prevents invalid or duplicate model output from leaking into the final citation-quality report.
+- [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/commands/refresh]] - The refresh module owns the `gwiki refresh` command: it resolves a wiki scope, loads source records, selects refreshable sources, and either renders a dry-run plan or executes refresh work through `execute`, `execute_with_fetcher`, and `execute_resolved_with_fetcher` [crates/gwiki/src/commands/refresh/mod.rs:29-37] [crates/gwiki/src/commands/refresh/mod.rs:39-49] [crates/gwiki/src/commands/refresh/mod.rs:51-140]. Its model layer defines the shared state passed through that pipeline: `Selection` separates planned, skipped, and failed records; `RefreshRender` gathers dry-run and execution output; `RefreshSinks` lets candidate handlers append refreshed, unchanged, failed, and degradation results; and `RefreshPlan::from_record` validates source IDs by resolving their raw path before a record can be refreshed [crates/gwiki/src/commands/refresh/model.rs:5-9]  [crates/gwiki/src/commands/refresh/model.rs:41-43].
 
-Selection is the first major flow: all-source refresh scans manifest entries, classifies unsupported replay contracts as skips, treats missing replay metadata or malformed plans as failures, and explicit refresh deduplicates requested IDs while reporting missing sources structurally [crates/gwiki/src/commands/refresh/selection.rs:4-75]. Candidate refresh then handles the replay-specific work. URL candidates fetch current content, hash it, emit an unchanged result when the hash matches, or re-ingest changed content and record the old and new raw paths, removed files, final URL, and updated source record; local candidates follow the same unchanged/changed/failed shape using local file hashing and replay validation [crates/gwiki/src/commands/refresh/candidate.rs:15-74] [crates/gwiki/src/commands/refresh/candidate.rs:76-173] .
+Selection is responsible for deciding what can enter the pipeline. `select_sources` supports both full-manifest scans and explicit source ID requests, deduplicates explicit IDs, reports missing IDs as structured failures, skips unsupported source kinds during broad refreshes, and turns valid records into `RefreshPlan`s [crates/gwiki/src/commands/refresh/selection.rs:4-75]. Candidate handling then performs the source-specific work: URL records are fetched, hashed, and either recorded as unchanged or passed into changed-source ingestion; local-file candidates follow the same unchanged-versus-changed split using replay metadata and local content validation .
 
-The vault helpers provide the filesystem safety layer used by changed refreshes: they resolve raw source paths, find existing raw asset files by source id, delete superseded relative files without erroring on already-missing paths, and reject unsafe or out-of-scope paths before deletion [crates/gwiki/src/commands/refresh/vault.rs:7-9] [crates/gwiki/src/commands/refresh/vault.rs:16-49] . Rendering then converts the collected model into a scoped command outcome with JSON and text summaries, including planned/refreshed/unchanged/failed/skipped lists, index status, and degradations; status prioritizes dry-run, failed, partial, refreshed, and unchanged states, with exit code 1 only for a non-dry-run explicit single-source refresh that completely failed .
+The remaining files support reporting, vault safety, and coverage. Rendering converts accumulated `RefreshRender` data into a scoped `CommandOutcome`, with status derived from dry-run, failure, refreshed, and unchanged counts, and it only returns process failure for an explicit non-dry-run single-source refresh where every attempt failed [crates/gwiki/src/commands/refresh/render.rs:3-49] [crates/gwiki/src/commands/refresh/render.rs:51-68]. Vault helpers resolve raw source paths, find matching raw assets, safely normalize paths before deletion, and ensure the scope root exists before refresh work proceeds [crates/gwiki/src/commands/refresh/vault.rs:7-9] [crates/gwiki/src/commands/refresh/vault.rs:16-49] . Tests seed URL, file, and local replay records and cover dry runs, unchanged and changed content, replay behavior, unsupported or missing records, ID/path validation, URL scheme classification, and full-source refresh skipping [crates/gwiki/src/commands/refresh/tests.rs:7-13] [crates/gwiki/src/commands/refresh/tests.rs:51-103] [crates/gwiki/src/commands/refresh/tests.rs:105-121].
 
 ## Files
 
-- [[code/files/crates/gwiki/src/commands/ask.rs|crates/gwiki/src/commands/ask.rs]] - This file implements the `ask` command as a thin RAG pipeline over search: it retrieves a bounded set of hits, turns them into an evidence plan, assembles an output structure, optionally runs LLM synthesis, and then renders the final result. It also rejects `--llm` when AI routing is `Off`, and the included test verifies that invalid input is caught before retrieval.
+- [[code/files/crates/gwiki/src/commands/ask.rs|crates/gwiki/src/commands/ask.rs]] - This file implements the `ask` command as a thin retrieval-augmented generation flow: it rejects `--llm` when AI routing is `Off`, retrieves top-k search results for the query and scope selection, builds an evidence plan, assembles a grounded answer from the retrieval output, optionally runs AI synthesis over that draft, and renders the final `CommandOutcome`. The test verifies the input validation path returns `WikiError::InvalidInput` for the `ask` field before retrieval starts.
 [crates/gwiki/src/commands/ask.rs:20-41]
 [crates/gwiki/src/commands/ask.rs:48-62]
-- [[code/files/crates/gwiki/src/commands/audit.rs|crates/gwiki/src/commands/audit.rs]] - This file wires the `audit` command into the shared analysis-command pipeline. Its `execute` function takes a `ScopeSelection`, runs `audit::run_with_options` with audit options loaded from the environment, and then renders the resulting report as text via `audit::render_text`. [crates/gwiki/src/commands/audit.rs:3-13]
-- [[code/files/crates/gwiki/src/commands/backlinks.rs|crates/gwiki/src/commands/backlinks.rs]] - This file implements the wiki backlink and link-suggestion commands. Both entry points first resolve the selected scope into an indexed store, build a memory graph from that store, and query it either for backlinks to a page or for link suggestions up to a limit. The rendering helpers then package those results into scoped `CommandOutcome` values with JSON payloads for machine use and formatted text summaries for human output, using separate text renderers for backlinks and suggestions.
+- [[code/files/crates/gwiki/src/commands/audit.rs|crates/gwiki/src/commands/audit.rs]] - Provides the `audit` command entry point for wiki analysis. It delegates to the shared analysis-command runner with the `audit` label, uses environment-derived `AuditOptions` to run the audit over the selected scope, and renders the resulting report as plain text. [crates/gwiki/src/commands/audit.rs:3-13]
+- [[code/files/crates/gwiki/src/commands/backlinks.rs|crates/gwiki/src/commands/backlinks.rs]] - This file implements the `backlinks` and `link-suggest` commands for the wiki. The two `execute` entry points resolve the selected scope, build an in-memory graph from the indexed store, query either backlinks for a page or link suggestions up to a limit, and then hand the results to renderer helpers. The renderer functions package the results into scoped `CommandOutcome` values with JSON payloads and matching human-readable text summaries, so the command output is available in both machine- and text-friendly forms.
 [crates/gwiki/src/commands/backlinks.rs:10-18]
 [crates/gwiki/src/commands/backlinks.rs:20-28]
 [crates/gwiki/src/commands/backlinks.rs:30-53]
 [crates/gwiki/src/commands/backlinks.rs:55-78]
 [crates/gwiki/src/commands/backlinks.rs:80-99]
-- [[code/files/crates/gwiki/src/commands/benchmark.rs|crates/gwiki/src/commands/benchmark.rs]] - This file implements the `gwiki benchmark` command flow. `execute` validates the benchmark options, resolves the PostgreSQL database URL, and delegates to `run_analysis_command` so the benchmark runs against the selected scope and produces a serialized report. `run_attached` performs the database-backed benchmark work: it builds AI/config context from Gobby home and PostgreSQL, resolves the benchmark inputs, and returns a `BenchmarkReport`. `search_scope_for_identity` derives the search scope from the selected output identity, and `benchmark_text` formats the final report into command output.
+- [[code/files/crates/gwiki/src/commands/benchmark.rs|crates/gwiki/src/commands/benchmark.rs]] - Implements the `gwiki benchmark` command pipeline: `execute` validates options, requires a configured PostgreSQL-backed project, opens a read-only connection, derives the search scope, and delegates to `run_analysis_command` to produce a serialized `CommandOutcome` or `WikiError`. The helper `run_attached` resolves benchmark inputs from Gobby home, Postgres, and optional AI/context sources before building a `BenchmarkReport`, while `search_scope_for_identity` maps scope identities into concrete search scopes and `benchmark_text` renders the report as a human-readable summary with scope, compression, graph coverage, retrieval precision, source mix, and degraded-source details.
 [crates/gwiki/src/commands/benchmark.rs:11-44]
 [crates/gwiki/src/commands/benchmark.rs:46-73]
 [crates/gwiki/src/commands/benchmark.rs:75-81]
 [crates/gwiki/src/commands/benchmark.rs:83-121]
-- [[code/files/crates/gwiki/src/commands/citation_quality.rs|crates/gwiki/src/commands/citation_quality.rs]] - Builds and executes the `citation-quality` command for a wiki scope, producing a report artifact plus serialized metadata that summarize citation health. The file defines the report and section data models, computes credibility, coverage gaps, contradictions, stale sources, and confidence from the source manifest, provenance graph, and health report, renders those results into markdown, and writes the artifact; the helper functions handle source scoring, section-ID and slug derivation, AI availability checks, and file output, while the tests verify PostgreSQL attachment requirements, scope filtering, contradiction detection, and report degradation behavior.
+- [[code/files/crates/gwiki/src/commands/citation_quality.rs|crates/gwiki/src/commands/citation_quality.rs]] - Builds and tests a citation-quality analysis command for `gwiki`: it gathers source, provenance, and health data for a selected scope, computes credibility, coverage-gap, contradiction, stale-source, and confidence sections, renders them into a markdown report, writes the artifact, and returns a `CommandOutcome` plus structured JSON-friendly report data. The file is organized around a top-level `CitationQualityReport` payload and a set of section records plus helper functions that derive each section, format the markdown, and handle AI-backed contradiction detection when available.
 [crates/gwiki/src/commands/citation_quality.rs:26-33]
 [crates/gwiki/src/commands/citation_quality.rs:36-40]
 [crates/gwiki/src/commands/citation_quality.rs:43-49]
 [crates/gwiki/src/commands/citation_quality.rs:52-56]
 [crates/gwiki/src/commands/citation_quality.rs:59-64]
-- [[code/files/crates/gwiki/src/commands/collect.rs|crates/gwiki/src/commands/collect.rs]] - Implements the `collect` command for a wiki scope. `execute` resolves the requested scope, initializes the vault so required paths exist, creates a fresh `MemoryWikiStore`, captures a collect timestamp, and runs `collect_inbox_and_index` against the scope root to produce a `CollectReport`. `render` turns that report into a `CommandOutcome` with a ready status, the scope and root path, accepted/skipped counts, and the full report payload, emitting both JSON and human-readable text through the shared scoped outcome helper.
+- [[code/files/crates/gwiki/src/commands/collect.rs|crates/gwiki/src/commands/collect.rs]] - Implements the `collect` command for a wiki scope. `execute` resolves the requested scope, ensures the vault exists, creates an in-memory wiki store, captures a collection timestamp, and runs collection over the scope root to gather inbox and index content into a `CollectReport`. `render` turns that report into a `CommandOutcome` with both JSON and human-readable text, including the scope, root path, and accepted/skipped item counts, then wraps it as the scoped command result.
 [crates/gwiki/src/commands/collect.rs:10-20]
 [crates/gwiki/src/commands/collect.rs:22-43]
-- [[code/files/crates/gwiki/src/commands/compile.rs|crates/gwiki/src/commands/compile.rs]] - Implements the `gwiki compile` command by loading the resolved research session, determining the article topic from explicit input, topic scope, or session state, and then delegating to the wiki compiler with the requested outline, target kind, target page, and write intent. It also probes daemon synthesis availability, resolves the AI explainer transport, and conditionally supplies an `ExplainerGenerator` so compilation can use daemon or text-based synthesis when enabled. The helper transport methods and routing functions encapsulate whether AI synthesis is active, how the route is labeled, and how a given `AiRouting` configuration maps to either a resolved or disabled explainer backend.
-[crates/gwiki/src/commands/compile.rs:14-104]
-[crates/gwiki/src/commands/compile.rs:109-119]
-[crates/gwiki/src/commands/compile.rs:121-155]
-[crates/gwiki/src/commands/compile.rs:122-124]
-[crates/gwiki/src/commands/compile.rs:126-131]
-- [[code/files/crates/gwiki/src/commands/export.rs|crates/gwiki/src/commands/export.rs]] - Implements the wiki export command by resolving the requested scope, running the export against that scope’s root, and packaging the result into a command outcome. It converts the export output into JSON for structured payload data, while also building a human-readable summary that includes the resolved scope and exported artifact paths. [crates/gwiki/src/commands/export.rs:4-30]
-- [[code/files/crates/gwiki/src/commands/graph.rs|crates/gwiki/src/commands/graph.rs]] - This file implements the `gwiki graph` command: it resolves the requested scope, opens a readonly PostgreSQL connection, loads wiki graph facts, and exports graph artifacts, returning a scoped `CommandOutcome` with artifact payload and file paths. It also contains helper logic to detect degraded optional sources by wiring PostgreSQL-backed AI config resolution through Gobby home settings, then checking whether FalkorDB, embeddings, and Qdrant are available. The test-only `TestConfigSource` and its helpers provide an in-memory config source for verifying the degraded-source detection behavior across missing, present, and blank configuration cases.
+- [[code/files/crates/gwiki/src/commands/compile.rs|crates/gwiki/src/commands/compile.rs]] - This file implements the `compile` command for `gwiki`. It resolves the command scope, derives or loads a research session, optionally applies source selections, and determines the final compile topic before calling `wiki_compile::compile_to_wiki_with_options` to build the wiki article outcome. It also wires in an `ExplainerTransport` that routes AI explainer prompts through daemon or text-generation backends when available, and then prepares the command’s JSON status payload. The helper functions handle topic seeding and fallback, session checkpoint loading, source selector resolution and deduplication, raw-source validation and persistence, and AI routing label/transport resolution; the tests cover those resolution and error cases.
+[crates/gwiki/src/commands/compile.rs:18-100]
+[crates/gwiki/src/commands/compile.rs:102-110]
+[crates/gwiki/src/commands/compile.rs:112-132]
+[crates/gwiki/src/commands/compile.rs:134-142]
+[crates/gwiki/src/commands/compile.rs:144-151]
+- [[code/files/crates/gwiki/src/commands/export.rs|crates/gwiki/src/commands/export.rs]] - Implements the `export` command entry point: it resolves the selected wiki scope, runs the export against that root, and packages the result into an `ExportOutput` plus a human-readable status message. The pieces work together by deriving the scope identity for output, serializing the export result to JSON for the command payload, collecting artifact file paths for the summary text, and returning a scoped `CommandOutcome`. [crates/gwiki/src/commands/export.rs:4-30]
+- [[code/files/crates/gwiki/src/commands/graph.rs|crates/gwiki/src/commands/graph.rs]] - This file implements the `gwiki graph` command. `execute` resolves the requested scope, opens a read-only PostgreSQL connection from the configured index, checks whether optional graph backends are degraded, loads wiki graph facts, and exports graph artifacts with either normal or degraded options before returning a `CommandOutcome` that includes the payload text, artifact metadata, and output paths. The helper functions build AI/config sources from PostgreSQL plus Gobby home state, detect when FalkorDB or semantic-relations support is unavailable, and the test-only `TestConfigSource` plus unit tests exercise those degradation checks under different configuration combinations.
 [crates/gwiki/src/commands/graph.rs:13-52]
 [crates/gwiki/src/commands/graph.rs:54-67]
 [crates/gwiki/src/commands/graph.rs:69-90]
 [crates/gwiki/src/commands/graph.rs:93-118]
 [crates/gwiki/src/commands/graph.rs:129-131]
-- [[code/files/crates/gwiki/src/commands/graph_context.rs|crates/gwiki/src/commands/graph_context.rs]] - Builds the `gwiki graph-context` command. `execute` resolves the user’s scope selection, connects read-only to PostgreSQL, fetches the wiki graph facts, and, when available for a project scope, augments them with shared code-graph edges from Falkor while tracking degraded sources and truncated components before returning the final context outcome. `optional_falkor_config` reads Falkor configuration from the current database connection and lets the command degrade gracefully when that integration is not configured.
+- [[code/files/crates/gwiki/src/commands/graph_context.rs|crates/gwiki/src/commands/graph_context.rs]] - Builds a graph-context command for a selected wiki scope. `execute` resolves the requested selection, opens a read-only PostgreSQL connection from the graph-context config, loads wiki graph facts, and when the scope is a project and FalkorDB config is available, attempts to add shared code-graph edges while recording truncation or degraded sources before returning a `CommandOutcome` or `WikiError`; `optional_falkor_config` handles the optional FalkorDB config lookup and maps configuration failures into `WikiError::Config`.
 [crates/gwiki/src/commands/graph_context.rs:13-83]
 [crates/gwiki/src/commands/graph_context.rs:85-98]
-- [[code/files/crates/gwiki/src/commands/health.rs|crates/gwiki/src/commands/health.rs]] - Implements the `health` command for a wiki scope. It resolves the requested scope, derives a stable identity for output, runs the health check against the scope root, serializes the resulting report to JSON, and wraps both the structured payload and human-readable text into a scoped command outcome. [crates/gwiki/src/commands/health.rs:4-19]
-- [[code/files/crates/gwiki/src/commands/index.rs|crates/gwiki/src/commands/index.rs]] - Implements the `gwiki index` and ingest command flow for a resolved scope: it validates the target root, computes index reports, and renders command outcomes for indexing, file ingest, and URL ingest. The core path branches between a PostgreSQL-backed index when a database URL is configured and an in-memory fallback otherwise, then layers in optional Qdrant and FalkorDB synchronization, capturing any service degradations alongside `IndexCounts` in `IndexReport`. Helper functions resolve AI context and embedding configuration, derive project IDs and config sources, check video frame interval settings, open Postgres connections, build scoped stores, and format consistent success output. The file also includes degradation constructors, scope-root validation, a test config source, and tests covering invalid video intervals, empty degradations, Qdrant failure reporting, and embedding-route fallback behavior.
+- [[code/files/crates/gwiki/src/commands/health.rs|crates/gwiki/src/commands/health.rs]] - Resolves a command scope for the selected wiki target, runs a health check against that scope’s root, and packages the result into a scoped `CommandOutcome`. It converts the health report to JSON for machine use, renders the same report as text for display, and returns both under the `health` command name while propagating scope resolution and serialization errors as `WikiError`. [crates/gwiki/src/commands/health.rs:4-19]
+- [[code/files/crates/gwiki/src/commands/index.rs|crates/gwiki/src/commands/index.rs]] - Implements the `gwiki` indexing and ingest command flow for a resolved scope, including scope validation, Postgres-backed indexing when configured, in-memory fallback, and rendering of command outcomes with counts and degradation details. The file also contains helpers for AI context and video frame interval resolution, backend connectivity and sync for Qdrant/FalkorDB, degradation construction, and tests covering config validation and rendered index output.
 [crates/gwiki/src/commands/index.rs:35-38]
 [crates/gwiki/src/commands/index.rs:40-46]
 [crates/gwiki/src/commands/index.rs:48-52]
 [crates/gwiki/src/commands/index.rs:54-86]
 [crates/gwiki/src/commands/index.rs:88-153]
-- [[code/files/crates/gwiki/src/commands/init.rs|crates/gwiki/src/commands/init.rs]] - Implements the `init` command for wiki setup. `execute` resolves the requested scope, initializes the vault, and then registers that scope in the registry; if registration fails, it cleans up any newly created vault paths before returning the error. `render` packages the successful result into a structured JSON payload and a human-readable status message, then delegates to the shared scoped outcome formatter so the command reports the initialized scope, root path, and created directories/files consistently.
+- [[code/files/crates/gwiki/src/commands/init.rs|crates/gwiki/src/commands/init.rs]] - Implements the `init` command for a wiki scope: `execute` resolves the requested scope, initializes the vault, and if scope registration fails it rolls back the created paths before returning the error. On success it derives the resolved scope identity and hands the root path plus created directories/files to `render`, which packages them into a JSON payload, formats the initialization status text, and delegates to `super::scoped_outcome` to produce the final `CommandOutcome`.
 [crates/gwiki/src/commands/init.rs:9-20]
 [crates/gwiki/src/commands/init.rs:22-40]
-- [[code/files/crates/gwiki/src/commands/librarian.rs|crates/gwiki/src/commands/librarian.rs]] - This file defines the `librarian` command entry point. Its `execute` function delegates to the shared `run_analysis_command` helper, passing the command name, a description, the selected scope, the librarian analysis runner with default options, and the text renderer so the command produces a serialized proposals report as text. [crates/gwiki/src/commands/librarian.rs:3-11]
-- [[code/files/crates/gwiki/src/commands/lint.rs|crates/gwiki/src/commands/lint.rs]] - Provides the `lint` command entry point for the wiki CLI. It accepts a `ScopeSelection` and forwards the work to the shared analysis-command runner, supplying the `lint` analysis name, a lint-report serialization label, and the lint-specific `run` and `render_text` functions so execution and text output stay centralized. [crates/gwiki/src/commands/lint.rs:3-11]
-- [[code/files/crates/gwiki/src/commands/mod.rs|crates/gwiki/src/commands/mod.rs]] - This module is the command router for `gwiki`: it declares the subcommand modules and centralizes execution by matching the top-level `Command` enum to the appropriate module-specific `execute` function, returning that handler’s `CommandOutcome` or `WikiError`. It also provides shared helpers for building successful scoped outcomes and for running analysis-style commands, which resolve the active scope, invoke an analysis closure on the scope root and identity, serialize the report to JSON, and package both machine-readable JSON and rendered text into a consistent `CommandOutcome`.
-[crates/gwiki/src/commands/mod.rs:30-100]
-[crates/gwiki/src/commands/mod.rs:102-113]
-[crates/gwiki/src/commands/mod.rs:115-139]
-- [[code/files/crates/gwiki/src/commands/read.rs|crates/gwiki/src/commands/read.rs]] - Implements the `read` command for gwiki. `execute` resolves the selected command scope, dispatches to either path-based or title-based lookup, and renders the result as a `CommandOutcome` or `WikiError`. The path flow normalizes and validates vault-relative paths, rejects unreadable locations, checks file existence, then reads markdown content with a byte cap, extracting the first heading and truncation metadata. The title flow searches the scoped wiki tree for matching first headings with bounded depth and scan limits, returning either the unique document, a not-found result, or an ambiguous result with candidates. Supporting types model the requested target, candidate documents, read output, and structured degradation/error messages used to report invalid input, missing documents, and ambiguity.
+- [[code/files/crates/gwiki/src/commands/librarian.rs|crates/gwiki/src/commands/librarian.rs]] - This file defines the `librarian` command entry point. `execute` delegates to the shared analysis-command runner with the command name, selected scope, a fixed report description, the default `librarian` analysis options, and `librarian::render_text` to turn the serialized proposals report into text output. [crates/gwiki/src/commands/librarian.rs:3-11]
+- [[code/files/crates/gwiki/src/commands/lint.rs|crates/gwiki/src/commands/lint.rs]] - This file defines the `lint` command entry point for the wiki CLI. Its `execute` function takes a `ScopeSelection` and hands off to the shared analysis-command runner with the `lint` label, the lint analyzer, and the text renderer so lint results are generated and formatted consistently. [crates/gwiki/src/commands/lint.rs:3-11]
+- [[code/files/crates/gwiki/src/commands/mod.rs|crates/gwiki/src/commands/mod.rs]] - Defines the `gwiki` command dispatcher and shared outcome helpers. `run` matches each `Command` variant to the corresponding module’s `execute` function, while `scoped_outcome` and `run_analysis_command` standardize successful scoped results by building a `CommandOutcome`, serializing analysis payloads to JSON, and turning serialization failures into `WikiError::Json`.
+[crates/gwiki/src/commands/mod.rs:30-102]
+[crates/gwiki/src/commands/mod.rs:104-115]
+[crates/gwiki/src/commands/mod.rs:117-141]
+- [[code/files/crates/gwiki/src/commands/read.rs|crates/gwiki/src/commands/read.rs]] - Implements the `read` command for a wiki scope: it resolves the active scope, then reads either a requested path or a title and turns the result into a `CommandOutcome` or `WikiError`. Path reads are validated against vault-relative, readable Markdown locations before opening the file, while title reads search the scoped tree for matching first headings and return found, not found, invalid, or ambiguous results. The supporting types and helpers (`ReadRequested`, `ReadOutput`, `ReadCandidate`, `ReadDegradation`, and rendering functions) package content, diagnostics, and user-facing guidance into a structured response.
 [crates/gwiki/src/commands/read.rs:17-28]
 [crates/gwiki/src/commands/read.rs:30-57]
 [crates/gwiki/src/commands/read.rs:59-85]
 [crates/gwiki/src/commands/read.rs:87-114]
 [crates/gwiki/src/commands/read.rs:116-122]
-- [[code/files/crates/gwiki/src/commands/review_report.rs|crates/gwiki/src/commands/review_report.rs]] - Implements the `gwiki review-report` command, which resolves the selected scope, loads PostgreSQL, optional Falkor graph config, wiki graph facts, provenance, and code-change input, then computes affected pages and degradation signals to produce a markdown review report. The file is organized around a top-level `execute` entrypoint plus helper types for change-set input and report parts, rendering helpers for markdown, changes, affected pages, neighborhoods, and risky dependency shifts, and analysis helpers that derive graph neighborhoods, centrality-based risk, changed nodes/files from diffs, and degradation classification. It also includes tests covering markdown rendering, degraded fallback behavior, partial-data degradation mapping, and diff-path parsing/sanitization.
+- [[code/files/crates/gwiki/src/commands/review_report.rs|crates/gwiki/src/commands/review_report.rs]] - Implements the `gwiki review-report` command: it resolves the selected scope, normalizes review input, opens a read-only PostgreSQL-backed context when available, loads wiki/provenance facts, computes affected pages and code-graph neighborhoods, assesses degradation and dependency risk, and returns either a markdown `CommandOutcome` or a `WikiError`. The file is organized around small data carriers (`ChangeSetInput`, `ReportParts`, `ReviewReport`, `ReviewAffectedPage`, `RiskyDependencyShift`) plus helpers that deduplicate and sanitize change inputs, derive graph-based impact data, map degradation sources, and render the final report sections.
 [crates/gwiki/src/commands/review_report.rs:28-105]
 [crates/gwiki/src/commands/review_report.rs:108-113]
 [crates/gwiki/src/commands/review_report.rs:115-143]
 [crates/gwiki/src/commands/review_report.rs:116-135]
 [crates/gwiki/src/commands/review_report.rs:137-142]
-- [[code/files/crates/gwiki/src/commands/search.rs|crates/gwiki/src/commands/search.rs]] - Implements the `gwiki` search command end to end: it executes a query against either an attached database or the local indexed store, resolves the active scope and search backends, and returns both rendered results and the raw evidence used to build bounded snippets. The module also contains the helpers that choose graph/semantic embedding configuration, compute snippet and query windows, and render text output, plus tests that verify snippet bounding, multibyte handling, and graceful degradation when search backends or config are missing.
+- [[code/files/crates/gwiki/src/commands/search.rs|crates/gwiki/src/commands/search.rs]] - Implements the `gwiki search` command end to end: it resolves the active scope and backend configuration, runs search either against an attached PostgreSQL-backed datastore or against local indexed-store backends, and then renders the results into a command outcome. The file also defines the retrieval container that keeps raw evidence alongside bounded search output, plus helpers for resolving embeddings, Falkor/Qdrant config, graph-boost fallback behavior, and snippet/window extraction so results stay concise and degradations are surfaced cleanly.
 [crates/gwiki/src/commands/search.rs:27-30]
 [crates/gwiki/src/commands/search.rs:32-39]
 [crates/gwiki/src/commands/search.rs:41-78]
 [crates/gwiki/src/commands/search.rs:80-143]
 [crates/gwiki/src/commands/search.rs:145-163]
-- [[code/files/crates/gwiki/src/commands/setup.rs|crates/gwiki/src/commands/setup.rs]] - This file implements the `gwiki setup` command. It resolves the requested scope, gathers the default PostgreSQL-backed objects the wiki needs, and then either runs a standalone Docker-based setup or uses an attached database URL from options or the environment. In standalone mode it validates embedding dimensions, applies service overrides, provisions Hub-dependent services, and writes the merged gCore config; in non-standalone mode it prepares the database connection and records the setup outcome. The helper functions handle config path lookup, merging PostgreSQL/FalkorDB/Qdrant settings into existing standalone config, embedding option validation, error conversion, outcome rendering, and status selection from created/skipped/failed results. The tests verify config merging, preserving existing database settings, standalone PostgreSQL-only persistence, and rejecting invalid embedding dimensions without mutating config.
+- [[code/files/crates/gwiki/src/commands/setup.rs|crates/gwiki/src/commands/setup.rs]] - Implements the `gwiki setup` command: it resolves the requested scope, gathers Postgres object metadata, and either runs a normal Postgres setup or, in standalone mode, validates embedding settings, provisions or reuses services, merges database and service credentials into gCore config, and reports the result as a `CommandOutcome` or `WikiError`. The helper functions break that flow into pieces for service overrides, home-path lookup, config writing, service diagnostics, embedding validation, error conversion, status classification, and final rendering, with tests covering config merging and status behavior.
 [crates/gwiki/src/commands/setup.rs:18]
 [crates/gwiki/src/commands/setup.rs:20-92]
 [crates/gwiki/src/commands/setup.rs:94-111]
 [crates/gwiki/src/commands/setup.rs:113-123]
 [crates/gwiki/src/commands/setup.rs:125-127]
-- [[code/files/crates/gwiki/src/commands/sources.rs|crates/gwiki/src/commands/sources.rs]] - Implements the `gwiki` source-management commands for a resolved scope: `execute` reads the source manifest, expands each manifest record into a renderable source entry, and returns a combined listing with any degradation notices, while `execute_remove` finds a source by ID, resolves its raw and asset paths, stages their deletion, updates the manifest and index state, and rolls everything back on failure or dry-run. The rest of the file is supporting machinery for that flow: small data types for listing/index status and path-change tracking, helpers for reading frontmatter and constructing safe vault-relative paths, staging/removal/rollback routines, rendering functions for normal and remove output, and tests that cover listing, path validation, manifest updates, and rollback behavior.
+- [[code/files/crates/gwiki/src/commands/sources.rs|crates/gwiki/src/commands/sources.rs]] - This file implements the `sources` command and its source-removal workflow for a wiki scope. It resolves and validates the selected scope, reads the source manifest, turns manifest records into renderable source entries while collecting degradations, and builds command outcomes for listing or removing sources. The removal path stages deletion of the raw source and optional asset files, tracks path changes and index status, and includes rollback/restore helpers so a failed removal can be undone safely. It also defines the serializable render models and path-validation utilities that support those commands, plus tests for manifest lookup, asset parsing, path safety, and rollback behavior.
 [crates/gwiki/src/commands/sources.rs:15-23]
 [crates/gwiki/src/commands/sources.rs:25-122]
 [crates/gwiki/src/commands/sources.rs:125-138]
 [crates/gwiki/src/commands/sources.rs:141-146]
 [crates/gwiki/src/commands/sources.rs:148-172]
-- [[code/files/crates/gwiki/src/commands/status.rs|crates/gwiki/src/commands/status.rs]] - This file implements the `gwiki status` command. `execute` resolves the requested scope and passes it to `render`, which gathers the daemon URL and runtime details, builds both structured JSON and a human-readable summary, and returns a scoped command outcome. `RuntimeStatus` is the small data carrier for the status fields. `runtime_status_for` determines runtime mode by first checking whether a database URL is available: if not, it reports a shell-ready, memory-only state; otherwise it opens a read-only PostgreSQL connection, loads configuration from the Gobby home directory, and derives service configuration such as FalkorDB, Qdrant, and embeddings. `gobby_home` supplies the local Gobby home path used during that config resolution.
+- [[code/files/crates/gwiki/src/commands/status.rs|crates/gwiki/src/commands/status.rs]] - Implements the `gwiki status` command by resolving the requested scope, gathering daemon and runtime state, and returning a scoped `CommandOutcome` with both JSON payload and human-readable text. The command reports the resolved scope identity, daemon URL, and runtime mode/status together so callers can see whether the app is running in a shell-only memory mode or backed by PostgreSQL with configured services. `runtime_status_for` handles that runtime probe, while `gobby_home` adapts Gobby home resolution into a `WikiError` for status reporting.
 [crates/gwiki/src/commands/status.rs:6-9]
 [crates/gwiki/src/commands/status.rs:11-30]
 [crates/gwiki/src/commands/status.rs:32-36]
 [crates/gwiki/src/commands/status.rs:38-88]
 [crates/gwiki/src/commands/status.rs:90-94]
-- [[code/files/crates/gwiki/src/commands/trust.rs|crates/gwiki/src/commands/trust.rs]] - This file implements the `gwiki trust` command. `execute` resolves the selected scope, gathers runtime status, index counts, health inspection results, and audit diagnostics, then combines them into a `TrustReport`, serializes that report to JSON, and returns a scoped command outcome with rendered text output. The supporting helpers handle index-count loading with a PostgreSQL-first, memory-fallback strategy and track degradations, while the report and summary structs package trust-relevant state into structured sections for freshness, audit findings, links, graph configuration, health, and index metrics. The status helpers reduce those fields into degradation labels, audit state, and an overall trust classification, and the text renderer formats the final report for display. The tests verify that audit issues take precedence in trust status and that JSON output includes the full contract schema.
+- [[code/files/crates/gwiki/src/commands/trust.rs|crates/gwiki/src/commands/trust.rs]] - This file implements the `gwiki trust` command, which assembles a trust report for a selected scope by combining runtime status, index counts, health inspection, and audit results, then serializes that report to JSON and formats a text outcome. The support code falls into three parts: index loading (`load_index_counts` and `memory_index_counts`) chooses PostgreSQL when available or falls back to in-memory counting while recording degradations; the `TrustReport` and related summary structs normalize those signals into structured sections for freshness, audit, links, health, graph, and index metrics; and the helper functions (`degradation_labels`, `trust_status`, `audit_state`, `service_configured`, `render_text`) derive the final status labels and human-readable output. The tests at the end verify that audit findings affect trust precedence and that the JSON report includes the expected contract fields.
 [crates/gwiki/src/commands/trust.rs:14-46]
 [crates/gwiki/src/commands/trust.rs:48-52]
 [crates/gwiki/src/commands/trust.rs:54-94]
@@ -722,14 +733,30 @@ The vault helpers provide the filesystem safety layer used by changed refreshes:
 - `e104c9da-f522-51d8-b75d-0b0455d4473f`
 - `b82f162e-63a4-5a97-b033-94faa99f166d`
 - `e6c80f4c-f0f7-5dfc-b6f6-1903106e80b6`
-- `c23787b4-704c-52bc-8292-76cbbff8c06c`
-- `64bc8757-3360-50ef-b69e-4ac1162ecaaa`
-- `edef227b-f665-5941-bb56-9a83febf7d66`
-- `94889f9c-cc62-52f2-a46a-1a5ad95f1794`
-- `bb71d54b-71c0-5b52-aea2-6f9077291085`
-- `f337e6d0-a625-5d2b-a9cb-c1c72010d0f1`
-- `bb503efa-4b4b-5c8c-ba05-49668cfcac7b`
-- `54e2eb1e-c21b-5b31-9063-59dff3147b2f`
+- `831825ea-cfa2-5fab-b255-68c954ee93d8`
+- `a897184a-e3db-5661-bb51-1fd1483ebf37`
+- `38548bd8-8f18-56b3-971c-1845f84ab1f3`
+- `88d106c6-d1b8-5b36-8d54-0357070f6fc4`
+- `284597a9-5aa1-5e0c-8828-2faf90cf5248`
+- `3f438980-0b66-5818-ba0c-eeaa63fcf8c9`
+- `294aa713-3090-52b8-b853-e0dbe3cf6e7d`
+- `58876afd-b532-5f90-a686-bb255cce4793`
+- `17dd195a-523a-50e3-b25f-ca1c0e008138`
+- `e5dea59f-0c6e-5c51-b292-bea8a582cd3c`
+- `7c2b4fda-1d3d-59fe-86c3-58e0a65709c6`
+- `5a4ca3fc-fc89-51a1-ad00-5e815e65dee0`
+- `fefc525b-f85a-5e2c-a72e-92ed6bfcd1df`
+- `b4f41ccf-6169-5249-8389-820d9a09c7d4`
+- `080cbcd4-7fa9-5953-afdd-3acce0d1034f`
+- `796f2c65-1b95-5c3b-8eff-1df8664553aa`
+- `cfffe95f-7481-551c-992f-fec0fc592d99`
+- `b10f95d1-c7da-5b10-aa18-1ad617148cd4`
+- `d7ae7ce9-64f7-5345-8a2f-7b6ce1f5258b`
+- `adcca1e0-01f7-517c-a7fb-2ae68a83849f`
+- `396b2484-b909-50f6-9085-983088b0b9d0`
+- `2290db0f-ad2a-5bac-9664-a8a9cca9c564`
+- `25b24946-a87d-5f02-a56a-437dd93a9629`
+- `e17fd907-7348-5b0f-826f-f7c18f984a72`
 - `0f23b04d-70d9-5c08-85bf-3dccb81bfb1c`
 - `243729ba-cdd5-53a7-85c1-11deca29beb1`
 - `81fdd806-cf1b-5f24-a89a-f4176c2f80a8`
@@ -793,8 +820,8 @@ The vault helpers provide the filesystem safety layer used by changed refreshes:
 - `ce00f6fd-84c3-5e9b-940b-9e677acbac9c`
 - `949aa991-1cf4-5206-852b-95b77e80dfbe`
 - `63fcda6c-5ef5-54e9-a083-1227a81bf596`
-- `c64b4c8e-f90a-5f11-9267-336ec5c750dd`
-- `ac7c3075-5fef-5616-8d13-3cf39377cdfd`
+- `af0e246b-2c42-5569-848c-0547f9271fb2`
+- `45b770b5-4e8a-5024-ba76-482432efe843`
 - `8ef9ebe1-e821-5d37-a487-ea104e22da2f`
 - `8b19ef2b-ddc2-58cf-ba52-edf8ce04d3a0`
 - `bc93b476-82e4-5872-a117-229688f09085`
@@ -852,25 +879,25 @@ The vault helpers provide the filesystem safety layer used by changed refreshes:
 - `286c3e93-3fff-594a-909f-e46840a6c55b`
 - `f2894f8c-9cdb-5bde-9a12-b872eb35290a`
 - `05dcb72b-1931-5544-9025-91a3b0f3f7f0`
-- `509145ca-e06d-5dba-8a4a-66ab46a8f075`
-- `40164e03-5c4a-5bf5-9d5b-09b59435a879`
-- `c724a678-1b84-56ad-8ff5-3dd6726d72bc`
-- `034afab3-419d-555a-b2eb-317540e07ac6`
-- `f448f685-9f97-5f1b-9b2b-0632ff4e58a5`
-- `93d11802-fe91-57a1-a758-ac6a9f70bdd7`
-- `216e2f5d-aab4-5735-abf7-29f85f8c9996`
-- `7e977d42-9569-5c94-ba91-569df1f95327`
-- `d4a5ff06-bbd0-5f42-8130-93cdd9734d18`
-- `d038cec6-9382-5f18-af14-c5a2a3a38c84`
-- `37dd1b21-f299-5114-a149-ae4ee664a83d`
-- `3d8a0c7c-1cd3-5060-986c-322da3d2e9e7`
-- `66799a3c-2fc3-537c-a72c-a6492124422f`
-- `a567ea0e-a6b5-5da0-a900-8b4ef2ac155e`
-- `71270fd0-73c4-503c-a7d6-032791e0f013`
-- `304675c9-bb9c-5273-b867-1664de917c61`
-- `602d0fdb-593d-563d-9c52-909af1eb71fe`
-- `a09d5fdb-1098-5daa-890b-c2b1fd5ddb99`
-- `84a9355a-c288-5445-ba20-0f3a019f30f2`
+- `fa56147e-ff1b-5bd9-bb2a-35448e433bc3`
+- `99d0b375-f107-5934-8959-b57579fea38d`
+- `3695bdd7-6b70-580a-8f3e-6b4430b84492`
+- `7a8e8ed3-2c00-57cf-8e39-f543abba64a5`
+- `7a5c4fcd-0b43-5b6e-93dc-68c870a41d29`
+- `5c7366b9-abc3-5a0f-9ab5-701b1076f029`
+- `7e6bd227-40f8-57f7-acc8-ece59ae816fd`
+- `97f30df8-5858-5eb8-8f0a-813dbca7fbe0`
+- `39072454-0bae-53ad-badf-5f1daa074d74`
+- `a966dfc3-d6c6-576e-90d7-8db3f4c4caf1`
+- `183b1cd2-31f4-50cd-b33b-39ac7a162f59`
+- `5aeb21d1-226b-50df-bce1-025a03eb7aee`
+- `46308355-3e7b-5932-80e9-f38783dcc80a`
+- `1ee04ed4-47fc-5e36-8f8b-59364abf91c7`
+- `92612fba-0461-5c1a-9c28-975bde936bed`
+- `698c0ffb-57cb-5aff-bb56-16d0de043e90`
+- `bd30a0ea-59f3-5803-91dd-c8fbcdc1050c`
+- `c150bf4a-d8c1-5534-acb0-ffe70953c4c4`
+- `c7d2767b-dce3-596f-920f-a3ad37bf0ecf`
 - `7827022e-fc2c-5f7c-af69-84222a4ae704`
 - `53398570-7c16-5692-bcb6-b8fd6e9d4860`
 - `5a87b1f0-54ab-5890-bfa2-6bd740f81ba2`

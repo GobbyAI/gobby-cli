@@ -18,7 +18,7 @@ Module: [[code/modules/crates/gwiki/src/ingest/pdf|crates/gwiki/src/ingest/pdf]]
 
 ## Purpose
 
-This module is the PDF ingestion hub for `gwiki`, coordinating text-layer extraction, page rendering, markdown generation, and vision-merged output. It exposes the document-feature-gated PDF entry points and shared types, while keeping the implementation split across `ingest`, `markdown`, `render`, `text`, and `types`. The internal structs `PdfPageMarkdown`, `PdfMarkdownSummary`, and `PdfRenderOutcome` act as lightweight transport objects for per-page markdown, overall ingestion summary state, and rendered-page results plus any degradation detected during rendering.
+This module is the PDF ingestion entry point for gwiki, wiring together text-layer extraction, page rendering, and vision-based Markdown merging. It exposes the document-feature-gated ingest API and shared PDF types, while the internal `PdfPageMarkdown` and `PdfMarkdownSummary` structs capture per-page Markdown plus extraction metadata, and `PdfRenderOutcome` bundles rendered pages with any degradation reported during rendering.
 [crates/gwiki/src/ingest/pdf/mod.rs:22-25]
 [crates/gwiki/src/ingest/pdf/mod.rs:28-34]
 [crates/gwiki/src/ingest/pdf/mod.rs:37-40]
@@ -27,11 +27,11 @@ This module is the PDF ingestion hub for `gwiki`, coordinating text-layer extrac
 
 - `PdfPageMarkdown` (class) component `PdfPageMarkdown [class]` (`2021a76a-b2b1-532a-8dd0-5615e7b55741`) lines 22-25 [crates/gwiki/src/ingest/pdf/mod.rs:22-25]
   - Signature: `struct PdfPageMarkdown {`
-  - Purpose: Indexed class `PdfPageMarkdown` in `crates/gwiki/src/ingest/pdf/mod.rs`. [crates/gwiki/src/ingest/pdf/mod.rs:22-25]
+  - Purpose: 'PdfPageMarkdown' is a data structure that pairs a PDF page number ('usize') with the page’s extracted Markdown content ('String'). [crates/gwiki/src/ingest/pdf/mod.rs:22-25]
 - `PdfMarkdownSummary` (class) component `PdfMarkdownSummary [class]` (`39ec77cb-ca8d-51b8-9930-d61f4bc795bc`) lines 28-34 [crates/gwiki/src/ingest/pdf/mod.rs:28-34]
   - Signature: `struct PdfMarkdownSummary {`
-  - Purpose: Indexed class `PdfMarkdownSummary` in `crates/gwiki/src/ingest/pdf/mod.rs`. [crates/gwiki/src/ingest/pdf/mod.rs:28-34]
+  - Purpose: 'PdfMarkdownSummary' is a struct that records PDF-to-Markdown extraction metadata: the page count, whether a text layer was present, whether vision fallback was used, the optional model name, and a list of document degradations encountered. [crates/gwiki/src/ingest/pdf/mod.rs:28-34]
 - `PdfRenderOutcome` (class) component `PdfRenderOutcome [class]` (`3c26316a-01a4-5e2e-b1f7-a3745019079a`) lines 37-40 [crates/gwiki/src/ingest/pdf/mod.rs:37-40]
   - Signature: `struct PdfRenderOutcome {`
-  - Purpose: Indexed class `PdfRenderOutcome` in `crates/gwiki/src/ingest/pdf/mod.rs`. [crates/gwiki/src/ingest/pdf/mod.rs:37-40]
+  - Purpose: 'PdfRenderOutcome' is a result struct that aggregates the rendered PDF pages as 'Vec<PdfRenderedPage>' and an optional 'DocumentDegradation' describing any quality loss or fallback during rendering. [crates/gwiki/src/ingest/pdf/mod.rs:37-40]
 

@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-Provides the public library entry point for executing a parsed `gwiki` command. It is a thin passthrough that forwards the `Command` to `commands::run` so embedders use the same dispatch path as the CLI and receive a `Result<CommandOutcome, WikiError>`. [crates/gwiki/src/runner.rs:7-9]
+Thin public entry point for executing a parsed `gwiki` command. It simply forwards the `Command` to `commands::run`, returning the resulting `CommandOutcome` or `WikiError` so embedders use the same dispatch path as the CLI. [crates/gwiki/src/runner.rs:7-9]
 
 ## API Symbols
 

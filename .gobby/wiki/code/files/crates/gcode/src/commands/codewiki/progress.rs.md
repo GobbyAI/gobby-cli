@@ -18,7 +18,7 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Purpose
 
-This file implements a configurable progress reporting system for codewiki commands. CodewikiProgressSink is an enum defining three output targets: Silent (discards messages), Stderr (writes to standard error), and Capture (test-only, stores in a vector). CodewikiProgress wraps a sink and provides factory methods—silent(), stderr(), and capture()—to instantiate the reporter in different modes. The emit method formats messages with a "codewiki:" prefix and routes them through the active sink based on its variant. The into_lines method retrieves captured messages for testing. This design allows a single progress interface to seamlessly switch between suppressed, live stderr, and in-memory capture outputs without branching at call sites.
+This file defines `CodewikiProgress`, a small progress-reporting wrapper with an internal sink enum that can suppress output, write prefixed `codewiki:` messages to stderr, or, in tests, capture them in memory. The constructors choose the sink mode (`silent`, `stderr`, `capture`), `emit` formats and dispatches each message through the selected sink, and `into_lines` exposes captured lines for tests while returning nothing for non-capture modes.
 [crates/gcode/src/commands/codewiki/progress.rs:2-7]
 [crates/gcode/src/commands/codewiki/progress.rs:10-12]
 [crates/gcode/src/commands/codewiki/progress.rs:14-55]

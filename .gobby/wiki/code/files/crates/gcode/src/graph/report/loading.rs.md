@@ -20,7 +20,7 @@ Module: [[code/modules/crates/gcode/src/graph/report|crates/gcode/src/graph/repo
 
 ## Purpose
 
-The file provides loading functionality for graph-based code analysis reports. It centers on `load_report_snapshot`, which orchestrates multiple GraphClient queries to assemble a complete report snapshot containing aggregated node/edge statistics, high-degree hotspots across files/symbols/modules, incoming call hotspots, and target frequency data for a specified project. Supporting functions (`load_hotspots`, `load_incoming_call_hotspots`, `load_target_frequencies`) handle individual query execution and row transformation, while `collect_report_rows` provides common error handling for row mapping operations.
+This file builds a graph report snapshot from a `GraphClient` by orchestrating several query helpers. `load_report_snapshot` gathers node and edge counts, high-degree hotspots for files, symbols, and modules, incoming call hotspots, unresolved and external target frequencies, and bridge-edge hypotheses, then packages them into a `ReportGraphSnapshot`. The helper functions each run a specific parameterized graph query and map rows into typed results, while `collect_report_rows` filters out malformed rows by applying a fallible converter and logging any dropped entries.
 [crates/gcode/src/graph/report/loading.rs:18-78]
 [crates/gcode/src/graph/report/loading.rs:80-95]
 [crates/gcode/src/graph/report/loading.rs:97-111]

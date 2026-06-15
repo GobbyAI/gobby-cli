@@ -61,13 +61,12 @@ provenance:
   - 158-195
   - 197-231
   - 233-237
-  - 239-275
-  - 277-317
-  - 319-329
-  - 333-347
-  - 349-378
-  - 380-388
-  - 390-395
+  - 239-248
+  - 250-290
+  - 294-308
+  - 310-339
+  - 341-349
+  - 351-356
 - file: crates/gcode/src/graph/report/tests.rs
   ranges:
   - 15-65
@@ -80,6 +79,7 @@ provenance:
   - 252-277
   - 280-317
   - 320-342
+  - 345-390
 - file: crates/gcode/src/graph/report/time.rs
   ranges:
   - 3-5
@@ -121,26 +121,25 @@ Parent: [[code/modules/crates/gcode/src/graph|crates/gcode/src/graph]]
 
 ## Overview
 
-The graph report module turns a project’s code graph into a structured and rendered analysis report. Its public generation flow starts with `generate_report`, delegates through option-aware entry points, loads a filtered graph snapshot when needed, and can also operate directly from a supplied snapshot to compute summaries, hotspots, unresolved or external target frequencies, bridge relationship data, recommendations, timestamps, and markdown output [crates/gcode/src/graph/report/generation.rs:21-23] [crates/gcode/src/graph/report/generation.rs:25-59] [crates/gcode/src/graph/report/generation.rs:78-159]. The report schema is centralized in `types.rs`, where `ProjectGraphReport` aggregates project metadata, summary counts, hotspot groups, target lists, optional bridge summaries, bridge hypotheses, degradation details, suggested questions, and rendered markdown [crates/gcode/src/graph/report/types.rs:36-49].
+The graph report module owns the end-to-end shape of project graph reporting: it defines the serialized report and snapshot data model, constructs or loads report inputs, derives summary analytics, and renders the final Markdown payload. `ProjectGraphReport` bundles project identity, timestamp, graph summary, hotspot groups, unresolved and external targets, optional bridge summaries and degradation details, suggested investigation questions, and rendered Markdown, while `ProjectGraphReportOptions` normalizes report limits around the default top-N setting . Report generation starts from either a configured FalkorDB-backed project or an already materialized `ReportGraphSnapshot`; the generation layer normalizes options, checks service availability, loads snapshots when needed, handles service/query failures, and fills in missing analysis before producing a complete report [crates/gcode/src/graph/report/generation.rs:25-59] [crates/gcode/src/graph/report/generation.rs:78-159].
 
-Database-backed reporting is split between query construction, loading, and row conversion. `queries.rs` builds the scoped Cypher used to classify nodes, count nodes and edges, rank hotspots, find frequent targets, and retrieve provenance for bridge edges [crates/gcode/src/graph/report/queries.rs:7-18] [crates/gcode/src/graph/report/queries.rs:28-38] [crates/gcode/src/graph/report/queries.rs:40-49]. `loading.rs` orchestrates those queries through `load_report_snapshot`, assembling aggregate statistics, high-degree and incoming-call hotspots, and target frequencies, while helper loaders and `collect_report_rows` keep per-query mapping and error handling consistent [crates/gcode/src/graph/report/loading.rs:18-78] . `rows.rs` then converts raw database rows into domain types, including named counts, graph hotspots, target frequencies, and bridge edge hypotheses with provenance and confidence metadata .
+Snapshot loading and query execution are split across `loading`, `queries`, and `rows`. `load_report_snapshot` coordinates graph queries for node and edge counts, hotspot rankings, target frequencies, incoming call hotspots, and bridge-edge hypotheses, then packages the results into `ReportGraphSnapshot`; malformed query rows are dropped through a shared fallible conversion path [crates/gcode/src/graph/report/loading.rs:18-78] [crates/gcode/src/graph/report/loading.rs:130-146]. Query builders centralize Cypher text, project filtering, typed parameters, and report-friendly node metadata expressions, while row converters turn Falkor rows into named counts, `GraphHotspot`, `TargetFrequency`, and `BridgeEdgeHypothesis` values with tolerant defaults and required-field checks  .
 
-Snapshot analysis and presentation are handled by the summary and render layers. `summary.rs` computes node and relationship counts, runs graph analytics for high-degree files, symbols, and modules, derives incoming-call hotspots and target frequencies, and summarizes bridge hypotheses using shared degree statistics and ranking helpers [crates/gcode/src/graph/report/summary.rs:14-17] [crates/gcode/src/graph/report/summary.rs:19-41] [crates/gcode/src/graph/report/summary.rs:51-91]. `render.rs` packages the resulting data into markdown sections for metadata, hotspot groups, incoming calls, and target frequencies, with helpers for escaping inline code and text safely [crates/gcode/src/graph/report/render.rs:8-18] [crates/gcode/src/graph/report/render.rs:20-99] . Tests exercise the collaboration end to end with synthetic snapshots containing files, modules, symbols, call edges, unresolved and external targets, and bridge hypotheses, validating JSON shape, hotspot algorithms, bridge behavior, degradation contracts, and CommonMark rendering details [crates/gcode/src/graph/report/tests.rs:15-65] .
+The analytics and presentation path is handled by `summary` and `render`. `summary` counts node and edge types, builds an analytics graph from report nodes and code edges, computes degree and centrality based hotspots across files, symbols, modules, and incoming calls, summarizes bridge hypotheses, and generates review questions from hotspots, unresolved or external targets, and inferred bridges  [crates/gcode/src/graph/report/summary.rs:93-100]. `render_markdown` then assembles the report header, counts, ranked hotspot and target sections, bridge summary, and degradation details with formatting helpers for inline code and safe Markdown text . Tests cover the integrated contract with synthetic snapshots, asserting serialized report shape, hotspot summaries, bridge aggregation, Markdown behavior, and degradation handling .
 
 ## Call Diagram
 
 ```mermaid
 sequenceDiagram
-    participant m_009b304a_4e55_5816_99ea_938130de7ee9 as edge_degree_stats &#91;function&#93;
     participant m_07d606ca_c504_5800_9a55_25109e41cbee as empty_report &#91;function&#93;
     participant m_1217d1cb_e173_540c_be3d_1b8fa3699c23 as row_to_target_frequency &#91;function&#93;
+    participant m_1b4c649e_57ea_5272_bbb7_b3aa184e7fc0 as analytics_top_hotspots &#91;function&#93;
+    participant m_1cc48fe7_57c1_552b_87be_3a25312cbdbd as gcore_hotspots_for_code_graph &#91;function&#93;
     participant m_1d3aae22_c86e_5f25_b30d_fa181fa82726 as generate_report_from_snapshot &#91;function&#93;
     participant m_1ef10d37_1300_5751_8121_68ea5132b223 as row_f64 &#91;function&#93;
     participant m_22d472bb_0e6e_553b_8160_09db28c2ce94 as generate_report_with_options &#91;function&#93;
-    participant m_256697eb_3260_5da6_8730_b028b9a3d578 as gcore_hotspots_for_code_graph &#91;function&#93;
     participant m_2e342435_0b6b_52b8_a5a2_7b5d60d0aa52 as render_markdown &#91;function&#93;
     participant m_3328327f_db95_569d_b43b_e21f8dbab0db as append_hotspot_section &#91;function&#93;
-    participant m_41b21694_17bd_593c_a79a_d2ba9d3155db as analytics_top_hotspots &#91;function&#93;
     participant m_44c52bb8_57e0_5886_8ef4_eed59fbd332c as load_incoming_call_hotspots &#91;function&#93;
     participant m_49480ab2_1284_52c3_909e_d3892295f42e as row_to_bridge_edge_hypothesis &#91;function&#93;
     participant m_531d48a4_bf59_5f2c_b1b8_a91f6fdc3277 as inline_code &#91;function&#93;
@@ -148,25 +147,26 @@ sequenceDiagram
     participant m_5ad444d5_80f0_5359_92f1_6bf86dd21413 as load_hotspots &#91;function&#93;
     participant m_5c906575_9e41_5977_bcb0_058c2b77120f as rows_to_named_counts &#91;function&#93;
     participant m_5f45b090_aa30_584f_a6d1_47f0e0b97a39 as row_string &#91;function&#93;
-    participant m_611e6df0_8875_5913_95a4_52e0ed78efd9 as sort_hotspots &#91;function&#93;
+    participant m_64ba56fa_910b_5fd2_bfa0_ce613e729704 as sort_hotspots &#91;function&#93;
+    participant m_6a038b6e_5b0f_509f_ab0e_2c4d36366a30 as edge_degree_stats &#91;function&#93;
     participant m_6b4d0e55_9ec2_5842_9ff3_fe81a05ec714 as row_usize &#91;function&#93;
-    participant m_6be392bf_708d_562c_a0c7_387684751985 as gcore_incoming_call_hotspots &#91;function&#93;
-    participant m_db6e7f0e_dfb0_5948_8313_779e6fde1b4f as is_symbol_node &#91;function&#93;
+    participant m_9939443a_02fa_51f8_8ddc_d352cb095bde as is_symbol_node &#91;function&#93;
+    participant m_b93d8daf_0360_5930_b283_c7cac27dd5fe as gcore_incoming_call_hotspots &#91;function&#93;
     participant m_f0e586e1_4d76_5191_b194_c8fd1efd03ff as generate_report_from_snapshot_with_options &#91;function&#93;
     participant m_f78fff36_26fb_56b9_ad90_02a78833f458 as collect_report_rows &#91;function&#93;
     participant m_fddfe140_2357_52a4_aa5c_15bd86f74cf6 as max_backtick_run &#91;function&#93;
     m_07d606ca_c504_5800_9a55_25109e41cbee->>m_1d3aae22_c86e_5f25_b30d_fa181fa82726: calls
     m_1217d1cb_e173_540c_be3d_1b8fa3699c23->>m_5f45b090_aa30_584f_a6d1_47f0e0b97a39: calls
     m_1217d1cb_e173_540c_be3d_1b8fa3699c23->>m_6b4d0e55_9ec2_5842_9ff3_fe81a05ec714: calls
+    m_1b4c649e_57ea_5272_bbb7_b3aa184e7fc0->>m_64ba56fa_910b_5fd2_bfa0_ce613e729704: calls
+    m_1cc48fe7_57c1_552b_87be_3a25312cbdbd->>m_1b4c649e_57ea_5272_bbb7_b3aa184e7fc0: calls
+    m_1cc48fe7_57c1_552b_87be_3a25312cbdbd->>m_6a038b6e_5b0f_509f_ab0e_2c4d36366a30: calls
+    m_1cc48fe7_57c1_552b_87be_3a25312cbdbd->>m_9939443a_02fa_51f8_8ddc_d352cb095bde: calls
+    m_1cc48fe7_57c1_552b_87be_3a25312cbdbd->>m_b93d8daf_0360_5930_b283_c7cac27dd5fe: calls
     m_1d3aae22_c86e_5f25_b30d_fa181fa82726->>m_f0e586e1_4d76_5191_b194_c8fd1efd03ff: calls
     m_22d472bb_0e6e_553b_8160_09db28c2ce94->>m_f0e586e1_4d76_5191_b194_c8fd1efd03ff: calls
-    m_256697eb_3260_5da6_8730_b028b9a3d578->>m_009b304a_4e55_5816_99ea_938130de7ee9: calls
-    m_256697eb_3260_5da6_8730_b028b9a3d578->>m_41b21694_17bd_593c_a79a_d2ba9d3155db: calls
-    m_256697eb_3260_5da6_8730_b028b9a3d578->>m_6be392bf_708d_562c_a0c7_387684751985: calls
-    m_256697eb_3260_5da6_8730_b028b9a3d578->>m_db6e7f0e_dfb0_5948_8313_779e6fde1b4f: calls
     m_2e342435_0b6b_52b8_a5a2_7b5d60d0aa52->>m_3328327f_db95_569d_b43b_e21f8dbab0db: calls
     m_2e342435_0b6b_52b8_a5a2_7b5d60d0aa52->>m_5a0d8348_6520_5220_8a67_4e7ee729f212: calls
-    m_41b21694_17bd_593c_a79a_d2ba9d3155db->>m_611e6df0_8875_5913_95a4_52e0ed78efd9: calls
     m_44c52bb8_57e0_5886_8ef4_eed59fbd332c->>m_f78fff36_26fb_56b9_ad90_02a78833f458: calls
     m_49480ab2_1284_52c3_909e_d3892295f42e->>m_1ef10d37_1300_5751_8121_68ea5132b223: calls
     m_49480ab2_1284_52c3_909e_d3892295f42e->>m_5f45b090_aa30_584f_a6d1_47f0e0b97a39: calls
@@ -179,54 +179,50 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gcode/src/graph/report/generation.rs|crates/gcode/src/graph/report/generation.rs]] - This file generates project graph reports through a tiered API. The entry point `generate_report` delegates to `generate_report_with_options`, which connects to FalkorDB, loads a filtered graph snapshot with service state error handling, and constructs a timestamped report. For direct snapshot-based workflows, `generate_report_from_snapshot_with_options` computes missing analysis components including graph summaries, hotspot identification, unresolved target detection, and bridge relationship normalization. The module also provides convenience functions like `empty_report` for stub reports. The functions coordinate snapshot loading, options normalization, summary generation, and markdown rendering to produce comprehensive ProjectGraphReport outputs with configurable analysis parameters.
+- [[code/files/crates/gcode/src/graph/report/generation.rs|crates/gcode/src/graph/report/generation.rs]] - This file orchestrates project graph report creation. `generate_report` is a convenience wrapper that uses default options, while `generate_report_with_options` normalizes options, checks that FalkorDB is configured, loads a top-N graph snapshot through `load_report_snapshot`, and turns service availability or query failures into `ProjectGraphReportError`s. `empty_report` produces a timestamped report with an empty snapshot, and the `generate_report_from_snapshot*` helpers build a `ProjectGraphReport` directly from a `ReportGraphSnapshot`, filling in missing analysis such as graph summaries, hotspots, target frequencies, bridge relationships, suggested questions, and rendered markdown using the shared summary and rendering utilities.
 [crates/gcode/src/graph/report/generation.rs:21-23]
 [crates/gcode/src/graph/report/generation.rs:25-59]
 [crates/gcode/src/graph/report/generation.rs:61-63]
 [crates/gcode/src/graph/report/generation.rs:65-76]
 [crates/gcode/src/graph/report/generation.rs:78-159]
-- [[code/files/crates/gcode/src/graph/report/loading.rs|crates/gcode/src/graph/report/loading.rs]] - The file provides loading functionality for graph-based code analysis reports. It centers on `load_report_snapshot`, which orchestrates multiple GraphClient queries to assemble a complete report snapshot containing aggregated node/edge statistics, high-degree hotspots across files/symbols/modules, incoming call hotspots, and target frequency data for a specified project. Supporting functions (`load_hotspots`, `load_incoming_call_hotspots`, `load_target_frequencies`) handle individual query execution and row transformation, while `collect_report_rows` provides common error handling for row mapping operations.
+- [[code/files/crates/gcode/src/graph/report/loading.rs|crates/gcode/src/graph/report/loading.rs]] - This file builds a graph report snapshot from a `GraphClient` by orchestrating several query helpers. `load_report_snapshot` gathers node and edge counts, high-degree hotspots for files, symbols, and modules, incoming call hotspots, unresolved and external target frequencies, and bridge-edge hypotheses, then packages them into a `ReportGraphSnapshot`. The helper functions each run a specific parameterized graph query and map rows into typed results, while `collect_report_rows` filters out malformed rows by applying a fallible converter and logging any dropped entries.
 [crates/gcode/src/graph/report/loading.rs:18-78]
 [crates/gcode/src/graph/report/loading.rs:80-95]
 [crates/gcode/src/graph/report/loading.rs:97-111]
 [crates/gcode/src/graph/report/loading.rs:113-128]
 [crates/gcode/src/graph/report/loading.rs:130-146]
-- [[code/files/crates/gcode/src/graph/report/queries.rs|crates/gcode/src/graph/report/queries.rs]] - This file provides Cypher query builders for analyzing code graph metrics and patterns in Neo4j. It exposes helper functions that generate consistent SQL expressions for node type classification (`report_node_type_case`), identification (`report_node_id_expr`), and naming (`report_node_name_expr`). These helpers are composed into parameterized query functions that support various reporting operations: `report_node_counts_query` and `report_code_edge_counts_query` tally nodes and relationships by type, `report_hotspots_query` and `report_incoming_call_hotspots_query` identify highly-connected nodes ranked by degree or incoming calls, `report_target_frequencies_query` finds the most frequently called external or unresolved targets, and `report_bridge_edges_query` retrieves provenance metadata for RELATES_TO_CODE edges. Together these queries enable introspection of code graph structure across node types (CodeFile, CodeModule, CodeSymbol, UnresolvedCallee, ExternalSymbol) and relationship types (DEFINES, IMPORTS, CALLS) scoped to a project.
+- [[code/files/crates/gcode/src/graph/report/queries.rs|crates/gcode/src/graph/report/queries.rs]] - Builds Cypher query strings and typed parameter maps for graph reporting over a project’s code model. The helper functions normalize node metadata for reports: `report_node_type_case` maps graph labels to displayable type names, while `report_node_id_expr` and `report_node_name_expr` choose stable fallback values from `id`, `path`, and `name`. The query builders then use those helpers to generate counts and ranking queries for nodes, code-edge relationships, hotspot symbols by total or incoming calls, target frequency summaries, and bridge edges, all filtered by `project` and parameterized through `typed_query::string_params`.
 [crates/gcode/src/graph/report/queries.rs:7-18]
 [crates/gcode/src/graph/report/queries.rs:20-22]
 [crates/gcode/src/graph/report/queries.rs:24-26]
 [crates/gcode/src/graph/report/queries.rs:28-38]
 [crates/gcode/src/graph/report/queries.rs:40-49]
-- [[code/files/crates/gcode/src/graph/report/render.rs|crates/gcode/src/graph/report/render.rs]] - This file provides markdown rendering for graph analysis reports. The `RenderMarkdownInput` struct packages report data, and `render_markdown` orchestrates the output by building a markdown string containing project metadata, high-degree hotspots (files, modules, symbols), incoming-call hotspots, and target frequency information. Helper functions handle specific formatting: `append_hotspot_section` and `append_target_section` structure report sections, `inline_code` and `markdown_text` manage content escaping, `max_backtick_run` supports proper backtick fence generation, and `named_counts_inline` formats categorical counts inline.
+- [[code/files/crates/gcode/src/graph/report/render.rs|crates/gcode/src/graph/report/render.rs]] - This file renders a project graph report as Markdown. `render_markdown` takes a borrowed `RenderMarkdownInput` bundle containing the project metadata, graph summary, hotspot lists, unresolved and external target frequencies, optional bridge summary, degradation details, and a `top_n` limit, then assembles the report sections in order. It emits the report header and core counts, optionally adds code-edge counts, appends ranked hotspot and target sections through dedicated helpers, includes an optional `RELATES_TO_CODE` bridge summary and degradation details, and relies on small formatting helpers to produce safe inline code, escaped markdown text, and comma-separated `name=count` summaries.
 [crates/gcode/src/graph/report/render.rs:8-18]
 [crates/gcode/src/graph/report/render.rs:20-99]
 [crates/gcode/src/graph/report/render.rs:101-121]
 [crates/gcode/src/graph/report/render.rs:123-141]
 [crates/gcode/src/graph/report/render.rs:143-150]
-- [[code/files/crates/gcode/src/graph/report/rows.rs|crates/gcode/src/graph/report/rows.rs]] - This file provides row-to-object conversion utilities for graph reporting, transforming database Row objects into domain models with sensible defaults and fallback values.
-
-The main converters are `rows_to_named_counts`, which collects rows into a sorted name-to-count map; `row_to_graph_hotspot`, which extracts id/name (mandatory) and node type, degree, and directional metrics (with defaults); `row_to_target_frequency`, which builds a frequency struct from id, name, and optional count; and `row_to_bridge_edge_hypothesis`, which deserializes complex edge data including source/target identifiers, relation type, and optional metadata like confidence and provenance.
-
-Supporting the converters are three low-level extractors: `row_string` returns the first non-empty string from candidate keys; `row_usize` attempts multi-type numeric conversions (u64, i64, f64) in sequence; and `row_f64` retrieves and converts floating-point values. Unit tests verify that extractors skip invalid or missing values, returning only valid conversions.
+- [[code/files/crates/gcode/src/graph/report/rows.rs|crates/gcode/src/graph/report/rows.rs]] - Provides row-conversion helpers for graph reporting, turning `gobby_core::falkor::Row` values into the report types used elsewhere in the graph layer. The main functions map query rows into a `BTreeMap<String, usize>`, `GraphHotspot`, `TargetFrequency`, and `BridgeEdgeHypothesis`, applying defaults and skipping rows when required fields are missing. The shared extractors `row_string`, `row_usize`, and `row_f64` centralize tolerant field lookup and type conversion, and the tests verify that empty or invalid candidate values are skipped and that missing counts are excluded.
 [crates/gcode/src/graph/report/rows.rs:11-19]
 [crates/gcode/src/graph/report/rows.rs:21-31]
 [crates/gcode/src/graph/report/rows.rs:33-39]
 [crates/gcode/src/graph/report/rows.rs:41-66]
 [crates/gcode/src/graph/report/rows.rs:68-78]
-- [[code/files/crates/gcode/src/graph/report/summary.rs|crates/gcode/src/graph/report/summary.rs]] - This file provides analysis and summarization functions for code dependency graphs. It computes structural statistics (node/edge counts by type) via `summarize_graph`, identifies high-degree "hotspot" nodes across files and symbols through `summarize_hotspots` and supporting functions like `gcore_hotspots_for_code_graph` and `analytics_top_hotspots`, and analyzes call patterns and edge frequencies via `gcore_incoming_call_hotspots` and `target_frequencies`. The module also includes bridge edge analysis functions (`summarize_bridge_edges`, `gcore_bridge_summary_for_edges`, `bridge_summary_from_analytics_edges`) to detect critical dependency connections, along with helper utilities like `edge_degree_stats`, `sort_hotspots`, and `is_symbol_node` for filtering and ranking nodes. The `DegreeStats` struct tracks incoming/outgoing edge counts used throughout these analyses.
+- [[code/files/crates/gcode/src/graph/report/summary.rs|crates/gcode/src/graph/report/summary.rs]] - This file assembles graph-report analytics for code graphs. It counts nodes and edge types into a `GraphReportSummary`, then builds hotspot reports by turning `ReportNode` and `ReportCodeEdge` data into an analytics graph, computing degrees and centrality, and splitting the top results into files, symbols, modules, and incoming-call hotspots. It also summarizes bridge-edge hypotheses into a `BridgeReportSummary`, normalizes bridge edges into a canonical form, generates review questions from the presence of hotspots, unresolved/external targets, and inferred bridges, and provides small helpers for sorting hotspots, counting edge degrees, and identifying symbol-like node types.
 [crates/gcode/src/graph/report/summary.rs:14-17]
 [crates/gcode/src/graph/report/summary.rs:19-41]
 [crates/gcode/src/graph/report/summary.rs:43-49]
 [crates/gcode/src/graph/report/summary.rs:51-91]
 [crates/gcode/src/graph/report/summary.rs:93-100]
-- [[code/files/crates/gcode/src/graph/report/tests.rs|crates/gcode/src/graph/report/tests.rs]] - This file contains unit tests for the graph report generation system. It validates report structure and content through several test functions: `report_shape` verifies that generated JSON reports contain correct project metadata, node/edge counts, and hotspot detection; `graph_report_hotspots_use_shared_centrality_degree` and related tests ensure hotspot algorithms work correctly; `bridge_edges_are_read_only` and `bridge_edges_are_hypotheses` verify bridge edge behavior; markdown rendering tests validate formatting with CommonMark delimiters; and `report_degradation_contract` tests backwards compatibility. Helper functions `expected_graph_hotspots` and `expected_bridge_summary` provide reference data for comparison. The tests use snapshot-based inputs containing nodes (files, modules, functions), code edges (relationships like DEFINES, CALLS), and bridge edges (inferred hypotheses with confidence scores).
+- [[code/files/crates/gcode/src/graph/report/tests.rs|crates/gcode/src/graph/report/tests.rs]] - Test suite for the graph reporting pipeline. It builds synthetic `ReportGraphSnapshot` fixtures and checks that report generation, hotspot summarization, bridge-edge aggregation, and markdown rendering all produce the expected serialized output and pinned summaries, including error/degradation behavior when the graph service is unavailable.
 [crates/gcode/src/graph/report/tests.rs:15-65]
 [crates/gcode/src/graph/report/tests.rs:68-84]
 [crates/gcode/src/graph/report/tests.rs:87-127]
 [crates/gcode/src/graph/report/tests.rs:129-179]
 [crates/gcode/src/graph/report/tests.rs:181-196]
-- [[code/files/crates/gcode/src/graph/report/time.rs|crates/gcode/src/graph/report/time.rs]] - This file provides a time utility function for the reporting module. The single public function `now_iso8601` generates a current UTC timestamp formatted as an RFC3339-compliant ISO8601 string with microsecond precision, using chrono's `Utc::now()` and `to_rfc3339_opts()` method with microsecond granularity. [crates/gcode/src/graph/report/time.rs:3-5]
-- [[code/files/crates/gcode/src/graph/report/types.rs|crates/gcode/src/graph/report/types.rs]] - This file defines type structures and implementations for dependency graph analysis and reporting. It provides several layers of abstractions: core elements like BridgeEdgeHypothesis (directed edges with relation semantics and metadata) and graph topology nodes/edges (ReportNode, ReportCodeEdge); analysis results including GraphReportHotspots (high-degree files, symbols, modules), TargetFrequency (occurrence metrics), and ConfidenceRange (numeric bounds); configuration options (ProjectGraphReportOptions) for controlling report scope; and error handling (ProjectGraphReportError) for graph query failures. The main ProjectGraphReport struct aggregates all these components into a serializable report capturing hotspots, unresolved targets, bridge edge hypotheses across multiple source systems, degradation details, and investigation recommendations. BridgeEdgeInput provides factory methods to construct available or unavailable bridge edge variants, while ReportGraphSnapshot encapsulates the complete analyzed graph structure. Together, these types form the complete schema for representing code dependency graph analysis results.
+- [[code/files/crates/gcode/src/graph/report/time.rs|crates/gcode/src/graph/report/time.rs]] - Provides a small time utility for report generation: `now_iso8601` returns the current UTC timestamp as an RFC3339/ISO8601 string with microsecond precision using `chrono`’s `Utc::now()` and `to_rfc3339_opts`. [crates/gcode/src/graph/report/time.rs:3-5]
+- [[code/files/crates/gcode/src/graph/report/types.rs|crates/gcode/src/graph/report/types.rs]] - This file defines the serialized data model for project graph reporting: report options, summary and hotspot aggregates, node/edge records, target frequency and degradation entries, bridge-edge hypotheses, and the top-level `ProjectGraphReport`/`ReportGraphSnapshot` containers that bundle those pieces into a report payload. It also provides small constructors and normalization helpers for building nodes, edges, and bridge inputs, plus a `ProjectGraphReportError` type for formatting and propagating report-generation failures.
 [crates/gcode/src/graph/report/types.rs:10-17]
 [crates/gcode/src/graph/report/types.rs:19-50]
 [crates/gcode/src/graph/report/types.rs:20-34]
@@ -273,22 +269,21 @@ Supporting the converters are three low-level extractors: `row_string` returns t
 - `bed47a27-db47-59cd-926e-3891cf833025`
 - `b895a14c-6fdf-5ef7-aa06-d6c888849b5b`
 - `5fb8773e-5154-5998-801e-b9a8d82cd331`
-- `1b9188fc-b061-57eb-ba0c-bf8f2b2563ec`
-- `6f2f5615-8ab2-599f-bf2c-44493b4890c8`
-- `cbfd7503-3454-533b-bcbf-6a7881123cfe`
-- `256697eb-3260-5da6-8730-b028b9a3d578`
-- `009b304a-4e55-5816-99ea-938130de7ee9`
-- `6be392bf-708d-562c-a0c7-387684751985`
-- `41b21694-17bd-593c-a79a-d2ba9d3155db`
-- `c26052ea-da95-5d91-a445-496dbde9e891`
-- `c2fc5858-0831-5bf4-9194-6e698e80d73e`
-- `edf1bb51-29f7-531b-bc41-d1854aa0f1a8`
-- `725671b1-345b-5368-8440-bfa739f0f387`
-- `760705a1-521d-5b02-94af-4b71a825c14f`
-- `6c99d805-b521-5cb6-b98b-3914edc8429b`
-- `19746df8-f404-5edf-bfd7-01e277739958`
-- `611e6df0-8875-5913-95a4-52e0ed78efd9`
-- `db6e7f0e-dfb0-5948-8313-779e6fde1b4f`
+- `925017d8-d365-54d5-85b8-7aa496662e1c`
+- `bef7b28c-43f5-592a-b119-6908a02c3c0d`
+- `cec6eee5-bd3c-5999-b0fa-d7134a561156`
+- `1cc48fe7-57c1-552b-87be-3a25312cbdbd`
+- `6a038b6e-5b0f-509f-ab0e-2c4d36366a30`
+- `b93d8daf-0360-5930-b283-c7cac27dd5fe`
+- `1b4c649e-57ea-5272-bbb7-b3aa184e7fc0`
+- `7eaf88da-8dc2-5fd6-878b-28e59dfd03ea`
+- `95081d19-def9-50b6-8eb2-76258cb4debc`
+- `e7cb5812-0442-5589-bb3c-9bbc494b86e7`
+- `0573d814-3843-57a1-84c6-ec34ecb9fd97`
+- `152c72f0-394c-5195-b607-37dba9bc1a0f`
+- `c9df2982-392e-5ad5-bcc3-6547fb2ae40d`
+- `64ba56fa-910b-5fd2-bfa0-ce613e729704`
+- `9939443a-02fa-51f8-8ddc-d352cb095bde`
 - `9142cd68-b487-5f7a-a910-fbd4b71d3cc1`
 - `4c344a58-b80f-5dba-88e1-4e6a793a4d4a`
 - `e5131274-82e9-5402-a913-b768b70681ed`
@@ -299,6 +294,7 @@ Supporting the converters are three low-level extractors: `row_string` returns t
 - `67d84179-c1ea-54af-9db4-dedfb36d6a33`
 - `598b9a05-6d4b-59b0-add1-86c233395c2b`
 - `41f4c5f5-0451-5521-aee1-10c5edcef7bd`
+- `aaf1e11c-c8dd-5091-b6b8-fbb2364b8daf`
 - `c0d03fb4-d57c-59c8-a5d7-b4cbddaa9c60`
 - `d918517e-c334-52ce-900a-9e965389ae4a`
 - `781d1611-6a96-55ec-b47f-21f956a2cc83`

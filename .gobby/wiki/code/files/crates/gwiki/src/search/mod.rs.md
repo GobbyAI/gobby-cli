@@ -43,7 +43,7 @@ Module: [[code/modules/crates/gwiki/src/search|crates/gwiki/src/search]]
 
 ## Purpose
 
-This module defines the search domain model and shared utilities for wiki search, while re-exporting the BM25, graph-boost, RRF, and semantic submodules that implement the actual retrieval pipeline. It centers on `SearchScope` and `SearchSource` for describing where results come from and how they are filtered, `SearchHitKind` plus provenance structs for attaching chunk/document metadata to hits, and `WikiSearchResult`/`WikiSearchResponse` for packaging ranked results, explanations, and degradation details. It also provides `normalized_path` and `SearchError` so results can be keyed and reported consistently, and includes search helpers/tests that show the search flow combining BM25 with optional semantic and graph boosting, including graceful fallback when backends are unavailable.
+Defines the wiki search module and its core data model, plus the orchestration helpers that connect BM25, graph boosting, and semantic search. `SearchScope` and `SearchSource` normalize how searches are targeted and attributed, while `SearchHitKind`, provenance structs, `WikiSearchResult`, `SearchRequest`, and `WikiSearchResponse` describe the inputs and outputs of the search API. The module also provides path normalization and error formatting, helpers for gathering graph seed paths and available sources, a degraded graph backend for fallback behavior, and tests that verify partial-search degradation and graph-enriched results.
 [crates/gwiki/src/search/mod.rs:14-18]
 [crates/gwiki/src/search/mod.rs:20-60]
 [crates/gwiki/src/search/mod.rs:21-23]

@@ -27,7 +27,7 @@ Module: [[code/modules/crates/gcode/src/index/parser/calls|crates/gcode/src/inde
 
 ## Purpose
 
-This file resolves call references within a single source file by combining symbol-table lookup with tree-sitter syntax analysis. It finds the innermost enclosing symbol for an offset, classifies a call as bare, member, or other by walking the AST, and then uses that classification plus name/qualifier parsing helpers to match a callee to a unique symbol ID, with language-specific filtering to avoid false positives such as Ruby bare calls.
+This file implements same-file call resolution for parser indexing. It classifies a call site as bare, member, or other by walking tree-sitter ancestors, then uses that syntax plus the caller’s enclosing symbol to match a unique callee symbol in the current file. Supporting helpers locate the deepest enclosing symbol for an offset, recognize callable and member-like syntax kinds, extract and normalize qualified member paths, split qualified names into qualifier and local name, and derive a root alias from a qualified identifier.
 [crates/gcode/src/index/parser/calls/resolution.rs:6-10]
 [crates/gcode/src/index/parser/calls/resolution.rs:17-21]
 [crates/gcode/src/index/parser/calls/resolution.rs:23-46]

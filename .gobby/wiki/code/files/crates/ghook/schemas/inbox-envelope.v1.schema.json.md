@@ -16,7 +16,7 @@ Module: [[code/modules/crates/ghook/schemas|crates/ghook/schemas]]
 
 ## Purpose
 
-Defines the JSON Schema v1 for a Gobby ghook inbox envelope: a strict object written to `~/.gobby/hooks/inbox/` and replayed by the daemon drain worker. It requires the envelope metadata (`schema_version`, `enqueued_at`, `critical`, `hook_type`, `input_data`, `source`, `headers`), forbids extra fields, and constrains each property so consumers can validate the envelope version, timestamp, hook identity, original stdin payload, source CLI, and emitted headers, including optional Gobby project/session IDs.
+Defines the JSON Schema for a v1 “Gobby ghook inbox envelope” written by `ghook` into `~/.gobby/hooks/inbox/` and later replayed by the daemon drain worker. It requires a fixed-version object with `schema_version`, `enqueued_at`, `critical`, `hook_type`, `input_data`, `source`, and `headers`, forbids extra top-level fields, and describes how the envelope carries the original stdin payload plus metadata like the enqueue timestamp, failure-critical flag, CLI/source identifier, and mirrored HTTP headers, including optional `X-Gobby-Project-Id` and `X-Gobby-Session-Id` values.
 [crates/ghook/schemas/inbox-envelope.v1.schema.json:2]
 [crates/ghook/schemas/inbox-envelope.v1.schema.json:3]
 [crates/ghook/schemas/inbox-envelope.v1.schema.json:4]

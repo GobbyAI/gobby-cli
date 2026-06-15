@@ -138,36 +138,38 @@ provenance:
   - 330-337
 - file: crates/gwiki/src/ingest/file.rs
   ranges:
-  - 53-57
-  - 60-63
-  - 65-78
-  - 80-262
-  - 264-310
-  - 312-336
-  - 338-345
-  - 347-349
-  - 352-354
-  - 356-371
-  - 373-379
-  - 382-414
-  - 416-431
-  - 433-447
-  - 449-461
-  - 463-508
-  - 521-530
-  - 532-538
-  - 541-557
-  - 560-613
-  - 616-638
-  - 641-655
-  - 658-698
-  - 701-728
-  - 731-754
-  - 757-829
-  - 833-867
-  - 871-897
-  - 901-925
-  - 929-953
+  - 34-38
+  - 41-44
+  - 46-59
+  - 62-94
+- file: crates/gwiki/src/ingest/file/degradation.rs
+  ranges:
+  - 4-11
+  - 13-15
+  - 18-22
+  - 24-39
+- file: crates/gwiki/src/ingest/file/source.rs
+  ranges:
+  - 9-24
+  - 26-40
+  - 42-54
+  - 56-62
+- file: crates/gwiki/src/ingest/file/tests.rs
+  ranges:
+  - 13-22
+  - 24-30
+  - 33-49
+  - 52-105
+  - 108-130
+  - 133-147
+  - 150-190
+  - 193-220
+  - 223-246
+  - 249-321
+  - 325-359
+  - 363-389
+  - 393-417
+  - 421-445
 - file: crates/gwiki/src/ingest/git.rs
   ranges:
   - 15-18
@@ -284,11 +286,6 @@ provenance:
   - 338-344
   - 351-360
   - 363-375
-- file: crates/gwiki/src/ingest/pdf/mod.rs
-  ranges:
-  - 22-25
-  - 28-34
-  - 37-40
 - file: crates/gwiki/src/ingest/pdf/render.rs
   ranges:
   - 23-39
@@ -340,58 +337,65 @@ provenance:
   - 60-81
 - file: crates/gwiki/src/ingest/url.rs
   ranges:
-  - 22-28
-  - 31-35
-  - 38-42
-  - 45-48
-  - 50-62
-  - 65-74
-  - 76-110
-  - 112-145
-  - 147-157
-  - 159-164
-  - 166-205
-  - 208-210
-  - 212-221
-  - 223-296
-  - 298-302
-  - 304-318
-  - 320-326
-  - 328-355
-  - 357-363
-  - 365-377
-  - 379-412
-  - 414-418
-  - 420-441
-  - 443-445
-  - 447-449
-  - 451-460
-  - 462-487
-  - 489-516
-  - 518-524
-  - 526-538
-  - 540-547
-  - 549-555
-  - 557-573
-  - 575-585
-  - 587-596
-  - 598-632
-  - 634-649
-  - 651-657
-  - 659-661
-  - 663-683
-  - 685-694
-  - 712-752
-  - 755-785
-  - 788-799
-  - 802-844
-  - 847-867
-  - 870-885
-  - 888-908
-  - 911-916
-  - 918-934
-  - 937-940
-  - 942-983
+  - 25-31
+  - 34-38
+  - 41-45
+  - 48-51
+  - 53-65
+  - 68-77
+  - 79-113
+  - 115-148
+  - 150-163
+  - 165-170
+  - 172-211
+- file: crates/gwiki/src/ingest/url/fetch.rs
+  ranges:
+  - 15-20
+  - 23-25
+  - 27-36
+  - 38-111
+  - 113-117
+  - 119-133
+  - 135-141
+  - 143-174
+  - 176-185
+  - 187-199
+  - 201-234
+  - 236-240
+  - 242-263
+  - 265-267
+  - 269-271
+  - 273-282
+- file: crates/gwiki/src/ingest/url/render.rs
+  ranges:
+  - 12-37
+  - 39-66
+  - 68-74
+  - 76-88
+  - 90-97
+  - 99-105
+  - 107-123
+  - 125-135
+  - 137-146
+  - 148-182
+  - 184-199
+  - 201-207
+  - 209-211
+  - 213-233
+  - 235-244
+- file: crates/gwiki/src/ingest/url/tests.rs
+  ranges:
+  - 21-60
+  - 63-93
+  - 96-107
+  - 110-152
+  - 155-175
+  - 178-193
+  - 196-216
+  - 219-224
+  - 226-242
+  - 245-248
+  - 250-283
 - file: crates/gwiki/src/ingest/video/assets.rs
   ranges:
   - 4-23
@@ -437,37 +441,26 @@ provenance:
   - 335-339
 - file: crates/gwiki/src/ingest/video/tests.rs
   ranges:
-  - 18-55
-  - 57-62
-  - 64-89
-  - 91-111
-  - '113'
-  - 115-131
-  - '133'
-  - 135-144
-  - '146'
-  - 148-160
-  - '162'
-  - 164-170
-  - 172-198
-  - 201-273
-  - 276-323
-  - 326-329
-  - 332-350
-  - 354-446
-  - 449-451
-  - 454-461
-  - 464-617
-  - 620-638
-  - 641-656
-  - 659-707
-  - 710-765
-  - 767-799
-  - 801-803
-  - 805-810
-  - 813-843
-  - 846-883
-  - 886-922
+  - 24-61
+  - 63-68
+  - 70-95
+  - 97-117
+  - '119'
+  - 121-137
+  - '139'
+  - 141-150
+  - '152'
+  - 154-166
+  - '168'
+  - 170-176
+  - 178-204
+  - 207-210
+  - 213-231
+  - 234-236
+  - 239-246
+  - 248-280
+  - 282-284
+  - 286-291
 - file: crates/gwiki/src/ingest/wayback.rs
   ranges:
   - 18-25
@@ -501,6 +494,7 @@ provenance:
   - 478-491
   - 494-511
   - 513-516
+provenance_truncated: 5
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -512,134 +506,141 @@ Parent: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-The ingest module is the raw-source intake layer for gwiki: it exposes file-type submodules for audio, documents, git, images, MediaWiki, PDFs, URLs, videos, and Wayback captures, while centralizing the shared `IngestResult` shape and immutable write helpers for raw markdown and assets  . Its common flow is to create a source record from a snapshot or local input, write a raw markdown representation under `raw/`, optionally persist original or derived assets, and then index the vault through helpers such as `index_after_ingest` or `write_raw_then_index`  [crates/gwiki/src/ingest/audio.rs:40-54] [crates/gwiki/src/ingest/wayback.rs:28-47].
+The ingest module is the common gateway for bringing external material into a gwiki vault as immutable raw source records, optional assets, generated markdown, and index rows. Its root module exposes the concrete ingest families for audio, file, git, image, mediawiki, pdf, url, video, wayback, and document ingestion, and provides the shared `IngestResult` plus low-level helpers for lowercase extensions, raw markdown writes, asset writes, suffixed assets, file-backed assets, metadata rendering, and indexing  . The central invariant is raw-first persistence: sources are registered through the source manifest, bytes or rendered markdown are written under `raw` or `raw/assets`, and indexing is triggered only after the durable content exists  [crates/gwiki/src/ingest/file.rs:46-59] [crates/gwiki/src/ingest/file.rs:62-94].
 
-The local file entry point acts as a dispatcher: it detects whether an input is generic text, media, PDF, office/HTML document, or stdin, then routes it into the specialized no-index pipelines before replay metadata and degradation summaries are attached [crates/gwiki/src/ingest/file.rs:53-57] [crates/gwiki/src/ingest/file.rs:65-78] [crates/gwiki/src/ingest/file.rs:80-262]. Specialized modules own their own snapshot/result types and enrichment steps: audio stores the original bytes and transcript markdown with production transcription or fallback degradation  [crates/gwiki/src/ingest/audio.rs:56-87], image ingestion records raw, asset, and vision-derived outputs  , and video coordinates assets, transcripts, frame samples, and optional production processing through indexed and without-index variants [crates/gwiki/src/ingest/video/mod.rs:32-45] .
+Each source-specific file adapts a different input shape into that same storage/indexing contract. Local file ingestion classifies filesystem or stdin inputs, dispatching path-based content through audio, image, video, document, PDF, or generic pipelines before reindexing, while stdin is rendered as raw markdown and registered as a draft  [crates/gwiki/src/ingest/file/dispatch.rs:42-224]. Remote and structured sources follow parallel flows: URL ingest fetches snapshots, splits HTML from non-HTML assets, records batch successes/failures, and indexes accepted batches; MediaWiki and Wayback ingestion normalize page or capture metadata, render markdown around raw source text or extracted visible HTML text, and write/index the result   [crates/gwiki/src/ingest/wayback.rs:28-47].
 
-Connector-style ingests follow the same raw-first contract but adapt external formats into markdown. URL ingestion fetches snapshots, validates redirects and unsafe addresses, limits response size, then splits HTML extraction from non-HTML asset preservation while reporting batch success or failure status  . Git and MediaWiki register provenance-rich source manifests and render stable markdown from repository files or page revisions  [crates/gwiki/src/ingest/git.rs:30-55] [crates/gwiki/src/ingest/mediawiki.rs:12-20] [crates/gwiki/src/ingest/mediawiki.rs:23-41]. Wayback ingestion similarly validates and decodes archived HTML, derives a title, registers the capture, renders markdown, and writes/indexes it, with helpers for charset handling, title fallback, text extraction, and metadata preservation  .
+Media-heavy submodules extend the same pattern with derived content and graceful degradation. Audio and image ingestion store the original bytes as assets plus raw markdown, then optionally route through AI transcription, translation, OCR, or vision extraction selected from `AiContext`; when routing is unavailable, they still preserve the original source and record degradation metadata  [crates/gwiki/src/ingest/audio.rs:56-87]  . Document, PDF, and video child modules collaborate with this layer by accepting richer snapshots, writing assets and derived markdown, recording extraction/rendering/transcription degradations, and using indexed wrappers that refresh the wiki index after no-index write paths complete   .
 
 ## Call Diagram
 
 ```mermaid
 sequenceDiagram
     participant m_00589531_b7ac_54da_a6ca_02d9c8ea1804 as ingest_image_with_vision &#91;function&#93;
-    participant m_014c2f03_e0e9_59cb_945c_7a8bb9c65a6b as source_kind_for_url_response &#91;function&#93;
     participant m_0171f70b_fa5e_53e4_8a1c_93801edad135 as test_context &#91;function&#93;
     participant m_017e301e_e617_58cc_b179_cb2195a4f3f0 as sanitize_pdf_page_markdown &#91;function&#93;
+    participant m_01a66b80_f006_5fb4_8c35_1312f7b68adb as CountingStore.record_ingestion &#91;method&#93;
     participant m_02d14539_2527_53e3_a472_18449d0abb5d as ingest_audio_with_transcription_without_index &#91;function&#93;
     participant m_038959ea_6f68_51a7_b28d_9b857beca386 as extract_docx &#91;function&#93;
     participant m_05e2eb59_486c_5722_8d2a_9911584d43a2 as ingest_video_file_with_degradations &#91;function&#93;
-    participant m_0dd0e533_f57b_517a_80e8_096c27a5ab06 as ingest_snapshot &#91;function&#93;
+    participant m_0962ec4b_6488_58a8_b32b_030e362216ae as CountingStore.record_file_hash &#91;method&#93;
+    participant m_0ad1e13f_d8f0_5171_9cb6_a5e746907d48 as is_disallowed_fetch_ip &#91;function&#93;
     participant m_0f981cd1_7d73_5d8d_ba02_38756ffa79a9 as stores_original_audio &#91;function&#93;
-    participant m_110bf979_ddf0_5b33_980b_1a8ba57a2bec as CountingStore.record_ingestion &#91;method&#93;
+    participant m_10429e53_e6ce_58de_ba73_2cfec6172411 as no_ai_context &#91;function&#93;
     participant m_11f4d2d5_6054_504e_9866_65db2bd9eb8c as RawFirstStore.replace_links &#91;method&#93;
-    participant m_14264205_377e_541a_811e_b66050cc0e40 as render_url_markdown &#91;function&#93;
-    participant m_1a71190e_9caf_5a2d_aa02_dbcd3509a583 as video_media_degradation &#91;function&#93;
-    participant m_1b535367_6c76_569d_a85f_f7e9362ecae4 as wayback_records_capture_metadata &#91;function&#93;
-    participant m_1bf81aa4_071b_5672_b65a_288e5c3f154f as extract_html_document &#91;function&#93;
+    participant m_1640a8b2_72ae_5998_b8fd_2de0bc496397 as media_dispatch_registers_once &#91;function&#93;
+    participant m_170bc9f5_8062_50c2_a52e_ecd192e32eb5 as validate_resolved_fetch_url &#91;function&#93;
     participant m_3543c95c_df70_5fa5_9de5_b2376e07fccc as transcribe_for_markdown &#91;function&#93;
-    participant m_38c2171b_952e_589f_a60c_c7c20cd5719d as content_type_media_type &#91;function&#93;
     participant m_4a3322af_f8bc_5dc0_a366_6e5523d13c7c as is_markdown_horizontal_rule &#91;function&#93;
     participant m_5eaf7359_6733_56b6_9ce1_e6399953a579 as sample_snapshot &#91;function&#93;
-    participant m_64b0c162_7265_5858_b461_95e60f8dd46d as ingest_capture &#91;function&#93;
     participant m_67b04ae9_5316_58ad_8c9e_4345e12cef0e as extract_xml_paragraphs &#91;function&#93;
-    participant m_68d26b08_c2bc_5988_ac45_5cf8370577ff as collect_visible_text &#91;function&#93;
     participant m_6a95a7e1_e58c_55a8_ac11_94f20e7abbc5 as neutralize_gwiki_page_marker_variants &#91;function&#93;
-    participant m_8db5b920_f822_5a65_a246_aa0dc1b0d145 as html_to_markdownish_text &#91;function&#93;
+    participant m_7699f494_2916_5e24_914a_6af2fb9a4546 as is_ipv6_unicast_link_local &#91;function&#93;
     participant m_9076381c_f935_5c44_bf48_257b15ba9c62 as read_zip_entry &#91;function&#93;
     participant m_91beae62_064b_50ee_a889_d2fb4e4e8d44 as ingest_video_file_with_degradations_without_index &#91;function&#93;
-    participant m_973f3faf_ba04_5707_bb88_b95f33938319 as message_is_ffmpeg_unavailable &#91;function&#93;
     participant m_abcbd023_5ca6_5268_8972_4c4d361d8fbe as render_raw_audio_markdown &#91;function&#93;
-    participant m_b77e439d_33bd_5784_b957_75c8d9bba4d1 as ingest_snapshot_without_index &#91;function&#93;
+    participant m_b1de1ef8_1fbf_53bf_a96f_76ce74c753c3 as ingest_options &#91;function&#93;
     participant m_c6476a84_0ff8_5c83_9c94_4711a935eea8 as ingest_audio &#91;function&#93;
-    participant m_c6c02a87_4cc3_542e_bbc1_446e0185e8bc as extract_html_title &#91;function&#93;
+    participant m_f13ed816_63d9_5fea_92de_d6611de7c6e4 as is_ipv6_unique_local &#91;function&#93;
     participant m_f6fff319_9e6b_5d72_9655_068135e8ea16 as ingest_image_with_vision_without_index &#91;function&#93;
     m_00589531_b7ac_54da_a6ca_02d9c8ea1804->>m_f6fff319_9e6b_5d72_9655_068135e8ea16: calls
-    m_014c2f03_e0e9_59cb_945c_7a8bb9c65a6b->>m_38c2171b_952e_589f_a60c_c7c20cd5719d: calls
     m_017e301e_e617_58cc_b179_cb2195a4f3f0->>m_4a3322af_f8bc_5dc0_a366_6e5523d13c7c: calls
     m_017e301e_e617_58cc_b179_cb2195a4f3f0->>m_6a95a7e1_e58c_55a8_ac11_94f20e7abbc5: calls
+    m_01a66b80_f006_5fb4_8c35_1312f7b68adb->>m_01a66b80_f006_5fb4_8c35_1312f7b68adb: calls
     m_02d14539_2527_53e3_a472_18449d0abb5d->>m_3543c95c_df70_5fa5_9de5_b2376e07fccc: calls
     m_02d14539_2527_53e3_a472_18449d0abb5d->>m_abcbd023_5ca6_5268_8972_4c4d361d8fbe: calls
     m_038959ea_6f68_51a7_b28d_9b857beca386->>m_67b04ae9_5316_58ad_8c9e_4345e12cef0e: calls
     m_038959ea_6f68_51a7_b28d_9b857beca386->>m_9076381c_f935_5c44_bf48_257b15ba9c62: calls
     m_05e2eb59_486c_5722_8d2a_9911584d43a2->>m_91beae62_064b_50ee_a889_d2fb4e4e8d44: calls
-    m_0dd0e533_f57b_517a_80e8_096c27a5ab06->>m_b77e439d_33bd_5784_b957_75c8d9bba4d1: calls
+    m_0962ec4b_6488_58a8_b32b_030e362216ae->>m_0962ec4b_6488_58a8_b32b_030e362216ae: calls
+    m_0ad1e13f_d8f0_5171_9cb6_a5e746907d48->>m_0ad1e13f_d8f0_5171_9cb6_a5e746907d48: calls
+    m_0ad1e13f_d8f0_5171_9cb6_a5e746907d48->>m_7699f494_2916_5e24_914a_6af2fb9a4546: calls
+    m_0ad1e13f_d8f0_5171_9cb6_a5e746907d48->>m_f13ed816_63d9_5fea_92de_d6611de7c6e4: calls
     m_0f981cd1_7d73_5d8d_ba02_38756ffa79a9->>m_0171f70b_fa5e_53e4_8a1c_93801edad135: calls
     m_0f981cd1_7d73_5d8d_ba02_38756ffa79a9->>m_5eaf7359_6733_56b6_9ce1_e6399953a579: calls
     m_0f981cd1_7d73_5d8d_ba02_38756ffa79a9->>m_c6476a84_0ff8_5c83_9c94_4711a935eea8: calls
-    m_110bf979_ddf0_5b33_980b_1a8ba57a2bec->>m_110bf979_ddf0_5b33_980b_1a8ba57a2bec: calls
     m_11f4d2d5_6054_504e_9866_65db2bd9eb8c->>m_11f4d2d5_6054_504e_9866_65db2bd9eb8c: calls
-    m_14264205_377e_541a_811e_b66050cc0e40->>m_8db5b920_f822_5a65_a246_aa0dc1b0d145: calls
-    m_1a71190e_9caf_5a2d_aa02_dbcd3509a583->>m_973f3faf_ba04_5707_bb88_b95f33938319: calls
-    m_1b535367_6c76_569d_a85f_f7e9362ecae4->>m_64b0c162_7265_5858_b461_95e60f8dd46d: calls
-    m_1bf81aa4_071b_5672_b65a_288e5c3f154f->>m_68d26b08_c2bc_5988_ac45_5cf8370577ff: calls
-    m_1bf81aa4_071b_5672_b65a_288e5c3f154f->>m_c6c02a87_4cc3_542e_bbc1_446e0185e8bc: calls
+    m_1640a8b2_72ae_5998_b8fd_2de0bc496397->>m_10429e53_e6ce_58de_ba73_2cfec6172411: calls
+    m_1640a8b2_72ae_5998_b8fd_2de0bc496397->>m_b1de1ef8_1fbf_53bf_a96f_76ce74c753c3: calls
+    m_170bc9f5_8062_50c2_a52e_ecd192e32eb5->>m_0ad1e13f_d8f0_5171_9cb6_a5e746907d48: calls
 ```
 
 ## Child Modules
 
-- [[code/modules/crates/gwiki/src/ingest/document|crates/gwiki/src/ingest/document]] - The `crates/gwiki/src/ingest/document` module owns document ingestion from snapshot to wiki-ready output. Its core types model the incoming asset, extraction request, extraction result, and final ingest result, with `DocumentIngestResult` converting back into the shared `IngestResult` shape used by the wider ingest system. The module wires local extractors into ingest entry points that can optionally update the index after writing assets and markdown, while keeping endpoint availability and degradation metadata explicit in the API .
+- [[code/modules/crates/gwiki/src/ingest/document|crates/gwiki/src/ingest/document]] - The document ingest module owns the path from a fetched document snapshot to persisted wiki content: it defines snapshots, extraction requests, extraction results, endpoint availability, and ingest results, including the stored raw path, original asset path, derived markdown path, and optional degradation metadata (crates/gwiki/src/ingest/document/mod.rs:21-53). Its main ingest helpers write the asset and raw/derived markdown, optionally index the result, and use a `DocumentExtractor` endpoint so extraction can be available locally or recorded as unavailable without losing the original document (crates/gwiki/src/ingest/document/mod.rs:54-100).
 
-Extraction is split by document family. HTML ingestion decodes bytes, parses a DOM, extracts a normalized title, walks the body or root node, skips non-visible `head`, `script`, and `style` content, and normalizes collected text into markdown; if no readable text remains, it returns a degraded `HtmlNoContent` extraction while preserving the original asset [crates/gwiki/src/ingest/document/html.rs:8-39] [crates/gwiki/src/ingest/document/html.rs:41-51] [crates/gwiki/src/ingest/document/html.rs:53-76]. Office ingestion routes by extension to DOCX, PPTX, or spreadsheet extractors, using bounded ZIP/XML reads and environment-overridable limits for entry size, slides, rows, and columns so large or malformed inputs can still produce structured partial markdown with warnings and degradation metadata [crates/gwiki/src/ingest/document/office.rs:39-52] .
+Extraction is split by source format. HTML bytes are decoded, parsed, titled from `<title>`, traversed from `<body>` or the root, normalized into markdown-like visible text, and degraded as `HtmlNoContent` when no readable text remains while preserving the asset (crates/gwiki/src/ingest/document/html.rs:1-38). Office extraction dispatches by extension to DOCX, PPTX, and spreadsheet handlers, with bounded defaults and environment-backed limits for ZIP entry size, slides, rows, and columns to keep extraction predictable (crates/gwiki/src/ingest/document/office.rs:12-52). The render layer then produces persisted markdown for raw and derived document records, carrying scope, extraction details, degradation context, and the original asset path in metadata.
 
-Rendering completes the pipeline by producing raw document markdown, resolving the derived markdown path, creating parent directories, and atomically staging then flushing final content to disk. Its helpers also classify failure modes and unit counts, including PDF-specific and unsupported-source fallbacks, so downstream callers receive consistent degradation reporting when extraction or rendering cannot fully succeed [crates/gwiki/src/ingest/document/render.rs:11-33] [crates/gwiki/src/ingest/document/render.rs:36-67]  [crates/gwiki/src/ingest/document/render.rs:124-211]. The integration tests exercise these collaborations with in-memory DOCX, PPTX, XLSX, and HTML fixtures, verifying successful markdown conversion and indexing alongside graceful behavior for malformed, oversized, empty, and formatting-sensitive inputs [crates/gwiki/src/ingest/document/tests.rs:9-18] .
-- [[code/modules/crates/gwiki/src/ingest/pdf|crates/gwiki/src/ingest/pdf]] - The PDF ingest module is the hub for turning PDF inputs into wiki-ready Markdown and assets, with document-feature-gated entry points and shared transport types exposed from `mod.rs` while implementation stays split across ingest, markdown, render, text, and types [crates/gwiki/src/ingest/pdf/mod.rs:22-25] [crates/gwiki/src/ingest/pdf/mod.rs:28-34]. Its data model carries PDFs through the pipeline as source bytes, extracted text pages, rendered page images, and ingest options such as the shared default render DPI [crates/gwiki/src/ingest/pdf/types.rs:11-14] [crates/gwiki/src/ingest/pdf/types.rs:18-24] [crates/gwiki/src/ingest/pdf/types.rs:28-33] [crates/gwiki/src/ingest/pdf/types.rs:37-43].
+The files collaborate around `DocumentExtraction`: `LocalDocumentExtractor` selects HTML or office extraction, `mod.rs` coordinates writes, fallback metadata, degradation, cleanup, and indexing, and `render.rs` serializes the final derived markdown. The test module builds minimal ZIP Office fixtures plus an in-memory ingest harness, then verifies successful HTML/Office conversion, indexing, malformed or oversized degradation behavior, bounded reads, spreadsheet table edge cases, and HTML text normalization details (crates/gwiki/src/ingest/document/tests.rs:9-59).
+[crates/gwiki/src/ingest/document/html.rs:8-39]
+[crates/gwiki/src/ingest/document/mod.rs:21-27]
+[crates/gwiki/src/ingest/document/office.rs:39-52]
+[crates/gwiki/src/ingest/document/render.rs:11-33]
+[crates/gwiki/src/ingest/document/tests.rs:9-18]
+- [[code/modules/crates/gwiki/src/ingest/file|crates/gwiki/src/ingest/file]] - The file ingest module turns local paths into normalized wiki ingest results by classifying source files, choosing the appropriate pipeline, preserving source identity, and recording replay metadata. Source handling starts with extension-based `SourceKind` detection for documents, media, markdown, text, and generic files, then derives a vault-relative or canonical display location, decides whether bytes should be stored as an asset, and wraps file-read failures as `WikiError::Io` [crates/gwiki/src/ingest/file/source.rs:9-24] [crates/gwiki/src/ingest/file/source.rs:26-40] . The central dispatch flow, `ingest_path_without_index`, uses that classification plus file name, location, fetched-at time, AI context, and ingest options to route audio, image, video, document, PDF, or generic inputs through the matching no-index ingest helper and return a unified `LocalFileIngestResult` [crates/gwiki/src/ingest/file/dispatch.rs:42-224].
 
-The main flow starts in `ingest.rs`, where callers can ingest pre-rendered page snapshots or full PDF files. Full-file ingestion first attempts text-layer extraction, records a degradation if that fails, renders pages when document support is enabled, merges native text with optional vision/OCR output, writes Markdown and assets, and optionally reindexes afterward [crates/gwiki/src/ingest/pdf/ingest.rs:23-37] [crates/gwiki/src/ingest/pdf/ingest.rs:41-52] [crates/gwiki/src/ingest/pdf/ingest.rs:55-108]. Rendering is handled by `render.rs`, which uses bundled Pdfium to load pages, rasterize them at the requested DPI, encode PNG bytes, and enforce page and byte budgets with degradation metadata when limits are exceeded [crates/gwiki/src/ingest/pdf/render.rs:23-39] [crates/gwiki/src/ingest/pdf/render.rs:42-94].
+Generic file ingest provides the fallback path: it reads source bytes, derives a markdown title from the filename, registers the source manifest record as a borrowed manual-ingest draft with pending compile status, optionally stores the original artifact, renders markdown, writes it to disk, and returns without degradations [crates/gwiki/src/ingest/file/generic.rs:11-57]. Rendering is shared through `render_file_markdown`, which builds front matter from kind, location, fetch time, hash, and optional asset path, then either inlines lossy UTF-8 for markdown/text/stdin-like sources or points readers to the stored artifact for binary and other non-inline inputs [crates/gwiki/src/ingest/file/render.rs:6-51]. After each ingest, replay metadata is attached by building a `SourceReplay` from the path and options, updating the matching manifest entry when needed, and ensuring the returned record carries the replay data even when the manifest does not change [crates/gwiki/src/ingest/file/replay.rs:8-32].
 
-Markdown assembly and text cleanup form the final coordination layer. `markdown.rs` builds document metadata, degradation sections, and per-page content, using sanitized page Markdown so page boundaries and internal markers remain safe . `text.rs` normalizes extracted page text by flattening individual lines, grouping non-empty runs into paragraphs, and preserving paragraph breaks while removing excess whitespace [crates/gwiki/src/ingest/pdf/text.rs:4-25]. The tests wire these pieces together with fake vision clients to verify combined text-layer plus OCR ingestion, rendered asset naming, Markdown escaping, rollback behavior, preserved page references, timestamp parsing, and uniform degradation metadata [crates/gwiki/src/ingest/pdf/tests.rs:21] [crates/gwiki/src/ingest/pdf/tests.rs:23-27] [crates/gwiki/src/ingest/pdf/tests.rs:29-60].
-- [[code/modules/crates/gwiki/src/ingest/video|crates/gwiki/src/ingest/video]] - The video ingest module turns fetched or file-backed video sources into wiki assets, metadata, transcripts, frame samples, and derived markdown. Its central data shapes are `VideoSnapshot`, `VideoFileSnapshot`, and `VideoIngestResult`, which carry source identity, media bytes or paths, timing, extracted frame information, transcript segments, optional transcription output, and the resulting source record [crates/gwiki/src/ingest/video/mod.rs:32-45] [crates/gwiki/src/ingest/video/mod.rs:48-61] [crates/gwiki/src/ingest/video/mod.rs:64-73]. The public orchestration layers start from generic video ingest entry points and branch into file-based, degraded, production-processing, and without-index variants so callers can choose whether extraction/transcription work is followed by vault reindexing [crates/gwiki/src/ingest/video/mod.rs:76-94] [crates/gwiki/src/ingest/video/mod.rs:97-104].
+The module also standardizes degraded-ingest reporting across media and document flows. It formats transcription and vision degradations as compact `type:reason:fallback` strings, conditionally includes document degradations behind the documents feature, and expands video results into both video media degradation strings and any transcription degradation . Tests cover the module as an integration surface, using deterministic no-AI ingest options and `MemoryWikiStore` to verify source hashing, path location behavior, source-kind detection, media/document dispatch, no-AI fallback degradation, and resulting manifest/raw artifact records  [crates/gwiki/src/ingest/file/tests.rs:33-49] .
+- [[code/modules/crates/gwiki/src/ingest/pdf|crates/gwiki/src/ingest/pdf]] - The PDF ingest module is the gwiki entry point for turning PDF snapshots or full PDF files into vault assets, Markdown, source manifest state, and index updates. Its public ingest path accepts page snapshots directly or, behind the `documents` feature, extracts text from a full PDF, renders page images for vision/OCR, records degradations, then indexes the result after the write completes [crates/gwiki/src/ingest/pdf/ingest.rs:23-37] [crates/gwiki/src/ingest/pdf/ingest.rs:41-52]. Shared types define the PDF inputs and outputs: page text, fetched snapshot metadata and bytes, rendered PNG pages, render DPI options, and timestamp parsing for RFC3339 or `unix-ms:` collection timestamps [crates/gwiki/src/ingest/pdf/types.rs:11-14] [crates/gwiki/src/ingest/pdf/types.rs:18-24] [crates/gwiki/src/ingest/pdf/types.rs:28-33] [crates/gwiki/src/ingest/pdf/types.rs:37-43] [crates/gwiki/src/ingest/pdf/types.rs:47-49].
 
-The asset path owns persistence: it registers the source, writes the original asset, gathers file metadata, renders raw markdown, optionally samples frames, persists frame assets, and cleans up temporary frame sources afterward [crates/gwiki/src/ingest/video/assets.rs:25-115] [crates/gwiki/src/ingest/video/assets.rs:126-206] [crates/gwiki/src/ingest/video/assets.rs:208-212]. The processing path supplies the media-heavy work through a `VideoMediaExtractor` trait; the production implementation delegates audio extraction and frame sampling to `crate::media`, then the ingest flow transcribes audio, describes sampled frames through vision, classifies degradations, and packages the result before optional indexing [crates/gwiki/src/ingest/video/processing.rs:18-26] [crates/gwiki/src/ingest/video/processing.rs:30-42] [crates/gwiki/src/ingest/video/processing.rs:35-41].
+The main flow splits responsibilities between extraction/rendering, normalization, Markdown assembly, and vault persistence. `render.rs` extracts 1-indexed text-layer pages and renders pages through Pdfium with limits on rendered page count and total byte budget, converting rendering, PNG, and dimension failures into ingestion errors or degradations [crates/gwiki/src/ingest/pdf/render.rs:23-39] [crates/gwiki/src/ingest/pdf/render.rs:42-94] [crates/gwiki/src/ingest/pdf/render.rs:97-100]. `text.rs` normalizes extracted page text into clean paragraphs by trimming lines, dropping blank runs, joining paragraph lines with spaces, and preserving paragraph breaks with double newlines [crates/gwiki/src/ingest/pdf/text.rs:4-25]. `markdown.rs` then writes metadata such as source location, hash, asset path, page count, text-layer and vision flags, model, scope, and degradation reasons, followed by the document title, degradation notes, and page sections or no-text fallback [crates/gwiki/src/ingest/pdf/markdown.rs:15-89].
 
-The metadata helpers keep the rest of the module’s data transformation small and shared. `VideoDegradationContext` carries media and transcription degradation state, `video_media_metadata` stats the stored asset, `VideoSnapshotRef` provides borrowed access over either snapshot type, and render helpers convert snapshots, transcripts, frame descriptions, and timestamps into raw ingest output and markdown [crates/gwiki/src/ingest/video/metadata.rs:4-8] [crates/gwiki/src/ingest/video/metadata.rs:10-25] [crates/gwiki/src/ingest/video/metadata.rs:27-39] [crates/gwiki/src/ingest/video/metadata.rs:43-57] [crates/gwiki/src/ingest/video/metadata.rs:59-73]. Tests mirror those collaboration points with fake media extractors, transcription clients, vision clients, temporary file helpers, and coverage for success and failure paths including transcript/frame generation, disabled frame sampling, degradation classification, and cleanup behavior .
+The files collaborate around `PdfPageMarkdown`, `PdfMarkdownSummary`, and `PdfRenderOutcome`, which carry page Markdown, extraction metadata, rendered images, and render degradations between substeps [crates/gwiki/src/ingest/pdf/mod.rs:22-25] [crates/gwiki/src/ingest/pdf/mod.rs:28-34] [crates/gwiki/src/ingest/pdf/mod.rs:37-40]. Markdown helpers merge text-layer content with OCR and vision descriptions, deduplicate OCR overlap, derive rendered page asset names and paths, and sanitize unsafe page content including gwiki marker variants and Markdown horizontal rules [crates/gwiki/src/ingest/pdf/markdown.rs:92-107] [crates/gwiki/src/ingest/pdf/markdown.rs:110-135] [crates/gwiki/src/ingest/pdf/markdown.rs:138-156] [crates/gwiki/src/ingest/pdf/markdown.rs:159-239]. The ingest layer stages the source asset and raw Markdown, records failures as uniform degradations, and rolls back registered PDF assets if raw Markdown writing fails, while tests cover the end-to-end behavior with fake vision clients, rollback paths, page references, sanitization, normalization, timestamp parsing, and render-budget reporting [crates/gwiki/src/ingest/pdf/ingest.rs:55-108] [crates/gwiki/src/ingest/pdf/ingest.rs:111-128] [crates/gwiki/src/ingest/pdf/ingest.rs:131-146] [crates/gwiki/src/ingest/pdf/tests.rs:23-27] [crates/gwiki/src/ingest/pdf/tests.rs:29-60].
+- [[code/modules/crates/gwiki/src/ingest/url|crates/gwiki/src/ingest/url]] - The `ingest/url` module turns remote URLs into durable wiki source material. Its fetch path builds a default blocking fetcher with a 30-second timeout, disabled automatic redirects, a fixed `gwiki/0.1` user agent, and a manual redirect loop capped at 10 hops; `fetch_url_snapshot` delegates to that fetcher, which validates requested and resolved URLs before each request and converts transport, HTTP status, redirect, size, and address-policy failures into `UrlIngestFailure` values   [crates/gwiki/src/ingest/url/fetch.rs:38-100].
+
+Rendering is split by response shape. HTML snapshots become markdown with URL metadata, canonical and requested locations, fetch time, source hash, optional content type, a title header, and visible document text extracted from the parsed HTML tree [crates/gwiki/src/ingest/url/render.rs:12-37]. Non-HTML snapshots use the same source metadata but classify the source kind, record the preserved asset path, mark the media degradation, and emit a short note that the response was stored as a source asset [crates/gwiki/src/ingest/url/render.rs:39-66]. Helpers decide whether a snapshot is HTML from content type or body shape and support title extraction, text collection, hidden-element skipping, and whitespace normalization .
+
+The tests describe the collaboration across the module and the broader ingest pipeline: a `UrlSnapshot` is rendered into raw markdown, written with canonical URL metadata, hashed, added to the source manifest, and indexed through the wiki store . Additional coverage exercises non-HTML asset preservation, HTML entity/text extraction, batch partial success and single indexing behavior, byte and content-length limits, private/local IP rejection, and relative redirect resolution, tying the fetch safety helpers and render helpers back to end-to-end URL ingestion behavior.
+- [[code/modules/crates/gwiki/src/ingest/video|crates/gwiki/src/ingest/video]] - The `crates/gwiki/src/ingest/video` module owns video ingestion from both in-memory and file-backed sources. Its core model types capture source identity, timing, MIME data, frame sampling, extracted frame descriptions, transcripts, and optional transcription output, while `VideoIngestResult` returns the stored source record plus derived asset and degradation information produced by the pipeline. The public ingest entry points compute or forward source hashes, choose degradation and processing settings, write assets into the vault, and refresh the wiki index when using the indexed variants. [crates/gwiki/src/ingest/video/mod.rs:32-45] [crates/gwiki/src/ingest/video/mod.rs:48-61] [crates/gwiki/src/ingest/video/mod.rs:64-73] [crates/gwiki/src/ingest/video/mod.rs:76-94]
+
+The main flow runs through `processing.rs` and `assets.rs`: production processing delegates media work through `VideoMediaExtractor`, with the default extractor calling `crate::media` for audio extraction and frame sampling, then the ingest wrappers optionally call `index_after_ingest` after the without-index pipeline completes. Asset ingestion registers the video source using a content hash, writes the original video and raw markdown, gathers file metadata, persists sampled frames as numbered JPEG assets, and cleans up temporary frame files on a best-effort basis.  [crates/gwiki/src/ingest/video/processing.rs:35-41] [crates/gwiki/src/ingest/video/assets.rs:25-115] [crates/gwiki/src/ingest/video/assets.rs:126-206]
+
+`metadata.rs` supplies the shared glue used by those flows: degradation context, file-size and duration metadata, borrowed snapshot views over both snapshot types, conversion into the local ingest-result shape, and rendering for raw-video markdown with timestamp formatting. The tests mirror the same collaboration points by constructing representative snapshots, fake media extractors, fake transcription and vision clients, temp-file helpers, and assertions over derived outputs, so success and failure paths can be exercised without production media or AI services. [crates/gwiki/src/ingest/video/metadata.rs:4-8] [crates/gwiki/src/ingest/video/metadata.rs:10-25]  [crates/gwiki/src/ingest/video/metadata.rs:59-73] 
 
 ## Files
 
-- [[code/files/crates/gwiki/src/ingest/audio.rs|crates/gwiki/src/ingest/audio.rs]] - This file implements audio ingestion for gwiki: it defines `AudioSnapshot` and `AudioIngestResult` as the input and output data shapes, then wires `ingest_audio` through production transcription routing into `ingest_audio_with_transcription`, which stores the raw audio, generates raw markdown metadata, transcribes or translates the content into transcript markdown, and rebuilds the wiki index. The routing helpers decide whether production transcription is available, whether translation can fall back through transcribe-plus-text generation, and what degradation metadata to attach when transcription is unavailable. The markdown conversion helpers turn successful transcription output into searchable transcript content or degrade to retained-raw-audio notes on failure or unsupported routing. The bottom of the file is mostly test support: fake and scripted transcription clients, test fixtures for audio snapshots and transcript outputs, and integration-style tests that verify direct transcription, translation, chunking, degradation, storage, and search indexing behavior.
+- [[code/files/crates/gwiki/src/ingest/audio.rs|crates/gwiki/src/ingest/audio.rs]] - This file implements audio ingestion for gwiki: it defines the `AudioSnapshot` input and `AudioIngestResult` output types, stores uploaded audio as a raw asset plus a generated markdown record, and drives transcription or translation through an AI routing layer selected from `AiContext`. The helper functions decide whether production transcription is available, fall back to degraded “unavailable” output when routing is off or unsupported, and convert transcription results into markdown-ready text with metadata. The rest of the file is support code for formatting raw-audio markdown, test doubles and fixtures for transcription clients and contexts, and integration tests that verify storage, indexing, chunking, translation, and degradation behavior.
 [crates/gwiki/src/ingest/audio.rs:21-28]
 [crates/gwiki/src/ingest/audio.rs:31-37]
 [crates/gwiki/src/ingest/audio.rs:40-54]
 [crates/gwiki/src/ingest/audio.rs:56-87]
 [crates/gwiki/src/ingest/audio.rs:89-91]
-- [[code/files/crates/gwiki/src/ingest/file.rs|crates/gwiki/src/ingest/file.rs]] - This file implements local ingestion into the wiki store for both filesystem paths and stdin snapshots. It detects the source kind from the path, builds source/location metadata, and routes each input through the right no-index pipeline: generic files are read, registered, optionally stored as assets, and rendered to raw markdown; media and document inputs are dispatched to audio, image, video, PDF, office, HTML, or document-specific ingest flows; and stdin is recorded as a draft source with raw markdown output and no asset path. It also updates replay metadata in the source manifest, formats degradation summaries for fallback cases, decides when to persist assets versus inline text, and provides helpers for path normalization, AI-disabled ingest context/options, and coverage tests that verify dispatch, hashing, storage, and feature-gated behavior.
-[crates/gwiki/src/ingest/file.rs:53-57]
-[crates/gwiki/src/ingest/file.rs:60-63]
-[crates/gwiki/src/ingest/file.rs:65-78]
-[crates/gwiki/src/ingest/file.rs:80-262]
-[crates/gwiki/src/ingest/file.rs:264-310]
-- [[code/files/crates/gwiki/src/ingest/git.rs|crates/gwiki/src/ingest/git.rs]] - This file ingests a selected snapshot of a Git repository into the wiki index. `GitFileSnapshot` and `GitRepositorySnapshot` model the remote, commit, fetch time, and chosen file bytes; `ingest_repository` rejects empty snapshots, registers the repository as a `SourceDraft`/`SourceManifest`, renders a markdown representation, and writes/indexes it. The helper functions derive stable content bytes for hashing/provenance, format git-specific markdown with code fences and metadata, and clamp fence delimiters so rendered fences stay valid even when content contains long runs of backticks or tildes.
+- [[code/files/crates/gwiki/src/ingest/file.rs|crates/gwiki/src/ingest/file.rs]] - This file contains the local ingest entry points and small support types for turning filesystem or stdin input into wiki content. `StdinSnapshot` captures a labeled stdin payload with its fetch time, `LocalFileIngestResult` bundles an ingest result with any fidelity degradations, `ingest_path` runs path ingestion and then reindexes the store, and `ingest_stdin` registers a stdin-backed draft, writes its rendered raw markdown, reindexes, and returns the resulting record.
+[crates/gwiki/src/ingest/file.rs:34-38]
+[crates/gwiki/src/ingest/file.rs:41-44]
+[crates/gwiki/src/ingest/file.rs:46-59]
+[crates/gwiki/src/ingest/file.rs:62-94]
+- [[code/files/crates/gwiki/src/ingest/git.rs|crates/gwiki/src/ingest/git.rs]] - Defines ingestion support for Git repository snapshots in `gwiki`. The two snapshot types model a repository commit plus selected files, and `ingest_repository` turns that snapshot into a registered source by validating that files exist, serializing provenance/content for the source draft, rendering a markdown document, and writing/indexing it in the vault store. The helper functions build the serialized byte payload, generate frontmatter and markdown with safe code fences and file-type info, and the tests verify that commit provenance is preserved and fence generation stays bounded under hostile content.
 [crates/gwiki/src/ingest/git.rs:15-18]
 [crates/gwiki/src/ingest/git.rs:22-27]
 [crates/gwiki/src/ingest/git.rs:30-55]
 [crates/gwiki/src/ingest/git.rs:58-74]
 [crates/gwiki/src/ingest/git.rs:77-109]
-- [[code/files/crates/gwiki/src/ingest/image.rs|crates/gwiki/src/ingest/image.rs]] - Defines the image ingestion pipeline for gwiki, centered on an `ImageSnapshot` input and an `ImageIngestResult` that records the generated source record plus raw, asset, and derived output paths and any vision degradation used. The top-level `ingest_image` path falls back to default degradation, while the production and non-production vision variants split index updates from ingestion work; shared helpers then render raw image markdown, decide whether original images are stored, determine scope-indexed metadata, and build the final `IngestResult` from the produced files and vision output.
+- [[code/files/crates/gwiki/src/ingest/image.rs|crates/gwiki/src/ingest/image.rs]] - This file implements image ingestion for gwiki. It defines `ImageSnapshot` as the in-memory input for a fetched image and `ImageIngestResult` as the output bundle with the source record, raw/asset/derived paths, and optional vision-degradation metadata. The ingest functions form a small pipeline: `ingest_image` performs ingestion with the default unavailable-vision fallback, `ingest_image_with_production_vision` and its `_without_index` variant route snapshots through production vision when available and otherwise degrade gracefully, and the non-indexed path writes the source manifest entry, raw image bytes, and markdown before optionally adding vision-derived content; the indexed wrappers then call `index_after_ingest`. Supporting helpers render the raw image markdown, supply the default degradation policy, and provide a conversion into the generic `IngestResult`. The tests verify the original bytes and metadata are preserved, scope indexing is correct, and production vision writes extracted description and OCR data.
 [crates/gwiki/src/ingest/image.rs:23-31]
 [crates/gwiki/src/ingest/image.rs:34-40]
 [crates/gwiki/src/ingest/image.rs:43-56]
 [crates/gwiki/src/ingest/image.rs:59-70]
 [crates/gwiki/src/ingest/image.rs:72-103]
-- [[code/files/crates/gwiki/src/ingest/mediawiki.rs|crates/gwiki/src/ingest/mediawiki.rs]] - This file defines the MediaWiki ingestion path for gwiki: it packages a fetched page into a `MediaWikiPageSnapshot`, registers the raw wikitext as a source manifest entry, renders a Markdown document with metadata, and writes it into the vault/index via `write_raw_then_index`. `render_mediawiki_markdown` builds the frontmatter from page and revision fields, normalizing values to single lines and including optional revision timestamp and category, while `mediawiki_records_revision_metadata` captures the revision details that should be preserved in the indexed record.
+- [[code/files/crates/gwiki/src/ingest/mediawiki.rs|crates/gwiki/src/ingest/mediawiki.rs]] - This file defines the `MediaWikiPageSnapshot` input model and the ingest path for turning a fetched MediaWiki page into stored wiki content and index metadata. `ingest_page` normalizes the title and source URL, registers the snapshot as a `MediaWiki` source draft with revision/fetch data, renders a Markdown wrapper around the raw wikitext via `render_mediawiki_markdown`, and writes the raw content plus index entry; the test confirms the written metadata preserves the expected normalized fields, revision details, category, and citation/source kind.
 [crates/gwiki/src/ingest/mediawiki.rs:12-20]
 [crates/gwiki/src/ingest/mediawiki.rs:23-41]
 [crates/gwiki/src/ingest/mediawiki.rs:44-77]
 [crates/gwiki/src/ingest/mediawiki.rs:86-123]
-- [[code/files/crates/gwiki/src/ingest/mod.rs|crates/gwiki/src/ingest/mod.rs]] - Helpers for ingesting immutable raw wiki sources into the vault, with the module organizing file-type submodules plus shared routines for writing raw markdown, storing assets, sanitizing names/extensions, and validating source hashes before indexing.
-
-The pieces work together in a raw-first flow: source text or binaries are written to stable `raw/...` paths, metadata values are converted into YAML-safe scalars, immutable writes are checked against existing content and declared hashes, and `RawFirstStore` plus `index_after_ingest` coordinate recording the ingestion and triggering indexing without rewriting wiki content.
+- [[code/files/crates/gwiki/src/ingest/mod.rs|crates/gwiki/src/ingest/mod.rs]] - Provides ingestion utilities for immutable raw wiki sources and derived assets. It defines `IngestResult`, helpers for normalizing extensions and YAML/markdown metadata, and a set of write functions that place raw markdown or assets under the vault via immutable file writes, then optionally rebuild the index. The file also includes validation and path-sanitizing helpers plus the `RawFirstStore` test decorator and related tests to enforce the invariant that raw content is written before any derived indexing rows.
 [crates/gwiki/src/ingest/mod.rs:25-29]
 [crates/gwiki/src/ingest/mod.rs:31-36]
 [crates/gwiki/src/ingest/mod.rs:38-46]
 [crates/gwiki/src/ingest/mod.rs:48-57]
 [crates/gwiki/src/ingest/mod.rs:59-73]
-- [[code/files/crates/gwiki/src/ingest/url.rs|crates/gwiki/src/ingest/url.rs]] - This file implements URL ingestion for gwiki: it fetches and validates URLs, captures them as `UrlSnapshot`s, and turns those snapshots into ingested wiki content. The ingest path splits into HTML and non-HTML handling, with helpers for redirect resolution, URL/IP safety checks, response-size limiting, and HTML-to-markdown/text extraction before writing raw content, assets, and source manifests into the store. It also defines batch result types for accepted and failed ingests, plus status/exit-code reporting for CLI or API callers.
-[crates/gwiki/src/ingest/url.rs:22-28]
-[crates/gwiki/src/ingest/url.rs:31-35]
-[crates/gwiki/src/ingest/url.rs:38-42]
-[crates/gwiki/src/ingest/url.rs:45-48]
-[crates/gwiki/src/ingest/url.rs:50-62]
-- [[code/files/crates/gwiki/src/ingest/wayback.rs|crates/gwiki/src/ingest/wayback.rs]] - This file ingests archived Wayback captures into the wiki index. `WaybackCaptureSnapshot` carries the capture URL, timestamps, raw body, and content type; `ingest_capture` drives the pipeline by decoding the snapshot into HTML, parsing it, deriving a title, registering the source draft, rendering markdown, and writing/indexing the result. The helper functions split that work into stages: content-type and charset validation, HTML decoding, title selection, URL/path fallback formatting, HTML-to-text extraction, block-aware inline text collection, and markdown rendering. The tests at the bottom verify the key behaviors: metadata capture, body-text extraction, block grouping, title fallback order, charset handling, entity decoding, and rejection of non-HTML captures.
+- [[code/files/crates/gwiki/src/ingest/url.rs|crates/gwiki/src/ingest/url.rs]] - This file defines the URL-ingest data model and orchestration for turning fetched web content into wiki content. `UrlSnapshot` captures a fetch result, while `AcceptedUrlIngest`, `UrlIngestFailure`, and `UrlBatchIngest` record per-URL outcomes and provide batch status/exit-code reporting. The ingest path splits HTML and non-HTML snapshots: HTML snapshots are parsed for a title, rendered to canonical markdown, and written into the vault, while non-HTML snapshots are stored as assets with a markdown wrapper. Batch ingestion fetches each URL, collects successes and failures, and triggers reindexing when anything was accepted.
+[crates/gwiki/src/ingest/url.rs:25-31]
+[crates/gwiki/src/ingest/url.rs:34-38]
+[crates/gwiki/src/ingest/url.rs:41-45]
+[crates/gwiki/src/ingest/url.rs:48-51]
+[crates/gwiki/src/ingest/url.rs:53-65]
+- [[code/files/crates/gwiki/src/ingest/wayback.rs|crates/gwiki/src/ingest/wayback.rs]] - This file implements ingestion for Wayback-archived captures. `WaybackCaptureSnapshot` holds the archived URL metadata, timestamps, body bytes, and optional content type; `ingest_capture` turns that snapshot into a stored wiki record by validating and decoding the HTML, parsing it for a title and visible text, registering a `SourceDraft` in the source manifest, rendering a Wayback-specific Markdown document, and writing/indexing it. The helper functions support that pipeline by enforcing HTML-only content types, choosing an encoding from the response headers, BOM, or HTML `<meta charset>`, deriving fallback titles from the document or URL, extracting plain text from the HTML tree while skipping head/script/style content and preserving block structure, and formatting the final markdown metadata and body. The tests exercise the main behaviors: metadata recording, title fallback order, charset decoding, HTML validation, and text extraction rules.
 [crates/gwiki/src/ingest/wayback.rs:18-25]
 [crates/gwiki/src/ingest/wayback.rs:28-47]
 [crates/gwiki/src/ingest/wayback.rs:50-60]
@@ -698,36 +699,10 @@ The pieces work together in a raw-first flow: source text or binaries are writte
 - `293e77aa-b0a4-54c2-9f87-18ae277515f5`
 - `0f981cd1-7d73-5d8d-ba02-38756ffa79a9`
 - `4a08b009-b68c-5dc7-adaa-f538a5d45b79`
-- `9b8e3792-61bc-5a26-8499-4db9a5cc710d`
-- `24fdbb89-caf6-5dd5-83b0-a57f6438c0e5`
-- `a6f88179-3233-5c30-89e5-93c0d8542e45`
-- `2f85c848-c235-5dfa-a615-7abbab08cb85`
-- `e1055ae4-52c6-52ed-a3d6-97a432c43b35`
-- `0cc6d692-4a13-5343-81ce-86889c63e31e`
-- `61dc0bb5-2a36-5cbd-a745-c44ba6efe62c`
-- `28ba99ef-edc1-57f0-9e6a-36196aadde47`
-- `1cf6491a-5f7c-5ea6-9d5c-8362eb8ef75b`
-- `6ef83a82-c763-594a-af11-a170087e782d`
-- `9c64f8e8-149c-5f68-a9e8-0d61b8a81f63`
-- `2cf827fd-51b3-5b43-94aa-a20a4aefc1d0`
-- `82a3b2b3-5c93-511e-96a6-f21e36891384`
-- `338edba2-7b6f-5cb1-9c2b-c86139d3d785`
-- `0652ca60-05dc-53c1-988b-fa12d345a297`
-- `683c55be-1699-5f50-b792-8f27552bc94b`
-- `944fa040-6581-5d6a-9403-31e6d9931563`
-- `c0686ad8-8257-5ff8-8823-fcfa817fff77`
-- `4c41b68b-915b-538c-a10d-f40a4753e289`
-- `b3e07c68-6c09-51a4-a387-acd9ca0d73cb`
-- `e83eb15b-2590-5c24-bfc7-810b04db6e75`
-- `c5507b09-eeba-5441-a1d9-362668391565`
-- `764b80db-be44-51b1-966a-acc729b14de5`
-- `2b58efa9-d0ac-5e0d-9fea-19e43c2696dd`
-- `e0bff932-28de-5ee8-92e7-d6f50970d2a9`
-- `726695e0-ae38-582d-b7cf-4b58998074a9`
-- `8f1d3079-db6c-56ac-bb78-66ebc21887ce`
-- `a376df42-ea5e-55d2-8f32-2873e2467913`
-- `921ca8ab-5fc6-5adc-b40b-56815ff7c7cd`
-- `6868ecb1-de40-56a5-a038-808eb1b71fbf`
+- `b9ed125c-564c-56c9-9d5c-95c5e05d583e`
+- `8f47278b-b904-5d63-a869-3086d56965e6`
+- `e9e4425e-8125-53ae-bcf0-af650e5c1bdf`
+- `b860b1e3-9eba-5669-947a-9bcb5e68bb16`
 - `31d7da91-e52c-56e2-b2b6-195f555ba05a`
 - `87a82eb0-d930-5b8b-a202-53e8d4c5184a`
 - `b9293672-6ee0-5c09-b00b-f4a5a520a3ff`
@@ -822,73 +797,19 @@ The pieces work together in a raw-first flow: source text or binaries are writte
 - `30d7cd51-2434-546d-a459-27544ade3e76`
 - `ee5c377a-8d68-558f-abb0-d8f66046992e`
 - `e716b1c3-df2b-577b-8b69-e8f55fcc986a`
-- `03b2d0d4-ab76-5a11-8532-57af80db8a1e`
-- `495fcdca-758c-5ee5-a55b-10b5ab71d0b2`
-- `feee58c1-9219-5b12-98d1-88fb472054f4`
-- `4597585d-3563-5049-9cd0-533d3fbc62ea`
-- `913a391b-32da-52fb-bbaf-283f4d9fe000`
-- `bbc15fa2-b711-5f9f-b250-7bad075ab341`
-- `7e815a52-3ea1-5cd4-b2e4-fd597c2dc9f5`
-- `0dd0e533-f57b-517a-80e8-096c27a5ab06`
-- `b77e439d-33bd-5784-b957-75c8d9bba4d1`
-- `9b3c35e2-b42e-5137-8cf2-bdcaeb3a5293`
-- `61e95718-2e6f-598c-90d0-bbb36036db89`
-- `46e96afb-5dd4-5076-a5c0-391604cba0b1`
-- `cd22916a-d017-51c8-b7bf-d6756190a9b1`
-- `33e6a191-e793-5e0f-9218-22db2ae44f3d`
-- `1e15e380-5453-539e-8c84-8480d672d4db`
-- `ac287915-755c-5a7d-8464-e9b449418900`
-- `5fcefe6a-6e54-544f-a21d-148fcabc5f90`
-- `1c0206d8-2495-5958-aa6d-68d5ac8946e5`
-- `82366b7b-e3da-5b73-96ba-b76acb9779dc`
-- `6ef88abf-ab84-584b-afa7-ec67e4e92abf`
-- `e99f0aa0-7e6b-58d7-a58e-596877ed9e6c`
-- `1e2bde6d-4e02-598d-922c-6646071a461a`
-- `54717e47-a33c-5bc9-9d56-8e5f99f4cd15`
-- `46304aa6-462e-5a76-85c0-3c4ef611653a`
-- `bdc65750-32a9-539d-b33c-0c29ffca43b4`
-- `e1ad2580-7234-5d3e-8dda-1e2a1ef1626f`
-- `2cb4ef6e-6b61-595d-9791-f40a34af5d4a`
-- `f606cc2d-ff27-5609-a3d1-bd2e555824f6`
-- `415dd21d-5a8e-5927-b784-a85f589ce66a`
-- `7ff4727b-9954-5246-8373-c7eae94fb46c`
-- `78cb37f7-9767-50fb-8784-2d5e36987199`
-- `4d6cc2ff-b9dd-5a02-a72e-badc26cbefae`
-- `0fcc4a10-b739-5b55-9551-1b6e13f3b1c7`
-- `14264205-377e-541a-811e-b66050cc0e40`
-- `dc411e0e-0bdc-5dd8-ba92-52493e0460e1`
-- `f8918254-2f30-538a-ae4f-47406a0ef656`
-- `014c2f03-e0e9-59cb-945c-7a8bb9c65a6b`
-- `38c2171b-952e-589f-a60c-c7c20cd5719d`
-- `06771242-1504-56d3-a3d3-64f8cca73fb8`
-- `b47071ed-62e4-503d-9415-6b66ecf0cbb7`
-- `693cce67-7f64-5570-8d74-a5cefd105d73`
-- `8db5b920-f822-5a65-a246-aa0dc1b0d145`
-- `81db6949-de40-50ff-9c07-0d85a2c27dbf`
-- `4953e3a3-ec36-5dc2-ad03-e079045f2dee`
-- `54c5ac60-a55b-5d2d-9126-18f13d077a0c`
-- `4cfd69c7-c2df-5368-b0c1-3eee11c96d1b`
-- `b50ba347-0695-5d4b-a583-00c0a1e5045f`
-- `eec62052-08a4-575a-8601-3febcdcf749f`
-- `a83332af-8945-560d-80b9-3f8ab3bdc844`
-- `be630435-6d36-55e8-bc75-2f92616304f1`
-- `dff623dc-bd97-5bf6-b9f3-ee39c5d0e8a0`
-- `83c41cf8-88db-587a-8eee-721c645834c6`
-- `815212f0-e244-5b04-a3b0-160f2e818bcb`
-- `394aa041-d174-5283-bd17-1c272c9881c9`
-- `6bab79d4-c39f-5c26-ab71-1eb39c60a853`
-- `8140c8a0-2167-5cf2-a647-f974d1886b8f`
-- `b315db40-1e3b-557f-8a55-172a2bd436ca`
-- `f84c3d19-229b-550a-a078-5ab39329b21a`
-- `15b1ab32-7604-53ed-95a9-ad2d0bd7b763`
-- `895caa0b-ba79-556a-a561-1b40daa184ce`
-- `680f32f9-7ede-5b12-809b-e9ec27f248c5`
-- `965766c0-64ce-5a8a-acd6-2f353ac02c48`
-- `95822980-f2ff-57d0-891c-4881afc0aa34`
-- `30496fee-d374-5e6c-ab47-ab30df603f10`
-- `110bf979-ddf0-5b33-980b-1a8ba57a2bec`
-- `8db88b64-d15a-5ea9-bf9c-e65bd9914846`
-- `506c2842-c79c-5682-ac7f-1590d9d033b5`
+- `c14b8f0a-a77a-503a-9bb9-4353724c9db4`
+- `10b5ab90-399b-564d-a071-16987e705a84`
+- `e1a888d5-5ecc-50f0-8c6b-a2edc46ac72f`
+- `c301d5b8-188c-50a5-acbc-40f22d82cba4`
+- `17c6626f-8890-5afa-b08e-d691de95afe8`
+- `0cc24868-fd0f-555a-b5cf-895a77c56d02`
+- `2e635155-f4db-5502-9348-7e6cdca94939`
+- `c056c1c8-97f3-5779-9a83-3d2e3dda80a0`
+- `a4f1949d-4667-5f9f-9af6-cf853e1476ca`
+- `c4a98887-d879-58d7-81a6-9d70911c19b3`
+- `62953a1c-8373-5ac7-a984-4be6c048f349`
+- `4c565554-84f8-5b2e-90f6-3ee1cce5914f`
+- `ab220337-f2ba-54b8-9c30-7018ddfa681b`
 - `ceb67b01-2212-5c09-80d9-6cc5686bb87b`
 - `64b0c162-7265-5858-b461-95e60f8dd46d`
 - `74aa7287-4f63-5b76-b031-5476596e6de6`

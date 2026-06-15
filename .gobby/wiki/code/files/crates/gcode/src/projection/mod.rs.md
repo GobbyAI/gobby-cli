@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcode/src/projection|crates/gcode/src/projection]]
 
 ## Purpose
 
-This is a Rust module file that declares a public `sync` submodule within the `projection` module of the gcode crate. It serves as the module root for organizing projection-related functionality, with the actual implementation of the sync module located in a separate file. [crates/gcode/src/projection/mod.rs:1-2]
+Exports the `sync` projection module for the `gcode` crate’s projection layer, serving as the module entry point for projection-related code. [crates/gcode/src/projection/mod.rs:1-2]
 
 ## API Symbols
 

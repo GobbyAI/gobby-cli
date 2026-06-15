@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gcore/assets/postgres-pgsearch|crates/gcore/assets
 
 ## Purpose
 
-This file is a version manifest for the `postgres-pgsearch` asset. It records the `pg_search_version`, a default `pg_search_sha256`, architecture-specific SHA-256 values for `amd64` and `arm64`, and the target `postgres_major` version so the build or packaging logic can select and verify the correct binary artifact.
+This JSON file records the packaged `pg_search` release metadata for the Postgres pgsearch asset: the version, its SHA-256 checksum, per-architecture checksums for `amd64` and `arm64`, and the target `postgres_major` version. The fields work together as a small manifest used to identify and verify the correct binary/artifact for each architecture.
 [crates/gcore/assets/postgres-pgsearch/version.json:2]
 [crates/gcore/assets/postgres-pgsearch/version.json:3]
 [crates/gcore/assets/postgres-pgsearch/version.json:4-7]

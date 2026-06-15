@@ -27,9 +27,7 @@ Module: [[code/modules/crates/gcode/src/search/fts|crates/gcode/src/search/fts]]
 
 ## Purpose
 
-This file implements symbol search for the gcode FTS layer, covering both ranked full-text search and fallback name-based lookup against a PostgreSQL-backed code symbol index. It provides visible and non-visible variants, plus an exact-first search strategy that combines exact, prefix, and substring matching while deduplicating and respecting optional filters for kind, language, and file paths.
-
-`VisibleSearchOutcome<T>` is a small wrapper used by the visibility-aware search paths to return results together with a `degraded` flag, and the helper constructors `ok` and `degraded` make it easy for callers to signal whether visibility filtering or other fallback behavior reduced result quality.
+This file implements PostgreSQL-backed symbol search helpers for a project, covering full-text BM25 search, fallback name-based LIKE search, and tiered exact-first matching. It provides both general and visibility-constrained variants, all filtered by kind, language, and file paths where applicable. The `VisibleSearchOutcome` wrapper carries result lists together with a `degraded` flag, and the visible query helpers use it to report when searches had to fall back or relax filtering while still returning usable results.
 [crates/gcode/src/search/fts/symbols.rs:15-18]
 [crates/gcode/src/search/fts/symbols.rs:21-26]
 [crates/gcode/src/search/fts/symbols.rs:28-33]

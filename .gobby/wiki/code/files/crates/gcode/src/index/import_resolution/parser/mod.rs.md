@@ -19,7 +19,7 @@ Module: [[code/modules/crates/gcode/src/index/import_resolution/parser|crates/gc
 
 ## Purpose
 
-This module coordinates import-resolution parsing across languages. It dispatches each import statement to the appropriate language-specific parser, falls back to recording an unparsed import when the language is unsupported, seeds external module-root bindings from the import resolution context for Rust and Elixir, and resolves external function callees back to their source modules by combining those bindings with qualified-path analysis and wildcard-import ambiguity checks.
+This module centralizes import-resolution parsing across supported languages and the lookup logic that ties imports to external calls. `parse_import_statement` dispatches each import line to a language-specific parser, falling back to `push_unparsed_import` to record unsupported or unparsed imports. `seed_import_bindings` builds the external-root bindings from the import-resolution context, with different handling for languages such as Rust and Elixir. `resolve_external_callee` then uses those bindings and qualified-path information to map an external function call back to its source module, including ambiguity checks for wildcard imports.
 [crates/gcode/src/index/import_resolution/parser/mod.rs:29-54]
 [crates/gcode/src/index/import_resolution/parser/mod.rs:56-74]
 [crates/gcode/src/index/import_resolution/parser/mod.rs:76-126]

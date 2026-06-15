@@ -25,7 +25,7 @@ Module: [[code/modules/crates/gcode/src/index/parser/calls|crates/gcode/src/inde
 
 ## Purpose
 
-This file provides text parsing utilities for the gcode index parser's call detection system. It handles three main concerns: line and column position tracking (via line terminators and UTF-16 unit conversion), identifier validation (using Unicode XID properties plus underscore and dollar sign), and language-specific keyword filtering (for Dart, Elixir, and Kotlin) to distinguish reserved words from actual function calls. The utilities work together to accurately parse textual call names while accounting for multi-byte UTF-8 sequences treated as replacement characters, enabling proper source location mapping and symbol identification across multiple programming languages.
+Provides text-processing helpers for the call parser’s indexing logic. It computes line terminator lengths and UTF-16 column offsets from byte positions, counts UTF-16 units even across invalid UTF-8, trims token edges to identifier characters, and classifies valid identifier and textual call-name bytes. It also filters out language keywords and special forms for Dart, Elixir, and Kotlin so they are not mistaken for callable names, with tests covering keyword exclusion and Unicode identifier handling.
 [crates/gcode/src/index/parser/calls/text.rs:4-20]
 [crates/gcode/src/index/parser/calls/text.rs:22-30]
 [crates/gcode/src/index/parser/calls/text.rs:32-49]

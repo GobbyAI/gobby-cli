@@ -18,7 +18,7 @@ Module: [[code/modules/crates/gcode/src/db|crates/gcode/src/db]]
 
 ## Purpose
 
-This module provides database connection management for a PostgreSQL-based system. It exposes two connection functions—connect_readwrite and connect_readonly—that establish database clients and validate the runtime schema before returning them. The separate functions preserve explicit access intent for future routing or permission enhancements. The module also wraps a config value reader that delegates to the postgres module, and re-exports query and resolution utilities from submodules. Together, these pieces form a centralized database abstraction layer with schema validation and differentiated access patterns.
+Database module that exposes query and resolution helpers, and centralizes PostgreSQL access for the gcode crate. It provides separate read-write and read-only connection entry points that both delegate to `gobby_core::postgres`, then validate the runtime schema before returning a `Client`, plus a thin `read_config_value` wrapper for fetching optional config strings by key.
 [crates/gcode/src/db/mod.rs:16-20]
 [crates/gcode/src/db/mod.rs:27-31]
 [crates/gcode/src/db/mod.rs:33-35]

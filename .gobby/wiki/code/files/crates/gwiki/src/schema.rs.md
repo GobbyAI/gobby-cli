@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-This file defines the runtime schema validator for `gwiki`’s PostgreSQL-backed datastore. `GwikiRuntimeSchema` is a zero-sized `AttachedValidator` that collects every required table and index from `GWIKI_POSTGRES_TABLES` and `GWIKI_POSTGRES_INDEXES`, wraps each one as a `RequiredObject`, and validates them through `validate_runtime_schema`. Validation checks for an available PostgreSQL connection, resolves each relation as `public.<name>` with `to_regclass`, and returns a `SetupIssue` with migration/setup guidance if the connection is missing, the query fails, or the relation does not exist. The tests verify that missing schema objects produce explicit setup failures and that relation names are qualified against the public schema.
+This file defines the runtime schema validator for `gwiki`, centered on a zero-sized `GwikiRuntimeSchema` marker that enumerates every required PostgreSQL table and index as attached validation targets. Each required relation is wrapped as a `RequiredObject` whose validator checks for a live PostgreSQL connection, verifies the relation exists via `to_regclass` in the `public` schema, and turns failures into a guided `SetupIssue` that points users to run migrations and `gwiki setup`. The public helper `validate_runtime_schema` runs that validation, and the tests confirm both the expected missing-object behavior and the schema-qualified relation naming.
 [crates/gwiki/src/schema.rs:13]
 [crates/gwiki/src/schema.rs:15-24]
 [crates/gwiki/src/schema.rs:16-23]

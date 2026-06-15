@@ -20,8 +20,8 @@ provenance:
   - 18-166
 - file: crates/gcode/src/commands/codewiki/build_parts/hotspots.rs
   ranges:
-  - 5-131
-  - 133-157
+  - 5-134
+  - 136-160
 - file: crates/gcode/src/commands/codewiki/build_parts/modules.rs
   ranges:
   - 6-27
@@ -33,13 +33,13 @@ provenance:
   ranges:
   - 7-52
   - 54-109
-  - 111-200
-  - 202-208
-  - 210-212
-  - 214-219
-  - 225-246
-  - 249-255
-  - 258-268
+  - 111-201
+  - 203-209
+  - 211-213
+  - 215-220
+  - 226-247
+  - 250-256
+  - 259-269
 - file: crates/gcode/src/commands/codewiki/build_parts/snapshot.rs
   ranges:
   - 6-84
@@ -56,25 +56,27 @@ Parent: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-The `build_parts` module assembles the major generated artifacts that make up Codewiki documentation: per-file docs, module docs, architecture narratives, onboarding guidance, hotspot analysis, change reports, and index snapshots. Its file-level and module-level builders establish the documentation base: `build_file_doc` handles reuse, progress reporting, symbol documentation, and fallback structural summaries for individual files, while `build_module_docs_with_filter` derives module ancestors from files, orders modules deepest-first, accumulates summaries and source spans, and emits each `ModuleDoc` through the caller’s callback [crates/gcode/src/commands/codewiki/build_parts/file.rs:18-166] .
+This module is the Codewiki document-building layer: it turns analyzed inputs into file, module, architecture, onboarding, hotspot, snapshot, and change artifacts. At the per-file and per-module levels, `build_file_doc` handles reuse, progress reporting, symbol documentation, AI-depth fallbacks, leading chunks, and generation hooks, while `build_module_docs_with_filter` gathers ancestor modules from file metadata and inferred paths, processes deepest modules first, and assembles each module from direct files, child modules, accumulated summaries, source spans, and prompt component IDs. [crates/gcode/src/commands/codewiki/build_parts/file.rs:18-166] [crates/gcode/src/commands/codewiki/build_parts/modules.rs:30-175]
 
-The higher-level builders reuse those file and module products to explain the codebase from different angles. `build_architecture_doc` starts from subsystem roots, records graph degradation, gathers direct file and child module summaries, and uses module component IDs plus structural fallbacks to produce subsystem architecture documentation [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-168]. `build_onboarding_doc` identifies entry points, ranks modules through dependency analytics when available, and gathers source spans for the resulting reading order, while `build_hotspots_doc` builds a weighted analytics graph from symbols and dependency edges to identify important nodes, degrading cleanly when analytics are unavailable [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:7-52] .
+The higher-level builders compose those outputs into reader-facing sections. `build_architecture_doc` identifies subsystem roots from file paths, marks graph-derived content as degraded when analytics are truncated or unavailable, and uses module direct-file summaries, child-module summaries, source spans, prompt component IDs, and structural fallbacks to produce subsystem documentation; its dependency helpers derive unique inter-module edges and deterministic topology ordering for dependency-aware narratives. [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-168] [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:174-189] [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:192-242] `build_onboarding_doc` collaborates with the architecture dependency helpers to combine discovered Rust entry files and public API symbols with a graph-ranked reading order, recording degraded sources when graph data is unavailable or truncated. [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:7-52] [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:54-109]
 
-Snapshot and change generation provide the persistence and comparison layer for the rest of the system. `build_codewiki_index_snapshot` filters files and symbols, hashes file contents with path validation, and fingerprints graph neighborhoods for deterministic dependency-change detection . `build_codewiki_changes_doc` then compares a current snapshot with an optional previous one, emits baseline or degradation metadata, counts files, symbols, and graph neighborhoods, and formats added, removed, and changed items into a markdown change report .
+The remaining files provide index and analytics support around those docs. `build_codewiki_index_snapshot` filters to core files and symbols, hashes validated project-root files, records per-symbol snapshots, and adds graph neighborhood fingerprints when graph data is usable; `build_codewiki_changes_doc` compares snapshots to report baseline status, file additions/removals/content changes, symbol additions/removals, and degraded metadata. [crates/gcode/src/commands/codewiki/build_parts/snapshot.rs:6-84] [crates/gcode/src/commands/codewiki/build_parts/snapshot.rs:101-134] [crates/gcode/src/commands/codewiki/build_parts/changes.rs:5-101] `build_hotspots_doc` uses the completed file docs plus graph edges to construct analytics nodes, run graph analytics, and emit hotspots, bridges, god nodes, source spans, and degraded-source markers, or an empty degraded document when analytics are unavailable. [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-134]
 
 ## Call Diagram
 
 ```mermaid
 sequenceDiagram
     participant m_1746e430_bb76_57d2_b659_5b84683e553c as prompt_component_ids_for_module &#91;function&#93;
+    participant m_18942d3b_f308_5760_92c4_056e14bbba25 as hotspot_nodes &#91;function&#93;
+    participant m_283593cc_043a_536d_9125_e7561752335b as is_public_api_symbol &#91;function&#93;
     participant m_28b95157_57d6_51ac_a399_87cfae755efe as file_is_direct_module_member &#91;function&#93;
-    participant m_35d266e1_588c_5922_be7b_59c73aac0fe6 as step_source_spans &#91;function&#93;
+    participant m_37f458fa_507d_5795_8688_a9b9c8ee27ad as step_source_spans &#91;function&#93;
     participant m_4e4335db_4971_58c5_9017_670a914be229 as changes_frontmatter &#91;function&#93;
     participant m_4f8ee865_ff5d_5abc_83e5_4cb632aa0108 as ranked_onboarding_steps &#91;function&#93;
     participant m_512b74da_d547_5cf0_85b9_f47e18a6abf8 as onboarding_entry_points &#91;function&#93;
+    participant m_76cd4247_f50b_54dc_8728_c1af6e567f71 as is_rust_entry_file &#91;function&#93;
     participant m_827f6d4e_76a7_54f7_ad22_c97eb3ead5a9 as build_hotspots_doc &#91;function&#93;
     participant m_83dd441f_f8ae_5caf_93ee_7fb58a33acb9 as build_codewiki_changes_doc &#91;function&#93;
-    participant m_84030109_023b_567c_ba3d_5f7793a04cd6 as is_public_api_symbol &#91;function&#93;
     participant m_8a4cda8e_8e1d_539a_a929_f7ec34f73d38 as build_codewiki_index_snapshot &#91;function&#93;
     participant m_8bc13251_cd9e_5d69_983c_eaec9f15fc96 as build_module_docs &#91;function&#93;
     participant m_93f406d5_ffea_5952_a944_498a82dc1b40 as direct_component_ids_for_module &#91;function&#93;
@@ -82,13 +84,11 @@ sequenceDiagram
     participant m_a7ee3e63_5ba5_5afb_ab5f_7cb30507dd2a as symbol_label &#91;function&#93;
     participant m_c2998ded_02bc_515a_a973_f9628d853a16 as build_onboarding_doc &#91;function&#93;
     participant m_ceaa24be_e770_5f29_997c_6320949ae401 as write_bullet_section &#91;function&#93;
-    participant m_d18447d0_e856_5eee_8b40_6724ee638f03 as is_rust_entry_file &#91;function&#93;
-    participant m_d5ea9924_4f7a_59fa_af46_01b397a81526 as hotspot_nodes &#91;function&#93;
     participant m_fc982987_7570_5095_b7df_450efceae8b5 as hash_snapshot_file &#91;function&#93;
     participant m_ffb67d2b_e3dd_56ba_86e4_3d7ac7863637 as build_module_docs_with_filter &#91;function&#93;
-    m_512b74da_d547_5cf0_85b9_f47e18a6abf8->>m_84030109_023b_567c_ba3d_5f7793a04cd6: calls
-    m_512b74da_d547_5cf0_85b9_f47e18a6abf8->>m_d18447d0_e856_5eee_8b40_6724ee638f03: calls
-    m_827f6d4e_76a7_54f7_ad22_c97eb3ead5a9->>m_d5ea9924_4f7a_59fa_af46_01b397a81526: calls
+    m_512b74da_d547_5cf0_85b9_f47e18a6abf8->>m_283593cc_043a_536d_9125_e7561752335b: calls
+    m_512b74da_d547_5cf0_85b9_f47e18a6abf8->>m_76cd4247_f50b_54dc_8728_c1af6e567f71: calls
+    m_827f6d4e_76a7_54f7_ad22_c97eb3ead5a9->>m_18942d3b_f308_5760_92c4_056e14bbba25: calls
     m_83dd441f_f8ae_5caf_93ee_7fb58a33acb9->>m_4e4335db_4971_58c5_9017_670a914be229: calls
     m_83dd441f_f8ae_5caf_93ee_7fb58a33acb9->>m_a7ee3e63_5ba5_5afb_ab5f_7cb30507dd2a: calls
     m_83dd441f_f8ae_5caf_93ee_7fb58a33acb9->>m_ceaa24be_e770_5f29_997c_6320949ae401: calls
@@ -96,7 +96,7 @@ sequenceDiagram
     m_8a4cda8e_8e1d_539a_a929_f7ec34f73d38->>m_fc982987_7570_5095_b7df_450efceae8b5: calls
     m_8bc13251_cd9e_5d69_983c_eaec9f15fc96->>m_ffb67d2b_e3dd_56ba_86e4_3d7ac7863637: calls
     m_93f406d5_ffea_5952_a944_498a82dc1b40->>m_28b95157_57d6_51ac_a399_87cfae755efe: calls
-    m_c2998ded_02bc_515a_a973_f9628d853a16->>m_35d266e1_588c_5922_be7b_59c73aac0fe6: calls
+    m_c2998ded_02bc_515a_a973_f9628d853a16->>m_37f458fa_507d_5795_8688_a9b9c8ee27ad: calls
     m_c2998ded_02bc_515a_a973_f9628d853a16->>m_4f8ee865_ff5d_5abc_83e5_4cb632aa0108: calls
     m_c2998ded_02bc_515a_a973_f9628d853a16->>m_512b74da_d547_5cf0_85b9_f47e18a6abf8: calls
     m_ffb67d2b_e3dd_56ba_86e4_3d7ac7863637->>m_1746e430_bb76_57d2_b659_5b84683e553c: calls
@@ -106,37 +106,35 @@ sequenceDiagram
 
 ## Files
 
-- [[code/files/crates/gcode/src/commands/codewiki/build_parts/architecture.rs|crates/gcode/src/commands/codewiki/build_parts/architecture.rs]] - This file builds architecture documentation for the codewiki system by analyzing code structure and module relationships. The main function `build_architecture_doc` orchestrates the process: it identifies subsystem roots from file paths, tracks graph availability states, collects module and file summaries, and generates architectural narratives. Supporting functions `module_dependency_edges` and `dependency_topology` analyze how modules depend on each other and their structural relationships. Together, these functions transform raw code structure data into coherent architecture documentation that describes subsystems, their internal organization, and cross-subsystem dependencies at the workspace crate level.
+- [[code/files/crates/gcode/src/commands/codewiki/build_parts/architecture.rs|crates/gcode/src/commands/codewiki/build_parts/architecture.rs]] - Builds the architecture section of a codewiki by turning file and module data into subsystem-level documentation. `build_architecture_doc` identifies subsystem roots from file paths, marks the result as degraded when dependency graph data is truncated or missing, then iterates the relevant modules to assemble summaries from direct files, child modules, link spans, prompts, and fallback structural summaries while tracking progress. `module_dependency_edges` extracts unique inter-module dependency pairs from graph edges, ignoring intra-module imports, and `dependency_topology` uses those edges to produce a deterministic module ordering that prioritizes modules with fewer unresolved dependencies and appends cyclic or disconnected ones last.
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-168]
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:174-189]
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:192-242]
-- [[code/files/crates/gcode/src/commands/codewiki/build_parts/changes.rs|crates/gcode/src/commands/codewiki/build_parts/changes.rs]] - This file generates markdown documentation of changes between CodewikiIndexSnapshot versions. The main function build_codewiki_changes_doc compares two snapshots (or designates the current one as a baseline if no previous version exists), identifies file and symbol additions, removals, and content modifications, then compiles them into a structured markdown document. Supporting functions handle specific tasks: changes_frontmatter serializes change metadata including baseline and degradation status into YAML frontmatter, write_bullet_section appends markdown sections with level-2 headings and bullet-point lists, and symbol_label formats code symbols with their qualified names, kinds, and file paths for display. The pieces work together to produce a human-readable change report with metadata, summary statistics, and detailed lists of modifications.
+- [[code/files/crates/gcode/src/commands/codewiki/build_parts/changes.rs|crates/gcode/src/commands/codewiki/build_parts/changes.rs]] - This file builds the Markdown “Index Changes” page for Codewiki snapshots. `build_codewiki_changes_doc` starts by writing YAML frontmatter and current-snapshot counts, then either marks the page as the baseline when no prior snapshot exists or compares `previous` and `current` to list added, removed, and content-changed files plus added and removed symbols. `changes_frontmatter` serializes metadata about generation, trust/freshness, baseline state, and degraded sources, while `write_bullet_section` formats the comparison results into reusable bullet sections and `symbol_label` renders human-readable symbol entries.
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:5-101]
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:104-113]
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:115-138]
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:140-156]
 [crates/gcode/src/commands/codewiki/build_parts/changes.rs:158-163]
-- [[code/files/crates/gcode/src/commands/codewiki/build_parts/file.rs|crates/gcode/src/commands/codewiki/build_parts/file.rs]] - This file orchestrates file-level documentation generation for a code documentation system. FileDocPosition tracks a file's position (index/total) for progress reporting. The build_file_doc function constructs documentation for a single file by: checking if a previously generated file doc can be reused via content hash lookup, emitting progress messages, iterating through symbols to generate or build individual symbol documentation with fallback structural summaries when AI generation is disabled, and handling different AI depth levels to determine which components require generation versus structural construction.
+- [[code/files/crates/gcode/src/commands/codewiki/build_parts/file.rs|crates/gcode/src/commands/codewiki/build_parts/file.rs]] - This file defines `FileDocPosition`, a small progress-tracking struct for a file’s place in the current generation run, and `build_file_doc`, which assembles a `FileDoc` for one source file. `build_file_doc` first checks whether the file can be reused from an existing `ReusePlan`, emits status updates, then iterates the file’s symbols to either generate symbol docs or fall back to structural summaries depending on `ai_depth`, using the leading chunk and generation hooks to fill in the final document.
 [crates/gcode/src/commands/codewiki/build_parts/file.rs:12-15]
 [crates/gcode/src/commands/codewiki/build_parts/file.rs:18-166]
-- [[code/files/crates/gcode/src/commands/codewiki/build_parts/hotspots.rs|crates/gcode/src/commands/codewiki/build_parts/hotspots.rs]] - This file builds hotspot documentation by analyzing code structure and dependencies. The `build_hotspots_doc` function orchestrates the process: it checks graph availability and returns an empty degraded document if analytics are unavailable; otherwise it collects hotspot nodes from files via `hotspot_nodes`, constructs a weighted analytics graph where nodes are weighted by line count and edges represent calls/imports, filters edges to include only those with both endpoints present, then runs graph analytics to identify important nodes. The `hotspot_nodes` helper flattens all symbols across input file documents into a keyed map, extracting each symbol's kind, qualified name, file/wiki references, and source span information.
-[crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-131]
-[crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:133-157]
-- [[code/files/crates/gcode/src/commands/codewiki/build_parts/modules.rs|crates/gcode/src/commands/codewiki/build_parts/modules.rs]] - Builds `ModuleDoc` entries for codewiki by collecting all module names implied by the input files, ordering them from deepest to shallowest, and emitting documentation for each module through a provided callback. `build_module_docs` is a test-only convenience wrapper that forwards to `build_module_docs_with_filter` with no filtering, while the main function coordinates module selection, summary/source accumulation, progress tracking, and reuse/generation plumbing.
-
-The helper functions identify direct module membership, derive direct component IDs for a module, and prompt for component IDs when needed, so the builder can connect files and graph edges to the correct module-level documentation.
+- [[code/files/crates/gcode/src/commands/codewiki/build_parts/hotspots.rs|crates/gcode/src/commands/codewiki/build_parts/hotspots.rs]] - Builds the codewiki “hotspots” document by combining file docs with graph edges and graph availability state. `build_hotspots_doc` returns an empty, degraded document when analytics are unavailable, otherwise it derives hotspot nodes from all symbols via `hotspot_nodes`, converts the surviving edges into an `AnalyticsGraph`, runs graph analytics, and packages the resulting hotspots, bridges, god nodes, and source spans along with any degraded-source markers.
+[crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-134]
+[crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:136-160]
+- [[code/files/crates/gcode/src/commands/codewiki/build_parts/modules.rs|crates/gcode/src/commands/codewiki/build_parts/modules.rs]] - Builds `ModuleDoc` entries for modules related to a set of files, then emits and returns the completed docs. The main workflow gathers every ancestor module from each file’s recorded module and inferred path module, filters and processes modules deepest-first, and uses accumulated summaries/sources plus direct file and child-module links to assemble each document; the test-only `build_module_docs` wrapper just calls that path with an always-true filter. The helper functions extract unique direct component IDs, test whether a file is a direct member of a module, and format prompt component IDs for a module’s descendant symbols.
 [crates/gcode/src/commands/codewiki/build_parts/modules.rs:6-27]
 [crates/gcode/src/commands/codewiki/build_parts/modules.rs:30-175]
 [crates/gcode/src/commands/codewiki/build_parts/modules.rs:177-188]
 [crates/gcode/src/commands/codewiki/build_parts/modules.rs:190-192]
 [crates/gcode/src/commands/codewiki/build_parts/modules.rs:194-204]
-- [[code/files/crates/gcode/src/commands/codewiki/build_parts/onboarding.rs|crates/gcode/src/commands/codewiki/build_parts/onboarding.rs]] - This file generates an ordered onboarding guide for a Rust codebase by identifying entry points and ranking modules by importance. The main function `build_onboarding_doc` orchestrates the process: it extracts entry points (main.rs, lib.rs, and public API symbols) via `onboarding_entry_points`, computes a reading order by ranking modules via their dependency graph centrality using `ranked_onboarding_steps`, and gracefully degrades when graph analytics are unavailable or truncated. Supporting functions classify files as Rust entry points with `is_rust_entry_file`, identify public API symbols with `is_public_api_symbol`, retrieve source spans for ranked steps via `step_source_spans`, and construct Symbol metadata with `symbol_with_signature`. The file includes unit tests validating public visibility detection.
+- [[code/files/crates/gcode/src/commands/codewiki/build_parts/onboarding.rs|crates/gcode/src/commands/codewiki/build_parts/onboarding.rs]] - Builds the onboarding section of a codewiki document by combining entry-point discovery with an ordered reading path through the project. It collects Rust entry files and public API symbols as onboarding entry points, then computes a ranked module reading order from dependency graph data, falling back gracefully when graph analytics are unavailable or truncated. Helper routines support this by identifying Rust entry files, filtering public API symbols, looking up module source spans, and the tests verify the public-API detection rules.
 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:7-52]
 [crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:54-109]
-[crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:111-200]
-[crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:202-208]
-[crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:210-212]
-- [[code/files/crates/gcode/src/commands/codewiki/build_parts/snapshot.rs|crates/gcode/src/commands/codewiki/build_parts/snapshot.rs]] - This file builds and snapshots code index data for a codewiki system. The primary function, build_codewiki_index_snapshot, orchestrates the snapshot creation by filtering core files and symbols, computing content hashes for each file, and capturing symbol metadata. It delegates to hash_snapshot_file to securely compute file content hashes while preventing directory traversal attacks through path canonicalization and root validation. For symbol relationships, it calls graph_neighborhood_fingerprints to generate deterministic fingerprints by hashing each symbol's sorted incoming and outgoing edges, enabling change detection in code dependencies. The functions work together to produce a complete, integrity-checked snapshot of the codebase state suitable for indexing and tracking code structure changes.
+[crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:111-201]
+[crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:203-209]
+[crates/gcode/src/commands/codewiki/build_parts/onboarding.rs:211-213]
+- [[code/files/crates/gcode/src/commands/codewiki/build_parts/snapshot.rs|crates/gcode/src/commands/codewiki/build_parts/snapshot.rs]] - Builds a `CodewikiIndexSnapshot` from `CodewikiInput` by keeping only core files and symbols, counting symbols per file, hashing each retained file after validating it stays under the project root, and materializing per-symbol snapshots keyed by symbol ID. When graph data is available, it also derives deterministic neighborhood fingerprints from the graph edges, and records degraded sources when the graph is truncated or unavailable.
 [crates/gcode/src/commands/codewiki/build_parts/snapshot.rs:6-84]
 [crates/gcode/src/commands/codewiki/build_parts/snapshot.rs:86-99]
 [crates/gcode/src/commands/codewiki/build_parts/snapshot.rs:101-134]
@@ -154,7 +152,7 @@ The helper functions identify direct module membership, derive direct component 
 - `8d59ef26-ccef-5cf1-a529-c928e227580c`
 - `74c5ab7d-bf59-509b-9f27-335f9307e219`
 - `827f6d4e-76a7-54f7-ad22-c97eb3ead5a9`
-- `d5ea9924-4f7a-59fa-af46-01b397a81526`
+- `18942d3b-f308-5760-92c4-056e14bbba25`
 - `8bc13251-cd9e-5d69-983c-eaec9f15fc96`
 - `ffb67d2b-e3dd-56ba-86e4-3d7ac7863637`
 - `93f406d5-ffea-5952-a944-498a82dc1b40`
@@ -163,12 +161,12 @@ The helper functions identify direct module membership, derive direct component 
 - `c2998ded-02bc-515a-a973-f9628d853a16`
 - `512b74da-d547-5cf0-85b9-f47e18a6abf8`
 - `4f8ee865-ff5d-5abc-83e5-4cb632aa0108`
-- `35d266e1-588c-5922-be7b-59c73aac0fe6`
-- `d18447d0-e856-5eee-8b40-6724ee638f03`
-- `84030109-023b-567c-ba3d-5f7793a04cd6`
-- `c329e461-dea4-5cd0-8053-478bd08fe594`
-- `05c77be0-fc54-5ebc-8aea-e4920a40c314`
-- `0e815d94-2c0b-56d5-b834-0d9d89a09442`
+- `37f458fa-507d-5795-8688-a9b9c8ee27ad`
+- `76cd4247-f50b-54dc-8728-c1af6e567f71`
+- `283593cc-043a-536d-9125-e7561752335b`
+- `144ef92a-220f-5fda-9231-ff7ec414a43a`
+- `01b794a3-d6cf-5d0f-a631-c7bea199c9de`
+- `b7a92ce8-6196-5ff7-9295-e6d6aa7c170b`
 - `8a4cda8e-8e1d-539a-a929-f7ec34f73d38`
 - `fc982987-7570-5095-b7df-450efceae8b5`
 - `a23d7e7d-f73e-5b17-a94f-daf542fd5cc7`

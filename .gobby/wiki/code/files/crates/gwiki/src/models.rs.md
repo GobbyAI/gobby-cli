@@ -31,7 +31,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-This file defines the core wiki data models and naming helpers used by `gwiki`: `WikiScope` represents either a project or topic namespace and provides variant introspection plus derived vector collection names, `WikiSourceKind` normalizes source categories to stable strings, `WikiProvenance` records where a document came from, and `WikiDocumentRow` stores the denormalized database row for a wiki document. The supporting functions validate scope identifiers and map scopes to namespaced storage keys, while the tests verify that those derived names stay properly scoped and that document rows keep their cached scope fields internally consistent.
+This file defines the core wiki data models and storage helpers for `gwiki`: fixed labels, the `WikiScope` and `WikiSourceKind` enums, a `WikiProvenance` record, and the PostgreSQL-facing `WikiDocumentRow` persistence model. The pieces work together by turning a scope into canonical identifiers and vector collection names, normalizing and validating scope IDs, keeping denormalized scope columns consistent with the active variant, and providing tests that confirm the derived names and row validation behave as expected.
 [crates/gwiki/src/models.rs:12-15]
 [crates/gwiki/src/models.rs:17-52]
 [crates/gwiki/src/models.rs:18-23]

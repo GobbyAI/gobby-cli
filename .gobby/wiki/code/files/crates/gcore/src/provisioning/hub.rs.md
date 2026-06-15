@@ -40,7 +40,7 @@ Module: [[code/modules/crates/gcore/src/provisioning|crates/gcore/src/provisioni
 
 ## Purpose
 
-Provides hub provisioning and database-URL resolution for gcore. It defines the option and result types used to identify a hub, collects candidate PostgreSQL DSNs from environment, config, and bootstrap sources, probes an existing database’s identity when possible, and falls back to Docker service provisioning when no verified hub is reachable.
+This file coordinates hub provisioning and database selection for gobby-core. It defines `EnsureHubOptions` and `HubIdentity`/related result types to carry hub config and identity/probe state, then provides `ensure_hub` and `ensure_hub_with_identity` as the main orchestration entry points: they gather candidate PostgreSQL URLs from environment, gcore config, and bootstrap data, validate them with reachability and identity probes, and optionally provision Docker services. The helper functions support that flow by formatting redacted DSNs, extracting and normalizing URLs from config sources, checking database reachability, and probing or stubbing PostgreSQL identity depending on build support.
 [crates/gcore/src/provisioning/hub.rs:4-9]
 [crates/gcore/src/provisioning/hub.rs:11-20]
 [crates/gcore/src/provisioning/hub.rs:12-19]

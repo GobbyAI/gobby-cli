@@ -15,17 +15,17 @@ provenance:
   - 81-85
   - 87-91
   - 94-98
-  - 100-158
-  - 160-181
-  - 183-218
-  - 220-232
-  - 234-242
-  - 244-252
-  - 254-261
-  - 263-271
-  - 285-316
-  - 319-344
-  - 347-362
+  - 100-161
+  - 163-184
+  - 186-221
+  - 223-235
+  - 237-245
+  - 247-255
+  - 257-264
+  - 266-274
+  - 288-319
+  - 322-347
+  - 350-365
 - file: crates/gwiki/src/graph/context.rs
   ranges:
   - 8-11
@@ -131,33 +131,32 @@ Parent: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-The `crates/gwiki/src/graph` module owns the wiki graph data model and the exported views built from it. Its core types represent documents, sources, resolved or unresolved links, code edges, and the aggregate `WikiGraphFacts`, while export-facing structures carry graph nodes, edge groups, analytics, and degradation metadata for serialization  . The module also defines shared graph labels, relationship constants, helper IDs, and `MemoryWikiGraph`, which keeps facts in memory and derives backlinks, link suggestions, and related-path rankings from the same fact set .
+The graph module owns the wiki graph data model and the shared utilities used to turn wiki facts into scoped graph outputs. Its core types describe documents, sources, links, code edges, and export payloads, while constants define the wiki-owned graph labels and relationship names used across exporters and queries   . The module exposes `analytics` and `context`, keeps `export` internal, and re-exports `render_graph_report`, so callers work through a small public surface while the files share common ID, node, and formatting helpers .
 
-The export flow starts from `WikiGraphFacts::export_graph`, deduplicating document, source, citation, target, and code endpoint nodes while building directed trust, audit, link, and code relationships. Sources produce `supports` and `cites` edges, resolved links can add placeholder document nodes, and unresolved links become target nodes so missing wiki targets remain visible in the graph [crates/gwiki/src/graph/export.rs:11-100]. `render_graph_report` then formats that export into a markdown report with counts, degradation state, analytics, and Mermaid output, while the analytics layer converts `MemoryWikiGraph` or `WikiGraphFacts` into `gobby_core`’s `AnalyticsGraph`, rejects duplicate node metadata conflicts, runs analysis, and maps communities, centrality, bridges, god nodes, unexpected links, and hotspots back into serializable export types  .
+Export flow starts from `WikiGraphFacts::export_graph`, which deduplicates document, source, citation, and link-target nodes, then emits trust and audit edges such as source-to-document `supports` and citation-to-source `cites`; resolved links create document placeholder nodes when needed, while unresolved targets use unresolved-target IDs [crates/gwiki/src/graph/export.rs:11-58] [crates/gwiki/src/graph/export.rs:59-100]. Analytics builds on the same facts and ID helpers, converting wiki documents, sources, citations, and link targets into a core `AnalyticsGraph`; it rejects conflicting duplicate node metadata through `GraphAnalyticsError`, then maps core communities, centrality, bridges, hotspots, and edge refs into serialized export structs  [crates/gwiki/src/graph/analytics.rs:24-39] .
 
-The context path builds a separate JSON-friendly payload for search and ask workflows. `GraphContextOptions` records degraded and truncated components, and `GraphContextPack` combines scope, degradation, warnings, neighborhoods, and recommendations into one response shape  . Neighborhood entries merge wiki neighbors, document links, citations, calls, and imports, so consumers can inspect both documentation relationships and code-derived relationships around a path without reassembling the graph themselves .
+Context flow packages the same graph facts for user-facing graph context. `GraphContextOptions` records degraded sources and truncated components, and `GraphContextPack` combines scope, degradation status, warnings, neighborhoods, and recommendations  . Neighborhood records merge wiki relationships with citations and code edges, so the context layer collaborates with the core model by consuming `WikiGraphFacts`, `WikiGraphLinkTarget`, and `WikiGraphCodeEdge` while export/reporting and analytics provide graph-wide serialization and interpretation  .
 
 ## Call Diagram
 
 ```mermaid
 sequenceDiagram
-    participant m_01a9eb77_3fbf_517f_aa3d_46928229f6d9 as analytics_graph_from_memory &#91;function&#93;
     participant m_031478d6_2bba_5920_ac6a_ee17c2d497eb as context_scope &#91;function&#93;
-    participant m_102bc0bf_9d18_55e9_87b3_1d3dad628aa9 as insert_node &#91;function&#93;
     participant m_116bd1b0_a85d_5eb3_b701_758669e4d90a as neighbors_for_path &#91;function&#93;
     participant m_1ae31f01_1c99_55c7_af0c_0e0807245c97 as graph_path &#91;function&#93;
-    participant m_217cf5a9_6813_55b1_b35b_46a5f6686780 as graph_analytics_rejects_duplicate_node_metadata &#91;function&#93;
     participant m_21bb4330_85ee_5c20_b5e2_f5f52c922695 as MemoryWikiGraph.related_paths_with_options &#91;method&#93;
     participant m_2289f8d2_db5f_589b_9812_e444b861ebb4 as citations_by_document &#91;function&#93;
     participant m_24dce42f_d268_57bf_a2fd_b868e9457c5f as unresolved_target_node &#91;function&#93;
     participant m_3045da76_83ae_5e87_be99_9a644230d5de as unresolved_target_id &#91;function&#93;
     participant m_3188ca19_45e3_5d82_a48b_a862e1b9c7ec as degradation_warnings &#91;function&#93;
     participant m_390af12e_a48d_51ee_a2c3_b48f854f1065 as build_context_pack &#91;function&#93;
+    participant m_3ad916c3_f82b_5773_9170_04d1263017f6 as graph_analytics_converts_memory_graph_to_core_graph &#91;function&#93;
     participant m_3b8f3ab9_33d9_56c4_9b70_e8d86d5b83f1 as document_kind &#91;function&#93;
     participant m_3c908a9e_7ec0_5316_ab44_9748bf8d4cf2 as audit_warnings &#91;function&#93;
+    participant m_3fdfe00d_0f4e_537e_8995_3598676a192e as is_code_path &#91;function&#93;
     participant m_44fb0018_7548_564f_8e8b_15854ccf489e as display_path &#91;function&#93;
     participant m_550ceffc_d141_565f_9c7f_538e7664f092 as scoped_id &#91;function&#93;
-    participant m_6bfcd22f_3c8b_56e6_950a_9a957044c969 as analytics_graph_from_facts &#91;function&#93;
+    participant m_6d03da4d_80fa_51c9_8fd5_174c617260c4 as analytics_graph_from_memory &#91;function&#93;
     participant m_7cc6251b_6f6e_5110_8e0f_76e13187f226 as code_imports_for_path &#91;function&#93;
     participant m_927e84de_831c_546f_b888_34afec7daa35 as stale_link_warnings &#91;function&#93;
     participant m_c5de296b_0fa5_5040_9908_f12f668eeb58 as code_calls_for_path &#91;function&#93;
@@ -165,9 +164,7 @@ sequenceDiagram
     participant m_daab9c99_4bfe_5408_a14d_a19d4058753a as capped_graph_warning &#91;function&#93;
     participant m_f2ecf981_f9fe_5b89_ae3c_624c772c387e as MemoryWikiGraph.document_keys &#91;method&#93;
     participant m_f9eca0d4_d6cd_593e_a78a_0def53a2921c as doc_links_for_path &#91;function&#93;
-    m_01a9eb77_3fbf_517f_aa3d_46928229f6d9->>m_6bfcd22f_3c8b_56e6_950a_9a957044c969: calls
     m_116bd1b0_a85d_5eb3_b701_758669e4d90a->>m_44fb0018_7548_564f_8e8b_15854ccf489e: calls
-    m_217cf5a9_6813_55b1_b35b_46a5f6686780->>m_102bc0bf_9d18_55e9_87b3_1d3dad628aa9: calls
     m_21bb4330_85ee_5c20_b5e2_f5f52c922695->>m_f2ecf981_f9fe_5b89_ae3c_624c772c387e: calls
     m_2289f8d2_db5f_589b_9812_e444b861ebb4->>m_44fb0018_7548_564f_8e8b_15854ccf489e: calls
     m_24dce42f_d268_57bf_a2fd_b868e9457c5f->>m_3045da76_83ae_5e87_be99_9a644230d5de: calls
@@ -184,30 +181,32 @@ sequenceDiagram
     m_390af12e_a48d_51ee_a2c3_b48f854f1065->>m_c5de296b_0fa5_5040_9908_f12f668eeb58: calls
     m_390af12e_a48d_51ee_a2c3_b48f854f1065->>m_c6d13b57_41a9_5bc9_80b8_7c9136cba20d: calls
     m_390af12e_a48d_51ee_a2c3_b48f854f1065->>m_f9eca0d4_d6cd_593e_a78a_0def53a2921c: calls
+    m_3ad916c3_f82b_5773_9170_04d1263017f6->>m_6d03da4d_80fa_51c9_8fd5_174c617260c4: calls
     m_3b8f3ab9_33d9_56c4_9b70_e8d86d5b83f1->>m_1ae31f01_1c99_55c7_af0c_0e0807245c97: calls
+    m_3b8f3ab9_33d9_56c4_9b70_e8d86d5b83f1->>m_3fdfe00d_0f4e_537e_8995_3598676a192e: calls
 ```
 
 ## Files
 
-- [[code/files/crates/gwiki/src/graph/analytics.rs|crates/gwiki/src/graph/analytics.rs]] - This file defines the graph analytics layer for wiki memory data: it converts `MemoryWikiGraph`/`WikiGraphFacts` into a core `AnalyticsGraph`, runs analysis, and exports the result as serializable report types for communities, centrality, bridges, god nodes, unexpected links, and hotspots. It also defines `GraphAnalyticsError` for duplicate node metadata conflicts, plus helper builders like `insert_node` and `from_core`/`from` conversions that map core analytics structures into the export model, with tests covering conversion, missing resolved targets, and duplicate-node rejection.
+- [[code/files/crates/gwiki/src/graph/analytics.rs|crates/gwiki/src/graph/analytics.rs]] - Builds graph analytics from wiki facts and converts the core analytics results into export-friendly records. It defines a `GraphAnalyticsError` for duplicate node metadata, constructs an `AnalyticsGraph` by inserting document/source/citation/link-related nodes and edges, and provides `from_core`/`From` conversions that map core communities, centrality, hotspots, node refs, and edge refs into serialized export structs.
 [crates/gwiki/src/graph/analytics.rs:14-22]
 [crates/gwiki/src/graph/analytics.rs:24-39]
 [crates/gwiki/src/graph/analytics.rs:25-38]
 [crates/gwiki/src/graph/analytics.rs:41]
 [crates/gwiki/src/graph/analytics.rs:44-51]
-- [[code/files/crates/gwiki/src/graph/context.rs|crates/gwiki/src/graph/context.rs]] - Builds the unified graph-context payload for wiki/code search results. It defines serializable structs for the overall pack, scope, degradation state, warnings, neighborhoods, neighbors, doc links, citations, code edges, and recommendations, plus `GraphContextOptions` to track degraded sources and truncated components. The helper functions assemble this pack from a path and `WikiGraphFacts`, derive scope and citation grouping, emit warnings for capped, stale, or audited data, collect neighborhood/doc-link/code-edge details, and provide constructors for resolved and unresolved links so wiki and code relationships are merged into one JSON-friendly context view.
+- [[code/files/crates/gwiki/src/graph/context.rs|crates/gwiki/src/graph/context.rs]] - This file builds and serializes graph-context payloads for wiki and code data. It defines the context options and the output structures for scope, degradation, warnings, neighborhoods, links, code edges, and recommendations, then provides helper functions to derive each piece from `WikiGraphFacts` and `GraphContextOptions` by collecting citations, stale/audit/degradation warnings, neighborhood neighbors and doc links, code call/import edges, and ranked recommendations, with tests covering the combined JSON output and degraded/truncated cases.
 [crates/gwiki/src/graph/context.rs:8-11]
 [crates/gwiki/src/graph/context.rs:13-29]
 [crates/gwiki/src/graph/context.rs:14-16]
 [crates/gwiki/src/graph/context.rs:18-23]
 [crates/gwiki/src/graph/context.rs:25-28]
-- [[code/files/crates/gwiki/src/graph/export.rs|crates/gwiki/src/graph/export.rs]] - This file defines wiki graph export and reporting for `WikiGraphFacts`. `export_graph` builds a deduplicated `GraphExport` by collecting document, source, and citation nodes, then wiring them with directed `supports` and `cites` edges while also handling link targets, including unresolved and placeholder nodes for missing documents. `render_graph_report` turns that export into a markdown summary with graph counts, degraded-source and analytics sections, and a Mermaid visualization. The tests exercise scope-aware ID generation, unresolved targets, and placeholder creation for missing resolved targets.
+- [[code/files/crates/gwiki/src/graph/export.rs|crates/gwiki/src/graph/export.rs]] - This file defines graph export and reporting for wiki facts. `WikiGraphFacts::export_graph` builds a deduplicated `GraphExport` by collecting document, source, citation, and link-target nodes, then wiring them with `supports` edges from sources to documents and `cites` edges from citations to sources, while tracking node IDs to avoid duplicates and to add placeholder nodes for unresolved or missing targets. `render_graph_report` turns that export into a markdown report with graph statistics, degraded-source and analytics sections, and a Mermaid visualization; the tests verify handling of unresolved targets and placeholder nodes.
 [crates/gwiki/src/graph/export.rs:11-112]
 [crates/gwiki/src/graph/export.rs:12-111]
 [crates/gwiki/src/graph/export.rs:114-190]
 [crates/gwiki/src/graph/export.rs:204-317]
 [crates/gwiki/src/graph/export.rs:320-349]
-- [[code/files/crates/gwiki/src/graph/mod.rs|crates/gwiki/src/graph/mod.rs]] - Defines the core wiki-graph model and export helpers for `gwiki`: typed records capture documents, sources, links, code edges, and the aggregated fact set; export structs turn those facts into serializable graph nodes, grouped edge categories, and Cypher statements; `GraphExportOptions` carries degraded-source state; `MemoryWikiGraph` stores facts in memory and derives backlinks, link suggestions, and related-path rankings from them; and the helper functions build scope-qualified IDs, normalize paths and labels for graph backends, and provide a few test constructors for documents and links.
+- [[code/files/crates/gwiki/src/graph/mod.rs|crates/gwiki/src/graph/mod.rs]] - Defines the wiki graph core model and utility layer for `gwiki`: scoped document, source, link, edge, and export DTO types plus constants for the wiki-owned graph labels and relationship names. It also provides constructors and helpers to normalize paths, generate scoped IDs and Mermaid/Falkor-safe strings, build Cypher export statements and export nodes from facts, and query an in-memory `WikiGraphFacts` store for backlinks, link suggestions, and related paths.
 [crates/gwiki/src/graph/mod.rs:22-26]
 [crates/gwiki/src/graph/mod.rs:29-33]
 [crates/gwiki/src/graph/mod.rs:36-39]
@@ -216,35 +215,35 @@ sequenceDiagram
 
 ## Components
 
-- `921ae05d-3610-5274-a87a-0f59b4c67ebc`
-- `e9066ffc-f566-5523-a175-157d92a03827`
-- `d2a98777-07ec-50be-83ce-44e8c2d2fdb8`
-- `bf5a1030-dbd1-50d4-8846-3b9bb9d03fa7`
-- `025d0e3a-689b-51eb-a439-c7f12dfee6f1`
-- `308baf93-0693-5bc6-8508-db88b6cc6153`
-- `29422d75-6b3f-5a77-a463-57bc4780fd75`
-- `398d3115-3d4a-5a90-a652-b238e792ef69`
-- `14c4080e-b636-5786-9c79-3d608d32fdf8`
-- `7d963b3a-a2d5-55bf-9770-844af4552c81`
-- `81bd7e8c-76a5-5eff-ac99-ad4d8c949520`
-- `01a9eb77-3fbf-517f-aa3d-46928229f6d9`
-- `6bfcd22f-3c8b-56e6-950a-9a957044c969`
-- `102bc0bf-9d18-55e9-87b3-1d3dad628aa9`
-- `926583c7-81a0-5930-adf5-a8a625babaf9`
-- `b4bd5705-77b9-559f-8bc3-da82f1064630`
-- `c20b53e8-f9da-58c8-b215-4dfd9dea5aeb`
-- `ec6b1718-c5ad-5179-b877-0283bf99e3dc`
-- `07628a28-c41e-5e61-a1c9-fe99d8335a5d`
-- `34f1eacf-13e0-564d-8428-252f658c8a1f`
-- `b50ec85e-0543-59b4-b4e8-321a29de6178`
-- `f7d8de7d-d210-5f0c-826d-b715c13eebd6`
-- `ca7db1bc-4990-5dbd-aba0-de7feb45e635`
-- `4084c2c4-132e-5177-893a-a5928a3678ef`
-- `a1d3ce21-fe93-518e-b031-f01f30912261`
-- `723724ea-51cc-5a0b-ad14-631495df9808`
-- `6304b50b-efd9-55a7-92f3-989793e1b6b9`
-- `b2f36466-0ba7-54e1-8b93-b4e7591a55d2`
-- `217cf5a9-6813-55b1-b35b-46a5f6686780`
+- `a728344c-24af-5a8a-bcb1-e70ff6b39cea`
+- `80311bef-5cbf-577a-a865-dfc51df63524`
+- `0410a958-c158-5f73-a010-4d238fbde733`
+- `c7cedb8e-ca45-5e55-a0fd-054d0d56200f`
+- `bd8038f9-aef7-589f-b93a-6f9620d5c9a6`
+- `991274d0-969a-592f-b866-36c2e3136f33`
+- `65447477-7b2a-5a7d-88b9-8907c05a5a31`
+- `6095a595-4dc2-51c8-bc6d-1b1428493295`
+- `13ad723c-d4a5-59f8-9688-9c6fef0e3ff1`
+- `57cf85b0-e509-5b48-af83-f19998bc1709`
+- `79cd25b2-34a4-56fa-ad19-122096231d80`
+- `6d03da4d-80fa-51c9-8fd5-174c617260c4`
+- `88ba2ef7-d638-54aa-9256-b846ade995ca`
+- `11666de7-90ca-5e58-84ce-cde8b3d982d0`
+- `8fc5924b-464e-5324-a14e-7b24583f9ade`
+- `54e18678-d866-5f33-85a9-d819dc9fdb81`
+- `e70dce11-cea7-5efa-b359-5a57213eda4a`
+- `78267316-5e7f-5fb7-b0c2-8a8e4eec2910`
+- `1154dac3-4b86-55a5-a4e0-da536452fe97`
+- `5e0b58ed-d457-58a5-bdd8-92349055d719`
+- `d9b76b9a-9db0-5737-beca-4c32b628ec63`
+- `106df146-0da5-52fa-b6e3-851848e4b6ac`
+- `39e5f959-a144-5278-a123-96f7c9e4eb99`
+- `c0440e5b-0a07-5671-abcd-1db61053bda8`
+- `0095c9da-702f-5cb4-8b6c-8c2c2e9dff50`
+- `3a73bcf9-9765-58e0-9090-09c68a9fdfb1`
+- `3ad916c3-f82b-5773-9170-04d1263017f6`
+- `f3e40b0f-2820-518f-a6cc-6650349c24a4`
+- `810cf12d-73c7-590a-9d9f-c0a878e7a6e4`
 - `ae429cf1-c77b-58be-bee2-630e1150849f`
 - `57bf3270-4dc6-5fed-b931-ce44e5a81668`
 - `ab54c7a8-455e-527e-82db-17c7e366cbd2`

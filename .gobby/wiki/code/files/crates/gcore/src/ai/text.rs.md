@@ -26,7 +26,7 @@ Module: [[code/modules/crates/gcore/src/ai|crates/gcore/src/ai]]
 
 ## Purpose
 
-This file provides the text-generation path for AI chat completions. `generate_text` is a thin convenience wrapper over `generate_text_with_max_tokens`, which creates an `AiTransport`, resolves the chat-completions URL for the `TextGenerate` capability, builds the JSON payload, sends the authenticated POST request, and assembles a `TextResult` from the returned content, model name, token usage, and empty metadata. The helper `request_body` formats the request messages from optional system context plus the required user prompt, while conditionally adding the binding’s model and a positive `max_tokens` limit. `chat_completion_usage` normalizes usage data from different provider field names into `TokenUsage`. The test helpers and unit tests spin up a stub server, inspect request headers and JSON body, and verify the request/response behavior and `max_tokens` forwarding.
+This file provides the text-generation client for AI capabilities: `generate_text` is a convenience wrapper over `generate_text_with_max_tokens`, which builds a chat-completions request from the AI context, sends it through the transport, and returns the generated text, model name, and token usage in a `TextResult`. The helper functions assemble the JSON body with optional system prompt, model, and max token limit, normalize usage fields from provider-specific response shapes, and the test helpers plus unit tests verify request construction, authentication, response parsing, and max-token forwarding.
 [crates/gcore/src/ai/text.rs:9-15]
 [crates/gcore/src/ai/text.rs:17-35]
 [crates/gcore/src/ai/text.rs:37-67]
@@ -37,7 +37,7 @@ This file provides the text-generation path for AI chat completions. `generate_t
 
 - `generate_text` (function) component `generate_text [function]` (`f9a32cf9-4865-5138-a433-c0f172863579`) lines 9-15 [crates/gcore/src/ai/text.rs:9-15]
   - Signature: `pub fn generate_text(`
-  - Purpose: Indexed function `generate_text` in `crates/gcore/src/ai/text.rs`. [crates/gcore/src/ai/text.rs:9-15]
+  - Purpose: 'generate_text' is a thin wrapper that forwards 'cfg', 'prompt', and 'system' to 'generate_text_with_max_tokens' with 'max_tokens' unset ('None'), returning its 'Result<TextResult, AiError>'. [crates/gcore/src/ai/text.rs:9-15]
 - `generate_text_with_max_tokens` (function) component `generate_text_with_max_tokens [function]` (`7b004b07-cf59-5266-9ea7-80d74e487ca4`) lines 17-35 [crates/gcore/src/ai/text.rs:17-35]
   - Signature: `pub fn generate_text_with_max_tokens(`
   - Purpose: Generates text by submitting an authenticated request to a chat completions API endpoint with a prompt and optional system context/token constraints, returning the generated text content alongside model identifier and token usage metrics. [crates/gcore/src/ai/text.rs:17-35]
@@ -52,7 +52,7 @@ This file provides the text-generation path for AI chat completions. `generate_t
   - Purpose: Unit test that verifies the `generate_text` function constructs a properly-authenticated POST request to a chat completion API endpoint with system and user messages, and correctly deserializes the response model name and token usage. [crates/gcore/src/ai/text.rs:98-120]
 - `forwards_generation_max_tokens` (function) component `forwards_generation_max_tokens [function]` (`5492543a-95a9-5200-bf21-1bddf5f8a06e`) lines 123-134 [crates/gcore/src/ai/text.rs:123-134]
   - Signature: `fn forwards_generation_max_tokens() {`
-  - Purpose: Indexed function `forwards_generation_max_tokens` in `crates/gcore/src/ai/text.rs`. [crates/gcore/src/ai/text.rs:123-134]
+  - Purpose: Verifies that 'generate_text_with_max_tokens' forwards the provided 'max_tokens' value into the outgoing request body by asserting the JSON field is '42'. [crates/gcore/src/ai/text.rs:123-134]
 - `spawn_server` (function) component `spawn_server [function]` (`f19aff3c-9f59-5289-8e66-e53454a81e6f`) lines 136-138 [crates/gcore/src/ai/text.rs:136-138]
   - Signature: `fn spawn_server(response: &'static str) -> (String, RequestHandle) {`
   - Purpose: Spawns a test server configured to return the provided static JSON response string, returning a tuple of the server URL and a RequestHandle, or panicking if server creation fails. [crates/gcore/src/ai/text.rs:136-138]

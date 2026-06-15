@@ -18,7 +18,7 @@ Module: [[code/modules/crates/gsqz|crates/gsqz]]
 
 ## Purpose
 
-This file defines the built-in default `gsqz` compression pipeline configuration. It sets global output thresholds and empty-output messaging, then maps command patterns to ordered pipelines whose steps filter, group, deduplicate, or truncate output for specific tools like test runners, linters, build, package, container, and download commands. The pipelines are applied in order, with first match winning and each step feeding the next, and later config layers can override these defaults.
+Default `gsqz` pipeline configuration that defines the built-in compression rules for command output, with later config layers able to override it. It sets global output thresholds and empty-output messaging, then maps command patterns to ordered step pipelines that match specific tools like test runners, linters, build, package, Docker, and download commands. Each pipeline combines output matching, line filtering/grouping, deduplication, and truncation so noisy command output is reduced while preserving failures and important summaries.
 [crates/gsqz/config.yaml:12-15]
 [crates/gsqz/config.yaml:13]
 [crates/gsqz/config.yaml:14]

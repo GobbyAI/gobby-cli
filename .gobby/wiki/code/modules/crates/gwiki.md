@@ -4,7 +4,7 @@ type: code_module
 provenance:
 - file: crates/gwiki/contract/gwiki.contract.json
   ranges:
-  - 2-879
+  - 2-887
 - file: crates/gwiki/src/ai/chunk.rs
   ranges:
   - 24-30
@@ -50,79 +50,29 @@ provenance:
   - 596-617
 - file: crates/gwiki/src/api.rs
   ranges:
-  - 11-121
-  - 124-127
-  - 130-144
-  - 147-149
-  - 151-154
-  - 156-162
-  - 166-174
-  - 177-182
-  - 184-214
-  - 218-222
-  - 224-262
-  - 264-268
-  - 272-276
-  - 278-286
-  - 289-292
-  - 294-315
-  - 317-321
-  - 324-328
-  - 331-334
-  - 343-359
-  - 362-383
-  - 386-416
-  - 419-436
-- file: crates/gwiki/src/audit.rs
-  ranges:
-  - 33-35
-  - 37-73
-  - 75-84
-  - 87-93
-  - 96-103
-  - 106-111
-  - 114-116
-  - 118-141
-  - 143-172
-  - 174-186
-  - 188-195
-  - 197-226
-  - 228-237
-  - 239-244
-  - 246-255
-  - 257-262
-  - 264-280
-  - 282-288
-  - 290-327
-  - 330-335
-  - 338-341
-  - 348-425
-  - 427-433
-  - 435-444
-  - 446-450
-  - 452-454
-  - 456-463
-  - 465-477
-  - 479-487
-  - 489-502
-  - 504-509
-  - 511-516
-  - 518-529
-  - 531-553
-  - 561-595
-  - 598-664
-  - 667-692
-  - 695-722
-  - 725-744
-  - 747-767
-  - 770-778
-  - 781-794
-  - 797-834
-  - 837-844
-  - 847-876
-  - 879-932
-  - 934-943
-  - 946-965
+  - 11-122
+  - 125-128
+  - 131-145
+  - 148-150
+  - 152-155
+  - 157-163
+  - 167-175
+  - 178-183
+  - 185-215
+  - 219-223
+  - 225-263
+  - 265-269
+  - 273-277
+  - 279-287
+  - 290-293
+  - 295-316
+  - 318-322
+  - 325-329
+  - 332-335
+  - 344-360
+  - 363-384
+  - 387-417
+  - 420-437
 - file: crates/gwiki/src/benchmark.rs
   ranges:
   - 30-39
@@ -351,26 +301,26 @@ provenance:
   - 268-294
   - 296-321
   - 323-362
-  - 364-398
-  - 400-429
-  - 431-455
-  - 457-470
-  - 472-483
-  - 485-492
-  - 494-529
-  - 531-533
-  - 535-545
-  - 547-561
-  - 563-571
-  - 573-587
-  - 589-602
-  - 604-611
-  - 613-625
-  - 639-706
-  - 709-731
-  - 734-741
-  - 744-755
-  - 758-771
+  - 364-399
+  - 401-430
+  - 432-456
+  - 458-471
+  - 473-484
+  - 486-493
+  - 495-530
+  - 532-534
+  - 536-546
+  - 548-562
+  - 564-572
+  - 574-588
+  - 590-603
+  - 605-612
+  - 614-626
+  - 642-711
+  - 714-736
+  - 739-746
+  - 749-760
+  - 763-776
 - file: crates/gwiki/src/commands/sources.rs
   ranges:
   - 15-23
@@ -412,62 +362,101 @@ provenance:
   - 831-839
   - 841-857
   - 859-874
-- file: crates/gwiki/src/falkor_graph.rs
+- file: crates/gwiki/src/daemon.rs
   ranges:
-  - 29-31
-  - 33-43
-  - 46-49
-  - 51-54
-  - 56-60
-  - 62-78
-  - 80-104
-  - 106-197
-  - 199-240
-  - 242-250
-  - 252-288
-  - 290-296
-  - 298-314
-  - 316-320
-  - 322-328
-  - 330-332
-  - 334-346
-  - 348-350
-  - 352-365
-  - 367-370
-  - 372-402
-  - 404-439
-  - 441-444
-  - 446-473
-  - 475-486
-  - 488-573
-  - 575-607
-  - 609-617
-  - 619-632
-  - 634-636
-  - 638-651
-  - 653-658
-  - 660-666
-  - 668-670
-  - 672-680
-  - 682-697
-  - 699-702
-  - 704-708
-  - 710-714
-  - 717-719
-  - 722-739
-  - 741-745
-  - 756-759
-  - 762-805
-  - 808-819
-  - 822-824
-  - 827-833
-  - 836-841
-  - 844-855
-  - 858-874
-  - 877-886
-  - 889-908
-  - 911-923
-  - 926-978
+  - 11-18
+  - 26-31
+  - 34-40
+  - 43-50
+  - 53-62
+  - 65-74
+  - 77-80
+  - 82-84
+  - '86'
+  - 88-97
+  - 165-168
+  - 170-172
+  - 174-247
+  - 249-256
+  - 258-275
+  - 277-295
+  - 297-329
+  - 331-345
+  - 354-356
+  - 358-366
+  - 368-375
+  - 378-418
+  - 421-431
+  - 434-458
+  - 461-480
+- file: crates/gwiki/src/frontmatter.rs
+  ranges:
+  - 10-13
+  - 16-30
+  - 32-116
+  - 119-125
+  - 128-130
+  - 132-136
+  - '138'
+  - 140-170
+  - 173-191
+  - 193-199
+  - 201-205
+  - 207-221
+  - 223-232
+  - 234-264
+  - 266-286
+  - 289-303
+  - 306-314
+  - 316-329
+  - 331-344
+  - 346-394
+  - 396-398
+  - 400-406
+  - 408-415
+  - 419-434
+  - 436-450
+  - 457-524
+  - 527-546
+  - 549-578
+  - 581-626
+  - 629-659
+  - 662-691
+- file: crates/gwiki/src/graph/context.rs
+  ranges:
+  - 8-11
+  - 13-29
+  - 32-39
+  - 42-45
+  - 48-53
+  - 56-61
+  - 64-73
+  - 76-80
+  - 83-88
+  - 91-99
+  - 102-105
+  - 107-153
+  - 155-172
+  - 174-183
+  - 185-201
+  - 203-212
+  - 214-227
+  - 229-242
+  - 244-272
+  - 274-311
+  - 313-320
+  - 322-329
+  - 331-340
+  - 342-390
+  - 392-394
+  - 407-502
+  - 505-557
+  - 560-654
+  - 656-662
+  - 664-670
+  - 672-684
+  - 686-693
+  - 695-714
 - file: crates/gwiki/src/graph/mod.rs
   ranges:
   - 22-26
@@ -707,93 +696,6 @@ provenance:
   - 729-746
   - 748-797
   - 800-833
-- file: crates/gwiki/src/ingest/url.rs
-  ranges:
-  - 22-28
-  - 31-35
-  - 38-42
-  - 45-48
-  - 50-62
-  - 65-74
-  - 76-110
-  - 112-145
-  - 147-157
-  - 159-164
-  - 166-205
-  - 208-210
-  - 212-221
-  - 223-296
-  - 298-302
-  - 304-318
-  - 320-326
-  - 328-355
-  - 357-363
-  - 365-377
-  - 379-412
-  - 414-418
-  - 420-441
-  - 443-445
-  - 447-449
-  - 451-460
-  - 462-487
-  - 489-516
-  - 518-524
-  - 526-538
-  - 540-547
-  - 549-555
-  - 557-573
-  - 575-585
-  - 587-596
-  - 598-632
-  - 634-649
-  - 651-657
-  - 659-661
-  - 663-683
-  - 685-694
-  - 712-752
-  - 755-785
-  - 788-799
-  - 802-844
-  - 847-867
-  - 870-885
-  - 888-908
-  - 911-916
-  - 918-934
-  - 937-940
-  - 942-983
-- file: crates/gwiki/src/ingest/video/tests.rs
-  ranges:
-  - 18-55
-  - 57-62
-  - 64-89
-  - 91-111
-  - '113'
-  - 115-131
-  - '133'
-  - 135-144
-  - '146'
-  - 148-160
-  - '162'
-  - 164-170
-  - 172-198
-  - 201-273
-  - 276-323
-  - 326-329
-  - 332-350
-  - 354-446
-  - 449-451
-  - 454-461
-  - 464-617
-  - 620-638
-  - 641-656
-  - 659-707
-  - 710-765
-  - 767-799
-  - 801-803
-  - 805-810
-  - 813-843
-  - 846-883
-  - 886-922
 - file: crates/gwiki/src/librarian.rs
   ranges:
   - 15-20
@@ -872,6 +774,41 @@ provenance:
   - 529-536
   - 539-553
   - 556-567
+- file: crates/gwiki/src/lint.rs
+  ranges:
+  - 13-22
+  - 25-30
+  - 33-36
+  - 38-103
+  - 105-126
+  - 129-135
+  - 137-169
+  - 171-173
+  - 175-181
+  - 183-195
+  - 197-254
+  - 256-262
+  - 264-270
+  - 272-282
+  - 284-290
+  - 292-306
+  - 308-316
+  - 318-347
+  - 349-365
+  - 367-376
+  - 378-397
+  - 399-433
+  - 435-440
+  - 442-461
+  - 463-476
+  - 478-484
+  - 487-493
+  - 500-532
+  - 535-552
+  - 555-560
+  - 563-568
+  - 571-587
+  - 589-593
 - file: crates/gwiki/src/main.rs
   ranges:
   - 45-59
@@ -887,26 +824,26 @@ provenance:
   - 301-309
   - 312-315
   - 318-321
-  - 324-346
-  - 349-352
-  - 355-368
-  - 371-385
-  - 388-392
-  - '399'
-  - 403-415
-  - 417-424
-  - 426-430
-  - 432-484
-  - 491-510
-  - 512-514
-  - 516-530
-  - 532-659
-  - 662-668
-  - 672-682
-  - 686-693
-  - 696-706
-  - 708-725
-  - 728-744
+  - 324-349
+  - 352-355
+  - 358-371
+  - 374-388
+  - 391-395
+  - '402'
+  - 406-418
+  - 420-427
+  - 429-433
+  - 435-487
+  - 494-513
+  - 515-517
+  - 519-533
+  - 535-663
+  - 666-672
+  - 676-686
+  - 690-697
+  - 700-710
+  - 712-729
+  - 732-748
 - file: crates/gwiki/src/output.rs
   ranges:
   - 10-13
@@ -1084,102 +1021,36 @@ provenance:
   - 477-502
   - 505-526
   - 529-550
-- file: crates/gwiki/src/store.rs
+- file: crates/gwiki/src/support/config.rs
   ranges:
-  - 15-21
-  - 24-30
-  - 33-40
-  - 43-49
-  - 52-57
-  - 60-66
-  - 69-73
-  - 76-78
-  - 80-112
-  - 115-121
-  - 123-134
-  - '136'
-  - 138-148
-  - 150-159
-  - 168-180
-  - 182-233
-  - 236-240
-  - 242-246
-  - 249-255
-  - 257-264
-  - 266-293
-  - 297-313
-  - 315-371
-  - 373-469
-  - 471-540
-  - 542-586
-  - 588-633
-  - 635-642
-  - 644-669
-  - 672-674
-  - 676-681
-  - 683-688
-  - 690-706
-  - 708-710
-  - 712-718
-  - 720-725
-  - 727-739
-  - 741-744
-  - 746-765
-  - 767-775
-  - 777-785
-  - 787-794
-  - 796-803
-  - 805-809
-  - 811-815
-  - 817-829
-  - 836-843
-  - 846-867
-  - 870-875
-  - 878-922
-  - 925-939
-- file: crates/gwiki/src/synthesis.rs
-  ranges:
-  - 15-19
-  - 21-37
-  - 40-44
-  - 47-56
-  - 59-65
-  - 68-74
-  - 77-80
-  - 84-87
-  - 90-93
-  - 95-182
-  - 188-230
-  - 232-272
-  - 279-293
-  - 295-366
-  - 368-396
-  - 398-421
-  - 423-438
-  - 440-445
-  - 447-453
-  - 455-478
-  - 480-494
-  - 496-501
-  - 503-525
-  - 527-537
-  - 539-573
-  - 575-593
-  - 595-609
-  - 611-616
-  - 618-636
-  - 638-662
-  - 664-698
-  - 700-719
-  - 721-731
-  - 738-765
-  - 768-791
-  - 794-799
-  - 802-815
-  - 818-854
-  - 857-886
-  - 890-917
-  - 920-930
+  - 18-20
+  - 22-44
+  - 46-61
+  - 68-71
+  - 73-80
+  - 82-86
+  - 88-93
+  - 96-102
+  - 104-111
+  - 113-118
+  - 120-127
+  - 129-136
+  - 138-142
+  - 144-151
+  - 153-168
+  - 182-185
+  - 187-201
+  - 203-212
+  - 214-220
+  - 223-225
+  - 227-232
+  - 234-242
+  - 245-257
+  - 260-279
+  - 283-301
+  - 304-316
+  - 320-332
+  - 336-363
 - file: crates/gwiki/src/vector.rs
   ranges:
   - 17-26
@@ -1224,7 +1095,41 @@ provenance:
   - 657-660
   - 662-693
   - 695-704
-provenance_truncated: 109
+- file: crates/gwiki/src/vision.rs
+  ranges:
+  - 19-23
+  - 26-29
+  - 31-44
+  - 47-52
+  - 58-65
+  - 67-69
+  - 72-79
+  - 81-85
+  - 88-91
+  - 93-140
+  - 142-254
+  - 256-264
+  - 266-283
+  - 285-303
+  - 305-329
+  - 331-358
+  - 360-379
+  - 388-390
+  - '392'
+  - 394-403
+  - 405-412
+  - '414'
+  - 416-426
+  - 428-444
+  - 447-491
+  - 494-522
+  - 525-547
+  - 550-592
+  - 595-626
+  - 629-659
+  - 662-715
+  - 718-729
+provenance_truncated: 145
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -1236,11 +1141,11 @@ Parent: [[code/modules/crates|crates]]
 
 ## Overview
 
-The `crates/gwiki` module is the local-first wiki system for the `gwiki` CLI, with its contract layer defining the public tool identity, version, command shape, global output flags, scope selectors, and current-directory project detection defaults [crates/gwiki/contract/gwiki.contract.json:2] [crates/gwiki/contract/gwiki.contract.json:3] [crates/gwiki/contract/gwiki.contract.json:4] [crates/gwiki/contract/gwiki.contract.json:5-25]. Its implementation layer provides the library and CLI entry point for scoped research/wiki vaults, covering scope resolution, vault initialization, source ingestion, indexing, manifest and registry persistence, search, provenance audits, and formatted outputs [crates/gwiki/src/lib.rs:1-60].
+The gwiki module is organized as a top-level CLI/library package with its behavior split between a contract definition and the Rust implementation under src. The contract submodule anchors the public command shape by naming the tool as gwiki, pinning the contract version, and describing it as a “Local-first wiki CLI for capture, search, upkeep, and synthesis” [crates/gwiki/contract/gwiki.contract.json:2] [crates/gwiki/contract/gwiki.contract.json:3] [crates/gwiki/contract/gwiki.contract.json:4]. It also standardizes invocation concerns shared across commands, including global format/quiet flags and scope flags whose default is current-project detection with kind and id as identity keys [crates/gwiki/contract/gwiki.contract.json:5-25].
 
-The main flow begins by resolving a project or topic scope, establishing the vault layout, and routing commands through the implementation modules exported from the crate entry point [crates/gwiki/src/lib.rs:1-60]. Ingested material is represented through store models for documents, chunks, links, sources, ingestion events, and scope metadata, which gives the rest of the system a shared data contract for indexing, search, graph, audit, and synthesis workflows [crates/gwiki/src/store.rs:15-21].
+The src submodule provides the executable and library surface that implement that contract. Its API layer defines command types and payloads, the binary parses CLI arguments into those commands, and the runner hands execution to a shared dispatcher [crates/gwiki/src/lib.rs:1-60] [crates/gwiki/src/main.rs:45-59] [crates/gwiki/src/main.rs:167-209] [crates/gwiki/src/runner.rs:7-9]. The resulting flows cover building, maintaining, querying, and exporting scoped wiki vaults, with ingestion, search, refresh, read, compile, audit, benchmark, export, and synthesis-style operations all routed through the same command model.
 
-The contract and implementation collaborate as two halves of the same tool: the contract describes how callers invoke `gwiki`, while `src` performs the work behind those commands. Within `src`, ingestion and vault management feed Markdown files into the indexer, the indexer parses headings, chunks, and links, and shared memory or Postgres stores receive added, changed, and deleted rows for downstream search, provenance, upkeep, and synthesis flows.
+Supporting modules in src establish the durable environment those commands operate on. Scope and vault code decide where work happens, while registry, setup, schema, store, and model components handle scope metadata, PostgreSQL objects, runtime validation, storage boundaries, and canonical IDs [crates/gwiki/src/scope.rs:12-16] [crates/gwiki/src/vault.rs:19-22] [crates/gwiki/src/registry.rs:15-20] [crates/gwiki/src/setup.rs:29-35] [crates/gwiki/src/store.rs:15-17]. Together, the contract supplies the CLI schema and src supplies the runtime machinery that maps scoped user requests into vault files, indexes, graph/vector integrations, and rendered command outputs.
 
 ## Call Diagram
 
@@ -1249,27 +1154,27 @@ sequenceDiagram
     participant m_00015808_7660_5129_8df1_45d4b9551ad1 as section_claim_comparisons &#91;function&#93;
     participant m_00589531_b7ac_54da_a6ca_02d9c8ea1804 as ingest_image_with_vision &#91;function&#93;
     participant m_01368509_6873_510a_9138_026736b2283e as frontmatter_migration_parses_shared_contract_keys &#91;function&#93;
-    participant m_014c2f03_e0e9_59cb_945c_7a8bb9c65a6b as source_kind_for_url_response &#91;function&#93;
     participant m_017e301e_e617_58cc_b179_cb2195a4f3f0 as sanitize_pdf_page_markdown &#91;function&#93;
     participant m_01a578a5_71ed_5a3f_a7a4_153605f04415 as english_one_pass_vs_target_first &#91;function&#93;
-    participant m_01a9eb77_3fbf_517f_aa3d_46928229f6d9 as analytics_graph_from_memory &#91;function&#93;
+    participant m_01a66b80_f006_5fb4_8c35_1312f7b68adb as CountingStore.record_ingestion &#91;method&#93;
     participant m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add as all_source_refresh_skips_unsupported_records &#91;function&#93;
+    participant m_0263f169_28eb_5daf_af73_0e82de1a1e71 as synthesize_article &#91;function&#93;
     participant m_02d14539_2527_53e3_a472_18449d0abb5d as ingest_audio_with_transcription_without_index &#91;function&#93;
     participant m_038959ea_6f68_51a7_b28d_9b857beca386 as extract_docx &#91;function&#93;
+    participant m_041f849e_720e_500c_8373_09cf0694550f as scoped_text_id &#91;function&#93;
     participant m_04796375_e1a3_5fa7_af29_7b585d7764a4 as parse_frontmatter &#91;function&#93;
     participant m_3543c95c_df70_5fa5_9de5_b2376e07fccc as transcribe_for_markdown &#91;function&#93;
-    participant m_38c2171b_952e_589f_a60c_c7c20cd5719d as content_type_media_type &#91;function&#93;
     participant m_4a3322af_f8bc_5dc0_a366_6e5523d13c7c as is_markdown_horizontal_rule &#91;function&#93;
+    participant m_4cc01a9b_4cd0_5f77_a008_49c7410cf3d0 as ground_article_explainer &#91;function&#93;
     participant m_585c7602_49d9_56e7_bcb5_2c9d6e14f120 as parse_metadata &#91;function&#93;
     participant m_5a5a8b89_8f80_5e29_911d_0e57b4729095 as seed_unsupported_connector &#91;function&#93;
     participant m_67b04ae9_5316_58ad_8c9e_4345e12cef0e as extract_xml_paragraphs &#91;function&#93;
     participant m_6a95a7e1_e58c_55a8_ac11_94f20e7abbc5 as neutralize_gwiki_page_marker_variants &#91;function&#93;
-    participant m_6bfcd22f_3c8b_56e6_950a_9a957044c969 as analytics_graph_from_facts &#91;function&#93;
-    participant m_6dabf274_5145_5116_ab12_740528a0b01d as find_closing_delimiter &#91;function&#93;
     participant m_82f3e4f9_5e64_5f94_84ff_2c0e0dbef37e as normalize_claim &#91;function&#93;
     participant m_89d5ac91_7ebb_524b_afcd_aef82ff7e4bd as seed_url &#91;function&#93;
     participant m_8c66f12f_4bbb_5a85_b464_7dc9611dfb24 as request &#91;function&#93;
     participant m_9076381c_f935_5c44_bf48_257b15ba9c62 as read_zip_entry &#91;function&#93;
+    participant m_9aa33ced_929a_54ad_a23d_84bb6d6291d4 as cap_scoped_id &#91;function&#93;
     participant m_a40abd46_665f_5ed9_bf15_40147ac6ba9f as snapshot &#91;function&#93;
     participant m_abcbd023_5ca6_5268_8972_4c4d361d8fbe as render_raw_audio_markdown &#91;function&#93;
     participant m_b904720c_a279_5107_93cd_ceb111199ebb as translate_audio &#91;function&#93;
@@ -1279,35 +1184,35 @@ sequenceDiagram
     m_00015808_7660_5129_8df1_45d4b9551ad1->>m_82f3e4f9_5e64_5f94_84ff_2c0e0dbef37e: calls
     m_00589531_b7ac_54da_a6ca_02d9c8ea1804->>m_f6fff319_9e6b_5d72_9655_068135e8ea16: calls
     m_01368509_6873_510a_9138_026736b2283e->>m_04796375_e1a3_5fa7_af29_7b585d7764a4: calls
-    m_014c2f03_e0e9_59cb_945c_7a8bb9c65a6b->>m_38c2171b_952e_589f_a60c_c7c20cd5719d: calls
     m_017e301e_e617_58cc_b179_cb2195a4f3f0->>m_4a3322af_f8bc_5dc0_a366_6e5523d13c7c: calls
     m_017e301e_e617_58cc_b179_cb2195a4f3f0->>m_6a95a7e1_e58c_55a8_ac11_94f20e7abbc5: calls
     m_01a578a5_71ed_5a3f_a7a4_153605f04415->>m_8c66f12f_4bbb_5a85_b464_7dc9611dfb24: calls
     m_01a578a5_71ed_5a3f_a7a4_153605f04415->>m_b904720c_a279_5107_93cd_ceb111199ebb: calls
     m_01a578a5_71ed_5a3f_a7a4_153605f04415->>m_c68dee89_e779_5e4f_998c_585372ffeab9: calls
-    m_01a9eb77_3fbf_517f_aa3d_46928229f6d9->>m_6bfcd22f_3c8b_56e6_950a_9a957044c969: calls
+    m_01a66b80_f006_5fb4_8c35_1312f7b68adb->>m_01a66b80_f006_5fb4_8c35_1312f7b68adb: calls
     m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add->>m_5a5a8b89_8f80_5e29_911d_0e57b4729095: calls
     m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add->>m_89d5ac91_7ebb_524b_afcd_aef82ff7e4bd: calls
     m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add->>m_a40abd46_665f_5ed9_bf15_40147ac6ba9f: calls
     m_01d45770_ff0f_5b92_8aaf_0fbb9fcb8add->>m_f0c37b2c_e586_5edd_83aa_ecf554126398: calls
+    m_0263f169_28eb_5daf_af73_0e82de1a1e71->>m_4cc01a9b_4cd0_5f77_a008_49c7410cf3d0: calls
     m_02d14539_2527_53e3_a472_18449d0abb5d->>m_3543c95c_df70_5fa5_9de5_b2376e07fccc: calls
     m_02d14539_2527_53e3_a472_18449d0abb5d->>m_abcbd023_5ca6_5268_8972_4c4d361d8fbe: calls
     m_038959ea_6f68_51a7_b28d_9b857beca386->>m_67b04ae9_5316_58ad_8c9e_4345e12cef0e: calls
     m_038959ea_6f68_51a7_b28d_9b857beca386->>m_9076381c_f935_5c44_bf48_257b15ba9c62: calls
+    m_041f849e_720e_500c_8373_09cf0694550f->>m_9aa33ced_929a_54ad_a23d_84bb6d6291d4: calls
     m_04796375_e1a3_5fa7_af29_7b585d7764a4->>m_585c7602_49d9_56e7_bcb5_2c9d6e14f120: calls
-    m_04796375_e1a3_5fa7_af29_7b585d7764a4->>m_6dabf274_5145_5116_ab12_740528a0b01d: calls
 ```
 
 ## Child Modules
 
-- [[code/modules/crates/gwiki/contract|crates/gwiki/contract]] - The `crates/gwiki/contract` module is the schema source for the `gwiki` local-first wiki CLI. Its single contract file identifies the tool as `gwiki`, sets `contract_version` to 5, and frames the CLI around capture, search, upkeep, and synthesis responsibilities. It also defines shared invocation behavior: global `--format json|text` and `--quiet` flags, scope selectors for `--project` and `--topic`, current-directory project detection defaults, and identity keys used to resolve scoped contexts. [crates/gwiki/contract/gwiki.contract.json:2] [crates/gwiki/contract/gwiki.contract.json:3] [crates/gwiki/contract/gwiki.contract.json:4] [crates/gwiki/contract/gwiki.contract.json:5-25]
+- [[code/modules/crates/gwiki/contract|crates/gwiki/contract]] - The contract module is the schema anchor for the `gwiki` command-line interface. Its single JSON file identifies the tool as `gwiki`, pins the contract version, and summarizes the CLI as a “Local-first wiki CLI for capture, search, upkeep, and synthesis” [crates/gwiki/contract/gwiki.contract.json:2] [crates/gwiki/contract/gwiki.contract.json:3] [crates/gwiki/contract/gwiki.contract.json:4]. It also defines shared invocation behavior through global `--format` and `--quiet` flags, plus project/topic scoping that defaults to detecting the current project and uses `kind` and `id` as identity keys [crates/gwiki/contract/gwiki.contract.json:5-25].
 
-The main flow is contract-driven command dispatch. The `commands` array enumerates daemon-consumed operations, beginning with `contract`, which emits the full CLI contract including global flags, scope, commands, and error codes, then `index`, which indexes markdown and source notes for the selected scope and returns indexing status plus page/source counts, and `search`, which accepts a `QUERY` positional for scoped wiki search.  [crates/gwiki/contract/gwiki.contract.json:70-84] [crates/gwiki/contract/gwiki.contract.json:85-100]
+The key flow is declarative: consumers read this file to understand which commands exist, how context is resolved, which inputs each command accepts, and what JSON fields each command returns. The `commands` array starts with a `contract` command that emits the contract itself, including top-level metadata, global flags, scope, command definitions, and error codes . Operational commands such as `index` and `search` are marked daemon-consumed, inherit the selected scope, and expose predictable output keys such as indexing status and search results [crates/gwiki/contract/gwiki.contract.json:70-100].
 
-Because there are no child modules, collaboration happens inside the JSON contract structure itself: top-level metadata and shared scope rules provide defaults for every command, while each command declares its own positionals, flags, daemon consumption status, JSON output keys, dependency/degradation metadata, and error-code behavior. This keeps CLI, daemon, and downstream consumers aligned around one declarative artifact rather than duplicating command semantics elsewhere. [crates/gwiki/contract/gwiki.contract.json:5-25] 
-- [[code/modules/crates/gwiki/src|crates/gwiki/src]] - The `gwiki` crate is the library and CLI implementation for managing scoped research/wiki vaults: it defines the command API and CLI contract, resolves project or topic scope, initializes vault layout, ingests sources, indexes Markdown, persists manifests and registry state, searches content, audits provenance, and formats command output. Its public entry point wires the module set together and re-exports the main command/result types plus `WikiError` and `run` for embedders [crates/gwiki/src/lib.rs:1-60]. The core data path centers on store models for documents, chunks, links, sources, ingestion events, and scope metadata [crates/gwiki/src/store.rs:15-21] , with indexing walking vault files, parsing Markdown into headings/chunks/links, and writing added/changed/deleted rows through a shared memory or Postgres store  .
+Because there are no child modules, collaboration happens within the single contract document: top-level metadata establishes the CLI identity, global flags and scope rules normalize invocation across commands, and each command block contributes its positional arguments, command-specific flags, daemon integration marker, and output shape. The file therefore serves both as user-facing CLI documentation and as a machine-readable interface for callers that need standardized command discovery, formatting, scope resolution, and failure handling [crates/gwiki/contract/gwiki.contract.json:2] [crates/gwiki/contract/gwiki.contract.json:7]
+- [[code/modules/crates/gwiki/src|crates/gwiki/src]] - The `gwiki` crate is the library and CLI surface for building, maintaining, querying, and exporting scoped wiki vaults. Its API layer defines the command contract and command payloads, while the binary parses CLI arguments into those command types and the runner forwards execution through the shared command dispatcher [crates/gwiki/src/lib.rs:1-60] [crates/gwiki/src/main.rs:45-59] [crates/gwiki/src/main.rs:167-209] [crates/gwiki/src/runner.rs:7-9]. Scope and vault modules establish where work happens, with registry, setup, schema, store, and model files providing durable scope metadata, PostgreSQL objects, runtime validation, storage boundaries, and canonical IDs [crates/gwiki/src/scope.rs:12-16] [crates/gwiki/src/vault.rs:19-22] [crates/gwiki/src/registry.rs:15-20] [crates/gwiki/src/setup.rs:29-35] [crates/gwiki/src/store.rs:15-17].
 
-The main flows layer specialized modules over that storage foundation. Ingestion accepts files, URLs, audio, images, PDFs, videos, Git snapshots, Wayback captures, and documents, writes immutable raw Markdown/assets, records source-manifest metadata, and then indexes the vault [crates/gwiki/src/ingest/audio.rs:40-54] [crates/gwiki/src/ingest/wayback.rs:28-47]. Compile and synthesis turn accepted source notes into handoff bundles and compiled wiki pages with grounded citations and safe atomic writes [crates/gwiki/src/compile/mod.rs:49-56] , while explainer, transcribe, vision, media, and video modules provide bounded AI or ffmpeg-backed derived content with degradation reporting    .
+The main flows move content from raw sources into searchable and reviewable wiki knowledge. Collection and ingest paths classify inbox items or external inputs, persist raw records first, generate derived markdown for media, documents, images, audio, video, URLs, and PDFs, then index markdown into documents, chunks, links, sources, and ingestion events [crates/gwiki/src/collect.rs:18-21] [crates/gwiki/src/indexer.rs:16-18] [crates/gwiki/src/transcribe.rs:14-18] [crates/gwiki/src/vision.rs:19-23] [crates/gwiki/src/video.rs:1-16]. Search, vector sync, Falkor graph loading, and code graph mapping collaborate to retrieve pages through BM25, semantic vectors, graph expansion, and code-provenance relationships, with benchmark and daemon probes reporting degraded optional services [crates/gwiki/src/vector.rs:17-26] [crates/gwiki/src/falkor_graph.rs:30-32] [crates/gwiki/src/code_graph.rs:15-18] [crates/gwiki/src/benchmark.rs:30-39] [crates/gwiki/src/daemon.rs:11-18].
 
-Operationally, `commands` adapts parsed `Command` variants into scoped command outcomes and delegates to domain modules such as health, audit, lint, export, collect, and librarian . Health combines lint, page collection, source manifests, provenance, citation indexing, stale detection, broken links, duplicate concepts, and report persistence , while audit checks generated and prose claims against inline sources, frontmatter, provenance, and ignored-section rules . Search and graph support collaborate through BM25, semantic/Qdrant vectors, graph boosts, FalkorDB graph sync, and code-graph provenance mapping: vector sync batches indexed chunks into deterministic Qdrant points , and Falkor graph sync loads wiki facts plus capped shared code edges into the `gobby_wiki` graph for search, context, exports, and refresh decisions .
+Maintenance and synthesis modules keep the vault trustworthy and usable after ingestion. Lint, health, audit, credibility, librarian, and citation helpers inspect markdown links, source freshness, provenance support, unsupported claims, and reportable quality signals, persisting or rendering structured results for CLI output [crates/gwiki/src/lint.rs:13-22] [crates/gwiki/src/health.rs:22-34] [crates/gwiki/src/audit.rs:36-38] [crates/gwiki/src/credibility.rs:7-13] [crates/gwiki/src/librarian.rs:15-20] [crates/gwiki/src/citations.rs:6-14]. Research sessions, compilation, synthesis, and explainer generation then turn accepted notes and grounded sources into vault-safe pages while provenance and frontmatter preserve support links and metadata across read, write, export, and review workflows [crates/gwiki/src/session.rs:15-18] [crates/gwiki/src/synthesis.rs:1-19] [crates/gwiki/src/explainer.rs:24-26] [crates/gwiki/src/provenance.rs:14-22] [crates/gwiki/src/frontmatter.rs:10-13] [crates/gwiki/src/exports.rs:9-13].
 

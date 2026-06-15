@@ -1,0 +1,559 @@
+---
+title: docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json
+type: code_file
+provenance:
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json
+  ranges:
+  - 3-295
+generated_by: gcode-codewiki
+trust: generated
+freshness: indexed
+---
+
+# docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json
+
+Module: [[code/modules/docs/evidence/wiki-parity-2026-06|docs/evidence/wiki-parity-2026-06]]
+
+## Purpose
+
+This JSON file records a wiki-parity evidence bundle for the `ghook` `ask` flow in direct mode. It captures the AI request state and model used, the command and route metadata, citation-backed evidence pulled from related `ghook` schema and source docs, ranked hit results with snippets and sources, and a final synthesis section that checks claims, notes truncation or warnings, and summarizes the answer status.
+[docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:3-10]
+[docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:4]
+[docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:5]
+[docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:6]
+[docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:7]
+
+## API Symbols
+
+- `ai` (property) component `ai [property]` (`764ee8d7-e3da-5473-b732-88f2c270abd0`) lines 3-10 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:3-10]
+  - Signature: `"ai": {`
+  - Purpose: Indexed property `ai` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:3-10]
+- `error` (property) component `error [property]` (`b8db89ff-8205-5a9f-8eeb-819f98bff174`) lines 4-4 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:4]
+  - Signature: `"error": null,`
+  - Purpose: Indexed property `error` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:4]
+- `model` (property) component `model [property]` (`e806351f-17f6-58ab-b6f8-317d61c11c94`) lines 5-5 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:5]
+  - Signature: `"model": "google/gemma-4-26b-a4b-qat",`
+  - Purpose: Indexed property `model` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:5]
+- `requested` (property) component `requested [property]` (`83d2062c-b90c-5c14-99d4-dc6f0ff3c8a2`) lines 6-6 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:6]
+  - Signature: `"requested": true,`
+  - Purpose: Indexed property `requested` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:6]
+- `requested_mode` (property) component `requested_mode [property]` (`0101bd5a-a112-5881-8307-49bfad1fad72`) lines 7-7 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:7]
+  - Signature: `"requested_mode": "direct",`
+  - Purpose: Indexed property `requested_mode` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:7]
+- `route` (property) component `route [property]` (`5028f936-b402-5a06-bfb4-7f032e5d2cda`) lines 8-8 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:8]
+  - Signature: `"route": "direct",`
+  - Purpose: Indexed property `route` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:8]
+- `status` (property) component `status [property]` (`53bc9fe8-b25d-5db3-b6f2-54368ebf0d25`) lines 9-9 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:9]
+  - Signature: `"status": "available"`
+  - Purpose: Indexed property `status` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:9]
+- `code_citations` (property) component `code_citations [property]` (`f05a6ab3-97c7-5d48-9074-444cf39febfd`) lines 11-28 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:11-28]
+  - Signature: `"code_citations": [`
+  - Purpose: Indexed property `code_citations` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:11-28]
+- `file` (property) component `file [property]` (`9126f080-5e81-5a37-ab11-dca868cb43a5`) lines 13-13 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:13]
+  - Signature: `"file": "code/files/crates/ghook/schemas/inbox-envelope.v1.schema.json.md",`
+  - Purpose: Indexed property `file` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:13]
+- `symbol` (property) component `symbol [property]` (`49a72cfa-af17-58c7-8650-a94931291824`) lines 14-14 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:14]
+  - Signature: `"symbol": "crates/ghook/schemas/inbox-envelope.v1.schema.json"`
+  - Purpose: Indexed property `symbol` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:14]
+- `file` (property) component `file [property]` (`156d7cc9-96bf-54f1-85da-d636ba5dc8d7`) lines 17-17 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:17]
+  - Signature: `"file": "code/files/crates/ghook/src/transport.rs.md",`
+  - Purpose: Indexed property `file` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:17]
+- `symbol` (property) component `symbol [property]` (`d4d09741-58e0-537a-92ff-604d86c656ae`) lines 18-18 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:18]
+  - Signature: `"symbol": "crates/ghook/src/transport.rs"`
+  - Purpose: Indexed property `symbol` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:18]
+- `file` (property) component `file [property]` (`158ce957-a167-573f-9e5b-cf779c9b24c1`) lines 21-21 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:21]
+  - Signature: `"file": "code/files/crates/ghook/src/envelope.rs.md",`
+  - Purpose: Indexed property `file` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:21]
+- `symbol` (property) component `symbol [property]` (`6847ee1d-18c3-5675-b3db-9b0976d226c4`) lines 22-22 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:22]
+  - Signature: `"symbol": "crates/ghook/src/envelope.rs"`
+  - Purpose: Indexed property `symbol` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:22]
+- `file` (property) component `file [property]` (`aa791450-bbbb-5a40-b5d8-1e36fa78926f`) lines 25-25 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:25]
+  - Signature: `"file": "code/files/crates/ghook/src/diagnose.rs.md",`
+  - Purpose: Indexed property `file` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:25]
+- `symbol` (property) component `symbol [property]` (`fb27926b-319a-5d42-8057-8439f2454493`) lines 26-26 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:26]
+  - Signature: `"symbol": "crates/ghook/src/diagnose.rs"`
+  - Purpose: Indexed property `symbol` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:26]
+- `command` (property) component `command [property]` (`76213e2e-a852-5cd0-a70b-f8896f8f2205`) lines 29-29 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:29]
+  - Signature: `"command": "ask",`
+  - Purpose: Indexed property `command` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:29]
+- `degraded` (property) component `degraded [property]` (`bbe7d1c6-7a7d-593d-bef8-ed60dbf4ad75`) lines 30-30 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:30]
+  - Signature: `"degraded": false,`
+  - Purpose: Indexed property `degraded` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:30]
+- `degraded_sources` (property) component `degraded_sources [property]` (`aff64244-84c0-5a3b-898e-271725b42ab1`) lines 31-31 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:31]
+  - Signature: `"degraded_sources": [],`
+  - Purpose: Indexed property `degraded_sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:31]
+- `evidence` (property) component `evidence [property]` (`15a36e93-dc36-54f5-aa2e-4dc0646047fe`) lines 32-73 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:32-73]
+  - Signature: `"evidence": [`
+  - Purpose: Indexed property `evidence` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:32-73]
+- `excerpt_chars` (property) component `excerpt_chars [property]` (`0d8d8058-3275-52ac-90b5-ec971f3ccce3`) lines 34-34 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:34]
+  - Signature: `"excerpt_chars": 3218,`
+  - Purpose: Indexed property `excerpt_chars` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:34]
+- `source_path` (property) component `source_path [property]` (`5689d397-451a-5c68-a5b8-527b97a1cf75`) lines 35-35 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:35]
+  - Signature: `"source_path": "code/files/crates/ghook/schemas/inbox-envelope.v1.schema.json.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:35]
+- `wiki_page` (property) component `wiki_page [property]` (`9c34be2d-0522-5db8-87af-022a87c56e65`) lines 36-36 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:36]
+  - Signature: `"wiki_page": "code/files/crates/ghook/schemas/inbox-envelope.v1.schema.json.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:36]
+- `excerpt_chars` (property) component `excerpt_chars [property]` (`62cc60fc-2b84-544d-8da3-16c6d4d3ff5f`) lines 39-39 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:39]
+  - Signature: `"excerpt_chars": 1199,`
+  - Purpose: Indexed property `excerpt_chars` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:39]
+- `source_path` (property) component `source_path [property]` (`73f626d2-de9a-5055-bc82-ecbe19ba6730`) lines 40-40 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:40]
+  - Signature: `"source_path": "code/files/crates/ghook/src/transport.rs.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:40]
+- `wiki_page` (property) component `wiki_page [property]` (`28daa148-a135-574a-a778-cf92ac0372b2`) lines 41-41 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:41]
+  - Signature: `"wiki_page": "code/files/crates/ghook/src/transport.rs.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:41]
+- `excerpt_chars` (property) component `excerpt_chars [property]` (`a2762407-b751-57a6-84ab-986ebcf65d2a`) lines 44-44 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:44]
+  - Signature: `"excerpt_chars": 1867,`
+  - Purpose: Indexed property `excerpt_chars` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:44]
+- `source_path` (property) component `source_path [property]` (`b660ee48-e415-5549-a848-4b74ac360923`) lines 45-45 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:45]
+  - Signature: `"source_path": "code/modules/crates/ghook/schemas.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:45]
+- `wiki_page` (property) component `wiki_page [property]` (`16781ba2-1116-54e9-882c-4ee9030c6b52`) lines 46-46 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:46]
+  - Signature: `"wiki_page": "code/modules/crates/ghook/schemas.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:46]
+- `excerpt_chars` (property) component `excerpt_chars [property]` (`c87c5255-c1ca-5970-932b-97eb7a023875`) lines 49-49 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:49]
+  - Signature: `"excerpt_chars": 3218,`
+  - Purpose: Indexed property `excerpt_chars` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:49]
+- `source_path` (property) component `source_path [property]` (`eea20d35-623b-589c-bdcd-56f77ce338a4`) lines 50-50 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:50]
+  - Signature: `"source_path": "code/files/crates/ghook/src/envelope.rs.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:50]
+- `wiki_page` (property) component `wiki_page [property]` (`420b4ef4-c51a-569f-8dca-b1fc861ba878`) lines 51-51 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:51]
+  - Signature: `"wiki_page": "code/files/crates/ghook/src/envelope.rs.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:51]
+- `excerpt_chars` (property) component `excerpt_chars [property]` (`5506662b-9120-5d18-b16e-adce7bb33f0c`) lines 54-54 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:54]
+  - Signature: `"excerpt_chars": 3242,`
+  - Purpose: Indexed property `excerpt_chars` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:54]
+- `source_path` (property) component `source_path [property]` (`0a71384b-56fa-556f-9518-e77ef3179d2a`) lines 55-55 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:55]
+  - Signature: `"source_path": "code/modules/crates/ghook.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:55]
+- `wiki_page` (property) component `wiki_page [property]` (`61b82b88-3feb-5a16-8bfd-48d7849a4f61`) lines 56-56 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:56]
+  - Signature: `"wiki_page": "code/modules/crates/ghook.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:56]
+- `excerpt_chars` (property) component `excerpt_chars [property]` (`d11d49a5-76ee-5b81-93e9-22b0997f88df`) lines 59-59 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:59]
+  - Signature: `"excerpt_chars": 3232,`
+  - Purpose: Indexed property `excerpt_chars` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:59]
+- `source_path` (property) component `source_path [property]` (`dfc67568-2d05-5976-bb58-fddafef9fe32`) lines 60-60 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:60]
+  - Signature: `"source_path": "code/modules/crates/ghook/src.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:60]
+- `wiki_page` (property) component `wiki_page [property]` (`866ab269-ae99-56df-b90b-76d5c9f49549`) lines 61-61 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:61]
+  - Signature: `"wiki_page": "code/modules/crates/ghook/src.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:61]
+- `excerpt_chars` (property) component `excerpt_chars [property]` (`0f00fdf9-6cec-5264-95c9-5ff0ed84a028`) lines 64-64 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:64]
+  - Signature: `"excerpt_chars": 10,`
+  - Purpose: Indexed property `excerpt_chars` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:64]
+- `source_path` (property) component `source_path [property]` (`51678d3b-e58f-5517-abe1-415de01380d2`) lines 65-65 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:65]
+  - Signature: `"source_path": "code/files/crates/ghook/src/diagnose.rs.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:65]
+- `wiki_page` (property) component `wiki_page [property]` (`79cb3977-730d-5beb-a31f-93e3e8ad8679`) lines 66-66 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:66]
+  - Signature: `"wiki_page": "code/files/crates/ghook/src/diagnose.rs.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:66]
+- `excerpt_chars` (property) component `excerpt_chars [property]` (`b16e2879-2542-560b-902d-951755a479ad`) lines 69-69 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:69]
+  - Signature: `"excerpt_chars": 120,`
+  - Purpose: Indexed property `excerpt_chars` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:69]
+- `source_path` (property) component `source_path [property]` (`9dc94466-0083-5432-8eb7-76a0e08f49ab`) lines 70-70 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:70]
+  - Signature: `"source_path": "code/_ownership.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:70]
+- `wiki_page` (property) component `wiki_page [property]` (`daf81f20-a347-5234-bc94-668cdaf5c913`) lines 71-71 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:71]
+  - Signature: `"wiki_page": "code/_ownership.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:71]
+- `hits` (property) component `hits [property]` (`895d2d8f-5b41-5629-b994-0454a40fb30f`) lines 74-263 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:74-263]
+  - Signature: `"hits": [`
+  - Purpose: Indexed property `hits` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:74-263]
+- `explanations` (property) component `explanations [property]` (`e2bffb88-3b7a-5bc8-af93-bc63b3ed69a2`) lines 76-87 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:76-87]
+  - Signature: `"explanations": [`
+  - Purpose: Indexed property `explanations` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:76-87]
+- `rank` (property) component `rank [property]` (`db2de621-d3c8-5957-afb6-ecbe1ec17d17`) lines 78-78 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:78]
+  - Signature: `"rank": 0,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:78]
+- `score` (property) component `score [property]` (`d3fb7d0f-3f55-5272-8347-7ef5e28f2dfb`) lines 79-79 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:79]
+  - Signature: `"score": 0.016666666666666666,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:79]
+- `source` (property) component `source [property]` (`0db15b70-2c38-5389-a5a8-5e16a192c2dc`) lines 80-80 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:80]
+  - Signature: `"source": "bm25"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:80]
+- `rank` (property) component `rank [property]` (`cce1ccdc-aae3-5e2c-96ed-89fcd8a2cbb4`) lines 83-83 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:83]
+  - Signature: `"rank": 2,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:83]
+- `score` (property) component `score [property]` (`762cb76e-3104-530b-9e26-bbf79c973f8f`) lines 84-84 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:84]
+  - Signature: `"score": 0.016129032258064516,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:84]
+- `source` (property) component `source [property]` (`b9e93c8d-cd3a-53cc-9531-5ee7cd114b03`) lines 85-85 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:85]
+  - Signature: `"source": "semantic"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:85]
+- `fusion_key` (property) component `fusion_key [property]` (`4d93ede8-a076-574a-916f-a905112c088e`) lines 88-88 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:88]
+  - Signature: `"fusion_key": "project:3bf57fe7-2a0c-4074-8912-a83d9cd4df01:code/files/crates/ghook/schemas/inbox-envelope.v1.schema.json.md",`
+  - Purpose: Indexed property `fusion_key` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:88]
+- `result_type` (property) component `result_type [property]` (`afb709ab-b6d7-55c2-9d6f-e910cbec87f9`) lines 89-89 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:89]
+  - Signature: `"result_type": "code",`
+  - Purpose: Indexed property `result_type` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:89]
+- `score` (property) component `score [property]` (`0cb77c8d-0cc7-5bc5-af01-12b2bf3cfba8`) lines 90-90 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:90]
+  - Signature: `"score": 0.03279569892473118,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:90]
+- `snippet` (property) component `snippet [property]` (`f361098d-15f4-5668-9e30-c8c43427b5b5`) lines 91-91 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:91]
+  - Signature: `"snippet": "--- title: crates/ghook/schemas/inbox-envelope.v1.schema.json type: code_file provenance: - file: crates/ghook/schemas/inbox-envelope.v1.s",`
+  - Purpose: Indexed property `snippet` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:91]
+- `source_path` (property) component `source_path [property]` (`1ccbe386-5b94-50d4-a021-9e3d10ba0626`) lines 92-92 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:92]
+  - Signature: `"source_path": "code/files/crates/ghook/schemas/inbox-envelope.v1.schema.json.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:92]
+- `sources` (property) component `sources [property]` (`69588ede-4a2b-5e94-80ef-63eee553587a`) lines 93-96 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:93-96]
+  - Signature: `"sources": [`
+  - Purpose: Indexed property `sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:93-96]
+- `title` (property) component `title [property]` (`1f11e8fd-304f-552d-8746-31f97a4a7121`) lines 97-97 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:97]
+  - Signature: `"title": "crates/ghook/schemas/inbox-envelope.v1.schema.json",`
+  - Purpose: Indexed property `title` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:97]
+- `wiki_page` (property) component `wiki_page [property]` (`355e2c06-7a77-536f-a4c7-a3662f42c812`) lines 98-98 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:98]
+  - Signature: `"wiki_page": "code/files/crates/ghook/schemas/inbox-envelope.v1.schema.json.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:98]
+- `explanations` (property) component `explanations [property]` (`15fdc241-8dbf-5656-85c8-a2444d2b5191`) lines 101-112 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:101-112]
+  - Signature: `"explanations": [`
+  - Purpose: Indexed property `explanations` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:101-112]
+- `rank` (property) component `rank [property]` (`d9d9080d-049b-5b78-b6a7-246ad21d03d8`) lines 103-103 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:103]
+  - Signature: `"rank": 2,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:103]
+- `score` (property) component `score [property]` (`54eee005-cae8-5e52-b1dd-439b2759b1c7`) lines 104-104 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:104]
+  - Signature: `"score": 0.016129032258064516,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:104]
+- `source` (property) component `source [property]` (`0a75315a-7b0e-509d-908d-5c5f972c36d9`) lines 105-105 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:105]
+  - Signature: `"source": "bm25"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:105]
+- `rank` (property) component `rank [property]` (`a798ed93-4f17-5547-9917-61ca3ae85bad`) lines 108-108 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:108]
+  - Signature: `"rank": 0,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:108]
+- `score` (property) component `score [property]` (`e1c9c370-060b-5f01-90fd-56058accfe3d`) lines 109-109 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:109]
+  - Signature: `"score": 0.016666666666666666,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:109]
+- `source` (property) component `source [property]` (`2c25d231-d972-5491-8c26-41665a2c7829`) lines 110-110 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:110]
+  - Signature: `"source": "semantic"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:110]
+- `fusion_key` (property) component `fusion_key [property]` (`54851056-1e07-5633-9e1b-01f31f88d49b`) lines 113-113 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:113]
+  - Signature: `"fusion_key": "project:3bf57fe7-2a0c-4074-8912-a83d9cd4df01:code/files/crates/ghook/src/transport.rs.md",`
+  - Purpose: Indexed property `fusion_key` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:113]
+- `result_type` (property) component `result_type [property]` (`14562808-d67c-539d-a829-4bcd990a9d2c`) lines 114-114 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:114]
+  - Signature: `"result_type": "code",`
+  - Purpose: Indexed property `result_type` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:114]
+- `score` (property) component `score [property]` (`a9e53850-22d4-52c6-bbd2-68d1984d45f4`) lines 115-115 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:115]
+  - Signature: `"score": 0.03279569892473118,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:115]
+- `snippet` (property) component `snippet [property]` (`57f727d6-c2e0-577e-8077-e5649e6ab578`) lines 116-116 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:116]
+  - Signature: ``"snippet": "## Purpose Implements the enqueue-first transport for `ghook --gobby-owned`: it names inbox envelopes with lexicographically sortable `prefix-",``
+  - Purpose: Indexed property `snippet` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:116]
+- `source_path` (property) component `source_path [property]` (`628d68fe-0436-5529-bea4-296be620ea7c`) lines 117-117 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:117]
+  - Signature: `"source_path": "code/files/crates/ghook/src/transport.rs.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:117]
+- `sources` (property) component `sources [property]` (`3a8e0b16-5022-5c08-93f7-db41a0f3758e`) lines 118-121 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:118-121]
+  - Signature: `"sources": [`
+  - Purpose: Indexed property `sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:118-121]
+- `title` (property) component `title [property]` (`96a7392e-c765-5546-b27c-8ccfc1b32cfd`) lines 122-122 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:122]
+  - Signature: `"title": "crates/ghook/src/transport.rs",`
+  - Purpose: Indexed property `title` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:122]
+- `wiki_page` (property) component `wiki_page [property]` (`79e79287-f3ef-5878-a4f2-f19fe99b8088`) lines 123-123 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:123]
+  - Signature: `"wiki_page": "code/files/crates/ghook/src/transport.rs.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:123]
+- `explanations` (property) component `explanations [property]` (`424f590e-06d0-582e-abeb-b734860ac28d`) lines 126-137 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:126-137]
+  - Signature: `"explanations": [`
+  - Purpose: Indexed property `explanations` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:126-137]
+- `rank` (property) component `rank [property]` (`998029e3-ff35-5073-b91d-909c65f7092a`) lines 128-128 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:128]
+  - Signature: `"rank": 1,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:128]
+- `score` (property) component `score [property]` (`b25ee0c2-48a0-588b-91d2-2200f03ef33f`) lines 129-129 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:129]
+  - Signature: `"score": 0.01639344262295082,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:129]
+- `source` (property) component `source [property]` (`155eb744-4850-59b4-8ef5-a308672fd67b`) lines 130-130 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:130]
+  - Signature: `"source": "bm25"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:130]
+- `rank` (property) component `rank [property]` (`66a6259c-e944-5f8d-b33d-1222c287cedb`) lines 133-133 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:133]
+  - Signature: `"rank": 3,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:133]
+- `score` (property) component `score [property]` (`bb914baa-961c-5701-956b-9184aa54a8a8`) lines 134-134 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:134]
+  - Signature: `"score": 0.015873015873015872,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:134]
+- `source` (property) component `source [property]` (`09997587-3f36-598a-8506-9f1ed6d5f21a`) lines 135-135 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:135]
+  - Signature: `"source": "semantic"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:135]
+- `fusion_key` (property) component `fusion_key [property]` (`8ea8b991-6685-54c6-8311-78a91071eb41`) lines 138-138 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:138]
+  - Signature: `"fusion_key": "project:3bf57fe7-2a0c-4074-8912-a83d9cd4df01:code/modules/crates/ghook/schemas.md",`
+  - Purpose: Indexed property `fusion_key` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:138]
+- `result_type` (property) component `result_type [property]` (`91c76e2f-8b64-544d-a4f8-02e211dbf8a4`) lines 139-139 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:139]
+  - Signature: `"result_type": "wiki",`
+  - Purpose: Indexed property `result_type` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:139]
+- `score` (property) component `score [property]` (`4744a489-634e-5e56-9731-d308b7897dbd`) lines 140-140 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:140]
+  - Signature: `"score": 0.032266458495966696,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:140]
+- `snippet` (property) component `snippet [property]` (`fa964828-2287-5adb-9d51-5b6420607596`) lines 141-141 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:141]
+  - Signature: ``"snippet": "## Overview The `crates/ghook/schemas` module defines the strict JSON contracts for ghook’s external diagnostic and queueing surface",``
+  - Purpose: Indexed property `snippet` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:141]
+- `source_path` (property) component `source_path [property]` (`a1a559ba-c664-5a18-9203-1c283cf23948`) lines 142-142 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:142]
+  - Signature: `"source_path": "code/modules/crates/ghook/schemas.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:142]
+- `sources` (property) component `sources [property]` (`2a56c676-34c1-5afc-b0a9-88c3da278cd8`) lines 143-146 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:143-146]
+  - Signature: `"sources": [`
+  - Purpose: Indexed property `sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:143-146]
+- `title` (property) component `title [property]` (`48b4d919-a820-5f6a-94fd-c03c6a7911bf`) lines 147-147 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:147]
+  - Signature: `"title": "crates/ghook/schemas",`
+  - Purpose: Indexed property `title` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:147]
+- `wiki_page` (property) component `wiki_page [property]` (`677cbbf8-b463-534a-9048-4d36a7389acf`) lines 148-148 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:148]
+  - Signature: `"wiki_page": "code/modules/crates/ghook/schemas.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:148]
+- `explanations` (property) component `explanations [property]` (`e8126ebf-d201-5355-98b1-9b27fd217b01`) lines 151-162 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:151-162]
+  - Signature: `"explanations": [`
+  - Purpose: Indexed property `explanations` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:151-162]
+- `rank` (property) component `rank [property]` (`f0b729f6-929b-5403-a03f-c0832d69fc3b`) lines 153-153 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:153]
+  - Signature: `"rank": 7,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:153]
+- `score` (property) component `score [property]` (`402e9f42-9094-567f-a418-8dee5307f33a`) lines 154-154 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:154]
+  - Signature: `"score": 0.014925373134328358,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:154]
+- `source` (property) component `source [property]` (`6ad93cf9-e0ed-52df-bb50-0344a18843bc`) lines 155-155 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:155]
+  - Signature: `"source": "bm25"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:155]
+- `rank` (property) component `rank [property]` (`26eefbaf-b214-584d-a509-07a92788103e`) lines 158-158 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:158]
+  - Signature: `"rank": 1,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:158]
+- `score` (property) component `score [property]` (`024a643b-8786-5824-8a66-446c70874b7b`) lines 159-159 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:159]
+  - Signature: `"score": 0.01639344262295082,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:159]
+- `source` (property) component `source [property]` (`2c23b290-0a5e-51a2-a8f6-2ed35fdd63cb`) lines 160-160 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:160]
+  - Signature: `"source": "semantic"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:160]
+- `fusion_key` (property) component `fusion_key [property]` (`bb2aa637-fd6f-52d6-85d9-dc75cf39907e`) lines 163-163 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:163]
+  - Signature: `"fusion_key": "project:3bf57fe7-2a0c-4074-8912-a83d9cd4df01:code/files/crates/ghook/src/envelope.rs.md",`
+  - Purpose: Indexed property `fusion_key` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:163]
+- `result_type` (property) component `result_type [property]` (`5b390f1e-b047-5fed-9b2c-b6cff814e6c5`) lines 164-164 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:164]
+  - Signature: `"result_type": "code",`
+  - Purpose: Indexed property `result_type` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:164]
+- `score` (property) component `score [property]` (`9e1f6f7c-f33d-5756-bf84-c1c077bfff6b`) lines 165-165 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:165]
+  - Signature: `"score": 0.03131881575727918,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:165]
+- `snippet` (property) component `snippet [property]` (`d69fadb6-0108-5c51-b660-6b569a98472a`) lines 166-166 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:166]
+  - Signature: `"snippet": "--- title: crates/ghook/src/envelope.rs type: code_file provenance: - file: crates/ghook/src/envelope.rs ranges: - 24-32 - 34-52 -",`
+  - Purpose: Indexed property `snippet` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:166]
+- `source_path` (property) component `source_path [property]` (`89029654-b0bf-5458-b622-d6f6e1a75d62`) lines 167-167 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:167]
+  - Signature: `"source_path": "code/files/crates/ghook/src/envelope.rs.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:167]
+- `sources` (property) component `sources [property]` (`3e5a3004-5d8d-582e-afe4-d2b38da20cda`) lines 168-171 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:168-171]
+  - Signature: `"sources": [`
+  - Purpose: Indexed property `sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:168-171]
+- `title` (property) component `title [property]` (`19cd6fc9-5877-5c6c-8938-c62f5c2123b3`) lines 172-172 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:172]
+  - Signature: `"title": "crates/ghook/src/envelope.rs",`
+  - Purpose: Indexed property `title` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:172]
+- `wiki_page` (property) component `wiki_page [property]` (`9c5c765c-eb4f-5e3b-970c-3b2b3c3568a2`) lines 173-173 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:173]
+  - Signature: `"wiki_page": "code/files/crates/ghook/src/envelope.rs.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:173]
+- `explanations` (property) component `explanations [property]` (`e2c65738-707e-5886-aa6a-0f47f602ebef`) lines 176-187 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:176-187]
+  - Signature: `"explanations": [`
+  - Purpose: Indexed property `explanations` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:176-187]
+- `rank` (property) component `rank [property]` (`9ca0b16c-ede3-52e6-bf85-63fac038c5f8`) lines 178-178 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:178]
+  - Signature: `"rank": 5,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:178]
+- `score` (property) component `score [property]` (`7e80fa0c-d415-5a91-b1b6-69685b9cba64`) lines 179-179 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:179]
+  - Signature: `"score": 0.015384615384615385,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:179]
+- `source` (property) component `source [property]` (`b6e3ee38-5cc8-535a-a235-3597ee4b2c0e`) lines 180-180 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:180]
+  - Signature: `"source": "bm25"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:180]
+- `rank` (property) component `rank [property]` (`48492efd-bfc5-5979-80f6-222c77421cc7`) lines 183-183 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:183]
+  - Signature: `"rank": 4,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:183]
+- `score` (property) component `score [property]` (`0953476e-8dd9-5899-a5c1-93a081f08294`) lines 184-184 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:184]
+  - Signature: `"score": 0.015625,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:184]
+- `source` (property) component `source [property]` (`4b6b7130-21a0-5020-a37a-09f0d852ab73`) lines 185-185 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:185]
+  - Signature: `"source": "semantic"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:185]
+- `fusion_key` (property) component `fusion_key [property]` (`8c92e421-cf76-523b-be19-c21c8d69c25c`) lines 188-188 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:188]
+  - Signature: `"fusion_key": "project:3bf57fe7-2a0c-4074-8912-a83d9cd4df01:code/modules/crates/ghook.md",`
+  - Purpose: Indexed property `fusion_key` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:188]
+- `result_type` (property) component `result_type [property]` (`f0c2785c-ff78-587f-ae0c-f1e9a5d02acd`) lines 189-189 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:189]
+  - Signature: `"result_type": "wiki",`
+  - Purpose: Indexed property `result_type` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:189]
+- `score` (property) component `score [property]` (`e099dd07-413a-5f8e-8c3c-ac2cd847b91d`) lines 190-190 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:190]
+  - Signature: `"score": 0.031009615384615385,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:190]
+- `snippet` (property) component `snippet [property]` (`7c663418-bb43-509f-98a5-a204b12e0022`) lines 191-191 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:191]
+  - Signature: ``"snippet": "## Child Modules - [[code/modules/crates/ghook/schemas|crates/ghook/schemas]] - The `crates/ghook/schemas` module defines the strict JSON contracts for ghook’s e",``
+  - Purpose: Indexed property `snippet` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:191]
+- `source_path` (property) component `source_path [property]` (`7f3e2575-fdc4-5c57-9138-22dbd1d6f3a7`) lines 192-192 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:192]
+  - Signature: `"source_path": "code/modules/crates/ghook.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:192]
+- `sources` (property) component `sources [property]` (`12cf16f5-f6eb-58b2-a79f-db7bbddf428c`) lines 193-196 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:193-196]
+  - Signature: `"sources": [`
+  - Purpose: Indexed property `sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:193-196]
+- `title` (property) component `title [property]` (`81c96ea1-1b64-5633-9d58-eb5bcd64362c`) lines 197-197 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:197]
+  - Signature: `"title": "crates/ghook",`
+  - Purpose: Indexed property `title` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:197]
+- `wiki_page` (property) component `wiki_page [property]` (`8755f521-2b79-58b0-8eec-f9a52ad211b5`) lines 198-198 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:198]
+  - Signature: `"wiki_page": "code/modules/crates/ghook.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:198]
+- `explanations` (property) component `explanations [property]` (`36419bb1-39a7-5060-9a1a-4a73fd037376`) lines 201-212 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:201-212]
+  - Signature: `"explanations": [`
+  - Purpose: Indexed property `explanations` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:201-212]
+- `rank` (property) component `rank [property]` (`21b9299f-1579-5fcd-a56d-7ad5d5782263`) lines 203-203 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:203]
+  - Signature: `"rank": 3,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:203]
+- `score` (property) component `score [property]` (`9ce49de4-9aab-5eed-b408-8bf0fff31daa`) lines 204-204 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:204]
+  - Signature: `"score": 0.015873015873015872,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:204]
+- `source` (property) component `source [property]` (`d2714c7b-8038-5bb3-a908-e3e2e0648fdf`) lines 205-205 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:205]
+  - Signature: `"source": "bm25"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:205]
+- `rank` (property) component `rank [property]` (`571e66c6-a3e1-573f-af9e-760df9f2735f`) lines 208-208 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:208]
+  - Signature: `"rank": 9,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:208]
+- `score` (property) component `score [property]` (`4783ed68-b5d3-54d0-8153-c3d7fe33ab0e`) lines 209-209 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:209]
+  - Signature: `"score": 0.014492753623188406,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:209]
+- `source` (property) component `source [property]` (`1693f714-adaf-537c-9db0-f1e0a140f938`) lines 210-210 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:210]
+  - Signature: `"source": "semantic"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:210]
+- `fusion_key` (property) component `fusion_key [property]` (`69e028d6-564d-58c8-9732-7f1dff257163`) lines 213-213 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:213]
+  - Signature: `"fusion_key": "project:3bf57fe7-2a0c-4074-8912-a83d9cd4df01:code/modules/crates/ghook/src.md",`
+  - Purpose: Indexed property `fusion_key` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:213]
+- `result_type` (property) component `result_type [property]` (`6ce570dd-dc72-58ad-87d5-3ad80a3d5c9c`) lines 214-214 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:214]
+  - Signature: `"result_type": "wiki",`
+  - Purpose: Indexed property `result_type` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:214]
+- `score` (property) component `score [property]` (`3c712b42-67f9-5319-ab2c-cc50f5d72623`) lines 215-215 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:215]
+  - Signature: `"score": 0.03036576949620428,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:215]
+- `snippet` (property) component `snippet [property]` (`77232aac-eb27-5e8a-b92b-f4940cd23aff`) lines 216-216 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:216]
+  - Signature: ``"snippet": "## Files - [[code/files/crates/ghook/src/cli_config.rs|crates/ghook/src/cli_config.rs]] - This file defines the compile-time `CliConfig` registry for G",``
+  - Purpose: Indexed property `snippet` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:216]
+- `source_path` (property) component `source_path [property]` (`1b8f5eeb-3d03-508c-a82b-00efcdfc9387`) lines 217-217 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:217]
+  - Signature: `"source_path": "code/modules/crates/ghook/src.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:217]
+- `sources` (property) component `sources [property]` (`020c68c6-b93a-5f00-a619-6fd59f1ab593`) lines 218-221 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:218-221]
+  - Signature: `"sources": [`
+  - Purpose: Indexed property `sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:218-221]
+- `title` (property) component `title [property]` (`08e08dd1-5711-56b8-8e7e-1cac71ba5fac`) lines 222-222 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:222]
+  - Signature: `"title": "crates/ghook/src",`
+  - Purpose: Indexed property `title` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:222]
+- `wiki_page` (property) component `wiki_page [property]` (`2c38d292-2ce3-5308-a7c9-8a826f75904d`) lines 223-223 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:223]
+  - Signature: `"wiki_page": "code/modules/crates/ghook/src.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:223]
+- `explanations` (property) component `explanations [property]` (`dfd8ed76-a50a-5178-9987-ca751bee6f10`) lines 226-232 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:226-232]
+  - Signature: `"explanations": [`
+  - Purpose: Indexed property `explanations` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:226-232]
+- `rank` (property) component `rank [property]` (`d1529614-13a6-5455-96be-92b9b029da64`) lines 228-228 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:228]
+  - Signature: `"rank": 6,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:228]
+- `score` (property) component `score [property]` (`4cfa08fc-e854-56fc-b37b-84c04d396826`) lines 229-229 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:229]
+  - Signature: `"score": 0.015151515151515152,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:229]
+- `source` (property) component `source [property]` (`9c9417bc-cc00-5568-a76c-118b60f67058`) lines 230-230 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:230]
+  - Signature: `"source": "semantic"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:230]
+- `fusion_key` (property) component `fusion_key [property]` (`8cc84550-5868-5bde-85a4-caeac7e71ba6`) lines 233-233 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:233]
+  - Signature: `"fusion_key": "project:3bf57fe7-2a0c-4074-8912-a83d9cd4df01:code/files/crates/ghook/src/diagnose.rs.md",`
+  - Purpose: Indexed property `fusion_key` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:233]
+- `result_type` (property) component `result_type [property]` (`e7f96a17-68b8-5060-9da9-ba68480fb1af`) lines 234-234 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:234]
+  - Signature: `"result_type": "code",`
+  - Purpose: Indexed property `result_type` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:234]
+- `score` (property) component `score [property]` (`5f1ea992-bd32-5abc-8e13-3e1f223cd043`) lines 235-235 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:235]
+  - Signature: `"score": 0.015151515151515152,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:235]
+- `snippet` (property) component `snippet [property]` (`2849a631-71fc-55fc-888b-4e2e93f35b2e`) lines 236-236 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:236]
+  - Signature: `"snippet": "## Purpose",`
+  - Purpose: Indexed property `snippet` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:236]
+- `source_path` (property) component `source_path [property]` (`7ea97db5-0a2d-5ff3-a80a-099a27a0bd69`) lines 237-237 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:237]
+  - Signature: `"source_path": "code/files/crates/ghook/src/diagnose.rs.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:237]
+- `sources` (property) component `sources [property]` (`3311646a-22b3-5add-98a6-bc3134a7a030`) lines 238-240 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:238-240]
+  - Signature: `"sources": [`
+  - Purpose: Indexed property `sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:238-240]
+- `title` (property) component `title [property]` (`a5bad079-05ab-578a-8e0e-a6d3675f957f`) lines 241-241 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:241]
+  - Signature: `"title": "crates/ghook/src/diagnose.rs",`
+  - Purpose: Indexed property `title` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:241]
+- `wiki_page` (property) component `wiki_page [property]` (`07b418f6-7858-5942-b3b8-213c55d53743`) lines 242-242 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:242]
+  - Signature: `"wiki_page": "code/files/crates/ghook/src/diagnose.rs.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:242]
+- `explanations` (property) component `explanations [property]` (`aa63f5df-1e91-5a7b-bbff-9db7498ba42d`) lines 245-251 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:245-251]
+  - Signature: `"explanations": [`
+  - Purpose: Indexed property `explanations` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:245-251]
+- `rank` (property) component `rank [property]` (`199a8cd6-5343-5f2c-9341-19fa0b35aa31`) lines 247-247 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:247]
+  - Signature: `"rank": 7,`
+  - Purpose: Indexed property `rank` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:247]
+- `score` (property) component `score [property]` (`8bee27b0-02c1-511a-b165-7bac8c99521d`) lines 248-248 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:248]
+  - Signature: `"score": 0.014925373134328358,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:248]
+- `source` (property) component `source [property]` (`752bc917-ffbf-579a-8518-434627891f51`) lines 249-249 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:249]
+  - Signature: `"source": "semantic"`
+  - Purpose: Indexed property `source` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:249]
+- `fusion_key` (property) component `fusion_key [property]` (`a588a634-8866-5edf-9d9c-430132d45f3c`) lines 252-252 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:252]
+  - Signature: `"fusion_key": "project:3bf57fe7-2a0c-4074-8912-a83d9cd4df01:code/_ownership.md",`
+  - Purpose: Indexed property `fusion_key` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:252]
+- `result_type` (property) component `result_type [property]` (`3d2b61fd-4a81-50a0-b605-81e95e824339`) lines 253-253 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:253]
+  - Signature: `"result_type": "wiki",`
+  - Purpose: Indexed property `result_type` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:253]
+- `score` (property) component `score [property]` (`5b3bcf64-aaae-52c7-8e70-8b814595fb25`) lines 254-254 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:254]
+  - Signature: `"score": 0.014925373134328358,`
+  - Purpose: Indexed property `score` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:254]
+- `snippet` (property) component `snippet [property]` (`55c3ed06-b0b0-5b1b-8d1d-8bec3ba5457a`) lines 255-255 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:255]
+  - Signature: `"snippet": "### [[code/files/crates/ghook/schemas/inbox-envelope.v1.schema.json|crates/ghook/schemas/inbox-envelope.v1.schema.json]]",`
+  - Purpose: Indexed property `snippet` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:255]
+- `source_path` (property) component `source_path [property]` (`00411a01-ce6e-5ebd-a1e5-4c0d0c894c4a`) lines 256-256 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:256]
+  - Signature: `"source_path": "code/_ownership.md",`
+  - Purpose: Indexed property `source_path` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:256]
+- `sources` (property) component `sources [property]` (`151e047c-f72b-55cb-8397-0385d95edfd2`) lines 257-259 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:257-259]
+  - Signature: `"sources": [`
+  - Purpose: Indexed property `sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:257-259]
+- `title` (property) component `title [property]` (`e8e76253-c9bd-56ae-a9d9-1e1020703abd`) lines 260-260 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:260]
+  - Signature: `"title": "Code Ownership",`
+  - Purpose: Indexed property `title` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:260]
+- `wiki_page` (property) component `wiki_page [property]` (`03cca98b-fa53-5d23-afae-dd651138649c`) lines 261-261 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:261]
+  - Signature: `"wiki_page": "code/_ownership.md"`
+  - Purpose: Indexed property `wiki_page` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:261]
+- `prompt_token_budget` (property) component `prompt_token_budget [property]` (`ceafbd4a-2dc6-5ce6-abe8-b4ee744f5ed0`) lines 264-264 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:264]
+  - Signature: `"prompt_token_budget": 12000,`
+  - Purpose: Indexed property `prompt_token_budget` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:264]
+- `prompt_tokens_estimated` (property) component `prompt_tokens_estimated [property]` (`d41fd250-bafe-54c4-830c-8fe9581bfcb7`) lines 265-265 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:265]
+  - Signature: `"prompt_tokens_estimated": 4296,`
+  - Purpose: Indexed property `prompt_tokens_estimated` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:265]
+- `query` (property) component `query [property]` (`a0a2d9a1-32e9-5f76-97a2-8165c9a14609`) lines 266-266 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:266]
+  - Signature: `"query": "What happens when the ghook inbox enqueue fails?",`
+  - Purpose: Indexed property `query` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:266]
+- `scope` (property) component `scope [property]` (`91fde974-cd9a-5233-9678-385942db85a1`) lines 267-270 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:267-270]
+  - Signature: `"scope": {`
+  - Purpose: Indexed property `scope` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:267-270]
+- `id` (property) component `id [property]` (`90062db8-351f-5116-80d6-e2511683ee42`) lines 268-268 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:268]
+  - Signature: `"id": "3bf57fe7-2a0c-4074-8912-a83d9cd4df01",`
+  - Purpose: Indexed property `id` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:268]
+- `kind` (property) component `kind [property]` (`92e45ed3-ce48-50d7-97a9-384966b01edb`) lines 269-269 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:269]
+  - Signature: `"kind": "project"`
+  - Purpose: Indexed property `kind` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:269]
+- `sources` (property) component `sources [property]` (`18d820d8-5fc0-58f7-bb50-6ef3475504c5`) lines 271-282 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:271-282]
+  - Signature: `"sources": [`
+  - Purpose: Indexed property `sources` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:271-282]
+- `status` (property) component `status [property]` (`e810145c-68c7-5da9-b69d-c2164c0117c2`) lines 283-283 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:283]
+  - Signature: `"status": "answered",`
+  - Purpose: Indexed property `status` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:283]
+- `synthesis` (property) component `synthesis [property]` (`ce4cf20f-4d86-57df-a76c-a811875f623a`) lines 284-292 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:284-292]
+  - Signature: `"synthesis": {`
+  - Purpose: Indexed property `synthesis` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:284-292]
+- `answer` (property) component `answer [property]` (`603cc019-ffaa-578d-b3d7-d97eaad6c6f3`) lines 285-285 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:285]
+  - Signature: `"answer": "On failure, the inbox file is either left or quarantined for later replay by the daemon drain worker [crates/ghook/src/transport.rs:31-36].",`
+  - Purpose: Indexed property `answer` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:285]
+- `citation_check` (property) component `citation_check [property]` (`1a8dc36a-ee1d-52ab-b7bf-52deae49469d`) lines 286-290 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:286-290]
+  - Signature: `"citation_check": {`
+  - Purpose: Indexed property `citation_check` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:286-290]
+- `checked_claims` (property) component `checked_claims [property]` (`ef5c43a9-eeb0-5620-ae69-72403ba204bb`) lines 287-287 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:287]
+  - Signature: `"checked_claims": 1,`
+  - Purpose: Indexed property `checked_claims` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:287]
+- `status` (property) component `status [property]` (`b13a2fe7-3827-5182-b75a-83df3a30056a`) lines 288-288 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:288]
+  - Signature: `"status": "supported",`
+  - Purpose: Indexed property `status` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:288]
+- `unsupported_claims` (property) component `unsupported_claims [property]` (`b510748c-9bc1-53b7-98b3-796c5ab6cddc`) lines 289-289 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:289]
+  - Signature: `"unsupported_claims": []`
+  - Purpose: Indexed property `unsupported_claims` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:289]
+- `model` (property) component `model [property]` (`ce55c862-a792-5b1e-8da9-85c911561f98`) lines 291-291 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:291]
+  - Signature: `"model": "google/gemma-4-26b-a4b-qat"`
+  - Purpose: Indexed property `model` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:291]
+- `truncated` (property) component `truncated [property]` (`032d834c-089a-536a-a0e1-ed4ad3ec3a90`) lines 293-293 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:293]
+  - Signature: `"truncated": false,`
+  - Purpose: Indexed property `truncated` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:293]
+- `truncated_components` (property) component `truncated_components [property]` (`4bf364cd-5cf0-52df-be7a-46007a206a48`) lines 294-294 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:294]
+  - Signature: `"truncated_components": [],`
+  - Purpose: Indexed property `truncated_components` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:294]
+- `warnings` (property) component `warnings [property]` (`2462a286-6650-5665-81b7-350279830304`) lines 295-295 [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:295]
+  - Signature: `"warnings": []`
+  - Purpose: Indexed property `warnings` in `docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json`. [docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:295]
+

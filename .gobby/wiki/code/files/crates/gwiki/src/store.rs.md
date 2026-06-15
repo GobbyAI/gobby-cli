@@ -4,57 +4,13 @@ type: code_file
 provenance:
 - file: crates/gwiki/src/store.rs
   ranges:
-  - 15-21
-  - 24-30
-  - 33-40
-  - 43-49
-  - 52-57
-  - 60-66
-  - 69-73
-  - 76-78
-  - 80-112
-  - 115-121
-  - 123-134
-  - '136'
-  - 138-148
-  - 150-159
-  - 168-180
-  - 182-233
-  - 236-240
-  - 242-246
-  - 249-255
-  - 257-264
-  - 266-293
-  - 297-313
-  - 315-371
-  - 373-469
-  - 471-540
-  - 542-586
-  - 588-633
-  - 635-642
-  - 644-669
-  - 672-674
-  - 676-681
-  - 683-688
-  - 690-706
-  - 708-710
-  - 712-718
-  - 720-725
-  - 727-739
-  - 741-744
-  - 746-765
-  - 767-775
-  - 777-785
-  - 787-794
-  - 796-803
-  - 805-809
-  - 811-815
-  - 817-829
-  - 836-843
-  - 846-867
-  - 870-875
-  - 878-922
-  - 925-939
+  - 15-17
+  - 19-21
+  - 32-39
+  - 42-63
+  - 66-71
+  - 74-118
+  - 121-135
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -66,216 +22,34 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-This file defines the core data model and storage layer for gwiki, covering wiki documents, chunks, links, sources, ingestion records, and scope metadata. It ties together an in-memory `MemoryWikiStore` and a PostgreSQL-backed `PostgresWikiStore` through shared store operations: validating paths, upserting and replacing derived rows, recording ingestions and hashes, normalizing scoped IDs and paths, and mapping document and ingestion kinds to storage-friendly strings, with `StoreError` used to surface validation and database failures.
-[crates/gwiki/src/store.rs:15-21]
-[crates/gwiki/src/store.rs:24-30]
-[crates/gwiki/src/store.rs:33-40]
-[crates/gwiki/src/store.rs:43-49]
-[crates/gwiki/src/store.rs:52-57]
+This module is the store entry point for `gwiki`: it wires together the `helpers`, `memory`, `postgres`, and `types` submodules, re-exports the main store APIs and data types, and exposes small wrappers for reading the configured in-memory index limit and classifying link targets. Its tests verify the helper behavior for link classification and scoped ID capping, and the memory store’s validation rules for chunk/link path mismatches and source indexing by `document_path`.
+[crates/gwiki/src/store.rs:15-17]
+[crates/gwiki/src/store.rs:19-21]
+[crates/gwiki/src/store.rs:32-39]
+[crates/gwiki/src/store.rs:42-63]
+[crates/gwiki/src/store.rs:66-71]
 
 ## API Symbols
 
-- `WikiDocumentKind` (type) component `WikiDocumentKind [type]` (`49f38590-ef48-55e1-af4a-3987297716b2`) lines 15-21 [crates/gwiki/src/store.rs:15-21]
-  - Signature: `pub enum WikiDocumentKind {`
-  - Purpose: Indexed type `WikiDocumentKind` in `crates/gwiki/src/store.rs`. [crates/gwiki/src/store.rs:15-21]
-- `WikiDocument` (class) component `WikiDocument [class]` (`603dabc4-c727-56b3-8fe0-9ae3dfa9c9fe`) lines 24-30 [crates/gwiki/src/store.rs:24-30]
-  - Signature: `pub struct WikiDocument {`
-  - Purpose: WikiDocument is a public Rust struct that encapsulates a wiki document with its file path, document kind classification, optional title, content hash, and text body. [crates/gwiki/src/store.rs:24-30]
-- `WikiChunk` (class) component `WikiChunk [class]` (`093b41cf-99c7-506e-bece-9f9435eceeb4`) lines 33-40 [crates/gwiki/src/store.rs:33-40]
-  - Signature: `pub struct WikiChunk {`
-  - Purpose: WikiChunk represents a byte-delimited segment of wiki file content with positional metadata (file path, byte offsets, chunk index) and an optional section heading. [crates/gwiki/src/store.rs:33-40]
-- `WikiLink` (class) component `WikiLink [class]` (`9321b59e-0c6a-53af-b1a4-ee83b0f2b813`) lines 43-49 [crates/gwiki/src/store.rs:43-49]
-  - Signature: `pub struct WikiLink {`
-  - Purpose: WikiLink is a Rust struct that represents a parsed wiki-style hyperlink with its source file path, target reference, optional display alias, and byte offset boundaries within the source document. [crates/gwiki/src/store.rs:43-49]
-- `WikiSource` (class) component `WikiSource [class]` (`6a9e158c-1b96-52ec-9bae-d740a0415f57`) lines 52-57 [crates/gwiki/src/store.rs:52-57]
-  - Signature: `pub struct WikiSource {`
-  - Purpose: WikiSource is a struct that stores metadata for a wiki document source, including its filesystem path, document path, document kind classification, and content hash. [crates/gwiki/src/store.rs:52-57]
-- `WikiIngestionEvent` (type) component `WikiIngestionEvent [type]` (`35b0deb9-c4c8-5cbc-ad9a-a84d8bd6e53f`) lines 60-66 [crates/gwiki/src/store.rs:60-66]
-  - Signature: `pub enum WikiIngestionEvent {`
-  - Purpose: Indexed type `WikiIngestionEvent` in `crates/gwiki/src/store.rs`. [crates/gwiki/src/store.rs:60-66]
-- `WikiIngestion` (class) component `WikiIngestion [class]` (`7ced74b9-88ff-59d9-904f-0bee8e3a6272`) lines 69-73 [crates/gwiki/src/store.rs:69-73]
-  - Signature: `pub struct WikiIngestion {`
-  - Purpose: WikiIngestion encapsulates a wiki content ingestion event, associating a file path, event type, and optional content hash for change detection. [crates/gwiki/src/store.rs:69-73]
-- `WikiStoreScope` (class) component `WikiStoreScope [class]` (`7cb6d937-577b-5da8-bef2-cec47b21aec0`) lines 76-78 [crates/gwiki/src/store.rs:76-78]
-  - Signature: `pub struct WikiStoreScope {`
-  - Purpose: WikiStoreScope is a newtype wrapper struct that encapsulates a WikiScope instance for contextual wiki store scoping. [crates/gwiki/src/store.rs:76-78]
-- `WikiStoreScope` (class) component `WikiStoreScope [class]` (`2f4c6d2e-68bb-5f12-a1e9-4073126f9de7`) lines 80-112 [crates/gwiki/src/store.rs:80-112]
-  - Signature: `impl WikiStoreScope {`
-  - Purpose: `WikiStoreScope` provides factory constructors and accessor methods for creating and querying wiki scopes that can be bound to either a project or a topic. [crates/gwiki/src/store.rs:80-112]
-- `WikiStoreScope.project` (method) component `WikiStoreScope.project [method]` (`5e845bb4-557b-5c2b-aafa-ece5f0626e68`) lines 81-87 [crates/gwiki/src/store.rs:81-87]
-  - Signature: `pub fn project(project_id: impl Into<String>) -> Self {`
-  - Purpose: Constructs and returns a `Self` instance with scope initialized to `WikiScope::Project` containing the provided project_id. [crates/gwiki/src/store.rs:81-87]
-- `WikiStoreScope.topic` (method) component `WikiStoreScope.topic [method]` (`04450893-5f96-517c-9b28-467197de83d8`) lines 89-95 [crates/gwiki/src/store.rs:89-95]
-  - Signature: `pub fn topic(topic_name: impl Into<String>) -> Self {`
-  - Purpose: Creates a `Self` instance with a `WikiScope::Topic` variant containing the provided topic name converted to `String`. [crates/gwiki/src/store.rs:89-95]
-- `WikiStoreScope.scope_kind` (method) component `WikiStoreScope.scope_kind [method]` (`cb46d713-b344-5ec2-ad7a-66738df4fdb3`) lines 97-99 [crates/gwiki/src/store.rs:97-99]
-  - Signature: `pub fn scope_kind(&self) -> &str {`
-  - Purpose: # Summary
-
-This method returns a borrowed string reference representing the kind identifier of the contained scope by delegating to its `kind()` method. [crates/gwiki/src/store.rs:97-99]
-- `WikiStoreScope.scope_id` (method) component `WikiStoreScope.scope_id [method]` (`d973900d-6fd1-554f-ab98-cd93f1d1a123`) lines 101-103 [crates/gwiki/src/store.rs:101-103]
-  - Signature: `pub fn scope_id(&self) -> &str {`
-  - Purpose: Returns a borrowed string slice containing the identity of the encapsulated scope object. [crates/gwiki/src/store.rs:101-103]
-- `WikiStoreScope.project_id` (method) component `WikiStoreScope.project_id [method]` (`292e5717-d026-5aa9-906d-3d2e97975ff1`) lines 105-107 [crates/gwiki/src/store.rs:105-107]
-  - Signature: `fn project_id(&self) -> Option<String> {`
-  - Purpose: This method returns an optional owned `String` by retrieving the project ID from the internal scope and converting it to owned via `ToOwned::to_owned()`. [crates/gwiki/src/store.rs:105-107]
-- `WikiStoreScope.topic_name` (method) component `WikiStoreScope.topic_name [method]` (`84f83c5e-4382-594d-902b-c81df5b14664`) lines 109-111 [crates/gwiki/src/store.rs:109-111]
-  - Signature: `fn topic_name(&self) -> Option<String> {`
-  - Purpose: This method retrieves the optional topic name from the scope and converts the borrowed reference to an owned `String` using `ToOwned::to_owned`. [crates/gwiki/src/store.rs:109-111]
-- `StoreError` (type) component `StoreError [type]` (`a56f6531-447d-5f24-9472-bc27361abbc3`) lines 115-121 [crates/gwiki/src/store.rs:115-121]
-  - Signature: `pub enum StoreError {`
-  - Purpose: Indexed type `StoreError` in `crates/gwiki/src/store.rs`. [crates/gwiki/src/store.rs:115-121]
-- `StoreError` (class) component `StoreError [class]` (`8f34bb54-e31f-5969-a317-044c52ce990a`) lines 123-134 [crates/gwiki/src/store.rs:123-134]
-  - Signature: `impl fmt::Display for StoreError {`
-  - Purpose: Implements the `fmt::Display` trait for `StoreError` to format two error variants—`InvalidData` and `Postgres`—as human-readable error messages. [crates/gwiki/src/store.rs:123-134]
-- `StoreError.fmt` (method) component `StoreError.fmt [method]` (`a9504022-73f9-513d-88fd-6ef99b4d82d3`) lines 124-133 [crates/gwiki/src/store.rs:124-133]
-  - Signature: `fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {`
-  - Purpose: Implements the `Display` trait's `fmt` method to serialize `StoreError` enum variants into human-readable formatted error messages via pattern matching. [crates/gwiki/src/store.rs:124-133]
-- `StoreError` (class) component `StoreError [class]` (`09e9fe7f-6481-5261-b79b-b15ab25ffc2e`) lines 136-136 [crates/gwiki/src/store.rs:136]
-  - Signature: `impl std::error::Error for StoreError {}`
-  - Purpose: StoreError is a custom error type that implements Rust's `std::error::Error` trait with default trait method implementations. [crates/gwiki/src/store.rs:136]
-- `StoreError` (class) component `StoreError [class]` (`2d893467-f1c7-55a9-bc15-1e1f5aa849d3`) lines 138-148 [crates/gwiki/src/store.rs:138-148]
-  - Signature: `impl From<postgres::Error> for StoreError {`
-  - Purpose: Implements automatic conversion from `postgres::Error` to `StoreError` by extracting the detailed database error message from the source `DbError` chain, or falling back to the generic error string. [crates/gwiki/src/store.rs:138-148]
-- `StoreError.from` (method) component `StoreError.from [method]` (`f19d51ab-99d7-5e97-b568-487e3217e4e2`) lines 139-147 [crates/gwiki/src/store.rs:139-147]
-  - Signature: `fn from(error: postgres::Error) -> Self {`
-  - Purpose: Implements `From<postgres::Error>` to convert PostgreSQL errors to `StoreError::Postgres`, preferentially extracting the wrapped `DbError` message from the error chain if available. [crates/gwiki/src/store.rs:139-147]
-- `WikiIndexStore` (type) component `WikiIndexStore [type]` (`35d10b4c-0496-56b7-99a2-7cbc5e7419c1`) lines 150-159 [crates/gwiki/src/store.rs:150-159]
-  - Signature: `pub trait WikiIndexStore {`
-  - Purpose: Indexed type `WikiIndexStore` in `crates/gwiki/src/store.rs`. [crates/gwiki/src/store.rs:150-159]
-- `MemoryWikiStore` (class) component `MemoryWikiStore [class]` (`3c28f059-bb0d-5c72-afea-39d96d572848`) lines 168-180 [crates/gwiki/src/store.rs:168-180]
-  - Signature: `pub struct MemoryWikiStore {`
-  - Purpose: An in-memory store that maintains path-indexed BTreeMaps of wiki documents, their chunks, links, sources, and file hashes, with ingestion records and mutation counters. [crates/gwiki/src/store.rs:168-180]
-- `MemoryWikiStore` (class) component `MemoryWikiStore [class]` (`83578ce9-1219-555b-8d73-2a802ec36028`) lines 182-233 [crates/gwiki/src/store.rs:182-233]
-  - Signature: `impl WikiIndexStore for MemoryWikiStore {`
-  - Purpose: **MemoryWikiStore is an in-memory implementation of the WikiIndexStore trait that maintains indexed wiki documents, chunks, links, sources, and file hashes with path-validated upsert and cascading deletion operations.** [crates/gwiki/src/store.rs:182-233]
-- `MemoryWikiStore.indexed_hashes` (method) component `MemoryWikiStore.indexed_hashes [method]` (`5d011d60-89f1-5ad5-8c31-45d1c174d0d8`) lines 183-185 [crates/gwiki/src/store.rs:183-185]
-  - Signature: `fn indexed_hashes(&mut self) -> Result<BTreeMap<PathBuf, String>, StoreError> {`
-  - Purpose: Returns a cloned BTreeMap associating file paths to their hash strings, wrapped in a Result type. [crates/gwiki/src/store.rs:183-185]
-- `MemoryWikiStore.upsert_document` (method) component `MemoryWikiStore.upsert_document [method]` (`8cfb61d5-20ca-5390-a506-7a7bbf369b64`) lines 187-191 [crates/gwiki/src/store.rs:187-191]
-  - Signature: `fn upsert_document(&mut self, document: WikiDocument) -> Result<(), StoreError> {`
-  - Purpose: Increments the upsert counter and inserts the provided WikiDocument into the documents map using its path as the key. [crates/gwiki/src/store.rs:187-191]
-- `MemoryWikiStore.replace_chunks` (method) component `MemoryWikiStore.replace_chunks [method]` (`a4b3964c-ebe9-5da4-a0af-41cdd83ac5f7`) lines 193-198 [crates/gwiki/src/store.rs:193-198]
-  - Signature: `fn replace_chunks(&mut self, path: &Path, chunks: Vec<WikiChunk>) -> Result<(), StoreError> {`
-  - Purpose: Validates chunk paths and inserts a vector of WikiChunks into the internal chunks map for a given path, while incrementing a replacement counter. [crates/gwiki/src/store.rs:193-198]
-- `MemoryWikiStore.replace_links` (method) component `MemoryWikiStore.replace_links [method]` (`13e8b723-a3b1-5dd8-830f-138093ad24a9`) lines 200-205 [crates/gwiki/src/store.rs:200-205]
-  - Signature: `fn replace_links(&mut self, path: &Path, links: Vec<WikiLink>) -> Result<(), StoreError> {`
-  - Purpose: Validates WikiLink paths, increments a replacement counter, and inserts the provided WikiLink collection into the store indexed by the given path. [crates/gwiki/src/store.rs:200-205]
-- `MemoryWikiStore.upsert_source` (method) component `MemoryWikiStore.upsert_source [method]` (`07ba44ed-8271-5f7d-9586-e045ab1edb60`) lines 207-211 [crates/gwiki/src/store.rs:207-211]
-  - Signature: `fn upsert_source(&mut self, source: WikiSource) -> Result<(), StoreError> {`
-  - Purpose: Inserts or updates a WikiSource in the sources map indexed by document path and increments an upsert counter. [crates/gwiki/src/store.rs:207-211]
-- `MemoryWikiStore.record_ingestion` (method) component `MemoryWikiStore.record_ingestion [method]` (`4bf61a17-02dd-5c6e-90cc-aee88490b2fb`) lines 213-216 [crates/gwiki/src/store.rs:213-216]
-  - Signature: `fn record_ingestion(&mut self, ingestion: WikiIngestion) -> Result<(), StoreError> {`
-  - Purpose: Appends a WikiIngestion to an internal ingestions collection, returning `Result<(), StoreError>`. [crates/gwiki/src/store.rs:213-216]
-- `MemoryWikiStore.record_file_hash` (method) component `MemoryWikiStore.record_file_hash [method]` (`77d8c4f0-1be0-535a-b179-92a8ce4f6624`) lines 218-221 [crates/gwiki/src/store.rs:218-221]
-  - Signature: `fn record_file_hash(&mut self, path: PathBuf, content_hash: String) -> Result<(), StoreError> {`
-  - Purpose: Inserts a path-hash pair into an internal map and unconditionally returns success. [crates/gwiki/src/store.rs:218-221]
-- `MemoryWikiStore.delete_derived_rows` (method) component `MemoryWikiStore.delete_derived_rows [method]` (`b67522a2-2d97-5c0b-b384-6ace3d263e5c`) lines 223-232 [crates/gwiki/src/store.rs:223-232]
-  - Signature: `fn delete_derived_rows(&mut self, path: &Path) -> Result<(), StoreError> {`
-  - Purpose: Removes all cached derivatives (documents, chunks, links, sources, file hashes) associated with a given path from their respective internal maps and appends the path to a deleted tracking list. [crates/gwiki/src/store.rs:223-232]
-- `DocumentMeta` (class) component `DocumentMeta [class]` (`b50a0e54-2b98-5b81-b1da-ef578c3619d4`) lines 236-240 [crates/gwiki/src/store.rs:236-240]
-  - Signature: `struct DocumentMeta {`
-  - Purpose: DocumentMeta is a struct that stores document metadata comprising a unique identifier, source type classifier, and content hash for integrity verification. [crates/gwiki/src/store.rs:236-240]
-- `PostgresWikiStore` (class) component `PostgresWikiStore [class]` (`cd18b8f2-a7d0-5d22-9466-01159a81ac2c`) lines 242-246 [crates/gwiki/src/store.rs:242-246]
-  - Signature: `pub struct PostgresWikiStore<'a> {`
-  - Purpose: `PostgresWikiStore` is a lifetime-parameterized wrapper around a PostgreSQL connection that maintains a scope-bounded, path-indexed collection of wiki document metadata. [crates/gwiki/src/store.rs:242-246]
-- `new` (function) component `new [function]` (`906ba13f-15e6-5329-aff5-23fa36bedf62`) lines 249-255 [crates/gwiki/src/store.rs:249-255]
-  - Signature: `pub fn new(conn: &'a mut postgres::Client, scope: WikiStoreScope) -> Self {`
-  - Purpose: Constructs a WikiStore instance with a mutable PostgreSQL client reference, a WikiStoreScope, and an empty BTreeMap for storing documents. [crates/gwiki/src/store.rs:249-255]
-- `scope_params` (function) component `scope_params [function]` (`a58a512c-301d-5e97-9553-69c0c94ded8b`) lines 257-264 [crates/gwiki/src/store.rs:257-264]
-  - Signature: `fn scope_params(&self) -> (String, String, Option<String>, Option<String>) {`
-  - Purpose: This function returns a tuple of the scope's kind and ID as required strings, along with optional project ID and topic name. [crates/gwiki/src/store.rs:257-264]
-- `document_meta` (function) component `document_meta [function]` (`d3d9448f-c2a5-57f2-acf4-5f7097362563`) lines 266-293 [crates/gwiki/src/store.rs:266-293]
-  - Signature: `fn document_meta(&mut self, path: &Path) -> Result<DocumentMeta, StoreError> {`
-  - Purpose: Retrieves and caches `DocumentMeta` (id, source_kind, content_hash) for a given path within a scope, querying the PostgreSQL `gwiki_documents` table on cache miss. [crates/gwiki/src/store.rs:266-293]
-- `indexed_hashes` (function) component `indexed_hashes [function]` (`d6fbb3c1-841e-583d-8320-44add3d902ff`) lines 297-313 [crates/gwiki/src/store.rs:297-313]
-  - Signature: `fn indexed_hashes(&mut self) -> Result<BTreeMap<PathBuf, String>, StoreError> {`
-  - Purpose: Retrieves a sorted map of document paths to their content hashes from the database, filtered by the current scope and converted to platform-specific PathBufs. [crates/gwiki/src/store.rs:297-313]
-- `upsert_document` (function) component `upsert_document [function]` (`0a089877-1d33-5aaf-8616-19fdaed5d1b5`) lines 315-371 [crates/gwiki/src/store.rs:315-371]
-  - Signature: `fn upsert_document(&mut self, document: WikiDocument) -> Result<(), StoreError> {`
-  - Purpose: Inserts or updates a WikiDocument in the gwiki_documents table, resolving conflicts on the composite key of (scope_kind, scope_id, path) and updating modification timestamps. [crates/gwiki/src/store.rs:315-371]
-- `replace_chunks` (function) component `replace_chunks [function]` (`c067578a-9702-53b6-8d9d-aa78a4320cc0`) lines 373-469 [crates/gwiki/src/store.rs:373-469]
-  - Signature: `fn replace_chunks(&mut self, path: &Path, chunks: Vec<WikiChunk>) -> Result<(), StoreError> {`
-  - Purpose: Atomically replaces all wiki chunks for a specified document path by deleting existing records and inserting validated new chunks within a single database transaction. [crates/gwiki/src/store.rs:373-469]
-- `replace_links` (function) component `replace_links [function]` (`2ccbfb1e-bc96-59c6-93b7-0fd99a500e88`) lines 471-540 [crates/gwiki/src/store.rs:471-540]
-  - Signature: `fn replace_links(&mut self, path: &Path, links: Vec<WikiLink>) -> Result<(), StoreError> {`
-  - Purpose: Atomically replaces wiki links for a given path by deleting stale entries and upserting new links within a database transaction using conflict resolution. [crates/gwiki/src/store.rs:471-540]
-- `upsert_source` (function) component `upsert_source [function]` (`a6a99bc1-2a87-5af2-97d7-7b42b46e7fae`) lines 542-586 [crates/gwiki/src/store.rs:542-586]
-  - Signature: `fn upsert_source(&mut self, source: WikiSource) -> Result<(), StoreError> {`
-  - Purpose: Performs an upsert operation on the `gwiki_sources` table, inserting a new source record or updating the existing one on conflict of the `(scope_kind, scope_id, document_path)` unique constraint. [crates/gwiki/src/store.rs:542-586]
-- `record_ingestion` (function) component `record_ingestion [function]` (`1697a825-e4c1-5c5c-aed7-dfd0d604c0a9`) lines 588-633 [crates/gwiki/src/store.rs:588-633]
-  - Signature: `fn record_ingestion(&mut self, ingestion: WikiIngestion) -> Result<(), StoreError> {`
-  - Purpose: Upserts a wiki ingestion record into the `gwiki_ingestions` table with extracted metadata, content hash, and ingestion status, using an INSERT...ON CONFLICT DO UPDATE pattern to handle duplicate entries. [crates/gwiki/src/store.rs:588-633]
-- `record_file_hash` (function) component `record_file_hash [function]` (`af0591e1-f443-58d5-9fab-36d4af999ffa`) lines 635-642 [crates/gwiki/src/store.rs:635-642]
-  - Signature: `fn record_file_hash(`
-  - Purpose: This method is a no-op stub that defers file hash storage to PostgreSQL's `upsert_document` operation on the `gwiki_documents` table, returning `Ok(())` without performing any action. [crates/gwiki/src/store.rs:635-642]
-- `delete_derived_rows` (function) component `delete_derived_rows [function]` (`a8a463aa-3026-5b7f-a5c4-03a811e3e536`) lines 644-669 [crates/gwiki/src/store.rs:644-669]
-  - Signature: `fn delete_derived_rows(&mut self, path: &Path) -> Result<(), StoreError> {`
-  - Purpose: Cascades a transactional delete of a document and its derived data (chunks, links, sources) across four PostgreSQL tables filtered by scope and path, then evicts the document from the in-memory cache. [crates/gwiki/src/store.rs:644-669]
-- `display_path` (function) component `display_path [function]` (`4acb551d-32f8-5dd9-bbcc-3c73255985b5`) lines 672-674 [crates/gwiki/src/store.rs:672-674]
-  - Signature: `fn display_path(path: &Path) -> String {`
-  - Purpose: Converts a `Path` to a `String` with all backslashes replaced by forward slashes for cross-platform path normalization. [crates/gwiki/src/store.rs:672-674]
-- `validate_chunk_paths` (function) component `validate_chunk_paths [function]` (`6f02548c-c616-5fe7-887a-17b46b1790ad`) lines 676-681 [crates/gwiki/src/store.rs:676-681]
-  - Signature: `fn validate_chunk_paths(path: &Path, chunks: &[WikiChunk]) -> Result<(), StoreError> {`
-  - Purpose: Validates that each WikiChunk's path matches the provided reference path, returning a StoreError if any validation fails. [crates/gwiki/src/store.rs:676-681]
-- `validate_link_paths` (function) component `validate_link_paths [function]` (`379b0772-578c-531b-a882-8c56a24e829f`) lines 683-688 [crates/gwiki/src/store.rs:683-688]
-  - Signature: `fn validate_link_paths(path: &Path, links: &[WikiLink]) -> Result<(), StoreError> {`
-  - Purpose: Validates that each WikiLink's path matches the provided reference path, returning a StoreError if any validation fails. [crates/gwiki/src/store.rs:683-688]
-- `validate_matching_path` (function) component `validate_matching_path [function]` (`db2bc823-fb37-58fd-a458-12a5ec538384`) lines 690-706 [crates/gwiki/src/store.rs:690-706]
-  - Signature: `fn validate_matching_path(`
-  - Purpose: Validates that two paths are equivalent using display path comparison, returning `Ok(())` on success or a descriptive `StoreError::InvalidData` with the field name and mismatched paths on failure. [crates/gwiki/src/store.rs:690-706]
-- `equivalent_display_path` (function) component `equivalent_display_path [function]` (`aadb447a-ae0b-52ef-b7a4-88aef2d61b32`) lines 708-710 [crates/gwiki/src/store.rs:708-710]
-  - Signature: `fn equivalent_display_path(left: &Path, right: &Path) -> bool {`
-  - Purpose: Returns true if two paths have equivalent display representations. [crates/gwiki/src/store.rs:708-710]
-- `platform_path_from_display` (function) component `platform_path_from_display [function]` (`c050836e-3c66-5228-86bd-2c7a1967168f`) lines 712-718 [crates/gwiki/src/store.rs:712-718]
-  - Signature: `fn platform_path_from_display(path: &str) -> PathBuf {`
-  - Purpose: Converts a forward-slash-delimited path string to a platform-native PathBuf by replacing separators with the platform's native separator (if not already `/`). [crates/gwiki/src/store.rs:712-718]
-- `scoped_id` (function) component `scoped_id [function]` (`a75aa5fe-da63-54a2-b016-7ba1c7d00f8b`) lines 720-725 [crates/gwiki/src/store.rs:720-725]
-  - Signature: `fn scoped_id(prefix: &str, scope: &WikiStoreScope, path: &Path, suffix: Option<&str>) -> String {`
-  - Purpose: Generates a scoped identifier string by delegating to `scoped_text_id` with the optional suffix converted to a single-element array if present, otherwise an empty array. [crates/gwiki/src/store.rs:720-725]
-- `scoped_text_id` (function) component `scoped_text_id [function]` (`b7f8743d-c229-5035-b166-c5a14f8d901c`) lines 727-739 [crates/gwiki/src/store.rs:727-739]
-  - Signature: `fn scoped_text_id(prefix: &str, scope: &WikiStoreScope, path: &Path, suffixes: &[&str]) -> String {`
-  - Purpose: Constructs a colon-delimited scoped identifier by concatenating a prefix, scope kind/ID, display path, and variable suffixes, then applies casing normalization via `cap_scoped_id`. [crates/gwiki/src/store.rs:727-739]
-- `cap_scoped_id` (function) component `cap_scoped_id [function]` (`a17fca60-009e-5bb8-93b8-08e9f15bb819`) lines 741-744 [crates/gwiki/src/store.rs:741-744]
-  - Signature: `fn cap_scoped_id(id: String) -> String {`
-  - Purpose: This function computes a content hash of the input string's bytes and delegates to `cap_scoped_id_with_hash` with both the original id and its hash to generate a scoped identifier. [crates/gwiki/src/store.rs:741-744]
-- `cap_scoped_id_with_hash` (function) component `cap_scoped_id_with_hash [function]` (`3aed8223-13db-51f4-bba7-8e964d78320e`) lines 746-765 [crates/gwiki/src/store.rs:746-765]
-  - Signature: `fn cap_scoped_id_with_hash(id: String, hash: &str) -> String {`
-  - Purpose: Truncates an ID string to MAX_ID_LEN bytes by preserving the original prefix (up to UTF-8 character boundaries) and appending a dash-delimited hash suffix, or returns the ID unchanged if already within the length limit. [crates/gwiki/src/store.rs:746-765]
-- `document_kind_name` (function) component `document_kind_name [function]` (`63083e48-42d9-532e-9211-d411c2d6c932`) lines 767-775 [crates/gwiki/src/store.rs:767-775]
-  - Signature: `fn document_kind_name(kind: WikiDocumentKind) -> &'static str {`
-  - Purpose: Maps a `WikiDocumentKind` enum variant to its corresponding static string identifier. [crates/gwiki/src/store.rs:767-775]
-- `ingestion_status` (function) component `ingestion_status [function]` (`c731ff15-e18a-571a-93d4-46515a58b2e8`) lines 777-785 [crates/gwiki/src/store.rs:777-785]
-  - Signature: `fn ingestion_status(event: WikiIngestionEvent) -> &'static str {`
-  - Purpose: Maps a `WikiIngestionEvent` enum variant to its corresponding static string literal representation. [crates/gwiki/src/store.rs:777-785]
-- `link_kind` (function) component `link_kind [function]` (`b2c18be7-0694-5d2d-8292-d33e65f9541f`) lines 787-794 [crates/gwiki/src/store.rs:787-794]
-  - Signature: `pub(crate) fn link_kind(target: &str) -> &'static str {`
-  - Purpose: Classifies a link target as "markdown" if it contains a URI scheme or absolute path prefix (`//` or `\\`), otherwise as "wiki". [crates/gwiki/src/store.rs:787-794]
-- `has_uri_scheme` (function) component `has_uri_scheme [function]` (`88a6ff83-9920-5f20-be5a-63a340bfcb18`) lines 796-803 [crates/gwiki/src/store.rs:796-803]
-  - Signature: `fn has_uri_scheme(target: &str) -> bool {`
-  - Purpose: Validates whether the target string has a valid URI scheme—a colon-delimited prefix that begins with an ASCII letter and contains only ASCII alphanumerics, plus (+), period (.), or hyphen (-). [crates/gwiki/src/store.rs:796-803]
-- `rollback_link_replacement` (function) component `rollback_link_replacement [function]` (`1c2bef5c-92e0-5ee4-a132-c274efda5150`) lines 805-809 [crates/gwiki/src/store.rs:805-809]
-  - Signature: `fn rollback_link_replacement(tx: Transaction<'_>, path: &str) {`
-  - Purpose: Attempts to rollback a database transaction for a gwiki link replacement operation and logs any rollback errors with the provided path. [crates/gwiki/src/store.rs:805-809]
-- `rollback_chunk_replacement` (function) component `rollback_chunk_replacement [function]` (`ff7ce857-0b67-5e29-9d3a-62b40b1d0b01`) lines 811-815 [crates/gwiki/src/store.rs:811-815]
-  - Signature: `fn rollback_chunk_replacement(tx: Transaction<'_>, path: &str) {`
-  - Purpose: Rolls back a database transaction for gwiki chunk replacement and logs any rollback failures. [crates/gwiki/src/store.rs:811-815]
-- `configured_memory_index_limit_bytes` (function) component `configured_memory_index_limit_bytes [function]` (`b2e96a04-6e8d-53cf-a6fc-4e9bf3eaab00`) lines 817-829 [crates/gwiki/src/store.rs:817-829]
+- `configured_memory_index_limit_bytes` (function) component `configured_memory_index_limit_bytes [function]` (`b4a82717-6d65-51fb-89cd-7bec1c14edd0`) lines 15-17 [crates/gwiki/src/store.rs:15-17]
   - Signature: `pub fn configured_memory_index_limit_bytes() -> Option<u64> {`
-  - Purpose: Parses the `MAX_MEMORY_INDEX_BYTES_ENV` environment variable as a positive `u64` integer, returning `Some(value)` or `None`—with a warning logged only if the variable exists but is invalid or non-positive. [crates/gwiki/src/store.rs:817-829]
-- `link_kind_classifies_uri_schemes_and_fragments` (function) component `link_kind_classifies_uri_schemes_and_fragments [function]` (`eabd208d-d354-55fa-94e4-7010e6b1c731`) lines 836-843 [crates/gwiki/src/store.rs:836-843]
+  - Purpose: Indexed function `configured_memory_index_limit_bytes` in `crates/gwiki/src/store.rs`. [crates/gwiki/src/store.rs:15-17]
+- `link_kind` (function) component `link_kind [function]` (`17b104d1-ddac-557b-87e9-27a7332aa0d0`) lines 19-21 [crates/gwiki/src/store.rs:19-21]
+  - Signature: `pub(crate) fn link_kind(target: &str) -> &'static str {`
+  - Purpose: Indexed function `link_kind` in `crates/gwiki/src/store.rs`. [crates/gwiki/src/store.rs:19-21]
+- `link_kind_classifies_uri_schemes_and_fragments` (function) component `link_kind_classifies_uri_schemes_and_fragments [function]` (`3635b710-928e-52ad-ad11-21bd4a8a3821`) lines 32-39 [crates/gwiki/src/store.rs:32-39]
   - Signature: `fn link_kind_classifies_uri_schemes_and_fragments() {`
-  - Purpose: This test verifies that `link_kind` classifies URIs with explicit schemes (https, mailto, tel) and protocol-relative paths (//) as 'markdown', while categorizing fragment identifiers (#) and wiki-style plain-text links as 'wiki'. [crates/gwiki/src/store.rs:836-843]
-- `scoped_ids_are_capped_with_deterministic_hash_suffix` (function) component `scoped_ids_are_capped_with_deterministic_hash_suffix [function]` (`150521cc-09fa-58ce-b46b-8de723ab1a07`) lines 846-867 [crates/gwiki/src/store.rs:846-867]
+  - Purpose: Indexed function `link_kind_classifies_uri_schemes_and_fragments` in `crates/gwiki/src/store.rs`. [crates/gwiki/src/store.rs:32-39]
+- `scoped_ids_are_capped_with_deterministic_hash_suffix` (function) component `scoped_ids_are_capped_with_deterministic_hash_suffix [function]` (`9ec7a45e-c25f-566f-af7d-ec2916bbeb43`) lines 42-63 [crates/gwiki/src/store.rs:42-63]
   - Signature: `fn scoped_ids_are_capped_with_deterministic_hash_suffix() {`
-  - Purpose: This test verifies that `scoped_text_id` generates deterministic, length-capped identifiers with a fixed-length hash suffix appended, ensuring consistent output and bounded string length regardless of input size. [crates/gwiki/src/store.rs:846-867]
-- `scoped_id_capping_tolerates_short_hashes` (function) component `scoped_id_capping_tolerates_short_hashes [function]` (`b5a36516-209a-582c-8b23-747fa2a8ef39`) lines 870-875 [crates/gwiki/src/store.rs:870-875]
+  - Purpose: Verifies that 'scoped_text_id' produces a deterministic, capped-length scoped ID no longer than 'MAX_ID_LEN' and ending with a fixed-length hash suffix of 'HASH_SUFFIX_LEN' characters. [crates/gwiki/src/store.rs:42-63]
+- `scoped_id_capping_tolerates_short_hashes` (function) component `scoped_id_capping_tolerates_short_hashes [function]` (`7f31af68-9a9d-55cf-b210-616592e29a83`) lines 66-71 [crates/gwiki/src/store.rs:66-71]
   - Signature: `fn scoped_id_capping_tolerates_short_hashes() {`
-  - Purpose: Verifies that the `cap_scoped_id_with_hash` function truncates oversized identifiers to `MAX_ID_LEN` while preserving the short hash suffix appended with a dash delimiter. [crates/gwiki/src/store.rs:870-875]
-- `memory_store_rejects_path_mismatches` (function) component `memory_store_rejects_path_mismatches [function]` (`cdf0d778-392a-5aca-95a6-31c7c241c591`) lines 878-922 [crates/gwiki/src/store.rs:878-922]
+  - Purpose: Verifies that 'cap_scoped_id_with_hash' truncates an overlong scoped ID to 'MAX_ID_LEN' while preserving a short hash suffix ('-abc') at the end. [crates/gwiki/src/store.rs:66-71]
+- `memory_store_rejects_path_mismatches` (function) component `memory_store_rejects_path_mismatches [function]` (`c6663743-909d-5d51-9d8a-c5d1c2f430db`) lines 74-118 [crates/gwiki/src/store.rs:74-118]
   - Signature: `fn memory_store_rejects_path_mismatches() {`
-  - Purpose: Tests that `MemoryWikiStore` rejects `replace_chunks()` and `replace_links()` operations when the provided chunk or link paths don't match the target file path argument. [crates/gwiki/src/store.rs:878-922]
-- `memory_store_keys_sources_by_document_path` (function) component `memory_store_keys_sources_by_document_path [function]` (`52508373-e4f6-59e0-a8ad-a3bd4dbebcf2`) lines 925-939 [crates/gwiki/src/store.rs:925-939]
+  - Purpose: Verifies that 'MemoryWikiStore::replace_chunks' and 'replace_links' reject entries whose embedded 'path' differs from the target page path, returning 'StoreError::InvalidData' for 'chunk.path' and 'link.path' mismatches. [crates/gwiki/src/store.rs:74-118]
+- `memory_store_keys_sources_by_document_path` (function) component `memory_store_keys_sources_by_document_path [function]` (`d610ff6c-0810-53db-99d9-710d3d014ee7`) lines 121-135 [crates/gwiki/src/store.rs:121-135]
   - Signature: `fn memory_store_keys_sources_by_document_path() {`
-  - Purpose: Verifies that `MemoryWikiStore::upsert_source` indexes `WikiSource` entries by their `document_path` rather than their source path. [crates/gwiki/src/store.rs:925-939]
+  - Purpose: It verifies that 'MemoryWikiStore::upsert_source' indexes a 'WikiSource' in 'store.sources' by its 'document_path' key rather than its raw 'path', and does not store the entry under the raw file path. [crates/gwiki/src/store.rs:121-135]
 

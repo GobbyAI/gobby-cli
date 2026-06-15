@@ -34,7 +34,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Purpose
 
-This file defines the shared setup boundary for gobby: it classifies setup resources by `StoreKind`, provides validation and setup contexts that carry optional datastore/config handles, and wraps validation results in `ValidationReport` with an `is_healthy` check. It also defines the callback types and object descriptors for consumer-supplied validation and creation (`RequiredValidator`, `RequiredObject`, `AttachedValidator`, `OwnedObject`, `SetupPostgresExecutor`, `StandaloneSetup`, `SetupError`, `SetupReport`), so attached-mode checks and standalone provisioning can share the same setup abstractions. The included tests verify runtime validation guidance, mutable-context access inside validator closures, and creator closures executing without moving shared ownership.
+This file defines the shared setup boundary for attached and standalone setup workflows, separating runtime validation from object creation. It provides the core types for classifying datastores (`StoreKind`), passing optional backend connections into validator callbacks (`ValidationContext`), collecting validation results (`ValidationReport`), and describing consumer-declared required objects via boxed validators (`RequiredObject`/`RequiredValidator`), while the owned-object and setup executor types support the complementary creation path and the tests verify validator behavior and setup guidance.
 [crates/gcore/src/setup.rs:11-18]
 [crates/gcore/src/setup.rs:26-34]
 [crates/gcore/src/setup.rs:38-43]

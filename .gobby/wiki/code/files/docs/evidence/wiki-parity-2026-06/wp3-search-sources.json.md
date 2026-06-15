@@ -16,7 +16,7 @@ Module: [[code/modules/docs/evidence/wiki-parity-2026-06|docs/evidence/wiki-pari
 
 ## Purpose
 
-This JSON captures evidence for a `gwiki` search run over the project scope, recording the query, limit, command, and any degradations alongside the ranked results. Each result bundles fusion metadata and per-source explanations, plus wiki/page identity fields and citations to the related code documentation files so the search output can be traced back to its sources.
+This JSON file records the evidence for a `gwiki` search run in the `wiki-parity-2026-06` set. It captures the search context (`scope`, `command`, `query`, `limit`, and any `degradations`), links the run to relevant code citations, and stores the ranked `results` array with per-result `explanations`, `score`, `source` provenance, `snippet`, `title`, `wiki_page`, and `source_path`. The top-level fields work together as an audit trail: the query metadata explains what was searched, the citations point to the implementation behind the search behavior, and the result objects document why each hit was returned and how it was ranked.
 [docs/evidence/wiki-parity-2026-06/wp3-search-sources.json:3-16]
 [docs/evidence/wiki-parity-2026-06/wp3-search-sources.json:5]
 [docs/evidence/wiki-parity-2026-06/wp3-search-sources.json:6]

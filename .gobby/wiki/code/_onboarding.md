@@ -15,62 +15,48 @@ provenance:
   - 84-91
   - 93-100
   - 102-109
-  - 119-122
-  - 139-145
-  - 150-173
-  - 176-185
-  - 188-191
-  - 194-201
-  - 204-211
-  - 215-217
-  - 219-284
-  - 292-316
-  - 319-372
-  - 493-500
-  - 541-544
-  - 546-582
-- file: crates/gcode/src/graph/code_graph/read.rs
-  ranges:
-  - 566-645
-  - 647-673
-  - 675-711
-  - 713-786
-  - 788-798
-  - 800-810
-  - 812-823
-  - 825-836
-  - 838-851
-  - 853-862
-  - 864-877
-  - 879-895
-  - 897-910
-  - 912-928
-  - 930-936
-  - 938-949
+  - 111-118
+  - 120-127
+  - 137-140
+  - 157-163
+  - 168-191
+  - 194-203
+  - 206-209
+  - 212-219
+  - 222-229
+  - 233-235
+  - 237-302
+  - 310-334
+  - 337-390
+  - 511-518
+  - 559-562
+  - 564-600
 - file: crates/gcode/src/graph/code_graph/write.rs
   ranges:
-  - 110-113
-  - 116-118
-  - 120-158
-  - 160-165
-  - 167-177
-  - 179-195
-  - 197-216
-  - 218-249
-  - 251-266
-  - 268-277
-  - 279-284
-  - 286-290
-  - 292-297
-  - 299-301
-  - 304-315
-  - 317-326
-  - 328-336
-  - 338-342
-  - 344-346
-  - 348-352
-  - 354-377
-  - 696-702
+  - 47-50
+  - 53-56
+  - 59-61
+  - 63-101
+  - 103-108
+  - 110-120
+  - 122-138
+  - 140-159
+  - 161-192
+  - 194-203
+  - 205-214
+  - 216-221
+  - 223-227
+  - 229-234
+  - 236-258
+  - 284-286
+  - 296-307
+  - 309-318
+  - 320-328
+  - 330-334
+  - 336-338
+  - 340-345
+  - 347-351
+  - 353-376
 - file: crates/gcode/src/graph/report/types.rs
   ranges:
   - 10-17
@@ -378,29 +364,29 @@ provenance:
   - 290-325
 - file: crates/gwiki/src/api.rs
   ranges:
-  - 11-121
-  - 124-127
-  - 130-144
-  - 147-149
-  - 166-174
-  - 177-182
-  - 185-213
-  - 218-222
-  - 225-227
-  - 229-231
-  - 233-235
-  - 237-243
-  - 245-247
-  - 249-254
-  - 256-261
-  - 272-276
-  - 279-285
-  - 289-292
-  - 295-300
-  - 302-307
-  - 309-314
-  - 324-328
-  - 331-334
+  - 11-122
+  - 125-128
+  - 131-145
+  - 148-150
+  - 167-175
+  - 178-183
+  - 186-214
+  - 219-223
+  - 226-228
+  - 230-232
+  - 234-236
+  - 238-244
+  - 246-248
+  - 250-255
+  - 257-262
+  - 273-277
+  - 280-286
+  - 290-293
+  - 296-301
+  - 303-308
+  - 310-315
+  - 325-329
+  - 332-335
 - file: crates/gwiki/src/document.rs
   ranges:
   - 4-16
@@ -417,6 +403,38 @@ provenance:
   - '98'
   - 101-116
   - 118-125
+- file: crates/gwiki/src/exports.rs
+  ranges:
+  - 9-13
+  - 16-20
+  - 23-27
+  - 30-38
+  - 41-45
+  - 48-54
+  - 58-62
+  - 82-84
+  - 86-96
+  - 98-110
+  - 112-131
+  - 133-168
+  - 177-190
+  - 192-214
+- file: crates/gwiki/src/graph/context.rs
+  ranges:
+  - 8-11
+  - 14-16
+  - 18-23
+  - 25-28
+  - 32-39
+  - 42-45
+  - 48-53
+  - 56-61
+  - 64-73
+  - 76-80
+  - 83-88
+  - 91-99
+  - 102-105
+  - 107-153
 - file: crates/gwiki/src/graph/mod.rs
   ranges:
   - 22-26
@@ -568,48 +586,23 @@ provenance:
   - 230-289
   - 291-307
   - 309-312
-- file: crates/gwiki/src/store.rs
+- file: crates/gwiki/src/sources/types.rs
   ranges:
-  - 15-21
-  - 24-30
-  - 33-40
-  - 43-49
-  - 52-57
-  - 60-66
-  - 69-73
-  - 76-78
-  - 81-87
-  - 89-95
-  - 97-99
-  - 101-103
-  - 115-121
-  - 150-159
-  - 168-180
-  - 242-246
-  - 249-255
-  - 817-829
-- file: crates/gwiki/src/synthesis.rs
-  ranges:
-  - 15-19
-  - 22-28
-  - 30-36
-  - 40-44
-  - 47-56
-  - 59-65
-  - 68-74
-  - 77-80
-  - 84-87
-  - 90-93
-  - 95-182
-  - 232-272
-  - 279-293
-  - 295-366
-  - 368-396
-  - 447-453
-  - 455-478
-  - 480-494
-  - 496-501
-provenance_truncated: 160
+  - 12-29
+  - 55-58
+  - 71-74
+  - 86-96
+  - 99-116
+  - 118-124
+  - 126-129
+  - 131-134
+  - 136-139
+  - 141-144
+  - 146-149
+  - 165-179
+  - 183-189
+  - 201-216
+provenance_truncated: 176
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -663,6 +656,7 @@ freshness: indexed
 - [[code/files/crates/gcode/src/commands/graph/lifecycle.rs|crates/gcode/src/commands/graph/lifecycle.rs]] - GraphSyncContractError.payload public API `pub fn payload(&self) -> &Value {`
 - [[code/files/crates/gcode/src/commands/graph/lifecycle.rs|crates/gcode/src/commands/graph/lifecycle.rs]] - clear public API `pub fn clear(ctx: &Context, format: Format) -> anyhow::Result<()> {`
 - [[code/files/crates/gcode/src/commands/graph/lifecycle.rs|crates/gcode/src/commands/graph/lifecycle.rs]] - rebuild public API `pub fn rebuild(ctx: &Context, format: Format) -> anyhow::Result<()> {`
+- [[code/files/crates/gcode/src/commands/graph/lifecycle.rs|crates/gcode/src/commands/graph/lifecycle.rs]] - cleanup_orphans public API `pub fn cleanup_orphans(ctx: &Context, format: Format) -> anyhow::Result<()> {`
 - [[code/files/crates/gcode/src/commands/graph/lifecycle.rs|crates/gcode/src/commands/graph/lifecycle.rs]] - sync_file public API `pub fn sync_file(`
 - [[code/files/crates/gcode/src/commands/graph/payload.rs|crates/gcode/src/commands/graph/payload.rs]] - report public API `pub fn report(ctx: &Context, top_n: usize, format: Format) -> anyhow::Result<()> {`
 - [[code/files/crates/gcode/src/commands/graph/payload.rs|crates/gcode/src/commands/graph/payload.rs]] - overview public API `pub fn overview(ctx: &Context, limit: usize, format: Format) -> anyhow::Result<()> {`
@@ -686,7 +680,7 @@ freshness: indexed
 - [[code/files/crates/gcode/src/commands/status.rs|crates/gcode/src/commands/status.rs]] - run public API `pub fn run(ctx: &Context, format: Format) -> anyhow::Result<()> {`
 - [[code/files/crates/gcode/src/commands/status.rs|crates/gcode/src/commands/status.rs]] - invalidate public API `pub fn invalidate(ctx: &Context, force: bool) -> anyhow::Result<()> {`
 - [[code/files/crates/gcode/src/commands/status.rs|crates/gcode/src/commands/status.rs]] - projects public API `pub fn projects(format: Format) -> anyhow::Result<()> {`
-- [[code/files/crates/gcode/src/commands/status.rs|crates/gcode/src/commands/status.rs]] - prune public API `pub fn prune(force: bool) -> anyhow::Result<()> {`
+- [[code/files/crates/gcode/src/commands/status.rs|crates/gcode/src/commands/status.rs]] - prune public API `pub fn prune(force: bool, project_override: Option<&str>, quiet: bool) -> anyhow::Result<()> {`
 - [[code/files/crates/gcode/src/commands/status.rs|crates/gcode/src/commands/status.rs]] - repo_outline public API `pub fn repo_outline(ctx: &Context, format: Format) -> anyhow::Result<()> {`
 - [[code/files/crates/gcode/src/commands/symbol_at.rs|crates/gcode/src/commands/symbol_at.rs]] - requested_file_for_freshness public API `pub fn requested_file_for_freshness(`
 - [[code/files/crates/gcode/src/commands/symbol_at.rs|crates/gcode/src/commands/symbol_at.rs]] - run public API `pub fn run(`
@@ -699,6 +693,7 @@ freshness: indexed
 - [[code/files/crates/gcode/src/commands/vector.rs|crates/gcode/src/commands/vector.rs]] - sync_file public API `pub fn sync_file(ctx: &Context, file_path: &str, format: Format) -> anyhow::Result<()> {`
 - [[code/files/crates/gcode/src/commands/vector.rs|crates/gcode/src/commands/vector.rs]] - clear public API `pub fn clear(ctx: &Context, format: Format) -> anyhow::Result<()> {`
 - [[code/files/crates/gcode/src/commands/vector.rs|crates/gcode/src/commands/vector.rs]] - rebuild public API `pub fn rebuild(ctx: &Context, format: Format) -> anyhow::Result<()> {`
+- [[code/files/crates/gcode/src/commands/vector.rs|crates/gcode/src/commands/vector.rs]] - cleanup_orphans public API `pub fn cleanup_orphans(ctx: &Context, format: Format) -> anyhow::Result<()> {`
 - [[code/files/crates/gcode/src/config/context.rs|crates/gcode/src/config/context.rs]] - FalkorConfig public API `pub struct FalkorConfig {`
 - [[code/files/crates/gcode/src/config/context.rs|crates/gcode/src/config/context.rs]] - QdrantConfig public API `pub type QdrantConfig = gobby_core::config::QdrantConfig;`
 - [[code/files/crates/gcode/src/config/context.rs|crates/gcode/src/config/context.rs]] - EmbeddingConfig public API `pub type EmbeddingConfig = gobby_core::config::EmbeddingConfig;`
@@ -708,6 +703,8 @@ freshness: indexed
 - [[code/files/crates/gcode/src/config/context.rs|crates/gcode/src/config/context.rs]] - ServiceConfigSelection.all public API `pub const fn all() -> Self {`
 - [[code/files/crates/gcode/src/config/context.rs|crates/gcode/src/config/context.rs]] - ServiceConfigSelection.database_only public API `pub const fn database_only() -> Self {`
 - [[code/files/crates/gcode/src/config/context.rs|crates/gcode/src/config/context.rs]] - ServiceConfigSelection.falkordb_only public API `pub const fn falkordb_only() -> Self {`
+- [[code/files/crates/gcode/src/config/context.rs|crates/gcode/src/config/context.rs]] - ServiceConfigSelection.qdrant_only public API `pub const fn qdrant_only() -> Self {`
+- [[code/files/crates/gcode/src/config/context.rs|crates/gcode/src/config/context.rs]] - ServiceConfigSelection.projection_cleanup public API `pub const fn projection_cleanup() -> Self {`
 - [[code/files/crates/gcode/src/config/context.rs|crates/gcode/src/config/context.rs]] - ServiceConfigSelection.vectors public API `pub const fn vectors() -> Self {`
 - [[code/files/crates/gcode/src/config/context.rs|crates/gcode/src/config/context.rs]] - ServiceConfigSelection.hybrid_search public API `pub const fn hybrid_search() -> Self {`
 - [[code/files/crates/gcode/src/config/context.rs|crates/gcode/src/config/context.rs]] - CodeVectorConfigError public API `pub enum CodeVectorConfigError {`
@@ -777,23 +774,24 @@ freshness: indexed
 - [[code/files/crates/gcode/src/graph/code_graph/payload.rs|crates/gcode/src/graph/code_graph/payload.rs]] - GraphLink.from_row public API `pub fn from_row(row: &Row) -> Option<Self> {`
 - [[code/files/crates/gcode/src/graph/code_graph/payload.rs|crates/gcode/src/graph/code_graph/payload.rs]] - GraphBlastRadiusTarget public API `pub enum GraphBlastRadiusTarget {`
 - [[code/files/crates/gcode/src/graph/code_graph/payload.rs|crates/gcode/src/graph/code_graph/payload.rs]] - extracted_code_edge_metadata public API `pub fn extracted_code_edge_metadata(`
-- [[code/files/crates/gcode/src/graph/code_graph/read.rs|crates/gcode/src/graph/code_graph/read.rs]] - project_overview_graph public API `pub fn project_overview_graph(ctx: &Context, limit: usize) -> anyhow::Result<GraphPayload> {`
-- [[code/files/crates/gcode/src/graph/code_graph/read.rs|crates/gcode/src/graph/code_graph/read.rs]] - file_graph public API `pub fn file_graph(ctx: &Context, file_path: &str) -> anyhow::Result<GraphPayload> {`
-- [[code/files/crates/gcode/src/graph/code_graph/read.rs|crates/gcode/src/graph/code_graph/read.rs]] - symbol_neighbors public API `pub fn symbol_neighbors(`
-- [[code/files/crates/gcode/src/graph/code_graph/read.rs|crates/gcode/src/graph/code_graph/read.rs]] - blast_radius_graph public API `pub fn blast_radius_graph(`
-- [[code/files/crates/gcode/src/graph/code_graph/read.rs|crates/gcode/src/graph/code_graph/read.rs]] - count_callers public API `pub fn count_callers(ctx: &Context, symbol_id: &str) -> anyhow::Result<usize> {`
-- [[code/files/crates/gcode/src/graph/code_graph/read.rs|crates/gcode/src/graph/code_graph/read.rs]] - count_usages public API `pub fn count_usages(ctx: &Context, symbol_id: &str) -> anyhow::Result<usize> {`
-- [[code/files/crates/gcode/src/graph/code_graph/read.rs|crates/gcode/src/graph/code_graph/read.rs]] - find_callers public API `pub fn find_callers(`
-- [[code/files/crates/gcode/src/graph/code_graph/read.rs|crates/gcode/src/graph/code_graph/read.rs]] - find_usages public API `pub fn find_usages(`
-- [[code/files/crates/gcode/src/graph/code_graph/read.rs|crates/gcode/src/graph/code_graph/read.rs]] - find_caller_ids public API `pub fn find_caller_ids(`
-- [[code/files/crates/gcode/src/graph/code_graph/read.rs|crates/gcode/src/graph/code_graph/read.rs]] - find_usage_ids public API `pub fn find_usage_ids(ctx: &Context, symbol_id: &str, limit: usize) -> anyhow::Result<Vec<String>> {`
-- [[code/files/crates/gcode/src/graph/code_graph/read.rs|crates/gcode/src/graph/code_graph/read.rs]] - find_callers_batch public API `pub fn find_callers_batch(`
-- [[code/files/crates/gcode/src/graph/code_graph/read.rs|crates/gcode/src/graph/code_graph/read.rs]] - find_caller_ids_batch public API `pub fn find_caller_ids_batch(`
-- [[code/files/crates/gcode/src/graph/code_graph/read.rs|crates/gcode/src/graph/code_graph/read.rs]] - find_callees_batch public API `pub fn find_callees_batch(`
-- [[code/files/crates/gcode/src/graph/code_graph/read.rs|crates/gcode/src/graph/code_graph/read.rs]] - find_callee_ids_batch public API `pub fn find_callee_ids_batch(`
-- [[code/files/crates/gcode/src/graph/code_graph/read.rs|crates/gcode/src/graph/code_graph/read.rs]] - get_imports public API `pub fn get_imports(ctx: &Context, file_path: &str) -> anyhow::Result<Vec<GraphResult>> {`
-- [[code/files/crates/gcode/src/graph/code_graph/read.rs|crates/gcode/src/graph/code_graph/read.rs]] - blast_radius public API `pub fn blast_radius(`
+- [[code/files/crates/gcode/src/graph/code_graph/read/graph_payloads.rs|crates/gcode/src/graph/code_graph/read/graph_payloads.rs]] - project_overview_graph public API `pub fn project_overview_graph(ctx: &Context, limit: usize) -> anyhow::Result<GraphPayload> {`
+- [[code/files/crates/gcode/src/graph/code_graph/read/graph_payloads.rs|crates/gcode/src/graph/code_graph/read/graph_payloads.rs]] - file_graph public API `pub fn file_graph(ctx: &Context, file_path: &str) -> anyhow::Result<GraphPayload> {`
+- [[code/files/crates/gcode/src/graph/code_graph/read/graph_payloads.rs|crates/gcode/src/graph/code_graph/read/graph_payloads.rs]] - symbol_neighbors public API `pub fn symbol_neighbors(`
+- [[code/files/crates/gcode/src/graph/code_graph/read/graph_payloads.rs|crates/gcode/src/graph/code_graph/read/graph_payloads.rs]] - blast_radius_graph public API `pub fn blast_radius_graph(`
+- [[code/files/crates/gcode/src/graph/code_graph/read/relationships.rs|crates/gcode/src/graph/code_graph/read/relationships.rs]] - count_callers public API `pub fn count_callers(ctx: &Context, symbol_id: &str) -> anyhow::Result<usize> {`
+- [[code/files/crates/gcode/src/graph/code_graph/read/relationships.rs|crates/gcode/src/graph/code_graph/read/relationships.rs]] - count_usages public API `pub fn count_usages(ctx: &Context, symbol_id: &str) -> anyhow::Result<usize> {`
+- [[code/files/crates/gcode/src/graph/code_graph/read/relationships.rs|crates/gcode/src/graph/code_graph/read/relationships.rs]] - find_callers public API `pub fn find_callers(`
+- [[code/files/crates/gcode/src/graph/code_graph/read/relationships.rs|crates/gcode/src/graph/code_graph/read/relationships.rs]] - find_usages public API `pub fn find_usages(`
+- [[code/files/crates/gcode/src/graph/code_graph/read/relationships.rs|crates/gcode/src/graph/code_graph/read/relationships.rs]] - find_caller_ids public API `pub fn find_caller_ids(`
+- [[code/files/crates/gcode/src/graph/code_graph/read/relationships.rs|crates/gcode/src/graph/code_graph/read/relationships.rs]] - find_usage_ids public API `pub fn find_usage_ids(ctx: &Context, symbol_id: &str, limit: usize) -> anyhow::Result<Vec<String>> {`
+- [[code/files/crates/gcode/src/graph/code_graph/read/relationships.rs|crates/gcode/src/graph/code_graph/read/relationships.rs]] - find_callers_batch public API `pub fn find_callers_batch(`
+- [[code/files/crates/gcode/src/graph/code_graph/read/relationships.rs|crates/gcode/src/graph/code_graph/read/relationships.rs]] - find_caller_ids_batch public API `pub fn find_caller_ids_batch(`
+- [[code/files/crates/gcode/src/graph/code_graph/read/relationships.rs|crates/gcode/src/graph/code_graph/read/relationships.rs]] - find_callees_batch public API `pub fn find_callees_batch(`
+- [[code/files/crates/gcode/src/graph/code_graph/read/relationships.rs|crates/gcode/src/graph/code_graph/read/relationships.rs]] - find_callee_ids_batch public API `pub fn find_callee_ids_batch(`
+- [[code/files/crates/gcode/src/graph/code_graph/read/relationships.rs|crates/gcode/src/graph/code_graph/read/relationships.rs]] - get_imports public API `pub fn get_imports(ctx: &Context, file_path: &str) -> anyhow::Result<Vec<GraphResult>> {`
+- [[code/files/crates/gcode/src/graph/code_graph/read/relationships.rs|crates/gcode/src/graph/code_graph/read/relationships.rs]] - blast_radius public API `pub fn blast_radius(`
 - [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - CodeGraph public API `pub struct CodeGraph<'a> {`
+- [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - GraphOrphanCleanup public API `pub struct GraphOrphanCleanup {`
 - [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - new public API `pub fn new(project_id: &'a str, client: &'a mut GraphClient) -> Self {`
 - [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - sync_file public API `pub fn sync_file(`
 - [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - ensure_project_indexes public API `pub fn ensure_project_indexes(&mut self) -> anyhow::Result<()> {`
@@ -806,15 +804,17 @@ freshness: indexed
 - [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - delete_file_node public API `pub fn delete_file_node(&mut self, file_path: &str) -> anyhow::Result<()> {`
 - [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - delete_file_projection public API `pub fn delete_file_projection(&mut self, file_path: &str) -> anyhow::Result<()> {`
 - [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - cleanup_orphans public API `pub fn cleanup_orphans(&mut self) -> anyhow::Result<()> {`
+- [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - cleanup_deleted_files public API `pub fn cleanup_deleted_files(`
 - [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - clear_project public API `pub fn clear_project(&mut self) -> anyhow::Result<()> {`
 - [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - sync_file_graph public API `pub fn sync_file_graph(`
 - [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - with_code_graph public API `pub fn with_code_graph<T>(`
 - [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - delete_file_graph public API `pub fn delete_file_graph(`
 - [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - delete_file_projection public API `pub fn delete_file_projection(ctx: &Context, file_path: &str) -> anyhow::Result<()> {`
 - [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - cleanup_orphans public API `pub fn cleanup_orphans(ctx: &Context) -> anyhow::Result<()> {`
+- [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - cleanup_deleted_files public API `pub fn cleanup_deleted_files(`
 - [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - clear_project public API `pub fn clear_project(ctx: &Context) -> anyhow::Result<()> {`
 - [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - clear_all_code_index public API `pub fn clear_all_code_index(config: &crate::config::FalkorConfig) -> anyhow::Result<()> {`
-- [[code/files/crates/gcode/src/graph/code_graph/write.rs|crates/gcode/src/graph/code_graph/write.rs]] - call_target_id public API `pub fn call_target_id(project_id: &str, call: &CallRelation) -> Option<String> {`
+- [[code/files/crates/gcode/src/graph/code_graph/write/mutation.rs|crates/gcode/src/graph/code_graph/write/mutation.rs]] - call_target_id public API `pub fn call_target_id(project_id: &str, call: &CallRelation) -> Option<String> {`
 - [[code/files/crates/gcode/src/graph/report/generation.rs|crates/gcode/src/graph/report/generation.rs]] - generate_report public API `pub fn generate_report(ctx: &Context) -> Result<ProjectGraphReport, ProjectGraphReportError> {`
 - [[code/files/crates/gcode/src/graph/report/generation.rs|crates/gcode/src/graph/report/generation.rs]] - generate_report_with_options public API `pub fn generate_report_with_options(`
 - [[code/files/crates/gcode/src/graph/report/generation.rs|crates/gcode/src/graph/report/generation.rs]] - empty_report public API `pub fn empty_report(project_id: impl Into<String>) -> ProjectGraphReport {`
@@ -878,6 +878,7 @@ freshness: indexed
 - [[code/files/crates/gcode/src/index/languages.rs|crates/gcode/src/index/languages.rs]] - LanguageSpec public API `pub struct LanguageSpec {`
 - [[code/files/crates/gcode/src/index/languages.rs|crates/gcode/src/index/languages.rs]] - detect_language public API `pub fn detect_language(file_path: &str) -> Option<&'static str> {`
 - [[code/files/crates/gcode/src/index/languages.rs|crates/gcode/src/index/languages.rs]] - get_spec public API `pub fn get_spec(lang: &str) -> Option<&'static LanguageSpec> {`
+- [[code/files/crates/gcode/src/index/languages.rs|crates/gcode/src/index/languages.rs]] - is_data_language public API `pub fn is_data_language(lang: &str) -> bool {`
 - [[code/files/crates/gcode/src/index/languages.rs|crates/gcode/src/index/languages.rs]] - get_ts_language public API `pub fn get_ts_language(lang: &str) -> Option<Language> {`
 - [[code/files/crates/gcode/src/index/languages.rs|crates/gcode/src/index/languages.rs]] - get_ts_language_for_path public API `pub fn get_ts_language_for_path(lang: &str, file_path: &str) -> Option<Language> {`
 - [[code/files/crates/gcode/src/index/security.rs|crates/gcode/src/index/security.rs]] - validate_path public API `pub fn validate_path(path: &Path, root: &Path) -> bool {`
@@ -886,14 +887,14 @@ freshness: indexed
 - [[code/files/crates/gcode/src/index/security.rs|crates/gcode/src/index/security.rs]] - should_exclude_path public API `pub fn should_exclude_path(root: &Path, path: &Path, patterns: &[impl AsRef<str>]) -> bool {`
 - [[code/files/crates/gcode/src/index/security.rs|crates/gcode/src/index/security.rs]] - has_secret_extension public API `pub fn has_secret_extension(path: &Path) -> bool {`
 - [[code/files/crates/gcode/src/index/security.rs|crates/gcode/src/index/security.rs]] - glob_match public API `pub fn glob_match(pattern: &str, text: &str) -> bool {`
-- [[code/files/crates/gcode/src/index/walker.rs|crates/gcode/src/index/walker.rs]] - FileClassification public API `pub enum FileClassification {`
-- [[code/files/crates/gcode/src/index/walker.rs|crates/gcode/src/index/walker.rs]] - DiscoveryOptions public API `pub struct DiscoveryOptions {`
-- [[code/files/crates/gcode/src/index/walker.rs|crates/gcode/src/index/walker.rs]] - discover_files public API `pub fn discover_files<S: AsRef<str>>(`
-- [[code/files/crates/gcode/src/index/walker.rs|crates/gcode/src/index/walker.rs]] - discover_files_with_options public API `pub fn discover_files_with_options<S: AsRef<str>>(`
-- [[code/files/crates/gcode/src/index/walker.rs|crates/gcode/src/index/walker.rs]] - classify_file public API `pub fn classify_file(`
-- [[code/files/crates/gcode/src/index/walker.rs|crates/gcode/src/index/walker.rs]] - classify_explicit_file_with_options public API `pub fn classify_explicit_file_with_options(`
-- [[code/files/crates/gcode/src/index/walker.rs|crates/gcode/src/index/walker.rs]] - is_content_indexable public API `pub fn is_content_indexable(`
-- [[code/files/crates/gcode/src/index/walker.rs|crates/gcode/src/index/walker.rs]] - content_language public API `pub fn content_language(path: &Path) -> String {`
+- [[code/files/crates/gcode/src/index/walker/classification.rs|crates/gcode/src/index/walker/classification.rs]] - classify_file public API `pub fn classify_file(`
+- [[code/files/crates/gcode/src/index/walker/classification.rs|crates/gcode/src/index/walker/classification.rs]] - classify_explicit_file_with_options public API `pub fn classify_explicit_file_with_options(`
+- [[code/files/crates/gcode/src/index/walker/classification.rs|crates/gcode/src/index/walker/classification.rs]] - is_content_indexable public API `pub fn is_content_indexable(`
+- [[code/files/crates/gcode/src/index/walker/classification.rs|crates/gcode/src/index/walker/classification.rs]] - content_language public API `pub fn content_language(path: &Path) -> String {`
+- [[code/files/crates/gcode/src/index/walker/discovery.rs|crates/gcode/src/index/walker/discovery.rs]] - discover_files public API `pub fn discover_files<S: AsRef<str>>(`
+- [[code/files/crates/gcode/src/index/walker/discovery.rs|crates/gcode/src/index/walker/discovery.rs]] - discover_files_with_options public API `pub fn discover_files_with_options<S: AsRef<str>>(`
+- [[code/files/crates/gcode/src/index/walker/types.rs|crates/gcode/src/index/walker/types.rs]] - FileClassification public API `pub enum FileClassification {`
+- [[code/files/crates/gcode/src/index/walker/types.rs|crates/gcode/src/index/walker/types.rs]] - DiscoveryOptions public API `pub struct DiscoveryOptions {`
 - [[code/files/crates/gcode/src/models.rs|crates/gcode/src/models.rs]] - ProjectionProvenance public API `pub enum ProjectionProvenance {`
 - [[code/files/crates/gcode/src/models.rs|crates/gcode/src/models.rs]] - ProjectionProvenance.from_wire_value public API `pub fn from_wire_value(value: &str) -> Option<Self> {`
 - [[code/files/crates/gcode/src/models.rs|crates/gcode/src/models.rs]] - ProjectionMetadata public API `pub struct ProjectionMetadata {`
@@ -1030,9 +1031,11 @@ freshness: indexed
 - [[code/files/crates/gcode/src/vector/code_symbols/lifecycle.rs|crates/gcode/src/vector/code_symbols/lifecycle.rs]] - CodeSymbolVectorLifecycle.sync_file_symbols public API `pub fn sync_file_symbols(`
 - [[code/files/crates/gcode/src/vector/code_symbols/lifecycle.rs|crates/gcode/src/vector/code_symbols/lifecycle.rs]] - CodeSymbolVectorLifecycle.clear_project_vectors public API `pub fn clear_project_vectors(`
 - [[code/files/crates/gcode/src/vector/code_symbols/lifecycle.rs|crates/gcode/src/vector/code_symbols/lifecycle.rs]] - CodeSymbolVectorLifecycle.rebuild_symbols public API `pub fn rebuild_symbols(`
+- [[code/files/crates/gcode/src/vector/code_symbols/qdrant.rs|crates/gcode/src/vector/code_symbols/qdrant.rs]] - VectorOrphanCleanup public API `pub struct VectorOrphanCleanup {`
 - [[code/files/crates/gcode/src/vector/code_symbols/qdrant.rs|crates/gcode/src/vector/code_symbols/qdrant.rs]] - collection_name public API `pub fn collection_name(`
 - [[code/files/crates/gcode/src/vector/code_symbols/qdrant.rs|crates/gcode/src/vector/code_symbols/qdrant.rs]] - delete_project_collection public API `pub fn delete_project_collection(`
 - [[code/files/crates/gcode/src/vector/code_symbols/qdrant.rs|crates/gcode/src/vector/code_symbols/qdrant.rs]] - delete_file_vectors public API `pub fn delete_file_vectors(`
+- [[code/files/crates/gcode/src/vector/code_symbols/qdrant.rs|crates/gcode/src/vector/code_symbols/qdrant.rs]] - cleanup_orphan_file_vectors public API `pub fn cleanup_orphan_file_vectors(`
 - [[code/files/crates/gcode/src/vector/code_symbols/qdrant.rs|crates/gcode/src/vector/code_symbols/qdrant.rs]] - delete_code_symbol_collections_with_prefix public API `pub fn delete_code_symbol_collections_with_prefix(`
 - [[code/files/crates/gcode/src/vector/code_symbols/qdrant.rs|crates/gcode/src/vector/code_symbols/qdrant.rs]] - vector_search public API `pub fn vector_search(`
 - [[code/files/crates/gcode/src/vector/code_symbols/repository.rs|crates/gcode/src/vector/code_symbols/repository.rs]] - fetch_symbols_for_file public API `pub fn fetch_symbols_for_file(`
@@ -1066,13 +1069,13 @@ freshness: indexed
 - [[code/files/crates/gcode/src/visibility.rs|crates/gcode/src/visibility.rs]] - visible_kinds public API `pub fn visible_kinds(conn: &mut Client, ctx: &Context) -> anyhow::Result<Vec<String>> {`
 - [[code/files/crates/gcode/src/visibility.rs|crates/gcode/src/visibility.rs]] - visible_tree public API `pub fn visible_tree(conn: &mut Client, ctx: &Context) -> anyhow::Result<Vec<VisibleFile>> {`
 - [[code/files/crates/gcode/src/visibility.rs|crates/gcode/src/visibility.rs]] - tombstone_count public API `pub fn tombstone_count(conn: &mut Client, ctx: &Context) -> usize {`
-- [[code/files/crates/gcore/src/ai/daemon.rs|crates/gcore/src/ai/daemon.rs]] - DaemonTranscriptionOptions public API `pub struct DaemonTranscriptionOptions<'a> {`
-- [[code/files/crates/gcore/src/ai/daemon.rs|crates/gcore/src/ai/daemon.rs]] - DaemonEmbeddingResult public API `pub struct DaemonEmbeddingResult {`
-- [[code/files/crates/gcore/src/ai/daemon.rs|crates/gcore/src/ai/daemon.rs]] - transcribe_via_daemon public API `pub fn transcribe_via_daemon(`
-- [[code/files/crates/gcore/src/ai/daemon.rs|crates/gcore/src/ai/daemon.rs]] - describe_image_via_daemon public API `pub fn describe_image_via_daemon(`
-- [[code/files/crates/gcore/src/ai/daemon.rs|crates/gcore/src/ai/daemon.rs]] - generate_via_daemon public API `pub fn generate_via_daemon(`
-- [[code/files/crates/gcore/src/ai/daemon.rs|crates/gcore/src/ai/daemon.rs]] - generate_via_daemon_with_max_tokens public API `pub fn generate_via_daemon_with_max_tokens(`
-- [[code/files/crates/gcore/src/ai/daemon.rs|crates/gcore/src/ai/daemon.rs]] - embed_via_daemon public API `pub fn embed_via_daemon(`
+- [[code/files/crates/gcore/src/ai/daemon/operations.rs|crates/gcore/src/ai/daemon/operations.rs]] - transcribe_via_daemon public API `pub fn transcribe_via_daemon(`
+- [[code/files/crates/gcore/src/ai/daemon/operations.rs|crates/gcore/src/ai/daemon/operations.rs]] - describe_image_via_daemon public API `pub fn describe_image_via_daemon(`
+- [[code/files/crates/gcore/src/ai/daemon/operations.rs|crates/gcore/src/ai/daemon/operations.rs]] - generate_via_daemon public API `pub fn generate_via_daemon(`
+- [[code/files/crates/gcore/src/ai/daemon/operations.rs|crates/gcore/src/ai/daemon/operations.rs]] - generate_via_daemon_with_max_tokens public API `pub fn generate_via_daemon_with_max_tokens(`
+- [[code/files/crates/gcore/src/ai/daemon/operations.rs|crates/gcore/src/ai/daemon/operations.rs]] - embed_via_daemon public API `pub fn embed_via_daemon(`
+- [[code/files/crates/gcore/src/ai/daemon/types.rs|crates/gcore/src/ai/daemon/types.rs]] - DaemonTranscriptionOptions public API `pub struct DaemonTranscriptionOptions<'a> {`
+- [[code/files/crates/gcore/src/ai/daemon/types.rs|crates/gcore/src/ai/daemon/types.rs]] - DaemonEmbeddingResult public API `pub struct DaemonEmbeddingResult {`
 - [[code/files/crates/gcore/src/ai/embeddings.rs|crates/gcore/src/ai/embeddings.rs]] - embed_one public API `pub fn embed_one(`
 - [[code/files/crates/gcore/src/ai/embeddings.rs|crates/gcore/src/ai/embeddings.rs]] - embed_batch public API `pub fn embed_batch(`
 - [[code/files/crates/gcore/src/ai/mod.rs|crates/gcore/src/ai/mod.rs]] - effective_route public API `pub fn effective_route(context: &AiContext, capability: AiCapability) -> AiRouting {`
@@ -1226,6 +1229,7 @@ freshness: indexed
 - [[code/files/crates/gcore/src/graph_analytics.rs|crates/gcore/src/graph_analytics.rs]] - Hotspot public API `pub struct Hotspot {`
 - [[code/files/crates/gcore/src/graph_analytics.rs|crates/gcore/src/graph_analytics.rs]] - GraphAnalytics public API `pub struct GraphAnalytics {`
 - [[code/files/crates/gcore/src/graph_analytics.rs|crates/gcore/src/graph_analytics.rs]] - analyze public API `pub fn analyze(graph: &AnalyticsGraph) -> GraphAnalytics {`
+- [[code/files/crates/gcore/src/graph_analytics.rs|crates/gcore/src/graph_analytics.rs]] - weight_for_kind public API `pub fn weight_for_kind(kind: &str) -> f64 {`
 - [[code/files/crates/gcore/src/indexing.rs|crates/gcore/src/indexing.rs]] - WalkerSettings public API `pub struct WalkerSettings {`
 - [[code/files/crates/gcore/src/indexing.rs|crates/gcore/src/indexing.rs]] - WalkerSettings.new public API `pub fn new(root: impl Into<PathBuf>) -> Self {`
 - [[code/files/crates/gcore/src/indexing.rs|crates/gcore/src/indexing.rs]] - WalkerSettings.into_walker public API `pub fn into_walker(self) -> WalkBuilder {`
@@ -1450,7 +1454,7 @@ freshness: indexed
 - [[code/files/crates/gwiki/src/audit.rs|crates/gwiki/src/audit.rs]] - AuditSourceContext public API `pub struct AuditSourceContext {`
 - [[code/files/crates/gwiki/src/audit.rs|crates/gwiki/src/audit.rs]] - run public API `pub fn run(vault_root: &Path, scope: ScopeIdentity) -> Result<AuditReport, WikiError> {`
 - [[code/files/crates/gwiki/src/audit.rs|crates/gwiki/src/audit.rs]] - run_with_options public API `pub fn run_with_options(`
-- [[code/files/crates/gwiki/src/audit.rs|crates/gwiki/src/audit.rs]] - render_text public API `pub fn render_text(report: &AuditReport) -> String {`
+- [[code/files/crates/gwiki/src/audit/render.rs|crates/gwiki/src/audit/render.rs]] - render_text public API `pub fn render_text(report: &AuditReport) -> String {`
 - [[code/files/crates/gwiki/src/benchmark.rs|crates/gwiki/src/benchmark.rs]] - BenchmarkReport public API `pub struct BenchmarkReport {`
 - [[code/files/crates/gwiki/src/benchmark.rs|crates/gwiki/src/benchmark.rs]] - TokenCompressionReport public API `pub struct TokenCompressionReport {`
 - [[code/files/crates/gwiki/src/benchmark.rs|crates/gwiki/src/benchmark.rs]] - GraphCoverageReport public API `pub struct GraphCoverageReport {`
@@ -1874,43 +1878,44 @@ freshness: indexed
 - [[code/files/crates/gwiki/src/sources/types.rs|crates/gwiki/src/sources/types.rs]] - SourceRecord public API `pub struct SourceRecord {`
 - [[code/files/crates/gwiki/src/sources/types.rs|crates/gwiki/src/sources/types.rs]] - SourceReplay public API `pub enum SourceReplay {`
 - [[code/files/crates/gwiki/src/sources/types.rs|crates/gwiki/src/sources/types.rs]] - SourceReplayOptions public API `pub struct SourceReplayOptions {`
-- [[code/files/crates/gwiki/src/store.rs|crates/gwiki/src/store.rs]] - WikiDocumentKind public API `pub enum WikiDocumentKind {`
-- [[code/files/crates/gwiki/src/store.rs|crates/gwiki/src/store.rs]] - WikiDocument public API `pub struct WikiDocument {`
-- [[code/files/crates/gwiki/src/store.rs|crates/gwiki/src/store.rs]] - WikiChunk public API `pub struct WikiChunk {`
-- [[code/files/crates/gwiki/src/store.rs|crates/gwiki/src/store.rs]] - WikiLink public API `pub struct WikiLink {`
-- [[code/files/crates/gwiki/src/store.rs|crates/gwiki/src/store.rs]] - WikiSource public API `pub struct WikiSource {`
-- [[code/files/crates/gwiki/src/store.rs|crates/gwiki/src/store.rs]] - WikiIngestionEvent public API `pub enum WikiIngestionEvent {`
-- [[code/files/crates/gwiki/src/store.rs|crates/gwiki/src/store.rs]] - WikiIngestion public API `pub struct WikiIngestion {`
-- [[code/files/crates/gwiki/src/store.rs|crates/gwiki/src/store.rs]] - WikiStoreScope public API `pub struct WikiStoreScope {`
-- [[code/files/crates/gwiki/src/store.rs|crates/gwiki/src/store.rs]] - WikiStoreScope.project public API `pub fn project(project_id: impl Into<String>) -> Self {`
-- [[code/files/crates/gwiki/src/store.rs|crates/gwiki/src/store.rs]] - WikiStoreScope.topic public API `pub fn topic(topic_name: impl Into<String>) -> Self {`
-- [[code/files/crates/gwiki/src/store.rs|crates/gwiki/src/store.rs]] - WikiStoreScope.scope_kind public API `pub fn scope_kind(&self) -> &str {`
-- [[code/files/crates/gwiki/src/store.rs|crates/gwiki/src/store.rs]] - WikiStoreScope.scope_id public API `pub fn scope_id(&self) -> &str {`
-- [[code/files/crates/gwiki/src/store.rs|crates/gwiki/src/store.rs]] - StoreError public API `pub enum StoreError {`
-- [[code/files/crates/gwiki/src/store.rs|crates/gwiki/src/store.rs]] - WikiIndexStore public API `pub trait WikiIndexStore {`
-- [[code/files/crates/gwiki/src/store.rs|crates/gwiki/src/store.rs]] - MemoryWikiStore public API `pub struct MemoryWikiStore {`
-- [[code/files/crates/gwiki/src/store.rs|crates/gwiki/src/store.rs]] - PostgresWikiStore public API `pub struct PostgresWikiStore<'a> {`
-- [[code/files/crates/gwiki/src/store.rs|crates/gwiki/src/store.rs]] - new public API `pub fn new(conn: &'a mut postgres::Client, scope: WikiStoreScope) -> Self {`
 - [[code/files/crates/gwiki/src/store.rs|crates/gwiki/src/store.rs]] - configured_memory_index_limit_bytes public API `pub fn configured_memory_index_limit_bytes() -> Option<u64> {`
-- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - ArticleKind public API `pub enum ArticleKind {`
-- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - ArticleKind.directory public API `pub fn directory(self) -> &'static str {`
-- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - ArticleKind.source_kind public API `pub fn source_kind(self) -> &'static str {`
-- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - SynthesisSource public API `pub struct SynthesisSource {`
-- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - SynthesisInput public API `pub struct SynthesisInput {`
-- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - SynthesisPrompt public API `pub struct SynthesisPrompt {`
-- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - SynthesizedPage public API `pub struct SynthesizedPage {`
-- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - WritePolicy public API `pub enum WritePolicy {`
-- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - PageWriteKind public API `pub enum PageWriteKind {`
-- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - PageWriteOutcome public API `pub struct PageWriteOutcome {`
-- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - synthesize_article public API `pub fn synthesize_article(`
-- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - synthesize_source_pages public API `pub fn synthesize_source_pages(`
-- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - ensure_page_write_allowed public API `pub fn ensure_page_write_allowed(`
-- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - write_synthesized_page public API `pub fn write_synthesized_page(`
-- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - ensure_synthesized_path_inside_vault public API `pub fn ensure_synthesized_path_inside_vault(`
-- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - wiki_link public API `pub fn wiki_link(vault_root: &Path, path: &Path, title: &str) -> String {`
-- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - slugify public API `pub fn slugify(title: &str) -> String {`
-- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - slugify_unique public API `pub fn slugify_unique(title: &str, mut exists: impl FnMut(&str) -> bool) -> String {`
-- [[code/files/crates/gwiki/src/synthesis.rs|crates/gwiki/src/synthesis.rs]] - relative_path public API `pub fn relative_path(root: &Path, path: &Path) -> String {`
+- [[code/files/crates/gwiki/src/store/helpers.rs|crates/gwiki/src/store/helpers.rs]] - configured_memory_index_limit_bytes public API `pub fn configured_memory_index_limit_bytes() -> Option<u64> {`
+- [[code/files/crates/gwiki/src/store/memory.rs|crates/gwiki/src/store/memory.rs]] - MemoryWikiStore public API `pub struct MemoryWikiStore {`
+- [[code/files/crates/gwiki/src/store/postgres.rs|crates/gwiki/src/store/postgres.rs]] - PostgresWikiStore public API `pub struct PostgresWikiStore<'a> {`
+- [[code/files/crates/gwiki/src/store/postgres.rs|crates/gwiki/src/store/postgres.rs]] - new public API `pub fn new(conn: &'a mut ::postgres::Client, scope: WikiStoreScope) -> Self {`
+- [[code/files/crates/gwiki/src/store/types.rs|crates/gwiki/src/store/types.rs]] - WikiDocumentKind public API `pub enum WikiDocumentKind {`
+- [[code/files/crates/gwiki/src/store/types.rs|crates/gwiki/src/store/types.rs]] - WikiDocument public API `pub struct WikiDocument {`
+- [[code/files/crates/gwiki/src/store/types.rs|crates/gwiki/src/store/types.rs]] - WikiChunk public API `pub struct WikiChunk {`
+- [[code/files/crates/gwiki/src/store/types.rs|crates/gwiki/src/store/types.rs]] - WikiLink public API `pub struct WikiLink {`
+- [[code/files/crates/gwiki/src/store/types.rs|crates/gwiki/src/store/types.rs]] - WikiSource public API `pub struct WikiSource {`
+- [[code/files/crates/gwiki/src/store/types.rs|crates/gwiki/src/store/types.rs]] - WikiIngestionEvent public API `pub enum WikiIngestionEvent {`
+- [[code/files/crates/gwiki/src/store/types.rs|crates/gwiki/src/store/types.rs]] - WikiIngestion public API `pub struct WikiIngestion {`
+- [[code/files/crates/gwiki/src/store/types.rs|crates/gwiki/src/store/types.rs]] - WikiStoreScope public API `pub struct WikiStoreScope {`
+- [[code/files/crates/gwiki/src/store/types.rs|crates/gwiki/src/store/types.rs]] - WikiStoreScope.project public API `pub fn project(project_id: impl Into<String>) -> Self {`
+- [[code/files/crates/gwiki/src/store/types.rs|crates/gwiki/src/store/types.rs]] - WikiStoreScope.topic public API `pub fn topic(topic_name: impl Into<String>) -> Self {`
+- [[code/files/crates/gwiki/src/store/types.rs|crates/gwiki/src/store/types.rs]] - WikiStoreScope.scope_kind public API `pub fn scope_kind(&self) -> &str {`
+- [[code/files/crates/gwiki/src/store/types.rs|crates/gwiki/src/store/types.rs]] - WikiStoreScope.scope_id public API `pub fn scope_id(&self) -> &str {`
+- [[code/files/crates/gwiki/src/store/types.rs|crates/gwiki/src/store/types.rs]] - StoreError public API `pub enum StoreError {`
+- [[code/files/crates/gwiki/src/store/types.rs|crates/gwiki/src/store/types.rs]] - WikiIndexStore public API `pub trait WikiIndexStore {`
+- [[code/files/crates/gwiki/src/synthesis/generate.rs|crates/gwiki/src/synthesis/generate.rs]] - synthesize_article public API `pub fn synthesize_article(`
+- [[code/files/crates/gwiki/src/synthesis/generate.rs|crates/gwiki/src/synthesis/generate.rs]] - synthesize_source_pages public API `pub fn synthesize_source_pages(`
+- [[code/files/crates/gwiki/src/synthesis/paths.rs|crates/gwiki/src/synthesis/paths.rs]] - ensure_synthesized_path_inside_vault public API `pub fn ensure_synthesized_path_inside_vault(`
+- [[code/files/crates/gwiki/src/synthesis/paths.rs|crates/gwiki/src/synthesis/paths.rs]] - wiki_link public API `pub fn wiki_link(vault_root: &Path, path: &Path, title: &str) -> String {`
+- [[code/files/crates/gwiki/src/synthesis/paths.rs|crates/gwiki/src/synthesis/paths.rs]] - slugify public API `pub fn slugify(title: &str) -> String {`
+- [[code/files/crates/gwiki/src/synthesis/paths.rs|crates/gwiki/src/synthesis/paths.rs]] - slugify_unique public API `pub fn slugify_unique(title: &str, mut exists: impl FnMut(&str) -> bool) -> String {`
+- [[code/files/crates/gwiki/src/synthesis/paths.rs|crates/gwiki/src/synthesis/paths.rs]] - relative_path public API `pub fn relative_path(root: &Path, path: &Path) -> String {`
+- [[code/files/crates/gwiki/src/synthesis/types.rs|crates/gwiki/src/synthesis/types.rs]] - ArticleKind public API `pub enum ArticleKind {`
+- [[code/files/crates/gwiki/src/synthesis/types.rs|crates/gwiki/src/synthesis/types.rs]] - ArticleKind.directory public API `pub fn directory(self) -> &'static str {`
+- [[code/files/crates/gwiki/src/synthesis/types.rs|crates/gwiki/src/synthesis/types.rs]] - ArticleKind.source_kind public API `pub fn source_kind(self) -> &'static str {`
+- [[code/files/crates/gwiki/src/synthesis/types.rs|crates/gwiki/src/synthesis/types.rs]] - SynthesisSource public API `pub struct SynthesisSource {`
+- [[code/files/crates/gwiki/src/synthesis/types.rs|crates/gwiki/src/synthesis/types.rs]] - SynthesisInput public API `pub struct SynthesisInput {`
+- [[code/files/crates/gwiki/src/synthesis/types.rs|crates/gwiki/src/synthesis/types.rs]] - SynthesisPrompt public API `pub struct SynthesisPrompt {`
+- [[code/files/crates/gwiki/src/synthesis/types.rs|crates/gwiki/src/synthesis/types.rs]] - SynthesizedPage public API `pub struct SynthesizedPage {`
+- [[code/files/crates/gwiki/src/synthesis/types.rs|crates/gwiki/src/synthesis/types.rs]] - WritePolicy public API `pub enum WritePolicy {`
+- [[code/files/crates/gwiki/src/synthesis/types.rs|crates/gwiki/src/synthesis/types.rs]] - PageWriteKind public API `pub enum PageWriteKind {`
+- [[code/files/crates/gwiki/src/synthesis/types.rs|crates/gwiki/src/synthesis/types.rs]] - PageWriteOutcome public API `pub struct PageWriteOutcome {`
+- [[code/files/crates/gwiki/src/synthesis/write.rs|crates/gwiki/src/synthesis/write.rs]] - ensure_page_write_allowed public API `pub fn ensure_page_write_allowed(`
+- [[code/files/crates/gwiki/src/synthesis/write.rs|crates/gwiki/src/synthesis/write.rs]] - write_synthesized_page public API `pub fn write_synthesized_page(`
 - [[code/files/crates/gwiki/src/transcribe.rs|crates/gwiki/src/transcribe.rs]] - TranscriptSegment public API `pub struct TranscriptSegment {`
 - [[code/files/crates/gwiki/src/transcribe.rs|crates/gwiki/src/transcribe.rs]] - TranscriptionRange public API `pub struct TranscriptionRange {`
 - [[code/files/crates/gwiki/src/transcribe.rs|crates/gwiki/src/transcribe.rs]] - TranscriptionOutput public API `pub struct TranscriptionOutput {`
@@ -1926,19 +1931,19 @@ freshness: indexed
 - [[code/files/crates/gwiki/src/vault.rs|crates/gwiki/src/vault.rs]] - required_paths public API `pub fn required_paths() -> VaultPaths {`
 - [[code/files/crates/gwiki/src/vault.rs|crates/gwiki/src/vault.rs]] - initialize public API `pub fn initialize(scope: &ResolvedScope) -> Result<CreatedVaultPaths, WikiError> {`
 - [[code/files/crates/gwiki/src/vault.rs|crates/gwiki/src/vault.rs]] - cleanup_created public API `pub fn cleanup_created(root: &Path, created: &CreatedVaultPaths) -> Result<(), WikiError> {`
-- [[code/files/crates/gwiki/src/video.rs|crates/gwiki/src/video.rs]] - FrameSamplingPlan public API `pub struct FrameSamplingPlan {`
-- [[code/files/crates/gwiki/src/video.rs|crates/gwiki/src/video.rs]] - VideoFrameSample public API `pub struct VideoFrameSample {`
-- [[code/files/crates/gwiki/src/video.rs|crates/gwiki/src/video.rs]] - VideoFrameDescription public API `pub struct VideoFrameDescription {`
-- [[code/files/crates/gwiki/src/video.rs|crates/gwiki/src/video.rs]] - AlignedVideoSegment public API `pub struct AlignedVideoSegment {`
-- [[code/files/crates/gwiki/src/video.rs|crates/gwiki/src/video.rs]] - VideoAudioReference public API `pub struct VideoAudioReference {`
-- [[code/files/crates/gwiki/src/video.rs|crates/gwiki/src/video.rs]] - VideoMarkdownResult public API `pub struct VideoMarkdownResult {`
-- [[code/files/crates/gwiki/src/video.rs|crates/gwiki/src/video.rs]] - VideoMediaMetadata public API `pub struct VideoMediaMetadata {`
-- [[code/files/crates/gwiki/src/video.rs|crates/gwiki/src/video.rs]] - VideoMediaDegradation public API `pub struct VideoMediaDegradation {`
-- [[code/files/crates/gwiki/src/video.rs|crates/gwiki/src/video.rs]] - sample_frames public API `pub fn sample_frames(asset_path: &Path, plan: FrameSamplingPlan) -> Vec<VideoFrameSample> {`
-- [[code/files/crates/gwiki/src/video.rs|crates/gwiki/src/video.rs]] - audio_reference_for_video public API `pub fn audio_reference_for_video(asset_path: &Path) -> VideoAudioReference {`
-- [[code/files/crates/gwiki/src/video.rs|crates/gwiki/src/video.rs]] - align_transcript_and_frames public API `pub fn align_transcript_and_frames(`
-- [[code/files/crates/gwiki/src/video.rs|crates/gwiki/src/video.rs]] - VideoMarkdownRequest public API `pub struct VideoMarkdownRequest<'a> {`
-- [[code/files/crates/gwiki/src/video.rs|crates/gwiki/src/video.rs]] - write_video_derived_markdown public API `pub fn write_video_derived_markdown(`
+- [[code/files/crates/gwiki/src/video/alignment.rs|crates/gwiki/src/video/alignment.rs]] - align_transcript_and_frames public API `pub fn align_transcript_and_frames(`
+- [[code/files/crates/gwiki/src/video/markdown.rs|crates/gwiki/src/video/markdown.rs]] - write_video_derived_markdown public API `pub fn write_video_derived_markdown(`
+- [[code/files/crates/gwiki/src/video/sampling.rs|crates/gwiki/src/video/sampling.rs]] - sample_frames public API `pub fn sample_frames(asset_path: &Path, plan: FrameSamplingPlan) -> Vec<VideoFrameSample> {`
+- [[code/files/crates/gwiki/src/video/sampling.rs|crates/gwiki/src/video/sampling.rs]] - audio_reference_for_video public API `pub fn audio_reference_for_video(asset_path: &Path) -> VideoAudioReference {`
+- [[code/files/crates/gwiki/src/video/types.rs|crates/gwiki/src/video/types.rs]] - FrameSamplingPlan public API `pub struct FrameSamplingPlan {`
+- [[code/files/crates/gwiki/src/video/types.rs|crates/gwiki/src/video/types.rs]] - VideoFrameSample public API `pub struct VideoFrameSample {`
+- [[code/files/crates/gwiki/src/video/types.rs|crates/gwiki/src/video/types.rs]] - VideoFrameDescription public API `pub struct VideoFrameDescription {`
+- [[code/files/crates/gwiki/src/video/types.rs|crates/gwiki/src/video/types.rs]] - AlignedVideoSegment public API `pub struct AlignedVideoSegment {`
+- [[code/files/crates/gwiki/src/video/types.rs|crates/gwiki/src/video/types.rs]] - VideoAudioReference public API `pub struct VideoAudioReference {`
+- [[code/files/crates/gwiki/src/video/types.rs|crates/gwiki/src/video/types.rs]] - VideoMarkdownResult public API `pub struct VideoMarkdownResult {`
+- [[code/files/crates/gwiki/src/video/types.rs|crates/gwiki/src/video/types.rs]] - VideoMediaMetadata public API `pub struct VideoMediaMetadata {`
+- [[code/files/crates/gwiki/src/video/types.rs|crates/gwiki/src/video/types.rs]] - VideoMediaDegradation public API `pub struct VideoMediaDegradation {`
+- [[code/files/crates/gwiki/src/video/types.rs|crates/gwiki/src/video/types.rs]] - VideoMarkdownRequest public API `pub struct VideoMarkdownRequest<'a> {`
 - [[code/files/crates/gwiki/src/vision.rs|crates/gwiki/src/vision.rs]] - VisionExtraction public API `pub struct VisionExtraction {`
 - [[code/files/crates/gwiki/src/vision.rs|crates/gwiki/src/vision.rs]] - VisionDegradation public API `pub struct VisionDegradation {`
 - [[code/files/crates/gwiki/src/vision.rs|crates/gwiki/src/vision.rs]] - VisionClient public API `pub trait VisionClient {`

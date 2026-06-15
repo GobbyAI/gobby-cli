@@ -20,9 +20,7 @@ Module: [[code/modules/crates/gcode/src/vector/code_symbols|crates/gcode/src/vec
 
 ## Purpose
 
-This file defines the error type and search entrypoints for vector-based code-symbol lookup. `SearchError` captures missing Qdrant or embedding configuration, query-embedding failure, invalid collection naming, and vector-search transport errors, with `Display` and `Error` implementations for human-readable reporting.
-
-`search_code_symbols` is the core fallible path: it pulls Qdrant and embedding settings from `Context`, embeds the query, builds the target collection name, runs a Qdrant vector search, and converts raw `(symbol_id, score)` pairs into `CodeSymbolVectorSearchHit` values. `semantic_search` wraps that behavior as a degraded semantic-ranking signal, returning results up to the requested limit while logging errors and falling back to an empty list on failure.
+This file defines error handling and vector-search entry points for code-symbol lookup. `SearchError` captures missing Qdrant/embedding configuration, query-embedding failure, invalid collection names, and vector search transport failures, and implements `Display` plus `std::error::Error` for user-facing reporting. `search_code_symbols` wires the lookup pipeline together by checking the context, embedding the query, building the Qdrant collection name, running the vector search, and converting raw `(symbol_id, score)` pairs into `CodeSymbolVectorSearchHit` values. `semantic_search` provides a higher-level semantic-search wrapper that returns up to `limit` `(symbol_id, relevance_score)` results and degrades to an empty list when errors are logged or otherwise handled.
 [crates/gcode/src/vector/code_symbols/search.rs:8-14]
 [crates/gcode/src/vector/code_symbols/search.rs:16-26]
 [crates/gcode/src/vector/code_symbols/search.rs:17-25]

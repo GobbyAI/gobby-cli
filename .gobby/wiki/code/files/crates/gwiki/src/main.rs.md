@@ -17,26 +17,26 @@ provenance:
   - 301-309
   - 312-315
   - 318-321
-  - 324-346
-  - 349-352
-  - 355-368
-  - 371-385
-  - 388-392
-  - '399'
-  - 403-415
-  - 417-424
-  - 426-430
-  - 432-484
-  - 491-510
-  - 512-514
-  - 516-530
-  - 532-659
-  - 662-668
-  - 672-682
-  - 686-693
-  - 696-706
-  - 708-725
-  - 728-744
+  - 324-349
+  - 352-355
+  - 358-371
+  - 374-388
+  - 391-395
+  - '402'
+  - 406-418
+  - 420-427
+  - 429-433
+  - 435-487
+  - 494-513
+  - 515-517
+  - 519-533
+  - 535-663
+  - 666-672
+  - 676-686
+  - 690-697
+  - 700-710
+  - 712-729
+  - 732-748
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -48,7 +48,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-`crates/gwiki/src/main.rs` defines the `gwiki` command-line entrypoint: it parses global CLI flags, scope selection, and a large subcommand enum, then turns those parsed arguments into internal `gobby_wiki::Command` values and runs the wiki workflow. It also normalizes `--project` usage, initializes stderr-based logging from `RUST_LOG` and `--quiet`, formats errors and exit codes, and provides small `From` conversions that map CLI-specific structs like compile, export, review-report, and setup arguments into the internal command model.
+This file is the `gwiki` binary entrypoint and CLI definition. It uses `clap` to parse global scope and output options plus a large subcommand enum, then maps those parsed arguments into internal `gobby_wiki::Command` and related config types. It also normalizes `--project` usage, selects the active wiki scope, initializes a stderr logger, formats errors and exit codes, and runs `main` to execute the chosen command or print the CLI contract.
 [crates/gwiki/src/main.rs:45-59]
 [crates/gwiki/src/main.rs:62-146]
 [crates/gwiki/src/main.rs:149-164]
@@ -96,76 +96,76 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 - `LinkSuggestArgs` (class) component `LinkSuggestArgs [class]` (`ae2b3938-35dc-52d5-b988-a3bd036caa07`) lines 318-321 [crates/gwiki/src/main.rs:318-321]
   - Signature: `struct LinkSuggestArgs {`
   - Purpose: 'LinkSuggestArgs' is a CLI argument struct that defines a single 'limit: usize' option, exposed as '--limit' and defaulting to '10'. [crates/gwiki/src/main.rs:318-321]
-- `CompileArgs` (class) component `CompileArgs [class]` (`bc6d427d-7dbb-5bc3-a948-4538a3792977`) lines 324-346 [crates/gwiki/src/main.rs:324-346]
+- `CompileArgs` (class) component `CompileArgs [class]` (`bc6d427d-7dbb-5bc3-a948-4538a3792977`) lines 324-349 [crates/gwiki/src/main.rs:324-349]
   - Signature: `struct CompileArgs {`
-  - Purpose: 'CompileArgs' is a Clap argument struct for a compile command that accepts an optional topic, zero or more outline headings, a compile kind enum defaulting to 'topic', an optional target page path, a 'write_intent' flag, and an AI routing mode for explainer synthesis. [crates/gwiki/src/main.rs:324-346]
-- `ExportArgs` (class) component `ExportArgs [class]` (`830dbf0a-2138-5dd0-92df-4cede3379069`) lines 349-352 [crates/gwiki/src/main.rs:349-352]
+  - Purpose: 'CompileArgs' is a 'clap' argument struct for a compile command that accepts an optional positional 'topic' (with a distinct internal id to avoid scope-arg collisions), repeated '--outline' and '--source' values, a '--kind' enum defaulting to 'topic', an optional '--target' page path, a '--write-intent' flag, and an '--ai' routing mode defaulting to 'auto'. [crates/gwiki/src/main.rs:324-349]
+- `ExportArgs` (class) component `ExportArgs [class]` (`085f610e-6c34-5454-8f33-8615f672c50f`) lines 352-355 [crates/gwiki/src/main.rs:352-355]
   - Signature: `struct ExportArgs {`
-  - Purpose: 'ExportArgs' is a command-line argument struct that holds a single 'ExportSubcommand' value as the parsed export subcommand. [crates/gwiki/src/main.rs:349-352]
-- `ReviewReportArgs` (class) component `ReviewReportArgs [class]` (`7b67eba6-4bda-571e-8f51-18663c190975`) lines 355-368 [crates/gwiki/src/main.rs:355-368]
+  - Purpose: 'ExportArgs' is a Rust command-line argument struct that contains a single required 'command' field of type 'ExportSubcommand', which is registered as a subcommand via '#[command(subcommand)]'. [crates/gwiki/src/main.rs:352-355]
+- `ReviewReportArgs` (class) component `ReviewReportArgs [class]` (`a4016c1e-da5c-5af1-94e3-728bb8b2be91`) lines 358-371 [crates/gwiki/src/main.rs:358-371]
   - Signature: `struct ReviewReportArgs {`
-  - Purpose: 'ReviewReportArgs' is a CLI argument struct that collects zero or more file paths and symbol IDs plus an optional diff path, and configures the markdown output filename with a default of 'review-report.md'. [crates/gwiki/src/main.rs:355-368]
-- `ExportSubcommand` (type) component `ExportSubcommand [type]` (`1242b798-6e1c-5f45-a8b7-96ba7939a89b`) lines 371-385 [crates/gwiki/src/main.rs:371-385]
+  - Purpose: 'ReviewReportArgs' is a command-line argument struct that collects zero or more '--file' paths and '--symbol' IDs, an optional '--diff' path, and an '--output' filename defaulting to 'review-report.md' for generating a review report. [crates/gwiki/src/main.rs:358-371]
+- `ExportSubcommand` (type) component `ExportSubcommand [type]` (`54aab7a6-b37d-5cde-a79b-0cae98d467ab`) lines 374-388 [crates/gwiki/src/main.rs:374-388]
   - Signature: `enum ExportSubcommand {`
-  - Purpose: Indexed type `ExportSubcommand` in `crates/gwiki/src/main.rs`. [crates/gwiki/src/main.rs:371-385]
-- `CompileKind` (type) component `CompileKind [type]` (`1dfddad6-9ceb-5b05-a17b-1bb5ffa7765b`) lines 388-392 [crates/gwiki/src/main.rs:388-392]
+  - Purpose: Indexed type `ExportSubcommand` in `crates/gwiki/src/main.rs`. [crates/gwiki/src/main.rs:374-388]
+- `CompileKind` (type) component `CompileKind [type]` (`9cf6eb93-0dd9-55aa-99ee-b8deaa1f1c19`) lines 391-395 [crates/gwiki/src/main.rs:391-395]
   - Signature: `enum CompileKind {`
-  - Purpose: Indexed type `CompileKind` in `crates/gwiki/src/main.rs`. [crates/gwiki/src/main.rs:388-392]
-- `StderrLogger` (class) component `StderrLogger [class]` (`84e6dbf1-3699-5d7e-97cd-bb6012b86d2a`) lines 399-399 [crates/gwiki/src/main.rs:399]
+  - Purpose: Indexed type `CompileKind` in `crates/gwiki/src/main.rs`. [crates/gwiki/src/main.rs:391-395]
+- `StderrLogger` (class) component `StderrLogger [class]` (`68df5012-f8bc-52f1-9b4e-d54301f3b356`) lines 402-402 [crates/gwiki/src/main.rs:402]
   - Signature: `struct StderrLogger;`
-  - Purpose: A logger implementation that writes log output to standard error ('stderr'). [crates/gwiki/src/main.rs:399]
-- `StderrLogger` (class) component `StderrLogger [class]` (`4a8798b7-b238-54e2-a185-7c424ae2000c`) lines 403-415 [crates/gwiki/src/main.rs:403-415]
+  - Purpose: 'StderrLogger' is an empty struct type that represents a logger implementation intended to emit log output to standard error. [crates/gwiki/src/main.rs:402]
+- `StderrLogger` (class) component `StderrLogger [class]` (`a374035c-1882-5a86-98db-a7b0594cb601`) lines 406-418 [crates/gwiki/src/main.rs:406-418]
   - Signature: `impl log::Log for StderrLogger {`
-  - Purpose: 'StderrLogger' is a 'log::Log' implementation that accepts records at or below the global max log level and emits them to stderr as 'gwiki: <level>: <message>', with 'flush()' a no-op. [crates/gwiki/src/main.rs:403-415]
-- `StderrLogger.enabled` (method) component `StderrLogger.enabled [method]` (`9b1bc4dc-df14-56a1-95bf-0b6d5543cce1`) lines 404-406 [crates/gwiki/src/main.rs:404-406]
+  - Purpose: 'StderrLogger' is a 'log::Log' implementation that emits enabled log records at or below the global max level to stderr in the format 'gwiki: <level>: <message>', and otherwise ignores them. [crates/gwiki/src/main.rs:406-418]
+- `StderrLogger.enabled` (method) component `StderrLogger.enabled [method]` (`4bd62c3a-8283-5aaf-99a8-bede6114fad9`) lines 407-409 [crates/gwiki/src/main.rs:407-409]
   - Signature: `fn enabled(&self, metadata: &log::Metadata<'_>) -> bool {`
-  - Purpose: Returns 'true' when the record’s 'log::Level' is less than or equal to the current global 'log::max_level()', thereby filtering out messages above the active logging threshold. [crates/gwiki/src/main.rs:404-406]
-- `StderrLogger.log` (method) component `StderrLogger.log [method]` (`fb321d7c-1106-5955-a8a0-a441da28b063`) lines 408-412 [crates/gwiki/src/main.rs:408-412]
+  - Purpose: Returns 'true' when the record’s 'metadata.level()' is less than or equal to the current global 'log::max_level()', and 'false' otherwise. [crates/gwiki/src/main.rs:407-409]
+- `StderrLogger.log` (method) component `StderrLogger.log [method]` (`8388e620-88ac-5d17-8ff9-25662519313d`) lines 411-415 [crates/gwiki/src/main.rs:411-415]
   - Signature: `fn log(&self, record: &log::Record<'_>) {`
-  - Purpose: If the record’s metadata is enabled, it writes 'gwiki: {level}: {args}' to stderr via 'eprintln!'; otherwise it does nothing. [crates/gwiki/src/main.rs:408-412]
-- `StderrLogger.flush` (method) component `StderrLogger.flush [method]` (`c4787935-ddc2-5184-b8a5-05901135e989`) lines 414-414 [crates/gwiki/src/main.rs:414]
+  - Purpose: If the record’s metadata passes 'enabled', this method writes a 'gwiki: <level>: <args>' line to standard error using 'eprintln!'. [crates/gwiki/src/main.rs:411-415]
+- `StderrLogger.flush` (method) component `StderrLogger.flush [method]` (`cad07935-ecac-5d19-866a-c4faad6211b3`) lines 417-417 [crates/gwiki/src/main.rs:417]
   - Signature: `fn flush(&self) {}`
-  - Purpose: 'flush' is a no-op method that takes an immutable reference to 'self' and performs no state changes or side effects. [crates/gwiki/src/main.rs:414]
-- `log_level` (function) component `log_level [function]` (`d24ff0fb-c427-52e1-9699-c50aac3ffd84`) lines 417-424 [crates/gwiki/src/main.rs:417-424]
+  - Purpose: 'flush' is a no-op method that takes an immutable reference to 'self' and returns '()', performing no state changes or side effects. [crates/gwiki/src/main.rs:417]
+- `log_level` (function) component `log_level [function]` (`9e2c65de-80dd-57ae-8fe3-82b356b8a6da`) lines 420-427 [crates/gwiki/src/main.rs:420-427]
   - Signature: `fn log_level(quiet: bool, rust_log: Option<&str>) -> log::LevelFilter {`
-  - Purpose: Returns 'log::LevelFilter::Off' when 'quiet' is true, otherwise attempts to parse the trimmed 'rust_log' string into a 'LevelFilter' and falls back to 'Off' if parsing fails or no value is provided. [crates/gwiki/src/main.rs:417-424]
-- `init_logger` (function) component `init_logger [function]` (`ac9023f0-7424-584b-9f97-3836e01617e2`) lines 426-430 [crates/gwiki/src/main.rs:426-430]
+  - Purpose: Returns 'log::LevelFilter::Off' when 'quiet' is 'true', otherwise attempts to parse the trimmed 'rust_log' string into a 'LevelFilter' and falls back to 'Off' if absent or invalid. [crates/gwiki/src/main.rs:420-427]
+- `init_logger` (function) component `init_logger [function]` (`dd8c671d-c4b2-552e-a789-fe523f31ef98`) lines 429-433 [crates/gwiki/src/main.rs:429-433]
   - Signature: `fn init_logger(quiet: bool) {`
-  - Purpose: Initializes the global logger by reading 'RUST_LOG' from the environment, installing 'STDERR_LOGGER', and setting the maximum log level based on 'quiet' and the optional 'RUST_LOG' value. [crates/gwiki/src/main.rs:426-430]
-- `main` (function) component `main [function]` (`3f7d20d5-0a03-5f7d-ac15-6f9e8392f184`) lines 432-484 [crates/gwiki/src/main.rs:432-484]
+  - Purpose: Initializes the global logger by reading 'RUST_LOG', installing 'STDERR_LOGGER', and setting the maximum log level via 'log_level(quiet, rust_log.as_deref())'. [crates/gwiki/src/main.rs:429-433]
+- `main` (function) component `main [function]` (`25498bb2-221c-5ac1-bce9-5d59a7480ecf`) lines 435-487 [crates/gwiki/src/main.rs:435-487]
   - Signature: `fn main() -> ExitCode {`
-  - Purpose: Parses CLI arguments, initializes logging, handles the 'Contract' subcommand by printing the CLI contract, otherwise converts the CLI request into an internal command and runs 'gobby_wiki::run', emitting status/result output or formatted errors and returning the corresponding 'ExitCode'. [crates/gwiki/src/main.rs:432-484]
-- `normalize_project_flag_args` (function) component `normalize_project_flag_args [function]` (`26cb2358-900f-51c8-be14-0a611063cc4b`) lines 491-510 [crates/gwiki/src/main.rs:491-510]
+  - Purpose: Parses CLI arguments, initializes logging, optionally prints the gwiki CLI contract, otherwise constructs and runs a 'gobby_wiki' command and renders either the result or any error before returning an appropriate 'ExitCode'. [crates/gwiki/src/main.rs:435-487]
+- `normalize_project_flag_args` (function) component `normalize_project_flag_args [function]` (`07fb5f5e-ec02-5463-834d-140ba5081d8a`) lines 494-513 [crates/gwiki/src/main.rs:494-513]
   - Signature: `fn normalize_project_flag_args<I, S>(args: I) -> Vec<OsString>`
-  - Purpose: It clones the input arguments into a 'Vec<OsString>' and, whenever it sees '--project' immediately followed by a string recognized as a CLI subcommand, inserts an extra '"."' project value after '--project' to normalize the argument list. [crates/gwiki/src/main.rs:491-510]
-- `is_cli_subcommand` (function) component `is_cli_subcommand [function]` (`4e2963ff-426e-50d2-bd31-f09e9aedb472`) lines 512-514 [crates/gwiki/src/main.rs:512-514]
+  - Purpose: Takes an iterator of arguments, clones them into a new 'Vec<OsString>', and inserts an extra '"."' immediately after any '--project' argument whose following argument is a CLI subcommand string. [crates/gwiki/src/main.rs:494-513]
+- `is_cli_subcommand` (function) component `is_cli_subcommand [function]` (`ad93918c-b867-5af0-9d41-2059558e624d`) lines 515-517 [crates/gwiki/src/main.rs:515-517]
   - Signature: `fn is_cli_subcommand(value: &str) -> bool {`
-  - Purpose: Returns 'true' if 'value' is present in the 'CLI_SUBCOMMANDS' collection, otherwise 'false'. [crates/gwiki/src/main.rs:512-514]
-- `print_error` (function) component `print_error [function]` (`a8308966-0f68-5cfa-ad43-0fc74f84a18b`) lines 516-530 [crates/gwiki/src/main.rs:516-530]
+  - Purpose: Returns 'true' if 'value' is present in the 'CLI_SUBCOMMANDS' collection, and 'false' otherwise. [crates/gwiki/src/main.rs:515-517]
+- `print_error` (function) component `print_error [function]` (`a1dfbac8-0a57-5866-a4c0-46a611343e23`) lines 519-533 [crates/gwiki/src/main.rs:519-533]
   - Signature: `fn print_error(format: output::Format, error: &WikiError) {`
-  - Purpose: Prints a 'WikiError' to stderr as JSON with 'code' and 'message' in 'Json' mode, falling back to 'gwiki: {error}' text if JSON serialization fails, or emits the text form directly in 'Text' mode. [crates/gwiki/src/main.rs:516-530]
-- `command_from_cli` (function) component `command_from_cli [function]` (`d513c18f-7899-5308-9605-2a8ae40e75de`) lines 532-659 [crates/gwiki/src/main.rs:532-659]
+  - Purpose: Prints a 'WikiError' to stderr either as JSON with 'code' and 'message' fields, falling back to 'gwiki: {error}' if JSON emission fails, or as plain 'gwiki: {error}' text for 'output::Format::Text'. [crates/gwiki/src/main.rs:519-533]
+- `command_from_cli` (function) component `command_from_cli [function]` (`7317f4b6-d3bc-5d0e-b87d-18df80a3dcb9`) lines 535-663 [crates/gwiki/src/main.rs:535-663]
   - Signature: `fn command_from_cli(command: CliCommand, scope: ScopeSelection) -> Result<Command, WikiError> {`
-  - Purpose: 'command_from_cli' converts a parsed 'CliCommand' plus 'ScopeSelection' into the corresponding internal 'Command', propagating scope and options while rejecting invalid 'remove-source' flag combinations and treating 'CliCommand::Contract' as unreachable. [crates/gwiki/src/main.rs:532-659]
-- `from` (function) component `from [function]` (`a79cdc88-cc62-5b5d-bc5c-175e3547a041`) lines 662-668 [crates/gwiki/src/main.rs:662-668]
+  - Purpose: 'command_from_cli' translates a parsed 'CliCommand' plus 'ScopeSelection' into the corresponding internal 'Command' variant, preserving scope and options while rejecting invalid 'remove-source' flag combinations and treating 'CliCommand::Contract' as unreachable. [crates/gwiki/src/main.rs:535-663]
+- `from` (function) component `from [function]` (`4b1470ad-4514-5652-b046-e2702016efad`) lines 666-672 [crates/gwiki/src/main.rs:666-672]
   - Signature: `fn from(kind: CompileKind) -> Self {`
-  - Purpose: Converts a 'CompileKind' into the corresponding 'Self' enum variant by matching 'Source', 'Concept', and 'Topic' to 'Self::Source', 'Self::Concept', and 'Self::Topic', respectively. [crates/gwiki/src/main.rs:662-668]
-- `from` (function) component `from [function]` (`868d2cb7-b94a-52b3-b0bc-e6170dd29a74`) lines 672-682 [crates/gwiki/src/main.rs:672-682]
+  - Purpose: Converts a 'CompileKind' value into the corresponding 'Self' enum variant by matching 'Source', 'Concept', and 'Topic' one-to-one. [crates/gwiki/src/main.rs:666-672]
+- `from` (function) component `from [function]` (`cab483bb-d571-5f3e-82ae-f059c391ce47`) lines 676-686 [crates/gwiki/src/main.rs:676-686]
   - Signature: `fn from(args: ExportArgs) -> Self {`
-  - Purpose: Converts an 'ExportArgs' value into the corresponding 'Self' variant by mapping 'WorkflowAssets { output }' to 'Self::WorkflowAssets { filename: output }' and 'Report { output, source }' to 'Self::ReportFile { filename: output, source_path: source }'. [crates/gwiki/src/main.rs:672-682]
-- `from` (function) component `from [function]` (`abbe9b98-5e2f-540e-a43f-e749f133f748`) lines 686-693 [crates/gwiki/src/main.rs:686-693]
+  - Purpose: Converts an 'ExportArgs' into the corresponding 'Self' variant by mapping 'WorkflowAssets { output }' to 'Self::WorkflowAssets { filename: output }' and 'Report { output, source }' to 'Self::ReportFile { filename: output, source_path: source }'. [crates/gwiki/src/main.rs:676-686]
+- `from` (function) component `from [function]` (`a1cd11cc-4250-564a-bec3-d87e53ec7d55`) lines 690-697 [crates/gwiki/src/main.rs:690-697]
   - Signature: `fn from(args: ReviewReportArgs) -> Self {`
-  - Purpose: Constructs a 'Self' value by moving 'files', 'symbols', 'diff_path', and 'output' from the provided 'ReviewReportArgs' into the corresponding fields. [crates/gwiki/src/main.rs:686-693]
-- `ScopeSelection` (class) component `ScopeSelection [class]` (`8afe00d1-13b2-55cf-aef3-a93909df4db6`) lines 696-706 [crates/gwiki/src/main.rs:696-706]
+  - Purpose: Constructs a 'Self' by moving 'files', 'symbols', 'diff_path', and 'output' from 'ReviewReportArgs' into the corresponding fields. [crates/gwiki/src/main.rs:690-697]
+- `ScopeSelection` (class) component `ScopeSelection [class]` (`5229a1ee-cf2b-518f-9f32-b7d05c65cfc4`) lines 700-710 [crates/gwiki/src/main.rs:700-710]
   - Signature: `impl From<ScopeArgs> for ScopeSelection {`
-  - Purpose: 'ScopeSelection' is constructed from 'ScopeArgs' by choosing 'topic(topic)' if 'topic' is set, otherwise 'project(project_root)' if 'project' is set, and falling back to 'detect()' when neither scope is provided. [crates/gwiki/src/main.rs:696-706]
-- `ScopeSelection.from` (method) component `ScopeSelection.from [method]` (`7e668ebe-36ce-523f-bc55-f7e5694e3377`) lines 697-705 [crates/gwiki/src/main.rs:697-705]
+  - Purpose: 'ScopeSelection' is constructed from 'ScopeArgs' by choosing the first available scope in priority order: 'topic', then 'project', otherwise falling back to automatic detection. [crates/gwiki/src/main.rs:700-710]
+- `ScopeSelection.from` (method) component `ScopeSelection.from [method]` (`9ab30698-6ae5-5135-901c-c9f6408c7c53`) lines 701-709 [crates/gwiki/src/main.rs:701-709]
   - Signature: `fn from(scope: ScopeArgs) -> Self {`
-  - Purpose: Constructs 'Self' by preferring 'scope.topic' via 'Self::topic', otherwise 'scope.project' via 'Self::project', and falling back to 'Self::detect()' when neither scope field is set. [crates/gwiki/src/main.rs:697-705]
-- `exit_code_for_error` (function) component `exit_code_for_error [function]` (`4bf5358c-b177-5f00-8c16-34757680b2af`) lines 708-725 [crates/gwiki/src/main.rs:708-725]
+  - Purpose: Constructs a 'Self' by preferring 'scope.topic' via 'Self::topic', otherwise 'scope.project' via 'Self::project', and falling back to 'Self::detect()' when neither is present. [crates/gwiki/src/main.rs:701-709]
+- `exit_code_for_error` (function) component `exit_code_for_error [function]` (`4e872ca4-4ab8-59f4-b12b-1ec5fe037b29`) lines 712-729 [crates/gwiki/src/main.rs:712-729]
   - Signature: `fn exit_code_for_error(error: &WikiError) -> ExitCode {`
-  - Purpose: Maps each 'WikiError' variant to a process exit code, returning 'ExitCode::from(2)' for user/input/query-related errors ('NotImplemented', 'InvalidInput', 'Index', 'Search', 'InvalidScope', 'NotFound') and 'ExitCode::from(1)' for configuration, I/O, parsing, registry, daemon, timeout, or setup errors. [crates/gwiki/src/main.rs:708-725]
-- `from` (function) component `from [function]` (`20087995-ae54-5e0e-b070-74d2cd8550ab`) lines 728-744 [crates/gwiki/src/main.rs:728-744]
+  - Purpose: Maps a 'WikiError' variant to a process 'ExitCode', returning '2' for user/input and lookup failures ('NotImplemented', 'InvalidInput', 'Index', 'Search', 'InvalidScope', 'NotFound') and '1' for configuration, I/O, parsing, registry, daemon, timeout, and setup errors. [crates/gwiki/src/main.rs:712-729]
+- `from` (function) component `from [function]` (`99f6613a-35c0-56a6-aaf2-b61db1d7c1ad`) lines 732-748 [crates/gwiki/src/main.rs:732-748]
   - Signature: `fn from(args: SetupArgs) -> Self {`
-  - Purpose: Constructs 'Self' by copying each corresponding field from 'SetupArgs' into the struct, preserving the setup configuration values unchanged. [crates/gwiki/src/main.rs:728-744]
+  - Purpose: Constructs 'Self' by copying each configuration field from the provided 'SetupArgs' into the corresponding struct fields without transformation. [crates/gwiki/src/main.rs:732-748]
 

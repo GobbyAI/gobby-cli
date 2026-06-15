@@ -18,11 +18,7 @@ Module: [[code/modules/crates/gcode/src/graph/code_graph|crates/gcode/src/graph/
 
 ## Purpose
 
-This file provides utilities for managing FalkorDB graph client connections with configurable error handling semantics. It contains three functions that work together to validate and access graph clients from a Context object.
-
-`require_graph_reads` serves as a guard that fails early if FalkorDB is not configured. `with_required_core_graph` wraps graph operations that must succeed, executing a provided closure with a graph client and explicitly mapping service state outcomes (unavailable, unreachable, query failures) to domain-specific GraphReadError types. `with_optional_core_graph` provides a fallback pattern for operations that can gracefully degrade—it either executes the closure on an available client or returns a default value when the service is unconfigured or unreachable, only failing on actual query execution errors.
-
-Together, these functions allow callers to express whether graph reads are mandatory or optional, with the appropriate error behavior for each case.
+This file provides small graph-connection helpers for code-graph reads against FalkorDB. `require_graph_reads` checks that graph reads are configured, `with_required_core_graph` runs a closure against a required graph client and maps missing, unreachable, or failed reads to `GraphReadError`, and `with_optional_core_graph` does the same work but falls back to a caller-supplied default when the graph is unavailable or unconfigured.
 [crates/gcode/src/graph/code_graph/connection.rs:7-12]
 [crates/gcode/src/graph/code_graph/connection.rs:14-40]
 [crates/gcode/src/graph/code_graph/connection.rs:42-68]

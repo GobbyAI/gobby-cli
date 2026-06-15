@@ -20,7 +20,7 @@ Module: [[code/modules/crates/gwiki/src/sources|crates/gwiki/src/sources]]
 
 ## Purpose
 
-This file contains unit tests for source manifest and rendering behavior in `gwiki`. Together, the tests verify that source registration deduplicates equivalent inputs by canonical URL identity and content hash, that local file replay metadata survives a manifest round trip without losing ingestion settings, and that location canonicalization normalizes URLs by case, query order, trailing slashes, and fragments. It also checks that existing index rendering can strip both unmarked and marked manifest sections while preserving the surrounding manual content.
+This file contains tests for source-manifest and index handling in `gwiki`: it checks that `SourceManifest::register()` deduplicates equivalent sources by canonical URL and content hash, preserves replay metadata for local file ingestion, and keeps canonical URL normalization consistent. It also verifies `existing_index_without_manifest()` correctly strips generated manifest sections while preserving surrounding manual content in both marked and unmarked index layouts.
 [crates/gwiki/src/sources/tests.rs:8-50]
 [crates/gwiki/src/sources/tests.rs:53-113]
 [crates/gwiki/src/sources/tests.rs:116-121]

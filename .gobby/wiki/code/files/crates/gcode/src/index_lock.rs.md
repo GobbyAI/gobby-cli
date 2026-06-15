@@ -35,9 +35,7 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Purpose
 
-Implements project-scoped PostgreSQL advisory locking for gcode indexing. It defines lock policies and results, computes a deterministic per-project lock key, acquires the lock with either blocking or brief retry semantics, warns if acquisition is slow, and returns a RAII guard that releases the lock on drop.
-
-The helper `with_project_lock` runs a closure only after the lock is acquired and reports `Busy` otherwise. Test helpers and cases verify key generation, lock contention behavior, and that different project IDs do not block each other.
+This file implements project-scoped PostgreSQL advisory locking for gcode index work. `IndexLockPolicy` chooses either a blocking `Wait` acquisition or a short bounded `BriefTry`, `with_project_lock`/`acquire_project_lock` use that policy to connect to Postgres, derive a deterministic lock key from the project ID, acquire the lock, optionally warn if acquisition is slow, and either run the caller’s closure or report `Busy`; `ProjectIndexLock` holds the live connection and releases the advisory lock on drop. The remaining helpers provide the key derivation, retry loop, warning threshold, and test fixtures that verify the lock key and blocking/busy behavior.
 [crates/gcode/src/index_lock.rs:15-21]
 [crates/gcode/src/index_lock.rs:23-30]
 [crates/gcode/src/index_lock.rs:24-29]
@@ -93,13 +91,13 @@ The helper `with_project_lock` runs a closure only after the lock is acquired an
   - Purpose: `context_for` constructs and returns a `Context` initialized with the supplied `database_url` and `project_id`, a fixed temporary `project_root`, `quiet = true`, no FalkorDB/Qdrant/embedding/daemon URL, default vector and indexing settings, and `ProjectIndexScope::Single`. [crates/gcode/src/index_lock.rs:200-214]
 - `connect_postgres_test_db` (function) component `connect_postgres_test_db [function]` (`73c49d7e-d58b-5aae-8ba5-43ab46c514cb`) lines 216-221 [crates/gcode/src/index_lock.rs:216-221]
   - Signature: `fn connect_postgres_test_db() -> String {`
-  - Purpose: Indexed function `connect_postgres_test_db` in `crates/gcode/src/index_lock.rs`. [crates/gcode/src/index_lock.rs:216-221]
+  - Purpose: Reads 'GCODE_POSTGRES_TEST_DATABASE_URL' from the environment, verifies it by opening a read-write PostgreSQL connection, and returns the URL string. [crates/gcode/src/index_lock.rs:216-221]
 - `hold_project_lock` (function) component `hold_project_lock [function]` (`8a3d943a-86b7-5bc1-bffc-fa23556511db`) lines 223-229 [crates/gcode/src/index_lock.rs:223-229]
   - Signature: `fn hold_project_lock(database_url: &str, project_id: &str) -> Client {`
-  - Purpose: Indexed function `hold_project_lock` in `crates/gcode/src/index_lock.rs`. [crates/gcode/src/index_lock.rs:223-229]
+  - Purpose: Opens a read-write PostgreSQL connection, derives an advisory lock key from 'project_id', acquires the session-level lock with 'pg_advisory_lock', and returns the connected client while holding that lock. [crates/gcode/src/index_lock.rs:223-229]
 - `project_lock_key_matches_fixture` (function) component `project_lock_key_matches_fixture [function]` (`b4c162d0-b497-5609-8a19-68e9a30e9118`) lines 232-234 [crates/gcode/src/index_lock.rs:232-234]
   - Signature: `fn project_lock_key_matches_fixture() {`
-  - Purpose: Indexed function `project_lock_key_matches_fixture` in `crates/gcode/src/index_lock.rs`. [crates/gcode/src/index_lock.rs:232-234]
+  - Purpose: Verifies that 'project_lock_key("proj")' returns the expected fixed hash value '-9102099203869195108'. [crates/gcode/src/index_lock.rs:232-234]
 - `project_lock_key_is_project_scoped` (function) component `project_lock_key_is_project_scoped [function]` (`03e58d56-06c2-5630-a74d-1577eb76c28e`) lines 237-239 [crates/gcode/src/index_lock.rs:237-239]
   - Signature: `fn project_lock_key_is_project_scoped() {`
   - Purpose: Verifies that 'project_lock_key' generates project-scoped lock keys by asserting the keys for '"proj-a"' and '"proj-b"' are not equal. [crates/gcode/src/index_lock.rs:237-239]

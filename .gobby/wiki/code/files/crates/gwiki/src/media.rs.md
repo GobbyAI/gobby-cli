@@ -44,7 +44,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-This file provides the media-processing layer for Gwiki: it discovers `ffmpeg` and `ffprobe`, probes media duration, extracts audio to temporary WAV files, samples video frames at intervals, and splits audio into fixed or overlapping chunks. The `MediaTools` helper centralizes executable paths, while `Chunk` packages each audio segment’s time range with its temp file. Supporting helpers handle duration parsing and conversion, temp-file creation, command execution, and consistent error construction. The tests verify time formatting, duration parsing, frame-sampling limits, and temp-file cleanup behavior.
+Utilities for media processing built around `ffmpeg` and `ffprobe`: this file probes durations, extracts audio, samples video frames, and splits audio into fixed or overlapping chunks, storing outputs in temporary files. The public functions are thin wrappers that discover the required tools on `PATH` and delegate to shared helpers that run commands, format time arguments, and convert durations between milliseconds and public second-based values. `Chunk` represents one extracted audio segment with its millisecond range and temp-file payload, while the tests verify time formatting, duration parsing, frame-sampling limits, and temp-file cleanup behavior.
 [crates/gwiki/src/media.rs:13-17]
 [crates/gwiki/src/media.rs:19-22]
 [crates/gwiki/src/media.rs:24-27]

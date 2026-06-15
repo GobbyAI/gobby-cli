@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gsqz/src|crates/gsqz/src]]
 
 ## Purpose
 
-This file provides feature-gated integration with the Gobby daemon for best-effort compression support: it can fetch output-compression settings from the daemon’s HTTP API, report compression savings back to an admin endpoint, and resolve the daemon URL from config or shared defaults. When the `gobby` feature is disabled, each API is replaced with a no-op or `None`-returning stub, and the tests verify URL pass-through, `${GOBBY_PORT}` expansion, and bootstrap-based resolution when env vars are absent.
+This module provides best-effort integration with the Gobby daemon behind the `gobby` feature flag: it fetches compression settings from the daemon’s config endpoint, reports compression savings to an admin endpoint, and resolves the daemon base URL from either a config override with `${GOBBY_PORT}` expansion or a shared fallback resolver. When the feature is disabled, the same APIs degrade to no-ops that return `None` or do nothing, and the tests verify passthrough behavior, environment-variable expansion, and bootstrap-based URL resolution.
 [crates/gsqz/src/daemon.rs:11-23]
 [crates/gsqz/src/daemon.rs:26-28]
 [crates/gsqz/src/daemon.rs:32-43]

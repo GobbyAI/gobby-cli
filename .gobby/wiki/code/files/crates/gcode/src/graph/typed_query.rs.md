@@ -39,11 +39,7 @@ Module: [[code/modules/crates/gcode/src/graph|crates/gcode/src/graph]]
 
 ## Purpose
 
-This file implements a type-safe Cypher query builder for Neo4j database operations. The TypedQuery struct combines a Cypher query string with a HashMap of validated parameters, while the TypedValue enum represents different value types (strings, numbers, booleans, lists, and maps) that can be safely rendered into Cypher literals.
-
-The core rendering pipeline converts TypedValue instances into properly escaped Cypher syntax through render_cypher_value, which recursively handles nested structures. String values are escaped via escape_string_contents and cypher_string_literal to prevent injection attacks. The TypedQuery methods—new, with_params, and insert_param—build queries by validating parameter identifiers through validate_identifier before storing their rendered values.
-
-Helper functions provide utilities for parameter clamping (clamp_limit, clamp_offset), list generation (id_list_literal), and float handling (render_float), which rejects non-finite values. Error handling is standardized through TypedQueryError enum variants with Display implementations that describe InvalidIdentifier and NonFiniteFloat failures with the specific constraint violated. Comprehensive tests verify that nested parameters, special characters, control characters, and invalid identifiers are properly handled and reported.
+Defines typed Cypher query construction and serialization for graph queries. `TypedQuery` stores a query string plus a parameter map, `TypedValue` models the allowed parameter value shapes, and helpers like `render_cypher_value`, `validate_identifier`, and `cypher_string_literal` turn typed values into safe Cypher literals while rejecting invalid parameter names or non-finite floats; `TypedQueryError` and `IdentifierKind` provide the validation errors used throughout.
 [crates/gcode/src/graph/typed_query.rs:7-10]
 [crates/gcode/src/graph/typed_query.rs:13-21]
 [crates/gcode/src/graph/typed_query.rs:24-27]

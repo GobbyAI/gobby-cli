@@ -47,7 +47,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-Provides the vision-to-markdown pipeline for image sources: it defines the extraction payload, degradation metadata, request/client interface, and the helpers that render derived markdown, sanitize and deduplicate vision metadata, and write the result atomically on disk. It also includes fallback clients and tests that cover successful extraction, empty or failing vision responses, metadata normalization, and safe overwrite behavior.
+This file defines the vision ingestion layer for image-derived wiki content. It models raw vision output with `VisionExtraction`, records fallback state with `VisionDegradation`, and exposes a `VisionClient` interface plus request/result types so callers can extract image text or degrade cleanly when vision is unavailable or empty. The core flow is `write_image_derived_markdown`, which runs extraction when possible, falls back to a degradation reason otherwise, renders markdown with front matter via `render_image_derived_markdown`, and writes it atomically with temp-file and directory-sync helpers. Supporting functions normalize and deduplicate vision metadata into safe front-matter keys, while the test clients and test cases exercise success, failure, empty-output handling, metadata sanitization, and atomic overwrite behavior.
 [crates/gwiki/src/vision.rs:19-23]
 [crates/gwiki/src/vision.rs:26-29]
 [crates/gwiki/src/vision.rs:31-44]

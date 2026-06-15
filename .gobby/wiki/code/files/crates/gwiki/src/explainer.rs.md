@@ -43,7 +43,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-This file implements bounded LLM explainer synthesis for compiled wiki articles. It defines the prompt and response data types, a token-budgeted prompt builder that formats the topic, outline sections, and accepted source excerpts, and a generation seam that either skips synthesis, returns a trimmed model response, or marks failure. After generation, it grounds the prose by validating and rewriting `[source: ...]` markers against accepted sources, stripping invented citations, and adding section-level fallback source notes when needed. Supporting helpers handle token estimation, excerpt truncation, citation matching, fallback target selection, and source-token heuristics.
+This file implements bounded, citation-grounded explainer synthesis for compiled wiki articles. It defines the prompt/response/report data types and the transport seam for generation, builds a single token-budgeted prompt from a `SynthesisInput` by listing requested sections and excerpting accepted sources, then runs generation only when sources are available. After generation, it grounds the model output by rewriting valid `[source: ...]` markers to real links, stripping invented citations, and adding fallback source citations to uncited sections using token-overlap heuristics. Helper functions handle token estimation, excerpt truncation, citation matching, and fallback target selection, and the included tests verify prompt construction, budget enforcement, grounding behavior, and generation skip/fail/success cases.
 [crates/gwiki/src/explainer.rs:24-26]
 [crates/gwiki/src/explainer.rs:39-45]
 [crates/gwiki/src/explainer.rs:49-53]

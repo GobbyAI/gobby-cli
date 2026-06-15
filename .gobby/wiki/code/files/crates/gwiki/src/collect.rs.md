@@ -58,9 +58,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-Implements inbox collection for a wiki vault: it scans `vault_root/inbox`, skips sidecars, directories, oversized or ambiguous items, classifies each file or URL, and either accepts it into the source manifest or records a skipped action in a `CollectReport`. Accepted items are rendered into raw markdown or stored as assets, status sidecars and `log.md` are updated, and failures trigger cleanup and rollback helpers that preserve error context.
-
-It also includes the supporting plumbing for URL extraction and validation, path and status-sidecar utilities, file writing, and tests that cover routing, indexing, skip behavior, logging, URL parsing, and cleanup error handling.
+This file implements inbox collection for a wiki vault: it scans `inbox`, classifies each entry as a URL or file, enforces size limits, writes accepted content into the vault’s raw/indexed structure, and records skipped items with sidecar status files and a markdown log. `CollectReport`, `CollectAction`, and `CollectStatus` model the outcome of a collection run, while helpers like `ensure_collect_paths`, `classify_inbox_item`, `accept_item`, `skip_item`, and the rendering/write utilities handle directory setup, routing, persistence, cleanup, and error reporting. URL parsing and path helpers support the classification and storage flow, and the tests verify routing, indexing, skipping, logging, URL extraction, and rollback/error-context behavior.
 [crates/gwiki/src/collect.rs:18-21]
 [crates/gwiki/src/collect.rs:24-30]
 [crates/gwiki/src/collect.rs:34-37]

@@ -16,7 +16,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-Library entry point for `gwiki`, wiring together the crate’s modules for API, errors, execution, indexing, graph/search, ingestion, media, synthesis, and related wiki/document-processing features. It also re-exports the main command/result types, setup and ingest options, the `WikiError`, and the `run` function for external use. [crates/gwiki/src/lib.rs:1-60]
+Crate root for `gwiki`, declaring the library’s internal modules for wiki ingestion, indexing, search, graph, media, synthesis, and related subsystems, with feature-gated AI and test HTTP support. It also re-exports the main command/API types, `WikiError`, and the `run` entry point for external use. [crates/gwiki/src/lib.rs:1-60]
 
 ## API Symbols
 

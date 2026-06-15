@@ -48,7 +48,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Purpose
 
-This file implements the wiki vault indexing pipeline: it walks a vault, optionally respects `.gitignore`, hashes files to detect added/changed/deleted/unchanged content, parses markdown documents into indexed chunks and links, and writes the resulting documents, sources, chunks, links, and ingestion events into a `WikiIndexStore`. It also defines the indexing configuration and error types, plus helpers for path classification, heading and link extraction, file writing, and a set of tests covering gitignore handling, deletion behavior, raw source immutability, idempotency, provenance, and memory-limit rejection.
+This file implements the wiki vault indexer: it walks a vault, discovers indexable markdown files, parses them into documents/chunks/links/sources, and writes the resulting derived rows and ingestion events into a `WikiIndexStore`. `IndexOptions` controls whether `.gitignore` rules are respected, while `IndexError` centralizes I/O, traversal, store, path-boundary, and memory-limit failures with conversion and source chaining support. The helper functions split the work into path filtering, document-kind detection, markdown heading and link extraction, and file writing, and the tests verify incremental indexing behavior, deletion handling, raw-source immutability, provenance preservation, and memory-limit enforcement.
 [crates/gwiki/src/indexer.rs:16-18]
 [crates/gwiki/src/indexer.rs:20-26]
 [crates/gwiki/src/indexer.rs:21-25]
