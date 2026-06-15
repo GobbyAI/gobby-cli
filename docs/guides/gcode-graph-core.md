@@ -104,6 +104,17 @@ file's code graph projection and Qdrant code-symbol points using
 `project_id + file_path`; daemon reconciliation is no longer the required cleanup
 mechanism for these cases.
 
+`gcode graph cleanup-orphans` is the graph-only reconciliation command. It
+compares project-scoped `CodeFile.path` and `CodeSymbol.file_path` values
+against PostgreSQL `code_indexed_files`, deletes file-scoped graph projection
+data for missing paths, and then runs project-wide graph orphan cleanup once.
+`gcode vector cleanup-orphans` is the Qdrant counterpart: it scrolls
+`code_symbols_{project_id}` payloads filtered by `project_id`, compares
+distinct `file_path` values against PostgreSQL, and deletes orphaned vector
+points. `gcode prune` composes stale-project pruning with both projection
+cleanup paths for the resolved current project and reports graph/vector
+degradation independently.
+
 ## Report And Degradation Contract
 
 `gcode graph report --format json` is the daemon-readable report surface for

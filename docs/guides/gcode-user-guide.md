@@ -380,6 +380,39 @@ See all indexed projects in the PostgreSQL hub:
 gcode projects
 ```
 
+### Prune And Projection Cleanup
+
+Remove stale project records from the PostgreSQL hub and reconcile the current
+project's graph/vector projections against `code_indexed_files`:
+
+```bash
+gcode prune
+gcode prune --force
+```
+
+Stale-project pruning is global and keeps its confirmation prompt unless
+`--force` is supplied. When `gcode prune` also resolves a current project, it
+deletes FalkorDB and Qdrant projection data for file paths that no longer exist
+in PostgreSQL. Outside a project, without `--project`, it keeps the old
+stale-project-only behavior.
+
+Projection-specific cleanup is available when only one store needs
+reconciliation:
+
+```bash
+gcode graph cleanup-orphans
+gcode vector cleanup-orphans
+```
+
+`gcode graph cleanup-orphans` scans project-scoped `CodeFile.path` and
+`CodeSymbol.file_path` values, deletes graph projection data for paths missing
+from PostgreSQL, and runs project orphan cleanup once. `gcode vector
+cleanup-orphans` scans `code_symbols_{project_id}` Qdrant payloads filtered by
+`project_id`, then deletes vector points for paths missing from PostgreSQL.
+Top-level `gcode prune` reports graph and vector cleanup failures independently
+so an unavailable FalkorDB does not block Qdrant cleanup, and an unavailable
+Qdrant does not block graph cleanup.
+
 ### Cross-Project Queries
 
 Query a different project by name or path:
@@ -447,12 +480,19 @@ Graph projection lifecycle is separate:
 ```bash
 gcode graph clear
 gcode graph rebuild
+gcode graph cleanup-orphans
 ```
 
 Use those to clear or replay graph state for the current project without
 performing a full destructive code-index invalidation. Code vector lifecycle is
 similarly scoped to `code_symbols_{project_id}` and does not touch Gobby memory
-vector collections.
+vector collections:
+
+```bash
+gcode vector clear
+gcode vector rebuild
+gcode vector cleanup-orphans
+```
 
 ## Operating Model
 
