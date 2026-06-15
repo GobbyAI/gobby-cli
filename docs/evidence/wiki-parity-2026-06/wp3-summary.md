@@ -29,6 +29,11 @@ End-to-end clean regen on a wiped + freshly-init'd vault. Binaries: gcode 1.1.0 
 | UUID5 make_id parity | snapshot.rs | **honest refusal** (insufficient evidence — no hallucination) | — |
 | FalkorDB unavailable | graph/reads.rs | cited (degrade to hints/empty/None) | — |
 
+Follow-up #779 (`wp3-ask-daemon-latency-followup.md`) confirmed the 15.8s daemon
+ask timing is provider-generation latency, not retrieval/RRF overhead. The
+direct/local <10s target remains valid; daemon-routed cited answers use a <20s
+soft target while `feature_low` resolves to the current Codex provider.
+
 Direct route wired via a temporary `~/.gobby/gcore.yaml` `text_generate` binding (`${OPENAI_BASE_URL}`/`${OPENAI_API_KEY}` env-interpolated, no secret committed), restored to original after. The honest-refusal answer is a parity win vs DeepWiki chat (which hallucinates).
 
 ## Step 5 — Agent research-deposit demo
