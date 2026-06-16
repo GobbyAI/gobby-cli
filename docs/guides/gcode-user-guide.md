@@ -119,6 +119,7 @@ gcode search "Context" --language rust         # Scope to Rust sources
 - `--offset N` — Skip first N results for pagination (default: 0)
 - `--kind <kind>` — Filter by symbol kind: `function`, `class`, `method`, `type`, etc. Use `gcode kinds` to list what's available in the current index.
 - `--language <lang>` — Filter by source language (e.g. `rust`, `python`, `typescript`, `css`).
+- `--token-budget N` — Trim returned rows to an approximate token ceiling. The estimate is `ceil(chars/4)` per rendered row; when rows are dropped, JSON includes a `hint` and text output prints a narrowing hint.
 - Positional `PATH` arguments after the query — Filter by one or more paths or globs (e.g. `src`, `src/**/*.rs`, `tests/*`). Bare paths match the exact file path and descendants; multiple paths use OR semantics.
 
 `--kind`, `--language`, and positional paths compose — combine them to narrow as far as you need. Globs that cannot be converted to SQL prefixes are still honored through post-filtering; JSON output includes a hint and text output prints a warning when that broader fetch path is used.
@@ -340,6 +341,7 @@ Incoming call sites:
 
 ```bash
 gcode usages "DatabasePool"
+gcode usages "DatabasePool" --token-budget 120
 ```
 
 ### Imports
@@ -356,9 +358,14 @@ Transitive impact analysis — what breaks if this changes?
 
 ```bash
 gcode blast-radius "handleAuth" --depth 3
+gcode blast-radius "handleAuth" --depth 3 --token-budget 160
 ```
 
 Walks the call graph to find all downstream dependents up to `--depth` levels deep.
+`usages` and `blast-radius` preserve the existing graph order, then trim rows
+from the tail when `--token-budget` is set. The estimate is `ceil(chars/4)` per
+rendered row, so it is a fast context-window guard rather than tokenizer-specific
+accounting. Budget-trimmed output includes a `refine with ...` hint.
 
 ## Project Management
 
@@ -561,7 +568,7 @@ gcode search "query" --format json   # Default — structured JSON
 gcode search "query" --format text   # Human-readable text
 ```
 
-JSON output for search/callers/usages is wrapped in a pagination envelope:
+JSON output for search/callers/usages/blast-radius is wrapped in a pagination envelope:
 
 ```json
 {
@@ -569,9 +576,12 @@ JSON output for search/callers/usages is wrapped in a pagination envelope:
   "total": 47,
   "offset": 0,
   "limit": 10,
-  "results": [...]
+  "results": [...],
+  "hint": "Token budget limited output to 3 of 10 results using ceil(chars/4) row estimates; refine with ..."
 }
 ```
+
+`hint` is omitted when there is no warning or narrowing guidance.
 
 Graph `callers` and `usages` result rows include `confidence`. AST-derived
 edges are emitted as `EXTRACTED`; future inferred edges can report `INFERRED`
