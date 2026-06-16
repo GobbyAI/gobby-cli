@@ -29,7 +29,7 @@ This workspace ships five Gobby CLI tools plus a shared library.
 |---|---|---:|---|
 | `gobby-code` | `gcode` | `1.1.0` | `gcode-v1.1.0` |
 | `gobby-core` | n/a | `0.5.0` | `gobby-core-v0.5.0` |
-| `gobby-hooks` | `ghook` | `0.5.0` | `ghook-v0.5.0` |
+| `gobby-hooks` | `ghook` | `0.6.0` | `ghook-v0.6.0` |
 | `gobby-squeeze` | `gsqz` | `0.4.7` | `gsqz-v0.4.7` |
 | `gobby-local` | `gloc` | `0.1.5` | `gloc-v0.1.5` |
 | `gobby-wiki` | `gwiki` | `0.4.0` | `gwiki-v0.4.0` |
