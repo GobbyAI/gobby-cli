@@ -7,20 +7,19 @@ This guide covers the multi-crate Rust release flow for maintainers.
 | Crate | Binary | Version | Tag | Publishes? |
 |---|---|---:|---|---|
 | `gobby-core` | n/a | `0.5.0` | `gobby-core-v0.5.0` | crates.io only |
-| `gobby-code` | `gcode` | `1.1.0` | `gcode-v1.1.0` | crates.io + GitHub binaries |
+| `gobby-code` | `gcode` | `1.2.0` | `gcode-v1.2.0` | crates.io + GitHub binaries |
 | `gobby-hooks` | `ghook` | `0.6.0` | `ghook-v0.6.0` | crates.io + GitHub binaries |
 | `gobby-squeeze` | `gsqz` | `0.4.7` | `gsqz-v0.4.7` | crates.io + GitHub binaries |
 | `gobby-local` | `gloc` | `0.1.5` | `gloc-v0.1.5` | crates.io + GitHub binaries |
-| `gobby-wiki` | `gwiki` | `0.4.0` | `gwiki-v0.4.0` | crates.io + GitHub binaries |
+| `gobby-wiki` | `gwiki` | `0.5.0` | `gwiki-v0.5.0` | crates.io + GitHub binaries |
 
 ## Version Rules
 
-- Bump `gobby-code` to `1.1.0` (post-1.0 minor: new features such as the
-  mid-tier AI profile and stderr diagnostics, no breaking CLI or envelope
-  changes).
+- Bump `gobby-code` to `1.2.0` (post-1.0 minor; verify there are no breaking
+  CLI or envelope changes).
 - Bump `gobby-core` to `0.5.0` (a breaking pre-1.0 minor bump: removed public
   APIs, `ureq` and the embeddings client re-gated under the `ai` feature).
-- Bump `gobby-wiki` to `0.4.0` and `gobby-hooks` to `0.6.0` (pre-1.0 minors
+- Bump `gobby-wiki` to `0.5.0` and `gobby-hooks` to `0.6.0` (pre-1.0 minors
   with new features).
 - Bump patch versions for `gobby-squeeze` and `gobby-local`.
 - `gobby-core 0.4.0 → 0.5.0` is breaking under Cargo's pre-1.0 semver, so every
@@ -42,17 +41,17 @@ git push origin gobby-core-v0.5.0
 
 # Wait for crates.io to index gobby-core 0.5.0.
 
-git tag gcode-v1.1.0
+git tag gcode-v1.2.0
 git tag ghook-v0.6.0
 git tag gsqz-v0.4.7
 git tag gloc-v0.1.5
-git tag gwiki-v0.4.0
+git tag gwiki-v0.5.0
 
 # Push the tags ONE AT A TIME. GitHub Actions does not create push events for
 # any tag when more than three tags arrive in a single push, so a batched
 # `git push origin <tag> <tag> <tag> <tag> ...` silently triggers NO release
 # workflows. Push each tag in its own invocation:
-for tag in gcode-v1.1.0 ghook-v0.6.0 gsqz-v0.4.7 gloc-v0.1.5 gwiki-v0.4.0; do
+for tag in gcode-v1.2.0 ghook-v0.6.0 gsqz-v0.4.7 gloc-v0.1.5 gwiki-v0.5.0; do
   git push origin "refs/tags/$tag"
 done
 ```
