@@ -7,7 +7,7 @@
 
 <p align="center">
   <strong>Rust CLI tools for AI-assisted development.</strong><br>
-  Code search, symbol navigation, output compression, local LLM launching, and multimodal research vaults — all from the terminal.
+  Code search, symbol navigation, hook dispatch, and multimodal research vaults — all from the terminal.
 </p>
 
 <p align="center">
@@ -21,7 +21,7 @@
 
 ## What's Inside
 
-This workspace ships five Gobby CLI tools plus a shared library.
+This workspace ships three Gobby CLI tools plus a shared library.
 
 ### Current Release Set
 
@@ -30,8 +30,6 @@ This workspace ships five Gobby CLI tools plus a shared library.
 | `gobby-code` | `gcode` | `1.2.0` | `gcode-v1.2.0` |
 | `gobby-core` | n/a | `0.5.0` | `gobby-core-v0.5.0` |
 | `gobby-hooks` | `ghook` | `0.6.0` | `ghook-v0.6.0` |
-| `gobby-squeeze` | `gsqz` | `0.4.7` | `gsqz-v0.4.7` |
-| `gobby-local` | `gloc` | `0.1.5` | `gloc-v0.1.5` |
 | `gobby-wiki` | `gwiki` | `0.5.0` | `gwiki-v0.5.0` |
 
 ### gcode — Code Search & Navigation
@@ -59,14 +57,6 @@ For non-Gobby-managed projects, `gcode init` installs the bundled `gcode` skill
 for Claude Code, Codex, Droid, Grok, Qwen, and Antigravity CLI. Gobby-managed
 projects skip those project-local skill writes because Gobby owns CLI wiring.
 
-### gsqz — Output Compression
-
-Squeezes CLI output before it eats your context window. 28 built-in pipelines for git, cargo, pytest, eslint, ruff, npm, and more. Filters noise, groups errors by rule, collapses repeats, and typically reduces token consumption by >90%. ~9ms overhead. YAML-configurable with layered config (global → project → CLI).
-
-### gloc — Local LLM Launcher
-
-One command to launch Claude Code or Codex against a local LLM backend. Auto-detects LM Studio and Ollama, manages Ollama model lifecycle (pull, load, warmup), sets the right env vars, and `exec`s into your CLI of choice. YAML-configurable with aliases, per-client env templates, and ordered backend priority.
-
 ### ghook — Hook Dispatcher
 
 Sandbox-tolerant hook dispatcher invoked by host AI CLIs (Claude Code, Codex, Gemini CLI, Qwen CLI) on lifecycle and tool-use events. Spools envelopes to `~/.gobby/hooks/inbox/` *before* POSTing to the local Gobby daemon, so the daemon's drain worker can replay any delivery lost to a sandbox FS-read denial, network blip, or daemon restart. You don't usually invoke it directly — Gobby wires it into your AI CLI for you.
@@ -90,15 +80,12 @@ contracts, and datastore client adapters. It is not a standalone tool.
 
 - [gcode User Guide](docs/guides/gcode-user-guide.md) — search, symbols, dependency graphs, project management
 - [Codewiki Guide](docs/guides/codewiki.md) — generated code documentation, AI prose depth, citations, incremental runs
-- [gsqz User Guide](docs/guides/gsqz-user-guide.md) — pipelines, step types, configuration, debugging
-- [gloc User Guide](docs/guides/gloc-user-guide.md) — backends, clients, model management, configuration
 - [ghook User Guide](docs/guides/ghook-user-guide.md) — hook wiring, diagnose mode, inbox/replay, troubleshooting
 - [gwiki User Guide](docs/guides/gwiki-user-guide.md) — vault setup, ingest, search, ask, research, compile
 - [gwiki Development Guide](docs/guides/gwiki-development-guide.md) — research vault ingest, indexing, and hybrid search
 - [Release Guide](docs/guides/release-guide.md) — crate versions, tag order, and local binary installation
 - [Changelog](CHANGELOG.md) — release history
 - [gcode README](crates/gcode/README.md) — architecture and build details
-- [gsqz README](crates/gsqz/README.md) — architecture and build details
 - [gwiki README](crates/gwiki/README.md) — architecture and build details
 
 ## Install
@@ -112,12 +99,6 @@ Download from [GitHub Releases](https://github.com/GobbyAI/gobby-cli/releases/la
 ```bash
 # gcode
 cargo install gobby-code
-
-# gsqz
-cargo install gobby-squeeze
-
-# gloc
-cargo install gobby-local
 
 # ghook
 cargo install gobby-hooks
@@ -157,8 +138,6 @@ Installing from source or crates.io requires Rust 1.88+.
 git clone https://github.com/GobbyAI/gobby-cli.git
 cd gobby-cli
 cargo install --path crates/gcode
-cargo install --path crates/gsqz
-cargo install --path crates/gloc
 cargo install --path crates/ghook
 cargo install --path crates/gwiki
 ```

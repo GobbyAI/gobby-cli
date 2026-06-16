@@ -23,7 +23,6 @@ The baseline crate remains dependency-light. Consumers that only need project di
 | `config` | always | Shared configuration-resolution contracts. Environment variables, `config_store`, and defaults are represented here as the foundation expands. |
 | `context` | always | Shared runtime context contracts for project identity, daemon URL, and service configuration. Consumer-specific CLI state stays outside. |
 | `degradation` | always | Shared vocabulary for configured-service unavailability, explicit degraded paths, partial search, stale indexes, skipped artifacts, and fatal core errors. |
-| `layered_config` | always | Layered YAML config loading for tool binaries (gsqz, gloc): CLI override → `.gobby/<tool>.yaml` at the CWD or project root → `<gobby_home>/<tool>.yaml` → caller's built-in default. First found wins; parse failures error instead of falling through. |
 | `setup` | always | Attached and standalone setup contracts. Runtime commands validate externally managed resources and do not implicitly migrate them. |
 | `postgres` | `postgres` | PostgreSQL hub adapter boundary. Validates Gobby-owned schema and BM25 requirements without creating, altering, or dropping managed objects. |
 | `falkor` | `falkor` | FalkorDB adapter boundary. Graph connection helpers live here without making FalkorDB a baseline dependency. |
@@ -176,8 +175,7 @@ qdrant = ["dep:reqwest", "dep:urlencoding"]
 indexing = ["dep:ignore", "dep:sha2"]
 search = []
 graph-analytics = []
-local-backend = []
-ai = ["dep:reqwest", "dep:base64", "dep:bytes", "dep:httpdate", "dep:rand", "dep:ureq", "local-backend", "reqwest/multipart"]
+ai = ["dep:reqwest", "dep:base64", "dep:bytes", "dep:httpdate", "dep:rand", "dep:ureq", "reqwest/multipart"]
 full = ["postgres", "falkor", "qdrant", "indexing", "search", "graph-analytics", "ai"]
 ```
 
@@ -191,8 +189,7 @@ Feature rationale:
 | `indexing` | `ignore`, `sha2` | File walking and content hashing are useful for indexing consumers only. |
 | `search` | no extra dependency today | Search fusion contracts are lightweight, but still opt-in so the public surface remains explicit. |
 | `graph-analytics` | no extra dependency today | In-memory graph analytics remain opt-in so the public surface stays explicit. |
-| `local-backend` | no extra dependency today | Local backend discovery uses a hand-rolled `TcpStream` probe so tiny consumers (gloc) link no HTTP client. |
-| `ai` | `reqwest`, `ureq`, AI payload helpers, and `local-backend` | AI transport, daemon probing, routing helpers, and the shared blocking OpenAI-compatible embeddings client (`ai::embeddings`, consumed by gcode and gwiki for direct embedding requests) need HTTP clients, local backend discovery, and multipart payload support. |
+| `ai` | `reqwest`, `ureq`, and AI payload helpers | AI transport, daemon probing, routing helpers, and the shared blocking OpenAI-compatible embeddings client (`ai::embeddings`, consumed by gcode and gwiki for direct embedding requests) need HTTP clients and multipart payload support. |
 | `full` | all feature modules | Convenience feature for development and consumers that need the whole foundation layer. |
 
 Every individual feature must compile in isolation. Do not rely on `--all-features` to hide missing feature dependencies.
