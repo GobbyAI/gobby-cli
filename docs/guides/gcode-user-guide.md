@@ -573,6 +573,10 @@ JSON output for search/callers/usages is wrapped in a pagination envelope:
 }
 ```
 
+Graph `callers` and `usages` result rows include `confidence`. AST-derived
+edges are emitted as `EXTRACTED`; future inferred edges can report `INFERRED`
+or `AMBIGUOUS` while preserving the same result shape.
+
 Text output shows a pagination hint when more results are available:
 
 ```text
