@@ -111,9 +111,10 @@ data for missing paths, and then runs project-wide graph orphan cleanup once.
 `gcode vector cleanup-orphans` is the Qdrant counterpart: it scrolls
 `code_symbols_{project_id}` payloads filtered by `project_id`, compares
 distinct `file_path` values against PostgreSQL, and deletes orphaned vector
-points. `gcode prune` composes stale-project pruning with both projection
-cleanup paths for the resolved current project and reports graph/vector
-degradation independently.
+points. Plain `gcode prune` composes stale-project pruning with both projection
+cleanup paths for every remaining indexed project. `gcode --project
+<path-or-name> prune` keeps projection cleanup scoped to the resolved project,
+and both modes report graph/vector degradation independently.
 
 ## Report And Degradation Contract
 

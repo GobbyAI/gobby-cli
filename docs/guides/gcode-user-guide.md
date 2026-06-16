@@ -382,8 +382,8 @@ gcode projects
 
 ### Prune And Projection Cleanup
 
-Remove stale project records from the PostgreSQL hub and reconcile the current
-project's graph/vector projections against `code_indexed_files`:
+Remove stale project records from the PostgreSQL hub and reconcile graph/vector
+projections against `code_indexed_files`:
 
 ```bash
 gcode prune
@@ -391,10 +391,11 @@ gcode prune --force
 ```
 
 Stale-project pruning is global and keeps its confirmation prompt unless
-`--force` is supplied. When `gcode prune` also resolves a current project, it
-deletes FalkorDB and Qdrant projection data for file paths that no longer exist
-in PostgreSQL. Outside a project, without `--project`, it keeps the old
-stale-project-only behavior.
+`--force` is supplied. Plain `gcode prune` re-collects the remaining indexed
+projects after stale invalidation, then deletes FalkorDB and Qdrant projection
+data for file paths that no longer exist in PostgreSQL for each remaining
+project. `gcode --project <path-or-name> prune` keeps projection cleanup scoped
+to the resolved project.
 
 Projection-specific cleanup is available when only one store needs
 reconciliation:
@@ -410,8 +411,8 @@ from PostgreSQL, and runs project orphan cleanup once. `gcode vector
 cleanup-orphans` scans `code_symbols_{project_id}` Qdrant payloads filtered by
 `project_id`, then deletes vector points for paths missing from PostgreSQL.
 Top-level `gcode prune` reports graph and vector cleanup failures independently
-so an unavailable FalkorDB does not block Qdrant cleanup, and an unavailable
-Qdrant does not block graph cleanup.
+for each project so an unavailable FalkorDB does not block Qdrant cleanup, and
+an unavailable Qdrant does not block graph cleanup.
 
 ### Cross-Project Queries
 
