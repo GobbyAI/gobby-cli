@@ -5,5 +5,5 @@ reviews:
   profile: assertive
   path_filters:
     - "!.gobby/plans/completed/**"
-    - "!**/.gobby/wiki/**"
+    - "!.gobby/wiki/**"
     - "!docs/plans/completed/**"
