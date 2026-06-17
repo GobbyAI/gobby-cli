@@ -15,7 +15,14 @@
 !.gobby/plans/gwiki-parity-plus.md
 gobby-wiki/_meta/**
 gobby-wiki/**/*.lock
-gobby-wiki/.obsidian/workspace.json
-gobby-wiki/.obsidian/workspaces.json
-gobby-wiki/.obsidian/workspace-mobile.json
+
+# Obsidian vault config: ignore personal/local state by default.
+gobby-wiki/.obsidian/*
+!gobby-wiki/.obsidian/
+!gobby-wiki/.obsidian/app.json
+!gobby-wiki/.obsidian/appearance.json
+!gobby-wiki/.obsidian/core-plugins.json
+!gobby-wiki/.obsidian/hotkeys.json
+!gobby-wiki/.obsidian/snippets/
+!gobby-wiki/.obsidian/snippets/**
 .playwright/
