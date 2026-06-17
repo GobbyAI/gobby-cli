@@ -75,9 +75,10 @@ Infrastructure and hub-connection config stays env-first: env vars (`GOBBY_FALKO
 
 AI capability config is the carve-out: `ai.*` keys resolve from `config_store` → standalone `~/.gobby/gcore.yaml` → defaults, with no `GOBBY_*` env-var layer. CLI flags may still override for a single invocation.
 
-### 4. Do NOT run `gcode invalidate`
+ ### 4. Require explicit user permission before running `gcode invalidate`
 
-`invalidate` destroys the project's code index and requires interactive confirmation. It exists for human use only. Use `gcode index` for incremental re-indexing instead.
+ `invalidate` destroys the project's code index and requires interactive confirmation. Agents may run it only when the user explicitly asks for
+  or approves a code-index wipe. Otherwise, use `gcode index` for incremental re-indexing instead.
 
 ## Common Tasks
 
