@@ -18,3 +18,4 @@
 !.gobby/plans/coverage/**
 !.gobby/plans/gwiki-parity-plus.md
 .playwright/
+.obsidian/
