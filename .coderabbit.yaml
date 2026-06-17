@@ -5,5 +5,8 @@ reviews:
   profile: assertive
   path_filters:
     - "!.gobby/plans/completed/**"
-    - "!.gobby/wiki/**"
+    - "!gobby-wiki/**"
+    - "!gobby-wiki/.obsidian/**"
+    - "!gobby-wiki/_meta/**"
+    - "!gobby-wiki/**/*.lock"
     - "!docs/plans/completed/**"

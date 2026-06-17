@@ -6,10 +6,6 @@
 !.gobby/memories.jsonl
 !.gobby/project.json
 !.gobby/project.jsonl
-!.gobby/wiki/
-!.gobby/wiki/**
-.gobby/wiki/_meta/**
-.gobby/wiki/**/*.lock
 !.gobby/plans/
 .gobby/plans/**
 !.gobby/plans/completed/
@@ -17,5 +13,9 @@
 !.gobby/plans/coverage/
 !.gobby/plans/coverage/**
 !.gobby/plans/gwiki-parity-plus.md
+gobby-wiki/_meta/**
+gobby-wiki/**/*.lock
+gobby-wiki/.obsidian/workspace.json
+gobby-wiki/.obsidian/workspaces.json
+gobby-wiki/.obsidian/workspace-mobile.json
 .playwright/
-.obsidian/

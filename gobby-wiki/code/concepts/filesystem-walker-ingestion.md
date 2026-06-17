@@ -1,0 +1,597 @@
+---
+title: Filesystem Walker & Ingestion
+type: code_concept
+provenance:
+- file: crates/gcode/src/freshness.rs
+  ranges:
+  - 13-16
+  - 19-22
+  - 24-83
+  - 93-121
+  - 123-144
+  - 146-160
+  - 162-182
+  - '184'
+  - 187-192
+  - 196-199
+  - 208-222
+  - 224-226
+  - 228-245
+  - 247-264
+  - 266-273
+  - 275-283
+  - 285-290
+  - 292-305
+  - 312-320
+  - 328-335
+  - 343-382
+  - 386-422
+- file: crates/gcode/src/git.rs
+  ranges:
+  - 5-9
+  - 12-17
+  - 19-51
+  - 53-63
+  - 65-77
+  - 79-87
+  - 93-101
+  - 103-118
+  - 121-132
+  - 135-158
+  - 161-181
+- file: crates/gcode/src/index/api.rs
+  ranges:
+  - 16-23
+  - 26-34
+  - 37-47
+  - 50-60
+  - 62-84
+  - 86-108
+  - 110-125
+  - 127-241
+  - 243-269
+  - 271-298
+  - 300-325
+  - 327-347
+  - 349-364
+  - 366-392
+  - 398-420
+  - 422-424
+- file: crates/gcode/src/index/import_resolution/context.rs
+  ranges:
+  - 41-138
+  - 144-146
+  - 151-166
+  - 170-187
+  - 194-206
+  - 212-214
+  - 220-225
+  - 231-236
+  - 241-246
+  - 248-253
+  - 255-277
+  - 279-284
+  - 286-291
+  - 297-302
+  - 309-319
+  - 321-326
+  - 328-333
+  - 335-340
+  - 345-350
+  - 353-363
+  - 365-409
+- file: crates/gcode/src/index/import_resolution/context/apple.rs
+  ranges:
+  - 8-12
+  - 14-110
+  - 112-123
+  - 125-149
+  - 151-169
+  - 171-187
+  - 189-196
+  - 203-225
+  - 232-274
+- file: crates/gcode/src/index/import_resolution/context/bindings.rs
+  ranges:
+  - 6-9
+  - 12-15
+  - 22-29
+  - 32-38
+  - 40-46
+  - 48-50
+  - 54-90
+  - 93-96
+  - 99-102
+  - 105-108
+- file: crates/gcode/src/index/import_resolution/context/package_metadata.rs
+  ranges:
+  - 4-38
+  - 40-49
+  - 51-60
+  - 66-97
+  - 99-102
+  - 104-130
+  - 132-172
+  - 174-185
+  - 187-197
+  - 199-201
+  - 203-224
+  - 226-234
+  - 242-244
+  - 247-249
+  - 252-270
+- file: crates/gcode/src/index/import_resolution/helpers.rs
+  ranges:
+  - 3-5
+  - 7-13
+  - 15-19
+  - 21-49
+  - 51-88
+  - 90-99
+  - 101-107
+  - 109-136
+  - 138-166
+  - 169-174
+  - 177-183
+  - 189-196
+  - 199-214
+  - 216-305
+  - 307-309
+  - 311-318
+  - 320-332
+  - 341-362
+  - 368-381
+  - 383-385
+  - 387-389
+  - 391-403
+- file: crates/gcode/src/index/import_resolution/js_local.rs
+  ranges:
+  - 7-24
+  - 26-69
+  - 71-84
+  - 86-99
+  - 101-115
+  - 117-124
+  - 126-134
+  - 140-142
+  - 145-150
+  - 153-156
+  - 159-162
+  - 165-169
+  - 172-174
+- file: crates/gcode/src/index/import_resolution/parser/mod.rs
+  ranges:
+  - 40-69
+  - 71-89
+  - 91-141
+  - 143-218
+  - 220-233
+  - 235-254
+  - 265-291
+  - 302-323
+  - 334-351
+  - 360-384
+  - 402-439
+  - 441-453
+  - 469-507
+- file: crates/gcode/src/index/import_resolution/parser/php_kotlin.rs
+  ranges:
+  - 9-16
+  - 18-61
+  - 64-68
+  - 70-136
+  - 138-189
+  - 199-226
+  - 228-247
+  - 249-262
+  - 264-270
+  - 272-292
+- file: crates/gcode/src/index/import_resolution/predicates.rs
+  ranges:
+  - 8-21
+  - 23-53
+  - 55-68
+  - 70-77
+  - 79-81
+  - 83-88
+  - 94-107
+  - 109-179
+  - 185-201
+  - 203-210
+  - 212-220
+  - 222-231
+  - 233-241
+  - 243-251
+  - 258-262
+  - 264-276
+  - 284-288
+  - 290-302
+  - 304-316
+  - 318-328
+- file: crates/gcode/src/index/import_resolution/rust_local.rs
+  ranges:
+  - 5-9
+  - 12-15
+  - 23-33
+  - 35-55
+  - 57-73
+  - 75-93
+  - 95-111
+  - 113-123
+  - 125-129
+  - 131-136
+  - 143-151
+  - 154-159
+  - 162-178
+  - 181-194
+  - 197-205
+  - 208-216
+- file: crates/gcode/src/index/indexer/file.rs
+  ranges:
+  - 15-91
+  - 93-102
+  - 104-111
+  - 114-118
+  - 120-130
+  - 133-180
+  - 182-232
+  - 234-267
+  - 278-284
+  - 287-293
+  - 296-302
+- file: crates/gcode/src/index/indexer/freshness_probe.rs
+  ranges:
+  - 37-81
+  - 89-96
+  - 98-105
+  - 109-111
+  - 113-115
+  - 118-138
+  - 141-156
+  - 159-176
+  - 179-195
+  - 198-235
+  - 238-265
+- file: crates/gcode/src/index/indexer/lifecycle.rs
+  ranges:
+  - 16-54
+  - 56-69
+  - 71-81
+  - 84-121
+  - 125-152
+  - 154-181
+  - 183-229
+  - 232-235
+  - 237-260
+  - 262-294
+  - 296-305
+- file: crates/gcode/src/index/indexer/overlay.rs
+  ranges:
+  - 33-36
+  - 39-45
+  - 47-83
+  - 85-260
+  - 262-293
+  - 295-304
+  - 306-326
+  - 328-380
+  - 382-398
+  - 400-405
+  - 407-412
+  - 414-419
+  - 421-434
+  - 436-452
+  - 460-467
+  - 471-475
+  - 479-488
+- file: crates/gcode/src/index/indexer/sink.rs
+  ranges:
+  - 6-34
+  - 36-38
+  - 41-43
+  - 50-52
+  - 54-60
+  - 62-69
+  - 71-73
+  - 75-77
+  - 79-86
+  - 88-95
+  - 97-99
+- file: crates/gcode/src/index/indexer/types.rs
+  ranges:
+  - 8-17
+  - 20-25
+  - 29-42
+  - 45-68
+  - 71-76
+  - 79-84
+  - 87-92
+  - 94-104
+  - 106-108
+  - 111-113
+  - 116-124
+- file: crates/gcode/src/index/indexer/util.rs
+  ranges:
+  - 28-66
+  - 70-93
+  - 95-101
+  - 103-111
+  - 113-142
+  - 144-154
+  - 156-160
+  - 162-169
+  - 176-186
+  - 189-194
+  - 197-205
+  - 209-214
+  - 218-223
+  - 227-232
+- file: crates/gcode/src/index/languages.rs
+  ranges:
+  - 9-14
+  - 443-459
+  - 461-480
+  - 482-484
+  - 486-492
+  - 494-500
+  - 502-533
+  - 535-548
+  - 550-555
+  - 557-566
+  - 568-570
+  - 572-574
+  - 577-582
+  - 591-595
+  - 598-624
+  - 627-638
+  - 645-649
+  - 652-657
+  - 660-663
+  - 666-669
+  - 672-675
+  - 678-680
+  - 683-686
+  - 689-691
+  - 694-708
+  - 711-722
+  - 725-740
+  - 743-757
+  - 760-766
+  - 769-775
+  - 777-782
+  - 784-789
+  - 792-802
+- file: crates/gcode/src/index/parser.rs
+  ranges:
+  - 29-134
+  - 136-235
+  - 237-264
+  - 266-318
+  - 320-326
+  - 328-389
+  - 391-398
+  - 400-443
+- file: crates/gcode/src/index/parser/calls/ast.rs
+  ranges:
+  - 17-103
+  - 105-135
+  - 148-179
+  - 181-193
+  - 196-205
+  - 208-217
+  - 220-235
+  - 238-252
+- file: crates/gcode/src/index/parser/calls/dart_textual.rs
+  ranges:
+  - 8-55
+  - 57-77
+  - 79-168
+  - 170-172
+  - 174-189
+  - 191-216
+  - 218-223
+  - 226-232
+  - 235-237
+  - 239-243
+  - 247-252
+  - 255-259
+  - 262-362
+  - 364-366
+  - 368-370
+  - 373-375
+  - 377-379
+  - 381-391
+  - 393-417
+  - 419-441
+  - 443-492
+- file: crates/gcode/src/index/parser/calls/resolution.rs
+  ranges:
+  - 6-10
+  - 17-21
+  - 23-46
+  - 48-62
+  - 64-66
+  - 68-96
+  - 98-112
+  - 114-122
+  - 124-145
+  - 147-202
+  - 204-209
+  - 211-222
+  - 224-229
+  - 239-285
+- file: crates/gcode/src/index/parser/calls/shadowing.rs
+  ranges:
+  - 6-23
+  - 25-43
+  - 45-84
+  - 86-96
+  - 98-113
+  - 115-129
+  - 131-153
+  - 155-218
+  - 220-224
+  - 226-235
+  - 237-260
+  - 262-273
+  - 283-299
+  - 302-315
+  - 318-327
+  - 330-339
+  - 342-351
+  - 354-363
+- file: crates/gcode/src/index/parser/calls/text.rs
+  ranges:
+  - 4-20
+  - 22-30
+  - 32-49
+  - 51-53
+  - 55-57
+  - 59-61
+  - 63-65
+  - 67-153
+  - 160-165
+  - 168-174
+- file: crates/gcode/src/index/security.rs
+  ranges:
+  - 26-31
+  - 34-39
+  - 42-54
+  - 63-89
+  - 91-93
+  - 96-120
+  - 123-127
+  - 129-148
+- file: crates/gcode/src/index/semantic.rs
+  ranges:
+  - 15-23
+  - 26-29
+  - 33-43
+  - 45-50
+  - 53-55
+  - 57-85
+  - 87-105
+  - 107-122
+  - 124-135
+  - 137-145
+  - 147-153
+  - 155-175
+  - 177-210
+  - 215-231
+  - 233-240
+  - 242-248
+  - 251-256
+  - 259-271
+  - 274-295
+  - 297-302
+  - 304-330
+  - 332-335
+  - 337-339
+  - 341-356
+  - 358-366
+  - 369-399
+  - 401-413
+  - 415-433
+  - 435-463
+  - 465-475
+  - 477-483
+  - 485-490
+  - 492-494
+  - 498-504
+  - 508-543
+  - 546-552
+  - 554-572
+  - 574-596
+  - 598-630
+  - 632-640
+  - 651-658
+  - 661-673
+  - 676-685
+  - 688-693
+  - 696-702
+  - 705-723
+  - 726-746
+  - 749-762
+  - 765-798
+  - 801-819
+  - 823-827
+  - 831-835
+  - 839-844
+  - 848-853
+  - 858-882
+  - 885-920
+- file: crates/gcode/src/index/walker/hidden.rs
+  ranges:
+  - 13-15
+  - 18-25
+  - 27-35
+  - 37-53
+  - 55-63
+  - 66-80
+  - 82-94
+  - 96-102
+  - 104-107
+  - 109-117
+  - 119-149
+  - 151-176
+  - 178-186
+provenance_truncated: 31
+generated_by: gcode-codewiki
+trust: generated
+freshness: indexed
+---
+
+<details>
+<summary>Relevant source files</summary>
+
+- [crates/gcode/src/freshness.rs:13-16](crates/gcode/src/freshness.rs#L13-L16), [crates/gcode/src/freshness.rs:19-22](crates/gcode/src/freshness.rs#L19-L22), [crates/gcode/src/freshness.rs:24-83](crates/gcode/src/freshness.rs#L24-L83), [crates/gcode/src/freshness.rs:93-121](crates/gcode/src/freshness.rs#L93-L121), [crates/gcode/src/freshness.rs:123-144](crates/gcode/src/freshness.rs#L123-L144), [crates/gcode/src/freshness.rs:146-160](crates/gcode/src/freshness.rs#L146-L160), [crates/gcode/src/freshness.rs:162-182](crates/gcode/src/freshness.rs#L162-L182), [crates/gcode/src/freshness.rs:184](crates/gcode/src/freshness.rs#L184), [crates/gcode/src/freshness.rs:187-192](crates/gcode/src/freshness.rs#L187-L192), [crates/gcode/src/freshness.rs:196-199](crates/gcode/src/freshness.rs#L196-L199), [crates/gcode/src/freshness.rs:208-222](crates/gcode/src/freshness.rs#L208-L222), [crates/gcode/src/freshness.rs:224-226](crates/gcode/src/freshness.rs#L224-L226), [crates/gcode/src/freshness.rs:228-245](crates/gcode/src/freshness.rs#L228-L245), [crates/gcode/src/freshness.rs:247-264](crates/gcode/src/freshness.rs#L247-L264), [crates/gcode/src/freshness.rs:266-273](crates/gcode/src/freshness.rs#L266-L273), [crates/gcode/src/freshness.rs:275-283](crates/gcode/src/freshness.rs#L275-L283), [crates/gcode/src/freshness.rs:285-290](crates/gcode/src/freshness.rs#L285-L290), [crates/gcode/src/freshness.rs:292-305](crates/gcode/src/freshness.rs#L292-L305), [crates/gcode/src/freshness.rs:312-320](crates/gcode/src/freshness.rs#L312-L320), [crates/gcode/src/freshness.rs:328-335](crates/gcode/src/freshness.rs#L328-L335), [crates/gcode/src/freshness.rs:343-382](crates/gcode/src/freshness.rs#L343-L382), [crates/gcode/src/freshness.rs:386-422](crates/gcode/src/freshness.rs#L386-L422)
+- [crates/gcode/src/git.rs:5-9](crates/gcode/src/git.rs#L5-L9), [crates/gcode/src/git.rs:12-17](crates/gcode/src/git.rs#L12-L17), [crates/gcode/src/git.rs:19-51](crates/gcode/src/git.rs#L19-L51), [crates/gcode/src/git.rs:53-63](crates/gcode/src/git.rs#L53-L63), [crates/gcode/src/git.rs:65-77](crates/gcode/src/git.rs#L65-L77), [crates/gcode/src/git.rs:79-87](crates/gcode/src/git.rs#L79-L87), [crates/gcode/src/git.rs:93-101](crates/gcode/src/git.rs#L93-L101), [crates/gcode/src/git.rs:103-118](crates/gcode/src/git.rs#L103-L118), [crates/gcode/src/git.rs:121-132](crates/gcode/src/git.rs#L121-L132), [crates/gcode/src/git.rs:135-158](crates/gcode/src/git.rs#L135-L158), [crates/gcode/src/git.rs:161-181](crates/gcode/src/git.rs#L161-L181)
+- [crates/gcode/src/index/api.rs:16-23](crates/gcode/src/index/api.rs#L16-L23), [crates/gcode/src/index/api.rs:26-34](crates/gcode/src/index/api.rs#L26-L34), [crates/gcode/src/index/api.rs:37-47](crates/gcode/src/index/api.rs#L37-L47), [crates/gcode/src/index/api.rs:50-60](crates/gcode/src/index/api.rs#L50-L60), [crates/gcode/src/index/api.rs:62-84](crates/gcode/src/index/api.rs#L62-L84), [crates/gcode/src/index/api.rs:86-108](crates/gcode/src/index/api.rs#L86-L108), [crates/gcode/src/index/api.rs:110-125](crates/gcode/src/index/api.rs#L110-L125), [crates/gcode/src/index/api.rs:127-241](crates/gcode/src/index/api.rs#L127-L241), [crates/gcode/src/index/api.rs:243-269](crates/gcode/src/index/api.rs#L243-L269), [crates/gcode/src/index/api.rs:271-298](crates/gcode/src/index/api.rs#L271-L298), [crates/gcode/src/index/api.rs:300-325](crates/gcode/src/index/api.rs#L300-L325), [crates/gcode/src/index/api.rs:327-347](crates/gcode/src/index/api.rs#L327-L347), [crates/gcode/src/index/api.rs:349-364](crates/gcode/src/index/api.rs#L349-L364), [crates/gcode/src/index/api.rs:366-392](crates/gcode/src/index/api.rs#L366-L392), [crates/gcode/src/index/api.rs:398-420](crates/gcode/src/index/api.rs#L398-L420), [crates/gcode/src/index/api.rs:422-424](crates/gcode/src/index/api.rs#L422-L424)
+- [crates/gcode/src/index/import_resolution/context.rs:41-138](crates/gcode/src/index/import_resolution/context.rs#L41-L138), [crates/gcode/src/index/import_resolution/context.rs:144-146](crates/gcode/src/index/import_resolution/context.rs#L144-L146), [crates/gcode/src/index/import_resolution/context.rs:151-166](crates/gcode/src/index/import_resolution/context.rs#L151-L166), [crates/gcode/src/index/import_resolution/context.rs:170-187](crates/gcode/src/index/import_resolution/context.rs#L170-L187), [crates/gcode/src/index/import_resolution/context.rs:194-206](crates/gcode/src/index/import_resolution/context.rs#L194-L206), [crates/gcode/src/index/import_resolution/context.rs:212-214](crates/gcode/src/index/import_resolution/context.rs#L212-L214), [crates/gcode/src/index/import_resolution/context.rs:220-225](crates/gcode/src/index/import_resolution/context.rs#L220-L225), [crates/gcode/src/index/import_resolution/context.rs:231-236](crates/gcode/src/index/import_resolution/context.rs#L231-L236), [crates/gcode/src/index/import_resolution/context.rs:241-246](crates/gcode/src/index/import_resolution/context.rs#L241-L246), [crates/gcode/src/index/import_resolution/context.rs:248-253](crates/gcode/src/index/import_resolution/context.rs#L248-L253), [crates/gcode/src/index/import_resolution/context.rs:255-277](crates/gcode/src/index/import_resolution/context.rs#L255-L277), [crates/gcode/src/index/import_resolution/context.rs:279-284](crates/gcode/src/index/import_resolution/context.rs#L279-L284), [crates/gcode/src/index/import_resolution/context.rs:286-291](crates/gcode/src/index/import_resolution/context.rs#L286-L291), [crates/gcode/src/index/import_resolution/context.rs:297-302](crates/gcode/src/index/import_resolution/context.rs#L297-L302), [crates/gcode/src/index/import_resolution/context.rs:309-319](crates/gcode/src/index/import_resolution/context.rs#L309-L319), [crates/gcode/src/index/import_resolution/context.rs:321-326](crates/gcode/src/index/import_resolution/context.rs#L321-L326), [crates/gcode/src/index/import_resolution/context.rs:328-333](crates/gcode/src/index/import_resolution/context.rs#L328-L333), [crates/gcode/src/index/import_resolution/context.rs:335-340](crates/gcode/src/index/import_resolution/context.rs#L335-L340), [crates/gcode/src/index/import_resolution/context.rs:345-350](crates/gcode/src/index/import_resolution/context.rs#L345-L350), [crates/gcode/src/index/import_resolution/context.rs:353-363](crates/gcode/src/index/import_resolution/context.rs#L353-L363), [crates/gcode/src/index/import_resolution/context.rs:365-409](crates/gcode/src/index/import_resolution/context.rs#L365-L409)
+- [crates/gcode/src/index/import_resolution/context/apple.rs:8-12](crates/gcode/src/index/import_resolution/context/apple.rs#L8-L12), [crates/gcode/src/index/import_resolution/context/apple.rs:14-110](crates/gcode/src/index/import_resolution/context/apple.rs#L14-L110), [crates/gcode/src/index/import_resolution/context/apple.rs:112-123](crates/gcode/src/index/import_resolution/context/apple.rs#L112-L123), [crates/gcode/src/index/import_resolution/context/apple.rs:125-149](crates/gcode/src/index/import_resolution/context/apple.rs#L125-L149), [crates/gcode/src/index/import_resolution/context/apple.rs:151-169](crates/gcode/src/index/import_resolution/context/apple.rs#L151-L169), [crates/gcode/src/index/import_resolution/context/apple.rs:171-187](crates/gcode/src/index/import_resolution/context/apple.rs#L171-L187), [crates/gcode/src/index/import_resolution/context/apple.rs:189-196](crates/gcode/src/index/import_resolution/context/apple.rs#L189-L196), [crates/gcode/src/index/import_resolution/context/apple.rs:203-225](crates/gcode/src/index/import_resolution/context/apple.rs#L203-L225), [crates/gcode/src/index/import_resolution/context/apple.rs:232-274](crates/gcode/src/index/import_resolution/context/apple.rs#L232-L274)
+- [crates/gcode/src/index/import_resolution/context/bindings.rs:6-9](crates/gcode/src/index/import_resolution/context/bindings.rs#L6-L9), [crates/gcode/src/index/import_resolution/context/bindings.rs:12-15](crates/gcode/src/index/import_resolution/context/bindings.rs#L12-L15), [crates/gcode/src/index/import_resolution/context/bindings.rs:22-29](crates/gcode/src/index/import_resolution/context/bindings.rs#L22-L29), [crates/gcode/src/index/import_resolution/context/bindings.rs:32-38](crates/gcode/src/index/import_resolution/context/bindings.rs#L32-L38), [crates/gcode/src/index/import_resolution/context/bindings.rs:40-46](crates/gcode/src/index/import_resolution/context/bindings.rs#L40-L46), [crates/gcode/src/index/import_resolution/context/bindings.rs:48-50](crates/gcode/src/index/import_resolution/context/bindings.rs#L48-L50), [crates/gcode/src/index/import_resolution/context/bindings.rs:54-90](crates/gcode/src/index/import_resolution/context/bindings.rs#L54-L90), [crates/gcode/src/index/import_resolution/context/bindings.rs:93-96](crates/gcode/src/index/import_resolution/context/bindings.rs#L93-L96), [crates/gcode/src/index/import_resolution/context/bindings.rs:99-102](crates/gcode/src/index/import_resolution/context/bindings.rs#L99-L102), [crates/gcode/src/index/import_resolution/context/bindings.rs:105-108](crates/gcode/src/index/import_resolution/context/bindings.rs#L105-L108)
+- [crates/gcode/src/index/import_resolution/context/package_metadata.rs:4-38](crates/gcode/src/index/import_resolution/context/package_metadata.rs#L4-L38), [crates/gcode/src/index/import_resolution/context/package_metadata.rs:40-49](crates/gcode/src/index/import_resolution/context/package_metadata.rs#L40-L49), [crates/gcode/src/index/import_resolution/context/package_metadata.rs:51-60](crates/gcode/src/index/import_resolution/context/package_metadata.rs#L51-L60), [crates/gcode/src/index/import_resolution/context/package_metadata.rs:66-97](crates/gcode/src/index/import_resolution/context/package_metadata.rs#L66-L97), [crates/gcode/src/index/import_resolution/context/package_metadata.rs:99-102](crates/gcode/src/index/import_resolution/context/package_metadata.rs#L99-L102), [crates/gcode/src/index/import_resolution/context/package_metadata.rs:104-130](crates/gcode/src/index/import_resolution/context/package_metadata.rs#L104-L130), [crates/gcode/src/index/import_resolution/context/package_metadata.rs:132-172](crates/gcode/src/index/import_resolution/context/package_metadata.rs#L132-L172), [crates/gcode/src/index/import_resolution/context/package_metadata.rs:174-185](crates/gcode/src/index/import_resolution/context/package_metadata.rs#L174-L185), [crates/gcode/src/index/import_resolution/context/package_metadata.rs:187-197](crates/gcode/src/index/import_resolution/context/package_metadata.rs#L187-L197), [crates/gcode/src/index/import_resolution/context/package_metadata.rs:199-201](crates/gcode/src/index/import_resolution/context/package_metadata.rs#L199-L201), [crates/gcode/src/index/import_resolution/context/package_metadata.rs:203-224](crates/gcode/src/index/import_resolution/context/package_metadata.rs#L203-L224), [crates/gcode/src/index/import_resolution/context/package_metadata.rs:226-234](crates/gcode/src/index/import_resolution/context/package_metadata.rs#L226-L234), [crates/gcode/src/index/import_resolution/context/package_metadata.rs:242-244](crates/gcode/src/index/import_resolution/context/package_metadata.rs#L242-L244), [crates/gcode/src/index/import_resolution/context/package_metadata.rs:247-249](crates/gcode/src/index/import_resolution/context/package_metadata.rs#L247-L249), [crates/gcode/src/index/import_resolution/context/package_metadata.rs:252-270](crates/gcode/src/index/import_resolution/context/package_metadata.rs#L252-L270)
+- [crates/gcode/src/index/import_resolution/helpers.rs:3-5](crates/gcode/src/index/import_resolution/helpers.rs#L3-L5), [crates/gcode/src/index/import_resolution/helpers.rs:7-13](crates/gcode/src/index/import_resolution/helpers.rs#L7-L13), [crates/gcode/src/index/import_resolution/helpers.rs:15-19](crates/gcode/src/index/import_resolution/helpers.rs#L15-L19), [crates/gcode/src/index/import_resolution/helpers.rs:21-49](crates/gcode/src/index/import_resolution/helpers.rs#L21-L49), [crates/gcode/src/index/import_resolution/helpers.rs:51-88](crates/gcode/src/index/import_resolution/helpers.rs#L51-L88), [crates/gcode/src/index/import_resolution/helpers.rs:90-99](crates/gcode/src/index/import_resolution/helpers.rs#L90-L99), [crates/gcode/src/index/import_resolution/helpers.rs:101-107](crates/gcode/src/index/import_resolution/helpers.rs#L101-L107), [crates/gcode/src/index/import_resolution/helpers.rs:109-136](crates/gcode/src/index/import_resolution/helpers.rs#L109-L136), [crates/gcode/src/index/import_resolution/helpers.rs:138-166](crates/gcode/src/index/import_resolution/helpers.rs#L138-L166), [crates/gcode/src/index/import_resolution/helpers.rs:169-174](crates/gcode/src/index/import_resolution/helpers.rs#L169-L174), [crates/gcode/src/index/import_resolution/helpers.rs:177-183](crates/gcode/src/index/import_resolution/helpers.rs#L177-L183), [crates/gcode/src/index/import_resolution/helpers.rs:189-196](crates/gcode/src/index/import_resolution/helpers.rs#L189-L196), [crates/gcode/src/index/import_resolution/helpers.rs:199-214](crates/gcode/src/index/import_resolution/helpers.rs#L199-L214), [crates/gcode/src/index/import_resolution/helpers.rs:216-305](crates/gcode/src/index/import_resolution/helpers.rs#L216-L305), [crates/gcode/src/index/import_resolution/helpers.rs:307-309](crates/gcode/src/index/import_resolution/helpers.rs#L307-L309), [crates/gcode/src/index/import_resolution/helpers.rs:311-318](crates/gcode/src/index/import_resolution/helpers.rs#L311-L318), [crates/gcode/src/index/import_resolution/helpers.rs:320-332](crates/gcode/src/index/import_resolution/helpers.rs#L320-L332), [crates/gcode/src/index/import_resolution/helpers.rs:341-362](crates/gcode/src/index/import_resolution/helpers.rs#L341-L362), [crates/gcode/src/index/import_resolution/helpers.rs:368-381](crates/gcode/src/index/import_resolution/helpers.rs#L368-L381), [crates/gcode/src/index/import_resolution/helpers.rs:383-385](crates/gcode/src/index/import_resolution/helpers.rs#L383-L385), [crates/gcode/src/index/import_resolution/helpers.rs:387-389](crates/gcode/src/index/import_resolution/helpers.rs#L387-L389), [crates/gcode/src/index/import_resolution/helpers.rs:391-403](crates/gcode/src/index/import_resolution/helpers.rs#L391-L403)
+- [crates/gcode/src/index/import_resolution/js_local.rs:7-24](crates/gcode/src/index/import_resolution/js_local.rs#L7-L24), [crates/gcode/src/index/import_resolution/js_local.rs:26-69](crates/gcode/src/index/import_resolution/js_local.rs#L26-L69), [crates/gcode/src/index/import_resolution/js_local.rs:71-84](crates/gcode/src/index/import_resolution/js_local.rs#L71-L84), [crates/gcode/src/index/import_resolution/js_local.rs:86-99](crates/gcode/src/index/import_resolution/js_local.rs#L86-L99), [crates/gcode/src/index/import_resolution/js_local.rs:101-115](crates/gcode/src/index/import_resolution/js_local.rs#L101-L115), [crates/gcode/src/index/import_resolution/js_local.rs:117-124](crates/gcode/src/index/import_resolution/js_local.rs#L117-L124), [crates/gcode/src/index/import_resolution/js_local.rs:126-134](crates/gcode/src/index/import_resolution/js_local.rs#L126-L134), [crates/gcode/src/index/import_resolution/js_local.rs:140-142](crates/gcode/src/index/import_resolution/js_local.rs#L140-L142), [crates/gcode/src/index/import_resolution/js_local.rs:145-150](crates/gcode/src/index/import_resolution/js_local.rs#L145-L150), [crates/gcode/src/index/import_resolution/js_local.rs:153-156](crates/gcode/src/index/import_resolution/js_local.rs#L153-L156), [crates/gcode/src/index/import_resolution/js_local.rs:159-162](crates/gcode/src/index/import_resolution/js_local.rs#L159-L162), [crates/gcode/src/index/import_resolution/js_local.rs:165-169](crates/gcode/src/index/import_resolution/js_local.rs#L165-L169), [crates/gcode/src/index/import_resolution/js_local.rs:172-174](crates/gcode/src/index/import_resolution/js_local.rs#L172-L174)
+- [crates/gcode/src/index/import_resolution/parser/mod.rs:40-69](crates/gcode/src/index/import_resolution/parser/mod.rs#L40-L69), [crates/gcode/src/index/import_resolution/parser/mod.rs:71-89](crates/gcode/src/index/import_resolution/parser/mod.rs#L71-L89), [crates/gcode/src/index/import_resolution/parser/mod.rs:91-141](crates/gcode/src/index/import_resolution/parser/mod.rs#L91-L141), [crates/gcode/src/index/import_resolution/parser/mod.rs:143-218](crates/gcode/src/index/import_resolution/parser/mod.rs#L143-L218), [crates/gcode/src/index/import_resolution/parser/mod.rs:220-233](crates/gcode/src/index/import_resolution/parser/mod.rs#L220-L233), [crates/gcode/src/index/import_resolution/parser/mod.rs:235-254](crates/gcode/src/index/import_resolution/parser/mod.rs#L235-L254), [crates/gcode/src/index/import_resolution/parser/mod.rs:265-291](crates/gcode/src/index/import_resolution/parser/mod.rs#L265-L291), [crates/gcode/src/index/import_resolution/parser/mod.rs:302-323](crates/gcode/src/index/import_resolution/parser/mod.rs#L302-L323), [crates/gcode/src/index/import_resolution/parser/mod.rs:334-351](crates/gcode/src/index/import_resolution/parser/mod.rs#L334-L351), [crates/gcode/src/index/import_resolution/parser/mod.rs:360-384](crates/gcode/src/index/import_resolution/parser/mod.rs#L360-L384), [crates/gcode/src/index/import_resolution/parser/mod.rs:402-439](crates/gcode/src/index/import_resolution/parser/mod.rs#L402-L439), [crates/gcode/src/index/import_resolution/parser/mod.rs:441-453](crates/gcode/src/index/import_resolution/parser/mod.rs#L441-L453), [crates/gcode/src/index/import_resolution/parser/mod.rs:469-507](crates/gcode/src/index/import_resolution/parser/mod.rs#L469-L507)
+- [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:9-16](crates/gcode/src/index/import_resolution/parser/php_kotlin.rs#L9-L16), [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:18-61](crates/gcode/src/index/import_resolution/parser/php_kotlin.rs#L18-L61), [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:64-68](crates/gcode/src/index/import_resolution/parser/php_kotlin.rs#L64-L68), [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:70-136](crates/gcode/src/index/import_resolution/parser/php_kotlin.rs#L70-L136), [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:138-189](crates/gcode/src/index/import_resolution/parser/php_kotlin.rs#L138-L189), [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:199-226](crates/gcode/src/index/import_resolution/parser/php_kotlin.rs#L199-L226), [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:228-247](crates/gcode/src/index/import_resolution/parser/php_kotlin.rs#L228-L247), [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:249-262](crates/gcode/src/index/import_resolution/parser/php_kotlin.rs#L249-L262), [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:264-270](crates/gcode/src/index/import_resolution/parser/php_kotlin.rs#L264-L270), [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:272-292](crates/gcode/src/index/import_resolution/parser/php_kotlin.rs#L272-L292)
+- [crates/gcode/src/index/import_resolution/predicates.rs:8-21](crates/gcode/src/index/import_resolution/predicates.rs#L8-L21), [crates/gcode/src/index/import_resolution/predicates.rs:23-53](crates/gcode/src/index/import_resolution/predicates.rs#L23-L53), [crates/gcode/src/index/import_resolution/predicates.rs:55-68](crates/gcode/src/index/import_resolution/predicates.rs#L55-L68), [crates/gcode/src/index/import_resolution/predicates.rs:70-77](crates/gcode/src/index/import_resolution/predicates.rs#L70-L77), [crates/gcode/src/index/import_resolution/predicates.rs:79-81](crates/gcode/src/index/import_resolution/predicates.rs#L79-L81), [crates/gcode/src/index/import_resolution/predicates.rs:83-88](crates/gcode/src/index/import_resolution/predicates.rs#L83-L88), [crates/gcode/src/index/import_resolution/predicates.rs:94-107](crates/gcode/src/index/import_resolution/predicates.rs#L94-L107), [crates/gcode/src/index/import_resolution/predicates.rs:109-179](crates/gcode/src/index/import_resolution/predicates.rs#L109-L179), [crates/gcode/src/index/import_resolution/predicates.rs:185-201](crates/gcode/src/index/import_resolution/predicates.rs#L185-L201), [crates/gcode/src/index/import_resolution/predicates.rs:203-210](crates/gcode/src/index/import_resolution/predicates.rs#L203-L210), [crates/gcode/src/index/import_resolution/predicates.rs:212-220](crates/gcode/src/index/import_resolution/predicates.rs#L212-L220), [crates/gcode/src/index/import_resolution/predicates.rs:222-231](crates/gcode/src/index/import_resolution/predicates.rs#L222-L231), [crates/gcode/src/index/import_resolution/predicates.rs:233-241](crates/gcode/src/index/import_resolution/predicates.rs#L233-L241), [crates/gcode/src/index/import_resolution/predicates.rs:243-251](crates/gcode/src/index/import_resolution/predicates.rs#L243-L251), [crates/gcode/src/index/import_resolution/predicates.rs:258-262](crates/gcode/src/index/import_resolution/predicates.rs#L258-L262), [crates/gcode/src/index/import_resolution/predicates.rs:264-276](crates/gcode/src/index/import_resolution/predicates.rs#L264-L276), [crates/gcode/src/index/import_resolution/predicates.rs:284-288](crates/gcode/src/index/import_resolution/predicates.rs#L284-L288), [crates/gcode/src/index/import_resolution/predicates.rs:290-302](crates/gcode/src/index/import_resolution/predicates.rs#L290-L302), [crates/gcode/src/index/import_resolution/predicates.rs:304-316](crates/gcode/src/index/import_resolution/predicates.rs#L304-L316), [crates/gcode/src/index/import_resolution/predicates.rs:318-328](crates/gcode/src/index/import_resolution/predicates.rs#L318-L328)
+- [crates/gcode/src/index/import_resolution/rust_local.rs:5-9](crates/gcode/src/index/import_resolution/rust_local.rs#L5-L9), [crates/gcode/src/index/import_resolution/rust_local.rs:12-15](crates/gcode/src/index/import_resolution/rust_local.rs#L12-L15), [crates/gcode/src/index/import_resolution/rust_local.rs:23-33](crates/gcode/src/index/import_resolution/rust_local.rs#L23-L33), [crates/gcode/src/index/import_resolution/rust_local.rs:35-55](crates/gcode/src/index/import_resolution/rust_local.rs#L35-L55), [crates/gcode/src/index/import_resolution/rust_local.rs:57-73](crates/gcode/src/index/import_resolution/rust_local.rs#L57-L73), [crates/gcode/src/index/import_resolution/rust_local.rs:75-93](crates/gcode/src/index/import_resolution/rust_local.rs#L75-L93), [crates/gcode/src/index/import_resolution/rust_local.rs:95-111](crates/gcode/src/index/import_resolution/rust_local.rs#L95-L111), [crates/gcode/src/index/import_resolution/rust_local.rs:113-123](crates/gcode/src/index/import_resolution/rust_local.rs#L113-L123), [crates/gcode/src/index/import_resolution/rust_local.rs:125-129](crates/gcode/src/index/import_resolution/rust_local.rs#L125-L129), [crates/gcode/src/index/import_resolution/rust_local.rs:131-136](crates/gcode/src/index/import_resolution/rust_local.rs#L131-L136), [crates/gcode/src/index/import_resolution/rust_local.rs:143-151](crates/gcode/src/index/import_resolution/rust_local.rs#L143-L151), [crates/gcode/src/index/import_resolution/rust_local.rs:154-159](crates/gcode/src/index/import_resolution/rust_local.rs#L154-L159), [crates/gcode/src/index/import_resolution/rust_local.rs:162-178](crates/gcode/src/index/import_resolution/rust_local.rs#L162-L178), [crates/gcode/src/index/import_resolution/rust_local.rs:181-194](crates/gcode/src/index/import_resolution/rust_local.rs#L181-L194), [crates/gcode/src/index/import_resolution/rust_local.rs:197-205](crates/gcode/src/index/import_resolution/rust_local.rs#L197-L205), [crates/gcode/src/index/import_resolution/rust_local.rs:208-216](crates/gcode/src/index/import_resolution/rust_local.rs#L208-L216)
+- [crates/gcode/src/index/indexer/file.rs:15-91](crates/gcode/src/index/indexer/file.rs#L15-L91), [crates/gcode/src/index/indexer/file.rs:93-102](crates/gcode/src/index/indexer/file.rs#L93-L102), [crates/gcode/src/index/indexer/file.rs:104-111](crates/gcode/src/index/indexer/file.rs#L104-L111), [crates/gcode/src/index/indexer/file.rs:114-118](crates/gcode/src/index/indexer/file.rs#L114-L118), [crates/gcode/src/index/indexer/file.rs:120-130](crates/gcode/src/index/indexer/file.rs#L120-L130), [crates/gcode/src/index/indexer/file.rs:133-180](crates/gcode/src/index/indexer/file.rs#L133-L180), [crates/gcode/src/index/indexer/file.rs:182-232](crates/gcode/src/index/indexer/file.rs#L182-L232), [crates/gcode/src/index/indexer/file.rs:234-267](crates/gcode/src/index/indexer/file.rs#L234-L267), [crates/gcode/src/index/indexer/file.rs:278-284](crates/gcode/src/index/indexer/file.rs#L278-L284), [crates/gcode/src/index/indexer/file.rs:287-293](crates/gcode/src/index/indexer/file.rs#L287-L293), [crates/gcode/src/index/indexer/file.rs:296-302](crates/gcode/src/index/indexer/file.rs#L296-L302)
+- [crates/gcode/src/index/indexer/freshness_probe.rs:37-81](crates/gcode/src/index/indexer/freshness_probe.rs#L37-L81), [crates/gcode/src/index/indexer/freshness_probe.rs:89-96](crates/gcode/src/index/indexer/freshness_probe.rs#L89-L96), [crates/gcode/src/index/indexer/freshness_probe.rs:98-105](crates/gcode/src/index/indexer/freshness_probe.rs#L98-L105), [crates/gcode/src/index/indexer/freshness_probe.rs:109-111](crates/gcode/src/index/indexer/freshness_probe.rs#L109-L111), [crates/gcode/src/index/indexer/freshness_probe.rs:113-115](crates/gcode/src/index/indexer/freshness_probe.rs#L113-L115), [crates/gcode/src/index/indexer/freshness_probe.rs:118-138](crates/gcode/src/index/indexer/freshness_probe.rs#L118-L138), [crates/gcode/src/index/indexer/freshness_probe.rs:141-156](crates/gcode/src/index/indexer/freshness_probe.rs#L141-L156), [crates/gcode/src/index/indexer/freshness_probe.rs:159-176](crates/gcode/src/index/indexer/freshness_probe.rs#L159-L176), [crates/gcode/src/index/indexer/freshness_probe.rs:179-195](crates/gcode/src/index/indexer/freshness_probe.rs#L179-L195), [crates/gcode/src/index/indexer/freshness_probe.rs:198-235](crates/gcode/src/index/indexer/freshness_probe.rs#L198-L235), [crates/gcode/src/index/indexer/freshness_probe.rs:238-265](crates/gcode/src/index/indexer/freshness_probe.rs#L238-L265)
+- [crates/gcode/src/index/indexer/lifecycle.rs:16-54](crates/gcode/src/index/indexer/lifecycle.rs#L16-L54), [crates/gcode/src/index/indexer/lifecycle.rs:56-69](crates/gcode/src/index/indexer/lifecycle.rs#L56-L69), [crates/gcode/src/index/indexer/lifecycle.rs:71-81](crates/gcode/src/index/indexer/lifecycle.rs#L71-L81), [crates/gcode/src/index/indexer/lifecycle.rs:84-121](crates/gcode/src/index/indexer/lifecycle.rs#L84-L121), [crates/gcode/src/index/indexer/lifecycle.rs:125-152](crates/gcode/src/index/indexer/lifecycle.rs#L125-L152), [crates/gcode/src/index/indexer/lifecycle.rs:154-181](crates/gcode/src/index/indexer/lifecycle.rs#L154-L181), [crates/gcode/src/index/indexer/lifecycle.rs:183-229](crates/gcode/src/index/indexer/lifecycle.rs#L183-L229), [crates/gcode/src/index/indexer/lifecycle.rs:232-235](crates/gcode/src/index/indexer/lifecycle.rs#L232-L235), [crates/gcode/src/index/indexer/lifecycle.rs:237-260](crates/gcode/src/index/indexer/lifecycle.rs#L237-L260), [crates/gcode/src/index/indexer/lifecycle.rs:262-294](crates/gcode/src/index/indexer/lifecycle.rs#L262-L294), [crates/gcode/src/index/indexer/lifecycle.rs:296-305](crates/gcode/src/index/indexer/lifecycle.rs#L296-L305)
+- [crates/gcode/src/index/indexer/overlay.rs:33-36](crates/gcode/src/index/indexer/overlay.rs#L33-L36), [crates/gcode/src/index/indexer/overlay.rs:39-45](crates/gcode/src/index/indexer/overlay.rs#L39-L45), [crates/gcode/src/index/indexer/overlay.rs:47-83](crates/gcode/src/index/indexer/overlay.rs#L47-L83), [crates/gcode/src/index/indexer/overlay.rs:85-260](crates/gcode/src/index/indexer/overlay.rs#L85-L260), [crates/gcode/src/index/indexer/overlay.rs:262-293](crates/gcode/src/index/indexer/overlay.rs#L262-L293), [crates/gcode/src/index/indexer/overlay.rs:295-304](crates/gcode/src/index/indexer/overlay.rs#L295-L304), [crates/gcode/src/index/indexer/overlay.rs:306-326](crates/gcode/src/index/indexer/overlay.rs#L306-L326), [crates/gcode/src/index/indexer/overlay.rs:328-380](crates/gcode/src/index/indexer/overlay.rs#L328-L380), [crates/gcode/src/index/indexer/overlay.rs:382-398](crates/gcode/src/index/indexer/overlay.rs#L382-L398), [crates/gcode/src/index/indexer/overlay.rs:400-405](crates/gcode/src/index/indexer/overlay.rs#L400-L405), [crates/gcode/src/index/indexer/overlay.rs:407-412](crates/gcode/src/index/indexer/overlay.rs#L407-L412), [crates/gcode/src/index/indexer/overlay.rs:414-419](crates/gcode/src/index/indexer/overlay.rs#L414-L419), [crates/gcode/src/index/indexer/overlay.rs:421-434](crates/gcode/src/index/indexer/overlay.rs#L421-L434), [crates/gcode/src/index/indexer/overlay.rs:436-452](crates/gcode/src/index/indexer/overlay.rs#L436-L452), [crates/gcode/src/index/indexer/overlay.rs:460-467](crates/gcode/src/index/indexer/overlay.rs#L460-L467), [crates/gcode/src/index/indexer/overlay.rs:471-475](crates/gcode/src/index/indexer/overlay.rs#L471-L475), [crates/gcode/src/index/indexer/overlay.rs:479-488](crates/gcode/src/index/indexer/overlay.rs#L479-L488)
+- [crates/gcode/src/index/indexer/sink.rs:6-34](crates/gcode/src/index/indexer/sink.rs#L6-L34), [crates/gcode/src/index/indexer/sink.rs:36-38](crates/gcode/src/index/indexer/sink.rs#L36-L38), [crates/gcode/src/index/indexer/sink.rs:41-43](crates/gcode/src/index/indexer/sink.rs#L41-L43), [crates/gcode/src/index/indexer/sink.rs:50-52](crates/gcode/src/index/indexer/sink.rs#L50-L52), [crates/gcode/src/index/indexer/sink.rs:54-60](crates/gcode/src/index/indexer/sink.rs#L54-L60), [crates/gcode/src/index/indexer/sink.rs:62-69](crates/gcode/src/index/indexer/sink.rs#L62-L69), [crates/gcode/src/index/indexer/sink.rs:71-73](crates/gcode/src/index/indexer/sink.rs#L71-L73), [crates/gcode/src/index/indexer/sink.rs:75-77](crates/gcode/src/index/indexer/sink.rs#L75-L77), [crates/gcode/src/index/indexer/sink.rs:79-86](crates/gcode/src/index/indexer/sink.rs#L79-L86), [crates/gcode/src/index/indexer/sink.rs:88-95](crates/gcode/src/index/indexer/sink.rs#L88-L95), [crates/gcode/src/index/indexer/sink.rs:97-99](crates/gcode/src/index/indexer/sink.rs#L97-L99)
+- [crates/gcode/src/index/indexer/types.rs:8-17](crates/gcode/src/index/indexer/types.rs#L8-L17), [crates/gcode/src/index/indexer/types.rs:20-25](crates/gcode/src/index/indexer/types.rs#L20-L25), [crates/gcode/src/index/indexer/types.rs:29-42](crates/gcode/src/index/indexer/types.rs#L29-L42), [crates/gcode/src/index/indexer/types.rs:45-68](crates/gcode/src/index/indexer/types.rs#L45-L68), [crates/gcode/src/index/indexer/types.rs:71-76](crates/gcode/src/index/indexer/types.rs#L71-L76), [crates/gcode/src/index/indexer/types.rs:79-84](crates/gcode/src/index/indexer/types.rs#L79-L84), [crates/gcode/src/index/indexer/types.rs:87-92](crates/gcode/src/index/indexer/types.rs#L87-L92), [crates/gcode/src/index/indexer/types.rs:94-104](crates/gcode/src/index/indexer/types.rs#L94-L104), [crates/gcode/src/index/indexer/types.rs:106-108](crates/gcode/src/index/indexer/types.rs#L106-L108), [crates/gcode/src/index/indexer/types.rs:111-113](crates/gcode/src/index/indexer/types.rs#L111-L113), [crates/gcode/src/index/indexer/types.rs:116-124](crates/gcode/src/index/indexer/types.rs#L116-L124)
+- [crates/gcode/src/index/indexer/util.rs:28-66](crates/gcode/src/index/indexer/util.rs#L28-L66), [crates/gcode/src/index/indexer/util.rs:70-93](crates/gcode/src/index/indexer/util.rs#L70-L93), [crates/gcode/src/index/indexer/util.rs:95-101](crates/gcode/src/index/indexer/util.rs#L95-L101), [crates/gcode/src/index/indexer/util.rs:103-111](crates/gcode/src/index/indexer/util.rs#L103-L111), [crates/gcode/src/index/indexer/util.rs:113-142](crates/gcode/src/index/indexer/util.rs#L113-L142), [crates/gcode/src/index/indexer/util.rs:144-154](crates/gcode/src/index/indexer/util.rs#L144-L154), [crates/gcode/src/index/indexer/util.rs:156-160](crates/gcode/src/index/indexer/util.rs#L156-L160), [crates/gcode/src/index/indexer/util.rs:162-169](crates/gcode/src/index/indexer/util.rs#L162-L169), [crates/gcode/src/index/indexer/util.rs:176-186](crates/gcode/src/index/indexer/util.rs#L176-L186), [crates/gcode/src/index/indexer/util.rs:189-194](crates/gcode/src/index/indexer/util.rs#L189-L194), [crates/gcode/src/index/indexer/util.rs:197-205](crates/gcode/src/index/indexer/util.rs#L197-L205), [crates/gcode/src/index/indexer/util.rs:209-214](crates/gcode/src/index/indexer/util.rs#L209-L214), [crates/gcode/src/index/indexer/util.rs:218-223](crates/gcode/src/index/indexer/util.rs#L218-L223), [crates/gcode/src/index/indexer/util.rs:227-232](crates/gcode/src/index/indexer/util.rs#L227-L232)
+- [crates/gcode/src/index/languages.rs:9-14](crates/gcode/src/index/languages.rs#L9-L14), [crates/gcode/src/index/languages.rs:443-459](crates/gcode/src/index/languages.rs#L443-L459), [crates/gcode/src/index/languages.rs:461-480](crates/gcode/src/index/languages.rs#L461-L480), [crates/gcode/src/index/languages.rs:482-484](crates/gcode/src/index/languages.rs#L482-L484), [crates/gcode/src/index/languages.rs:486-492](crates/gcode/src/index/languages.rs#L486-L492), [crates/gcode/src/index/languages.rs:494-500](crates/gcode/src/index/languages.rs#L494-L500), [crates/gcode/src/index/languages.rs:502-533](crates/gcode/src/index/languages.rs#L502-L533), [crates/gcode/src/index/languages.rs:535-548](crates/gcode/src/index/languages.rs#L535-L548), [crates/gcode/src/index/languages.rs:550-555](crates/gcode/src/index/languages.rs#L550-L555), [crates/gcode/src/index/languages.rs:557-566](crates/gcode/src/index/languages.rs#L557-L566), [crates/gcode/src/index/languages.rs:568-570](crates/gcode/src/index/languages.rs#L568-L570), [crates/gcode/src/index/languages.rs:572-574](crates/gcode/src/index/languages.rs#L572-L574), [crates/gcode/src/index/languages.rs:577-582](crates/gcode/src/index/languages.rs#L577-L582), [crates/gcode/src/index/languages.rs:591-595](crates/gcode/src/index/languages.rs#L591-L595), [crates/gcode/src/index/languages.rs:598-624](crates/gcode/src/index/languages.rs#L598-L624), [crates/gcode/src/index/languages.rs:627-638](crates/gcode/src/index/languages.rs#L627-L638), [crates/gcode/src/index/languages.rs:645-649](crates/gcode/src/index/languages.rs#L645-L649), [crates/gcode/src/index/languages.rs:652-657](crates/gcode/src/index/languages.rs#L652-L657), [crates/gcode/src/index/languages.rs:660-663](crates/gcode/src/index/languages.rs#L660-L663), [crates/gcode/src/index/languages.rs:666-669](crates/gcode/src/index/languages.rs#L666-L669), [crates/gcode/src/index/languages.rs:672-675](crates/gcode/src/index/languages.rs#L672-L675), [crates/gcode/src/index/languages.rs:678-680](crates/gcode/src/index/languages.rs#L678-L680), [crates/gcode/src/index/languages.rs:683-686](crates/gcode/src/index/languages.rs#L683-L686), [crates/gcode/src/index/languages.rs:689-691](crates/gcode/src/index/languages.rs#L689-L691), [crates/gcode/src/index/languages.rs:694-708](crates/gcode/src/index/languages.rs#L694-L708), [crates/gcode/src/index/languages.rs:711-722](crates/gcode/src/index/languages.rs#L711-L722), [crates/gcode/src/index/languages.rs:725-740](crates/gcode/src/index/languages.rs#L725-L740), [crates/gcode/src/index/languages.rs:743-757](crates/gcode/src/index/languages.rs#L743-L757), [crates/gcode/src/index/languages.rs:760-766](crates/gcode/src/index/languages.rs#L760-L766), [crates/gcode/src/index/languages.rs:769-775](crates/gcode/src/index/languages.rs#L769-L775), [crates/gcode/src/index/languages.rs:777-782](crates/gcode/src/index/languages.rs#L777-L782), [crates/gcode/src/index/languages.rs:784-789](crates/gcode/src/index/languages.rs#L784-L789), [crates/gcode/src/index/languages.rs:792-802](crates/gcode/src/index/languages.rs#L792-L802)
+- [crates/gcode/src/index/parser.rs:29-134](crates/gcode/src/index/parser.rs#L29-L134), [crates/gcode/src/index/parser.rs:136-235](crates/gcode/src/index/parser.rs#L136-L235), [crates/gcode/src/index/parser.rs:237-264](crates/gcode/src/index/parser.rs#L237-L264), [crates/gcode/src/index/parser.rs:266-318](crates/gcode/src/index/parser.rs#L266-L318), [crates/gcode/src/index/parser.rs:320-326](crates/gcode/src/index/parser.rs#L320-L326), [crates/gcode/src/index/parser.rs:328-389](crates/gcode/src/index/parser.rs#L328-L389), [crates/gcode/src/index/parser.rs:391-398](crates/gcode/src/index/parser.rs#L391-L398), [crates/gcode/src/index/parser.rs:400-443](crates/gcode/src/index/parser.rs#L400-L443)
+- [crates/gcode/src/index/parser/calls/ast.rs:17-103](crates/gcode/src/index/parser/calls/ast.rs#L17-L103), [crates/gcode/src/index/parser/calls/ast.rs:105-135](crates/gcode/src/index/parser/calls/ast.rs#L105-L135), [crates/gcode/src/index/parser/calls/ast.rs:148-179](crates/gcode/src/index/parser/calls/ast.rs#L148-L179), [crates/gcode/src/index/parser/calls/ast.rs:181-193](crates/gcode/src/index/parser/calls/ast.rs#L181-L193), [crates/gcode/src/index/parser/calls/ast.rs:196-205](crates/gcode/src/index/parser/calls/ast.rs#L196-L205), [crates/gcode/src/index/parser/calls/ast.rs:208-217](crates/gcode/src/index/parser/calls/ast.rs#L208-L217), [crates/gcode/src/index/parser/calls/ast.rs:220-235](crates/gcode/src/index/parser/calls/ast.rs#L220-L235), [crates/gcode/src/index/parser/calls/ast.rs:238-252](crates/gcode/src/index/parser/calls/ast.rs#L238-L252)
+- [crates/gcode/src/index/parser/calls/dart_textual.rs:8-55](crates/gcode/src/index/parser/calls/dart_textual.rs#L8-L55), [crates/gcode/src/index/parser/calls/dart_textual.rs:57-77](crates/gcode/src/index/parser/calls/dart_textual.rs#L57-L77), [crates/gcode/src/index/parser/calls/dart_textual.rs:79-168](crates/gcode/src/index/parser/calls/dart_textual.rs#L79-L168), [crates/gcode/src/index/parser/calls/dart_textual.rs:170-172](crates/gcode/src/index/parser/calls/dart_textual.rs#L170-L172), [crates/gcode/src/index/parser/calls/dart_textual.rs:174-189](crates/gcode/src/index/parser/calls/dart_textual.rs#L174-L189), [crates/gcode/src/index/parser/calls/dart_textual.rs:191-216](crates/gcode/src/index/parser/calls/dart_textual.rs#L191-L216), [crates/gcode/src/index/parser/calls/dart_textual.rs:218-223](crates/gcode/src/index/parser/calls/dart_textual.rs#L218-L223), [crates/gcode/src/index/parser/calls/dart_textual.rs:226-232](crates/gcode/src/index/parser/calls/dart_textual.rs#L226-L232), [crates/gcode/src/index/parser/calls/dart_textual.rs:235-237](crates/gcode/src/index/parser/calls/dart_textual.rs#L235-L237), [crates/gcode/src/index/parser/calls/dart_textual.rs:239-243](crates/gcode/src/index/parser/calls/dart_textual.rs#L239-L243), [crates/gcode/src/index/parser/calls/dart_textual.rs:247-252](crates/gcode/src/index/parser/calls/dart_textual.rs#L247-L252), [crates/gcode/src/index/parser/calls/dart_textual.rs:255-259](crates/gcode/src/index/parser/calls/dart_textual.rs#L255-L259), [crates/gcode/src/index/parser/calls/dart_textual.rs:262-362](crates/gcode/src/index/parser/calls/dart_textual.rs#L262-L362), [crates/gcode/src/index/parser/calls/dart_textual.rs:364-366](crates/gcode/src/index/parser/calls/dart_textual.rs#L364-L366), [crates/gcode/src/index/parser/calls/dart_textual.rs:368-370](crates/gcode/src/index/parser/calls/dart_textual.rs#L368-L370), [crates/gcode/src/index/parser/calls/dart_textual.rs:373-375](crates/gcode/src/index/parser/calls/dart_textual.rs#L373-L375), [crates/gcode/src/index/parser/calls/dart_textual.rs:377-379](crates/gcode/src/index/parser/calls/dart_textual.rs#L377-L379), [crates/gcode/src/index/parser/calls/dart_textual.rs:381-391](crates/gcode/src/index/parser/calls/dart_textual.rs#L381-L391), [crates/gcode/src/index/parser/calls/dart_textual.rs:393-417](crates/gcode/src/index/parser/calls/dart_textual.rs#L393-L417), [crates/gcode/src/index/parser/calls/dart_textual.rs:419-441](crates/gcode/src/index/parser/calls/dart_textual.rs#L419-L441), [crates/gcode/src/index/parser/calls/dart_textual.rs:443-492](crates/gcode/src/index/parser/calls/dart_textual.rs#L443-L492)
+- [crates/gcode/src/index/parser/calls/resolution.rs:6-10](crates/gcode/src/index/parser/calls/resolution.rs#L6-L10), [crates/gcode/src/index/parser/calls/resolution.rs:17-21](crates/gcode/src/index/parser/calls/resolution.rs#L17-L21), [crates/gcode/src/index/parser/calls/resolution.rs:23-46](crates/gcode/src/index/parser/calls/resolution.rs#L23-L46), [crates/gcode/src/index/parser/calls/resolution.rs:48-62](crates/gcode/src/index/parser/calls/resolution.rs#L48-L62), [crates/gcode/src/index/parser/calls/resolution.rs:64-66](crates/gcode/src/index/parser/calls/resolution.rs#L64-L66), [crates/gcode/src/index/parser/calls/resolution.rs:68-96](crates/gcode/src/index/parser/calls/resolution.rs#L68-L96), [crates/gcode/src/index/parser/calls/resolution.rs:98-112](crates/gcode/src/index/parser/calls/resolution.rs#L98-L112), [crates/gcode/src/index/parser/calls/resolution.rs:114-122](crates/gcode/src/index/parser/calls/resolution.rs#L114-L122), [crates/gcode/src/index/parser/calls/resolution.rs:124-145](crates/gcode/src/index/parser/calls/resolution.rs#L124-L145), [crates/gcode/src/index/parser/calls/resolution.rs:147-202](crates/gcode/src/index/parser/calls/resolution.rs#L147-L202), [crates/gcode/src/index/parser/calls/resolution.rs:204-209](crates/gcode/src/index/parser/calls/resolution.rs#L204-L209), [crates/gcode/src/index/parser/calls/resolution.rs:211-222](crates/gcode/src/index/parser/calls/resolution.rs#L211-L222), [crates/gcode/src/index/parser/calls/resolution.rs:224-229](crates/gcode/src/index/parser/calls/resolution.rs#L224-L229), [crates/gcode/src/index/parser/calls/resolution.rs:239-285](crates/gcode/src/index/parser/calls/resolution.rs#L239-L285)
+- [crates/gcode/src/index/parser/calls/shadowing.rs:6-23](crates/gcode/src/index/parser/calls/shadowing.rs#L6-L23), [crates/gcode/src/index/parser/calls/shadowing.rs:25-43](crates/gcode/src/index/parser/calls/shadowing.rs#L25-L43), [crates/gcode/src/index/parser/calls/shadowing.rs:45-84](crates/gcode/src/index/parser/calls/shadowing.rs#L45-L84), [crates/gcode/src/index/parser/calls/shadowing.rs:86-96](crates/gcode/src/index/parser/calls/shadowing.rs#L86-L96), [crates/gcode/src/index/parser/calls/shadowing.rs:98-113](crates/gcode/src/index/parser/calls/shadowing.rs#L98-L113), [crates/gcode/src/index/parser/calls/shadowing.rs:115-129](crates/gcode/src/index/parser/calls/shadowing.rs#L115-L129), [crates/gcode/src/index/parser/calls/shadowing.rs:131-153](crates/gcode/src/index/parser/calls/shadowing.rs#L131-L153), [crates/gcode/src/index/parser/calls/shadowing.rs:155-218](crates/gcode/src/index/parser/calls/shadowing.rs#L155-L218), [crates/gcode/src/index/parser/calls/shadowing.rs:220-224](crates/gcode/src/index/parser/calls/shadowing.rs#L220-L224), [crates/gcode/src/index/parser/calls/shadowing.rs:226-235](crates/gcode/src/index/parser/calls/shadowing.rs#L226-L235), [crates/gcode/src/index/parser/calls/shadowing.rs:237-260](crates/gcode/src/index/parser/calls/shadowing.rs#L237-L260), [crates/gcode/src/index/parser/calls/shadowing.rs:262-273](crates/gcode/src/index/parser/calls/shadowing.rs#L262-L273), [crates/gcode/src/index/parser/calls/shadowing.rs:283-299](crates/gcode/src/index/parser/calls/shadowing.rs#L283-L299), [crates/gcode/src/index/parser/calls/shadowing.rs:302-315](crates/gcode/src/index/parser/calls/shadowing.rs#L302-L315), [crates/gcode/src/index/parser/calls/shadowing.rs:318-327](crates/gcode/src/index/parser/calls/shadowing.rs#L318-L327), [crates/gcode/src/index/parser/calls/shadowing.rs:330-339](crates/gcode/src/index/parser/calls/shadowing.rs#L330-L339), [crates/gcode/src/index/parser/calls/shadowing.rs:342-351](crates/gcode/src/index/parser/calls/shadowing.rs#L342-L351), [crates/gcode/src/index/parser/calls/shadowing.rs:354-363](crates/gcode/src/index/parser/calls/shadowing.rs#L354-L363)
+- [crates/gcode/src/index/parser/calls/text.rs:4-20](crates/gcode/src/index/parser/calls/text.rs#L4-L20), [crates/gcode/src/index/parser/calls/text.rs:22-30](crates/gcode/src/index/parser/calls/text.rs#L22-L30), [crates/gcode/src/index/parser/calls/text.rs:32-49](crates/gcode/src/index/parser/calls/text.rs#L32-L49), [crates/gcode/src/index/parser/calls/text.rs:51-53](crates/gcode/src/index/parser/calls/text.rs#L51-L53), [crates/gcode/src/index/parser/calls/text.rs:55-57](crates/gcode/src/index/parser/calls/text.rs#L55-L57), [crates/gcode/src/index/parser/calls/text.rs:59-61](crates/gcode/src/index/parser/calls/text.rs#L59-L61), [crates/gcode/src/index/parser/calls/text.rs:63-65](crates/gcode/src/index/parser/calls/text.rs#L63-L65), [crates/gcode/src/index/parser/calls/text.rs:67-153](crates/gcode/src/index/parser/calls/text.rs#L67-L153), [crates/gcode/src/index/parser/calls/text.rs:160-165](crates/gcode/src/index/parser/calls/text.rs#L160-L165), [crates/gcode/src/index/parser/calls/text.rs:168-174](crates/gcode/src/index/parser/calls/text.rs#L168-L174)
+- [crates/gcode/src/index/security.rs:26-31](crates/gcode/src/index/security.rs#L26-L31), [crates/gcode/src/index/security.rs:34-39](crates/gcode/src/index/security.rs#L34-L39), [crates/gcode/src/index/security.rs:42-54](crates/gcode/src/index/security.rs#L42-L54), [crates/gcode/src/index/security.rs:63-89](crates/gcode/src/index/security.rs#L63-L89), [crates/gcode/src/index/security.rs:91-93](crates/gcode/src/index/security.rs#L91-L93), [crates/gcode/src/index/security.rs:96-120](crates/gcode/src/index/security.rs#L96-L120), [crates/gcode/src/index/security.rs:123-127](crates/gcode/src/index/security.rs#L123-L127), [crates/gcode/src/index/security.rs:129-148](crates/gcode/src/index/security.rs#L129-L148)
+- [crates/gcode/src/index/semantic.rs:15-23](crates/gcode/src/index/semantic.rs#L15-L23), [crates/gcode/src/index/semantic.rs:26-29](crates/gcode/src/index/semantic.rs#L26-L29), [crates/gcode/src/index/semantic.rs:33-43](crates/gcode/src/index/semantic.rs#L33-L43), [crates/gcode/src/index/semantic.rs:45-50](crates/gcode/src/index/semantic.rs#L45-L50), [crates/gcode/src/index/semantic.rs:53-55](crates/gcode/src/index/semantic.rs#L53-L55), [crates/gcode/src/index/semantic.rs:57-85](crates/gcode/src/index/semantic.rs#L57-L85), [crates/gcode/src/index/semantic.rs:87-105](crates/gcode/src/index/semantic.rs#L87-L105), [crates/gcode/src/index/semantic.rs:107-122](crates/gcode/src/index/semantic.rs#L107-L122), [crates/gcode/src/index/semantic.rs:124-135](crates/gcode/src/index/semantic.rs#L124-L135), [crates/gcode/src/index/semantic.rs:137-145](crates/gcode/src/index/semantic.rs#L137-L145), [crates/gcode/src/index/semantic.rs:147-153](crates/gcode/src/index/semantic.rs#L147-L153), [crates/gcode/src/index/semantic.rs:155-175](crates/gcode/src/index/semantic.rs#L155-L175), [crates/gcode/src/index/semantic.rs:177-210](crates/gcode/src/index/semantic.rs#L177-L210), [crates/gcode/src/index/semantic.rs:215-231](crates/gcode/src/index/semantic.rs#L215-L231), [crates/gcode/src/index/semantic.rs:233-240](crates/gcode/src/index/semantic.rs#L233-L240), [crates/gcode/src/index/semantic.rs:242-248](crates/gcode/src/index/semantic.rs#L242-L248), [crates/gcode/src/index/semantic.rs:251-256](crates/gcode/src/index/semantic.rs#L251-L256), [crates/gcode/src/index/semantic.rs:259-271](crates/gcode/src/index/semantic.rs#L259-L271), [crates/gcode/src/index/semantic.rs:274-295](crates/gcode/src/index/semantic.rs#L274-L295), [crates/gcode/src/index/semantic.rs:297-302](crates/gcode/src/index/semantic.rs#L297-L302), [crates/gcode/src/index/semantic.rs:304-330](crates/gcode/src/index/semantic.rs#L304-L330), [crates/gcode/src/index/semantic.rs:332-335](crates/gcode/src/index/semantic.rs#L332-L335), [crates/gcode/src/index/semantic.rs:337-339](crates/gcode/src/index/semantic.rs#L337-L339), [crates/gcode/src/index/semantic.rs:341-356](crates/gcode/src/index/semantic.rs#L341-L356), [crates/gcode/src/index/semantic.rs:358-366](crates/gcode/src/index/semantic.rs#L358-L366), [crates/gcode/src/index/semantic.rs:369-399](crates/gcode/src/index/semantic.rs#L369-L399), [crates/gcode/src/index/semantic.rs:401-413](crates/gcode/src/index/semantic.rs#L401-L413), [crates/gcode/src/index/semantic.rs:415-433](crates/gcode/src/index/semantic.rs#L415-L433), [crates/gcode/src/index/semantic.rs:435-463](crates/gcode/src/index/semantic.rs#L435-L463), [crates/gcode/src/index/semantic.rs:465-475](crates/gcode/src/index/semantic.rs#L465-L475), [crates/gcode/src/index/semantic.rs:477-483](crates/gcode/src/index/semantic.rs#L477-L483), [crates/gcode/src/index/semantic.rs:485-490](crates/gcode/src/index/semantic.rs#L485-L490), [crates/gcode/src/index/semantic.rs:492-494](crates/gcode/src/index/semantic.rs#L492-L494), [crates/gcode/src/index/semantic.rs:498-504](crates/gcode/src/index/semantic.rs#L498-L504), [crates/gcode/src/index/semantic.rs:508-543](crates/gcode/src/index/semantic.rs#L508-L543), [crates/gcode/src/index/semantic.rs:546-552](crates/gcode/src/index/semantic.rs#L546-L552), [crates/gcode/src/index/semantic.rs:554-572](crates/gcode/src/index/semantic.rs#L554-L572), [crates/gcode/src/index/semantic.rs:574-596](crates/gcode/src/index/semantic.rs#L574-L596), [crates/gcode/src/index/semantic.rs:598-630](crates/gcode/src/index/semantic.rs#L598-L630), [crates/gcode/src/index/semantic.rs:632-640](crates/gcode/src/index/semantic.rs#L632-L640), [crates/gcode/src/index/semantic.rs:651-658](crates/gcode/src/index/semantic.rs#L651-L658), [crates/gcode/src/index/semantic.rs:661-673](crates/gcode/src/index/semantic.rs#L661-L673), [crates/gcode/src/index/semantic.rs:676-685](crates/gcode/src/index/semantic.rs#L676-L685), [crates/gcode/src/index/semantic.rs:688-693](crates/gcode/src/index/semantic.rs#L688-L693), [crates/gcode/src/index/semantic.rs:696-702](crates/gcode/src/index/semantic.rs#L696-L702), [crates/gcode/src/index/semantic.rs:705-723](crates/gcode/src/index/semantic.rs#L705-L723), [crates/gcode/src/index/semantic.rs:726-746](crates/gcode/src/index/semantic.rs#L726-L746), [crates/gcode/src/index/semantic.rs:749-762](crates/gcode/src/index/semantic.rs#L749-L762), [crates/gcode/src/index/semantic.rs:765-798](crates/gcode/src/index/semantic.rs#L765-L798), [crates/gcode/src/index/semantic.rs:801-819](crates/gcode/src/index/semantic.rs#L801-L819), [crates/gcode/src/index/semantic.rs:823-827](crates/gcode/src/index/semantic.rs#L823-L827), [crates/gcode/src/index/semantic.rs:831-835](crates/gcode/src/index/semantic.rs#L831-L835), [crates/gcode/src/index/semantic.rs:839-844](crates/gcode/src/index/semantic.rs#L839-L844), [crates/gcode/src/index/semantic.rs:848-853](crates/gcode/src/index/semantic.rs#L848-L853), [crates/gcode/src/index/semantic.rs:858-882](crates/gcode/src/index/semantic.rs#L858-L882), [crates/gcode/src/index/semantic.rs:885-920](crates/gcode/src/index/semantic.rs#L885-L920)
+- [crates/gcode/src/index/walker/hidden.rs:13-15](crates/gcode/src/index/walker/hidden.rs#L13-L15), [crates/gcode/src/index/walker/hidden.rs:18-25](crates/gcode/src/index/walker/hidden.rs#L18-L25), [crates/gcode/src/index/walker/hidden.rs:27-35](crates/gcode/src/index/walker/hidden.rs#L27-L35), [crates/gcode/src/index/walker/hidden.rs:37-53](crates/gcode/src/index/walker/hidden.rs#L37-L53), [crates/gcode/src/index/walker/hidden.rs:55-63](crates/gcode/src/index/walker/hidden.rs#L55-L63), [crates/gcode/src/index/walker/hidden.rs:66-80](crates/gcode/src/index/walker/hidden.rs#L66-L80), [crates/gcode/src/index/walker/hidden.rs:82-94](crates/gcode/src/index/walker/hidden.rs#L82-L94), [crates/gcode/src/index/walker/hidden.rs:96-102](crates/gcode/src/index/walker/hidden.rs#L96-L102), [crates/gcode/src/index/walker/hidden.rs:104-107](crates/gcode/src/index/walker/hidden.rs#L104-L107), [crates/gcode/src/index/walker/hidden.rs:109-117](crates/gcode/src/index/walker/hidden.rs#L109-L117), [crates/gcode/src/index/walker/hidden.rs:119-149](crates/gcode/src/index/walker/hidden.rs#L119-L149), [crates/gcode/src/index/walker/hidden.rs:151-176](crates/gcode/src/index/walker/hidden.rs#L151-L176), [crates/gcode/src/index/walker/hidden.rs:178-186](crates/gcode/src/index/walker/hidden.rs#L178-L186)
+
+_31 more source files omitted._
+
+</details>
+
+# Filesystem Walker & Ingestion
+
+## Overview
+
+Responsible for scanning the local filesystem safely, filtering out ignored and machine-generated files, and managing freshness locks.
+
+## Reference Modules
+
+- [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
+- [[code/modules/crates/gcode/src/index/indexer|crates/gcode/src/index/indexer]]
+- [[code/modules/crates/gcode/src/index/walker|crates/gcode/src/index/walker]]
+
+## Source Files
+
+- [[code/files/crates/gcode/src/freshness.rs|crates/gcode/src/freshness.rs]]
+- [[code/files/crates/gcode/src/git.rs|crates/gcode/src/git.rs]]
