@@ -3,49 +3,33 @@ title: crates/gcode/src/commands/codewiki/reuse.rs
 type: code_file
 provenance:
 - file: crates/gcode/src/commands/codewiki/reuse.rs
-  ranges:
-  - 11-19
-  - 22-31
-  - 36-46
-  - 49-57
-  - 59-88
-  - 90-126
-  - 128-135
-  - 140-142
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gcode/src/commands/codewiki/reuse.rs:11-19](crates/gcode/src/commands/codewiki/reuse.rs#L11-L19), [crates/gcode/src/commands/codewiki/reuse.rs:22-31](crates/gcode/src/commands/codewiki/reuse.rs#L22-L31), [crates/gcode/src/commands/codewiki/reuse.rs:36-46](crates/gcode/src/commands/codewiki/reuse.rs#L36-L46), [crates/gcode/src/commands/codewiki/reuse.rs:49-57](crates/gcode/src/commands/codewiki/reuse.rs#L49-L57), [crates/gcode/src/commands/codewiki/reuse.rs:59-88](crates/gcode/src/commands/codewiki/reuse.rs#L59-L88), [crates/gcode/src/commands/codewiki/reuse.rs:90-126](crates/gcode/src/commands/codewiki/reuse.rs#L90-L126), [crates/gcode/src/commands/codewiki/reuse.rs:128-135](crates/gcode/src/commands/codewiki/reuse.rs#L128-L135), [crates/gcode/src/commands/codewiki/reuse.rs:140-142](crates/gcode/src/commands/codewiki/reuse.rs#L140-L142)
-
-</details>
-
 # crates/gcode/src/commands/codewiki/reuse.rs
 
 Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/commands/codewiki]]
 
-## Purpose
+## Overview
 
-This file builds a `ReusePlan` that decides when previously generated codewiki docs can be reused without another LLM call. `ReusePlan::load` reads the saved codewiki metadata from the output directory and initializes lazy current-source hash tracking; the `reusable_page` and `reusable_page_with_summary` methods return the on-disk page, and optionally its stored summary, only if the doc still qualifies as reusable. `reusable_pages_with_prefixes` and `reusable` apply that reuse check across matching docs by comparing AI mode, doc health, recorded sources, current source hashes, and whether the generated page still exists on disk, while `current_hash` caches source hashes so missing or unhashable inputs are handled once. `span_files` is a small helper used to turn source spans into file sets for reuse validation.
-[crates/gcode/src/commands/codewiki/reuse.rs:11-19]
-[crates/gcode/src/commands/codewiki/reuse.rs:22-31]
-[crates/gcode/src/commands/codewiki/reuse.rs:36-46]
-[crates/gcode/src/commands/codewiki/reuse.rs:49-57]
-[crates/gcode/src/commands/codewiki/reuse.rs:59-88]
+`crates/gcode/src/commands/codewiki/reuse.rs` exposes 8 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `ReusePlan` | class | `pub(crate) struct ReusePlan {` | `ReusePlan [class]` | `5bda1d67-27ee-567f-a570-6ca7942496a4` | 11-19 [crates/gcode/src/commands/codewiki/reuse.rs:11-19] | Indexed class `ReusePlan` in `crates/gcode/src/commands/codewiki/reuse.rs`. [crates/gcode/src/commands/codewiki/reuse.rs:11-19] |
-| `ReusePlan::load` | method | `pub(crate) fn load(project_root: &Path, out_dir: &Path, ai_mode: &str) -> anyhow::Result<Self> {` | `ReusePlan::load [method]` | `fd379cda-cd64-58fc-b47a-1ad99a09d4ad` | 22-31 [crates/gcode/src/commands/codewiki/reuse.rs:22-31] | Indexed method `ReusePlan::load` in `crates/gcode/src/commands/codewiki/reuse.rs`. [crates/gcode/src/commands/codewiki/reuse.rs:22-31] |
-| `ReusePlan::reusable_page` | method | `pub(crate) fn reusable_page(` | `ReusePlan::reusable_page [method]` | `5ff9ea69-185f-5904-9b4a-79f848b7040d` | 36-46 [crates/gcode/src/commands/codewiki/reuse.rs:36-46] | Indexed method `ReusePlan::reusable_page` in `crates/gcode/src/commands/codewiki/reuse.rs`. [crates/gcode/src/commands/codewiki/reuse.rs:36-46] |
-| `ReusePlan::reusable_page_with_summary` | method | `pub(crate) fn reusable_page_with_summary(` | `ReusePlan::reusable_page_with_summary [method]` | `3c13013a-df0e-597d-b7d7-f27ca3f2f13a` | 49-57 [crates/gcode/src/commands/codewiki/reuse.rs:49-57] | Indexed method `ReusePlan::reusable_page_with_summary` in `crates/gcode/src/commands/codewiki/reuse.rs`. [crates/gcode/src/commands/codewiki/reuse.rs:49-57] |
-| `ReusePlan::reusable_pages_with_prefixes` | method | `pub(crate) fn reusable_pages_with_prefixes(` | `ReusePlan::reusable_pages_with_prefixes [method]` | `34c3b3d4-12a7-5a63-b4fc-7091fdf9f307` | 59-88 [crates/gcode/src/commands/codewiki/reuse.rs:59-88] | Indexed method `ReusePlan::reusable_pages_with_prefixes` in `crates/gcode/src/commands/codewiki/reuse.rs`. [crates/gcode/src/commands/codewiki/reuse.rs:59-88] |
-| `ReusePlan::reusable` | method | `fn reusable(&mut self, doc_path: &str, sources: &BTreeSet<String>) -> bool {` | `ReusePlan::reusable [method]` | `abe1f2df-374f-5334-8974-be39ddb0595c` | 90-126 [crates/gcode/src/commands/codewiki/reuse.rs:90-126] | Indexed method `ReusePlan::reusable` in `crates/gcode/src/commands/codewiki/reuse.rs`. [crates/gcode/src/commands/codewiki/reuse.rs:90-126] |
-| `ReusePlan::current_hash` | method | `fn current_hash(&mut self, file: &str) -> Option<String> {` | `ReusePlan::current_hash [method]` | `c602ef4b-5543-59c1-8768-c633fa5f2f7e` | 128-135 [crates/gcode/src/commands/codewiki/reuse.rs:128-135] | Indexed method `ReusePlan::current_hash` in `crates/gcode/src/commands/codewiki/reuse.rs`. [crates/gcode/src/commands/codewiki/reuse.rs:128-135] |
-| `span_files` | function | `pub(crate) fn span_files(spans: &[SourceSpan]) -> BTreeSet<String> {` | `span_files [function]` | `c65faa98-176a-5618-a15b-adc5dc0d9f74` | 140-142 [crates/gcode/src/commands/codewiki/reuse.rs:140-142] | Indexed function `span_files` in `crates/gcode/src/commands/codewiki/reuse.rs`. [crates/gcode/src/commands/codewiki/reuse.rs:140-142] |
+`crates/gcode/src/commands/codewiki/reuse.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `ReusePlan` | class | 'ReusePlan' is a crate-private plan object that tracks a project root, output directory, AI mode, documentation metadata, and lazily computed current-content hashes to decide whether files can be safely reused, with unhashable sources permanently marked as non-reusable. [crates/gcode/src/commands/codewiki/reuse.rs:11-19] |
+| `ReusePlan::load` | method | Constructs and returns a 'Self' by reading existing codewiki metadata from 'out_dir', copying 'project_root' and 'out_dir' into owned paths, storing 'ai_mode' as a 'String', reusing 'previous.docs', and initializing 'current_hashes' as an empty 'BTreeMap'. [crates/gcode/src/commands/codewiki/reuse.rs:22-31] |
+| `ReusePlan::reusable_page` | method | Returns the existing rendered document as 'String' from the safe output-path corresponding to 'doc_path' only when 'self.reusable(doc_path, sources)' is true, otherwise 'None', propagating any path-safety or file-read failure as 'None'. [crates/gcode/src/commands/codewiki/reuse.rs:36-46] |
+| `ReusePlan::reusable_page_with_summary` | method | Returns 'Some((page, summary))' by cloning the cached summary for 'doc_path' from 'self.docs', constructing a reusable page via 'self.reusable_page(doc_path, sources)', and yielding 'None' if either the document or summary is missing or the page cannot be reused. [crates/gcode/src/commands/codewiki/reuse.rs:49-57] |
+| `ReusePlan::reusable_pages_with_prefixes` | method | Collects all 'docs' entries whose paths start with any of the supplied prefixes, rebuilds each via 'reusable_page' using its source-hash keys and cloned summary, returns the resulting 'BuiltDoc' list sorted by path, or 'None' if no paths match. [crates/gcode/src/commands/codewiki/reuse.rs:59-88] |
+| `ReusePlan::reusable` | method | Returns 'true' only when the document exists in 'self.docs' and is not degraded, the AI mode and render version match, the stored source-hash set is nonempty and exactly matches 'sources', every tracked source file currently hashes to the stored value, and the rendered output path resolves safely and still exists on disk. [crates/gcode/src/commands/codewiki/reuse.rs:90-126] |
+| `ReusePlan::current_hash` | method | Returns the cached content hash for 'file' if present, otherwise computes it from 'project_root/file', stores the resulting 'Option<String>' in 'current_hashes', and returns it. [crates/gcode/src/commands/codewiki/reuse.rs:128-135] |
+| `span_files` | function | Returns a 'BTreeSet<String>' containing the distinct 'file' values cloned from each 'SourceSpan' in 'spans'. [crates/gcode/src/commands/codewiki/reuse.rs:140-142] |
+

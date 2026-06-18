@@ -3,45 +3,32 @@ title: crates/gcode/src/commands/codewiki/generation.rs
 type: code_file
 provenance:
 - file: crates/gcode/src/commands/codewiki/generation.rs
-  ranges:
-  - 16-24
-  - 26-50
-  - 53-73
-  - 76-83
-  - 87-113
-  - 119-310
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gcode/src/commands/codewiki/generation.rs:16-24](crates/gcode/src/commands/codewiki/generation.rs#L16-L24), [crates/gcode/src/commands/codewiki/generation.rs:26-50](crates/gcode/src/commands/codewiki/generation.rs#L26-L50), [crates/gcode/src/commands/codewiki/generation.rs:53-73](crates/gcode/src/commands/codewiki/generation.rs#L53-L73), [crates/gcode/src/commands/codewiki/generation.rs:76-83](crates/gcode/src/commands/codewiki/generation.rs#L76-L83), [crates/gcode/src/commands/codewiki/generation.rs:87-113](crates/gcode/src/commands/codewiki/generation.rs#L87-L113), [crates/gcode/src/commands/codewiki/generation.rs:119-310](crates/gcode/src/commands/codewiki/generation.rs#L119-L310)
-
-</details>
-
 # crates/gcode/src/commands/codewiki/generation.rs
 
 Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/commands/codewiki]]
 
-## Purpose
+## Overview
 
-Builds hierarchical codewiki documentation for an input repository by routing through a shared core generator and a few convenience wrappers. The public entry point returns path/content pairs, while the other functions adapt the core to different capabilities and contexts: silent graph-availability fallback, ownership-aware generation, test-progress reporting, and reuse planning.
-[crates/gcode/src/commands/codewiki/generation.rs:16-24]
-[crates/gcode/src/commands/codewiki/generation.rs:26-50]
-[crates/gcode/src/commands/codewiki/generation.rs:53-73]
-[crates/gcode/src/commands/codewiki/generation.rs:76-83]
-[crates/gcode/src/commands/codewiki/generation.rs:87-113]
+`crates/gcode/src/commands/codewiki/generation.rs` exposes 7 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `generate_hierarchical_docs` | function | `pub fn generate_hierarchical_docs(` | `generate_hierarchical_docs [function]` | `28fea489-ff19-5da4-ae53-d46a8ae3cd2b` | 16-24 [crates/gcode/src/commands/codewiki/generation.rs:16-24] | Indexed function `generate_hierarchical_docs` in `crates/gcode/src/commands/codewiki/generation.rs`. [crates/gcode/src/commands/codewiki/generation.rs:16-24] |
-| `generate_hierarchical_docs_with_graph_availability` | function | `fn generate_hierarchical_docs_with_graph_availability(` | `generate_hierarchical_docs_with_graph_availability [function]` | `7e4b0e75-8d4e-51aa-b4bd-91ffe5188703` | 26-50 [crates/gcode/src/commands/codewiki/generation.rs:26-50] | Indexed function `generate_hierarchical_docs_with_graph_availability` in `crates/gcode/src/commands/codewiki/generation.rs`. [crates/gcode/src/commands/codewiki/generation.rs:26-50] |
-| `generate_hierarchical_docs_with_ownership` | function | `pub(crate) fn generate_hierarchical_docs_with_ownership(` | `generate_hierarchical_docs_with_ownership [function]` | `40c7cbbf-e86d-52ee-9724-583d90796dc6` | 53-73 [crates/gcode/src/commands/codewiki/generation.rs:53-73] | Indexed function `generate_hierarchical_docs_with_ownership` in `crates/gcode/src/commands/codewiki/generation.rs`. [crates/gcode/src/commands/codewiki/generation.rs:53-73] |
-| `generate_hierarchical_docs_with_progress` | function | `pub(crate) fn generate_hierarchical_docs_with_progress(` | `generate_hierarchical_docs_with_progress [function]` | `168dbec4-23dc-54a2-a6d3-87bfdf93918c` | 76-83 [crates/gcode/src/commands/codewiki/generation.rs:76-83] | Indexed function `generate_hierarchical_docs_with_progress` in `crates/gcode/src/commands/codewiki/generation.rs`. [crates/gcode/src/commands/codewiki/generation.rs:76-83] |
-| `generate_hierarchical_docs_with_reuse` | function | `pub(crate) fn generate_hierarchical_docs_with_reuse(` | `generate_hierarchical_docs_with_reuse [function]` | `350f0ef4-947c-572c-8527-e40dc37ef079` | 87-113 [crates/gcode/src/commands/codewiki/generation.rs:87-113] | Indexed function `generate_hierarchical_docs_with_reuse` in `crates/gcode/src/commands/codewiki/generation.rs`. [crates/gcode/src/commands/codewiki/generation.rs:87-113] |
-| `generate_hierarchical_docs_core` | function | `pub(crate) fn generate_hierarchical_docs_core(` | `generate_hierarchical_docs_core [function]` | `eb460700-cc4e-5720-b3ad-91734571c7f9` | 119-310 [crates/gcode/src/commands/codewiki/generation.rs:119-310] | Indexed function `generate_hierarchical_docs_core` in `crates/gcode/src/commands/codewiki/generation.rs`. [crates/gcode/src/commands/codewiki/generation.rs:119-310] |
+`crates/gcode/src/commands/codewiki/generation.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `generate_hierarchical_docs` | function | Calls 'generate_hierarchical_docs_with_graph_availability' with the provided input and optional generator, then converts each returned document into a '(path, content)' tuple and collects them into a 'Vec'. [crates/gcode/src/commands/codewiki/generation.rs:16-24] |
+| `generate_hierarchical_docs_with_graph_availability` | function | Attempts to generate hierarchical docs at symbol depth without ownership metadata using a silent progress tracker and unscoped pruning, collecting emitted 'BuiltDoc's into a vector and returning an empty vector on core-generation error after logging a warning. [crates/gcode/src/commands/codewiki/generation.rs:26-51] |
+| `generate_hierarchical_docs_with_ownership` | function | A thin wrapper that forwards all parameters to 'generate_hierarchical_docs_core', propagating optional ownership metadata, generator/verifier handles, reuse planning, progress tracking, pruning scope, and emitted 'BuiltDoc' results. [crates/gcode/src/commands/codewiki/generation.rs:54-76] |
+| `generate_hierarchical_docs_with_progress` | function | Delegates hierarchical documentation generation to 'generate_hierarchical_docs_with_reuse' with no reuse cache ('None'), passing through the input, optional text generator, AI depth, and mutable progress tracker, and returns the resulting 'Vec<BuiltDoc>'. [crates/gcode/src/commands/codewiki/generation.rs:79-86] |
+| `generate_hierarchical_docs_with_reuse` | function | Runs 'generate_hierarchical_docs_core' with an unscoped pruning scope and no ownership metadata, collecting emitted 'BuiltDoc's into a vector, logging a warning and returning an empty vector if generation fails. [crates/gcode/src/commands/codewiki/generation.rs:90-117] |
+| `generate_hierarchical_docs_with_verify` | function | 'generate_hierarchical_docs_with_verify' invokes 'generate_hierarchical_docs_core' with silent progress and an unscoped prune scope to build a 'Vec<BuiltDoc>' from a 'CodewikiInput', optionally using provided generator/verifier handles, and returns an empty vector after logging a warning if core generation fails. [crates/gcode/src/commands/codewiki/generation.rs:123-152] |
+| `generate_hierarchical_docs_core` | function | Generates hierarchical documentation for the core files in the requested scope by collecting and sorting scoped symbols, clustering file modules from the file graph, emitting progress, and building/emitting 'BuiltDoc' records using the provided generator, verifier, reuse plan, and ownership metadata. [crates/gcode/src/commands/codewiki/generation.rs:158-359] |
+

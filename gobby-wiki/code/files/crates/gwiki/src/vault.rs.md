@@ -3,63 +3,40 @@ title: crates/gwiki/src/vault.rs
 type: code_file
 provenance:
 - file: crates/gwiki/src/vault.rs
-  ranges:
-  - 19-22
-  - 25-28
-  - 55-60
-  - 62-99
-  - 101-137
-  - 140-143
-  - 145-151
-  - 153-180
-  - 182-218
-  - 220-230
-  - 232-251
-  - 258-275
-  - 278-303
-  - 306-324
-  - 327-346
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gwiki/src/vault.rs:19-22](crates/gwiki/src/vault.rs#L19-L22), [crates/gwiki/src/vault.rs:25-28](crates/gwiki/src/vault.rs#L25-L28), [crates/gwiki/src/vault.rs:55-60](crates/gwiki/src/vault.rs#L55-L60), [crates/gwiki/src/vault.rs:62-99](crates/gwiki/src/vault.rs#L62-L99), [crates/gwiki/src/vault.rs:101-137](crates/gwiki/src/vault.rs#L101-L137), [crates/gwiki/src/vault.rs:140-143](crates/gwiki/src/vault.rs#L140-L143), [crates/gwiki/src/vault.rs:145-151](crates/gwiki/src/vault.rs#L145-L151), [crates/gwiki/src/vault.rs:153-180](crates/gwiki/src/vault.rs#L153-L180), [crates/gwiki/src/vault.rs:182-218](crates/gwiki/src/vault.rs#L182-L218), [crates/gwiki/src/vault.rs:220-230](crates/gwiki/src/vault.rs#L220-L230), [crates/gwiki/src/vault.rs:232-251](crates/gwiki/src/vault.rs#L232-L251), [crates/gwiki/src/vault.rs:258-275](crates/gwiki/src/vault.rs#L258-L275), [crates/gwiki/src/vault.rs:278-303](crates/gwiki/src/vault.rs#L278-L303), [crates/gwiki/src/vault.rs:306-324](crates/gwiki/src/vault.rs#L306-L324), [crates/gwiki/src/vault.rs:327-346](crates/gwiki/src/vault.rs#L327-L346)
-
-</details>
-
 # crates/gwiki/src/vault.rs
 
 Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
-## Purpose
+## Overview
 
-Defines the shared Obsidian vault layout for `gwiki` and provides setup/teardown utilities for it. `VaultPaths` and `CreatedVaultPaths` describe the required directories/files and what was actually created, `required_paths` exposes the static layout, `initialize` creates the directory tree and default files plus the `.gwiki/scope.json` scope record, and `cleanup_created` removes only the paths reported as newly created; the helper functions handle directory creation, file creation, atomic scope-file writes, temp sibling naming, and parent-directory syncing, with the remaining functions covering path computation and behavior checks around the vault shape and default contents.
-[crates/gwiki/src/vault.rs:19-22]
-[crates/gwiki/src/vault.rs:25-28]
-[crates/gwiki/src/vault.rs:55-60]
-[crates/gwiki/src/vault.rs:62-99]
-[crates/gwiki/src/vault.rs:101-137]
+`crates/gwiki/src/vault.rs` exposes 15 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `VaultPaths` | class | `pub struct VaultPaths {` | `VaultPaths [class]` | `0433aeb7-39e7-56c5-8fe7-6dbdd014402a` | 19-22 [crates/gwiki/src/vault.rs:19-22] | Indexed class `VaultPaths` in `crates/gwiki/src/vault.rs`. [crates/gwiki/src/vault.rs:19-22] |
-| `CreatedVaultPaths` | class | `pub struct CreatedVaultPaths {` | `CreatedVaultPaths [class]` | `9003c07a-c018-5b3e-b2bd-13a9e1d98877` | 25-28 [crates/gwiki/src/vault.rs:25-28] | Indexed class `CreatedVaultPaths` in `crates/gwiki/src/vault.rs`. [crates/gwiki/src/vault.rs:25-28] |
-| `required_paths` | function | `pub fn required_paths() -> VaultPaths {` | `required_paths [function]` | `46cbefbd-c277-5d47-84ff-c1fb4884188f` | 55-60 [crates/gwiki/src/vault.rs:55-60] | Indexed function `required_paths` in `crates/gwiki/src/vault.rs`. [crates/gwiki/src/vault.rs:55-60] |
-| `initialize` | function | `pub fn initialize(scope: &ResolvedScope) -> Result<CreatedVaultPaths, WikiError> {` | `initialize [function]` | `9deaf6bb-98b8-5a3f-a804-aa2d569b81a8` | 62-99 [crates/gwiki/src/vault.rs:62-99] | Indexed function `initialize` in `crates/gwiki/src/vault.rs`. [crates/gwiki/src/vault.rs:62-99] |
-| `cleanup_created` | function | `pub fn cleanup_created(root: &Path, created: &CreatedVaultPaths) -> Result<(), WikiError> {` | `cleanup_created [function]` | `05bd5ec2-4638-5321-b9b6-3b1a7ff4aee8` | 101-137 [crates/gwiki/src/vault.rs:101-137] | Indexed function `cleanup_created` in `crates/gwiki/src/vault.rs`. [crates/gwiki/src/vault.rs:101-137] |
-| `ScopeFile` | class | `struct ScopeFile<'a> {` | `ScopeFile [class]` | `42c150a9-b9df-5d3b-863e-db0bf4c84b8b` | 140-143 [crates/gwiki/src/vault.rs:140-143] | Indexed class `ScopeFile` in `crates/gwiki/src/vault.rs`. [crates/gwiki/src/vault.rs:140-143] |
-| `create_dir` | function | `fn create_dir(path: &Path) -> Result<(), WikiError> {` | `create_dir [function]` | `f32e550a-c2b7-50fb-9e3c-ba86d901a5a4` | 145-151 [crates/gwiki/src/vault.rs:145-151] | Indexed function `create_dir` in `crates/gwiki/src/vault.rs`. [crates/gwiki/src/vault.rs:145-151] |
-| `ensure_file` | function | `fn ensure_file(path: &Path, contents: &str) -> Result<bool, WikiError> {` | `ensure_file [function]` | `2bd832f1-7d3b-5934-8be7-5052c11aeaba` | 153-180 [crates/gwiki/src/vault.rs:153-180] | Indexed function `ensure_file` in `crates/gwiki/src/vault.rs`. [crates/gwiki/src/vault.rs:153-180] |
-| `write_scope_file_atomically` | function | `fn write_scope_file_atomically(path: &Path, contents: &[u8]) -> Result<(), WikiError> {` | `write_scope_file_atomically [function]` | `371c0e25-ab4a-55df-aadf-d6d90c3200e9` | 182-218 [crates/gwiki/src/vault.rs:182-218] | Indexed function `write_scope_file_atomically` in `crates/gwiki/src/vault.rs`. [crates/gwiki/src/vault.rs:182-218] |
-| `temp_sibling_path` | function | `fn temp_sibling_path(path: &Path) -> std::path::PathBuf {` | `temp_sibling_path [function]` | `4225e946-4a3b-5823-a2e7-dfb08342091c` | 220-230 [crates/gwiki/src/vault.rs:220-230] | Indexed function `temp_sibling_path` in `crates/gwiki/src/vault.rs`. [crates/gwiki/src/vault.rs:220-230] |
-| `sync_parent_dir` | function | `fn sync_parent_dir(path: &Path) -> Result<(), WikiError> {` | `sync_parent_dir [function]` | `85cc7a94-2779-527f-b183-d346b699098d` | 232-251 [crates/gwiki/src/vault.rs:232-251] | Indexed function `sync_parent_dir` in `crates/gwiki/src/vault.rs`. [crates/gwiki/src/vault.rs:232-251] |
-| `vault_shape_lists_required_paths` | function | `fn vault_shape_lists_required_paths() {` | `vault_shape_lists_required_paths [function]` | `845dfe34-4c30-5889-87ea-8be3bdba301e` | 258-275 [crates/gwiki/src/vault.rs:258-275] | Indexed function `vault_shape_lists_required_paths` in `crates/gwiki/src/vault.rs`. [crates/gwiki/src/vault.rs:258-275] |
-| `default_files_drive_required_paths_and_contents` | function | `fn default_files_drive_required_paths_and_contents() {` | `default_files_drive_required_paths_and_contents [function]` | `d8d3f30b-c0cd-55ad-a923-f0a8b4e54954` | 278-303 [crates/gwiki/src/vault.rs:278-303] | Indexed function `default_files_drive_required_paths_and_contents` in `crates/gwiki/src/vault.rs`. [crates/gwiki/src/vault.rs:278-303] |
-| `initialize_overwrites_scope_file` | function | `fn initialize_overwrites_scope_file() {` | `initialize_overwrites_scope_file [function]` | `722b3e70-0ef4-5c9e-9a25-4cda6ba8f668` | 306-324 [crates/gwiki/src/vault.rs:306-324] | Indexed function `initialize_overwrites_scope_file` in `crates/gwiki/src/vault.rs`. [crates/gwiki/src/vault.rs:306-324] |
-| `cleanup_created_removes_only_created_vault_paths` | function | `fn cleanup_created_removes_only_created_vault_paths() {` | `cleanup_created_removes_only_created_vault_paths [function]` | `30472266-4128-599e-ad8f-06d79314f59b` | 327-346 [crates/gwiki/src/vault.rs:327-346] | Indexed function `cleanup_created_removes_only_created_vault_paths` in `crates/gwiki/src/vault.rs`. [crates/gwiki/src/vault.rs:327-346] |
+`crates/gwiki/src/vault.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `VaultPaths` | class | 'VaultPaths' is a data container holding a static slice of directory path strings and a vector of static file path strings. [crates/gwiki/src/vault.rs:24-27] |
+| `CreatedVaultPaths` | class | 'CreatedVaultPaths' is a struct that records the vault paths created during an operation, split into two string lists: 'directories' and 'files'. [crates/gwiki/src/vault.rs:30-33] |
+| `required_paths` | function | Returns a 'VaultPaths' struct populated with the compile-time 'DIRECTORIES' set and a 'files' collection containing only the path keys from 'DEFAULT_FILES'. [crates/gwiki/src/vault.rs:60-65] |
+| `initialize` | function | Creates the vault’s required directory structure and default files under 'scope.root()', writes an atomic 'state_root/scope.json' containing the scope identity and root path, and returns the newly created directory/file paths. [crates/gwiki/src/vault.rs:67-104] |
+| `cleanup_created` | function | Removes each path in 'created.files' with 'remove_file' and each path in 'created.directories' in reverse order with 'remove_dir', ignoring 'NotFound' for files and 'NotFound' or 'DirectoryNotEmpty' for directories, and wraps any other I/O failure in 'WikiError::Io'. [crates/gwiki/src/vault.rs:106-142] |
+| `ScopeFile` | class | 'ScopeFile<'a>' is a borrowed data structure holding two string slices, 'identity' and 'root', both valid for lifetime ''a'. [crates/gwiki/src/vault.rs:145-148] |
+| `create_dir` | function | Creates the directory at 'path' and any missing parent directories with 'std::fs::create_dir_all', converting any I/O failure into 'WikiError::Io' with action '"create directory"' and the path attached. [crates/gwiki/src/vault.rs:150-156] |
+| `ensure_file` | function | Ensures the target file’s parent directory exists, then atomically creates the file only if it does not already exist, writes the provided contents, returns 'Ok(true)' when created, 'Ok(false)' when the file already exists, and converts I/O failures into 'WikiError::Io' while cleaning up any partially written file. [crates/gwiki/src/vault.rs:158-185] |
+| `write_scope_file_atomically` | function | Creates the parent directory if needed, writes 'contents' to a sibling temp file, flushes and fsyncs it, renames it atomically into 'path', and returns a 'WikiError::Io' on any I/O failure while cleaning up the temp file. [crates/gwiki/src/vault.rs:187-223] |
+| `temp_sibling_path` | function | Returns a sibling temporary-path 'PathBuf' beside the given path by taking its file name (defaulting to 'scope.json'), prefixing it with a dot, and appending the current process ID and a UNIX-epoch nanosecond timestamp before the '.tmp' suffix. [crates/gwiki/src/vault.rs:225-235] |
+| `sync_parent_dir` | function | On Unix, 'sync_parent_dir' opens 'path'’s parent directory and calls 'sync_all()' to flush its metadata to disk, mapping I/O failures into 'WikiError::Io', while on non-Unix platforms it is a no-op and returns 'Ok(())' (and it also returns 'Ok(())' if the path has no parent). [crates/gwiki/src/vault.rs:237-256] |
+| `vault_shape_lists_required_paths` | function | Asserts that 'required_paths()' includes the expected vault directory set ('raw/assets', 'code', 'knowledge', '_meta', 'knowledge/sources', 'knowledge/concepts', 'knowledge/topics', 'outputs', 'meta/health') and file set ('raw/INDEX.md', 'knowledge/INDEX.md', 'code/INDEX.md', '_index.md', 'log.md'). [crates/gwiki/src/vault.rs:263-280] |
+| `default_files_drive_required_paths_and_contents` | function | Verifies that 'initialize(&scope)' creates every file in 'DEFAULT_FILES' under the topic root with the expected contents, and that 'required_paths().files' exactly matches the default file paths. [crates/gwiki/src/vault.rs:283-308] |
+| `initialize_overwrites_scope_file` | function | Verifies that calling 'initialize' a second time for the same 'ResolvedScope' overwrites an existing stale 'scope.json' under 'STATE_ROOT' with the correct 'topic:rust' contents without reporting that file as newly created. [crates/gwiki/src/vault.rs:311-329] |
+| `cleanup_created_removes_only_created_vault_paths` | function | Verifies that 'cleanup_created' deletes only the file and directory paths recorded in 'created' under the vault root, while leaving the root directory itself intact. [crates/gwiki/src/vault.rs:332-351] |
+

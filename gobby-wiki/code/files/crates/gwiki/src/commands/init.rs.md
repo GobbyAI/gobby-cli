@@ -3,34 +3,27 @@ title: crates/gwiki/src/commands/init.rs
 type: code_file
 provenance:
 - file: crates/gwiki/src/commands/init.rs
-  ranges:
-  - 9-20
-  - 22-40
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gwiki/src/commands/init.rs:9-20](crates/gwiki/src/commands/init.rs#L9-L20), [crates/gwiki/src/commands/init.rs:22-40](crates/gwiki/src/commands/init.rs#L22-L40)
-
-</details>
-
 # crates/gwiki/src/commands/init.rs
 
 Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
-## Purpose
+## Overview
 
-Implements the `init` command for creating a wiki scope. `execute` resolves the requested scope, initializes the vault, and then registers the scope in the registry; if registration fails, it cleans up any paths created during initialization before returning the error. `render` packages the successful result into a scoped `CommandOutcome` with JSON metadata and a human-readable message, including the command name, resolved scope, root path, status, and created directories/files.
-[crates/gwiki/src/commands/init.rs:9-20]
-[crates/gwiki/src/commands/init.rs:22-40]
+`crates/gwiki/src/commands/init.rs` exposes 2 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `execute` | function | `pub(crate) fn execute(selection: ScopeSelection) -> Result<CommandOutcome, WikiError> {` | `execute [function]` | `14fc1143-adc3-5c81-adf6-f1b4513f3b65` | 9-20 [crates/gwiki/src/commands/init.rs:9-20] | Indexed function `execute` in `crates/gwiki/src/commands/init.rs`. [crates/gwiki/src/commands/init.rs:9-20] |
-| `render` | function | `fn render(scope: ScopeIdentity, root: &Path, created_paths: &CreatedVaultPaths) -> CommandOutcome {` | `render [function]` | `b2ef46a2-b1e1-5219-af7c-0bbd643befb0` | 22-40 [crates/gwiki/src/commands/init.rs:22-40] | Indexed function `render` in `crates/gwiki/src/commands/init.rs`. [crates/gwiki/src/commands/init.rs:22-40] |
+`crates/gwiki/src/commands/init.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `execute` | function | Resolves the target scope, initializes the vault, seeds Obsidian metadata and project '.gitignore' as needed, rolls back created files if registry registration fails, and otherwise returns a rendered 'CommandOutcome' for the resolved scope identity. [crates/gwiki/src/commands/init.rs:9-26] |
+| `render` | function | Builds a JSON payload and human-readable message for an '"init"' command indicating the scope, root path, and created directories/files, then returns the result via 'scoped_outcome("init", ...)'. [crates/gwiki/src/commands/init.rs:28-46] |
+

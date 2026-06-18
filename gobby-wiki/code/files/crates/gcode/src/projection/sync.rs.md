@@ -3,82 +3,56 @@ title: crates/gcode/src/projection/sync.rs
 type: code_file
 provenance:
 - file: crates/gcode/src/projection/sync.rs
-  ranges:
-  - 11-14
-  - 17-21
-  - 24-29
-  - 33-37
-  - 40-43
-  - 46-52
-  - 55-63
-  - 65-81
-  - 83-96
-  - 100-103
-  - 105-112
-  - 114-122
-  - 124-151
-  - 153-205
-  - 207-235
-  - 237-264
-  - 266-270
-  - 273-285
-  - 287-296
-  - 299-314
-  - 316-326
-  - 328-335
-  - 337-348
-  - 355-390
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gcode/src/projection/sync.rs:11-14](crates/gcode/src/projection/sync.rs#L11-L14), [crates/gcode/src/projection/sync.rs:17-21](crates/gcode/src/projection/sync.rs#L17-L21), [crates/gcode/src/projection/sync.rs:24-29](crates/gcode/src/projection/sync.rs#L24-L29), [crates/gcode/src/projection/sync.rs:33-37](crates/gcode/src/projection/sync.rs#L33-L37), [crates/gcode/src/projection/sync.rs:40-43](crates/gcode/src/projection/sync.rs#L40-L43), [crates/gcode/src/projection/sync.rs:46-52](crates/gcode/src/projection/sync.rs#L46-L52), [crates/gcode/src/projection/sync.rs:55-63](crates/gcode/src/projection/sync.rs#L55-L63), [crates/gcode/src/projection/sync.rs:65-81](crates/gcode/src/projection/sync.rs#L65-L81), [crates/gcode/src/projection/sync.rs:83-96](crates/gcode/src/projection/sync.rs#L83-L96), [crates/gcode/src/projection/sync.rs:100-103](crates/gcode/src/projection/sync.rs#L100-L103), [crates/gcode/src/projection/sync.rs:105-112](crates/gcode/src/projection/sync.rs#L105-L112), [crates/gcode/src/projection/sync.rs:114-122](crates/gcode/src/projection/sync.rs#L114-L122), [crates/gcode/src/projection/sync.rs:124-151](crates/gcode/src/projection/sync.rs#L124-L151), [crates/gcode/src/projection/sync.rs:153-205](crates/gcode/src/projection/sync.rs#L153-L205), [crates/gcode/src/projection/sync.rs:207-235](crates/gcode/src/projection/sync.rs#L207-L235), [crates/gcode/src/projection/sync.rs:237-264](crates/gcode/src/projection/sync.rs#L237-L264), [crates/gcode/src/projection/sync.rs:266-270](crates/gcode/src/projection/sync.rs#L266-L270), [crates/gcode/src/projection/sync.rs:273-285](crates/gcode/src/projection/sync.rs#L273-L285), [crates/gcode/src/projection/sync.rs:287-296](crates/gcode/src/projection/sync.rs#L287-L296), [crates/gcode/src/projection/sync.rs:299-314](crates/gcode/src/projection/sync.rs#L299-L314), [crates/gcode/src/projection/sync.rs:316-326](crates/gcode/src/projection/sync.rs#L316-L326), [crates/gcode/src/projection/sync.rs:328-335](crates/gcode/src/projection/sync.rs#L328-L335), [crates/gcode/src/projection/sync.rs:337-348](crates/gcode/src/projection/sync.rs#L337-L348), [crates/gcode/src/projection/sync.rs:355-390](crates/gcode/src/projection/sync.rs#L355-L390)
-
-</details>
-
 # crates/gcode/src/projection/sync.rs
 
 Module: [[code/modules/crates/gcode/src/projection|crates/gcode/src/projection]]
 
-## Purpose
+## Overview
 
-Defines the data model and orchestration helpers for syncing a project’s projections into graph and vector views. It introduces request/status/report types and a `ProjectionStatus`/`ProjectionTarget` enum so callers can ask for specific sync targets, inspect pending work, and receive structured success, degraded, or failed results. The sync helpers then fan out across files, graph entries, and vector state, convert graph/vector-specific errors into typed projection errors, and update tracking state so completed work is marked synced and projection success is reflected in the stored state.
-[crates/gcode/src/projection/sync.rs:11-14]
-[crates/gcode/src/projection/sync.rs:17-21]
-[crates/gcode/src/projection/sync.rs:24-29]
-[crates/gcode/src/projection/sync.rs:33-37]
-[crates/gcode/src/projection/sync.rs:40-43]
+`crates/gcode/src/projection/sync.rs` exposes 31 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `ProjectionTarget` | type | `pub enum ProjectionTarget {` | `ProjectionTarget [type]` | `0c0b8a4d-6a94-5ce6-9a69-a0a30262bbcc` | 11-14 [crates/gcode/src/projection/sync.rs:11-14] | Indexed type `ProjectionTarget` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:11-14] |
-| `ProjectionSyncRequest` | class | `pub struct ProjectionSyncRequest {` | `ProjectionSyncRequest [class]` | `e5c70e76-cf95-5dbc-b40a-d82007b50bec` | 17-21 [crates/gcode/src/projection/sync.rs:17-21] | Indexed class `ProjectionSyncRequest` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:17-21] |
-| `ProjectionSyncStatus` | class | `pub struct ProjectionSyncStatus {` | `ProjectionSyncStatus [class]` | `b447d6c7-91c3-5840-bac3-ced3aeb159ef` | 24-29 [crates/gcode/src/projection/sync.rs:24-29] | Indexed class `ProjectionSyncStatus` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:24-29] |
-| `ProjectionStatus` | type | `pub enum ProjectionStatus {` | `ProjectionStatus [type]` | `5a9822b7-3dd6-5b08-8f9a-28756a55b602` | 33-37 [crates/gcode/src/projection/sync.rs:33-37] | Indexed type `ProjectionStatus` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:33-37] |
-| `ProjectionSyncError` | class | `pub struct ProjectionSyncError {` | `ProjectionSyncError [class]` | `a24abf65-d285-5c46-87e4-43436cfbc0b1` | 40-43 [crates/gcode/src/projection/sync.rs:40-43] | Indexed class `ProjectionSyncError` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:40-43] |
-| `ProjectionSyncReport` | class | `pub struct ProjectionSyncReport {` | `ProjectionSyncReport [class]` | `a4f54b72-9fbd-5028-83a0-601dfee3566b` | 46-52 [crates/gcode/src/projection/sync.rs:46-52] | Indexed class `ProjectionSyncReport` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:46-52] |
-| `ProjectionSyncReport::ok` | method | `pub fn ok(synced_files: usize, synced_symbols: usize) -> Self {` | `ProjectionSyncReport::ok [method]` | `7de48d77-64a6-5f5f-a635-5986ca06f1ee` | 55-63 [crates/gcode/src/projection/sync.rs:55-63] | Indexed method `ProjectionSyncReport::ok` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:55-63] |
-| `ProjectionSyncReport::degraded` | method | `pub fn degraded(` | `ProjectionSyncReport::degraded [method]` | `140f6cf2-1cb9-5f69-ae66-c7c2b26a9a22` | 65-81 [crates/gcode/src/projection/sync.rs:65-81] | Indexed method `ProjectionSyncReport::degraded` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:65-81] |
-| `ProjectionSyncReport::degraded_from_error` | method | `fn degraded_from_error(` | `ProjectionSyncReport::degraded_from_error [method]` | `269b6103-252d-5ed8-b3f0-59d05722799e` | 83-96 [crates/gcode/src/projection/sync.rs:83-96] | Indexed method `ProjectionSyncReport::degraded_from_error` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:83-96] |
-| `ProjectionSyncReports` | class | `pub struct ProjectionSyncReports {` | `ProjectionSyncReports [class]` | `dcf6732c-e15c-5b7a-9b17-86f72a875f39` | 100-103 [crates/gcode/src/projection/sync.rs:100-103] | Indexed class `ProjectionSyncReports` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:100-103] |
-| `pending_after_code_fact_write` | function | `pub fn pending_after_code_fact_write(request: ProjectionSyncRequest) -> ProjectionSyncStatus {` | `pending_after_code_fact_write [function]` | `dc2a84bb-c770-572b-bb04-67044649fb2d` | 105-112 [crates/gcode/src/projection/sync.rs:105-112] | Indexed function `pending_after_code_fact_write` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:105-112] |
-| `sync_after_index` | function | `pub fn sync_after_index(` | `sync_after_index [function]` | `1fb25c8d-88c7-5a92-be95-c601568e0423` | 114-122 [crates/gcode/src/projection/sync.rs:114-122] | Indexed function `sync_after_index` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:114-122] |
-| `sync_files_with_state` | function | `pub(crate) fn sync_files_with_state<S>(` | `sync_files_with_state [function]` | `2bb27fdb-99c6-56aa-a764-a6d9fb95c6e0` | 124-151 [crates/gcode/src/projection/sync.rs:124-151] | Indexed function `sync_files_with_state` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:124-151] |
-| `sync_graph_files` | function | `fn sync_graph_files(ctx: &Context, file_paths: &[String]) -> anyhow::Result<ProjectionSyncReport> {` | `sync_graph_files [function]` | `ce1c9ecb-0734-5296-aedb-5d74b16b7c75` | 153-205 [crates/gcode/src/projection/sync.rs:153-205] | Indexed function `sync_graph_files` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:153-205] |
-| `sync_vector_files` | function | `fn sync_vector_files(ctx: &Context, file_paths: &[String]) -> anyhow::Result<ProjectionSyncReport> {` | `sync_vector_files [function]` | `e75cfd1f-f99e-5003-9de7-4ab35c4dbc1d` | 207-235 [crates/gcode/src/projection/sync.rs:207-235] | Indexed function `sync_vector_files` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:207-235] |
-| `sync_graph_file` | function | `fn sync_graph_file(` | `sync_graph_file [function]` | `3e668ccd-fd85-549d-b6ac-f402a11baee1` | 237-264 [crates/gcode/src/projection/sync.rs:237-264] | Indexed function `sync_graph_file` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:237-264] |
-| `VectorProjectionState` | class | `struct VectorProjectionState<'a> {` | `VectorProjectionState [class]` | `3d58588c-b7a5-5459-bf41-e92d1ecd4f40` | 266-270 [crates/gcode/src/projection/sync.rs:266-270] | Indexed class `VectorProjectionState` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:266-270] |
-| `sync_file` | function | `fn sync_file(&mut self, file_path: &str) -> anyhow::Result<usize> {` | `sync_file [function]` | `eda0613d-0503-50c5-a592-c651b382789f` | 273-285 [crates/gcode/src/projection/sync.rs:273-285] | Indexed function `sync_file` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:273-285] |
-| `mark_synced` | function | `fn mark_synced(&mut self, file_path: &str) -> anyhow::Result<()> {` | `mark_synced [function]` | `1e8ab4c9-8d3d-5dbc-bfc2-6622b9957681` | 287-296 [crates/gcode/src/projection/sync.rs:287-296] | Indexed function `mark_synced` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:287-296] |
-| `vector_lifecycle_from_context` | function | `fn vector_lifecycle_from_context(` | `vector_lifecycle_from_context [function]` | `46afde92-9447-539c-b7e3-462d26e8764d` | 299-314 [crates/gcode/src/projection/sync.rs:299-314] | Indexed function `vector_lifecycle_from_context` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:299-314] |
-| `typed_projection_error` | function | `fn typed_projection_error(error: &anyhow::Error) -> ProjectionSyncError {` | `typed_projection_error [function]` | `969b0bb3-d2c3-58e5-b07f-1c6092a8213b` | 316-326 [crates/gcode/src/projection/sync.rs:316-326] | Indexed function `typed_projection_error` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:316-326] |
-| `graph_error_kind` | function | `fn graph_error_kind(error: &GraphReadError) -> &'static str {` | `graph_error_kind [function]` | `0fe5ae3e-7f0f-55f6-9a41-f29b84034521` | 328-335 [crates/gcode/src/projection/sync.rs:328-335] | Indexed function `graph_error_kind` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:328-335] |
-| `vector_error_kind` | function | `fn vector_error_kind(error: &VectorLifecycleError) -> &'static str {` | `vector_error_kind [function]` | `16509372-aa0a-5eae-8b43-7d21f610156c` | 337-348 [crates/gcode/src/projection/sync.rs:337-348] | Indexed function `vector_error_kind` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:337-348] |
-| `sync_state_tracks_projection_success` | function | `fn sync_state_tracks_projection_success() {` | `sync_state_tracks_projection_success [function]` | `4996d22b-8002-5af6-aceb-07aff60cb48a` | 355-390 [crates/gcode/src/projection/sync.rs:355-390] | Indexed function `sync_state_tracks_projection_success` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:355-390] |
-| `State` | class | `struct State {` | `State [class]` | `37690df0-453d-50e3-91cc-5d75ab647002` | 358-361 [crates/gcode/src/projection/sync.rs:358-361] | Indexed class `State` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:358-361] |
+`crates/gcode/src/projection/sync.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `ProjectionTarget` | type | Indexed type `ProjectionTarget` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:12-15] |
+| `ProjectionSyncRequest` | class | 'ProjectionSyncRequest' is a request payload containing a 'project_id', a list of file path strings to synchronize, and a list of 'ProjectionTarget' destinations. [crates/gcode/src/projection/sync.rs:18-22] |
+| `ProjectionSyncStatus` | class | 'ProjectionSyncStatus' is a status record for a project’s synchronization state, containing the project ID, the list of affected file paths, and boolean flags indicating whether graph and vector updates are still pending. [crates/gcode/src/projection/sync.rs:25-30] |
+| `ProjectionStatus` | type | Indexed type `ProjectionStatus` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:34-38] |
+| `ProjectionSyncError` | class | 'ProjectionSyncError' is a struct that represents a projection synchronization failure by carrying a string 'kind' discriminator and a human-readable 'message'. [crates/gcode/src/projection/sync.rs:41-44] |
+| `ProjectionSyncReport` | class | 'ProjectionSyncReport' is a sync outcome summary that records the projection’s final status, counts of synced/skipped/failed files and synced symbols, whether the run degraded, and an optional 'ProjectionSyncError'. [crates/gcode/src/projection/sync.rs:47-55] |
+| `ProjectionSyncReport::ok` | method | Constructs a new 'Self' by delegating to 'Self::ok_with_counts(synced_files, synced_symbols, 0, 0)', using zero for the two additional count fields. [crates/gcode/src/projection/sync.rs:58-60] |
+| `ProjectionSyncReport::ok_with_counts` | method | Constructs and returns a 'Self' value representing a successful projection state by setting 'status' to 'ProjectionStatus::Ok', populating the provided file/symbol counts, and clearing 'degraded' and 'error'. [crates/gcode/src/projection/sync.rs:62-77] |
+| `ProjectionSyncReport::degraded` | method | Constructs a degraded state by converting 'kind' and 'message' into 'String' values and delegating to 'degraded_with_counts' with the provided synced file/symbol counts and zero unsynced file/symbol counts. [crates/gcode/src/projection/sync.rs:79-86] |
+| `ProjectionSyncReport::degraded_with_counts` | method | Constructs a 'ProjectionSync' value in 'Degraded' status with 'degraded = true', populates the synced/skipped/failed file and symbol counts, and attaches an 'error' containing the provided 'kind' and 'message'. [crates/gcode/src/projection/sync.rs:88-108] |
+| `ProjectionSyncReport::degraded_from_error` | method | 'degraded_from_error' constructs a degraded 'Self' state from an 'anyhow::Error' and the current synced file/symbol counts, defaulting the unsynced counts to zero by delegating to 'degraded_from_error_with_counts'. [crates/gcode/src/projection/sync.rs:110-116] |
+| `ProjectionSyncReport::degraded_from_error_with_counts` | method | Constructs a 'ProjectionStats'-like value in a degraded state by projecting the provided 'anyhow::Error' to a typed error, setting 'status' to 'ProjectionStatus::Degraded', copying the supplied file/symbol counts, marking 'degraded' true, and storing the typed error in 'error'. [crates/gcode/src/projection/sync.rs:118-135] |
+| `ProjectionSyncReports` | class | 'ProjectionSyncReports' is a struct that groups two 'ProjectionSyncReport' values, 'graph' and 'vector', representing sync reports for those two projection modes. [crates/gcode/src/projection/sync.rs:139-142] |
+| `ProjectionFileSyncOutcome` | type | Indexed type `ProjectionFileSyncOutcome` in `crates/gcode/src/projection/sync.rs`. [crates/gcode/src/projection/sync.rs:145-148] |
+| `pending_after_code_fact_write` | function | Constructs a 'ProjectionSyncStatus' from a 'ProjectionSyncRequest', marking 'graph_pending' and 'vectors_pending' based on whether 'request.targets' contains 'ProjectionTarget::Graph' or 'ProjectionTarget::Vectors', and copying through 'project_id' and 'file_paths'. [crates/gcode/src/projection/sync.rs:150-157] |
+| `sync_after_index` | function | Creates and returns a 'ProjectionSyncReports' by synchronizing graph files and vector files for the given 'file_paths' with the provided 'Context', propagating any error from either sync operation. [crates/gcode/src/projection/sync.rs:159-167] |
+| `sync_files_with_state` | function | Iterates over 'file_paths', invoking 'sync_one' for each to accumulate synced/skipped/failed counts and error messages, then returns an 'ok_with_counts' report when no errors occurred or a 'degraded_with_counts' report with the first error kind and concatenated diagnostics otherwise. [crates/gcode/src/projection/sync.rs:169-224] |
+| `sync_graph_files` | function | Synchronizes the given file paths into the code graph using a read-write database connection, tracking synced/skipped/failed counts and reconciliation errors, and returns an 'ok' or degraded 'ProjectionSyncReport' depending on whether any file-level or graph-access errors occurred. [crates/gcode/src/projection/sync.rs:226-310] |
+| `sync_vector_files` | function | Synchronizes the given vector file paths by building a 'VectorProjectionState' from the context and a read-write database connection, returning an OK report for an empty input or a degraded report if lifecycle initialization fails, otherwise delegating to 'sync_files_with_state' with 'VectorProjectionState::sync_file'. [crates/gcode/src/projection/sync.rs:312-340] |
+| `sync_graph_file` | function | Attempts to mark a project file for graph sync, loads its persisted graph facts, applies them to 'code_graph::CodeGraph::sync_file', then marks the file synced and returns either 'Synced' with the number of definitions or 'SkippedMissingIndexedFile' if the file was missing from the index. [crates/gcode/src/projection/sync.rs:342-365] |
+| `VectorProjectionState` | class | 'VectorProjectionState<'a>' is a state container holding a borrowed 'Context', an owned 'postgres::Client' connection, and a 'CodeSymbolVectorLifecycle' for managing vector projection operations. [crates/gcode/src/projection/sync.rs:367-371] |
+| `sync_file` | function | Checks whether the file is indexed, fetches its symbols and syncs them into the lifecycle, then marks its vectors as synced and returns either 'Synced { symbols }' or 'SkippedMissingIndexedFile' if the file is absent or could not be marked. [crates/gcode/src/projection/sync.rs:374-389] |
+| `vector_lifecycle_from_context` | function | Builds a 'CodeSymbolVectorLifecycle' from a 'Context' by cloning the configured Qdrant client and code vector settings, resolving the embedding source from the context, and returning an error if either Qdrant or embedding configuration is missing. [crates/gcode/src/projection/sync.rs:392-407] |
+| `typed_projection_error` | function | Converts an 'anyhow::Error' into a 'ProjectionSyncError' by classifying it as a 'VectorLifecycleError' or 'GraphReadError' kind when possible, otherwise defaulting to '"sync_failed"', and copying the error's string representation into 'message'. [crates/gcode/src/projection/sync.rs:409-419] |
+| `graph_error_kind` | function | Returns a static error-kind string label by pattern-matching 'GraphReadError' variants, mapping each variant to a corresponding FalkorDB or invalid-target identifier. [crates/gcode/src/projection/sync.rs:421-428] |
+| `vector_error_kind` | function | Returns a static string error category for a 'VectorLifecycleError' by matching each variant to a fixed lowercase, underscore-separated kind label. [crates/gcode/src/projection/sync.rs:430-441] |
+| `test_context` | function | Constructs and returns a 'Context' test fixture with hardcoded placeholder values, including a nonexistent PostgreSQL URL and project root, 'project-1' ID, 'quiet = true', no optional service endpoints, default indexing configuration, and 'ProjectIndexScope::Single'. [crates/gcode/src/projection/sync.rs:448-462] |
+| `sync_state_continues_after_projection_errors` | function | Verifies that 'sync_files_with_state' continues processing subsequent files after a projection write error, marks the overall report as 'Degraded', and correctly aggregates synced/failed counts and the 'sync_failed' error kind. [crates/gcode/src/projection/sync.rs:465-500] |
+| `State` | class | 'State' is a struct with a single field, 'synced: Vec<String>', used to store a list of synced string values. [crates/gcode/src/projection/sync.rs:472-474] |
+| `sync_state_treats_missing_indexed_file_as_non_degraded_skip` | function | Verifies that 'sync_files_with_state' counts 'ProjectionFileSyncOutcome::SkippedMissingIndexedFile' as a non-degrading skip, leaving the overall report 'Ok' with one synced file, one skipped file, no failures, and 'degraded == false'. [crates/gcode/src/projection/sync.rs:503-528] |
+| `State` | class | 'State' is a struct that stores a single field, 'synced', which is a vector of strings representing synced items. [crates/gcode/src/projection/sync.rs:506-508] |
+

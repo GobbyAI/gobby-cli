@@ -3,109 +3,63 @@ title: crates/gcode/src/commands/status.rs
 type: code_file
 provenance:
 - file: crates/gcode/src/commands/status.rs
-  ranges:
-  - 18-42
-  - 45-58
-  - 60-134
-  - 136-158
-  - 160-185
-  - 187-197
-  - 200-227
-  - 229-245
-  - 248-256
-  - 259-268
-  - 271-293
-  - 296-310
-  - 313-316
-  - 319-322
-  - 325-334
-  - 337-341
-  - 343-347
-  - 349-358
-  - 361-367
-  - 369-423
-  - 426-437
-  - 439-452
-  - 454-494
-  - 496-520
-  - 522-526
-  - 528-547
-  - 549-567
-  - 569-597
-  - 599-605
-  - 607-614
-  - 616-629
-  - 631-635
-  - 637-677
-  - 683-693
-  - 695-709
-  - 712-717
-  - 720-725
-  - 728-746
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gcode/src/commands/status.rs:18-42](crates/gcode/src/commands/status.rs#L18-L42), [crates/gcode/src/commands/status.rs:45-58](crates/gcode/src/commands/status.rs#L45-L58), [crates/gcode/src/commands/status.rs:60-134](crates/gcode/src/commands/status.rs#L60-L134), [crates/gcode/src/commands/status.rs:136-158](crates/gcode/src/commands/status.rs#L136-L158), [crates/gcode/src/commands/status.rs:160-185](crates/gcode/src/commands/status.rs#L160-L185), [crates/gcode/src/commands/status.rs:187-197](crates/gcode/src/commands/status.rs#L187-L197), [crates/gcode/src/commands/status.rs:200-227](crates/gcode/src/commands/status.rs#L200-L227), [crates/gcode/src/commands/status.rs:229-245](crates/gcode/src/commands/status.rs#L229-L245), [crates/gcode/src/commands/status.rs:248-256](crates/gcode/src/commands/status.rs#L248-L256), [crates/gcode/src/commands/status.rs:259-268](crates/gcode/src/commands/status.rs#L259-L268), [crates/gcode/src/commands/status.rs:271-293](crates/gcode/src/commands/status.rs#L271-L293), [crates/gcode/src/commands/status.rs:296-310](crates/gcode/src/commands/status.rs#L296-L310), [crates/gcode/src/commands/status.rs:313-316](crates/gcode/src/commands/status.rs#L313-L316), [crates/gcode/src/commands/status.rs:319-322](crates/gcode/src/commands/status.rs#L319-L322), [crates/gcode/src/commands/status.rs:325-334](crates/gcode/src/commands/status.rs#L325-L334), [crates/gcode/src/commands/status.rs:337-341](crates/gcode/src/commands/status.rs#L337-L341), [crates/gcode/src/commands/status.rs:343-347](crates/gcode/src/commands/status.rs#L343-L347), [crates/gcode/src/commands/status.rs:349-358](crates/gcode/src/commands/status.rs#L349-L358), [crates/gcode/src/commands/status.rs:361-367](crates/gcode/src/commands/status.rs#L361-L367), [crates/gcode/src/commands/status.rs:369-423](crates/gcode/src/commands/status.rs#L369-L423), [crates/gcode/src/commands/status.rs:426-437](crates/gcode/src/commands/status.rs#L426-L437), [crates/gcode/src/commands/status.rs:439-452](crates/gcode/src/commands/status.rs#L439-L452), [crates/gcode/src/commands/status.rs:454-494](crates/gcode/src/commands/status.rs#L454-L494), [crates/gcode/src/commands/status.rs:496-520](crates/gcode/src/commands/status.rs#L496-L520), [crates/gcode/src/commands/status.rs:522-526](crates/gcode/src/commands/status.rs#L522-L526), [crates/gcode/src/commands/status.rs:528-547](crates/gcode/src/commands/status.rs#L528-L547), [crates/gcode/src/commands/status.rs:549-567](crates/gcode/src/commands/status.rs#L549-L567), [crates/gcode/src/commands/status.rs:569-597](crates/gcode/src/commands/status.rs#L569-L597), [crates/gcode/src/commands/status.rs:599-605](crates/gcode/src/commands/status.rs#L599-L605), [crates/gcode/src/commands/status.rs:607-614](crates/gcode/src/commands/status.rs#L607-L614), [crates/gcode/src/commands/status.rs:616-629](crates/gcode/src/commands/status.rs#L616-L629), [crates/gcode/src/commands/status.rs:631-635](crates/gcode/src/commands/status.rs#L631-L635), [crates/gcode/src/commands/status.rs:637-677](crates/gcode/src/commands/status.rs#L637-L677), [crates/gcode/src/commands/status.rs:683-693](crates/gcode/src/commands/status.rs#L683-L693), [crates/gcode/src/commands/status.rs:695-709](crates/gcode/src/commands/status.rs#L695-L709), [crates/gcode/src/commands/status.rs:712-717](crates/gcode/src/commands/status.rs#L712-L717), [crates/gcode/src/commands/status.rs:720-725](crates/gcode/src/commands/status.rs#L720-L725), [crates/gcode/src/commands/status.rs:728-746](crates/gcode/src/commands/status.rs#L728-L746)
-
-</details>
-
 # crates/gcode/src/commands/status.rs
 
 Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
-## Purpose
+## Overview
 
-This file implements the gcode status and cleanup workflow for indexed projects. It formats timestamps for display, converts epoch days to calendar dates, and then uses the database, graph, vector, and visibility layers to load the current indexed project state, detect stale or missing project context, and report coverage and repository outline information. The prune helpers and `ProjectionPruneTotals` aggregate cleanup work across graph/vector projections, support different projection scopes, and write or print per-project JSON and totals while handling orphaned or duplicate-root cases and warning on cleanup failures.
-[crates/gcode/src/commands/status.rs:18-42]
-[crates/gcode/src/commands/status.rs:45-58]
-[crates/gcode/src/commands/status.rs:60-134]
-[crates/gcode/src/commands/status.rs:136-158]
-[crates/gcode/src/commands/status.rs:160-185]
+`crates/gcode/src/commands/status.rs` exposes 38 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `format_timestamp` | function | `fn format_timestamp(raw: &str) -> String {` | `format_timestamp [function]` | `7027693a-1411-5ccd-90be-cc3810418e85` | 18-42 [crates/gcode/src/commands/status.rs:18-42] | Indexed function `format_timestamp` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:18-42] |
-| `days_to_ymd` | function | `fn days_to_ymd(mut days: i64) -> (i64, i64, i64) {` | `days_to_ymd [function]` | `a2c86830-61ee-56e0-a451-271f26a16c3a` | 45-58 [crates/gcode/src/commands/status.rs:45-58] | Indexed function `days_to_ymd` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:45-58] |
-| `run` | function | `pub fn run(ctx: &Context, format: Format) -> anyhow::Result<()> {` | `run [function]` | `bfc1cae3-4c00-5c73-9dc5-dce66f0eec85` | 60-134 [crates/gcode/src/commands/status.rs:60-134] | Indexed function `run` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:60-134] |
-| `overlay_status_json` | function | `fn overlay_status_json(ctx: &Context, conn: &mut postgres::Client) -> Option<serde_json::Value> {` | `overlay_status_json [function]` | `a7f6bfd3-9618-5f95-8de9-75d4a7e252a7` | 136-158 [crates/gcode/src/commands/status.rs:136-158] | Indexed function `overlay_status_json` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:136-158] |
-| `invalidate` | function | `pub fn invalidate(ctx: &Context, force: bool) -> anyhow::Result<()> {` | `invalidate [function]` | `0f76d4c3-4416-5c6a-a6fe-6412539a54ce` | 160-185 [crates/gcode/src/commands/status.rs:160-185] | Indexed function `invalidate` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:160-185] |
-| `cleanup_project_projections` | function | `fn cleanup_project_projections(ctx: &Context) -> anyhow::Result<()> {` | `cleanup_project_projections [function]` | `f3af98c0-13ed-574c-9fa7-860777fee0f2` | 187-197 [crates/gcode/src/commands/status.rs:187-197] | Indexed function `cleanup_project_projections` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:187-197] |
-| `collect_projects` | function | `fn collect_projects() -> anyhow::Result<Vec<IndexedProject>> {` | `collect_projects [function]` | `b8a64763-17fe-5978-849c-212a7193587d` | 200-227 [crates/gcode/src/commands/status.rs:200-227] | Indexed function `collect_projects` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:200-227] |
-| `indexed_project_from_row` | function | `fn indexed_project_from_row(row: &postgres::Row) -> anyhow::Result<IndexedProject> {` | `indexed_project_from_row [function]` | `7da7842b-9070-53f3-af3d-0d4474453982` | 229-245 [crates/gcode/src/commands/status.rs:229-245] | Indexed function `indexed_project_from_row` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:229-245] |
-| `format_coverage` | function | `fn format_coverage(indexed: usize, eligible: Option<usize>) -> String {` | `format_coverage [function]` | `d985b558-527d-54b5-b16c-83529d40b856` | 248-256 [crates/gcode/src/commands/status.rs:248-256] | Indexed function `format_coverage` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:248-256] |
-| `display_name` | function | `fn display_name(p: &IndexedProject) -> String {` | `display_name [function]` | `fab3b435-7199-5e13-bf61-58fdb3c43510` | 259-268 [crates/gcode/src/commands/status.rs:259-268] | Indexed function `display_name` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:259-268] |
-| `projects` | function | `pub fn projects(format: Format) -> anyhow::Result<()> {` | `projects [function]` | `a87c6b68-c8ad-56f5-8165-55fa8584c3e4` | 271-293 [crates/gcode/src/commands/status.rs:271-293] | Indexed function `projects` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:271-293] |
-| `is_stale` | function | `fn is_stale(p: &IndexedProject) -> Option<&'static str> {` | `is_stale [function]` | `bcd80e7e-aab0-57be-88c2-e05d8885d0c2` | 296-310 [crates/gcode/src/commands/status.rs:296-310] | Indexed function `is_stale` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:296-310] |
-| `StaleProject` | class | `struct StaleProject<'a> {` | `StaleProject [class]` | `64197fa3-d771-51b1-8afc-a20cda7fe2c8` | 313-316 [crates/gcode/src/commands/status.rs:313-316] | Indexed class `StaleProject` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:313-316] |
-| `ProjectionCleanupScope` | type | `enum ProjectionCleanupScope {` | `ProjectionCleanupScope [type]` | `2850aa65-d097-5a0e-8abd-75e7d83faf24` | 319-322 [crates/gcode/src/commands/status.rs:319-322] | Indexed type `ProjectionCleanupScope` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:319-322] |
-| `ProjectionPruneTotals` | class | `struct ProjectionPruneTotals {` | `ProjectionPruneTotals [class]` | `74fd99d5-e2e6-5ea6-98ba-6ce6bc9bac27` | 325-334 [crates/gcode/src/commands/status.rs:325-334] | Indexed class `ProjectionPruneTotals` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:325-334] |
-| `ProjectionPruneTotals::record_graph_cleanup` | method | `fn record_graph_cleanup(&mut self, cleanup: crate::graph::code_graph::GraphOrphanCleanup) {` | `ProjectionPruneTotals::record_graph_cleanup [method]` | `7c05fe11-16ec-55cd-8184-81f9a8083d45` | 337-341 [crates/gcode/src/commands/status.rs:337-341] | Indexed method `ProjectionPruneTotals::record_graph_cleanup` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:337-341] |
-| `ProjectionPruneTotals::record_vector_cleanup` | method | `fn record_vector_cleanup(&mut self, cleanup: code_symbols::VectorOrphanCleanup) {` | `ProjectionPruneTotals::record_vector_cleanup [method]` | `155548c1-76a7-577c-bf74-99bac55d9ba6` | 343-347 [crates/gcode/src/commands/status.rs:343-347] | Indexed method `ProjectionPruneTotals::record_vector_cleanup` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:343-347] |
-| `ProjectionPruneTotals::add` | method | `fn add(&mut self, other: ProjectionPruneTotals) {` | `ProjectionPruneTotals::add [method]` | `a8ec4bc5-93a3-5a17-ad6a-e3a4f012771b` | 349-358 [crates/gcode/src/commands/status.rs:349-358] | Indexed method `ProjectionPruneTotals::add` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:349-358] |
-| `projection_cleanup_scope` | function | `fn projection_cleanup_scope(project_override: Option<&str>) -> ProjectionCleanupScope {` | `projection_cleanup_scope [function]` | `4748f546-c81e-5481-acf4-b5a269f1ad9a` | 361-367 [crates/gcode/src/commands/status.rs:361-367] | Indexed function `projection_cleanup_scope` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:361-367] |
-| `stale_projects` | function | `fn stale_projects(projects: &[IndexedProject]) -> Vec<StaleProject<'_>> {` | `stale_projects [function]` | `7d2bce73-6cb2-5021-8c3a-8599c668e7ee` | 369-423 [crates/gcode/src/commands/status.rs:369-423] | Indexed function `stale_projects` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:369-423] |
-| `prune` | function | `pub fn prune(force: bool, project_override: Option<&str>, quiet: bool) -> anyhow::Result<()> {` | `prune [function]` | `d2dc4b48-98b5-53e5-94dc-84a6188556c2` | 426-437 [crates/gcode/src/commands/status.rs:426-437] | Indexed function `prune` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:426-437] |
-| `prune_resolved_project_projections` | function | `fn prune_resolved_project_projections(` | `prune_resolved_project_projections [function]` | `428f208d-015d-5507-9cc5-cff224a25054` | 439-452 [crates/gcode/src/commands/status.rs:439-452] | Indexed function `prune_resolved_project_projections` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:439-452] |
-| `prune_stale_projects` | function | `fn prune_stale_projects(force: bool) -> anyhow::Result<Option<usize>> {` | `prune_stale_projects [function]` | `47d5b4c1-eeed-5318-8e1d-734b125b7dea` | 454-494 [crates/gcode/src/commands/status.rs:454-494] | Indexed function `prune_stale_projects` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:454-494] |
-| `prune_all_project_projections` | function | `fn prune_all_project_projections(quiet: bool) -> anyhow::Result<()> {` | `prune_all_project_projections [function]` | `fb6cfdcc-b84c-5025-9cfc-04c3c304280d` | 496-520 [crates/gcode/src/commands/status.rs:496-520] | Indexed function `prune_all_project_projections` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:496-520] |
-| `prune_current_project_projections` | function | `fn prune_current_project_projections(ctx: &Context) -> anyhow::Result<()> {` | `prune_current_project_projections [function]` | `a3bab600-9978-5c4c-9a81-1272447b8081` | 522-526 [crates/gcode/src/commands/status.rs:522-526] | Indexed function `prune_current_project_projections` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:522-526] |
-| `prune_project_orphan_projections` | function | `fn prune_project_orphan_projections(` | `prune_project_orphan_projections [function]` | `4f4ce9c0-302a-5726-ac30-e800d5be96a0` | 528-547 [crates/gcode/src/commands/status.rs:528-547] | Indexed function `prune_project_orphan_projections` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:528-547] |
-| `print_current_project_projection_totals` | function | `fn print_current_project_projection_totals(totals: ProjectionPruneTotals) {` | `print_current_project_projection_totals [function]` | `ed59d9fd-2d62-5cad-8ab3-b560111d8146` | 549-567 [crates/gcode/src/commands/status.rs:549-567] | Indexed function `print_current_project_projection_totals` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:549-567] |
-| `print_all_project_projection_totals` | function | `fn print_all_project_projection_totals(totals: ProjectionPruneTotals) {` | `print_all_project_projection_totals [function]` | `710966ea-3a4c-5899-b850-f07c4a63ed45` | 569-597 [crates/gcode/src/commands/status.rs:569-597] | Indexed function `print_all_project_projection_totals` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:569-597] |
-| `warn_projection_cleanup_failure` | function | `fn warn_projection_cleanup_failure(store: &str, project_label: Option<&str>, error: anyhow::Error) {` | `warn_projection_cleanup_failure [function]` | `95a93486-649b-5868-8192-23e0e3c670e1` | 599-605 [crates/gcode/src/commands/status.rs:599-605] | Indexed function `warn_projection_cleanup_failure` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:599-605] |
-| `prune_graph_orphans` | function | `fn prune_graph_orphans(` | `prune_graph_orphans [function]` | `4234eb74-4092-5f71-8a3a-cca5d5b2a41b` | 607-614 [crates/gcode/src/commands/status.rs:607-614] | Indexed function `prune_graph_orphans` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:607-614] |
-| `prune_vector_orphans` | function | `fn prune_vector_orphans(` | `prune_vector_orphans [function]` | `7a0ce9a9-424c-5d17-a8f3-dba0f12ff4ef` | 616-629 [crates/gcode/src/commands/status.rs:616-629] | Indexed function `prune_vector_orphans` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:616-629] |
-| `is_missing_project_context` | function | `fn is_missing_project_context(error: &anyhow::Error) -> bool {` | `is_missing_project_context [function]` | `dd8f5d17-d743-5696-8d3d-24616b21de8c` | 631-635 [crates/gcode/src/commands/status.rs:631-635] | Indexed function `is_missing_project_context` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:631-635] |
-| `repo_outline` | function | `pub fn repo_outline(ctx: &Context, format: Format) -> anyhow::Result<()> {` | `repo_outline [function]` | `060e38f5-7a4e-50c7-ba38-eb8a0872cc08` | 637-677 [crates/gcode/src/commands/status.rs:637-677] | Indexed function `repo_outline` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:637-677] |
-| `indexed_project` | function | `fn indexed_project(id: &str, root_path: &Path) -> IndexedProject {` | `indexed_project [function]` | `a8978517-66b7-56e6-8196-739455511587` | 683-693 [crates/gcode/src/commands/status.rs:683-693] | Indexed function `indexed_project` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:683-693] |
-| `write_project_json` | function | `fn write_project_json(root: &Path, id: &str) {` | `write_project_json [function]` | `6a912344-7292-5eeb-a31b-25a2e1ed52da` | 695-709 [crates/gcode/src/commands/status.rs:695-709] | Indexed function `write_project_json` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:695-709] |
-| `prune_without_project_uses_all_indexed_projection_scope` | function | `fn prune_without_project_uses_all_indexed_projection_scope() {` | `prune_without_project_uses_all_indexed_projection_scope [function]` | `7bfb8bd3-565a-5265-8ff3-6f60ce75c2ad` | 712-717 [crates/gcode/src/commands/status.rs:712-717] | Indexed function `prune_without_project_uses_all_indexed_projection_scope` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:712-717] |
-| `prune_with_project_uses_single_resolved_projection_scope` | function | `fn prune_with_project_uses_single_resolved_projection_scope() {` | `prune_with_project_uses_single_resolved_projection_scope [function]` | `e7060ed5-9d92-5434-9942-642b67111810` | 720-725 [crates/gcode/src/commands/status.rs:720-725] | Indexed function `prune_with_project_uses_single_resolved_projection_scope` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:720-725] |
-| `duplicate_root_prune_detection_keeps_resolved_project_id` | function | `fn duplicate_root_prune_detection_keeps_resolved_project_id() {` | `duplicate_root_prune_detection_keeps_resolved_project_id [function]` | `5131eb49-4684-5c4c-9969-90964a64f002` | 728-746 [crates/gcode/src/commands/status.rs:728-746] | Indexed function `duplicate_root_prune_detection_keeps_resolved_project_id` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:728-746] |
+`crates/gcode/src/commands/status.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `format_timestamp` | function | Returns '"never"' for an empty input, formats an all-digit string as a naive UTC timestamp from epoch seconds, truncates ISO-8601-like strings to the first 19 characters with 'T' replaced by a space, and otherwise returns the input unchanged. [crates/gcode/src/commands/status.rs:18-42] |
+| `days_to_ymd` | function | Converts an 'i64' count of days since the Unix epoch into a Gregorian '(year, month, day)' date using Howard Hinnant’s civil-from-days algorithm with a '719468'-day offset. [crates/gcode/src/commands/status.rs:45-58] |
+| `run` | function | Queries the readonly database for the current project’s indexed-project record and prints it in either JSON or human-readable text, augmenting JSON with overlay status when available and formatting basic index statistics such as root path, file/symbol counts, last indexed time, and duration. [crates/gcode/src/commands/status.rs:60-134] |
+| `overlay_status_json` | function | Returns 'None' unless 'ctx.index_scope' is an 'Overlay', otherwise builds and returns a JSON object containing the overlay and parent project/root IDs plus a 'tombstones' field when 'visibility::tombstone_count(conn, ctx)' is greater than zero. [crates/gcode/src/commands/status.rs:136-158] |
+| `invalidate` | function | Prompts for confirmation unless 'force' is true, then opens a read-write database connection, invalidates the project’s code index via the indexer using the project ID and optional daemon URL, and finishes by cleaning up project projections. [crates/gcode/src/commands/status.rs:160-185] |
+| `cleanup_project_projections` | function | Clears the project's FalkorDB projection when 'ctx.falkordb' is present and deletes the project's Qdrant collection when 'ctx.qdrant' is set, mapping any backend errors into contextual 'anyhow' failures. [crates/gcode/src/commands/status.rs:187-197] |
+| `collect_projects` | function | Queries 'code_indexed_projects' in descending 'last_indexed_at' order, converts each row into an 'IndexedProject', filters out duplicate IDs with a 'HashSet', and returns the deduplicated list or an error. [crates/gcode/src/commands/status.rs:200-227] |
+| `indexed_project_from_row` | function | Builds an 'IndexedProject' from a PostgreSQL row by extracting typed columns, converting 'i64' counts to 'usize'/'u64', defaulting a missing 'last_indexed_at' string to '""', and mapping an optional 'total_eligible_files' to 'Option<usize>'. [crates/gcode/src/commands/status.rs:229-245] |
+| `format_coverage` | function | Formats coverage as 'indexed/eligible (pct%)' when 'eligible' is 'Some(total > 0)', otherwise returns just the 'indexed' count as a string. [crates/gcode/src/commands/status.rs:248-256] |
+| `display_name` | function | Returns a human-readable project label using the root directory basename and a shortened ID when 'root_path' is a non-empty absolute path, otherwise falls back to '"<unknown> (id)"'. [crates/gcode/src/commands/status.rs:259-268] |
+| `projects` | function | Collects all indexed projects and emits them as JSON or as human-readable text, printing a no-projects warning to stderr when the list is empty. [crates/gcode/src/commands/status.rs:271-293] |
+| `is_stale` | function | Returns 'Some' with a static reason string when the project is a sentinel entry, has an empty or non-absolute 'root_path', or points to a path that does not exist, and otherwise returns 'None'. [crates/gcode/src/commands/status.rs:296-310] |
+| `StaleProject` | class | 'StaleProject<'a>' is a borrowed wrapper around an 'IndexedProject' that pairs the project reference with a 'String' explaining why the project is considered stale. [crates/gcode/src/commands/status.rs:313-316] |
+| `ProjectionCleanupScope` | type | Indexed type `ProjectionCleanupScope` in `crates/gcode/src/commands/status.rs`. [crates/gcode/src/commands/status.rs:319-322] |
+| `ProjectionPruneTotals` | class | 'ProjectionPruneTotals' is a struct of 'usize' counters summarizing prune activity for graph and vector projections, including how many projects were cleaned or skipped and how many stale/orphan files, nodes, and vectors were deleted. [crates/gcode/src/commands/status.rs:325-334] |
+| `ProjectionPruneTotals::record_graph_cleanup` | method | Increments the graph-cleanup counters by one project and accumulates the number of stale files and graph nodes deleted from the provided 'GraphOrphanCleanup' result. [crates/gcode/src/commands/status.rs:337-341] |
+| `ProjectionPruneTotals::record_vector_cleanup` | method | Increments the cleanup counters by one and accumulates the deleted orphan files and deleted vectors from the provided 'VectorOrphanCleanup' into the struct’s running totals. [crates/gcode/src/commands/status.rs:343-347] |
+| `ProjectionPruneTotals::add` | method | Adds the corresponding counters from 'other' into 'self' for all projection-prune totals, accumulating graph and vector cleaned/skipped/deleted metrics in place. [crates/gcode/src/commands/status.rs:349-358] |
+| `projection_cleanup_scope` | function | Returns 'ProjectionCleanupScope::ResolvedProjectOverride' when 'project_override' is 'Some', otherwise returns 'ProjectionCleanupScope::AllIndexedProjects'. [crates/gcode/src/commands/status.rs:361-367] |
+| `stale_projects` | function | Returns all projects deemed stale either because 'is_stale(project)' reports a reason or because they share a canonicalized root with another project and are superseded by the current project identity, tagging each with the corresponding stale reason. [crates/gcode/src/commands/status.rs:369-423] |
+| `prune` | function | Returns early if 'prune_stale_projects(force)' removes nothing, otherwise determines the projection cleanup scope from 'project_override' and prunes either all indexed project projections or only the resolved override’s projections, propagating any error. [crates/gcode/src/commands/status.rs:426-437] |
+| `prune_resolved_project_projections` | function | Resolves the current project context using the projection-cleanup service configuration and, if successful, prunes that project’s projections; if no project is set and the context is missing, it returns 'Ok(())', otherwise it propagates the error. [crates/gcode/src/commands/status.rs:439-452] |
+| `prune_stale_projects` | function | 'prune_stale_projects' collects projects, identifies stale ones, reports them, optionally prompts for confirmation unless 'force' is set, invalidates each stale project's indexed data in the database via the daemon URL, and returns 'Ok(Some(count))' for pruned entries, 'Ok(Some(0))' when none are stale, or 'Ok(None)' if the user aborts. [crates/gcode/src/commands/status.rs:454-494] |
+| `prune_all_project_projections` | function | Collects all indexed projects and, for each one, resolves a projection-cleanup context and prunes orphaned projections while accumulating and printing totals, warning on per-project resolution failures and exiting early if no projects remain. [crates/gcode/src/commands/status.rs:496-520] |
+| `prune_current_project_projections` | function | Calls 'prune_project_orphan_projections' for the current project scope ('None'), prints the resulting projection totals, and returns 'Ok(())'. [crates/gcode/src/commands/status.rs:522-526] |
+| `prune_project_orphan_projections` | function | Runs graph and vector orphan-pruning for the given 'Context', accumulates any successful cleanup counts into 'ProjectionPruneTotals', increments skip counters when no cleanup is needed, and logs warnings on cleanup errors before returning the totals. [crates/gcode/src/commands/status.rs:528-547] |
+| `print_current_project_projection_totals` | function | Prints to stderr either the counts of stale files and deleted nodes/points for cleaned graph and vector projection orphan cleanup, or a configuration-missing skip message for each projection type when cleanup was skipped. [crates/gcode/src/commands/status.rs:549-567] |
+| `print_all_project_projection_totals` | function | Prints 'eprintln!' status messages for graph and vector projection orphan cleanup, reporting either the number of projects/files/nodes or point deletions when cleaned, or the number of skipped projects when the corresponding backend is not configured. [crates/gcode/src/commands/status.rs:569-597] |
+| `warn_projection_cleanup_failure` | function | Prints a warning to stderr reporting that orphan projection cleanup failed for the given 'store', including the optional 'project_label' when present and the supplied 'anyhow::Error'. [crates/gcode/src/commands/status.rs:599-605] |
+| `prune_graph_orphans` | function | Returns 'Ok(None)' when 'ctx.falkordb' is absent, otherwise runs 'cleanup_deleted_project_graph(ctx)' and wraps its result in 'Some', yielding an 'anyhow::Result<Option<GraphOrphanCleanup>>'. [crates/gcode/src/commands/status.rs:607-614] |
+| `prune_vector_orphans` | function | If Qdrant is configured, it opens a read-only database connection, gathers the project’s indexed file paths into a 'HashSet', and calls 'code_symbols::cleanup_orphan_file_vectors' to remove orphaned vectors, returning 'Ok(None)' when Qdrant is unavailable. [crates/gcode/src/commands/status.rs:616-629] |
+| `is_missing_project_context` | function | Returns 'true' if the error’s string representation contains the exact message 'No gcode project found. Run 'gcode init'', and 'false' otherwise. [crates/gcode/src/commands/status.rs:631-635] |
+| `repo_outline` | function | 'repo_outline' opens a read-only database connection, collects the visible file tree into per-file JSON records, groups those records by parent directory, and emits either the grouped structure as JSON or a text summary of each directory with file and symbol totals. [crates/gcode/src/commands/status.rs:637-677] |
+| `indexed_project` | function | Constructs and returns an 'IndexedProject' by cloning the provided 'id' and 'root_path' into owned strings and populating all indexing metadata fields with fixed placeholder values ('total_files'/'total_symbols'/'index_duration_ms' = '1', 'last_indexed_at' = '"1"', 'total_eligible_files' = 'Some(1)'). [crates/gcode/src/commands/status.rs:683-693] |
+| `write_project_json` | function | Creates the '.gobby' directory under 'root' if needed and writes a 'project.json' file containing the project 'id', fixed name '"project"', the parent project path as 'root', and 'parent_project_id' equal to 'id'. [crates/gcode/src/commands/status.rs:695-709] |
+| `prune_without_project_uses_all_indexed_projection_scope` | function | Verifies that 'projection_cleanup_scope(None)' resolves to 'ProjectionCleanupScope::AllIndexedProjects' when no project is specified. [crates/gcode/src/commands/status.rs:712-717] |
+| `prune_with_project_uses_single_resolved_projection_scope` | function | Verifies that 'projection_cleanup_scope(Some("/tmp/project"))' resolves to 'ProjectionCleanupScope::ResolvedProjectOverride'. [crates/gcode/src/commands/status.rs:720-725] |
+| `duplicate_root_prune_detection_keeps_resolved_project_id` | function | Verifies that when two indexed projects share the same canonical root, stale-project detection marks only the duplicate entry as stale with a '"duplicate root"' reason while preserving the resolved current project ID as non-stale. [crates/gcode/src/commands/status.rs:728-746] |
+

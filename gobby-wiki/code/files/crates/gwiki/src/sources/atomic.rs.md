@@ -3,45 +3,31 @@ title: crates/gwiki/src/sources/atomic.rs
 type: code_file
 provenance:
 - file: crates/gwiki/src/sources/atomic.rs
-  ranges:
-  - 7-44
-  - 46-56
-  - 58-83
-  - 85-104
-  - 111-116
-  - 120-129
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gwiki/src/sources/atomic.rs:7-44](crates/gwiki/src/sources/atomic.rs#L7-L44), [crates/gwiki/src/sources/atomic.rs:46-56](crates/gwiki/src/sources/atomic.rs#L46-L56), [crates/gwiki/src/sources/atomic.rs:58-83](crates/gwiki/src/sources/atomic.rs#L58-L83), [crates/gwiki/src/sources/atomic.rs:85-104](crates/gwiki/src/sources/atomic.rs#L85-L104), [crates/gwiki/src/sources/atomic.rs:111-116](crates/gwiki/src/sources/atomic.rs#L111-L116), [crates/gwiki/src/sources/atomic.rs:120-129](crates/gwiki/src/sources/atomic.rs#L120-L129)
-
-</details>
-
 # crates/gwiki/src/sources/atomic.rs
 
 Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
-## Purpose
+## Overview
 
-Provides atomic file-write helpers for wiki sources. `write_atomic` creates a sibling temp file, writes and `sync_all`s the data, then swaps it into place with `replace_atomic` and finally syncs the parent directory so the update is durable. `temp_sibling_path` builds a unique temp name next to the target and rejects paths without a file name or without a UTF-8 file name, while `replace_atomic` does the platform-specific rename step, removing an existing destination first on Windows.
-[crates/gwiki/src/sources/atomic.rs:7-44]
-[crates/gwiki/src/sources/atomic.rs:46-56]
-[crates/gwiki/src/sources/atomic.rs:58-83]
-[crates/gwiki/src/sources/atomic.rs:85-104]
-[crates/gwiki/src/sources/atomic.rs:111-116]
+`crates/gwiki/src/sources/atomic.rs` exposes 6 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `write_atomic` | function | `pub(crate) fn write_atomic(` | `write_atomic [function]` | `d727156b-09a1-574e-ae55-ec7e16497c1f` | 7-44 [crates/gwiki/src/sources/atomic.rs:7-44] | Indexed function `write_atomic` in `crates/gwiki/src/sources/atomic.rs`. [crates/gwiki/src/sources/atomic.rs:7-44] |
-| `replace_atomic` | function | `fn replace_atomic(temp_path: &Path, path: &Path) -> std::io::Result<()> {` | `replace_atomic [function]` | `145c1170-f37f-5dce-876e-e31177f6123b` | 46-56 [crates/gwiki/src/sources/atomic.rs:46-56] | Indexed function `replace_atomic` in `crates/gwiki/src/sources/atomic.rs`. [crates/gwiki/src/sources/atomic.rs:46-56] |
-| `temp_sibling_path` | function | `fn temp_sibling_path(path: &Path) -> Result<PathBuf, WikiError> {` | `temp_sibling_path [function]` | `3890ab81-748a-5f41-8438-989da59810ce` | 58-83 [crates/gwiki/src/sources/atomic.rs:58-83] | Indexed function `temp_sibling_path` in `crates/gwiki/src/sources/atomic.rs`. [crates/gwiki/src/sources/atomic.rs:58-83] |
-| `sync_parent_dir` | function | `pub(crate) fn sync_parent_dir(path: &Path) -> Result<(), WikiError> {` | `sync_parent_dir [function]` | `119d0c70-66bd-5558-bbfb-48af00da6966` | 85-104 [crates/gwiki/src/sources/atomic.rs:85-104] | Indexed function `sync_parent_dir` in `crates/gwiki/src/sources/atomic.rs`. [crates/gwiki/src/sources/atomic.rs:85-104] |
-| `temp_sibling_path_rejects_missing_file_name` | function | `fn temp_sibling_path_rejects_missing_file_name() {` | `temp_sibling_path_rejects_missing_file_name [function]` | `76ca60eb-5da6-5d7f-8316-5dd10384941b` | 111-116 [crates/gwiki/src/sources/atomic.rs:111-116] | Indexed function `temp_sibling_path_rejects_missing_file_name` in `crates/gwiki/src/sources/atomic.rs`. [crates/gwiki/src/sources/atomic.rs:111-116] |
-| `temp_sibling_path_rejects_non_utf8_file_name` | function | `fn temp_sibling_path_rejects_non_utf8_file_name() {` | `temp_sibling_path_rejects_non_utf8_file_name [function]` | `95ebb71d-e9d2-5fce-9afb-6fe792c0d65f` | 120-129 [crates/gwiki/src/sources/atomic.rs:120-129] | Indexed function `temp_sibling_path_rejects_non_utf8_file_name` in `crates/gwiki/src/sources/atomic.rs`. [crates/gwiki/src/sources/atomic.rs:120-129] |
+`crates/gwiki/src/sources/atomic.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `write_atomic` | function | Writes 'contents' to a temporary sibling file, 'fsync's it, atomically replaces 'path' with that temp file, cleans up the temp file on any failure, and then syncs the parent directory to make the update durable. [crates/gwiki/src/sources/atomic.rs:7-44] |
+| `replace_atomic` | function | On Windows, it first deletes any existing file at 'path' (ignoring 'NotFound') and then renames 'temp_path' to 'path', returning the 'std::io::Result' from the rename operation. [crates/gwiki/src/sources/atomic.rs:46-56] |
+| `temp_sibling_path` | function | Returns a temporary sibling 'PathBuf' for atomic writes by validating that 'path' has a UTF-8 filename, then constructing a hidden '.name.pid.nanos.uuid.tmp' filename in the same directory. [crates/gwiki/src/sources/atomic.rs:58-83] |
+| `sync_parent_dir` | function | On Unix, opens 'path'’s parent directory and calls 'sync_all()' to flush it to stable storage, mapping any I/O error into 'WikiError::Io' with the parent path and action label, while on non-Unix platforms or for paths without a parent it returns 'Ok(())'. [crates/gwiki/src/sources/atomic.rs:85-104] |
+| `temp_sibling_path_rejects_missing_file_name` | function | Asserts that 'temp_sibling_path(Path::new("/"))' fails with 'WikiError::Config' when the input path has no file name. [crates/gwiki/src/sources/atomic.rs:111-116] |
+| `temp_sibling_path_rejects_non_utf8_file_name` | function | Verifies that 'temp_sibling_path' returns a 'WikiError::Config' error when given a 'PathBuf' whose filename contains invalid UTF-8 bytes. [crates/gwiki/src/sources/atomic.rs:120-129] |
+

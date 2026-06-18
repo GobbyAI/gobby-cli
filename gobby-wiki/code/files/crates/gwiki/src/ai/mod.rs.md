@@ -3,28 +3,23 @@ title: crates/gwiki/src/ai/mod.rs
 type: code_file
 provenance:
 - file: crates/gwiki/src/ai/mod.rs
-  ranges:
-  - 1-4
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gwiki/src/ai/mod.rs:1-4](crates/gwiki/src/ai/mod.rs#L1-L4)
-
-</details>
-
 # crates/gwiki/src/ai/mod.rs
 
 Module: [[code/modules/crates/gwiki/src/ai|crates/gwiki/src/ai]]
 
-## Purpose
+## Overview
 
-Declares the `gwiki` crate’s internal AI module and exposes its three submodules: `chunk`, `clients`, and `translate`, which organize the AI-related implementation. [crates/gwiki/src/ai/mod.rs:1-4]
+`crates/gwiki/src/ai/mod.rs` has no indexed API symbols.
 
-## API Symbols
+## How it fits
+
+`crates/gwiki/src/ai/mod.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
 
 No indexed symbols.

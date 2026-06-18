@@ -3,77 +3,46 @@ title: crates/gcode/src/index/parser/calls/dart_textual.rs
 type: code_file
 provenance:
 - file: crates/gcode/src/index/parser/calls/dart_textual.rs
-  ranges:
-  - 8-55
-  - 57-77
-  - 79-168
-  - 170-172
-  - 174-189
-  - 191-216
-  - 218-223
-  - 226-232
-  - 235-237
-  - 239-243
-  - 247-252
-  - 255-259
-  - 262-362
-  - 364-366
-  - 368-370
-  - 373-375
-  - 377-379
-  - 381-391
-  - 393-417
-  - 419-441
-  - 443-492
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gcode/src/index/parser/calls/dart_textual.rs:8-55](crates/gcode/src/index/parser/calls/dart_textual.rs#L8-L55), [crates/gcode/src/index/parser/calls/dart_textual.rs:57-77](crates/gcode/src/index/parser/calls/dart_textual.rs#L57-L77), [crates/gcode/src/index/parser/calls/dart_textual.rs:79-168](crates/gcode/src/index/parser/calls/dart_textual.rs#L79-L168), [crates/gcode/src/index/parser/calls/dart_textual.rs:170-172](crates/gcode/src/index/parser/calls/dart_textual.rs#L170-L172), [crates/gcode/src/index/parser/calls/dart_textual.rs:174-189](crates/gcode/src/index/parser/calls/dart_textual.rs#L174-L189), [crates/gcode/src/index/parser/calls/dart_textual.rs:191-216](crates/gcode/src/index/parser/calls/dart_textual.rs#L191-L216), [crates/gcode/src/index/parser/calls/dart_textual.rs:218-223](crates/gcode/src/index/parser/calls/dart_textual.rs#L218-L223), [crates/gcode/src/index/parser/calls/dart_textual.rs:226-232](crates/gcode/src/index/parser/calls/dart_textual.rs#L226-L232), [crates/gcode/src/index/parser/calls/dart_textual.rs:235-237](crates/gcode/src/index/parser/calls/dart_textual.rs#L235-L237), [crates/gcode/src/index/parser/calls/dart_textual.rs:239-243](crates/gcode/src/index/parser/calls/dart_textual.rs#L239-L243), [crates/gcode/src/index/parser/calls/dart_textual.rs:247-252](crates/gcode/src/index/parser/calls/dart_textual.rs#L247-L252), [crates/gcode/src/index/parser/calls/dart_textual.rs:255-259](crates/gcode/src/index/parser/calls/dart_textual.rs#L255-L259), [crates/gcode/src/index/parser/calls/dart_textual.rs:262-362](crates/gcode/src/index/parser/calls/dart_textual.rs#L262-L362), [crates/gcode/src/index/parser/calls/dart_textual.rs:364-366](crates/gcode/src/index/parser/calls/dart_textual.rs#L364-L366), [crates/gcode/src/index/parser/calls/dart_textual.rs:368-370](crates/gcode/src/index/parser/calls/dart_textual.rs#L368-L370), [crates/gcode/src/index/parser/calls/dart_textual.rs:373-375](crates/gcode/src/index/parser/calls/dart_textual.rs#L373-L375), [crates/gcode/src/index/parser/calls/dart_textual.rs:377-379](crates/gcode/src/index/parser/calls/dart_textual.rs#L377-L379), [crates/gcode/src/index/parser/calls/dart_textual.rs:381-391](crates/gcode/src/index/parser/calls/dart_textual.rs#L381-L391), [crates/gcode/src/index/parser/calls/dart_textual.rs:393-417](crates/gcode/src/index/parser/calls/dart_textual.rs#L393-L417), [crates/gcode/src/index/parser/calls/dart_textual.rs:419-441](crates/gcode/src/index/parser/calls/dart_textual.rs#L419-L441), [crates/gcode/src/index/parser/calls/dart_textual.rs:443-492](crates/gcode/src/index/parser/calls/dart_textual.rs#L443-L492)
-
-</details>
-
 # crates/gcode/src/index/parser/calls/dart_textual.rs
 
 Module: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 
-## Purpose
+## Overview
 
-Implements a textual Dart call extractor for the call indexer. It walks the source line by line, maintains lightweight scan state for code, strings, comments, and class-member context, and uses that state to find call-like candidates, filter out declarations and other ignored contexts, and materialize `CallRelation` entries with optional semantic resolution.
+`crates/gcode/src/index/parser/calls/dart_textual.rs` exposes 21 indexed API symbols.
 
-The helper functions and small state structs work together to support the heuristics: line-span splitting, candidate detection, qualifier and angle-bracket checks, declaration and string-start detection, and per-line scan bookkeeping that suppresses false positives before a call is recorded.
-[crates/gcode/src/index/parser/calls/dart_textual.rs:8-55]
-[crates/gcode/src/index/parser/calls/dart_textual.rs:57-77]
-[crates/gcode/src/index/parser/calls/dart_textual.rs:79-168]
-[crates/gcode/src/index/parser/calls/dart_textual.rs:170-172]
-[crates/gcode/src/index/parser/calls/dart_textual.rs:174-189]
+## How it fits
 
-## API Symbols
+`crates/gcode/src/index/parser/calls/dart_textual.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `extract_textual_dart_calls` | function | `pub(super) fn extract_textual_dart_calls(` | `extract_textual_dart_calls [function]` | `e61b2a21-72d5-5d34-8e75-b367e3ad76ba` | 8-55 [crates/gcode/src/index/parser/calls/dart_textual.rs:8-55] | Indexed function `extract_textual_dart_calls` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:8-55] |
-| `source_line_spans` | function | `fn source_line_spans(source: &[u8]) -> Vec<(usize, &[u8])> {` | `source_line_spans [function]` | `2738a422-f288-534e-a366-5e9e46974efe` | 57-77 [crates/gcode/src/index/parser/calls/dart_textual.rs:57-77] | Indexed function `source_line_spans` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:57-77] |
-| `textual_call_candidates` | function | `fn textual_call_candidates(` | `textual_call_candidates [function]` | `3159fb65-0a43-5df8-b392-1bc39ff422a6` | 79-168 [crates/gcode/src/index/parser/calls/dart_textual.rs:79-168] | Indexed function `textual_call_candidates` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:79-168] |
-| `is_textual_qualifier_byte` | function | `fn is_textual_qualifier_byte(byte: u8) -> bool {` | `is_textual_qualifier_byte [function]` | `044945e8-53b2-5a84-abe4-a18304877a11` | 170-172 [crates/gcode/src/index/parser/calls/dart_textual.rs:170-172] | Indexed function `is_textual_qualifier_byte` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:170-172] |
-| `matching_angle_start` | function | `fn matching_angle_start(bytes: &[u8], close_idx: usize) -> Option<usize> {` | `matching_angle_start [function]` | `75250a72-74e8-5862-ad9b-51b8a6da1a65` | 174-189 [crates/gcode/src/index/parser/calls/dart_textual.rs:174-189] | Indexed function `matching_angle_start` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:174-189] |
-| `angle_looks_like_generic_delimiter` | function | `fn angle_looks_like_generic_delimiter(bytes: &[u8], idx: usize) -> bool {` | `angle_looks_like_generic_delimiter [function]` | `647ac655-f5a8-5f0d-a60f-33c8ea2c9ce2` | 191-216 [crates/gcode/src/index/parser/calls/dart_textual.rs:191-216] | Indexed function `angle_looks_like_generic_delimiter` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:191-216] |
-| `is_angle_operator_neighbor` | function | `fn is_angle_operator_neighbor(byte: u8) -> bool {` | `is_angle_operator_neighbor [function]` | `18b2b0c1-9d75-540c-945d-d4927534fe86` | 218-223 [crates/gcode/src/index/parser/calls/dart_textual.rs:218-223] | Indexed function `is_angle_operator_neighbor` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:218-223] |
-| `DartScanState` | class | `struct DartScanState {` | `DartScanState [class]` | `a0546f1a-f17f-57c6-b2ff-422ba208d0c1` | 226-232 [crates/gcode/src/index/parser/calls/dart_textual.rs:226-232] | Indexed class `DartScanState` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:226-232] |
-| `DartScanState::is_code` | method | `fn is_code(&self) -> bool {` | `DartScanState::is_code [method]` | `1f8978c2-802f-5f74-bade-eb9b8c282f14` | 235-237 [crates/gcode/src/index/parser/calls/dart_textual.rs:235-237] | Indexed method `DartScanState::is_code` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:235-237] |
-| `DartScanState::in_class_member_scope` | method | `fn in_class_member_scope(&self) -> bool {` | `DartScanState::in_class_member_scope [method]` | `c1a66187-3bcc-5091-b205-1883d9e3935b` | 239-243 [crates/gcode/src/index/parser/calls/dart_textual.rs:239-243] | Indexed method `DartScanState::in_class_member_scope` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:239-243] |
-| `DartStringState` | class | `struct DartStringState {` | `DartStringState [class]` | `c94c5b27-366d-50be-b9e8-f8f2e7af1dc8` | 247-252 [crates/gcode/src/index/parser/calls/dart_textual.rs:247-252] | Indexed class `DartStringState` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:247-252] |
-| `DartLineScan` | class | `struct DartLineScan {` | `DartLineScan [class]` | `826e8df3-be70-5ac4-ada1-55a31359f6ff` | 255-259 [crates/gcode/src/index/parser/calls/dart_textual.rs:255-259] | Indexed class `DartLineScan` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:255-259] |
-| `DartLineScan::new` | method | `fn new(line: &str, mut state: DartScanState) -> Self {` | `DartLineScan::new [method]` | `f3fb79da-43d4-545c-b031-131b84dca8a2` | 262-362 [crates/gcode/src/index/parser/calls/dart_textual.rs:262-362] | Indexed method `DartLineScan::new` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:262-362] |
-| `DartLineScan::state_at` | method | `fn state_at(&self, byte: usize) -> &DartScanState {` | `DartLineScan::state_at [method]` | `ddf1d64c-873e-530c-8e50-7993d3724101` | 364-366 [crates/gcode/src/index/parser/calls/dart_textual.rs:364-366] | Indexed method `DartLineScan::state_at` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:364-366] |
-| `DartLineScan::in_line_comment` | method | `fn in_line_comment(&self, byte: usize) -> bool {` | `DartLineScan::in_line_comment [method]` | `8a1a9ca2-9049-55c1-b8f6-bc61d1c51cab` | 368-370 [crates/gcode/src/index/parser/calls/dart_textual.rs:368-370] | Indexed method `DartLineScan::in_line_comment` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:368-370] |
-| `record_scan_state` | function | `fn record_scan_state(states: &mut Vec<DartScanState>, count: usize, state: &DartScanState) {` | `record_scan_state [function]` | `c3e16433-934e-5dfc-a56a-f42893a6a5b1` | 373-375 [crates/gcode/src/index/parser/calls/dart_textual.rs:373-375] | Indexed function `record_scan_state` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:373-375] |
-| `dart_textual_candidate_in_ignored_context` | function | `fn dart_textual_candidate_in_ignored_context(scan: &DartLineScan, candidate_byte: usize) -> bool {` | `dart_textual_candidate_in_ignored_context [function]` | `dcc92820-a198-56bc-bbad-0abad5c21c36` | 377-379 [crates/gcode/src/index/parser/calls/dart_textual.rs:377-379] | Indexed function `dart_textual_candidate_in_ignored_context` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:377-379] |
-| `dart_line_starts_type_declaration` | function | `fn dart_line_starts_type_declaration(line: &str) -> bool {` | `dart_line_starts_type_declaration [function]` | `3efdcaae-3db8-5670-b839-7d379eb7a396` | 381-391 [crates/gcode/src/index/parser/calls/dart_textual.rs:381-391] | Indexed function `dart_line_starts_type_declaration` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:381-391] |
-| `empty_prefix_semicolon_declaration_in_class` | function | `fn empty_prefix_semicolon_declaration_in_class(` | `empty_prefix_semicolon_declaration_in_class [function]` | `c99e04de-c6b8-5a5a-90af-0d60d1bc23f3` | 393-417 [crates/gcode/src/index/parser/calls/dart_textual.rs:393-417] | Indexed function `empty_prefix_semicolon_declaration_in_class` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:393-417] |
-| `dart_string_start` | function | `fn dart_string_start(bytes: &[u8], idx: usize) -> Option<(DartStringState, usize)> {` | `dart_string_start [function]` | `0467e7e4-5fdd-570e-9d33-c53d9783c68f` | 419-441 [crates/gcode/src/index/parser/calls/dart_textual.rs:419-441] | Indexed function `dart_string_start` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:419-441] |
-| `looks_like_textual_function_declaration` | function | `fn looks_like_textual_function_declaration(` | `looks_like_textual_function_declaration [function]` | `9ed7304a-528a-586b-adb5-856d6b59e102` | 443-492 [crates/gcode/src/index/parser/calls/dart_textual.rs:443-492] | Indexed function `looks_like_textual_function_declaration` in `crates/gcode/src/index/parser/calls/dart_textual.rs`. [crates/gcode/src/index/parser/calls/dart_textual.rs:443-492] |
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `extract_textual_dart_calls` | function | Scans a Dart source buffer line by line, skips import/export/type/class declarations and other ignored textual contexts, filters out disallowed call names, and materializes a 'CallRelation' for each remaining textual '.'-based call candidate using the optional semantic resolver. [crates/gcode/src/index/parser/calls/dart_textual.rs:8-55] |
+| `source_line_spans` | function | Returns a vector of '(byte_offset, line_slice)' pairs for each line in 'source', splitting on '\n' and stripping a trailing '\r' from each line slice while preserving the original start index. [crates/gcode/src/index/parser/calls/dart_textual.rs:57-77] |
+| `textual_call_candidates` | function | Scans a single source line for '('-terminated textual call expressions, backtracks to extract the callee name and optional qualified path (including generic type arguments), skips likely function declarations, and returns corresponding 'CallSite' candidates with byte-range/line metadata. [crates/gcode/src/index/parser/calls/dart_textual.rs:79-168] |
+| `is_textual_qualifier_byte` | function | Returns 'true' if the byte is an ASCII alphanumeric character or one of the qualifier characters '_' or '$', otherwise 'false'. [crates/gcode/src/index/parser/calls/dart_textual.rs:170-172] |
+| `matching_angle_start` | function | Scans backward from 'close_idx' through 'bytes', tracking nested generic angle delimiters, and returns the index of the matching opening '<' for the closing '>' at 'close_idx' if one is found, otherwise 'None'. [crates/gcode/src/index/parser/calls/dart_textual.rs:174-189] |
+| `angle_looks_like_generic_delimiter` | function | Returns 'true' when the byte at 'idx' is a '<' or '>' that does not appear to be part of a shift/comparison/operator sequence, based on its immediate neighbors, and 'false' otherwise. [crates/gcode/src/index/parser/calls/dart_textual.rs:191-216] |
+| `is_angle_operator_neighbor` | function | Returns 'true' if the byte is one of '=', '<', '>', '!', '&', '\|', '+', '-', '*', '/', '^', or '%', indicating an operator character that can neighbor angle brackets. [crates/gcode/src/index/parser/calls/dart_textual.rs:218-223] |
+| `DartScanState` | class | 'DartScanState' tracks the current lexical scanning context for Dart code, including whether the scanner is inside a block comment or string, the current brace nesting depth, whether a class body is pending, and a stack of class-body brace depths. [crates/gcode/src/index/parser/calls/dart_textual.rs:226-232] |
+| `DartScanState::is_code` | method | Returns 'true' when the current token is not inside a block comment and not inside a string literal ('self.string.is_none()'), otherwise 'false'. [crates/gcode/src/index/parser/calls/dart_textual.rs:235-237] |
+| `DartScanState::in_class_member_scope` | method | Returns 'true' when there is a recorded innermost class body depth and the current 'brace_depth' exactly matches that depth, meaning the parser is at class member scope. [crates/gcode/src/index/parser/calls/dart_textual.rs:239-243] |
+| `DartStringState` | class | 'DartStringState' is a small state record for parsing Dart string literals, tracking the quote delimiter, whether the string is triple-quoted or raw, and whether the parser is currently in an escaped state. [crates/gcode/src/index/parser/calls/dart_textual.rs:247-252] |
+| `DartLineScan` | class | 'DartLineScan' is a scan summary for a line of Dart source containing the per-byte lexer states, the starting byte offset of any line comment, and the final lexer state after scanning the line. [crates/gcode/src/index/parser/calls/dart_textual.rs:255-259] |
+| `DartLineScan::new` | method | Scans a Dart source line byte by byte to update and record lexical state transitions for block comments and string literals, while also flagging a pending class body when a type declaration starts in code. [crates/gcode/src/index/parser/calls/dart_textual.rs:262-362] |
+| `DartLineScan::state_at` | method | Returns a reference to the 'DartScanState' stored at the given byte index, clamping the index to the last valid entry if 'byte' exceeds the bounds of 'states_at_byte'. [crates/gcode/src/index/parser/calls/dart_textual.rs:364-366] |
+| `DartLineScan::in_line_comment` | method | Returns 'true' when 'line_comment_start' is set and the given byte offset is greater than or equal to that start position, indicating the byte lies within an in-line comment. [crates/gcode/src/index/parser/calls/dart_textual.rs:368-370] |
+| `record_scan_state` | function | 'record_scan_state' appends 'count' cloned copies of 'state' to the end of 'states'. [crates/gcode/src/index/parser/calls/dart_textual.rs:373-375] |
+| `dart_textual_candidate_in_ignored_context` | function | Returns 'true' when the candidate byte lies inside a line comment or at a position whose scan state is not code, indicating the textual candidate is in an ignored context. [crates/gcode/src/index/parser/calls/dart_textual.rs:377-379] |
+| `dart_line_starts_type_declaration` | function | Returns 'true' if the line, after left-trimming whitespace, begins with a Dart type declaration keyword such as 'class', 'abstract class', 'base class', 'final class', 'interface class', 'enum', 'mixin', or 'extension'. [crates/gcode/src/index/parser/calls/dart_textual.rs:381-391] |
+| `empty_prefix_semicolon_declaration_in_class` | function | Returns 'true' only for a class-member declaration whose prefix before 'name_start' is blank, is immediately followed by a parenthesized parameter list and a trailing semicolon, and is not inside a line comment according to 'scan'. [crates/gcode/src/index/parser/calls/dart_textual.rs:393-417] |
+| `dart_string_start` | function | Parses the start of a Dart string literal at 'idx', recognizing optional raw prefixes ('r'), single vs. triple quoting, and returns the initial 'DartStringState' plus the number of bytes consumed, or 'None' if no string start is present. [crates/gcode/src/index/parser/calls/dart_textual.rs:419-441] |
+| `looks_like_textual_function_declaration` | function | Returns 'true' when a line syntactically resembles a textual function declaration by requiring a declaration-like suffix after the parameter list and a plausible type/identifier prefix before the name, while rejecting expressions or calls with disallowed preceding tokens. [crates/gcode/src/index/parser/calls/dart_textual.rs:443-492] |
+

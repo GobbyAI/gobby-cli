@@ -3,92 +3,82 @@ title: crates/gcore/assets/docker-compose.services.yml
 type: code_file
 provenance:
 - file: crates/gcore/assets/docker-compose.services.yml
-  ranges:
-  - 5-117
-  - 119-128
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gcore/assets/docker-compose.services.yml:5-117](crates/gcore/assets/docker-compose.services.yml#L5-L117), [crates/gcore/assets/docker-compose.services.yml:119-128](crates/gcore/assets/docker-compose.services.yml#L119-L128)
-
-</details>
-
 # crates/gcore/assets/docker-compose.services.yml
 
 Module: [[code/modules/crates/gcore/assets|crates/gcore/assets]]
 
-## Purpose
+## Overview
 
-Defines Docker Compose service dependencies for Gobby, used by the daemon to start and stop local infrastructure through profiles. It wires up three services: `falkordb` for Redis-compatible storage with password-based auth and a healthcheck, `qdrant` for vector storage with local-only access and a healthcheck, and `postgres` built from a local `postgres-pgsearch` context with pg_search and pgaudit settings. The file also declares persistent named volumes for each service so their data survives container restarts.
-[crates/gcore/assets/docker-compose.services.yml:5-117]
-[crates/gcore/assets/docker-compose.services.yml:6-28]
-[crates/gcore/assets/docker-compose.services.yml:7]
-[crates/gcore/assets/docker-compose.services.yml:8-10]
-[crates/gcore/assets/docker-compose.services.yml:11-16]
+`crates/gcore/assets/docker-compose.services.yml` exposes 57 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `services` | property | `services:` | `services [property]` | `591e4361-5db2-5f0c-922e-3fc17b8a0992` | 5-117 [crates/gcore/assets/docker-compose.services.yml:5-117] | Indexed property `services` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:5-117] |
-| `falkordb` | property | `falkordb:` | `falkordb [property]` | `8060bf8a-009e-510d-a92e-2414ef58fee9` | 6-28 [crates/gcore/assets/docker-compose.services.yml:6-28] | Indexed property `falkordb` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:6-28] |
-| `image` | property | `image: falkordb/falkordb:latest` | `image [property]` | `0ec81f31-b1bd-5fd3-a5dc-df0048a6cf04` | 7-7 [crates/gcore/assets/docker-compose.services.yml:7] | Indexed property `image` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:7] |
-| `ports` | property | `ports:` | `ports [property]` | `e5e8281a-5074-5ab4-a173-8b0061be39c0` | 8-10 [crates/gcore/assets/docker-compose.services.yml:8-10] | Indexed property `ports` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:8-10] |
-| `environment` | property | `environment:` | `environment [property]` | `2e970e6d-aeb2-5338-9656-ea9da8c17209` | 11-16 [crates/gcore/assets/docker-compose.services.yml:11-16] | Indexed property `environment` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:11-16] |
-| `volumes` | property | `volumes:` | `volumes [property]` | `3a6c487e-a23c-53e1-8485-fd39120f9f8c` | 17-18 [crates/gcore/assets/docker-compose.services.yml:17-18] | Indexed property `volumes` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:17-18] |
-| `healthcheck` | property | `healthcheck:` | `healthcheck [property]` | `ac1cb913-f9bd-5a46-8d1d-e8179a54fba0` | 19-26 [crates/gcore/assets/docker-compose.services.yml:19-26] | Indexed property `healthcheck` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:19-26] |
-| `test` | property | `test:` | `test [property]` | `dfa0baf7-1895-5c9e-a2e7-3e00224f40c5` | 21-23 [crates/gcore/assets/docker-compose.services.yml:21-23] | Indexed property `test` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:21-23] |
-| `interval` | property | `interval: 10s` | `interval [property]` | `25136f51-692a-5741-ab29-4c28b7d41fd5` | 24-24 [crates/gcore/assets/docker-compose.services.yml:24] | Indexed property `interval` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:24] |
-| `timeout` | property | `timeout: 5s` | `timeout [property]` | `71631f91-ce85-558b-97ed-d206043e8c43` | 25-25 [crates/gcore/assets/docker-compose.services.yml:25] | Indexed property `timeout` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:25] |
-| `retries` | property | `retries: 5` | `retries [property]` | `f2cd6e50-9249-5d8c-bace-bf9f9b6efa74` | 26-26 [crates/gcore/assets/docker-compose.services.yml:26] | Indexed property `retries` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:26] |
-| `restart` | property | `restart: unless-stopped` | `restart [property]` | `eabd17d7-01df-523b-a9de-de4d7e061518` | 27-27 [crates/gcore/assets/docker-compose.services.yml:27] | Indexed property `restart` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:27] |
-| `profiles` | property | `profiles: [falkordb, all]` | `profiles [property]` | `6f734415-ad4b-59cb-a679-b7098a150c07` | 28-28 [crates/gcore/assets/docker-compose.services.yml:28] | Indexed property `profiles` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:28] |
-| `qdrant` | property | `qdrant:` | `qdrant [property]` | `aaa98d08-01b0-58a7-9914-f5ecb4008772` | 30-49 [crates/gcore/assets/docker-compose.services.yml:30-49] | Indexed property `qdrant` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:30-49] |
-| `image` | property | `image: qdrant/qdrant:latest` | `image [property]` | `e64c3f3e-8873-5d83-ba15-885eda52bb3c` | 31-31 [crates/gcore/assets/docker-compose.services.yml:31] | Indexed property `image` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:31] |
-| `ports` | property | `ports:` | `ports [property]` | `e363d09d-ba01-58d2-b24d-025d1d78a3a7` | 32-34 [crates/gcore/assets/docker-compose.services.yml:32-34] | Indexed property `ports` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:32-34] |
-| `environment` | property | `environment:` | `environment [property]` | `8f061858-1bbf-5aee-8317-7872aea29d82` | 35-38 [crates/gcore/assets/docker-compose.services.yml:35-38] | Indexed property `environment` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:35-38] |
-| `volumes` | property | `volumes:` | `volumes [property]` | `3533eb39-72ad-5fa7-b3bc-2991f0fe7702` | 39-40 [crates/gcore/assets/docker-compose.services.yml:39-40] | Indexed property `volumes` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:39-40] |
-| `healthcheck` | property | `healthcheck:` | `healthcheck [property]` | `0dfefab0-a488-5d49-b63a-6371927d8cd1` | 41-45 [crates/gcore/assets/docker-compose.services.yml:41-45] | Indexed property `healthcheck` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:41-45] |
-| `test` | property | `test: ["CMD-SHELL", "bash -c 'exec 3<>/dev/tcp/localhost/6333 && printf \"GET /healthz HTTP/1.0\\r\\nHost: localhost\\r\\n\\r\\n\" >&3 && grep -q \"healthz check passed\" <&3'"]` | `test [property]` | `58d0ad72-9f33-5425-a131-4036300e06ac` | 42-42 [crates/gcore/assets/docker-compose.services.yml:42] | Indexed property `test` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:42] |
-| `interval` | property | `interval: 10s` | `interval [property]` | `1937d982-be22-5131-9d30-4c9521d19049` | 43-43 [crates/gcore/assets/docker-compose.services.yml:43] | Indexed property `interval` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:43] |
-| `timeout` | property | `timeout: 5s` | `timeout [property]` | `caec3d67-8d20-50c1-b7d3-42a81e9c9fdc` | 44-44 [crates/gcore/assets/docker-compose.services.yml:44] | Indexed property `timeout` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:44] |
-| `retries` | property | `retries: 5` | `retries [property]` | `65f0c110-1164-5bb6-9e18-dceda58bb5ae` | 45-45 [crates/gcore/assets/docker-compose.services.yml:45] | Indexed property `retries` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:45] |
-| `restart` | property | `restart: unless-stopped` | `restart [property]` | `4cf7dd10-d55a-5505-8c15-2181b63f1c39` | 46-46 [crates/gcore/assets/docker-compose.services.yml:46] | Indexed property `restart` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:46] |
-| `profiles` | property | `profiles:` | `profiles [property]` | `950b901b-1e15-5ff5-b5f7-d0246b41a10e` | 47-49 [crates/gcore/assets/docker-compose.services.yml:47-49] | Indexed property `profiles` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:47-49] |
-| `postgres` | property | `postgres:` | `postgres [property]` | `aa7fa767-3f9c-5987-b78c-5828aa2ce570` | 51-117 [crates/gcore/assets/docker-compose.services.yml:51-117] | Indexed property `postgres` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:51-117] |
-| `build` | property | `build:` | `build [property]` | `b11ff9b0-d225-5134-a210-e50d3f7fbaa9` | 52-56 [crates/gcore/assets/docker-compose.services.yml:52-56] | Indexed property `build` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:52-56] |
-| `context` | property | `context: ./postgres-pgsearch` | `context [property]` | `5f6b234a-7f4a-5568-acce-93c88ab53c55` | 53-53 [crates/gcore/assets/docker-compose.services.yml:53] | Indexed property `context` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:53] |
-| `args` | property | `args:` | `args [property]` | `6f0bfa87-de13-5ba9-984c-a13b9b333edb` | 54-56 [crates/gcore/assets/docker-compose.services.yml:54-56] | Indexed property `args` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:54-56] |
-| `PG_SEARCH_VERSION` | property | `PG_SEARCH_VERSION: ${GOBBY_PG_SEARCH_VERSION:-0.23.4}` | `PG_SEARCH_VERSION [property]` | `b9c73405-ea2f-55ea-9606-1769f2a21ca7` | 55-55 [crates/gcore/assets/docker-compose.services.yml:55] | Indexed property `PG_SEARCH_VERSION` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:55] |
-| `PG_SEARCH_SHA256` | property | `PG_SEARCH_SHA256: ${GOBBY_PG_SEARCH_SHA256}` | `PG_SEARCH_SHA256 [property]` | `559072d8-376a-5dbc-be18-88dc0070ed8a` | 56-56 [crates/gcore/assets/docker-compose.services.yml:56] | Indexed property `PG_SEARCH_SHA256` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:56] |
-| `image` | property | `image: gobby-postgres-local:18-pgsearch` | `image [property]` | `a731605a-ef10-5f25-a180-5ebbcaaa1151` | 57-57 [crates/gcore/assets/docker-compose.services.yml:57] | Indexed property `image` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:57] |
-| `container_name` | property | `container_name: gobby-postgres` | `container_name [property]` | `ca8649e4-5e48-5f1f-a550-4403b005d889` | 58-58 [crates/gcore/assets/docker-compose.services.yml:58] | Indexed property `container_name` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:58] |
-| `command` | property | `command:` | `command [property]` | `683c70af-f961-5b6e-9a16-6b4beae8d68e` | 59-82 [crates/gcore/assets/docker-compose.services.yml:59-82] | Indexed property `command` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:59-82] |
-| `environment` | property | `environment:` | `environment [property]` | `606c0eae-93d0-5497-aedf-8bdddefc0733` | 83-87 [crates/gcore/assets/docker-compose.services.yml:83-87] | Indexed property `environment` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:83-87] |
-| `POSTGRES_DB` | property | `POSTGRES_DB: ${GOBBY_POSTGRES_DB:-gobby}` | `POSTGRES_DB [property]` | `0784a3df-b47e-564a-b2f7-0470d4e7a3b3` | 84-84 [crates/gcore/assets/docker-compose.services.yml:84] | Indexed property `POSTGRES_DB` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:84] |
-| `POSTGRES_USER` | property | `POSTGRES_USER: ${GOBBY_POSTGRES_USER:-gobby}` | `POSTGRES_USER [property]` | `071bd758-4848-505d-8fb3-acc39810af60` | 85-85 [crates/gcore/assets/docker-compose.services.yml:85] | Indexed property `POSTGRES_USER` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:85] |
-| `POSTGRES_PASSWORD` | property | `POSTGRES_PASSWORD: ${GOBBY_POSTGRES_PASSWORD:-gobby_dev}` | `POSTGRES_PASSWORD [property]` | `990e0119-a144-5b12-8db0-3eebeee0da20` | 86-86 [crates/gcore/assets/docker-compose.services.yml:86] | Indexed property `POSTGRES_PASSWORD` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:86] |
-| `GOBBY_PGAUDIT_LOG` | property | `GOBBY_PGAUDIT_LOG: ${GOBBY_PGAUDIT_LOG:-ddl}` | `GOBBY_PGAUDIT_LOG [property]` | `7b6d7e3d-be6c-5b72-805b-ccf370f728e5` | 87-87 [crates/gcore/assets/docker-compose.services.yml:87] | Indexed property `GOBBY_PGAUDIT_LOG` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:87] |
-| `ports` | property | `ports:` | `ports [property]` | `23d164da-b584-5c84-a7d8-8d37cea87b8b` | 88-89 [crates/gcore/assets/docker-compose.services.yml:88-89] | Indexed property `ports` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:88-89] |
-| `volumes` | property | `volumes:` | `volumes [property]` | `f9855082-a3a2-5eb2-bf07-2e6de0bfb613` | 90-92 [crates/gcore/assets/docker-compose.services.yml:90-92] | Indexed property `volumes` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:90-92] |
-| `healthcheck` | property | `healthcheck:` | `healthcheck [property]` | `582781f7-6818-5dba-8912-5e4d5f853ba2` | 93-113 [crates/gcore/assets/docker-compose.services.yml:93-113] | Indexed property `healthcheck` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:93-113] |
-| `test` | property | `test:` | `test [property]` | `d6748349-1adb-53d1-8645-4026726ea6b2` | 94-110 [crates/gcore/assets/docker-compose.services.yml:94-110] | Indexed property `test` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:94-110] |
-| `interval` | property | `interval: 5s` | `interval [property]` | `22bb68ed-6f43-550c-bfac-d4f6273fed95` | 111-111 [crates/gcore/assets/docker-compose.services.yml:111] | Indexed property `interval` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:111] |
-| `timeout` | property | `timeout: 3s` | `timeout [property]` | `455e568d-a625-52cc-8d0d-9917b9e75857` | 112-112 [crates/gcore/assets/docker-compose.services.yml:112] | Indexed property `timeout` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:112] |
-| `retries` | property | `retries: 10` | `retries [property]` | `e78dd862-9429-5383-9b4c-68b264e6ebaa` | 113-113 [crates/gcore/assets/docker-compose.services.yml:113] | Indexed property `retries` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:113] |
-| `restart` | property | `restart: unless-stopped` | `restart [property]` | `8dc8e30b-6df9-5d1d-ba43-60a28dc03600` | 114-114 [crates/gcore/assets/docker-compose.services.yml:114] | Indexed property `restart` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:114] |
-| `profiles` | property | `profiles:` | `profiles [property]` | `6359ef78-ad73-5281-ab3b-6341a749a6f1` | 115-117 [crates/gcore/assets/docker-compose.services.yml:115-117] | Indexed property `profiles` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:115-117] |
-| `volumes` | property | `volumes:` | `volumes [property]` | `64153251-c5bd-59c7-b6eb-defc1369fdcd` | 119-128 [crates/gcore/assets/docker-compose.services.yml:119-128] | Indexed property `volumes` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:119-128] |
-| `gobby_falkordb_data` | property | `gobby_falkordb_data:` | `gobby_falkordb_data [property]` | `4d2cee14-286f-566c-9c85-9c96a283e16a` | 120-121 [crates/gcore/assets/docker-compose.services.yml:120-121] | Indexed property `gobby_falkordb_data` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:120-121] |
-| `name` | property | `name: gobby_falkordb_data` | `name [property]` | `abc8afa0-7ef9-518e-ae76-84800c614485` | 121-121 [crates/gcore/assets/docker-compose.services.yml:121] | Indexed property `name` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:121] |
-| `gobby_qdrant_data` | property | `gobby_qdrant_data:` | `gobby_qdrant_data [property]` | `5e6428e3-951c-5c9a-95ac-0b3c40d4c322` | 122-123 [crates/gcore/assets/docker-compose.services.yml:122-123] | Indexed property `gobby_qdrant_data` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:122-123] |
-| `name` | property | `name: gobby_qdrant_data` | `name [property]` | `dcb576b4-a5af-5983-96e9-a80472f4c65b` | 123-123 [crates/gcore/assets/docker-compose.services.yml:123] | Indexed property `name` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:123] |
-| `gobby_postgres_data` | property | `gobby_postgres_data:` | `gobby_postgres_data [property]` | `27f328c9-6b58-561c-a919-a5cce2486667` | 124-125 [crates/gcore/assets/docker-compose.services.yml:124-125] | Indexed property `gobby_postgres_data` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:124-125] |
-| `name` | property | `name: gobby_postgres_data` | `name [property]` | `500f6f15-fce0-5878-ba8d-10ebbbdb5071` | 125-125 [crates/gcore/assets/docker-compose.services.yml:125] | Indexed property `name` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:125] |
-| `gobby_pgaudit_log` | property | `gobby_pgaudit_log:` | `gobby_pgaudit_log [property]` | `69cc6e92-3262-5da5-9494-733e42d29757` | 126-128 [crates/gcore/assets/docker-compose.services.yml:126-128] | Indexed property `gobby_pgaudit_log` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:126-128] |
-| `name` | property | `name: gobby_pgaudit_log` | `name [property]` | `72678802-facf-508b-892a-07eb709831db` | 127-127 [crates/gcore/assets/docker-compose.services.yml:127] | Indexed property `name` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:127] |
+`crates/gcore/assets/docker-compose.services.yml` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `services` | property | Indexed property `services` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:5-117] |
+| `falkordb` | property | Indexed property `falkordb` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:6-28] |
+| `image` | property | Indexed property `image` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:7] |
+| `ports` | property | Indexed property `ports` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:8-10] |
+| `environment` | property | Indexed property `environment` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:11-16] |
+| `volumes` | property | Indexed property `volumes` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:17-18] |
+| `healthcheck` | property | Indexed property `healthcheck` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:19-26] |
+| `test` | property | Indexed property `test` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:21-23] |
+| `interval` | property | Indexed property `interval` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:24] |
+| `timeout` | property | Indexed property `timeout` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:25] |
+| `retries` | property | Indexed property `retries` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:26] |
+| `restart` | property | Indexed property `restart` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:27] |
+| `profiles` | property | Indexed property `profiles` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:28] |
+| `qdrant` | property | Indexed property `qdrant` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:30-49] |
+| `image` | property | Indexed property `image` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:31] |
+| `ports` | property | Indexed property `ports` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:32-34] |
+| `environment` | property | Indexed property `environment` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:35-38] |
+| `volumes` | property | Indexed property `volumes` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:39-40] |
+| `healthcheck` | property | Indexed property `healthcheck` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:41-45] |
+| `test` | property | Indexed property `test` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:42] |
+| `interval` | property | Indexed property `interval` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:43] |
+| `timeout` | property | Indexed property `timeout` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:44] |
+| `retries` | property | Indexed property `retries` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:45] |
+| `restart` | property | Indexed property `restart` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:46] |
+| `profiles` | property | Indexed property `profiles` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:47-49] |
+| `postgres` | property | Indexed property `postgres` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:51-117] |
+| `build` | property | Indexed property `build` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:52-56] |
+| `context` | property | Indexed property `context` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:53] |
+| `args` | property | Indexed property `args` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:54-56] |
+| `PG_SEARCH_VERSION` | property | Indexed property `PG_SEARCH_VERSION` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:55] |
+| `PG_SEARCH_SHA256` | property | Indexed property `PG_SEARCH_SHA256` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:56] |
+| `image` | property | Indexed property `image` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:57] |
+| `container_name` | property | Indexed property `container_name` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:58] |
+| `command` | property | Indexed property `command` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:59-82] |
+| `environment` | property | Indexed property `environment` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:83-87] |
+| `POSTGRES_DB` | property | Indexed property `POSTGRES_DB` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:84] |
+| `POSTGRES_USER` | property | Indexed property `POSTGRES_USER` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:85] |
+| `POSTGRES_PASSWORD` | property | Indexed property `POSTGRES_PASSWORD` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:86] |
+| `GOBBY_PGAUDIT_LOG` | property | Indexed property `GOBBY_PGAUDIT_LOG` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:87] |
+| `ports` | property | Indexed property `ports` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:88-89] |
+| `volumes` | property | Indexed property `volumes` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:90-92] |
+| `healthcheck` | property | Indexed property `healthcheck` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:93-113] |
+| `test` | property | Indexed property `test` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:94-110] |
+| `interval` | property | Indexed property `interval` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:111] |
+| `timeout` | property | Indexed property `timeout` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:112] |
+| `retries` | property | Indexed property `retries` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:113] |
+| `restart` | property | Indexed property `restart` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:114] |
+| `profiles` | property | Indexed property `profiles` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:115-117] |
+| `volumes` | property | Indexed property `volumes` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:119-128] |
+| `gobby_falkordb_data` | property | Indexed property `gobby_falkordb_data` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:120-121] |
+| `name` | property | Indexed property `name` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:121] |
+| `gobby_qdrant_data` | property | Indexed property `gobby_qdrant_data` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:122-123] |
+| `name` | property | Indexed property `name` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:123] |
+| `gobby_postgres_data` | property | Indexed property `gobby_postgres_data` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:124-125] |
+| `name` | property | Indexed property `name` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:125] |
+| `gobby_pgaudit_log` | property | Indexed property `gobby_pgaudit_log` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:126-128] |
+| `name` | property | Indexed property `name` in `crates/gcore/assets/docker-compose.services.yml`. [crates/gcore/assets/docker-compose.services.yml:127] |
+

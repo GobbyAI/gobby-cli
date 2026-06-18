@@ -3,34 +3,27 @@ title: scripts/verify.sh
 type: code_file
 provenance:
 - file: scripts/verify.sh
-  ranges:
-  - 4-10
-  - 12-39
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [scripts/verify.sh:4-10](scripts/verify.sh#L4-L10), [scripts/verify.sh:12-39](scripts/verify.sh#L12-L39)
-
-</details>
-
 # scripts/verify.sh
 
 Module: [[code/modules/scripts|scripts]]
 
-## Purpose
+## Overview
 
-`scripts/verify.sh` is a small Bash wrapper for running repository verification checks. It defines `usage` to print the supported check names and `run_check` to dispatch each requested name to the matching Cargo command: workspace build, nextest unit tests, doctests, formatting, or Clippy linting. The script defaults to running all checks when invoked with no arguments, and it exits early with help text or an error if the user asks for help or passes an unknown check.
-[scripts/verify.sh:4-10]
-[scripts/verify.sh:12-39]
+`scripts/verify.sh` exposes 2 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `usage` | function | `usage() {` | `usage [function]` | `a2012a5e-328e-53ba-9859-6ec386be77cc` | 4-10 [scripts/verify.sh:4-10] | Indexed function `usage` in `scripts/verify.sh`. [scripts/verify.sh:4-10] |
-| `run_check` | function | `run_check() {` | `run_check [function]` | `37c18a2a-c9eb-575b-9103-7673b10f6ef1` | 12-39 [scripts/verify.sh:12-39] | Indexed function `run_check` in `scripts/verify.sh`. [scripts/verify.sh:12-39] |
+`scripts/verify.sh` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `usage` | function | Prints a usage message to stderr describing 'scripts/verify.sh' subcommands ('build', 'unit_tests', 'doc_tests', 'format', 'lint', etc.) and notes that running with no arguments executes all checks. [scripts/verify.sh:4-10] |
+| `run_check` | function | Dispatches a named workspace check target to the corresponding Cargo command ('build', 'nextest' unit tests, doc tests, formatting, or Clippy with warnings denied), prints usage for help, and exits with status 2 on unknown checks. [scripts/verify.sh:12-39] |
+

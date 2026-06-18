@@ -3,43 +3,30 @@ title: crates/gwiki/src/sources/tests.rs
 type: code_file
 provenance:
 - file: crates/gwiki/src/sources/tests.rs
-  ranges:
-  - 8-50
-  - 53-113
-  - 116-121
-  - 124-140
-  - 143-160
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gwiki/src/sources/tests.rs:8-50](crates/gwiki/src/sources/tests.rs#L8-L50), [crates/gwiki/src/sources/tests.rs:53-113](crates/gwiki/src/sources/tests.rs#L53-L113), [crates/gwiki/src/sources/tests.rs:116-121](crates/gwiki/src/sources/tests.rs#L116-L121), [crates/gwiki/src/sources/tests.rs:124-140](crates/gwiki/src/sources/tests.rs#L124-L140), [crates/gwiki/src/sources/tests.rs:143-160](crates/gwiki/src/sources/tests.rs#L143-L160)
-
-</details>
-
 # crates/gwiki/src/sources/tests.rs
 
 Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
-## Purpose
+## Overview
 
-This file contains tests for source manifest and index handling in `gwiki`: it verifies that source registration deduplicates by canonical location and content hash, and that local-file replay metadata round-trips correctly through the manifest. It also checks location canonicalization and the `existing_index_without_manifest` logic, ensuring unmarked manifests are stripped up to the next heading while marked manifests preserve the content that follows.
-[crates/gwiki/src/sources/tests.rs:8-50]
-[crates/gwiki/src/sources/tests.rs:53-113]
-[crates/gwiki/src/sources/tests.rs:116-121]
-[crates/gwiki/src/sources/tests.rs:124-140]
-[crates/gwiki/src/sources/tests.rs:143-160]
+`crates/gwiki/src/sources/tests.rs` exposes 5 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `dedupes_by_canonical_identity_and_hash` | function | `fn dedupes_by_canonical_identity_and_hash() {` | `dedupes_by_canonical_identity_and_hash [function]` | `e90ad7dd-1e73-5888-a7ba-0bf11e3d78b9` | 8-50 [crates/gwiki/src/sources/tests.rs:8-50] | Indexed function `dedupes_by_canonical_identity_and_hash` in `crates/gwiki/src/sources/tests.rs`. [crates/gwiki/src/sources/tests.rs:8-50] |
-| `local_file_replay_metadata_round_trips_through_manifest` | function | `fn local_file_replay_metadata_round_trips_through_manifest() {` | `local_file_replay_metadata_round_trips_through_manifest [function]` | `98234679-435b-5104-bd46-e7e1cfaba61f` | 53-113 [crates/gwiki/src/sources/tests.rs:53-113] | Indexed function `local_file_replay_metadata_round_trips_through_manifest` in `crates/gwiki/src/sources/tests.rs`. [crates/gwiki/src/sources/tests.rs:53-113] |
-| `canonical_location_sorts_query_before_trimming_slash` | function | `fn canonical_location_sorts_query_before_trimming_slash() {` | `canonical_location_sorts_query_before_trimming_slash [function]` | `71e75e80-b30f-5090-9cf0-dfac821ca024` | 116-121 [crates/gwiki/src/sources/tests.rs:116-121] | Indexed function `canonical_location_sorts_query_before_trimming_slash` in `crates/gwiki/src/sources/tests.rs`. [crates/gwiki/src/sources/tests.rs:116-121] |
-| `existing_index_strips_unmarked_manifest_until_next_heading` | function | `fn existing_index_strips_unmarked_manifest_until_next_heading() {` | `existing_index_strips_unmarked_manifest_until_next_heading [function]` | `2ae2fa17-e2ea-5fa2-ad13-a7bef2d414fe` | 124-140 [crates/gwiki/src/sources/tests.rs:124-140] | Indexed function `existing_index_strips_unmarked_manifest_until_next_heading` in `crates/gwiki/src/sources/tests.rs`. [crates/gwiki/src/sources/tests.rs:124-140] |
-| `existing_index_preserves_content_after_marked_manifest` | function | `fn existing_index_preserves_content_after_marked_manifest() {` | `existing_index_preserves_content_after_marked_manifest [function]` | `cef27902-e350-5015-b565-f06bb54ffb9d` | 143-160 [crates/gwiki/src/sources/tests.rs:143-160] | Indexed function `existing_index_preserves_content_after_marked_manifest` in `crates/gwiki/src/sources/tests.rs`. [crates/gwiki/src/sources/tests.rs:143-160] |
+`crates/gwiki/src/sources/tests.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `dedupes_by_canonical_identity_and_hash` | function | Verifies that registering two URL drafts with the same canonical identity and identical content hash returns the original manifest, writes only one source record to the index, and preserves the first draft’s metadata fields. [crates/gwiki/src/sources/tests.rs:8-50] |
+| `local_file_replay_metadata_round_trips_through_manifest` | function | Verifies that a 'SourceReplay::LocalFile' persisted in a 'SourceManifest' round-trips through disk intact, preserving the entry ID, file path, and serialized ingest routing settings. [crates/gwiki/src/sources/tests.rs:53-113] |
+| `canonical_location_sorts_query_before_trimming_slash` | function | Verifies that 'canonicalize_location' lowercases the host, sorts query parameters alphabetically, and removes the trailing slash and fragment from 'https://Example.com/docs/?b=2&a=1#frag', yielding 'https://example.com/docs?a=1&b=2'. [crates/gwiki/src/sources/tests.rs:116-121] |
+| `existing_index_strips_unmarked_manifest_until_next_heading` | function | Creates a temp index file containing an unmarked '## Source manifest' section and verifies 'existing_index_without_manifest' removes that manifest block from the returned prefix while preserving the subsequent generated heading and content in the suffix. [crates/gwiki/src/sources/tests.rs:124-140] |
+| `existing_index_preserves_content_after_marked_manifest` | function | Verifies that 'existing_index_without_manifest' removes the generated source-manifest block from an existing index while preserving manual content in both the prefix and suffix. [crates/gwiki/src/sources/tests.rs:143-160] |
+

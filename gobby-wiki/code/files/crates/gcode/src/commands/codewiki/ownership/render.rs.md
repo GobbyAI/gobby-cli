@@ -3,52 +3,35 @@ title: crates/gcode/src/commands/codewiki/ownership/render.rs
 type: code_file
 provenance:
 - file: crates/gcode/src/commands/codewiki/ownership/render.rs
-  ranges:
-  - 10-34
-  - 36-68
-  - 70-72
-  - 74-100
-  - 102-114
-  - 116-126
-  - 128-172
-  - 174-180
-  - 182-204
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gcode/src/commands/codewiki/ownership/render.rs:10-34](crates/gcode/src/commands/codewiki/ownership/render.rs#L10-L34), [crates/gcode/src/commands/codewiki/ownership/render.rs:36-68](crates/gcode/src/commands/codewiki/ownership/render.rs#L36-L68), [crates/gcode/src/commands/codewiki/ownership/render.rs:70-72](crates/gcode/src/commands/codewiki/ownership/render.rs#L70-L72), [crates/gcode/src/commands/codewiki/ownership/render.rs:74-100](crates/gcode/src/commands/codewiki/ownership/render.rs#L74-L100), [crates/gcode/src/commands/codewiki/ownership/render.rs:102-114](crates/gcode/src/commands/codewiki/ownership/render.rs#L102-L114), [crates/gcode/src/commands/codewiki/ownership/render.rs:116-126](crates/gcode/src/commands/codewiki/ownership/render.rs#L116-L126), [crates/gcode/src/commands/codewiki/ownership/render.rs:128-172](crates/gcode/src/commands/codewiki/ownership/render.rs#L128-L172), [crates/gcode/src/commands/codewiki/ownership/render.rs:174-180](crates/gcode/src/commands/codewiki/ownership/render.rs#L174-L180), [crates/gcode/src/commands/codewiki/ownership/render.rs:182-204](crates/gcode/src/commands/codewiki/ownership/render.rs#L182-L204)
-
-</details>
-
 # crates/gcode/src/commands/codewiki/ownership/render.rs
 
-Module: [[code/modules/crates/gcode/src/commands/codewiki/ownership|crates/gcode/src/commands/codewiki/ownership]]
+Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/commands/codewiki]]
 
-## Purpose
+## Overview
 
-Builds the codewiki ownership page output: it derives degraded provenance flags from `OwnershipStatus` and per-file ownership data, serializes YAML frontmatter for a “Code Ownership” document, and then formats ownership content by writing module and file sections. The helper functions split the work into small steps: `degraded_sources` records missing or partial input signals, `ownership_frontmatter` emits the generated page metadata, `is_false` supports YAML serialization, and the `write_*`/`aggregate_*` helpers organize owners and contributors into deterministic lines for modules and files.
-[crates/gcode/src/commands/codewiki/ownership/render.rs:10-34]
-[crates/gcode/src/commands/codewiki/ownership/render.rs:36-68]
-[crates/gcode/src/commands/codewiki/ownership/render.rs:38-52]
-[crates/gcode/src/commands/codewiki/ownership/render.rs:70-72]
-[crates/gcode/src/commands/codewiki/ownership/render.rs:74-100]
+`crates/gcode/src/commands/codewiki/ownership/render.rs` exposes 10 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `degraded_sources` | function | `pub(super) fn degraded_sources(` | `degraded_sources [function]` | `50920e55-cf5e-5112-ad77-822ba34fe62b` | 10-34 [crates/gcode/src/commands/codewiki/ownership/render.rs:10-34] | Indexed function `degraded_sources` in `crates/gcode/src/commands/codewiki/ownership/render.rs`. [crates/gcode/src/commands/codewiki/ownership/render.rs:10-34] |
-| `ownership_frontmatter` | function | `pub(super) fn ownership_frontmatter(partial: bool, degraded_sources: &[String]) -> String {` | `ownership_frontmatter [function]` | `48ca619a-d7bc-59fa-a10e-f8acf9c10363` | 36-68 [crates/gcode/src/commands/codewiki/ownership/render.rs:36-68] | Indexed function `ownership_frontmatter` in `crates/gcode/src/commands/codewiki/ownership/render.rs`. [crates/gcode/src/commands/codewiki/ownership/render.rs:36-68] |
-| `Frontmatter` | class | `struct Frontmatter<'a> {` | `Frontmatter [class]` | `f034c4da-42e6-59a4-b0a0-f0ec45bf3452` | 38-52 [crates/gcode/src/commands/codewiki/ownership/render.rs:38-52] | Indexed class `Frontmatter` in `crates/gcode/src/commands/codewiki/ownership/render.rs`. [crates/gcode/src/commands/codewiki/ownership/render.rs:38-52] |
-| `is_false` | function | `fn is_false(value: &bool) -> bool {` | `is_false [function]` | `05ae00f9-a722-5ad4-a323-d3dd0b0a664b` | 70-72 [crates/gcode/src/commands/codewiki/ownership/render.rs:70-72] | Indexed function `is_false` in `crates/gcode/src/commands/codewiki/ownership/render.rs`. [crates/gcode/src/commands/codewiki/ownership/render.rs:70-72] |
-| `write_modules` | function | `pub(super) fn write_modules(` | `write_modules [function]` | `f8d33520-f172-5739-88bc-31fb182f8888` | 74-100 [crates/gcode/src/commands/codewiki/ownership/render.rs:74-100] | Indexed function `write_modules` in `crates/gcode/src/commands/codewiki/ownership/render.rs`. [crates/gcode/src/commands/codewiki/ownership/render.rs:74-100] |
-| `write_files` | function | `pub(super) fn write_files(doc: &mut String, by_file: &BTreeMap<String, FileOwnership>) {` | `write_files [function]` | `1076ddc3-1d5d-5db2-83b1-774040ebbf48` | 102-114 [crates/gcode/src/commands/codewiki/ownership/render.rs:102-114] | Indexed function `write_files` in `crates/gcode/src/commands/codewiki/ownership/render.rs`. [crates/gcode/src/commands/codewiki/ownership/render.rs:102-114] |
-| `aggregate_primary` | function | `fn aggregate_primary(files: &[(&String, &FileOwnership)]) -> Vec<String> {` | `aggregate_primary [function]` | `5af25571-0a4f-5774-bcd8-c1706f2dbaff` | 116-126 [crates/gcode/src/commands/codewiki/ownership/render.rs:116-126] | Indexed function `aggregate_primary` in `crates/gcode/src/commands/codewiki/ownership/render.rs`. [crates/gcode/src/commands/codewiki/ownership/render.rs:116-126] |
-| `aggregate_contributors` | function | `fn aggregate_contributors(files: &[(&String, &FileOwnership)]) -> Vec<OwnershipContributor> {` | `aggregate_contributors [function]` | `4157ac5f-7eba-5c56-8f43-64db9958c306` | 128-172 [crates/gcode/src/commands/codewiki/ownership/render.rs:128-172] | Indexed function `aggregate_contributors` in `crates/gcode/src/commands/codewiki/ownership/render.rs`. [crates/gcode/src/commands/codewiki/ownership/render.rs:128-172] |
-| `write_owner_line` | function | `fn write_owner_line(doc: &mut String, label: &str, owners: &[String]) {` | `write_owner_line [function]` | `77306155-d2df-548d-a1df-889d0b0e27c0` | 174-180 [crates/gcode/src/commands/codewiki/ownership/render.rs:174-180] | Indexed function `write_owner_line` in `crates/gcode/src/commands/codewiki/ownership/render.rs`. [crates/gcode/src/commands/codewiki/ownership/render.rs:174-180] |
-| `write_contributor_line` | function | `fn write_contributor_line(doc: &mut String, contributors: &[OwnershipContributor]) {` | `write_contributor_line [function]` | `e2c7f95a-4bce-5b63-8701-8a5dc000af1a` | 182-204 [crates/gcode/src/commands/codewiki/ownership/render.rs:182-204] | Indexed function `write_contributor_line` in `crates/gcode/src/commands/codewiki/ownership/render.rs`. [crates/gcode/src/commands/codewiki/ownership/render.rs:182-204] |
+`crates/gcode/src/commands/codewiki/ownership/render.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `degraded_sources` | function | Returns a list of degradation reason strings for an 'OwnershipStatus' and file-ownership map, adding markers for unavailable CODEOWNERS or git blame data, blame errors or partial results, and 'ownership_unknown' when every file has neither declared nor derived ownership. [crates/gcode/src/commands/codewiki/ownership/render.rs:10-34] |
+| `ownership_frontmatter` | function | Constructs and returns a YAML frontmatter block for a 'Code Ownership' document by serializing a 'Frontmatter' struct with generated provenance/trust metadata, optional 'degraded' and 'partial' fields derived from 'degraded_sources' and 'partial', stripping the serializer’s leading '---', and rewrapping it as a YAML document string. [crates/gcode/src/commands/codewiki/ownership/render.rs:36-68] |
+| `Frontmatter` | class | 'Frontmatter<'a>' is a Serde-serializable metadata struct that records a document’s title, type, provenance, generator, trust and freshness labels, plus optional degradation flags and source lists, with conditional omission of empty or false fields during serialization. [crates/gcode/src/commands/codewiki/ownership/render.rs:38-52] |
+| `is_false` | function | Returns the logical negation of the referenced boolean, yielding 'true' when 'value' is 'false' and 'false' when 'value' is 'true'. [crates/gcode/src/commands/codewiki/ownership/render.rs:70-72] |
+| `write_modules` | function | Groups files by module, appends a '## Modules' section to 'doc', and for each module writes a heading plus aggregated primary-owner and contributor lines derived from the files in that module. [crates/gcode/src/commands/codewiki/ownership/render.rs:74-100] |
+| `write_files` | function | Appends a '## Files' section to 'doc' that iterates over 'by_file', emits a wikilinked '###' heading for each file, writes “Unknown ownership.” when both declared and derived owners are empty, otherwise writes the declared owners and derived contributors lines followed by a blank line. [crates/gcode/src/commands/codewiki/ownership/render.rs:102-114] |
+| `aggregate_primary` | function | Returns a sorted, deduplicated 'Vec<String>' of primary owner names by collecting all non-empty declared owners from the input files, otherwise falling back to the first derived owner name for files without declared owners. [crates/gcode/src/commands/codewiki/ownership/render.rs:116-126] |
+| `aggregate_contributors` | function | Aggregates all 'derived' contributors across the input 'FileOwnership' values by contributor ID, deterministically merges identity fields while summing line counts, then returns the top five 'OwnershipContributor' records sorted by descending lines, ascending name, and ascending contributor ID. [crates/gcode/src/commands/codewiki/ownership/render.rs:128-172] |
+| `write_owner_line` | function | Appends a 'label:' line to 'doc' ending with 'unknown' when 'owners' is empty, otherwise joining the owner strings with ', ' and writing them via 'writeln!'. [crates/gcode/src/commands/codewiki/ownership/render.rs:174-180] |
+| `write_contributor_line` | function | Appends a 'Top contributors:' line to 'doc', rendering each contributor as 'name (N line[s])' joined by commas, or 'Top contributors: unknown' if the slice is empty. [crates/gcode/src/commands/codewiki/ownership/render.rs:182-204] |
+

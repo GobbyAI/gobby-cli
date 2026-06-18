@@ -3,30 +3,28 @@ title: crates/gcode/src/main.rs
 type: code_file
 provenance:
 - file: crates/gcode/src/main.rs
-  ranges:
-  - 4-6
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gcode/src/main.rs:4-6](crates/gcode/src/main.rs#L4-L6)
-
-</details>
-
 # crates/gcode/src/main.rs
 
 Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
-## Purpose
+## Overview
 
-Entry point for the `gcode` binary. It declares the `cli` and `dispatch` modules, then hands control to `dispatch::run_with_exit_code()` from `main`, making this file a thin startup wrapper that returns the process exit code. [crates/gcode/src/main.rs:4-6]
+`crates/gcode/src/main.rs` exposes 3 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `main` | function | `fn main() -> std::process::ExitCode {` | `main [function]` | `8e467992-cf7d-50da-9171-184b5fcdf4b4` | 4-6 [crates/gcode/src/main.rs:4-6] | Indexed function `main` in `crates/gcode/src/main.rs`. [crates/gcode/src/main.rs:4-6] |
+`crates/gcode/src/main.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `main` | function | Calls 'reset_sigpipe()' to restore SIGPIPE handling, then returns the 'std::process::ExitCode' produced by 'dispatch::run_with_exit_code()'. [crates/gcode/src/main.rs:4-7] |
+| `reset_sigpipe` | function | Sets the process-wide 'SIGPIPE' disposition back to the default handler using 'libc::signal(SIGPIPE, SIG_DFL)' in an unsafe startup-only call. [crates/gcode/src/main.rs:16-22] |
+| `reset_sigpipe` | function | Restores the process’s SIGPIPE disposition to the default handler. [crates/gcode/src/main.rs:25] |
+

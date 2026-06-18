@@ -3,49 +3,33 @@ title: crates/gcode/src/index/parser.rs
 type: code_file
 provenance:
 - file: crates/gcode/src/index/parser.rs
-  ranges:
-  - 29-134
-  - 136-235
-  - 237-264
-  - 266-318
-  - 320-326
-  - 328-389
-  - 391-398
-  - 400-443
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gcode/src/index/parser.rs:29-134](crates/gcode/src/index/parser.rs#L29-L134), [crates/gcode/src/index/parser.rs:136-235](crates/gcode/src/index/parser.rs#L136-L235), [crates/gcode/src/index/parser.rs:237-264](crates/gcode/src/index/parser.rs#L237-L264), [crates/gcode/src/index/parser.rs:266-318](crates/gcode/src/index/parser.rs#L266-L318), [crates/gcode/src/index/parser.rs:320-326](crates/gcode/src/index/parser.rs#L320-L326), [crates/gcode/src/index/parser.rs:328-389](crates/gcode/src/index/parser.rs#L328-L389), [crates/gcode/src/index/parser.rs:391-398](crates/gcode/src/index/parser.rs#L391-L398), [crates/gcode/src/index/parser.rs:400-443](crates/gcode/src/index/parser.rs#L400-L443)
-
-</details>
-
 # crates/gcode/src/index/parser.rs
 
 Module: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 
-## Purpose
+## Overview
 
-Tree-sitter-based indexing for source files: it validates a candidate path, detects the language, parses the file, and builds a `ParseResult` with extracted symbols, imports, docstrings, and calls, optionally enriching call extraction with a semantic resolver. The helper functions break that work into stages: `extract_symbols` walks the AST to collect symbols, `link_parents` and `collapse_rust_impl_symbols` normalize symbol hierarchy for Rust, `extract_docstring` and `strip_quotes` attach cleaned documentation text, and `extract_imports` gathers import data for later resolution.
-[crates/gcode/src/index/parser.rs:29-134]
-[crates/gcode/src/index/parser.rs:136-235]
-[crates/gcode/src/index/parser.rs:237-264]
-[crates/gcode/src/index/parser.rs:266-318]
-[crates/gcode/src/index/parser.rs:320-326]
+`crates/gcode/src/index/parser.rs` exposes 8 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `parse_file_with_semantic` | function | `pub(crate) fn parse_file_with_semantic(` | `parse_file_with_semantic [function]` | `c8ba7159-8e56-54fa-985a-1821e9d8d076` | 29-134 [crates/gcode/src/index/parser.rs:29-134] | Indexed function `parse_file_with_semantic` in `crates/gcode/src/index/parser.rs`. [crates/gcode/src/index/parser.rs:29-134] |
-| `extract_symbols` | function | `fn extract_symbols(` | `extract_symbols [function]` | `4cd06356-ca6d-516f-926c-f21ab3dc22a4` | 136-235 [crates/gcode/src/index/parser.rs:136-235] | Indexed function `extract_symbols` in `crates/gcode/src/index/parser.rs`. [crates/gcode/src/index/parser.rs:136-235] |
-| `link_parents` | function | `fn link_parents(symbols: &mut [Symbol]) {` | `link_parents [function]` | `e18c280e-b5b7-5b95-bc6d-6215ebfaec8c` | 237-264 [crates/gcode/src/index/parser.rs:237-264] | Indexed function `link_parents` in `crates/gcode/src/index/parser.rs`. [crates/gcode/src/index/parser.rs:237-264] |
-| `collapse_rust_impl_symbols` | function | `fn collapse_rust_impl_symbols(symbols: &mut Vec<Symbol>) {` | `collapse_rust_impl_symbols [function]` | `0326b48a-4404-5d07-a6f9-e92bef95ec43` | 266-318 [crates/gcode/src/index/parser.rs:266-318] | Indexed function `collapse_rust_impl_symbols` in `crates/gcode/src/index/parser.rs`. [crates/gcode/src/index/parser.rs:266-318] |
-| `is_rust_impl_symbol` | function | `fn is_rust_impl_symbol(symbol: &Symbol) -> bool {` | `is_rust_impl_symbol [function]` | `4c284c6c-18ce-5bdc-9761-811baac5e178` | 320-326 [crates/gcode/src/index/parser.rs:320-326] | Indexed function `is_rust_impl_symbol` in `crates/gcode/src/index/parser.rs`. [crates/gcode/src/index/parser.rs:320-326] |
-| `extract_docstring` | function | `fn extract_docstring(node: &tree_sitter::Node, source: &[u8], language: &str) -> Option<String> {` | `extract_docstring [function]` | `13353f9b-16d7-5c56-9d86-979c94099192` | 328-389 [crates/gcode/src/index/parser.rs:328-389] | Indexed function `extract_docstring` in `crates/gcode/src/index/parser.rs`. [crates/gcode/src/index/parser.rs:328-389] |
-| `strip_quotes` | function | `fn strip_quotes(s: &str) -> &str {` | `strip_quotes [function]` | `f35bb74f-79d8-5acb-a4f2-0404216c0404` | 391-398 [crates/gcode/src/index/parser.rs:391-398] | Indexed function `strip_quotes` in `crates/gcode/src/index/parser.rs`. [crates/gcode/src/index/parser.rs:391-398] |
-| `extract_imports` | function | `fn extract_imports(` | `extract_imports [function]` | `c239baa3-e2f6-5fd8-9b64-99a2258ae9b3` | 400-443 [crates/gcode/src/index/parser.rs:400-443] | Indexed function `extract_imports` in `crates/gcode/src/index/parser.rs`. [crates/gcode/src/index/parser.rs:400-443] |
+`crates/gcode/src/index/parser.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `parse_file_with_semantic` | function | Validates that 'file_path' is a safe, non-excluded, non-secret, non-binary, size-bounded file under 'root_path', detects its language and Tree-sitter parser, reads and parses the source into an AST, computes a relative path, and then extracts symbols to produce an optional 'ParseResult' or 'None' on any failure. [crates/gcode/src/index/parser.rs:29-134] |
+| `extract_symbols` | function | 'extract_symbols' compiles the language-specific Tree-sitter symbol query, scans the syntax tree for matching definition/name captures, deduplicates results by ID, and returns a 'Vec<Symbol>' built from each symbol’s name, definition node, and first-line signature. [crates/gcode/src/index/parser.rs:136-235] |
+| `link_parents` | function | Assigns each symbol the nearest enclosing 'class' or 'type' as its parent based on byte-span containment, updates its 'parent_symbol_id' and dotted 'qualified_name', and promotes non-Elixir nested functions to 'method' kind. [crates/gcode/src/index/parser.rs:237-264] |
+| `collapse_rust_impl_symbols` | function | Rewrites Rust symbols nested under 'impl' blocks so their 'qualified_name' becomes 'Type::member', reparenting them to the canonical type declaration in the same file when available, and then removes the 'impl' symbols themselves from the vector. [crates/gcode/src/index/parser.rs:266-318] |
+| `is_rust_impl_symbol` | function | Returns 'true' only for Rust class symbols whose signature begins with 'impl ' or 'unsafe impl ', indicating a Rust implementation block. [crates/gcode/src/index/parser.rs:320-326] |
+| `extract_docstring` | function | Returns the first non-empty docstring-like string literal from the start of a Python/JavaScript/TypeScript node’s block body, preferring 'string_content' when present and otherwise stripping quotes, and yields 'None' for unsupported languages or if no valid string is found. [crates/gcode/src/index/parser.rs:328-389] |
+| `strip_quotes` | function | Returns the trimmed inner slice of 's' if it is enclosed by matching triple or single quotes ('"""', ''''', '"' or ''') on both ends with sufficient length, otherwise returns 's' unchanged. [crates/gcode/src/index/parser.rs:391-398] |
+| `extract_imports` | function | Compiles and executes the language’s tree-sitter import query over the parsed source, extracts each '"import"' capture as text, parses it into an 'ExtractedImports' via import-resolution helpers, seeds import bindings from context, and returns the accumulated result or an error if query compilation or parsing fails. [crates/gcode/src/index/parser.rs:400-443] |
+

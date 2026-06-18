@@ -3,28 +3,23 @@ title: crates/gcode/src/index/parser/tests.rs
 type: code_file
 provenance:
 - file: crates/gcode/src/index/parser/tests.rs
-  ranges:
-  - 1-12
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gcode/src/index/parser/tests.rs:1-12](crates/gcode/src/index/parser/tests.rs#L1-L12)
-
-</details>
-
 # crates/gcode/src/index/parser/tests.rs
 
 Module: [[code/modules/crates/gcode/src/index/parser|crates/gcode/src/index/parser]]
 
-## Purpose
+## Overview
 
-Test module entry point for the gcode index parser, declaring the parser test suites and shared test helpers for different language-specific and semantic/resolution cases. [crates/gcode/src/index/parser/tests.rs:1-12]
+`crates/gcode/src/index/parser/tests.rs` has no indexed API symbols.
 
-## API Symbols
+## How it fits
+
+`crates/gcode/src/index/parser/tests.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
 
 No indexed symbols.

@@ -3,34 +3,27 @@ title: crates/gcode/src/commands/codewiki/render/pages.rs
 type: code_file
 provenance:
 - file: crates/gcode/src/commands/codewiki/render/pages.rs
-  ranges:
-  - 6-72
-  - 74-133
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gcode/src/commands/codewiki/render/pages.rs:6-72](crates/gcode/src/commands/codewiki/render/pages.rs#L6-L72), [crates/gcode/src/commands/codewiki/render/pages.rs:74-133](crates/gcode/src/commands/codewiki/render/pages.rs#L74-L133)
-
-</details>
-
 # crates/gcode/src/commands/codewiki/render/pages.rs
 
 Module: [[code/modules/crates/gcode/src/commands/codewiki/render|crates/gcode/src/commands/codewiki/render]]
 
-## Purpose
+## Overview
 
-Builds CodeWiki page text for module and file documentation. `render_module_doc` assembles a module page with frontmatter, linked source files, headings, parent navigation, summary, dependency and call diagrams, and tables for child modules and direct files, while `render_file_doc` does the same for a single file by combining its metadata, source context, summary, and related links into the final markdown output.
-[crates/gcode/src/commands/codewiki/render/pages.rs:6-72]
-[crates/gcode/src/commands/codewiki/render/pages.rs:74-133]
+`crates/gcode/src/commands/codewiki/render/pages.rs` exposes 2 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `render_module_doc` | function | `pub(crate) fn render_module_doc(module: &ModuleDoc) -> String {` | `render_module_doc [function]` | `1b8187f4-6e9a-5ef2-8abf-135f44de6a76` | 6-72 [crates/gcode/src/commands/codewiki/render/pages.rs:6-72] | Indexed function `render_module_doc` in `crates/gcode/src/commands/codewiki/render/pages.rs`. [crates/gcode/src/commands/codewiki/render/pages.rs:6-72] |
-| `render_file_doc` | function | `pub(crate) fn render_file_doc(file: &FileDoc) -> String {` | `render_file_doc [function]` | `4054dafa-79aa-5928-8d06-3cb6d27221a4` | 74-133 [crates/gcode/src/commands/codewiki/render/pages.rs:74-133] | Indexed function `render_file_doc` in `crates/gcode/src/commands/codewiki/render/pages.rs`. [crates/gcode/src/commands/codewiki/render/pages.rs:74-133] |
+`crates/gcode/src/commands/codewiki/render/pages.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `render_module_doc` | function | 'render_module_doc' builds a Markdown document for a 'ModuleDoc' by emitting frontmatter, the module heading and parent link, an overview section, dependency/call diagram sections conditioned on graph availability, and a child-modules table when present. [crates/gcode/src/commands/codewiki/render/pages.rs:6-68] |
+| `render_file_doc` | function | 'render_file_doc' builds and returns a Markdown document for a 'FileDoc', starting with frontmatter and a file heading/module link plus optional body text, then appending a “Key components” table of indexed symbols with their kinds and neutralized purposes, or a “No indexed symbols” note if none exist. [crates/gcode/src/commands/codewiki/render/pages.rs:70-111] |
+

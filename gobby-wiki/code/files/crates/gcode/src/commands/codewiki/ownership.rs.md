@@ -3,49 +3,33 @@ title: crates/gcode/src/commands/codewiki/ownership.rs
 type: code_file
 provenance:
 - file: crates/gcode/src/commands/codewiki/ownership.rs
-  ranges:
-  - 20-23
-  - 26-31
-  - 35-38
-  - 41-44
-  - 47-53
-  - 56-61
-  - 64-67
-  - 69-114
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gcode/src/commands/codewiki/ownership.rs:20-23](crates/gcode/src/commands/codewiki/ownership.rs#L20-L23), [crates/gcode/src/commands/codewiki/ownership.rs:26-31](crates/gcode/src/commands/codewiki/ownership.rs#L26-L31), [crates/gcode/src/commands/codewiki/ownership.rs:35-38](crates/gcode/src/commands/codewiki/ownership.rs#L35-L38), [crates/gcode/src/commands/codewiki/ownership.rs:41-44](crates/gcode/src/commands/codewiki/ownership.rs#L41-L44), [crates/gcode/src/commands/codewiki/ownership.rs:47-53](crates/gcode/src/commands/codewiki/ownership.rs#L47-L53), [crates/gcode/src/commands/codewiki/ownership.rs:56-61](crates/gcode/src/commands/codewiki/ownership.rs#L56-L61), [crates/gcode/src/commands/codewiki/ownership.rs:64-67](crates/gcode/src/commands/codewiki/ownership.rs#L64-L67), [crates/gcode/src/commands/codewiki/ownership.rs:69-114](crates/gcode/src/commands/codewiki/ownership.rs#L69-L114)
-
-</details>
-
 # crates/gcode/src/commands/codewiki/ownership.rs
 
 Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/commands/codewiki]]
 
-## Purpose
+## Overview
 
-Builds a codewiki ownership document for a set of files by combining declared owners from `CODEOWNERS` with derived blame-based ownership, caching blame summaries in `OwnershipMeta` to avoid recomputation. `OwnershipOptions` controls blame limits and timeout, the small data structs carry cached summaries, contributor details, and status flags, and `build_ownership_doc` ties the analysis and render modules together to assemble per-file ownership data and emit the final document.
-[crates/gcode/src/commands/codewiki/ownership.rs:20-23]
-[crates/gcode/src/commands/codewiki/ownership.rs:26-31]
-[crates/gcode/src/commands/codewiki/ownership.rs:35-38]
-[crates/gcode/src/commands/codewiki/ownership.rs:41-44]
-[crates/gcode/src/commands/codewiki/ownership.rs:47-53]
+`crates/gcode/src/commands/codewiki/ownership.rs` exposes 8 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `OwnershipOptions` | class | `pub(crate) struct OwnershipOptions {` | `OwnershipOptions [class]` | `f41a0ee8-5e30-5962-a6fb-bb079a5b36b8` | 20-23 [crates/gcode/src/commands/codewiki/ownership.rs:20-23] | Indexed class `OwnershipOptions` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:20-23] |
-| `OwnershipOptions::default` | method | `fn default() -> Self {` | `OwnershipOptions::default [method]` | `4fe0c950-0a3c-524e-9fb1-ad035344a41c` | 26-31 [crates/gcode/src/commands/codewiki/ownership.rs:26-31] | Indexed method `OwnershipOptions::default` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:26-31] |
-| `OwnershipMeta` | class | `pub(crate) struct OwnershipMeta {` | `OwnershipMeta [class]` | `f9a0d7ef-2830-5d6b-8691-8ac8d9f7476b` | 35-38 [crates/gcode/src/commands/codewiki/ownership.rs:35-38] | Indexed class `OwnershipMeta` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:35-38] |
-| `CachedBlameSummary` | class | `pub(crate) struct CachedBlameSummary {` | `CachedBlameSummary [class]` | `d3e6d1e4-66e2-588a-9508-207dffc42659` | 41-44 [crates/gcode/src/commands/codewiki/ownership.rs:41-44] | Indexed class `CachedBlameSummary` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:41-44] |
-| `OwnershipContributor` | class | `pub(crate) struct OwnershipContributor {` | `OwnershipContributor [class]` | `7a605b7c-826c-5b65-953b-4f59f3d86866` | 47-53 [crates/gcode/src/commands/codewiki/ownership.rs:47-53] | Indexed class `OwnershipContributor` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:47-53] |
-| `OwnershipStatus` | class | `struct OwnershipStatus {` | `OwnershipStatus [class]` | `c4dedc5e-dffe-59cb-b219-51ea84f31d3f` | 56-61 [crates/gcode/src/commands/codewiki/ownership.rs:56-61] | Indexed class `OwnershipStatus` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:56-61] |
-| `FileOwnership` | class | `struct FileOwnership {` | `FileOwnership [class]` | `64ffa3e8-436f-501f-9115-9509d5832639` | 64-67 [crates/gcode/src/commands/codewiki/ownership.rs:64-67] | Indexed class `FileOwnership` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:64-67] |
-| `build_ownership_doc` | function | `pub(crate) fn build_ownership_doc(` | `build_ownership_doc [function]` | `7932c4da-b0ee-5354-baf2-3b7467af10dc` | 69-114 [crates/gcode/src/commands/codewiki/ownership.rs:69-114] | Indexed function `build_ownership_doc` in `crates/gcode/src/commands/codewiki/ownership.rs`. [crates/gcode/src/commands/codewiki/ownership.rs:69-114] |
+`crates/gcode/src/commands/codewiki/ownership.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `OwnershipOptions` | class | 'OwnershipOptions' is a crate-private configuration struct that controls blame analysis limits via a maximum file-capacity ('blame_file_cap: usize') and a timeout ('blame_timeout: Duration'). [crates/gcode/src/commands/codewiki/ownership.rs:20-23] |
+| `OwnershipOptions::default` | method | Returns a 'Self' instance initialized with 'blame_file_cap' set to '200' and 'blame_timeout' set to 'Duration::from_secs(20)'. [crates/gcode/src/commands/codewiki/ownership.rs:26-31] |
+| `OwnershipMeta` | class | 'OwnershipMeta' is a crate-private Serde-deserializable metadata struct that stores a 'BTreeMap<String, CachedBlameSummary>' keyed by file path, defaulting to an empty map when omitted. [crates/gcode/src/commands/codewiki/ownership.rs:35-38] |
+| `CachedBlameSummary` | class | 'CachedBlameSummary' is an internal cache record that stores a content hash and the corresponding list of 'OwnershipContributor' entries used to summarize blame ownership for that content. [crates/gcode/src/commands/codewiki/ownership.rs:41-44] |
+| `OwnershipContributor` | class | 'OwnershipContributor' is a crate-visible serializable/deserializable data struct that records a contributor’s identifier, display name, optional email (ignored on serialization), and owned line count. [crates/gcode/src/commands/codewiki/ownership.rs:47-53] |
+| `OwnershipStatus` | class | 'OwnershipStatus' is a status struct that reports whether CODEOWNERS data and blame data are available, whether blame retrieval encountered errors, and whether the ownership information is partial. [crates/gcode/src/commands/codewiki/ownership.rs:56-61] |
+| `FileOwnership` | class | 'FileOwnership' is a struct that models file ownership metadata as explicitly declared owner identifiers ('declared') plus an inferred set of ownership contributors ('derived'). [crates/gcode/src/commands/codewiki/ownership.rs:64-67] |
+| `build_ownership_doc` | function | Builds a Markdown ownership document for the given files by loading 'CODEOWNERS', deriving per-file declared and blame-based owners, tracking partial/degraded status, and then rendering either an unknown-ownership notice or module/file ownership sections. [crates/gcode/src/commands/codewiki/ownership.rs:69-114] |
+

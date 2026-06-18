@@ -3,53 +3,36 @@ title: crates/gcode/src/commands/codewiki/text/generation.rs
 type: code_file
 provenance:
 - file: crates/gcode/src/commands/codewiki/text/generation.rs
-  ranges:
-  - 20-68
-  - 73-87
-  - 89-97
-  - 99-112
-  - 119-123
-  - 126-128
-  - 132-141
-  - 144-158
-  - 167-177
-  - 179-182
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gcode/src/commands/codewiki/text/generation.rs:20-68](crates/gcode/src/commands/codewiki/text/generation.rs#L20-L68), [crates/gcode/src/commands/codewiki/text/generation.rs:73-87](crates/gcode/src/commands/codewiki/text/generation.rs#L73-L87), [crates/gcode/src/commands/codewiki/text/generation.rs:89-97](crates/gcode/src/commands/codewiki/text/generation.rs#L89-L97), [crates/gcode/src/commands/codewiki/text/generation.rs:99-112](crates/gcode/src/commands/codewiki/text/generation.rs#L99-L112), [crates/gcode/src/commands/codewiki/text/generation.rs:119-123](crates/gcode/src/commands/codewiki/text/generation.rs#L119-L123), [crates/gcode/src/commands/codewiki/text/generation.rs:126-128](crates/gcode/src/commands/codewiki/text/generation.rs#L126-L128), [crates/gcode/src/commands/codewiki/text/generation.rs:132-141](crates/gcode/src/commands/codewiki/text/generation.rs#L132-L141), [crates/gcode/src/commands/codewiki/text/generation.rs:144-158](crates/gcode/src/commands/codewiki/text/generation.rs#L144-L158), [crates/gcode/src/commands/codewiki/text/generation.rs:167-177](crates/gcode/src/commands/codewiki/text/generation.rs#L167-L177), [crates/gcode/src/commands/codewiki/text/generation.rs:179-182](crates/gcode/src/commands/codewiki/text/generation.rs#L179-L182)
-
-</details>
-
 # crates/gcode/src/commands/codewiki/text/generation.rs
 
 Module: [[code/modules/crates/gcode/src/commands/codewiki/text|crates/gcode/src/commands/codewiki/text]]
 
-## Purpose
+## Overview
 
-This file wires codewiki text generation end to end: it resolves an AI-backed text generator from the current context and routing settings, wraps model calls in a bounded retry loop for retryable errors, and falls back cleanly when generation is unavailable or fails. The `Generation` type tracks successful or degraded generation results, `maybe_generate` decides whether generation should run, and the cleanup helpers filter out prompt echoes and normalize generated text before it is returned or recorded.
-[crates/gcode/src/commands/codewiki/text/generation.rs:20-68]
-[crates/gcode/src/commands/codewiki/text/generation.rs:73-87]
-[crates/gcode/src/commands/codewiki/text/generation.rs:89-97]
-[crates/gcode/src/commands/codewiki/text/generation.rs:99-112]
-[crates/gcode/src/commands/codewiki/text/generation.rs:119-123]
+`crates/gcode/src/commands/codewiki/text/generation.rs` exposes 11 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `resolve_text_generator` | function | `pub(crate) fn resolve_text_generator(` | `resolve_text_generator [function]` | `a95a6d74-34aa-5df0-926d-eb4a49ccaead` | 20-68 [crates/gcode/src/commands/codewiki/text/generation.rs:20-68] | Indexed function `resolve_text_generator` in `crates/gcode/src/commands/codewiki/text/generation.rs`. [crates/gcode/src/commands/codewiki/text/generation.rs:20-68] |
-| `generate_with_bounded_retry` | function | `pub(crate) fn generate_with_bounded_retry<T>(` | `generate_with_bounded_retry [function]` | `7283cd8c-8a0b-58bd-afa2-d484e6011f15` | 73-87 [crates/gcode/src/commands/codewiki/text/generation.rs:73-87] | Indexed function `generate_with_bounded_retry` in `crates/gcode/src/commands/codewiki/text/generation.rs`. [crates/gcode/src/commands/codewiki/text/generation.rs:73-87] |
-| `retryable_generation_error` | function | `fn retryable_generation_error(error: &AiError) -> bool {` | `retryable_generation_error [function]` | `891be826-d36f-552e-bcac-2405f3e3d5bd` | 89-97 [crates/gcode/src/commands/codewiki/text/generation.rs:89-97] | Indexed function `retryable_generation_error` in `crates/gcode/src/commands/codewiki/text/generation.rs`. [crates/gcode/src/commands/codewiki/text/generation.rs:89-97] |
-| `resolve_ai_context` | function | `fn resolve_ai_context(ctx: &Context, ai: Option<AiRouting>) -> anyhow::Result<AiContext> {` | `resolve_ai_context [function]` | `870f6403-ab78-5e3f-9e56-c2694de1b5a7` | 99-112 [crates/gcode/src/commands/codewiki/text/generation.rs:99-112] | Indexed function `resolve_ai_context` in `crates/gcode/src/commands/codewiki/text/generation.rs`. [crates/gcode/src/commands/codewiki/text/generation.rs:99-112] |
-| `Generation` | type | `pub(crate) enum Generation {` | `Generation [type]` | `caf23a4d-82c8-5286-94da-826e50c96869` | 119-123 [crates/gcode/src/commands/codewiki/text/generation.rs:119-123] | Indexed type `Generation` in `crates/gcode/src/commands/codewiki/text/generation.rs`. [crates/gcode/src/commands/codewiki/text/generation.rs:119-123] |
-| `Generation::failed` | method | `pub(crate) fn failed(&self) -> bool {` | `Generation::failed [method]` | `ee94bbce-49a4-5d50-9713-9576829c4ad6` | 126-128 [crates/gcode/src/commands/codewiki/text/generation.rs:126-128] | Indexed method `Generation::failed` in `crates/gcode/src/commands/codewiki/text/generation.rs`. [crates/gcode/src/commands/codewiki/text/generation.rs:126-128] |
-| `Generation::unwrap_or_record` | method | `pub(crate) fn unwrap_or_record(self, fallback: String, degraded: &mut bool) -> String {` | `Generation::unwrap_or_record [method]` | `64c617e6-f233-56d6-87b4-2ff280cca315` | 132-141 [crates/gcode/src/commands/codewiki/text/generation.rs:132-141] | Indexed method `Generation::unwrap_or_record` in `crates/gcode/src/commands/codewiki/text/generation.rs`. [crates/gcode/src/commands/codewiki/text/generation.rs:132-141] |
-| `maybe_generate` | function | `pub(crate) fn maybe_generate(` | `maybe_generate [function]` | `8a4c98bc-11c2-548f-904b-798e6d45daaa` | 144-158 [crates/gcode/src/commands/codewiki/text/generation.rs:144-158] | Indexed function `maybe_generate` in `crates/gcode/src/commands/codewiki/text/generation.rs`. [crates/gcode/src/commands/codewiki/text/generation.rs:144-158] |
-| `is_prompt_echo` | function | `pub(super) fn is_prompt_echo(text: &str, prompt: &str) -> bool {` | `is_prompt_echo [function]` | `7752da58-8d5a-5b90-824d-92773829b337` | 167-177 [crates/gcode/src/commands/codewiki/text/generation.rs:167-177] | Indexed function `is_prompt_echo` in `crates/gcode/src/commands/codewiki/text/generation.rs`. [crates/gcode/src/commands/codewiki/text/generation.rs:167-177] |
-| `clean_generated` | function | `fn clean_generated(text: String) -> Option<String> {` | `clean_generated [function]` | `03cbe5bf-ebc7-5e5a-8775-8738d3d5ff4f` | 179-182 [crates/gcode/src/commands/codewiki/text/generation.rs:179-182] | Indexed function `clean_generated` in `crates/gcode/src/commands/codewiki/text/generation.rs`. [crates/gcode/src/commands/codewiki/text/generation.rs:179-182] |
+`crates/gcode/src/commands/codewiki/text/generation.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `resolve_text_generator` | function | Resolves and returns an optional boxed text-generation closure that configures AI context and routing, short-circuits when text generation is disabled, invokes either daemon or direct generation with bounded retries and tier-dependent profile selection, cleans successful output, and emits a one-time warning while returning 'None' on failure. [crates/gcode/src/commands/codewiki/text/generation.rs:21-69] |
+| `resolve_text_verifier` | function | Resolves the AI context and verification model/API-key settings, returns 'None' for 'Off'/'Auto' routing, and otherwise builds a boxed 'TextVerifier' closure that generates verification text via the selected route with bounded retries, cleans the output, and emits at most one warning on failure. [crates/gcode/src/commands/codewiki/text/generation.rs:79-144] |
+| `generate_with_bounded_retry` | function | Calls a generator closure once and, only for retryable 'AiError's, retries it after each delay in 'GENERATION_RETRY_BACKOFF' until success or the retry budget is exhausted, then returns the final 'Result<T, AiError>'. [crates/gcode/src/commands/codewiki/text/generation.rs:149-163] |
+| `retryable_generation_error` | function | Returns 'true' for transient AI generation failures that should be retried ('TransportFailure', 'RateLimited', and HTTP 5xx statuses) and 'false' for non-retryable errors ('CapabilityUnavailable', 'NotConfigured', 'ParseFailure'). [crates/gcode/src/commands/codewiki/text/generation.rs:165-173] |
+| `resolve_ai_context` | function | Creates a read-only database connection, builds an AI configuration source from primary Postgres and optional standalone config, and resolves an 'AiContext' for the current project with optional forced routing and AI enabled. [crates/gcode/src/commands/codewiki/text/generation.rs:175-188] |
+| `Generation` | type | Indexed type `Generation` in `crates/gcode/src/commands/codewiki/text/generation.rs`. [crates/gcode/src/commands/codewiki/text/generation.rs:195-199] |
+| `Generation::failed` | method | Returns 'true' if 'self' is 'Generation::Failed', and 'false' otherwise. [crates/gcode/src/commands/codewiki/text/generation.rs:202-204] |
+| `Generation::unwrap_or_record` | method | Returns the generated 'text' when 'self' is 'Generation::Generated', otherwise returns 'fallback' and sets '*degraded = true' only for 'Generation::Failed' (not for 'Generation::Skipped'). [crates/gcode/src/commands/codewiki/text/generation.rs:208-217] |
+| `maybe_generate` | function | Returns 'Generation::Skipped' when no generator is available, otherwise invokes it and maps a prompt-echoing or 'None' result to 'Generation::Failed' and any other 'Some(text)' result to 'Generation::Generated(text)'. [crates/gcode/src/commands/codewiki/text/generation.rs:220-234] |
+| `is_prompt_echo` | function | Returns 'true' only when the left-trimmed 'text' begins with the first 'PROMPT_ECHO_PREFIX_CHARS' Unicode scalar values of the left-trimmed 'prompt', and returns 'false' if the prompt prefix is shorter than that threshold. [crates/gcode/src/commands/codewiki/text/generation.rs:243-253] |
+| `clean_generated` | function | Returns 'Some(trimmed_text)' when the input string is non-empty after whitespace trimming, otherwise returns 'None'. [crates/gcode/src/commands/codewiki/text/generation.rs:255-258] |
+

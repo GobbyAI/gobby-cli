@@ -3,40 +3,29 @@ title: crates/gcode/src/index/import_resolution/parser/shell.rs
 type: code_file
 provenance:
 - file: crates/gcode/src/index/import_resolution/parser/shell.rs
-  ranges:
-  - 8-40
-  - 42-57
-  - 59-78
-  - 80-96
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gcode/src/index/import_resolution/parser/shell.rs:8-40](crates/gcode/src/index/import_resolution/parser/shell.rs#L8-L40), [crates/gcode/src/index/import_resolution/parser/shell.rs:42-57](crates/gcode/src/index/import_resolution/parser/shell.rs#L42-L57), [crates/gcode/src/index/import_resolution/parser/shell.rs:59-78](crates/gcode/src/index/import_resolution/parser/shell.rs#L59-L78), [crates/gcode/src/index/import_resolution/parser/shell.rs:80-96](crates/gcode/src/index/import_resolution/parser/shell.rs#L80-L96)
-
-</details>
-
 # crates/gcode/src/index/import_resolution/parser/shell.rs
 
 Module: [[code/modules/crates/gcode/src/index/import_resolution|crates/gcode/src/index/import_resolution]]
 
-## Purpose
+## Overview
 
-This file handles shell import detection and shell-local call resolution for import indexing. `parse_shell_import_statement` normalizes a line of shell text, recognizes `source` and `.` statements, extracts the referenced path, records an `ImportRelation`, and, when the target is a safe relative path, adds the resolved file to `shell_source_files`. `resolve_shell_local_callee` then uses those sourced files to build a `LocalCallBinding` for bare calls only when no existing symbol in the file already matches the callee name. The helper `shell_source_target` filters out absolute, interpolated, or otherwise dynamic paths and resolves safe relative paths against the importing file, while `normalize_project_path` canonicalizes the resulting project path form.
-[crates/gcode/src/index/import_resolution/parser/shell.rs:8-40]
-[crates/gcode/src/index/import_resolution/parser/shell.rs:42-57]
-[crates/gcode/src/index/import_resolution/parser/shell.rs:59-78]
-[crates/gcode/src/index/import_resolution/parser/shell.rs:80-96]
+`crates/gcode/src/index/import_resolution/parser/shell.rs` exposes 4 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `parse_shell_import_statement` | function | `pub(crate) fn parse_shell_import_statement(` | `parse_shell_import_statement [function]` | `00447dc2-bfc5-5aa9-bc0e-11a47087513d` | 8-40 [crates/gcode/src/index/import_resolution/parser/shell.rs:8-40] | Indexed function `parse_shell_import_statement` in `crates/gcode/src/index/import_resolution/parser/shell.rs`. [crates/gcode/src/index/import_resolution/parser/shell.rs:8-40] |
-| `resolve_shell_local_callee` | function | `pub(crate) fn resolve_shell_local_callee(` | `resolve_shell_local_callee [function]` | `2fc09547-bb5d-5ce6-b830-e6262a5eb599` | 42-57 [crates/gcode/src/index/import_resolution/parser/shell.rs:42-57] | Indexed function `resolve_shell_local_callee` in `crates/gcode/src/index/import_resolution/parser/shell.rs`. [crates/gcode/src/index/import_resolution/parser/shell.rs:42-57] |
-| `shell_source_target` | function | `fn shell_source_target(rel_path: &str, source_path: &str) -> Option<String> {` | `shell_source_target [function]` | `f3d5fddd-d9a7-5917-9fd0-c7b03fdc3961` | 59-78 [crates/gcode/src/index/import_resolution/parser/shell.rs:59-78] | Indexed function `shell_source_target` in `crates/gcode/src/index/import_resolution/parser/shell.rs`. [crates/gcode/src/index/import_resolution/parser/shell.rs:59-78] |
-| `normalize_project_path` | function | `fn normalize_project_path(path: &Path) -> Option<String> {` | `normalize_project_path [function]` | `66aaedd2-8099-54da-b607-d9c86b9928ee` | 80-96 [crates/gcode/src/index/import_resolution/parser/shell.rs:80-96] | Indexed function `normalize_project_path` in `crates/gcode/src/index/import_resolution/parser/shell.rs`. [crates/gcode/src/index/import_resolution/parser/shell.rs:80-96] |
+`crates/gcode/src/index/import_resolution/parser/shell.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `parse_shell_import_statement` | function | Parses a shell 'source' or '.' import statement, extracts the referenced path from quoted or unquoted syntax, records an 'ImportRelation' for 'rel_path', and, if it can resolve the target, appends that resolved source file to 'extracted.bindings.shell_source_files'. [crates/gcode/src/index/import_resolution/parser/shell.rs:8-40] |
+| `resolve_shell_local_callee` | function | Returns a 'LocalCallBinding' for 'callee_name' using the unique sorted shell source files from 'import_bindings' only when the call is bare and no symbol in 'symbols' already matches that name, otherwise 'None'. [crates/gcode/src/index/import_resolution/parser/shell.rs:42-57] |
+| `shell_source_target` | function | Returns a normalized project path for 'source_path' resolved relative to 'rel_path'’s parent, but only if 'source_path' is a non-absolute, non-shell-expanded relative path without drive/root/prefix components, otherwise returns 'None'. [crates/gcode/src/index/import_resolution/parser/shell.rs:59-78] |
+| `normalize_project_path` | function | Normalizes a relative 'Path' by removing '.' components, resolving '..' against prior segments, rejecting rooted or prefixed paths, and returning a non-empty UTF-8-lossy string with backslashes converted to forward slashes, or 'None' if normalization fails. [crates/gcode/src/index/import_resolution/parser/shell.rs:80-96] |
+

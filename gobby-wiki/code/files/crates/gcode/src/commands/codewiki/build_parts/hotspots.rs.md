@@ -3,34 +3,27 @@ title: crates/gcode/src/commands/codewiki/build_parts/hotspots.rs
 type: code_file
 provenance:
 - file: crates/gcode/src/commands/codewiki/build_parts/hotspots.rs
-  ranges:
-  - 5-134
-  - 136-160
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-134](crates/gcode/src/commands/codewiki/build_parts/hotspots.rs#L5-L134), [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:136-160](crates/gcode/src/commands/codewiki/build_parts/hotspots.rs#L136-L160)
-
-</details>
-
 # crates/gcode/src/commands/codewiki/build_parts/hotspots.rs
 
 Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gcode/src/commands/codewiki/build_parts]]
 
-## Purpose
+## Overview
 
-Builds the codewiki “hotspots” document from file docs and graph edges by first checking graph availability, then assembling an analytics graph from the file-derived hotspot nodes and filtered call/import edges. It uses source-span length as node weight, records degraded-source markers when graph data is truncated or unavailable, and returns the computed hotspots, god nodes, bridges, and spans; `hotspot_nodes` supplies the node set used by that assembly.
-[crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-134]
-[crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:136-160]
+`crates/gcode/src/commands/codewiki/build_parts/hotspots.rs` exposes 2 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `build_hotspots_doc` | function | `pub(crate) fn build_hotspots_doc(` | `build_hotspots_doc [function]` | `827f6d4e-76a7-54f7-ad22-c97eb3ead5a9` | 5-134 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-134] | Indexed function `build_hotspots_doc` in `crates/gcode/src/commands/codewiki/build_parts/hotspots.rs`. [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-134] |
-| `hotspot_nodes` | function | `fn hotspot_nodes(files: &[FileDoc]) -> BTreeMap<String, HotspotNode> {` | `hotspot_nodes [function]` | `18942d3b-f308-5760-92c4-056e14bbba25` | 136-160 [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:136-160] | Indexed function `hotspot_nodes` in `crates/gcode/src/commands/codewiki/build_parts/hotspots.rs`. [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:136-160] |
+`crates/gcode/src/commands/codewiki/build_parts/hotspots.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `build_hotspots_doc` | function | Builds a 'HotspotsDoc' by deriving hotspot nodes from 'files', constructing an analytics graph from in-scope 'graph_edges' and node span weights, and returning a degraded or empty document when graph analytics is truncated or unavailable. [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-134] |
+| `hotspot_nodes` | function | Builds a 'BTreeMap' keyed by each symbol’s 'component_id', where each 'HotspotNode' is assembled from file and symbol metadata using the symbol’s qualified name when available, otherwise its name, along with wiki links and source span. [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:136-160] |
+

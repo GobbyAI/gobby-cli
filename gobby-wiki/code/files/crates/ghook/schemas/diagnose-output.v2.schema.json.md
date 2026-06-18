@@ -3,84 +3,75 @@ title: crates/ghook/schemas/diagnose-output.v2.schema.json
 type: code_file
 provenance:
 - file: crates/ghook/schemas/diagnose-output.v2.schema.json
-  ranges:
-  - 2-79
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/ghook/schemas/diagnose-output.v2.schema.json:2-79](crates/ghook/schemas/diagnose-output.v2.schema.json#L2-L79)
-
-</details>
-
 # crates/ghook/schemas/diagnose-output.v2.schema.json
 
 Module: [[code/modules/crates/ghook/schemas|crates/ghook/schemas]]
 
-## Purpose
+## Overview
 
-JSON Schema for `ghook --diagnose` output version 2. It defines a closed object shape with required runtime/status fields like `schema_version`, `ghook_version`, `cli`, `hook_type`, daemon details, and recognition flags, then constrains each property’s type and bounds; `schema_version` is fixed to `2`, `additionalProperties` is false, and v2 adds optional install provenance fields `install_method` and `install_source_url` while keeping the v1 fields unchanged.
-[crates/ghook/schemas/diagnose-output.v2.schema.json:2]
-[crates/ghook/schemas/diagnose-output.v2.schema.json:3]
-[crates/ghook/schemas/diagnose-output.v2.schema.json:4]
-[crates/ghook/schemas/diagnose-output.v2.schema.json:5]
-[crates/ghook/schemas/diagnose-output.v2.schema.json:6]
+`crates/ghook/schemas/diagnose-output.v2.schema.json` exposes 50 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `$schema` | property | `"$schema": "http://json-schema.org/draft-07/schema#",` | `$schema [property]` | `bacf0899-0f32-5e82-a162-ce6ec065c665` | 2-2 [crates/ghook/schemas/diagnose-output.v2.schema.json:2] | Indexed property `$schema` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:2] |
-| `$id` | property | `"$id": "https://gobby.ai/schemas/ghook/diagnose-output.v2.schema.json",` | `$id [property]` | `2098d2a7-1567-5d38-b7ff-aa501e6f20f2` | 3-3 [crates/ghook/schemas/diagnose-output.v2.schema.json:3] | Indexed property `$id` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:3] |
-| `title` | property | `"title": "Gobby ghook --diagnose output",` | `title [property]` | `f4184134-2496-5da6-a6d3-148b09001802` | 4-4 [crates/ghook/schemas/diagnose-output.v2.schema.json:4] | Indexed property `title` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:4] |
-| `description` | property | ``"description": "Output of `ghook --diagnose --cli=<c> --type=<t>`. Schema version 2 — adds install_method and install_source_url for install-provenance reporting. v1 fields are unchanged.",`` | `description [property]` | `8c90ed26-3cbd-53ca-9b4e-85bbdf3a873c` | 5-5 [crates/ghook/schemas/diagnose-output.v2.schema.json:5] | Indexed property `description` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:5] |
-| `type` | property | `"type": "object",` | `type [property]` | `3cfe478d-baf7-53af-adc4-6bc7073dd4d0` | 6-6 [crates/ghook/schemas/diagnose-output.v2.schema.json:6] | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:6] |
-| `required` | property | `"required": [` | `required [property]` | `255c1c10-fb50-5c4c-ab0a-6fab53823622` | 7-18 [crates/ghook/schemas/diagnose-output.v2.schema.json:7-18] | Indexed property `required` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:7-18] |
-| `additionalProperties` | property | `"additionalProperties": false,` | `additionalProperties [property]` | `d32937c3-8cbc-5f70-ad2e-bc4163ff124e` | 19-19 [crates/ghook/schemas/diagnose-output.v2.schema.json:19] | Indexed property `additionalProperties` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:19] |
-| `properties` | property | `"properties": {` | `properties [property]` | `0c90c2b2-0f3f-566e-9aad-5557d8397b0d` | 20-79 [crates/ghook/schemas/diagnose-output.v2.schema.json:20-79] | Indexed property `properties` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:20-79] |
-| `schema_version` | property | `"schema_version": {` | `schema_version [property]` | `98a0fbc5-cad9-5724-b8a8-bfcfdb872584` | 21-24 [crates/ghook/schemas/diagnose-output.v2.schema.json:21-24] | Indexed property `schema_version` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:21-24] |
-| `type` | property | `"type": "integer",` | `type [property]` | `efdb5996-ebcd-589c-87ea-a123854987bd` | 22-22 [crates/ghook/schemas/diagnose-output.v2.schema.json:22] | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:22] |
-| `const` | property | `"const": 2` | `const [property]` | `c67570be-71bc-5b6f-9299-251552edf051` | 23-23 [crates/ghook/schemas/diagnose-output.v2.schema.json:23] | Indexed property `const` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:23] |
-| `ghook_version` | property | `"ghook_version": {` | `ghook_version [property]` | `8fafacd4-4027-5f64-9cef-d0bcad3139ef` | 25-28 [crates/ghook/schemas/diagnose-output.v2.schema.json:25-28] | Indexed property `ghook_version` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:25-28] |
-| `type` | property | `"type": "string",` | `type [property]` | `e5d2730a-aa45-5bc2-9cd4-2f0c86147f53` | 26-26 [crates/ghook/schemas/diagnose-output.v2.schema.json:26] | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:26] |
-| `minLength` | property | `"minLength": 1` | `minLength [property]` | `cbfd1119-fdcd-5cb9-b25b-c0d75f68369c` | 27-27 [crates/ghook/schemas/diagnose-output.v2.schema.json:27] | Indexed property `minLength` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:27] |
-| `cli` | property | `"cli": {` | `cli [property]` | `edefea07-9c4f-5ee1-bce3-c7b7eeedf72b` | 29-32 [crates/ghook/schemas/diagnose-output.v2.schema.json:29-32] | Indexed property `cli` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:29-32] |
-| `type` | property | `"type": "string",` | `type [property]` | `d1ff8a5a-bbe5-5f69-b911-5e7fef8a1931` | 30-30 [crates/ghook/schemas/diagnose-output.v2.schema.json:30] | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:30] |
-| `minLength` | property | `"minLength": 1` | `minLength [property]` | `37d3d038-bc2b-5c2e-a705-a374231a5cb7` | 31-31 [crates/ghook/schemas/diagnose-output.v2.schema.json:31] | Indexed property `minLength` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:31] |
-| `hook_type` | property | `"hook_type": {` | `hook_type [property]` | `d21d0c64-1768-5acc-b463-406be2d7b8c0` | 33-36 [crates/ghook/schemas/diagnose-output.v2.schema.json:33-36] | Indexed property `hook_type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:33-36] |
-| `type` | property | `"type": "string",` | `type [property]` | `b828923e-0236-5616-a339-df5d5bff6830` | 34-34 [crates/ghook/schemas/diagnose-output.v2.schema.json:34] | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:34] |
-| `minLength` | property | `"minLength": 1` | `minLength [property]` | `2916f41a-c5bd-5505-9caa-4699aba07f02` | 35-35 [crates/ghook/schemas/diagnose-output.v2.schema.json:35] | Indexed property `minLength` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:35] |
-| `source` | property | `"source": {` | `source [property]` | `b21f51e9-f548-56f9-9e5f-849c71b59944` | 37-39 [crates/ghook/schemas/diagnose-output.v2.schema.json:37-39] | Indexed property `source` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:37-39] |
-| `type` | property | `"type": ["string", "null"]` | `type [property]` | `6eeef965-c316-5f6f-9013-c5977f691690` | 38-38 [crates/ghook/schemas/diagnose-output.v2.schema.json:38] | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:38] |
-| `critical` | property | `"critical": {` | `critical [property]` | `76db3b7a-3b7f-5c44-b510-8d1188beeb86` | 40-42 [crates/ghook/schemas/diagnose-output.v2.schema.json:40-42] | Indexed property `critical` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:40-42] |
-| `type` | property | `"type": "boolean"` | `type [property]` | `cf36f950-0e73-5dab-8c96-914dbfcd31b1` | 41-41 [crates/ghook/schemas/diagnose-output.v2.schema.json:41] | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:41] |
-| `terminal_context_enabled` | property | `"terminal_context_enabled": {` | `terminal_context_enabled [property]` | `589bbd4a-9e7b-5a24-b1c0-7b9883f5c991` | 43-45 [crates/ghook/schemas/diagnose-output.v2.schema.json:43-45] | Indexed property `terminal_context_enabled` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:43-45] |
-| `type` | property | `"type": "boolean"` | `type [property]` | `d3d51a75-fcb5-5f99-be5d-0677d2587ec0` | 44-44 [crates/ghook/schemas/diagnose-output.v2.schema.json:44] | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:44] |
-| `daemon_url` | property | `"daemon_url": {` | `daemon_url [property]` | `25f7bffd-0360-59f1-bfe5-5a4224e27969` | 46-49 [crates/ghook/schemas/diagnose-output.v2.schema.json:46-49] | Indexed property `daemon_url` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:46-49] |
-| `type` | property | `"type": "string",` | `type [property]` | `239f3d50-c63a-5fa5-8ec9-b5e33b1d4cf6` | 47-47 [crates/ghook/schemas/diagnose-output.v2.schema.json:47] | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:47] |
-| `minLength` | property | `"minLength": 1` | `minLength [property]` | `61e5c980-5107-5b94-a255-dd30fff3256a` | 48-48 [crates/ghook/schemas/diagnose-output.v2.schema.json:48] | Indexed property `minLength` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:48] |
-| `daemon_host` | property | `"daemon_host": {` | `daemon_host [property]` | `37e526c1-d0ad-56f2-8f84-459b34ac5abd` | 50-53 [crates/ghook/schemas/diagnose-output.v2.schema.json:50-53] | Indexed property `daemon_host` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:50-53] |
-| `type` | property | `"type": "string",` | `type [property]` | `4a698df5-5087-5ad1-ae48-a5fdde313a83` | 51-51 [crates/ghook/schemas/diagnose-output.v2.schema.json:51] | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:51] |
-| `minLength` | property | `"minLength": 1` | `minLength [property]` | `5a603945-bf8c-539f-8f27-535d8d4ff04e` | 52-52 [crates/ghook/schemas/diagnose-output.v2.schema.json:52] | Indexed property `minLength` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:52] |
-| `daemon_port` | property | `"daemon_port": {` | `daemon_port [property]` | `d5d778e3-e1c0-57d3-b59d-5ceb5e9ac8a3` | 54-58 [crates/ghook/schemas/diagnose-output.v2.schema.json:54-58] | Indexed property `daemon_port` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:54-58] |
-| `type` | property | `"type": "integer",` | `type [property]` | `f10afc11-7fd5-57b7-b234-eeef33756cfe` | 55-55 [crates/ghook/schemas/diagnose-output.v2.schema.json:55] | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:55] |
-| `minimum` | property | `"minimum": 1,` | `minimum [property]` | `3184bba7-db11-50eb-ace8-f4dd85fbb21d` | 56-56 [crates/ghook/schemas/diagnose-output.v2.schema.json:56] | Indexed property `minimum` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:56] |
-| `maximum` | property | `"maximum": 65535` | `maximum [property]` | `f3af8c8a-b418-5597-885b-db8fb9c1da05` | 57-57 [crates/ghook/schemas/diagnose-output.v2.schema.json:57] | Indexed property `maximum` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:57] |
-| `project_root` | property | `"project_root": {` | `project_root [property]` | `0f0d8050-a628-564e-9be3-33ac3c2f603e` | 59-61 [crates/ghook/schemas/diagnose-output.v2.schema.json:59-61] | Indexed property `project_root` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:59-61] |
-| `type` | property | `"type": ["string", "null"]` | `type [property]` | `24560909-6e1a-5e14-8b72-4998c7ad0db0` | 60-60 [crates/ghook/schemas/diagnose-output.v2.schema.json:60] | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:60] |
-| `project_id` | property | `"project_id": {` | `project_id [property]` | `e24a0919-9834-56da-a898-4d640d511e08` | 62-64 [crates/ghook/schemas/diagnose-output.v2.schema.json:62-64] | Indexed property `project_id` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:62-64] |
-| `type` | property | `"type": ["string", "null"]` | `type [property]` | `85cd11d0-506d-549e-b640-bc1527518ee2` | 63-63 [crates/ghook/schemas/diagnose-output.v2.schema.json:63] | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:63] |
-| `terminal_context_preview` | property | `"terminal_context_preview": {` | `terminal_context_preview [property]` | `51fe7313-cece-5ccb-a29b-7e6cc6d2a9be` | 65-67 [crates/ghook/schemas/diagnose-output.v2.schema.json:65-67] | Indexed property `terminal_context_preview` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:65-67] |
-| `type` | property | `"type": ["object", "null"]` | `type [property]` | `43b83a6c-d9be-5131-96ab-eb1af64f1e5b` | 66-66 [crates/ghook/schemas/diagnose-output.v2.schema.json:66] | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:66] |
-| `cli_recognized` | property | `"cli_recognized": {` | `cli_recognized [property]` | `e0465c18-a77b-5c38-b139-77849c1f6929` | 68-70 [crates/ghook/schemas/diagnose-output.v2.schema.json:68-70] | Indexed property `cli_recognized` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:68-70] |
-| `type` | property | `"type": "boolean"` | `type [property]` | `42985042-0643-5ae2-9fe0-c9d4bd1a6113` | 69-69 [crates/ghook/schemas/diagnose-output.v2.schema.json:69] | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:69] |
-| `install_method` | property | `"install_method": {` | `install_method [property]` | `dc946393-4886-50da-8a0a-351239f928ed` | 71-74 [crates/ghook/schemas/diagnose-output.v2.schema.json:71-74] | Indexed property `install_method` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:71-74] |
-| `type` | property | `"type": ["string", "null"],` | `type [property]` | `322f6e90-7f84-5ff0-85c0-9e1d9eca8c9f` | 72-72 [crates/ghook/schemas/diagnose-output.v2.schema.json:72] | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:72] |
-| `description` | property | `"description": "How ghook was installed, sourced from the install sidecar (.ghook-install.json) next to the binary. Conventional values: github-release, crates-binstall, cargo-install, manual, unknown...` | `description [property]` | `081c77c1-7c54-5af9-9e9e-a2a6f0045a44` | 73-73 [crates/ghook/schemas/diagnose-output.v2.schema.json:73] | Indexed property `description` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:73] |
-| `install_source_url` | property | `"install_source_url": {` | `install_source_url [property]` | `e935415a-1e52-589c-9ebb-ec2d584d1d71` | 75-78 [crates/ghook/schemas/diagnose-output.v2.schema.json:75-78] | Indexed property `install_source_url` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:75-78] |
-| `type` | property | `"type": ["string", "null"],` | `type [property]` | `10ea730c-b509-535b-94d0-33d46f6e36d4` | 76-76 [crates/ghook/schemas/diagnose-output.v2.schema.json:76] | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:76] |
-| `description` | property | `"description": "URL the binary was fetched from (typically a GitHub release asset URL), sourced from the install sidecar. null when unknown or not applicable."` | `description [property]` | `a7439602-0f19-534d-916b-65788e133a6a` | 77-77 [crates/ghook/schemas/diagnose-output.v2.schema.json:77] | Indexed property `description` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:77] |
+`crates/ghook/schemas/diagnose-output.v2.schema.json` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `$schema` | property | Indexed property `$schema` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:2] |
+| `$id` | property | Indexed property `$id` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:3] |
+| `title` | property | Indexed property `title` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:4] |
+| `description` | property | Indexed property `description` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:5] |
+| `type` | property | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:6] |
+| `required` | property | Indexed property `required` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:7-18] |
+| `additionalProperties` | property | Indexed property `additionalProperties` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:19] |
+| `properties` | property | Indexed property `properties` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:20-79] |
+| `schema_version` | property | Indexed property `schema_version` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:21-24] |
+| `type` | property | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:22] |
+| `const` | property | Indexed property `const` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:23] |
+| `ghook_version` | property | Indexed property `ghook_version` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:25-28] |
+| `type` | property | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:26] |
+| `minLength` | property | Indexed property `minLength` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:27] |
+| `cli` | property | Indexed property `cli` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:29-32] |
+| `type` | property | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:30] |
+| `minLength` | property | Indexed property `minLength` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:31] |
+| `hook_type` | property | Indexed property `hook_type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:33-36] |
+| `type` | property | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:34] |
+| `minLength` | property | Indexed property `minLength` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:35] |
+| `source` | property | Indexed property `source` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:37-39] |
+| `type` | property | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:38] |
+| `critical` | property | Indexed property `critical` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:40-42] |
+| `type` | property | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:41] |
+| `terminal_context_enabled` | property | Indexed property `terminal_context_enabled` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:43-45] |
+| `type` | property | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:44] |
+| `daemon_url` | property | Indexed property `daemon_url` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:46-49] |
+| `type` | property | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:47] |
+| `minLength` | property | Indexed property `minLength` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:48] |
+| `daemon_host` | property | Indexed property `daemon_host` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:50-53] |
+| `type` | property | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:51] |
+| `minLength` | property | Indexed property `minLength` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:52] |
+| `daemon_port` | property | Indexed property `daemon_port` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:54-58] |
+| `type` | property | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:55] |
+| `minimum` | property | Indexed property `minimum` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:56] |
+| `maximum` | property | Indexed property `maximum` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:57] |
+| `project_root` | property | Indexed property `project_root` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:59-61] |
+| `type` | property | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:60] |
+| `project_id` | property | Indexed property `project_id` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:62-64] |
+| `type` | property | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:63] |
+| `terminal_context_preview` | property | Indexed property `terminal_context_preview` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:65-67] |
+| `type` | property | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:66] |
+| `cli_recognized` | property | Indexed property `cli_recognized` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:68-70] |
+| `type` | property | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:69] |
+| `install_method` | property | Indexed property `install_method` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:71-74] |
+| `type` | property | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:72] |
+| `description` | property | Indexed property `description` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:73] |
+| `install_source_url` | property | Indexed property `install_source_url` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:75-78] |
+| `type` | property | Indexed property `type` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:76] |
+| `description` | property | Indexed property `description` in `crates/ghook/schemas/diagnose-output.v2.schema.json`. [crates/ghook/schemas/diagnose-output.v2.schema.json:77] |
+

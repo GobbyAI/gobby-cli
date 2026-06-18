@@ -3,37 +3,28 @@ title: crates/gwiki/src/commands/mod.rs
 type: code_file
 provenance:
 - file: crates/gwiki/src/commands/mod.rs
-  ranges:
-  - 31-104
-  - 106-117
-  - 119-143
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gwiki/src/commands/mod.rs:31-104](crates/gwiki/src/commands/mod.rs#L31-L104), [crates/gwiki/src/commands/mod.rs:106-117](crates/gwiki/src/commands/mod.rs#L106-L117), [crates/gwiki/src/commands/mod.rs:119-143](crates/gwiki/src/commands/mod.rs#L119-L143)
-
-</details>
-
 # crates/gwiki/src/commands/mod.rs
 
 Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
-## Purpose
+## Overview
 
-This module is the command dispatcher for `gwiki`: it declares the individual command submodules and centralizes how CLI commands are executed. `run` matches each `Command` variant to the appropriate module-level `execute` function, while `scoped_outcome` and `run_analysis_command` provide shared helpers for running commands with resolved scope and for handling analysis-related command execution.
-[crates/gwiki/src/commands/mod.rs:31-104]
-[crates/gwiki/src/commands/mod.rs:106-117]
-[crates/gwiki/src/commands/mod.rs:119-143]
+`crates/gwiki/src/commands/mod.rs` exposes 3 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `run` | function | `pub(crate) fn run(command: Command) -> Result<CommandOutcome, WikiError> {` | `run [function]` | `eaea66ca-7b18-5903-bfff-5f90b653a921` | 31-104 [crates/gwiki/src/commands/mod.rs:31-104] | Indexed function `run` in `crates/gwiki/src/commands/mod.rs`. [crates/gwiki/src/commands/mod.rs:31-104] |
-| `scoped_outcome` | function | `pub(crate) fn scoped_outcome(` | `scoped_outcome [function]` | `d1f3c366-c1da-5c4d-8832-578c1ad7cafe` | 106-117 [crates/gwiki/src/commands/mod.rs:106-117] | Indexed function `scoped_outcome` in `crates/gwiki/src/commands/mod.rs`. [crates/gwiki/src/commands/mod.rs:106-117] |
-| `run_analysis_command` | function | `pub(crate) fn run_analysis_command<T>(` | `run_analysis_command [function]` | `1e962369-237f-543b-ae5c-deb1d4dd596c` | 119-143 [crates/gwiki/src/commands/mod.rs:119-143] | Indexed function `run_analysis_command` in `crates/gwiki/src/commands/mod.rs`. [crates/gwiki/src/commands/mod.rs:119-143] |
+`crates/gwiki/src/commands/mod.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `run` | function | Dispatches the given 'Command' enum variant to its corresponding module-level 'execute' function and returns that operation’s 'Result<CommandOutcome, WikiError>'. [crates/gwiki/src/commands/mod.rs:32-106] |
+| `scoped_outcome` | function | Constructs a successful 'CommandOutcome' with exit code '0', a single status message of the form '"{command} resolved scope {scope}"', and a 'CommandResult' containing the supplied JSON 'payload' and 'text'. [crates/gwiki/src/commands/mod.rs:108-119] |
+| `run_analysis_command` | function | Resolves the selected scope, executes the provided analysis closure on that scope’s root path and identity, serializes the returned report to JSON, and packages both the serialized payload and rendered summary into a scoped 'CommandOutcome'. [crates/gwiki/src/commands/mod.rs:121-145] |
+

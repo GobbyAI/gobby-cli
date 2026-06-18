@@ -3,66 +3,57 @@ title: docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json
 type: code_file
 provenance:
 - file: docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json
-  ranges:
-  - 3-44
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:3-44](docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json#L3-L44)
-
-</details>
-
 # docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json
 
 Module: [[code/modules/docs/evidence/wiki-parity-2026-06|docs/evidence/wiki-parity-2026-06]]
 
-## Purpose
+## Overview
 
-This JSON records the result of a `compile` run for the wiki explainer on hybrid search result merging. The `ai` block captures how generation was routed and whether it succeeded, while the remaining fields identify the target article and index paths, the handoff ID, the prompt and scope metadata, and the page writes that created the output article and supporting source note.
-[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:3-12]
-[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:4]
-[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:5]
-[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:6]
-[docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:7]
+`docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json` exposes 32 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `ai` | property | `"ai": {` | `ai [property]` | `39461b11-e8ef-5781-b6cf-cf5d8926739d` | 3-12 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:3-12] | Indexed property `ai` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:3-12] |
-| `citations_kept` | property | `"citations_kept": 2,` | `citations_kept [property]` | `e0eb2ba5-aea5-591a-9412-8390d4f264f5` | 4-4 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:4] | Indexed property `citations_kept` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:4] |
-| `citations_stripped` | property | `"citations_stripped": 0,` | `citations_stripped [property]` | `1cddca69-c198-5a13-8f62-9d15dfb454c9` | 5-5 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:5] | Indexed property `citations_stripped` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:5] |
-| `error` | property | `"error": null,` | `error [property]` | `d7d0b8ba-1749-5e3f-bb7a-d48a817dfda0` | 6-6 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:6] | Indexed property `error` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:6] |
-| `fallback_sections` | property | `"fallback_sections": 0,` | `fallback_sections [property]` | `e37f0651-8cd9-571d-a2c8-0a8b897a87b0` | 7-7 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:7] | Indexed property `fallback_sections` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:7] |
-| `model` | property | `"model": "gpt-5.4-mini",` | `model [property]` | `d87b3229-4d10-54a9-9d56-a50f0b84506e` | 8-8 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:8] | Indexed property `model` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:8] |
-| `requested_mode` | property | `"requested_mode": "daemon",` | `requested_mode [property]` | `db951409-4f6b-514b-b85b-f17d3eb53f4f` | 9-9 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:9] | Indexed property `requested_mode` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:9] |
-| `route` | property | `"route": "daemon",` | `route [property]` | `e5c2e451-f898-55b2-bb77-6c05509e2c77` | 10-10 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:10] | Indexed property `route` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:10] |
-| `status` | property | `"status": "generated"` | `status [property]` | `619df09b-da56-5b8d-b4a8-4a83dedaf908` | 11-11 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:11] | Indexed property `status` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:11] |
-| `article_path` | property | `"article_path": "/Users/josh/Projects/gobby-cli/.gobby/wiki/knowledge/topics/hybrid-search-result-merging.md",` | `article_path [property]` | `ac241998-8f99-5af6-8407-861c62441a50` | 13-13 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:13] | Indexed property `article_path` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:13] |
-| `command` | property | `"command": "compile",` | `command [property]` | `87654abe-8830-5bdc-be61-0919f024c23c` | 14-14 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:14] | Indexed property `command` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:14] |
-| `daemon_synthesis_available` | property | `"daemon_synthesis_available": true,` | `daemon_synthesis_available [property]` | `0f92794c-ced9-5237-b97f-d25fdbe17d95` | 15-15 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:15] | Indexed property `daemon_synthesis_available` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:15] |
-| `handoff_id` | property | `"handoff_id": "compile-hybrid-search-result-merging-1781420467017",` | `handoff_id [property]` | `193fecbb-6e7a-5adc-93b9-9f469241f5c9` | 16-16 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:16] | Indexed property `handoff_id` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:16] |
-| `index_path` | property | `"index_path": "/Users/josh/Projects/gobby-cli/.gobby/wiki/_index.md",` | `index_path [property]` | `0465e26e-4e20-5823-be50-172baa98339c` | 17-17 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:17] | Indexed property `index_path` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:17] |
-| `outline` | property | `"outline": [],` | `outline [property]` | `f4d599a5-08b5-5a94-ac87-16e81593e200` | 18-18 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:18] | Indexed property `outline` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:18] |
-| `page_writes` | property | `"page_writes": [` | `page_writes [property]` | `a038c63d-a4cd-5ec5-9470-283c69f443c4` | 19-28 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:19-28] | Indexed property `page_writes` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:19-28] |
-| `kind` | property | `"kind": "created",` | `kind [property]` | `5f1dc944-05b6-5b37-95e7-423302d1dc29` | 21-21 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:21] | Indexed property `kind` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:21] |
-| `path` | property | `"path": "/Users/josh/Projects/gobby-cli/.gobby/wiki/knowledge/topics/hybrid-search-result-merging.md"` | `path [property]` | `3521eca8-e055-5a74-b981-8e5ab3ca8e7c` | 22-22 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:22] | Indexed property `path` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:22] |
-| `kind` | property | `"kind": "created",` | `kind [property]` | `4cded764-d2cd-5df9-8666-ca6af5695622` | 25-25 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:25] | Indexed property `kind` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:25] |
-| `path` | property | `"path": "/Users/josh/Projects/gobby-cli/.gobby/wiki/knowledge/sources/how-gobby-cli-merges-hybrid-search-results.md"` | `path [property]` | `08cee95c-b0a8-5043-8090-0fd535f604a3` | 26-26 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:26] | Indexed property `path` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:26] |
-| `prompt` | property | `"prompt": {` | `prompt [property]` | `ed5c69eb-9978-58fb-b588-48019a3ffc56` | 29-35 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:29-35] | Indexed property `prompt` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:29-35] |
-| `daemon_synthesis_available` | property | `"daemon_synthesis_available": true,` | `daemon_synthesis_available [property]` | `ab492f2f-de26-5c77-8814-514c904502fd` | 30-30 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:30] | Indexed property `daemon_synthesis_available` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:30] |
-| `system` | property | `"system": "You write a grounded wiki explainer from supplied source excerpts. Use only facts stated in the excerpts. Write each requested section as a markdown '## <section>' heading followed by one o...` | `system [property]` | `3a76c58b-af45-5cba-9b1d-f6fc63517266` | 31-31 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:31] | Indexed property `system` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:31] |
-| `tokens_estimated` | property | `"tokens_estimated": 340,` | `tokens_estimated [property]` | `4c722d2e-a38e-572a-92bf-fc5bcfa414db` | 32-32 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:32] | Indexed property `tokens_estimated` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:32] |
-| `truncated_sources` | property | `"truncated_sources": 0,` | `truncated_sources [property]` | `f1444637-1f22-5592-a3a2-c543951ae0da` | 33-33 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:33] | Indexed property `truncated_sources` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:33] |
-| `user` | property | `"user": "Topic: hybrid search result merging\nWrite the explainer with exactly these sections:\n- Overview\n\nSource excerpts:\n1. How gobby-cli merges hybrid search results [source: raw/src-ab36a0b10...` | `user [property]` | `992a3baf-e24f-5909-9bf1-df8aa9c4b213` | 34-34 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:34] | Indexed property `user` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:34] |
-| `scope` | property | `"scope": {` | `scope [property]` | `5888338d-a902-54d6-9157-36a219f35aa3` | 36-39 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:36-39] | Indexed property `scope` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:36-39] |
-| `id` | property | `"id": "3bf57fe7-2a0c-4074-8912-a83d9cd4df01",` | `id [property]` | `946f58d5-745a-577b-84bc-640a6c010fec` | 37-37 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:37] | Indexed property `id` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:37] |
-| `kind` | property | `"kind": "project"` | `kind [property]` | `51a43768-c395-5d03-82df-377d748e7477` | 38-38 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:38] | Indexed property `kind` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:38] |
-| `source_paths` | property | `"source_paths": [` | `source_paths [property]` | `dcfeb2bc-cb32-5195-9ea1-cfe1d0f8c10a` | 40-42 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:40-42] | Indexed property `source_paths` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:40-42] |
-| `status` | property | `"status": "compiled",` | `status [property]` | `7dab8fca-efa8-51af-916f-95ad8ffc6d6f` | 43-43 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:43] | Indexed property `status` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:43] |
-| `target_kind` | property | `"target_kind": "topic"` | `target_kind [property]` | `c4850d94-13e6-5a9b-90f2-c76a39b55e02` | 44-44 [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:44] | Indexed property `target_kind` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:44] |
+`docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `ai` | property | Indexed property `ai` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:3-12] |
+| `citations_kept` | property | Indexed property `citations_kept` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:4] |
+| `citations_stripped` | property | Indexed property `citations_stripped` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:5] |
+| `error` | property | Indexed property `error` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:6] |
+| `fallback_sections` | property | Indexed property `fallback_sections` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:7] |
+| `model` | property | Indexed property `model` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:8] |
+| `requested_mode` | property | Indexed property `requested_mode` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:9] |
+| `route` | property | Indexed property `route` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:10] |
+| `status` | property | Indexed property `status` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:11] |
+| `article_path` | property | Indexed property `article_path` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:13] |
+| `command` | property | Indexed property `command` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:14] |
+| `daemon_synthesis_available` | property | Indexed property `daemon_synthesis_available` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:15] |
+| `handoff_id` | property | Indexed property `handoff_id` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:16] |
+| `index_path` | property | Indexed property `index_path` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:17] |
+| `outline` | property | Indexed property `outline` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:18] |
+| `page_writes` | property | Indexed property `page_writes` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:19-28] |
+| `kind` | property | Indexed property `kind` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:21] |
+| `path` | property | Indexed property `path` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:22] |
+| `kind` | property | Indexed property `kind` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:25] |
+| `path` | property | Indexed property `path` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:26] |
+| `prompt` | property | Indexed property `prompt` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:29-35] |
+| `daemon_synthesis_available` | property | Indexed property `daemon_synthesis_available` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:30] |
+| `system` | property | Indexed property `system` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:31] |
+| `tokens_estimated` | property | Indexed property `tokens_estimated` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:32] |
+| `truncated_sources` | property | Indexed property `truncated_sources` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:33] |
+| `user` | property | Indexed property `user` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:34] |
+| `scope` | property | Indexed property `scope` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:36-39] |
+| `id` | property | Indexed property `id` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:37] |
+| `kind` | property | Indexed property `kind` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:38] |
+| `source_paths` | property | Indexed property `source_paths` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:40-42] |
+| `status` | property | Indexed property `status` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:43] |
+| `target_kind` | property | Indexed property `target_kind` in `docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json`. [docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json:44] |
+

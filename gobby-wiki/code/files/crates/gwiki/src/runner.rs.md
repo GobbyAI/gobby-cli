@@ -3,30 +3,26 @@ title: crates/gwiki/src/runner.rs
 type: code_file
 provenance:
 - file: crates/gwiki/src/runner.rs
-  ranges:
-  - 7-9
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gwiki/src/runner.rs:7-9](crates/gwiki/src/runner.rs#L7-L9)
-
-</details>
-
 # crates/gwiki/src/runner.rs
 
 Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
-## Purpose
+## Overview
 
-Provides a thin public entry point for executing a parsed `gwiki` command. `run` simply forwards the `Command` to `commands::run` and returns its `CommandOutcome` or `WikiError`, so embedders use the same dispatch path as the CLI. [crates/gwiki/src/runner.rs:7-9]
+`crates/gwiki/src/runner.rs` exposes 1 indexed API symbol.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `run` | function | `pub fn run(command: Command) -> Result<CommandOutcome, WikiError> {` | `run [function]` | `b2e10e08-1c60-55dc-a672-6c3177316550` | 7-9 [crates/gwiki/src/runner.rs:7-9] | Indexed function `run` in `crates/gwiki/src/runner.rs`. [crates/gwiki/src/runner.rs:7-9] |
+`crates/gwiki/src/runner.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `run` | function | Indexed function `run` in `crates/gwiki/src/runner.rs`. [crates/gwiki/src/runner.rs:7-9] |
+

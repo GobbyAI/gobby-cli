@@ -3,28 +3,23 @@ title: crates/gcode/src/setup.rs
 type: code_file
 provenance:
 - file: crates/gcode/src/setup.rs
-  ranges:
-  - 1-16
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gcode/src/setup.rs:1-16](crates/gcode/src/setup.rs#L1-L16)
-
-</details>
-
 # crates/gcode/src/setup.rs
 
 Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
-## Purpose
+## Overview
 
-Defines the `gcode` setup module tree and re-exports the main standalone setup API, request/status types, and default schema constant for external use. [crates/gcode/src/setup.rs:1-16]
+`crates/gcode/src/setup.rs` has no indexed API symbols.
 
-## API Symbols
+## How it fits
+
+`crates/gcode/src/setup.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
 
 No indexed symbols.

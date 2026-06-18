@@ -3,28 +3,23 @@ title: crates/gcore/src/config/mod.rs
 type: code_file
 provenance:
 - file: crates/gcore/src/config/mod.rs
-  ranges:
-  - 1-31
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gcore/src/config/mod.rs:1-31](crates/gcore/src/config/mod.rs#L1-L31)
-
-</details>
-
 # crates/gcore/src/config/mod.rs
 
 Module: [[code/modules/crates/gcore/src/config|crates/gcore/src/config]]
 
-## Purpose
+## Overview
 
-Public configuration boundary for shared Gobby Rust crates, defining the `gobby_code` graph name and re-exporting configuration resolution and type contracts for AI, embedding, indexing, FalkorDB, and Qdrant settings, plus test-only environment locking and module tests. [crates/gcore/src/config/mod.rs:1-31]
+`crates/gcore/src/config/mod.rs` has no indexed API symbols.
 
-## API Symbols
+## How it fits
+
+`crates/gcore/src/config/mod.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
 
 No indexed symbols.

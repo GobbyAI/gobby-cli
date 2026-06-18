@@ -3,49 +3,33 @@ title: crates/gcode/src/index/parser/calls/ast.rs
 type: code_file
 provenance:
 - file: crates/gcode/src/index/parser/calls/ast.rs
-  ranges:
-  - 17-103
-  - 105-135
-  - 148-179
-  - 181-193
-  - 196-205
-  - 208-217
-  - 220-235
-  - 238-252
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gcode/src/index/parser/calls/ast.rs:17-103](crates/gcode/src/index/parser/calls/ast.rs#L17-L103), [crates/gcode/src/index/parser/calls/ast.rs:105-135](crates/gcode/src/index/parser/calls/ast.rs#L105-L135), [crates/gcode/src/index/parser/calls/ast.rs:148-179](crates/gcode/src/index/parser/calls/ast.rs#L148-L179), [crates/gcode/src/index/parser/calls/ast.rs:181-193](crates/gcode/src/index/parser/calls/ast.rs#L181-L193), [crates/gcode/src/index/parser/calls/ast.rs:196-205](crates/gcode/src/index/parser/calls/ast.rs#L196-L205), [crates/gcode/src/index/parser/calls/ast.rs:208-217](crates/gcode/src/index/parser/calls/ast.rs#L208-L217), [crates/gcode/src/index/parser/calls/ast.rs:220-235](crates/gcode/src/index/parser/calls/ast.rs#L220-L235), [crates/gcode/src/index/parser/calls/ast.rs:238-252](crates/gcode/src/index/parser/calls/ast.rs#L238-L252)
-
-</details>
-
 # crates/gcode/src/index/parser/calls/ast.rs
 
 Module: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 
-## Purpose
+## Overview
 
-This file extracts call relations from Tree-sitter AST queries for multiple languages and turns matched call sites into `CallRelation` records. `extract_ast_calls` is the main entry point: it compiles the language’s call query, walks query matches, finds the `name` and optional `call` captures, filters ignored names, handles language-specific special cases like Elixir definition heads, and then materializes each call with qualifier-path and semantic-resolution helpers; the JS-specific helpers and the small test cases exercise capture handling, qualifier splitting, and when bare or qualified names should be treated as member calls.
-[crates/gcode/src/index/parser/calls/ast.rs:17-103]
-[crates/gcode/src/index/parser/calls/ast.rs:105-135]
-[crates/gcode/src/index/parser/calls/ast.rs:148-179]
-[crates/gcode/src/index/parser/calls/ast.rs:181-193]
-[crates/gcode/src/index/parser/calls/ast.rs:196-205]
+`crates/gcode/src/index/parser/calls/ast.rs` exposes 8 indexed API symbols.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `extract_ast_calls` | function | `pub(super) fn extract_ast_calls(` | `extract_ast_calls [function]` | `bcaf8341-d7e2-526b-af67-326be6b04220` | 17-103 [crates/gcode/src/index/parser/calls/ast.rs:17-103] | Indexed function `extract_ast_calls` in `crates/gcode/src/index/parser/calls/ast.rs`. [crates/gcode/src/index/parser/calls/ast.rs:17-103] |
-| `is_elixir_definition_head_call` | function | `fn is_elixir_definition_head_call(language: &str, call_node: Node<'_>, source: &[u8]) -> bool {` | `is_elixir_definition_head_call [function]` | `586efd45-7dd8-5f7d-ade3-f785c9d9d9c8` | 105-135 [crates/gcode/src/index/parser/calls/ast.rs:105-135] | Indexed function `is_elixir_definition_head_call` in `crates/gcode/src/index/parser/calls/ast.rs`. [crates/gcode/src/index/parser/calls/ast.rs:105-135] |
-| `extract_js_calls` | function | `fn extract_js_calls(` | `extract_js_calls [function]` | `425ba4ef-1a13-5762-bac0-07e57d1d2709` | 148-179 [crates/gcode/src/index/parser/calls/ast.rs:148-179] | Indexed function `extract_js_calls` in `crates/gcode/src/index/parser/calls/ast.rs`. [crates/gcode/src/index/parser/calls/ast.rs:148-179] |
-| `js_bindings` | function | `fn js_bindings(import_text: &str) -> ImportBindings {` | `js_bindings [function]` | `4560361a-df66-5092-969a-7592746703a4` | 181-193 [crates/gcode/src/index/parser/calls/ast.rs:181-193] | Indexed function `js_bindings` in `crates/gcode/src/index/parser/calls/ast.rs`. [crates/gcode/src/index/parser/calls/ast.rs:181-193] |
-| `skips_matches_without_name_capture` | function | `fn skips_matches_without_name_capture() {` | `skips_matches_without_name_capture [function]` | `9e398a6c-c654-5983-a963-06daa7a9169c` | 196-205 [crates/gcode/src/index/parser/calls/ast.rs:196-205] | Indexed function `skips_matches_without_name_capture` in `crates/gcode/src/index/parser/calls/ast.rs`. [crates/gcode/src/index/parser/calls/ast.rs:196-205] |
-| `ignores_qualified_keyword_callee_after_split` | function | `fn ignores_qualified_keyword_callee_after_split() {` | `ignores_qualified_keyword_callee_after_split [function]` | `2146e6ac-ac69-5c87-8f97-04c4fb67ed5c` | 208-217 [crates/gcode/src/index/parser/calls/ast.rs:208-217] | Indexed function `ignores_qualified_keyword_callee_after_split` in `crates/gcode/src/index/parser/calls/ast.rs`. [crates/gcode/src/index/parser/calls/ast.rs:208-217] |
-| `member_call_uses_qualifier_path_from_call_node` | function | `fn member_call_uses_qualifier_path_from_call_node() {` | `member_call_uses_qualifier_path_from_call_node [function]` | `79b25384-0aab-5efe-b355-3dd11e8de21a` | 220-235 [crates/gcode/src/index/parser/calls/ast.rs:220-235] | Indexed function `member_call_uses_qualifier_path_from_call_node` in `crates/gcode/src/index/parser/calls/ast.rs`. [crates/gcode/src/index/parser/calls/ast.rs:220-235] |
-| `bare_detected_syntax_upgrades_to_member_when_qualified_name_is_captured` | function | `fn bare_detected_syntax_upgrades_to_member_when_qualified_name_is_captured() {` | `bare_detected_syntax_upgrades_to_member_when_qualified_name_is_captured [function]` | `aa7ddaad-72e7-5d12-a15e-7b8996db3fe8` | 238-252 [crates/gcode/src/index/parser/calls/ast.rs:238-252] | Indexed function `bare_detected_syntax_upgrades_to_member_when_qualified_name_is_captured` in `crates/gcode/src/index/parser/calls/ast.rs`. [crates/gcode/src/index/parser/calls/ast.rs:238-252] |
+`crates/gcode/src/index/parser/calls/ast.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `extract_ast_calls` | function | Runs the language-specific Tree-sitter call query over the parsed AST, extracts 'name'/'call' captures into 'CallRelation' values, and filters out ignored or non-call constructs such as definition heads before returning the collected call relations. [crates/gcode/src/index/parser/calls/ast.rs:17-103] |
+| `is_elixir_definition_head_call` | function | Returns 'true' only when the node is an Elixir 'call' that appears as the head of a 'def', 'defp', or 'defmacro' definition by walking up through 'arguments'/'binary_operator' parents and checking the enclosing call’s target keyword. [crates/gcode/src/index/parser/calls/ast.rs:105-135] |
+| `extract_js_calls` | function | Parses the given JavaScript source with tree-sitter, constructs a JavaScript language spec and call-extraction context, and returns the extracted 'CallRelation' values by delegating to 'extract_ast_calls'. [crates/gcode/src/index/parser/calls/ast.rs:148-179] |
+| `js_bindings` | function | Parses a JavaScript import statement from 'import_text' using a default 'ImportResolutionContext', stores the extracted imports via 'parse_import_statement', and returns the resulting 'ImportBindings'. [crates/gcode/src/index/parser/calls/ast.rs:181-193] |
+| `skips_matches_without_name_capture` | function | Verifies that 'extract_js_calls' returns no results for a JavaScript call expression when the query matches the callee but does not provide the expected name capture. [crates/gcode/src/index/parser/calls/ast.rs:196-205] |
+| `ignores_qualified_keyword_callee_after_split` | function | Verifies that 'extract_js_calls' returns no matches for the Dart snippet 'obj.await();' when the callee is a qualified keyword-like member expression, i.e. such calls are ignored after splitting. [crates/gcode/src/index/parser/calls/ast.rs:208-217] |
+| `member_call_uses_qualifier_path_from_call_node` | function | Verifies that a JavaScript member call like 'fs.readFile()' is extracted with the property name as 'callee_name', the correct source line, and the imported qualifier 'fs' recorded as an external module target. [crates/gcode/src/index/parser/calls/ast.rs:220-235] |
+| `bare_detected_syntax_upgrades_to_member_when_qualified_name_is_captured` | function | Verifies that when a JavaScript import binding captures the qualified name, a bare 'fs.readFile()' call is recognized as a single external member call with callee name 'readFile', target kind 'External', and external module 'fs'. [crates/gcode/src/index/parser/calls/ast.rs:238-252] |
+

@@ -245,3 +245,69 @@ _To be completed by #853E. Required lines:_
 - Guided tour reads as a tutorial (curated TOC, dependency-ordered chapters with Prev/Next chain).
 - `_meta/codewiki.json` `render_version: 4`.
 - Residual `missing_backlinks` itemized by source page (not dismissed).
+
+---
+
+## 6. Epic #871 closeout (Leaf 6 / #877) — verified-shape regen + after-metrics
+
+Supersedes §5 and the old #853E / #869 "regen-only" acceptance. This is the closeout of the
+umbrella epic **#871 — "Trustworthy code-intelligence surfaces"**, which shipped (Leaves 1–5):
+decomposed `concepts.rs`; a grounded codewiki **verify pass** (generate → verify → strip
+unsupported blocks); verified multi-section file/module **narrative rendering**; internal
+**citation re-anchoring** + a no-LLM repair routine; and **gcode contract v2** (daemon-consumed
+query surface + public `codewiki --repair-citations`), built and installed to `~/.gobby/bin/`.
+
+### Regen
+
+Installed binary `~/.gobby/bin/gcode` 1.2.0 (`contract_version: 2`, `--repair-citations` live)
+ran:
+
+```
+gcode codewiki --out gobby-wiki --ai off
+```
+
+Result: `files: 482, modules: 81, symbols: 9600, skipped: 0, ai_enabled: false`. Every page in
+`_meta/codewiki.json` is now **`render_version: 6`** (585/585 docs; the cache epoch bumped 3/4→6
+in Leaves 2–3 forces a full rewrite out of the legacy symbol-dump shape).
+
+### Page-shape assertions (whole vault)
+
+| Check | Result |
+| --- | --- |
+| File pages with ≥3 `## ` sections | **482/482** (min = 3: `Overview` / `How it fits` / `Key components`) |
+| `Component ID` occurrences | **0** files |
+| `API Symbols` symbol-table header | **0** files |
+| `<details>` on file pages | **0** |
+| `<details>` on module pages | **0** |
+| Module pages slimmed (range-free frontmatter, bounded `Overview`/diagrams/`Files`) | yes |
+| `_meta/codewiki.json` render_version | **6** (all docs) |
+
+The 20 residual `<details>` blocks are all on **aggregate** pages (`concepts/`, `narrative/`,
+`repo.md`, `_architecture`, `_hotspots`, `_onboarding`) and are the curated
+`<summary>Relevant source files</summary>` navigation aid — not the legacy per-symbol
+byte/line provenance dump that Leaf 3 removed from `render_file_doc`/`render_module_doc`.
+
+### `gwiki lint --project` deltas (before → after regen)
+
+| Metric | Before | After | Δ |
+| --- | --- | --- | --- |
+| `broken_links` | 0 | 0 | 0 |
+| `missing_backlinks` | 2297 | 1471 | **−826** |
+| `orphan_pages` | 13 | 5 | **−8** |
+| `missing_frontmatter` | 2 | 2 | 0 (pre-existing) |
+| `duplicate_aliases` | 0 | 0 | 0 |
+
+Broken links stay at zero; the new narrative shape cut missing backlinks by 826 and orphan pages
+by 8.
+
+### AI narrative + verify layer — deferred to nightly daemon regen (honest cost)
+
+This regen used `--ai off`, so the committed vault carries the deterministic structural body
+(multi-section shape, hub-`summary` Key-components purposes, range-free frontmatter) and the
+**verify pass did not run on it**. The grounded generate→verify pipeline itself is independently
+proven by the Leaf 2/3 unit tests (planted-unsupported-block stripping, each degradation path,
+standalone direct generate+verify) and the Leaf 5 contract/CLI acceptance. A cold full **AI-on**
+regen is intentionally deferred to the nightly daemon regen (linked gobby-cron task), per the
+epic's "Honest cost" note: with the serial `AiLimiter` (`max_concurrency = 1`) a full
+generate+verify pass is ~2 calls × 574 pages and is hours-scale — observed **67 s blocked on
+file 1 of 482** before switching to the deterministic structural regen for this closeout.

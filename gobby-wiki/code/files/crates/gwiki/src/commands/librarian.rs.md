@@ -3,30 +3,26 @@ title: crates/gwiki/src/commands/librarian.rs
 type: code_file
 provenance:
 - file: crates/gwiki/src/commands/librarian.rs
-  ranges:
-  - 3-11
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gwiki/src/commands/librarian.rs:3-11](crates/gwiki/src/commands/librarian.rs#L3-L11)
-
-</details>
-
 # crates/gwiki/src/commands/librarian.rs
 
 Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
-## Purpose
+## Overview
 
-Provides the `librarian` command entry point for the wiki CLI. It delegates to the shared analysis-command runner with the `"librarian"` label, the selected scope, the description `"serialize librarian proposals report"`, the default librarian options, and the librarian text renderer so the command analyzes the wiki data and renders the resulting report. [crates/gwiki/src/commands/librarian.rs:3-11]
+`crates/gwiki/src/commands/librarian.rs` exposes 1 indexed API symbol.
 
-## API Symbols
+## How it fits
 
-| Symbol | Kind | Signature | Component | Component ID | Lines | Purpose |
-| --- | --- | --- | --- | --- | --- | --- |
-| `execute` | function | `pub(crate) fn execute(selection: ScopeSelection) -> Result<CommandOutcome, WikiError> {` | `execute [function]` | `ce00f6fd-84c3-5e9b-940b-9e677acbac9c` | 3-11 [crates/gwiki/src/commands/librarian.rs:3-11] | Indexed function `execute` in `crates/gwiki/src/commands/librarian.rs`. [crates/gwiki/src/commands/librarian.rs:3-11] |
+`crates/gwiki/src/commands/librarian.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
+
+| Symbol | Kind | Purpose |
+| --- | --- | --- |
+| `execute` | function | Dispatches the 'librarian' analysis command for the selected scope using default 'librarian::Options', then renders the result as text via 'librarian::render_text' and returns the resulting 'CommandOutcome' or 'WikiError'. [crates/gwiki/src/commands/librarian.rs:3-11] |
+

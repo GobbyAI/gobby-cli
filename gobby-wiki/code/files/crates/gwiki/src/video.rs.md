@@ -3,28 +3,23 @@ title: crates/gwiki/src/video.rs
 type: code_file
 provenance:
 - file: crates/gwiki/src/video.rs
-  ranges:
-  - 1-16
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
 ---
 
-<details>
-<summary>Relevant source files</summary>
-
-- [crates/gwiki/src/video.rs:1-16](crates/gwiki/src/video.rs#L1-L16)
-
-</details>
-
 # crates/gwiki/src/video.rs
 
 Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
-## Purpose
+## Overview
 
-Defines the `gwiki` video module by wiring together submodules for alignment, markdown generation, sampling, timestamps, types, and writing, and re-exporting the main video markdown and frame-sampling APIs plus the core video data types. [crates/gwiki/src/video.rs:1-16]
+`crates/gwiki/src/video.rs` has no indexed API symbols.
 
-## API Symbols
+## How it fits
+
+`crates/gwiki/src/video.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+
+## Key components
 
 No indexed symbols.
