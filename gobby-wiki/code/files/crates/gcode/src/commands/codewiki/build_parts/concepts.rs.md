@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/build_parts/concepts.rs
@@ -14,11 +17,20 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gco
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/build_parts/concepts.rs` exposes 6 indexed API symbols.
+This file serves as the coordinator for building curated conceptual and navigation documentation within the Codewiki build pipeline. It is responsible for orchestrating high-level overview documentation and guided tours, ensuring they remain digestible and structurally bounded.
+
+A primary role of this file is to define structural constraints for curated documentation. It defines constants that cap the number of narrative chapters and limit list lengths, such as the maximum number of key components and source file links. These constraints prevent verbose automated outputs from overwhelming the final user-facing documentation structure.
 
 ## How it fits
 
-`crates/gcode/src/commands/codewiki/build_parts/concepts.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file represents a key module entry point, delegating specific processing tasks to its path-declared submodules including plan, render, spans, support, and types. It integrates directly with the broader Codewiki build system by consuming arrays of FileDoc and ModuleDoc structures.
+
+During the documentation generation flow, the build process extracts all input spans to evaluate document freshness. If the reuse planner confirms that source spans are unchanged, previously compiled markdown pages under the concepts and narrative paths are returned directly, saving translation and processing overhead.
+[crates/gcode/src/commands/codewiki/build_parts/concepts.rs:35-85]
+[crates/gcode/src/commands/codewiki/build_parts/concepts.rs:93-110]
+[crates/gcode/src/commands/codewiki/build_parts/concepts.rs:113-124]
+[crates/gcode/src/commands/codewiki/build_parts/concepts.rs:127-137]
+[crates/gcode/src/commands/codewiki/build_parts/concepts.rs:140-152]
 
 ## Key components
 

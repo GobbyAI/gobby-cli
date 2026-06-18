@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/progress.rs
@@ -14,11 +17,18 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/progress.rs` exposes 7 indexed API symbols.
+The file `crates/gcode/src/commands/codewiki/progress.rs` provides a lightweight, unified mechanism for tracking and outputting progress messages during the execution of `codewiki` operations. It encapsulates the destination of these messages, decoupling the core logic of the command from the specific output medium.
+
+At its core, the file defines the `CodewikiProgress` struct crates/gcode/src/commands/codewiki/progress.rs:10-12, which acts as a crate-visible wrapper around a progress sink. By providing a clean interface for emitting progress updates, it allows downstream operations to report status updates without managing stream handling directly.
 
 ## How it fits
 
-`crates/gcode/src/commands/codewiki/progress.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+Depending on configuration, the execution pipeline can instantiate a silent sink via `silent` crates/gcode/src/commands/codewiki/progress.rs:15-19 or route outputs to standard error via `stderr` crates/gcode/src/commands/codewiki/progress.rs:21-29. In testing environments, the flow captures progress lines into a list via `capture` crates/gcode/src/commands/codewiki/progress.rs:32-36, which can then be extracted using `into_lines` crates/gcode/src/commands/codewiki/progress.rs:49-54 to verify the sequence of emitted events.
+[crates/gcode/src/commands/codewiki/progress.rs:2-7]
+[crates/gcode/src/commands/codewiki/progress.rs:10-12]
+[crates/gcode/src/commands/codewiki/progress.rs:15-19]
+[crates/gcode/src/commands/codewiki/progress.rs:21-29]
+[crates/gcode/src/commands/codewiki/progress.rs:32-36]
 
 ## Key components
 

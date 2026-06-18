@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/build_parts/changes.rs
@@ -14,11 +17,18 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gco
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/build_parts/changes.rs` exposes 5 indexed API symbols.
+The `crates/gcode/src/commands/codewiki/build_parts/changes.rs` file is responsible for generating structured Markdown change reports that document modifications between codebase index snapshots. It provides developers and automated systems with a clear mechanism to trace files and symbols that have been introduced, modified, or removed across different versions of the codebase index.
+
+At the core of this file is the `build_codewiki_changes_doc` function in `crates/gcode/src/commands/codewiki/build_parts/changes.rs:5-101`. This function acts as the generator for the change report, accepting current and optional previous snapshot states to determine changes in files, symbols, and dependency graph neighborhoods. If no previous index snapshot exists, the file gracefully generates a baseline report indicating that this is the initial snapshot.
 
 ## How it fits
 
-`crates/gcode/src/commands/codewiki/build_parts/changes.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+The main data flow starts with `build_codewiki_changes_doc` in `crates/gcode/src/commands/codewiki/build_parts/changes.rs:5-101`, which compares the keys of the file and symbol maps of the previous and current snapshots. It computes sets of added, removed, and modified files by cross-referencing keys and comparing content hashes.
+[crates/gcode/src/commands/codewiki/build_parts/changes.rs:5-101]
+[crates/gcode/src/commands/codewiki/build_parts/changes.rs:104-113]
+[crates/gcode/src/commands/codewiki/build_parts/changes.rs:115-138]
+[crates/gcode/src/commands/codewiki/build_parts/changes.rs:140-156]
+[crates/gcode/src/commands/codewiki/build_parts/changes.rs:158-163]
 
 ## Key components
 

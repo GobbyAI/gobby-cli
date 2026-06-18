@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/text/verify.rs
@@ -14,11 +17,18 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/text|crates/gcode/src/
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/text/verify.rs` exposes 16 indexed API symbols.
+This file implements a grounded verification pass for generated codewiki narrative text crates/gcode/src/commands/codewiki/text/verify.rs:1-10. Since AI-generated prose can drift from original sources, this module performs an optional second-pass validation over the generated page body crates/gcode/src/commands/codewiki/text/verify.rs:3-5. It splits the prose into deterministic numbered blocks, queries a verifier to identify unsupported blocks, and strips those blocks from the final output crates/gcode/src/commands/codewiki/text/verify.rs:5-7.
+
+Crucially, the verifier only returns block IDs rather than rewriting prose, which ensures that hallucinations are never introduced into the final page crates/gcode/src/commands/codewiki/text/verify.rs:7-8. By keeping the deterministic block splitting, response parsing, and stripping logic separate from any external AI model dependency, the system maintains a fully unit-testable and predictable pipeline crates/gcode/src/commands/codewiki/text/verify.rs:8-10.
 
 ## How it fits
 
-`crates/gcode/src/commands/codewiki/text/verify.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+The logic inside this file is built around the `verify_and_strip` function crates/gcode/src/commands/codewiki/text/verify.rs:36-71, which integrates with the wider `codewiki` module. It accepts an optional `TextVerifier` closure crates/gcode/src/commands/codewiki/text/verify.rs:36-37 and a slice of `SourceExcerpt` items crates/gcode/src/commands/codewiki/text/verify.rs:38 to run its verification pass. The function returns a `VerifyOutcome` enum crates/gcode/src/commands/codewiki/text/verify.rs:16-28 representing the result of the pass: `Skipped` crates/gcode/src/commands/codewiki/text/verify.rs:17-18, `Verified` crates/gcode/src/commands/codewiki/text/verify.rs:19-23, or `Unusable` crates/gcode/src/commands/codewiki/text/verify.rs:24-27.
+[crates/gcode/src/commands/codewiki/text/verify.rs:16-28]
+[crates/gcode/src/commands/codewiki/text/verify.rs:36-71]
+[crates/gcode/src/commands/codewiki/text/verify.rs:76-82]
+[crates/gcode/src/commands/codewiki/text/verify.rs:88-100]
+[crates/gcode/src/commands/codewiki/text/verify.rs:104-112]
 
 ## Key components
 

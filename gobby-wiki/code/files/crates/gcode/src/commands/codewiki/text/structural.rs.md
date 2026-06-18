@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/text/structural.rs
@@ -14,11 +17,18 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/text|crates/gcode/src/
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/text/structural.rs` exposes 7 indexed API symbols.
+For symbols, `structural_symbol_purpose` at crates/gcode/src/commands/codewiki/text/structural.rs:7-22 attempts to retrieve a non-empty summary or docstring. If neither is available, it generates a standard fallback index description that identifies the symbol kind, qualified name, and source file path. Similarly, file, module, and repository structures are described using pluralized counts and descriptive labels through `structural_file_summary` at crates/gcode/src/commands/codewiki/text/structural.rs:24-33, `structural_module_summary` at crates/gcode/src/commands/codewiki/text/structural.rs:43-55, and `structural_repo_summary` at crates/gcode/src/commands/codewiki/text/structural.rs:57-63.
+
+Additionally, the module assists with formatting layout and organizing source references. The function `write_section` at crates/gcode/src/commands/codewiki/text/structural.rs:65-67 appends properly spaced Markdown H2 sections to a document, while `collect_link_spans` at crates/gcode/src/commands/codewiki/text/structural.rs:69-78 processes and consolidates related source file and module spans into a sorted, unique collection.
 
 ## How it fits
 
-`crates/gcode/src/commands/codewiki/text/structural.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+A key workflow optimization is implemented in `display_child_summary` at crates/gcode/src/commands/codewiki/text/structural.rs:38-41. It uses `structural_file_summary` to filter out generic "no-symbol" filler text, returning `None` instead of standard stubs. This ensures index pages list file links cleanly without cluttering the final output with redundant placeholders.
+[crates/gcode/src/commands/codewiki/text/structural.rs:7-22]
+[crates/gcode/src/commands/codewiki/text/structural.rs:24-33]
+[crates/gcode/src/commands/codewiki/text/structural.rs:38-41]
+[crates/gcode/src/commands/codewiki/text/structural.rs:43-55]
+[crates/gcode/src/commands/codewiki/text/structural.rs:57-63]
 
 ## Key components
 

@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs
@@ -14,11 +17,12 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts/concepts|c
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs` exposes 9 indexed API symbols.
-
 ## How it fits
-
-`crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:12-138]
+[crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:141-143]
+[crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:145-191]
+[crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:193-218]
+[crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:220-263]
 
 ## Key components
 

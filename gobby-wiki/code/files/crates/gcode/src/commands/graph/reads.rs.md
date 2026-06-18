@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/graph/reads.rs
@@ -14,11 +17,12 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-`crates/gcode/src/commands/graph/reads.rs` exposes 42 indexed API symbols.
-
 ## How it fits
-
-`crates/gcode/src/commands/graph/reads.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/commands/graph/reads.rs:19-25]
+[crates/gcode/src/commands/graph/reads.rs:27-35]
+[crates/gcode/src/commands/graph/reads.rs:37-43]
+[crates/gcode/src/commands/graph/reads.rs:45-49]
+[crates/gcode/src/commands/graph/reads.rs:51-59]
 
 ## Key components
 

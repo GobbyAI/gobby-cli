@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/assets/import_roots/ruby_require_roots.json
@@ -14,11 +17,12 @@ Module: [[code/modules/crates/gcode/assets/import_roots|crates/gcode/assets/impo
 
 ## Overview
 
-`crates/gcode/assets/import_roots/ruby_require_roots.json` exposes 10 indexed API symbols.
-
 ## How it fits
-
-`crates/gcode/assets/import_roots/ruby_require_roots.json` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/assets/import_roots/ruby_require_roots.json:2]
+[crates/gcode/assets/import_roots/ruby_require_roots.json:3]
+[crates/gcode/assets/import_roots/ruby_require_roots.json:4]
+[crates/gcode/assets/import_roots/ruby_require_roots.json:5]
+[crates/gcode/assets/import_roots/ruby_require_roots.json:6]
 
 ## Key components
 

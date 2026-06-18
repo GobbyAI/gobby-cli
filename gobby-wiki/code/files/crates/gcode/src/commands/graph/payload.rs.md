@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/graph/payload.rs
@@ -14,11 +17,22 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-`crates/gcode/src/commands/graph/payload.rs` exposes 8 indexed API symbols.
+The file crates/gcode/src/commands/graph/payload.rs orchestrates and formats graph-related command outputs for the gcode CLI tool. Its main role is to fetch code graph structures and render them into human-readable text or structured JSON payloads.
+
+This file acts as the primary presentation layer for various graph operations, transforming raw node and link details into clean, structured results. It ensures a consistent user interface when visualizing project structures, file dependencies, neighboring symbols, or the potential blast radius of a change.
 
 ## How it fits
 
-`crates/gcode/src/commands/graph/payload.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file sits directly between high-level command handlers and the lower-level graph generation engine. It processes requests, communicates with graph-building functions, and routes the outputs to output rendering utility functions.
+
+The resulting payloads are processed by print_graph_payload in crates/gcode/src/commands/graph/payload.rs:39-44, which routes JSON formatting directly to output::print_json. For text formats, it relies on format_graph_payload_text in crates/gcode/src/commands/graph/payload.rs:6-37 to generate a detailed summary showing nodes, types, file paths, and directional links, which is then printed using output::print_text.
+
+Additionally, the report function in crates/gcode/src/commands/graph/payload.rs:50-59 handles markdown report generation. It prints the raw JSON structure for JSON requests, or uses format_report_text in crates/gcode/src/commands/graph/payload.rs:46-48 to extract the markdown text and output it as standard terminal text.
+[crates/gcode/src/commands/graph/payload.rs:6-37]
+[crates/gcode/src/commands/graph/payload.rs:39-44]
+[crates/gcode/src/commands/graph/payload.rs:46-48]
+[crates/gcode/src/commands/graph/payload.rs:50-59]
+[crates/gcode/src/commands/graph/payload.rs:61-64]
 
 ## Key components
 

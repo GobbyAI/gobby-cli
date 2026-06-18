@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/ownership/analysis.rs
@@ -14,11 +17,18 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/ownership/analysis.rs` exposes 12 indexed API symbols.
+This source file provides the implementation details for analyzing file ownership in a Git repository by executing and parsing `git blame` results. It serves as an analysis engine that aggregates contribution metrics, attributing line changes to individual contributors and caching the outcomes to optimize performance.
+
+At the core of the file is the `derived_owners_for_files` function crates/gcode/src/commands/codewiki/ownership/analysis.rs:23-87, which coordinates the overall analysis process. This function resolves the Git repository, checks file content hashes to utilize cached results, and enforces global blame timeouts and cap limits to avoid expensive processes on oversized tasks.
 
 ## How it fits
 
-`crates/gcode/src/commands/codewiki/ownership/analysis.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+It relies on types defined in its parent module, such as `CachedBlameSummary`, `OwnershipContributor`, `OwnershipMeta`, `OwnershipOptions`, and `OwnershipStatus` crates/gcode/src/commands/codewiki/ownership/analysis.rs:11-14. During execution, it modifies the provided `OwnershipMeta` to insert freshly computed file summaries crates/gcode/src/commands/codewiki/ownership/analysis.rs:23-87, ensuring that subsequent requests do not re-run git commands for unchanged files.
+[crates/gcode/src/commands/codewiki/ownership/analysis.rs:17-21]
+[crates/gcode/src/commands/codewiki/ownership/analysis.rs:23-87]
+[crates/gcode/src/commands/codewiki/ownership/analysis.rs:89-91]
+[crates/gcode/src/commands/codewiki/ownership/analysis.rs:93-104]
+[crates/gcode/src/commands/codewiki/ownership/analysis.rs:106-110]
 
 ## Key components
 

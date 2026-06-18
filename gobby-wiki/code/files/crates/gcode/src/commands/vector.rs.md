@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/vector.rs
@@ -14,11 +17,12 @@ Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Overview
 
-`crates/gcode/src/commands/vector.rs` exposes 17 indexed API symbols.
-
 ## How it fits
-
-`crates/gcode/src/commands/vector.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/commands/vector.rs:16-22]
+[crates/gcode/src/commands/vector.rs:24-28]
+[crates/gcode/src/commands/vector.rs:30-45]
+[crates/gcode/src/commands/vector.rs:47-77]
+[crates/gcode/src/commands/vector.rs:79-131]
 
 ## Key components
 

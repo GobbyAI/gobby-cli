@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/text/sanitize.rs
@@ -14,11 +17,14 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/text|crates/gcode/src/
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/text/sanitize.rs` exposes 27 indexed API symbols.
-
 ## How it fits
 
-`crates/gcode/src/commands/codewiki/text/sanitize.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+Another major capability is neutralize_symbol_purpose_links, located at crates/gcode/src/commands/codewiki/text/sanitize.rs:12-17. It renders links inert by converting them to code spans using replacement_for_range (crates/gcode/src/commands/codewiki/text/sanitize.rs:64-69) and Replacement (crates/gcode/src/commands/codewiki/text/sanitize.rs:111-114). It coordinates markdown_link_replacements (crates/gcode/src/commands/codewiki/text/sanitize.rs:19-27) and wikilink_replacements (crates/gcode/src/commands/codewiki/text/sanitize.rs:39-62) while ensuring code blocks are untouched by checking markdown_code_ranges (crates/gcode/src/commands/codewiki/text/sanitize.rs:29-37) with helper functions like range_contains (crates/gcode/src/commands/codewiki/text/sanitize.rs:71-75) and range_overlaps (crates/gcode/src/commands/codewiki/text/sanitize.rs:77-81).
+[crates/gcode/src/commands/codewiki/text/sanitize.rs:7-10]
+[crates/gcode/src/commands/codewiki/text/sanitize.rs:12-17]
+[crates/gcode/src/commands/codewiki/text/sanitize.rs:19-27]
+[crates/gcode/src/commands/codewiki/text/sanitize.rs:29-37]
+[crates/gcode/src/commands/codewiki/text/sanitize.rs:39-62]
 
 ## Key components
 

@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/build_parts/concepts/spans.rs
@@ -14,11 +17,14 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts/concepts|c
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/build_parts/concepts/spans.rs` exposes 3 indexed API symbols.
-
 ## How it fits
 
-`crates/gcode/src/commands/codewiki/build_parts/concepts/spans.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file serves as a functional helper within the broader concepts-building phase of the documentation generation process. It links logical pages and conceptual models back to physical source locations by interacting with mapped document structures.
+
+The `all_input_spans` function in crates/gcode/src/commands/codewiki/build_parts/concepts/spans.rs:4-13 aggregates source spans directly from pre-resolved slices of file and module documentation objects. This serves scenarios where the documents are already loaded.
+[crates/gcode/src/commands/codewiki/build_parts/concepts/spans.rs:4-13]
+[crates/gcode/src/commands/codewiki/build_parts/concepts/spans.rs:15-42]
+[crates/gcode/src/commands/codewiki/build_parts/concepts/spans.rs:44-62]
 
 ## Key components
 

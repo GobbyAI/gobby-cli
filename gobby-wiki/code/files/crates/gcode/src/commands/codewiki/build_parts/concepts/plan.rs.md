@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs
@@ -13,12 +16,12 @@ freshness: indexed
 Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts/concepts|crates/gcode/src/commands/codewiki/build_parts/concepts]]
 
 ## Overview
-
-`crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs` exposes 8 indexed API symbols.
-
-## How it fits
-
-`crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file, crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs, is responsible for planning and structuring the navigation layers of a code wiki. It orchestrates the curation of concepts, sections, and narrative pages that together build a high-level guide over an existing codebase reference.
+[crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs:10-24]
+[crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs:26-58]
+[crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs:60-69]
+[crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs:71-154]
+[crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs:156-197]
 
 ## Key components
 

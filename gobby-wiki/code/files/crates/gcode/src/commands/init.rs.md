@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/init.rs
@@ -13,12 +16,11 @@ freshness: indexed
 Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Overview
+The `crates/gcode/src/commands/init.rs` file manages the initialization process for a codebase. Its primary role is to establish a verified project identity and prepare the repository environment for search and query capabilities.
 
-`crates/gcode/src/commands/init.rs` exposes 1 indexed API symbol.
+For self-managed environments, the process integrates with `crate::skill` to install CLI extension targets in `crates/gcode/src/commands/init.rs:31-52`. This allows AI assistant capabilities to be deployed directly into the workspace.
 
-## How it fits
-
-`crates/gcode/src/commands/init.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+Finally, the command connects with `crate::db` to retrieve the active database URL in `crates/gcode/src/commands/init.rs:57`. It packages these references into an indexing context defined in `crates/gcode/src/commands/init.rs:58-67`, feeding configuration state directly into the auto-indexing pipeline. [crates/gcode/src/commands/init.rs:11-148]
 
 ## Key components
 

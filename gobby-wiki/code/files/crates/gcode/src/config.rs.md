@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/config.rs
@@ -14,11 +17,9 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-`crates/gcode/src/config.rs` has no indexed API symbols.
+This module incorporates submodules for handling configuration context and services at crates/gcode/src/config.rs:3-4. It also manages its own unit testing suite by conditionally including a tests module at crates/gcode/src/config.rs:6-7.
 
-## How it fits
-
-`crates/gcode/src/config.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+## How it fits [crates/gcode/src/config.rs:1-25]
 
 ## Key components
 

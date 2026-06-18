@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/render/pages.rs
@@ -14,11 +17,11 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/render|crates/gcode/sr
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/render/pages.rs` exposes 2 indexed API symbols.
+The function `render_module_doc` crates/gcode/src/commands/codewiki/render/pages.rs:6-68 constructs the Markdown representation of a module. It formats frontmatter, establishes parent navigation links, includes overview narratives, and lists nested child modules or files in table formats. It also conditionally embeds dependency and call diagrams based on graph availability crates/gcode/src/commands/codewiki/render/pages.rs:24-44.
 
 ## How it fits
-
-`crates/gcode/src/commands/codewiki/render/pages.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/commands/codewiki/render/pages.rs:6-68]
+[crates/gcode/src/commands/codewiki/render/pages.rs:70-111]
 
 ## Key components
 

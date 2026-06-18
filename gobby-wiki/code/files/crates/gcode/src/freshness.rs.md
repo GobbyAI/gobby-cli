@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/freshness.rs
@@ -14,11 +17,18 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-`crates/gcode/src/freshness.rs` exposes 22 indexed API symbols.
+The freshness.rs file manages the freshness and synchronization state of the project's code index. It determines whether files on disk have changed relative to the database index and orchestrates necessary updates, ensuring that developers query up-to-date symbol information.
+
+At its core, the file defines the FreshnessScope enum crates/gcode/src/freshness.rs:13-16, which dictates whether freshness validation applies globally to the entire project or selectively to a list of specific files. It returns a FreshnessStatus crates/gcode/src/freshness.rs:19-22 to indicate whether the index was validated successfully or if the update was skipped because the indexer was busy elsewhere.
+
+The entry point for this logic is ensure_fresh crates/gcode/src/freshness.rs:24-83. This function acts as a smart guard that short-circuits execution if a freshness check is already active in the current process, or if the project has not changed since the last indexing run. If changes are detected, it acquires a project lock and triggers a reindexing operation.
 
 ## How it fits
-
-`crates/gcode/src/freshness.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/freshness.rs:13-16]
+[crates/gcode/src/freshness.rs:19-22]
+[crates/gcode/src/freshness.rs:24-83]
+[crates/gcode/src/freshness.rs:93-121]
+[crates/gcode/src/freshness.rs:123-144]
 
 ## Key components
 

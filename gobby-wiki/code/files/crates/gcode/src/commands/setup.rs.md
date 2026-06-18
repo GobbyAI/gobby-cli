@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/setup.rs
@@ -14,11 +17,16 @@ Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Overview
 
-`crates/gcode/src/commands/setup.rs` exposes 18 indexed API symbols.
+This file manages the initialization and provisioning of the standalone setup environment for the `gcode` tool. It provides the main command routine to orchestrate backend services, manage database connections, handle projections, and generate configurations needed for local operation.
+
+The central orchestration is performed by the `run` function crates/gcode/src/commands/setup.rs:23-95. It validates incoming user requests, manages backing services like PostgreSQL and optional Docker containers, and handles execution reporting, failing gracefully when necessary.
 
 ## How it fits
-
-`crates/gcode/src/commands/setup.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/commands/setup.rs:23-95]
+[crates/gcode/src/commands/setup.rs:97-100]
+[crates/gcode/src/commands/setup.rs:102-118]
+[crates/gcode/src/commands/setup.rs:120-166]
+[crates/gcode/src/commands/setup.rs:168-187]
 
 ## Key components
 

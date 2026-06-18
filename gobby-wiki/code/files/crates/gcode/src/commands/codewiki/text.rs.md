@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/text.rs
@@ -14,11 +17,12 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/text.rs` exposes 17 indexed API symbols.
-
 ## How it fits
-
-`crates/gcode/src/commands/codewiki/text.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/commands/codewiki/text.rs:51-57]
+[crates/gcode/src/commands/codewiki/text.rs:60-79]
+[crates/gcode/src/commands/codewiki/text.rs:82-102]
+[crates/gcode/src/commands/codewiki/text.rs:105-117]
+[crates/gcode/src/commands/codewiki/text.rs:120-133]
 
 ## Key components
 

@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/build_parts/architecture.rs
@@ -14,11 +17,16 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gco
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/build_parts/architecture.rs` exposes 3 indexed API symbols.
+This file is responsible for constructing high-level architectural documentation for a codebase in the form of an ArchitectureDoc. It analyzes files, modules, and dependency relationships to map out how the system is organized.
+
+The main driver in this file is build_architecture_doc crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-169. It groups files into logical subsystems, compiles subsystem-level summaries, and tracks the availability of dependency graph data, flagging the documentation as degraded if graph data is truncated or unavailable.
 
 ## How it fits
 
-`crates/gcode/src/commands/codewiki/build_parts/architecture.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file is a key component of the codewiki documentation-generation engine. It takes raw file listings, module definitions, and dependency edges, and refines them into a structured representation of the system layout and hierarchy.
+[crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-169]
+[crates/gcode/src/commands/codewiki/build_parts/architecture.rs:175-190]
+[crates/gcode/src/commands/codewiki/build_parts/architecture.rs:193-243]
 
 ## Key components
 

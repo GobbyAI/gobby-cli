@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/build_parts/concepts/types.rs
@@ -13,12 +16,13 @@ freshness: indexed
 Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts/concepts|crates/gcode/src/commands/codewiki/build_parts/concepts]]
 
 ## Overview
+The types.rs file defines the core, deserializable data structures used to build and model the conceptual navigation and content framework for a code wiki. It serves as the primary schema definition file for parsing raw, structural metadata and managing the subsequent state of narrative components and concept layouts.
 
-`crates/gcode/src/commands/codewiki/build_parts/concepts/types.rs` exposes 4 indexed API symbols.
+The top-level container, `CuratedNavigationPlan` [crates/gcode/src/commands/codewiki/build_parts/concepts/types.rs:4-11], aggregates multiple curated collections of content. These collections include structured modules, sections, and individual pages, allowing the system to represent the broader navigational map of the code wiki.
 
-## How it fits
+Within this plan, `ConceptSection` [crates/gcode/src/commands/codewiki/build_parts/concepts/types.rs:36-42] organizes concepts into logical groups with summaries and associated lists. The actual documentation pages are represented by `ConceptModule` [crates/gcode/src/commands/codewiki/build_parts/concepts/types.rs:14-33] and `NarrativePage` [crates/gcode/src/commands/codewiki/build_parts/concepts/types.rs:45-63]. Both track target files, related code modules, and summary information.
 
-`crates/gcode/src/commands/codewiki/build_parts/concepts/types.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+During the initial structure-pass parsing, structures like `ConceptModule` [crates/gcode/src/commands/codewiki/build_parts/concepts/types.rs:14-33] and `NarrativePage` [crates/gcode/src/commands/codewiki/build_parts/concepts/types.rs:45-63] use Serde attributes to skip fields like `body` and `body_degraded`. This design prevents external configuration from perturbing or overriding the actual content generation phase.
 
 ## Key components
 

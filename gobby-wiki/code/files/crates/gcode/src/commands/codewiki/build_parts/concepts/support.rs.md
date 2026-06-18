@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs
@@ -14,11 +17,16 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts/concepts|c
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs` exposes 6 indexed API symbols.
+This support file provides a collection of utility functions designed to format, clean, and path-map strings for the codewiki concept and narrative document generation system. It acts as a standardized text processing layer, ensuring uniform casing, path formatting, and slug conversion across the generated Wiki pages.
+
+The primary responsibilities of this file include producing standard titles from module paths, transforming arbitrary text into clean lowercase URL-safe slugs, and resolving the correct repository-relative paths for generated markdown documents. It also provides a helper to handle degraded source states.
 
 ## How it fits
-
-`crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs:1-7]
+[crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs:9-25]
+[crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs:27-29]
+[crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs:31-33]
+[crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs:35-37]
 
 ## Key components
 

@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/build_parts/file.rs
@@ -13,12 +16,10 @@ freshness: indexed
 Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gcode/src/commands/codewiki/build_parts]]
 
 ## Overview
-
-`crates/gcode/src/commands/codewiki/build_parts/file.rs` exposes 5 indexed API symbols.
+This file is responsible for constructing comprehensive documentation models for individual source files, orchestrating the creation of both file-level and symbol-level summaries. Through the main entry point build_file_doc, the module manages the lifecycle of generating a FileDoc by coordinating progress tracking, cache reuse, and natural language generation according to configured AI depths [crates/gcode/src/commands/codewiki/build_parts/file.rs:19-162].
 
 ## How it fits
-
-`crates/gcode/src/commands/codewiki/build_parts/file.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file acts as a critical intermediate pipeline step within the larger codewiki command execution. It receives inputs including a file's path, parent module details, extracted symbols, and generator or verifier interfaces [crates/gcode/src/commands/codewiki/build_parts/file.rs:19-162]. It relies on FileDocPosition to track and report its 1-based indexing progress relative to the overall build task [crates/gcode/src/commands/codewiki/build_parts/file.rs:13-16].
 
 ## Key components
 

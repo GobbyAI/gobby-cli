@@ -6,19 +6,24 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/graph.rs
 
 Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/commands/codewiki]]
 
-## Overview
-
-`crates/gcode/src/commands/codewiki/graph.rs` exposes 5 indexed API symbols.
+The primary entry point is `fetch_codewiki_graph_edges` crates/gcode/src/commands/codewiki/graph.rs:5-110, which orchestrates the retrieval of graph data for core files. If FalkorDB is unconfigured, or if connection or queries fail, it gracefully falls back to returning an unavailable graph state. It also ensures that the returned graph is conservatively marked as truncated if the number of returned records reaches the designated limit.
 
 ## How it fits
-
-`crates/gcode/src/commands/codewiki/graph.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file lives within the `codewiki` command module, acting as the data retrieval layer that interfaces directly with FalkorDB to pull structural relationships. It relies on FalkorDB configuration provided via the `Context` and is designed to handle query execution robustly.
+[crates/gcode/src/commands/codewiki/graph.rs:5-110]
+[crates/gcode/src/commands/codewiki/graph.rs:35-50]
+[crates/gcode/src/commands/codewiki/graph.rs:114-143]
+[crates/gcode/src/commands/codewiki/graph.rs:149-164]
+[crates/gcode/src/commands/codewiki/graph.rs:166-181]
 
 ## Key components
 

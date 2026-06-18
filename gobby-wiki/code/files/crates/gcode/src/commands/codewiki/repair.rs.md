@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/repair.rs
@@ -14,11 +17,16 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/repair.rs` exposes 7 indexed API symbols.
+The file crates/gcode/src/commands/codewiki/repair.rs provides a deterministic, no-LLM citation repair routine that re-anchors `[file:line]` citations within a generated vault back to the codebase's current index. When source files drift over time, updating these citations is a cheaper alternative to fully regenerating pages. The system accomplishes this by mapping the stale citations of a documented page directly to their corresponding symbols' updated locations in the codebase.
+
+The module contains two primary structures to manage this process. The IndexCitationResolver at crates/gcode/src/commands/codewiki/repair.rs:40-51 serves as the bridge between old snapshot anchors and current symbol spans. To summarize the outcomes of a repair operation, the CitationRepairSummary at crates/gcode/src/commands/codewiki/repair.rs:21-31 tracks metrics such as the number of pages scanned, pages and individual citations repaired in place, and any stale citations left unresolved due to missing symbols.
 
 ## How it fits
-
-`crates/gcode/src/commands/codewiki/repair.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/commands/codewiki/repair.rs:21-31]
+[crates/gcode/src/commands/codewiki/repair.rs:40-51]
+[crates/gcode/src/commands/codewiki/repair.rs:56-97]
+[crates/gcode/src/commands/codewiki/repair.rs:101-107]
+[crates/gcode/src/commands/codewiki/repair.rs:109-114]
 
 ## Key components
 

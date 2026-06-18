@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/io.rs
@@ -14,11 +17,12 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/io.rs` exposes 31 indexed API symbols.
-
 ## How it fits
-
-`crates/gcode/src/commands/codewiki/io.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/commands/codewiki/io.rs:3-9]
+[crates/gcode/src/commands/codewiki/io.rs:11-28]
+[crates/gcode/src/commands/codewiki/io.rs:30-43]
+[crates/gcode/src/commands/codewiki/io.rs:46-48]
+[crates/gcode/src/commands/codewiki/io.rs:51-53]
 
 ## Key components
 

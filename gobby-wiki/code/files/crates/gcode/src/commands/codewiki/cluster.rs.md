@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/cluster.rs
@@ -14,11 +17,12 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/cluster.rs` exposes 18 indexed API symbols.
-
 ## How it fits
-
-`crates/gcode/src/commands/codewiki/cluster.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/commands/codewiki/cluster.rs:8-43]
+[crates/gcode/src/commands/codewiki/cluster.rs:46-55]
+[crates/gcode/src/commands/codewiki/cluster.rs:57-61]
+[crates/gcode/src/commands/codewiki/cluster.rs:63-123]
+[crates/gcode/src/commands/codewiki/cluster.rs:125-149]
 
 ## Key components
 

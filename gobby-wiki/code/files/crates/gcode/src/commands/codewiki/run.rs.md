@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/run.rs
@@ -14,11 +17,15 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/run.rs` exposes 7 indexed API symbols.
+The primary entry point, `run`, coordinates loading files in-scope, retrieving symbols, pulling leading code chunks, and building the necessary context structure. [crates/gcode/src/commands/codewiki/run.rs:22-188]
 
 ## How it fits
 
-`crates/gcode/src/commands/codewiki/run.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file sits at the boundary between database query mechanisms and documentation generation workflows. It serves as the orchestrator that structures physical code data into logical inputs for downstream processing.
+
+The process begins with validating execution constraints like the graph edge limit using `validate_edge_limit`. [crates/gcode/src/commands/codewiki/run.rs:217-222]
+
+The initial contents of these files are loaded via `load_leading_chunks`. [crates/gcode/src/commands/codewiki/run.rs:249-295]
 
 ## Key components
 

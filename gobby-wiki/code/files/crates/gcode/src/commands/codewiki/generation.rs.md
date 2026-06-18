@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/generation.rs
@@ -14,11 +17,18 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/generation.rs` exposes 7 indexed API symbols.
+The `crates/gcode/src/commands/codewiki/generation.rs` file acts as the primary orchestrator for generating hierarchical, high-level, and detail-level documentation for a codebase. It defines a set of API entry points that transform codebase structural inputs into polished wiki-style documentation.
 
 ## How it fits
 
-`crates/gcode/src/commands/codewiki/generation.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file resides within the `codewiki` command module. It imports critical structures and helper builders (crates/gcode/src/commands/codewiki/generation.rs:6-14) such as `CodewikiInput`, `BuiltDoc`, `TextGenerator`, and module clusterers. It coordinates these components to pipeline raw workspace data into rendered documentation files.
+
+The highest-level public interface is `generate_hierarchical_docs` (crates/gcode/src/commands/codewiki/generation.rs:16-24), which takes a `CodewikiInput` and returns a flat collection of path-to-content string tuples. It does this by driving `generate_hierarchical_docs_with_graph_availability` (crates/gcode/src/commands/codewiki/generation.rs:26-51) and mapping the resulting `BuiltDoc` objects.
+[crates/gcode/src/commands/codewiki/generation.rs:16-24]
+[crates/gcode/src/commands/codewiki/generation.rs:26-51]
+[crates/gcode/src/commands/codewiki/generation.rs:54-76]
+[crates/gcode/src/commands/codewiki/generation.rs:79-86]
+[crates/gcode/src/commands/codewiki/generation.rs:90-117]
 
 ## Key components
 

@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/render/common.rs
@@ -14,11 +17,7 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/render|crates/gcode/sr
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/render/common.rs` exposes 1 indexed API symbol.
-
-## How it fits
-
-`crates/gcode/src/commands/codewiki/render/common.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+## How it fits [crates/gcode/src/commands/codewiki/render/common.rs:1-7]
 
 ## Key components
 

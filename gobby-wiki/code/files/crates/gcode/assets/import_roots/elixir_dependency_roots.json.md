@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/assets/import_roots/elixir_dependency_roots.json
@@ -14,11 +17,9 @@ Module: [[code/modules/crates/gcode/assets/import_roots|crates/gcode/assets/impo
 
 ## Overview
 
-`crates/gcode/assets/import_roots/elixir_dependency_roots.json` exposes 16 indexed API symbols.
-
 ## How it fits
 
-`crates/gcode/assets/import_roots/elixir_dependency_roots.json` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+For example, when a project references JSON or HTTP client packages, the indexer maps `jason` [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2] to `Jason`, and `httpoison` [crates/gcode/assets/import_roots/elixir_dependency_roots.json:3] or `tesla` [crates/gcode/assets/import_roots/elixir_dependency_roots.json:4] to their respective module roots. Similarly, modern HTTP clients like `req` [crates/gcode/assets/import_roots/elixir_dependency_roots.json:5], `finch` [crates/gcode/assets/import_roots/elixir_dependency_roots.json:6], and `mint` [crates/gcode/assets/import_roots/elixir_dependency_roots.json:7] are associated with their exact module signatures.
 
 ## Key components
 

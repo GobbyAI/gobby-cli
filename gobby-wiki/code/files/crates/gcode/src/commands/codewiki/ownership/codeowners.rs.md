@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/ownership/codeowners.rs
@@ -14,11 +17,22 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/ownership/codeowners.rs` exposes 6 indexed API symbols.
+This file implements the mechanisms required to locate, parse, and evaluate CODEOWNERS configuration files within a project repository. It provides the capability to identify who owns specific files based on path matching patterns.
+
+The internal structure `Codeowners` crates/gcode/src/commands/codewiki/ownership/codeowners.rs:5-7 acts as a container for a list of rule entries. Individual rules are represented by the `CodeownersEntry` struct crates/gcode/src/commands/codewiki/ownership/codeowners.rs:10-13, which pairs a specific path pattern with its designated owner identifiers.
+
+Together, these structures and their associated functions enable the application to process standard, declarative codebase ownership rules and match them against target file paths.
 
 ## How it fits
 
-`crates/gcode/src/commands/codewiki/ownership/codeowners.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+Once a file is found, its content is parsed by `parse_codeowners` crates/gcode/src/commands/codewiki/ownership/codeowners.rs:27-45. This function processes the text line-by-line, filtering out comments and empty space to populate the ordered sequence of ownership rules.
+
+Finally, the module resolves ownership for a given list of files through `declared_owners_for_files` crates/gcode/src/commands/codewiki/ownership/codeowners.rs:47-66. This function leverages `codeowners_pattern_matches` crates/gcode/src/commands/codewiki/ownership/codeowners.rs:68-103 to match patterns against target paths. By evaluating entries in reverse order, it ensures that the last matching rule takes precedence, outputting a sorted `BTreeMap` of files to their respective owners.
+[crates/gcode/src/commands/codewiki/ownership/codeowners.rs:5-7]
+[crates/gcode/src/commands/codewiki/ownership/codeowners.rs:10-13]
+[crates/gcode/src/commands/codewiki/ownership/codeowners.rs:15-25]
+[crates/gcode/src/commands/codewiki/ownership/codeowners.rs:27-45]
+[crates/gcode/src/commands/codewiki/ownership/codeowners.rs:47-66]
 
 ## Key components
 

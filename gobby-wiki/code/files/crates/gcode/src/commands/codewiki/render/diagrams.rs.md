@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/render/diagrams.rs
@@ -14,11 +17,16 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/render|crates/gcode/sr
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/render/diagrams.rs` exposes 14 indexed API symbols.
+To keep the rendered diagrams clear and readable, the file implements strict edge bounding and hop-limiting strategies. By applying traversal limits, the engine ensures diagrams do not become cluttered, providing notes or comments when elements are omitted due to these constraints.
 
 ## How it fits
 
-`crates/gcode/src/commands/codewiki/render/diagrams.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file plays a key rendering role within the larger codewiki module, converting raw file and import data into visual documentation assets. It sits at the output phase of dependency extraction, consuming lists of files and graph edge records to construct Markdown-compatible Mermaid code blocks.
+[crates/gcode/src/commands/codewiki/render/diagrams.rs:5-67]
+[crates/gcode/src/commands/codewiki/render/diagrams.rs:72-92]
+[crates/gcode/src/commands/codewiki/render/diagrams.rs:97-127]
+[crates/gcode/src/commands/codewiki/render/diagrams.rs:131-166]
+[crates/gcode/src/commands/codewiki/render/diagrams.rs:170-197]
 
 ## Key components
 

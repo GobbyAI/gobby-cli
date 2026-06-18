@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/build_parts/curated_content.rs
@@ -14,11 +17,14 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gco
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/build_parts/curated_content.rs` exposes 10 indexed API symbols.
-
 ## How it fits
 
-`crates/gcode/src/commands/codewiki/build_parts/curated_content.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file is isolated from core structs like `ConceptModule` and `NarrativePage` to keep related files compact and satisfy layout rules, keeping implementation details cleanly separated crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:10-13. It interacts directly with the structure pass from `super::concepts` which identifies and names the chapters and concepts that need pages crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:3-5.
+[crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:28-31]
+[crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:34-43]
+[crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:50-132]
+[crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:134-162]
+[crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:164-185]
 
 ## Key components
 

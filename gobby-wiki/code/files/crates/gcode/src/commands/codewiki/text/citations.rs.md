@@ -6,19 +6,24 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/text/citations.rs
 
 Module: [[code/modules/crates/gcode/src/commands/codewiki/text|crates/gcode/src/commands/codewiki/text]]
 
-## Overview
-
-`crates/gcode/src/commands/codewiki/text/citations.rs` exposes 18 indexed API symbols.
+To prevent excessive citations in generated summaries, the file enforces a strict limit on the number of fallback references via `MAX_FALLBACK_CITATIONS` . The module extracts lexical tokens from the generated text and calculates a relevance score to rank candidate paths, prioritizing actual source code over static asset files [crates/gcode/src/commands/codewiki/text/citations.rs:26-34, crates/gcode/src/commands/codewiki/text/citations.rs:38-44, crates/gcode/src/commands/codewiki/text/citations.rs:46-51, crates/gcode/src/commands/codewiki/text/citations.rs:58-98].
 
 ## How it fits
-
-`crates/gcode/src/commands/codewiki/text/citations.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file is part of the `codewiki::text` submodule, working alongside sibling modules like `sanitize` and utilizing the `SourceSpan` type to process textual spans . It operates as an intermediary validation step between the raw text generation flow and the final documented output.
+[crates/gcode/src/commands/codewiki/text/citations.rs:26-34]
+[crates/gcode/src/commands/codewiki/text/citations.rs:38-44]
+[crates/gcode/src/commands/codewiki/text/citations.rs:46-51]
+[crates/gcode/src/commands/codewiki/text/citations.rs:58-98]
+[crates/gcode/src/commands/codewiki/text/citations.rs:100-106]
 
 ## Key components
 

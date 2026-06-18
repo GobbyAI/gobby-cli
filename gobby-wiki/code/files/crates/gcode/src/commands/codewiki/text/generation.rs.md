@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/text/generation.rs
@@ -14,11 +17,14 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/text|crates/gcode/src/
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/text/generation.rs` exposes 11 indexed API symbols.
+The `crates/gcode/src/commands/codewiki/text/generation.rs` file manages text-generation and verification tasks for the codewiki documentation engine. It acts as an adapter that resolves configuration settings and abstracts the details of calling AI generation endpoints, ensuring robust and clean text outputs.
 
 ## How it fits
-
-`crates/gcode/src/commands/codewiki/text/generation.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/commands/codewiki/text/generation.rs:21-69]
+[crates/gcode/src/commands/codewiki/text/generation.rs:79-144]
+[crates/gcode/src/commands/codewiki/text/generation.rs:149-163]
+[crates/gcode/src/commands/codewiki/text/generation.rs:165-173]
+[crates/gcode/src/commands/codewiki/text/generation.rs:175-188]
 
 ## Key components
 

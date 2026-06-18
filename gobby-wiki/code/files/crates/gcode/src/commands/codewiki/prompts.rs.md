@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/prompts.rs
@@ -14,11 +17,12 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/prompts.rs` exposes 41 indexed API symbols.
-
 ## How it fits
-
-`crates/gcode/src/commands/codewiki/prompts.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/commands/codewiki/prompts.rs:19-41]
+[crates/gcode/src/commands/codewiki/prompts.rs:43-77]
+[crates/gcode/src/commands/codewiki/prompts.rs:82-88]
+[crates/gcode/src/commands/codewiki/prompts.rs:90-106]
+[crates/gcode/src/commands/codewiki/prompts.rs:108-131]
 
 ## Key components
 

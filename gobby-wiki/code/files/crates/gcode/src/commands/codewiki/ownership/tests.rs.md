@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/ownership/tests.rs
@@ -13,12 +16,12 @@ freshness: indexed
 Module: [[code/modules/crates/gcode/src/commands/codewiki/ownership|crates/gcode/src/commands/codewiki/ownership]]
 
 ## Overview
-
-`crates/gcode/src/commands/codewiki/ownership/tests.rs` exposes 13 indexed API symbols.
-
-## How it fits
-
-`crates/gcode/src/commands/codewiki/ownership/tests.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file serves as the comprehensive testing suite for the CodeWiki ownership mapping functionality. It is designed to verify that the generation of codebase ownership documentation works reliably across multiple configurations, inputs, and real-world repository conditions.
+[crates/gcode/src/commands/codewiki/ownership/tests.rs:8-35]
+[crates/gcode/src/commands/codewiki/ownership/tests.rs:38-62]
+[crates/gcode/src/commands/codewiki/ownership/tests.rs:65-82]
+[crates/gcode/src/commands/codewiki/ownership/tests.rs:85-106]
+[crates/gcode/src/commands/codewiki/ownership/tests.rs:109-131]
 
 ## Key components
 

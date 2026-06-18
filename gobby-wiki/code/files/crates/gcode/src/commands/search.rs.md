@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/search.rs
@@ -14,11 +17,11 @@ Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Overview
 
-`crates/gcode/src/commands/search.rs` exposes 39 indexed API symbols.
-
 ## How it fits
 
-`crates/gcode/src/commands/search.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file acts as the command-layer controller for searching within the `crates/gcode/src/commands/` module. It interacts directly with the database layer to execute searches and retrieves settings via the `Context` [crates/gcode/src/commands/search.rs:13] configuration. It relies on the database wrapper `db`  to establish connections, such as in `db::connect_readonly` [crates/gcode/src/commands/search.rs:28].
+
+Data flows into this file via `SearchOptions` [crates/gcode/src/commands/search.rs:13-22], which encapsulates pagination limits, offsets, language/kind filters, and path whitelists. The search processes use the `fts` module  to expand path lists and compile glob patterns. They then fetch candidate results from the PostgreSQL database using BM25, and optional graph databases or semantic indices.
 
 ## Key components
 

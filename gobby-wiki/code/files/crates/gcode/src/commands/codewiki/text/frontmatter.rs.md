@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/text/frontmatter.rs
@@ -14,11 +17,16 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/text|crates/gcode/src/
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/text/frontmatter.rs` exposes 13 indexed API symbols.
+The file crates/gcode/src/commands/codewiki/text/frontmatter.rs is responsible for generating structured metadata, formatted as YAML frontmatter, for generated codewiki pages. It defines the layout and serialization format used to document provenance, titles, and structural labels of these source-derived documents.
+
+To accomplish this, the file utilizes the Frontmatter struct crates/gcode/src/commands/codewiki/text/frontmatter.rs:7-21, which encapsulates fields such as the title, page kind, trust and freshness labels, and source files that contributed to the document. Individual source files and their corresponding line spans are tracked via the FrontmatterSourceFile struct crates/gcode/src/commands/codewiki/text/frontmatter.rs:24-28.
 
 ## How it fits
-
-`crates/gcode/src/commands/codewiki/text/frontmatter.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/commands/codewiki/text/frontmatter.rs:7-21]
+[crates/gcode/src/commands/codewiki/text/frontmatter.rs:24-28]
+[crates/gcode/src/commands/codewiki/text/frontmatter.rs:36-38]
+[crates/gcode/src/commands/codewiki/text/frontmatter.rs:42-49]
+[crates/gcode/src/commands/codewiki/text/frontmatter.rs:51-58]
 
 ## Key components
 

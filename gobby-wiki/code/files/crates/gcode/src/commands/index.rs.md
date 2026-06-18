@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/index.rs
@@ -14,11 +17,18 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-`crates/gcode/src/commands/index.rs` exposes 17 indexed API symbols.
+The file crates/gcode/src/commands/index.rs provides the execution logic and formatting utilities for the indexing command in the gcode toolset. It is responsible for initializing the correct directory and target scope context, executing the files indexer under a project lock, and presenting structured feedback to the caller in either plain text or JSON.
+
+The core command driver is the run function, which maps command-line arguments to internal API requests and coordinates downstream processes crates/gcode/src/commands/index.rs:10-60. To keep index operations safe from race conditions across processes, it acquires a project-wide indexing lock before running the core logic crates/gcode/src/commands/index.rs:10-60.
 
 ## How it fits
 
-`crates/gcode/src/commands/index.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+Next, it coordinates with index-locking systems and the core API engine. The lock layer index_lock::with_project_lock ensures safe exclusive access crates/gcode/src/commands/index.rs:10-60 before calling into the index engine api::index_files crates/gcode/src/commands/index.rs:10-60.
+[crates/gcode/src/commands/index.rs:10-60]
+[crates/gcode/src/commands/index.rs:62-92]
+[crates/gcode/src/commands/index.rs:96-104]
+[crates/gcode/src/commands/index.rs:107-117]
+[crates/gcode/src/commands/index.rs:119-132]
 
 ## Key components
 

@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/grep/grep_matcher.rs
@@ -14,11 +17,16 @@ Module: [[code/modules/crates/gcode/src/commands/grep|crates/gcode/src/commands/
 
 ## Overview
 
-`crates/gcode/src/commands/grep/grep_matcher.rs` exposes 14 indexed API symbols.
+This file defines the pattern-matching logic used during grep search operations. It contains the GrepMatcher struct, which compiles search patterns and scans input text to locate matching spans crates/gcode/src/commands/grep/grep_matcher.rs:6-9. The matcher supports standard regular expressions, fixed-string escaping, case-insensitive options, and specialized word-boundary matching rules crates/gcode/src/commands/grep/grep_matcher.rs:12-31.
+
+Through its word-boundary implementation, the matcher provides precise matching capabilities designed for source code analysis. When word-boundary matching is enabled, it ensures that matches are not part of larger, attached alphanumeric identifiers, avoiding false positives during token searches crates/gcode/src/commands/grep/grep_matcher.rs:33-43.
 
 ## How it fits
-
-`crates/gcode/src/commands/grep/grep_matcher.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/commands/grep/grep_matcher.rs:6-9]
+[crates/gcode/src/commands/grep/grep_matcher.rs:12-31]
+[crates/gcode/src/commands/grep/grep_matcher.rs:33-43]
+[crates/gcode/src/commands/grep/grep_matcher.rs:46-65]
+[crates/gcode/src/commands/grep/grep_matcher.rs:67-75]
 
 ## Key components
 

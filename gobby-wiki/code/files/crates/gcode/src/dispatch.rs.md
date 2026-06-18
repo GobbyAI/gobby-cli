@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/dispatch.rs
@@ -14,11 +17,16 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-`crates/gcode/src/dispatch.rs` exposes 15 indexed API symbols.
+The file implements a custom standard error logger, StderrLogger at crates/gcode/src/dispatch.rs:8, which writes log messages directly to standard error if their level is enabled. This logger is configured globally via init_logger at crates/gcode/src/dispatch.rs:24-28, which filters records based on user-specified quiet flags or the RUST_LOG environment variable using stderr_log_level at crates/gcode/src/dispatch.rs:30-37.
+
+To ensure that queries operate on reliable data, this file defines several freshness validation routines such as ensure_project_fresh at crates/gcode/src/dispatch.rs:39-47, ensure_files_fresh at crates/gcode/src/dispatch.rs:49-61, ensure_file_fresh at crates/gcode/src/dispatch.rs:63-65, and ensure_symbol_fresh at crates/gcode/src/dispatch.rs:67-72. These routines check index health before executing operations and utilize warn_if_busy at crates/gcode/src/dispatch.rs:74-78 to alert users if a parallel reindexing process is already running.
 
 ## How it fits
-
-`crates/gcode/src/dispatch.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/dispatch.rs:8]
+[crates/gcode/src/dispatch.rs:11-13]
+[crates/gcode/src/dispatch.rs:15-19]
+[crates/gcode/src/dispatch.rs:21]
+[crates/gcode/src/dispatch.rs:24-28]
 
 ## Key components
 

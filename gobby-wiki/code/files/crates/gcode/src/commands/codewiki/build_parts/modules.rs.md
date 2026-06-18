@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/build_parts/modules.rs
@@ -14,11 +17,11 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gco
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/build_parts/modules.rs` exposes 4 indexed API symbols.
-
 ## How it fits
-
-`crates/gcode/src/commands/codewiki/build_parts/modules.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/commands/codewiki/build_parts/modules.rs:6-27]
+[crates/gcode/src/commands/codewiki/build_parts/modules.rs:30-175]
+[crates/gcode/src/commands/codewiki/build_parts/modules.rs:177-179]
+[crates/gcode/src/commands/codewiki/build_parts/modules.rs:181-191]
 
 ## Key components
 

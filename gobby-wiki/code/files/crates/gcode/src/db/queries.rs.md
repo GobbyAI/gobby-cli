@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/db/queries.rs
@@ -14,11 +17,11 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-`crates/gcode/src/db/queries.rs` exposes 36 indexed API symbols.
+The `crates/gcode/src/db/queries.rs` file manages database query operations for projects, files, and their structural facts. It serves as a data access layer interfacing with a PostgreSQL database to query, record, and track codebase indexing metadata.
+
+At its core, the file defines the `GraphFileFacts` struct [crates/gcode/src/db/queries.rs:8-13], which aggregates a file's structural information including its imports, definitions, and calls. It includes helpers to verify existence, such as `indexed_project_exists` [crates/gcode/src/db/queries.rs:28-38] and `indexed_file_exists` [crates/gcode/src/db/queries.rs:57-69], as well as list indexed file paths using `list_indexed_file_paths` [crates/gcode/src/db/queries.rs:15-26].
 
 ## How it fits
-
-`crates/gcode/src/db/queries.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
 
 ## Key components
 

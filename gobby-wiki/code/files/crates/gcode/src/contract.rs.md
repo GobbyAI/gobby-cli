@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/contract.rs
@@ -14,11 +17,14 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-`crates/gcode/src/contract.rs` exposes 25 indexed API symbols.
+The `crates/gcode/src/contract.rs` file defines the schema contract for the `gcode` CLI tool, which serves as a fast code index CLI for Gobby. Its primary entry point is the `contract` function crates/gcode/src/contract.rs:5-535. This function constructs and returns a `CliContract` describing the CLI's version (version 2), its global flags (such as formatting, quietness, verbosity, and freshness), and the available subcommand contracts.
 
 ## How it fits
-
-`crates/gcode/src/contract.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/contract.rs:5-535]
+[crates/gcode/src/contract.rs:537-539]
+[crates/gcode/src/contract.rs:541-544]
+[crates/gcode/src/contract.rs:546-548]
+[crates/gcode/src/contract.rs:550-557]
 
 ## Key components
 

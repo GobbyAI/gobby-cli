@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/paths.rs
@@ -14,11 +17,14 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/paths.rs` exposes 19 indexed API symbols.
+A major role of this file is text normalization and Markdown generation. It ensures that code and table data are output correctly without breaking Markdown syntax. For instance, it formats inline code segments in `crates/gcode/src/commands/codewiki/paths.rs:3-14` and writes escaped table headers and rows in `crates/gcode/src/commands/codewiki/paths.rs:16-19` and `crates/gcode/src/commands/codewiki/paths.rs:21-33`.
 
 ## How it fits
-
-`crates/gcode/src/commands/codewiki/paths.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/commands/codewiki/paths.rs:3-14]
+[crates/gcode/src/commands/codewiki/paths.rs:16-19]
+[crates/gcode/src/commands/codewiki/paths.rs:21-33]
+[crates/gcode/src/commands/codewiki/paths.rs:35-41]
+[crates/gcode/src/commands/codewiki/paths.rs:43-55]
 
 ## Key components
 

@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/ownership.rs
@@ -14,11 +17,17 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/ownership.rs` exposes 8 indexed API symbols.
+This source file orchestrates code ownership analysis for a workspace. It brings together explicit configuration and git metadata to understand who owns and maintains different parts of the code.
+
+The main driver is `build_ownership_doc` [crates/gcode/src/commands/codewiki/ownership.rs:69-114], which coordinates parsing configuration and rendering the results. The file models the underlying data using structures that track both declared static owners and dynamically derived git-blame contributors.
 
 ## How it fits
 
-`crates/gcode/src/commands/codewiki/ownership.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file acts as the main entry point for the ownership portion of the codewiki command, delegating specialized operations to its internal modules: `analysis`, `codeowners`, and `render`.
+
+During execution, `build_ownership_doc` [crates/gcode/src/commands/codewiki/ownership.rs:69-114] reads CODEOWNERS rules via `read_codeowners` to find declared owners. It resolves files to their declared lists [crates/gcode/src/commands/codewiki/ownership.rs:81] and invokes `derived_owners_for_files` to compute blame-based ownership contributors.
+
+As calculations proceed, the code populates `OwnershipStatus` [crates/gcode/src/commands/codewiki/ownership.rs:56-61] to record integration health, such as blame availability or parsing failures. Each target file's metadata is structured under `FileOwnership` [crates/gcode/src/commands/codewiki/ownership.rs:64-67], pairing declared owner identifiers with derived `OwnershipContributor` records [crates/gcode/src/commands/codewiki/ownership.rs:47-53]. Finally, the data flow routes these structured models to the `render` submodule to compile the final document.
 
 ## Key components
 

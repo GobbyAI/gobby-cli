@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/ownership/render.rs
@@ -14,11 +17,18 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/ownership/render.rs` exposes 10 indexed API symbols.
+The module handles diagnostic reporting of metadata degradation in degraded_sources (crates/gcode/src/commands/codewiki/ownership/render.rs:10-34), tracking issues such as missing CODEOWNERS or git blame files. It constructs the YAML frontmatter document block using ownership_frontmatter (crates/gcode/src/commands/codewiki/ownership/render.rs:36-68) with a Serde-serializable Frontmatter struct (crates/gcode/src/commands/codewiki/ownership/render.rs:38-52).
 
 ## How it fits
 
-`crates/gcode/src/commands/codewiki/ownership/render.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file acts as the presentation layer for the code ownership analysis subsystem within the codewiki command. It imports structures like FileOwnership, OwnershipContributor, and OwnershipStatus from its parent module to translate analysis results into user-readable Markdown documents.
+
+The rendering process begins with data ingestion. It takes an OwnershipStatus and a map of analyzed files to determine degradation levels and construct a standard frontmatter block. It utilizes helpers like is_false (crates/gcode/src/commands/codewiki/ownership/render.rs:70-72) to omit unnecessary boolean fields during YAML serialization.
+[crates/gcode/src/commands/codewiki/ownership/render.rs:10-34]
+[crates/gcode/src/commands/codewiki/ownership/render.rs:36-68]
+[crates/gcode/src/commands/codewiki/ownership/render.rs:38-52]
+[crates/gcode/src/commands/codewiki/ownership/render.rs:70-72]
+[crates/gcode/src/commands/codewiki/ownership/render.rs:74-100]
 
 ## Key components
 

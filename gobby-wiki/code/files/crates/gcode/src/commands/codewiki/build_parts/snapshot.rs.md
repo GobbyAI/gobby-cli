@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/build_parts/snapshot.rs
@@ -13,12 +16,15 @@ freshness: indexed
 Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gcode/src/commands/codewiki/build_parts]]
 
 ## Overview
+This file implements the mechanisms required to generate a deterministic structural snapshot of a project's core codebase. Its primary purpose is to capture file and symbol states, which serves as a foundation for building a Codewiki index.
 
-`crates/gcode/src/commands/codewiki/build_parts/snapshot.rs` exposes 3 indexed API symbols.
+Additionally, the file is responsible for verifying file locations and tracking the relational context of code elements. It calculates deterministic hashes for local file contents and maps out dependencies between symbols, handling cases where the project graph data might be degraded or missing.
 
 ## How it fits
-
-`crates/gcode/src/commands/codewiki/build_parts/snapshot.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+As a building block of the `codewiki` build pipeline, this file transforms incoming raw `CodewikiInput` data into a structured `CodewikiIndexSnapshot`. It coordinates closely with structural hashing utility functions and dependency analysis modules.
+[crates/gcode/src/commands/codewiki/build_parts/snapshot.rs:6-84]
+[crates/gcode/src/commands/codewiki/build_parts/snapshot.rs:86-99]
+[crates/gcode/src/commands/codewiki/build_parts/snapshot.rs:101-134]
 
 ## Key components
 

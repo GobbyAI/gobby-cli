@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/cli.rs
@@ -14,11 +17,20 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-`crates/gcode/src/cli.rs` exposes 14 indexed API symbols.
+The crates/gcode/src/cli.rs file defines the command-line interface entry point and configuration structures for the gcode command-line utility. It acts as the user-facing gateway that parses CLI inputs, validates configuration parameters, and routes commands to the appropriate execution paths.
+
+The main structure is the Cli struct, which is a crate-private Clap-parsed top-level command-line configuration struct (crates/gcode/src/cli.rs:23-46). This struct captures global settings like the project root, output format, verbose logging, quiet mode, and freshness checks.
 
 ## How it fits
 
-`crates/gcode/src/cli.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file serves as the translator between external CLI arguments and core library data types. By mapping command-line options into internal structures, it establishes the foundation for downstream data flow across Gobby crates.
+
+It exposes several arguments and direct translation functions. The AiRouteArg enum (crates/gcode/src/cli.rs:49-54) and its From implementation (crates/gcode/src/cli.rs:57-64) map string-based user arguments directly onto Gobby's core AiRouting variants. Similarly, the AiDepthArg enum (crates/gcode/src/cli.rs:68-73) and its From converter (crates/gcode/src/cli.rs:76-82) translate command options into core Gobby code wiki parameters.
+[crates/gcode/src/cli.rs:23-46]
+[crates/gcode/src/cli.rs:49-54]
+[crates/gcode/src/cli.rs:57-64]
+[crates/gcode/src/cli.rs:68-73]
+[crates/gcode/src/cli.rs:76-82]
 
 ## Key components
 

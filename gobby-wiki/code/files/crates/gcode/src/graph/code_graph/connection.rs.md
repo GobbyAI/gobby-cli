@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/graph/code_graph/connection.rs
@@ -14,11 +17,18 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-`crates/gcode/src/graph/code_graph/connection.rs` exposes 3 indexed API symbols.
+The crates/gcode/src/graph/code_graph/connection.rs file manages connection lifecycle and error mapping for operations interacting with the FalkorDB graph database. It provides a standardized wrapper around the database client, ensuring that database queries are executed safely within the context of the application's service configuration and system degradation state.
+
+By abstracting client access, this file enables other parts of the graph module to query the database without managing raw connection configuration or dealing with low-level connection states directly. It distinguishes between mandatory database access and optional access, supporting graceful degradation when the database is unavailable.
 
 ## How it fits
 
-`crates/gcode/src/graph/code_graph/connection.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+For workflows that strictly require a graph database connection, the with_required_core_graph function at crates/gcode/src/graph/code_graph/connection.rs:14-40 resolves the database configuration, executes a provided query closure using a GraphClient, and translates any connectivity, missing-result, or execution errors into corresponding GraphReadError variants.
+
+For non-essential features that can fallback when the database is offline or unconfigured, the with_optional_core_graph function at crates/gcode/src/graph/code_graph/connection.rs:42-68 executes the query closure when the database is available, but automatically returns a default value without failing if the database is not configured or is unreachable.
+[crates/gcode/src/graph/code_graph/connection.rs:7-12]
+[crates/gcode/src/graph/code_graph/connection.rs:14-40]
+[crates/gcode/src/graph/code_graph/connection.rs:42-68]
 
 ## Key components
 

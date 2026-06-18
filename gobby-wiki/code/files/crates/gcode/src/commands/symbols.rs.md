@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/symbols.rs
@@ -14,11 +17,14 @@ Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Overview
 
-`crates/gcode/src/commands/symbols.rs` exposes 24 indexed API symbols.
+This file implements command-line entry points and underlying logic for querying, rendering, and summarizing codebase symbol structures. Its primary role is to serve structural code information to users or integrations, allowing them to examine files as hierarchical outlines or high-level summaries instead of raw source code.
 
 ## How it fits
-
-`crates/gcode/src/commands/symbols.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/commands/symbols.rs:21-78]
+[crates/gcode/src/commands/symbols.rs:80-103]
+[crates/gcode/src/commands/symbols.rs:105-126]
+[crates/gcode/src/commands/symbols.rs:128-142]
+[crates/gcode/src/commands/symbols.rs:144-167]
 
 ## Key components
 

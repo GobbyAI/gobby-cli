@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/contract/gcode.contract.json
@@ -14,11 +17,12 @@ Module: [[code/modules/crates/gcode/contract|crates/gcode/contract]]
 
 ## Overview
 
-`crates/gcode/contract/gcode.contract.json` exposes 952 indexed API symbols.
-
 ## How it fits
-
-`crates/gcode/contract/gcode.contract.json` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/contract/gcode.contract.json:2]
+[crates/gcode/contract/gcode.contract.json:3]
+[crates/gcode/contract/gcode.contract.json:4]
+[crates/gcode/contract/gcode.contract.json:5-49]
+[crates/gcode/contract/gcode.contract.json:7]
 
 ## Key components
 

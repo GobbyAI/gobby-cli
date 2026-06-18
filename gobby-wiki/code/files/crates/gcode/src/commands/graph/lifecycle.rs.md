@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/graph/lifecycle.rs
@@ -14,11 +17,12 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-`crates/gcode/src/commands/graph/lifecycle.rs` exposes 25 indexed API symbols.
-
 ## How it fits
-
-`crates/gcode/src/commands/graph/lifecycle.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+[crates/gcode/src/commands/graph/lifecycle.rs:12-14]
+[crates/gcode/src/commands/graph/lifecycle.rs:17-28]
+[crates/gcode/src/commands/graph/lifecycle.rs:30-41]
+[crates/gcode/src/commands/graph/lifecycle.rs:43-45]
+[crates/gcode/src/commands/graph/lifecycle.rs:47-49]
 
 ## Key components
 

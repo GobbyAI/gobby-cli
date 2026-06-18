@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/build_parts/hotspots.rs
@@ -14,11 +17,13 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gco
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/build_parts/hotspots.rs` exposes 2 indexed API symbols.
+The main entry point is the build_hotspots_doc function [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:5-134]. This function processes incoming source files and graph edges to construct an analytical representation of the codebase. If graph analytics are truncated or completely unavailable, it gracefully handles these states by returning a degraded or empty document [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:10-25].
 
 ## How it fits
 
-`crates/gcode/src/commands/codewiki/build_parts/hotspots.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file fits into the larger codewiki command pipeline under crates/gcode/src/commands/codewiki/build_parts/hotspots.rs. It bridges raw file and symbol metadata with graph-theoretic algorithms defined in gobby_core::graph_analytics .
+
+Once the lookup map is prepared, build_hotspots_doc builds an AnalyticsGraph [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:28]. It uses the node lookup map to resolve edge endpoints, ensuring only edges connecting valid hotspot nodes are included [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:45-49]. Edge weights are assigned based on their type, such as function calls or module imports [crates/gcode/src/commands/codewiki/build_parts/hotspots.rs:50-64]. This completed graph is then used to perform graph calculations, outputting a structured HotspotsDoc containing key metrics like god nodes and bridges.
 
 ## Key components
 

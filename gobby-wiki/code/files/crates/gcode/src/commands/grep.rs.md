@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/grep.rs
@@ -14,11 +17,11 @@ Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Overview
 
-`crates/gcode/src/commands/grep.rs` exposes 44 indexed API symbols.
+Search results and metadata are represented by rich data structures, including `GrepMatch` [crates/gcode/src/commands/grep.rs:61-68], `GrepResult` [crates/gcode/src/commands/grep.rs:87-92], and `GrepResponse` [crates/gcode/src/commands/grep.rs:71-84]. These components collect match positions, line numbers, and matching text snippets, along with optional before and after context lines captured using `GrepContextLine` [crates/gcode/src/commands/grep.rs:55-58] and `GrepSpan` [crates/gcode/src/commands/grep.rs:49-52].
 
 ## How it fits
 
-`crates/gcode/src/commands/grep.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file integrates with the database layer and external helper modules to handle the end-to-end flow of a search command. When executed via `run` [crates/gcode/src/commands/grep.rs:94-125], it connects to a read-only database via `db::connect_readonly` and retrieves matching file chunks using `load_indexed_chunks` [crates/gcode/src/commands/grep.rs:127-234].
 
 ## Key components
 

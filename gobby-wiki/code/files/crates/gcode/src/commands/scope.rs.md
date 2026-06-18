@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/scope.rs
@@ -14,11 +17,18 @@ Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
 
 ## Overview
 
-`crates/gcode/src/commands/scope.rs` exposes 12 indexed API symbols.
+The `crates/gcode/src/commands/scope.rs` file manages project path scoping, normalization, and validation rules for the `gcode` tool. It provides a standardized mechanism to handle relative and absolute file paths within active project directories, ensuring paths are correctly resolved against defined workspace roots or fallback configurations.
+
+To prevent out-of-bounds access and support advanced overlay structures, the file implements robust existence checks. Specifically, `path_exists_in_current_project` crates/gcode/src/commands/scope.rs:29-45 validates file location relative to single and multi-layered index scopes, leveraging `path_exists_under_root` crates/gcode/src/commands/scope.rs:47-60 to safely confirm path canonicalization.
 
 ## How it fits
 
-`crates/gcode/src/commands/scope.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+During execution, `current_indexed_path_is_valid` crates/gcode/src/commands/scope.rs:62-69 ties database-visible indexing checks from `visibility::indexed_file_exists` to the disk-level verification functions defined locally. This ensures that referenced files exist both in database state and within current project boundaries.
+[crates/gcode/src/commands/scope.rs:9-12]
+[crates/gcode/src/commands/scope.rs:14-27]
+[crates/gcode/src/commands/scope.rs:29-45]
+[crates/gcode/src/commands/scope.rs:47-60]
+[crates/gcode/src/commands/scope.rs:62-69]
 
 ## Key components
 

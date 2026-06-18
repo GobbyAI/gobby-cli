@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/render/repo.rs
@@ -14,11 +17,18 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/render|crates/gcode/sr
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/render/repo.rs` exposes 3 indexed API symbols.
+The file crates/gcode/src/commands/codewiki/render/repo.rs is responsible for building and rendering the repository-level overview page in the CodeWiki document generation process. This overview provides a structured entry point for the codebase, serving as a guided tour for engineers exploring the repository.
+
+The primary entry point is the build_repo_doc function at crates/gcode/src/commands/codewiki/render/repo.rs:5-91, which checks if all source files are unchanged and attempts to reuse the existing code/repo.md page. If changes are detected, it compiles structured summaries of root modules and files, and generates a new overview document.
 
 ## How it fits
 
-`crates/gcode/src/commands/codewiki/render/repo.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file fits into the broader CodeWiki rendering subsystem by pulling in utilities and parent-level types imported at crates/gcode/src/commands/codewiki/render/repo.rs:1-3. It sits at the top of the render pipeline, orchestrating repository-wide metadata rather than detailing individual submodules or files.
+
+Data flows into build_repo_doc in the form of completed FileDoc and ModuleDoc lists. The function filters these collections to extract top-level modules where parent_module is none at crates/gcode/src/commands/codewiki/render/repo.rs:13-21, and root-level files that belong to no submodule at crates/gcode/src/commands/codewiki/render/repo.rs:22-30.
+[crates/gcode/src/commands/codewiki/render/repo.rs:5-91]
+[crates/gcode/src/commands/codewiki/render/repo.rs:96-116]
+[crates/gcode/src/commands/codewiki/render/repo.rs:118-193]
 
 ## Key components
 

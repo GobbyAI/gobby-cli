@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/types.rs
@@ -14,11 +17,9 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/types.rs` exposes 46 indexed API symbols.
+At the heart of input ingestion is the `CodewikiInput` struct `[crates/gcode/src/commands/codewiki/types.rs:11-21]`, which groups together paths, graph edges, and symbols along with leading content chunks. These chunks are captured using the `LeadingChunk` struct `[crates/gcode/src/commands/codewiki/types.rs:26-30]`, storing raw text alongside starting and ending line indices to seed aggregate prompts with real source context.
 
 ## How it fits
-
-`crates/gcode/src/commands/codewiki/types.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
 
 ## Key components
 

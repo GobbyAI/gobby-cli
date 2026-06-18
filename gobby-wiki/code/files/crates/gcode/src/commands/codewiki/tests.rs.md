@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/tests.rs
@@ -14,11 +17,11 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/tests.rs` exposes 1 indexed API symbol.
+The file contains the unit test `documents_code_and_config_excludes_content_only_by_default` crates/gcode/src/commands/codewiki/tests.rs:26-47. This test verifies that the `should_document_file` helper includes code and structured configuration files while excluding content-only files unless the override parameter is explicitly set to true.
 
 ## How it fits
 
-`crates/gcode/src/commands/codewiki/tests.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+It declares a wide array of submodules, such as `support`, `ai`, `architecture`, `incremental`, and `io_safety` crates/gcode/src/commands/codewiki/tests.rs:7-24, which keep the testing concerns separated. The test flow evaluates `should_document_file` against file paths like `crates/gcode/src/lib.rs` and `README.md` crates/gcode/src/commands/codewiki/tests.rs:28-36, ensuring that the command logic correctly routes code, configuration, and documentation assets during a codewiki execution. [crates/gcode/src/commands/codewiki/tests.rs:26-47]
 
 ## Key components
 

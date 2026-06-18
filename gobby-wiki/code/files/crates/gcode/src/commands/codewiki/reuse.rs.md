@@ -6,6 +6,9 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
+degraded: true
+degraded_sources:
+- model-unavailable
 ---
 
 # crates/gcode/src/commands/codewiki/reuse.rs
@@ -14,11 +17,18 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/reuse.rs` exposes 8 indexed API symbols.
+The primary orchestrator is the ReusePlan struct crates/gcode/src/commands/codewiki/reuse.rs:11-19, which tracks the project root, output directory, active AI mode, and documentation metadata. It lazily computes and caches hashes of source files to determine reuse feasibility, permanently marking missing or unhashable sources as non-reusable to avoid repeated disk probing.
 
 ## How it fits
 
-`crates/gcode/src/commands/codewiki/reuse.rs` is documented from its indexed symbols; see the Key components below and the module page for how it connects to sibling files.
+This file bridges the gap between stored documentation outputs on disk and the current state of the workspace. During initialization, ReusePlan::load crates/gcode/src/commands/codewiki/reuse.rs:22-31 constructs the planning state by reading existing codewiki metadata and copying relevant path configurations.
+
+To resolve cache hits, ReusePlan::reusable_page crates/gcode/src/commands/codewiki/reuse.rs:36-46 fetches the existing on-disk content of a page when its sources match. This is extended by ReusePlan::reusable_page_with_summary crates/gcode/src/commands/codewiki/reuse.rs:49-57, which bundles the cached page text together with its recorded summary.
+[crates/gcode/src/commands/codewiki/reuse.rs:11-19]
+[crates/gcode/src/commands/codewiki/reuse.rs:22-31]
+[crates/gcode/src/commands/codewiki/reuse.rs:36-46]
+[crates/gcode/src/commands/codewiki/reuse.rs:49-57]
+[crates/gcode/src/commands/codewiki/reuse.rs:59-88]
 
 ## Key components
 
