@@ -5,15 +5,42 @@ The machine-readable contract lives at `crates/gcode/contract/gcode.contract.jso
 
 ## Version
 
-`contract_version`: 1
+`contract_version`: 2
 
-Version 1 covers the daemon-consumed surface:
+Version 2 marks the full daemon-consumed query surface. Each command below emits
+a stable JSON shape under `--format json`; the keys are pinned in
+`gcode.contract.json` and asserted by the drift tests.
 
-- `contract`
-- `index`
-- `search`
-- `search-symbol`
-- `codewiki`
+### Query surfaces
+
+- `contract`, `index` — project and index metadata
+- `search`, `search-symbol`, `search-text`, `search-content` — ranked results
+  (`project_id, total, offset, limit, results[]`, each hit carrying `id, name,
+  qualified_name, kind, language, file_path, line_start, line_end, signature,
+  score`)
+- `grep` — exact pattern matches with spans
+- `outline` — `id, name, kind, line_start, line_end, signature` per symbol
+- `symbol` — a stored symbol record plus the on-disk `source` snippet
+- `symbol-at` — same as `symbol`, plus a `lookup` block describing how the
+  location resolved
+- `symbols` — the stored symbol record (no `source`)
+- `tree` — `file_path, language, symbol_count` per file
+- `callers`, `usages` — graph reads (the `graph_read_keys` envelope)
+- `imports`, `blast-radius` — the paged graph envelope (`project_id, total,
+  offset, limit, results[]`, each row carrying `id, name, file_path, line,
+  confidence, relation, distance, metadata, hint`)
+- `codewiki` — a generation run-summary, or under `--repair-citations` the
+  citation-repair summary
+
+Stored symbol records carry the AI `summary`, never the raw `docstring`.
+
+### Citation repair
+
+`gcode codewiki --repair-citations` re-anchors existing pages' `[file:line]`
+citations against the current index and rewrites only the pages whose citations
+changed. It runs no generation and makes no AI/LLM calls. The JSON summary keys
+are `pages_scanned`, `pages_repaired`, `citations_repaired`, and
+`citations_unresolved`.
 
 ## Scope
 
