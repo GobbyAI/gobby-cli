@@ -6,9 +6,6 @@ provenance:
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
-degraded: true
-degraded_sources:
-- model-unavailable
 ---
 
 # crates/gcode/assets/import_roots/elixir_dependency_roots.json
@@ -16,10 +13,23 @@ degraded_sources:
 Module: [[code/modules/crates/gcode/assets/import_roots|crates/gcode/assets/import_roots]]
 
 ## Overview
+This asset file defines a static lookup map of popular Elixir dependency package names to their canonical top-level module names. It provides a structured dictionary where each key represents a lowercase Elixir package name, and the value is an array containing the capitalized module namespaces associated with that library.
+
+The file serves as a reference directory for resolve and import analysis tools within the gcode toolchain. By providing these standard mappings, it enables tools to identify external modules imported or used in Elixir projects and map them back to their originating packages.
 
 ## How it fits
+This configuration file is placed under the asset directories of the gcode workspace. It defines the mapping schema for standard libraries such as `jason` on crates/gcode/assets/import_roots/elixir_dependency_roots.json:2, `httpoison` on crates/gcode/assets/import_roots/elixir_dependency_roots.json:3, `tesla` on crates/gcode/assets/import_roots/elixir_dependency_roots.json:4, `req` on crates/gcode/assets/import_roots/elixir_dependency_roots.json:5, and `finch` on crates/gcode/assets/import_roots/elixir_dependency_roots.json:6.
 
-For example, when a project references JSON or HTTP client packages, the indexer maps `jason` [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2] to `Jason`, and `httpoison` [crates/gcode/assets/import_roots/elixir_dependency_roots.json:3] or `tesla` [crates/gcode/assets/import_roots/elixir_dependency_roots.json:4] to their respective module roots. Similarly, modern HTTP clients like `req` [crates/gcode/assets/import_roots/elixir_dependency_roots.json:5], `finch` [crates/gcode/assets/import_roots/elixir_dependency_roots.json:6], and `mint` [crates/gcode/assets/import_roots/elixir_dependency_roots.json:7] are associated with their exact module signatures.
+It also contains mappings for `mint` on crates/gcode/assets/import_roots/elixir_dependency_roots.json:7, `ecto` on crates/gcode/assets/import_roots/elixir_dependency_roots.json:8, `phoenix` on crates/gcode/assets/import_roots/elixir_dependency_roots.json:9, `plug` on crates/gcode/assets/import_roots/elixir_dependency_roots.json:10, and `oban` on crates/gcode/assets/import_roots/elixir_dependency_roots.json:11.
+
+Furthermore, it maps `broadway` on crates/gcode/assets/import_roots/elixir_dependency_roots.json:12, `nimble_options` on crates/gcode/assets/import_roots/elixir_dependency_roots.json:13, `nimble_parsec` on crates/gcode/assets/import_roots/elixir_dependency_roots.json:14, `telemetry` on crates/gcode/assets/import_roots/elixir_dependency_roots.json:15, `benchee` on crates/gcode/assets/import_roots/elixir_dependency_roots.json:16, and `ex_doc` on crates/gcode/assets/import_roots/elixir_dependency_roots.json:17.
+
+No external calling files or direct module relationships are supplied in the current context, indicating that this resource is loaded dynamically or compiled in by the surrounding module resolution systems of the crate.
+[crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
+[crates/gcode/assets/import_roots/elixir_dependency_roots.json:3]
+[crates/gcode/assets/import_roots/elixir_dependency_roots.json:4]
+[crates/gcode/assets/import_roots/elixir_dependency_roots.json:5]
+[crates/gcode/assets/import_roots/elixir_dependency_roots.json:6]
 
 ## Key components
 
