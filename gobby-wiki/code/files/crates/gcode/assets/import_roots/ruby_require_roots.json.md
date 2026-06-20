@@ -14,24 +14,13 @@ Module: [[code/modules/crates/gcode/assets/import_roots|crates/gcode/assets/impo
 
 ## Overview
 
-The `crates/gcode/assets/import_roots/ruby_require_roots.json` file is a static configuration asset that defines mappings between Ruby require paths and their corresponding top-level constant or module namespaces. It acts as a static registry used by the indexing and analysis system to resolve import dependencies to their correct runtime constants.
-
-This file helps bridge the gap between file-based import paths and the actual constants defined in Ruby's global namespace. For instance, requiring the path `json` corresponds to the `JSON` namespace as mapped in crates/gcode/assets/import_roots/ruby_require_roots.json:2, while requiring `fileutils` exposes the `FileUtils` namespace as specified in crates/gcode/assets/import_roots/ruby_require_roots.json:3.
+`crates/gcode/assets/import_roots/ruby_require_roots.json` exposes 10 indexed API symbols.
 
 ## How it fits
 
-This JSON file provides a static dictionary for the surrounding codebase to look up standard and third-party Ruby namespaces. In static analysis, it is difficult to infer namespaces from require paths because Ruby's load paths and naming conventions can decouple file names from module names. 
+`crates/gcode/assets/import_roots/ruby_require_roots.json` is documented from its indexed symbols; see the Reference table below and the module page for how it connects to sibling files.
 
-The configuration maps standard library components like `net/http` at crates/gcode/assets/import_roots/ruby_require_roots.json:4 and `net/https` at crates/gcode/assets/import_roots/ruby_require_roots.json:5 to the shared `Net` namespace. It also indexes major third-party dependencies, resolving the `faraday` HTTP library to `Faraday` at crates/gcode/assets/import_roots/ruby_require_roots.json:6 and `nokogiri` to `Nokogiri` at crates/gcode/assets/import_roots/ruby_require_roots.json:7.
-
-Additionally, testing libraries are consolidated under a single namespace definition. The core testing path `rspec` at crates/gcode/assets/import_roots/ruby_require_roots.json:8, as well as its submodules `rspec/expectations` at crates/gcode/assets/import_roots/ruby_require_roots.json:9, `rspec/core` at crates/gcode/assets/import_roots/ruby_require_roots.json:10, and `rspec/mocks` at crates/gcode/assets/import_roots/ruby_require_roots.json:11, all correctly map to the unified `RSpec` namespace. This mappings layout ensures correct symbol resolution and cross-referencing within Ruby environments.
-[crates/gcode/assets/import_roots/ruby_require_roots.json:2]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:3]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:4]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:5]
-[crates/gcode/assets/import_roots/ruby_require_roots.json:6]
-
-## Key components
+## Reference
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
