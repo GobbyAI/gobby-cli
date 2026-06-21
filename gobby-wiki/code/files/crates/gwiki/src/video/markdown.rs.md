@@ -24,6 +24,6 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `write_video_derived_markdown` | function | Indexed function `write_video_derived_markdown` in `crates/gwiki/src/video/markdown.rs`. [crates/gwiki/src/video/markdown.rs:15-40] |
-| `render_video_derived_markdown` | function | Indexed function `render_video_derived_markdown` in `crates/gwiki/src/video/markdown.rs`. [crates/gwiki/src/video/markdown.rs:42-300] |
+| `write_video_derived_markdown` | function | Aligns video transcript segments and frame descriptions, renders derived markdown from them, and atomically writes the result to a vault-relative file path. [crates/gwiki/src/video/markdown.rs:15-40] |
+| `render_video_derived_markdown` | function | Constructs a markdown string by aggregating video source metadata, asset paths, frame and transcript statistics, and scope information into structured metadata fields. [crates/gwiki/src/video/markdown.rs:42-300] |
 

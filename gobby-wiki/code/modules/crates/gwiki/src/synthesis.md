@@ -19,31 +19,62 @@ Parent: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-`crates/gwiki/src/synthesis` owns the data and safety envelope for turning accepted knowledge handoffs into vault pages. Its types define article targets, source bundles, generation input, prompt telemetry, synthesized pages, and write outcomes; synthesized concept/topic pages can carry an `ExplainerReport`, while source pages leave it absent (`crates/gwiki/src/synthesis/types.rs:1-67`). `ArticleKind` provides the stable mapping from logical article type to vault directory and source-kind metadata (`crates/gwiki/src/synthesis/types.rs:7-30`).
+## crates/gwiki/src/synthesis
 
-The write flow is guarded before and during persistence. Callers may preflight with `ensure_page_write_allowed`; `write_synthesized_page` then normalizes Markdown, verifies the destination stays under the vault, validates the parent, creates missing directories, and applies the selected write policy (`crates/gwiki/src/synthesis/write.rs:10-39`). Path validation canonicalizes the vault root and existing path prefixes, rejects paths outside the root or containing parent/root/prefix components, and separately checks existing parents before directory creation (`crates/gwiki/src/synthesis/paths.rs:10-80`). Tests capture the intended behavior: existing pages fail under `RequireMergeIntent`, existing content is preserved, and successful writes classify create versus overwrite outcomes (`crates/gwiki/src/synthesis/tests.rs:14-66`).
+The `synthesis` module is responsible for turning structured research inputs into finished wiki pages. It owns the full pipeline from raw material assembly through LLM prompt construction, markdown rendering, safe path resolution, and atomic file writing. The module is organised into five collaborating files — `types`, `paths`, `generate`, `render`, and `write` — plus an integration test suite in `tests.rs`.
 
-Collaboration points are mostly crate-local. The path layer imports `WikiError` and synthesis types (`crates/gwiki/src/synthesis/paths.rs:1-6`), the write layer imports path guards plus page/write types and calls `crate::markdown::normalize` before persistence (`crates/gwiki/src/synthesis/write.rs:5-8`, `crates/gwiki/src/synthesis/write.rs:31-37`), and the data model imports `serde::Serialize` plus `crate::explainer::ExplainerReport` (`crates/gwiki/src/synthesis/types.rs:3-5`). The tests exercise public API across pathing, rendering, generation, and writing, including `source_page_paths`, `yaml_scalar`, `slugify_unique`, `synthesize_article`, and `write_synthesized_page` (`crates/gwiki/src/synthesis/tests.rs:7-12`).
+### Public API surface
 
-| Public symbol | Kind | Contract / fields |
-| --- | --- | --- |
-| `ArticleKind` | enum | `Source`, `Concept`, `Topic` (`crates/gwiki/src/synthesis/types.rs:7-13`) |
-| `ArticleKind::directory` | method | Maps kinds to `knowledge/sources`, `knowledge/concepts`, `knowledge/topics` (`crates/gwiki/src/synthesis/types.rs:15-22`) |
-| `ArticleKind::source_kind` | method | Maps kinds to `source_note`, `concept`, `topic` (`crates/gwiki/src/synthesis/types.rs:24-30`) |
-| `SynthesisSource` | struct | `title`, `path`, `chunks` (`crates/gwiki/src/synthesis/types.rs:32-37`) |
-| `SynthesisInput` | struct | Handoff/topic/outline, target kind, accepted sources, citations, conflicts, missing evidence (`crates/gwiki/src/synthesis/types.rs:39-49`) |
-| `SynthesisPrompt` | struct | Prompt text plus daemon/token/truncation metadata (`crates/gwiki/src/synthesis/types.rs:51-58`) |
-| `SynthesizedPage` | struct | `path`, `title`, `markdown`, optional `explainer` (`crates/gwiki/src/synthesis/types.rs:60-67`) |
-| `WritePolicy` | enum | `RequireMergeIntent`, `AllowOverwriteAfterMerge` (`crates/gwiki/src/synthesis/types.rs:69-73`) |
-| `PageWriteKind` | enum | `Created`, `Overwritten` (`crates/gwiki/src/synthesis/types.rs:75-80`) |
-| `PageWriteOutcome` | struct | Written `path` plus write `kind` (`crates/gwiki/src/synthesis/types.rs:82-86`) |
+| Symbol | Kind | File |
+|---|---|---|
+| `ArticleKind` | enum | types.rs:8 |
+| `SynthesisSource` | struct | types.rs:36 |
+| `SynthesisInput` | struct | types.rs:43 |
+| `SynthesisPrompt` | struct | types.rs:54 |
+| `SynthesizedPage` | struct | types.rs:62 |
+| `WritePolicy` | enum | types.rs:69 |
+| `PageWriteKind` | enum | types.rs:75 |
+| `PageWriteOutcome` | struct | types.rs:82 |
+| `synthesize_article` | fn | generate.rs |
+| `write_synthesized_page` | fn | write.rs:32 |
+| `ensure_page_write_allowed` | fn | write.rs:14 |
+| `slugify_unique` | fn | paths.rs |
 
-| Write behavior | Evidence |
-| --- | --- |
-| Existing pages require merge intent under strict policy | `ensure_page_write_allowed` checks `page.path.exists()` with `RequireMergeIntent` (`crates/gwiki/src/synthesis/write.rs:15-28`) |
-| Strict writes use exclusive creation | `.create_new(true)` is used for `RequireMergeIntent` writes (`crates/gwiki/src/synthesis/write.rs:47-52`) |
-| Vault containment is enforced before writing | `write_synthesized_page` calls `ensure_synthesized_path_inside_vault` (`crates/gwiki/src/synthesis/write.rs:31-37`) |
-| Parent directory is validated before creation | parent guard runs before `create_dir_all` (`crates/gwiki/src/synthesis/write.rs:38-44`) |
+### Article kinds and vault layout
+
+`ArticleKind` controls which subdirectory a page lands in and the `source_kind` front-matter field injected by the renderer (types.rs:8–32).
+
+| Variant | Directory | source\_kind |
+|---|---|---|
+| `Source` | `knowledge/sources` | `source_note` |
+| `Concept` | `knowledge/concepts` | `concept` |
+| `Topic` | `knowledge/topics` | `topic` |
+
+### Core data flow
+
+Callers assemble a `SynthesisInput` (types.rs:43) carrying the `handoff_id`, `topic`, outline bullet points, accepted `SynthesisSource` chunks, citation strings, conflicting-claims notes, and missing-evidence annotations. `generate.rs` consumes that struct, builds a `SynthesisPrompt` (types.rs:54) that records the rendered `system`/`user` strings, a `daemon_synthesis_available` flag, an estimated token count, and the number of sources that were truncated to fit the context window, then calls out to the LLM layer. The resulting markdown comes back as a `SynthesizedPage` (types.rs:62), which adds the resolved `path`, `title`, normalised `markdown`, and an optional `ExplainerReport` (absent for source notes, present for compiled concept/topic pages).
+
+### Path safety and write policy
+
+`paths.rs` enforces that every path produced by synthesis stays inside the vault root. `ensure_synthesized_path_inside_vault` (paths.rs:9) canonicalises the existing path prefix via `canonicalize_existing_prefix` (paths.rs:40) and rejects any result that escapes the vault via `..`, absolute segments, or prefix components. `ensure_existing_parent_inside_vault` (paths.rs:65) applies the same guard to the target directory before `fs::create_dir_all` is called.
+
+`write.rs` enforces two write modes through `WritePolicy`:
+
+| Variant | Behaviour |
+|---|---|
+| `RequireMergeIntent` | Opens with `create_new(true)`; fails with `WikiError::InvalidInput { field: "write_intent" }` if the file already exists (write.rs:47–65) |
+| `AllowOverwriteAfterMerge` | Performs an atomic replacement; classifies the outcome as `PageWriteKind::Created` or `PageWriteKind::Overwritten` |
+
+`ensure_page_write_allowed` (write.rs:14) is an advisory preflight for callers who want to surface conflicts before spending tokens on synthesis; the race-free protection lives inside `write_synthesized_page` itself. `write_synthesized_page` also normalises whitespace via `crate::markdown::normalize` before writing (write.rs:33).
+
+### Test coverage
+
+`tests.rs` imports directly from the module's public surface (tests.rs:8–11) and exercises three invariants: that `RequireMergeIntent` leaves an existing file untouched and returns the correct error field (tests.rs:14–43); that `AllowOverwriteAfterMerge` correctly classifies first-write vs. overwrite outcomes (tests.rs:45–68); and that `slugify_unique` terminates within `MAX_SLUG_TRIES` (paths.rs:8) even when every candidate collides, returning a bounded fallback slug.
+[crates/gwiki/src/synthesis/generate.rs:13-100]
+[crates/gwiki/src/synthesis/paths.rs:10-38]
+[crates/gwiki/src/synthesis/render.rs:3-37]
+[crates/gwiki/src/synthesis/tests.rs:15-42]
+[crates/gwiki/src/synthesis/types.rs:9-13]
 
 ## Files
 

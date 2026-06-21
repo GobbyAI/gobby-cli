@@ -20,23 +20,60 @@ Parent: [[code/modules/crates/gcode/src/vector|crates/gcode/src/vector]]
 
 ## Overview
 
-The `code_symbols` vector module owns semantic indexing and search for extracted code symbols. It turns `Symbol` records into embedding text and Qdrant payloads, supports daemon-routed or direct embedding configuration through `EmbeddingSource`, and wraps embedding calls in `EmbeddingBackend`, which validates direct embedding config before building a client (`embedding.rs:22-48`). Payloads preserve symbol identity, source ranges, provenance, confidence, and optional summaries for round-tripping search hits back to indexed code (`types.rs:6-65`).
+## Module: `crates/gcode/src/vector/code_symbols`
 
-Lifecycle management is centered on `CodeSymbolVectorLifecycle`: it resolves the project collection name, validates the Qdrant boundary, initializes embedding and HTTP clients, and provides flows for ensuring collections, syncing file symbols, clearing project vectors, and rebuilding symbol vectors (`lifecycle.rs:22-57`). Qdrant-specific helpers keep collection naming compatible with the wider `gobby_core::qdrant` schema, expose project/file deletion helpers, and clean up vectors for files no longer present in the indexed set (`qdrant.rs:14-60`).
+This module implements the full vector-search pipeline for code symbols, covering every concern from raw text embedding through Qdrant collection management to scored semantic search. It is subdivided into five functional layers — types, embedding, lifecycle, Qdrant I/O, repository queries, and search — plus a test harness. The module keeps all Qdrant collections under a shared naming convention (`CODE_SYMBOL_COLLECTION_PREFIX`) enforced by `collection_name` (qdrant.rs) so that collections remain compatible with the Python daemon's existing Qdrant schema (qdrant.rs:13-14).
 
-The module collaborates outward with `crate::config` for `EmbeddingConfig`, `QdrantConfig`, `CodeVectorSettings`, and `CODE_SYMBOL_COLLECTION_PREFIX`; with `crate::models::Symbol` for indexed code facts; and with `gobby_core` for AI routing, Qdrant request shapes, collection name validation, and degradation state (`embedding.rs:3-12`, `lifecycle.rs:5-18`, `qdrant.rs:6-10`). Internally, lifecycle code calls embedding helpers such as `dimension_probe_text` and `vector_text_for_symbol`, then uses Qdrant helpers such as `collection_name`, `collection_path`, `parse_collection_schema`, and delete APIs to maintain the vector store (`lifecycle.rs:12-20`).
+The embedding layer (`embedding.rs`) exposes an `EmbeddingBackend` that accepts two sources: a daemon-routed `AiContext` (using `gobby_core::ai::{daemon, effective_route}`) or a direct `EmbeddingConfig` with a raw HTTP client (embedding.rs:1-18). It provides single-text, query, and batch embedding entry points, and probes the model's output dimensionality via the sentinel string `"dimension_probe"` (embedding.rs:16-22). The lifecycle layer (`lifecycle.rs`) wraps `EmbeddingBackend` in `CodeSymbolVectorLifecycle`, which owns a `QdrantConfig`, a `reqwest` blocking client, and per-project collection state. Its methods manage the full collection lifecycle: schema creation, schema compatibility checks, per-file symbol upsert (in batches of `DEFAULT_UPSERT_BATCH_SIZE`), stale-vector deletion, and full project rebuilds. The Qdrant I/O layer (`qdrant.rs`) contains all raw HTTP calls — collection creation and deletion, filtered vector deletes, scroll-based file-path enumeration, and orphan cleanup — all keyed on a singleton `OnceLock<reqwest::blocking::Client>` (qdrant.rs:17-18). The repository layer (`repository.rs`) wraps SQL queries for fetching `Symbol` rows per file or project, while `search.rs` embeds a query, issues a `SearchRequest` to Qdrant, and maps results to `CodeSymbolVectorSearchHit` records.
 
-| Area | Public symbols |
-| --- | --- |
-| Embedding | `EmbeddingSource`, `EmbeddingBackend`, `embedding_source_from_context`, `resolve_embedding_ai_context`, `embed_text`, `embed_text_batch`, `embed_query`, `probe_embedding_dim`, `vector_text_for_symbol` |
-| Lifecycle | `CodeSymbolVectorLifecycle`, `resolve_lifecycle_qdrant_config`, `lifecycle_status`, `payload_map`, `point_ids` |
-| Qdrant | `VectorOrphanCleanup`, `collection_name`, `delete_project_collection`, `delete_file_vectors`, `cleanup_orphan_file_vectors`, `delete_code_symbol_collections_with_prefix`, `parse_collection_schema` |
-| Repository/Search | `fetch_symbols_for_file`, `fetch_symbols_for_project`, `search_code_symbols`, `semantic_search`, `vector_search` |
-| Types | `CodeSymbolVectorSearchRequest`, `CodeSymbolVectorSearchHit`, `CodeSymbolVectorPayload`, `CodeSymbolVectorLifecycleStatus`, `VectorCollectionSchema`, `VectorLifecycleError` |
+The module sits inside `crates/gcode::vector` and is called into by higher-level gcode orchestration that drives indexing and semantic search flows. It imports from `gobby_core::ai_context`, `gobby_core::ai_types`, `gobby_core::degradation`, `gobby_core::qdrant`, and `gobby_core::config`, treating `gobby_core` as the shared infrastructure layer. Inbound callers receive `CodeSymbolVectorLifecycleStatus` / `CodeSymbolVectorLifecycleOutput` as progress/result envelopes and either a `VectorLifecycleError` or a `SearchError` on failure. The `tests.rs` file provides builder helpers (`test_symbol`, `test_context`, `spawn_http_responses`) and integration-style tests (`resolves_via_shared_routing`, `reads_endpoint_from_shared_binding`, `direct_source_uses_resolved_embedding_config`) that exercise the routing and config-resolution paths without requiring a live Qdrant instance.
 
-| Environment variable | Purpose | Default |
-| --- | --- | --- |
-| `GCODE_QDRANT_DELETE_TIMEOUT_SECS` | Overrides Qdrant delete timeout | `60s` (`qdrant.rs:14-17`) |
+### Public Types
+
+| Symbol | Kind | File | Role |
+|---|---|---|---|
+| `EmbeddingSource` | enum | embedding.rs | Selects daemon vs. direct embedding path |
+| `EmbeddingBackend` | struct | embedding.rs | HTTP client wrapper for embedding calls |
+| `CodeSymbolVectorLifecycle` | struct | lifecycle.rs | Stateful collection + embedding manager |
+| `CodeSymbolVectorLifecycleStatus` | struct | types.rs | Pre-run status envelope |
+| `CodeSymbolVectorLifecycleOutput` | struct | types.rs | Post-run result envelope |
+| `CodeSymbolVectorLifecycleAction` | type alias | types.rs | Enum of sync/rebuild/clear actions |
+| `CodeSymbolVectorPayload` | struct | types.rs | Qdrant point payload schema |
+| `CodeSymbolVectorSearchRequest` | struct | types.rs | Semantic search request parameters |
+| `CodeSymbolVectorSearchHit` | struct | types.rs | Scored search result (symbol_id + score) |
+| `VectorCollectionSchema` | struct | types.rs | Expected schema description |
+| `ExistingVectorCollectionSchema` | struct | types.rs | Schema read back from Qdrant |
+| `VectorLifecycleError` | type | types.rs | Lifecycle error variants |
+| `SearchError` | type | search.rs | Search-phase error variants |
+| `VectorOrphanCleanup` | struct | qdrant.rs | Orphan-deletion result summary |
+
+### Key Public Functions
+
+| Function | File | Description |
+|---|---|---|
+| `resolve_lifecycle_qdrant_config` | lifecycle.rs | Resolves `QdrantConfig` from a `ConfigSource` |
+| `lifecycle_status` | lifecycle.rs | Constructs a pre-run `CodeSymbolVectorLifecycleStatus` |
+| `search_code_symbols` | search.rs | End-to-end semantic search over a project's collection |
+| `semantic_search` | search.rs | Lower-level Qdrant vector search call |
+| `delete_project_collection` | qdrant.rs | Drops an entire project's Qdrant collection |
+| `delete_file_vectors` | qdrant.rs | Removes all vectors for a specific file path |
+| `cleanup_orphan_file_vectors` | qdrant.rs | Scrolls collection, removes files absent from the index |
+| `delete_code_symbol_collections_with_prefix` | qdrant.rs | Bulk-deletes collections matching a prefix |
+| `fetch_symbols_for_file` | repository.rs | SQL query: symbols by file path |
+| `fetch_symbols_for_project` | repository.rs | SQL query: all symbols for a project |
+| `embed_text` / `embed_query` / `embed_text_batch` | embedding.rs | Embedding call entry points |
+| `probe_embedding_dim` | embedding.rs | Detects vector dimension from live model |
+| `vector_text_for_symbol` | embedding.rs | Serialises a `Symbol` to its embedding input string |
+
+### Environment Variables
+
+| Variable | Default | Description |
+|---|---|---|
+| `GCODE_QDRANT_DELETE_TIMEOUT_SECS` | `60` s | Timeout for Qdrant delete operations (qdrant.rs:14-16) |
+
+### Qdrant Collection Naming
+
+Collections are constructed as `gcode:<CODE_SYMBOL_COLLECTION_PREFIX><project_id>` via `collection_name(collection_prefix, project_id)` (qdrant.rs:29-35), ensuring namespace isolation per project and compatibility with the daemon's Python-side collections (qdrant.rs:13).
 [crates/gcode/src/vector/code_symbols/embedding.rs:21-23]
 [crates/gcode/src/vector/code_symbols/lifecycle.rs:29-37]
 [crates/gcode/src/vector/code_symbols/qdrant.rs:21-27]

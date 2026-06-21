@@ -44,30 +44,34 @@ Parent: [[code/modules/crates|crates]]
 
 ## Overview
 
-`crates/gcode` is the GCode CLI crate and its surrounding contract/assets bundle. It defines a “Fast code index CLI for Gobby” contract at version 2, including invocation schema, global flags, scope resolution, command metadata, JSON output keys, and error-code metadata (crates/gcode/contract/gcode.contract.json:1-94). The main application layer owns CLI orchestration, configuration/context resolution, PostgreSQL index access, graph/vector projection lifecycle, search/grep, setup, freshness, visibility, and shared output/model contracts (crates/gcode/src/commands/grep.rs:1-100, crates/gcode/src/commands/search.rs:1-100).
+## crates/gcode
 
-The key runtime flow is command dispatch into thin handlers: handlers resolve a `Context`, connect to backing services, apply scope and visibility rules, then render through `output::Format`. `grep` runs that pattern over indexed chunks, while `search` combines exact, BM25, vector, and graph-style results before output (crates/gcode/src/commands/grep.rs:1-100, crates/gcode/src/commands/search.rs:1-100). The `assets/import_roots` data supports dependency/import resolution by mapping package or require identifiers to top-level API roots used by downstream indexing code.
+`crates/gcode` is the top-level application crate for the Gcode toolchain. It houses the CLI binary entry point (`main`), a machine-readable contract surface (`crates/gcode/contract`), bundled static assets (`crates/gcode/assets`), and all runtime source logic (`crates/gcode/src`). The crate brings together every major subsystem — code indexing, graph analysis, vector search, AI documentation generation, project context resolution, and service configuration — into a single deployable `gcode` binary.
 
-At build time, the crate exposes a small Cargo build script that declares sensitivity to `GCODE_POSTGRES_TEST_DATABASE_URL`, registers `gcode_postgres_tests` as an allowed cfg, and enables that cfg only when the env var is present (crates/gcode/build.rs:1-9). This makes PostgreSQL-backed test code opt-in through environment configuration rather than always compiling it.
+The build script (`build.rs:1-9`) is the crate's only compile-time gate. It watches one environment variable and conditionally emits a Cargo `cfg` flag that enables PostgreSQL-backed integration tests across the crate's test suite. When the variable is absent the cfg is never set, so Postgres tests are silently excluded rather than failing.
 
-| Surface | Role | Evidence |
-| --- | --- | --- |
-| `contract` | Static CLI contract: version, flags, commands, output keys, errors | crates/gcode/contract/gcode.contract.json:1-94 |
-| `src` | Main CLI implementation and service orchestration | crates/gcode/src/commands/grep.rs:1-100; crates/gcode/src/commands/search.rs:1-100 |
-| `assets/import_roots` | Registry data for dependency/import root resolution | child module summary |
-| `build.rs::main` | Cargo cfg setup for PostgreSQL test gating | crates/gcode/build.rs:1-9 |
+| Item | Detail |
+|---|---|
+| Env var watched | `GCODE_POSTGRES_TEST_DATABASE_URL` (`build.rs:2`) |
+| Emitted cfg flag | `gcode_postgres_tests` (`build.rs:3,6`) |
+| Rebuild trigger | `cargo:rerun-if-env-changed` on the same variable (`build.rs:2`) |
 
-| Environment Variable | Effect | Evidence |
-| --- | --- | --- |
-| `GCODE_POSTGRES_TEST_DATABASE_URL` | Triggers Cargo rerun and enables `cfg(gcode_postgres_tests)` when set | crates/gcode/build.rs:2-7 |
+The `src` child module contains the bulk of public API symbols: the `Cli` struct and its command dispatch (`run`, `run_with_exit_code`, `dispatch_early_command`), typed command variants (`Command`, `GraphCommand`, `VectorCommand`, `EmbeddingsCommand`), and cross-cutting helpers for argument parsing (`AiRouteArg`, `AiDepthArg`, `AiProseDepthArg`), flag construction (`ai_flag`, `grep_flags`, `graph_read_flags`), and JSON output key contracts. The `contract` child module publishes `Contract`, `ContractCommand`, `ContractFlag`, and `BinaryContract` — the machine-readable specification against which the CLI's clap command tree is validated at test time via `clap_command_leaves_are_documented_in_contract`.
+
+Externally, `crates/gcode` is the terminal consumer of nearly every other crate in the workspace: it calls into graph database code (FalkorDB via `CodeGraph`, `GraphPayload`), vector store code (Qdrant via `CodeSymbolVectorLifecycle`), the PostgreSQL index layer (`CodeFactSink`, search queries, schema validation), AI generation and verification pipelines, the codewiki documentation engine, and the multi-language parser/indexer. Nothing in the workspace imports from `crates/gcode`; it is strictly a consumer that wires all subsystems together and surfaces them through the CLI contract.
+[crates/gcode/src/graph/code_graph/read/payload_queries.rs:10-29]
+[crates/gcode/src/graph/code_graph/read/relationship_queries.rs:9-21]
+[crates/gcode/src/index/parser/calls/resolution.rs:6-10]
+[crates/gcode/src/vector/code_symbols/qdrant.rs:21-27]
+[crates/gcode/src/vector/code_symbols/search.rs:8-14]
 
 ## Child Modules
 
 | Module | Summary |
 | --- | --- |
-| [[code/modules/crates/gcode/assets\|crates/gcode/assets]] | `crates/gcode/assets` is a data-only asset area for GCode’s dependency/import resolution. Its child module, `assets/import_roots`, provides registry JSON files that map package or require identifiers to top-level API roots used by downstream indexing code. |
-| [[code/modules/crates/gcode/contract\|crates/gcode/contract]] | `crates/gcode/contract` is the static contract surface for the `gcode` CLI, identified as contract version 2 and summarized as a “Fast code index CLI for Gobby” (crates/gcode/contract/gcode.contract.json:1-4). It centralizes the tool’s invocation schema: global flags, scope resolution, commands, JSON output keys, and error-code metadata (crates/gcode/contract/gcode.contract.json:5-94). |
-| [[code/modules/crates/gcode/src\|crates/gcode/src]] | `crates/gcode/src` is the main gcode application crate: it owns the CLI surface, configuration/context resolution, PostgreSQL code-index access, graph/vector projection lifecycle, search/grep commands, setup, freshness, visibility, and shared output/model contracts. The command layer is thin orchestration: handlers resolve `Context`, connect to backing services, apply scope and visibility rules, then render through `output::Format`; `grep` follows this pattern over indexed chunks, while `search` merges exact, BM25, vector, and graph-style results (`crates/gcode/src/commands/grep.rs:1-100`,… |
+| [[code/modules/crates/gcode/assets\|crates/gcode/assets]] | ## crates/gcode/assets |
+| [[code/modules/crates/gcode/contract\|crates/gcode/contract]] | ## crates/gcode/contract |
+| [[code/modules/crates/gcode/src\|crates/gcode/src]] | ## crates/gcode/src |
 
 ## Files
 

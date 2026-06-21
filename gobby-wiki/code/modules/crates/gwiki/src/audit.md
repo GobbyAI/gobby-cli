@@ -16,25 +16,39 @@ Parent: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-The `crates/gwiki/src/audit` module audits wiki pages for unsupported claims and renders the resulting report. Its claim pass takes a `WikiPage`, `ProvenanceGraph`, shared `AuditSourceContext`, and `AuditOptions`, derives candidate claim lines, computes provenance-supported lines, checks CodeWiki frontmatter support, and filters out claims that already have provenance or inline citations before emitting `UnsupportedClaim` records with path, line, heading, reason, and source context .
+## Module: `crates/gwiki/src/audit`
 
-The module collaborates with linting, markdown parsing, provenance, synthesis, and CodeWiki contract code. `claims.rs` imports `WikiPage` and line utilities from `crate::lint`, markdown fence and heading helpers from `crate::markdown`, `ProvenanceGraph` from `crate::provenance`, `slugify` from `crate::synthesis`, and audit-local types from `super` . Generated CodeWiki pages are treated specially: pages under `code/` with `trust: generated` do not inherit raw source context, avoiding misleading audit source suggestions .
+The `audit` module is responsible for scanning wiki pages for factual claims that lack source provenance or inline citations, collecting those violations into a structured report, and rendering that report as human-readable text. It operates on the parsed wiki content produced by `crate::lint` and cross-references it against provenance data held in `crate::provenance::ProvenanceGraph` to determine which claim lines are supported. The module exposes a public `run` entry-point (exercised throughout `tests.rs`) that accepts a filesystem root and a `ScopeIdentity` and returns an `AuditReport` containing zero or more `UnsupportedClaim` records.
 
-Rendering is intentionally compact. `render_text` accepts an `AuditReport`, prints the report scope, then lists unsupported claims as `path:line claim`, appending source IDs when contextual sources are available; empty reports render `- none` [crates/gwiki/src/audit/render.rs:3-32]. Tests exercise the end-to-end audit path via `run(root, ScopeIdentity::topic("ops"))`, source registration through `SourceManifest::register`, and generated-CodeWiki source-context behavior  .
+The central flow lives in `claims.rs`. `unsupported_claims` (claims.rs:14-42) calls `claim_lines` to enumerate every claim-bearing line in a `WikiPage`, then calls `supported_claim_lines` to intersect those against the `ProvenanceGraph`. Three exemption paths exist before a claim is emitted: the page has CodeWiki frontmatter source spans (`has_codewiki_frontmatter_source_spans`, claims.rs:63), the line is covered by provenance, or the line carries an inline citation (`has_inline_source_support`). Generated CodeWiki pages — those under `code/` with `trust: generated` in their frontmatter — are detected by `is_generated_codewiki_page` (claims.rs:56-60) and receive an empty `source_context` slice so that raw sources registered in the wider system are not incorrectly attributed to machine-generated content; this behaviour is verified by the `generated_codewiki_numeric_claims_do_not_inherit_raw_source_context` test (tests.rs:54).
 
-| Symbol | Kind | Responsibility | Evidence |
-| --- | --- | --- | --- |
-| `unsupported_claims` | `pub(super)` function | Produces `UnsupportedClaim` entries for claims lacking provenance or inline citation |  |
-| `has_codewiki_frontmatter_source_spans` | `pub(super)` function | Detects CodeWiki frontmatter provenance support |  |
-| `render_text` | `pub` function | Converts an `AuditReport` into plain text output | [crates/gwiki/src/audit/render.rs:3-32] |
+Rendering is handled by `render_text` in `render.rs`, the sole public symbol in that file. It formats an `AuditReport` as a plain-text summary, listing each unsupported claim with its file path, line number, claim text, and a bracketed list of contributing source IDs drawn from `AuditSourceContext` records (render.rs:1-31). Source context is threaded into `UnsupportedClaim` at claim-collection time and is populated from `SourceManifest`-registered sources, as demonstrated by the `reports_unsupported_claims` test which registers a URL source with a citation and asserts it appears on the resulting claim (tests.rs:14-46).
 
-| Collaborator | Direction | Role | Evidence |
-| --- | --- | --- | --- |
-| `crate::lint::WikiPage` | imported | Supplies parsed page content and relative paths for auditing |  |
-| `crate::markdown` helpers | imported | Support claim extraction around headings and fenced blocks |  |
-| `crate::provenance::ProvenanceGraph` | imported | Determines which claim lines have source support |  |
-| `super::AuditReport` | imported | Input to text rendering |  |
-| `SourceManifest` / `SourceDraft` | test dependency | Provides source fixtures and citations for audit behavior |  |
+### Public API
+
+| Symbol | Location | Description |
+|---|---|---|
+| `render_text` | render.rs:3 | Converts an `AuditReport` to a plain-text string |
+| `unsupported_claims` (pub(super)) | claims.rs:14 | Enumerates claim lines without source provenance |
+| `has_codewiki_frontmatter_source_spans` (pub(super)) | claims.rs:63 | Returns true when a `code/` page declares provenance spans in frontmatter |
+| `has_inline_source_support` (pub(super)) | claims.rs (tested at tests.rs:5) | Returns true when claim text contains an inline citation marker |
+| `claim_lines` (pub(super)) | claims.rs (tested at tests.rs:4) | Extracts all claim-bearing lines from a `WikiPage` |
+
+### Cross-module dependencies
+
+| Import | Used for |
+|---|---|
+| `crate::lint::{WikiPage, line_number}` | Parsed page representation and line lookup |
+| `crate::markdown::{MarkdownFence, markdown_fence_*,  parse_atx_heading}` | Detecting fenced code blocks and headings when classifying claim lines |
+| `crate::provenance::ProvenanceGraph` | Determining which lines have source coverage |
+| `crate::synthesis::slugify` | Normalising identifiers during claim classification |
+| `crate::sources::{SourceDraft, SourceManifest}` | Registering sources in tests and populating `source_context` |
+| `gobby_core::codewiki_contract::TRUST_GENERATED` | Sentinel value for identifying machine-generated pages (claims.rs:57) |
+[crates/gwiki/src/audit/claims.rs:15-44]
+[crates/gwiki/src/audit/render.rs:3-32]
+[crates/gwiki/src/audit/tests.rs:14-48]
+[crates/gwiki/src/audit/claims.rs:46-55]
+[crates/gwiki/src/audit/claims.rs:57-62]
 
 ## Files
 

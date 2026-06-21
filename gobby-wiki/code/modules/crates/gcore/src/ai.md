@@ -26,40 +26,60 @@ Parent: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Overview
 
-The `crates/gcore/src/ai` module centralizes AI capability routing and direct provider calls for text, vision, embeddings, and speech tasks. Its root module imports `AiContext`, AI result/error types, and capability binding/routing config, then exposes submodules for daemon, embeddings, probe, text, transcription, and vision (`crates/gcore/src/ai/mod.rs:1-100`). Routing is capability-aware: `effective_route` preserves explicit `Off`, `Direct`, and `Daemon` choices, while `Auto` probes daemon availability and falls back to a configured direct route or `Off` (`crates/gcore/src/ai/mod.rs:1-100`).
+## crates/gcore/src/ai
 
-The daemon child module is the blocking HTTP adapter between `AiContext` capability bindings and the local Gobby daemon. It sends voice transcription, vision extraction, text generation, and embedding work to daemon endpoints, while its request layer validates audio capability support, builds multipart uploads, adds optional text fields, and constructs text JSON bodies with provider/model/project/profile/candidate metadata (`operations.rs:1-13`, `request.rs:1-100`).
+This module is the central AI dispatch layer for `gcore`, responsible for routing AI capability requests — text generation, vision/image description, audio transcription and translation, and vector embeddings — to either a local daemon process or a direct remote API endpoint. It owns the shared transport primitives (retry logic, backoff, timeout constants, HTTP client wrappers) and re-exports the six sub-modules that implement each capability. The `mod.rs` file defines `AiTransport`, `effective_route`, and helpers such as `chat_completions_url`, `retry_with_backoff`, and `parse_json_response` that every sub-module calls through the `super::` path (mod.rs:1–100).
 
-Direct capability flows use shared transport helpers from the root module. Vision encodes image bytes as a base64 data URI, sends a chat-completions-style request, and parses either JSON or delimited content into `VisionResult` (`crates/gcore/src/ai/vision.rs:1-100`). Transcription maps `TranscriptionTask` to `AudioTranscribe` or `AudioTranslate`, chooses `/v1/audio/transcriptions` or `/v1/audio/translations`, builds multipart requests, retries with backoff, and parses a `TranscriptionResult` (`crates/gcore/src/ai/transcription.rs:1-100`).
+Routing decisions flow through `effective_route` → `effective_route_with_probe` → `daemon_route_or_fallback` / `direct_route_or_off` (mod.rs:31–65). When the configured `AiRouting` is `Auto`, the module calls into `probe::probe_daemon_capability` at runtime to check whether the daemon currently advertises the requested capability; if it does not, the module falls back to a direct API binding or returns `AiRouting::Off`. This probe-then-fallback design makes the system fail-safe: a missing or degraded daemon never blocks a configured direct route. The probe sub-module contacts daemon status endpoints with a tight 750 ms timeout (probe.rs:7) and maps each of the five probed capabilities to a fixed status path (probe.rs:9–17, 62–72).
 
-Probe support is the bridge between routing and daemon health. It imports `AiCapability` plus `daemon_url`, defines daemon status routes for five capabilities, and reports availability or degradation reasons such as missing endpoint, unauthorized, unreachable, or invalid body (`crates/gcore/src/ai/probe.rs:1-100`). That probe result feeds `effective_route` so callers get daemon routing only when the daemon advertises the requested capability (`crates/gcore/src/ai/mod.rs:1-100`).
+Each capability sub-module follows a consistent pattern: accept an `&AiContext`, construct an `AiTransport`, resolve a URL (via `super::chat_completions_url` or a task-specific `endpoint_url`), build a request body, call `super::retry_with_backoff`, and parse the response. `transcription.rs` models two tasks (`Transcribe` / `Translate`) that map to `/v1/audio/transcriptions` and `/v1/audio/translations` (transcription.rs:34–37) and attach multipart audio payloads with an optional language field. `vision.rs` base64-encodes image bytes into a data URI and sends a fixed structured prompt requesting JSON output with `description` and `ocr_text` keys (vision.rs:10–11, 36–53). The `daemon.rs` child module and its sub-package expose convenience wrappers — `generate_via_daemon`, `transcribe_via_daemon`, `describe_image_via_daemon`, `embed_via_daemon` — that bypass the routing layer and talk directly to the daemon, primarily used by tests and internal tooling.
 
-| Public symbol / fact | Purpose | Source |
-| --- | --- | --- |
-| `effective_route` | Resolve configured AI routing for a capability | `crates/gcore/src/ai/mod.rs:1-100` |
-| `CapabilityProbeReport::availability` | Look up probed daemon availability by capability | `crates/gcore/src/ai/probe.rs:1-100` |
-| `capability_status_route` | Map AI capability to daemon status endpoint | `crates/gcore/src/ai/probe.rs:1-100` |
-| `probe_daemon_capability` | Probe capability availability at the configured daemon URL | `crates/gcore/src/ai/probe.rs:1-100` |
-| `describe_image` | Perform direct vision extraction | `crates/gcore/src/ai/vision.rs:1-100` |
-| `transcribe` | Perform direct audio transcription or translation | `crates/gcore/src/ai/transcription.rs:1-100` |
+### Timeout & retry constants
 
-| Capability | Status route | Source |
-| --- | --- | --- |
-| `AudioTranscribe` / `AudioTranslate` | `/api/voice/status` | `crates/gcore/src/ai/probe.rs:1-100` |
-| `VisionExtract` | `/api/llm/vision/status` | `crates/gcore/src/ai/probe.rs:1-100` |
-| `TextGenerate` | `/api/llm/status` | `crates/gcore/src/ai/probe.rs:1-100` |
-| `Embed` | `/api/embeddings/status` | `crates/gcore/src/ai/probe.rs:1-100` |
+| Constant | Value | Applies to |
+|---|---|---|
+| `TEXT_GENERATE_TIMEOUT` | 300 s | Text generation (mod.rs:22) |
+| `VISION_TIMEOUT` | 60 s | Vision/image requests (mod.rs:23) |
+| `EMBEDDINGS_TIMEOUT` | 10 s | Embeddings requests (mod.rs:24) |
+| `STT_CHUNK_TIMEOUT` | 120 s | Audio transcription chunks (mod.rs:25) |
+| `PROBE_TIMEOUT` | 750 ms | Daemon capability probe (probe.rs:7) |
+| `MAX_RETRIES` | 2 | All retried operations (mod.rs:26) |
+| `BASE_BACKOFF` | 250 ms | Initial retry wait (mod.rs:27) |
+| `MAX_BACKOFF` | 30 s | Retry ceiling (mod.rs:28) |
+
+### Daemon status routes by capability
+
+| AiCapability | HTTP Method | Status Path |
+|---|---|---|
+| `AudioTranscribe` / `AudioTranslate` | GET | `/api/voice/status` (probe.rs:64) |
+| `VisionExtract` | GET | `/api/llm/vision/status` (probe.rs:65) |
+| `TextGenerate` | GET | `/api/llm/status` (probe.rs:66) |
+| `Embed` | GET | `/api/embeddings/status` (probe.rs:67) |
+
+### Public API surface by sub-module
+
+| Sub-module | Key public symbols |
+|---|---|
+| `mod.rs` | `effective_route`, `AiTransport`, `retry_with_backoff`, `chat_completions_url`, `parse_json_response` (37 symbols) |
+| `probe.rs` | `probe_daemon_capability`, `probe_daemon_capability_at`, `CapabilityProbeReport`, `CapabilityAvailability`, `CapabilityDegradation`, `capability_status_route` (31 symbols) |
+| `vision.rs` | `describe_image`, `request_body`, `parse_content` (18 symbols) |
+| `transcription.rs` | `transcribe`, `TranscriptionTask`, `endpoint_url`, `build_request` (13 symbols) |
+| `embeddings.rs` | `embed`, `embeddings_request_body`, `parse_daemon_embeddings` (12 symbols) |
+| `text.rs` | `generate_text`, `TextRequestOptions`, `text_request_body` (11 symbols) |
+| `daemon.rs` | `generate_via_daemon`, `transcribe_via_daemon`, `describe_image_via_daemon`, `embed_via_daemon`, `spawn_server`, `EnvGuard` (no indexed exports; see component table) |
+
+The module imports `AiContext` from `crate::ai_context`, result/error types from `crate::ai_types`, capability and routing enumerations from `crate::config`, and the daemon base URL resolver from `crate::daemon_url` (probe.rs:5; mod.rs:9–11). External callers — such as higher-level service handlers — invoke the public entry points (`describe_image`, `transcribe`, `embed`, `generate_text`) and rely on this module to transparently select the daemon or direct transport without needing to know about routing, retries, or backoff.
 [crates/gcore/src/ai/daemon/operations.rs:20-72]
 [crates/gcore/src/ai/daemon/request.rs:11-19]
+[crates/gcore/src/ai/daemon/response.rs:7-9]
+[crates/gcore/src/ai/daemon/tests.rs:15-24]
 [crates/gcore/src/ai/daemon/transport.rs:8-12]
-[crates/gcore/src/ai/daemon/types.rs:4-9]
-[crates/gcore/src/ai/daemon.rs:1-15]
 
 ## Child Modules
 
 | Module | Summary |
 | --- | --- |
-| [[code/modules/crates/gcore/src/ai/daemon\|crates/gcore/src/ai/daemon]] | The `crates/gcore/src/ai/daemon` module is the blocking HTTP adapter between `AiContext` capability bindings and a local Gobby daemon. Its operations layer sends AI work to daemon endpoints for voice transcription, vision extraction, text generation, and embeddings, importing request builders, response parsers, transport helpers, and daemon-specific result/option types from sibling files (`operations.rs:1-13`). The request layer validates supported audio capabilities, builds multipart file uploads, adds optional text fields, and constructs text request JSON with… |
+| [[code/modules/crates/gcore/src/ai/daemon\|crates/gcore/src/ai/daemon]] | ## crates/gcore/src/ai/daemon |
 
 ## Files
 

@@ -14,17 +14,25 @@ Parent: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-The `crates/gcode/src/cli` test surface enforces that every leaf Clap command exposed by `Cli::command()` is documented in the generated Gobby contract. It imports the parent CLI definitions with `super::*`, uses Clap’s `CommandFactory`, and compares discovered command paths against `gobby_code::contract::contract().commands` .
+## crates/gcode/src/cli
 
-The key flow starts by building the Clap command tree, collecting only leaf subcommands, and diffing those leaves against contract command names. Missing entries fail the test with a comma-separated list, making this module a guardrail between CLI implementation and external command metadata .
+This module houses the CLI layer for the `gcode` crate, built on top of [clap](https://docs.rs/clap). The `tests.rs` file is the sole file directly present, but it pulls in five subtest modules — `codewiki`, `grep`, `projection`, `search`, and `top_level` — that collectively cover the full surface of the command hierarchy. The parent module exposes a `Cli` struct that implements both `clap::Parser` and `clap::CommandFactory`, serving as the root of the command tree tests.rs:1-2.
 
-Collaboration-wise, this module is called by the Rust test runner, calls into the parent CLI via `Cli::command()`, calls out to `gobby_code::contract::contract()`, and uses Clap’s `get_subcommands()` API to recursively traverse nested commands  . The test suite is further split into focused sibling test modules for `codewiki`, `grep`, `projection`, `search`, and `top_level` coverage .
+The primary contract-enforcement responsibility lives in `clap_command_leaves_are_documented_in_contract`. It constructs the live `Cli` command graph, walks it to collect every leaf subcommand (i.e., commands with no further subcommands), and then diffs that set against the authoritative list published by `gobby_code::contract::contract()`. Any clap-registered leaf command that lacks a matching contract entry causes the test to fail with a descriptive message listing the offenders tests.rs:11-29. This ensures the CLI and its external contract specification never drift apart.
 
-| Symbol | Kind | Responsibility |
-| --- | --- | --- |
-| `clap_command_leaves_are_documented_in_contract` | test function | Verifies every Clap leaf command has a contract entry  |
-| `clap_command_leaves` | helper function | Initializes collection of leaf command paths  |
-| `collect_clap_command_leaves` | helper function | Recursively walks subcommands and records leaf paths  |
+The two helper functions implement a depth-first traversal of the clap command tree. `clap_command_leaves` initialises a `BTreeSet` and delegates to `collect_clap_command_leaves` tests.rs:31-35. The recursive helper builds a space-joined path string as it descends (e.g., `"search query"`), inserting only terminal nodes into the leaf set tests.rs:37-54. The use of `BTreeSet` throughout guarantees deterministic ordering in both the collected leaves and the diff output.
+
+| Symbol | Kind | Role |
+|---|---|---|
+| `clap_command_leaves_are_documented_in_contract` | `#[test]` fn | Asserts every clap leaf command appears in `gobby_code::contract` tests.rs:11 |
+| `clap_command_leaves` | fn | Entry point — returns `BTreeSet<String>` of all leaf command paths tests.rs:31 |
+| `collect_clap_command_leaves` | fn | Recursive depth-first collector; builds space-delimited path strings tests.rs:37 |
+
+| External dependency | Usage |
+|---|---|
+| `clap::{CommandFactory, Parser}` | Materialises the live command graph from `Cli` tests.rs:2 |
+| `gobby_code::contract::contract()` | Provides the canonical set of documented command names for diffing tests.rs:14-18 |
+| `std::collections::BTreeSet` | Sorted, diffable set used for leaf collection and contract comparison tests.rs:3 |
 [crates/gcode/src/cli/tests.rs:12-30]
 [crates/gcode/src/cli/tests.rs:32-36]
 [crates/gcode/src/cli/tests.rs:38-55]

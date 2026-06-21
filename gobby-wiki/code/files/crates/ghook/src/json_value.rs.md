@@ -24,7 +24,7 @@ Module: [[code/modules/crates/ghook/src|crates/ghook/src]]
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `is_python_truthy` | function | Indexed function `is_python_truthy` in `crates/ghook/src/json_value.rs`. [crates/ghook/src/json_value.rs:3-20] |
+| `is_python_truthy` | function | # Summary This function evaluates the Python truthiness of a 'Value' enum, returning false for null, zero numbers, and empty collections/strings, and true otherwise. [crates/ghook/src/json_value.rs:3-20] |
 
 _Verified by 1 in-file unit test._
 

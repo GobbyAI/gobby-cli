@@ -14,22 +14,45 @@ Parent: [[code/modules/crates/gcode|crates/gcode]]
 
 ## Overview
 
-`crates/gcode/contract` is the static contract surface for the `gcode` CLI, identified as contract version 2 and summarized as a “Fast code index CLI for Gobby” (crates/gcode/contract/gcode.contract.json:1-4). It centralizes the tool’s invocation schema: global flags, scope resolution, commands, JSON output keys, and error-code metadata (crates/gcode/contract/gcode.contract.json:5-94).
+## crates/gcode/contract
 
-Project context is modeled through a scoped `--project ROOT` flag, with the default behavior detecting the project from the current working directory and stable identity keys of `project_id` and `project_root` (crates/gcode/contract/gcode.contract.json:50-65). The visible command flow starts with `contract`, which emits the CLI contract and is marked daemon-consumed, while `init` initializes project context for the current repository and is not daemon-consumed (crates/gcode/contract/gcode.contract.json:67-100).
+The `contract` module contains a single authoritative JSON artifact — `gcode.contract.json` — that serves as the machine-readable specification for the entire `gcode` CLI surface (gcode.contract.json:1-5). It declares the tool identity (`"tool": "gcode"`), the schema revision (`"contract_version": 2`), a human-readable summary (`"Fast code index CLI for Gobby."`), and three top-level sections: `global_flags`, `scope`, and `commands`. The file indexes 988 named API symbols, making it the single source of truth for every flag, positional argument, allowed value set, and JSON output key shape exposed by the tool.
 
-| Global flag | Value | Allowed values | Required | Repeatable | Source |
-| --- | --- | --- | --- | --- | --- |
-| `--project` | `ROOT` | none | no | no | crates/gcode/contract/gcode.contract.json:6-13 |
-| `--format` | `json\|text` | `json`, `text` | no | no | crates/gcode/contract/gcode.contract.json:14-24 |
-| `--quiet` | none | none | no | no | crates/gcode/contract/gcode.contract.json:25-32 |
-| `--verbose` | none | none | no | no | crates/gcode/contract/gcode.contract.json:33-40 |
-| `--no-freshness` | none | none | no | no | crates/gcode/contract/gcode.contract.json:41-48 |
+The `scope` block (gcode.contract.json:54-65) governs how `gcode` resolves its project context. It re-exposes the `--project ROOT` flag, provides a human-readable default (`"detect project from current working directory"`), and enumerates the canonical identity keys (`project_id`, `project_root`) that uniquely identify a project session. The `commands` array (gcode.contract.json:67-100+) enumerates every sub-command, each carrying a `name`, `summary`, a `daemon_consumed` boolean indicating whether a background daemon services the request, typed `positionals`, per-command `flags`, and a `json_output_keys` list that specifies which fields appear in structured JSON output. The `contract` command itself is flagged `daemon_consumed: true` and emits the full schema as its JSON payload (gcode.contract.json:69-100).
 
-| Command | Responsibility | Daemon consumed | Notable output/flags | Source |
-| --- | --- | --- | --- | --- |
-| `contract` | Emit this CLI contract | yes | `--format`; outputs `tool`, `contract_version`, `summary`, `global_flags`, `scope`, `commands`, `error_codes` | crates/gcode/contract/gcode.contract.json:68-94 |
-| `init` | Initialize project context for the current repository | no | no positionals shown in excerpt | crates/gcode/contract/gcode.contract.json:96-100 |
+Because no cross-file relationships were supplied, the contract is consumed passively — external tooling, shell-completion generators, documentation pipelines, or runtime CLI parsers read this file to discover the full API without inspecting compiled binaries. The file itself imports nothing and calls nothing; it is a pure data artifact.
+
+### Global Flags
+
+| Flag | Takes Value | Value / Allowed Values | Required | Repeatable |
+|---|---|---|---|---|
+| `--project` | yes | `ROOT` (free-form) | no | no |
+| `--format` | yes | `json`, `text` | no | no |
+| `--quiet` | no | — | no | no |
+| `--verbose` | no | — | no | no |
+| `--no-freshness` | no | — | no | no |
+
+### Scope Configuration
+
+| Property | Value |
+|---|---|
+| Scoping flag | `--project ROOT` |
+| Default resolution | detect project from current working directory |
+| Identity keys | `project_id`, `project_root` |
+
+### Selected Commands (from contract excerpt)
+
+| Command | Summary | Daemon Consumed | JSON Output Keys |
+|---|---|---|---|
+| `contract` | Emit this CLI contract. | yes | `tool`, `contract_version`, `summary`, `global_flags`, `scope`, `commands`, `error_codes` |
+| `init` | Initialize project context for the current repository. | no | — (positionals-based) |
+
+Per-command entries follow a uniform schema: each flag descriptor carries `name`, `takes_value`, `value_name`, `allowed_values`, `required`, and `repeatable` fields (gcode.contract.json:72-83), and each positional carries `name`, `required`, and `repeatable`. The full set of ~988 indexed symbols spans all commands across those repeated descriptor shapes.
+[crates/gcode/contract/gcode.contract.json:2]
+[crates/gcode/contract/gcode.contract.json:3]
+[crates/gcode/contract/gcode.contract.json:4]
+[crates/gcode/contract/gcode.contract.json:5-49]
+[crates/gcode/contract/gcode.contract.json:7]
 
 ## Files
 

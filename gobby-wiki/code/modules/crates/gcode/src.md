@@ -44,44 +44,67 @@ Parent: [[code/modules/crates/gcode|crates/gcode]]
 
 ## Overview
 
-`crates/gcode/src` is the main gcode application crate: it owns the CLI surface, configuration/context resolution, PostgreSQL code-index access, graph/vector projection lifecycle, search/grep commands, setup, freshness, visibility, and shared output/model contracts. The command layer is thin orchestration: handlers resolve `Context`, connect to backing services, apply scope and visibility rules, then render through `output::Format`; `grep` follows this pattern over indexed chunks, while `search` merges exact, BM25, vector, and graph-style results (`crates/gcode/src/commands/grep.rs:1-100`, `crates/gcode/src/commands/search.rs:1-100`).
+## crates/gcode/src
 
-The data flow centers on PostgreSQL as the indexed fact store and optional projections for richer retrieval. The `db` boundary resolves the hub DSN, opens read/write or read-only connections, validates schema, and exposes query APIs over indexed files, projects, graph facts, and sync state (`crates/gcode/src/db/mod.rs:1-36`, `crates/gcode/src/db/queries.rs:1-100`). Graph projection is owned under `graph::code_graph`: `CodeGraph::sync_file` turns PostgreSQL imports, definitions, and calls into FalkorDB `IMPORTS`, `DEFINES`, and `CALLS` edges with provenance metadata (`crates/gcode/src/graph/code_graph/write.rs:18-31`, `crates/gcode/src/graph/code_graph/write.rs:43-100`, `crates/gcode/src/graph/code_graph/write/mutation.rs:1-100`). Vector projection is exposed through `vector::code_symbols`, which embeds extracted `Symbol` records and stores Qdrant payloads with source metadata (`crates/gcode/src/vector/mod.rs:1-2`, `crates/gcode/src/vector/code_symbols.rs:1-23`).
+`crates/gcode/src` is the complete source tree for `gcode`, a Rust CLI binary that provides a unified code-intelligence platform over a PostgreSQL code index, an optional FalkorDB graph projection, and an optional Qdrant vector store. The binary entry point at `main.rs` initialises signal handling and delegates to `dispatch.rs`, which parses the Clap command tree defined in `cli.rs`, resolves a `Context` (project identity + database URL + optional service configs) through `config/context.rs` and `config/services.rs`, and routes each command to a handler. Early-exit commands such as `setup` bypass full context resolution so they can run without a live database connection `crates/gcode/src/dispatch.rs`.
 
-Collaboration points are explicit. The config layer imports `gobby_core` AI/config/provisioning APIs, `postgres::Client`, crate-local `db`, and `secrets`, then resolves service values from environment, PostgreSQL config, standalone config, and secret expansion (`crates/gcode/src/config/services.rs:1-18`, `crates/gcode/src/config/services.rs:24-57`). Graph read commands import `Context`, `db`, `graph::code_graph`, FTS symbol resolution, shared models, and output formatting, degrading to empty paged responses with hints when FalkorDB is missing or unreachable (`crates/gcode/src/commands/graph/reads.rs:1-64`). Search similarly imports FTS, graph boost, RRF, vector symbols, visibility, models, and output, then fetches generously for merged ranking (`crates/gcode/src/commands/search.rs:1-56`).
+The module is organised into eleven child sub-modules whose concerns are cleanly separated: `config` holds multi-source configuration resolution (environment variables, Postgres config store, `gcore_config` TOML, standalone bootstrap files); `db` holds all SQL queries against the Postgres code index; `index` drives file discovery, AST parsing, and fact ingestion; `graph` manages the FalkorDB code graph (connection pooling in `code_graph/connection.rs`, write batching in `code_graph/write/mutation.rs`, sync plans in `code_graph/write/sync_plan.rs`, and orphan cleanup in `code_graph/write/deletion.rs`); `search` performs multi-source symbol and content search with BM25 FTS, Qdrant vector retrieval, and FalkorDB graph boosting fused by Reciprocal Rank Fusion; `vector` wraps Qdrant lifecycle operations; `projection` coordinates post-index projection syncing across graph and vector backends; `dispatch` stitches context resolution to command dispatch; `setup` handles first-run schema provisioning; `cli` defines the Clap command/flag tree; and `commands` implements the user-facing operations (search, grep, graph reads, graph lifecycle, outline, symbol-at, etc.). Cross-cutting concerns — freshness gating (`freshness.rs`), advisory index locking (`index_lock.rs`), output formatting (`output.rs`), progress rendering (`progress.rs`), and token-budget management — live at the crate root.
 
-| Public Surface | Responsibility |
-| --- | --- |
-| `Cli`, `Command`, `GraphCommand`, `VectorCommand`, `EmbeddingsCommand` | Parsed CLI entry points and command families |
-| `Context`, `ServiceConfigSelection`, `FalkorConfig`, `CodeVectorSettings` | Runtime project and service configuration |
-| `Symbol`, `IndexedFile`, `ImportRelation`, `CallRelation`, `SearchResult`, `GraphResult` | Shared code-index and result models |
-| `connect_readonly`, `connect_readwrite`, `read_graph_file_facts` | PostgreSQL access and indexed fact queries |
-| `CodeGraph`, `sync_file`, `clear_project`, `cleanup_orphans` | FalkorDB projection lifecycle |
-| `Format`, `print_json`, `print_text` | Shared output rendering |
+The search command (`commands/search.rs`) illustrates the widest collaboration: it opens a read-only Postgres connection via `db::connect_readonly`, calls `fts::search_symbols_exact_first_visible` and `fts::search_symbols_fts_visible` for BM25 ranked results, calls into `code_symbols` for Qdrant semantic results, and optionally calls `graph_boost` for FalkorDB-reranked results, then merges all three with `rrf::merge` before serialising through `output::Format` `crates/gcode/src/commands/search.rs:1-100`. Graph read commands (`commands/graph/reads.rs`) follow a similar pattern but wrap every FalkorDB call in graceful degradation — returning an empty paged response with a typed `GraphReadError` hint when FalkorDB is not configured or unreachable `crates/gcode/src/commands/graph/reads.rs:1-100`. Configuration resolution chains environment variables, the Postgres config store (read via `gobby_core::postgres::read_config_value`), and a `StandaloneConfig` fallback, with secrets resolved through `secrets::resolve_config_value` `crates/gcode/src/config/services.rs:1-100`.
 
-| Environment / Config Key | Purpose |
-| --- | --- |
-| `GOBBY_FALKORDB_HOST` / `databases.falkordb.host` | FalkorDB host override (`crates/gcode/src/config/services.rs:24-38`) |
-| `GOBBY_FALKORDB_PORT` / `databases.falkordb.port` | FalkorDB port override (`crates/gcode/src/config/services.rs:24-38`) |
-| `GOBBY_FALKORDB_PASSWORD` / `databases.falkordb.password` | FalkorDB password override (`crates/gcode/src/config/services.rs:24-38`) |
-| `GOBBY_QDRANT_URL` / `databases.qdrant.url` | Qdrant endpoint override (`crates/gcode/src/config/services.rs:24-38`) |
-| `GOBBY_QDRANT_API_KEY` / `databases.qdrant.api_key` | Qdrant API key override (`crates/gcode/src/config/services.rs:24-38`) |
+The crate imports heavily from `gobby_core` (AI context, config primitives, provisioning, RRF, chunking, BM25 schema) and from `gobby_core::postgres` for low-level query helpers. Outbound integration points are FalkorDB (via the `falkordb` crate, accessed through `graph/code_graph/connection.rs`), Qdrant (HTTP client in `vector`), the clangd LSP subprocess (in the `index` sub-module for C/C++ semantic resolution), and external AI endpoints for embedding and text generation.
+
+### Top-level CLI commands
+
+| Command group | Type alias |
+|---|---|
+| Root dispatcher | `Command` |
+| Code graph lifecycle / reads | `GraphCommand` |
+| Vector index lifecycle | `VectorCommand` |
+| Embeddings diagnostics | `EmbeddingsCommand` |
+
+### Key configuration & environment variables
+
+| Key / Env var | Purpose |
+|---|---|
+| `GOBBY_FALKORDB_HOST` / `databases.falkordb.host` | FalkorDB host |
+| `GOBBY_FALKORDB_PORT` / `databases.falkordb.port` | FalkorDB port |
+| `GOBBY_FALKORDB_PASSWORD` / `databases.falkordb.password` | FalkorDB password |
+| `GOBBY_QDRANT_URL` / `databases.qdrant.url` | Qdrant endpoint |
+| `GOBBY_QDRANT_API_KEY` / `databases.qdrant.api_key` | Qdrant auth key |
+| `GOBBY_POSTGRES_DSN` / `GCODE_DATABASE_URL` | Postgres connection (falling back in that order) |
+
+### Core public model types
+
+| Type | Role |
+|---|---|
+| `Symbol` | Indexed code symbol with stable UUID (`CODE_INDEX_UUID_NAMESPACE`) `crates/gcode/src/models.rs:1-100` |
+| `ProjectionProvenance` (`Extracted` / `Inferred` / `Ambiguous`) | Confidence classification for graph/vector facts `crates/gcode/src/models.rs:1-100` |
+| `ProjectionMetadata` | Provenance envelope attached to `GraphResult` and projection payloads |
+| `IndexedFile`, `ContentChunk`, `ImportRelation`, `CallRelation` | Core code-fact record types persisted to Postgres |
+| `PagedResponse<T>`, `GraphResult`, `SearchResult` | Wire-format response envelopes for JSON and text output |
+| `Context` | Resolved runtime context (project identity, database URL, optional service configs) |
+[crates/gcode/src/graph/code_graph/write/sync_plan.rs:30-81]
+[crates/gcode/src/graph/code_graph/read/graph_payloads.rs:19-98]
+[crates/gcode/src/graph/code_graph/read/payload_queries.rs:10-29]
+[crates/gcode/src/graph/code_graph/read/relationship_queries.rs:9-21]
+[crates/gcode/src/graph/code_graph/write/deletion.rs:8-66]
 
 ## Child Modules
 
 | Module | Summary |
 | --- | --- |
-| [[code/modules/crates/gcode/src/cli\|crates/gcode/src/cli]] | The `crates/gcode/src/cli` test surface enforces that every leaf Clap command exposed by `Cli::command()` is documented in the generated Gobby contract. It imports the parent CLI definitions with `super::*`, uses Clap’s `CommandFactory`, and compares discovered command paths against `gobby_code::contract::contract().commands` . |
-| [[code/modules/crates/gcode/src/commands\|crates/gcode/src/commands]] | `crates/gcode/src/commands` is the CLI command layer for indexing, search, inspection, setup, status, graph/vector lifecycle, and CodeWiki generation. Command handlers consistently take resolved configuration context, connect to backing services, apply scope/visibility filters, and render through the shared output layer: `grep` imports `Context`, `ProjectIndexScope`, `db`, `output::Format`, FTS helpers, and visibility controls before its `run` opens a readonly database connection, builds filters, loads indexed chunks, and applies the matcher (`crates/gcode/src/commands/grep.rs:1-100`).… |
-| [[code/modules/crates/gcode/src/config\|crates/gcode/src/config]] | `crates/gcode/src/config` is the gcode configuration layer. Its `context.rs` facade documents the resolution order as `bootstrap.yaml -> PostgreSQL hub -> config_store -> service configs`, including `$secret:NAME` and `${VAR}` expansion, and exposes the typed service settings used by the rest of gcode . It delegates concrete service resolution to `services.rs`, importing `resolve_falkordb_config`, `resolve_qdrant_config`, `resolve_embedding_config`, `resolve_code_vector_settings`, `resolve_indexing_settings`, and standalone config loading . |
-| [[code/modules/crates/gcode/src/db\|crates/gcode/src/db]] | `crates/gcode/src/db` is the gcode database boundary: it resolves the hub PostgreSQL DSN, opens read/write or read-only connections, validates the runtime schema, delegates config reads to `gobby_core`, and re-exports the query and resolution APIs from its submodules (`crates/gcode/src/db/mod.rs:1-36`). Its query layer works over `postgres::GenericClient` and the gcode model types to read indexed file paths, project/file existence, graph facts, and graph sync state from hub tables such as `code_indexed_files` and `code_indexed_projects` (`crates/gcode/src/db/queries.rs:1-100`). |
-| [[code/modules/crates/gcode/src/dispatch\|crates/gcode/src/dispatch]] | The `dispatch` module is responsible for turning parsed CLI commands into early execution decisions, service-configuration requirements, and stderr logging behavior. Its tests exercise dispatch internals via `use super::*`, while collaborating with CLI parsing and format resolution through `crate::cli::{Cli, effective_format}` and `clap::Parser` (`crates/gcode/src/dispatch/tests.rs:1-3`). |
-| [[code/modules/crates/gcode/src/graph\|crates/gcode/src/graph]] | The `crates/gcode/src/graph` module is the public graph namespace for `gcode`, exposing `code_graph`, `report`, and `typed_query` as child modules (`crates/gcode/src/graph/mod.rs:1-3`). `code_graph` owns the code-index graph projection: it persists `Code*` FalkorDB nodes and edges derived from PostgreSQL index rows, making the projection a `gcode`-owned store (`crates/gcode/src/graph/code_graph/write.rs:1-4`). Its central write flow is `CodeGraph::sync_file`, which creates a sync token, maps imports, definitions, and calls into graph items, partitions call relations, then delegates mutation… |
-| [[code/modules/crates/gcode/src/index\|crates/gcode/src/index]] | `crates/gcode/src/index` is the code indexing subsystem: it discovers files, classifies them for AST or content-only indexing, detects language, extracts symbols/imports/calls, chunks and hashes content, resolves imports, optionally performs C/C++ semantic call resolution, and persists facts. The language registry supplies tree-sitter extension/query specs through `LanguageSpec` (`crates/gcode/src/index/languages.rs:1-16`), while parser call extraction can fall back to textual language-specific scanners such as Dart, which filters imports/declarations and materializes call relations with… |
-| [[code/modules/crates/gcode/src/projection\|crates/gcode/src/projection]] | `crates/gcode/src/projection` owns projection synchronization and cleanup for graph and vector backends. `mod.rs` exposes the projection submodule and provides deleted-file reconciliation: when graph configuration exists it deletes the graph projection, and when Qdrant is configured it deletes stored vectors, returning per-target failures instead of stopping at the first error (`crates/gcode/src/projection/mod.rs:1-36`). |
-| [[code/modules/crates/gcode/src/search\|crates/gcode/src/search]] | The `crates/gcode/src/search` module is the search facade for gcode: it groups pg_search BM25 full-text search, graph-based ranking support, and Reciprocal Rank Fusion under `fts`, `graph_boost`, and `rrf` submodules (`crates/gcode/src/search/mod.rs:1-11`). The FTS layer keeps the legacy module name while executing PostgreSQL `pg_search` BM25 keyword search against Gobby’s PostgreSQL hub (`crates/gcode/src/search/fts.rs:1-4`). Its child modules cover symbols, content, counts, graph-symbol resolution, path/language filtering, snippets, and shared query sanitation via… |
-| [[code/modules/crates/gcode/src/setup\|crates/gcode/src/setup]] | `crates/gcode/src/setup` owns standalone provisioning for the gcode PostgreSQL code index: request/status DTOs, secret redaction, DDL construction, identifier qualification, catalog contracts, compatibility checks, and reset helpers. `GcodeStandaloneSetup` carries a schema, qualifies relations, emits PostgreSQL object definitions, and implements the `gobby_core::setup::StandaloneSetup` contract; its DDL includes `pg_search` plus code-index tables such as `code_indexed_projects`, `code_indexed_files`, `code_symbols`, `code_content_chunks`, `code_imports`, and `code_calls`… |
-| [[code/modules/crates/gcode/src/vector\|crates/gcode/src/vector]] | The `crates/gcode/src/vector` module is a narrow public entry point for vector-backed code-symbol functionality. Its root module currently exposes only `code_symbols`, while `code_symbols.rs` fans out into embedding, lifecycle, Qdrant, repository, search, and type submodules, then re-exports their public surface for callers (`crates/gcode/src/vector/mod.rs:1-2`, `crates/gcode/src/vector/code_symbols.rs:1-23`). The child module owns semantic indexing and search for extracted `Symbol` records: it builds embedding text, creates Qdrant payloads that preserve symbol identity and source metadata,… |
+| [[code/modules/crates/gcode/src/cli\|crates/gcode/src/cli]] | ## crates/gcode/src/cli |
+| [[code/modules/crates/gcode/src/commands\|crates/gcode/src/commands]] | ## Module: `crates/gcode/src/commands` |
+| [[code/modules/crates/gcode/src/config\|crates/gcode/src/config]] | ## crates/gcode/src/config |
+| [[code/modules/crates/gcode/src/db\|crates/gcode/src/db]] | ## crates/gcode/src/db |
+| [[code/modules/crates/gcode/src/dispatch\|crates/gcode/src/dispatch]] | ## crates/gcode/src/dispatch |
+| [[code/modules/crates/gcode/src/graph\|crates/gcode/src/graph]] | ## crates/gcode/src/graph |
+| [[code/modules/crates/gcode/src/index\|crates/gcode/src/index]] | ## Module: `crates/gcode/src/index` |
+| [[code/modules/crates/gcode/src/projection\|crates/gcode/src/projection]] | ## crates/gcode/src/projection |
+| [[code/modules/crates/gcode/src/search\|crates/gcode/src/search]] | ## Module: crates/gcode/src/search |
+| [[code/modules/crates/gcode/src/setup\|crates/gcode/src/setup]] | ## crates/gcode/src/setup |
+| [[code/modules/crates/gcode/src/vector\|crates/gcode/src/vector]] | ## Module: `crates/gcode/src/vector` |
 
 ## Files
 

@@ -23,23 +23,63 @@ Parent: [[code/modules/crates/gcode/src/index/import_resolution|crates/gcode/src
 
 ## Overview
 
-The `parser` module is the language dispatcher for import resolution. It accepts a language, import text, relative file path, shared `ImportResolutionContext`, and mutable `ExtractedImports`, then routes to the appropriate language-specific parser for Python, JS/TS, Go, Rust, Java, C#, PHP, Kotlin, Scala, Lua, Objective-C, shell, and several “rest” languages (`crates/gcode/src/index/import_resolution/parser/mod.rs:1-100`).
+## crates/gcode/src/index/import_resolution/parser
 
-Each parser records discovered imports as `ImportRelation` values and, where possible, also creates bindings that later resolution can use. For example, Go parsing handles single and block import forms, stores the imported module, skips blank and dot imports for binding purposes, derives default package aliases, and decides whether to register an external member binding based on external-module predicates (`crates/gcode/src/index/import_resolution/parser/go_rust.rs:1-100`). PHP/Kotlin parsing normalizes statements, supports PHP `use function` and `use const`, expands grouped imports, skips malformed brace syntax, and uses helper splitters plus PHP symbol predicates (`crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:1-100`). Scala parsing expands grouped selectors and wildcard imports, records import relations, and maps imported simple names or aliases into local-call bindings when matching package files exist (`crates/gcode/src/index/import_resolution/parser/scala.rs:1-100`).
+This module is the language-dispatch layer for import statement parsing within the gcode indexer's import resolution pipeline. Its sole public entry point, `parse_import_statement` (mod.rs:38), accepts a raw import text string, a language tag, a relative file path, and a shared `ImportResolutionContext`, then routes the call to the correct language-specific parser. Each language parser populates a mutable `ExtractedImports` accumulator with `ImportRelation` records and binding metadata drawn from `crate::models` (mod.rs:1). The module also re-exports three callee-resolution helpers — `resolve_lua_require_member_callee`, `resolve_objc_local_callee`, and `resolve_shell_local_callee` — giving upstream code access to language-specific call-site disambiguation without exposing the full submodule hierarchy (mod.rs:24–36).
 
-Within the wider import-resolution system, this module imports model types (`ImportRelation`, `Symbol`), context/binding structures (`ExternalCallTarget`, `ExternalRootBinding`, `ExtractedImports`, `ImportBindings`, `ImportResolutionContext`, `LocalCallBinding`), and predicates such as `rust_external_roots` from its parent import-resolution layer (`crates/gcode/src/index/import_resolution/parser/mod.rs:1-12`). It calls out to per-language parser modules declared locally, and re-exports resolver helpers for Lua, Objective-C, and shell local/member callee handling so sibling resolution code can reuse language-specific lookup behavior (`crates/gcode/src/index/import_resolution/parser/mod.rs:13-33`).
+Internally the module is split across nine language-family files. `go_rust.rs` handles Go block imports (`import (…)`) and Rust `use` trees, delegating external-module detection to `predicates::is_external_go_module` and `is_external_rust_root` (go_rust.rs:9). `php_kotlin.rs` parses PHP grouped `use` statements with `function`/`const`/class-like discrimination and Kotlin star-imports, calling `predicates::is_external_php_symbol` and `helpers::split_rust_use_group` (php_kotlin.rs:7). `scala.rs` recurses over comma-separated import selectors, expanding brace groups and wildcard suffixes into individual `ImportRelation` entries (scala.rs:36–51). `java_csharp.rs` re-exports a `csharp_global_qualifier_parts` helper consumed by callers outside this module (mod.rs:21). The four parsers for Dart, Elixir, Ruby, and Swift are consolidated in `rest.rs` (mod.rs:31–34).
 
-| Public/internal symbol | Role | Source |
-| --- | --- | --- |
-| `parse_import_statement` | Main language dispatch entry point | `crates/gcode/src/index/import_resolution/parser/mod.rs:35-100` |
-| `resolve_lua_require_member_callee` | Re-exported Lua require-member resolver | `crates/gcode/src/index/import_resolution/parser/mod.rs:20` |
-| `resolve_objc_local_callee` | Re-exported Objective-C local callee resolver | `crates/gcode/src/index/import_resolution/parser/mod.rs:24` |
-| `resolve_shell_local_callee` | Re-exported shell local callee resolver | `crates/gcode/src/index/import_resolution/parser/mod.rs:33` |
-| `php_local_symbol_exists` | Checks lowercased PHP local-symbol index | `crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:8-14` |
-| `parse_php_import_statement` | Parses PHP `use` imports and grouped imports | `crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:16-56` |
-| `parse_kotlin_import_statement` | Parses Kotlin import statements | `crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:64-100` |
-| `parse_go_import_statement` | Parses Go single and block imports | `crates/gcode/src/index/import_resolution/parser/go_rust.rs:13-37` |
-| `parse_scala_import_statement` | Parses Scala imports, groups, and wildcard modules | `crates/gcode/src/index/import_resolution/parser/scala.rs:6-22` |
+The module sits between the parent `import_resolution` crate (which owns `ImportResolutionContext`, `ExtractedImports`, and the `UNPARSED_IMPORT_PREFIX` sentinel) and the concrete model layer (`crate::models::ImportRelation`, `Symbol`). It calls outward to sibling modules `context`, `predicates`, and `helpers` for shared resolution logic, and receives inbound calls exclusively through `parse_import_statement` from the parent orchestrator.
+
+### Public API symbols exported from mod.rs
+
+| Symbol | Kind | Notes |
+|---|---|---|
+| `parse_import_statement` | `pub(crate) fn` | Main dispatch; routes by `language` string tag (mod.rs:38) |
+| `resolve_lua_require_member_callee` | `pub(crate) fn` | Re-exported from `lua` (mod.rs:24) |
+| `resolve_objc_local_callee` | `pub(crate) fn` | Re-exported from `objc` (mod.rs:26) |
+| `resolve_shell_local_callee` | `pub(crate) fn` | Re-exported from `shell` (mod.rs:36) |
+
+### Language dispatch table
+
+| `language` tag | Submodule | Parser function |
+|---|---|---|
+| `"python"` | `python_js` | `parse_python_import_statement` |
+| `"javascript"` / `"typescript"` | `python_js` | `parse_js_import_statement` |
+| `"go"` | `go_rust` | `parse_go_import_statement` |
+| `"rust"` | `go_rust` | `parse_rust_import_statement` |
+| `"java"` | `java_csharp` | `parse_java_import_statement` |
+| `"csharp"` | `java_csharp` | `parse_csharp_import_statement` |
+| `"php"` | `php_kotlin` | `parse_php_import_statement` |
+| `"kotlin"` | `php_kotlin` | `parse_kotlin_import_statement` |
+| `"scala"` | `scala` | `parse_scala_import_statement` |
+| `"lua"` | `lua` | `parse_lua_import_statement` |
+| `"objc"` | `objc` | `parse_objc_import_statement` |
+| `"shell"` | `shell` | `parse_shell_import_statement` |
+| `"dart"` | `rest` | `parse_dart_import_statement` |
+| `"elixir"` | `rest` | `parse_elixir_import_statement` |
+| `"ruby"` | `rest` | `parse_ruby_import_statement` |
+| `"swift"` | `rest` | `parse_swift_import_statement` |
+
+### Submodule symbol counts
+
+| Submodule file | Indexed symbols |
+|---|---|
+| `php_kotlin.rs` | 10 |
+| `mod.rs` | 13 |
+| `go_rust.rs` | 7 |
+| `scala.rs` | 7 |
+| `lua.rs` | 6 |
+| `java_csharp.rs` | 4 |
+| `python_js.rs` | 4 |
+| `rest.rs` | 4 |
+| `shell.rs` | 4 |
+| `objc.rs` | 3 |
+[crates/gcode/src/index/import_resolution/parser/java_csharp.rs:9-91]
+[crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:9-16]
+[crates/gcode/src/index/import_resolution/parser/go_rust.rs:12-40]
+[crates/gcode/src/index/import_resolution/parser/lua.rs:6-44]
+[crates/gcode/src/index/import_resolution/parser/mod.rs:40-69]
 
 ## Files
 

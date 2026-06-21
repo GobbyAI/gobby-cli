@@ -26,8 +26,8 @@ Module: [[code/modules/crates/gcore/src/qdrant|crates/gcore/src/qdrant]]
 | --- | --- | --- |
 | `CollectionScope` | type | Indexed type `CollectionScope` in `crates/gcore/src/qdrant/naming.rs`. [crates/gcore/src/qdrant/naming.rs:3-10] |
 | `CollectionNameError` | type | Indexed type `CollectionNameError` in `crates/gcore/src/qdrant/naming.rs`. [crates/gcore/src/qdrant/naming.rs:13-22] |
-| `collection_name` | function | Indexed function `collection_name` in `crates/gcore/src/qdrant/naming.rs`. [crates/gcore/src/qdrant/naming.rs:25-43] |
-| `validate_collection_name_component` | function | Indexed function `validate_collection_name_component` in `crates/gcore/src/qdrant/naming.rs`. [crates/gcore/src/qdrant/naming.rs:45-70] |
+| `collection_name` | function | Generates a validated collection name by either combining a namespace with project/topic identifiers or returning a custom name unmodified, based on the provided CollectionScope variant. [crates/gcore/src/qdrant/naming.rs:25-43] |
+| `validate_collection_name_component` | function | Validates that a collection name component is non-empty, lacks surrounding whitespace, is not a reserved name ('.' or '..'), and contains no ASCII control characters, whitespace, or special path characters ('/', '\', ':'). [crates/gcore/src/qdrant/naming.rs:45-70] |
 
 _Verified by 3 in-file unit tests._
 

@@ -44,27 +44,34 @@ Parent: [[code/repo|Repository Overview]]
 
 ## Overview
 
-# crates
+## Module: `crates`
 
-The `crates` module is the Rust workspace root for Gobby. It owns no source files of its own; instead it aggregates four sibling crates that together provide code indexing, a shared service/AI core, host-agent hook integration, and a local-first wiki. The shared core (`gcore`) supplies the common substrate — configuration resolution, storage clients (FalkorDB, Qdrant, PostgreSQL), embeddings, indexing/search primitives, graph analytics, and setup/degradation contracts — while the three feature crates (`gcode`, `ghook`, `gwiki`) build user-facing surfaces on top of it (`crates/gcore/src/config/mod.rs:1-17`, `crates/gcore/src/config/types.rs:1-30`).
+The `crates` directory is the Rust workspace root that organises the system's first-party binaries and libraries into four distinct crates. Each crate owns a vertical slice of functionality — code intelligence, shared platform primitives, AI-agent hook integration, and knowledge-wiki management — while sharing a common configuration, identity, and AI-routing layer defined in `crates/gcore`. The workspace boundary enforces that no crate may reach across sibling boundaries except through explicit Cargo dependency declarations, keeping domain concerns cleanly separated.
 
-| Crate | Role | Key anchor |
-| --- | --- | --- |
-| `gcore` | Shared core: AI routing/result types, config resolution, storage clients, indexing/search/graph primitives, setup & degradation contracts, local service provisioning | `crates/gcore/src/config/mod.rs:1-17` |
-| `gcode` | Fast code-index CLI for Gobby; Clap parsing, command dispatch, project/service context resolution, PostgreSQL hub access, search/graph/vector/setup/docs flows | `crates/gcode/src/commands/search.rs:1-13` |
-| `gwiki` | Local-first wiki CLI for capture, search, upkeep, and synthesis | `crates/gwiki/contract/gwiki.contract.json:2-4` |
-| `ghook` | Host-agent hook integration: builds and persists hook envelopes, attempts daemon delivery | `crates/ghook/src/transport.rs:1-18` |
+| Child crate | Primary responsibility |
+|---|---|
+| `crates/gcode` | Code-graph indexing, AST parsing, symbol resolution, graph read/write, CLI surface for code intelligence |
+| `crates/gcore` | Shared platform primitives: project identity, service config, PostgreSQL/FalkorDB/Qdrant connectivity, AI context, embedding backend, Gobby-core integration |
+| `crates/ghook` | AI-agent hook dispatcher; intercepts session-start/tool-use events from Claude, Codex, Grok, Droid, Gemini, Qwen and routes envelopes to the daemon |
+| `crates/gwiki` | Knowledge-wiki engine: ingest, search, compile, audit, health, vector sync, graph analytics, Obsidian vault management |
 
-The two CLI crates each pair a static, versioned invocation contract with an application crate that implements it. `gcode` exposes contract version 2 — a “Fast code index CLI for Gobby” — centralizing global flags, scope handling, command metadata, JSON output keys, and error-code metadata as a stable surface (`crates/gcode/contract/gcode.contract.json:1-4`, `crates/gcode/contract/gcode.contract.json:5-94`). `gwiki` follows the same pattern, declaring its identity, contract version, global flags, scope selection, commands, JSON output shapes, and error codes in its contract document (`crates/gwiki/contract/gwiki.contract.json:2-4`). These contracts let the runtime surfaces be validated against a published shape while keeping consumer-owned choices (such as graph and collection names) outside the shared config layer (`crates/gcore/src/config/types.rs:1-30`).
+The component table exposed by the workspace spans the full public symbol surface of all four crates. Shared CLI primitives — `global_flags`, `scope`, `flags`, `positionals`, `json_output_keys`, `daemon_consumed`, and `error_codes` — appear in nearly every command, reflecting a contract-driven CLI design enforced by `BinaryContract`, `CliContract`, `CommandContract`, and `FlagContract` types. Argument-parsing adaptors such as `AiRouteArg`, `AiDepthArg`, `AiProseDepthArg`, and `AiRegisterArg` sit at the boundary between the raw CLI layer and the `AiContext`/`AiBindings` resolution pipeline that lives in `gcore`.
 
-`ghook` is the hook-side integration layer that connects external host agents into the Gobby system. Its runtime child receives hook invocations, builds a durable inbox envelope, persists it locally, and then attempts daemon delivery, while its schema child defines the JSON contracts for both diagnostics output and inbox envelopes (`crates/ghook/src/transport.rs:1-18`, `crates/ghook/schemas/diagnose-output.v2.schema.json:1`, `crates/ghook/schemas/inbox-envelope.v1.schema.json:1`). Collaboration across the workspace flows through `gcore`: the feature crates resolve configuration and service bindings, reach PostgreSQL/FalkorDB/Qdrant, and apply setup and degradation contracts via the shared core, so that capability gaps degrade gracefully rather than fail outright (`crates/gcore/src/config/mod.rs:1-17`).
+Key runtime flows cross crate boundaries in predictable ways. A `gcode` command (e.g., `graph sync-file`) resolves its `Context` and `ProjectIdentity` through `gcore`, opens a `CodeGraph` via a FalkorDB `GraphClient`, and writes `GraphNode`/`GraphLink` projections before notifying the daemon. A `gwiki` command (e.g., `search` or `ask`) resolves a `WikiScope` and `ResolvedScope` from `gcore`'s config stack, dispatches to BM25 (`Bm25SearchBackend`), vector (`SemanticSearchBackend`, `GobbyQdrantBackend`), and graph-boost (`FalkorGraphBoostBackend`) backends, then fuses results through `rrf_merge`. Hook events processed by `ghook` call into a lightweight daemon HTTP client (`DaemonEndpoint`, `post_and_cleanup`) and write envelopes to a scoped inbox directory; they share no Rust types with `gcode` or `gwiki` at runtime, communicating only through the file-system inbox and the daemon REST API. Embedding generation threads through `gcore`'s `EmbeddingBackend`, which multiplexes between a direct OpenAI-compatible HTTP route and a daemon-proxied route depending on `AiRouting` and `CapabilityStatusRoute` probe results.
+
+The component table also exposes a large set of dependency library properties (`ecto`, `phoenix`, `plug`, `oban`, `broadway`, `httpoison`, `jason`, `req`, `finch`, `rspec`, `faraday`, `nokogiri`, etc.) that represent the Elixir/Ruby service layer and test tooling referenced by the wider system outside the Rust workspace. Within the workspace itself the collaboration points are: `gcore` is consumed by both `gcode` and `gwiki` as a library; `ghook` is a standalone binary with minimal shared code; and `gwiki` re-exports `gcore` connectivity primitives (`PostgresWikiStore`, `GwikiStandaloneSetup`, `WikiVectorChunk`) rather than duplicating them.
+[crates/gcode/src/graph/code_graph/write/sync_plan.rs:30-81]
+[crates/gcode/src/graph/code_graph/read.rs:1-25]
+[crates/gcode/src/graph/code_graph/read/graph_payloads.rs:19-98]
+[crates/gcode/src/graph/code_graph/read/payload_queries.rs:10-29]
+[crates/gcode/src/graph/code_graph/read/relationship_queries.rs:9-21]
 
 ## Child Modules
 
 | Module | Summary |
 | --- | --- |
-| [[code/modules/crates/gcode\|crates/gcode]] | `crates/gcode` is the code-indexing CLI module for Gobby. Its contract submodule defines the stable invocation surface as contract version 2, described as a “Fast code index CLI for Gobby,” and centralizes global flags, scope handling, command metadata, JSON output keys, and error-code metadata (crates/gcode/contract/gcode.contract.json:1-4, crates/gcode/contract/gcode.contract.json:5-94). The `src` submodule implements the binary/library surface: Clap parsing, command dispatch, project and service context resolution, PostgreSQL hub access, and shared model types for search, graph, vector,… |
-| [[code/modules/crates/gcore\|crates/gcore]] | `crates/gcore` is Gobby’s shared core layer: it centralizes AI routing and result types, configuration resolution, storage clients, indexing/search primitives, graph analytics, setup/degradation contracts, and local service provisioning. Its `src` child keeps service configuration behind a lightweight shared surface, covering FalkorDB, Qdrant, embeddings, indexing, AI routing, capability bindings, tuning, and feature candidates, while leaving consumer-owned choices such as graph and collection names outside the shared config layer (`crates/gcore/src/config/mod.rs:1-17`,… |
-| [[code/modules/crates/ghook\|crates/ghook]] | `crates/ghook` is Gobby’s hook-side integration layer. Its runtime child module receives host-agent hook invocations, builds a hook envelope, persists it locally, and then attempts daemon delivery; its schema child module defines the JSON contracts for both diagnostics and durable inbox envelopes (crates/ghook/src/transport.rs:1-18) (crates/ghook/schemas/diagnose-output.v2.schema.json:1) (crates/ghook/schemas/inbox-envelope.v1.schema.json:1). |
-| [[code/modules/crates/gwiki\|crates/gwiki]] | `crates/gwiki` is the top-level gwiki module, combining a static CLI contract with the application crate that implements it. The contract defines gwiki’s identity as a local-first wiki CLI for capture, search, upkeep, and synthesis, along with contract version, global flags, scope selection, commands, JSON output shapes, and error codes (`crates/gwiki/contract/gwiki.contract.json:2-4`). |
+| [[code/modules/crates/gcode\|crates/gcode]] | ## crates/gcode |
+| [[code/modules/crates/gcore\|crates/gcore]] | ## Module: crates/gcore |
+| [[code/modules/crates/ghook\|crates/ghook]] | ## crates/ghook |
+| [[code/modules/crates/gwiki\|crates/gwiki]] | ## Module: `crates/gwiki` |
 

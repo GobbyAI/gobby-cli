@@ -14,7 +14,7 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/text.rs` exposes 17 indexed API symbols.
+`crates/gcode/src/commands/codewiki/text.rs` exposes 20 indexed API symbols.
 
 ## How it fits
 
@@ -24,8 +24,8 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `span` | function | The 'span' function constructs and returns a 'SourceSpan' struct by converting the provided 'file' parameter into a 'String' and associating it with the specified start and end line indices. [crates/gcode/src/commands/codewiki/text.rs:52-58] |
-| `transport_failure` | function | Returns an 'AiError::TransportFailure' with 'status' and 'body' set to 'None' and 'source' set to '"connection reset"'. [crates/gcode/src/commands/codewiki/text.rs:285-291] |
+| `span` | function | Constructs a 'SourceSpan' from a file path (converted via the 'Into<String>' trait) and a line range defined by start and end line numbers. [crates/gcode/src/commands/codewiki/text.rs:52-58] |
+| `transport_failure` | function | Constructs and returns an 'AiError::TransportFailure' variant with null status and body fields and "connection reset" as the error source. [crates/gcode/src/commands/codewiki/text.rs:325-331] |
 
-_Verified by 15 in-file unit tests._
+_Verified by 18 in-file unit tests._
 

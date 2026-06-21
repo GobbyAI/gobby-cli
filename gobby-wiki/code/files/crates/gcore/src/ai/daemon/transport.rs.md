@@ -24,9 +24,9 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `daemon_client` | function | Indexed function `daemon_client` in `crates/gcore/src/ai/daemon/transport.rs`. [crates/gcore/src/ai/daemon/transport.rs:8-12] |
-| `daemon_url` | function | Indexed function `daemon_url` in `crates/gcore/src/ai/daemon/transport.rs`. [crates/gcore/src/ai/daemon/transport.rs:14-20] |
-| `read_local_cli_token` | function | Indexed function `read_local_cli_token` in `crates/gcore/src/ai/daemon/transport.rs`. [crates/gcore/src/ai/daemon/transport.rs:22-38] |
-| `gobby_home` | function | Indexed function `gobby_home` in `crates/gcore/src/ai/daemon/transport.rs`. [crates/gcore/src/ai/daemon/transport.rs:40-42] |
-| `with_local_token` | function | Indexed function `with_local_token` in `crates/gcore/src/ai/daemon/transport.rs`. [crates/gcore/src/ai/daemon/transport.rs:44-46] |
+| `daemon_client` | function | This function instantiates an HTTP 'Client' using the builder pattern and maps any construction errors to 'AiError'. [crates/gcore/src/ai/daemon/transport.rs:8-12] |
+| `daemon_url` | function | This function concatenates a provided path to a base daemon URL obtained from 'crate::daemon_url::daemon_url()' after removing any trailing slashes from the base URL. [crates/gcore/src/ai/daemon/transport.rs:14-20] |
+| `read_local_cli_token` | function | Reads a CLI authentication token from a local file in the gobby home directory, returning the trimmed string if non-empty, otherwise returns an 'AiError'. [crates/gcore/src/ai/daemon/transport.rs:22-38] |
+| `gobby_home` | function | Wraps the internal 'crate::gobby_home()' function and converts any errors into 'AiError::not_configured' variants. [crates/gcore/src/ai/daemon/transport.rs:40-42] |
+| `with_local_token` | function | Adds the provided token as the 'LOCAL_TOKEN_HEADER' HTTP header to a 'RequestBuilder' and returns the modified builder for method chaining. [crates/gcore/src/ai/daemon/transport.rs:44-46] |
 

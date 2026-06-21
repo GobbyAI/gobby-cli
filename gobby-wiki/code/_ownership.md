@@ -52,12 +52,12 @@ Top contributors: Josh Wilhelmi (7750 lines)
 ### Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gcode/src/commands/codewiki/build_parts]]
 
 Primary owners: Josh Wilhelmi
-Top contributors: Josh Wilhelmi (3668 lines)
+Top contributors: Josh Wilhelmi (2915 lines)
 
 ### Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts/concepts|crates/gcode/src/commands/codewiki/build_parts/concepts]]
 
 Primary owners: Josh Wilhelmi
-Top contributors: Josh Wilhelmi (69 lines)
+Top contributors: Josh Wilhelmi (822 lines)
 
 ### Module: [[code/modules/crates/gcode/src/commands/codewiki/ownership|crates/gcode/src/commands/codewiki/ownership]]
 
@@ -187,7 +187,7 @@ Top contributors: Josh Wilhelmi (152 lines)
 ### Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 Primary owners: Josh Wilhelmi
-Top contributors: Josh Wilhelmi (10213 lines)
+Top contributors: Josh Wilhelmi (9808 lines)
 
 ### Module: [[code/modules/crates/gcore/src/ai|crates/gcore/src/ai]]
 
@@ -197,7 +197,7 @@ Top contributors: Josh Wilhelmi (14 lines)
 ### Module: [[code/modules/crates/gcore/src/ai/daemon|crates/gcore/src/ai/daemon]]
 
 Primary owners: Josh Wilhelmi
-Top contributors: Josh Wilhelmi (177 lines)
+Top contributors: Josh Wilhelmi (582 lines)
 
 ### Module: [[code/modules/crates/gcore/src/config|crates/gcore/src/config]]
 

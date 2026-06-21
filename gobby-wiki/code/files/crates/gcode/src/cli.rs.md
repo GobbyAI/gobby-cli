@@ -37,9 +37,9 @@ Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 | `GraphCommand` | type | Indexed type `GraphCommand` in `crates/gcode/src/cli.rs`. [crates/gcode/src/cli.rs:472-536] |
 | `VectorCommand` | type | Indexed type `VectorCommand` in `crates/gcode/src/cli.rs`. [crates/gcode/src/cli.rs:539-555] |
 | `EmbeddingsCommand` | type | Indexed type `EmbeddingsCommand` in `crates/gcode/src/cli.rs`. [crates/gcode/src/cli.rs:558-561] |
-| `non_empty_grep_pattern` | function | The 'non_empty_grep_pattern' function validates whether a given string slice is non-empty, returning a 'Result' containing the owned string on success or an error message if the input is empty. [crates/gcode/src/cli.rs:563-569] |
-| `positive_usize` | function | The 'positive_usize' function parses a string slice into a 'usize' by delegating to 'bounded_positive_usize' to validate that the parsed value is a positive integer bounded by 'MAX_POSITIVE_USIZE_ARG'. [crates/gcode/src/cli.rs:571-573] |
-| `grep_max_count` | function | The 'grep_max_count' function parses a string slice into a positive 'usize' up to 'MAX_GREP_MAX_COUNT' representing the '--max-count' parameter, returning the parsed value or an error message on failure. [crates/gcode/src/cli.rs:575-577] |
-| `bounded_positive_usize` | function | Parses a string slice into a 'usize', validating that it is greater than zero and does not exceed a specified maximum value 'max', and returns the parsed value or a formatted error message. [crates/gcode/src/cli.rs:579-590] |
-| `effective_format` | function | This function returns the explicitly provided output format if present, or defaults to 'output::Format::Text' for grep commands and 'output::Format::Json' for all other commands. [crates/gcode/src/cli.rs:592-600] |
+| `non_empty_grep_pattern` | function | Validates that a gcode grep pattern is non-empty, returning the input string wrapped in 'Ok' if valid or an error message wrapped in 'Err' if the input is empty. [crates/gcode/src/cli.rs:563-569] |
+| `positive_usize` | function | Parses a string into a positive 'usize' bounded by 'MAX_POSITIVE_USIZE_ARG', returning the value on success or an error message on failure. [crates/gcode/src/cli.rs:571-573] |
+| `grep_max_count` | function | Parses and validates a string input as a bounded positive unsigned integer with a maximum limit of 'MAX_GREP_MAX_COUNT', returning the parsed 'usize' value or a validation error string for the '--max-count' parameter. [crates/gcode/src/cli.rs:575-577] |
+| `bounded_positive_usize` | function | Parses a string into a positive (non-zero) 'usize' and validates it does not exceed a specified maximum bound, returning the parsed value or a descriptive error message. [crates/gcode/src/cli.rs:579-590] |
+| `effective_format` | function | Returns the explicit output format if provided, otherwise defaults to Text for Grep commands and Json for all other command types. [crates/gcode/src/cli.rs:592-600] |
 

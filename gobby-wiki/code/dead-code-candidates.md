@@ -121,26 +121,33 @@ A symbol is listed as a candidate only when ALL of the following hold:
 
 | Symbol | Kind | Location |
 | --- | --- | --- |
+| `curated_navigation_prompt` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs:6` |
+| `parse_plan` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs:40` |
+| `fallback_plan` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs:51` |
 | `normalize_concepts` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs:140` |
-| `normalize_sections` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs:183` |
-| `normalize_narrative_pages` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs:219` |
+| `normalize_sections` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs:203` |
+| `normalize_narrative_pages` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs:239` |
+| `concept_key_map` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs:352` |
+| `narrative_page` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs:372` |
 
 ## [[code/files/crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs|crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs]]
 
 | Symbol | Kind | Location |
 | --- | --- | --- |
-| `chapter_link` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:136` |
-| `render_concept_tree` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:140` |
-| `render_concept_page` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:188` |
-| `render_narrative_page` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:210` |
-| `append_curated_body` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:254` |
-| `append_explore_section` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:277` |
-| `narrative_members` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:303` |
+| `render_curated_navigation_docs` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:10` |
+| `chapter_link` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:141` |
+| `render_concept_tree` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:145` |
+| `render_concept_page` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:193` |
+| `render_narrative_page` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:215` |
+| `append_curated_body` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:259` |
+| `append_explore_section` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:282` |
+| `narrative_members` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:308` |
 
 ## [[code/files/crates/gcode/src/commands/codewiki/build_parts/concepts/spans.rs|crates/gcode/src/commands/codewiki/build_parts/concepts/spans.rs]]
 
 | Symbol | Kind | Location |
 | --- | --- | --- |
+| `all_input_spans` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/spans.rs:4` |
 | `narrative_spans` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/spans.rs:15` |
 
 ## [[code/files/crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs|crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs]]
@@ -148,9 +155,11 @@ A symbol is listed as a candidate only when ALL of the following hold:
 | Symbol | Kind | Location |
 | --- | --- | --- |
 | `degraded_sources` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs:1` |
+| `concept_title` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs:9` |
 | `concept_doc_path` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs:27` |
 | `concept_doc_stem` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs:31` |
 | `narrative_doc_path` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs:35` |
+| `slugify` | function | `crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs:39` |
 
 ## [[code/files/crates/gcode/src/commands/codewiki/build_parts/concepts/types.rs|crates/gcode/src/commands/codewiki/build_parts/concepts/types.rs]]
 
@@ -250,7 +259,8 @@ A symbol is listed as a candidate only when ALL of the following hold:
 | `generate_hierarchical_docs` | function | `crates/gcode/src/commands/codewiki/generation.rs:20` |
 | `generate_hierarchical_docs_with_graph_availability` | function | `crates/gcode/src/commands/codewiki/generation.rs:30` |
 | `generate_hierarchical_docs_with_ownership` | function | `crates/gcode/src/commands/codewiki/generation.rs:61` |
-| `generate_hierarchical_docs_core` | function | `crates/gcode/src/commands/codewiki/generation.rs:177` |
+| `repo_audit_links` | function | `crates/gcode/src/commands/codewiki/generation.rs:177` |
+| `generate_hierarchical_docs_core` | function | `crates/gcode/src/commands/codewiki/generation.rs:200` |
 
 ## [[code/files/crates/gcode/src/commands/codewiki/graph.rs|crates/gcode/src/commands/codewiki/graph.rs]]
 
@@ -267,24 +277,26 @@ A symbol is listed as a candidate only when ALL of the following hold:
 | `write_incremental_doc_set_with_snapshot` | function | `crates/gcode/src/commands/codewiki/io.rs:30` |
 | `DocPruneScope` | class | `crates/gcode/src/commands/codewiki/io.rs:46` |
 | `DocSink` | class | `crates/gcode/src/commands/codewiki/io.rs:99` |
-| `open_with_prune_scope` | function | `crates/gcode/src/commands/codewiki/io.rs:127` |
-| `with_since` | function | `crates/gcode/src/commands/codewiki/io.rs:155` |
-| `persist` | function | `crates/gcode/src/commands/codewiki/io.rs:162` |
-| `flush` | function | `crates/gcode/src/commands/codewiki/io.rs:247` |
-| `finish` | function | `crates/gcode/src/commands/codewiki/io.rs:262` |
-| `scoped_file_doc` | function | `crates/gcode/src/commands/codewiki/io.rs:293` |
-| `scoped_module_doc` | function | `crates/gcode/src/commands/codewiki/io.rs:299` |
-| `write_doc` | function | `crates/gcode/src/commands/codewiki/io.rs:305` |
-| `reject_symlinked_doc_path` | function | `crates/gcode/src/commands/codewiki/io.rs:315` |
-| `prune_empty_doc_dirs` | function | `crates/gcode/src/commands/codewiki/io.rs:335` |
-| `read_codewiki_meta` | function | `crates/gcode/src/commands/codewiki/io.rs:357` |
-| `write_codewiki_meta` | function | `crates/gcode/src/commands/codewiki/io.rs:377` |
-| `read_ownership_meta` | function | `crates/gcode/src/commands/codewiki/io.rs:382` |
-| `write_ownership_meta` | function | `crates/gcode/src/commands/codewiki/io.rs:391` |
-| `source_hashes_for_doc` | function | `crates/gcode/src/commands/codewiki/io.rs:396` |
-| `neighbor_hashes_for_doc` | function | `crates/gcode/src/commands/codewiki/io.rs:423` |
-| `source_files_from_frontmatter` | function | `crates/gcode/src/commands/codewiki/io.rs:448` |
-| `safe_doc_path` | function | `crates/gcode/src/commands/codewiki/io.rs:528` |
+| `open_with_prune_scope` | function | `crates/gcode/src/commands/codewiki/io.rs:132` |
+| `with_since` | function | `crates/gcode/src/commands/codewiki/io.rs:161` |
+| `persist` | function | `crates/gcode/src/commands/codewiki/io.rs:168` |
+| `degraded_docs` | function | `crates/gcode/src/commands/codewiki/io.rs:258` |
+| `flush` | function | `crates/gcode/src/commands/codewiki/io.rs:262` |
+| `finish` | function | `crates/gcode/src/commands/codewiki/io.rs:277` |
+| `collect_generated_doc_pages` | function | `crates/gcode/src/commands/codewiki/io.rs:331` |
+| `scoped_file_doc` | function | `crates/gcode/src/commands/codewiki/io.rs:362` |
+| `scoped_module_doc` | function | `crates/gcode/src/commands/codewiki/io.rs:368` |
+| `write_doc` | function | `crates/gcode/src/commands/codewiki/io.rs:374` |
+| `reject_symlinked_doc_path` | function | `crates/gcode/src/commands/codewiki/io.rs:384` |
+| `prune_empty_doc_dirs` | function | `crates/gcode/src/commands/codewiki/io.rs:404` |
+| `read_codewiki_meta` | function | `crates/gcode/src/commands/codewiki/io.rs:426` |
+| `write_codewiki_meta` | function | `crates/gcode/src/commands/codewiki/io.rs:446` |
+| `read_ownership_meta` | function | `crates/gcode/src/commands/codewiki/io.rs:451` |
+| `write_ownership_meta` | function | `crates/gcode/src/commands/codewiki/io.rs:460` |
+| `source_hashes_for_doc` | function | `crates/gcode/src/commands/codewiki/io.rs:465` |
+| `neighbor_hashes_for_doc` | function | `crates/gcode/src/commands/codewiki/io.rs:492` |
+| `source_files_from_frontmatter` | function | `crates/gcode/src/commands/codewiki/io.rs:517` |
+| `safe_doc_path` | function | `crates/gcode/src/commands/codewiki/io.rs:597` |
 
 ## [[code/files/crates/gcode/src/commands/codewiki/ownership.rs|crates/gcode/src/commands/codewiki/ownership.rs]]
 
@@ -465,8 +477,8 @@ A symbol is listed as a candidate only when ALL of the following hold:
 | Symbol | Kind | Location |
 | --- | --- | --- |
 | `build_repo_doc` | function | `crates/gcode/src/commands/codewiki/render/repo.rs:4` |
-| `repo_source_excerpts` | function | `crates/gcode/src/commands/codewiki/render/repo.rs:80` |
-| `render_repo_doc` | function | `crates/gcode/src/commands/codewiki/render/repo.rs:102` |
+| `repo_source_excerpts` | function | `crates/gcode/src/commands/codewiki/render/repo.rs:88` |
+| `render_repo_doc` | function | `crates/gcode/src/commands/codewiki/render/repo.rs:110` |
 
 ## [[code/files/crates/gcode/src/commands/codewiki/repair.rs|crates/gcode/src/commands/codewiki/repair.rs]]
 
@@ -488,13 +500,13 @@ A symbol is listed as a candidate only when ALL of the following hold:
 
 | Symbol | Kind | Location |
 | --- | --- | --- |
-| `run_repair` | function | `crates/gcode/src/commands/codewiki/run.rs:230` |
-| `validate_edge_limit` | function | `crates/gcode/src/commands/codewiki/run.rs:252` |
-| `git_changed_files` | function | `crates/gcode/src/commands/codewiki/run.rs:263` |
-| `documents_file` | function | `crates/gcode/src/commands/codewiki/run.rs:290` |
-| `should_document_file` | function | `crates/gcode/src/commands/codewiki/run.rs:296` |
-| `load_symbols_for_codewiki` | function | `crates/gcode/src/commands/codewiki/run.rs:300` |
-| `load_leading_chunks` | function | `crates/gcode/src/commands/codewiki/run.rs:312` |
+| `run_repair` | function | `crates/gcode/src/commands/codewiki/run.rs:242` |
+| `validate_edge_limit` | function | `crates/gcode/src/commands/codewiki/run.rs:264` |
+| `git_changed_files` | function | `crates/gcode/src/commands/codewiki/run.rs:275` |
+| `documents_file` | function | `crates/gcode/src/commands/codewiki/run.rs:302` |
+| `should_document_file` | function | `crates/gcode/src/commands/codewiki/run.rs:308` |
+| `load_symbols_for_codewiki` | function | `crates/gcode/src/commands/codewiki/run.rs:312` |
+| `load_leading_chunks` | function | `crates/gcode/src/commands/codewiki/run.rs:324` |
 
 ## [[code/files/crates/gcode/src/commands/codewiki/system_model.rs|crates/gcode/src/commands/codewiki/system_model.rs]]
 
@@ -519,6 +531,13 @@ A symbol is listed as a candidate only when ALL of the following hold:
 | `toolchain_boundaries` | function | `crates/gcode/src/commands/codewiki/system_model.rs:481` |
 | `fixture_workspace` | function | `crates/gcode/src/commands/codewiki/system_model.rs:540` |
 | `crate_named` | function | `crates/gcode/src/commands/codewiki/system_model.rs:561` |
+
+## [[code/files/crates/gcode/src/commands/codewiki/text.rs|crates/gcode/src/commands/codewiki/text.rs]]
+
+| Symbol | Kind | Location |
+| --- | --- | --- |
+| `span` | function | `crates/gcode/src/commands/codewiki/text.rs:52` |
+| `transport_failure` | function | `crates/gcode/src/commands/codewiki/text.rs:325` |
 
 ## [[code/files/crates/gcode/src/commands/codewiki/text/citations.rs|crates/gcode/src/commands/codewiki/text/citations.rs]]
 
@@ -568,15 +587,17 @@ A symbol is listed as a candidate only when ALL of the following hold:
 
 | Symbol | Kind | Location |
 | --- | --- | --- |
-| `resolve_text_generator` | function | `crates/gcode/src/commands/codewiki/text/generation.rs:23` |
-| `resolve_text_verifier` | function | `crates/gcode/src/commands/codewiki/text/generation.rs:89` |
-| `generate_with_bounded_retry` | function | `crates/gcode/src/commands/codewiki/text/generation.rs:159` |
-| `retryable_generation_error` | function | `crates/gcode/src/commands/codewiki/text/generation.rs:175` |
-| `resolve_ai_context` | function | `crates/gcode/src/commands/codewiki/text/generation.rs:185` |
-| `Generation` | type | `crates/gcode/src/commands/codewiki/text/generation.rs:205` |
-| `maybe_generate` | function | `crates/gcode/src/commands/codewiki/text/generation.rs:230` |
-| `is_prompt_echo` | function | `crates/gcode/src/commands/codewiki/text/generation.rs:253` |
-| `clean_generated` | function | `crates/gcode/src/commands/codewiki/text/generation.rs:265` |
+| `writer_candidate_chain` | function | `crates/gcode/src/commands/codewiki/text/generation.rs:28` |
+| `resolve_text_generator` | function | `crates/gcode/src/commands/codewiki/text/generation.rs:47` |
+| `resolve_text_verifier` | function | `crates/gcode/src/commands/codewiki/text/generation.rs:134` |
+| `generate_with_bounded_retry` | function | `crates/gcode/src/commands/codewiki/text/generation.rs:204` |
+| `retryable_generation_error` | function | `crates/gcode/src/commands/codewiki/text/generation.rs:220` |
+| `resolve_ai_context` | function | `crates/gcode/src/commands/codewiki/text/generation.rs:230` |
+| `Generation` | type | `crates/gcode/src/commands/codewiki/text/generation.rs:250` |
+| `maybe_generate` | function | `crates/gcode/src/commands/codewiki/text/generation.rs:275` |
+| `is_prompt_echo` | function | `crates/gcode/src/commands/codewiki/text/generation.rs:300` |
+| `is_model_refusal` | function | `crates/gcode/src/commands/codewiki/text/generation.rs:324` |
+| `clean_generated` | function | `crates/gcode/src/commands/codewiki/text/generation.rs:343` |
 
 ## [[code/files/crates/gcode/src/commands/codewiki/text/sanitize.rs|crates/gcode/src/commands/codewiki/text/sanitize.rs]]
 
@@ -664,19 +685,19 @@ A symbol is listed as a candidate only when ALL of the following hold:
 | `VerifyNote` | class | `crates/gcode/src/commands/codewiki/types.rs:427` |
 | `normalize_verify_note_reason` | function | `crates/gcode/src/commands/codewiki/types.rs:441` |
 | `CodewikiRunSummary` | class | `crates/gcode/src/commands/codewiki/types.rs:454` |
-| `CodewikiMeta` | class | `crates/gcode/src/commands/codewiki/types.rs:469` |
-| `CodewikiDocMeta` | class | `crates/gcode/src/commands/codewiki/types.rs:479` |
-| `BuiltDoc` | class | `crates/gcode/src/commands/codewiki/types.rs:518` |
-| `CodewikiIndexSnapshot` | class | `crates/gcode/src/commands/codewiki/types.rs:573` |
-| `CodewikiFileSnapshot` | class | `crates/gcode/src/commands/codewiki/types.rs:583` |
-| `CodewikiSymbolSnapshot` | class | `crates/gcode/src/commands/codewiki/types.rs:589` |
-| `TextGenerator` | type | `crates/gcode/src/commands/codewiki/types.rs:597` |
-| `TextVerifier` | type | `crates/gcode/src/commands/codewiki/types.rs:605` |
-| `PromptTier` | type | `crates/gcode/src/commands/codewiki/types.rs:612` |
-| `AiDepth` | type | `crates/gcode/src/commands/codewiki/types.rs:621` |
-| `ProseDepth` | type | `crates/gcode/src/commands/codewiki/types.rs:654` |
-| `ProseRegister` | type | `crates/gcode/src/commands/codewiki/types.rs:681` |
-| `CodewikiAiOptions` | class | `crates/gcode/src/commands/codewiki/types.rs:693` |
+| `CodewikiMeta` | class | `crates/gcode/src/commands/codewiki/types.rs:474` |
+| `CodewikiDocMeta` | class | `crates/gcode/src/commands/codewiki/types.rs:484` |
+| `BuiltDoc` | class | `crates/gcode/src/commands/codewiki/types.rs:523` |
+| `CodewikiIndexSnapshot` | class | `crates/gcode/src/commands/codewiki/types.rs:578` |
+| `CodewikiFileSnapshot` | class | `crates/gcode/src/commands/codewiki/types.rs:588` |
+| `CodewikiSymbolSnapshot` | class | `crates/gcode/src/commands/codewiki/types.rs:594` |
+| `TextGenerator` | type | `crates/gcode/src/commands/codewiki/types.rs:602` |
+| `TextVerifier` | type | `crates/gcode/src/commands/codewiki/types.rs:610` |
+| `PromptTier` | type | `crates/gcode/src/commands/codewiki/types.rs:618` |
+| `AiDepth` | type | `crates/gcode/src/commands/codewiki/types.rs:628` |
+| `ProseDepth` | type | `crates/gcode/src/commands/codewiki/types.rs:661` |
+| `ProseRegister` | type | `crates/gcode/src/commands/codewiki/types.rs:688` |
+| `CodewikiAiOptions` | class | `crates/gcode/src/commands/codewiki/types.rs:700` |
 
 ## [[code/files/crates/gcode/src/commands/embeddings_doctor.rs|crates/gcode/src/commands/embeddings_doctor.rs]]
 
@@ -733,19 +754,11 @@ A symbol is listed as a candidate only when ALL of the following hold:
 | `load_indexed_chunks` | function | `crates/gcode/src/commands/grep.rs:127` |
 | `push_grep_sql_prefilters` | function | `crates/gcode/src/commands/grep.rs:236` |
 | `push_grep_sql_prefix_filter` | function | `crates/gcode/src/commands/grep.rs:256` |
-| `grep_chunks_with_filters` | function | `crates/gcode/src/commands/grep.rs:287` |
-| `context_line_numbers` | function | `crates/gcode/src/commands/grep.rs:354` |
-| `collect_context_lines` | function | `crates/gcode/src/commands/grep.rs:377` |
 | `GrepFilters` | class | `crates/gcode/src/commands/grep.rs:409` |
-| `sql_like_prefixes` | function | `crates/gcode/src/commands/grep.rs:441` |
 | `escape_like_prefix` | function | `crates/gcode/src/commands/grep.rs:458` |
 | `CompiledGlob` | class | `crates/gcode/src/commands/grep.rs:469` |
-| `context_before` | function | `crates/gcode/src/commands/grep.rs:499` |
-| `context_after` | function | `crates/gcode/src/commands/grep.rs:517` |
 | `format_text_matches` | function | `crates/gcode/src/commands/grep.rs:535` |
-| `push_grouped_grep_line` | function | `crates/gcode/src/commands/grep.rs:584` |
 | `chunk` | function | `crates/gcode/src/commands/grep.rs:603` |
-| `options` | function | `crates/gcode/src/commands/grep.rs:611` |
 
 ## [[code/files/crates/gcode/src/commands/grep/grep_matcher.rs|crates/gcode/src/commands/grep/grep_matcher.rs]]
 
@@ -812,16 +825,8 @@ A symbol is listed as a candidate only when ALL of the following hold:
 | Symbol | Kind | Location |
 | --- | --- | --- |
 | `format_timestamp` | function | `crates/gcode/src/commands/status.rs:18` |
-| `overlay_status_json` | function | `crates/gcode/src/commands/status.rs:136` |
-| `cleanup_project_projections` | function | `crates/gcode/src/commands/status.rs:187` |
-| `collect_projects` | function | `crates/gcode/src/commands/status.rs:200` |
-| `indexed_project_from_row` | function | `crates/gcode/src/commands/status.rs:229` |
 | `format_coverage` | function | `crates/gcode/src/commands/status.rs:248` |
-| `display_name` | function | `crates/gcode/src/commands/status.rs:259` |
-| `is_stale` | function | `crates/gcode/src/commands/status.rs:296` |
 | `StaleProject` | class | `crates/gcode/src/commands/status.rs:313` |
 | `ProjectionCleanupScope` | type | `crates/gcode/src/commands/status.rs:319` |
 | `ProjectionPruneTotals` | class | `crates/gcode/src/commands/status.rs:325` |
-| `projection_cleanup_scope` | function | `crates/gcode/src/commands/status.rs:361` |
-| `stale_projects` | function | `crates/gcode/src/commands/status.rs:369` |
 

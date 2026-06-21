@@ -18,33 +18,48 @@ Parent: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-The `crates/gwiki/src/search` module is the shared search layer for wiki content. It exposes lexical BM25, graph-boost, reciprocal-rank fusion, and semantic search submodules from one namespace (`mod.rs:1-4`), while centralizing common concepts such as `SearchScope`, `SearchSource`, hit kinds, provenance, results, requests, responses, and errors (`mod.rs:11-100`). Scopes support global, project, and topic filtering, with helper methods that produce a kind/value pair or an optional filter tuple for downstream backends (`mod.rs:11-51`).
+## crates/gwiki/src/search
 
-Search execution is split across specialized backends. BM25 accepts a query, scope, and limit, delegates to a `Bm25SearchBackend`, over-fetches candidates, filters to keyword-searchable wiki paths, requires BM25 attribution, and truncates to the requested limit (`bm25.rs:12-58`). Semantic search similarly accepts a query/scope/limit request and returns hits plus optional degradation; it depends on embedding configuration, Qdrant configuration, query embedding, and vector search traits (`semantic.rs:3-67`). Graph boosting accepts scoped seed paths and a limit, uses Falkor/graph configuration and wiki graph imports, and can degrade cleanly through unavailable/no-op backends (`graph_boost.rs:1-70`).
+The search module is the retrieval core of gwiki, orchestrating three complementary ranking signals — BM25 keyword scoring, semantic vector search, and graph-link boosting — before merging them through Reciprocal Rank Fusion (RRF). The root `mod.rs` file declares the shared vocabulary of the subsystem: `SearchScope`, `SearchSource`, `SearchHitKind`, `WikiSearchResult`, `SearchRequest`, `WikiSearchResponse`, and `SearchError`, plus the top-level `search` function that drives the full pipeline. Each sub-file owns one stage of the pipeline behind a trait boundary, keeping backends swappable for both production and testing.
 
-Collaboration points are explicit: this module imports degradation reporting from `gobby_core`, graph access through Falkor and `MemoryWikiGraph`, vector search structures and collection naming from Qdrant, and embedding/AI configuration from core config and optional AI daemon context (`semantic.rs:3-10`, `graph_boost.rs:4-14`). Internally, search backends share common result and provenance types from `crate::search`, while graph boost also reuses BM25 path searchability filtering (`graph_boost.rs:9-14`, `bm25.rs:6-9`). The top-level source model normalizes result attribution across BM25, graph, and semantic systems via stable string names (`mod.rs:53-76`).
+BM25 search (`bm25.rs`) generates parameterised PostgreSQL full-text SQL via `build_bm25_sql`, delegating execution to anything that implements `Bm25SearchBackend`. It oversamples candidates by 4× from the backend and then post-filters to keyword-searchable paths and confirmed `Bm25` sources before truncating to the requested limit. Semantic search (`semantic.rs`) encodes the query through a `QueryEmbedder` — either `OpenAiEmbeddingBackend` calling the OpenAI API directly (feature `ai` disabled) or via the Gobby AI daemon — and dispatches a nearest-neighbour search to a `VectorSearchBackend`, concretely `GobbyQdrantBackend`, scoped to the correct Qdrant collection through `collection_for_scope` and `payload_filter`. Graph boost (`graph_boost.rs`) receives seed page paths from the BM25 or semantic results, expands them through `MemoryWikiGraph` or the Falkor graph client, and surfaces linked documents as additional hits labelled `SearchSource::Graph`. All three result lists are combined by `fuse_sources` in `rrf.rs`, which computes RRF scores, resolves canonical page keys via `WikiSearchResult::fusion_key`, and merges per-hit source/explanation metadata with `merge_hit_metadata`.
 
-| Public API area | Symbols |
-| --- | --- |
-| Scope | `SearchScope`, `SearchScope::global`, `SearchScope::project`, `SearchScope::topic`, `scope_kind`, `scope_value`, `scope_filter` |
-| Source attribution | `SearchSource`, `SearchSource::as_str`, `SearchSource::from_source_name` |
-| Results/provenance | `SearchHitKind`, `ChunkProvenance`, `SearchProvenance`, `SearchSourceExplanation`, `WikiSearchResult`, `WikiSearchResult::fusion_key` |
-| Orchestration | `SearchRequest`, `WikiSearchResponse`, `SearchError`, `search`, `available_sources` |
-| Fusion | `fuse_sources`, `ranked_keys`, `merge_hit_metadata` |
-| Semantic | `SemanticSearchRequest`, `SemanticSearchOutcome`, `SemanticSearchBackend`, `QueryEmbedder`, `VectorSearchBackend`, `search_semantic` |
-| Graph | `GraphBoostConfig`, `GraphBoostRequest`, `GraphBoostOutcome`, `GraphBoostBackend` |
+The module integrates heavily with `gobby_core`. `semantic.rs` consumes `gobby_core::config::{EmbeddingConfig, QdrantConfig}`, `gobby_core::qdrant::{CollectionScope, SearchHit, SearchRequest, collection_name}`, and `gobby_core::degradation::DegradationKind` (semantic.rs:1-9). `graph_boost.rs` imports `gobby_core::config::FalkorConfig` and `gobby_core::falkor::GraphClient`, as well as `crate::graph::MemoryWikiGraph` (graph_boost.rs:1-6). `bm25.rs` draws SQL helpers from `gobby_core::search::{bm25_score_expr, sanitize_pg_search_query}` (bm25.rs:5). Degradation is a first-class concern throughout: each backend returns an `Option<DegradationKind>` alongside its hits, unavailable services are represented by `UnavailableSemanticBackend`, `UnavailableGraphBoostBackend`, and `NoopGraphBoostBackend`, and the `available_sources` / `search_source_unavailable` helpers at the module level collect and surface degradation information to callers.
 
-| Enumerable value | Values | Support |
-| --- | --- | --- |
-| `SearchScope` | `Global`, `Project { project_id }`, `Topic { topic }` | `mod.rs:11-51` |
-| `SearchSource` | `Bm25`, `Graph`, `Semantic` | `mod.rs:53-76` |
-| `SearchHitKind` | `Document`, `Chunk` | `mod.rs:78-81` |
-| Graph defaults | document query limit `10_000`, link query limit `50_000` | `graph_boost.rs:15-31` |
+### SearchScope
+
+| Variant | Constructor | scope_kind() | scope_filter() |
+|---|---|---|---|
+| Global | `SearchScope::global()` | `"global"` | `None` |
+| Project | `SearchScope::project(id)` | `"project"` | `Some(("project", id))` |
+| Topic | `SearchScope::topic(t)` | `"topic"` | `Some(("topic", t))` |
+
+### SearchSource
+
+| Variant | as_str() | Backend trait | Concrete production impl |
+|---|---|---|---|
+| Bm25 | `"bm25"` | `Bm25SearchBackend` | PostgreSQL via `build_bm25_sql` |
+| Graph | `"graph"` | `GraphBoostBackend` | `MemoryWikiGraph` / Falkor `GraphClient` |
+| Semantic | `"semantic"` | `SemanticSearchBackend` | `GobbySemanticBackend` + `GobbyQdrantBackend` |
+
+### Public API symbols (mod.rs)
+
+| Symbol | Kind | Role |
+|---|---|---|
+| `search` | fn | Top-level entry point; runs all three stages and fuses results |
+| `fuse_sources` | fn (rrf.rs) | RRF merge of multi-source result lists |
+| `graph_seed_paths` | fn | Extracts seed paths for graph expansion from prior hits |
+| `available_sources` | fn | Returns the set of `SearchSource` values active for a request |
+| `normalized_path` | fn | Canonicalises a file path for fusion-key comparison |
+| `WikiSearchResult` | struct | Unified hit type carrying path, score, sources, and provenance |
+| `SearchRequest` | struct | Input to `search`: query string, scope, per-source limits |
+| `WikiSearchResponse` | struct | Output of `search`: ranked hits plus per-source degradation notices |
+| `SearchError` | enum | Unified error type across all backends |
 [crates/gwiki/src/search/graph_boost.rs:21-24]
 [crates/gwiki/src/search/bm25.rs:13-17]
 [crates/gwiki/src/search/mod.rs:14-18]
-[crates/gwiki/src/search/semantic.rs:18-22]
 [crates/gwiki/src/search/rrf.rs:8-92]
+[crates/gwiki/src/search/semantic.rs:18-22]
 
 ## Files
 

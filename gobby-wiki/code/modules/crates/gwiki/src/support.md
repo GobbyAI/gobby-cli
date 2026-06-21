@@ -23,30 +23,48 @@ Parent: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-`crates/gwiki/src/support` is the utility layer for gwiki runtime plumbing: configuration, environment discovery, graph shaping, and text/search helpers. Config is hub-aware: `HubPrimary` implements `ConfigSource`, reads values through PostgreSQL when available, resolves `$secret:` values through the hub, and rejects secret references when no hub exists (crates/gwiki/src/support/config.rs:18-43). `hub_ai_config_source` ties this to command execution by resolving Gobby home, asking `support::env::database_url_for` for a hub DSN, optionally connecting to Postgres, and building an `AiConfigSource` (crates/gwiki/src/support/config.rs:46-60).
+## crates/gwiki/src/support
 
-Environment resolution is the main inbound collaboration point for hub-backed flows. `database_url` prefers explicit env vars, then falls back through Gobby home bootstrap/broker resolution, bootstrap file values, and gcore config (crates/gwiki/src/support/env.rs:32-49). `config` imports core config/provisioning, `postgres::Client`, crate indexer/error types, and `super::search::PostgresConfigSource`, then calls `super::env::database_url_for` during AI config construction (crates/gwiki/src/support/config.rs:1-10, crates/gwiki/src/support/config.rs:52-53).
+The `support` module is the internal utility layer for the `gwiki` crate. It consolidates cross-cutting concerns — configuration resolution, environment discovery, text processing, graph construction, search helpers, scoping, PostgreSQL access, time utilities, and counters — so that the rest of the crate can import focused primitives without duplicating infrastructure logic. Nothing in this module is part of the public crate API; all symbols carry `pub(crate)` visibility and are imported directly by the indexer, graph, search, and command layers above.
 
-The text and graph helpers normalize data before higher-level features consume it. `text` tokenizes and scores search strings, sanitizes repo-relative code paths, clips snippets, and produces stable degradation labels (crates/gwiki/src/support/text.rs:7-69). `graph` converts a `store::MemoryWikiStore` plus `search::SearchScope` into `graph::MemoryWikiGraph` facts, resolving internal links, skipping external targets, and using `text::slugify` for slug lookup (crates/gwiki/src/support/graph.rs:4-6, crates/gwiki/src/support/graph.rs:8-84).
+Configuration and environment resolution are the most interconnected concerns. `env.rs` owns the database-URL discovery chain: it checks environment variables first, then falls back to a brokered lookup against `bootstrap.yaml`, then a direct file parse, and finally a `gobby_core` `gcore` config read (env.rs:33–49). `config.rs` builds on top of this by constructing a layered `AiConfigSource` whose primary layer is `HubPrimary` — an owned, optional `postgres::Client` that resolves `$secret:` references through the PostgreSQL hub when reachable, and rejects them with a clear error when the hub is absent (config.rs:22–44). `hub_ai_config_source()` calls `super::env::database_url_for` to obtain the connection string and delegates secret resolution to `gobby_core::secrets` (config.rs:47–62). The `search` sub-module supplies `PostgresConfigSource`, which is re-imported by `config.rs` (config.rs:9).
 
-| Symbol | Role | Source |
-| --- | --- | --- |
-| `hub_ai_config_source` | Builds hub-aware AI config source | crates/gwiki/src/support/config.rs:46-60 |
-| `database_url` | Resolves hub database URL | crates/gwiki/src/support/env.rs:32-49 |
-| `database_url_for` | Wraps DB URL errors as `WikiError::Config` | crates/gwiki/src/support/env.rs:51-55 |
-| `database_url_from_env` | Reads explicit DB env vars | crates/gwiki/src/support/env.rs:57-65 |
-| `query_tokens` / `keyword_score` | Query normalization and scoring | crates/gwiki/src/support/text.rs:7-22 |
-| `sanitize_code_path` | Rejects unsafe code paths | crates/gwiki/src/support/text.rs:24-45 |
-| `memory_graph_from_store` | Builds in-memory graph facts | crates/gwiki/src/support/graph.rs:8-55 |
+Text and graph utilities form a second cohesive pair. `text.rs` provides tokenisation (`query_tokens`), keyword scoring, safe path sanitisation (`sanitize_code_path` rejects absolute paths and `..` traversals), snippet extraction, and degradation label formatting. `graph.rs` imports `text::slugify` (graph.rs:6) to build the slug-to-path index used when resolving wiki link targets inside `memory_graph_from_store`, which converts a `MemoryWikiStore` + `SearchScope` into a `MemoryWikiGraph` containing documents, resolved links, and source mappings (graph.rs:7–54). `scope.rs`, `search.rs`, `counts.rs`, `time.rs`, and `postgres.rs` round out the layer with the remaining 10 + 8 + 7 + 3 + 2 symbols respectively.
 
-| Key / Constant | Value / Behavior | Source |
-| --- | --- | --- |
-| `GWIKI_DATABASE_URL` | Preferred explicit DB URL env var | crates/gwiki/src/support/env.rs:14-16 |
-| `GOBBY_POSTGRES_DSN` | Fallback explicit DB URL env var | crates/gwiki/src/support/env.rs:14-16 |
-| `GWIKI_BROKER_TIMEOUT_MS` | Broker timeout override env var | crates/gwiki/src/support/env.rs:16-18 |
-| `DEFAULT_BROKER_TIMEOUT` | 7000 ms | crates/gwiki/src/support/env.rs:18 |
-| `DEFAULT_MAX_INBOX_ITEM_BYTES` | 500 MB import ceiling | crates/gwiki/src/support/env.rs:1-4 |
-| `DEFAULT_SHARED_CODE_GRAPH_EDGE_LIMIT` | 200 | crates/gwiki/src/support/config.rs:63 |
+### Environment variables (env.rs:13–17)
+
+| Variable | Purpose | Default |
+|---|---|---|
+| `GWIKI_DATABASE_URL` | Primary PostgreSQL DSN override | — |
+| `GOBBY_POSTGRES_DSN` | Secondary PostgreSQL DSN fallback | — |
+| `GWIKI_BROKER_TIMEOUT_MS` | Broker connection timeout in milliseconds | `7000` |
+
+### Notable constants and limits
+
+| Symbol | Value | Location |
+|---|---|---|
+| `DEFAULT_MAX_INBOX_ITEM_BYTES` | 500 000 000 (500 MB) | env.rs:3 |
+| `DEFAULT_BROKER_TIMEOUT` | 7 000 ms | env.rs:17 |
+| `DEFAULT_SHARED_CODE_GRAPH_EDGE_LIMIT` | 200 | config.rs:64 |
+
+### Key public(crate) API surface
+
+| File | Representative symbols |
+|---|---|
+| `config.rs` | `HubPrimary`, `hub_ai_config_source` |
+| `env.rs` | `database_url`, `database_url_for`, `database_url_from_env` |
+| `text.rs` | `query_tokens`, `keyword_score`, `sanitize_code_path`, `snippet_from_text`, `degradation_label` |
+| `graph.rs` | `memory_graph_from_store` |
+| `search.rs` | `PostgresConfigSource` (imported by `config.rs`) |
+| `postgres.rs` | 2 PostgreSQL helper symbols |
+| `scope.rs` | 10 scope-management symbols |
+| `counts.rs` | 7 counting symbols |
+| `time.rs` | 3 time-formatting symbols |
+[crates/gwiki/src/support/config.rs:18-20]
+[crates/gwiki/src/support/counts.rs:4-10]
+[crates/gwiki/src/support/env.rs:21-24]
+[crates/gwiki/src/support/graph.rs:8-55]
+[crates/gwiki/src/support/postgres.rs:6-39]
 
 ## Files
 

@@ -44,32 +44,58 @@ Parent: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-The `crates/gwiki/src/commands` module is the command layer for gwiki: each file implements a user-facing operation, resolves the active wiki scope, performs domain work, and returns a `CommandOutcome`. Commands cover retrieval and reading, source management, indexing/search/graph workflows, trust and citation review, setup/status, export/compile, and AI-assisted answering. For example, `read` resolves scope, dispatches by `ReadTarget::Path` or `ReadTarget::Title`, validates scoped paths, and renders structured read output (`crates/gwiki/src/commands/read.rs:16-28`, `crates/gwiki/src/commands/read.rs:30-58`). `sources` lists and removes manifest-backed sources, guarding scope roots and staging raw/source asset deletion before re-indexing when not in dry-run mode (`crates/gwiki/src/commands/sources.rs:12-21`, `crates/gwiki/src/commands/sources.rs:23-74`).
+## Module: crates/gwiki/src/commands
 
-Several commands coordinate richer multi-step flows. `ask` turns search retrieval into grounded answers by building a bounded `EvidencePlan` from `SearchRetrieval`, centering excerpts around query terms, estimating tokens, enforcing a 12,000-token prompt budget, then routing text generation through shared AI configuration and recording requested/effective route metadata. `citation_quality` builds a report with dependency metadata and sections for credibility, coverage gaps, contradictions, stale sources, and confidence (`crates/gwiki/src/commands/citation_quality.rs:21-48`); its contradiction submodule accepts a `ProvenanceGraph`, AI availability, and an injected detector, and explicitly returns an unavailable section rather than fabricating findings when AI is off (`crates/gwiki/src/commands/citation_quality/contradictions.rs:27-65`, `crates/gwiki/src/commands/citation_quality/contradictions.rs:31-41`). `refresh` plans source replays from manifest records, validates raw source paths, serializes replay metadata, and reports skipped or failed refreshes for unsupported or malformed source records (`crates/gwiki/src/commands/refresh/selection.rs:1`, `crates/gwiki/src/commands/refresh/selection.rs:5`, `crates/gwiki/src/commands/refresh/selection.rs:36`, `crates/gwiki/src/commands/refresh/model.rs:39`, `crates/gwiki/src/commands/refresh/model.rs:46`, `crates/gwiki/src/commands/refresh/model.rs:54`).
+This module is the command-dispatch layer for the `gwiki` CLI tool. Each file implements a single user-facing operation — ranging from content ingestion (`collect`, `compile`, `index`, `init`, `setup`) and source lifecycle management (`sources`, `refresh`) to analytical workflows (`citation_quality`, `review_report`, `audit`, `benchmark`) and navigation utilities (`read`, `search`, `backlinks`, `graph`, `graph_context`). The module root (`mod.rs`) publishes exactly three symbols that the binary wires into its argument parser, keeping the public surface minimal while the per-file `execute` functions carry the implementation weight. Three child modules — `ask`, `citation_quality` (with its own `contradictions` submodule), and `refresh` — encapsulate enough logic to warrant their own directory trees.
 
-The command layer sits between CLI-facing request types and lower-level gwiki subsystems. It imports shared scope helpers such as `resolve_command_scope`, `resolved_scope_identity`, and `resolve_selection_context` to constrain all operations to the selected vault (`crates/gwiki/src/commands/sources.rs:9-10`, `crates/gwiki/src/commands/read.rs:7-8`, `crates/gwiki/src/commands/review_report.rs:16`). It calls out to manifests, provenance, health/lint, PostgreSQL, FalkorDB/code graph analytics, search, exports, and AI routing depending on the command (`crates/gwiki/src/commands/citation_quality.rs:5-18`, `crates/gwiki/src/commands/review_report.rs:5-21`). `review_report` illustrates the wider integration point: it resolves selection context, requires PostgreSQL index configuration, optionally loads FalkorDB config, loads wiki graph facts and provenance, then asks the code graph subsystem for affected pages (`crates/gwiki/src/commands/review_report.rs:24-61`).
+| Command file | Primary entry point | Notes |
+|---|---|---|
+| ask.rs | `execute` | LLM question-answering; validates AI routing |
+| audit.rs | `execute` | Single-symbol surface; wiki health audit |
+| backlinks.rs | `execute` | 6 symbols; reverse-link traversal |
+| benchmark.rs | `execute` | Performance profiling; 4 symbols |
+| citation_quality.rs | `execute` / `build_report` | 44 symbols; full citation analysis pipeline |
+| collect.rs | `execute` | Source ingestion; 2 symbols |
+| compile.rs | `execute` | 23 symbols; Markdown compilation |
+| export.rs | `execute` | Single export symbol |
+| graph.rs | `execute` | 16 symbols; graph rendering |
+| health.rs | `execute` | Single health-check symbol |
+| index.rs | `execute` | 35 symbols; PostgreSQL indexing core |
+| init.rs | `execute` | Workspace initialisation; 2 symbols |
+| librarian.rs | `execute` | Single librarian symbol |
+| lint.rs | `execute` | Single lint symbol |
+| normalize.rs | `execute` | Normalisation pass |
+| read.rs | `execute` | 36 symbols; path- and title-based document lookup |
+| review_report.rs | `execute` | 36 symbols; code-change impact report |
+| search.rs | `execute` | 20 symbols; full-text search |
+| session_sync.rs | `execute` | Session state synchronisation; 3 symbols |
+| setup.rs | `execute` | 18 symbols; environment setup |
+| sources.rs | `execute` / `execute_remove` | 41 symbols; source manifest management |
+| status.rs | `execute` | 5 symbols; workspace status |
+| trust.rs | `execute` | 21 symbols; source-trust scoring |
+| refresh (child) | `execute` / `execute_with_fetcher` | URL and local-file refresh pipeline |
 
-| Public API / Type | Role |
-| --- | --- |
-| `execute` | Common command entry point name used across command files. |
-| `CitationQualityReport` | Serialized citation-quality report root (`crates/gwiki/src/commands/citation_quality.rs:21-28`). |
-| `DependencyMetadata` | Captures hard, optional, and multimodal dependencies (`crates/gwiki/src/commands/citation_quality.rs:30-35`). |
-| `CitationQualitySections` | Groups credibility, coverage, contradiction, stale-source, and confidence sections (`crates/gwiki/src/commands/citation_quality.rs:37-45`). |
-| `SourceCredibility` | Per-source credibility score and signals (`crates/gwiki/src/commands/citation_quality.rs:55-62`). |
-| `RefreshPlan::from_record` / `RefreshPlan::serialize` | Build and report refresh replay plans (`crates/gwiki/src/commands/refresh/model.rs:39`, `crates/gwiki/src/commands/refresh/model.rs:46`). |
+Key analytical flows are concentrated in `citation_quality.rs` and `review_report.rs`. The citation-quality pipeline reads `SourceManifest` and `ProvenanceGraph` from the vault, scores each source via `crate::credibility` (credibility_quality.rs:10), optionally dispatches AI contradiction detection through `gobby_core::ai::effective_route` (citation_quality.rs:6), then assembles a `CitationQualityReport` with five structured sections before writing a Markdown artifact to disk (citation_quality.rs:25–52). The review-report command mandates a live PostgreSQL connection via `crate::support::env::database_url_for` (review_report.rs:33–38), optionally connects to FalkorDB, loads graph analytics from `gobby_core::graph_analytics`, and joins `ProvenanceGraph` data with a `CodeChangeSet` to surface wiki pages affected by code diffs (review_report.rs:42–57). The `refresh` child module (`execute_with_fetcher` / `execute_resolved_with_fetcher`) handles URL and local-file source refreshing, distinguishing `RefreshPlan`, `ChangedRefresh`, `RefreshedSource`, `SkippedRefresh`, and `RefreshFailure` outcomes and cleaning up stale raw assets on content change.
 
-| Environment Variable | Purpose |
-| --- | --- |
-| `GWIKI_READ_MAX_BYTES` | Caps bytes read by the `read` command; defaults to 1 MiB (`crates/gwiki/src/commands/read.rs:12-13`). |
+| Environment variable | Default | Consumer |
+|---|---|---|
+| `GWIKI_READ_MAX_BYTES` | 1 048 576 (1 MiB) | `read.rs` (read.rs:13–14) |
+| `DATABASE_URL` / PostgreSQL DSN | — | `review_report.rs`, `citation_quality.rs`, `index.rs` |
+
+The commands module is a pure caller: it imports from `gobby_core` (AI routing, config, graph analytics, PostgreSQL, degradation), from sibling crates (`crate::credibility`, `crate::provenance`, `crate::sources`, `crate::search`, `crate::code_graph`, `crate::falkor_graph`, `crate::lint`, `crate::markdown`, `crate::frontmatter`, `crate::paths`), and from the shared helpers under `crate::support::scope`, `crate::support::counts`, `crate::support::env`, and `crate::support::search`. Nothing inside `commands` is re-exported beyond the three symbols in `mod.rs`; the binary layer calls in through those entry points, and the commands call outward into the rest of the crate and into `gobby_core`. Degradation signals follow a consistent pattern: soft failures are collected into `degradations` vectors and attached to `CommandOutcome` rather than unwinding, keeping every command tolerant of partial infrastructure (e.g., `DEGRADED_FALKORDB_UNAVAILABLE` in review_report.rs:24–26).
+[crates/gwiki/src/commands/citation_quality/contradictions.rs:15-18]
+[crates/gwiki/src/commands/ask/citation.rs:25-46]
+[crates/gwiki/src/commands/citation_quality.rs:26-33]
+[crates/gwiki/src/commands/graph_context.rs:13-83]
+[crates/gwiki/src/commands/refresh/mod.rs:29-37]
 
 ## Child Modules
 
 | Module | Summary |
 | --- | --- |
-| [[code/modules/crates/gwiki/src/commands/ask\|crates/gwiki/src/commands/ask]] | The `ask` module turns search retrieval into a grounded answer. `evidence.rs` builds a bounded `EvidencePlan` from `SearchRetrieval`, centering excerpts around query terms with `query_window`, estimating tokens conservatively, and dropping later hits once the prompt would exceed the 12,000-token budget . `synthesis.rs` then resolves gwiki’s shared AI routing, records requested and effective route metadata on `AskOutput`, and dispatches the single text-generation call through either the direct OpenAI-compatible path or the daemon path . |
-| [[code/modules/crates/gwiki/src/commands/citation_quality\|crates/gwiki/src/commands/citation_quality]] | `crates/gwiki/src/commands/citation_quality/contradictions.rs` builds the contradiction-detection portion of citation quality reporting. Its main entry point, `contradiction_section`, accepts a `ProvenanceGraph`, an AI availability flag, and an injected detector callback, then returns a `ContradictionSection` for the parent command layer (crates/gwiki/src/commands/citation_quality/contradictions.rs:27-65). It explicitly avoids inventing results when AI is unavailable, returning an unavailable section with a note and no findings… |
-| [[code/modules/crates/gwiki/src/commands/refresh\|crates/gwiki/src/commands/refresh]] | The `refresh` module plans and executes source replays for the wiki vault. Selection turns manifest records into `RefreshPlan`s, either for all refreshable records or for explicit source IDs; unsupported source kinds are skipped in broad refreshes, while missing explicit IDs and replay-metadata problems become `RefreshFailure`s ((crates/gwiki/src/commands/refresh/selection.rs:1), (crates/gwiki/src/commands/refresh/selection.rs:5), (crates/gwiki/src/commands/refresh/selection.rs:36)). Plans validate that a stored source ID maps to a raw source path before entering the refresh flow, and… |
+| [[code/modules/crates/gwiki/src/commands/ask\|crates/gwiki/src/commands/ask]] | ## Module: crates/gwiki/src/commands/ask |
+| [[code/modules/crates/gwiki/src/commands/citation_quality\|crates/gwiki/src/commands/citation_quality]] | ## `crates/gwiki/src/commands/citation_quality/contradictions` |
+| [[code/modules/crates/gwiki/src/commands/refresh\|crates/gwiki/src/commands/refresh]] | ## `crates/gwiki/src/commands/refresh` |
 
 ## Files
 

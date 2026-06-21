@@ -30,30 +30,57 @@ Parent: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-The `build_parts` module is the document-generation toolkit behind codewiki pages: architecture, audits, changes, curated concepts, feature catalogs, file/module pages, hotspots, infrastructure, onboarding, and snapshots. Its audit path is deterministic and LLM-free, building deprecation and dead-code pages from indexed symbols, call graph edges, and bounded source scans, while keeping index parsing and hub schemas untouched (`audit.rs:1-8`). Curated concepts use a two-step flow: first they plan concept modules, sections, and narrative pages from file/module summaries, then render grounded page bodies with fallback behavior when generation is unavailable or degraded (`plan.rs:1-43`, `render.rs:9-33`).
+## Module: `crates/gcode/src/commands/codewiki/build_parts`
 
-The module collaborates outward with the rest of codewiki generation through shared `super::super` types such as `CodewikiInput`, graph edges, audit docs, feature catalog docs, and test/deprecation indexes (`audit.rs:11-18`). `AuditContext` is explicitly built once and threaded from `run.rs` through the generation core, carrying deprecations, test-gated symbols, project root, and feature-catalog entry points (`audit.rs:35-46`). The onboarding builder imports architecture helpers for module dependency analysis and graph analytics for centrality-based reading order; when graph data is unavailable, it keeps entry points and omits ranked reading order without marking the page degraded (`onboarding.rs:1-18`).
+This module is the generation engine for the codewiki command, housing one builder file per wiki page type. Each builder accepts structured inputs — file docs, module docs, call-graph edges, and a `CodewikiGraphAvailability` signal — and emits a typed doc struct that the parent codewiki coordinator assembles into the final output. The twelve builders divide cleanly into two rendering strategies: fully deterministic builders (audit, changes, hotspots, snapshot) that rely only on index facts and bounded source scans, and LLM-assisted builders (curated content, module docs, file docs) that include a structural fallback so `--ai off` runs and generation failures still produce real content rather than bare summaries.
 
-Feature catalog generation reads pinned CLI contract JSON for `gcode` and `gwiki`, then resolves each contract command to dispatch wiring so the docs can link commands back to handler files and entry symbols (`features.rs:5-17`, `features.rs:35-64`). Curated content is intentionally decoupled from concept data structures: callers pass primitive member lists and receive a ready-to-render body string, allowing `concepts` to own structure while `curated_content` owns the per-page prose pass and structural fallback (`curated_content.rs:1-14`, `curated_content.rs:45-51`).
+The audit subsystem (`audit.rs`) is the most self-contained: it introduces `AuditContext` (audit.rs:38–55), built once per run and threaded through generation in the same pattern as `system_model`. Deprecation detection walks up to `LOOKBACK_LINES = 12` source lines above each symbol (audit.rs:24) scanning for `#[deprecated(...)]` attributes and doc-comment markers; dead-code candidates are derived from the call-graph edge set and filtered against a set of known entry points drawn from the feature catalog, capped at `DEAD_CODE_CANDIDATE_CAP = 500` items (audit.rs:29). Both pages are guaranteed to render even when the graph is unavailable. The onboarding builder (`onboarding.rs`) applies the same availability guard: when `CodewikiGraphAvailability::Unavailable` is signalled it omits the centrality-ranked reading order rather than marking the page degraded (onboarding.rs:19–23), and it delegates topology work to sibling helpers `dependency_topology` and `module_dependency_edges` from `architecture.rs` (onboarding.rs:2).
 
-| Area | Symbols / Facts | Purpose |
+The feature catalog builder (`features.rs`) is the primary integration point with the CLI contract layer. It parses pinned `*.contract.json` files for two registered binaries and resolves each contract command name to a handler file and entry symbol through binary-specific dispatch resolvers; any unmapped command renders without a Docs wikilink so coverage gaps stay visible (features.rs:57–65). The curated-content builder (`curated_content.rs`) runs a second per-page LLM pass that expands concept and narrative pages beyond the one-line summaries produced by the structure pass in the `concepts` child module; it caps evidence rows fed into a single prompt at `MAX_PAGE_SYMBOL_ROWS = 12` (curated_content.rs:23) and records `degraded: true` on fallback so reviewers can distinguish intended structural output from a failed generation (curated_content.rs:39–44). The snapshot builder (`snapshot.rs`) finalises a run by hashing output files and computing graph-neighbourhood fingerprints, providing the change-detection baseline consumed by `changes.rs`.
+
+### Registered CLI Binaries (features.rs)
+
+| Binary | Crate dir | Contract file |
 | --- | --- | --- |
-| Audit | `AuditContext`, `DEAD_CODE_CANDIDATE_CAP`, `LOOKBACK_LINES` | Carries deterministic audit state; bounds scans and rendered dead-code output (`audit.rs:20-40`) |
-| Curated content | `CuratedPageKind::{Concept, Narrative}`, `CuratedBody`, `curated_page_body` | Expands concept and narrative pages into grounded bodies with degradation tracking (`curated_content.rs:20-51`) |
-| Feature catalog | `Contract`, `ContractCommand`, `ContractFlag`, `BinaryContract` | Parses pinned CLI contracts and maps commands to handlers (`features.rs:8-33`, `features.rs:53-64`) |
-| Binaries | `gcode`, `gwiki` | Enumerated from contract files under workspace crates (`features.rs:35-50`) |
-| Onboarding | `build_onboarding_doc` | Produces entry points and optional graph-ranked reading order (`onboarding.rs:6-35`) |
-[crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs:6-38]
-[crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:10-133]
-[crates/gcode/src/commands/codewiki/build_parts/concepts/types.rs:6-13]
+| `gcode` | `gcode` | `gcode.contract.json` |
+| `gwiki` | `gwiki` | `gwiki.contract.json` |
+
+### Page Builder Public Entry Points
+
+| File | Primary entry point | Output type |
+| --- | --- | --- |
+| `architecture.rs` | `build_architecture_doc` | architecture doc |
+| `audit.rs` | `build_audit_context`, `build_deprecations_doc`, `build_dead_code_doc` | `AuditContext`, `DeprecationsDoc`, `DeadCodeDoc` |
+| `changes.rs` | `build_codewiki_changes_doc` | changes doc |
+| `curated_content.rs` | `curated_page_body` | `CuratedBody` |
+| `features.rs` | `build_feature_catalog_doc` | `FeatureCatalogDoc` |
+| `file.rs` | `build_file_doc` | file doc |
+| `hotspots.rs` | `build_hotspots_doc` | hotspots doc |
+| `infrastructure.rs` | `build_infrastructure_doc` | infrastructure doc |
+| `modules.rs` | `build_module_docs`, `build_module_docs_with_filter` | module docs |
+| `onboarding.rs` | `build_onboarding_doc` | `OnboardingDoc` |
+| `snapshot.rs` | `build_codewiki_index_snapshot` | snapshot |
+
+### Key Constants
+
+| Constant | Value | Location | Purpose |
+| --- | --- | --- | --- |
+| `LOOKBACK_LINES` | 12 | audit.rs:24 | Source lines scanned above a symbol for deprecation/test gating |
+| `DEAD_CODE_CANDIDATE_CAP` | 500 | audit.rs:29 | Maximum dead-code rows rendered per page |
+| `REASON_MAX` | 160 | audit.rs:32 | Max chars kept from a `DEPRECATED` doc-comment reason |
+| `MAX_PAGE_SYMBOL_ROWS` | 12 | curated_content.rs:23 | Evidence rows fed into one content-pass prompt |
+| `MAX_KEY_FLAGS` | 8 | features.rs:8 | Max flag names listed per command row in feature catalog |
+[crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:10-138]
 [crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:28-31]
 [crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-170]
+[crates/gcode/src/commands/codewiki/build_parts/audit.rs:38-51]
+[crates/gcode/src/commands/codewiki/build_parts/changes.rs:5-101]
 
 ## Child Modules
 
 | Module | Summary |
 | --- | --- |
-| [[code/modules/crates/gcode/src/commands/codewiki/build_parts/concepts\|crates/gcode/src/commands/codewiki/build_parts/concepts]] | This module builds the curated “concepts” navigation layer for codewiki. It defines the JSON plan shape for concept modules, sections, and narrative pages, then turns file/module summaries into a prompt, parses model output, and provides fallback planning when needed (`plan.rs:1-43`, `types.rs:5-70`). Rendering normalizes the plan, expands each concept/narrative summary into grounded page bodies, and emits built documentation, tracking degraded body generation and verification notes (`render.rs:9-33`, `types.rs:20-31`, `types.rs:56-69`). |
+| [[code/modules/crates/gcode/src/commands/codewiki/build_parts/concepts\|crates/gcode/src/commands/codewiki/build_parts/concepts]] | ## Module: `crates/gcode/src/commands/codewiki/build_parts/concepts` |
 
 ## Files
 
@@ -63,10 +90,6 @@ Feature catalog generation reads pinned CLI contract JSON for `gcode` and `gwiki
 | [[code/files/crates/gcode/src/commands/codewiki/build_parts/audit.rs\|crates/gcode/src/commands/codewiki/build_parts/audit.rs]] | `crates/gcode/src/commands/codewiki/build_parts/audit.rs` exposes 27 indexed API symbols. |
 | [[code/files/crates/gcode/src/commands/codewiki/build_parts/changes.rs\|crates/gcode/src/commands/codewiki/build_parts/changes.rs]] | `crates/gcode/src/commands/codewiki/build_parts/changes.rs` exposes 5 indexed API symbols. |
 | [[code/files/crates/gcode/src/commands/codewiki/build_parts/concepts.rs\|crates/gcode/src/commands/codewiki/build_parts/concepts.rs]] | `crates/gcode/src/commands/codewiki/build_parts/concepts.rs` exposes 1 indexed API symbol. |
-| [[code/files/crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs\|crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs]] | `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs` exposes 7 indexed API symbols. |
-| [[code/files/crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs\|crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs]] | `crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs` exposes 8 indexed API symbols. |
-| [[code/files/crates/gcode/src/commands/codewiki/build_parts/concepts/spans.rs\|crates/gcode/src/commands/codewiki/build_parts/concepts/spans.rs]] | `crates/gcode/src/commands/codewiki/build_parts/concepts/spans.rs` exposes 3 indexed API symbols. |
-| [[code/files/crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs\|crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs]] | `crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs` exposes 6 indexed API symbols. |
 | [[code/files/crates/gcode/src/commands/codewiki/build_parts/curated_content.rs\|crates/gcode/src/commands/codewiki/build_parts/curated_content.rs]] | `crates/gcode/src/commands/codewiki/build_parts/curated_content.rs` exposes 10 indexed API symbols. |
 | [[code/files/crates/gcode/src/commands/codewiki/build_parts/features.rs\|crates/gcode/src/commands/codewiki/build_parts/features.rs]] | `crates/gcode/src/commands/codewiki/build_parts/features.rs` exposes 9 indexed API symbols. |
 | [[code/files/crates/gcode/src/commands/codewiki/build_parts/file.rs\|crates/gcode/src/commands/codewiki/build_parts/file.rs]] | `crates/gcode/src/commands/codewiki/build_parts/file.rs` exposes 5 indexed API symbols. |

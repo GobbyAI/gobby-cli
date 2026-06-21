@@ -18,30 +18,83 @@ Parent: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Overview
 
-`crates/gcore/src/provisioning` owns standalone bootstrap plus local Docker service provisioning: it mirrors daemon service assets, copies them under `~/.gobby/services`, starts daemon-style profiles, and persists bootstrap keys in `gcore.yaml` (`crates/gcore/src/provisioning/mod.rs:1-7`). The module root centralizes service filenames, default database/vector/AI endpoint settings, and embedded Docker/Postgres asset templates (`crates/gcore/src/provisioning/mod.rs:14-52`).
+## crates/gcore/src/provisioning
 
-The Docker path is option-driven: `DockerServiceOptions` carries home, Postgres, Qdrant, and FalkorDB settings, with helpers to derive the Postgres DSN and Qdrant URL (`crates/gcore/src/provisioning/docker.rs:9-37`). Provisioning returns asset/run reports and uses an injectable `CommandRunner`; production execution goes through `RealCommandRunner`, which builds a `std::process::Command` from the supplied command spec (`crates/gcore/src/provisioning/docker.rs:39-100`).
+This module is the central runtime provisioning layer for the Gobby core library, responsible for two tightly coupled concerns: writing and reading the standalone `gcore.yaml` bootstrap configuration, and spinning up (or verifying) the full Docker services stack that backs a running instance. The module root (`mod.rs`) declares all shared constants, embeds static asset files at compile time via `include_str!`, and re-exports the three sub-files through `pub mod` declarations. Embedded assets include the Docker Compose template, a custom `postgres-pgsearch` Dockerfile, version metadata, and SQL init scripts, making the binary self-contained for first-time provisioning (`mod.rs:44-55`).
 
-Hub resolution sits above Docker provisioning. `EnsureHubOptions` combines `gobby_home`, Docker options, candidate database URLs, and a `provision_services` switch (`crates/gcore/src/provisioning/hub.rs:3-17`). `ensure_hub` reads environment, checks Postgres reachability, probes hub identity, and provisions Docker services when needed (`crates/gcore/src/provisioning/hub.rs:47-54`); tests can inject environment, reachability, identity, and provisioning callbacks through the internal variants (`crates/gcore/src/provisioning/hub.rs:56-75`). The module collaborates with `crate::config` for AI key names, capability binding, env-pattern resolution, and test locking, and with `crate::degradation::CoreError` for error reporting (`crates/gcore/src/provisioning/mod.rs:9-12`, `crates/gcore/src/provisioning/tests.rs:1-3`).
+`bootstrap.rs` owns the YAML configuration contract. `EmbeddingBootstrap` offers two factory methods — `lm_studio` and `ollama` — that produce a fully-populated key/value map for the `gcore.yaml` file, covering embedding provider, API base URL, model name, vector dimension, and shared API key. `TextGenerationBootstrap` can be derived from an embedding config (`from_embedding`) or a raw endpoint (`from_endpoint`), injecting text-generation routing, API base, model, and API key fields. The `apply_text_generation_bootstrap` function merges these defaults without overwriting values already present in the config, and `write_standalone_bootstrap` serialises the result to disk. YAML keys use a dotted-path notation; `flatten_yaml_value` / `flatten_yaml_value_at_depth` parse nested and flat YAML into a uniform `BTreeMap<String, String>`, with `yaml_path` and `scalar_to_string` handling traversal and type coercion. Tests in `tests.rs` validate collision detection, excessive nesting rejection, sequence scalars, tagged scalars, and dotted-prefix resolution (`tests.rs:1-100`).
 
-| Public area | Symbols |
-| --- | --- |
-| Bootstrap | `EmbeddingBootstrap`, `TextGenerationBootstrap`, `apply_text_generation_bootstrap`, `write_standalone_bootstrap`, `default_text_model` |
-| Docker provisioning | `DockerServiceOptions`, `DockerProvisioningReport`, `ServiceAssetReport`, `provision_docker_services`, `prepare_service_assets`, `docker_compose_up_spec` |
-| Command/health injection | `CommandSpec`, `CommandOutput`, `CommandRunner`, `RealCommandRunner`, `DockerHealthChecker`, `TcpDockerHealthChecker` |
-| YAML helpers | `flatten_yaml_value`, `yaml_path`, `scalar_to_string`, `flatten` |
-| Hub orchestration | `EnsureHubOptions`, `HubIdentity`, `ensure_hub` |
+`docker.rs` implements service orchestration. `DockerServiceOptions` holds port bindings and connection defaults for PostgreSQL, Qdrant, and FalkorDB; its `database_url` and `qdrant_url` helpers produce ready-to-use connection strings. `provision_docker_services` and `provision_docker_services_with` copy bundled assets into `~/.gobby/services`, write an `.env` file via `update_env_file`, invoke `docker compose up` through the `CommandRunner` trait abstraction, and return a `DockerProvisioningReport`. `TcpDockerHealthChecker` (the default `DockerHealthChecker` impl) polls each service over raw TCP with `wait_for_tcp` / `wait_for` until the service accepts connections, performing dedicated waits for Postgres, Qdrant, and FalkorDB (`docker.rs:1-100`). `RealCommandRunner` delegates directly to `std::process::Command`, while tests use `RecordingRunner` and `RecordingHealth` to capture invocations without side effects.
 
-| Default/config fact | Value or role | Source |
-| --- | --- | --- |
-| Config filename | `gcore.yaml` | `crates/gcore/src/provisioning/mod.rs:14` |
-| Services directory | `services` | `crates/gcore/src/provisioning/mod.rs:15` |
-| Compose filename | `docker-compose.yml` | `crates/gcore/src/provisioning/mod.rs:16` |
-| Postgres defaults | host `127.0.0.1`, port `60891`, db/user `gobby`, password `gobby_dev` | `crates/gcore/src/provisioning/mod.rs:18-22` |
-| FalkorDB defaults | host `127.0.0.1`, port `16379`, browser `13000`, password `gobbyfalkor` | `crates/gcore/src/provisioning/mod.rs:24-27` |
-| Qdrant defaults | host `127.0.0.1`, HTTP `6333`, gRPC `6334` | `crates/gcore/src/provisioning/mod.rs:29-31` |
-| AI defaults | LM Studio and Ollama API bases/models, embedding dimension `768` | `crates/gcore/src/provisioning/mod.rs:33-43` |
-| Test-cleared env vars | `GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, `GOBBY_FALKORDB_PASSWORD`, `GOBBY_POSTGRES_DSN`, `GOBBY_QDRANT_URL`, `GOBBY_QDRANT_API_KEY` | `crates/gcore/src/provisioning/tests.rs:17-28` |
+`hub.rs` provides the idempotent `ensure_hub` entry point, which resolves the authoritative database URL by checking candidate URLs from environment variables, comparing live `HubIdentity` probes (system identifier + database name), and provisioning Docker services only when necessary. The enum `RecordedHubIdentityStatus` (`SingleReachable`, `VerifiedSameHub`, `IdentityUnknownInsufficientPrivilege`) drives conflict detection: divergent hub identities surface an error, insufficient privilege preserves the recorded hub rather than replacing it, and an already-reachable hub skips re-provisioning entirely (`tests.rs`: `divergent_hubs_surface_conflict`, `no_double_provision_when_reachable`, `insufficient_identity_privilege_preserves_hub`).
+
+---
+
+### Module-level constants (`mod.rs`)
+
+| Constant | Value | Purpose |
+|---|---|---|
+| `GCORE_CONFIG_FILENAME` | `"gcore.yaml"` | Standalone config file name |
+| `SERVICES_DIRNAME` | `"services"` | Subdirectory under `~/.gobby` |
+| `COMPOSE_FILENAME` | `"docker-compose.yml"` | Compose file written on provision |
+| `DEFAULT_POSTGRES_PORT` | `60891` | Local Postgres port |
+| `DEFAULT_POSTGRES_DB/USER/PASSWORD` | `gobby` / `gobby` / `gobby_dev` | Postgres defaults |
+| `DEFAULT_FALKORDB_PORT` | `16379` | FalkorDB Redis port |
+| `DEFAULT_FALKORDB_BROWSER_PORT` | `13000` | FalkorDB browser UI |
+| `DEFAULT_FALKORDB_PASSWORD` | `"gobbyfalkor"` | FalkorDB auth |
+| `DEFAULT_QDRANT_HTTP_PORT` | `6333` | Qdrant REST port |
+| `DEFAULT_QDRANT_GRPC_PORT` | `6334` | Qdrant gRPC port |
+| `DEFAULT_LM_STUDIO_API_BASE` | `http://localhost:1234/v1` | LM Studio endpoint |
+| `DEFAULT_LM_STUDIO_MODEL` | `text-embedding-nomic-embed-text-v1.5@f16` | Embedding model |
+| `DEFAULT_LM_STUDIO_TEXT_MODEL` | `qwen2.5-vl-7b-instruct` | Text-gen model |
+| `DEFAULT_OLLAMA_API_BASE` | `http://localhost:11434/v1` | Ollama endpoint |
+| `DEFAULT_OLLAMA_MODEL` | `nomic-embed-text` | Ollama embedding model |
+| `DEFAULT_OLLAMA_TEXT_MODEL` | `qwen3-coder` | Ollama text-gen model |
+| `DEFAULT_EMBEDDING_VECTOR_DIM` | `768` | Vector dimension |
+
+---
+
+### Public API surface
+
+| Symbol | Kind | File | Description |
+|---|---|---|---|
+| `EmbeddingBootstrap` | struct | `bootstrap.rs` | Factory for embedding config key/value sets |
+| `EmbeddingBootstrap::lm_studio` | method | `bootstrap.rs` | LM Studio embedding bootstrap |
+| `EmbeddingBootstrap::ollama` | method | `bootstrap.rs` | Ollama embedding bootstrap |
+| `TextGenerationBootstrap` | struct | `bootstrap.rs` | Factory for text-gen config key/value sets |
+| `TextGenerationBootstrap::from_embedding` | method | `bootstrap.rs` | Derive text-gen settings from embedding config |
+| `TextGenerationBootstrap::from_endpoint` | method | `bootstrap.rs` | Build text-gen settings from raw endpoint |
+| `apply_text_generation_bootstrap` | fn | `bootstrap.rs` | Merge text-gen defaults without overwriting |
+| `write_standalone_bootstrap` | fn | `bootstrap.rs` | Serialise bootstrap map to `gcore.yaml` |
+| `flatten_yaml_value` | fn | `bootstrap.rs` | Parse nested/flat YAML into `BTreeMap` |
+| `DockerServiceOptions` | struct | `docker.rs` | Port bindings and connection parameters |
+| `DockerServiceOptions::database_url` | method | `docker.rs` | Compute Postgres connection string |
+| `DockerServiceOptions::qdrant_url` | method | `docker.rs` | Compute Qdrant HTTP URL |
+| `provision_docker_services` | fn | `docker.rs` | Top-level provisioning entry point |
+| `provision_docker_services_with` | fn | `docker.rs` | Injectable provisioning (for testing) |
+| `prepare_service_assets` | fn | `docker.rs` | Copy bundled assets to `~/.gobby/services` |
+| `CommandRunner` | trait | `docker.rs` | Abstraction over process execution |
+| `RealCommandRunner` | struct | `docker.rs` | Production `CommandRunner` implementation |
+| `TcpDockerHealthChecker` | struct | `docker.rs` | TCP-polling health checks for all services |
+| `DockerProvisioningReport` | struct | `docker.rs` | Result of a provisioning run |
+| `ensure_hub` | fn | `hub.rs` | Idempotent hub resolution + optional provisioning |
+| `EnsureHubOptions` | struct | `hub.rs` | Parameters for hub resolution |
+| `HubIdentity` | struct | `hub.rs` | Postgres system identifier + database name |
+| `HubIdentityProbeResult` | enum | `hub.rs` | `Known` or `UnknownInsufficientPrivilege` |
+| `RecordedHubResolution` | struct | `hub.rs` | Resolved URL + identity status |
+
+---
+
+### Environment variables consumed (test guard covers these, `tests.rs:22-32`)
+
+| Variable | Service |
+|---|---|
+| `GOBBY_POSTGRES_DSN` | PostgreSQL connection string override |
+| `GOBBY_FALKORDB_HOST` | FalkorDB host override |
+| `GOBBY_FALKORDB_PORT` | FalkorDB port override |
+| `GOBBY_FALKORDB_PASSWORD` | FalkorDB password override |
+| `GOBBY_QDRANT_URL` | Qdrant URL override |
+| `GOBBY_QDRANT_API_KEY` | Qdrant API key override |
 [crates/gcore/src/provisioning/bootstrap.rs:8-15]
 [crates/gcore/src/provisioning/docker.rs:9-18]
 [crates/gcore/src/provisioning/hub.rs:4-9]

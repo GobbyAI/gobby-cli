@@ -64,15 +64,15 @@ Reader-first paths into the grounded code reference.
 
 ## Start here — guided tour
 
-New to this codebase? Begin with [[code/narrative/introduction|System Orientation]].
+New to this codebase? Begin with [[code/narrative/01-introduction|Introduction: The Gobby Code Intelligence Workspace]].
 
-1. [[code/narrative/introduction|System Orientation]]
-2. [[code/narrative/architecture|Architecture]]
-3. [[code/narrative/data-flow|Data Flow]]
-4. [[code/narrative/cli-runtime-foundation|CLI Runtime Foundation]]
-5. [[code/narrative/building-the-code-index|Building the Code Index]]
-6. [[code/narrative/resolving-relationships|Resolving Relationships]]
-7. [[code/narrative/projecting-graph-and-vectors|Projecting Graph and Vectors]]
+1. [[code/narrative/01-introduction|Introduction: The Gobby Code Intelligence Workspace]]
+2. [[code/narrative/02-architecture|Architecture]]
+3. [[code/narrative/03-data-flow|Data Flow]]
+4. [[code/narrative/04-foundations-config-and-services|Foundations: Configuration, Connectivity, and Services]]
+5. [[code/narrative/05-indexing-pipeline|Turning Source Files into Code Facts]]
+6. [[code/narrative/06-graph-and-vector-stores|Projecting Facts into the Graph and Vector Stores]]
+7. [[code/narrative/07-search-and-retrieval|Searching the Index: Lexical, Semantic, and Graph-Boosted]]
 
 Ask questions across this vault with `gwiki ask "..."`, or find pages with `gwiki search "..."`.
 
@@ -80,28 +80,28 @@ Ask questions across this vault with `gwiki ask "..."`, or find pages with `gwik
 
 ### Foundations
 
-The workspace, shared services, contract surface, configuration, and database setup that every higher-level workflow relies on.
+The shared platform primitives, service infrastructure, and configuration layers every subsystem builds on.
 
-- [[code/concepts/workspace-map|Workspace Map]] - Start with the workspace-level view: the crates divide responsibilities between shared core services, code indexing, hook intake, and wiki tooling.
-- [[code/concepts/shared-service-substrate|Shared Service Substrate]] - Ground the system in the shared core layer that provides AI routing, configuration, provisioning, storage adapters, search primitives, and local service assets.
-- [[code/concepts/cli-contracts-and-dispatch|CLI Contracts and Dispatch]] - Understand how gcode exposes a versioned command contract, parses commands, selects early dispatch paths, and keeps CLI leaves aligned with documented command metadata.
-- [[code/concepts/configuration-and-postgresql-setup|Configuration and PostgreSQL Setup]] - Follow how project context, service configuration, hub database resolution, and standalone PostgreSQL schema setup give commands a consistent runtime base.
+- [[code/concepts/crates|Workspace Topology]] - The four-crate Rust workspace and how code intelligence, shared primitives, hook dispatch, and the wiki engine are partitioned with explicit dependency boundaries.
+- [[code/concepts/crates-gcore|Shared Platform Primitives]] - The gcore foundation that every higher crate depends on: AI capability routing, Postgres/Qdrant/FalkorDB connectivity, configuration resolution, hub identity, graph analytics, and shared error types.
+- [[code/concepts/crates-gcore-assets|Service Infrastructure]] - Docker Compose definitions and build artifacts for the backing services (PostgreSQL with pg_search, Qdrant, FalkorDB) the platform provisions and health-checks.
+- [[code/concepts/crates-gcode-src-config|Configuration & Database Access]] - Layered configuration resolution (env → Postgres hub → standalone files), secret interpolation, runtime context building, and the validated Postgres connection and query layer.
+- [[code/concepts/crates-gcode-src-setup|Schema Provisioning]] - Standalone setup that validates, resets, and creates the code-index PostgreSQL schema with redacted-secret safety and compatibility checks.
 
-### Code Intelligence Index
+### Indexing & Resolution
 
-The indexing, resolution, projection, vector, and retrieval layers that turn source files into searchable and navigable code knowledge.
+How source files become structured code facts: discovery, parsing, call extraction, and cross-language import resolution.
 
-- [[code/concepts/file-discovery-and-indexing|File Discovery and Indexing]] - See how gcode discovers project files, classifies them, parses indexable code, writes code facts, and handles freshness or overlay state.
-- [[code/concepts/import-and-call-resolution|Import and Call Resolution]] - Explore the language-aware layer that turns imports and call sites into local or external relationships for later search, graph, and documentation use.
-- [[code/concepts/graph-projection-and-reports|Graph Projection and Reports]] - Trace how indexed facts are projected into FalkorDB, queried as graph payloads or relationships, cleaned up through projection sync, and summarized into project reports.
-- [[code/concepts/vector-symbol-search|Vector Symbol Search]] - Follow the semantic symbol path from indexed symbols to embedding text, Qdrant payloads, vector lifecycle operations, and semantic search results.
-- [[code/concepts/hybrid-search-and-lookup-commands|Hybrid Search and Lookup Commands]] - Connect indexed content, PostgreSQL BM25 search, graph boosting, reciprocal rank fusion, grep matching, symbol lookup, and user-facing search commands.
+- [[code/concepts/crates-gcode-src-index|Code Indexing Pipeline]] - File discovery, language classification, tree-sitter parsing, fact extraction, and transactional persistence of symbols, imports, calls, and content chunks.
+- [[code/concepts/crates-gcode-src-index-parser|Call Extraction]] - AST-guided and textual call-site discovery, syntax-kind classification, local-binding shadowing checks, and materialization of call relations across many languages.
+- [[code/concepts/crates-gcode-src-index-import-resolution|Import Resolution]] - Cross-language engine that turns raw import statements into candidate files, classifying local versus external dependencies across more than a dozen ecosystems.
+- [[code/concepts/crates-gcode-assets|Dependency Root Catalog]] - Static language-specific lookup tables mapping package and require paths back to their canonical root modules for polyglot import analysis.
 
-### Grounded Documentation
+### Stores & Retrieval
 
-The CodeWiki generation, curated navigation, and repository-insight layers that build human-readable documentation from the indexed reference.
+The graph and vector projections of indexed data and the search strategies that query them.
 
-- [[code/concepts/codewiki-generation-pipeline|CodeWiki Generation Pipeline]] - Learn how CodeWiki gathers indexed facts, graph relationships, source excerpts, AI prompts, verification, rendering, and persistence into grounded documentation pages.
-- [[code/concepts/curated-navigation-builder|Curated Navigation Builder]] - Focus on the layer that plans concept modules, sections, and narrative pages, then renders grounded concept and tour documentation on top of the reference wiki.
-- [[code/concepts/repository-insight-pages|Repository Insight Pages]] - Round out the documentation surface with ownership, audits, feature catalogs, onboarding, architecture, hotspots, and infrastructure pages built from indexed and repository metadata.
+- [[code/concepts/crates-gcode-src-graph|Code Graph Engine]] - Building, reading, writing, and managing the FalkorDB code-knowledge graph: typed Cypher serialization, batched mutations, scoped deletions, and traversal reads.
+- [[code/concepts/crates-gcode-src-graph-report|Graph Analytics & Reporting]] - Degree-based hotspot rankings, bridge-edge hypotheses, dependency frequencies, and Markdown report generation over the project code graph.
+- [[code/concepts/crates-gcode-src-vector|Vector Search & Embeddings]] - The Qdrant-backed vector pipeline: text embedding via daemon or direct routes, collection lifecycle management, and scored semantic search over code symbols.
 

@@ -24,5 +24,5 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `ingest_path_without_index` | function | Indexed function `ingest_path_without_index` in `crates/gwiki/src/ingest/file/dispatch.rs`. [crates/gwiki/src/ingest/file/dispatch.rs:43-242] |
+| `ingest_path_without_index` | function | This function detects the media type of a file at a given path and delegates to specialized routines to ingest audio or image data without indexing, returning a structured 'LocalFileIngestResult'. [crates/gwiki/src/ingest/file/dispatch.rs:43-242] |
 

@@ -21,29 +21,55 @@ Parent: [[code/modules/crates/gcode/src/index/import_resolution|crates/gcode/src
 
 ## Overview
 
-The `context` module supplies the language-specific lookup state used by import resolution. Its core binding types separate external imports from local cross-file candidates: `ExternalImportBinding` stores module/name pairs, while `LocalCallBinding` carries candidate target files plus either named or default-export resolution, deferring final symbol UUID matching to a later post-write pass .
+## crates/gcode/src/index/import_resolution/context
 
-A major flow is package and project metadata discovery. `package_metadata.rs` reads `package.json` dependency fields and self package names, parses `go.mod` module declarations, and builds Go package-directory indexes so selector calls like `pkg.Fn()` can resolve against any file in the imported package directory . Language scanners add richer local indexes: Objective-C indexes headers/implementations by import keys, declared types, and functions , while Elixir scans `defmodule` declarations because module names need not match paths and multiple modules may share a file .
+This module is the pre-resolution context layer for the import-resolution subsystem. Before any import statement in a source file can be matched to a symbol, the indexer must know which packages are external to the project, what the project's own name or module path is, and how local files are laid out. Every file in this module answers one of those questions for a specific ecosystem. The results are collected into the binding and index types defined in `bindings.rs` and consumed downstream by the per-language resolution passes.
 
-The module collaborates with the wider import-resolution layer through restricted `pub(in crate::index::import_resolution)` APIs and `pub(super)` language helpers. It imports shared helpers and predicates for Elixir alias/dependency logic , uses `ImportRelation` from `crate::models` in the bindings layer , and relies on parallel scanning via `rayon` for filesystem-derived indexes in Apple and Elixir contexts  .
+`bindings.rs` is the structural core of the module. It defines the runtime vocabulary that the rest of the resolution pipeline works with: `ExternalImportBinding` records a resolved external module and callee name; `LocalCallBinding` records candidate files and the originally imported name for a cross-file local reference, deferring UUID assignment to a post-write pass once `code_symbols` is fully populated (bindings.rs:21–30); `LocalCallResolution` distinguishes named from default-export imports (bindings.rs:14–18); and `ImportBindings` aggregates all of these into a single per-file state bag (bindings.rs:55–68). `ExtractedImports` and `ExternalCallTarget` complete the public API surface exposed to callers outside this module.
 
-| Public API symbol | Role |
-| --- | --- |
-| `ExternalImportBinding` | External module/name binding |
-| `LocalCallBinding` | Local import candidate binding |
-| `ImportBindings` | Aggregated import-resolution maps |
-| `load_js_external_packages` | Reads JS dependency package names |
-| `load_js_self_package_name` | Reads package self name |
-| `load_go_module_path` | Reads Go module path |
-| `build_go_package_files` | Indexes Go files by package directory |
-| `build_python_module_index` | Builds Python module lookup index |
-| `build_elixir_local_module_files` | Maps Elixir modules to declaring files |
-| `build_objc_indexes` | Builds Objective-C import/type/function indexes |
+`package_metadata.rs` provides the ecosystem-specific manifest readers. `load_js_external_packages` reads all six standard `package.json` dependency fields (package_metadata.rs:14–22); `load_js_self_package_name` extracts the package's own `name` field; `load_go_module_path` parses the `module` directive from `go.mod`; and `build_go_package_files` maps every discovered Go source file to its package directory so that a `pkg.Fn()` selector call can be resolved against any file in that directory (package_metadata.rs:62–68). Parallel counterparts exist for Rust (`load_rust_external_crates`, `rust_manifest_paths`, `load_rust_self_crate_name`, `collect_rust_dependency_keys`, `normalize_rust_crate_name`), Dart (`load_dart_external_packages`, `load_dart_self_package_name`), and Python (`build_python_module_index`, `python_candidate_files`, `python_module_names_for_path`). All functions carry `pub(in crate::index::import_resolution)` visibility, making them available only to sibling resolution modules.
+
+The language-specific files (`apple.rs`, `elixir.rs`, `jvm.rs`, `dotnet.rs`, `python.rs`, `scripting.rs`) each build in-memory lookup indexes by scanning candidate source files in parallel with Rayon. `apple.rs` produces `ObjcIndex` — three maps from header-path keys to the types and functions declared in each `.h`/`.m`/`.mm` file (apple.rs:7–12, 14–56). `elixir.rs` scans `defmodule` declarations because Elixir modules need not follow path-from-name conventions and a single file may declare several modules (elixir.rs:53–58). `python.rs` emits `build_python_module_index` and handles the three common Python layout styles (top-level module, `src/`, and package directory) via dedicated helpers. All indexes are purely additive structures built at context-construction time and passed as read-only references into the resolution passes.
+
+### Public API symbols
+
+| Symbol | Kind | File |
+|---|---|---|
+| `ExternalImportBinding` | struct | bindings.rs |
+| `LocalCallBinding` | struct | bindings.rs |
+| `LocalCallResolution` | enum | bindings.rs |
+| `ImportBindings` | struct | bindings.rs |
+| `ExternalRootBinding` | struct | bindings.rs |
+| `ExtractedImports` | struct | bindings.rs |
+| `ExternalCallTarget` | struct | bindings.rs |
+| `LocalCallBinding::named` | method | bindings.rs |
+| `LocalCallBinding::default_export` | method | bindings.rs |
+| `LocalCallBinding::is_default_export` | method | bindings.rs |
+
+### Package-metadata loaders (all `pub(in crate::index::import_resolution)`)
+
+| Function | Ecosystem | Manifest read |
+|---|---|---|
+| `load_js_external_packages` | JavaScript/TypeScript | `package.json` |
+| `load_js_self_package_name` | JavaScript/TypeScript | `package.json` |
+| `load_go_module_path` | Go | `go.mod` |
+| `build_go_package_files` | Go | filesystem walk |
+| `load_rust_external_crates` | Rust | `Cargo.toml` |
+| `rust_manifest_paths` | Rust | filesystem walk |
+| `load_rust_self_crate_name` | Rust | `Cargo.toml` |
+| `collect_rust_dependency_keys` | Rust | `Cargo.toml` |
+| `normalize_rust_crate_name` | Rust | — (pure transform) |
+| `load_dart_external_packages` | Dart | `pubspec.yaml` |
+| `load_dart_self_package_name` | Dart | `pubspec.yaml` |
+| `build_python_module_index` | Python | filesystem walk |
+| `python_candidate_files` | Python | filesystem walk |
+| `python_module_names_for_path` | Python | — (pure transform) |
+| `canonical_relative_path` | all | — (pure transform) |
 [crates/gcode/src/index/import_resolution/context/package_metadata.rs:4-38]
 [crates/gcode/src/index/import_resolution/context/apple.rs:8-12]
 [crates/gcode/src/index/import_resolution/context/bindings.rs:6-9]
+[crates/gcode/src/index/import_resolution/context/dotnet.rs:10-17]
 [crates/gcode/src/index/import_resolution/context/elixir.rs:13-49]
-[crates/gcode/src/index/import_resolution/context/python.rs:4-15]
 
 ## Files
 

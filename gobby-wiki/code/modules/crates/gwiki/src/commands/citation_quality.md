@@ -14,18 +14,39 @@ Parent: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Overview
 
-`crates/gwiki/src/commands/citation_quality/contradictions.rs` builds the contradiction-detection portion of citation quality reporting. Its main entry point, `contradiction_section`, accepts a `ProvenanceGraph`, an AI availability flag, and an injected detector callback, then returns a `ContradictionSection` for the parent command layer (crates/gwiki/src/commands/citation_quality/contradictions.rs:27-65). It explicitly avoids inventing results when AI is unavailable, returning an unavailable section with a note and no findings (crates/gwiki/src/commands/citation_quality/contradictions.rs:31-41).
+## `crates/gwiki/src/commands/citation_quality/contradictions`
 
-The core flow derives per-section source claim comparisons from provenance, skips sections that do not have usable multi-source claim data, gathers valid source IDs, invokes the detector, and sanitizes returned findings against those source IDs before exposing them (crates/gwiki/src/commands/citation_quality/contradictions.rs:43-65). The module’s data contracts are small: `SectionClaimComparison` groups claims by section, while `SourceClaim` records each contributing `source_id` and claim text (crates/gwiki/src/commands/citation_quality/contradictions.rs:12-23). Model output is deserialized through `ContradictionModelOutput`, which contains a list of `ContradictionFinding` values (crates/gwiki/src/commands/citation_quality/contradictions.rs:25-26).
+This module is the AI-assisted contradiction-detection engine within the `citation_quality` command family. Its central responsibility is to examine a wiki's `ProvenanceGraph`, extract per-section claims attributed to distinct sources, invoke an AI detector, and return a structured `ContradictionSection` that the parent command can embed in a quality report. Because the module is entirely `pub(super)`, it acts as an internal implementation detail of the `citation_quality` command and exposes no surface area to the wider crate or binary.
 
-Within the wider system, this module collaborates with the citation-quality parent module through `ContradictionFinding` and `ContradictionSection`, imports provenance data from `crate::provenance::ProvenanceGraph`, and reports failures using `crate::WikiError` (crates/gwiki/src/commands/citation_quality/contradictions.rs:8-11). It also imports Gobby AI routing, daemon, text, context, capability, routing, and error types, indicating that contradiction detection can be backed by the shared AI infrastructure (crates/gwiki/src/commands/citation_quality/contradictions.rs:3-7).
+The primary entry point is `contradiction_section` (contradictions.rs:30–62). When called it first gates on the `ai_available` flag; if AI is unavailable it returns early with a sentinel `ContradictionSection { available: false, … }` rather than fabricating findings (contradictions.rs:33–43). When AI is available it calls the private `section_claim_comparisons` helper (contradictions.rs:64+) to walk every link in the `ProvenanceGraph` and group `SourceClaim` records by section heading, producing a `Vec<SectionClaimComparison>`. Empty results short-circuit with an informational note (contradictions.rs:44–56). Non-empty comparisons are forwarded to a caller-supplied `detector` closure — a `FnMut(&[SectionClaimComparison]) -> Result<Vec<ContradictionFinding>, WikiError>` — which decouples the HTTP/daemon AI call from the logic here. Results are post-processed through `sanitize_contradiction_findings`, which filters any model-hallucinated source IDs against the canonical set gathered by `comparison_source_ids`.
 
-| Symbol | Kind | Purpose |
-| --- | --- | --- |
-| `SectionClaimComparison` | Struct | Groups source claims for one section (crates/gwiki/src/commands/citation_quality/contradictions.rs:12-16). |
-| `SourceClaim` | Struct | Holds a `source_id` and claim string (crates/gwiki/src/commands/citation_quality/contradictions.rs:19-23). |
-| `ContradictionModelOutput` | Struct | Deserializes model findings (crates/gwiki/src/commands/citation_quality/contradictions.rs:25-26). |
-| `contradiction_section` | Function | Produces the contradiction report section from provenance and detector output (crates/gwiki/src/commands/citation_quality/contradictions.rs:27-65). |
+The module collaborates outward through several `gobby_core` packages. It imports AI routing primitives (`daemon`, `effective_route`, `text`) from `gobby_core::ai` and context types from `gobby_core::ai_context` and `gobby_core::ai_types` (contradictions.rs:3–6), suggesting that the concrete detector closure passed in by the parent module wires those primitives to the actual model call. Configuration capability and routing enums (`AiCapability`, `AiRouting`) arrive from `gobby_core::config` (contradictions.rs:6). Inward, it depends on `crate::provenance::ProvenanceGraph` (contradictions.rs:9) to iterate citation links, and on `super::ContradictionFinding` and `super::ContradictionSection` (contradictions.rs:12) for the shared output types defined by the parent `citation_quality` module.
+
+### Public (super) API symbols
+
+| Symbol | Kind | Role |
+|---|---|---|
+| `SectionClaimComparison` | struct (Serialize) | Bundles a section heading with all per-source claims for AI input |
+| `SectionClaimComparison::section` | field `String` | Section heading key |
+| `SectionClaimComparison::claims` | field `Vec<SourceClaim>` | Ordered list of source claims for the section |
+| `SourceClaim` | struct (Serialize) | Single source-attributed claim within a section |
+| `SourceClaim::source_id` | field `String` | Identifier of the provenance source |
+| `SourceClaim::claim` | field `String` | Extracted claim text |
+| `contradiction_section` | fn `pub(super)` | Orchestrates detection; accepts provenance graph, AI flag, and detector closure |
+
+### Key internal helpers (private)
+
+| Symbol | Role |
+|---|---|
+| `ContradictionModelOutput` | Deserialize target for raw AI JSON (`findings` array) |
+| `section_claim_comparisons` | Builds `Vec<SectionClaimComparison>` from `ProvenanceGraph` links |
+| `comparison_source_ids` | Derives canonical `BTreeSet` of source IDs from comparisons |
+| `sanitize_contradiction_findings` | Removes findings that reference source IDs not in the canonical set |
+[crates/gwiki/src/commands/citation_quality/contradictions.rs:15-18]
+[crates/gwiki/src/commands/citation_quality/contradictions.rs:21-24]
+[crates/gwiki/src/commands/citation_quality/contradictions.rs:27-29]
+[crates/gwiki/src/commands/citation_quality/contradictions.rs:31-67]
+[crates/gwiki/src/commands/citation_quality/contradictions.rs:69-117]
 
 ## Files
 

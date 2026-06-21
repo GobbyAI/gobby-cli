@@ -24,10 +24,10 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `load_graph_boost_data` | function | Indexed function `load_graph_boost_data` in `crates/gwiki/src/falkor_graph/boost.rs`. [crates/gwiki/src/falkor_graph/boost.rs:11-35] |
-| `query_documents` | function | Indexed function `query_documents` in `crates/gwiki/src/falkor_graph/boost.rs`. [crates/gwiki/src/falkor_graph/boost.rs:37-67] |
-| `query_links` | function | Indexed function `query_links` in `crates/gwiki/src/falkor_graph/boost.rs`. [crates/gwiki/src/falkor_graph/boost.rs:69-104] |
-| `LimitedQuery` | class | Indexed class `LimitedQuery` in `crates/gwiki/src/falkor_graph/boost.rs`. [crates/gwiki/src/falkor_graph/boost.rs:106-109] |
-| `query_limited` | function | Indexed function `query_limited` in `crates/gwiki/src/falkor_graph/boost.rs`. [crates/gwiki/src/falkor_graph/boost.rs:111-138] |
-| `partial_graph_degradation` | function | Indexed function `partial_graph_degradation` in `crates/gwiki/src/falkor_graph/boost.rs`. [crates/gwiki/src/falkor_graph/boost.rs:140-151] |
+| `load_graph_boost_data` | function | Queries a GraphClient for documents and links within specified limits and returns a GraphBoostData struct containing the results along with degradation metadata if either limit was capped. [crates/gwiki/src/falkor_graph/boost.rs:11-35] |
+| `query_documents` | function | Queries a graph database for WikiDoc nodes (optionally filtered by SearchScope), maps the results to GraphBoostDocument objects containing file paths and titles, and returns a cardinality-limited result set. [crates/gwiki/src/falkor_graph/boost.rs:37-67] |
+| `query_links` | function | Executes a scoped or global Cypher query on a GraphClient to retrieve wiki document WIKI_LINKS_TO relationships, returning a limited collection of GraphBoostLink objects mapped from source and target document paths. [crates/gwiki/src/falkor_graph/boost.rs:69-104] |
+| `LimitedQuery` | class | 'LimitedQuery<T>' is a generic struct that encapsulates a vector of items alongside a boolean flag indicating whether the query results were truncated or capacity-capped. [crates/gwiki/src/falkor_graph/boost.rs:106-109] |
+| `query_limited` | function | Executes a graph database query with a specified limit, using a sentinel row to detect result truncation, and returns a 'LimitedQuery' containing the result set and a capped flag indicating whether results were truncated. [crates/gwiki/src/falkor_graph/boost.rs:111-138] |
+| `partial_graph_degradation` | function | Conditionally returns a 'DegradationKind::PartialData' variant containing the gwiki_graph component and a formatted message listing items that exceeded configured caps, or 'None' if the input slice is empty. [crates/gwiki/src/falkor_graph/boost.rs:140-151] |
 

@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `sample_frames` | function | Indexed function `sample_frames` in `crates/gwiki/src/video/sampling.rs`. [crates/gwiki/src/video/sampling.rs:8-32] |
-| `audio_reference_for_video` | function | Indexed function `audio_reference_for_video` in `crates/gwiki/src/video/sampling.rs`. [crates/gwiki/src/video/sampling.rs:34-41] |
-| `frame_sample` | function | Indexed function `frame_sample` in `crates/gwiki/src/video/sampling.rs`. [crates/gwiki/src/video/sampling.rs:43-54] |
+| `sample_frames` | function | Samples video frames from an asset file at regular time intervals specified by a 'FrameSamplingPlan', returning a vector of frame samples with overflow-safe timestamp arithmetic. [crates/gwiki/src/video/sampling.rs:8-32] |
+| `audio_reference_for_video` | function | This function constructs a 'VideoAudioReference' struct containing the provided asset path as an owned 'PathBuf' and a URI reference string formed by appending the '#audio' fragment identifier to the displayed asset path. [crates/gwiki/src/video/sampling.rs:34-41] |
+| `frame_sample` | function | Creates a 'VideoFrameSample' struct by formatting a timestamp and constructing a time-indexed URI reference from the provided asset path. [crates/gwiki/src/video/sampling.rs:43-54] |
 

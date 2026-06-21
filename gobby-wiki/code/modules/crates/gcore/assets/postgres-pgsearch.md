@@ -15,29 +15,21 @@ Parent: [[code/modules/crates/gcore/assets|crates/gcore/assets]]
 
 ## Overview
 
-This module packages pg_search asset metadata and supporting PostgreSQL audit-log export tooling. The version manifest pins pg_search `0.23.4`, records SHA-256 checksums, includes per-architecture hashes, and targets PostgreSQL major version `18` (`crates/gcore/assets/postgres-pgsearch/version.json:1-10`).
+## Module: crates/gcore/assets/postgres-pgsearch
 
-Its child `scripts` module provides `pg_audit_export.sh`, a Bash utility that filters PostgreSQL logs for `AUDIT:` lines, parses their leading timestamps, and emits records inside an inclusive `--start` / `--end` epoch window. The default log root is `/var/log/pgaudit`, with `--log-dir` available to override it.
+This module is a versioned asset bundle that pins and distributes the `pg_search` PostgreSQL extension within the broader `gcore` infrastructure. Its primary artifact is `version.json`, which serves as the single source of truth for the extension release being consumed: it records the exact version string, a canonical SHA-256 digest, per-architecture digests, and the target PostgreSQL major version. Downstream tooling reads these values to fetch, verify, and install the correct extension binary without embedding version details in code.
 
-Collaboration-wise, this module acts as a data-and-utility asset consumed by higher-level packaging or deployment code: callers can read `version.json` to choose the pg_search artifact and validate downloaded binaries by architecture, while operators or automation can call the audit export script to extract pgAudit records from PostgreSQL log files. No explicit cross-file caller/import relationships were supplied beyond the child script module and manifest fields.
-
-| Key | Value |
-| --- | --- |
+| Property | Value (version.json:1-9) |
+|---|---|
 | `pg_search_version` | `0.23.4` |
-| `pg_search_sha256` | `6b042d61d156ca5fdcb1c417e291d90bffe3026848890be30bf6e578146b4676` |
+| `pg_search_sha256` (canonical) | `6b042d61d156ca5fdcb1c417e291d90bffe3026848890be30bf6e578146b4676` |
 | `pg_search_sha256_by_arch.amd64` | `6b042d61d156ca5fdcb1c417e291d90bffe3026848890be30bf6e578146b4676` |
 | `pg_search_sha256_by_arch.arm64` | `5ad13a80b76c46590914e0c366bd8deaf807d5b352f5ad489876ec836d06d3d1` |
 | `postgres_major` | `18` |
 
-| Script Symbol | Kind |
-| --- | --- |
-| `usage` | function |
-| `die_usage` | function |
-| `require_value` | function |
-| `parse_epoch` | function |
-| `timestamp_epoch` | function |
-| `audit_line_epoch` | function |
-| `emit_windowed_audit_lines` | function |
+The child module `crates/gcore/assets/postgres-pgsearch/scripts` provides the operational shell logic that acts on these version values. Its exported components — `usage`, `die_usage`, and `require_value` — handle CLI argument validation and help output, while `parse_epoch`, `timestamp_epoch`, `audit_line_epoch`, and `emit_windowed_audit_lines` implement time-window utilities for parsing and emitting audit log lines during install or upgrade operations. This separation keeps static metadata (`version.json`) decoupled from procedural installation logic (`scripts/`), making version bumps a one-file change.
+
+Collaboration in the wider system flows inward: external provisioning or CI scripts read `version.json` (version.json:2-8) to resolve the artifact URL and validate the downloaded tarball's integrity against the appropriate architecture digest before handing off to the shell scripts for actual installation steps. The dual-digest design (`pg_search_sha256` for the canonical path and `pg_search_sha256_by_arch` for `amd64`/`arm64`) allows multi-architecture build pipelines to select the correct checksum without conditional logic at the call site.
 [crates/gcore/assets/postgres-pgsearch/scripts/pg_audit_export.sh:10-17]
 [crates/gcore/assets/postgres-pgsearch/version.json:2]
 [crates/gcore/assets/postgres-pgsearch/scripts/pg_audit_export.sh:19-23]
@@ -48,7 +40,7 @@ Collaboration-wise, this module acts as a data-and-utility asset consumed by hig
 
 | Module | Summary |
 | --- | --- |
-| [[code/modules/crates/gcore/assets/postgres-pgsearch/scripts\|crates/gcore/assets/postgres-pgsearch/scripts]] | This module contains a single Bash utility for exporting pgAudit records from PostgreSQL logs. `pg_audit_export.sh` scans log files, keeps only lines containing `AUDIT:`, parses each line’s leading PostgreSQL timestamp, and emits records whose epoch falls inside an inclusive `--start`/`--end` validation window . Its default log root is `/var/log/pgaudit`, with an overridable `--log-dir` implied by the usage text . |
+| [[code/modules/crates/gcore/assets/postgres-pgsearch/scripts\|crates/gcore/assets/postgres-pgsearch/scripts]] | ## Module: crates/gcore/assets/postgres-pgsearch/scripts |
 
 ## Files
 

@@ -24,8 +24,8 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `sync_scope_from_postgres` | function | Indexed function `sync_scope_from_postgres` in `crates/gwiki/src/falkor_graph/sync.rs`. [crates/gwiki/src/falkor_graph/sync.rs:13-29] |
-| `clear_scope` | function | Indexed function `clear_scope` in `crates/gwiki/src/falkor_graph/sync.rs`. [crates/gwiki/src/falkor_graph/sync.rs:31-44] |
-| `execute_statement` | function | Indexed function `execute_statement` in `crates/gwiki/src/falkor_graph/sync.rs`. [crates/gwiki/src/falkor_graph/sync.rs:46-49] |
-| `graph_sync_error` | function | Indexed function `graph_sync_error` in `crates/gwiki/src/falkor_graph/sync.rs`. [crates/gwiki/src/falkor_graph/sync.rs:51-55] |
+| `sync_scope_from_postgres` | function | Synchronizes wiki graph facts from PostgreSQL to FalkorDB for a specified scope by loading facts, clearing the existing scope data, and executing generated graph write statements. [crates/gwiki/src/falkor_graph/sync.rs:13-29] |
+| `clear_scope` | function | Deletes all WikiDoc, WikiSource, and WikiTarget nodes from the graph database whose scope_kind and scope_id match the provided SearchScope parameters. [crates/gwiki/src/falkor_graph/sync.rs:31-44] |
+| `execute_statement` | function | Executes a Cypher query extracted from a 'GraphStatement' against a mutable 'GraphClient', returning an 'anyhow::Result<()>'. [crates/gwiki/src/falkor_graph/sync.rs:46-49] |
+| `graph_sync_error` | function | This function transforms an 'anyhow::Error' into a 'WikiError::Config' variant with a formatted detail message indicating a gwiki graph synchronization failure to FalkorDB. [crates/gwiki/src/falkor_graph/sync.rs:51-55] |
 

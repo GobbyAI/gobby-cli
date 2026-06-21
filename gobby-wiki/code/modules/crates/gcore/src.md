@@ -44,37 +44,103 @@ Parent: [[code/modules/crates/gcore|crates/gcore]]
 
 ## Overview
 
-`crates/gcore/src` is the shared core layer for Gobby Rust crates: it centralizes AI routing/types, configuration resolution, storage clients, indexing/search primitives, graph analytics, setup/degradation contracts, and local provisioning. Configuration stays behind a lightweight shared surface, with service config types for FalkorDB, Qdrant, embeddings, indexing, AI routing, AI capability bindings, tuning, and feature candidates, while consumer-owned choices such as graph and collection names remain outside the shared config layer (`crates/gcore/src/config/mod.rs:1-17`, `crates/gcore/src/config/types.rs:1-30`).
+## crates/gcore/src
 
-The AI flow is split between config-only context resolution and transport-backed execution. `AiContext` resolves per-capability bindings, tuning, concurrency limits, and optional command-scoped overrides, but intentionally stays transport-free (`crates/gcore/src/ai_context.rs:1-16`, `crates/gcore/src/ai_context.rs:20-58`). The transport layer imports `AiContext`, shared `AiError`/result types, and config bindings, then selects a route per capability: explicit `Off`, `Direct`, and `Daemon` modes are honored, while `Auto` probes daemon availability and falls back to direct config or `Off` (`crates/gcore/src/ai/mod.rs:1-14`, `crates/gcore/src/ai/mod.rs:28-63`). Shared AI wire models normalize outputs for callers across transports, including transcription segments in milliseconds, vision OCR/metadata, text usage, and provider metadata (`crates/gcore/src/ai_types.rs:1-66`).
+`gcore` is the foundational shared library for the gobby platform. It owns every cross-cutting concern that more than one binary or domain crate depends on: multi-modal AI dispatch, graph database access, vector-store operations, hybrid search, file indexing, PostgreSQL connectivity, secret/config resolution, service provisioning, and structured degradation reporting. The crate is intentionally transport-agnostic at its boundary — `ai_context.rs` resolves desired AI bindings and routing from caller-supplied config layers without importing any HTTP client, leaving probe-backed route collapse to the `ai` sub-module (ai_context.rs:1-6). The single public root (`lib.rs`) re-exports the sub-module tree so downstream crates receive a stable, version-locked surface.
 
-The module also supplies backend and analysis boundaries. Qdrant owns collection naming and client-facing vector behavior, including scoped project/topic/custom names and validation against blank, reserved, whitespace, control, path-like, and URL-like names (`crates/gcore/src/qdrant/naming.rs:1`, `crates/gcore/src/qdrant/naming.rs:44`). Graph analytics exposes public graph/community analysis while delegating community detection to a deterministic std-only Leiden kernel over dense integer node IDs; the facade adapts external node IDs into that representation (`crates/gcore/src/graph_analytics/leiden.rs:1-7`). Provisioning owns standalone Docker bootstrap by mirroring service assets under `~/.gobby/services`, starting daemon-style profiles, and persisting bootstrap keys in `gcore.yaml` (`crates/gcore/src/provisioning/mod.rs:1-7`, `crates/gcore/src/provisioning/mod.rs:14-52`).
+The AI subsystem (`ai/`) provides five modal capabilities dispatched through a four-way routing enum. `ai/mod.rs` resolves the effective route via `effective_route` / `effective_route_with_probe` (ai/mod.rs:31-66): explicit `Off`, `Direct`, or `Daemon` modes are forced through unchanged; `Auto` probes the local daemon's status endpoint via `ai/probe.rs` and falls back to a configured direct endpoint or `Off`. All outbound requests are retried up to `MAX_RETRIES = 2` times with exponential backoff capped at 30 s, jitter, and `Retry-After` header parsing. Per-modal timeout constants reflect practical latency profiles: text generation gets 300 s for large local-reasoning models, vision 60 s, embeddings 10 s, and STT chunks 120 s (ai/mod.rs:22-28). `ai_context.rs` owns the concurrency limiter (`AiLimiter` / `AiPermit`) that enforces `max_concurrency` across the shared `AiContext`, and surfaces `AiContextOptions` for command-scoped `--no-ai` or forced routing overrides.
 
-| Public API Area | Representative Symbols | Responsibility |
-| --- | --- | --- |
-| AI context | `AiContext`, `AiContext::resolve`, `AiContext::resolve_with_options`, `AiContext::binding` | Resolve shared per-capability AI bindings, tuning, limiter, and project identity (`crates/gcore/src/ai_context.rs:20-58`). |
-| AI routing | `effective_route`, `effective_route_with_probe` | Collapse configured routing into daemon/direct/off behavior with capability probing (`crates/gcore/src/ai/mod.rs:28-63`). |
-| AI results/errors | `TranscriptionResult`, `VisionResult`, `TextResult`, `TokenUsage`, `AiError` | Normalize AI transport outputs and parse failures across transcription, vision, and text generation (`crates/gcore/src/ai_types.rs:1-66`). |
-| Graph analytics | `GraphAnalytics`, `AnalyticsGraph`, `Community`, `detect_communities` | Adapt public graph data to deterministic weighted Leiden community detection (`crates/gcore/src/graph_analytics/leiden.rs:1-7`). |
-| Provisioning | `StandaloneConfig`, `provision_docker_services`, `ensure_hub` | Manage local service assets, Docker profiles, and persisted bootstrap config (`crates/gcore/src/provisioning/mod.rs:1-7`). |
+The storage layer bundles three distinct backends. `falkor.rs` wraps FalkorDB/RedisGraph with a `GraphClient` that handles Cypher identifier escaping, error classification, and a `ReadOnlySyncGraph` for read-path sharing. `qdrant.rs` manages Qdrant collections — creation, upsert (batched), vector search, and schema compatibility checks — surfacing a `CollectionScope` type for namespacing. `postgres.rs` provides read-only and read-write connection factories with a full TLS mode matrix (`Unverified`, `VerifyCA`, `VerifyFull`) and schema-validation hooks. `graph_analytics/leiden.rs` implements a deterministic, RNG-free, weighted Leiden community-detection kernel operating on dense integer indices, which the `graph_analytics.rs` façade adapts to the public `AnalyticsGraph` / `Community` / `CentralityScore` types (leiden.rs:1-12). `search.rs` fuses BM25 and vector hits via Reciprocal Rank Fusion (`rrf_merge`) and sanitises PostgreSQL full-text queries.
+
+Configuration, secrets, and provisioning form the operational backbone. The `config` child module defines `ConfigSource`, `LayeredConfigSource`, and all resolution functions (`resolve_capability_binding`, `resolve_ai_tuning`, `resolve_embedding_config`, etc.) that populate `AiContext`. `secrets.rs` resolves inline secret references and Fernet-encrypted values from config strings. `provisioning/` owns `StandaloneConfig` (a YAML key-value store at `~/.gobby/gcore.yaml`), Docker service orchestration (`provision_docker_services`), and the `ensure_hub` flow that probes, records, and reconciles PostgreSQL hub identity. `daemon_url.rs` resolves the local AI daemon base URL from the bootstrap file or environment overrides, normalising wildcard bind addresses to loopback.
+
+---
+
+### AI Capability Routing
+
+| Route value | Behaviour |
+|---|---|
+| `Off` | Capability disabled; no requests sent |
+| `Direct` | POST directly to configured `api_base` endpoint |
+| `Daemon` | Forward through local gobby AI daemon |
+| `Auto` | Probe daemon; use `Daemon` if available, else `Direct` or `Off` |
+
+### Per-Modal Timeouts
+
+| Capability | Timeout |
+|---|---|
+| `TextGenerate` | 300 s |
+| `VisionExtract` | 60 s |
+| `AudioTranscribe` / `AudioTranslate` | 120 s per chunk |
+| `Embed` | 10 s |
+
+### AI Capabilities (`AiCapability`)
+
+| Variant | `as_str` key |
+|---|---|
+| `Embed` | `ai.embeddings` |
+| `AudioTranscribe` | `ai.audio.transcribe` |
+| `AudioTranslate` | `ai.audio.translate` |
+| `VisionExtract` | `ai.vision` |
+| `TextGenerate` | `ai.text` |
+
+### Public Result Types (`ai_types.rs`)
+
+| Type | Purpose |
+|---|---|
+| `TranscriptionResult` / `TranscriptionSegment` | STT / translation output, millisecond-normalised segments |
+| `VisionResult` | Image description + OCR text + metadata map |
+| `TextResult` | Chat-completion text + token usage + reasoning effort |
+| `TokenUsage` | Prompt / completion / total token counts |
+| `AiError` | Typed errors: `capability_unavailable`, `not_configured`, `transport_failure`, `rate_limited`, `parse_failure` |
+
+### Graph Analytics Outputs (`graph_analytics.rs`)
+
+| Symbol | Description |
+|---|---|
+| `CentralityScore` | Betweenness / degree centrality per node |
+| `Community` | Leiden-detected community membership |
+| `Hotspot` | Nodes with anomalously high connection density |
+| `BridgeSearch` | Tarjan-based bridge-node/edge detection |
+
+### Retry Policy Constants
+
+| Constant | Value |
+|---|---|
+| `MAX_RETRIES` | 2 |
+| `BASE_BACKOFF` | 250 ms |
+| `MAX_BACKOFF` | 30 s |
+
+### Key Config/Env Resolution Helpers
+
+| Function | Role |
+|---|---|
+| `resolve_capability_binding` | Reads routing, api_base, api_key, model per capability |
+| `resolve_embedding_config` | Resolves embedding dimension, model, provider |
+| `resolve_ai_tuning` | Reads `max_concurrency` and generation tuning knobs |
+| `resolve_secret` | Decrypts Fernet-wrapped or env-patterned config values |
+| `daemon_url` / `daemon_url_at` | Builds daemon base URL from bootstrap file + env overrides |
+| `gobby_home` | Returns `$GOBBY_HOME` or `~/.gobby` |
+[crates/gcore/src/graph_analytics/leiden.rs:32-40]
+[crates/gcore/src/ai/daemon/operations.rs:20-72]
+[crates/gcore/src/ai/daemon/transport.rs:8-12]
+[crates/gcore/src/ai/daemon/types.rs:4-9]
+[crates/gcore/src/config/mod.rs:1-31]
 
 ## Child Modules
 
 | Module | Summary |
 | --- | --- |
-| [[code/modules/crates/gcore/src/ai\|crates/gcore/src/ai]] | The `crates/gcore/src/ai` module centralizes AI routing, transport, and capability-specific clients for text generation, embeddings, transcription, translation, and vision. Its top-level `mod.rs` exposes the child modules, imports `AiContext`, shared result/error types, and config bindings, then defines shared timeout, retry, and backoff policy used by capability flows (crates/gcore/src/ai/mod.rs:1). Route selection is capability-aware: `effective_route` delegates daemon probing to `probe::probe_daemon_capability`, while `Auto` mode uses daemon only when its status endpoint advertises the… |
-| [[code/modules/crates/gcore/src/config\|crates/gcore/src/config]] | `crates/gcore/src/config` is the shared configuration-resolution boundary for Gobby Rust crates, keeping lightweight contracts and resolver entry points behind one public module surface (`crates/gcore/src/config/mod.rs:1-17`). It owns common service config types for FalkorDB, Qdrant, embeddings, indexing, AI routing, AI capability bindings, tuning, and feature candidates, while leaving consumer-specific choices such as graph names and collection names outside the shared layer (`crates/gcore/src/config/types.rs:1-30`). |
-| [[code/modules/crates/gcore/src/graph_analytics\|crates/gcore/src/graph_analytics]] | `crates/gcore/src/graph_analytics/leiden.rs` implements a std-only, deterministic weighted Leiden community detection kernel over dense integer node indices. It is intentionally decoupled from public `AnalyticsGraph` and `Community` types so the algorithm can be tested in isolation, while the higher-level facade in `graph_analytics.rs` adapts external node IDs and memberships into this integer-index representation (crates/gcore/src/graph_analytics/leiden.rs:1-7). |
-| [[code/modules/crates/gcore/src/provisioning\|crates/gcore/src/provisioning]] | `crates/gcore/src/provisioning` owns standalone bootstrap plus local Docker service provisioning: it mirrors daemon service assets, copies them under `~/.gobby/services`, starts daemon-style profiles, and persists bootstrap keys in `gcore.yaml` (`crates/gcore/src/provisioning/mod.rs:1-7`). The module root centralizes service filenames, default database/vector/AI endpoint settings, and embedded Docker/Postgres asset templates (`crates/gcore/src/provisioning/mod.rs:14-52`). |
-| [[code/modules/crates/gcore/src/qdrant\|crates/gcore/src/qdrant]] | The `crates/gcore/src/qdrant` module owns Qdrant collection naming plus the client-facing behavior exercised by its tests. Its naming layer defines scoped collection names for project, topic, and caller-supplied custom collections, with namespace prefixes for project/topic scopes and verbatim names for custom scopes ((crates/gcore/src/qdrant/naming.rs:1)). It rejects empty names, reserved path-like names, whitespace-surrounded names, ASCII whitespace/control characters, and path/URL-like separators (`/`, `\`, `:`) before building collection names ((crates/gcore/src/qdrant/naming.rs:44)). |
+| [[code/modules/crates/gcore/src/ai\|crates/gcore/src/ai]] | ## crates/gcore/src/ai |
+| [[code/modules/crates/gcore/src/config\|crates/gcore/src/config]] | ## crates/gcore/src/config |
+| [[code/modules/crates/gcore/src/graph_analytics\|crates/gcore/src/graph_analytics]] | ## crates/gcore/src/graph_analytics |
+| [[code/modules/crates/gcore/src/provisioning\|crates/gcore/src/provisioning]] | ## crates/gcore/src/provisioning |
+| [[code/modules/crates/gcore/src/qdrant\|crates/gcore/src/qdrant]] | ## crates/gcore/src/qdrant |
 
 ## Files
 
 | File | Summary |
 | --- | --- |
-| [[code/files/crates/gcore/src/ai/daemon/operations.rs\|crates/gcore/src/ai/daemon/operations.rs]] | `crates/gcore/src/ai/daemon/operations.rs` exposes 5 indexed API symbols. |
-| [[code/files/crates/gcore/src/ai/daemon/request.rs\|crates/gcore/src/ai/daemon/request.rs]] | `crates/gcore/src/ai/daemon/request.rs` exposes 8 indexed API symbols. |
-| [[code/files/crates/gcore/src/ai/daemon/response.rs\|crates/gcore/src/ai/daemon/response.rs]] | `crates/gcore/src/ai/daemon/response.rs` exposes 3 indexed API symbols. |
 | [[code/files/crates/gcore/src/ai/daemon/transport.rs\|crates/gcore/src/ai/daemon/transport.rs]] | `crates/gcore/src/ai/daemon/transport.rs` exposes 5 indexed API symbols. |
 | [[code/files/crates/gcore/src/ai/embeddings.rs\|crates/gcore/src/ai/embeddings.rs]] | `crates/gcore/src/ai/embeddings.rs` exposes 12 indexed API symbols. |
 | [[code/files/crates/gcore/src/ai/mod.rs\|crates/gcore/src/ai/mod.rs]] | `crates/gcore/src/ai/mod.rs` exposes 37 indexed API symbols. |

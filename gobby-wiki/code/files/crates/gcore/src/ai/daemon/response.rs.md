@@ -10,7 +10,7 @@ freshness: indexed
 
 # crates/gcore/src/ai/daemon/response.rs
 
-Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
+Module: [[code/modules/crates/gcore/src/ai/daemon|crates/gcore/src/ai/daemon]]
 
 ## Overview
 
@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `parse_daemon_transcription` | function | Indexed function `parse_daemon_transcription` in `crates/gcore/src/ai/daemon/response.rs`. [crates/gcore/src/ai/daemon/response.rs:7-9] |
-| `parse_daemon_embeddings` | function | Indexed function `parse_daemon_embeddings` in `crates/gcore/src/ai/daemon/response.rs`. [crates/gcore/src/ai/daemon/response.rs:11-47] |
-| `parse_daemon_embedding` | function | Indexed function `parse_daemon_embedding` in `crates/gcore/src/ai/daemon/response.rs`. [crates/gcore/src/ai/daemon/response.rs:49-68] |
+| `parse_daemon_transcription` | function | Deserializes a JSON 'Value' into a 'TranscriptionResult' by delegating to 'TranscriptionResult::from_wire_json', returning an 'AiError' on deserialization failure. [crates/gcore/src/ai/daemon/response.rs:7-9] |
+| `parse_daemon_embeddings` | function | Parses and validates a daemon embedding response JSON by extracting the model name, dimension, and embeddings array, ensuring the embedding count matches the expected input length. [crates/gcore/src/ai/daemon/response.rs:11-47] |
+| `parse_daemon_embedding` | function | Parses a JSON array value into an f32 vector, validating that all elements are numeric and the resulting vector dimensionality matches the expected size. [crates/gcore/src/ai/daemon/response.rs:49-68] |
 

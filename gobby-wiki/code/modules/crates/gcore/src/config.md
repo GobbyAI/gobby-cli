@@ -17,27 +17,74 @@ Parent: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Overview
 
-`crates/gcore/src/config` is the shared configuration-resolution boundary for Gobby Rust crates, keeping lightweight contracts and resolver entry points behind one public module surface (`crates/gcore/src/config/mod.rs:1-17`). It owns common service config types for FalkorDB, Qdrant, embeddings, indexing, AI routing, AI capability bindings, tuning, and feature candidates, while leaving consumer-specific choices such as graph names and collection names outside the shared layer (`crates/gcore/src/config/types.rs:1-30`).
+## crates/gcore/src/config
 
-The main flow is: stored config values are decoded, environment patterns like `${VAR}` and `${VAR:-default}` are resolved, then typed resolver functions produce concrete configs for services and AI capabilities (`crates/gcore/src/config/resolve.rs:1-100`). Defaults are centralized here, including FalkorDB port `16379`, embedding model `nomic-embed-text`, embedding timeout `10`, AI max concurrency `1`, and indexing’s default `respect_gitignore = true` (`crates/gcore/src/config/resolve.rs:1-8`, `crates/gcore/src/config/types.rs:25-37`).
+### Responsibilities
 
-This module collaborates outward through re-exports: callers import `ConfigSource`, `LayeredConfigSource`, resolver functions, and typed config structs from `config::...` rather than reaching into `resolve` or `types` directly (`crates/gcore/src/config/mod.rs:6-24`). It also defines cross-crate constants and shared naming contracts, including the `CODE_GRAPH_NAME` used by gcode’s code graph projection and AI capability names shared with the daemon registry (`crates/gcore/src/config/mod.rs:9-17`, `crates/gcore/src/config/types.rs:76-100`). Internally, tests isolate process environment mutation behind `EnvGuard` and capture warnings with a test logger, reflecting that env resolution is a key behavior under test (`crates/gcore/src/config/tests.rs:1-100`).
+This module is the shared configuration-resolution boundary for all Gobby Rust crates (crates/gcore/src/config/mod.rs:1-6). It owns two concerns: lightweight domain types that describe service connections and AI capabilities (`types.rs`), and resolution logic that reads from layered sources and collapses them into those types (`resolve.rs`). The module intentionally stays small so that downstream crates can depend on it without pulling in heavy service machinery. A single constant, `CODE_GRAPH_NAME = "gobby_code"`, pins the FalkorDB graph name used by the `gcode` code-graph projection (crates/gcore/src/config/mod.rs:11).
 
-| Public Symbol | Kind | Purpose |
+### Key Flows
+
+Resolution begins with a `ConfigSource` trait implemented by `LayeredConfigSource` and `EnvOnlySource` (crates/gcore/src/config/resolve.rs:1). `LayeredConfigSource` merges an ordered stack of sources, each queried by `config_value` and then `resolve_value`. Raw stored values pass through `decode_config_value`, which parses JSON strings, arrays, objects, and null, falling back to the literal text when the input is not valid JSON (crates/gcore/src/config/resolve.rs:11-21). Values containing `${VAR}` or `${VAR:-default}` shell-like patterns are expanded by `resolve_env_pattern`, which walks the string segment by segment, resolves each named variable from the process environment, and either applies the inline default or leaves the slot unresolved (crates/gcore/src/config/resolve.rs:24-65). Higher-level functions (`resolve_falkordb_config`, `resolve_qdrant_config`, `resolve_embedding_config`, `resolve_indexing_config`, `resolve_capability_binding`, `resolve_ai_tuning`) each call the primitive helpers `resolve_setting`, `resolve_setting_from_keys`, `resolve_port`, `resolve_non_empty`, and `resolve_config_bool` to assemble typed structs from the layered source. Embedding resolution has two additional entry points, `resolve_embedding_config_resolution` and `resolve_embedding_config_from_binding`, to support capability-scoped overrides via `CapabilityBinding`.
+
+### Public API
+
+**Service configuration types** (crates/gcore/src/config/types.rs:1-45)
+
+| Type | Key Fields |
+| --- | --- |
+| `FalkorConfig` | `host`, `port` (default 16379), `password?: String` |
+| `QdrantConfig` | `url?: String`, `api_key?: String` |
+| `EmbeddingConfig` | `api_base`, `model` (default `nomic-embed-text`), `api_key?`, `query_prefix?`, `timeout_seconds` (default 10) |
+| `IndexingConfig` | `respect_gitignore: bool` (default `true`) |
+| `AiTuning` | max concurrency (default 1), tuning fields |
+| `CapabilityBinding` | per-capability AI routing + connection overrides |
+| `EmbeddingConfigResolution` | resolved embedding config with source provenance |
+| `FeatureCandidate` | deserializable feature-flag record |
+
+**`AiRouting` variants** (crates/gcore/src/config/types.rs:46-70)
+
+| Variant | Parse string |
+| --- | --- |
+| `Auto` (default) | `"auto"` |
+| `Daemon` | `"daemon"` |
+| `Direct` | `"direct"` |
+| `Off` | `"off"` |
+
+**`AiCapability` variants and config key accessors** (crates/gcore/src/config/types.rs:80-100)
+
+| Variant | `as_str` | Key methods |
 | --- | --- | --- |
-| `CODE_GRAPH_NAME` | constant | FalkorDB graph name for gcode code graph projection (`crates/gcore/src/config/mod.rs:9-10`) |
-| `ConfigSource`, `LayeredConfigSource`, `EnvOnlySource` | source abstractions | Provide config lookup/resolution sources (`crates/gcore/src/config/mod.rs:12-17`) |
-| `decode_config_value` | function | Decodes stored config-store values from JSON/raw representations (`crates/gcore/src/config/resolve.rs:10-22`) |
-| `resolve_env_pattern` | function | Resolves `${VAR}` and `${VAR:-default}` patterns (`crates/gcore/src/config/resolve.rs:24-100`) |
-| `resolve_falkordb_config`, `resolve_qdrant_config`, `resolve_embedding_config`, `resolve_indexing_config` | functions | Produce typed service/indexing configs (`crates/gcore/src/config/mod.rs:12-17`) |
-| `AiCapability`, `AiRouting`, `CapabilityBinding`, `AiTuning` | types | Shared AI routing and capability contracts (`crates/gcore/src/config/mod.rs:18-24`, `crates/gcore/src/config/types.rs:39-100`) |
+| `Embed` | `"embed"` | `routing_key`, `transport_key`, `api_base_key`, `api_key_key`, `model_key`, `provider_key` |
+| `AudioTranscribe` | `"audio_transcribe"` | same set |
+| `AudioTranslate` | `"audio_translate"` | same set |
+| `VisionExtract` | `"vision_extract"` | same set |
+| `TextGenerate` | `"text_generate"` | same set |
 
-| Key / Env Var | Role | Default / Notes |
-| --- | --- | --- |
-| `indexing.respect_gitignore` | Config key for indexing behavior | Re-exported as `INDEXING_RESPECT_GITIGNORE_KEY` (`crates/gcore/src/config/resolve.rs:1-8`) |
-| `GOBBY_INDEXING_RESPECT_GITIGNORE` | Env override for indexing behavior | Used by indexing resolver (`crates/gcore/src/config/resolve.rs:1-8`) |
-| `GOBBY_FALKORDB_HOST`, `GOBBY_FALKORDB_PORT`, `GOBBY_FALKORDB_PASSWORD` | FalkorDB test/env keys | Cleared by test `EnvGuard` (`crates/gcore/src/config/tests.rs:46-77`) |
-| `GOBBY_QDRANT_URL`, `GOBBY_QDRANT_API_KEY` | Qdrant test/env keys | Cleared by test `EnvGuard` (`crates/gcore/src/config/tests.rs:46-77`) |
+**Environment variables read during resolution** (inferred from crates/gcore/src/config/tests.rs:62-85)
+
+| Variable | Purpose |
+| --- | --- |
+| `GOBBY_FALKORDB_HOST` | FalkorDB hostname |
+| `GOBBY_FALKORDB_PORT` | FalkorDB port (default 16379) |
+| `GOBBY_FALKORDB_PASSWORD` | FalkorDB password |
+| `GOBBY_QDRANT_URL` | Qdrant service URL |
+| `GOBBY_QDRANT_API_KEY` | Qdrant API key |
+| `GOBBY_INDEXING_RESPECT_GITIGNORE` | Boolean; key `indexing.respect_gitignore` (crates/gcore/src/config/resolve.rs:7-8) |
+
+**Notable public constants** (crates/gcore/src/config/resolve.rs:3-8, crates/gcore/src/config/mod.rs:11)
+
+| Constant | Value |
+| --- | --- |
+| `CODE_GRAPH_NAME` | `"gobby_code"` |
+| `FALKORDB_DEFAULT_PORT` | `16379` |
+| `EMBEDDING_DEFAULT_MODEL` | `"nomic-embed-text"` |
+| `EMBEDDING_DEFAULT_TIMEOUT_SECONDS` | `10` |
+| `INDEXING_RESPECT_GITIGNORE_KEY` | `"indexing.respect_gitignore"` |
+
+### Test Infrastructure
+
+`tests.rs` supplies a suite of in-process fixtures so that resolution logic can be exercised without live services (crates/gcore/src/config/tests.rs:1-100). `TestSource` and its `with_values` / `with_raw_values` constructors provide an in-memory `ConfigSource` backed by a `HashMap`. `FailingResolveSource` injects controlled errors into `resolve_value` for specific keys. `LayeredTestSource` stacks multiple `TestSource` maps to verify priority semantics. `EnvGuard` serializes all process-environment mutations through a crate-level `TEST_ENV_LOCK` mutex and restores a fixed allowlist of `GOBBY_*` keys on drop, preventing cross-test pollution (crates/gcore/src/config/tests.rs:53-85). `TestLogger` and `capture_warn_logs` intercept `log::warn!` emissions so tests can assert on diagnostic output without writing to stderr.
 
 ## Files
 

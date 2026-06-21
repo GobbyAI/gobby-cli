@@ -10,7 +10,7 @@ freshness: indexed
 
 # crates/gcode/src/commands/codewiki/build_parts/concepts/spans.rs
 
-Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gcode/src/commands/codewiki/build_parts]]
+Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts/concepts|crates/gcode/src/commands/codewiki/build_parts/concepts]]
 
 ## Overview
 

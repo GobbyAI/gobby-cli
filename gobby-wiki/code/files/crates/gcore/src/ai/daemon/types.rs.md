@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gcore/src/ai/daemon|crates/gcore/src/ai/daemon]]
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `DaemonTranscriptionOptions` | class | Indexed class `DaemonTranscriptionOptions` in `crates/gcore/src/ai/daemon/types.rs`. [crates/gcore/src/ai/daemon/types.rs:4-9] |
-| `DaemonEmbeddingResult` | class | Indexed class `DaemonEmbeddingResult` in `crates/gcore/src/ai/daemon/types.rs`. [crates/gcore/src/ai/daemon/types.rs:12-16] |
-| `default` | function | Indexed function `default` in `crates/gcore/src/ai/daemon/types.rs`. [crates/gcore/src/ai/daemon/types.rs:19-26] |
+| `DaemonTranscriptionOptions` | class | 'DaemonTranscriptionOptions<'a>' is a configuration struct with lifetime parameter ''a' that bundles a required 'AiCapability' field and three optional borrowed string references for source language, target language, and custom prompt specification. [crates/gcore/src/ai/daemon/types.rs:4-9] |
+| `DaemonEmbeddingResult` | class | 'DaemonEmbeddingResult' is a struct containing vector embeddings as a collection of f32 float arrays, along with metadata specifying the model used and embedding dimensionality. [crates/gcore/src/ai/daemon/types.rs:12-16] |
+| `default` | function | This function returns a default instance with 'AiCapability::AudioTranscribe' as the capability while initializing 'language', 'target_lang', and 'prompt' fields to 'None'. [crates/gcore/src/ai/daemon/types.rs:19-26] |
 

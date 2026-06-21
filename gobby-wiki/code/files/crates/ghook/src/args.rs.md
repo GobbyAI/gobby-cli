@@ -24,5 +24,5 @@ Module: [[code/modules/crates/ghook/src|crates/ghook/src]]
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `Args` | class | Indexed class `Args` in `crates/ghook/src/args.rs`. [crates/ghook/src/args.rs:9-33] |
+| `Args` | class | A crate-scoped struct defining command-line argument flags for controlling hook invocation modes, diagnostics output, versioning, host CLI identification, and process lifecycle management. [crates/ghook/src/args.rs:9-33] |
 

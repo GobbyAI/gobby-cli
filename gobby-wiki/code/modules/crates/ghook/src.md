@@ -29,30 +29,52 @@ Parent: [[code/modules/crates/ghook|crates/ghook]]
 
 ## Overview
 
-`crates/ghook/src` implements the hook-side CLI/runtime for forwarding host-agent hook invocations into Gobby. Its normal path builds a hook envelope, writes it to the local inbox first, then attempts a daemon POST; `transport` documents the durability contract as atomic write to `~/.gobby/hooks/inbox/<p>-<ts13>-<uuid>.json`, deletion on 2xx, and replay by the daemon drain worker on timeout, connection failure, or HTTP failure (`crates/ghook/src/transport.rs:1-18`). `action` translates daemon responses into hook-visible stdout/stderr/exit behavior through `HookAction`, importing CLI policy, Python-style truthiness, Stop-hook handling, output, and transport collaborators (`crates/ghook/src/action.rs:1-29`).
+## Module: crates/ghook/src
 
-The main hook flow is policy-driven by source and CLI configuration: `CliConfig` decides recognized CLIs and critical hooks, `source` detects canonical sources, `dispatch` builds and sends envelopes, `terminal_context` can inject tmux/TTY/process context, and `transport` records delivery reports. The response path preserves daemon JSON on stdout when appropriate, emits stderr for blocking errors, and maps special cases such as Claude hard stops, Droid semantics, transport failures, and critical-hook failures into exit codes (`crates/ghook/src/action.rs:31-100`). Planned shutdown handling is a narrow Stop-hook escape hatch: it accepts only fresh shutdown markers, checks daemon reachability, and suppresses only connection/timeout races for Stop hooks so intentional Gobby restarts do not block the host CLI (`crates/ghook/src/planned_shutdown.rs:1-58`).
+`ghook` is the Gobby hook relay binary. It sits between AI coding assistant CLIs (Claude, Codex, Gemini, Grok, Droid) and the Gobby daemon, intercepting every hook invocation the host CLI fires. Its central responsibility is an enqueue-first delivery guarantee: before attempting a live daemon POST, it writes the hook envelope atomically to `~/.gobby/hooks/inbox/<prefix>-<ts13>-<uuid>.json` so the daemon's drain worker can replay any delivery that races a transient outage (transport.rs:1–16). On a 2xx response the inbox file is deleted immediately; on any other outcome — connection refused, timeout, 5xx — the file persists. Each invocation also detects the active AI CLI via `CliConfig::for_cli` (cli_config.rs), which governs which hook types are considered *critical* (exit-blocking) versus non-critical (best-effort JSON), and carries per-CLI quirks such as Gemini treating JSON-parse errors as exit-1, Grok using native snake_case hook names, and Droid having no critical hooks at all.
 
-Statusline handling is intentionally outside the enqueue-first path because Claude consumes statusline stdout on every tick. `statusline` recognizes only Claude `statusline` hooks, extracts a session payload when possible, posts it best-effort to `/api/sessions/statusline`, optionally runs a downstream command from `GOBBY_STATUSLINE_DOWNSTREAM`, preserves downstream stdout bytes, and always exits successfully so daemon or parsing problems do not surface as hook failures (`crates/ghook/src/statusline.rs:1-65`). Diagnostics and support modules round out the binary: `diagnose` reports CLI/install/schema state, `envelope` defines serialized hook payloads, `json_value` centralizes Python truthiness compatibility, `output` wraps stdout/stderr emission, `detach` and `runtime` support process/runtime setup, and `main` dispatches the CLI entry points.
+The main dispatch path reads stdin, injects terminal and tmux context through `terminal_context::inject` (terminal_context.rs), wraps the payload in an `Envelope` (envelope.rs), enqueues and POSTs via `transport::post_and_cleanup`, then converts the daemon's response into a `HookAction` (action.rs). `action_from_success_response` applies per-source rules: Claude's `stopReason: HARD_STOP` becomes exit 2; Codex `pretool_deny` is surfaced as a JSON block; Droid's `continue: false` maps to exit 2 with JSON; generic `is_blocked` matches the dispatcher's blocking patterns for remaining sources (action.rs:36–100). The Claude *statusline* hook takes a separate, latency-sensitive path in `statusline.rs` that posts to `/api/sessions/statusline` with a 2-second timeout on a background thread, then passes stdin bytes through to an optional `GOBBY_STATUSLINE_DOWNSTREAM` subprocess with a 5-second deadline, never surfacing transport failures to Claude as hook errors (statusline.rs:1–80).
 
-| Area | Public symbols |
-| --- | --- |
-| Action emission | `HookAction`, `continue_action`, `emit_empty_json`, `emit_action`, `action_from_success_response`, `action_from_failure` |
-| CLI policy | `Args`, `CliConfig`, `CliConfig::for_cli`, `CliConfig::for_dispatch`, `CliConfig::is_critical_hook` |
-| Dispatch/envelope | `run_gobby_owned`, `build_dispatch_envelope`, `Envelope`, `Envelope::new` |
-| Transport | `DeliveryOutcome`, `DeliveryFailureKind`, `DeliveryReport`, `inbox_dir`, `quarantine_dir`, `enqueue_to`, `post_and_cleanup` |
-| Shutdown/statusline | `should_skip_dispatch`, `suppress_after_failed_post`, `is_stop_hook`, `is_statusline_hook`, `handle` |
-| Context/source | `detect_source`, `SourceEnvGuard`, `capture`, `enabled_for_hook`, `build_context`, `inject` |
+Intentional daemon restarts are handled by `planned_shutdown.rs`. If a Stop hook fires while a fresh `shutdown_intent_active.json` marker is present in the marker home directory and the daemon health check returns nothing within 350 ms, `should_skip_dispatch` returns `true` and the Stop hook is silently passed through (planned_shutdown.rs:21–64). A parallel `suppress_after_failed_post` path cleans up an already-enqueued file when a Stop hook's live POST fails with a connect or timeout error during the same window — preventing spurious inbox accumulation during planned restarts. Freshness is configurable via `GOBBY_SHUTDOWN_ALLOW_SECONDS`.
 
-| Environment/config fact | Meaning |
-| --- | --- |
-| `GOBBY_STATUSLINE_DOWNSTREAM` | Optional downstream statusline command; when set, its stdout is passed through exactly (`crates/ghook/src/statusline.rs:24-62`). |
-| `~/.gobby/hooks/inbox/` | Durable hook inbox used before live daemon POST (`crates/ghook/src/transport.rs:1-18`, `crates/ghook/src/transport.rs:54-57`). |
-| `~/.gobby/hooks/inbox/quarantine/` | Quarantine directory for malformed inbox entries (`crates/ghook/src/transport.rs:59-62`). |
-| `shutdown_intent_active.json` | Short-lived planned-shutdown marker checked for Stop-hook suppression (`crates/ghook/src/planned_shutdown.rs:10-17`). |
-| `/api/hooks/execute` | Normal daemon hook endpoint (`crates/ghook/src/transport.rs:21-24`). |
-| `/api/sessions/statusline` | Best-effort statusline endpoint (`crates/ghook/src/statusline.rs:14-18`). |
-| `/api/admin/health` | Planned-shutdown reachability probe endpoint (`crates/ghook/src/planned_shutdown.rs:10-13`). |
+The `diagnose` subcommand (`diagnose.rs`) emits a schema-v2 JSON report that includes install provenance read from a sidecar file, recognized CLI name, and whether terminal context is enabled for the current hook — useful for support and CI validation. Source detection (`source.rs`) infers the originating Gobby source from environment variables and writes a `SourceEnvGuard` that restores env state on drop, supporting nested hook scenarios.
+
+### CLI entry points
+
+| Subcommand / flag | File | Description |
+|---|---|---|
+| *(default / no subcommand)* | main.rs | Normal hook dispatch |
+| `diagnose` | main.rs, diagnose.rs | Emit v2 JSON diagnostic report |
+| `--gobby-owned` | args.rs | Activate enqueue-first transport path |
+
+### Environment variables
+
+| Variable | Module | Purpose |
+|---|---|---|
+| `GOBBY_DAEMON_URL` | transport.rs, statusline.rs | Override daemon base URL |
+| `GOBBY_STATUSLINE_DOWNSTREAM` | statusline.rs | Shell command to exec for statusline passthrough |
+| `GOBBY_SHUTDOWN_ALLOW_SECONDS` | planned_shutdown.rs | Override freshness window for shutdown markers (default 120 s) |
+| `GOBBY_HOOKS_DISABLED` | dispatch.rs | Disable all hook dispatch when set to a truthy value |
+| `TMUX_PANE` | terminal_context.rs | tmux pane ID injected into session-start envelopes |
+
+### Public transport types (transport.rs)
+
+| Type | Variants / shape | Purpose |
+|---|---|---|
+| `DeliveryOutcome` | `Delivered`, `Enqueued` | Whether the daemon ACKed and the inbox file was removed |
+| `DeliveryFailureKind` | `Http`, `Connect`, `Timeout`, `Other` | Classification of a failed live POST |
+| `DeliveryReport` | outcome, failure\_kind, status\_code, response\_body, transport\_error | Full delivery details returned to caller |
+
+### Per-CLI criticality rules (cli_config.rs)
+
+| CLI | Critical hooks | Notes |
+|---|---|---|
+| `claude` | `PreToolUse`, `PostToolUse`, `Stop`, `SessionStart` (when terminal context enabled) | JSON-parse errors are non-critical |
+| `codex` | `Stop` | `PreToolUse` is non-critical without terminal context |
+| `gemini` | *(none critical)* | JSON-parse errors produce exit 1 |
+| `grok` | `session_start` (snake_case, terminal context enabled) | Uses native snake_case hook names |
+| `droid` | *(none)* | All hooks non-critical; Pascal-case hook names preserved |
+| unknown | falls back to Claude rules for dispatch | `for_cli` returns `None`; `for_dispatch` returns Claude config |
 [crates/ghook/src/cli_config.rs:11-18]
 [crates/ghook/src/json_value.rs:3-20]
 [crates/ghook/src/planned_shutdown.rs:21-27]

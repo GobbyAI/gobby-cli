@@ -14,30 +14,56 @@ Parent: [[code/modules/crates/gwiki|crates/gwiki]]
 
 ## Overview
 
-The `crates/gwiki/contract` module defines the static CLI contract for `gwiki`: tool identity, contract version, global flags, scope selection, commands, JSON output shapes, and error-code surface. The contract identifies `gwiki` as a local-first wiki CLI for capture, search, upkeep, and synthesis (`crates/gwiki/contract/gwiki.contract.json:2-4`), with the supplied file summary indicating 429 indexed API symbols.
+## crates/gwiki/contract
 
-The key flow is scope resolution followed by command execution. Scope defaults to project detection from the current working directory, can be narrowed with `--project ROOT` or `--topic NAME`, and uses `kind` plus `id` as identity keys (`crates/gwiki/contract/gwiki.contract.json:26-49`). The visible commands expose self-description through `contract`, indexing through `index`, and scoped document lookup through `search` (`crates/gwiki/contract/gwiki.contract.json:51-100`).
+This module contains the single machine-readable source of truth for the `gwiki` CLI's public API surface: `gwiki.contract.json`. The file is a versioned (currently `contract_version: 5`) JSON document that declares every command the tool exposes, together with its positional arguments, flags, allowed values, structured output keys, dependency requirements, and error codes. The top-level `summary` field — "Local-first wiki CLI for capture, search, upkeep, and synthesis." — serves as the human-readable elevator pitch for the tool. With 429 indexed symbols spread across the file, the contract is the definitive reference consulted by the daemon, shell completions, documentation generators, and any other consumers that need to understand what `gwiki` can do without executing it.
 
-No cross-file relationship data was supplied for callers, imports, or downstream Rust modules. The collaboration point visible here is daemon integration: the shown commands are marked `daemon_consumed: true`, so daemon-facing code can use this contract to discover supported commands and expected JSON keys (`crates/gwiki/contract/gwiki.contract.json:53-78`, `crates/gwiki/contract/gwiki.contract.json:81-92`, `crates/gwiki/contract/gwiki.contract.json:95-100`).
+The schema is organised into three top-level concerns. `global_flags` applies to every invocation (`--format json|text`, `--quiet`). The `scope` object holds the two workspace-narrowing flags (`--project ROOT`, `--topic NAME`) and records how scope is resolved when neither flag is supplied ("detect project from current working directory; bare `--project` uses current directory"); it also names the `identity_keys` used to deduplicate results (`kind`, `id`). The `commands` array is the largest section; each entry carries a `name`, human-readable `summary`, a `daemon_consumed` boolean that tells callers whether a running background service will handle the request, optional `positionals` and per-command `flags` arrays, and a `json_output_keys` list that documents the exact keys present in JSON-mode output. A subset of commands additionally declare `hard_dependencies`, `optional_dependencies`, `multimodal`, `degradation`, `output_shape`, and `metadata_keys` fields, signalling richer structured results and graceful-degradation behaviour for capabilities such as image or audio processing. The `error_codes` top-level key enumerates the well-known error identifiers the daemon can return.
 
-| Contract Fact | Value | Source |
-| --- | --- | --- |
-| Tool | `gwiki` | `crates/gwiki/contract/gwiki.contract.json:2` |
-| Contract version | `5` | `crates/gwiki/contract/gwiki.contract.json:3` |
-| Summary | Local-first wiki CLI for capture, search, upkeep, and synthesis | `crates/gwiki/contract/gwiki.contract.json:4` |
+The `contract` command itself (`daemon_consumed: true`) re-emits the full document at runtime, bridging the static file and the live binary. Its `json_output_keys` — `tool`, `contract_version`, `summary`, `global_flags`, `scope`, `commands`, `error_codes` — mirror the top-level structure of this file exactly (gwiki.contract.json:1–83). Other commands visible in the excerpt include `index` (indexes markdown and source notes, outputs `command`, `scope`, `status`, `indexed_pages`, `indexed_sources`) and `search` (queries wiki documents in the selected scope), with the remainder of the command roster spanning capture, upkeep, and synthesis workflows implied by the 429 total symbols.
 
-| Flag | Scope | Value | Allowed Values | Source |
-| --- | --- | --- | --- | --- |
-| `--format` | Global / `contract` | `json\|text` | `json`, `text` | `crates/gwiki/contract/gwiki.contract.json:7-16`, `crates/gwiki/contract/gwiki.contract.json:59-68` |
-| `--quiet` | Global | none | none | `crates/gwiki/contract/gwiki.contract.json:18-24` |
-| `--project` | Scope | `ROOT` | unrestricted | `crates/gwiki/contract/gwiki.contract.json:29-35` |
-| `--topic` | Scope | `NAME` | unrestricted | `crates/gwiki/contract/gwiki.contract.json:37-43` |
+### Global Flags
 
-| Command | Responsibility | Daemon Consumed | Visible JSON Keys / Inputs | Source |
-| --- | --- | --- | --- | --- |
-| `contract` | Emit this CLI contract | yes | `tool`, `contract_version`, `summary`, `global_flags`, `scope`, `commands`, `error_codes` | `crates/gwiki/contract/gwiki.contract.json:53-78` |
-| `index` | Index markdown and source notes in selected scope | yes | `command`, `scope`, `status`, `indexed_pages`, `indexed_sources` | `crates/gwiki/contract/gwiki.contract.json:81-92` |
-| `search` | Search wiki documents in selected scope | yes | begins with positional `QUERY` | `crates/gwiki/contract/gwiki.contract.json:95-100` |
+| Flag | Takes Value | Allowed Values | Required | Repeatable |
+|---|---|---|---|---|
+| `--format` | yes | `json`, `text` | no | no |
+| `--quiet` | no | — | no | no |
+
+### Scope Flags
+
+| Flag | Value Name | Required | Default Behaviour |
+|---|---|---|---|
+| `--project` | `ROOT` | no | Detect from Cwd; bare flag uses Cwd |
+| `--topic` | `NAME` | no | — |
+
+| Scope Property | Value |
+|---|---|
+| `identity_keys` | `kind`, `id` |
+
+### Known Commands (from excerpt)
+
+| Command | Summary | daemon_consumed | Notable json_output_keys |
+|---|---|---|---|
+| `contract` | Emit this CLI contract | yes | `tool`, `contract_version`, `summary`, `global_flags`, `scope`, `commands`, `error_codes` |
+| `index` | Index markdown and source notes in the selected scope | yes | `command`, `scope`, `status`, `indexed_pages`, `indexed_sources` |
+| `search` | Search wiki documents in the selected scope | yes | (defined in full contract) |
+
+### Optional Command-Level Schema Fields
+
+| Field | Purpose |
+|---|---|
+| `hard_dependencies` | External capabilities required for the command to function |
+| `optional_dependencies` | Capabilities that enhance but are not required |
+| `multimodal` | Whether the command handles non-text media |
+| `degradation` | Describes behaviour when optional dependencies are absent |
+| `output_shape` | Structural shape of the primary result payload |
+| `metadata_keys` | Additional envelope keys alongside the primary output |
+| `error_codes` | Well-known error identifiers the daemon may return |
+[crates/gwiki/contract/gwiki.contract.json:2]
+[crates/gwiki/contract/gwiki.contract.json:3]
+[crates/gwiki/contract/gwiki.contract.json:4]
+[crates/gwiki/contract/gwiki.contract.json:5-25]
+[crates/gwiki/contract/gwiki.contract.json:7]
 
 ## Files
 

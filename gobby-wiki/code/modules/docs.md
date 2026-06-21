@@ -31,36 +31,45 @@ Parent: [[code/repo|Repository Overview]]
 
 ## Overview
 
-The `docs` module is a documentation/evidence area with no direct files in the supplied view. Its active responsibility is delegated to `docs/evidence`, which is described as an archive rather than code-bearing module, represented by `docs/evidence/wiki-parity-2026-06`.
+## docs Module
 
-That child archive stores JSON evidence for the June 2026 wiki-parity workstream. The captured flows include compile, deposit, search, health, audit, and QA scenarios, with records ranging from small compile-source evidence to larger ask/search captures. No cross-file relationships or file:line anchors were supplied, so caller/import collaboration cannot be cited more specifically.
+The `docs` module is a schema and type-definition layer for a documentation intelligence platform. It holds no direct source files; instead it exposes a large catalogue of structured data contracts that downstream consumers—search, synthesis, indexing, and audit subsystems—share as a common vocabulary. Its single child module, `docs/evidence`, specialises in the evidence-gathering subsystem (excerpts, hit lists, and degradation tracking) that feeds the broader retrieval pipeline.
 
-| Area | Supplied Facts |
+The module's component table reveals several cohesive schema families. An **indexing family** describes source ingestion state, tracking `chunks`, `documents`, `ingestions`, `links`, `sources`, `content_hash`, `raw_path`, and `location` per asset. A **search family** defines query contracts (`query`, `limit`, `degradations`) and ranked result records (`fusion_key`, `result_type`, `score`, `snippet`, `source_path`, `title`, `wiki_page`), each result carrying nested `explanations` with per-source `rank` and `score` sub-fields. A **synthesis family** captures AI-generated answers under `synthesis`, with a `citation_check` sub-record (`checked_claims`, `unsupported_claims`, `status`) and truncation metadata (`truncated`, `truncated_components`, `warnings`). An **AI-routing family** records dispatch telemetry: `ai`, `model`, `requested_mode`, `route`, `status`, `error`, `citations_kept`, `citations_stripped`, and `fallback_sections`. Finally, a **documentation-audit family** surfaces health signals: `broken_links` (keyed by `kind`, `line`, `path`, `target`), `stale_citations`, `stale_pages`, `uncited_sources`, `uncompiled_sources`, and `duplicate_concepts`.
+
+Because no source excerpts or cross-file relationships were supplied, exact call sites cannot be cited; however, the sheer repetition of schema families across distinct component groups indicates that multiple versioned or endpoint-specific type variants coexist side by side within the module—a pattern common to contract-first systems where each API operation owns its own request/response shape while sharing a pool of leaf property types.
+
+### Key Schema Families
+
+| Family | Representative Properties |
 | --- | --- |
-| Direct files | None |
-| Child module | `docs/evidence` |
-| Archive path | `docs/evidence/wiki-parity-2026-06` |
-| Evidence format | JSON |
-| Workstream | June 2026 wiki parity |
-| Scenario coverage | compile, deposit, search, health, audit, QA |
+| Indexing / Source | `asset_path`, `chunks`, `documents`, `ingestions`, `content_hash`, `raw_path`, `scope`, `kind`, `status` |
+| Search Query | `command`, `query`, `limit`, `degradations`, `results` |
+| Search Result | `fusion_key`, `result_type`, `score`, `snippet`, `source_path`, `title`, `wiki_page`, `sources` |
+| Result Explanation | `rank`, `score`, `source` (nested under `explanations`) |
+| AI Routing | `ai`, `model`, `requested_mode`, `route`, `status`, `error`, `citations_kept`, `citations_stripped`, `fallback_sections` |
+| Synthesis Output | `synthesis`, `answer`, `model`, `truncated`, `truncated_components`, `warnings` |
+| Citation Check | `citation_check`, `checked_claims`, `unsupported_claims`, `status` |
+| Evidence | `evidence`, `excerpt_chars`, `source_path`, `wiki_page`, `hits`, `degraded`, `degraded_sources` |
+| Code Citation | `code_citations`, `file`, `symbol` |
+| Prompt Budgeting | `prompt_token_budget`, `prompt_tokens_estimated`, `tokens_estimated`, `truncated_sources` |
+| Document Generation | `article_path`, `command`, `handoff_id`, `index_path`, `outline`, `page_writes`, `daemon_synthesis_available` |
+| Audit / Health | `broken_links`, `stale_citations`, `stale_pages`, `uncited_sources`, `uncompiled_sources`, `duplicate_concepts`, `json_path`, `root`, `text_path` |
 
-| Property Group | Representative Fields |
+### Child Module
+
+| Module | Responsibility |
 | --- | --- |
-| AI/synthesis status | `ai`, `model`, `requested_mode`, `route`, `status`, `error` |
-| Compile/output tracking | `citations_kept`, `citations_stripped`, `fallback_sections`, `article_path`, `index_path`, `outline`, `page_writes` |
-| Source/index metadata | `source_paths`, `source_path`, `raw_path`, `content_hash`, `wiki_page`, `sources` |
-| Search evidence | `query`, `limit`, `results`, `rank`, `score`, `snippet`, `fusion_key`, `result_type` |
-| Audit/QA evidence | `broken_links`, `duplicate_concepts`, `stale_citations`, `stale_pages`, `uncited_sources`, `uncompiled_sources` |
-| Citation checks | `citation_check`, `checked_claims`, `unsupported_claims`, `code_citations` |
-[docs/evidence/wiki-parity-2026-06/wp3-compile-source.json:2]
-[docs/evidence/wiki-parity-2026-06/wp3-deposit-search.json:2-11]
-[docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json:3-10]
+| `docs/evidence` | Evidence collection subsystem — per-source excerpts, retrieval hit lists, and degraded-source tracking consumed by the synthesis pipeline |
 [docs/evidence/wiki-parity-2026-06/wp3-search-sources.json:3-16]
 [docs/evidence/wiki-parity-2026-06/wp3-audit.json:1-100]
+[docs/evidence/wiki-parity-2026-06/wp3-compile-source.json:2]
+[docs/evidence/wiki-parity-2026-06/wp3-deposit-search.json:2-11]
+[docs/evidence/wiki-parity-2026-06/wp3-health.json:3-16]
 
 ## Child Modules
 
 | Module | Summary |
 | --- | --- |
-| [[code/modules/docs/evidence\|docs/evidence]] | `docs/evidence` is an evidence archive module rather than a code-bearing module; the supplied view has no direct files and is represented by the child archive `docs/evidence/wiki-parity-2026-06`. That child module stores JSON evidence for the June 2026 wiki-parity workstream, covering compile, deposit, search, health, audit, and QA scenarios, with indexed objects ranging from small compile-source records to larger ask/search captures. |
+| [[code/modules/docs/evidence\|docs/evidence]] | ## docs/evidence |
 

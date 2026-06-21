@@ -44,37 +44,100 @@ Parent: [[code/modules/crates/gwiki|crates/gwiki]]
 
 ## Overview
 
-`crates/gwiki/src` is the gwiki application crate: it turns scoped wiki vaults into ingestible, searchable, auditable knowledge bases. The core ingest boundary writes immutable raw markdown/assets and returns an `IngestResult` with the registered `SourceRecord`, raw path, and optional asset path, while child ingest modules handle files, URLs, PDFs, audio, video, images, sessions, git, MediaWiki, and Wayback captures . Commands sit above these subsystems, resolving scoped inputs, reading vault state, invoking shared services, and rendering `CommandOutcome`s; the command layer pulls together scope, manifests, provenance, health/lint, search, and `gobby_core` AI/config/database facilities .
+## Module: `crates/gwiki/src`
 
-The main runtime flows are source ingestion, indexing/search, graph enrichment, and trust/reporting. Search centralizes BM25, graph boost, reciprocal-rank fusion, semantic search, scoped filtering, hit kinds, provenance, request/response types, and backend error handling . The graph layer defines wiki graph facts for documents, sources, links, and code edges, plus export options and graph reports, then downstream FalkorDB support loads/syncs those facts for graph search , . Health and benchmark flows read lint reports, manifests, provenance, Postgres counts, Falkor/Qdrant availability, and AI routing state to produce persisted health snapshots and degradation-aware performance reports , .
+`gwiki` is the top-level crate for a knowledge-management system that ingests heterogeneous content, indexes it in PostgreSQL and vector stores, models it as a graph, and surfaces it through a unified CLI and API. The binary entry point is `main.rs`, which parses a `Cli`/`CliCommand` struct and dispatches to one of roughly twenty sub-commands housed under `commands/`. All commands share a common `ScopeSelection` and `ScopeIdentity` abstraction that routes operations to a global, project-scoped, or topic-scoped view of the vault. The error type is the crate-wide `WikiError`, and structured command results flow through `CommandOutcome`/`CommandResult` before being serialised as JSON or rendered as plain text by `output.rs`.
 
-AI-backed collaboration is split by responsibility rather than buried in commands. `ai` owns chunked transcription and audio translation, including direct English translation with transcription-plus-segment fallback [crates/gwiki/src/ai/mod.rs:1-4]. `compile` bridges accepted research notes into wiki synthesis inputs, importing session state, synthesis APIs, citation rendering, and explainer generation , while `synthesis` defines article targets, source bundles, prompt telemetry, synthesized pages, write policies, and optional explainer reports . Runtime configuration is hub-aware: `HubPrimary` reads config through PostgreSQL when available, resolves `$secret:` values through the hub, and rejects secret references without a hub; `hub_ai_config_source` wires that into command execution by resolving Gobby home, finding a hub DSN, and constructing an `AiConfigSource` .
+The ingest subsystem (`ingest/`) accepts audio, video, images, PDFs, Office documents, HTML URLs, Wayback captures, git repositories, MediaWiki pages, local files, stdin, and AI session transcripts (Claude Code, Codex, Gemini, Grok, Droid, Qwen). Each sub-pipeline writes an immutable raw asset under `raw/` via `write_immutable`/`write_asset` helpers in `ingest/mod.rs`, registers the source in a `SourceManifest`, then calls `index_after_ingest` to upsert rows into a `WikiIndexStore`. The store is backed by either a `MemoryWikiStore` (for tests) or a `PostgresWikiStore`; vector embeddings are synced separately to Qdrant via `vector.rs`. Graph facts are maintained in FalkorDB through `falkor_graph/` and mirrored in a `MemoryWikiGraph` for offline analytics.
 
-| Public Surface | Role | Evidence |
-| --- | --- | --- |
-| `IngestResult` | Shared ingest return value for registered source, raw markdown path, and optional asset path |  |
-| `WikiGraphFacts` | In-memory fact bundle for graph export/search: documents, links, sources, code edges | [crates/gwiki/src/graph/mod.rs:52-59] |
-| `GraphExportOptions` | Marks graph exports available or degraded with source labels |  |
-| `HealthReport` | Serialized health output for stale pages/citations, uncited/uncompiled sources, links, duplicates, and report paths |  |
-| `BenchmarkReport` | Serialized benchmark output for compression, graph coverage, retrieval precision, source mix, model availability, and degradations |  |
+Search is a multi-source fusion pipeline assembled in `search/`. BM25 keyword queries are issued against PostgreSQL (`search/bm25.rs`), semantic queries are embedded and dispatched to Qdrant (`search/semantic`), and a graph-boost signal derived from link-neighbourhood scoring is layered on top (`search/graph_boost.rs`). The `ask` command extends search with an LLM synthesis stage: evidence is planned and token-budgeted in `commands/ask/evidence.rs`, a synthesis prompt is submitted via `commands/ask/synthesis.rs`, leading narration is stripped in `commands/ask/narration.rs`, and citation grounding is validated in `commands/ask/assembly.rs`. The `compile` command runs a similar flow—`compile_to_wiki` in `compile/mod.rs` assembles source chunks, invokes an optional `ExplainerGenerator`, grounds citations, and writes a target wiki page; `compile/index.rs` keeps the top-level wiki index in sync.
+
+Several cross-cutting subsystems provide quality and observability. `health.rs` detects stale pages and citations, uncited sources, and broken links. `audit/` analyses claim-level source support for codewiki pages, classifying lines as structural or prose claims and checking each for inline source spans. `benchmark.rs` measures token compression, graph coverage, and retrieval precision against a PostgreSQL backend. `librarian.rs` proposes patch diffs for pages with weak provenance or outdated codewiki content. `lint.rs` enforces wikilink hygiene and backlink reciprocity. All of these subsystems receive their configuration from `support/config.rs` and `support/env.rs`, which resolve values from a layered configuration source that includes a local `gcore.yaml` and environment variables.
+
+### CLI commands
+
+| Subcommand | Primary handler |
+|---|---|
+| `setup` | `commands/setup.rs` |
+| `index` | `commands/index.rs` |
+| `search` | `commands/search.rs` |
+| `ask` | `commands/ask/` |
+| `read` | `commands/read.rs` |
+| `compile` | `commands/compile.rs` |
+| `sources` / `remove-source` | `commands/sources.rs` |
+| `refresh` | `commands/sources.rs` |
+| `backlinks` / `link-suggest` | `commands/backlinks.rs` |
+| `graph` | `commands/graph.rs` |
+| `health` | `commands/health.rs` |
+| `lint` | `commands/lint.rs` |
+| `normalize` | `commands/normalize.rs` |
+| `collect` | `commands/collect.rs` |
+| `benchmark` | `commands/benchmark.rs` |
+| `review-report` | `commands/review_report.rs` |
+| `export` | `commands/export.rs` |
+| `sync-sessions` | `commands/session_sync.rs` |
+| `status` | `commands/status.rs` |
+| `trust` | `commands/trust.rs` |
+| `init` | `commands/init.rs` |
+
+### Key public types and traits
+
+| Symbol | File | Role |
+|---|---|---|
+| `WikiError` | `error.rs` | Crate-wide error type with typed variants |
+| `ScopeSelection` / `ScopeIdentity` | `api.rs` | Scope resolution for global / project / topic |
+| `WikiIndexStore` | `store/mod.rs` | Storage trait over memory and Postgres backends |
+| `SourceManifest` / `SourceRecord` | `sources/manifest.rs` | Source registry and per-entry metadata |
+| `WikiGraphFacts` | `graph/mod.rs` | In-memory document/link/source/code-edge graph |
+| `IngestResult` | `ingest/mod.rs` | Return value from all ingestion paths |
+| `BenchmarkReport` | `benchmark.rs` | Serialisable quality metrics |
+| `HealthReport` | `health.rs` | Stale citations, broken links, duplicate concepts |
+| `AuditReport` / `AuditOptions` | `audit/mod.rs` | Claim-level source audit result |
+| `TranscriptionClient` | `transcribe.rs` | Trait for audio transcription and translation |
+| `VisionClient` | `vision.rs` | Trait for image/frame description |
+
+### Selected environment variables
+
+| Variable | Consumer | Purpose |
+|---|---|---|
+| `GWIKI_STALE_CITATION_YEARS` | `health.rs` | Threshold for stale citation warnings |
+| `GOBBY_HOME` | `support/env.rs` | Root directory for hub config and vault discovery |
+| `GWIKI_MAX_INBOX_ITEM_BYTES` | `support/env.rs` | Size cap for collect inbox items |
+| `GWIKI_SHARED_CODE_GRAPH_*` | `support/config.rs` | Limits on code-edge queries |
+
+### Storage and service dependencies
+
+| Service | Integration point |
+|---|---|
+| PostgreSQL | `store/postgres.rs`, `search/bm25.rs`, `benchmark.rs` |
+| Qdrant | `vector.rs`, `search/semantic` |
+| FalkorDB | `falkor_graph/` |
+| ffmpeg | `media.rs`, `ingest/audio.rs`, `ingest/video/` |
+| pdfium | `ingest/pdf/render.rs` |
+| gobby daemon (AI) | `daemon.rs`, `support/env.rs` |
+[crates/gwiki/src/falkor_graph/wiki_facts.rs:13-98]
+[crates/gwiki/src/commands/ask/assembly.rs:6-39]
+[crates/gwiki/src/commands/ask/citation.rs:25-46]
+[crates/gwiki/src/commands/ask/evidence.rs:14-16]
+[crates/gwiki/src/commands/ask/narration.rs:7-58]
 
 ## Child Modules
 
 | Module | Summary |
 | --- | --- |
-| [[code/modules/crates/gwiki/src/ai\|crates/gwiki/src/ai]] | `crates/gwiki/src/ai` is the gwiki AI integration layer. Its module root exposes three internal submodules, `chunk`, `clients`, and `translate` [crates/gwiki/src/ai/mod.rs:1-4]. `chunk` owns audio chunk sizing and splitting abstractions, including upload/window constants, `AudioChunk`, `ChunkedTranscription`, `ChunkTranscriptionMode`, and the `AudioChunker` trait backed by `MediaAudioChunker` . `translate` owns language-normalization flow for audio translation: it prefers direct English translation, falls back to transcription plus segment translation on failure, and marks degraded output… |
-| [[code/modules/crates/gwiki/src/audit\|crates/gwiki/src/audit]] | The `crates/gwiki/src/audit` module audits wiki pages for unsupported claims and renders the resulting report. Its claim pass takes a `WikiPage`, `ProvenanceGraph`, shared `AuditSourceContext`, and `AuditOptions`, derives candidate claim lines, computes provenance-supported lines, checks CodeWiki frontmatter support, and filters out claims that already have provenance or inline citations before emitting `UnsupportedClaim` records with path, line, heading, reason, and source context . |
-| [[code/modules/crates/gwiki/src/commands\|crates/gwiki/src/commands]] | The `crates/gwiki/src/commands` module is the CLI command layer for gwiki: it resolves scoped wiki inputs, reads vault state, calls shared subsystems, and renders `CommandOutcome`s. Command files cover reading pages, source management, indexing/search, graph/reporting, citation quality, refresh, setup/status, and AI-backed flows such as ask and librarian. The layer imports core concerns from `crate::support::scope`, manifests, provenance, health/lint, search, and `gobby_core` AI/config/database facilities, then adapts them into command-specific outputs (for example, citation quality pulls… |
-| [[code/modules/crates/gwiki/src/compile\|crates/gwiki/src/compile]] | `crates/gwiki/src/compile` prepares research-session handoffs into wiki-ready synthesis inputs. Its core data surface is defined in `mod.rs`: `CompileRequest` captures topic, outline, optional target page, and write intent, while `CompileBundle`, `CompileOutcome`, and `WikiCompileOutcome` carry accepted sources, citations, conflict/gap notes, generated prompts, write results, and optional explainer output (crates/gwiki/src/compile/mod.rs:24-95). The module imports session state, synthesis APIs, citation rendering, and explainer generation, so it sits between accepted research notes and the… |
-| [[code/modules/crates/gwiki/src/falkor_graph\|crates/gwiki/src/falkor_graph]] | `crates/gwiki/src/falkor_graph` builds and consumes FalkorDB-backed graph data for wiki search. It loads wiki documents, links, and sources from PostgreSQL into `WikiGraphFacts`, resolving internal link targets while preserving unresolved wiki targets and skipping external URLs (`wiki_facts.rs:12-63`, `tests.rs:24-73`). It also loads graph boost data from FalkorDB, querying scoped or global `WikiDoc` nodes and links with caps that report partial degradation when limits are exceeded (`boost.rs:10-60`). |
-| [[code/modules/crates/gwiki/src/graph\|crates/gwiki/src/graph]] | `crates/gwiki/src/graph` defines the wiki graph model and the serializable products built from it. The root module exposes graph vocabulary constants, document/source/link/code-edge fact types, `WikiGraphFacts`, export options, and `GraphExport`; it also publishes `analytics` and `context`, keeps `export` private, and re-exports `render_graph_report` for outside callers (`crates/gwiki/src/graph/mod.rs:7-19`, `crates/gwiki/src/graph/mod.rs:21-92`). |
-| [[code/modules/crates/gwiki/src/ingest\|crates/gwiki/src/ingest]] | The `ingest` module is the shared boundary for turning external inputs into immutable wiki sources. Its root declares the ingest submodules and central result type, `IngestResult`, which carries the registered `SourceRecord`, raw markdown path, and optional asset path; it also provides common helpers for extension normalization, raw markdown writes, asset writes, suffixed asset writes, and source-path asset preservation (`crates/gwiki/src/ingest/mod.rs:1-100`). Child modules specialize that pattern for local files, URLs, documents, PDFs, audio, video, images, session archives, MediaWiki/git… |
-| [[code/modules/crates/gwiki/src/search\|crates/gwiki/src/search]] | The `crates/gwiki/src/search` module is the shared search layer for wiki content. It exposes lexical BM25, graph-boost, reciprocal-rank fusion, and semantic search submodules from one namespace (`mod.rs:1-4`), while centralizing common concepts such as `SearchScope`, `SearchSource`, hit kinds, provenance, results, requests, responses, and errors (`mod.rs:11-100`). Scopes support global, project, and topic filtering, with helper methods that produce a kind/value pair or an optional filter tuple for downstream backends (`mod.rs:11-51`). |
-| [[code/modules/crates/gwiki/src/sources\|crates/gwiki/src/sources]] | The `sources` module owns raw source tracking for a gwiki vault: it defines source metadata types, renders source entries into the generated manifest section, reads existing manifest markers back from the raw source index, and writes updates safely. Core metadata covers source kind, ingestion method, and compile status, all serialized with snake-case names and displayed as stable strings (`crates/gwiki/src/sources/types.rs:9-72`). |
-| [[code/modules/crates/gwiki/src/store\|crates/gwiki/src/store]] | The `store` module defines the gwiki indexing boundary: shared document/chunk/link/source models, ingestion bookkeeping, scoped identity, validation helpers, and interchangeable `WikiIndexStore` implementations. `types.rs` owns the core data contracts such as `WikiDocument`, `WikiChunk`, `WikiLink`, `WikiSource`, ingestion events, `StoreError`, and `WikiStoreScope`; scope wraps `crate::models::WikiScope` and exposes project/topic identity helpers for storage backends (`crates/gwiki/src/store/types.rs:1-100`). |
-| [[code/modules/crates/gwiki/src/support\|crates/gwiki/src/support]] | `crates/gwiki/src/support` is the utility layer for gwiki runtime plumbing: configuration, environment discovery, graph shaping, and text/search helpers. Config is hub-aware: `HubPrimary` implements `ConfigSource`, reads values through PostgreSQL when available, resolves `$secret:` values through the hub, and rejects secret references when no hub exists (crates/gwiki/src/support/config.rs:18-43). `hub_ai_config_source` ties this to command execution by resolving Gobby home, asking `support::env::database_url_for` for a hub DSN, optionally connecting to Postgres, and building an… |
-| [[code/modules/crates/gwiki/src/synthesis\|crates/gwiki/src/synthesis]] | `crates/gwiki/src/synthesis` owns the data and safety envelope for turning accepted knowledge handoffs into vault pages. Its types define article targets, source bundles, generation input, prompt telemetry, synthesized pages, and write outcomes; synthesized concept/topic pages can carry an `ExplainerReport`, while source pages leave it absent (`crates/gwiki/src/synthesis/types.rs:1-67`). `ArticleKind` provides the stable mapping from logical article type to vault directory and source-kind metadata (`crates/gwiki/src/synthesis/types.rs:7-30`). |
-| [[code/modules/crates/gwiki/src/video\|crates/gwiki/src/video]] | The `crates/gwiki/src/video` module models and assembles video-derived wiki content: sampled frames, frame descriptions, transcript alignment, audio references, media metadata/degradations, and the final markdown result. Its central request type, `VideoMarkdownRequest`, carries the original asset/raw paths, MIME and duration metadata, degradation records, frame samples/images/descriptions, transcript segments, and optional transcription output into markdown generation (`crates/gwiki/src/video/types.rs:55-74`). |
+| [[code/modules/crates/gwiki/src/ai\|crates/gwiki/src/ai]] | ## Module: crates/gwiki/src/ai |
+| [[code/modules/crates/gwiki/src/audit\|crates/gwiki/src/audit]] | ## Module: `crates/gwiki/src/audit` |
+| [[code/modules/crates/gwiki/src/commands\|crates/gwiki/src/commands]] | ## Module: crates/gwiki/src/commands |
+| [[code/modules/crates/gwiki/src/compile\|crates/gwiki/src/compile]] | ## Module: `crates/gwiki/src/compile` |
+| [[code/modules/crates/gwiki/src/falkor_graph\|crates/gwiki/src/falkor_graph]] | ## crates/gwiki/src/falkor_graph |
+| [[code/modules/crates/gwiki/src/graph\|crates/gwiki/src/graph]] | ## crates/gwiki/src/graph |
+| [[code/modules/crates/gwiki/src/ingest\|crates/gwiki/src/ingest]] | ## `crates/gwiki/src/ingest` |
+| [[code/modules/crates/gwiki/src/search\|crates/gwiki/src/search]] | ## crates/gwiki/src/search |
+| [[code/modules/crates/gwiki/src/sources\|crates/gwiki/src/sources]] | ## crates/gwiki/src/sources |
+| [[code/modules/crates/gwiki/src/store\|crates/gwiki/src/store]] | ## crates/gwiki/src/store |
+| [[code/modules/crates/gwiki/src/support\|crates/gwiki/src/support]] | ## crates/gwiki/src/support |
+| [[code/modules/crates/gwiki/src/synthesis\|crates/gwiki/src/synthesis]] | ## crates/gwiki/src/synthesis |
+| [[code/modules/crates/gwiki/src/video\|crates/gwiki/src/video]] | ## crates/gwiki/src/video |
 
 ## Files
 

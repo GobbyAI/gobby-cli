@@ -19,33 +19,42 @@ Parent: [[code/modules/crates/gcore/src/ai|crates/gcore/src/ai]]
 
 ## Overview
 
-The `crates/gcore/src/ai/daemon` module is the blocking HTTP adapter between `AiContext` capability bindings and a local Gobby daemon. Its operations layer sends AI work to daemon endpoints for voice transcription, vision extraction, text generation, and embeddings, importing request builders, response parsers, transport helpers, and daemon-specific result/option types from sibling files (`operations.rs:1-13`). The request layer validates supported audio capabilities, builds multipart file uploads, adds optional text fields, and constructs text request JSON with provider/model/project/profile/candidate metadata (`request.rs:1-100`).
+## crates/gcore/src/ai/daemon
 
-Runtime flow starts from functions such as `transcribe_via_daemon`, which reads the requested capability from `DaemonTranscriptionOptions`, resolves the capability binding from `AiContext`, creates a reqwest client, reads the local CLI token, builds the daemon URL, applies binding defaults such as language/model/provider, acquires the AI limiter, and executes the call through the shared retry/backoff path (`operations.rs:15-60`). Transport centralizes daemon URL construction, local token loading from `.gobby/local_cli_token`, and injection of the `X-Gobby-Local-Token` header (`transport.rs:1-47`).
+This module implements a local-daemon AI backend for `gcore`, routing transcription, vision, text-generation, and embedding operations to a long-running daemon process on the same machine. It is one concrete routing strategy under `crates/gcore/src/ai`, selected when a capability binding carries `AiRouting::Daemon` (tests.rs:75–82). Every operation follows the same skeleton: acquire a concurrency permit from `AiContext::limiter`, build an HTTP request using helpers in `request.rs`, authenticate with a file-system token via `transport.rs`, post to the daemon over localhost, and parse the JSON response through `response.rs`. Retries with exponential back-off are delegated to `super::super::retry_with_backoff` (operations.rs:43).
 
-The module collaborates outward with `crate::ai_context` for bindings, concurrency limits, and project IDs; `crate::config` for capabilities, routing, tuning, and feature candidates; `crate::ai_types` for shared result/error types; `crate::daemon_url` and `crate::gobby_home` for local daemon discovery; and `reqwest` for blocking HTTP and multipart transport (`operations.rs:1-13`, `request.rs:1-7`, `transport.rs:1-47`). Its tests stand up local JSON-response servers, synthesize daemon bootstrap/token files, inspect request JSON/headers/multipart fields, and build `AiContext` values routed to `AiRouting::Daemon` (`tests.rs:1-100`).
+The transport layer (`transport.rs`) resolves the daemon's base URL from `crate::daemon_url::daemon_url()` and authenticates every request by reading a plain-text token from `~/.gobby/local_cli_token` (transport.rs:22–37), attaching it as the `X-Gobby-Local-Token` header (transport.rs:6, 44–46). If the token file is absent or empty, `read_local_cli_token` returns `AiError::not_configured`. The request layer (`request.rs`) guards audio operations through `audio_capability`, which rejects any capability other than `AudioTranscribe` or `AudioTranslate` with `AiError::capability_unavailable` (request.rs:11–18). Multipart audio payloads are constructed via `multipart_form_with_file` and augmented with optional provider, model, language, and prompt fields using `add_optional_text` (request.rs:21–52). JSON text and embedding bodies are assembled by `text_request_body` and `embeddings_request_body`, which insert optional keys such as provider, model, project ID, max tokens, profile, candidates, and reasoning effort (request.rs:55–100).
 
-| Fact | Value | Source |
-| --- | --- | --- |
-| Voice endpoint | `/api/voice/transcribe` | `operations.rs:10-13` |
-| Vision endpoint | `/api/llm/vision/extract` | `operations.rs:10-13` |
-| Text generation endpoint | `/api/llm/generate` | `operations.rs:10-13` |
-| Embeddings endpoint | `/api/embeddings` | `operations.rs:10-13` |
-| Local token file | `.gobby/local_cli_token` | `transport.rs:5-32`, `tests.rs:42-53` |
-| Local token header | `X-Gobby-Local-Token` | `transport.rs:5-6`, `transport.rs:43-47` |
-| Bootstrap keys used in tests | `daemon_port`, `bind_host` | `tests.rs:42-50` |
+The test infrastructure in `tests.rs` spins up an in-process JSON HTTP server via `crate::test_http::spawn_json_response`, writes synthetic daemon bootstrap and token files under a `tempfile::TempDir` guarded by `EnvGuard` (which patches `HOME` and restores it on drop), and assembles a fully-wired `AiContext` through `test_context`/`binding` helpers (tests.rs:15–85). Sub-modules `embeddings`, `environment`, `multipart`, and `text` host the actual test cases. The module imports `crate::config::{AiRouting, AiTuning, CapabilityBinding, TEST_ENV_LOCK}`, `crate::ai_context::{AiBindings, AiContext, AiLimiter}`, and `crate::ai_types::AiError` as its primary cross-crate dependencies.
 
-| Symbol | Kind | Role |
-| --- | --- | --- |
-| `DaemonTranscriptionOptions` | class | Options for daemon audio transcription/translation calls |
-| `DaemonEmbeddingResult` | class | Daemon embedding result type |
-| `transcribe_via_daemon` | function | Sends audio work to the daemon |
-| `multipart_form_with_file` | function | Builds multipart upload forms |
-| `text_request_body` | function | Builds text-generation JSON bodies |
-| `read_local_cli_token` | function | Loads the local daemon auth token |
-| `with_local_token` | function | Adds daemon auth header to requests |
-| `spawn_server` | test helper | Starts a local JSON test server |
-| `write_daemon_files` | test helper | Writes daemon bootstrap/token fixtures |
+### Public Operation Functions
+
+| Function | Daemon Endpoint | Notes |
+|---|---|---|
+| `transcribe_via_daemon` | `/api/voice/transcribe` | Multipart form; `AudioTranscribe` or `AudioTranslate` only |
+| `describe_image_via_daemon` | `/api/llm/vision/extract` | Multipart form with image bytes |
+| `generate_via_daemon` | `/api/llm/generate` | Default token limit and profile |
+| `generate_via_daemon_with_max_tokens` | `/api/llm/generate` | Caller-supplied `max_tokens` |
+| `generate_via_daemon_with_candidates` | `/api/llm/generate` | Accepts `&[FeatureCandidate]` slice |
+| `generate_text_via_daemon` | `/api/llm/generate` | Simplified text-only variant |
+| `embed_via_daemon` | `/api/embeddings` | Returns `DaemonEmbeddingResult` |
+
+### Key Types
+
+| Type | File | Role |
+|---|---|---|
+| `DaemonTranscriptionOptions` | `types.rs` | Capability, language, target\_lang, prompt for audio ops |
+| `DaemonEmbeddingResult` | `types.rs` | Parsed embeddings response |
+| `TextRequestOptions` | `request.rs` | Provider, model, project\_id, max\_tokens, profile, candidates, reasoning\_effort |
+
+### Transport Constants and Config Files
+
+| Artifact | Value / Path | Purpose |
+|---|---|---|
+| `LOCAL_TOKEN_HEADER` | `X-Gobby-Local-Token` | Auth header on every request (transport.rs:6) |
+| `LOCAL_CLI_TOKEN_FILENAME` | `local_cli_token` | Token file read from `~/.gobby/` (transport.rs:5) |
+| Bootstrap file | `~/.gobby/bootstrap.yaml` | Contains `daemon_port` and `bind_host` (tests.rs:51–55) |
+| `TEXT_GENERATE_DEFAULT_PROFILE` | `feature_low` | Default profile for text generation (request.rs:8) |
 [crates/gcore/src/ai/daemon/operations.rs:20-72]
 [crates/gcore/src/ai/daemon/request.rs:11-19]
 [crates/gcore/src/ai/daemon/response.rs:7-9]
@@ -56,7 +65,7 @@ The module collaborates outward with `crate::ai_context` for bindings, concurren
 
 | File | Summary |
 | --- | --- |
-| [[code/files/crates/gcore/src/ai/daemon/operations.rs\|crates/gcore/src/ai/daemon/operations.rs]] | `crates/gcore/src/ai/daemon/operations.rs` exposes 5 indexed API symbols. |
+| [[code/files/crates/gcore/src/ai/daemon/operations.rs\|crates/gcore/src/ai/daemon/operations.rs]] | `crates/gcore/src/ai/daemon/operations.rs` exposes 7 indexed API symbols. |
 | [[code/files/crates/gcore/src/ai/daemon/request.rs\|crates/gcore/src/ai/daemon/request.rs]] | `crates/gcore/src/ai/daemon/request.rs` exposes 8 indexed API symbols. |
 | [[code/files/crates/gcore/src/ai/daemon/response.rs\|crates/gcore/src/ai/daemon/response.rs]] | `crates/gcore/src/ai/daemon/response.rs` exposes 3 indexed API symbols. |
 | [[code/files/crates/gcore/src/ai/daemon/tests.rs\|crates/gcore/src/ai/daemon/tests.rs]] | `crates/gcore/src/ai/daemon/tests.rs` exposes 11 indexed API symbols. |

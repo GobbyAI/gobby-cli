@@ -18,27 +18,52 @@ Parent: [[code/modules/crates/gcode/src/graph/code_graph|crates/gcode/src/graph/
 
 ## Overview
 
-`crates/gcode/src/graph/code_graph/read` is the read-side query layer for the code graph. It builds Falkor/Cypher-style graph queries for project overview payloads, file views, symbol neighborhoods, callers/usages, imports, callees, symbol paths, and blast-radius analysis. The module is split between query-string builders and execution helpers: `relationship_queries.rs` and `payload_queries.rs` construct parameterized queries with `typed_query`, while `relationships.rs` exposes higher-level functions that accept `Context`, run through `with_optional_core_graph`, call `GraphClient::query`, and convert rows into counts or model results (`relationships.rs:3-18`, `relationships.rs:35-67`).
+## crates/gcode/src/graph/code_graph/read
 
-The key flow is “public read API → query builder → graph client → row conversion.” For example, `count_callers` and `count_usages` build project-scoped queries from `ctx.project_id`, execute them only when the core graph is available, and otherwise return `0` (`relationships.rs:35-67`). Query builders clamp offsets/limits before embedding pagination and return `(String, HashMap<String, String>)` parameter bundles (`relationship_queries.rs:8-58`). Payload graph queries similarly select project files, imports, and definitions, adding relationship metadata where available (`payload_queries.rs:9-68`).
+This module is the read-side of the code graph subsystem, responsible for translating high-level requests about code structure into parameterized Cypher queries, executing those queries against the FalkorDB graph database, and converting raw rows into typed domain models such as `GraphResult` and `GraphPathStep`. It is organised as a strict three-layer stack: `support.rs` supplies shared string constants and row-mapping utilities; `payload_queries.rs` and `relationship_queries.rs` build parameterized Cypher strings without touching the database; and `graph_payloads.rs` and `relationships.rs` form the public API that drives actual graph I/O through `with_optional_core_graph` from the sibling `connection` module (relationships.rs:7).
 
-This module collaborates with surrounding graph infrastructure rather than owning storage. It imports `Context`, `typed_query`, `GraphResult`, `GraphPathStep`, payload row helpers, optional graph connection handling, and `gobby_core::falkor::GraphClient` (`relationships.rs:3-18`). Shared support code centralizes graph predicates, node-type cases, confidence-label logic, link metadata projection, the maximum graph limit, and `row_to_graph_result` mapping (`support.rs:6-43`, `support.rs:44-100`). The relationship queries deliberately distinguish “callers” from the broader “usages” command surface even though both currently traverse `CALLS`, leaving room for future imports/references expansion (`relationship_queries.rs:20-36`).
+`relationships.rs` exports the primary callable surface for the rest of the crate. It handles caller/callee counting and retrieval (including batched variants), import discovery, external-call-target resolution, blast-radius computation, and shortest-symbol-path reconstruction (relationships.rs:1–100). Every function opens a graph connection through `gobby_core::falkor::GraphClient`, delegates query construction to the matching `*_query` function in `relationship_queries.rs`, and maps result rows with helpers from `support.rs`. `graph_payloads.rs` follows the same pattern for the four overview-style graph projections (`project_overview_graph`, `file_graph`, `symbol_neighbors`, `blast_radius_graph`), each assembling multiple sub-queries from `payload_queries.rs`. `support.rs` keeps shared Cypher fragments that are embedded literally into query strings via Rust's `format!` macro, so all queries share consistent predicate and return-column conventions (support.rs:1–100).
 
-| Public API / Symbol Group | Symbols |
+The module imports `crate::config::Context` for project identity, `crate::graph::typed_query` for parameter encoding helpers (e.g. `string_params`, `id_list_literal`), and `crate::models::{GraphResult, GraphPathStep, ProjectionProvenance}` for output types (relationships.rs:3–6; support.rs:4–5). It calls out to `super::super::connection::with_optional_core_graph`, which gracefully returns a default value when no graph is configured, and to `super::super::payload::{row_string_owned, row_usize, row_to_projection_metadata}` for per-field extraction from FalkorDB rows (relationships.rs:7–8; support.rs:7).
+
+### Shared Cypher constants (support.rs:8–40)
+
+| Constant | Purpose |
 | --- | --- |
-| Graph payloads | `project_overview_graph`, `file_graph`, `symbol_neighbors`, `blast_radius_graph` |
-| Payload query builders | `project_overview_files_query`, `project_overview_imports_query`, `project_overview_defines_query`, `project_overview_calls_query`, `file_symbols_query`, `file_calls_query`, `symbol_neighbors_query`, `blast_radius_center_query`, `blast_radius_file_call_query`, `blast_radius_file_import_query` |
-| Relationship reads | `count_callers`, `count_usages`, `find_callers`, `find_usages`, `find_caller_ids`, `find_usage_ids`, `find_callers_batch`, `find_caller_ids_batch`, `find_callees_batch`, `find_callee_ids_batch`, `get_imports`, `resolve_external_call_target`, `symbol_callee_edges`, `symbol_path_steps`, `reconstruct_symbol_path`, `shortest_symbol_path`, `blast_radius` |
-| Support / limits | `row_to_graph_result`, `clamp_limit`, `clamp_offset`, `dedupe_limited_blast_rows`, `count_from_rows`, `MAX_GRAPH_LIMIT` |
-| Constants / structs | `DEFAULT_SYMBOL_PATH_MAX_DEPTH`, `MAX_SYMBOL_PATH_DEPTH`, `ResolvedExternalCallTarget` |
+| `CALL_TARGET_PREDICATE` | WHERE clause accepting `CodeSymbol`, `UnresolvedCallee`, or `ExternalSymbol` as call targets |
+| `NEIGHBOR_PREDICATE` | Same labels, used in neighbor queries |
+| `TARGET_TYPE_CASE` | CASE expression mapping target labels to type strings (`external`, `unresolved`, kind) |
+| `NEIGHBOR_TYPE_CASE` | Same as above for neighbor nodes |
+| `NODE_TYPE_CASE` | Covers `CodeFile`, `CodeModule`, `CodeSymbol`, `ExternalSymbol` |
+| `CONFIDENCE_LABEL_CASE` | Folds collected provenances to `AMBIGUOUS` > `INFERRED` > `EXTRACTED` |
+| `LINK_METADATA_RETURN` | Standard SELECT clause for edge metadata (provenance, confidence, source system, file/line/symbol) |
+| `MAX_GRAPH_LIMIT` | Hard ceiling of 100 rows per query |
 
-| Shared Query Fact | Value / Role | Source |
-| --- | --- | --- |
-| Call target predicate | Allows `CodeSymbol`, `UnresolvedCallee`, or `ExternalSymbol` targets | `support.rs:6-8` |
-| Neighbor predicate | Allows symbol, unresolved, or external neighbor nodes | `support.rs:9-10` |
-| Confidence label case | Projects provenance into `AMBIGUOUS`, `INFERRED`, or `EXTRACTED` | `support.rs:20-24` |
-| Link metadata return | Returns provenance, confidence, source system/file/line/symbol, and matching method | `support.rs:32-39` |
-| Max graph limit | `100` | `support.rs:40` |
+### Public API — relationship queries (relationships.rs)
+
+| Symbol | Description |
+| --- | --- |
+| `count_callers(ctx, symbol_id)` | Count distinct callers of a symbol |
+| `count_usages(ctx, symbol_id)` | Count CALLS-edge usages of a symbol |
+| `find_callers(ctx, symbol_id, offset, limit)` | Paginated caller list with confidence label |
+| `find_usages(ctx, symbol_id, offset, limit)` | Paginated usage list |
+| `find_caller_ids / find_usage_ids` | Return only IDs for the above |
+| `find_callers_batch / find_caller_ids_batch` | Multi-symbol caller lookups |
+| `find_callees_batch / find_callee_ids_batch` | Multi-symbol callee lookups |
+| `get_imports(ctx, symbol_id)` | Retrieve import edges for a symbol |
+| `resolve_external_call_target(ctx, …)` | Resolve an unresolved callee to a `ResolvedExternalCallTarget`; returns ambiguity hints when multiple candidates match |
+| `symbol_callee_edges(ctx, symbol_id)` | Raw callee edge list for a symbol |
+| `symbol_path_steps / reconstruct_symbol_path / shortest_symbol_path` | Shortest-path traversal up to `MAX_SYMBOL_PATH_DEPTH` (16) hops, default 8 |
+| `blast_radius(ctx, symbol_id, …)` | Compute the blast-radius subgraph for a symbol |
+
+### Public API — graph payloads (graph_payloads.rs)
+
+| Symbol | Description |
+| --- | --- |
+| `project_overview_graph` | Multi-query snapshot of files, imports, defines, and calls for a project |
+| `file_graph` | File-scoped symbols and call edges |
+| `symbol_neighbors` | Immediate call/import neighbours of a symbol |
+| `blast_radius_graph` | Subgraph centred on a symbol showing its downstream impact |
 [crates/gcode/src/graph/code_graph/read/payload_queries.rs:10-29]
 [crates/gcode/src/graph/code_graph/read/relationship_queries.rs:9-21]
 [crates/gcode/src/graph/code_graph/read/graph_payloads.rs:19-98]

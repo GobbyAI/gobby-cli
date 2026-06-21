@@ -23,24 +23,57 @@ Parent: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-The `crates/gcode/src/search` module is the search facade for gcode: it groups pg_search BM25 full-text search, graph-based ranking support, and Reciprocal Rank Fusion under `fts`, `graph_boost`, and `rrf` submodules (`crates/gcode/src/search/mod.rs:1-11`). The FTS layer keeps the legacy module name while executing PostgreSQL `pg_search` BM25 keyword search against Gobby’s PostgreSQL hub (`crates/gcode/src/search/fts.rs:1-4`). Its child modules cover symbols, content, counts, graph-symbol resolution, path/language filtering, snippets, and shared query sanitation via `gobby_core::search::sanitize_pg_search_query` (`crates/gcode/src/search/fts/common.rs:9`).
+## Module: crates/gcode/src/search
 
-The main flow is hybrid search composition: callers can combine lexical FTS, semantic vectors, and graph boost, then merge ranked sources with RRF; the module is designed to degrade when semantic or graph services are unavailable (`crates/gcode/src/search/mod.rs:3-6`). Graph boosting resolves the query to a visible symbol through `fts::search_symbols_exact_first_visible`, scopes graph access through `visibility::context_for_source_project`, and calls `code_graph::find_caller_ids` / `find_usage_ids` to produce related symbol IDs for ranking (`crates/gcode/src/search/graph_boost.rs:24-39`). Graph expansion similarly starts from seed result IDs and returns deduplicated neighbors, ranking callees before callers for conceptual queries (`crates/gcode/src/search/graph_boost.rs:42-60`).
+This module is the top-level search subsystem for the Gobby code intelligence platform. As declared in `mod.rs:1-8`, it orchestrates three complementary retrieval strategies — full-text search (FTS) via PostgreSQL pg_search BM25, semantic vector search, and a FalkorDB call-graph boost — fusing their ranked outputs with Reciprocal Rank Fusion. The design explicitly supports graceful degradation: hybrid callers fall back to lexical-only results when graph or vector infrastructure is unavailable at query time.
 
-Collaboration points are explicit: `graph_boost` imports `crate::config::Context`, `crate::graph::code_graph`, `crate::search::fts`, and `crate::visibility` (`crates/gcode/src/search/graph_boost.rs:8-12`), while `rrf::merge` delegates the actual fusion implementation to `gobby_core::search::rrf_merge` and adapts its result shape (`crates/gcode/src/search/rrf.rs:12-16`). When FalkorDB or a PostgreSQL connection is absent, graph helpers return empty lists so upstream hybrid callers can still return lexical results (`crates/gcode/src/search/graph_boost.rs:16-30`).
+The `fts` submodule (`fts.rs:1-32`) is itself a facade that re-exports from six internal child modules (`common`, `content`, `counts`, `graph`, `symbols`, `tests`). Its public surface covers symbol lookup by name, exact-first and BM25 ordering, content search with snippet generation, count queries, and graph-symbol resolution. The `graph_boost` submodule (`graph_boost.rs:1-100`) consults FalkorDB to expand a query into a set of related symbol IDs: `graph_boost` resolves the query string to a concrete symbol via `fts::search_symbols_exact_first_visible`, then fetches up to ten callers and ten usages from `code_graph::find_caller_ids` / `find_usage_ids` (`graph_boost.rs:35-45`). The companion `graph_expand` function takes seed IDs from prior FTS/semantic results and expands their call neighbourhood, with callees ranked ahead of callers because they surface implementation details. Both helpers return an empty list — never an error — when FalkorDB is absent (`graph_boost.rs:22-27`).
 
-| Public surface | Purpose | Anchor |
-| --- | --- | --- |
-| `fts` module | Re-exports BM25 symbol/content search, counts, graph-symbol resolution, path helpers, and visible-search outcomes | `crates/gcode/src/search/fts.rs:12-22` |
-| `graph_boost` | Finds graph-related symbol IDs for boosting and expands neighborhoods from seed IDs | `crates/gcode/src/search/graph_boost.rs:14-60` |
-| `rrf::MergedResult` | Tuple shape for fused results: symbol id, score, source names | `crates/gcode/src/search/rrf.rs:7-8` |
-| `rrf::merge` | Merges ranked source lists using Reciprocal Rank Fusion | `crates/gcode/src/search/rrf.rs:10-16` |
+The `rrf` submodule (`rrf.rs:1-20`) provides the final merge step. It wraps `gobby_core::search::rrf_merge`, mapping each result to the `MergedResult` triple `(symbol_id, combined_score, source_names)`. Score is computed as `1.0 / (K + rank)` with K = 60, sources are sorted deterministically, and a symbol appearing in multiple lists accumulates contributions from each (`rrf.rs:43-49`).
+
+### Public API — graph_boost
+
+| Symbol | Kind | Description |
+|---|---|---|
+| `graph_boost` | `fn(ctx, conn, query) -> Vec<String>` | Callers + usages of the resolved query symbol; empty when FalkorDB absent |
+| `graph_expand` | `fn(ctx, conn, seed_ids) -> Vec<String>` | Callees then callers for a set of seed IDs, deduplicated |
+| `graph_expand_grouped` | `fn(…) -> …` | Expands per project scope and deduplicates across scopes |
+
+### Public API — rrf
+
+| Symbol | Kind | Description |
+|---|---|---|
+| `MergedResult` | `type` | `(String, f64, Vec<String>)` — id, RRF score, contributing source names |
+| `merge` | `fn(Vec<(&str, Vec<String>)>) -> Vec<MergedResult>` | Fuses ranked lists; delegates to `gobby_core::search::rrf_merge` (`rrf.rs:15-20`) |
+
+### Public API — fts (re-exports)
+
+| Symbol | Origin child | Purpose |
+|---|---|---|
+| `search_symbols_fts` / `_visible` | `symbols` | BM25 symbol search, optional project/file filters |
+| `search_symbols_by_name` / `_visible` | `symbols` | Name-based symbol lookup |
+| `search_symbols_exact_first` / `_visible` | `symbols` | Exact match prioritised over BM25 |
+| `search_text` / `_visible` | `symbols` | Full-text search over symbol text |
+| `search_content` / `_visible` | `content` | BM25 content search with snippet generation |
+| `count_content` / `_visible`, `count_text` / `_visible` | `counts` | Result-count queries for pagination |
+| `resolve_graph_symbol`, `resolve_graph_symbol_by_id` | `graph` | Resolve a symbol row to a `ResolvedGraphSymbol` |
+| `compile_patterns`, `expand_paths`, `sanitize_pg_search_query` | `common` | Query/path pre-processing utilities |
+| `ResolvedGraphSymbol`, `VisibleSearchOutcome` | `common` / `symbols` | Result types |
+
+### External dependencies and collaboration
+
+`graph_boost` imports `crate::config::Context` for FalkorDB configuration, `crate::graph::code_graph` for graph traversal, `crate::search::fts` for the initial symbol resolution, and `crate::visibility` to scope the graph context to the source project (`graph_boost.rs:9-12`). `rrf` delegates entirely to `gobby_core::search::rrf_merge` (`rrf.rs:16`), keeping ranking logic in the shared core crate. Callers outside this module — hybrid search orchestrators — are expected to drive the three-phase pattern: run FTS, optionally run graph expansion, then call `rrf::merge` with the combined source lists.
+[crates/gcode/src/search/fts/common.rs:16]
+[crates/gcode/src/search/fts/content.rs:13-21]
+[crates/gcode/src/search/fts/counts.rs:10-66]
+[crates/gcode/src/search/fts/graph.rs:16-50]
+[crates/gcode/src/search/fts/symbols.rs:15-18]
 
 ## Child Modules
 
 | Module | Summary |
 | --- | --- |
-| [[code/modules/crates/gcode/src/search/fts\|crates/gcode/src/search/fts]] | The `crates/gcode/src/search/fts` module implements pg_search-backed full-text search for symbols and content, plus count helpers, path/language filters, graph-symbol resolution, and shared SQL parameter plumbing. `common.rs` centralizes query sanitation through `gobby_core::search::sanitize_pg_search_query` so gcode and gwiki escape BM25 DSL consistently, and wraps pg_search row scoring via trusted local SQL aliases (`TrustedRowId`, `bm25_score_expr`) (crates/gcode/src/search/fts/common.rs:9). |
+| [[code/modules/crates/gcode/src/search/fts\|crates/gcode/src/search/fts]] | ## Module: crates/gcode/src/search/fts |
 
 ## Files
 

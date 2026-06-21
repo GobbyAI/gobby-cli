@@ -37,32 +37,45 @@ Parent: [[code/modules/crates/gcode/src/index|crates/gcode/src/index]]
 
 ## Overview
 
-`import_resolution` builds and applies per-language import knowledge for indexing. Its context layer owns lookup state for local modules, external packages, language-specific symbol maps, and candidate file sets; `ImportResolutionContext` includes Python module names, JS package metadata, Go package-directory file maps, Rust crate metadata, and Java class indexes (`crates/gcode/src/index/import_resolution/context.rs:1-100`). The parser layer is the dispatch point: it accepts language, import text, relative path, shared `ImportResolutionContext`, and mutable `ExtractedImports`, then routes to Python, JS/TS, Go, Rust, Java, C#, PHP, Kotlin, Scala, Lua, Objective-C, shell, and rest-language handlers (`crates/gcode/src/index/import_resolution/parser/mod.rs:1-100`).
+## Module: crates/gcode/src/index/import_resolution
 
-The key flow is context construction followed by import parsing and later call resolution. Helpers normalize raw syntax, including JavaScript module specifier and import-clause extraction, quoted-string parsing, whitespace collapsing, and template interpolation skipping (`crates/gcode/src/index/import_resolution/helpers.rs:1-100`). Predicates classify imports as local or external using the populated context, including JS builtins/packages, Go self-module paths, Python module indexes, and Rust external roots plus standard crates (`crates/gcode/src/index/import_resolution/predicates.rs:1-100`). Rust local resolution is deliberately candidate-based: it maps module paths to possible `foo.rs`/`foo/mod.rs` or crate-root `lib.rs`/`main.rs` files and returns `RustLocalTarget` records without reading files, leaving final symbol matching to a later pass (`crates/gcode/src/index/import_resolution/rust_local.rs:1-100`).
+This module is the cross-language import resolution engine for the `gcode` indexer. Its central responsibility is converting raw import statements found in source files into candidate file paths that the indexer can use to build call graphs and symbol references. It covers more than a dozen language ecosystems — Python, JavaScript/TypeScript, Go, Rust, Java, Kotlin, Scala, C#, PHP, Ruby, Elixir, Lua, Objective-C, Swift, Dart, and shell — and must distinguish local (project-internal) imports from external package dependencies for each of them. The two entry points `build_import_resolution_context` and `build_import_resolution_context_with_overrides` (component IDs `2e0502cf`, `25e5e0eb`) materialise an `ImportResolutionContext` by scanning manifest files (`Cargo.toml`, `package.json`, `go.mod`, `mix.exs`, etc.) and pre-building per-ecosystem lookup indexes; all subsequent resolution queries read from that context without additional I/O.
 
-Collaboration is centered on `context.rs`: it imports JS candidate lookup, Ruby require-root logic, and Rust local target functions, declares Apple/.NET/Elixir/JVM/scripting/package metadata submodules, and re-exports binding and metadata builders for the rest of the indexer (`crates/gcode/src/index/import_resolution/context.rs:1-34`). The child `context` module separates external bindings from local cross-file call bindings, while the child `parser` module writes parsed results into `ExtractedImports`; together they form the bridge between raw import statements and downstream indexed call/link resolution.
+The module is split across three layers. The **parser** child module (`parser/mod.rs` and its per-language files `go_rust.rs`, `java_csharp.rs`, `python_js.rs`, `php_kotlin.rs`, `scala.rs`, `lua.rs`, `objc.rs`, `shell.rs`, `rest.rs`) provides `parse_import_statement` plus helpers such as `parse_go_import_spec`, `split_rust_use_group`, `split_scala_import_group`, and `split_php_use_group` that tokenise raw source lines into `ExtractedImports` / `ImportBindings` structures. The **context** child module (`context.rs` and sub-files `apple.rs`, `dotnet.rs`, `elixir.rs`, `jvm.rs`, `scripting.rs`) builds the ecosystem indexes (`JavaClassIndex`, `CsharpIndex`, `ObjcIndex`) and populates the many map/set fields on `ImportResolutionContext` such as `go_package_files`, `python_modules`, `rust_external_crates`, and the Swift/Ruby/Elixir/PHP/Lua file maps. Language-specific local resolution logic lives in `js_local.rs` (`js_candidate_files`, `js_import_target_keys`) and `rust_local.rs` (`rust_candidate_files`, `rust_import_target`, `rust_qualified_call_target`). The **predicates** layer (`predicates.rs`) classifies a resolved import path as local or external (e.g. `is_external_js_module`, `is_external_go_module`, `is_external_rust_root`) and provides `rust_external_roots`, `java_declared_types`, `csharp_declared_types`, and `php_declared_symbols` for symbol-level filtering. The **helpers** layer (`helpers.rs`) supplies string utilities (`collapse_whitespace`, `extract_js_module_specifier`, `extract_quoted_string`, `split_top_level`, `split_error_context`) that the parsers and context builders share.
 
-| Public API Area | Representative Symbols |
-| --- | --- |
-| Context model | `ImportResolutionContext`, `ExtractedImports`, `ImportBindings`, `ExternalImportBinding`, `LocalCallBinding` |
-| Context builders | `build_import_resolution_context`, `build_import_resolution_context_with_overrides` |
-| Candidate lookup | `js_candidate_files`, `rust_import_candidate`, `go_candidate_files`, `java_candidate_files`, `php_candidate_files` |
-| Parsers | `parse_import_statement`, `parse_js_import_statement`, `parse_python_import_statement`, `parse_rust_import_statement` |
-| Resolution | `resolve_external_callee`, `resolve_local_callee`, `resolve_local_member_callee`, `resolve_rust_local_qualified_callee` |
-| Predicates/helpers | `is_external_js_module`, `is_external_go_module`, `rust_external_roots`, `extract_js_module_specifier`, `split_top_level` |
-[crates/gcode/src/index/import_resolution/context/package_metadata.rs:4-38]
+`ImportResolutionContext` exposes per-language query methods that the wider indexer calls after construction to obtain candidate file lists or symbol resolution targets:
+
+| Method | Language | Returns |
+|---|---|---|
+| `js_candidate_files` | JS/TS | candidate `.js`/`.ts` paths for a specifier |
+| `rust_import_candidate` | Rust | `RustLocalTarget` for a `use` path |
+| `rust_qualified_candidate` | Rust | `RustLocalTarget` for a qualified call |
+| `go_candidate_files` | Go | files in the imported package directory |
+| `java_candidate_files` | Java | files declaring the imported class |
+| `csharp_type_files` | C# | files declaring the imported type |
+| `kotlin_package_files` | Kotlin | files in the Kotlin package |
+| `scala_package_files` | Scala | files in the Scala package |
+| `lua_module_files` | Lua | files for a `require` module name |
+| `objc_import_candidate_files` | Objective-C | files for a `#import` path |
+| `objc_declared_types` / `objc_declared_functions` | Objective-C | symbol lookups |
+| `php_candidate_files` | PHP | files for a `use`/`require` symbol |
+| `swift_module_candidate_files` | Swift | files in the Swift module |
+| `ruby_require_root` / `ruby_constant_files` | Ruby | require-root and constant files |
+| `elixir_external_root_module` / `elixir_module_files` | Elixir | module file candidates |
+
+Public binding types surfaced from this module and consumed by call-graph construction elsewhere in `crates/gcode` include `ExternalImportBinding`, `ExternalRootBinding`, `ExternalCallTarget`, `ImportBindings`, `LocalCallBinding`, `ExtractedImports`, and `LocalCallResolution`. `RustLocalTarget` (component `f2450d7f`) carries a `source_root`, `module`, and `name` triple that the Rust-specific post-write narrowing pass uses to match indexed symbols against resolved imports (`rust_local.rs:9-14`). Predicate helpers consumed by upstream index construction read the context directly, e.g. `is_external_js_module` checks `js_external_packages` and the `JS_BUILTIN_MODULES` set (`predicates.rs:23-52`), and `rust_external_roots` merges `STANDARD_RUST_CRATES` (`["std","core","alloc","proc_macro","test"]`) with the manifest-loaded crate set (`predicates.rs:67-76`). The `tests.rs` file exercises the module's resolution logic end-to-end without exporting additional API symbols.
+[crates/gcode/src/index/import_resolution/parser/java_csharp.rs:9-91]
 [crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:9-16]
 [crates/gcode/src/index/import_resolution/context/apple.rs:8-12]
-[crates/gcode/src/index/import_resolution/context/bindings.rs:6-9]
+[crates/gcode/src/index/import_resolution/context/dotnet.rs:10-17]
 [crates/gcode/src/index/import_resolution/context/elixir.rs:13-49]
 
 ## Child Modules
 
 | Module | Summary |
 | --- | --- |
-| [[code/modules/crates/gcode/src/index/import_resolution/context\|crates/gcode/src/index/import_resolution/context]] | The `context` module supplies the language-specific lookup state used by import resolution. Its core binding types separate external imports from local cross-file candidates: `ExternalImportBinding` stores module/name pairs, while `LocalCallBinding` carries candidate target files plus either named or default-export resolution, deferring final symbol UUID matching to a later post-write pass . |
-| [[code/modules/crates/gcode/src/index/import_resolution/parser\|crates/gcode/src/index/import_resolution/parser]] | The `parser` module is the language dispatcher for import resolution. It accepts a language, import text, relative file path, shared `ImportResolutionContext`, and mutable `ExtractedImports`, then routes to the appropriate language-specific parser for Python, JS/TS, Go, Rust, Java, C#, PHP, Kotlin, Scala, Lua, Objective-C, shell, and several “rest” languages (`crates/gcode/src/index/import_resolution/parser/mod.rs:1-100`). |
+| [[code/modules/crates/gcode/src/index/import_resolution/context\|crates/gcode/src/index/import_resolution/context]] | ## crates/gcode/src/index/import_resolution/context |
+| [[code/modules/crates/gcode/src/index/import_resolution/parser\|crates/gcode/src/index/import_resolution/parser]] | ## crates/gcode/src/index/import_resolution/parser |
 
 ## Files
 

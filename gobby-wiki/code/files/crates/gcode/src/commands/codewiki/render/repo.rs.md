@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/render|crates/gcode/sr
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `build_repo_doc` | function | This function compiles a repository-level overview document by filtering and mapping top-level modules and root-level files, returning a cached on-disk page verbatim from a reuse plan if the underlying source spans are unchanged, or otherwise preparing to generate a new overview. [crates/gcode/src/commands/codewiki/render/repo.rs:4-75] |
-| `repo_source_excerpts` | function | The 'repo_source_excerpts' function filters a list of files for those with empty module names, sorts them prioritizing README files followed by descending symbol count and lexicographical path, and then maps the top candidates to a limited vector of source excerpts using a leading chunks lookup map. [crates/gcode/src/commands/codewiki/render/repo.rs:80-100] |
-| `render_repo_doc` | function | The 'render_repo_doc' function constructs a Markdown-formatted repository overview document containing metadata frontmatter, a guided narrative tour, a citation-processed summary, and a reference appendix listing modules and files. [crates/gcode/src/commands/codewiki/render/repo.rs:102-174] |
+| `build_repo_doc` | function | # Summary 'build_repo_doc' generates a repository overview document by aggregating top-level file and module documentation, with source-aware provenance caching to conditionally reuse previously-generated content when source files are unchanged. [crates/gcode/src/commands/codewiki/render/repo.rs:4-83] |
+| `repo_source_excerpts` | function | This function filters repository files with empty modules, sorts them by README priority and descending symbol count, and returns up to MAX_PROMPT_SOURCE_EXCERPTS source excerpts extracted from the prioritized files. [crates/gcode/src/commands/codewiki/render/repo.rs:88-108] |
+| `render_repo_doc` | function | # Summary 'render_repo_doc' generates a markdown String for a code repository overview document with guided narrative tour chapters, source-span-annotated summary content, and audit catalogs. [crates/gcode/src/commands/codewiki/render/repo.rs:110-193] |
 

@@ -24,5 +24,5 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `split_keyword_dsn_tokens` | function | Indexed function `split_keyword_dsn_tokens` in `crates/gcore/src/libpq.rs`. [crates/gcore/src/libpq.rs:1-39] |
+| `split_keyword_dsn_tokens` | function | Splits a DSN database URL string into whitespace-delimited keyword tokens while preserving single-quoted substrings and respecting backslash escape sequences. [crates/gcore/src/libpq.rs:1-39] |
 

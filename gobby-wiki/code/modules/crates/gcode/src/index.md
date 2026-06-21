@@ -44,35 +44,103 @@ Parent: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 
-`crates/gcode/src/index` owns code indexing: discovery, language detection, parsing, semantic enrichment, import/call resolution, chunking, hashing, and persistence. The walker discovers project files with `gobby_core::indexing::WalkerSettings`, gitignore-aware `DiscoveryOptions`, `MAX_FILE_SIZE`, hidden-file traversal, and explicit hidden allowlists before classifying AST-capable versus content-only inputs (`discovery.rs:18-85`). The indexer then drives the write path: `index_file` derives a relative path, parses with optional semantic resolution, detects language, hashes content, reads metadata, and writes through `PostgresCodeFactSink` (`crates/gcode/src/index/indexer/file.rs:1-100`).
+## Module: `crates/gcode/src/index`
 
-The module’s parsing flow is language-aware. `languages.rs` defines a `LanguageSpec` registry of extensions plus tree-sitter symbol/import/call queries, with concrete specs such as Python, JavaScript, and TypeScript (`crates/gcode/src/index/languages.rs:1-100`). The parser extracts call relationships into `CallRelation` records from source, symbols, import context, and optional semantic inputs (`crates/gcode/src/index/parser/calls.rs:1-100`). Specialized call handling includes Dart textual scanning that filters imports, declarations, comments, and ignored names before `materialize_call` (`crates/gcode/src/index/parser/calls/dart_textual.rs:1-100`), and shadowing checks that prevent external calls from winning when a local binding or parameter already defines the same name (`crates/gcode/src/index/parser/calls/shadowing.rs:1-100`).
+This module is the complete code-indexing pipeline for the `gcode` crate. It is responsible for discovering source files in a project, classifying and parsing them with tree-sitter grammars, extracting structured facts (symbols, imports, call sites, and content chunks), resolving cross-file call and import relationships, and persisting all results to a database backend through a `CodeFactSink` abstraction. The module is subdivided into five collaborating areas: file walking and classification (`walker`), language detection and tree-sitter query registry (`languages`), AST and textual parsing (`parser` and its `calls` sub-hierarchy), import/call resolution (`import_resolution`, `indexer`), and database I/O plus hashing (`api`, `chunker`, `hasher`). Security filters (`security.rs`) enforce path validation, binary detection, symlink safety, and secret-extension exclusion across every discovered path.
 
-Import resolution sits between parsing and persistence. `ImportResolutionContext` precomputes Python modules, JS packages, Go package directories, Rust crates, JVM types, Apple/.NET indexes, and scripting-language indexes, wiring together language-specific local resolvers and predicates (`crates/gcode/src/index/import_resolution/context.rs:1`, `crates/gcode/src/index/import_resolution/context.rs:5`, `crates/gcode/src/index/import_resolution/context.rs:9`, `crates/gcode/src/index/import_resolution/context.rs:18`). Binding records deliberately store imported names, candidate files, external roots, members, and default-export shape while deferring final symbol IDs until the indexed-symbol pass (`crates/gcode/src/index/import_resolution/context/bindings.rs:5`, `crates/gcode/src/index/import_resolution/context/bindings.rs:21`, `crates/gcode/src/index/import_resolution/context/bindings.rs:25`).
+The central indexing flow begins in the `indexer` child module, which calls `index_file` / `index_files` to drive the pipeline per file. Each file is first validated by `validate_path` and classified by `classify_file` into a `FileClassification`; it then proceeds through `detect_language` (backed by the `LanguageSpec` registry in `languages.rs`) and `parse_file_with_semantic`. Parsing yields raw symbol, import, and call lists via `extract_symbols`, `extract_imports`, and `extract_calls`; call sites pass through per-language resolution paths including AST-driven extraction (`ast.rs`, `objc_ast.rs`), textual fallback (`dart_textual.rs`), shadowing suppression (`shadowing.rs`), and—for C/C++—an optional `ClangdResolver` that speaks the Language Server Protocol to resolve definitions to either `SemanticTargetKind::External` (a dependency path) or `SemanticTargetKind::LocalCandidate` (a project-relative file) (`semantic.rs:34–43`). Import relationships are resolved per language through `ImportResolutionContext`, which exposes language-specific candidate-file lookups for JS, Rust, Go, Java, C#, Kotlin, Scala, Lua, Obj-C, PHP, Swift, Ruby, Elixir, and Dart. Resolved facts are written via `upsert_*` functions that target a `PostgresCodeFactSink` implementing the `CodeFactSink` trait.
 
-Semantic resolution collaborates with external `clangd` for C/C++ calls. `SemanticCallRequest`, `SemanticCallTarget`, and `SemanticCallResolver` model the request/response boundary, while `SemanticTargetKind` distinguishes external dependency definitions from project-local candidates that are later narrowed by `index::indexer::local_imports` (`crates/gcode/src/index/semantic.rs:1-100`). This code imports process, thread, timeout, channel, and JSON machinery, then starts from `create_cpp_semantic_resolver`, which requires or discovers `compile_commands.json` and honors `GCODE_REQUIRE_CPP_SEMANTICS` (`crates/gcode/src/index/semantic.rs:1-100`).
+The `semantic.rs` file drives C/C++ semantic resolution by spawning a `clangd` subprocess, sending LSP `textDocument/definition` requests, and reading JSON-RPC responses on a background thread with a 30-second timeout (`CLANGD_RESPONSE_TIMEOUT`, `semantic.rs:11`). The `create_cpp_semantic_resolver` function discovers `compile_commands.json` in the project root or build directories and can be made mandatory via the `GCODE_REQUIRE_CPP_SEMANTICS` environment variable or the `require_cpp_semantics` flag (`semantic.rs:57–68`). The `languages.rs` registry defines tree-sitter `symbol_query`, `import_query`, and `call_query` strings for every supported language via `LanguageSpec` structs (`languages.rs:8–14`), and `detect_header_language` applies heuristics—sibling implementation lookup, ObjC directive scanning—to disambiguate C, C++, and Objective-C header files.
 
-| Area | Public Symbols |
-| --- | --- |
-| Persistence API | `CodeFactWriteRequest`, `CodeFactWriteSummary`, `delete_file_facts`, `upsert_symbols`, `upsert_file`, `upsert_imports`, `upsert_calls`, `upsert_content_chunks` |
-| Index orchestration | `IndexRequest`, `IndexOutcome`, `IndexDurations`, `index_files`, `index_file`, `index_overlay_files`, `project_changed_since` |
-| Discovery | `discover_files`, `discover_files_with_options`, `classify_file`, `DiscoveryOptions`, `FileClassification`, `HiddenPathAllowlist` |
-| Language/parser | `LanguageSpec`, `detect_language`, `parse_file_with_semantic`, `extract_symbols`, `extract_imports`, `extract_calls` |
-| Import resolution | `ImportResolutionContext`, `build_import_resolution_context`, `ImportBindings`, `ExtractedImports`, `ExternalCallTarget` |
-| Semantic resolution | `SemanticCallRequest`, `SemanticCallTarget`, `SemanticTargetKind`, `SemanticCallResolver`, `create_cpp_semantic_resolver` |
+---
 
-| Environment Variable | Purpose |
-| --- | --- |
-| `GCODE_REQUIRE_CPP_SEMANTICS` | Makes C/C++ semantic indexing strict when creating the clangd-backed resolver (`crates/gcode/src/index/semantic.rs:1-100`). |
+### Public API — Database Write Functions (`api.rs`)
+
+| Symbol | Kind | Description |
+|---|---|---|
+| `CodeFactWriteRequest` | struct | Bundles all parsed facts for a single file write |
+| `CodeFactWriteSummary` | struct | Per-file write result; constructed via `for_file` |
+| `upsert_file` | fn | Insert or update the file row |
+| `upsert_symbols` | fn | Bulk upsert extracted symbol records |
+| `upsert_imports` | fn | Bulk upsert import edges |
+| `upsert_calls` | fn | Bulk upsert call-site edges |
+| `upsert_content_chunks` | fn | Store text chunks for search |
+| `upsert_project_stats` | fn | Refresh aggregate project counters |
+| `delete_file_facts` | fn | Remove all facts for a file |
+| `delete_file_non_symbol_facts` | fn | Remove non-symbol facts only |
+| `delete_stale_file_symbols` | fn | Remove symbols absent from latest parse |
+| `file_facts_exist` | fn | Check whether a file is already indexed |
+| `insert_call` | fn | Insert a single resolved call edge |
+| `promote_local_import_call` | fn | Upgrade a local-import call to a resolved symbol call |
+
+---
+
+### Language Registry (`languages.rs`)
+
+| Symbol | Kind | Description |
+|---|---|---|
+| `LanguageSpec` | struct | Holds extensions + three tree-sitter query strings per language |
+| `detect_language` | fn | Map file extension to a `LanguageSpec` |
+| `detect_header_language` | fn | Disambiguate `.h` / `.hpp` as C, C++, or Obj-C |
+| `get_spec` | fn | Return spec by language name string |
+| `get_ts_language` | fn | Return tree-sitter `Language` handle by name |
+| `get_ts_language_for_path` | fn | Combine path + content signals into a grammar handle |
+| `is_data_language` | fn | True for JSON and YAML (no symbol extraction) |
+
+---
+
+### Semantic (C/C++) Resolution (`semantic.rs`)
+
+| Symbol | Kind | Description |
+|---|---|---|
+| `SemanticCallResolver` | trait | Single `resolve(&SemanticCallRequest) -> Option<SemanticCallTarget>` |
+| `SemanticCallRequest` | struct | Language, paths, source bytes, callee name, line/column |
+| `SemanticCallTarget` | struct | Resolved callee name + `SemanticTargetKind` |
+| `SemanticTargetKind::External` | variant | Definition outside project; carries dependency path |
+| `SemanticTargetKind::LocalCandidate` | variant | Definition inside project; carries project-relative path |
+| `ClangdResolver` | struct | LSP client that manages clangd subprocess lifetime |
+| `create_cpp_semantic_resolver` | fn | Factory; discovers `compile_commands.json`, respects `GCODE_REQUIRE_CPP_SEMANTICS` |
+| `discover_compile_commands_dir` | fn | Searches root and build subdirectories |
+
+---
+
+### Security & Path Filtering (`security.rs`)
+
+| Symbol | Description |
+|---|---|
+| `validate_path` | Rejects paths with traversal sequences |
+| `is_symlink_safe` | Ensures symlink target stays within project root |
+| `is_binary` | Heuristic binary-file detection |
+| `should_exclude_path` | Combines all exclusion rules |
+| `is_root_generated_dir` | Detects well-known generated directories (e.g. `node_modules`) |
+| `has_secret_extension` | Filters credential file extensions |
+| `glob_match` / `glob_inner` | Lightweight glob used for hidden-path allowlist |
+
+---
+
+### Content Utilities (`chunker.rs`, `hasher.rs`)
+
+| Symbol | File | Description |
+|---|---|---|
+| `chunk_file_content` | chunker.rs | Splits file text into overlapping search chunks |
+| `epoch_secs_str` | chunker.rs | Stable timestamp string for chunk keys |
+| `file_content_hash` | hasher.rs | SHA-based hash of raw file bytes |
+| `content_hash` | hasher.rs | Generic byte-slice hash (delegates to `gobby_core`) |
+| `symbol_content_hash` | hasher.rs | Hash scoped to a symbol's byte range |
+[crates/gcode/src/index/import_resolution/parser/php_kotlin.rs:9-16]
+[crates/gcode/src/index/import_resolution/parser/go_rust.rs:12-40]
+[crates/gcode/src/index/import_resolution/parser/java_csharp.rs:9-91]
+[crates/gcode/src/index/import_resolution/parser/lua.rs:6-44]
+[crates/gcode/src/index/import_resolution/parser/objc.rs:8-69]
 
 ## Child Modules
 
 | Module | Summary |
 | --- | --- |
-| [[code/modules/crates/gcode/src/index/import_resolution\|crates/gcode/src/index/import_resolution]] | The `import_resolution` module builds and uses language-aware indexes for resolving imports and call targets across a mixed-language codebase. Its central `ImportResolutionContext` stores precomputed facts such as Python modules, JS packages, Go package directories, Rust crates, JVM type indexes, and Apple/.NET/scripting-language indexes; the context wires together local submodules for package metadata, Python, Apple, .NET, Elixir, JVM, PHP/Lua/Ruby scripting, JS local resolution, predicates, and Rust local resolution ((crates/gcode/src/index/import_resolution/context.rs:1),… |
-| [[code/modules/crates/gcode/src/index/indexer\|crates/gcode/src/index/indexer]] | The `crates/gcode/src/index/indexer` module owns project indexing from discovery through persistence: it indexes individual files, handles content-only fallback, reconciles overlay indexes, probes freshness, resolves local imports, cleans stale projections, and writes facts through a sink abstraction. `index_file` is the core single-file flow: it derives a relative path, parses with semantic resolution, detects language, hashes content, reads metadata, then writes transactional facts through `PostgresCodeFactSink` (`crates/gcode/src/index/indexer/file.rs:1-100`). |
-| [[code/modules/crates/gcode/src/index/parser\|crates/gcode/src/index/parser]] | The `crates/gcode/src/index/parser` module focuses on extracting call relationships for the gcode indexer. Its `calls` child module owns call parsing and resolution, producing `CallRelation` records from source, symbols, import context, and optional semantic resolution inputs (`crates/gcode/src/index/parser/calls.rs:1-100`). |
-| [[code/modules/crates/gcode/src/index/walker\|crates/gcode/src/index/walker]] | The `crates/gcode/src/index/walker` module discovers and classifies project files for indexing. Its top-level flow walks a root with `gobby_core::indexing::WalkerSettings`, applying gitignore behavior from `DiscoveryOptions`, bounding file size with `MAX_FILE_SIZE`, and enabling hidden traversal before splitting files into AST candidates and content-only candidates (`discovery.rs:18-45`). It then adds hidden files that are explicitly allowlisted through `HiddenPathAllowlist::load(root).discover(root)`, deduplicating by canonical path before routing each file through `classify_file`… |
+| [[code/modules/crates/gcode/src/index/import_resolution\|crates/gcode/src/index/import_resolution]] | ## Module: crates/gcode/src/index/import_resolution |
+| [[code/modules/crates/gcode/src/index/indexer\|crates/gcode/src/index/indexer]] | ## crates/gcode/src/index/indexer |
+| [[code/modules/crates/gcode/src/index/parser\|crates/gcode/src/index/parser]] | ## Module: `crates/gcode/src/index/parser` |
+| [[code/modules/crates/gcode/src/index/walker\|crates/gcode/src/index/walker]] | ## crates/gcode/src/index/walker |
 
 ## Files
 

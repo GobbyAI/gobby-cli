@@ -15,23 +15,54 @@ Parent: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 ## Overview
 
-The `crates/gcore/src/qdrant` module owns Qdrant collection naming plus the client-facing behavior exercised by its tests. Its naming layer defines scoped collection names for project, topic, and caller-supplied custom collections, with namespace prefixes for project/topic scopes and verbatim names for custom scopes ((crates/gcore/src/qdrant/naming.rs:1)). It rejects empty names, reserved path-like names, whitespace-surrounded names, ASCII whitespace/control characters, and path/URL-like separators (`/`, `\`, `:`) before building collection names ((crates/gcore/src/qdrant/naming.rs:44)).
+## crates/gcore/src/qdrant
 
-The test coverage documents the main flows around payload opacity, degradation, search, upsert, HTTP error typing, schema validation, and collection lifecycle. Payloads and filters are treated as opaque JSON maps/values rather than schema-bound structs, preserving caller-provided fields such as `symbol_id`, `wiki`, and filter clauses ((crates/gcore/src/qdrant/tests.rs:11)). The `with_qdrant` helper degrades to `ServiceState::NotConfigured` when config or URL is missing, returns `ServiceState::Available` when configured, and propagates closure errors unchanged ((crates/gcore/src/qdrant/tests.rs:32)).
+This module is the core abstraction layer between `gcore` and a Qdrant vector-database backend. It owns two concerns: safe, validated collection-name construction (`naming.rs`) and the behavioral contract tests that exercise the full Qdrant client surface (`tests.rs`). The public API exposed here is consumed by higher-level features in `gcore` — such as symbol search and project-scoped vector stores — without those callers needing to reason about raw Qdrant HTTP semantics.
 
-Within the wider crate, this module collaborates with configuration, degradation-state reporting, JSON serialization, and HTTP test helpers. The tests import `QdrantConfig`, `ServiceState`, and HTTP harness utilities from sibling crate modules, showing that production Qdrant behavior is configured through `crate::config`, reported through `crate::degradation`, and verified through `crate::test_http` request/response helpers ((crates/gcore/src/qdrant/tests.rs:1)). Search is exercised through a CLI-style path that sends a `SearchRequest` to a configured collection with API-key support ((crates/gcore/src/qdrant/tests.rs:61)).
+### Collection naming
 
-| Public Symbol | Kind | Responsibility |
-| --- | --- | --- |
-| `CollectionScope` | enum | Selects project, topic, or custom collection naming mode ((crates/gcore/src/qdrant/naming.rs:1)) |
-| `CollectionNameError` | enum | Reports empty, reserved, invalid-character, or surrounding-whitespace collection names ((crates/gcore/src/qdrant/naming.rs:12)) |
-| `collection_name` | function | Builds validated collection names from namespace plus scope ((crates/gcore/src/qdrant/naming.rs:24)) |
-| `validate_collection_name_component` | function | Internal validator for collection-name components ((crates/gcore/src/qdrant/naming.rs:44)) |
+`naming.rs` encodes the convention that every Qdrant collection owned by `gcore` carries a namespace prefix and a scope qualifier naming.rs:1-65. `CollectionScope` controls which pattern is applied:
 
-| Configuration Field | Meaning |
-| --- | --- |
-| `QdrantConfig.url` | Enables Qdrant when present; missing URL degrades as not configured ([crates/gcore/src/qdrant/tests.rs:34-49](crates/gcore/src/qdrant/tests.rs:34)) |
-| `QdrantConfig.api_key` | Optional API key used by configured search flow ([crates/gcore/src/qdrant/tests.rs:73-83](crates/gcore/src/qdrant/tests.rs:73)) |
+| Variant | Resulting name pattern | Use case |
+|---|---|---|
+| `Project(&str)` | `{namespace}_project_{id}` | Per-project vector store |
+| `Topic(&str)` | `{namespace}_topic_{name}` | Topic-scoped shared store |
+| `Custom(&str)` | verbatim `name` | Caller-managed or legacy names |
+
+The `collection_name` function delegates to `validate_collection_name_component` before formatting any string naming.rs:26-45. Validation rejects empty strings, path-like reserved names (`.` and `..`), surrounding whitespace, and characters that would be illegal in filesystem or URL contexts (`/`, `\`, `:`, ASCII control characters) naming.rs:47-68. Failures surface as typed `CollectionNameError` variants, making error handling exhaustive at call sites.
+
+| Error variant | Condition |
+|---|---|
+| `Empty` | Zero-length component |
+| `Reserved` | Component equals `.` or `..` |
+| `InvalidCharacter` | Control chars, whitespace, `/`, `\`, `:` |
+| `SurroundingWhitespace` | Leading or trailing whitespace |
+
+### Client contract and test coverage
+
+`tests.rs` acts as an executable specification of the module's behavioral contracts. The `with_qdrant_degradation_contract` test verifies that `with_qdrant` returns `ServiceState::NotConfigured` when no config is supplied or when the config's URL is absent, and `ServiceState::Available` only for a fully-specified config tests.rs:33-57. This makes the degradation signal explicit and machine-checkable. The `sync_search_from_cli_path` test spins up a local TCP listener via `spawn_qdrant_response`, fires a real HTTP `search` call, and asserts on scored result payloads tests.rs:59-90. Complementary tests cover upsert batching (`upsert_batched_splits_points_by_batch_size`), rejection of incomplete Qdrant operations (`upsert_rejects_non_completed_qdrant_operation`), typed HTTP error mapping (`qdrant_http_failures_are_typed_errors`), server-error-only unreachability classification (`qdrant_http_status_unreachable_only_for_server_errors`), collection schema validation, lifecycle management (schema enforcement and filtered-point deletion), and point-count reads against collection info.
+
+### Key public API symbols
+
+| Symbol | Kind | File |
+|---|---|---|
+| `CollectionScope` | enum | naming.rs:1 |
+| `CollectionNameError` | enum | naming.rs:11 |
+| `collection_name` | fn | naming.rs:26 |
+| `validate_collection_name_component` | fn (private) | naming.rs:47 |
+| `UpsertRequest` | struct | (parent module, exercised in tests.rs:14) |
+| `SearchRequest` | struct | (parent module, exercised in tests.rs:21) |
+| `with_qdrant` | fn | (parent module, exercised in tests.rs:33) |
+| `search` | fn | (parent module, exercised in tests.rs:74) |
+
+### Cross-module collaboration
+
+The tests import `crate::config::QdrantConfig` for URL/API-key configuration and `crate::degradation::ServiceState` to assert on availability outcomes tests.rs:2-3. HTTP fixture infrastructure comes from `crate::test_http` (`spawn_json_response_with_status`, `RequestHandle`, `read_http_request`) tests.rs:4, allowing tests to intercept outbound Qdrant HTTP calls without a live instance. The module therefore sits between the configuration layer (`crate::config`), the degradation-state machinery (`crate::degradation`), and any feature crate that needs namespaced Qdrant collections — providing both the naming contract and the HTTP client wrapper as stable integration points.
+[crates/gcore/src/qdrant/naming.rs:3-10]
+[crates/gcore/src/qdrant/tests.rs:12-30]
+[crates/gcore/src/qdrant/naming.rs:13-22]
+[crates/gcore/src/qdrant/naming.rs:25-43]
+[crates/gcore/src/qdrant/naming.rs:45-70]
 
 ## Files
 

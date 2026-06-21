@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `write_video_markdown_atomic` | function | Indexed function `write_video_markdown_atomic` in `crates/gwiki/src/video/write.rs`. [crates/gwiki/src/video/write.rs:9-65] |
-| `temp_sibling_path` | function | Indexed function `temp_sibling_path` in `crates/gwiki/src/video/write.rs`. [crates/gwiki/src/video/write.rs:67-77] |
-| `sync_parent_dir` | function | Indexed function `sync_parent_dir` in `crates/gwiki/src/video/write.rs`. [crates/gwiki/src/video/write.rs:79-98] |
+| `write_video_markdown_atomic` | function | Atomically writes a byte slice to a file using a temporary sibling file and atomic rename operation, with implicit existing-file replacement and parent directory synchronization. [crates/gwiki/src/video/write.rs:9-65] |
+| `temp_sibling_path` | function | Generates a PathBuf for a temporary hidden sibling file by formatting the filename as '.{original_filename}.{pid}.{nanoseconds_since_epoch}.tmp'. [crates/gwiki/src/video/write.rs:67-77] |
+| `sync_parent_dir` | function | Flushes the parent directory to disk on Unix systems using 'sync_all()' to ensure metadata durability; no-op on non-Unix platforms, returning 'WikiError::Io' on I/O failure. [crates/gwiki/src/video/write.rs:79-98] |
 

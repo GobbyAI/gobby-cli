@@ -44,31 +44,55 @@ Parent: [[code/modules/crates|crates]]
 
 ## Overview
 
-`crates/gwiki` is the top-level gwiki module, combining a static CLI contract with the application crate that implements it. The contract defines gwiki’s identity as a local-first wiki CLI for capture, search, upkeep, and synthesis, along with contract version, global flags, scope selection, commands, JSON output shapes, and error codes (`crates/gwiki/contract/gwiki.contract.json:2-4`).
+## Module: `crates/gwiki`
 
-The application flow runs through command handling: commands resolve the active scope, invoke domain work, and return `CommandOutcome`. Ingestion accepts immutable raw sources from files, URLs, audio, video, images, PDFs, documents, sessions, MediaWiki, Wayback, and git, then writes raw Markdown/assets and returns an `IngestResult` containing source metadata and paths. Downstream flows index vault content, build/search graph and vector/keyword indexes, run health/audit checks, refresh stale sources, and synthesize or compile wiki pages.
+`crates/gwiki` is the top-level crate for the **gwiki** command-line tool, a multimodal personal knowledge-management system built on an Obsidian-compatible Markdown vault. The crate is split into two sub-modules: `contract`, which publishes a machine-readable JSON description of every command, flag, and output key so that daemon and shell integrations can introspect the tool without parsing help text; and `src`, which contains the full runtime — CLI parsing, command dispatch, ingest orchestration, search, AI synthesis, graph analytics, and vault maintenance. The `contract` function assembles `contract_version`, `global_flags`, `commands`, `identity_keys`, and `error_codes` into a structured payload consumed by the daemon probe layer (`probe_contract`) and integration tests such as `crate_has_no_gcode_dependency`.
 
-Collaboration points are broad: the command layer calls into ingestion, indexing, search, graph, audit, health, source manifest, and synthesis subsystems; external callers interact through the CLI contract and public command/output types. The contract child module supplies the stable daemon/CLI-facing surface, while `src` owns the operational behavior behind that surface (`crates/gwiki/contract/gwiki.contract.json:2-4`).
+The ingestion pipeline accepts a wide variety of content kinds — Markdown files, URLs, audio, video, images, PDFs, Office documents, Git repositories, AI session archives (Claude Code, Codex, Droid, Gemini, Grok, Qwen), and MediaWiki pages — each routed through a dedicated orchestrator (`ingest_path`, `ingest_audio`, `ingest_video`, `ingest_document`, `ingest_image`, `ingest_repository`, `ingest_snapshot`, `sync_session_transcript_archives`). Raw assets are written atomically via `write_raw_then_index` before being handed to `index_vault`, which upserts documents, chunks, links, and source records into either a `MemoryWikiStore` or a `PostgresWikiStore`. Optional services — Qdrant for semantic vectors (`sync_scope_vectors`, `GwikiQdrantVectorStore`) and FalkorDB for graph analytics (`WikiGraphFacts`, `FalkorGraphBoostBackend`) — are treated as degradable dependencies; missing or unreachable backends produce structured `DaemonDegradation` values rather than hard failures.
 
-| Area | Representative Symbols |
-| --- | --- |
-| CLI/contract | `contract`, `Cli`, `CliCommand`, `Command`, `CommandOutcome`, `CommandResult` |
-| Scope | `ScopeSelection`, `ScopeIdentity`, `WikiScope`, `ResolvedScope`, `SearchScope` |
-| Ingestion/source state | `IngestResult`, `SourceManifest`, `SourceRecord`, `SourceDraft`, `SourceKind`, `SourceReplay` |
-| Search/index | `SearchRequest`, `WikiSearchResponse`, `WikiSearchResult`, `IndexOptions`, `WikiIndexStore` |
-| Graph | `WikiGraphFacts`, `MemoryWikiGraph`, `GraphExport`, `GraphContextPack`, `CodeGraphQuery` |
-| Quality/upkeep | `AuditOptions`, `AuditReport`, `HealthReport`, `TrustReport`, `LintReport` |
-| Synthesis/compile | `CompileRequest`, `CompileOutcome`, `WikiCompileOptions`, `SynthesisInput`, `SynthesizedPage` |
-[crates/gwiki/src/commands/refresh/selection.rs:4-75]
-[crates/gwiki/src/commands/refresh/vault.rs:7-9]
+Query and synthesis features are layered on top of the index. The `search` entry point fuses BM25 keyword results (`search_bm25`), semantic vector results (`search_semantic`), and graph-neighbourhood boosts (`search_graph_boost`) using reciprocal-rank fusion (`fuse_sources`). The `ask` command plans evidence (`plan_evidence`, `EvidencePlan`), calls an LLM for synthesis, strips model narration (`strip_leading_model_narration`), runs a citation check, and emits `AskOutput` with grounded claims. `compile_to_wiki` drives the research-to-wiki compilation loop, invoking an `ExplainerTransport` to generate prose sections and recording provenance via `ProvenanceGraph`. Audit, health, lint, normalize, benchmark, and citation-quality commands each produce typed report objects (`AuditReport`, `HealthReport`, `LintReport`, `BenchmarkReport`, `CitationQualityReport`) that are rendered as both JSON and plain text.
+
+| CLI command | Key options struct | Output type |
+|---|---|---|
+| `setup` | `SetupArgs` / `SetupOptions` | `PostgresSetupResult` |
+| `index` | `IndexOptions` | `IndexReport` |
+| `ingest file` | `IngestFileOptions` | `IndexReport` |
+| `ingest url` | `UrlBatchIngest` | `UrlBatchIngest` |
+| `search` | `SearchArgs` | `SearchOutput` |
+| `ask` | `AskArgs` | `AskOutput` |
+| `read` | `ReadArgs` | `ReadOutput` |
+| `compile` | `CompileArgs` | `WikiCompileOutcome` |
+| `refresh` | `RefreshArgs` | `RefreshRender` |
+| `collect` | — | `CollectReport` |
+| `audit` | `AuditOptions` | `AuditOutput` |
+| `health` | — | `HealthReport` |
+| `lint` | — | `LintReport` |
+| `normalize` | `NormalizeArgs` | `NormalizeReport` |
+| `benchmark` | `BenchmarkArgs` / `BenchmarkOptions` | `BenchmarkReport` |
+| `review` | `ReviewReportArgs` / `ReviewReportOptions` | `ReviewReport` |
+| `export` | `ExportArgs` | `ExportOutput` |
+| `sync-sessions` | `SyncSessionsArgs` | `SessionArchiveBatchIngest` |
+| `backlinks` | `BacklinksArgs` | wiki backlink list |
+| `link-suggest` | `LinkSuggestArgs` | `LinkSuggestion` list |
+| `source list/remove` | `RemoveSourceArgs` | `RemoveSourceRender` |
+| `status` | — | `RuntimeStatus` |
+
+| Key environment variable | Purpose |
+|---|---|
+| `GOBBY_HOME` | Root directory for hub config and registry (`gobby_home`) |
+| `DATABASE_URL` | PostgreSQL connection string (`database_url_from_env`) |
+| `GWIKI_STALE_CITATION_YEARS` | Override stale-citation age threshold (`stale_citation_years_from_env`) |
+| `GWIKI_MAX_INBOX_ITEM_BYTES` | Cap on inbox item size (`max_inbox_item_bytes_from_env`) |
+[crates/gwiki/src/commands/ask/citation.rs:25-46]
+[crates/gwiki/src/commands/ask/evidence.rs:14-16]
+[crates/gwiki/src/commands/ask/narration.rs:7-58]
 [crates/gwiki/src/commands/ask/synthesis.rs:15-45]
-[crates/gwiki/src/commands/audit.rs:3-13]
 [crates/gwiki/src/commands/citation_quality.rs:26-33]
 
 ## Child Modules
 
 | Module | Summary |
 | --- | --- |
-| [[code/modules/crates/gwiki/contract\|crates/gwiki/contract]] | The `crates/gwiki/contract` module defines the static CLI contract for `gwiki`: tool identity, contract version, global flags, scope selection, commands, JSON output shapes, and error-code surface. The contract identifies `gwiki` as a local-first wiki CLI for capture, search, upkeep, and synthesis (`crates/gwiki/contract/gwiki.contract.json:2-4`), with the supplied file summary indicating 429 indexed API symbols. |
-| [[code/modules/crates/gwiki/src\|crates/gwiki/src]] | `crates/gwiki/src` is the gwiki application crate: it combines CLI command handling, source ingestion, vault indexing, search, graph construction, audit/health checks, and synthesis. The ingestion layer owns immutable raw-source intake across audio, documents, files, git, images, MediaWiki, PDF, sessions, URLs, video, and Wayback captures, with shared helpers that write raw Markdown/assets and return an `IngestResult` containing a `SourceRecord`, raw path, and optional asset path . The command layer is the user-facing orchestration boundary: commands resolve active scope, perform domain work,… |
+| [[code/modules/crates/gwiki/contract\|crates/gwiki/contract]] | ## crates/gwiki/contract |
+| [[code/modules/crates/gwiki/src\|crates/gwiki/src]] | ## Module: `crates/gwiki/src` |
 
