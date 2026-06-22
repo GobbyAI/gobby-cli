@@ -60,8 +60,6 @@ _460 more source files omitted._
 
 # Data Flow
 
-# Data Flow
-
 ## Why this matters
 
 Before `gcode` can answer a single question about your code, raw bytes on disk have to travel a long way: a project root must be located, every file has to be classified and parsed, and the resulting symbols have to land in the right backing stores. If any one of those stages guesses wrong — picks the wrong project, walks a file it should skip, or connects to the wrong database — everything downstream is silently corrupted.

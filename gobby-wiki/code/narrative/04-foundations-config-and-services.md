@@ -45,8 +45,6 @@ _4 more source files omitted._
 
 # Foundations: Configuration, Connectivity, and Services
 
-# Foundations: Configuration, Connectivity, and Services
-
 ## Why this matters
 
 Before any `gcode` command can do real work — indexing a project, querying symbols, writing vectors — it has to answer a chain of questions: *Which project am I operating on? Where do its backing services live? Are those services reachable? Has their schema been created yet?* If each command answered those questions in its own ad‑hoc way, you'd get subtle drift: one command reading an environment variable, another a config file, a third assuming localhost.

@@ -60,8 +60,6 @@ _460 more source files omitted._
 
 # Architecture
 
-# Architecture
-
 ## Why this matters
 
 Before you can navigate any codebase confidently, you need a map of where things live and how the pieces fit together. This chapter is that map. It traces the workspace from the top-level `crates` module down into the `gcode` crate, where the bulk of the indexing logic lives, and shows how configuration, the database layer, the indexer, and the filesystem walker relate to one another.

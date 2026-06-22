@@ -60,8 +60,6 @@ _49 more source files omitted._
 
 # Turning Source Files into Code Facts
 
-# Turning Source Files into Code Facts
-
 ## Why this matters
 
 A repository on disk is just a pile of text. To answer questions like "who calls this function?" or "which dependency does this import point at?", that text has to be transformed into structured, queryable *facts*. This chapter follows the `index` pipeline that performs exactly that transformation: it discovers files, decides which ones are worth parsing, runs them through tree-sitter to extract calls, resolves each import to a concrete root, and persists the results as Postgres facts.

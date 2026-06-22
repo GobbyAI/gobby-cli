@@ -60,8 +60,6 @@ _460 more source files omitted._
 
 # Introduction: The Gobby Code Intelligence Workspace
 
-# Introduction: The Gobby Code Intelligence Workspace
-
 ## Why this matters
 
 Before you can read any single file with confidence, you need a map of the territory. Gobby is organized as a Cargo workspace whose top-level `crates` module partitions the system into focused, separately-buildable units. The design decision here is separation by responsibility: code intelligence, shared primitives, hook dispatch, and the wiki engine each live in their own crate, with `gcore` serving as the common foundation that the others build on top of. That layering keeps the heavy machinery — indexing, language imports, services — from leaking into the primitives everyone shares.

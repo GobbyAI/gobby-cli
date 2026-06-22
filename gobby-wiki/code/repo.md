@@ -92,8 +92,6 @@ Ask questions across this vault with `gwiki ask "..."`, or find pages with `gwik
 
 ## Overview
 
-# Repository Overview
-
 This repository is organized as a multi-part workspace whose top level divides cleanly into three concerns: a `crates` module, a `docs` module, and a `scripts` module. The supplied evidence is limited to these module headers alone — no root-file summaries and no source excerpts were provided — so this overview describes the structural shape of the project rather than its internal behavior, and flags where deeper inspection is needed before any functional claim can be made.
 
 The presence of a `crates` module is the strongest signal about the system's nature: a top-level `crates` directory is the conventional layout for a Rust Cargo workspace, where each subdirectory is an independently versioned library or binary crate that the workspace ties together. This separation exists so that distinct responsibilities — for example, a core library, a command-line front end, and shared utilities — can be compiled, tested, and depended upon in isolation while still sharing a single dependency graph and build configuration. Without the individual crate summaries, the specific roles and boundaries between these crates cannot yet be stated.
@@ -119,7 +117,6 @@ Note: the role column above is inferred from conventional layout, not from suppl
 - [[code/features|Feature catalog]]
 - [[code/infrastructure|Infrastructure stack]]
 - [[code/deprecations|Deprecations]]
-- [[code/dead-code-candidates|Dead-code candidates]]
 
 ## Reference appendix
 

@@ -19,8 +19,6 @@ freshness: indexed
 
 # Dependency Root Catalog
 
-# Dependency Root Catalog
-
 ## Purpose
 
 The Dependency Root Catalog is a set of static, language-specific lookup tables that map a package name or `require` path back to the canonical root module(s) that name introduces. When analyzing source code across multiple languages (polyglot import analysis), a dependency declared in a manifest (for example the Elixir package `httpoison`) does not literally match the symbol used in code (the `HTTPoison` module). The catalog bridges that gap by recording, per ecosystem, which top-level module names a given dependency or require path resolves to.

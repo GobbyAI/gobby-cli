@@ -60,8 +60,6 @@ _27 more source files omitted._
 
 # Projecting Facts into the Graph and Vector Stores
 
-# Projecting Facts into the Graph and Vector Stores
-
 ## Why this matters
 
 Indexing produces *facts* about your code — symbols, definitions, references, relationships — but raw facts sitting in memory or a flat store are hard to query in the ways developers actually want. You want to ask graph-shaped questions ("what calls this function?") and similarity-shaped questions ("show me code that resembles this snippet"). Those two questions need two very different storage engines: a graph database and a vector database.

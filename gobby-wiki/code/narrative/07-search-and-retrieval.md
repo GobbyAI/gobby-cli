@@ -48,8 +48,6 @@ _7 more source files omitted._
 
 # Searching the Index: Lexical, Semantic, and Graph-Boosted
 
-# Searching the Index: Lexical, Semantic, and Graph-Boosted
-
 ## Why this matters
 
 No single search strategy is good at everything. A developer who types an exact identifier like `parse_config` wants a literal, lexical match — the kind that classic full-text search excels at. A developer who asks "where do we validate the user's email?" is describing *meaning*, not spelling, and needs semantic similarity. And a developer chasing how one symbol relates to another wants results ranked by how the code actually connects.
