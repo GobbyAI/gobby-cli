@@ -13,16 +13,7 @@
 !.gobby/plans/coverage/
 !.gobby/plans/coverage/**
 !.gobby/plans/gwiki-parity-plus.md
-gobby-wiki/_meta/**
-gobby-wiki/**/*.lock
-
-# Obsidian vault config: ignore personal/local state by default.
-gobby-wiki/.obsidian/*
-!gobby-wiki/.obsidian/
-!gobby-wiki/.obsidian/app.json
-!gobby-wiki/.obsidian/appearance.json
-!gobby-wiki/.obsidian/core-plugins.json
-!gobby-wiki/.obsidian/hotkeys.json
-!gobby-wiki/.obsidian/snippets/
-!gobby-wiki/.obsidian/snippets/**
+# Codewiki vault lives on the `wiki` branch (republished by .githooks/pre-push on
+# pushes to main); kept untracked here so it stays out of dev/main everyday diffs.
+gobby-wiki/
 .playwright/
