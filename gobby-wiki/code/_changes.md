@@ -1,0 +1,381 @@
+---
+title: Index Changes
+kind: code_changes
+generated_by: gcode-codewiki
+trust: generated
+freshness: indexed
+baseline: false
+degraded: false
+degraded_sources: []
+---
+
+# Index Changes
+
+## Current Snapshot
+
+- Files: 491
+- Symbols: 9826
+- Graph neighborhoods: 9826
+
+## Added Files
+
+- None
+
+## Removed Files
+
+- None
+
+## Changed Files
+
+- `crates/gcode/src/cli.rs`
+- `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs`
+- `crates/gcode/src/commands/codewiki/build_parts/file.rs`
+- `crates/gcode/src/commands/codewiki/build_parts/modules.rs`
+- `crates/gcode/src/commands/codewiki/generation.rs`
+- `crates/gcode/src/commands/codewiki/mod.rs`
+- `crates/gcode/src/commands/codewiki/render/repo.rs`
+- `crates/gcode/src/commands/codewiki/text.rs`
+- `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `crates/gcode/src/commands/codewiki/types.rs`
+- `crates/gcore/src/ai/daemon.rs`
+- `crates/gcore/src/ai/daemon/operations.rs`
+
+## New Symbols
+
+- `generate_via_daemon` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `re_titled_extra_tracks_its_title_slug` function in `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs`
+- `transcribe_via_daemon` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `ProseRegister` type in `crates/gcode/src/commands/codewiki/types.rs`
+- `span` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `bounded_retry_gives_up_after_bounded_attempts` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `file_is_direct_module_member` function in `crates/gcode/src/commands/codewiki/build_parts/modules.rs`
+- `Generation::unwrap_or_record` method in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `EmbeddingsCommand` type in `crates/gcode/src/cli.rs`
+- `narrative_page` function in `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs`
+- `frontmatter_caps_provenance_and_records_truncation` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `structural_file_body` function in `crates/gcode/src/commands/codewiki/build_parts/file.rs`
+- `generate_with_bounded_retry` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `refusal_marker_after_the_lead_is_ignored` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `citation_markers_are_capped_and_keep_reference_numbering` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `PromptTier` type in `crates/gcode/src/commands/codewiki/types.rs`
+- `embed_via_daemon` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `concept_key_map` function in `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs`
+- `asset_data_files_rank_behind_source_unless_sole_provenance` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `GraphCommand` type in `crates/gcode/src/cli.rs`
+- `generate_via_daemon_with_max_tokens` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `render_repo_doc` function in `crates/gcode/src/commands/codewiki/render/repo.rs`
+- `ProseDepth::max_tokens` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `bounded_retry_recovers_from_transient_transport_failure` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `references_resolve_only_markers_present_in_doc` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `prompt_component_ids_for_module` function in `crates/gcode/src/commands/codewiki/build_parts/modules.rs`
+- `model_refusal_is_detected_but_real_prose_is_not` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `is_prompt_echo` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `narrative_extras_get_readable_ordinal_slugs` function in `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs`
+- `effective_format` function in `crates/gcode/src/cli.rs`
+- `repo_source_excerpts` function in `crates/gcode/src/commands/codewiki/render/repo.rs`
+- `file_summary_from_body` function in `crates/gcode/src/commands/codewiki/build_parts/file.rs`
+- `fallback_spans_prefer_distinct_files_over_one_files_span_run` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `frontmatter_coalesces_contiguous_provenance_ranges` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `resolve_text_generator` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `AiDepth::includes_files` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `retryable_generation_error` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `Generation::failed` method in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `clean_generated` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `CodewikiAiOptions` class in `crates/gcode/src/commands/codewiki/types.rs`
+- `resolve_text_verifier` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `citation_list_caps_oversized_span_sets` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `repo_audit_links` function in `crates/gcode/src/commands/codewiki/generation.rs`
+- `Generation` type in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `AiDepth::includes_symbols` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `ProseDepth` type in `crates/gcode/src/commands/codewiki/types.rs`
+- `bounded_retry_fails_fast_on_non_transient_errors` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `citation_list_emits_one_fallback_range_per_line` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `fallback_citations_rank_lexically_relevant_files_first` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `AiDepth::mode_label` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `SourceSpan::citation` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `AiDepth` type in `crates/gcode/src/commands/codewiki/types.rs`
+- `refusal_body_makes_maybe_generate_fail_and_fall_back` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `grep_max_count` function in `crates/gcode/src/cli.rs`
+- `non_empty_grep_pattern` function in `crates/gcode/src/cli.rs`
+- `resolve_ai_context` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `generate_via_daemon_with_candidates` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `short_prompts_never_trigger_echo_rejection` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `bounded_positive_usize` function in `crates/gcode/src/cli.rs`
+- `describe_image_via_daemon` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `writer_candidate_chain` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `positive_usize` function in `crates/gcode/src/cli.rs`
+- `VectorCommand` type in `crates/gcode/src/cli.rs`
+- `prompt_echo_is_rejected_as_failed_generation` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `generate_hierarchical_docs_core` function in `crates/gcode/src/commands/codewiki/generation.rs`
+- `generate_text_via_daemon` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `maybe_generate` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `SourceSpan::contains` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `SourceSpan::from_symbol` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `wrap_citation_items_bounds_line_width` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `transport_failure` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `is_model_refusal` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+
+## Removed Symbols
+
+- `asset_data_files_rank_behind_source_unless_sole_provenance` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `generate_via_daemon` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `fallback_citations_rank_lexically_relevant_files_first` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `file_summary_from_body` function in `crates/gcode/src/commands/codewiki/build_parts/file.rs`
+- `describe_image_via_daemon` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `wrap_citation_items_bounds_line_width` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `SourceSpan::contains` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `citation_markers_are_capped_and_keep_reference_numbering` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `CodewikiAiOptions` class in `crates/gcode/src/commands/codewiki/types.rs`
+- `maybe_generate` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `AiDepth::mode_label` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `embed_via_daemon` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `AiDepth::includes_symbols` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `citation_list_emits_one_fallback_range_per_line` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `ProseRegister` type in `crates/gcode/src/commands/codewiki/types.rs`
+- `VectorCommand` type in `crates/gcode/src/cli.rs`
+- `ProseDepth` type in `crates/gcode/src/commands/codewiki/types.rs`
+- `SourceSpan::from_symbol` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `prompt_echo_is_rejected_as_failed_generation` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `positive_usize` function in `crates/gcode/src/cli.rs`
+- `generate_with_bounded_retry` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `clean_generated` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `retryable_generation_error` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `resolve_text_verifier` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `bounded_retry_gives_up_after_bounded_attempts` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `short_prompts_never_trigger_echo_rejection` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `AiDepth::includes_files` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `frontmatter_caps_provenance_and_records_truncation` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `transcribe_via_daemon` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `SourceSpan::citation` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `ProseDepth::max_tokens` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `re_titled_extra_keeps_its_ordinal_slug` function in `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs`
+- `narrative_page` function in `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs`
+- `repo_source_excerpts` function in `crates/gcode/src/commands/codewiki/render/repo.rs`
+- `references_resolve_only_markers_present_in_doc` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `resolve_ai_context` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `EmbeddingsCommand` type in `crates/gcode/src/cli.rs`
+- `Generation::failed` method in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `prompt_component_ids_for_module` function in `crates/gcode/src/commands/codewiki/build_parts/modules.rs`
+- `frontmatter_coalesces_contiguous_provenance_ranges` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `file_is_direct_module_member` function in `crates/gcode/src/commands/codewiki/build_parts/modules.rs`
+- `effective_format` function in `crates/gcode/src/cli.rs`
+- `Generation` type in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `bounded_retry_fails_fast_on_non_transient_errors` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `span` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `bounded_positive_usize` function in `crates/gcode/src/cli.rs`
+- `resolve_text_generator` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `fallback_spans_prefer_distinct_files_over_one_files_span_run` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `GraphCommand` type in `crates/gcode/src/cli.rs`
+- `render_repo_doc` function in `crates/gcode/src/commands/codewiki/render/repo.rs`
+- `structural_file_body` function in `crates/gcode/src/commands/codewiki/build_parts/file.rs`
+- `PromptTier` type in `crates/gcode/src/commands/codewiki/types.rs`
+- `non_empty_grep_pattern` function in `crates/gcode/src/cli.rs`
+- `generate_hierarchical_docs_core` function in `crates/gcode/src/commands/codewiki/generation.rs`
+- `is_prompt_echo` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `citation_list_caps_oversized_span_sets` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `AiDepth` type in `crates/gcode/src/commands/codewiki/types.rs`
+- `concept_key_map` function in `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs`
+- `Generation::unwrap_or_record` method in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `bounded_retry_recovers_from_transient_transport_failure` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `narrative_extras_get_ordinal_only_slugs` function in `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs`
+- `grep_max_count` function in `crates/gcode/src/cli.rs`
+- `generate_via_daemon_with_max_tokens` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `transport_failure` function in `crates/gcode/src/commands/codewiki/text.rs`
+
+## Changed Graph Neighborhoods
+
+- `asset_data_files_rank_behind_source_unless_sole_provenance` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `format_tree_text` function in `crates/gcode/src/commands/symbols.rs`
+- `generate_via_daemon` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `CompiledGlob::new` method in `crates/gcode/src/commands/grep.rs`
+- `generate_via_daemon` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `fallback_citations_rank_lexically_relevant_files_first` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `re_titled_extra_tracks_its_title_slug` function in `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs`
+- `file_summary_from_body` function in `crates/gcode/src/commands/codewiki/build_parts/file.rs`
+- `describe_image_via_daemon` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `transcribe_via_daemon` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `wrap_citation_items_bounds_line_width` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `SourceSpan::contains` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `ProseRegister` type in `crates/gcode/src/commands/codewiki/types.rs`
+- `citation_markers_are_capped_and_keep_reference_numbering` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `CodewikiAiOptions` class in `crates/gcode/src/commands/codewiki/types.rs`
+- `text_request_body` function in `crates/gcore/src/ai/daemon/request.rs`
+- `maybe_generate` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `AiDepth::mode_label` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `context_after` function in `crates/gcode/src/commands/grep.rs`
+- `embed_via_daemon` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `parse_daemon_embeddings` function in `crates/gcore/src/ai/daemon/response.rs`
+- `span` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `bounded_retry_gives_up_after_bounded_attempts` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `AiDepth::includes_symbols` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `tree` function in `crates/gcode/src/commands/symbols.rs`
+- `citation_list_emits_one_fallback_range_per_line` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `lifecycle_json_payload` function in `crates/gcode/src/commands/vector.rs`
+- `file_is_direct_module_member` function in `crates/gcode/src/commands/codewiki/build_parts/modules.rs`
+- `Generation::unwrap_or_record` method in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `ProseRegister` type in `crates/gcode/src/commands/codewiki/types.rs`
+- `EmbeddingsCommand` type in `crates/gcode/src/cli.rs`
+- `VectorCommand` type in `crates/gcode/src/cli.rs`
+- `outline` function in `crates/gcode/src/commands/symbols.rs`
+- `format_outline_text_line` function in `crates/gcode/src/commands/symbols.rs`
+- `ProseDepth` type in `crates/gcode/src/commands/codewiki/types.rs`
+- `resolve_outline_ai_context` function in `crates/gcode/src/commands/symbols.rs`
+- `SourceSpan::from_symbol` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `narrative_page` function in `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs`
+- `summarize_outline` function in `crates/gcode/src/commands/symbols.rs`
+- `frontmatter_caps_provenance_and_records_truncation` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `structural_file_body` function in `crates/gcode/src/commands/codewiki/build_parts/file.rs`
+- `prompt_echo_is_rejected_as_failed_generation` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `outline_text_line_includes_id_range_and_signature` function in `crates/gcode/src/commands/symbols.rs`
+- `generate_with_bounded_retry` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `positive_usize` function in `crates/gcode/src/cli.rs`
+- `generate_with_bounded_retry` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `refusal_marker_after_the_lead_is_ignored` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `citation_markers_are_capped_and_keep_reference_numbering` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `clean_generated` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `PromptTier` type in `crates/gcode/src/commands/codewiki/types.rs`
+- `cleanup_orphans` function in `crates/gcode/src/commands/vector.rs`
+- `sync_file` function in `crates/gcode/src/commands/vector.rs`
+- `collect_context_lines` function in `crates/gcode/src/commands/grep.rs`
+- `lifecycle_from_context` function in `crates/gcode/src/commands/vector.rs`
+- `print_orphan_cleanup` function in `crates/gcode/src/commands/vector.rs`
+- `embed_via_daemon` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `concept_key_map` function in `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs`
+- `asset_data_files_rank_behind_source_unless_sole_provenance` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `GraphCommand` type in `crates/gcode/src/cli.rs`
+- `generate_via_daemon_with_max_tokens` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `retryable_generation_error` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `resolve_text_verifier` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `render_repo_doc` function in `crates/gcode/src/commands/codewiki/render/repo.rs`
+- `bounded_retry_gives_up_after_bounded_attempts` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `ProseDepth::max_tokens` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `embeddings_request_body` function in `crates/gcore/src/ai/daemon/request.rs`
+- `short_prompts_never_trigger_echo_rejection` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `AiDepth::includes_files` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `sql_like_prefixes` function in `crates/gcode/src/commands/grep.rs`
+- `bounded_retry_recovers_from_transient_transport_failure` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `outline_summary_prompt` function in `crates/gcode/src/commands/symbols.rs`
+- `summarizes_when_configured` function in `crates/gcode/src/commands/symbols.rs`
+- `references_resolve_only_markers_present_in_doc` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `prompt_component_ids_for_module` function in `crates/gcode/src/commands/codewiki/build_parts/modules.rs`
+- `frontmatter_caps_provenance_and_records_truncation` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `model_refusal_is_detected_but_real_prose_is_not` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `is_prompt_echo` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `options` function in `crates/gcode/src/commands/grep.rs`
+- `transcribe_via_daemon` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `qdrant_config` function in `crates/gcode/src/commands/vector.rs`
+- `SourceSpan::citation` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `narrative_extras_get_readable_ordinal_slugs` function in `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs`
+- `ProseDepth::max_tokens` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `effective_format` function in `crates/gcode/src/cli.rs`
+- `re_titled_extra_keeps_its_ordinal_slug` function in `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs`
+- `repo_source_excerpts` function in `crates/gcode/src/commands/codewiki/render/repo.rs`
+- `parse_daemon_transcription` function in `crates/gcore/src/ai/daemon/response.rs`
+- `daemon_url` function in `crates/gcore/src/ai/daemon/transport.rs`
+- `file_summary_from_body` function in `crates/gcode/src/commands/codewiki/build_parts/file.rs`
+- `narrative_page` function in `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs`
+- `daemon_embedding_source` function in `crates/gcode/src/commands/vector.rs`
+- `repo_source_excerpts` function in `crates/gcode/src/commands/codewiki/render/repo.rs`
+- `fallback_spans_prefer_distinct_files_over_one_files_span_run` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `references_resolve_only_markers_present_in_doc` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `resolve_ai_context` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `EmbeddingsCommand` type in `crates/gcode/src/cli.rs`
+- `frontmatter_coalesces_contiguous_provenance_ranges` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `resolve_text_generator` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `AiDepth::includes_files` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `Generation::failed` method in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `prompt_component_ids_for_module` function in `crates/gcode/src/commands/codewiki/build_parts/modules.rs`
+- `retryable_generation_error` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `multipart_form_with_file` function in `crates/gcore/src/ai/daemon/request.rs`
+- `Generation::failed` method in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `clean_generated` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `CodewikiAiOptions` class in `crates/gcode/src/commands/codewiki/types.rs`
+- `frontmatter_coalesces_contiguous_provenance_ranges` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `file_is_direct_module_member` function in `crates/gcode/src/commands/codewiki/build_parts/modules.rs`
+- `grep_chunks_with_filters` function in `crates/gcode/src/commands/grep.rs`
+- `lifecycle_json_contract` function in `crates/gcode/src/commands/vector.rs`
+- `effective_format` function in `crates/gcode/src/cli.rs`
+- `read_local_cli_token` function in `crates/gcore/src/ai/daemon/transport.rs`
+- `Generation` type in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `resolve_text_verifier` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `citation_list_caps_oversized_span_sets` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `repo_audit_links` function in `crates/gcode/src/commands/codewiki/generation.rs`
+- `bounded_retry_fails_fast_on_non_transient_errors` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `grep_chunks` function in `crates/gcode/src/commands/grep.rs`
+- `span` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `Generation` type in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `bounded_positive_usize` function in `crates/gcode/src/cli.rs`
+- `outline_depth` function in `crates/gcode/src/commands/symbols.rs`
+- `vector_lifecycle_requires_config` function in `crates/gcode/src/commands/vector.rs`
+- `AiDepth::includes_symbols` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `text_groups_multiple_files` function in `crates/gcode/src/commands/grep.rs`
+- `summarize_outline_with` function in `crates/gcode/src/commands/symbols.rs`
+- `ProseDepth` type in `crates/gcode/src/commands/codewiki/types.rs`
+- `resolve_text_generator` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `fallback_spans_prefer_distinct_files_over_one_files_span_run` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `GraphCommand` type in `crates/gcode/src/cli.rs`
+- `lifecycle_from_resolved_embedding_source` function in `crates/gcode/src/commands/vector.rs`
+- `render_repo_doc` function in `crates/gcode/src/commands/codewiki/render/repo.rs`
+- `bounded_retry_fails_fast_on_non_transient_errors` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `context_before` function in `crates/gcode/src/commands/grep.rs`
+- `with_local_token` function in `crates/gcore/src/ai/daemon/transport.rs`
+- `citation_list_emits_one_fallback_range_per_line` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `structural_file_body` function in `crates/gcode/src/commands/codewiki/build_parts/file.rs`
+- `fallback_citations_rank_lexically_relevant_files_first` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `PromptTier` type in `crates/gcode/src/commands/codewiki/types.rs`
+- `non_empty_grep_pattern` function in `crates/gcode/src/cli.rs`
+- `format_text_matches` function in `crates/gcode/src/commands/grep.rs`
+- `AiDepth::mode_label` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `outline_text_indents_by_parent_chain_depth` function in `crates/gcode/src/commands/symbols.rs`
+- `generate_hierarchical_docs_core` function in `crates/gcode/src/commands/codewiki/generation.rs`
+- `render_outline_text` function in `crates/gcode/src/commands/symbols.rs`
+- `GrepFilters::matches` method in `crates/gcode/src/commands/grep.rs`
+- `is_prompt_echo` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `print_lifecycle_output` function in `crates/gcode/src/commands/vector.rs`
+- `SourceSpan::citation` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `audio_capability` function in `crates/gcore/src/ai/daemon/request.rs`
+- `citation_list_caps_oversized_span_sets` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `AiDepth` type in `crates/gcode/src/commands/codewiki/types.rs`
+- `AiDepth` type in `crates/gcode/src/commands/codewiki/types.rs`
+- `GrepFilters::new` method in `crates/gcode/src/commands/grep.rs`
+- `refusal_body_makes_maybe_generate_fail_and_fall_back` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `unsupported_file_type_diagnostic` function in `crates/gcode/src/commands/symbols.rs`
+- `print_skipped_missing_indexed_file` function in `crates/gcode/src/commands/vector.rs`
+- `grep_max_count` function in `crates/gcode/src/cli.rs`
+- `concept_key_map` function in `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs`
+- `non_empty_grep_pattern` function in `crates/gcode/src/cli.rs`
+- `make_ctx` function in `crates/gcode/src/commands/vector.rs`
+- `resolve_ai_context` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `generate_via_daemon_with_candidates` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `short_prompts_never_trigger_echo_rejection` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `bounded_positive_usize` function in `crates/gcode/src/cli.rs`
+- `Generation::unwrap_or_record` method in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `context_line_numbers` function in `crates/gcode/src/commands/grep.rs`
+- `rebuild` function in `crates/gcode/src/commands/vector.rs`
+- `describe_image_via_daemon` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `text_renders_grouped_grep_shape` function in `crates/gcode/src/commands/grep.rs`
+- `writer_candidate_chain` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `positive_usize` function in `crates/gcode/src/cli.rs`
+- `context_flags_include_bounded_neighbors` function in `crates/gcode/src/commands/grep.rs`
+- `VectorCommand` type in `crates/gcode/src/cli.rs`
+- `prompt_echo_is_rejected_as_failed_generation` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `generate_hierarchical_docs_core` function in `crates/gcode/src/commands/codewiki/generation.rs`
+- `clear` function in `crates/gcode/src/commands/vector.rs`
+- `generate_text_via_daemon` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `bounded_retry_recovers_from_transient_transport_failure` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `CompiledGlob::matches` method in `crates/gcode/src/commands/grep.rs`
+- `maybe_generate` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `outline_missing_diagnostic` function in `crates/gcode/src/commands/symbols.rs`
+- `push_grouped_grep_line` function in `crates/gcode/src/commands/grep.rs`
+- `SourceSpan::contains` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `SourceSpan::from_symbol` method in `crates/gcode/src/commands/codewiki/types.rs`
+- `daemon_client` function in `crates/gcore/src/ai/daemon/transport.rs`
+- `wrap_citation_items_bounds_line_width` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `narrative_extras_get_ordinal_only_slugs` function in `crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs`
+- `grep_max_count` function in `crates/gcode/src/cli.rs`
+- `transport_failure` function in `crates/gcode/src/commands/codewiki/text.rs`
+- `is_model_refusal` function in `crates/gcode/src/commands/codewiki/text/generation.rs`
+- `generate_via_daemon_with_max_tokens` function in `crates/gcore/src/ai/daemon/operations.rs`
+- `add_optional_text` function in `crates/gcore/src/ai/daemon/request.rs`
+- `transport_failure` function in `crates/gcode/src/commands/codewiki/text.rs`
+
