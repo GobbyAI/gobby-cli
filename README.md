@@ -27,14 +27,14 @@ This workspace ships three Gobby CLI tools plus a shared library.
 
 | Crate | Binary | Version | Release tag |
 |---|---|---:|---|
-| `gobby-code` | `gcode` | `1.2.0` | `gcode-v1.2.0` |
-| `gobby-core` | n/a | `0.5.0` | `gobby-core-v0.5.0` |
+| `gobby-code` | `gcode` | `1.3.0` | `gcode-v1.3.0` |
+| `gobby-core` | n/a | `0.6.0` | `gobby-core-v0.6.0` |
 | `gobby-hooks` | `ghook` | `0.6.0` | `ghook-v0.6.0` |
-| `gobby-wiki` | `gwiki` | `0.5.0` | `gwiki-v0.5.0` |
+| `gobby-wiki` | `gwiki` | `0.6.0` | `gwiki-v0.6.0` |
 
 ### gcode — Code Search & Navigation
 
-AST-aware code search powered by tree-sitter. Indexes 18 languages plus safe
+AST-aware code search powered by tree-sitter. Indexes 21 languages plus safe
 repo text files into the Gobby PostgreSQL hub, with pg_search BM25 for symbol
 lookup, exact indexed grep over repo content chunks, ranked repo-content search
 across source/docs/config/scripts, file tree
@@ -42,9 +42,12 @@ navigation, and hybrid ranking. In the full Gobby-backed stack, required
 FalkorDB, Qdrant, and embedding sources provide graph-aware search, semantic
 search, opt-in graph expansion for exact symbol lookup
 (`gcode search-symbol --with-graph`), dependency analysis (`callers`, `usages`,
-`imports`, `blast-radius`), and Rust-owned graph/vector projection lifecycle.
-`gcode graph clear --project-id <PROJECT_ID>` is available for daemon
-stale-project graph cleanup without cwd project resolution.
+`imports`, `blast-radius`, shortest CALLS `path`), and Rust-owned graph/vector
+projection lifecycle. `--token-budget` trims high-volume reads (`search`,
+`usages`, `blast-radius`) to an approximate token cap, and `gcode prune`
+reconciles stale projects and orphaned graph/vector projection state across all
+indexed projects. `gcode graph clear --project-id <PROJECT_ID>` is available for
+daemon stale-project graph cleanup without cwd project resolution.
 
 `gcode codewiki` generates vault-ready hierarchical code documentation
 (repo → modules → files, plus architecture/onboarding/hotspots/changes/ownership
@@ -64,13 +67,16 @@ Sandbox-tolerant hook dispatcher invoked by host AI CLIs (Claude Code, Codex, Ge
 ### gwiki — Research Knowledge Vault
 
 Ingests multimodal sources — documents, PDFs, URLs, MediaWiki, git repos,
-Wayback snapshots, and audio/image/video — into a Markdown knowledge vault with
-frontmatter provenance and citations, then indexes and searches them with the
-same hybrid BM25 + semantic + graph stack as `gcode`. Compiles vault material
-into cited briefs, runs a reason-act `research` loop with step/token/source
-budgets, and answers questions directly with `gwiki ask`. Multimodal and AI
-capabilities degrade gracefully when transcription, vision, or the configured
-datastores are unavailable.
+Wayback snapshots, audio/image/video, and archived Gobby session transcripts
+(`gwiki sync-sessions`) — into a Markdown knowledge vault with frontmatter
+provenance and citations, then indexes and searches them with the same hybrid
+BM25 + semantic + graph stack as `gcode`. `gwiki search` is the bounded agent
+retrieval primitive and `gwiki ask` is a thin bounded-evidence RAG layer over
+it, both honoring `--token-budget`. Compiles vault material into cited briefs,
+emits static agent exports (`llms.txt`, `llms-full.txt`, `graph.jsonld`), and
+repairs on-disk markdown with `gwiki normalize`. Multimodal and AI capabilities
+degrade gracefully when transcription, vision, or the configured datastores are
+unavailable.
 
 `gobby-core` underpins them all — a small shared-primitives library for project
 root walk-up, bootstrap config, daemon URL composition, setup/provisioning
@@ -81,7 +87,7 @@ contracts, and datastore client adapters. It is not a standalone tool.
 - [gcode User Guide](docs/guides/gcode-user-guide.md) — search, symbols, dependency graphs, project management
 - [Codewiki Guide](docs/guides/codewiki.md) — generated code documentation, AI prose depth, citations, incremental runs
 - [ghook User Guide](docs/guides/ghook-user-guide.md) — hook wiring, diagnose mode, inbox/replay, troubleshooting
-- [gwiki User Guide](docs/guides/gwiki-user-guide.md) — vault setup, ingest, search, ask, research, compile
+- [gwiki User Guide](docs/guides/gwiki-user-guide.md) — vault setup, ingest, sync-sessions, search, ask, compile
 - [gwiki Development Guide](docs/guides/gwiki-development-guide.md) — research vault ingest, indexing, and hybrid search
 - [Release Guide](docs/guides/release-guide.md) — crate versions, tag order, and local binary installation
 - [Changelog](CHANGELOG.md) — release history

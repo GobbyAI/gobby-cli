@@ -12,7 +12,8 @@ CLI output and `clap` types:
 
 - `index::api` for code fact indexing.
 - `projection::sync` for graph and vector projection sync reports.
-- `graph::code_graph` and `graph::report` for graph lifecycle, graph reads, and
+- `graph::code_graph` and `graph::report` for graph lifecycle, graph reads
+  (including `callers`, `usages`, `imports`, `path`, and `blast-radius`), and
   project graph reports.
 - `vector::code_symbols` for code-symbol vector lifecycle and search helpers.
 

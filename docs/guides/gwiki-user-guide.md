@@ -192,6 +192,27 @@ Fetches one or more URL sources into the vault. The positional `URL` argument is
 repeatable. URL ingest handles web pages, Wayback captures, MediaWiki pages, and
 git repositories by source type.
 
+### Sync Session Transcripts (`sync-sessions`)
+
+```bash
+gwiki --topic rust-async sync-sessions
+gwiki --topic rust-async sync-sessions --archive-dir ~/.gobby/sessions/archive
+gwiki --topic rust-async sync-sessions --limit 20
+```
+
+Syncs archived Gobby session transcripts into the wiki vault. Per-CLI adapters
+recognize Claude Code, Codex, Gemini, Grok, Qwen, and Droid archives, normalize
+each into a derived Markdown page with deterministic session frontmatter, and
+redact secrets on ingest. Use it to fold your agent session history into the
+searchable vault alongside ingested sources.
+
+**When to use:** You want archived agent/CLI sessions captured as cited,
+searchable vault pages.
+
+**Options:**
+- `--archive-dir <PATH>` — Directory containing archived `*.jsonl.gz` session transcripts. Defaults to the standard Gobby session archive location when omitted.
+- `--limit <N>` — Maximum number of archives to process in this run.
+
 ### Collect Inbox Drops (`collect`)
 
 ```bash
@@ -297,6 +318,7 @@ contributing `sources` with per-source `explanations`, and the output includes
 **Options:**
 - `--limit <N>` — Max results (default: `10`).
 - `--no-semantic` — Disable semantic vector ranking for this query (BM25 + graph only). This is a query-time ranking control; Qdrant and embeddings are still required runtime infrastructure.
+- `--token-budget <N>` — Trim results to fit an approximate token budget. When hits are dropped to stay inside the budget, the output emits a narrowing hint so an agent can refine the query rather than silently lose context.
 
 ### Ask (`ask`)
 
@@ -321,6 +343,7 @@ list of pages.
 - `--llm` — Synthesize an answer from retrieved wiki hits.
 - `--ai <auto|daemon|direct|off>` — AI routing override for synthesis (default: `auto`). Inert unless `--llm` is set. `daemon` routes through the Gobby daemon; `direct` hits any OpenAI-compatible endpoint (`ai.text_generate.api_base`/`api_key`), including LM Studio locally.
 - `--require-ai` — Fail if synthesis is requested but no AI route succeeds.
+- `--token-budget <N>` — Trim retrieval hits to fit an approximate token budget before the evidence prompt is built, emitting a narrowing hint when hits are dropped. This applies on top of the `prompt_token_budget` evidence cap described above.
 
 Without `--llm`, `ask` is a pure retrieval command and runs without any AI route.
 
@@ -453,7 +476,28 @@ gwiki --topic rust-async lint
 ```
 
 Detects broken links and vault hygiene issues — dangling wiki links, malformed
-references, and similar structural problems.
+references, and similar structural problems. Lint also runs Mermaid diagram
+checks on curated wiki pages: a **validity** check that rejects malformed Mermaid
+blocks (and verifies diagram headers against the supported set), and a
+**grounding** check that flags Mermaid node labels with no support in the
+surrounding page text.
+
+### Normalize (`normalize`)
+
+```bash
+gwiki --topic rust-async normalize
+gwiki --topic rust-async normalize --check
+```
+
+Normalizes whitespace in already-written vault Markdown (markdownlint repair) —
+collapsing the whitespace issues that authored or generated pages accumulate.
+By default it rewrites the affected docs in place.
+
+**Options:**
+- `--check` — Report which authored docs need normalization without rewriting
+  them. This is an exit-code gate: it reports the docs that are out of compliance
+  and fails rather than mutating the vault, so it can guard CI or a pre-commit
+  step.
 
 ### Health (`health`)
 
@@ -494,6 +538,15 @@ Exports unified wiki graph artifacts under `outputs/`: `graph.json` for
 machine-readable graph data and `GRAPH_REPORT.md` for a readable summary. The
 JSON includes document/source/citation/link nodes, trust and audit edges, graph
 analytics, and `degraded`/`degraded_sources` fields.
+
+`graph` also writes static agent-context exports alongside those artifacts:
+
+- `llms.txt` — a portable, link-indexed table of contents over the vault
+  document graph, in the `llms.txt` convention.
+- `llms-full.txt` — the same index expanded with the full Markdown body of each
+  present document for single-file agent ingestion.
+- `graph.jsonld` — a schema.org JSON-LD representation of the vault document
+  graph for structured/linked-data consumers.
 
 `graph` requires PostgreSQL index configuration. Missing optional FalkorDB,
 Qdrant, or embedding support marks the exported graph degraded so consumers can
