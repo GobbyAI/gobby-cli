@@ -1,6 +1,6 @@
 # ghook User Guide
 
-ghook is the sandbox-tolerant hook dispatcher Gobby uses to receive lifecycle and tool-use events from host AI CLIs (Claude Code, Codex, Gemini CLI, Qwen CLI, Factory droid, Grok). It enqueues an envelope to `~/.gobby/hooks/inbox/` *before* attempting to POST to the local Gobby daemon — so the daemon's drain worker can replay any envelope whose POST was lost to a sandbox FS-read denial, a network blip, or a daemon restart.
+ghook is the sandbox-tolerant hook dispatcher Gobby uses to receive lifecycle and tool-use events from host AI CLIs (Claude Code, Codex, Gemini CLI, Qwen CLI, Factory droid, Grok, Antigravity CLI). It enqueues an envelope to `~/.gobby/hooks/inbox/` *before* attempting to POST to the local Gobby daemon — so the daemon's drain worker can replay any envelope whose POST was lost to a sandbox FS-read denial, a network blip, or a daemon restart.
 
 You don't usually invoke ghook directly. The Gobby installer wires it into each host CLI's hook configuration. This guide explains what it does, how to verify it's working, and how to wire it manually if you need to.
 
@@ -95,7 +95,7 @@ ghook --version
 | `--gobby-owned` | dispatch | Normal hook invocation. Reads stdin, enqueues, attempts POST. |
 | `--diagnose` | introspection | Prints a JSON snapshot of what *would* happen. No network, no envelope write. |
 | `--version` | metadata | Prints version and writes `~/.gobby/bin/.ghook-runtime.json` for the daemon. |
-| `--cli` | required for dispatch/diagnose | Host CLI name: `claude`, `codex`, `gemini`, `qwen`, `droid`, `grok`. Case-insensitive. |
+| `--cli` | required for dispatch/diagnose | Host CLI name: `claude`, `codex`, `gemini`, `qwen`, `droid`, `grok`, `agy`. Case-insensitive. |
 | `--type` | required for dispatch/diagnose | Hook type. CLI-specific (e.g. `session-start` for Claude, `SessionStart` for Codex/Gemini/Qwen, `PreToolUse`, `PostToolUse`, `Stop`, `pre-compact`, `session-end`). |
 | `--detach` | dispatch | After enqueue and project-root walk-up, call `setsid(2)` to escape the host CLI's process group before the POST. Useful for hooks where the host CLI tears down its session immediately. |
 
@@ -174,7 +174,7 @@ Claude Code uses lowercase-hyphenated names internally for some hooks (`session-
 
 Lifecycle hook criticality (`session-start`, `session-end`, `pre-compact`) comes from ghook's per-CLI registry. Tool-use hooks are non-critical — the envelope still spools, but a transient daemon outage won't block your tool call.
 
-### Codex, Gemini, Qwen, Droid, Grok
+### Codex, Gemini, Qwen, Droid, Grok, Antigravity CLI
 
 Same pattern with different `--cli` and `--type` values. ghook's per-CLI
 registry (see `crates/ghook/src/cli_config.rs`) defines which hooks are
@@ -189,10 +189,13 @@ tmux pane env vars.
 | `qwen` | `SessionStart` |
 | `droid` | none |
 | `grok` | `session_start`, `session_end`, `pre_compact`, `stop` |
+| `agy` | `SessionStart`, `Stop` |
 
 Grok uses native snake_case hook types (e.g. `session_start`, `session_end`, `pre_compact`, `stop`, `pre_tool_use`) — distinct from Claude's hyphenated names and the PascalCase names the other CLIs use. Its malformed-JSON exit code is `2`.
 
 Droid uses PascalCase hook types (`SessionStart`, `PreToolUse`, `PostToolUse`, `UserPromptSubmit`, `Notification`, `Stop`, `SubagentStop`, `PreCompact`, `SessionEnd`) and ghook forwards droid's stdin payload unchanged to the daemon with `source: "droid"`. Droid-specific block handling differs slightly from the other CLIs: daemon responses containing `continue:false` exit 2, while other meaningful response JSON is written to stdout with exit 0.
+
+Antigravity CLI uses PascalCase hook types (`SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `Stop`) and ghook forwards them with `source: "agy"`. `SessionStart` and `Stop` are fail-closed critical hooks; prompt and tool hooks are non-critical.
 
 Unknown `--cli` values fall back to conservative Claude-like dispatch behavior on the live path. Diagnose mode still reports unknown CLIs as unrecognized.
 
