@@ -6,7 +6,7 @@ write the comparison doc (epic **#908**, leaf **#914**).
 half of the bake-off (curated narrative depth). This doc is the *agent-context-delivery* half — how
 an **agent** (not a human) gets grounded, bounded, queryable context out of gobby's surfaces.
 **Status:** epic #908 Workstream C (gwiki ergonomics) + Workstream D (diagrams) complete; the daemon
-Workstream B handoff (`/Users/josh/Projects/gobby`) landed in parallel. Candidate sources are the
+Workstream B handoff (the daemon repo) landed in parallel. Candidate sources are the
 C1–C10 log in [`ADOPTION-CANDIDATES.md`](ADOPTION-CANDIDATES.md).
 
 ## TL;DR
@@ -165,7 +165,7 @@ confirming the generator's honest-omission path holds end to end.
 
 ## 4. Daemon — Workstream B (parallel handoff)
 
-Workstream B is daemon integration in `/Users/josh/Projects/gobby` — explicitly **not** part of
+Workstream B is daemon integration in the daemon repo — explicitly **not** part of
 #908 (epic description), but its outcomes complete the agent-context picture because the daemon is
 how an agent reaches these surfaces over MCP/HTTP.
 
