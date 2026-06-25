@@ -198,20 +198,25 @@ git repositories by source type.
 gwiki --topic rust-async sync-sessions
 gwiki --topic rust-async sync-sessions --archive-dir ~/.gobby/sessions/archive
 gwiki --topic rust-async sync-sessions --limit 20
+gwiki --topic rust-async sync-sessions --raw
 ```
 
-Syncs archived Gobby session transcripts into the wiki vault. Per-CLI adapters
-recognize Claude Code, Codex, Gemini, Grok, Qwen, and Droid archives, normalize
-each into a derived Markdown page with deterministic session frontmatter, and
-redact secrets on ingest. Use it to fold your agent session history into the
-searchable vault alongside ingested sources.
+Syncs daemon-synthesized Gobby session wiki pages into the wiki vault. By
+default, raw `*.jsonl.gz` archives are used only for presence reconciliation and
+are not parsed as fallback content. Pass `--raw` to opt in to legacy raw
+transcript fallback when no synthesized page exists. Per-CLI adapters recognize
+Claude Code, Codex, Gemini, Grok, Qwen, and Droid archives, normalize each raw
+fallback into a derived Markdown page with deterministic session frontmatter, and
+redact secrets on ingest.
 
 **When to use:** You want archived agent/CLI sessions captured as cited,
 searchable vault pages.
 
 **Options:**
 - `--archive-dir <PATH>` — Directory containing archived `*.jsonl.gz` session transcripts. Defaults to the standard Gobby session archive location when omitted.
+- `--wiki-dir <PATH>` — Directory containing daemon-synthesized session wiki `*.md` files. Defaults to the standard Gobby session wiki location when omitted.
 - `--limit <N>` — Maximum number of archives to process in this run.
+- `--raw` — Parse raw transcript archives as fallback content when no synthesized page exists.
 
 ### Collect Inbox Drops (`collect`)
 
