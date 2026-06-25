@@ -27,10 +27,10 @@ This workspace ships three Gobby CLI tools plus a shared library.
 
 | Crate | Binary | Version | Release tag |
 |---|---|---:|---|
-| `gobby-code` | `gcode` | `1.3.1` | `gcode-v1.3.1` |
+| `gobby-code` | `gcode` | `1.3.2` | `gcode-v1.3.2` |
 | `gobby-core` | n/a | `0.6.0` | `gobby-core-v0.6.0` |
-| `gobby-hooks` | `ghook` | `0.6.1` | `ghook-v0.6.1` |
-| `gobby-wiki` | `gwiki` | `0.6.1` | `gwiki-v0.6.1` |
+| `gobby-hooks` | `ghook` | `0.6.2` | `ghook-v0.6.2` |
+| `gobby-wiki` | `gwiki` | `0.6.2` | `gwiki-v0.6.2` |
 
 ### gcode — Code Search & Navigation
 
