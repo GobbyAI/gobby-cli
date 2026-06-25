@@ -5,9 +5,9 @@ The machine-readable contract lives at `crates/gwiki/contract/gwiki.contract.jso
 
 ## Version
 
-`contract_version`: 5
+`contract_version`: 7
 
-Version 5 covers the daemon-consumed surface:
+Version 7 covers the daemon-consumed surface:
 
 - `contract`
 - `index`
@@ -48,7 +48,7 @@ compose `search` and `read` for retrieval and deposit results through
 can select ingested manifest records with repeatable
 `--source SOURCE_ID_OR_PATH`.
 
-An additive version 5 update gives `compile` a source-selection surface.
+An additive version 7 update gives `compile` a source-selection surface.
 `--source` selectors resolve as exact source ID, derived raw path
 `raw/<id>.md`, then exact manifest `location`/`canonical_location`. Passing at
 least one `--source` replaces the compile checkpoint's `accepted_notes` with the
@@ -56,7 +56,7 @@ resolved raw markdown sources, deduped by source ID in selector order, before
 the article is compiled. On a fresh vault, `compile` may create the research
 checkpoint only when a positional topic or `--topic` supplies the topic seed.
 
-An additive version 5 update gives `compile` an LLM explainer layer over its
+An additive version 7 update gives `compile` an LLM explainer layer over its
 deterministic skeleton. `--ai auto|daemon|direct|off` routes one bounded
 completion (the same ~12K estimated-token budget as `ask`) through the daemon
 text lane or a direct OpenAI-compatible endpoint. Generated prose is grounded
