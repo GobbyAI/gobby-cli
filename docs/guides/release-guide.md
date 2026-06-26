@@ -9,7 +9,7 @@ This guide covers the multi-crate Rust release flow for maintainers.
 | `gobby-core` | n/a | `0.6.0` | `gobby-core-v0.6.0` | crates.io only |
 | `gobby-code` | `gcode` | `1.3.2` | `gcode-v1.3.2` | crates.io + GitHub binaries |
 | `gobby-hooks` | `ghook` | `0.6.2` | `ghook-v0.6.2` | crates.io + GitHub binaries |
-| `gobby-wiki` | `gwiki` | `0.6.2` | `gwiki-v0.6.2` | crates.io + GitHub binaries |
+| `gobby-wiki` | `gwiki` | `0.6.5` | `gwiki-v0.6.5` | crates.io + GitHub binaries |
 
 ## Version Rules
 
@@ -38,13 +38,13 @@ git push origin gobby-core-v0.6.0
 
 git tag gcode-v1.3.2
 git tag ghook-v0.6.2
-git tag gwiki-v0.6.2
+git tag gwiki-v0.6.5
 
 # Push the tags ONE AT A TIME. GitHub Actions does not create push events for
 # any tag when more than three tags arrive in a single push, so a batched
 # `git push origin <tag> <tag> <tag> <tag> ...` silently triggers NO release
 # workflows. Push each tag in its own invocation:
-for tag in gcode-v1.3.2 ghook-v0.6.2 gwiki-v0.6.2; do
+for tag in gcode-v1.3.2 ghook-v0.6.2 gwiki-v0.6.5; do
   git push origin "refs/tags/$tag"
 done
 ```
@@ -110,4 +110,4 @@ cargo build --release -p gobby-code -p gobby-hooks -p gobby-wiki
 The repository CI still owns cross-target release packaging. Local validation
 only proves manifests, lockfile resolution, and native release binaries.
 
-_Last verified: 2026-06-23_
+_Last verified: 2026-06-26_

@@ -195,10 +195,11 @@ git repositories by source type.
 ### Sync Session Transcripts (`sync-sessions`)
 
 ```bash
-gwiki --topic rust-async sync-sessions
+gwiki sync-sessions
 gwiki --topic rust-async sync-sessions --archive-dir ~/.gobby/sessions/archive
 gwiki --topic rust-async sync-sessions --limit 20
 gwiki --topic rust-async sync-sessions --raw
+gwiki --topic rust-async sync-sessions --summarize
 ```
 
 Syncs daemon-synthesized Gobby session wiki pages into the wiki vault. By
@@ -209,6 +210,10 @@ Claude Code, Codex, Gemini, Grok, Qwen, and Droid archives, normalize each raw
 fallback into a derived Markdown page with deterministic session frontmatter, and
 redact secrets on ingest.
 
+Session pages are machine-wide rather than project-scoped, so a `sync-sessions`
+run with **no** `--topic` / `--project` defaults to the machine-global `sessions`
+scope. Pass `--topic` or `--project` to route the pages into a specific vault.
+
 **When to use:** You want archived agent/CLI sessions captured as cited,
 searchable vault pages.
 
@@ -217,6 +222,7 @@ searchable vault pages.
 - `--wiki-dir <PATH>` — Directory containing daemon-synthesized session wiki `*.md` files. Defaults to the standard Gobby session wiki location when omitted.
 - `--limit <N>` — Maximum number of archives to process in this run.
 - `--raw` — Parse raw transcript archives as fallback content when no synthesized page exists.
+- `--summarize` — When a raw archive has no daemon-synthesized page, generate a session summary directly from the transcript using the shared `handoff/session_end` prompt (falling back to a skeleton page when text generation is routed off) instead of relying on the raw fallback.
 
 ### Collect Inbox Drops (`collect`)
 
