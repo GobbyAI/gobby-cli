@@ -57,9 +57,11 @@ fires no event.
 The release workflows verify binary crate tag/version alignment where the
 installer expects GitHub assets. `gobby-core` has no binary artifact matrix.
 
-The `gwiki` crates.io publish uses Trusted Publishing in the GitHub environment
-`crates-io`. The workflow obtains an OIDC token during the publish job, so no
-crates.io API token secret is needed for that release.
+All four crates publish to crates.io with the repository `CARGO_REGISTRY_TOKEN`
+secret via `cargo publish` (which reads the token from the environment). `gwiki`
+previously used GitHub OIDC Trusted Publishing, but that path needs a
+crates.io-side config that cannot be registered from the CLI, so its publish job
+now matches `gcode`/`ghook`/`gobby-core`.
 
 ## Local Install Check
 
