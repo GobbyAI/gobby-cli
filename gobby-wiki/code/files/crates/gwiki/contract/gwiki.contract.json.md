@@ -14,7 +14,7 @@ Module: [[code/modules/crates/gwiki/contract|crates/gwiki/contract]]
 
 ## Overview
 
-`crates/gwiki/contract/gwiki.contract.json` exposes 429 indexed API symbols.
+`crates/gwiki/contract/gwiki.contract.json` exposes 441 indexed API symbols.
 
 ## How it fits
 
@@ -49,5 +49,5 @@ Module: [[code/modules/crates/gwiki/contract|crates/gwiki/contract]]
 | `required` | property | Indexed property `required` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:33] |
 | `repeatable` | property | Indexed property `repeatable` in `crates/gwiki/contract/gwiki.contract.json`. [crates/gwiki/contract/gwiki.contract.json:34] |
 
-_405 more symbol(s) not shown — run `gcode outline crates/gwiki/contract/gwiki.contract.json` for the full list._
+_417 more symbol(s) not shown — run `gcode outline crates/gwiki/contract/gwiki.contract.json` for the full list._
 

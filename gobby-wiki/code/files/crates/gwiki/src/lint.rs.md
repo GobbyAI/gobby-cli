@@ -14,7 +14,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-`crates/gwiki/src/lint.rs` exposes 36 indexed API symbols.
+`crates/gwiki/src/lint.rs` exposes 55 indexed API symbols.
 
 ## How it fits
 
@@ -24,32 +24,32 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `LintReport` | class | 'LintReport' is a structured linting results container that records the executed command, checked scope and root path, and collections of detected documentation issues such as broken links, orphan pages, missing frontmatter, duplicate aliases, and missing backlinks. [crates/gwiki/src/lint.rs:13-22] |
-| `LinkIssue` | class | 'LinkIssue' is a struct that represents a link-related problem by storing the source 'path', the 1-based 'line' where it occurs, the link 'target', and a string 'kind' categorizing the issue. [crates/gwiki/src/lint.rs:25-30] |
-| `DuplicateAlias` | class | 'DuplicateAlias' is a struct that records a duplicated alias string together with the set of filesystem paths associated with that alias. [crates/gwiki/src/lint.rs:33-36] |
-| `run` | function | Scans all pages under 'vault_root' for the given 'scope', resolves and validates links against the page target map, and builds a 'LintReport' containing broken links, orphan pages, missing frontmatter, and other page-structure issues. [crates/gwiki/src/lint.rs:38-103] |
-| `render_text` | function | Formats a 'LintReport' into a plain-text wiki lint report string by emitting the scope header and appending sections for broken links, orphan pages, missing frontmatter, duplicate aliases, and missing backlinks. [crates/gwiki/src/lint.rs:105-126] |
-| `WikiPage` | class | 'WikiPage' is a crate-visible data container representing a wiki page’s file paths, raw Markdown content, parsed 'MarkdownDomainRecord', and a flag indicating whether frontmatter was present. [crates/gwiki/src/lint.rs:129-135] |
-| `collect_pages` | function | Recursively collects markdown files under 'vault_root/knowledge' and 'vault_root/code', sorts them by relative path, parses each page against the set of known targets, and returns a 'Vec<WikiPage>' or a 'WikiError' if file collection or markdown parsing fails. [crates/gwiki/src/lint.rs:137-169] |
-| `relative_path` | function | Returns 'path' with the 'root' prefix removed when 'path' starts with 'root', otherwise returns 'path' unchanged as a 'PathBuf'. [crates/gwiki/src/lint.rs:171-173] |
-| `line_number` | function | Returns the 1-based line number containing 'byte_start' by counting '\n' bytes in 'markdown[..min(byte_start, markdown.len())]' and adding 1. [crates/gwiki/src/lint.rs:175-181] |
-| `title_for_page` | function | Returns the page title from frontmatter 'title' if present, otherwise falls back to the file stem of 'page.path', and finally to the display string of 'page.relative_path' if no stem is available. [crates/gwiki/src/lint.rs:183-195] |
-| `collect_markdown_files` | function | Recursively traverses 'directory' under 'vault_root', reads each Markdown file, parses its frontmatter, computes its relative path, and appends a 'RawWikiPage' to 'pages', returning 'Ok(())' for missing directories and wrapping I/O or frontmatter parse failures in 'WikiError'. [crates/gwiki/src/lint.rs:197-254] |
-| `is_markdown_path` | function | Returns 'true' when the path has an extension that, after UTF-8 conversion and case-insensitive normalization, is exactly 'md' or 'markdown', and 'false' otherwise. [crates/gwiki/src/lint.rs:256-262] |
-| `known_targets` | function | Builds and returns a 'BTreeSet<String>' of all targets extracted from each 'RawWikiPage' by calling 'insert_page_targets' with the page’s 'relative_path' and 'frontmatter'. [crates/gwiki/src/lint.rs:264-270] |
-| `target_map` | function | Builds a 'BTreeMap' from each target string returned by 'page_targets' for the given pages to the first 'relative_path' that declares it, preserving the earliest page encountered for duplicate targets. [crates/gwiki/src/lint.rs:272-282] |
-| `insert_page_targets` | function | 'insert_page_targets' computes the page-target strings for 'relative_path' and 'frontmatter' via 'page_targets' and inserts them into the mutable 'BTreeSet<String>' 'targets' by extending the set with the returned iterator. [crates/gwiki/src/lint.rs:284-290] |
-| `page_targets` | function | 'page_targets' builds and returns a list of normalized wiki target strings derived from the page’s relative path, its file stem, the frontmatter title if present, and all frontmatter aliases. [crates/gwiki/src/lint.rs:292-306] |
-| `ignored_target` | function | Returns 'true' when the trimmed 'target' string looks like an ignored link or reference, namely if it starts with '#', '//', '\\\\', 'mailto:', or 'tel:', or contains '://'; otherwise returns 'false'. [crates/gwiki/src/lint.rs:308-316] |
-| `link_lookup_targets` | function | Returns a deduplicated list of candidate lookup paths for a wiki link, starting with its normalized target and, for Markdown or Wikilink targets outside reserved namespaces and not absolute, adding normalized resolutions relative to each parent directory of the current page. [crates/gwiki/src/lint.rs:318-347] |
-| `normalize_path_components` | function | Returns a slash-separated path string formed by concatenating 'parent' and 'target', removing empty and '.' segments and resolving '..' by popping the previous component when possible. [crates/gwiki/src/lint.rs:349-365] |
-| `is_orphan_exempt` | function | Returns 'true' when the path’s filename stem, interpreted as UTF-8 and case-folded to ASCII lowercase, is exactly '_index', 'index', 'home', or 'readme'; otherwise it returns 'false'. [crates/gwiki/src/lint.rs:367-376] |
-| `is_backlink_source_exempt` | function | Returns 'true' when the normalized path, with backslashes converted to slashes and a trailing '.md' removed, exactly matches one of the exempt backlink source paths under 'code/', and 'false' otherwise. [crates/gwiki/src/lint.rs:384-395] |
-| `duplicate_aliases` | function | Collects frontmatter aliases from all pages, normalizes them by trimming and case-folding to lowercase, groups the page paths for each alias, sorts each path list, and returns only aliases that appear on more than one page as 'DuplicateAlias' records. [crates/gwiki/src/lint.rs:397-416] |
-| `missing_backlinks` | function | 'missing_backlinks' builds a title map for wiki pages, scans each non-exempt page’s outgoing links, and returns a sorted 'Vec<LinkIssue>' for every target that does not contain a reciprocal link back to the source, using the source page title as the issue target. [crates/gwiki/src/lint.rs:418-457] |
-| `link_kind` | function | Returns the static string '"wikilink"' for 'LinkKind::Wikilink' and '"markdown"' for 'LinkKind::Markdown'. [crates/gwiki/src/lint.rs:459-464] |
+| `LintReport` | class | 'LintReport' is a struct that aggregates multiple categories of linting validation issues—including broken links, orphan pages, missing frontmatter, duplicate aliases, missing backlinks, and invalid diagrams—detected within a specified document scope and root directory. [crates/gwiki/src/lint.rs:13-23] |
+| `LinkIssue` | class | LinkIssue is a Rust struct that records the location (file path and line number), target reference, and classification type of a detected link-related problem. [crates/gwiki/src/lint.rs:26-31] |
+| `DuplicateAlias` | class | 'DuplicateAlias' is a struct that associates a single alias (String) with multiple file system paths (Vec<PathBuf>), representing a duplicate or conflicting alias mapping. [crates/gwiki/src/lint.rs:34-37] |
+| `DiagramIssue` | class | 'DiagramIssue' is a public struct that represents a diagram validation error, storing the file path, line number, and reason description for the detected issue. [crates/gwiki/src/lint.rs:45-49] |
+| `run` | function | The 'run' function performs static analysis on a wiki vault to identify and report broken cross-references, orphaned pages, and missing frontmatter metadata. [crates/gwiki/src/lint.rs:51-118] |
+| `render_text` | function | Formats a 'LintReport' into a text string by aggregating multiple categories of wiki linting issues (broken links, orphan pages, missing frontmatter, duplicate aliases, missing backlinks, and invalid diagrams). [crates/gwiki/src/lint.rs:120-142] |
+| `WikiPage` | class | WikiPage is a crate-private struct that represents a wiki document, storing both absolute and relative filesystem paths, raw markdown source, its parsed MarkdownDomainRecord representation, and a frontmatter presence indicator. [crates/gwiki/src/lint.rs:145-151] |
+| `collect_pages` | function | Collects markdown files from 'knowledge' and 'code' subdirectories of a vault, parses them with resolved cross-references, sorts by relative path, and returns a vector of structured WikiPage objects or a WikiError. [crates/gwiki/src/lint.rs:153-185] |
+| `relative_path` | function | # Summary This function strips a root prefix from a path and returns the resulting relative path as a 'PathBuf', or returns the original path unchanged if the prefix removal fails. [crates/gwiki/src/lint.rs:187-189] |
+| `line_number` | function | This function returns the 1-indexed line number corresponding to a specified byte offset in a markdown string by counting all preceding newline characters. [crates/gwiki/src/lint.rs:191-197] |
+| `title_for_page` | function | Returns a WikiPage title from its frontmatter metadata, or derives it from the filename stem or relative path as successive fallbacks. [crates/gwiki/src/lint.rs:199-211] |
+| `collect_markdown_files` | function | Recursively traverses a directory tree to identify markdown files, parse their YAML frontmatter and content, and populate a mutable vector with 'RawWikiPage' structures containing the parsed metadata and relative paths. [crates/gwiki/src/lint.rs:213-270] |
+| `is_markdown_path` | function | Returns 'true' if the provided path has a file extension of "md" or "markdown" (case-insensitive), otherwise returns 'false'. [crates/gwiki/src/lint.rs:272-278] |
+| `known_targets` | function | "Aggregates all link targets extracted from each wiki page's relative path and frontmatter into a sorted, deduplicated set." [crates/gwiki/src/lint.rs:280-286] |
+| `target_map` | function | This function builds a BTreeMap that associates target identifiers (extracted from each WikiPage's relative path and frontmatter) with the paths of the first pages that define them, using first-occurrence semantics for duplicate targets. [crates/gwiki/src/lint.rs:288-298] |
+| `insert_page_targets` | function | Extends a mutable BTreeSet with string targets computed from a relative file path and wiki frontmatter metadata. [crates/gwiki/src/lint.rs:300-306] |
+| `page_targets` | function | Returns a vector of normalized wiki link targets constructed from a page's relative file path, filename stem, frontmatter title, and aliases. [crates/gwiki/src/lint.rs:308-322] |
+| `ignored_target` | function | This function returns 'true' if the target string represents a non-standard link reference—specifically, if it is a fragment identifier (#), protocol-relative URL (//), UNC path (\\), or contains an explicit URI scheme (mailto:, tel:, ://)—otherwise it returns 'false'. [crates/gwiki/src/lint.rs:324-332] |
+| `link_lookup_targets` | function | # Summary 'link_lookup_targets' returns a vector of possible target paths for a wiki link by combining its normalized target with relative path candidates resolved against the page's directory hierarchy, applying type-specific traversal rules (immediate parent for Markdown links, all ancestors for Wikilinks). [crates/gwiki/src/lint.rs:334-363] |
+| `normalize_path_components` | function | Normalizes a filesystem path by concatenating 'parent' and 'target' path components, resolving parent directory references ('..') and filtering out empty segments and current directory ('.') entries. [crates/gwiki/src/lint.rs:365-381] |
+| `is_orphan_exempt` | function | Returns true if the file's stem (filename without extension) matches one of the predefined exempt filenames (_index, index, home, or readme) in a case-insensitive comparison. [crates/gwiki/src/lint.rs:383-392] |
+| `is_backlink_source_exempt` | function | This function returns 'true' if the given file path, after normalizing path separators to forward slashes and stripping the '.md' extension, matches one of five predefined exempt backlink source paths. [crates/gwiki/src/lint.rs:400-411] |
+| `duplicate_aliases` | function | This function identifies and returns all aliases that appear across multiple wiki pages, grouping each duplicate alias with the paths of all pages containing it using case-insensitive matching. [crates/gwiki/src/lint.rs:413-432] |
+| `missing_backlinks` | function | This function identifies missing reciprocal backlinks by detecting outgoing links from non-exempt source pages that are not reciprocated by their target pages, returning a sorted vector of 'LinkIssue' records. [crates/gwiki/src/lint.rs:434-473] |
 
-_5 more symbol(s) not shown — run `gcode outline crates/gwiki/src/lint.rs` for the full list._
+_16 more symbol(s) not shown — run `gcode outline crates/gwiki/src/lint.rs` for the full list._
 
-_Verified by 7 in-file unit tests._
+_Verified by 15 in-file unit tests._
 

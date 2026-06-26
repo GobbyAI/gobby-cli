@@ -14,7 +14,7 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gco
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/build_parts/curated_content.rs` exposes 10 indexed API symbols.
+`crates/gcode/src/commands/codewiki/build_parts/curated_content.rs` exposes 31 indexed API symbols.
 
 ## How it fits
 
@@ -34,4 +34,22 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gco
 | `append_guided_tour` | function | Appends a “guided tour” section to 'doc' by inserting a header, an optional introductory link to the first chapter, a numbered list of wiki-style links for all provided chapters, a trailing blank line, and the ask hint footer. [crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:268-281] |
 | `append_ask_hint` | function | Appends a fixed help hint to the provided string, instructing users to query the vault with 'gwiki ask "..."' or locate pages with 'gwiki search "..."'. [crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:284-288] |
 | `append_tour_nav` | function | Appends a “Continue the tour” navigation section to 'doc' with optional previous and next narrative links in wiki markup, and does nothing if both links are absent. [crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:293-309] |
+| `FlowComponent` | class | FlowComponent is a struct that represents a stage in a data-flow analysis chain, identified by normalized module/file keys for alignment with documented flows, a descriptive label, and an optional role designation. [crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:312-318] |
+| `curated_flow_diagram` | function | Returns an optional rendered conceptual flow diagram of module and file components ordered by documentation hints and annotated with architectural roles. [crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:338-373] |
+| `flow_components` | function | Creates a vector of FlowComponents by looking up documentation for member modules first, then supplementing with member files if fewer than two components are generated. [crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:378-398] |
+| `component_from` | function | Constructs a 'FlowComponent' with deduplicated normalized keys derived from the input name and its flow-label variant, and a role phrase computed from the summary. [crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:400-413] |
+| `flow_hint_text` | function | Concatenates documentation summaries for specified modules and files with truncated source code excerpts retrieved from lookup maps into a single hint string. [crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:417-447] |
+| `order_components_by_hint` | function | Reorders FlowComponents in-place according to indices parsed from a hint string, placing chain-matched components first in specified order followed by remaining components, returning false if the parsed chain contains fewer than two elements. [crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:452-473] |
+| `parse_flow_chain` | function | **Parses an arrow-delimited flow hint to extract and return the indices of the first chain containing at least two unique components.** [crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:477-494] |
+| `first_component_in` | function | Finds and returns the index of the first 'FlowComponent' whose keys collection contains a match for any normalized, non-empty alphanumeric token extracted from the segment. [crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:497-507] |
+| `push_unique` | function | Appends the given 'usize' index to the vector only if it is not already present, ensuring no duplicate entries. [crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:509-513] |
+| `flow_label` | function | Extracts the rightmost segment of a string delimited by '/' or ':', strips a trailing '.rs' suffix and whitespace, and returns the result as an owned String. [crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:517-524] |
+| `normalize_key` | function | Extracts the filename stem from the last path/URI segment and normalizes it by filtering to ASCII alphanumeric characters and converting to lowercase. [crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:528-535] |
+| `role_phrase` | function | This function extracts and returns the first 'FLOW_ROLE_WORDS' whitespace-separated tokens from the first clause (delimited by '.', ';', or ':') of a trimmed input string, or 'None' if the input or resulting phrase is empty. [crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:540-556] |
+| `module_doc` | function | Constructs a new 'ModuleDoc' struct with the provided 'name' and 'summary' fields while initializing all other fields to empty collections, 'false', and 'None'. [crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:562-574] |
+| `file_doc` | function | This function constructs a 'FileDoc' struct with the provided path and summary strings, initializing all remaining fields to empty collections or default values. [crates/gcode/src/commands/codewiki/build_parts/curated_content.rs:576-590] |
+
+_2 more symbol(s) not shown — run `gcode outline crates/gcode/src/commands/codewiki/build_parts/curated_content.rs` for the full list._
+
+_Verified by 5 in-file unit tests._
 

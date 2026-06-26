@@ -2,39 +2,23 @@
 title: Start Here
 type: code_onboarding
 provenance:
-- file: crates/gcode/src/commands/codewiki/prompts.rs
-  ranges:
-  - 53-75
-  - 77-90
-  - 95-101
-  - 103-121
-  - 123-146
-  - 171-188
-  - 192-220
-  - 228-233
-  - 237-253
-  - 257-273
-  - 282-306
-  - 581-589
-  - 592-595
-  - 600-605
 - file: crates/gcode/src/commands/codewiki/types.rs
   ranges:
   - 11-21
   - 26-30
-  - 65-69
-  - 72-81
-  - 83-92
-  - 96-99
-  - 131-135
-  - 454-471
-  - '602'
-  - '610'
-  - 618-623
-  - 628-636
-  - 661-669
-  - 688-697
-  - 700-721
+  - 94-98
+  - 101-110
+  - 112-121
+  - 125-128
+  - 160-164
+  - 451-468
+  - '599'
+  - '607'
+  - 615-620
+  - 625-633
+  - 658-666
+  - 685-694
+  - 697-718
 - file: crates/gcode/src/config/context.rs
   ranges:
   - 26-31
@@ -437,30 +421,47 @@ provenance:
   - 172-181
 - file: crates/gwiki/src/api.rs
   ranges:
-  - 11-130
-  - 133-136
-  - 139-153
-  - 156-158
-  - 175-183
-  - 186-189
-  - 192-197
-  - 200-228
-  - 233-237
-  - 240-242
-  - 244-246
-  - 248-250
-  - 252-258
-  - 260-262
-  - 264-269
-  - 271-276
-  - 287-291
-  - 294-300
-  - 304-307
-  - 310-315
-  - 317-322
-  - 324-329
-  - 339-343
-  - 346-349
+  - 11-132
+  - 135-138
+  - 141-155
+  - 158-160
+  - 177-185
+  - 188-191
+  - 194-199
+  - 202-230
+  - 235-239
+  - 242-244
+  - 246-248
+  - 250-252
+  - 254-260
+  - 262-264
+  - 266-271
+  - 273-278
+  - 289-293
+  - 296-302
+  - 306-309
+  - 312-317
+  - 319-324
+  - 326-331
+  - 341-345
+  - 348-351
+- file: crates/gwiki/src/exports.rs
+  ranges:
+  - 11-15
+  - 18-22
+  - 25-29
+  - 32-40
+  - 43-47
+  - 50-56
+  - 60-64
+  - 84-86
+  - 88-98
+  - 100-112
+  - 114-133
+  - 135-170
+  - 184-218
+  - 447-460
+  - 462-484
 - file: crates/gwiki/src/graph/mod.rs
   ranges:
   - 22-26
@@ -513,26 +514,26 @@ provenance:
   - 55-61
   - 63-66
   - 68-70
-  - 73-81
-  - 84-101
-  - 107-125
-  - 131-151
-  - 155-159
-  - 162-168
-  - 173-176
-  - 181-191
-  - 193-195
-  - 199-209
-  - 212-219
-  - 222-226
-  - 233-237
+  - 73-84
+  - 87-105
+  - 111-129
+  - 135-158
+  - 162-166
+  - 169-175
+  - 180-183
+  - 188-198
+  - 200-202
+  - 206-216
+  - 219-226
+  - 229-233
   - 240-244
-  - 247-253
-  - 256-269
-  - 273-278
-  - 281-287
-  - 290-303
-  - 306-333
+  - 247-251
+  - 254-260
+  - 263-276
+  - 280-285
+  - 288-294
+  - 297-310
+  - 313-340
 - file: crates/gwiki/src/search/graph_boost.rs
   ranges:
   - 21-24
@@ -612,7 +613,7 @@ provenance:
   - 232-291
   - 293-309
   - 311-314
-provenance_truncated: 163
+provenance_truncated: 164
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -621,8 +622,7 @@ freshness: indexed
 <details>
 <summary>Relevant source files</summary>
 
-- [crates/gcode/src/commands/codewiki/prompts.rs:53-75](crates/gcode/src/commands/codewiki/prompts.rs#L53-L75), [crates/gcode/src/commands/codewiki/prompts.rs:77-90](crates/gcode/src/commands/codewiki/prompts.rs#L77-L90), [crates/gcode/src/commands/codewiki/prompts.rs:95-101](crates/gcode/src/commands/codewiki/prompts.rs#L95-L101), [crates/gcode/src/commands/codewiki/prompts.rs:103-121](crates/gcode/src/commands/codewiki/prompts.rs#L103-L121), [crates/gcode/src/commands/codewiki/prompts.rs:123-146](crates/gcode/src/commands/codewiki/prompts.rs#L123-L146), [crates/gcode/src/commands/codewiki/prompts.rs:171-188](crates/gcode/src/commands/codewiki/prompts.rs#L171-L188), [crates/gcode/src/commands/codewiki/prompts.rs:192-220](crates/gcode/src/commands/codewiki/prompts.rs#L192-L220), [crates/gcode/src/commands/codewiki/prompts.rs:228-233](crates/gcode/src/commands/codewiki/prompts.rs#L228-L233), [crates/gcode/src/commands/codewiki/prompts.rs:237-253](crates/gcode/src/commands/codewiki/prompts.rs#L237-L253), [crates/gcode/src/commands/codewiki/prompts.rs:257-273](crates/gcode/src/commands/codewiki/prompts.rs#L257-L273), [crates/gcode/src/commands/codewiki/prompts.rs:282-306](crates/gcode/src/commands/codewiki/prompts.rs#L282-L306), [crates/gcode/src/commands/codewiki/prompts.rs:581-589](crates/gcode/src/commands/codewiki/prompts.rs#L581-L589), [crates/gcode/src/commands/codewiki/prompts.rs:592-595](crates/gcode/src/commands/codewiki/prompts.rs#L592-L595), [crates/gcode/src/commands/codewiki/prompts.rs:600-605](crates/gcode/src/commands/codewiki/prompts.rs#L600-L605)
-- [crates/gcode/src/commands/codewiki/types.rs:11-21](crates/gcode/src/commands/codewiki/types.rs#L11-L21), [crates/gcode/src/commands/codewiki/types.rs:26-30](crates/gcode/src/commands/codewiki/types.rs#L26-L30), [crates/gcode/src/commands/codewiki/types.rs:65-69](crates/gcode/src/commands/codewiki/types.rs#L65-L69), [crates/gcode/src/commands/codewiki/types.rs:72-81](crates/gcode/src/commands/codewiki/types.rs#L72-L81), [crates/gcode/src/commands/codewiki/types.rs:83-92](crates/gcode/src/commands/codewiki/types.rs#L83-L92), [crates/gcode/src/commands/codewiki/types.rs:96-99](crates/gcode/src/commands/codewiki/types.rs#L96-L99), [crates/gcode/src/commands/codewiki/types.rs:131-135](crates/gcode/src/commands/codewiki/types.rs#L131-L135), [crates/gcode/src/commands/codewiki/types.rs:454-471](crates/gcode/src/commands/codewiki/types.rs#L454-L471), [crates/gcode/src/commands/codewiki/types.rs:602](crates/gcode/src/commands/codewiki/types.rs#L602), [crates/gcode/src/commands/codewiki/types.rs:610](crates/gcode/src/commands/codewiki/types.rs#L610), [crates/gcode/src/commands/codewiki/types.rs:618-623](crates/gcode/src/commands/codewiki/types.rs#L618-L623), [crates/gcode/src/commands/codewiki/types.rs:628-636](crates/gcode/src/commands/codewiki/types.rs#L628-L636), [crates/gcode/src/commands/codewiki/types.rs:661-669](crates/gcode/src/commands/codewiki/types.rs#L661-L669), [crates/gcode/src/commands/codewiki/types.rs:688-697](crates/gcode/src/commands/codewiki/types.rs#L688-L697), [crates/gcode/src/commands/codewiki/types.rs:700-721](crates/gcode/src/commands/codewiki/types.rs#L700-L721)
+- [crates/gcode/src/commands/codewiki/types.rs:11-21](crates/gcode/src/commands/codewiki/types.rs#L11-L21), [crates/gcode/src/commands/codewiki/types.rs:26-30](crates/gcode/src/commands/codewiki/types.rs#L26-L30), [crates/gcode/src/commands/codewiki/types.rs:94-98](crates/gcode/src/commands/codewiki/types.rs#L94-L98), [crates/gcode/src/commands/codewiki/types.rs:101-110](crates/gcode/src/commands/codewiki/types.rs#L101-L110), [crates/gcode/src/commands/codewiki/types.rs:112-121](crates/gcode/src/commands/codewiki/types.rs#L112-L121), [crates/gcode/src/commands/codewiki/types.rs:125-128](crates/gcode/src/commands/codewiki/types.rs#L125-L128), [crates/gcode/src/commands/codewiki/types.rs:160-164](crates/gcode/src/commands/codewiki/types.rs#L160-L164), [crates/gcode/src/commands/codewiki/types.rs:451-468](crates/gcode/src/commands/codewiki/types.rs#L451-L468), [crates/gcode/src/commands/codewiki/types.rs:599](crates/gcode/src/commands/codewiki/types.rs#L599), [crates/gcode/src/commands/codewiki/types.rs:607](crates/gcode/src/commands/codewiki/types.rs#L607), [crates/gcode/src/commands/codewiki/types.rs:615-620](crates/gcode/src/commands/codewiki/types.rs#L615-L620), [crates/gcode/src/commands/codewiki/types.rs:625-633](crates/gcode/src/commands/codewiki/types.rs#L625-L633), [crates/gcode/src/commands/codewiki/types.rs:658-666](crates/gcode/src/commands/codewiki/types.rs#L658-L666), [crates/gcode/src/commands/codewiki/types.rs:685-694](crates/gcode/src/commands/codewiki/types.rs#L685-L694), [crates/gcode/src/commands/codewiki/types.rs:697-718](crates/gcode/src/commands/codewiki/types.rs#L697-L718)
 - [crates/gcode/src/config/context.rs:26-31](crates/gcode/src/config/context.rs#L26-L31), [crates/gcode/src/config/context.rs:34](crates/gcode/src/config/context.rs#L34), [crates/gcode/src/config/context.rs:37](crates/gcode/src/config/context.rs#L37), [crates/gcode/src/config/context.rs:51-53](crates/gcode/src/config/context.rs#L51-L53), [crates/gcode/src/config/context.rs:55](crates/gcode/src/config/context.rs#L55), [crates/gcode/src/config/context.rs:58-63](crates/gcode/src/config/context.rs#L58-L63), [crates/gcode/src/config/context.rs:66-73](crates/gcode/src/config/context.rs#L66-L73), [crates/gcode/src/config/context.rs:75-82](crates/gcode/src/config/context.rs#L75-L82), [crates/gcode/src/config/context.rs:84-91](crates/gcode/src/config/context.rs#L84-L91), [crates/gcode/src/config/context.rs:93-100](crates/gcode/src/config/context.rs#L93-L100), [crates/gcode/src/config/context.rs:102-109](crates/gcode/src/config/context.rs#L102-L109), [crates/gcode/src/config/context.rs:111-118](crates/gcode/src/config/context.rs#L111-L118), [crates/gcode/src/config/context.rs:120-127](crates/gcode/src/config/context.rs#L120-L127), [crates/gcode/src/config/context.rs:137-140](crates/gcode/src/config/context.rs#L137-L140), [crates/gcode/src/config/context.rs:157-163](crates/gcode/src/config/context.rs#L157-L163), [crates/gcode/src/config/context.rs:168-191](crates/gcode/src/config/context.rs#L168-L191), [crates/gcode/src/config/context.rs:194-203](crates/gcode/src/config/context.rs#L194-L203), [crates/gcode/src/config/context.rs:206-209](crates/gcode/src/config/context.rs#L206-L209), [crates/gcode/src/config/context.rs:212-219](crates/gcode/src/config/context.rs#L212-L219), [crates/gcode/src/config/context.rs:222-229](crates/gcode/src/config/context.rs#L222-L229), [crates/gcode/src/config/context.rs:233-235](crates/gcode/src/config/context.rs#L233-L235), [crates/gcode/src/config/context.rs:237-302](crates/gcode/src/config/context.rs#L237-L302), [crates/gcode/src/config/context.rs:305-352](crates/gcode/src/config/context.rs#L305-L352), [crates/gcode/src/config/context.rs:355-408](crates/gcode/src/config/context.rs#L355-L408), [crates/gcode/src/config/context.rs:529-536](crates/gcode/src/config/context.rs#L529-L536), [crates/gcode/src/config/context.rs:577-580](crates/gcode/src/config/context.rs#L577-L580), [crates/gcode/src/config/context.rs:582-618](crates/gcode/src/config/context.rs#L582-L618)
 - [crates/gcode/src/db/queries.rs:8-13](crates/gcode/src/db/queries.rs#L8-L13), [crates/gcode/src/db/queries.rs:15-26](crates/gcode/src/db/queries.rs#L15-L26), [crates/gcode/src/db/queries.rs:28-38](crates/gcode/src/db/queries.rs#L28-L38), [crates/gcode/src/db/queries.rs:40-55](crates/gcode/src/db/queries.rs#L40-L55), [crates/gcode/src/db/queries.rs:57-69](crates/gcode/src/db/queries.rs#L57-L69), [crates/gcode/src/db/queries.rs:71-83](crates/gcode/src/db/queries.rs#L71-L83), [crates/gcode/src/db/queries.rs:85-97](crates/gcode/src/db/queries.rs#L85-L97), [crates/gcode/src/db/queries.rs:99-109](crates/gcode/src/db/queries.rs#L99-L109), [crates/gcode/src/db/queries.rs:111-123](crates/gcode/src/db/queries.rs#L111-L123), [crates/gcode/src/db/queries.rs:125-135](crates/gcode/src/db/queries.rs#L125-L135), [crates/gcode/src/db/queries.rs:141-156](crates/gcode/src/db/queries.rs#L141-L156), [crates/gcode/src/db/queries.rs:158-168](crates/gcode/src/db/queries.rs#L158-L168), [crates/gcode/src/db/queries.rs:241-259](crates/gcode/src/db/queries.rs#L241-L259), [crates/gcode/src/db/queries.rs:261-274](crates/gcode/src/db/queries.rs#L261-L274), [crates/gcode/src/db/queries.rs:289-321](crates/gcode/src/db/queries.rs#L289-L321), [crates/gcode/src/db/queries.rs:323-357](crates/gcode/src/db/queries.rs#L323-L357), [crates/gcode/src/db/queries.rs:451-470](crates/gcode/src/db/queries.rs#L451-L470)
 - [crates/gcode/src/graph/code_graph/read/relationships.rs:24-27](crates/gcode/src/graph/code_graph/read/relationships.rs#L24-L27), [crates/gcode/src/graph/code_graph/read/relationships.rs:50-60](crates/gcode/src/graph/code_graph/read/relationships.rs#L50-L60), [crates/gcode/src/graph/code_graph/read/relationships.rs:62-72](crates/gcode/src/graph/code_graph/read/relationships.rs#L62-L72), [crates/gcode/src/graph/code_graph/read/relationships.rs:74-85](crates/gcode/src/graph/code_graph/read/relationships.rs#L74-L85), [crates/gcode/src/graph/code_graph/read/relationships.rs:87-98](crates/gcode/src/graph/code_graph/read/relationships.rs#L87-L98), [crates/gcode/src/graph/code_graph/read/relationships.rs:100-113](crates/gcode/src/graph/code_graph/read/relationships.rs#L100-L113), [crates/gcode/src/graph/code_graph/read/relationships.rs:115-124](crates/gcode/src/graph/code_graph/read/relationships.rs#L115-L124), [crates/gcode/src/graph/code_graph/read/relationships.rs:126-139](crates/gcode/src/graph/code_graph/read/relationships.rs#L126-L139), [crates/gcode/src/graph/code_graph/read/relationships.rs:141-157](crates/gcode/src/graph/code_graph/read/relationships.rs#L141-L157), [crates/gcode/src/graph/code_graph/read/relationships.rs:159-172](crates/gcode/src/graph/code_graph/read/relationships.rs#L159-L172), [crates/gcode/src/graph/code_graph/read/relationships.rs:174-190](crates/gcode/src/graph/code_graph/read/relationships.rs#L174-L190), [crates/gcode/src/graph/code_graph/read/relationships.rs:192-198](crates/gcode/src/graph/code_graph/read/relationships.rs#L192-L198), [crates/gcode/src/graph/code_graph/read/relationships.rs:200-225](crates/gcode/src/graph/code_graph/read/relationships.rs#L200-L225), [crates/gcode/src/graph/code_graph/read/relationships.rs:304-342](crates/gcode/src/graph/code_graph/read/relationships.rs#L304-L342), [crates/gcode/src/graph/code_graph/read/relationships.rs:344-355](crates/gcode/src/graph/code_graph/read/relationships.rs#L344-L355)
@@ -643,16 +643,17 @@ freshness: indexed
 - [crates/gcore/src/provisioning/mod.rs:55-57](crates/gcore/src/provisioning/mod.rs#L55-L57), [crates/gcore/src/provisioning/mod.rs:60-62](crates/gcore/src/provisioning/mod.rs#L60-L62), [crates/gcore/src/provisioning/mod.rs:64-66](crates/gcore/src/provisioning/mod.rs#L64-L66), [crates/gcore/src/provisioning/mod.rs:68-77](crates/gcore/src/provisioning/mod.rs#L68-L77), [crates/gcore/src/provisioning/mod.rs:79-89](crates/gcore/src/provisioning/mod.rs#L79-L89), [crates/gcore/src/provisioning/mod.rs:91-102](crates/gcore/src/provisioning/mod.rs#L91-L102), [crates/gcore/src/provisioning/mod.rs:104-106](crates/gcore/src/provisioning/mod.rs#L104-L106), [crates/gcore/src/provisioning/mod.rs:108-110](crates/gcore/src/provisioning/mod.rs#L108-L110), [crates/gcore/src/provisioning/mod.rs:112-114](crates/gcore/src/provisioning/mod.rs#L112-L114), [crates/gcore/src/provisioning/mod.rs:116-118](crates/gcore/src/provisioning/mod.rs#L116-L118), [crates/gcore/src/provisioning/mod.rs:149-151](crates/gcore/src/provisioning/mod.rs#L149-L151), [crates/gcore/src/provisioning/mod.rs:153-155](crates/gcore/src/provisioning/mod.rs#L153-L155), [crates/gcore/src/provisioning/mod.rs:157-159](crates/gcore/src/provisioning/mod.rs#L157-L159), [crates/gcore/src/provisioning/mod.rs:161-170](crates/gcore/src/provisioning/mod.rs#L161-L170)
 - [crates/gcore/src/qdrant.rs:20-36](crates/gcore/src/qdrant.rs#L20-L36), [crates/gcore/src/qdrant.rs:50-53](crates/gcore/src/qdrant.rs#L50-L53), [crates/gcore/src/qdrant.rs:56-59](crates/gcore/src/qdrant.rs#L56-L59), [crates/gcore/src/qdrant.rs:63-67](crates/gcore/src/qdrant.rs#L63-L67), [crates/gcore/src/qdrant.rs:70-73](crates/gcore/src/qdrant.rs#L70-L73), [crates/gcore/src/qdrant.rs:77-81](crates/gcore/src/qdrant.rs#L77-L81), [crates/gcore/src/qdrant.rs:85-89](crates/gcore/src/qdrant.rs#L85-L89), [crates/gcore/src/qdrant.rs:92-114](crates/gcore/src/qdrant.rs#L92-L114), [crates/gcore/src/qdrant.rs:117-173](crates/gcore/src/qdrant.rs#L117-L173), [crates/gcore/src/qdrant.rs:176-194](crates/gcore/src/qdrant.rs#L176-L194), [crates/gcore/src/qdrant.rs:197-219](crates/gcore/src/qdrant.rs#L197-L219), [crates/gcore/src/qdrant.rs:222-244](crates/gcore/src/qdrant.rs#L222-L244), [crates/gcore/src/qdrant.rs:247-306](crates/gcore/src/qdrant.rs#L247-L306), [crates/gcore/src/qdrant.rs:337-399](crates/gcore/src/qdrant.rs#L337-L399), [crates/gcore/src/qdrant.rs:401-407](crates/gcore/src/qdrant.rs#L401-L407), [crates/gcore/src/qdrant.rs:409-433](crates/gcore/src/qdrant.rs#L409-L433)
 - [crates/gcore/src/setup.rs:11-18](crates/gcore/src/setup.rs#L11-L18), [crates/gcore/src/setup.rs:26-34](crates/gcore/src/setup.rs#L26-L34), [crates/gcore/src/setup.rs:38-43](crates/gcore/src/setup.rs#L38-L43), [crates/gcore/src/setup.rs:47-49](crates/gcore/src/setup.rs#L47-L49), [crates/gcore/src/setup.rs:53-54](crates/gcore/src/setup.rs#L53-L54), [crates/gcore/src/setup.rs:57-64](crates/gcore/src/setup.rs#L57-L64), [crates/gcore/src/setup.rs:69-84](crates/gcore/src/setup.rs#L69-L84), [crates/gcore/src/setup.rs:90-100](crates/gcore/src/setup.rs#L90-L100), [crates/gcore/src/setup.rs:104-107](crates/gcore/src/setup.rs#L104-L107), [crates/gcore/src/setup.rs:125-132](crates/gcore/src/setup.rs#L125-L132), [crates/gcore/src/setup.rs:136-156](crates/gcore/src/setup.rs#L136-L156), [crates/gcore/src/setup.rs:159](crates/gcore/src/setup.rs#L159), [crates/gcore/src/setup.rs:162-169](crates/gcore/src/setup.rs#L162-L169), [crates/gcore/src/setup.rs:172-181](crates/gcore/src/setup.rs#L172-L181)
-- [crates/gwiki/src/api.rs:11-130](crates/gwiki/src/api.rs#L11-L130), [crates/gwiki/src/api.rs:133-136](crates/gwiki/src/api.rs#L133-L136), [crates/gwiki/src/api.rs:139-153](crates/gwiki/src/api.rs#L139-L153), [crates/gwiki/src/api.rs:156-158](crates/gwiki/src/api.rs#L156-L158), [crates/gwiki/src/api.rs:175-183](crates/gwiki/src/api.rs#L175-L183), [crates/gwiki/src/api.rs:186-189](crates/gwiki/src/api.rs#L186-L189), [crates/gwiki/src/api.rs:192-197](crates/gwiki/src/api.rs#L192-L197), [crates/gwiki/src/api.rs:200-228](crates/gwiki/src/api.rs#L200-L228), [crates/gwiki/src/api.rs:233-237](crates/gwiki/src/api.rs#L233-L237), [crates/gwiki/src/api.rs:240-242](crates/gwiki/src/api.rs#L240-L242), [crates/gwiki/src/api.rs:244-246](crates/gwiki/src/api.rs#L244-L246), [crates/gwiki/src/api.rs:248-250](crates/gwiki/src/api.rs#L248-L250), [crates/gwiki/src/api.rs:252-258](crates/gwiki/src/api.rs#L252-L258), [crates/gwiki/src/api.rs:260-262](crates/gwiki/src/api.rs#L260-L262), [crates/gwiki/src/api.rs:264-269](crates/gwiki/src/api.rs#L264-L269), [crates/gwiki/src/api.rs:271-276](crates/gwiki/src/api.rs#L271-L276), [crates/gwiki/src/api.rs:287-291](crates/gwiki/src/api.rs#L287-L291), [crates/gwiki/src/api.rs:294-300](crates/gwiki/src/api.rs#L294-L300), [crates/gwiki/src/api.rs:304-307](crates/gwiki/src/api.rs#L304-L307), [crates/gwiki/src/api.rs:310-315](crates/gwiki/src/api.rs#L310-L315), [crates/gwiki/src/api.rs:317-322](crates/gwiki/src/api.rs#L317-L322), [crates/gwiki/src/api.rs:324-329](crates/gwiki/src/api.rs#L324-L329), [crates/gwiki/src/api.rs:339-343](crates/gwiki/src/api.rs#L339-L343), [crates/gwiki/src/api.rs:346-349](crates/gwiki/src/api.rs#L346-L349)
+- [crates/gwiki/src/api.rs:11-132](crates/gwiki/src/api.rs#L11-L132), [crates/gwiki/src/api.rs:135-138](crates/gwiki/src/api.rs#L135-L138), [crates/gwiki/src/api.rs:141-155](crates/gwiki/src/api.rs#L141-L155), [crates/gwiki/src/api.rs:158-160](crates/gwiki/src/api.rs#L158-L160), [crates/gwiki/src/api.rs:177-185](crates/gwiki/src/api.rs#L177-L185), [crates/gwiki/src/api.rs:188-191](crates/gwiki/src/api.rs#L188-L191), [crates/gwiki/src/api.rs:194-199](crates/gwiki/src/api.rs#L194-L199), [crates/gwiki/src/api.rs:202-230](crates/gwiki/src/api.rs#L202-L230), [crates/gwiki/src/api.rs:235-239](crates/gwiki/src/api.rs#L235-L239), [crates/gwiki/src/api.rs:242-244](crates/gwiki/src/api.rs#L242-L244), [crates/gwiki/src/api.rs:246-248](crates/gwiki/src/api.rs#L246-L248), [crates/gwiki/src/api.rs:250-252](crates/gwiki/src/api.rs#L250-L252), [crates/gwiki/src/api.rs:254-260](crates/gwiki/src/api.rs#L254-L260), [crates/gwiki/src/api.rs:262-264](crates/gwiki/src/api.rs#L262-L264), [crates/gwiki/src/api.rs:266-271](crates/gwiki/src/api.rs#L266-L271), [crates/gwiki/src/api.rs:273-278](crates/gwiki/src/api.rs#L273-L278), [crates/gwiki/src/api.rs:289-293](crates/gwiki/src/api.rs#L289-L293), [crates/gwiki/src/api.rs:296-302](crates/gwiki/src/api.rs#L296-L302), [crates/gwiki/src/api.rs:306-309](crates/gwiki/src/api.rs#L306-L309), [crates/gwiki/src/api.rs:312-317](crates/gwiki/src/api.rs#L312-L317), [crates/gwiki/src/api.rs:319-324](crates/gwiki/src/api.rs#L319-L324), [crates/gwiki/src/api.rs:326-331](crates/gwiki/src/api.rs#L326-L331), [crates/gwiki/src/api.rs:341-345](crates/gwiki/src/api.rs#L341-L345), [crates/gwiki/src/api.rs:348-351](crates/gwiki/src/api.rs#L348-L351)
+- [crates/gwiki/src/exports.rs:11-15](crates/gwiki/src/exports.rs#L11-L15), [crates/gwiki/src/exports.rs:18-22](crates/gwiki/src/exports.rs#L18-L22), [crates/gwiki/src/exports.rs:25-29](crates/gwiki/src/exports.rs#L25-L29), [crates/gwiki/src/exports.rs:32-40](crates/gwiki/src/exports.rs#L32-L40), [crates/gwiki/src/exports.rs:43-47](crates/gwiki/src/exports.rs#L43-L47), [crates/gwiki/src/exports.rs:50-56](crates/gwiki/src/exports.rs#L50-L56), [crates/gwiki/src/exports.rs:60-64](crates/gwiki/src/exports.rs#L60-L64), [crates/gwiki/src/exports.rs:84-86](crates/gwiki/src/exports.rs#L84-L86), [crates/gwiki/src/exports.rs:88-98](crates/gwiki/src/exports.rs#L88-L98), [crates/gwiki/src/exports.rs:100-112](crates/gwiki/src/exports.rs#L100-L112), [crates/gwiki/src/exports.rs:114-133](crates/gwiki/src/exports.rs#L114-L133), [crates/gwiki/src/exports.rs:135-170](crates/gwiki/src/exports.rs#L135-L170), [crates/gwiki/src/exports.rs:184-218](crates/gwiki/src/exports.rs#L184-L218), [crates/gwiki/src/exports.rs:447-460](crates/gwiki/src/exports.rs#L447-L460), [crates/gwiki/src/exports.rs:462-484](crates/gwiki/src/exports.rs#L462-L484)
 - [crates/gwiki/src/graph/mod.rs:22-26](crates/gwiki/src/graph/mod.rs#L22-L26), [crates/gwiki/src/graph/mod.rs:29-33](crates/gwiki/src/graph/mod.rs#L29-L33), [crates/gwiki/src/graph/mod.rs:36-39](crates/gwiki/src/graph/mod.rs#L36-L39), [crates/gwiki/src/graph/mod.rs:42-47](crates/gwiki/src/graph/mod.rs#L42-L47), [crates/gwiki/src/graph/mod.rs:50-59](crates/gwiki/src/graph/mod.rs#L50-L59), [crates/gwiki/src/graph/mod.rs:62-67](crates/gwiki/src/graph/mod.rs#L62-L67), [crates/gwiki/src/graph/mod.rs:70-72](crates/gwiki/src/graph/mod.rs#L70-L72), [crates/gwiki/src/graph/mod.rs:75-77](crates/gwiki/src/graph/mod.rs#L75-L77), [crates/gwiki/src/graph/mod.rs:79-81](crates/gwiki/src/graph/mod.rs#L79-L81), [crates/gwiki/src/graph/mod.rs:85-92](crates/gwiki/src/graph/mod.rs#L85-L92), [crates/gwiki/src/graph/mod.rs:95-103](crates/gwiki/src/graph/mod.rs#L95-L103), [crates/gwiki/src/graph/mod.rs:106-113](crates/gwiki/src/graph/mod.rs#L106-L113), [crates/gwiki/src/graph/mod.rs:116-122](crates/gwiki/src/graph/mod.rs#L116-L122), [crates/gwiki/src/graph/mod.rs:125-127](crates/gwiki/src/graph/mod.rs#L125-L127), [crates/gwiki/src/graph/mod.rs:130-135](crates/gwiki/src/graph/mod.rs#L130-L135), [crates/gwiki/src/graph/mod.rs:138-143](crates/gwiki/src/graph/mod.rs#L138-L143), [crates/gwiki/src/graph/mod.rs:146-148](crates/gwiki/src/graph/mod.rs#L146-L148), [crates/gwiki/src/graph/mod.rs:158-239](crates/gwiki/src/graph/mod.rs#L158-L239), [crates/gwiki/src/graph/mod.rs:242-244](crates/gwiki/src/graph/mod.rs#L242-L244), [crates/gwiki/src/graph/mod.rs:247-249](crates/gwiki/src/graph/mod.rs#L247-L249), [crates/gwiki/src/graph/mod.rs:256-290](crates/gwiki/src/graph/mod.rs#L256-L290), [crates/gwiki/src/graph/mod.rs:292-334](crates/gwiki/src/graph/mod.rs#L292-L334), [crates/gwiki/src/graph/mod.rs:336-343](crates/gwiki/src/graph/mod.rs#L336-L343), [crates/gwiki/src/graph/mod.rs:345-405](crates/gwiki/src/graph/mod.rs#L345-L405)
 - [crates/gwiki/src/models.rs:12-15](crates/gwiki/src/models.rs#L12-L15), [crates/gwiki/src/models.rs:18-23](crates/gwiki/src/models.rs#L18-L23), [crates/gwiki/src/models.rs:25-30](crates/gwiki/src/models.rs#L25-L30), [crates/gwiki/src/models.rs:32-37](crates/gwiki/src/models.rs#L32-L37), [crates/gwiki/src/models.rs:39-44](crates/gwiki/src/models.rs#L39-L44), [crates/gwiki/src/models.rs:46-51](crates/gwiki/src/models.rs#L46-L51), [crates/gwiki/src/models.rs:55-61](crates/gwiki/src/models.rs#L55-L61), [crates/gwiki/src/models.rs:64-72](crates/gwiki/src/models.rs#L64-L72), [crates/gwiki/src/models.rs:76-80](crates/gwiki/src/models.rs#L76-L80), [crates/gwiki/src/models.rs:83-97](crates/gwiki/src/models.rs#L83-L97), [crates/gwiki/src/models.rs:100-125](crates/gwiki/src/models.rs#L100-L125), [crates/gwiki/src/models.rs:127-149](crates/gwiki/src/models.rs#L127-L149), [crates/gwiki/src/models.rs:152-154](crates/gwiki/src/models.rs#L152-L154), [crates/gwiki/src/models.rs:156-158](crates/gwiki/src/models.rs#L156-L158), [crates/gwiki/src/models.rs:160-166](crates/gwiki/src/models.rs#L160-L166), [crates/gwiki/src/models.rs:168-174](crates/gwiki/src/models.rs#L168-L174)
-- [crates/gwiki/src/output.rs:10-13](crates/gwiki/src/output.rs#L10-L13), [crates/gwiki/src/output.rs:16-19](crates/gwiki/src/output.rs#L16-L19), [crates/gwiki/src/output.rs:44-53](crates/gwiki/src/output.rs#L44-L53), [crates/gwiki/src/output.rs:55-61](crates/gwiki/src/output.rs#L55-L61), [crates/gwiki/src/output.rs:63-66](crates/gwiki/src/output.rs#L63-L66), [crates/gwiki/src/output.rs:68-70](crates/gwiki/src/output.rs#L68-L70), [crates/gwiki/src/output.rs:73-81](crates/gwiki/src/output.rs#L73-L81), [crates/gwiki/src/output.rs:84-101](crates/gwiki/src/output.rs#L84-L101), [crates/gwiki/src/output.rs:107-125](crates/gwiki/src/output.rs#L107-L125), [crates/gwiki/src/output.rs:131-151](crates/gwiki/src/output.rs#L131-L151), [crates/gwiki/src/output.rs:155-159](crates/gwiki/src/output.rs#L155-L159), [crates/gwiki/src/output.rs:162-168](crates/gwiki/src/output.rs#L162-L168), [crates/gwiki/src/output.rs:173-176](crates/gwiki/src/output.rs#L173-L176), [crates/gwiki/src/output.rs:181-191](crates/gwiki/src/output.rs#L181-L191), [crates/gwiki/src/output.rs:193-195](crates/gwiki/src/output.rs#L193-L195), [crates/gwiki/src/output.rs:199-209](crates/gwiki/src/output.rs#L199-L209), [crates/gwiki/src/output.rs:212-219](crates/gwiki/src/output.rs#L212-L219), [crates/gwiki/src/output.rs:222-226](crates/gwiki/src/output.rs#L222-L226), [crates/gwiki/src/output.rs:233-237](crates/gwiki/src/output.rs#L233-L237), [crates/gwiki/src/output.rs:240-244](crates/gwiki/src/output.rs#L240-L244), [crates/gwiki/src/output.rs:247-253](crates/gwiki/src/output.rs#L247-L253), [crates/gwiki/src/output.rs:256-269](crates/gwiki/src/output.rs#L256-L269), [crates/gwiki/src/output.rs:273-278](crates/gwiki/src/output.rs#L273-L278), [crates/gwiki/src/output.rs:281-287](crates/gwiki/src/output.rs#L281-L287), [crates/gwiki/src/output.rs:290-303](crates/gwiki/src/output.rs#L290-L303), [crates/gwiki/src/output.rs:306-333](crates/gwiki/src/output.rs#L306-L333)
+- [crates/gwiki/src/output.rs:10-13](crates/gwiki/src/output.rs#L10-L13), [crates/gwiki/src/output.rs:16-19](crates/gwiki/src/output.rs#L16-L19), [crates/gwiki/src/output.rs:44-53](crates/gwiki/src/output.rs#L44-L53), [crates/gwiki/src/output.rs:55-61](crates/gwiki/src/output.rs#L55-L61), [crates/gwiki/src/output.rs:63-66](crates/gwiki/src/output.rs#L63-L66), [crates/gwiki/src/output.rs:68-70](crates/gwiki/src/output.rs#L68-L70), [crates/gwiki/src/output.rs:73-84](crates/gwiki/src/output.rs#L73-L84), [crates/gwiki/src/output.rs:87-105](crates/gwiki/src/output.rs#L87-L105), [crates/gwiki/src/output.rs:111-129](crates/gwiki/src/output.rs#L111-L129), [crates/gwiki/src/output.rs:135-158](crates/gwiki/src/output.rs#L135-L158), [crates/gwiki/src/output.rs:162-166](crates/gwiki/src/output.rs#L162-L166), [crates/gwiki/src/output.rs:169-175](crates/gwiki/src/output.rs#L169-L175), [crates/gwiki/src/output.rs:180-183](crates/gwiki/src/output.rs#L180-L183), [crates/gwiki/src/output.rs:188-198](crates/gwiki/src/output.rs#L188-L198), [crates/gwiki/src/output.rs:200-202](crates/gwiki/src/output.rs#L200-L202), [crates/gwiki/src/output.rs:206-216](crates/gwiki/src/output.rs#L206-L216), [crates/gwiki/src/output.rs:219-226](crates/gwiki/src/output.rs#L219-L226), [crates/gwiki/src/output.rs:229-233](crates/gwiki/src/output.rs#L229-L233), [crates/gwiki/src/output.rs:240-244](crates/gwiki/src/output.rs#L240-L244), [crates/gwiki/src/output.rs:247-251](crates/gwiki/src/output.rs#L247-L251), [crates/gwiki/src/output.rs:254-260](crates/gwiki/src/output.rs#L254-L260), [crates/gwiki/src/output.rs:263-276](crates/gwiki/src/output.rs#L263-L276), [crates/gwiki/src/output.rs:280-285](crates/gwiki/src/output.rs#L280-L285), [crates/gwiki/src/output.rs:288-294](crates/gwiki/src/output.rs#L288-L294), [crates/gwiki/src/output.rs:297-310](crates/gwiki/src/output.rs#L297-L310), [crates/gwiki/src/output.rs:313-340](crates/gwiki/src/output.rs#L313-L340)
 - [crates/gwiki/src/search/graph_boost.rs:21-24](crates/gwiki/src/search/graph_boost.rs#L21-L24), [crates/gwiki/src/search/graph_boost.rs:35-39](crates/gwiki/src/search/graph_boost.rs#L35-L39), [crates/gwiki/src/search/graph_boost.rs:41-44](crates/gwiki/src/search/graph_boost.rs#L41-L44), [crates/gwiki/src/search/graph_boost.rs:46-51](crates/gwiki/src/search/graph_boost.rs#L46-L51), [crates/gwiki/src/search/graph_boost.rs:54](crates/gwiki/src/search/graph_boost.rs#L54), [crates/gwiki/src/search/graph_boost.rs:68-70](crates/gwiki/src/search/graph_boost.rs#L68-L70), [crates/gwiki/src/search/graph_boost.rs:73-77](crates/gwiki/src/search/graph_boost.rs#L73-L77), [crates/gwiki/src/search/graph_boost.rs:101-103](crates/gwiki/src/search/graph_boost.rs#L101-L103), [crates/gwiki/src/search/graph_boost.rs:106-108](crates/gwiki/src/search/graph_boost.rs#L106-L108), [crates/gwiki/src/search/graph_boost.rs:126-129](crates/gwiki/src/search/graph_boost.rs#L126-L129), [crates/gwiki/src/search/graph_boost.rs:132-134](crates/gwiki/src/search/graph_boost.rs#L132-L134), [crates/gwiki/src/search/graph_boost.rs:136-145](crates/gwiki/src/search/graph_boost.rs#L136-L145), [crates/gwiki/src/search/graph_boost.rs:188-191](crates/gwiki/src/search/graph_boost.rs#L188-L191), [crates/gwiki/src/search/graph_boost.rs:194-197](crates/gwiki/src/search/graph_boost.rs#L194-L197), [crates/gwiki/src/search/graph_boost.rs:199-264](crates/gwiki/src/search/graph_boost.rs#L199-L264), [crates/gwiki/src/search/graph_boost.rs:266-277](crates/gwiki/src/search/graph_boost.rs#L266-L277)
 - [crates/gwiki/src/search/mod.rs:14-18](crates/gwiki/src/search/mod.rs#L14-L18), [crates/gwiki/src/search/mod.rs:21-23](crates/gwiki/src/search/mod.rs#L21-L23), [crates/gwiki/src/search/mod.rs:25-29](crates/gwiki/src/search/mod.rs#L25-L29), [crates/gwiki/src/search/mod.rs:31-35](crates/gwiki/src/search/mod.rs#L31-L35), [crates/gwiki/src/search/mod.rs:37-43](crates/gwiki/src/search/mod.rs#L37-L43), [crates/gwiki/src/search/mod.rs:45-51](crates/gwiki/src/search/mod.rs#L45-L51), [crates/gwiki/src/search/mod.rs:53-59](crates/gwiki/src/search/mod.rs#L53-L59), [crates/gwiki/src/search/mod.rs:63-67](crates/gwiki/src/search/mod.rs#L63-L67), [crates/gwiki/src/search/mod.rs:70-76](crates/gwiki/src/search/mod.rs#L70-L76), [crates/gwiki/src/search/mod.rs:89-92](crates/gwiki/src/search/mod.rs#L89-L92), [crates/gwiki/src/search/mod.rs:95-100](crates/gwiki/src/search/mod.rs#L95-L100), [crates/gwiki/src/search/mod.rs:103-108](crates/gwiki/src/search/mod.rs#L103-L108), [crates/gwiki/src/search/mod.rs:111-115](crates/gwiki/src/search/mod.rs#L111-L115), [crates/gwiki/src/search/mod.rs:118-131](crates/gwiki/src/search/mod.rs#L118-L131), [crates/gwiki/src/search/mod.rs:134-141](crates/gwiki/src/search/mod.rs#L134-L141), [crates/gwiki/src/search/mod.rs:152-157](crates/gwiki/src/search/mod.rs#L152-L157), [crates/gwiki/src/search/mod.rs:160-163](crates/gwiki/src/search/mod.rs#L160-L163), [crates/gwiki/src/search/mod.rs:166-169](crates/gwiki/src/search/mod.rs#L166-L169), [crates/gwiki/src/search/mod.rs:186-266](crates/gwiki/src/search/mod.rs#L186-L266)
 - [crates/gwiki/src/search/semantic.rs:18-22](crates/gwiki/src/search/semantic.rs#L18-L22), [crates/gwiki/src/search/semantic.rs:25-28](crates/gwiki/src/search/semantic.rs#L25-L28), [crates/gwiki/src/search/semantic.rs:30-35](crates/gwiki/src/search/semantic.rs#L30-L35), [crates/gwiki/src/search/semantic.rs:37-54](crates/gwiki/src/search/semantic.rs#L37-L54), [crates/gwiki/src/search/semantic.rs:57-61](crates/gwiki/src/search/semantic.rs#L57-L61), [crates/gwiki/src/search/semantic.rs:63-70](crates/gwiki/src/search/semantic.rs#L63-L70), [crates/gwiki/src/search/semantic.rs:72-163](crates/gwiki/src/search/semantic.rs#L72-L163), [crates/gwiki/src/search/semantic.rs:172-174](crates/gwiki/src/search/semantic.rs#L172-L174), [crates/gwiki/src/search/semantic.rs:184-204](crates/gwiki/src/search/semantic.rs#L184-L204), [crates/gwiki/src/search/semantic.rs:206-211](crates/gwiki/src/search/semantic.rs#L206-L211), [crates/gwiki/src/search/semantic.rs:214-226](crates/gwiki/src/search/semantic.rs#L214-L226), [crates/gwiki/src/search/semantic.rs:250-252](crates/gwiki/src/search/semantic.rs#L250-L252), [crates/gwiki/src/search/semantic.rs:265-267](crates/gwiki/src/search/semantic.rs#L265-L267), [crates/gwiki/src/search/semantic.rs:327](crates/gwiki/src/search/semantic.rs#L327), [crates/gwiki/src/search/semantic.rs:331-333](crates/gwiki/src/search/semantic.rs#L331-L333), [crates/gwiki/src/search/semantic.rs:379](crates/gwiki/src/search/semantic.rs#L379), [crates/gwiki/src/search/semantic.rs:512](crates/gwiki/src/search/semantic.rs#L512)
 - [crates/gwiki/src/session.rs:15-18](crates/gwiki/src/session.rs#L15-L18), [crates/gwiki/src/session.rs:21-26](crates/gwiki/src/session.rs#L21-L26), [crates/gwiki/src/session.rs:28-33](crates/gwiki/src/session.rs#L28-L33), [crates/gwiki/src/session.rs:35-39](crates/gwiki/src/session.rs#L35-L39), [crates/gwiki/src/session.rs:60-64](crates/gwiki/src/session.rs#L60-L64), [crates/gwiki/src/session.rs:68-76](crates/gwiki/src/session.rs#L68-L76), [crates/gwiki/src/session.rs:98-110](crates/gwiki/src/session.rs#L98-L110), [crates/gwiki/src/session.rs:141-143](crates/gwiki/src/session.rs#L141-L143), [crates/gwiki/src/session.rs:145-147](crates/gwiki/src/session.rs#L145-L147), [crates/gwiki/src/session.rs:149-151](crates/gwiki/src/session.rs#L149-L151), [crates/gwiki/src/session.rs:153-155](crates/gwiki/src/session.rs#L153-L155), [crates/gwiki/src/session.rs:159-166](crates/gwiki/src/session.rs#L159-L166), [crates/gwiki/src/session.rs:169-179](crates/gwiki/src/session.rs#L169-L179), [crates/gwiki/src/session.rs:182-194](crates/gwiki/src/session.rs#L182-L194), [crates/gwiki/src/session.rs:197-224](crates/gwiki/src/session.rs#L197-L224), [crates/gwiki/src/session.rs:226-230](crates/gwiki/src/session.rs#L226-L230), [crates/gwiki/src/session.rs:232-291](crates/gwiki/src/session.rs#L232-L291), [crates/gwiki/src/session.rs:293-309](crates/gwiki/src/session.rs#L293-L309), [crates/gwiki/src/session.rs:311-314](crates/gwiki/src/session.rs#L311-L314)
 
-_163 more source files omitted._
+_164 more source files omitted._
 
 </details>
 
@@ -669,20 +670,20 @@ _163 more source files omitted._
 - [[code/files/crates/gcode/src/commands/codewiki/generation.rs|crates/gcode/src/commands/codewiki/generation.rs]] - generate_hierarchical_docs public API `pub fn generate_hierarchical_docs(`
 - [[code/files/crates/gcode/src/commands/codewiki/io.rs|crates/gcode/src/commands/codewiki/io.rs]] - write_doc_set public API `pub fn write_doc_set(out_dir: &Path, docs: &[(String, String)]) -> anyhow::Result<()> {`
 - [[code/files/crates/gcode/src/commands/codewiki/io.rs|crates/gcode/src/commands/codewiki/io.rs]] - write_incremental_doc_set public API `pub fn write_incremental_doc_set(`
-- [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - symbol_prompt public API `pub fn symbol_prompt(symbol: &Symbol) -> String {`
-- [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - file_prompt public API `pub fn file_prompt(`
-- [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - content_file_prompt public API `pub fn content_file_prompt(file: &str, source: &SourceExcerpt) -> String {`
-- [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - module_prompt public API `pub fn module_prompt(`
-- [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - repo_prompt public API `pub fn repo_prompt(`
-- [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - architecture_prompt public API `pub fn architecture_prompt(`
-- [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - architecture_narrative_prompt public API `pub fn architecture_narrative_prompt(`
-- [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - PageEvidenceRow public API `pub struct PageEvidenceRow {`
-- [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - concept_page_prompt public API `pub fn concept_page_prompt(`
-- [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - narrative_page_prompt public API `pub fn narrative_page_prompt(`
-- [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - verify_prompt public API `pub fn verify_prompt(`
-- [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - SymbolSummary public API `pub struct SymbolSummary {`
-- [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - ChildSummary public API `pub struct ChildSummary {`
-- [[code/files/crates/gcode/src/commands/codewiki/prompts.rs|crates/gcode/src/commands/codewiki/prompts.rs]] - SourceExcerpt public API `pub struct SourceExcerpt {`
+- [[code/files/crates/gcode/src/commands/codewiki/prompts/builders.rs|crates/gcode/src/commands/codewiki/prompts/builders.rs]] - symbol_prompt public API `pub fn symbol_prompt(symbol: &Symbol) -> String {`
+- [[code/files/crates/gcode/src/commands/codewiki/prompts/builders.rs|crates/gcode/src/commands/codewiki/prompts/builders.rs]] - file_prompt public API `pub fn file_prompt(`
+- [[code/files/crates/gcode/src/commands/codewiki/prompts/builders.rs|crates/gcode/src/commands/codewiki/prompts/builders.rs]] - content_file_prompt public API `pub fn content_file_prompt(file: &str, source: &SourceExcerpt) -> String {`
+- [[code/files/crates/gcode/src/commands/codewiki/prompts/builders.rs|crates/gcode/src/commands/codewiki/prompts/builders.rs]] - module_prompt public API `pub fn module_prompt(`
+- [[code/files/crates/gcode/src/commands/codewiki/prompts/builders.rs|crates/gcode/src/commands/codewiki/prompts/builders.rs]] - repo_prompt public API `pub fn repo_prompt(`
+- [[code/files/crates/gcode/src/commands/codewiki/prompts/builders.rs|crates/gcode/src/commands/codewiki/prompts/builders.rs]] - architecture_prompt public API `pub fn architecture_prompt(`
+- [[code/files/crates/gcode/src/commands/codewiki/prompts/builders.rs|crates/gcode/src/commands/codewiki/prompts/builders.rs]] - architecture_narrative_prompt public API `pub fn architecture_narrative_prompt(`
+- [[code/files/crates/gcode/src/commands/codewiki/prompts/builders.rs|crates/gcode/src/commands/codewiki/prompts/builders.rs]] - concept_page_prompt public API `pub fn concept_page_prompt(`
+- [[code/files/crates/gcode/src/commands/codewiki/prompts/builders.rs|crates/gcode/src/commands/codewiki/prompts/builders.rs]] - narrative_page_prompt public API `pub fn narrative_page_prompt(`
+- [[code/files/crates/gcode/src/commands/codewiki/prompts/builders.rs|crates/gcode/src/commands/codewiki/prompts/builders.rs]] - verify_prompt public API `pub fn verify_prompt(`
+- [[code/files/crates/gcode/src/commands/codewiki/prompts/types.rs|crates/gcode/src/commands/codewiki/prompts/types.rs]] - PageEvidenceRow public API `pub struct PageEvidenceRow {`
+- [[code/files/crates/gcode/src/commands/codewiki/prompts/types.rs|crates/gcode/src/commands/codewiki/prompts/types.rs]] - SymbolSummary public API `pub struct SymbolSummary {`
+- [[code/files/crates/gcode/src/commands/codewiki/prompts/types.rs|crates/gcode/src/commands/codewiki/prompts/types.rs]] - ChildSummary public API `pub struct ChildSummary {`
+- [[code/files/crates/gcode/src/commands/codewiki/prompts/types.rs|crates/gcode/src/commands/codewiki/prompts/types.rs]] - SourceExcerpt public API `pub struct SourceExcerpt {`
 - [[code/files/crates/gcode/src/commands/codewiki/repair.rs|crates/gcode/src/commands/codewiki/repair.rs]] - CitationRepairSummary public API `pub struct CitationRepairSummary {`
 - [[code/files/crates/gcode/src/commands/codewiki/repair.rs|crates/gcode/src/commands/codewiki/repair.rs]] - repair_citations public API `pub fn repair_citations(`
 - [[code/files/crates/gcode/src/commands/codewiki/run.rs|crates/gcode/src/commands/codewiki/run.rs]] - run public API `pub fn run(`
@@ -1566,6 +1567,7 @@ _163 more source files omitted._
 - [[code/files/crates/gwiki/src/exports.rs|crates/gwiki/src/exports.rs]] - export_workflow_assets public API `pub fn export_workflow_assets(`
 - [[code/files/crates/gwiki/src/exports.rs|crates/gwiki/src/exports.rs]] - export_report_file public API `pub fn export_report_file(`
 - [[code/files/crates/gwiki/src/exports.rs|crates/gwiki/src/exports.rs]] - export_graph_artifacts public API `pub fn export_graph_artifacts(`
+- [[code/files/crates/gwiki/src/exports.rs|crates/gwiki/src/exports.rs]] - export_agent_artifacts public API `pub fn export_agent_artifacts(`
 - [[code/files/crates/gwiki/src/exports.rs|crates/gwiki/src/exports.rs]] - export_markdown_report public API `pub fn export_markdown_report(`
 - [[code/files/crates/gwiki/src/exports.rs|crates/gwiki/src/exports.rs]] - write_export public API `pub fn write_export(root: &Path, request: ExportRequest) -> Result<ExportArtifact, WikiError> {`
 - [[code/files/crates/gwiki/src/frontmatter.rs|crates/gwiki/src/frontmatter.rs]] - FrontmatterFormat public API `pub enum FrontmatterFormat {`
@@ -1706,6 +1708,7 @@ _163 more source files omitted._
 - [[code/files/crates/gwiki/src/lint.rs|crates/gwiki/src/lint.rs]] - LintReport public API `pub struct LintReport {`
 - [[code/files/crates/gwiki/src/lint.rs|crates/gwiki/src/lint.rs]] - LinkIssue public API `pub struct LinkIssue {`
 - [[code/files/crates/gwiki/src/lint.rs|crates/gwiki/src/lint.rs]] - DuplicateAlias public API `pub struct DuplicateAlias {`
+- [[code/files/crates/gwiki/src/lint.rs|crates/gwiki/src/lint.rs]] - DiagramIssue public API `pub struct DiagramIssue {`
 - [[code/files/crates/gwiki/src/lint.rs|crates/gwiki/src/lint.rs]] - run public API `pub fn run(vault_root: &Path, scope: ScopeIdentity) -> Result<LintReport, WikiError> {`
 - [[code/files/crates/gwiki/src/lint.rs|crates/gwiki/src/lint.rs]] - render_text public API `pub fn render_text(report: &LintReport) -> String {`
 - [[code/files/crates/gwiki/src/log.rs|crates/gwiki/src/log.rs]] - LogEntry public API `pub struct LogEntry {`

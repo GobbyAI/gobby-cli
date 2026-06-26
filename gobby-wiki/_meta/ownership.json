@@ -1,0 +1,4974 @@
+{
+  "files": {
+    "crates/gcode/assets/import_roots/elixir_dependency_roots.json": {
+      "content_hash": "d0e14184dd0070ca32f9ca0521aeb907ed8b9f2a1a063df04ad06347d12e46d6",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 18
+        }
+      ]
+    },
+    "crates/gcode/assets/import_roots/ruby_require_roots.json": {
+      "content_hash": "27e1950be738efc8761d176728643444cf5d0c98458f86a4a7b6e24d8e60c92b",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 12
+        }
+      ]
+    },
+    "crates/gcode/build.rs": {
+      "content_hash": "b019902ef8f1f01786e10c4612294ce1a855cabd3d405b0434b5c68e1949ae66",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 8
+        }
+      ]
+    },
+    "crates/gcode/contract/gcode.contract.json": {
+      "content_hash": "37c0cb3e2f87f3178bf24aa7f3cd8b8f7ff030249ce4e5424a350c96296bf464",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 1902
+        }
+      ]
+    },
+    "crates/gcode/src/cli.rs": {
+      "content_hash": "d64cfc73c391a4165639dd0d073ca34e31dbb96175b9a92ac7cfc5e589838241",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 606
+        }
+      ]
+    },
+    "crates/gcode/src/cli/tests.rs": {
+      "content_hash": "b04eeb1207d3c09f0609a81a4d250fdca9af5c6247f492c8c1e5b722bf456f41",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 55
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/architecture_diagrams.rs": {
+      "content_hash": "0803b1d449dc2feea306111c3ed87b0871433f36c1b71ddf551a11e48c9726cd",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 936
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/build.rs": {
+      "content_hash": "5339ed4cd6bb4ce59d8ebf7048a958ec56d4bf96940ce1fec5110a3044da5e1a",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 38
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/architecture.rs": {
+      "content_hash": "233d96dcfca63082ced2d98ff32f96648f560400efc31d85d2347905d1660f02",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 244
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/audit.rs": {
+      "content_hash": "43874f8c7ee5e0e701a5b5a2c2bad7411368bd3a019f1e5dff9a75343399b7bd",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 334
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/changes.rs": {
+      "content_hash": "b7f18e5ddaec6f54786241847a33122c9e7a5bcb25cc33ffe85190b49ee3b7aa",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 163
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/concepts.rs": {
+      "content_hash": "d039b45df210ed396a6618c29284be12f4df63f0e22f238f902df25c89273d26",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 85
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs": {
+      "content_hash": "c25f234599d0a9d6973581b6f785982d2370f5e1d07365702fd0f120669381d2",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 315
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs": {
+      "content_hash": "b15e25e94b4b03fbb0f55214ad440f6acdf3c8dd279ba7a410dc4de4392b458c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 470
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/concepts/spans.rs": {
+      "content_hash": "0f588528d906d4ed4f2272420ff0688e5a696fd9d0d49cefadf336d2d5d5fbee",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 62
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs": {
+      "content_hash": "5b00e562ca4434beff6185a066e44b5aff4af924b902049bac8c7c0b8e2c30ca",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 53
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/concepts/types.rs": {
+      "content_hash": "08f20fd1d12c2fe00d28824489d8896347118c7fa755b2089c2ef839be49b648",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 69
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/curated_content.rs": {
+      "content_hash": "22f64513876c90156e4cf6d3277670a5203f5aa7f013aee502eb0d9410106d3e",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 736
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/features.rs": {
+      "content_hash": "3ec99e126f0b1fec5a2b72ceff6149166a1e9423938ac198bc785d61d920df55",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 400
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/file.rs": {
+      "content_hash": "888cf8c38caa8ce0878e8d2f2a1e8335a319d107f96ff32fabbcde92fd57da3e",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 295
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/hotspots.rs": {
+      "content_hash": "ba801022ed8605109918732c706bfbbddff9c4eacc0e39cf363cff985eb53380",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 156
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/infrastructure.rs": {
+      "content_hash": "f43825226050ca0ef2e31d0d8bc423b2932a83a2c63d2be6868d9664bad35057",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 148
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/modules.rs": {
+      "content_hash": "49900c56f98f6a559043a9b313e3d6171cd8f5de49e72946b80c8d770ef7d71a",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 217
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/onboarding.rs": {
+      "content_hash": "1414eff6d19ffa8f887027915e0e1749f3ac642f89dfd7d7c338ca43e863a833",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 261
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/build_parts/snapshot.rs": {
+      "content_hash": "71ad18696aaa74f36012ea9a1c32a74bfa7e0edd8adca32167173291c396a84c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 125
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/cluster.rs": {
+      "content_hash": "e7991e0ae83bf2ca4587c027ce449ed86b79d3b46cd1762abd5f4d45264e2527",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 414
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/generation.rs": {
+      "content_hash": "5cfcbce3f7e6042e970447d9215c8aebe45e5915ee1fbb45de5e8903e83c5361",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 516
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/graph.rs": {
+      "content_hash": "908fc877e2b7602536d171a69b0e091f4bc2d7294167f8f62e61035eb27d1121",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 181
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/io.rs": {
+      "content_hash": "c430004e81f1f99dbfedc9c9c4461bcb3f272130c334240eddb9a44ae85782f4",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 538
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/mod.rs": {
+      "content_hash": "fb28ab1cd5e2de0d3750d80a19094bf7a9d62e54cbf2ee834cd7eab94962bedb",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 177
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/ownership.rs": {
+      "content_hash": "929e81fd36437c23351e8b8e11e0aaba03f6e28010faf38a1a2b7bb8a09fa3af",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 121
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/ownership/analysis.rs": {
+      "content_hash": "f73da7f4aa7f3c41c7f9ddb4f0bbf5756304a4c9210da9368d628d579e1d7bd7",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 263
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/ownership/codeowners.rs": {
+      "content_hash": "7146120a7e864223a1b871f02d7139190fb6b9d276a292d2802a27d3cba3fd61",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 103
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/ownership/render.rs": {
+      "content_hash": "c97cf3fda8b72cec2c0db39d07af2385af64eb393314811ef698d3d289f2efb6",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 204
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/ownership/tests.rs": {
+      "content_hash": "c08edbac8a16fa487c9f6944ded1a92f2733b2837a0bed645379d5a11756403f",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 285
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/paths.rs": {
+      "content_hash": "48c023b98336e9d5d724ce5250ad7da2eb09f0e364d5c297ffb09e9da27331c7",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 200
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/progress.rs": {
+      "content_hash": "13548543f84a24d02d63f5db3df60d5c0c971c5dfac44edeecaa3f0263df7d6c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 55
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/prompts.rs": {
+      "content_hash": "c1aac5d87df27afafa6c33476750b2fcf6cd98875a36075173ae5c12af91f7b7",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 36
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/prompts/builders.rs": {
+      "content_hash": "714b42dc873ec14ca1eb90888aa7f8cbab2292ca41aa29f67199f5f59310214e",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 341
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/prompts/excerpts.rs": {
+      "content_hash": "cf2066857cd50d274ff69c047200fbdc11e86bf79de1c93335643e326db3d119",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 98
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/prompts/systems.rs": {
+      "content_hash": "c71fe5de22d8717795c038ae60426b3002b24347f62e9b1860653a6ac1527914",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 24
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/prompts/tables.rs": {
+      "content_hash": "a637dc2299db1eeb7fa697ee5dbb7e27711a1e366f8bd64b813d13beea650dc0",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 132
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/prompts/tests.rs": {
+      "content_hash": "4c8e352bed6ec40a3d75262e18d30bada11cb58f5fc3e4e4d559d5e326194ad9",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 441
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/prompts/types.rs": {
+      "content_hash": "c005f87dca25a7ca61f69c2d8fffdb5ffd3bf15c667ffb981b1f6b9e36756484",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 39
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/relationship_facts.rs": {
+      "content_hash": "bbe9f6a6957e8830cc426517a63754719a6e0154538f11ea3735c8c0c70481db",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 361
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/render.rs": {
+      "content_hash": "697e3e5e386f5de9e8e3ab0deca12e7a5f2e9379f83452f4907df5bf7af6be84",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 17
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/render/audit.rs": {
+      "content_hash": "5ce8cc080240d44be3bbcca0fe381e1f82d432b0eed70e1897eea279c1c2f338",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 57
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/render/common.rs": {
+      "content_hash": "40e4ca29b9997c8dfeed8297eeb78950958fb32fdb12b75c8f0acef2e6c383d8",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 113
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/render/diagrams.rs": {
+      "content_hash": "b93600fac4719ee0b4af02a201134e814709c760b6cddb1f962e3fa3e955f6e5",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 34
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/render/features.rs": {
+      "content_hash": "be537f6ed0fbc74411a51384218ad6c921eff00ca325cc4bd4dfd8072d630588",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 101
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/render/infrastructure.rs": {
+      "content_hash": "28a0d6d80110d88892dbc4e56868024363268eed8e92eb5b532bbf75caf9ec77",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 43
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/render/overview.rs": {
+      "content_hash": "aad6fbf77e6ba7501a314a3cf411fbd1c5e3035485316c89cde588eee89d6a85",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 204
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/render/pages.rs": {
+      "content_hash": "f85fc0a51d20492f14e10193f7521a3c9e35c56a40287756b651e7142141adf7",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 152
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/render/repo.rs": {
+      "content_hash": "2a15aab4ede28d22960306f17070a90c44e072d0267aaaa487ec3f23b0f3cab2",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 174
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/repair.rs": {
+      "content_hash": "30f363fadb8377bcf1b39c933cdb56e03e0348d857e0c6242d21f11ebb43de40",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 162
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/reuse.rs": {
+      "content_hash": "b73c680a6648ef977bf0d18bc9dabe576ad8d870983ff15619018faa09dbebe3",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 243
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/run.rs": {
+      "content_hash": "837a10f431f43103f50ea226d17d8bb479d0c97a7ede053d8072437bcb0d0b8c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 374
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/system_model.rs": {
+      "content_hash": "a23100fad4233ae4b4f2922d93cd8bb96e2f9ad00aa7eafd9aacb5c4f54328a4",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 857
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/tests.rs": {
+      "content_hash": "404fd156c2e6ca8cf43d97f4a3534867722985f596d634d0257d746a5f523692",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 51
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/text.rs": {
+      "content_hash": "c5a74cb9d238820c515b723c9911e7d946268a2c5fb7259c00800c29aa87baab",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 335
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/text/citations.rs": {
+      "content_hash": "5e6529995e78bb390c41a3f53f00be83bf0ea8dc3bc964795d8af1b70212ce04",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 382
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/text/frontmatter.rs": {
+      "content_hash": "8ffd96a539b68d7fd489c619d5d5ea15146d0c8d3f38f01e38ff2487c0166148",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 349
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/text/generation.rs": {
+      "content_hash": "9f9dab408b91111f5fc5e885d70de0f1801f97082b683f311061c0972cc46e1d",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 268
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/text/sanitize.rs": {
+      "content_hash": "0fb2b7f203b6db1739400157a4df1b5a8822b20c7849c18843bb6e7bd4ed25e2",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 367
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/text/structural.rs": {
+      "content_hash": "5522873acec9ca79288a3649dcced0ef49a2d2205afbf872c9e380be8f09f1f6",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 78
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/text/verify.rs": {
+      "content_hash": "b7b215c30c0711d945f286e9da39a915dcc9ceec4a502ecde3f5dd3e82608dbc",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 335
+        }
+      ]
+    },
+    "crates/gcode/src/commands/codewiki/types.rs": {
+      "content_hash": "7e55d8a2ff7441e67045f0ab8d0cdc25a526d10339c5d7d28c70a35d8bd5fed2",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 711
+        }
+      ]
+    },
+    "crates/gcode/src/commands/embeddings_doctor.rs": {
+      "content_hash": "81ff8ddbbe22c0b1a920f7c330c9a566f08f279766e25acb2c4d2c5c545e90ad",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 363
+        }
+      ]
+    },
+    "crates/gcode/src/commands/graph.rs": {
+      "content_hash": "9ac24f852dfe9701a4a1ce812224c187da8e529400ad09c75c9ba1ee572cc98f",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 14
+        }
+      ]
+    },
+    "crates/gcode/src/commands/graph/lifecycle.rs": {
+      "content_hash": "d22ed2bd4bc94381db4bbd6ab6ec764faf9f17b2d6ddb51ff48d541e0ad410f9",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 509
+        }
+      ]
+    },
+    "crates/gcode/src/commands/graph/payload.rs": {
+      "content_hash": "a18abcb8e443cbfe9c0ab998c68885e6724c263d8c634784ec6aa8e6ba025acb",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 96
+        }
+      ]
+    },
+    "crates/gcode/src/commands/graph/reads.rs": {
+      "content_hash": "18c1bc8372ffb9f859efe1fee91635fe74bc3e068743d6a439bee329ba453941",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 869
+        }
+      ]
+    },
+    "crates/gcode/src/commands/graph/tests.rs": {
+      "content_hash": "a4f339deb5046b0c87e87f97d21f583e0c2a9e8c818f525d30c9286098420625",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 548
+        }
+      ]
+    },
+    "crates/gcode/src/commands/grep.rs": {
+      "content_hash": "3d3335ccf5108b4308c5142d94fe4ac7e6c88ec6933ba5dcb02520a8fbe3289f",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 880
+        }
+      ]
+    },
+    "crates/gcode/src/commands/grep/grep_matcher.rs": {
+      "content_hash": "57892981a343fda39d7dfab7688e43086336e0786847f8677c9f18411d740d07",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 164
+        }
+      ]
+    },
+    "crates/gcode/src/commands/index.rs": {
+      "content_hash": "c16ce6aa4ac1d18c4eda3aaec2312b998412bdc4ca1b102d99c8725c3286dbed",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 369
+        }
+      ]
+    },
+    "crates/gcode/src/commands/init.rs": {
+      "content_hash": "ecd58b60ba762b2bef0eb21b388a1bdc817817210303d5110f8409f44f78e237",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 148
+        }
+      ]
+    },
+    "crates/gcode/src/commands/mod.rs": {
+      "content_hash": "7e3e882d0e43f290b588cf8b252671c7af9cff477e1aa74563046c3c4ef39dbb",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 14
+        }
+      ]
+    },
+    "crates/gcode/src/commands/scope.rs": {
+      "content_hash": "825f19efadd1044220140ff7bf12c06b267ce2f614a0200fad2d4bafae2d5bce",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 209
+        }
+      ]
+    },
+    "crates/gcode/src/commands/search.rs": {
+      "content_hash": "b16e5dd67c2385b685a96c5497684fd762e79d87afdc4b7cce01c5327abc5463",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 932
+        }
+      ]
+    },
+    "crates/gcode/src/commands/setup.rs": {
+      "content_hash": "fa734b2bfe8a1f47481f1a423c95412370227294de3d2e5228d25061084f0c90",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 612
+        }
+      ]
+    },
+    "crates/gcode/src/commands/status.rs": {
+      "content_hash": "669c82116962f250492105f9612d31b1b5c83d27e66270c3497db64b5b63211f",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 747
+        }
+      ]
+    },
+    "crates/gcode/src/commands/symbol_at.rs": {
+      "content_hash": "ad9cb110d622e91fe79fc3f12256c774c24fdabc2e84321625eae0381ff4df68",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 641
+        }
+      ]
+    },
+    "crates/gcode/src/commands/symbols.rs": {
+      "content_hash": "3d5b92295d93d4a03a2cb265d87e647427b92078974f65efcd683a10d4dabbaa",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 569
+        }
+      ]
+    },
+    "crates/gcode/src/commands/vector.rs": {
+      "content_hash": "6080a6a88f2f051e747704994996b7f57674337f654c4a630db56cacd20fb915",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 383
+        }
+      ]
+    },
+    "crates/gcode/src/config.rs": {
+      "content_hash": "d701dce094ce1c0a1c87e8665718c7a45f25995f84f211fde6cb66554565aa7a",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 24
+        }
+      ]
+    },
+    "crates/gcode/src/config/context.rs": {
+      "content_hash": "b74802dcde4fc17a5c2e717cb84aff22d4332bbf8b58cbab2f65e12f802bd691",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 639
+        }
+      ]
+    },
+    "crates/gcode/src/config/services.rs": {
+      "content_hash": "c1ece7683ffffcd80b5740b0de54b2bedb5e234422a4b3876810ac279a29728f",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 635
+        }
+      ]
+    },
+    "crates/gcode/src/config/tests.rs": {
+      "content_hash": "8275d4b7b77a365282d85c027d1bffaf877e37945cf9393a81dfb22633d7bf24",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 553
+        }
+      ]
+    },
+    "crates/gcode/src/contract.rs": {
+      "content_hash": "cdd4712e9befe064e2754d3c4b1d7468a28402b0ed632bb5e199c1c4491da1a9",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 850
+        }
+      ]
+    },
+    "crates/gcode/src/db/mod.rs": {
+      "content_hash": "fa2440a3eef525957ce3da7c6e278e49f9931ccab7856a05af9768615ffb52e8",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 35
+        }
+      ]
+    },
+    "crates/gcode/src/db/queries.rs": {
+      "content_hash": "1cf1c664eaaf9bf053ecac13af561e5c192d120d2de33b7c82d6a8dc63420ba4",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 568
+        }
+      ]
+    },
+    "crates/gcode/src/db/resolution.rs": {
+      "content_hash": "ce6277eeb2ec6510f95a6f80be1e85594d4e308161af5edf0d43912528caae82",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 795
+        }
+      ]
+    },
+    "crates/gcode/src/dispatch.rs": {
+      "content_hash": "f56dbbfe10601157541ed33f0a1732455877de6e051a34d6c0593796e432038b",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 627
+        }
+      ]
+    },
+    "crates/gcode/src/dispatch/tests.rs": {
+      "content_hash": "62766a0dfe1e1faa3c545d2e24c125fa1d4cac610b86080f4ad61f42147b5cce",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 141
+        }
+      ]
+    },
+    "crates/gcode/src/freshness.rs": {
+      "content_hash": "99d7cad7907c91f3bb962c9936824e186b2b26cc42fa1ece3aaac3a1c94256a1",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 424
+        }
+      ]
+    },
+    "crates/gcode/src/git.rs": {
+      "content_hash": "18085834a42dd264cb6c42589d06b1db4f4a1ee572fef6706e4fa26f8243c143",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 182
+        }
+      ]
+    },
+    "crates/gcode/src/graph/code_graph.rs": {
+      "content_hash": "dc11d50c9c214d1095ec306e4e0b4da7fbc3355029e6a44af557ad6d6efe21d3",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 50
+        }
+      ]
+    },
+    "crates/gcode/src/graph/code_graph/connection.rs": {
+      "content_hash": "0707784a94144177cac3169031811979f32f2c7a315cc42c34ee12e1cfc59434",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 68
+        }
+      ]
+    },
+    "crates/gcode/src/graph/code_graph/lifecycle.rs": {
+      "content_hash": "98fc55e1792e20ce7a286515c41138b748a885ab00bd05b22ee182c9f86518d4",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 286
+        }
+      ]
+    },
+    "crates/gcode/src/graph/code_graph/payload.rs": {
+      "content_hash": "9e261592284f3a6aeaae32e5c6ddfede2d14eb0e0f6db410a464c5660d617791",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 343
+        }
+      ]
+    },
+    "crates/gcode/src/graph/code_graph/read.rs": {
+      "content_hash": "612ff0631115ee895031b38c8037994ec959b3bfce7638f32a9971d06e3fa859",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 24
+        }
+      ]
+    },
+    "crates/gcode/src/graph/code_graph/read/graph_payloads.rs": {
+      "content_hash": "a2b335befb2f955889b6dbe1568e7c552162c0cb2c634ca16ec5ff9d6a88ac8c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 239
+        }
+      ]
+    },
+    "crates/gcode/src/graph/code_graph/read/payload_queries.rs": {
+      "content_hash": "e45ac552cc2ce5a8011d31fece3130616742d6fb6e08e60857f73a399e271867",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 219
+        }
+      ]
+    },
+    "crates/gcode/src/graph/code_graph/read/relationship_queries.rs": {
+      "content_hash": "30fcd78f930f736843e80492ffe13587f5f6bd309ba7e57324fc14926436a617",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 330
+        }
+      ]
+    },
+    "crates/gcode/src/graph/code_graph/read/relationships.rs": {
+      "content_hash": "7e7c35b7bb4a4e5ce8bb79b178149aff3c220f3a3fab357905bf5ecdb79303b0",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 398
+        }
+      ]
+    },
+    "crates/gcode/src/graph/code_graph/read/support.rs": {
+      "content_hash": "d977497e1df7a0f90dc2c011faac4720d04c5814ffa8bdf1f0567bbb7f134473",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 188
+        }
+      ]
+    },
+    "crates/gcode/src/graph/code_graph/tests.rs": {
+      "content_hash": "51825c318fc747058403b83e4213c094d06425b977725c8c62b6304e8e1eb700",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 579
+        }
+      ]
+    },
+    "crates/gcode/src/graph/code_graph/write.rs": {
+      "content_hash": "3bfdfce261918f41826a1900e82459b3ba3340244aa0f806c7c5e2d7387c6de9",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 376
+        }
+      ]
+    },
+    "crates/gcode/src/graph/code_graph/write/deletion.rs": {
+      "content_hash": "426d7c5b9b4f5c652fd85d76d9eea5cbe78b2ad52e7e58a40500cc0d81d3daff",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 211
+        }
+      ]
+    },
+    "crates/gcode/src/graph/code_graph/write/mutation.rs": {
+      "content_hash": "4ccb994e4e6041a44bf43a6ab44a707cad6e88a2b6c427b5e8a5f669562b4332",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 451
+        }
+      ]
+    },
+    "crates/gcode/src/graph/code_graph/write/support.rs": {
+      "content_hash": "cd619bb03471121c8ec1d0a62466c34ff62f34bf53b43f194281ce5b43045c91",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 31
+        }
+      ]
+    },
+    "crates/gcode/src/graph/code_graph/write/sync_plan.rs": {
+      "content_hash": "846c1e7a7bb3f4b1799ee205b9cafc7ebca030dbe0cdb8dc57f085d5d70894bb",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 178
+        }
+      ]
+    },
+    "crates/gcode/src/graph/mod.rs": {
+      "content_hash": "487b5604711c8fa7de63d5c3ac8907d3f079fa154b9146ad059d3fc30dad9fdb",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 3
+        }
+      ]
+    },
+    "crates/gcode/src/graph/report.rs": {
+      "content_hash": "b536201e30728aa8e730cb5b952c3b4f4026e270e441068e392eca163cad313e",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 20
+        }
+      ]
+    },
+    "crates/gcode/src/graph/report/generation.rs": {
+      "content_hash": "11c63ffb6278be5a4ac524bfe8dbe27df072f160026d24169e49ed900fb2ee55",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 159
+        }
+      ]
+    },
+    "crates/gcode/src/graph/report/loading.rs": {
+      "content_hash": "45db9e4fe323814c2876cea5861f71757041fd7450eda05c3e4785851d59ced2",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 146
+        }
+      ]
+    },
+    "crates/gcode/src/graph/report/queries.rs": {
+      "content_hash": "989c1e5c464536269f6fcb4a1cff5182466ecbde5513fc9ad8bfd8457c0f6ec6",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 144
+        }
+      ]
+    },
+    "crates/gcode/src/graph/report/render.rs": {
+      "content_hash": "c528606d5698b0ab6d444eb4cd4a06db59ceeddfcafcbfad833eef9fb5fd1563",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 185
+        }
+      ]
+    },
+    "crates/gcode/src/graph/report/rows.rs": {
+      "content_hash": "e096e13738c19536ef7247e9f9ebb861feeb4850097f00f824e8636b7930847b",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 163
+        }
+      ]
+    },
+    "crates/gcode/src/graph/report/summary.rs": {
+      "content_hash": "7418f153545314f549af4fe8b802e44a41a683499ca4c02579bb99bc3d4d0975",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 356
+        }
+      ]
+    },
+    "crates/gcode/src/graph/report/tests.rs": {
+      "content_hash": "bdd7ad5ed179f10738f9d7b75df894a005599a7309a39332f57a837d75aac054",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 390
+        }
+      ]
+    },
+    "crates/gcode/src/graph/report/time.rs": {
+      "content_hash": "3f872c51de4126aec728b08437cca67ea90d6c4a8aa2d7152a56139e5558d449",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 5
+        }
+      ]
+    },
+    "crates/gcode/src/graph/report/types.rs": {
+      "content_hash": "2a3a20f11a623caf5d4b8263f28077e7f032699ae2a8eb3cde97364c8582a23f",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 268
+        }
+      ]
+    },
+    "crates/gcode/src/graph/typed_query.rs": {
+      "content_hash": "86ac1c4fa13f7feca4644cb491a805256076252e4bd48ef186976d6168d06b42",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 351
+        }
+      ]
+    },
+    "crates/gcode/src/index/api.rs": {
+      "content_hash": "04e48b1f40d6c5434aedeef1fe18bc62fc49c541d36d4f06e3afa98cbffdea6b",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 424
+        }
+      ]
+    },
+    "crates/gcode/src/index/chunker.rs": {
+      "content_hash": "548ca3c2bb637c23ffb23f3d5d1d870bf777f5186ca03c897bbb56e1c8984b0a",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 91
+        }
+      ]
+    },
+    "crates/gcode/src/index/hasher.rs": {
+      "content_hash": "706088a98e4bb2967e9dff1786c6e834d2a7f6f08ee063d08f80302769ae6feb",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 86
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution.rs": {
+      "content_hash": "e4da79f8bc930cddfd9904b8627f3cbc2519c1cfe3a4c44164dd797af665dc54",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 25
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/context.rs": {
+      "content_hash": "01e50218cdfe3680ff3675d158d909bf0c5c4889135fdd42754163cea4641073",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 409
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/context/apple.rs": {
+      "content_hash": "5c686b2f73710397879f07d06416f633da064772551cfc60d24fb5f8ce0f2d37",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 274
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/context/bindings.rs": {
+      "content_hash": "81e4e7afa622d717d5fb4668899da88e1149d1e6959912d31e97b0b1e8b96cf7",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 173
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/context/dotnet.rs": {
+      "content_hash": "f75e7eb816d4b36a9766a1f4112e3c75f67c0725dc21b9be7410e8a979c72269",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 88
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/context/elixir.rs": {
+      "content_hash": "10e5795f7a6d42f3e1da22a48420a90b409b2df1530d4d8b2754ce2a2a2b6612",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 164
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/context/jvm.rs": {
+      "content_hash": "c1254434b8259fd8ab3520f87e2e3ee6c2be235dcd6601497791df3944dfef38",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 218
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/context/package_metadata.rs": {
+      "content_hash": "24021d4bdb4672e2fcfd267f1d74ab3fd27f3773b8354c127ed9ac47d35d0348",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 271
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/context/python.rs": {
+      "content_hash": "be8778e72258c421e1d8a8e55b64ca7c3bc0fc17aca7976f9949cd1372bc3a12",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 91
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/context/scripting.rs": {
+      "content_hash": "3f14afb4d353a176646484315c840e26fc3f881f7d8f05b106c4f2c7cb7bfaed",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 218
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/helpers.rs": {
+      "content_hash": "1d277f1e7bbd0c5a551d97a6dd35d1383576be52142c4e56d016d5f1c339bb1a",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 403
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/js_local.rs": {
+      "content_hash": "c9b8bded18a9585f62450af79f3ecc97e37fc04633d7c32f6e0ee6cf0f80f9d8",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 175
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/parser/go_rust.rs": {
+      "content_hash": "4bf232248d2fc265131efa0840b442f83ce535e872a532f2604db162692c148c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 261
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/parser/java_csharp.rs": {
+      "content_hash": "f731959b20cd48806f4c4ec4b2cd8924e9272cb56258337e213bde5d4d53aa14",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 188
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/parser/lua.rs": {
+      "content_hash": "da76702d154230f5017ddd8e599d14cd487f84422c4245176a98943bc6fa329c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 137
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/parser/mod.rs": {
+      "content_hash": "a07092ba4e0dd44c868e07b4e4ce293df2a1fde83565016d66537ee68b709a72",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 507
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/parser/objc.rs": {
+      "content_hash": "666f70a6f43e765aed08f9d06551bebaa1fee33a27377ba344824b9e0845f4b0",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 95
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/parser/php_kotlin.rs": {
+      "content_hash": "9a0e37c85d996667b0d9f740c572d5432968192c10e799b5f233ca71af1aed53",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 292
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/parser/python_js.rs": {
+      "content_hash": "18ac6f0a86da9e026f05b406c5af02295eb4c25e8ffd16c543029c64da48e4b0",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 319
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/parser/rest.rs": {
+      "content_hash": "6ea1f7187eed9377fb9dda4e1ef7d43c50af1ebc7eb5e0b896cb164e5489ee54",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 233
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/parser/scala.rs": {
+      "content_hash": "91d577fd434701864b50033c54f0f2f4b3552cdae53da67bc60124e90122539c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 155
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/parser/shell.rs": {
+      "content_hash": "f0c886fbe20ac597360ef7745805ce14b7097fc99f4652c4141f74868e3984b1",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 96
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/predicates.rs": {
+      "content_hash": "af5efd81c0846bdc825259ba9ee54cf9ebea2dedf35da38763f8a00527cb7cbe",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 328
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/rust_local.rs": {
+      "content_hash": "b3c9dd0edf070708fb9b01fb508113982d2e2f277c0740b838ccd75217f5e4ec",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 217
+        }
+      ]
+    },
+    "crates/gcode/src/index/import_resolution/tests.rs": {
+      "content_hash": "d862ecbb6be42f8b17829206a9fa05a4b30b598141c4ef6265d907232fc6efdf",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 5
+        }
+      ]
+    },
+    "crates/gcode/src/index/indexer.rs": {
+      "content_hash": "6b338b510f9fd15946a996d92c64f713350a22fcaf203d7b6b927e89e1b0f899",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 27
+        }
+      ]
+    },
+    "crates/gcode/src/index/indexer/file.rs": {
+      "content_hash": "7ff6f1a86d36c782e0b5383ce85f569d918c14fc691742b32b76369922b64d91",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 303
+        }
+      ]
+    },
+    "crates/gcode/src/index/indexer/freshness_probe.rs": {
+      "content_hash": "32739acb51ad7586986889361e64c130a013980cd9413fd7bfbba47d9cb49bb5",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 266
+        }
+      ]
+    },
+    "crates/gcode/src/index/indexer/lifecycle.rs": {
+      "content_hash": "6b82471cf280be98de0c393c6cafce74b8ba44f3db762fde7086aa0e799eb88a",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 305
+        }
+      ]
+    },
+    "crates/gcode/src/index/indexer/local_imports.rs": {
+      "content_hash": "b3ad86d0b69d2d83cf810679e9c1dab95f78fe0dafa125658d11e73fd407c4e4",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 102
+        }
+      ]
+    },
+    "crates/gcode/src/index/indexer/overlay.rs": {
+      "content_hash": "1c4801a9c6e8db5779a3dc351d481ba303f2874467ba4ee8c98eef6a09dbe7f8",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 489
+        }
+      ]
+    },
+    "crates/gcode/src/index/indexer/pipeline.rs": {
+      "content_hash": "d2bc384323617e5a0cc53c5c20cfa0b108adec974f263ba312d4b5f912e236d0",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 350
+        }
+      ]
+    },
+    "crates/gcode/src/index/indexer/sink.rs": {
+      "content_hash": "1c69e680cc6391f1ce65272b3ee1fe261250889dbced31efec396953a5967269",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 100
+        }
+      ]
+    },
+    "crates/gcode/src/index/indexer/tests.rs": {
+      "content_hash": "46a6983d465b8d9a419a5bd5a10847a22ceb1bd7798d43bdafc02cca3418be80",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 8
+        }
+      ]
+    },
+    "crates/gcode/src/index/indexer/types.rs": {
+      "content_hash": "c83f78d323a5994cdd8a659a23646a4f212f2b62eb42c055c72a302d4b83af5f",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 124
+        }
+      ]
+    },
+    "crates/gcode/src/index/indexer/util.rs": {
+      "content_hash": "1609801535e57d6f81935f4c3ed6d8aa348dba09845827cf1f6362b8089e8aa1",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 233
+        }
+      ]
+    },
+    "crates/gcode/src/index/languages.rs": {
+      "content_hash": "27ba85817c2355baf9529fada0281c581d10238bf4255909ff276e2a74c7406f",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 803
+        }
+      ]
+    },
+    "crates/gcode/src/index/mod.rs": {
+      "content_hash": "cd7f223a52573cff465047136576e34f44d8237b241b983b058fb94fe378de65",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 25
+        }
+      ]
+    },
+    "crates/gcode/src/index/parser.rs": {
+      "content_hash": "6864d37a001ff0226efc54374f4bac2c091f7f0f816d10e411a2a11bdf4ac949",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 446
+        }
+      ]
+    },
+    "crates/gcode/src/index/parser/calls.rs": {
+      "content_hash": "0434601e35f4f67d95712d003f43d0f07bb24a3d595ac56022d74a63d82c8649",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 464
+        }
+      ]
+    },
+    "crates/gcode/src/index/parser/calls/ast.rs": {
+      "content_hash": "d7bd309f480723b45ee187c14fb356005940738a6edb27e819b8c83cd4fbb72a",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 253
+        }
+      ]
+    },
+    "crates/gcode/src/index/parser/calls/dart_textual.rs": {
+      "content_hash": "0874091d72ae8227d54f587c265c2c3b22fd34d33fc869f0121f9d64014aa221",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 492
+        }
+      ]
+    },
+    "crates/gcode/src/index/parser/calls/objc_ast.rs": {
+      "content_hash": "66e1a1096f06fc2dd08fccdb89fa43c19c419c508dcc7892f233d926c8ba4851",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 197
+        }
+      ]
+    },
+    "crates/gcode/src/index/parser/calls/resolution.rs": {
+      "content_hash": "e0365579ea8179c7bfe0ff83de66f1aa81ce7b47083f9295d6ccfd4e6681fcbb",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 286
+        }
+      ]
+    },
+    "crates/gcode/src/index/parser/calls/shadowing.rs": {
+      "content_hash": "26d4f585fc040dec9fcc36816ebd759454cd3bda94a9a0700cc942cd6fa0ecdb",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 364
+        }
+      ]
+    },
+    "crates/gcode/src/index/parser/calls/text.rs": {
+      "content_hash": "ed46ae1946f999e092cc31b63098d5fbc5e233c8479706e7b7b5dede393a600d",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 175
+        }
+      ]
+    },
+    "crates/gcode/src/index/parser/tests.rs": {
+      "content_hash": "bb4cf4a6c8e0831e47494acc2b5e9f8dbddb43993c91dd433b4db6ec1884b691",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 11
+        }
+      ]
+    },
+    "crates/gcode/src/index/security.rs": {
+      "content_hash": "ed6bdcce048a64295f4454290aed96ea74e6c913f2db643535625e529a596f5b",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 148
+        }
+      ]
+    },
+    "crates/gcode/src/index/semantic.rs": {
+      "content_hash": "5fd238a2653e842ba26ff9bb6c620233d69a94f393b8d985f67739ae42536039",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 921
+        }
+      ]
+    },
+    "crates/gcode/src/index/walker.rs": {
+      "content_hash": "13b6fb891d48cc1776e9065c9dd0aeae92c57730dc0f9132e30ec5f100aefe66",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 17
+        }
+      ]
+    },
+    "crates/gcode/src/index/walker/classification.rs": {
+      "content_hash": "fd06cb4000f8289013d02829a092926cdd24bc6ff1ace4d6ed36331011850644",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 144
+        }
+      ]
+    },
+    "crates/gcode/src/index/walker/discovery.rs": {
+      "content_hash": "ef4ded4271a300db39e16cd5470e0cdfb01566ed352dae15013292def136f08d",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 84
+        }
+      ]
+    },
+    "crates/gcode/src/index/walker/generated.rs": {
+      "content_hash": "00b58dd17684b4fc3e061bf8e3162ff2ffa597e07cf8df11840d1ab5bb519c3f",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 92
+        }
+      ]
+    },
+    "crates/gcode/src/index/walker/hidden.rs": {
+      "content_hash": "b08c4c05c3ecbf566cb56f74ca0701a6b6ea0579b9c37fe4103c90d6c7bb2994",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 188
+        }
+      ]
+    },
+    "crates/gcode/src/index/walker/tests.rs": {
+      "content_hash": "9f2114816821f3f9a177b2170c5d52fd7a2a4e765289a0ad40a397c5cc2f8272",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 31
+        }
+      ]
+    },
+    "crates/gcode/src/index/walker/types.rs": {
+      "content_hash": "8b83defff1d5ef9e4d578ae2d72041fe09c0655df7fd8bfa4be69c2f58a8e5e7",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 19
+        }
+      ]
+    },
+    "crates/gcode/src/index_lock.rs": {
+      "content_hash": "6e802a5fb55367202d4f073c457aba66d19f6e69ea874fe2346b8cc8ba5d8d6f",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 324
+        }
+      ]
+    },
+    "crates/gcode/src/lib.rs": {
+      "content_hash": "fd7136244d48912ffacb5007bb9319b4e1865c2beed0627379eada0d5d03378a",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 212
+        }
+      ]
+    },
+    "crates/gcode/src/main.rs": {
+      "content_hash": "dfc3598e031b6c5581e743c9ed2581662d80f33d2f18fa7585140d514653df31",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 25
+        }
+      ]
+    },
+    "crates/gcode/src/models.rs": {
+      "content_hash": "ffc7d09ad3b5c948a802c17a115d49a0e5b95491a93d63e92c5ff03be44bd116",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 703
+        }
+      ]
+    },
+    "crates/gcode/src/output.rs": {
+      "content_hash": "c7062d588859e9e54e67c8c6c3d3d7c26d116e235253888f56d4f560aeb74136",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 26
+        }
+      ]
+    },
+    "crates/gcode/src/progress.rs": {
+      "content_hash": "ddb77a6e15f13b88fae4ddcd0257ca42ca38184fed12b57633d13ea9fa0f86b8",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 71
+        }
+      ]
+    },
+    "crates/gcode/src/project.rs": {
+      "content_hash": "c6e1b184333ea7641bada80d158a0537629a6b3f247d4bfcb7f2777dca3d3c6a",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 266
+        }
+      ]
+    },
+    "crates/gcode/src/projection/mod.rs": {
+      "content_hash": "616ce7287e19b414895257055746df9f0ae873addee0ec0c13bcdf531d0b7420",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 35
+        }
+      ]
+    },
+    "crates/gcode/src/projection/sync.rs": {
+      "content_hash": "8b70358a13ea0cf044aad6cad968af7dac532d03306ef048d47e76b03e63a7ef",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 529
+        }
+      ]
+    },
+    "crates/gcode/src/savings.rs": {
+      "content_hash": "7588d7b4495a09ae31f482f946de63926dea5fd249731005aafbdc5c3b0b8a07",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 50
+        }
+      ]
+    },
+    "crates/gcode/src/schema.rs": {
+      "content_hash": "c6e6d47280c34cbeabf84dbbaa15521738fd96e947682c58bdc01441fd7eeeb3",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 141
+        }
+      ]
+    },
+    "crates/gcode/src/search/fts.rs": {
+      "content_hash": "1d8ed48c363e3ac344fc0ffef4e96b8c0c682edf2d0d9db111517692d87900ee",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 31
+        }
+      ]
+    },
+    "crates/gcode/src/search/fts/common.rs": {
+      "content_hash": "10ca69e5dd0661f7d6d363af8179f4d4cbdb02f79f5b72299754db927fc62eb9",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 363
+        }
+      ]
+    },
+    "crates/gcode/src/search/fts/content.rs": {
+      "content_hash": "4cced97b8fcf4155840c4e5368e27f09611d150bfa9ac5debe2e151d9f57f306",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 270
+        }
+      ]
+    },
+    "crates/gcode/src/search/fts/counts.rs": {
+      "content_hash": "3c83bb7160cea256e105af03f9853eae71224732f9fe73b6b67982caaa55f7b4",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 386
+        }
+      ]
+    },
+    "crates/gcode/src/search/fts/graph.rs": {
+      "content_hash": "6d5c6d05b887dc05e1741ddedf9e700451923635939e42e63560c5756cb32fe2",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 147
+        }
+      ]
+    },
+    "crates/gcode/src/search/fts/symbols.rs": {
+      "content_hash": "34a4e43c611cc614ed7a20aba06d591f737256e09b3c14241a8b0be705125eb9",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 401
+        }
+      ]
+    },
+    "crates/gcode/src/search/fts/tests.rs": {
+      "content_hash": "428c06a06ba5bc28b3aa58de61302e7c2880b92471de1b8efe2c8f4a15ba0c9e",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 557
+        }
+      ]
+    },
+    "crates/gcode/src/search/graph_boost.rs": {
+      "content_hash": "f7109d1858a34ee92e29570725101276cf1684eece0e9fa2dfa4e78a4dde173c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 224
+        }
+      ]
+    },
+    "crates/gcode/src/search/mod.rs": {
+      "content_hash": "1320437eb82c2e030ce2f78069f0b1702a223fb9d98a43a7096db5572d6005c8",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 10
+        }
+      ]
+    },
+    "crates/gcode/src/search/rrf.rs": {
+      "content_hash": "c1f09b6cb3fac76976356aa150ca2f1fadb206d86fdd695bedea604c865f721a",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 114
+        }
+      ]
+    },
+    "crates/gcode/src/secrets.rs": {
+      "content_hash": "584af7e4eb22c4d4dac65136f1779d36e772f29767334b14af9e645a787779a5",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 3
+        }
+      ]
+    },
+    "crates/gcode/src/setup.rs": {
+      "content_hash": "991ba93a59620af2f7dfa77443bece023519ce64ae419584da87e5e6ea843a2d",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 15
+        }
+      ]
+    },
+    "crates/gcode/src/setup/contracts.rs": {
+      "content_hash": "79e261ca2aa58bf2231daa25eb2b033d6c202ef4b062cc8becde71875e6f8c17",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 197
+        }
+      ]
+    },
+    "crates/gcode/src/setup/ddl.rs": {
+      "content_hash": "82d875af2e4deb9cc398085efaa91cb0e5f263634a92ef34bf80e562e857ce40",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 338
+        }
+      ]
+    },
+    "crates/gcode/src/setup/identifiers.rs": {
+      "content_hash": "bb2629727a4cdfada7facab8a7cadd6a65543a09882906ae733ba6570f8ad8d8",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 41
+        }
+      ]
+    },
+    "crates/gcode/src/setup/postgres.rs": {
+      "content_hash": "62c3795ac4c1185a38bd79afcbe0b8faae39b0581b9e3fb8ada18e1055a356fe",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 308
+        }
+      ]
+    },
+    "crates/gcode/src/setup/tests.rs": {
+      "content_hash": "9d5d62dc1090e1447e891c85f9b3e0c9a4a1ccb95f190e8f3df2798093e2992d",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 471
+        }
+      ]
+    },
+    "crates/gcode/src/setup/types.rs": {
+      "content_hash": "328d48841481bf626ad1bac8c8e419057d51a04349a274c7aa16adefa4d36c72",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 147
+        }
+      ]
+    },
+    "crates/gcode/src/skill.rs": {
+      "content_hash": "80b70485206dc3417c2d4a62edc0a48b7cc0375f806a8a23a7bfa48a2d0643d5",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 221
+        }
+      ]
+    },
+    "crates/gcode/src/utils.rs": {
+      "content_hash": "b7b240a138f6defac1392cb54cb4f11c0eecee5e27699b02196b48759840226e",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 54
+        }
+      ]
+    },
+    "crates/gcode/src/vector/code_symbols.rs": {
+      "content_hash": "4ef72f103c873a0e107b29bf1fd6404fb67785790930482b0384aa0f9d36bdae",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 28
+        }
+      ]
+    },
+    "crates/gcode/src/vector/code_symbols/embedding.rs": {
+      "content_hash": "7fd9683393e6ceff3aeaaaf1fe9241d17c3392940b16692e52068cf84d56a776",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 443
+        }
+      ]
+    },
+    "crates/gcode/src/vector/code_symbols/lifecycle.rs": {
+      "content_hash": "416db73e6dbaac78d228b4738694f53f2f9dcd0191979bb5d18ba409cd304adc",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 393
+        }
+      ]
+    },
+    "crates/gcode/src/vector/code_symbols/qdrant.rs": {
+      "content_hash": "8126ce5c9c37aa91111344c42b42c2c0394aa84b23005e172d65550ddd470df9",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 453
+        }
+      ]
+    },
+    "crates/gcode/src/vector/code_symbols/repository.rs": {
+      "content_hash": "d0a3445ed37582e642d2621eb7680e1a087d63710dac8e98f4739ec545965a6e",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 77
+        }
+      ]
+    },
+    "crates/gcode/src/vector/code_symbols/search.rs": {
+      "content_hash": "9f1f2c326f3c9e18396514a1ae36a6b7fe048e612d791a38e009ae8dbc80828f",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 81
+        }
+      ]
+    },
+    "crates/gcode/src/vector/code_symbols/tests.rs": {
+      "content_hash": "090723579667bfb1311a803433b5d9021e222df2cf0ceee8e90a12a2c0211e67",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 162
+        }
+      ]
+    },
+    "crates/gcode/src/vector/code_symbols/types.rs": {
+      "content_hash": "8b26570126f9edc0ab3a61b30266eb30a651fa57bf255d897eb433745934fc79",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 211
+        }
+      ]
+    },
+    "crates/gcode/src/vector/mod.rs": {
+      "content_hash": "23748eba911ece0311da2057fa1731dd1fb350678f58e5d0af747a9d53e5537a",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 1
+        }
+      ]
+    },
+    "crates/gcode/src/visibility.rs": {
+      "content_hash": "de4737315628031b85d05aa04b3f6f562fe3f6f06814e4c39ae70feafa4562a3",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 612
+        }
+      ]
+    },
+    "crates/gcore/assets/docker-compose.services.yml": {
+      "content_hash": "73dd88dd4643bf9523edc0502bdceb425448eac1c959cbd8eb682990383cc08b",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 127
+        }
+      ]
+    },
+    "crates/gcore/assets/postgres-pgsearch/scripts/pg_audit_export.sh": {
+      "content_hash": "4b778b062f6be50d1a5021cceeadc3831de25c0acf99291ec111a3d7aa0a50ba",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 152
+        }
+      ]
+    },
+    "crates/gcore/assets/postgres-pgsearch/version.json": {
+      "content_hash": "bbf8df73b578c35ae72be081f02d8e707da60433e99fbfec71a562cd36e74792",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 9
+        }
+      ]
+    },
+    "crates/gcore/src/ai/daemon.rs": {
+      "content_hash": "fb8a5425d1bce7b173b71f6356492581c80e42efa3bfd09e778a452f7e4ea761",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 14
+        }
+      ]
+    },
+    "crates/gcore/src/ai/daemon/operations.rs": {
+      "content_hash": "a0b15807b36a5a51bde1bb27f72754a4624ed4d3663e703ad36d02ce6af2c222",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 203
+        }
+      ]
+    },
+    "crates/gcore/src/ai/daemon/request.rs": {
+      "content_hash": "92d243caae96e92b1650be4fc382aae0e9e8e7f517e7e2a4a9a49e6067abda59",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 134
+        }
+      ]
+    },
+    "crates/gcore/src/ai/daemon/response.rs": {
+      "content_hash": "90574997eba05eb2034f0407ec331fe711e8c29fa22fee6f1cc6af80b239c035",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 68
+        }
+      ]
+    },
+    "crates/gcore/src/ai/daemon/tests.rs": {
+      "content_hash": "f9651d82bee94549cddf5c700a0ae5e83f9da015f396e7fbed2a0a607055b292",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 150
+        }
+      ]
+    },
+    "crates/gcore/src/ai/daemon/transport.rs": {
+      "content_hash": "dc17cdb0c980abe1a1922ddcd705c24822458a8b7470b4d67df6d7478ebd2a30",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 46
+        }
+      ]
+    },
+    "crates/gcore/src/ai/daemon/types.rs": {
+      "content_hash": "203b7bc05c15f2178ad90f403d8ba0008bb23866a0d912cc2ed0e9bb59cfabca",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 27
+        }
+      ]
+    },
+    "crates/gcore/src/ai/embeddings.rs": {
+      "content_hash": "3c585ad5ae6422b61ccb8cf819c4bc60162aa97be06827416491bd092ef1f73b",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 274
+        }
+      ]
+    },
+    "crates/gcore/src/ai/mod.rs": {
+      "content_hash": "e02a17cfe117ca8a57cd012834c4d24632bd05f1c2048085cc19a3fa27834f30",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 600
+        }
+      ]
+    },
+    "crates/gcore/src/ai/probe.rs": {
+      "content_hash": "fdd8c97452c788b6681d90cb6f46448eb3669228bedc408827b38005555ebac0",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 531
+        }
+      ]
+    },
+    "crates/gcore/src/ai/text.rs": {
+      "content_hash": "8480c6f64289ba7d37e035f373c63e260d46ec188ddba61f3cc3c6cf2dc7c972",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 193
+        }
+      ]
+    },
+    "crates/gcore/src/ai/transcription.rs": {
+      "content_hash": "d2900a0c30da051c130eaf9edc4d702a8ba88140653c4ae42c0458be21093772",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 254
+        }
+      ]
+    },
+    "crates/gcore/src/ai/vision.rs": {
+      "content_hash": "445537320693e3333c33b370785618aa091d1d31a2eaeaadce0ca98dd4294344",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 308
+        }
+      ]
+    },
+    "crates/gcore/src/ai_context.rs": {
+      "content_hash": "6c2b4a5001844e9714e36058644cc691e03c61322979986b39ff0d1f88920a53",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 739
+        }
+      ]
+    },
+    "crates/gcore/src/ai_types.rs": {
+      "content_hash": "b922133540f8f3817c1e027850d6823417845ca1b132a1771a4667877c2c6964",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 443
+        }
+      ]
+    },
+    "crates/gcore/src/bootstrap.rs": {
+      "content_hash": "b032ede0d311ef9450b096c8b2b5aa595bab50d46fad841bb549bff89bd2401d",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 179
+        }
+      ]
+    },
+    "crates/gcore/src/cli_contract.rs": {
+      "content_hash": "58e32eaf00400dde9241b738370126c603d09ffba42a62095d32524d5407320d",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 179
+        }
+      ]
+    },
+    "crates/gcore/src/codewiki_contract.rs": {
+      "content_hash": "09dd7f203cfd25cb84ab2bbd0a7ea1f7fd52055f32ba44e63c9d022b444f7edd",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 87
+        }
+      ]
+    },
+    "crates/gcore/src/config/mod.rs": {
+      "content_hash": "7051bf210335392e7ec1d020891672d8cdf5c0d05336b808282d9ee63fc1a630",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 30
+        }
+      ]
+    },
+    "crates/gcore/src/config/resolve.rs": {
+      "content_hash": "5470c3baf939f4bb532c36212ee9aa1a10d3b3fd6836a311261448f182337ea9",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 541
+        }
+      ]
+    },
+    "crates/gcore/src/config/tests.rs": {
+      "content_hash": "2ba763a3fdbc2df99deacb6b8bf7de7c8c7b82093cab6e0d9bc022949db8ab1c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 211
+        }
+      ]
+    },
+    "crates/gcore/src/config/types.rs": {
+      "content_hash": "16a5cf112ee60b5ed8be963ee9146cf7c6f79ed6b363d81bf740053e2b3211c8",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 414
+        }
+      ]
+    },
+    "crates/gcore/src/daemon_url.rs": {
+      "content_hash": "10fcc9256b546dbbbb1af6abd1ba8110ee4cb3429368f80247cec1d46bd408d9",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 235
+        }
+      ]
+    },
+    "crates/gcore/src/degradation.rs": {
+      "content_hash": "b0ed2ab46676ca6b844e6188c898c796a2529df8e06eddf9104552c0ca095056",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 418
+        }
+      ]
+    },
+    "crates/gcore/src/falkor.rs": {
+      "content_hash": "f1dce8b9f8e6227b2edb6fedd1d39b4c1499c1a58b3715b25bd429766de34f53",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 482
+        }
+      ]
+    },
+    "crates/gcore/src/graph_analytics.rs": {
+      "content_hash": "f0bc5a352357c68a35bee17ea8642c94811ae7aa4c140be74005531b1c163750",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 691
+        }
+      ]
+    },
+    "crates/gcore/src/graph_analytics/leiden.rs": {
+      "content_hash": "bce2083637cac28ddbf71883276ca80bd9141923549a491605f8655b4ee67d90",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 846
+        }
+      ]
+    },
+    "crates/gcore/src/indexing.rs": {
+      "content_hash": "5994d89388d2f92dfcf9b2b2edb3cc943562fd3a2a9fd50265f2459471f0789c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 398
+        }
+      ]
+    },
+    "crates/gcore/src/lib.rs": {
+      "content_hash": "cbdfbf2adc6f8c54e0ba824725541a9357b0fd5ef36617bbd8bcec66be074436",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 61
+        }
+      ]
+    },
+    "crates/gcore/src/libpq.rs": {
+      "content_hash": "bad6a927a176f52ca2499e0428b7fb2d02475874be5d9de68934c1bd0efd402c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 39
+        }
+      ]
+    },
+    "crates/gcore/src/postgres.rs": {
+      "content_hash": "760b3e56d8471772b22b988fbc1d723107d20108d5efd3d1ea63d15371c04e77",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 414
+        }
+      ]
+    },
+    "crates/gcore/src/project.rs": {
+      "content_hash": "c2fbc65bb362722548f2f456884793adc596ce7cadd6df7d1c77a9b60bfe4aba",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 165
+        }
+      ]
+    },
+    "crates/gcore/src/provisioning/bootstrap.rs": {
+      "content_hash": "45b32835d7397a99c816310a74bd9331b490706340ccf87fd999953d6c987b36",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 276
+        }
+      ]
+    },
+    "crates/gcore/src/provisioning/docker.rs": {
+      "content_hash": "f038b2477a7fd9f4ce95c699f17da80894f6bbe0fe0bd5310a7b1f98b0ac19a0",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 418
+        }
+      ]
+    },
+    "crates/gcore/src/provisioning/hub.rs": {
+      "content_hash": "db154c26899a1ab3515dd303a14eab5ef9693d9b1b413846f38694b51b937c51",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 470
+        }
+      ]
+    },
+    "crates/gcore/src/provisioning/mod.rs": {
+      "content_hash": "01e59fbab89f859e93ab48b3d39bb7702ddb1eaba1b0c93b13a30c8043be360c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 233
+        }
+      ]
+    },
+    "crates/gcore/src/provisioning/tests.rs": {
+      "content_hash": "e12b1615913627a4faf6a4f4ce9fbfd6cceda12c304c9c96d1228b67e6b81b4b",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 792
+        }
+      ]
+    },
+    "crates/gcore/src/qdrant.rs": {
+      "content_hash": "44f4bae978ebec1f8ad5f8bcf484cd9a7b771cc03e8cc05cee683a667c01dafc",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 586
+        }
+      ]
+    },
+    "crates/gcore/src/qdrant/naming.rs": {
+      "content_hash": "602185b76ee78881a4ce128c0d160d296fcec38633898255dd0d13371ed9c50e",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 125
+        }
+      ]
+    },
+    "crates/gcore/src/qdrant/tests.rs": {
+      "content_hash": "2d6b6780a2a7226ae5bb3b35e05d56f38cadef94ba4b5c13c87b40e29539c794",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 556
+        }
+      ]
+    },
+    "crates/gcore/src/search.rs": {
+      "content_hash": "8902596584eea6052141cfef0847366d80540fb5f62462244da723b8bdd499af",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 297
+        }
+      ]
+    },
+    "crates/gcore/src/secrets.rs": {
+      "content_hash": "b4d49670a280100e7b4d4f5755c46a091d1003b1e45123b0598c9303e399451c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 325
+        }
+      ]
+    },
+    "crates/gcore/src/setup.rs": {
+      "content_hash": "e0f907f67693b0cc50453e8e69c05fb11278c10259d8c9eeab5e6bf7bbdb7d73",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 316
+        }
+      ]
+    },
+    "crates/ghook/schemas/diagnose-output.v2.schema.json": {
+      "content_hash": "82621e16c5b3152a9963a05b1d0b0ca5f210af970303b89f0a19bf180c063c37",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 80
+        }
+      ]
+    },
+    "crates/ghook/schemas/inbox-envelope.v1.schema.json": {
+      "content_hash": "df30064e8847cb0fdb86dfedbf312f08c15642f706bcda812da461c14e8641dd",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 64
+        }
+      ]
+    },
+    "crates/ghook/src/action.rs": {
+      "content_hash": "be1498000722a4ec91a4bd506b8b831d598d60231ab21e5b75fa4d4dc6e50806",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 578
+        }
+      ]
+    },
+    "crates/ghook/src/args.rs": {
+      "content_hash": "3b35e5a6243bb3103a9291529f81b26e94d2507de158f84307cdf79bee85166f",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 33
+        }
+      ]
+    },
+    "crates/ghook/src/cli_config.rs": {
+      "content_hash": "ab8ed37b4e132451ef026620d39968b8d401aa587a351ca1e3462f89dc5b5d89",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 137
+        }
+      ]
+    },
+    "crates/ghook/src/detach.rs": {
+      "content_hash": "104a779bdfc46df1aabd1446724844911aaf61b9c6aa7f65523e85215b914357",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 44
+        }
+      ]
+    },
+    "crates/ghook/src/diagnose.rs": {
+      "content_hash": "e99de425e9955d2b6f6db840625c4d0f15b3a16c8dcd68772ea338e2af549ab1",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 285
+        }
+      ]
+    },
+    "crates/ghook/src/dispatch.rs": {
+      "content_hash": "10112f274cfb46bfbfed8c383709a1f2929cd6abba1cdd843f99f510b0350314",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 331
+        }
+      ]
+    },
+    "crates/ghook/src/envelope.rs": {
+      "content_hash": "da18456e95f5f71fc7ca35ee7542cbf90e02099941f2f9dc092096693d9fe2ac",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 163
+        }
+      ]
+    },
+    "crates/ghook/src/json_value.rs": {
+      "content_hash": "adbf1c31f28f51e2891c5af51c414ce0623e079db23c9eec26c220500306865d",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 53
+        }
+      ]
+    },
+    "crates/ghook/src/main.rs": {
+      "content_hash": "fb86fa67d1b57d9686cdbba6463577bc1c20b336c657037cd17b2cfe0185eaea",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 81
+        }
+      ]
+    },
+    "crates/ghook/src/output.rs": {
+      "content_hash": "1f1fe97909b497cfa0a178b5b9bf65078699a92e59cf0c57cc259f7774906598",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 9
+        }
+      ]
+    },
+    "crates/ghook/src/planned_shutdown.rs": {
+      "content_hash": "e5c0d075c3a2e7869747bc416407148939d8830c0decd2846591495aa0cb3f8d",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 409
+        }
+      ]
+    },
+    "crates/ghook/src/runtime.rs": {
+      "content_hash": "f3bc069f7b4fcd40bd7481cb11cfffb4fd5bba4f0834c880284d12bda0b698af",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 16
+        }
+      ]
+    },
+    "crates/ghook/src/source.rs": {
+      "content_hash": "2add6762ee56b8a93cc96fe0557fc4b7c5b2ea47614ae0f5fdf9b02d7ae43885",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 88
+        }
+      ]
+    },
+    "crates/ghook/src/statusline.rs": {
+      "content_hash": "c4f32f2d48772cbb82bfab133c72e121b129fef7b6aebccb4e24dcf0b075deca",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 398
+        }
+      ]
+    },
+    "crates/ghook/src/terminal_context.rs": {
+      "content_hash": "fcfdc200f020cff1637b1cd8a63de0942f2735b3c728ebb2ed6d14ef2798be58",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 238
+        }
+      ]
+    },
+    "crates/ghook/src/transport.rs": {
+      "content_hash": "fbf4be61ccd74fb3a7651b196708fc4231dd7ad16f498ca92e212b0ff12b4f14",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 494
+        }
+      ]
+    },
+    "crates/gwiki/contract/gwiki.contract.json": {
+      "content_hash": "1387f95b63f0d55f5872ee379919460c5e692e879ae6b79d29a7a8d7dbdd1f27",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 948
+        }
+      ]
+    },
+    "crates/gwiki/src/ai/chunk.rs": {
+      "content_hash": "242c9f80fc41fbfc0e56efe68db56b017fdf0564244fdc8763713c7cfb10a184",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 618
+        }
+      ]
+    },
+    "crates/gwiki/src/ai/clients.rs": {
+      "content_hash": "82e5b6d4de4384364e6a864133d7927d0f118d95a0b346ad0bc2886db463cb4a",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 490
+        }
+      ]
+    },
+    "crates/gwiki/src/ai/mod.rs": {
+      "content_hash": "f5c0098f56d2e5691c1df0c823c7182d9f9d543ac43473db72088f9d7f8bfbc1",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 3
+        }
+      ]
+    },
+    "crates/gwiki/src/ai/translate.rs": {
+      "content_hash": "b3774c989d5d9863a36031d8c6a8086ea5d808b2f140c0c453906114fde3ace1",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 350
+        }
+      ]
+    },
+    "crates/gwiki/src/api.rs": {
+      "content_hash": "b1c8452d0a8c899424367a35fd17267d98588e8b89f1001d0d2c6cdfa4fd4a10",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 454
+        }
+      ]
+    },
+    "crates/gwiki/src/audit.rs": {
+      "content_hash": "4b1c8d8af93e3dcfed9cb01b634a933a0be656af06d632b577603d06c8a6ae54",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 167
+        }
+      ]
+    },
+    "crates/gwiki/src/audit/claims.rs": {
+      "content_hash": "9f0862192b7b95dd972dbee427a1396662d48dc435c0699e2c1f397a1d85b561",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 371
+        }
+      ]
+    },
+    "crates/gwiki/src/audit/render.rs": {
+      "content_hash": "a0efc4f0957ffd7e1ad23368d7aa757a3f6a65fd09106d9fb50b8458ca8f15fb",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 32
+        }
+      ]
+    },
+    "crates/gwiki/src/audit/tests.rs": {
+      "content_hash": "52a1694787f30de606b6b3f238fd59da05eff25c5e591b4244b4efd768ee2d77",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 417
+        }
+      ]
+    },
+    "crates/gwiki/src/benchmark.rs": {
+      "content_hash": "94237d317b72e620f3994b8ab8a5fea6d898e041cb53259c5b918c44efd2ca67",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 894
+        }
+      ]
+    },
+    "crates/gwiki/src/citations.rs": {
+      "content_hash": "5973394f347b1ecc77c3e5ced36f23a76a57be87fe905983004bdfe7042c2977",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 171
+        }
+      ]
+    },
+    "crates/gwiki/src/code_graph.rs": {
+      "content_hash": "754f92839f846fb5a85363cfb2f85fac8b5d95b7e7248c994576889d2efe4ebe",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 493
+        }
+      ]
+    },
+    "crates/gwiki/src/collect.rs": {
+      "content_hash": "3506f591e4c6968367dc0817ed75cd862a0e4952f096f9bdc49cbd7a710b4c92",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 893
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/ask.rs": {
+      "content_hash": "4157c611b585ef6547362180ae8fab56cfecf8e631e0b3f2cadf6b143ed7cf35",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 65
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/ask/assembly.rs": {
+      "content_hash": "c5c4693327406fac9635faa19cd46518ebbee927d5ab48cd2d0411f1839193a7",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 122
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/ask/citation.rs": {
+      "content_hash": "1e63344cc5c53ebf6ef34a3a643b2800359611df7f54ce5ed5be5b92d76c16db",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 131
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/ask/evidence.rs": {
+      "content_hash": "6e25f59b55a31aaf5d8655eb0169f31900fb4a7413f2fbf1734c10aa91304cb7",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 159
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/ask/narration.rs": {
+      "content_hash": "0a021ac74ddfcc787c304576d31d5a94146250a85e823cf1aa0ea971d3ab8af0",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 215
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/ask/render.rs": {
+      "content_hash": "b9f11c7a65c4c5477ba756cfc32d1859929da02318e85131b2bbfe884a56e448",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 115
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/ask/synthesis.rs": {
+      "content_hash": "966f0a185851f4410cd5133f291b31b7ac3d2d3450137a51fd548f63f6b58bf4",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 304
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/audit.rs": {
+      "content_hash": "f2623aa30cf133ab1f9710ac67b8e501a123cb0992425cf62535ecf9ddb34119",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 13
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/backlinks.rs": {
+      "content_hash": "ea7a968379bd49d864e0c801c4a7ad0771761ac84d8f115e3d4cc659b19b6a4f",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 126
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/benchmark.rs": {
+      "content_hash": "c938cd04194d13da38ffbb7a3fa47bc83c2ffcdd279659e3a8d75a19b47eac6b",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 121
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/citation_quality.rs": {
+      "content_hash": "f1460ef6c58ac35a66b19ec4fd4d43213c0047be1e24f0dc9971c1995fc6dc52",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 866
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/citation_quality/contradictions.rs": {
+      "content_hash": "f6664b3cfb61bf60158af1552eeb41e2ac0c02068f0dcd13d425161eda15f630",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 241
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/collect.rs": {
+      "content_hash": "840531b90bbfc71820885931ec42abee9e78aa6ebd9aadb96ce62e38d5a2d712",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 43
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/compile.rs": {
+      "content_hash": "907c4f2463c7c977350779fe6fb048070fa97aef4a7458dc0b98d035790da139",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 558
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/export.rs": {
+      "content_hash": "5aaebd0d92377623253f8d553162e9f10bb253d4b08068328784fadf8a47446a",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 30
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/graph.rs": {
+      "content_hash": "bddf76ae9ed55a4dc31fcbde990583a24c338073925c2685e2fa5fce30d30684",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 218
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/graph_context.rs": {
+      "content_hash": "2c6a96825840207b9dadd27060cb0d6276a3adec5aec5935d746771122f5548f",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 98
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/health.rs": {
+      "content_hash": "f246e8c447f84116583155302c230ded7599eac6805a424789dcee137aaa0c9a",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 19
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/index.rs": {
+      "content_hash": "9809299156be16e082bd35e554baaed4d23dd1d7f65f1df317c03b44294554eb",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 750
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/init.rs": {
+      "content_hash": "64dadb5f3d925c4b66043b8a4ac53f9fc79cbdb8d58e25a18cb275cb48c1b241",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 46
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/librarian.rs": {
+      "content_hash": "fb2f853183ff780417db245d1d17fb3e138728d6496bd7332bfe6aebab6aca50",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 11
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/lint.rs": {
+      "content_hash": "e1a69da0086e577bbeadfe6a6c8480cf1006d20b7d574bad33d52260f4fc399d",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 11
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/mod.rs": {
+      "content_hash": "e577e2221d63ef3c4dd7c696dae2fe4513d4a3e341e3257509b4a3f59f482204",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 147
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/normalize.rs": {
+      "content_hash": "1c672c99c343e484cc702e62fc34b51a3233815835ddd821a566fff37cc7d679",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 23
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/read.rs": {
+      "content_hash": "3084f1043162ff0e3e48deb17e0727bca0f8e06aad781fffef41a6227fddeea6",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 623
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/refresh/candidate.rs": {
+      "content_hash": "5e6f8451928ab2147d01c9a8f8473c2788bb4d5b6c94eefe8202493c3e3f8902",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 310
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/refresh/mod.rs": {
+      "content_hash": "9f2ce9189ec0a9fb8cc2b17e284f6d98519e74ac44af2298f57a26008111ed8d",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 143
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/refresh/model.rs": {
+      "content_hash": "f59bbce29551ef2fa5d15eb46ad966d5a2867e5feab2df780ab1fc4176690abb",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 170
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/refresh/render.rs": {
+      "content_hash": "644ab70ca35d1579d13728eccc7e955396276326795fff5807910a86dde9093d",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 68
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/refresh/selection.rs": {
+      "content_hash": "02a87bf58bac6e65de05222afbfd219acfe6003b678e15f43a1386d292054c4f",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 295
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/refresh/tests.rs": {
+      "content_hash": "e182274da8fd78c573a479afc7ecec3ec57f9c68abe74e6892591ab3603e4590",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 464
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/refresh/vault.rs": {
+      "content_hash": "4f16c177e52e08735658782b66700b6b5c21080267f062a681309688cfcbf836",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 112
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/review_report.rs": {
+      "content_hash": "c8b94955ffc6b65b709d044b96682d2ca8ecd6548f3907226960bb11d335514d",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 777
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/search.rs": {
+      "content_hash": "20d083195c5c2a86e4d1eb1d05aa655814dd8d709de20c8225e5d80bb804c7e9",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 553
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/session_sync.rs": {
+      "content_hash": "f50cfcadd8ec655872f7a7b91398fb1a5fcaec830f78260cca1b143f29bbd9d8",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 162
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/setup.rs": {
+      "content_hash": "3d8bc53f84c1a5ba7f71adf91e1a7927d0a20da80db5c4ba756080c0b8305614",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 479
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/sources.rs": {
+      "content_hash": "163d0dc9adf25695a7941dfddd0ffedcce43b26aec1c0327c27b6b482859a7d3",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 875
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/status.rs": {
+      "content_hash": "a0955debb1eb75187f979a7e7ed0b45e41790efd7a320b0eb917a86d7aa8e057",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 94
+        }
+      ]
+    },
+    "crates/gwiki/src/commands/trust.rs": {
+      "content_hash": "8fbdb786e2e59661adf7573318b09e50c46a863b7dc2f8916d1ba7f85784a4c5",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 481
+        }
+      ]
+    },
+    "crates/gwiki/src/compile/collect.rs": {
+      "content_hash": "8a4cdc3c263562b068eed7096c15e2b9070ebed726edecfc010445508037b290",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 301
+        }
+      ]
+    },
+    "crates/gwiki/src/compile/index.rs": {
+      "content_hash": "3360b3bde3fd65669b1c207d8ba60947078e7a4c3dc87d8fa41e5a4b21503d1b",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 347
+        }
+      ]
+    },
+    "crates/gwiki/src/compile/mod.rs": {
+      "content_hash": "8d96322be70389dddc4e260bcea4dc2585dc15243aaaf1491bf337b396bd5eeb",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 306
+        }
+      ]
+    },
+    "crates/gwiki/src/compile/render.rs": {
+      "content_hash": "6b01d9c899b97d0e83779ce94cf7145d46d1f263dce097d6c5047481420ef152",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 190
+        }
+      ]
+    },
+    "crates/gwiki/src/compile/tests.rs": {
+      "content_hash": "46d3baf0dc7036c2b88878af43564e5804f394b5a1fc06d238896d27f84b4f22",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 583
+        }
+      ]
+    },
+    "crates/gwiki/src/contract.rs": {
+      "content_hash": "b3885e29d451aee50a87082c8019a0719b424236b7b49c0ef4888da45a6ab55f",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 543
+        }
+      ]
+    },
+    "crates/gwiki/src/credibility.rs": {
+      "content_hash": "aa24dbf51f0a4f95ef608b90b821904d54b370b297200c0dbd366b37fd8308b1",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 224
+        }
+      ]
+    },
+    "crates/gwiki/src/daemon.rs": {
+      "content_hash": "72511fa129c4a56d6e8175c5016fc6ffe38ea61261431da8cdf48f8e74369b55",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 481
+        }
+      ]
+    },
+    "crates/gwiki/src/document.rs": {
+      "content_hash": "e89f9a1ca91a3b145f9d0a40fd948adc5211c906685e3e13d2451852b484b8ab",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 218
+        }
+      ]
+    },
+    "crates/gwiki/src/error.rs": {
+      "content_hash": "47cebbd4377e25b881cec763d6f8d8b7a5d805ac21ad739b3734cb18994f8130",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 288
+        }
+      ]
+    },
+    "crates/gwiki/src/explainer.rs": {
+      "content_hash": "54673e973b399d85e260b89d4cca17e9a394a2b4e4161909c0b4519bf3b67690",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 546
+        }
+      ]
+    },
+    "crates/gwiki/src/exports.rs": {
+      "content_hash": "a478a920e8ce399dfb1b2bb42043fee1bce822b193027b0efb14345e1f1aa056",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 943
+        }
+      ]
+    },
+    "crates/gwiki/src/falkor_graph.rs": {
+      "content_hash": "9902c4eb9269f7b9a067a22fcb8ef8aee9307d6286751de9e5dd3ef27e36018c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 56
+        }
+      ]
+    },
+    "crates/gwiki/src/falkor_graph/boost.rs": {
+      "content_hash": "9a4fe765044566c3f99b57804be0966ef02dc1c5945dca32ab22f7b4c7e7b896",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 151
+        }
+      ]
+    },
+    "crates/gwiki/src/falkor_graph/code_edges.rs": {
+      "content_hash": "0f1d1a5d09f9a766fadb619612586d8515eaa5daadc089408c1b48edda7a26b4",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 289
+        }
+      ]
+    },
+    "crates/gwiki/src/falkor_graph/query.rs": {
+      "content_hash": "7b7bc09b92f1287683d549cd2a4a637fcb52039f2c45aab187e80d8c01772b1e",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 40
+        }
+      ]
+    },
+    "crates/gwiki/src/falkor_graph/sync.rs": {
+      "content_hash": "2779a608cf88fd5b36373d39806698aba96af513ee68aa68e2a546c1eef109fe",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 55
+        }
+      ]
+    },
+    "crates/gwiki/src/falkor_graph/tests.rs": {
+      "content_hash": "2d5535a97e2a563b2436747648d754cb1ce05c9a515aa470f1cf0ce2bcb984f0",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 274
+        }
+      ]
+    },
+    "crates/gwiki/src/falkor_graph/wiki_facts.rs": {
+      "content_hash": "4046e741b8cd85b374f7771871f1b5ab001f307bfd7650b3472c97eec67af236",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 186
+        }
+      ]
+    },
+    "crates/gwiki/src/frontmatter.rs": {
+      "content_hash": "e30d6ac387c0e9849b638a571d04a542051ef389c28d0219dc397d31447d2390",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 692
+        }
+      ]
+    },
+    "crates/gwiki/src/graph/analytics.rs": {
+      "content_hash": "76852b2281ab8ee2c7f91e74cf7388b68c8fb7c52577b58228eb227a0f370fc0",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 366
+        }
+      ]
+    },
+    "crates/gwiki/src/graph/context.rs": {
+      "content_hash": "cf945988dd6ce994ab0cc0366ad8cf6984163d8b014f825a4d751b9bd2645414",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 715
+        }
+      ]
+    },
+    "crates/gwiki/src/graph/export.rs": {
+      "content_hash": "6bdc238f66cfc71a34194a25451688f5473e56d039404c4c8d5adde674ce5c77",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 350
+        }
+      ]
+    },
+    "crates/gwiki/src/graph/mod.rs": {
+      "content_hash": "fbbcb62d9ac7ce6af900ef057b4f7167bf4b3592caf31e24a46516a375ffee96",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 894
+        }
+      ]
+    },
+    "crates/gwiki/src/health.rs": {
+      "content_hash": "4c4a98b4a1b79d35b65ad517d8f9974ae88637c894ca7d6bc28dccd3c7ac4143",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 831
+        }
+      ]
+    },
+    "crates/gwiki/src/indexer.rs": {
+      "content_hash": "a5d96fcf0825da1dd52f3d67895fc2af196ceed7bf6c5e5a9224a64102caa524",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 703
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/audio.rs": {
+      "content_hash": "1280ffd3ce4b378fd2d8952435fe97f0b791004e94e5654d80154c571f5030b6",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 903
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/document/html.rs": {
+      "content_hash": "124c2765344bc647a661ef98668d3b4178078e71840c10295d64508e2bbb13c9",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 243
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/document/mod.rs": {
+      "content_hash": "75a9b8938ff49de35e2de5dbea6c491bc53af1bd88af73f02dbc79b84366aaad",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 232
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/document/office.rs": {
+      "content_hash": "e582c92a6c43562fa4e7168175dab4f4290f56dfe598aa5378ba9c3823549574",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 522
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/document/render.rs": {
+      "content_hash": "c777d2b3e6cfc60b01187a5fc26013673be87a3ee02b098dd2506cfa83dbea0e",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 275
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/document/tests.rs": {
+      "content_hash": "78b2a299bae0f49900a20034428d6bfb0d1b5b9170292cca5b2d071a970a8ffa",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 337
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/file.rs": {
+      "content_hash": "1562101ab6734dd7e0d1c5f84509241e70bf11c5309df745ba7a38becdbfacf2",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 94
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/file/degradation.rs": {
+      "content_hash": "cdd4dc9cf7437b7fe5a65f22f2979d05df87058270cb2b7915e7ca24a0d613c3",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 39
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/file/dispatch.rs": {
+      "content_hash": "20283bf639581ff3b9a3c2bb6c2148d3bbd82fd71086e9748347faf032e12025",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 242
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/file/generic.rs": {
+      "content_hash": "f0dddb147f1392ed02323942436bd03be0209b3893972d565bf870e6f361a893",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 57
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/file/render.rs": {
+      "content_hash": "4172fd162318f8f7a59d0f613a44d59dd3ef10b75363e654e7b3ae215ca3f1fa",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 51
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/file/replay.rs": {
+      "content_hash": "070023fd7eabaf8b2ea4b20483f5025ad0024e50e866c376c2e943539b831f03",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 32
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/file/source.rs": {
+      "content_hash": "d0ff6131e9b3ddf70a77c64338dda9502f2794b24de8aa50a819d77f209ce8d2",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 63
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/file/tests.rs": {
+      "content_hash": "e59030145544bdfef388556ae950eaad212a1de322a5195b7fc76a09b0728831",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 736
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/git.rs": {
+      "content_hash": "526267766c86ca6a91c45df19b48973cff349ee6f4c8084f801fffb8013ed776",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 262
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/image.rs": {
+      "content_hash": "bf643e9cd83fce1d0541d55c8de0c3cb4f75869c4eeb474963af6bc95773a572",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 381
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/mediawiki.rs": {
+      "content_hash": "a806cab015a821b693d262b61b242a5e3395c5f0be18357a7c44570dbf9cd7ed",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 124
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/mod.rs": {
+      "content_hash": "8c07c0fedefc2a5d4fb779cff760b545d41c58291fa92554dfc50ccde5010025",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 865
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/pdf/ingest.rs": {
+      "content_hash": "8b4f39a317a8e515072eaffd2761eaae33b2771ff38d84ccc8c06fc267925d6e",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 266
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/pdf/markdown.rs": {
+      "content_hash": "065077802d71d7fa07f851aebe3cfeba9f680e27d9f0263599ea8a3b15ef7d00",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 376
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/pdf/mod.rs": {
+      "content_hash": "f462cc64c47f10cb1a2c599c6f7927e63391771d6d8c7f5d7aa5be43c2d43535",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 43
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/pdf/render.rs": {
+      "content_hash": "427b6cc26d782d5baa4418b468bc62bb6ce59ec36efa0242a60bb8c2e5b6ba26",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 203
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/pdf/tests.rs": {
+      "content_hash": "030a31a866a328c75bf472b9689accd557c34a2fd9c53dcdb8235a7660268016",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 453
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/pdf/text.rs": {
+      "content_hash": "78dddcef3bd286d4f60c5b2bc919d397d8efa275b06acd60f6828c5743edbaa7",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 83
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/pdf/types.rs": {
+      "content_hash": "95ad22f842a02a66545f036882f6747d05f27e11df2f889a27e250a6fcff6aa8",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 81
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/session.rs": {
+      "content_hash": "f21d8f18b5354eaa05ac5689219f02178c11904111b8dbb79599aa3e0fe0dc80",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 969
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/session/codex.rs": {
+      "content_hash": "2a9da55404ceed912efc3b5943bc6b06bc401d282e216ad9e63fdef824a9c127",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 542
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/session/derived.rs": {
+      "content_hash": "b91556df8284c2daf13b6b3348907451727087d5fd595afe76a11311bcc978fd",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 105
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/session/droid.rs": {
+      "content_hash": "52576e981fd2591e873f2116a2af712f2e2c7e5e3304764c1e3cd585c1560b05",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 455
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/session/gemini.rs": {
+      "content_hash": "3e4c90ce2acfc1cf89f42ee2c7d856f246afd36d1162b1a881c9cb7f07244325",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 357
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/session/grok.rs": {
+      "content_hash": "687f36a4ed334c68a738c05c283c553e459aee69627d57a8c9bdb8227eb0b3cd",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 431
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/session/metadata.rs": {
+      "content_hash": "7ad30de2c57f906214cf76d42ba28f82a0dfa06d717ec46862b95d0236898244",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 152
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/session/qwen.rs": {
+      "content_hash": "f7b217b4c327a634201b5c8f69e8428cc16cc29e8adb850a7f2766d4d1b8fc80",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 431
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/session/redaction.rs": {
+      "content_hash": "0af0643cdc2e2615842bc3a7e9902b367de6ce68527760aa14d0bd5fe14ff68b",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 146
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/session_archive.rs": {
+      "content_hash": "94977cd501c474c349cfdfb346314821d8566b2efae36f07de5358d9c6c09c3f",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 381
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/url.rs": {
+      "content_hash": "1804fd33ca467cd92e3113851461367a51640eab0c08ce662e990a0d133968a3",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 211
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/url/fetch.rs": {
+      "content_hash": "c602567cc2e0b4d89d21002f5810288316972f201485d5d5732152c8a9fd1a3f",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 282
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/url/render.rs": {
+      "content_hash": "ac64347cd4d576e8f17afd686391f815cd670cda5a70dd63da57301161674445",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 244
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/url/tests.rs": {
+      "content_hash": "f57de7ed1fef44e0780f65a7da3d38be4850e397e81cdf789ece3e5bdb4fa25b",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 283
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/video/assets.rs": {
+      "content_hash": "adc1c99629658a3c786be0d2fb76827de1b5675945ba076691dce990df86e47b",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 242
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/video/metadata.rs": {
+      "content_hash": "8fd1ca348de36e631dc7a795731ddf2efbf21ea31910632daf24e88c51034088",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 134
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/video/mod.rs": {
+      "content_hash": "b47787d0827cc0ce78afd2d1c1d693881b0a3a85d443808a5c0b47a1320f9c13",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 246
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/video/processing.rs": {
+      "content_hash": "057cfddc369c49d4c23899980eaba9185950c7901b7295990796ffd3288ea406",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 339
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/video/tests.rs": {
+      "content_hash": "bbc657cd654cd95b4bcbf56c962b139f98ace79312e412319ba3440d23f33e73",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 292
+        }
+      ]
+    },
+    "crates/gwiki/src/ingest/wayback.rs": {
+      "content_hash": "d70bced239062ee22913b287f90765409570cf1126a2932fb563df916da030b7",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 517
+        }
+      ]
+    },
+    "crates/gwiki/src/lib.rs": {
+      "content_hash": "48c7171f61f50c014dd078dbb6f10c4d3cbd59b12d6b8637cfd54160a9fb072c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 62
+        }
+      ]
+    },
+    "crates/gwiki/src/librarian.rs": {
+      "content_hash": "0a15a0b61b03839e9636e4f3061c16ff1bd2e033c7800683186d05359153f784",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 702
+        }
+      ]
+    },
+    "crates/gwiki/src/links.rs": {
+      "content_hash": "c086c34b5ede1061338690aaf35e508f02a361572046d6f69b9a62b77bb554fb",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 568
+        }
+      ]
+    },
+    "crates/gwiki/src/lint.rs": {
+      "content_hash": "9ac10f79e0bc7e15d56550882f54ec0c1deb44df5c6d2598dac8692bd15bc8a5",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 1084
+        }
+      ]
+    },
+    "crates/gwiki/src/log.rs": {
+      "content_hash": "88db9f745be602e81759a6c645226d6bc146fe8a730d98994fe40b191b16f83d",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 234
+        }
+      ]
+    },
+    "crates/gwiki/src/main.rs": {
+      "content_hash": "33008c4865867141f34d26cc07ccf18e10e4ab87d20bbc5aa3f0a306f21aca30",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 817
+        }
+      ]
+    },
+    "crates/gwiki/src/markdown.rs": {
+      "content_hash": "5033bb85a4f22b79b01f6ae9b5d66b06ad4b48a56a69290210ef68088a532459",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 599
+        }
+      ]
+    },
+    "crates/gwiki/src/media.rs": {
+      "content_hash": "40f97fcd3e742887e7963bb8cbf9a4248e85267df24a439486a7a25c9518c9e5",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 450
+        }
+      ]
+    },
+    "crates/gwiki/src/models.rs": {
+      "content_hash": "9ffbf9846caea8483355428a3426863afd178df1f990201edebf4a8e6fa1ba7b",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 292
+        }
+      ]
+    },
+    "crates/gwiki/src/normalize.rs": {
+      "content_hash": "507fb80483e23f2db3e417ef915058b6e26597e24167fc880eb57d5ad1a9b504",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 332
+        }
+      ]
+    },
+    "crates/gwiki/src/obsidian.rs": {
+      "content_hash": "0b0c5bef96f02eba9bd5876224e4535117cb9112a0a248adbea94a1da59dd30c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 262
+        }
+      ]
+    },
+    "crates/gwiki/src/output.rs": {
+      "content_hash": "8779ff3a33a11ba25f446f4cf7d1081b2c862198a260072598dec9af42eda2b7",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 513
+        }
+      ]
+    },
+    "crates/gwiki/src/paths.rs": {
+      "content_hash": "ceb4a1fdab3399746cbe5f8827631adba4da7575992c36076711e57eff08658c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 87
+        }
+      ]
+    },
+    "crates/gwiki/src/provenance.rs": {
+      "content_hash": "51dc9ee480986b75e6bc9022a82f7f2480a58ef27ec1aa1786be7e6ab3a9d259",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 314
+        }
+      ]
+    },
+    "crates/gwiki/src/registry.rs": {
+      "content_hash": "f2cd74cd8cd24630cf03756ccb94caa6271069ec8df4be807acd5b3ca19fffee",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 334
+        }
+      ]
+    },
+    "crates/gwiki/src/runner.rs": {
+      "content_hash": "e417d9bdf882a8f0c0399c9d949a573cd72d9051d1e03fd29900a956c41841ef",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 9
+        }
+      ]
+    },
+    "crates/gwiki/src/schema.rs": {
+      "content_hash": "17795eb1dfc3bf32348b4599a5682580e03d1e605ece35d27dec08fae0a78683",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 127
+        }
+      ]
+    },
+    "crates/gwiki/src/scope.rs": {
+      "content_hash": "fff0a4ae967bd4aa3f2ea3a5458f774175236f0c36074d483971557757560c48",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 342
+        }
+      ]
+    },
+    "crates/gwiki/src/search/bm25.rs": {
+      "content_hash": "00e2020b76d403d22fbe87eb5a667669f47a71f440ac3d16ba8a2b78da6ce6be",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 552
+        }
+      ]
+    },
+    "crates/gwiki/src/search/graph_boost.rs": {
+      "content_hash": "58a42ba9bce07305b155786079659d932e177c1a7b777ab3648e5c78c4057f61",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 527
+        }
+      ]
+    },
+    "crates/gwiki/src/search/mod.rs": {
+      "content_hash": "3e4886765bb8030e5363f6c74113131c979942ae79610139503c47f61b7fb56c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 503
+        }
+      ]
+    },
+    "crates/gwiki/src/search/rrf.rs": {
+      "content_hash": "c1442afcc839e35c9a257d7fdf591536c1105c981adf1c9b56569392bf06ad26",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 268
+        }
+      ]
+    },
+    "crates/gwiki/src/search/semantic.rs": {
+      "content_hash": "3b68f5ef9bc212029616208341ba94b060eaf1d08ee5fcdf04c61c46836dfb19",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 642
+        }
+      ]
+    },
+    "crates/gwiki/src/session.rs": {
+      "content_hash": "f9a92226f95a4fe7523e993c21a59349feaee5daeddb2759d2ad3e742d99b40e",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 557
+        }
+      ]
+    },
+    "crates/gwiki/src/setup.rs": {
+      "content_hash": "8cd1a328e2ce1b4c290d2d30078101c8b421b99678491eaa0429470c17a30653",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 497
+        }
+      ]
+    },
+    "crates/gwiki/src/sources/atomic.rs": {
+      "content_hash": "3fcb8a6a7f9d0344bd0fd5ebe06c7d9b47db80246dd3c687f0ff9d8ffd799618",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 130
+        }
+      ]
+    },
+    "crates/gwiki/src/sources/manifest.rs": {
+      "content_hash": "0774782f39f732fc8ea2664b7e8055d0a6b81ae89126eeb92c90fe6f7c3a5061",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 313
+        }
+      ]
+    },
+    "crates/gwiki/src/sources/mod.rs": {
+      "content_hash": "7350bcf46f389ce4866a9e47b695436869b849974b2299ee9e554c20fd58521c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 23
+        }
+      ]
+    },
+    "crates/gwiki/src/sources/render.rs": {
+      "content_hash": "5bc4df0c2cd9e61a4f613890bdfa431ba7681f4377c7e6f432a8e8d6ddedc302",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 235
+        }
+      ]
+    },
+    "crates/gwiki/src/sources/tests.rs": {
+      "content_hash": "e14b6015402918e6dc03045f62ebf87af61d9d75cb2988c2f9170bc09a5cdb7a",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 160
+        }
+      ]
+    },
+    "crates/gwiki/src/sources/types.rs": {
+      "content_hash": "f4d388f2c9e2469734a93edcbf26abae41220e783c1d599e54d2c8e5f22cd815",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 276
+        }
+      ]
+    },
+    "crates/gwiki/src/store.rs": {
+      "content_hash": "68b5495954f5a536bde04386e20758ed89b36087a9521cd06298db9499ade380",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 136
+        }
+      ]
+    },
+    "crates/gwiki/src/store/helpers.rs": {
+      "content_hash": "17ba42b4c9d6fba0fe884c16b36f1876a8475a513b1de0e398421bf1065dfedc",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 180
+        }
+      ]
+    },
+    "crates/gwiki/src/store/memory.rs": {
+      "content_hash": "8c9ec0d2d83adac2dfffdbb2703d029121baa7f9a4ebdbc74fd6bcd9c573574d",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 81
+        }
+      ]
+    },
+    "crates/gwiki/src/store/postgres.rs": {
+      "content_hash": "25e637e0ccc7c648bd3ba7325395d1745931f6ae5d14d5654b9b0ec12d658e93",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 452
+        }
+      ]
+    },
+    "crates/gwiki/src/store/types.rs": {
+      "content_hash": "36ba65532be6a8c3cd137f5861fb6700e20ffa902bff924a2b0957cdf184ad7e",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 152
+        }
+      ]
+    },
+    "crates/gwiki/src/support/config.rs": {
+      "content_hash": "0522b3884854fd1be8d79c9b85d190caa8ac71f911cc3eb2b148e71609606d3c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 364
+        }
+      ]
+    },
+    "crates/gwiki/src/support/counts.rs": {
+      "content_hash": "9af920b8336bfd05a84d0af6fe0af80c84e1b38478428a07179b02c1e6f0fe56",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 86
+        }
+      ]
+    },
+    "crates/gwiki/src/support/env.rs": {
+      "content_hash": "240d2c9f800927090c4dddff982cd8e326a257ffee2ba12f6f46f1b7bb6ba27d",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 323
+        }
+      ]
+    },
+    "crates/gwiki/src/support/graph.rs": {
+      "content_hash": "f9c44c46eb33c7f2e6c38360fde4b9ac90d0123e11524e05ef93e35a281477e0",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 273
+        }
+      ]
+    },
+    "crates/gwiki/src/support/mod.rs": {
+      "content_hash": "3c430d07e45bf9a114f42011589a1450c3704020c7bdfcb52ca1156532be8977",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 11
+        }
+      ]
+    },
+    "crates/gwiki/src/support/postgres.rs": {
+      "content_hash": "984989e50dc05ae4169791896ed97291b26531ffe659c164a401ed2393f2afc6",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 51
+        }
+      ]
+    },
+    "crates/gwiki/src/support/scope.rs": {
+      "content_hash": "66cba9049fcab1d1249875ebaaecd0d580baa0db9f4fceb77b305f7e44f1ace3",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 122
+        }
+      ]
+    },
+    "crates/gwiki/src/support/search.rs": {
+      "content_hash": "630f44fce968977546c5ab7c0d93651568068fedc85738143f3fa426e2da9b79",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 161
+        }
+      ]
+    },
+    "crates/gwiki/src/support/text.rs": {
+      "content_hash": "39c44593cf7ccf8b55011932dc83303de8a8a5e7687f236f676241dc4a87e60c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 167
+        }
+      ]
+    },
+    "crates/gwiki/src/support/time.rs": {
+      "content_hash": "e517fb3e788fa30b072390636f761ca81f6a43601ce071bad5daeaf29c073c51",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 40
+        }
+      ]
+    },
+    "crates/gwiki/src/synthesis.rs": {
+      "content_hash": "b3bbe0b3a16552479f63addc908ed08f84ef5d6473306a6d76cc89ff8d086935",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 18
+        }
+      ]
+    },
+    "crates/gwiki/src/synthesis/generate.rs": {
+      "content_hash": "242cf5b14a53d8e3eaa0769caf66559652f298de770a88b674c0d95029db64b1",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 190
+        }
+      ]
+    },
+    "crates/gwiki/src/synthesis/paths.rs": {
+      "content_hash": "08a780239b218cf207240a2862bd52ba258a6bf6b56f3086e650c97a64ed00fb",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 186
+        }
+      ]
+    },
+    "crates/gwiki/src/synthesis/render.rs": {
+      "content_hash": "70bd8b5dfa18df2fa0e44f0ebad85ec11866cf37f38e517e7cb7da34649d62c2",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 93
+        }
+      ]
+    },
+    "crates/gwiki/src/synthesis/tests.rs": {
+      "content_hash": "85a969ba662ea168b44ba73d3eab5463ea76034b780fc998d9ad7a57310f9323",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 204
+        }
+      ]
+    },
+    "crates/gwiki/src/synthesis/types.rs": {
+      "content_hash": "6df7575bce772f9adae9dc1808fc29d129fb9158ab6c3601a3c6e7d8f62bc0c8",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 87
+        }
+      ]
+    },
+    "crates/gwiki/src/synthesis/write.rs": {
+      "content_hash": "b7749c777208befe498d757de204aecd77d264c36075e3596a8d3900f4d52868",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 198
+        }
+      ]
+    },
+    "crates/gwiki/src/transcribe.rs": {
+      "content_hash": "0a76fbac9ade7862475368febe7f2bc60112041bf10b7710d59917f55044c573",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 682
+        }
+      ]
+    },
+    "crates/gwiki/src/vault.rs": {
+      "content_hash": "9694ec8603e553e1698089c71c194c21605532bc953d1b0d3cbee8ceb70f33d5",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 352
+        }
+      ]
+    },
+    "crates/gwiki/src/vector.rs": {
+      "content_hash": "390c2a7505c5d950a6b2b13d6d76f7f0171d554fddcb72e1e2057c174d8ca0dd",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 705
+        }
+      ]
+    },
+    "crates/gwiki/src/video.rs": {
+      "content_hash": "c2c56029deb7a19cb73eb129dc78cd03910b38111f2ca95c7eb73c0e4d3e32e6",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 15
+        }
+      ]
+    },
+    "crates/gwiki/src/video/alignment.rs": {
+      "content_hash": "aaae1d0f06e8b89901e8872b764ffce9378e5740f8ae42bb16d73751fa3b2623",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 76
+        }
+      ]
+    },
+    "crates/gwiki/src/video/markdown.rs": {
+      "content_hash": "fe082498260bf0987c96054082e229b5d7f7f491b40e452681ba854dcbf6a824",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 300
+        }
+      ]
+    },
+    "crates/gwiki/src/video/sampling.rs": {
+      "content_hash": "9aa0e4b46238b955b05e79798e970611e2a1b8b6f7fad6fea0cb2fa06b24c1f9",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 54
+        }
+      ]
+    },
+    "crates/gwiki/src/video/tests.rs": {
+      "content_hash": "806238024b42075eb82911d8b54fd4dba2247df8ba1edc7a8f431e2014483537",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 303
+        }
+      ]
+    },
+    "crates/gwiki/src/video/timestamps.rs": {
+      "content_hash": "2dc07fa4b1223c1d60a211757c13cc0ec643822c1c6473f57a6bf19b86a694b6",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 47
+        }
+      ]
+    },
+    "crates/gwiki/src/video/types.rs": {
+      "content_hash": "6eac0901784e06074c8a2f98bc036f9d4fe79aa8739750c66cc13752299f8f19",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 73
+        }
+      ]
+    },
+    "crates/gwiki/src/video/write.rs": {
+      "content_hash": "9291bda1041e3d1068148a79e584b42ecbb7720007aebf2e02fc29e46b53e5b8",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 98
+        }
+      ]
+    },
+    "crates/gwiki/src/vision.rs": {
+      "content_hash": "a038c145f1e8ddf6947046e1d2581d04a56ac361047752f373778a96c1fa5541",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 730
+        }
+      ]
+    },
+    "docs/evidence/wiki-parity-2026-06/wp3-audit.json": {
+      "content_hash": "5024bdd7300be84e83c23c5b5c5150b938debaa1e8d65c1784b7158914220d41",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 128325
+        }
+      ]
+    },
+    "docs/evidence/wiki-parity-2026-06/wp3-compile-explainer-v2.json": {
+      "content_hash": "981ed98799acee70436cd003e6732415f465cf635446c6af97646e742fe08acc",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 48
+        }
+      ]
+    },
+    "docs/evidence/wiki-parity-2026-06/wp3-compile-explainer.json": {
+      "content_hash": "dd15a84ed74129e23cbf5bb0376a84838f4d0dbd2796fdde1d1fb7f37bae01e2",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 45
+        }
+      ]
+    },
+    "docs/evidence/wiki-parity-2026-06/wp3-compile-source.json": {
+      "content_hash": "5636cf78a888d98990e3141824c9baed926c1daf0faff70994fcc01653feb2fa",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 4
+        }
+      ]
+    },
+    "docs/evidence/wiki-parity-2026-06/wp3-deposit-ingest.json": {
+      "content_hash": "5f5a2a42a8ad53a62e53d50e8ff16a262ab6901679080884146139a713013a86",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 25
+        }
+      ]
+    },
+    "docs/evidence/wiki-parity-2026-06/wp3-deposit-search.json": {
+      "content_hash": "93c64970bd0970ec4d8f479a7b537d5e8932b7d40fe8d49b420c116cd8c85a94",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 91
+        }
+      ]
+    },
+    "docs/evidence/wiki-parity-2026-06/wp3-health.json": {
+      "content_hash": "c4e610289ccabb6e62295172187fb5c7ca9e150799b068921e62cc065ecedabf",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 72
+        }
+      ]
+    },
+    "docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-daemon.json": {
+      "content_hash": "5eadf0e4b810dc2e7ab8b57a70bff3584a84b668bc6409145cc6f70d640f3ec5",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 300
+        }
+      ]
+    },
+    "docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json": {
+      "content_hash": "b96a040267d69a746716dec1a9f6dd167ba572dce39d8181015bcb78b88f0a5e",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 296
+        }
+      ]
+    },
+    "docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-search.json": {
+      "content_hash": "cccdfebee3b1e0d507c14aa8347221ed675bea2246d73a8d42d098bbcd73268b",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 114
+        }
+      ]
+    },
+    "docs/evidence/wiki-parity-2026-06/wp3-qa-q2-rrf-ask-daemon.json": {
+      "content_hash": "22c04dd85562fdcf083df4e45f5e1480a467267cdfc178fac57a384111b20010",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 342
+        }
+      ]
+    },
+    "docs/evidence/wiki-parity-2026-06/wp3-qa-q2-rrf-search.json": {
+      "content_hash": "ef53e5c0645b4960ed9d2439ff3d9d323a3bcb6f94589fb36e86593156da5913",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 85
+        }
+      ]
+    },
+    "docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json": {
+      "content_hash": "44841a6e3afcada9134a6bdda4d2c57883a4aeb1334f3c5aaff8ffb8e60e7733",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 328
+        }
+      ]
+    },
+    "docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-search.json": {
+      "content_hash": "98e47fa05473c80b98d6110cdf206f9fa95ed24685ebebcf95f30da0306eba6d",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 79
+        }
+      ]
+    },
+    "docs/evidence/wiki-parity-2026-06/wp3-qa-q4-falkor-ask-daemon.json": {
+      "content_hash": "c92f03b2157db5d54cc1d99616353dc63db8c4d0c7518cd55947f29cdfda55d2",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 342
+        }
+      ]
+    },
+    "docs/evidence/wiki-parity-2026-06/wp3-qa-q4-falkor-search.json": {
+      "content_hash": "381afbd53a4f4c3cae90e783b602a9225cb2070fb751d0ca785e7ac9ab726341",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 85
+        }
+      ]
+    },
+    "docs/evidence/wiki-parity-2026-06/wp3-search-hybrid.json": {
+      "content_hash": "5cbb90d32dd24f10bb2837b33e5b1d08e9fec6fa95339536961743631748d75e",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 138
+        }
+      ]
+    },
+    "docs/evidence/wiki-parity-2026-06/wp3-search-sources.json": {
+      "content_hash": "5ad89a919e825962af17d218a4e40d23a3d78254444ed1c741d0c04fcdb33f8c",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 228
+        }
+      ]
+    },
+    "scripts/verify.sh": {
+      "content_hash": "ea937910d2856a63aaa5387d7f2fa37a60cb76aecbb086d86d888e0f4c05f91e",
+      "contributors": [
+        {
+          "contributor_id": "257a2c872903e258a9ae17f2bf3a5e223fbefbfa9752d274d9bca0612bd81ba0",
+          "name": "Josh Wilhelmi",
+          "lines": 47
+        }
+      ]
+    }
+  }
+}

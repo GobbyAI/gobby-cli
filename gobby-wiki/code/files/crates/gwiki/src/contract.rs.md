@@ -24,11 +24,11 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `contract` | function | Constructs and returns a 'CliContract' for the 'gwiki' local-first wiki CLI, defining contract version 5, global flags, project/topic scope defaults, and the command set and their JSON output schemas. [crates/gwiki/src/contract.rs:6-494] |
-| `format_flag` | function | Creates a 'FlagContract' for the '--format' flag with the value spec '"json\|text"' and restricts allowed values to 'json' and 'text'. [crates/gwiki/src/contract.rs:496-498] |
-| `ingest_file_flags` | function | Returns a vector of 'FlagContract' definitions for ingest-file CLI options, including two switches, two value flags, and three AI-related routing flags. [crates/gwiki/src/contract.rs:500-510] |
-| `ai_flag` | function | Creates a 'FlagContract' for the given static flag name with a string value schema '"auto\|daemon\|direct\|off"' and constrains the accepted values to exactly 'auto', 'daemon', 'direct', or 'off'. [crates/gwiki/src/contract.rs:512-515] |
-| `optional_positional` | function | Constructs and returns a 'PositionalContract' for the given 'name' that is always marked 'required: false' and uses the provided 'repeatable' flag. [crates/gwiki/src/contract.rs:517-523] |
-| `scoped_keys` | function | Prepends the fixed keys '"command"' and '"scope"' to the input 'Vec<&'static str>' by appending the input vector onto a new vector containing those two values, then returns the combined vector. [crates/gwiki/src/contract.rs:525-529] |
-| `contract_keys` | function | Returns a vector of static string keys identifying the contract fields: 'tool', 'contract_version', 'summary', 'global_flags', 'scope', 'commands', and 'error_codes'. [crates/gwiki/src/contract.rs:531-541] |
+| `contract` | function | Returns a 'CliContract' that specifies the command-line interface schema for gwiki, a local-first wiki tool, including global flags, scope configuration, and command contracts for operations like indexing and search. [crates/gwiki/src/contract.rs:6-496] |
+| `format_flag` | function | The 'format_flag' function creates and returns a 'FlagContract' that defines a '--format' command-line flag accepting "json" or "text" as mutually allowed values. [crates/gwiki/src/contract.rs:498-500] |
+| `ingest_file_flags` | function | Returns a vector of command-line flag contracts defining switches and parameters for file processing, language translation, video sampling, and AI routing options. [crates/gwiki/src/contract.rs:502-512] |
+| `ai_flag` | function | Creates a FlagContract for a named flag with validation restricting its value to one of four allowed options: "auto", "daemon", "direct", or "off". [crates/gwiki/src/contract.rs:514-517] |
+| `optional_positional` | function | Constructs a 'PositionalContract' for an optional positional argument with the specified name and repeatability setting. [crates/gwiki/src/contract.rs:519-525] |
+| `scoped_keys` | function | Prepends the static string references "command" and "scope" to an input vector of static strings and returns the combined vector. [crates/gwiki/src/contract.rs:527-531] |
+| `contract_keys` | function | Returns a vector of static string slice references representing the canonical field identifiers for a contract schema. [crates/gwiki/src/contract.rs:533-543] |
 

@@ -10,7 +10,7 @@ freshness: indexed
 
 # crates/gwiki/src/commands/citation_quality.rs
 
-Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
+Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 

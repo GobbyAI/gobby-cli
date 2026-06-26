@@ -62,8 +62,8 @@ This page is derived deterministically from the pinned CLI contracts (`crates/<b
 | --- | --- | --- | --- | --- |
 | `contract` | Emit this CLI contract. | `--format` | `contract::contract` | [[code/files/crates/gwiki/src/contract.rs\|crates/gwiki/src/contract.rs]] |
 | `index` | Index markdown and source notes in the selected scope. | — | `commands::index::execute` | [[code/files/crates/gwiki/src/commands/index.rs\|crates/gwiki/src/commands/index.rs]] |
-| `search` | Search wiki documents in the selected scope. | `--limit` `--no-semantic` | `commands::search::execute` | [[code/files/crates/gwiki/src/commands/search.rs\|crates/gwiki/src/commands/search.rs]] |
-| `ask` | Ask a question about wiki documents in the selected scope. | `--llm` `--ai` `--require-ai` | `commands::ask::execute` | [[code/files/crates/gwiki/src/commands/ask.rs\|crates/gwiki/src/commands/ask.rs]] |
+| `search` | Search wiki documents in the selected scope. | `--limit` `--no-semantic` `--token-budget` | `commands::search::execute` | [[code/files/crates/gwiki/src/commands/search.rs\|crates/gwiki/src/commands/search.rs]] |
+| `ask` | Ask a question about wiki documents in the selected scope. | `--llm` `--ai` `--require-ai` `--token-budget` | `commands::ask::execute` | [[code/files/crates/gwiki/src/commands/ask.rs\|crates/gwiki/src/commands/ask.rs]] |
 | `read` | Read a wiki page or document in the selected scope. | `--path` `--title` | `commands::read::execute` | [[code/files/crates/gwiki/src/commands/read.rs\|crates/gwiki/src/commands/read.rs]] |
 | `refresh` | Refresh URL-backed raw source records. | `--id` `--dry-run` | `commands::refresh::execute` | [[code/files/crates/gwiki/src/commands/refresh/mod.rs\|crates/gwiki/src/commands/refresh/mod.rs]] |
 | `ingest-file` | Capture a local source file into the wiki inbox. | `--no-ai` `--translate` `--target-lang` `--video-frame-interval` `--transcription-routing` `--vision-routing` `--text-routing` | `commands::index::execute_ingest_file` | [[code/files/crates/gwiki/src/commands/index.rs\|crates/gwiki/src/commands/index.rs]] |

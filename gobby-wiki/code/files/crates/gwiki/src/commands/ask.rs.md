@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `execute` | function | Validates that '--llm' is not used with '--ai off', retrieves evidence for the query and selection, builds an ask output from the retrieval plan, optionally synthesizes it with the AI routing settings, and renders the resulting 'CommandOutcome'. [crates/gwiki/src/commands/ask.rs:20-41] |
+| `execute` | function | Executes a search query with optional LLM-based synthesis of retrieved and assembled results, returning a rendered command outcome. [crates/gwiki/src/commands/ask.rs:20-42] |
 
 _Verified by 1 in-file unit test._
 

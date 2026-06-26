@@ -10,7 +10,7 @@ freshness: indexed
 
 # crates/gwiki/src/commands/refresh/mod.rs
 
-Module: [[code/modules/crates/gwiki/src/commands/refresh|crates/gwiki/src/commands/refresh]]
+Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 

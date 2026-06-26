@@ -10,7 +10,7 @@ freshness: indexed
 
 # crates/gcode/src/db/mod.rs
 
-Module: [[code/modules/crates/gcode/src/db|crates/gcode/src/db]]
+Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 

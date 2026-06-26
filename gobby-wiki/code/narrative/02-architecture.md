@@ -3,12 +3,7 @@ title: Architecture
 type: code_narrative
 provenance:
 - file: crates/gcode/contract/gcode.contract.json
-- file: crates/gcode/src/commands/codewiki/prompts.rs
 - file: crates/gcode/src/commands/codewiki/types.rs
-- file: crates/gcode/src/commands/graph/reads.rs
-- file: crates/gcode/src/commands/grep.rs
-- file: crates/gcode/src/commands/search.rs
-- file: crates/gcode/src/commands/symbol_at.rs
 - file: crates/gcode/src/config/services.rs
 - file: crates/gcode/src/db/resolution.rs
 - file: crates/gcode/src/index/semantic.rs
@@ -16,23 +11,28 @@ provenance:
 - file: crates/gcore/assets/docker-compose.services.yml
 - file: crates/gcore/src/ai_context.rs
 - file: crates/ghook/schemas/diagnose-output.v2.schema.json
-- file: crates/ghook/schemas/inbox-envelope.v1.schema.json
 - file: crates/gwiki/contract/gwiki.contract.json
-- file: crates/gwiki/src/ai/chunk.rs
 - file: crates/gwiki/src/benchmark.rs
-- file: crates/gwiki/src/collect.rs
-- file: crates/gwiki/src/commands/citation_quality.rs
-- file: crates/gwiki/src/commands/sources.rs
 - file: crates/gwiki/src/graph/mod.rs
 - file: crates/gwiki/src/health.rs
 - file: crates/gwiki/src/ingest/audio.rs
 - file: crates/gwiki/src/ingest/mod.rs
-- file: crates/gwiki/src/ingest/session.rs
-- file: crates/gwiki/src/links.rs
-- file: crates/gwiki/src/main.rs
+- file: crates/gwiki/src/lint.rs
 - file: crates/gwiki/src/search/semantic.rs
 - file: crates/gwiki/src/vector.rs
-provenance_truncated: 442
+- file: docs/evidence/wiki-parity-2026-06/wp3-deposit-search.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-daemon.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-search.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q2-rrf-ask-daemon.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q2-rrf-search.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-search.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q4-falkor-ask-daemon.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q4-falkor-search.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-search-hybrid.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-search-sources.json
+provenance_truncated: 468
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -42,19 +42,19 @@ freshness: indexed
 <summary>Relevant source files</summary>
 
 - [crates/gcode/contract/gcode.contract.json](crates/gcode/contract/gcode.contract.json)
-- [crates/gcode/src/commands/codewiki/prompts.rs](crates/gcode/src/commands/codewiki/prompts.rs)
 - [crates/gcode/src/commands/codewiki/types.rs](crates/gcode/src/commands/codewiki/types.rs)
-- [crates/gcode/src/commands/graph/reads.rs](crates/gcode/src/commands/graph/reads.rs)
-- [crates/gcode/src/commands/grep.rs](crates/gcode/src/commands/grep.rs)
-- [crates/gcode/src/commands/search.rs](crates/gcode/src/commands/search.rs)
-- [crates/gcode/src/commands/symbol_at.rs](crates/gcode/src/commands/symbol_at.rs)
 - [crates/gcode/src/config/services.rs](crates/gcode/src/config/services.rs)
 - [crates/gcode/src/db/resolution.rs](crates/gcode/src/db/resolution.rs)
 - [crates/gcode/src/index/semantic.rs](crates/gcode/src/index/semantic.rs)
 - [crates/gcode/src/models.rs](crates/gcode/src/models.rs)
 - [crates/gcore/assets/docker-compose.services.yml](crates/gcore/assets/docker-compose.services.yml)
+- [crates/gcore/src/ai_context.rs](crates/gcore/src/ai_context.rs)
+- [crates/ghook/schemas/diagnose-output.v2.schema.json](crates/ghook/schemas/diagnose-output.v2.schema.json)
+- [crates/gwiki/contract/gwiki.contract.json](crates/gwiki/contract/gwiki.contract.json)
+- [crates/gwiki/src/benchmark.rs](crates/gwiki/src/benchmark.rs)
+- [crates/gwiki/src/graph/mod.rs](crates/gwiki/src/graph/mod.rs)
 
-_460 more source files omitted._
+_486 more source files omitted._
 
 </details>
 
@@ -62,61 +62,88 @@ _460 more source files omitted._
 
 ## Why this matters
 
-Before you can navigate any codebase confidently, you need a map of where things live and how the pieces fit together. This chapter is that map. It traces the workspace from the top-level `crates` module down into the `gcode` crate, where the bulk of the indexing logic lives, and shows how configuration, the database layer, the indexer, and the filesystem walker relate to one another.
-
-The central design decision here is *separation by responsibility within a single crate*. Rather than scattering concerns, `gcode` keeps configuration resolution ([crates/gcode/src/config/context.rs:26-31]), persistence ([crates/gcode/src/db/mod.rs:16-20]), indexing ([crates/gcode/src/index/api.rs:16-23]), and project setup ([crates/gcode/src/setup/contracts.rs:5-8]) in clearly named submodules. The supporting `gcore` crate carries shared assets such as the service definitions in its Docker Compose file ([crates/gcore/assets/docker-compose.services.yml:5-117]). Understanding this layout means you can predict where a given behavior is implemented before you ever open the file.
-
-## How it works
-
-Here is the real flow, from build time through configuration to the indexing modules.
-
-1. **Build-time wiring happens first.** The crate's build script, `main`, emits Cargo directives so the build reruns when `GCODE_POSTGRES_TEST_DATABASE_URL` changes, registers the `gcode_postgres_tests` cfg, and enables that cfg only when the environment variable is set ([crates/gcode/build.rs:1-8]). This is how the Postgres-backed tests are gated: with no database URL present, the cfg stays off and those tests are compiled out.
-
-2. **Configuration is resolved through the `config` module.** The crate root re-exports the public configuration surface — `Context`, `ProjectIdentity`, `FalkorConfig`, `QdrantConfig`, and the embedding types — from `context` ([crates/gcode/src/config.rs:9-15]). This module is the entry point for answering "what project am I in, and which services do I talk to?" via helpers like `detect_project_root` and `resolve_project_identity` ([crates/gcode/src/config.rs:9-15]).
-
-3. **Service settings come from environment variables and config keys.** Configuration distinguishes named config keys (such as `FALKORDB_HOST_CONFIG_KEY`) from their environment-variable counterparts (`GOBBY_FALKORDB_HOST_ENV`), letting a value be supplied either way ([crates/gcode/src/config.rs:11-14]). Internal helpers like `read_standalone_config_optional` and `resolve_embedding_config_details` are re-exported only at crate-internal visibility ([crates/gcode/src/config.rs:18-20]), keeping the public API focused.
-
-4. **The database layer backs persistence.** With identity and service config resolved, the `db` module ([crates/gcode/src/db/mod.rs:16-20]) provides the storage interface the rest of the crate builds on — the same FalkorDB and Qdrant services described in the shared Compose assets ([crates/gcore/assets/docker-compose.services.yml:5-117]).
-
-5. **Indexing drives the walker and indexer.** The `index` module exposes its API ([crates/gcode/src/index/api.rs:16-23]) and coordinates two collaborators: the `walker`, which classifies files as it traverses the tree ([crates/gcode/src/index/walker/classification.rs:15-52]), and the `indexer`, which processes individual files ([crates/gcode/src/index/indexer/file.rs:15-91]). Setup contracts in the `setup` module ([crates/gcode/src/setup/contracts.rs:5-8]) define the agreements that initialize a project before indexing runs.
-
-The notable fallback to remember is the build-script gate from step 1: absent `GCODE_POSTGRES_TEST_DATABASE_URL`, the `gcode_postgres_tests` cfg is never enabled ([crates/gcode/build.rs:4-7]).
+Architecture walks through the modules and files listed below; follow the key components in order, then continue to the linked pages.
 
 ## Key components
 
-| Symbol / Module | Where | Role |
-| --- | --- | --- |
-| `main` (build script) | [crates/gcode/build.rs:1-8] | Gates Postgres tests on the `GCODE_POSTGRES_TEST_DATABASE_URL` env var |
-| `config` | [crates/gcode/src/config/context.rs:26-31] | Resolves project identity and service settings |
-| `db` | [crates/gcode/src/db/mod.rs:16-20] | Persistence layer backing the index |
-| `index` | [crates/gcode/src/index/api.rs:16-23] | Public indexing entry point |
-| `index/walker` | [crates/gcode/src/index/walker/classification.rs:15-52] | Traverses and classifies files |
-| `index/indexer` | [crates/gcode/src/index/indexer/file.rs:15-91] | Processes individual files |
+| Symbol | Kind | Source | Role |
+| --- | --- | --- | --- |
+| AiDepthArg | type | [crates/gcode/src/cli.rs:68-73] | Indexed type `AiDepthArg` in `crates/gcode/src/cli.rs`. [crates/gcode/src/cli.rs:68-73] |
+| AiProseDepthArg | type | [crates/gcode/src/cli.rs:86-91] | Indexed type `AiProseDepthArg` in `crates/gcode/src/cli.rs`. [crates/gcode/src/cli.rs:86-91] |
+| AiRegisterArg | type | [crates/gcode/src/cli.rs:104-108] | Indexed type `AiRegisterArg` in `crates/gcode/src/cli.rs`. [crates/gcode/src/cli.rs:104-108] |
+| AiRouteArg | type | [crates/gcode/src/cli.rs:49-54] | Indexed type `AiRouteArg` in `crates/gcode/src/cli.rs`. [crates/gcode/src/cli.rs:49-54] |
+| Cli | class | [crates/gcode/src/cli.rs:23-46] | 'Cli' is a crate-private Clap-parsed top-level command-line configuration struct that provides global flags for project root, output format, quiet/verbose logging, and freshness checks, plus a required 'Command' subcommand. [crates/gcode/src/cli.rs:23-46] |
+| CodeGraphLifecycleBackend | class | [crates/gcode/src/commands/graph/lifecycle.rs:86] | 'CodeGraphLifecycleBackend' is a backend abstraction for managing the lifecycle of a code graph, represented here as an opaque 'struct' with no exposed fields or methods. [crates/gcode/src/commands/graph/lifecycle.rs:86] |
+| Command | type | [crates/gcode/src/cli.rs:121-469] | Indexed type `Command` in `crates/gcode/src/cli.rs`. [crates/gcode/src/cli.rs:121-469] |
+| CompiledGlob | class | [crates/gcode/src/commands/grep.rs:469-472] | 'CompiledGlob' is a struct that stores both the original glob string ('raw') and its precompiled 'glob::Pattern' representation ('pattern') for efficient matching. [crates/gcode/src/commands/grep.rs:469-472] |
+| EmbeddingsCommand | type | [crates/gcode/src/cli.rs:558-561] | Indexed type `EmbeddingsCommand` in `crates/gcode/src/cli.rs`. [crates/gcode/src/cli.rs:558-561] |
+| GraphCommand | type | [crates/gcode/src/cli.rs:472-536] | Indexed type `GraphCommand` in `crates/gcode/src/cli.rs`. [crates/gcode/src/cli.rs:472-536] |
+| GraphFileSyncOutcome | type | [crates/gcode/src/commands/graph/lifecycle.rs:131-140] | Indexed type `GraphFileSyncOutcome` in `crates/gcode/src/commands/graph/lifecycle.rs`. [crates/gcode/src/commands/graph/lifecycle.rs:131-140] |
+| GraphPathEndpoint | class | [crates/gcode/src/commands/graph/reads.rs:155-159] | 'GraphPathEndpoint' is a serde-serializable struct representing a path endpoint with an optional 'id' field omitted when 'None' and a required 'display_name' string. [crates/gcode/src/commands/graph/reads.rs:155-159] |
 
-Selected configuration variables, surfaced through the crate root ([crates/gcode/src/config.rs:9-20]):
+## Members
 
-| Name | Kind |
-| --- | --- |
-| `GCODE_POSTGRES_TEST_DATABASE_URL` | Env var (build-time test gate) [crates/gcode/build.rs:2] |
-| `GOBBY_FALKORDB_HOST_ENV` / `GOBBY_FALKORDB_PORT_ENV` / `GOBBY_FALKORDB_PASSWORD_ENV` | FalkorDB env vars [crates/gcode/src/config.rs:13-14] |
-| `FALKORDB_HOST_CONFIG_KEY` / `FALKORDB_PORT_CONFIG_KEY` / `FALKORDB_PASSWORD_CONFIG_KEY` | FalkorDB config keys [crates/gcode/src/config.rs:11-12] |
-| `CODE_SYMBOL_COLLECTION_PREFIX` | Collection naming prefix [crates/gcode/src/config.rs:10] |
+- `crates` (module) [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
+- `crates/gcode` (module) [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
+- `crates/gcode/assets` (module) [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
+- `crates/gcode/assets/import_roots` (module) [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
+- `crates/gcode/contract` (module) [crates/gcode/contract/gcode.contract.json:2]
+- `crates/gcode/src` (module) [crates/gcode/src/cli.rs:23-46]
+- `docs` (module) [docs/evidence/wiki-parity-2026-06/wp3-audit.json:1-100]
+- `scripts` (module) [scripts/verify.sh:4-10]
+- `crates/gcode/assets/import_roots/elixir_dependency_roots.json` (file) [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
+- `crates/gcode/assets/import_roots/ruby_require_roots.json` (file) [crates/gcode/assets/import_roots/ruby_require_roots.json:2]
+- `crates/gcode/build.rs` (file) [crates/gcode/build.rs:1-8]
+- `crates/gcode/contract/gcode.contract.json` (file) [crates/gcode/contract/gcode.contract.json:2]
+- `crates/gcode/src/cli.rs` (file) [crates/gcode/src/cli.rs:23-46]
+- `crates/gcode/src/cli/tests.rs` (file) [crates/gcode/src/cli/tests.rs:12-30]
+- `crates/gcode/src/commands/graph/lifecycle.rs` (file) [crates/gcode/src/commands/graph/lifecycle.rs:12-14]
+- `crates/gcode/src/commands/graph/payload.rs` (file) [crates/gcode/src/commands/graph/payload.rs:6-37]
+- `crates/gcode/src/commands/graph/reads.rs` (file) [crates/gcode/src/commands/graph/reads.rs:19-25]
+- `crates/gcode/src/commands/graph/tests.rs` (file) [crates/gcode/src/commands/graph/tests.rs:22-36]
+- `crates/gcode/src/commands/grep.rs` (file) [crates/gcode/src/commands/grep.rs:21-33]
 
-## What to read next
 
-Follow the flow in the order the code uses it. Start with the **Configuration** reference for the `config` module ([crates/gcode/src/config/context.rs:26-31]) to see how project identity and service settings are resolved, then move to the **Indexing** chapter covering the `index` API ([crates/gcode/src/index/api.rs:16-23]) and its `walker` ([crates/gcode/src/index/walker/classification.rs:15-52]) and `indexer` ([crates/gcode/src/index/indexer/file.rs:15-91]) collaborators.
+## Conceptual flow
+
+> _Conceptual flow_ — how this page's subsystems behave together, in the order these subsystems are grouped on this page. Grounded in the member module/file summaries below; it is a behavior sketch, not a per-symbol call or import graph.
+
+```mermaid
+flowchart LR
+    s0["crates — `crates` contains 0 direct files and 4 child"]
+    s1["gcode — `crates/gcode` contains 1 direct file and 3 child"]
+    s2["assets — `crates/gcode/assets` contains 0 direct files and 1 child"]
+    s3["import_roots — `crates/gcode/assets/import_roots` contains 2 direct files and 0 child"]
+    s4["contract — `crates/gcode/contract` contains 1 direct file and 0 child"]
+    s5["src — `crates/gcode/src` contains 39 direct files and 11 child"]
+    s6["docs — `docs` contains 0 direct files and 1 child"]
+    s7["scripts — `scripts` contains 1 direct file and 0 child"]
+    s0 --> s1
+    s1 --> s2
+    s2 --> s3
+    s3 --> s4
+    s4 --> s5
+    s5 --> s6
+    s6 --> s7
+```
 
 ## Concepts
 
-- [[code/concepts/crates|Workspace Topology]]
-- [[code/concepts/crates-gcore|Shared Platform Primitives]]
-- [[code/concepts/crates-gcore-assets|Service Infrastructure]]
-- [[code/concepts/crates-gcode-src-config|Configuration & Database Access]]
-- [[code/concepts/crates-gcode-src-setup|Schema Provisioning]]
-- [[code/concepts/crates-gcode-src-index|Code Indexing Pipeline]]
+- [[code/concepts/crates|Crates]]
+- [[code/concepts/crates-gcode|Gcode]]
+- [[code/concepts/crates-gcode-assets|Assets]]
+- [[code/concepts/crates-gcode-assets-import-roots|Import Roots]]
+- [[code/concepts/crates-gcode-contract|Contract]]
+- [[code/concepts/crates-gcode-src|Src]]
+
+## Explore
+
+- [[code/modules/crates|crates]]
+- [[code/modules/docs|docs]]
+- [[code/modules/scripts|scripts]]
 
 ## Continue the tour
 
-- ← Previous: [[code/narrative/01-introduction|Introduction: The Gobby Code Intelligence Workspace]]
+- ← Previous: [[code/narrative/01-introduction|Introduction]]
 - Next →: [[code/narrative/03-data-flow|Data Flow]]
 

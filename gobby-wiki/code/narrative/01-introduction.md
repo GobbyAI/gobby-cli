@@ -1,14 +1,9 @@
 ---
-title: 'Introduction: The Gobby Code Intelligence Workspace'
+title: Introduction
 type: code_narrative
 provenance:
 - file: crates/gcode/contract/gcode.contract.json
-- file: crates/gcode/src/commands/codewiki/prompts.rs
 - file: crates/gcode/src/commands/codewiki/types.rs
-- file: crates/gcode/src/commands/graph/reads.rs
-- file: crates/gcode/src/commands/grep.rs
-- file: crates/gcode/src/commands/search.rs
-- file: crates/gcode/src/commands/symbol_at.rs
 - file: crates/gcode/src/config/services.rs
 - file: crates/gcode/src/db/resolution.rs
 - file: crates/gcode/src/index/semantic.rs
@@ -16,23 +11,28 @@ provenance:
 - file: crates/gcore/assets/docker-compose.services.yml
 - file: crates/gcore/src/ai_context.rs
 - file: crates/ghook/schemas/diagnose-output.v2.schema.json
-- file: crates/ghook/schemas/inbox-envelope.v1.schema.json
 - file: crates/gwiki/contract/gwiki.contract.json
-- file: crates/gwiki/src/ai/chunk.rs
 - file: crates/gwiki/src/benchmark.rs
-- file: crates/gwiki/src/collect.rs
-- file: crates/gwiki/src/commands/citation_quality.rs
-- file: crates/gwiki/src/commands/sources.rs
 - file: crates/gwiki/src/graph/mod.rs
 - file: crates/gwiki/src/health.rs
 - file: crates/gwiki/src/ingest/audio.rs
 - file: crates/gwiki/src/ingest/mod.rs
-- file: crates/gwiki/src/ingest/session.rs
-- file: crates/gwiki/src/links.rs
-- file: crates/gwiki/src/main.rs
+- file: crates/gwiki/src/lint.rs
 - file: crates/gwiki/src/search/semantic.rs
 - file: crates/gwiki/src/vector.rs
-provenance_truncated: 442
+- file: docs/evidence/wiki-parity-2026-06/wp3-deposit-search.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-daemon.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-ask-direct.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-ghook-search.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q2-rrf-ask-daemon.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q2-rrf-search.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-ask-daemon.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q3-uuid5-search.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q4-falkor-ask-daemon.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-qa-q4-falkor-search.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-search-hybrid.json
+- file: docs/evidence/wiki-parity-2026-06/wp3-search-sources.json
+provenance_truncated: 468
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -42,67 +42,105 @@ freshness: indexed
 <summary>Relevant source files</summary>
 
 - [crates/gcode/contract/gcode.contract.json](crates/gcode/contract/gcode.contract.json)
-- [crates/gcode/src/commands/codewiki/prompts.rs](crates/gcode/src/commands/codewiki/prompts.rs)
 - [crates/gcode/src/commands/codewiki/types.rs](crates/gcode/src/commands/codewiki/types.rs)
-- [crates/gcode/src/commands/graph/reads.rs](crates/gcode/src/commands/graph/reads.rs)
-- [crates/gcode/src/commands/grep.rs](crates/gcode/src/commands/grep.rs)
-- [crates/gcode/src/commands/search.rs](crates/gcode/src/commands/search.rs)
-- [crates/gcode/src/commands/symbol_at.rs](crates/gcode/src/commands/symbol_at.rs)
 - [crates/gcode/src/config/services.rs](crates/gcode/src/config/services.rs)
 - [crates/gcode/src/db/resolution.rs](crates/gcode/src/db/resolution.rs)
 - [crates/gcode/src/index/semantic.rs](crates/gcode/src/index/semantic.rs)
 - [crates/gcode/src/models.rs](crates/gcode/src/models.rs)
 - [crates/gcore/assets/docker-compose.services.yml](crates/gcore/assets/docker-compose.services.yml)
+- [crates/gcore/src/ai_context.rs](crates/gcore/src/ai_context.rs)
+- [crates/ghook/schemas/diagnose-output.v2.schema.json](crates/ghook/schemas/diagnose-output.v2.schema.json)
+- [crates/gwiki/contract/gwiki.contract.json](crates/gwiki/contract/gwiki.contract.json)
+- [crates/gwiki/src/benchmark.rs](crates/gwiki/src/benchmark.rs)
+- [crates/gwiki/src/graph/mod.rs](crates/gwiki/src/graph/mod.rs)
 
-_460 more source files omitted._
+_486 more source files omitted._
 
 </details>
 
-# Introduction: The Gobby Code Intelligence Workspace
+# Introduction
 
 ## Why this matters
 
-Before you can read any single file with confidence, you need a map of the territory. Gobby is organized as a Cargo workspace whose top-level `crates` module partitions the system into focused, separately-buildable units. The design decision here is separation by responsibility: code intelligence, shared primitives, hook dispatch, and the wiki engine each live in their own crate, with `gcore` serving as the common foundation that the others build on top of. That layering keeps the heavy machinery — indexing, language imports, services — from leaking into the primitives everyone shares.
-
-You can already see the consequences of that split in the assets each crate carries. The intelligence crate, `gcode`, ships language-aware data such as `elixir_dependency_roots.json` [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2], because resolving imports across ecosystems is its job. The foundation crate, `gcore`, ships infrastructure concerns instead — for example a `docker-compose.services.yml` describing the backing services the rest of the workspace depends on [crates/gcore/assets/docker-compose.services.yml:5-117]. Reading the directory layout, then, is the fastest way to predict where a given concern lives.
-
-## How it works
-
-Here is the real flow of how the workspace orients itself and prepares to build:
-
-1. **Start at the workspace root.** The `crates` module is the entry point that groups the member crates [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]. Think of it the way the `import_roots` assets work for `gcode`: a small set of declared roots tells the rest of the system where to begin resolving everything else.
-
-2. **Identify the foundation, `gcore`.** Everything else layers on top of it, and it owns the shared infrastructure — including the service definitions in `docker-compose.services.yml` [crates/gcore/assets/docker-compose.services.yml:5-117] that stand up the dependencies the workspace needs at runtime.
-
-3. **Move outward to `gcode`, the code-intelligence crate.** This is where language-specific knowledge lives, such as the Elixir dependency roots used during import resolution [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2].
-
-4. **Let the build script wire in optional capabilities.** When Cargo builds `gcode`, its `build.rs` runs first. The `main` function emits three directives: it asks Cargo to rerun the script whenever `GCODE_POSTGRES_TEST_DATABASE_URL` changes, registers the `gcode_postgres_tests` cfg so `cargo`'s check-cfg lint accepts it, and conditionally enables that cfg [crates/gcode/build.rs:1-8].
-
-5. **Fall back gracefully when Postgres is absent.** The enabling step is gated on the environment: only `if std::env::var_os("GCODE_POSTGRES_TEST_DATABASE_URL").is_some()` does the script emit `cargo:rustc-cfg=gcode_postgres_tests` [crates/gcode/build.rs:4-6]. If the variable is unset, the cfg simply stays off and the Postgres-backed tests compile out — so a contributor without a database can still build the crate.
+Introduction walks through the modules and files listed below; follow the key components in order, then continue to the linked pages.
 
 ## Key components
 
-| Symbol / File | Kind | Role |
-| --- | --- | --- |
-| `crates` | module | Workspace root that partitions the system into member crates [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2] |
-| `crates/gcore` | module | Shared foundation carrying infrastructure assets like the service compose file [crates/gcore/assets/docker-compose.services.yml:5-117] |
-| `crates/gcode` | module | Code-intelligence crate holding language import data [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2] |
-| `main` | function | Build script that registers and conditionally enables the `gcode_postgres_tests` cfg [crates/gcode/build.rs:1-8] |
+| Symbol | Kind | Source | Role |
+| --- | --- | --- | --- |
+| AiDepthArg | type | [crates/gcode/src/cli.rs:68-73] | Indexed type `AiDepthArg` in `crates/gcode/src/cli.rs`. [crates/gcode/src/cli.rs:68-73] |
+| AiProseDepthArg | type | [crates/gcode/src/cli.rs:86-91] | Indexed type `AiProseDepthArg` in `crates/gcode/src/cli.rs`. [crates/gcode/src/cli.rs:86-91] |
+| AiRegisterArg | type | [crates/gcode/src/cli.rs:104-108] | Indexed type `AiRegisterArg` in `crates/gcode/src/cli.rs`. [crates/gcode/src/cli.rs:104-108] |
+| AiRouteArg | type | [crates/gcode/src/cli.rs:49-54] | Indexed type `AiRouteArg` in `crates/gcode/src/cli.rs`. [crates/gcode/src/cli.rs:49-54] |
+| Cli | class | [crates/gcode/src/cli.rs:23-46] | 'Cli' is a crate-private Clap-parsed top-level command-line configuration struct that provides global flags for project root, output format, quiet/verbose logging, and freshness checks, plus a required 'Command' subcommand. [crates/gcode/src/cli.rs:23-46] |
+| CodeGraphLifecycleBackend | class | [crates/gcode/src/commands/graph/lifecycle.rs:86] | 'CodeGraphLifecycleBackend' is a backend abstraction for managing the lifecycle of a code graph, represented here as an opaque 'struct' with no exposed fields or methods. [crates/gcode/src/commands/graph/lifecycle.rs:86] |
+| Command | type | [crates/gcode/src/cli.rs:121-469] | Indexed type `Command` in `crates/gcode/src/cli.rs`. [crates/gcode/src/cli.rs:121-469] |
+| CompiledGlob | class | [crates/gcode/src/commands/grep.rs:469-472] | 'CompiledGlob' is a struct that stores both the original glob string ('raw') and its precompiled 'glob::Pattern' representation ('pattern') for efficient matching. [crates/gcode/src/commands/grep.rs:469-472] |
+| EmbeddingsCommand | type | [crates/gcode/src/cli.rs:558-561] | Indexed type `EmbeddingsCommand` in `crates/gcode/src/cli.rs`. [crates/gcode/src/cli.rs:558-561] |
+| GraphCommand | type | [crates/gcode/src/cli.rs:472-536] | Indexed type `GraphCommand` in `crates/gcode/src/cli.rs`. [crates/gcode/src/cli.rs:472-536] |
+| GraphFileSyncOutcome | type | [crates/gcode/src/commands/graph/lifecycle.rs:131-140] | Indexed type `GraphFileSyncOutcome` in `crates/gcode/src/commands/graph/lifecycle.rs`. [crates/gcode/src/commands/graph/lifecycle.rs:131-140] |
+| GraphPathEndpoint | class | [crates/gcode/src/commands/graph/reads.rs:155-159] | 'GraphPathEndpoint' is a serde-serializable struct representing a path endpoint with an optional 'id' field omitted when 'None' and a required 'display_name' string. [crates/gcode/src/commands/graph/reads.rs:155-159] |
 
-## What to read next
+## Members
 
-Continue with the chapter on **`gcore`, the common foundation**, since it underpins every other crate and explains the shared primitives and services (such as the `docker-compose.services.yml` you saw above [crates/gcore/assets/docker-compose.services.yml:5-117]) before you dive into the higher-level code-intelligence, hook-dispatch, and wiki crates.
+- `crates` (module) [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
+- `crates/gcode` (module) [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
+- `crates/gcode/assets` (module) [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
+- `crates/gcode/assets/import_roots` (module) [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
+- `crates/gcode/contract` (module) [crates/gcode/contract/gcode.contract.json:2]
+- `crates/gcode/src` (module) [crates/gcode/src/cli.rs:23-46]
+- `docs` (module) [docs/evidence/wiki-parity-2026-06/wp3-audit.json:1-100]
+- `scripts` (module) [scripts/verify.sh:4-10]
+- `crates/gcode/assets/import_roots/elixir_dependency_roots.json` (file) [crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
+- `crates/gcode/assets/import_roots/ruby_require_roots.json` (file) [crates/gcode/assets/import_roots/ruby_require_roots.json:2]
+- `crates/gcode/build.rs` (file) [crates/gcode/build.rs:1-8]
+- `crates/gcode/contract/gcode.contract.json` (file) [crates/gcode/contract/gcode.contract.json:2]
+- `crates/gcode/src/cli.rs` (file) [crates/gcode/src/cli.rs:23-46]
+- `crates/gcode/src/cli/tests.rs` (file) [crates/gcode/src/cli/tests.rs:12-30]
+- `crates/gcode/src/commands/graph/lifecycle.rs` (file) [crates/gcode/src/commands/graph/lifecycle.rs:12-14]
+- `crates/gcode/src/commands/graph/payload.rs` (file) [crates/gcode/src/commands/graph/payload.rs:6-37]
+- `crates/gcode/src/commands/graph/reads.rs` (file) [crates/gcode/src/commands/graph/reads.rs:19-25]
+- `crates/gcode/src/commands/graph/tests.rs` (file) [crates/gcode/src/commands/graph/tests.rs:22-36]
+- `crates/gcode/src/commands/grep.rs` (file) [crates/gcode/src/commands/grep.rs:21-33]
+
+
+## Conceptual flow
+
+> _Conceptual flow_ — how this page's subsystems behave together, in the order these subsystems are grouped on this page. Grounded in the member module/file summaries below; it is a behavior sketch, not a per-symbol call or import graph.
+
+```mermaid
+flowchart LR
+    s0["crates — `crates` contains 0 direct files and 4 child"]
+    s1["gcode — `crates/gcode` contains 1 direct file and 3 child"]
+    s2["assets — `crates/gcode/assets` contains 0 direct files and 1 child"]
+    s3["import_roots — `crates/gcode/assets/import_roots` contains 2 direct files and 0 child"]
+    s4["contract — `crates/gcode/contract` contains 1 direct file and 0 child"]
+    s5["src — `crates/gcode/src` contains 39 direct files and 11 child"]
+    s6["docs — `docs` contains 0 direct files and 1 child"]
+    s7["scripts — `scripts` contains 1 direct file and 0 child"]
+    s0 --> s1
+    s1 --> s2
+    s2 --> s3
+    s3 --> s4
+    s4 --> s5
+    s5 --> s6
+    s6 --> s7
+```
 
 ## Concepts
 
-- [[code/concepts/crates|Workspace Topology]]
-- [[code/concepts/crates-gcore|Shared Platform Primitives]]
+- [[code/concepts/crates|Crates]]
+- [[code/concepts/crates-gcode|Gcode]]
+- [[code/concepts/crates-gcode-assets|Assets]]
+- [[code/concepts/crates-gcode-assets-import-roots|Import Roots]]
+- [[code/concepts/crates-gcode-contract|Contract]]
+- [[code/concepts/crates-gcode-src|Src]]
 
 ## Explore
 
 - [[code/modules/crates|crates]]
-- [[code/modules/crates/gcode|crates/gcode]]
-- [[code/modules/crates/gcore|crates/gcore]]
+- [[code/modules/docs|docs]]
+- [[code/modules/scripts|scripts]]
 
 ## Continue the tour
 

@@ -10,7 +10,7 @@ freshness: indexed
 
 # crates/gcore/src/ai/daemon/transport.rs
 
-Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
+Module: [[code/modules/crates/gcore/src/ai/daemon|crates/gcore/src/ai/daemon]]
 
 ## Overview
 

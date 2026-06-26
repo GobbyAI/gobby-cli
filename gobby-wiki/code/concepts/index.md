@@ -3,7 +3,6 @@ title: Curated Concept Navigation
 type: code_concept_tree
 provenance:
 - file: crates/gcode/contract/gcode.contract.json
-- file: crates/gcode/src/commands/codewiki/prompts.rs
 - file: crates/gcode/src/commands/codewiki/types.rs
 - file: crates/gcode/src/config/services.rs
 - file: crates/gcode/src/db/resolution.rs
@@ -18,6 +17,7 @@ provenance:
 - file: crates/gwiki/src/health.rs
 - file: crates/gwiki/src/ingest/audio.rs
 - file: crates/gwiki/src/ingest/mod.rs
+- file: crates/gwiki/src/lint.rs
 - file: crates/gwiki/src/search/semantic.rs
 - file: crates/gwiki/src/vector.rs
 - file: docs/evidence/wiki-parity-2026-06/wp3-deposit-search.json
@@ -32,7 +32,7 @@ provenance:
 - file: docs/evidence/wiki-parity-2026-06/wp3-qa-q4-falkor-search.json
 - file: docs/evidence/wiki-parity-2026-06/wp3-search-hybrid.json
 - file: docs/evidence/wiki-parity-2026-06/wp3-search-sources.json
-provenance_truncated: 461
+provenance_truncated: 468
 generated_by: gcode-codewiki
 trust: generated
 freshness: indexed
@@ -42,7 +42,6 @@ freshness: indexed
 <summary>Relevant source files</summary>
 
 - [crates/gcode/contract/gcode.contract.json](crates/gcode/contract/gcode.contract.json)
-- [crates/gcode/src/commands/codewiki/prompts.rs](crates/gcode/src/commands/codewiki/prompts.rs)
 - [crates/gcode/src/commands/codewiki/types.rs](crates/gcode/src/commands/codewiki/types.rs)
 - [crates/gcode/src/config/services.rs](crates/gcode/src/config/services.rs)
 - [crates/gcode/src/db/resolution.rs](crates/gcode/src/db/resolution.rs)
@@ -53,8 +52,9 @@ freshness: indexed
 - [crates/ghook/schemas/diagnose-output.v2.schema.json](crates/ghook/schemas/diagnose-output.v2.schema.json)
 - [crates/gwiki/contract/gwiki.contract.json](crates/gwiki/contract/gwiki.contract.json)
 - [crates/gwiki/src/benchmark.rs](crates/gwiki/src/benchmark.rs)
+- [crates/gwiki/src/graph/mod.rs](crates/gwiki/src/graph/mod.rs)
 
-_479 more source files omitted._
+_486 more source files omitted._
 
 </details>
 
@@ -64,44 +64,88 @@ Reader-first paths into the grounded code reference.
 
 ## Start here — guided tour
 
-New to this codebase? Begin with [[code/narrative/01-introduction|Introduction: The Gobby Code Intelligence Workspace]].
+New to this codebase? Begin with [[code/narrative/01-introduction|Introduction]].
 
-1. [[code/narrative/01-introduction|Introduction: The Gobby Code Intelligence Workspace]]
+1. [[code/narrative/01-introduction|Introduction]]
 2. [[code/narrative/02-architecture|Architecture]]
 3. [[code/narrative/03-data-flow|Data Flow]]
-4. [[code/narrative/04-foundations-config-and-services|Foundations: Configuration, Connectivity, and Services]]
-5. [[code/narrative/05-indexing-pipeline|Turning Source Files into Code Facts]]
-6. [[code/narrative/06-graph-and-vector-stores|Projecting Facts into the Graph and Vector Stores]]
-7. [[code/narrative/07-search-and-retrieval|Searching the Index: Lexical, Semantic, and Graph-Boosted]]
 
 Ask questions across this vault with `gwiki ask "..."`, or find pages with `gwiki search "..."`.
 
 ## Concept Tree
 
-### Foundations
+### System Tour
 
-The shared platform primitives, service infrastructure, and configuration layers every subsystem builds on.
+A curated path through the primary modules.
 
-- [[code/concepts/crates|Workspace Topology]] - The four-crate Rust workspace and how code intelligence, shared primitives, hook dispatch, and the wiki engine are partitioned with explicit dependency boundaries.
-- [[code/concepts/crates-gcore|Shared Platform Primitives]] - The gcore foundation that every higher crate depends on: AI capability routing, Postgres/Qdrant/FalkorDB connectivity, configuration resolution, hub identity, graph analytics, and shared error types.
-- [[code/concepts/crates-gcore-assets|Service Infrastructure]] - Docker Compose definitions and build artifacts for the backing services (PostgreSQL with pg_search, Qdrant, FalkorDB) the platform provisions and health-checks.
-- [[code/concepts/crates-gcode-src-config|Configuration & Database Access]] - Layered configuration resolution (env → Postgres hub → standalone files), secret interpolation, runtime context building, and the validated Postgres connection and query layer.
-- [[code/concepts/crates-gcode-src-setup|Schema Provisioning]] - Standalone setup that validates, resets, and creates the code-index PostgreSQL schema with redacted-secret safety and compatibility checks.
-
-### Indexing & Resolution
-
-How source files become structured code facts: discovery, parsing, call extraction, and cross-language import resolution.
-
-- [[code/concepts/crates-gcode-src-index|Code Indexing Pipeline]] - File discovery, language classification, tree-sitter parsing, fact extraction, and transactional persistence of symbols, imports, calls, and content chunks.
-- [[code/concepts/crates-gcode-src-index-parser|Call Extraction]] - AST-guided and textual call-site discovery, syntax-kind classification, local-binding shadowing checks, and materialization of call relations across many languages.
-- [[code/concepts/crates-gcode-src-index-import-resolution|Import Resolution]] - Cross-language engine that turns raw import statements into candidate files, classifying local versus external dependencies across more than a dozen ecosystems.
-- [[code/concepts/crates-gcode-assets|Dependency Root Catalog]] - Static language-specific lookup tables mapping package and require paths back to their canonical root modules for polyglot import analysis.
-
-### Stores & Retrieval
-
-The graph and vector projections of indexed data and the search strategies that query them.
-
-- [[code/concepts/crates-gcode-src-graph|Code Graph Engine]] - Building, reading, writing, and managing the FalkorDB code-knowledge graph: typed Cypher serialization, batched mutations, scoped deletions, and traversal reads.
-- [[code/concepts/crates-gcode-src-graph-report|Graph Analytics & Reporting]] - Degree-based hotspot rankings, bridge-edge hypotheses, dependency frequencies, and Markdown report generation over the project code graph.
-- [[code/concepts/crates-gcode-src-vector|Vector Search & Embeddings]] - The Qdrant-backed vector pipeline: text embedding via daemon or direct routes, collection lifecycle management, and scored semantic search over code symbols.
+- [[code/concepts/crates|Crates]] - `crates` contains 0 direct files and 4 child modules.
+[crates/gcode/src/commands/codewiki/build_parts/modules.rs:6-24]
+[crates/gcode/build.rs:1-8]
+[crates/gcode/src/cli.rs:23-46]
+[crates/gcode/src/cli/tests.rs:12-30]
+[crates/gcode/src/commands/codewiki/architecture_diagrams.rs:40-81]
+- [[code/concepts/crates-gcode|Gcode]] - `crates/gcode` contains 1 direct file and 3 child modules.
+[crates/gcode/src/commands/codewiki/build_parts/file.rs:14-17]
+[crates/gcode/src/commands/codewiki/build_parts/modules.rs:6-24]
+[crates/gcode/src/index/indexer/file.rs:15-91]
+[crates/gcode/build.rs:1-8]
+[crates/gcode/src/cli.rs:23-46]
+- [[code/concepts/crates-gcode-assets|Assets]] - `crates/gcode/assets` contains 0 direct files and 1 child module.
+[crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
+[crates/gcode/assets/import_roots/ruby_require_roots.json:2]
+[crates/gcode/assets/import_roots/elixir_dependency_roots.json:3]
+[crates/gcode/assets/import_roots/elixir_dependency_roots.json:4]
+[crates/gcode/assets/import_roots/elixir_dependency_roots.json:5]
+- [[code/concepts/crates-gcode-assets-import-roots|Import Roots]] - `crates/gcode/assets/import_roots` contains 2 direct files and 0 child modules.
+[crates/gcode/assets/import_roots/elixir_dependency_roots.json:2]
+[crates/gcode/assets/import_roots/ruby_require_roots.json:2]
+[crates/gcode/assets/import_roots/elixir_dependency_roots.json:3]
+[crates/gcode/assets/import_roots/elixir_dependency_roots.json:4]
+[crates/gcode/assets/import_roots/elixir_dependency_roots.json:5]
+- [[code/concepts/crates-gcode-contract|Contract]] - `crates/gcode/contract` contains 1 direct file and 0 child modules.
+[crates/gcode/contract/gcode.contract.json:2]
+[crates/gcode/contract/gcode.contract.json:3]
+[crates/gcode/contract/gcode.contract.json:4]
+[crates/gcode/contract/gcode.contract.json:5-49]
+[crates/gcode/contract/gcode.contract.json:7]
+- [[code/concepts/crates-gcode-src|Src]] - `crates/gcode/src` contains 39 direct files and 11 child modules.
+[crates/gcode/src/commands/codewiki/build_parts/modules.rs:6-24]
+[crates/gcode/src/cli.rs:23-46]
+[crates/gcode/src/cli/tests.rs:12-30]
+[crates/gcode/src/commands/codewiki/architecture_diagrams.rs:40-81]
+[crates/gcode/src/commands/codewiki/build.rs:1-39]
+- [[code/concepts/crates-gcode-src-cli|Cli]] - `crates/gcode/src/cli` contains 1 direct file and 0 child modules.
+[crates/gcode/src/cli/tests.rs:12-30]
+[crates/gcode/src/cli/tests.rs:32-36]
+[crates/gcode/src/cli/tests.rs:38-55]
+- [[code/concepts/crates-gcode-src-commands|Commands]] - `crates/gcode/src/commands` contains 13 direct files and 3 child modules.
+[crates/gcode/src/commands/codewiki/build_parts/modules.rs:6-24]
+[crates/gcode/src/commands/codewiki/architecture_diagrams.rs:40-81]
+[crates/gcode/src/commands/codewiki/build.rs:1-39]
+[crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-170]
+[crates/gcode/src/commands/codewiki/build_parts/audit.rs:28-34]
+- [[code/concepts/crates-gcode-src-commands-codewiki|Codewiki]] - `crates/gcode/src/commands/codewiki` contains 24 direct files and 5 child modules.
+[crates/gcode/src/commands/codewiki/build_parts/modules.rs:6-24]
+[crates/gcode/src/commands/codewiki/architecture_diagrams.rs:40-81]
+[crates/gcode/src/commands/codewiki/build.rs:1-39]
+[crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-170]
+[crates/gcode/src/commands/codewiki/build_parts/audit.rs:28-34]
+- [[code/concepts/crates-gcode-src-commands-codewiki-build-parts|Build Parts]] - `crates/gcode/src/commands/codewiki/build_parts` contains 12 direct files and 1 child module.
+[crates/gcode/src/commands/codewiki/build_parts/architecture.rs:5-170]
+[crates/gcode/src/commands/codewiki/build_parts/audit.rs:28-34]
+[crates/gcode/src/commands/codewiki/build_parts/changes.rs:5-101]
+[crates/gcode/src/commands/codewiki/build_parts/concepts.rs:35-85]
+[crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs:6-38]
+- [[code/concepts/crates-gcode-src-commands-codewiki-build-parts-concepts|Concepts]] - `crates/gcode/src/commands/codewiki/build_parts/concepts` contains 5 direct files and 0 child modules.
+[crates/gcode/src/commands/codewiki/build_parts/concepts/plan.rs:6-38]
+[crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:10-161]
+[crates/gcode/src/commands/codewiki/build_parts/concepts/spans.rs:4-13]
+[crates/gcode/src/commands/codewiki/build_parts/concepts/support.rs:1-7]
+[crates/gcode/src/commands/codewiki/build_parts/concepts/types.rs:6-13]
+- [[code/concepts/crates-gcode-src-commands-codewiki-ownership|Ownership]] - `crates/gcode/src/commands/codewiki/ownership` contains 4 direct files and 0 child modules.
+[crates/gcode/src/commands/codewiki/ownership/analysis.rs:17-21]
+[crates/gcode/src/commands/codewiki/ownership/codeowners.rs:5-7]
+[crates/gcode/src/commands/codewiki/ownership/render.rs:10-34]
+[crates/gcode/src/commands/codewiki/ownership/tests.rs:8-35]
+[crates/gcode/src/commands/codewiki/ownership/analysis.rs:23-87]
 

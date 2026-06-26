@@ -24,9 +24,9 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gco
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `build_module_docs_with_filter` | function | Indexed function `build_module_docs_with_filter` in `crates/gcode/src/commands/codewiki/build_parts/modules.rs`. [crates/gcode/src/commands/codewiki/build_parts/modules.rs:27-201] |
-| `file_is_direct_module_member` | function | Indexed function `file_is_direct_module_member` in `crates/gcode/src/commands/codewiki/build_parts/modules.rs`. [crates/gcode/src/commands/codewiki/build_parts/modules.rs:203-205] |
-| `prompt_component_ids_for_module` | function | Indexed function `prompt_component_ids_for_module` in `crates/gcode/src/commands/codewiki/build_parts/modules.rs`. [crates/gcode/src/commands/codewiki/build_parts/modules.rs:207-217] |
+| `build_module_docs_with_filter` | function | # Summary Constructs and emits a filtered collection of ModuleDoc structures from source files and code graph edges, resolving symbol references and processing modules in reverse-depth order. [crates/gcode/src/commands/codewiki/build_parts/modules.rs:27-201] |
+| `file_is_direct_module_member` | function | Returns 'true' if the file's stored module field equals the given module string, or if the module computed from the file's path equals the given module string. [crates/gcode/src/commands/codewiki/build_parts/modules.rs:203-205] |
+| `prompt_component_ids_for_module` | function | This function filters 'FileDoc' entries by module membership (including descendant modules) and returns a vector of formatted strings pairing each symbol's component label with its ID. [crates/gcode/src/commands/codewiki/build_parts/modules.rs:207-217] |
 
 _Verified by 1 in-file unit test._
 

@@ -14,7 +14,7 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts/concepts|c
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs` exposes 8 indexed API symbols.
+`crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs` exposes 15 indexed API symbols.
 
 ## How it fits
 
@@ -24,12 +24,15 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts/concepts|c
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `render_curated_navigation_docs` | function | Generates curated documentation by normalizing input files and modules against a navigation plan and expanding concept/narrative summaries into multi-section bodies with optional text generation and verification. [crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:10-138] |
-| `chapter_link` | function | This function extracts a 'NarrativePage''s slug and title fields and returns them as a tuple of string slices. [crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:141-143] |
-| `render_concept_tree` | function | Produces a markdown-formatted string containing a hierarchical concept navigation document organized by ConceptSections with narrative chapter links and formatted cross-references to ConceptModules. [crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:145-191] |
-| `render_concept_page` | function | Renders a ConceptModule into a formatted documentation string by composing frontmatter, curated body content, source file references, and exploration sections with optional degraded source handling. [crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:193-213] |
-| `render_narrative_page` | function | 'render_narrative_page' generates a markdown-formatted documentation string by assembling a NarrativePage's frontmatter, title, body content, concept links, module exploration sections, and navigation metadata. [crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:215-257] |
-| `append_curated_body` | function | Appends a trimmed non-empty body string to a mutable document with ensured trailing newlines, otherwise invokes 'write_section' with fallback heading and text. [crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:259-275] |
-| `append_explore_section` | function | Appends a markdown "Explore" section to a mutable string document containing up to MAX_CURATED_KEY_COMPONENTS wikilinks, prioritizing modules over files. [crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:282-303] |
-| `narrative_members` | function | Aggregates and returns deduplicated, lexicographically-sorted vectors of module and file names from a NarrativePage combined with those from its referenced ConceptModules. [crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:308-328] |
+| `render_curated_navigation_docs` | function | 'render_curated_navigation_docs' renders curated documentation by normalizing a navigation plan and expanding concept/page summaries into multi-section content bodies using optional text generation and verification. [crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:10-161] |
+| `chapter_link` | function | Returns a tuple of string slices containing a 'NarrativePage''s slug and title fields. [crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:164-166] |
+| `render_concept_tree` | function | # Summary Generates a markdown string rendering a hierarchical concept tree organized by sections with narrative chapters as entry points and concept module references. [crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:168-214] |
+| `render_concept_page` | function | Renders a concept documentation page by sequentially assembling frontmatter metadata, curated source file links, title heading, overview body content, optional flow diagrams, and an exploration section of related modules and files into a single string document. [crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:216-244] |
+| `render_narrative_page` | function | Converts a 'NarrativePage' struct into a markdown-formatted 'String' by composing the page title, curated body content, concept links (with title mapping), module exploration section, and tour navigation with source span validation and degradation metadata. [crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:246-292] |
+| `append_curated_body` | function | Appends a body string to a document after stripping its leading H1 heading, or writes a fallback section if the body is absent or empty. [crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:294-314] |
+| `strip_leading_model_h1` | function | Strips a leading markdown H1 heading (single '#' with up to 3 spaces indentation) and any trailing blank lines from the input string, returning the remainder or the original string if no valid H1 is found. [crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:327-351] |
+| `append_explore_section` | function | This function appends a markdown "## Explore" section to a document string, populated with up to MAX_CURATED_KEY_COMPONENTS wikilinks derived from the modules array, or the files array as a fallback, formatted as a markdown list. [crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:358-379] |
+| `narrative_members` | function | Aggregates and returns deduplicated, sorted modules and files from a NarrativePage and its referenced ConceptModules. [crates/gcode/src/commands/codewiki/build_parts/concepts/render.rs:384-404] |
+
+_Verified by 6 in-file unit tests._
 

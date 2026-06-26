@@ -1,0 +1,219 @@
+{
+  "main": {
+    "id": "a97d8a311f974982",
+    "type": "split",
+    "children": [
+      {
+        "id": "a7655e2f20282e1e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "191e69578081577b",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "0d8e4969db3dfaf2",
+    "type": "split",
+    "children": [
+      {
+        "id": "24a75bf7554f5e41",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "47345ca4abe74194",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "5f7fc6892621f8b0",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "e9a0a018bdc6ef63",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "3c01a365b1313738",
+    "type": "split",
+    "children": [
+      {
+        "id": "3fe72e84f1687974",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ca6f828f65ad4552",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "2e836bc843c3e67e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "275b115360210f69",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "838463070f1a09dc",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "116fc3a3fe6a604a",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "191e69578081577b",
+  "lastOpenFiles": [
+    "wikis.json",
+    "raw/INDEX.md",
+    "log.md",
+    "knowledge/INDEX.md",
+    "code/repo.md",
+    "code/narrative/introduction.md",
+    "code/narrative/data-flow.md",
+    "code/narrative/architecture.md",
+    "code/narrative",
+    "code/modules/crates/gcode/src/commands/codewiki/build_parts/concepts.md",
+    "code/modules/crates/gcode/src/index/parser/calls.md",
+    "code/modules/crates/gcode/src/index/import_resolution/parser.md",
+    "code/modules/crates/gcode/src/index/import_resolution/context.md",
+    "code/modules/crates/gcode/src/graph/code_graph/write.md",
+    "code/modules/crates/gcode/src/graph/code_graph/read.md",
+    "code/modules/crates/gcode/src/commands/codewiki/text.md",
+    "code/modules/crates/gcode/src/commands/codewiki/render.md",
+    "code/modules/crates/gcode/src/commands/codewiki/ownership.md",
+    "code/modules/crates/gcode/src/commands/codewiki/build_parts.md",
+    "code/modules/crates/gcode/src/commands/codewiki/build_parts",
+    "code/modules/crates/gwiki/src/ingest/video.md",
+    "code/modules/crates/gwiki/src/ingest/url.md",
+    "code/modules/crates/gwiki/src/ingest/session.md",
+    "code/modules/crates/gwiki/src/ingest/pdf.md",
+    "code/modules/crates/gwiki/src/ingest/file.md",
+    "code/modules/crates/gwiki/src/ingest/document.md",
+    "code/modules/crates/gwiki/src/commands/refresh.md",
+    "code/modules/crates/gwiki/src/commands/citation_quality.md",
+    "code/modules/crates/gcode/src/index/parser",
+    "code/modules/crates/gcode/src/index/import_resolution",
+    "code/modules/crates/gcode/src/graph/code_graph",
+    "code/modules/crates/gcode/src/commands/codewiki",
+    "code/modules/crates/gwiki/src/ingest",
+    "code/modules/crates/gwiki/src/commands",
+    "code/modules/crates/gcore/src/ai",
+    "code/modules/crates/gcore/assets/postgres-pgsearch",
+    "Untitled.canvas"
+  ]
+}

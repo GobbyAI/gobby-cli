@@ -10,7 +10,7 @@ freshness: indexed
 
 # crates/gwiki/src/graph/analytics.rs
 
-Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
+Module: [[code/modules/crates/gwiki/src/graph|crates/gwiki/src/graph]]
 
 ## Overview
 

@@ -14,7 +14,7 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 
 ## Overview
 
-`crates/gcode/src/commands/codewiki/architecture_diagrams.rs` exposes 35 indexed API symbols.
+`crates/gcode/src/commands/codewiki/architecture_diagrams.rs` exposes 40 indexed API symbols.
 
 ## How it fits
 
@@ -41,7 +41,10 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki|crates/gcode/src/comma
 | `fence` | function | The 'fence' function trims trailing newlines from the input string slice and formats it into a triple-single-quoted Mermaid code block ending with a newline. [crates/gcode/src/commands/codewiki/architecture_diagrams.rs:411-414] |
 | `is_valid_mermaid` | function | This function validates that a string slice is a properly structured Mermaid block by ensuring it is enclosed in triple-single-quote fences (beginning with ''''mermaid' and ending with '''''), contains a valid Mermaid header followed by at least one non-empty content line, and has balanced delimiters across its interior lines. [crates/gcode/src/commands/codewiki/architecture_diagrams.rs:433-478] |
 | `balanced_delimiters` | function | This function determines whether parentheses, brackets, and braces are balanced and properly nested across a slice of string lines, ignoring any delimiters located inside double quotes and returning 'false' if any quote spans across line boundaries or if any delimiter counter drops below zero. [crates/gcode/src/commands/codewiki/architecture_diagrams.rs:482-513] |
-| `sample_model` | function | The 'sample_model' function constructs and returns a hardcoded 'SystemModel' containing predefined 'Crate' metadata, inter-crate dependency 'Edge' definitions, and service boundaries with their associated enabled features. [crates/gcode/src/commands/codewiki/architecture_diagrams.rs:525-589] |
+| `ConceptualFlowStep` | class | ConceptualFlowStep is a crate-scoped struct that encapsulates a workflow step with a required String identifier and label, plus an optional String role field. [crates/gcode/src/commands/codewiki/architecture_diagrams.rs:519-523] |
+| `render_conceptual_flow` | function | Renders a validated Mermaid left-to-right flowchart from an array of 'ConceptualFlowStep' objects into a markdown section with optional provenance and degradation annotations. [crates/gcode/src/commands/codewiki/architecture_diagrams.rs:540-593] |
+| `step` | function | Constructs and returns a 'ConceptualFlowStep' by converting borrowed string parameters into owned 'String' values, with the optional 'role' parameter mapped using 'Option::map'. [crates/gcode/src/commands/codewiki/architecture_diagrams.rs:601-607] |
+| `sample_model` | function | The function constructs and returns a 'SystemModel' containing four Rust crates with dependency edges linking them to a core library, plus three external service boundaries for PostgreSQL, embeddings, and daemon access. [crates/gcode/src/commands/codewiki/architecture_diagrams.rs:660-724] |
 
-_Verified by 17 in-file unit tests._
+_Verified by 19 in-file unit tests._
 

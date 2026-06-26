@@ -44,104 +44,27 @@ Parent: [[code/modules/crates/gcore|crates/gcore]]
 
 ## Overview
 
-## crates/gcore/src
-
-`gcore` is the foundational shared library for the gobby platform. It owns every cross-cutting concern that more than one binary or domain crate depends on: multi-modal AI dispatch, graph database access, vector-store operations, hybrid search, file indexing, PostgreSQL connectivity, secret/config resolution, service provisioning, and structured degradation reporting. The crate is intentionally transport-agnostic at its boundary — `ai_context.rs` resolves desired AI bindings and routing from caller-supplied config layers without importing any HTTP client, leaving probe-backed route collapse to the `ai` sub-module (ai_context.rs:1-6). The single public root (`lib.rs`) re-exports the sub-module tree so downstream crates receive a stable, version-locked surface.
-
-The AI subsystem (`ai/`) provides five modal capabilities dispatched through a four-way routing enum. `ai/mod.rs` resolves the effective route via `effective_route` / `effective_route_with_probe` (ai/mod.rs:31-66): explicit `Off`, `Direct`, or `Daemon` modes are forced through unchanged; `Auto` probes the local daemon's status endpoint via `ai/probe.rs` and falls back to a configured direct endpoint or `Off`. All outbound requests are retried up to `MAX_RETRIES = 2` times with exponential backoff capped at 30 s, jitter, and `Retry-After` header parsing. Per-modal timeout constants reflect practical latency profiles: text generation gets 300 s for large local-reasoning models, vision 60 s, embeddings 10 s, and STT chunks 120 s (ai/mod.rs:22-28). `ai_context.rs` owns the concurrency limiter (`AiLimiter` / `AiPermit`) that enforces `max_concurrency` across the shared `AiContext`, and surfaces `AiContextOptions` for command-scoped `--no-ai` or forced routing overrides.
-
-The storage layer bundles three distinct backends. `falkor.rs` wraps FalkorDB/RedisGraph with a `GraphClient` that handles Cypher identifier escaping, error classification, and a `ReadOnlySyncGraph` for read-path sharing. `qdrant.rs` manages Qdrant collections — creation, upsert (batched), vector search, and schema compatibility checks — surfacing a `CollectionScope` type for namespacing. `postgres.rs` provides read-only and read-write connection factories with a full TLS mode matrix (`Unverified`, `VerifyCA`, `VerifyFull`) and schema-validation hooks. `graph_analytics/leiden.rs` implements a deterministic, RNG-free, weighted Leiden community-detection kernel operating on dense integer indices, which the `graph_analytics.rs` façade adapts to the public `AnalyticsGraph` / `Community` / `CentralityScore` types (leiden.rs:1-12). `search.rs` fuses BM25 and vector hits via Reciprocal Rank Fusion (`rrf_merge`) and sanitises PostgreSQL full-text queries.
-
-Configuration, secrets, and provisioning form the operational backbone. The `config` child module defines `ConfigSource`, `LayeredConfigSource`, and all resolution functions (`resolve_capability_binding`, `resolve_ai_tuning`, `resolve_embedding_config`, etc.) that populate `AiContext`. `secrets.rs` resolves inline secret references and Fernet-encrypted values from config strings. `provisioning/` owns `StandaloneConfig` (a YAML key-value store at `~/.gobby/gcore.yaml`), Docker service orchestration (`provision_docker_services`), and the `ensure_hub` flow that probes, records, and reconciles PostgreSQL hub identity. `daemon_url.rs` resolves the local AI daemon base URL from the bootstrap file or environment overrides, normalising wildcard bind addresses to loopback.
-
----
-
-### AI Capability Routing
-
-| Route value | Behaviour |
-|---|---|
-| `Off` | Capability disabled; no requests sent |
-| `Direct` | POST directly to configured `api_base` endpoint |
-| `Daemon` | Forward through local gobby AI daemon |
-| `Auto` | Probe daemon; use `Daemon` if available, else `Direct` or `Off` |
-
-### Per-Modal Timeouts
-
-| Capability | Timeout |
-|---|---|
-| `TextGenerate` | 300 s |
-| `VisionExtract` | 60 s |
-| `AudioTranscribe` / `AudioTranslate` | 120 s per chunk |
-| `Embed` | 10 s |
-
-### AI Capabilities (`AiCapability`)
-
-| Variant | `as_str` key |
-|---|---|
-| `Embed` | `ai.embeddings` |
-| `AudioTranscribe` | `ai.audio.transcribe` |
-| `AudioTranslate` | `ai.audio.translate` |
-| `VisionExtract` | `ai.vision` |
-| `TextGenerate` | `ai.text` |
-
-### Public Result Types (`ai_types.rs`)
-
-| Type | Purpose |
-|---|---|
-| `TranscriptionResult` / `TranscriptionSegment` | STT / translation output, millisecond-normalised segments |
-| `VisionResult` | Image description + OCR text + metadata map |
-| `TextResult` | Chat-completion text + token usage + reasoning effort |
-| `TokenUsage` | Prompt / completion / total token counts |
-| `AiError` | Typed errors: `capability_unavailable`, `not_configured`, `transport_failure`, `rate_limited`, `parse_failure` |
-
-### Graph Analytics Outputs (`graph_analytics.rs`)
-
-| Symbol | Description |
-|---|---|
-| `CentralityScore` | Betweenness / degree centrality per node |
-| `Community` | Leiden-detected community membership |
-| `Hotspot` | Nodes with anomalously high connection density |
-| `BridgeSearch` | Tarjan-based bridge-node/edge detection |
-
-### Retry Policy Constants
-
-| Constant | Value |
-|---|---|
-| `MAX_RETRIES` | 2 |
-| `BASE_BACKOFF` | 250 ms |
-| `MAX_BACKOFF` | 30 s |
-
-### Key Config/Env Resolution Helpers
-
-| Function | Role |
-|---|---|
-| `resolve_capability_binding` | Reads routing, api_base, api_key, model per capability |
-| `resolve_embedding_config` | Resolves embedding dimension, model, provider |
-| `resolve_ai_tuning` | Reads `max_concurrency` and generation tuning knobs |
-| `resolve_secret` | Decrypts Fernet-wrapped or env-patterned config values |
-| `daemon_url` / `daemon_url_at` | Builds daemon base URL from bootstrap file + env overrides |
-| `gobby_home` | Returns `$GOBBY_HOME` or `~/.gobby` |
-[crates/gcore/src/graph_analytics/leiden.rs:32-40]
+`crates/gcore/src` contains 26 direct files and 5 child modules.
+[crates/gcore/src/ai/daemon.rs:1-16]
 [crates/gcore/src/ai/daemon/operations.rs:20-72]
-[crates/gcore/src/ai/daemon/transport.rs:8-12]
-[crates/gcore/src/ai/daemon/types.rs:4-9]
-[crates/gcore/src/config/mod.rs:1-31]
+[crates/gcore/src/ai/daemon/request.rs:11-19]
+[crates/gcore/src/ai/daemon/response.rs:7-9]
+[crates/gcore/src/ai/daemon/tests.rs:15-24]
 
 ## Child Modules
 
 | Module | Summary |
 | --- | --- |
-| [[code/modules/crates/gcore/src/ai\|crates/gcore/src/ai]] | ## crates/gcore/src/ai |
-| [[code/modules/crates/gcore/src/config\|crates/gcore/src/config]] | ## crates/gcore/src/config |
-| [[code/modules/crates/gcore/src/graph_analytics\|crates/gcore/src/graph_analytics]] | ## crates/gcore/src/graph_analytics |
-| [[code/modules/crates/gcore/src/provisioning\|crates/gcore/src/provisioning]] | ## crates/gcore/src/provisioning |
-| [[code/modules/crates/gcore/src/qdrant\|crates/gcore/src/qdrant]] | ## crates/gcore/src/qdrant |
+| [[code/modules/crates/gcore/src/ai\|crates/gcore/src/ai]] | `crates/gcore/src/ai` contains 7 direct files and 1 child module. [crates/gcore/src/ai/daemon.rs:1-16] [crates/gcore/src/ai/daemon/operations.rs:20-72] [crates/gcore/src/ai/daemon/request.rs:11-19] [crates/gcore/src/ai/daemon/response.rs:7-9] [crates/gcore/src/ai/daemon/tests.rs:15-24] |
+| [[code/modules/crates/gcore/src/config\|crates/gcore/src/config]] | `crates/gcore/src/config` contains 4 direct files and 0 child modules. [crates/gcore/src/config/mod.rs:1-31] [crates/gcore/src/config/resolve.rs:11-21] [crates/gcore/src/config/tests.rs:5-7] [crates/gcore/src/config/types.rs:7-11] [crates/gcore/src/config/resolve.rs:24-75] |
+| [[code/modules/crates/gcore/src/graph_analytics\|crates/gcore/src/graph_analytics]] | `crates/gcore/src/graph_analytics` contains 1 direct file and 0 child modules. [crates/gcore/src/graph_analytics/leiden.rs:32-40] [crates/gcore/src/graph_analytics/leiden.rs:45-72] [crates/gcore/src/graph_analytics/leiden.rs:76-79] [crates/gcore/src/graph_analytics/leiden.rs:82-87] [crates/gcore/src/graph_analytics/leiden.rs:94-184] |
+| [[code/modules/crates/gcore/src/provisioning\|crates/gcore/src/provisioning]] | `crates/gcore/src/provisioning` contains 5 direct files and 0 child modules. [crates/gcore/src/provisioning/bootstrap.rs:8-15] [crates/gcore/src/provisioning/docker.rs:9-18] [crates/gcore/src/provisioning/hub.rs:4-9] [crates/gcore/src/provisioning/mod.rs:55-57] [crates/gcore/src/provisioning/tests.rs:5-7] |
+| [[code/modules/crates/gcore/src/qdrant\|crates/gcore/src/qdrant]] | `crates/gcore/src/qdrant` contains 2 direct files and 0 child modules. [crates/gcore/src/qdrant/naming.rs:3-10] [crates/gcore/src/qdrant/tests.rs:12-30] [crates/gcore/src/qdrant/naming.rs:13-22] [crates/gcore/src/qdrant/naming.rs:25-43] [crates/gcore/src/qdrant/naming.rs:45-70] |
 
 ## Files
 
 | File | Summary |
 | --- | --- |
-| [[code/files/crates/gcore/src/ai/daemon/transport.rs\|crates/gcore/src/ai/daemon/transport.rs]] | `crates/gcore/src/ai/daemon/transport.rs` exposes 5 indexed API symbols. |
 | [[code/files/crates/gcore/src/ai/embeddings.rs\|crates/gcore/src/ai/embeddings.rs]] | `crates/gcore/src/ai/embeddings.rs` exposes 12 indexed API symbols. |
 | [[code/files/crates/gcore/src/ai/mod.rs\|crates/gcore/src/ai/mod.rs]] | `crates/gcore/src/ai/mod.rs` exposes 37 indexed API symbols. |
 | [[code/files/crates/gcore/src/ai/probe.rs\|crates/gcore/src/ai/probe.rs]] | `crates/gcore/src/ai/probe.rs` exposes 31 indexed API symbols. |
@@ -164,7 +87,6 @@ Configuration, secrets, and provisioning form the operational backbone. The `con
 | [[code/files/crates/gcore/src/postgres.rs\|crates/gcore/src/postgres.rs]] | `crates/gcore/src/postgres.rs` exposes 32 indexed API symbols. |
 | [[code/files/crates/gcore/src/project.rs\|crates/gcore/src/project.rs]] | `crates/gcore/src/project.rs` exposes 8 indexed API symbols. |
 | [[code/files/crates/gcore/src/provisioning/hub.rs\|crates/gcore/src/provisioning/hub.rs]] | `crates/gcore/src/provisioning/hub.rs` exposes 26 indexed API symbols. |
-| [[code/files/crates/gcore/src/provisioning/mod.rs\|crates/gcore/src/provisioning/mod.rs]] | `crates/gcore/src/provisioning/mod.rs` exposes 19 indexed API symbols. |
 | [[code/files/crates/gcore/src/qdrant.rs\|crates/gcore/src/qdrant.rs]] | `crates/gcore/src/qdrant.rs` exposes 30 indexed API symbols. |
 | [[code/files/crates/gcore/src/search.rs\|crates/gcore/src/search.rs]] | `crates/gcore/src/search.rs` exposes 18 indexed API symbols. |
 | [[code/files/crates/gcore/src/secrets.rs\|crates/gcore/src/secrets.rs]] | `crates/gcore/src/secrets.rs` exposes 23 indexed API symbols. |

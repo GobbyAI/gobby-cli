@@ -10,7 +10,7 @@ freshness: indexed
 
 # crates/gwiki/src/ingest/session/metadata.rs
 
-Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
+Module: [[code/modules/crates/gwiki/src/ingest/session|crates/gwiki/src/ingest/session]]
 
 ## Overview
 

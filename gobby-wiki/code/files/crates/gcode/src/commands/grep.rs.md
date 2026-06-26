@@ -10,7 +10,7 @@ freshness: indexed
 
 # crates/gcode/src/commands/grep.rs
 
-Module: [[code/modules/crates/gcode/src/commands|crates/gcode/src/commands]]
+Module: [[code/modules/crates/gcode/src|crates/gcode/src]]
 
 ## Overview
 

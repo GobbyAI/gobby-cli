@@ -10,11 +10,11 @@ freshness: indexed
 
 # crates/gwiki/src/commands/search.rs
 
-Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
+Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Overview
 
-`crates/gwiki/src/commands/search.rs` exposes 20 indexed API symbols.
+`crates/gwiki/src/commands/search.rs` exposes 24 indexed API symbols.
 
 ## How it fits
 
@@ -24,21 +24,23 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `SearchRetrieval` | class | 'SearchRetrieval' is a crate-visible struct that packages a 'SearchOutput' result together with a vector of string evidence snippets ('Vec<String>') supporting that result. [crates/gwiki/src/commands/search.rs:27-30] |
-| `execute` | function | Executes a wiki command by calling 'retrieve(query, selection, limit, include_semantic)', propagating any 'WikiError', and then passing the returned 'output' into 'render' to produce a 'Result<CommandOutcome, WikiError>'. [crates/gwiki/src/commands/search.rs:32-39] |
-| `retrieve` | function | 'retrieve' executes a wiki search for the given query and scope selection, preferring an attached database-backed search path when available and otherwise building in-memory BM25 and graph-boost backends over the indexed store before running the search with the requested limit and optional semantic scoring. [crates/gwiki/src/commands/search.rs:41-78] |
-| `run_search_attached` | function | Opens a read-only PostgreSQL connection, resolves the search stack configuration from 'gobby_home' and the database to obtain semantic embedding, Qdrant, and FalkorDB settings, and returns a 'WikiError' if any required search dependency is missing or misconfigured. [crates/gwiki/src/commands/search.rs:80-143] |
-| `graph_backend_from_falkor_config` | function | Returns a 'GraphBoostBackend' that uses 'FalkorGraphBoostBackend::new' when a 'FalkorConfig' is present and otherwise, or on initialization failure, falls back to an 'UnavailableGraphBoostBackend::unreachable' carrying the corresponding error message. [crates/gwiki/src/commands/search.rs:145-163] |
-| `required_search_config` | function | Constructs and returns a 'WikiError::Config' whose detail message states that 'gwiki search' requires the given service and advises running 'gwiki setup --standalone' or attaching to Gobby’s full datastore stack. [crates/gwiki/src/commands/search.rs:165-171] |
-| `resolve_semantic_embedding` | function | Returns an optional 'wiki_search::semantic::SemanticEmbedding' by mapping the effective AI routing mode to 'None', a daemon-backed embedding using a cloned 'AiContext' when the 'ai' feature is enabled, or a direct embedding resolved from 'source' via 'resolve_embedding_config'. [crates/gwiki/src/commands/search.rs:173-208] |
-| `effective_embedding_route` | function | Returns the effective embedding routing for 'context', delegating to 'effective_route(..., AiCapability::Embed)' when the 'ai' feature is enabled, and otherwise preserving 'Off'/'Direct' while downgrading 'Daemon' to 'Off' and leaving 'Auto' unchanged with a warning. [crates/gwiki/src/commands/search.rs:210-234] |
-| `gobby_home` | function | Wraps 'gobby_core::gobby_home()' and converts any resolution failure into 'WikiError::Config' with a formatted message, returning the resolved Gobby home 'PathBuf' on success. [crates/gwiki/src/commands/search.rs:236-240] |
-| `SearchExecutionInput` | class | SearchExecutionInput encapsulates the configuration parameters for executing a wiki search operation, comprising the search scope, output scope, query string, result limit, and a flag to enable semantic search functionality. [crates/gwiki/src/commands/search.rs:242-248] |
-| `run_search_with_backends` | function | Runs a wiki search across BM25, semantic, and graph-boost backends using the input query parameters, then converts each returned hit into 'SearchResultOutput' with derived fusion keys, bounded snippets, source/explanation mappings, evidence snippets, and degradation labels for the final 'SearchRetrieval' result. [crates/gwiki/src/commands/search.rs:250-317] |
-| `bounded_snippet` | function | Returns a whitespace-normalized snippet around the query by extracting a bounded window from 'content' via 'query_window' using 'SNIPPET_BEFORE_CHARS' and 'SNIPPET_AFTER_CHARS', then collapsing all whitespace to single spaces. [crates/gwiki/src/commands/search.rs:326-329] |
-| `query_window` | function | Returns a substring of 'content' centered on the earliest case-insensitive match of any non-empty whitespace-delimited token from 'query', extending 'before' characters to the left and 'after' characters to the right, clamped to the string bounds. [crates/gwiki/src/commands/search.rs:333-353] |
-| `render` | function | Serializes the 'SearchOutput' to JSON, renders a human-readable search summary from its query, scope, results, and degradations, and returns both as a scoped '"search"' 'CommandOutcome', mapping serialization failures to 'WikiError::Json'. [crates/gwiki/src/commands/search.rs:355-366] |
-| `render_text` | function | 'render_text' formats a plain-text search results report containing the query, scope, optional degradation notices, a '"No results"' fallback, or one '- page \| title \| snippet' line per 'SearchResultOutput', and returns it as a 'String'. [crates/gwiki/src/commands/search.rs:368-395] |
+| `SearchRetrieval` | class | SearchRetrieval is a crate-private struct that encapsulates a SearchOutput result alongside a vector of string-based evidence. [crates/gwiki/src/commands/search.rs:28-31] |
+| `execute` | function | Retrieves wiki query results according to specified scope, limit, and semantic parameters, then renders the output to a 'CommandOutcome' or propagates a 'WikiError'. [crates/gwiki/src/commands/search.rs:36-44] |
+| `retrieve` | function | Executes a combined BM25 and graph-boost search on a scoped wiki index, either via an attached database or in-memory store, returning up to 'limit' ranked results. [crates/gwiki/src/commands/search.rs:46-86] |
+| `run_search_attached` | function | **Executes a scoped wiki search query by establishing a PostgreSQL connection and resolving required semantic embedding (Qdrant) and graph database (FalkorDB) configurations.** [crates/gwiki/src/commands/search.rs:88-153] |
+| `graph_backend_from_falkor_config` | function | Constructs and returns a boxed 'GraphBoostBackend' trait object by attempting to instantiate a 'FalkorGraphBoostBackend' from the provided optional configuration, or falling back to an 'UnavailableGraphBoostBackend' if the configuration is absent or initialization fails. [crates/gwiki/src/commands/search.rs:155-173] |
+| `required_search_config` | function | Constructs and returns a 'WikiError::Config' variant indicating that a required search service configuration is missing for gwiki search operation. [crates/gwiki/src/commands/search.rs:175-181] |
+| `resolve_semantic_embedding` | function | Resolves an optional semantic embedding by selecting between daemon-backed, config-sourced direct, or null implementations based on the effective AI routing strategy and feature flags. [crates/gwiki/src/commands/search.rs:183-218] |
+| `effective_embedding_route` | function | # Summary 'effective_embedding_route' determines the effective routing mode for embedding operations by delegating to 'effective_route' when AI support is compiled in, or by gracefully degrading unsupported daemon routing configurations to 'Off' with fallback handling when AI support is unavailable. [crates/gwiki/src/commands/search.rs:220-244] |
+| `gobby_home` | function | Resolves the Gobby home directory path by delegating to 'gobby_core::gobby_home()', converting any errors into a 'WikiError::Config' variant with a contextual error message for gwiki search configuration. [crates/gwiki/src/commands/search.rs:246-250] |
+| `SearchExecutionInput` | class | SearchExecutionInput is a struct that encapsulates the configuration parameters for executing a scoped wiki search, including query text, result limit, output scope, search scope, semantic search enablement, and optional token budget constraints. [crates/gwiki/src/commands/search.rs:252-259] |
+| `run_search_with_backends` | function | Executes a federated search across three backends (BM25, semantic, and graph-boost), then transforms the aggregated results into structured 'SearchResultOutput' objects with bounded snippets, fusion keys, and per-source rank explanations. [crates/gwiki/src/commands/search.rs:261-337] |
+| `format_search_result_line` | function | This function formats a 'SearchResultOutput' into a pipe-delimited string containing the wiki page name, optional title (defaulting to empty string if absent), and snippet text. [crates/gwiki/src/commands/search.rs:342-349] |
+| `bounded_snippet` | function | 'bounded_snippet' extracts a bounded text snippet around a query match and normalizes internal whitespace by collapsing it to single spaces. [crates/gwiki/src/commands/search.rs:358-361] |
+| `query_window` | function | Extracts a context window from content centered around the character position of the earliest-found whitespace-separated query token (using case-insensitive matching), spanning 'before' characters backward and 'after' characters forward from the match start. [crates/gwiki/src/commands/search.rs:365-385] |
+| `render` | function | Renders text from a SearchOutput and serializes it to JSON payload, returning a scoped CommandOutcome or a WikiError if JSON serialization fails. [crates/gwiki/src/commands/search.rs:387-398] |
+| `render_text` | function | Concatenates a search query, scope identity, optional degradations, and search result metadata (wiki pages, titles, snippets) into a single formatted text string. [crates/gwiki/src/commands/search.rs:400-427] |
+| `sample_hit` | function | Constructs a 'SearchResultOutput' struct representing a wiki search result from the provided page and snippet parameters, with a hardcoded score of 1.0 and BM25 source attribution. [crates/gwiki/src/commands/search.rs:500-512] |
 
-_Verified by 5 in-file unit tests._
+_Verified by 7 in-file unit tests._
 

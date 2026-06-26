@@ -24,30 +24,30 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `Command` | type | Indexed type `Command` in `crates/gwiki/src/api.rs`. [crates/gwiki/src/api.rs:11-130] |
-| `ReadTarget` | type | Indexed type `ReadTarget` in `crates/gwiki/src/api.rs`. [crates/gwiki/src/api.rs:133-136] |
-| `SetupOptions` | class | 'SetupOptions' is a configuration struct for setup/runtime provisioning that toggles standalone and service-free modes and optionally supplies database, FalkorDB, Qdrant, and embedding provider connection and model parameters. [crates/gwiki/src/api.rs:139-153] |
-| `BenchmarkOptions` | class | 'BenchmarkOptions' is a struct that configures benchmarking by storing a single 'usize' field, 'retrieval_candidates', representing the number of retrieval candidates to use. [crates/gwiki/src/api.rs:156-158] |
-| `BenchmarkOptions::default` | method | Returns a new 'Self' initialized with 'retrieval_candidates' set to 'Self::DEFAULT_RETRIEVAL_CANDIDATES'. [crates/gwiki/src/api.rs:166-170] |
-| `IngestFileOptions` | class | 'IngestFileOptions' configures file ingestion behavior, including whether AI is disabled, whether translation is performed and into which target language, the optional video frame sampling interval, and optional AI routing overrides for transcription, vision, and text processing. [crates/gwiki/src/api.rs:175-183] |
-| `SyncSessionsOptions` | class | 'SyncSessionsOptions' configures session synchronization with an optional archive directory ('archive_dir') and an optional maximum number of sessions to process or retain ('limit'). [crates/gwiki/src/api.rs:186-189] |
-| `ReviewReportOptions` | class | 'ReviewReportOptions' is a configuration struct that specifies the target files and symbols to review, an optional diff file path, and the output destination or format as a string. [crates/gwiki/src/api.rs:192-197] |
-| `IngestFileOptions::apply_to_ai_context` | method | 'apply_to_ai_context' mutates an 'AiContext' by copying any configured routing overrides into the relevant audio/vision/text bindings (using 'audio_translate' when 'translate' is set, otherwise 'audio_transcribe', and also propagating 'target_lang' for translation), or, if 'no_ai' is enabled, disables all AI bindings by setting their routing to 'AiRouting::Off'. [crates/gwiki/src/api.rs:200-228] |
-| `ScopeSelection` | type | Indexed type `ScopeSelection` in `crates/gwiki/src/api.rs`. [crates/gwiki/src/api.rs:233-237] |
-| `ScopeSelection::detect` | method | Returns the 'Detect' enum variant by constructing 'Self::Detect'. [crates/gwiki/src/api.rs:240-242] |
-| `ScopeSelection::project` | method | Constructs and returns a 'Self::ProjectRoot' variant by converting the provided 'root' into a 'PathBuf'. [crates/gwiki/src/api.rs:244-246] |
-| `ScopeSelection::topic` | method | Constructs and returns a 'Self' value by converting the input 'topic' into a 'String' and wrapping it in the 'Self::Topic' variant. [crates/gwiki/src/api.rs:248-250] |
-| `ScopeSelection::identity` | method | Returns a 'ScopeIdentity' by mapping 'Detect' to the global identity, 'ProjectRoot(root)' to a project identity built from 'root'’s display string, and 'Topic(topic)' to a topic identity cloned from 'topic'. [crates/gwiki/src/api.rs:252-258] |
-| `ScopeSelection::is_project` | method | Returns 'true' when 'self' is the 'ProjectRoot' variant and 'false' otherwise. [crates/gwiki/src/api.rs:260-262] |
-| `ScopeSelection::project_root` | method | Returns the underlying project-root 'Path' as 'Some(&Path)' when 'self' is 'Self::ProjectRoot', and 'None' for 'Self::Detect' or 'Self::Topic(_)'. [crates/gwiki/src/api.rs:264-269] |
-| `ScopeSelection::topic_name` | method | Returns 'Some(&str)' containing the topic string when 'self' is 'Self::Topic', and 'None' for 'Self::Detect' or 'Self::ProjectRoot(_)'. [crates/gwiki/src/api.rs:271-276] |
-| `ScopeSelection::default` | method | Returns 'Self::detect()', using automatic detection to construct the default instance. [crates/gwiki/src/api.rs:280-282] |
-| `ScopeKind` | type | Indexed type `ScopeKind` in `crates/gwiki/src/api.rs`. [crates/gwiki/src/api.rs:287-291] |
-| `ScopeKind::as_str` | method | Returns the ''static' string literal representation of the enum value, mapping 'Global' to '"global"', 'Project' to '"project"', and 'Topic' to '"topic"'. [crates/gwiki/src/api.rs:294-300] |
-| `ScopeIdentity` | class | 'ScopeIdentity' is a struct that uniquely identifies a scope by storing its 'ScopeKind' and a string 'id'. [crates/gwiki/src/api.rs:304-307] |
-| `ScopeIdentity::global` | method | Constructs and returns a 'Self' value representing the global scope, with 'kind' set to 'ScopeKind::Global' and 'id' initialized to '"default"'. [crates/gwiki/src/api.rs:310-315] |
-| `ScopeIdentity::project` | method | Constructs and returns a 'Self' value representing a project-scoped scope by setting 'kind' to 'ScopeKind::Project' and initializing 'id' from the provided 'Into<String>' argument. [crates/gwiki/src/api.rs:317-322] |
-| `ScopeIdentity::topic` | method | Constructs and returns a 'Self' value with 'kind' set to 'ScopeKind::Topic' and 'id' initialized from the provided 'id' converted into a 'String'. [crates/gwiki/src/api.rs:324-329] |
+| `Command` | type | Indexed type `Command` in `crates/gwiki/src/api.rs`. [crates/gwiki/src/api.rs:11-132] |
+| `ReadTarget` | type | Indexed type `ReadTarget` in `crates/gwiki/src/api.rs`. [crates/gwiki/src/api.rs:135-138] |
+| `SetupOptions` | class | SetupOptions is a configuration struct that encapsulates parameters for database connectivity, FalkorDB and Qdrant service integration, and embedding provider configuration. [crates/gwiki/src/api.rs:141-155] |
+| `BenchmarkOptions` | class | 'BenchmarkOptions' is a public struct that encapsulates a single configuration parameter ('retrieval_candidates: usize') for specifying the number of retrieval candidates to use in benchmark operations. [crates/gwiki/src/api.rs:158-160] |
+| `BenchmarkOptions::default` | method | Returns a new instance of 'Self' with the 'retrieval_candidates' field initialized to the constant value 'Self::DEFAULT_RETRIEVAL_CANDIDATES'. [crates/gwiki/src/api.rs:168-172] |
+| `IngestFileOptions` | class | IngestFileOptions is a configuration struct that controls file ingestion parameters including AI processing toggles, translation settings, video frame sampling intervals, and optional AI model routing for transcription, vision, and text analysis. [crates/gwiki/src/api.rs:177-185] |
+| `SyncSessionsOptions` | class | 'SyncSessionsOptions' is a configuration struct providing optional parameters for session synchronization: an archive directory path and a maximum session count limit. [crates/gwiki/src/api.rs:188-191] |
+| `ReviewReportOptions` | class | ReviewReportOptions is a configuration struct that specifies a collection of files and symbols to analyze, an optional diff file path, and an output destination for generating a code review report. [crates/gwiki/src/api.rs:194-199] |
+| `IngestFileOptions::apply_to_ai_context` | method | # Summary Conditionally applies transcription, vision, and text routing configurations along with translation target language settings to the AiContext bindings, or disables all AI bindings if the 'no_ai' flag is set. [crates/gwiki/src/api.rs:202-230] |
+| `ScopeSelection` | type | Indexed type `ScopeSelection` in `crates/gwiki/src/api.rs`. [crates/gwiki/src/api.rs:235-239] |
+| `ScopeSelection::detect` | method | The 'detect' method is a zero-parameter constructor function that returns the 'Detect' variant of the implementing enum type. [crates/gwiki/src/api.rs:242-244] |
+| `ScopeSelection::project` | method | Constructs a 'ProjectRoot' enum variant by converting the provided path argument into a 'PathBuf'. [crates/gwiki/src/api.rs:246-248] |
+| `ScopeSelection::topic` | method | This method is a generic constructor that accepts any type implementing 'Into<String>', converts it to a 'String', and returns a 'Self::Topic' enum variant. [crates/gwiki/src/api.rs:250-252] |
+| `ScopeSelection::identity` | method | Maps the enum variant to its corresponding 'ScopeIdentity' type: global identity for 'Detect', project-scoped identity for 'ProjectRoot', and topic-scoped identity for 'Topic'. [crates/gwiki/src/api.rs:254-260] |
+| `ScopeSelection::is_project` | method | This method returns 'true' if the instance matches the 'ProjectRoot' enum variant, otherwise 'false'. [crates/gwiki/src/api.rs:262-264] |
+| `ScopeSelection::project_root` | method | Returns an optional reference to the inner path if 'self' is the 'ProjectRoot' variant, otherwise returns 'None' for 'Detect' and 'Topic' variants. [crates/gwiki/src/api.rs:266-271] |
+| `ScopeSelection::topic_name` | method | Returns an optional string reference to the inner topic string if the enum variant is Topic, otherwise returns None for Detect and ProjectRoot variants. [crates/gwiki/src/api.rs:273-278] |
+| `ScopeSelection::default` | method | The 'default()' method implements the 'Default' trait by delegating to the 'detect()' associated function to construct and return a new instance of the type. [crates/gwiki/src/api.rs:282-284] |
+| `ScopeKind` | type | Indexed type `ScopeKind` in `crates/gwiki/src/api.rs`. [crates/gwiki/src/api.rs:289-293] |
+| `ScopeKind::as_str` | method | Converts the enum value into a ''static' string reference corresponding to its variant through exhaustive pattern matching. [crates/gwiki/src/api.rs:296-302] |
+| `ScopeIdentity` | class | ScopeIdentity is a public struct that pairs a ScopeKind discriminant with a unique String identifier to represent an entity within a specific scope context. [crates/gwiki/src/api.rs:306-309] |
+| `ScopeIdentity::global` | method | Returns a new instance of Self with 'ScopeKind::Global' and an identifier of '"default"'. [crates/gwiki/src/api.rs:312-317] |
+| `ScopeIdentity::project` | method | Constructs a new instance of the containing type with 'kind' set to 'ScopeKind::Project' and 'id' set to the provided value converted into a 'String'. [crates/gwiki/src/api.rs:319-324] |
+| `ScopeIdentity::topic` | method | Creates a new instance of 'Self' with 'kind' set to 'ScopeKind::Topic' and 'id' converted from any type implementing 'Into<String>'. [crates/gwiki/src/api.rs:326-331] |
 
 _3 more symbol(s) not shown — run `gcode outline crates/gwiki/src/api.rs` for the full list._
 

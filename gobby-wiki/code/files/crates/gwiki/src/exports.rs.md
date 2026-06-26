@@ -14,7 +14,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 ## Overview
 
-`crates/gwiki/src/exports.rs` exposes 22 indexed API symbols.
+`crates/gwiki/src/exports.rs` exposes 39 indexed API symbols.
 
 ## How it fits
 
@@ -24,24 +24,32 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `ExportKind` | type | Indexed type `ExportKind` in `crates/gwiki/src/exports.rs`. [crates/gwiki/src/exports.rs:9-13] |
-| `ExportRequest` | class | 'ExportRequest' is a data transfer struct that represents an export operation with a target 'filename', an 'ExportKind' discriminator, and the exported 'contents' as a string. [crates/gwiki/src/exports.rs:16-20] |
-| `ExportArtifact` | class | 'ExportArtifact' is a struct that records an exported file’s destination 'path', its 'kind' ('ExportKind'), and the number of 'bytes_written' during the export. [crates/gwiki/src/exports.rs:23-27] |
-| `ExportCommand` | type | Indexed type `ExportCommand` in `crates/gwiki/src/exports.rs`. [crates/gwiki/src/exports.rs:30-38] |
-| `ExportOutput` | class | 'ExportOutput' is a Rust struct that represents the result of an export operation, containing the static command name, the associated 'ScopeIdentity', and a list of 'ExportArtifact' values. [crates/gwiki/src/exports.rs:41-45] |
-| `ExportOutput::new` | method | Constructs a new instance with 'command' set to '"export"' and initializes it from the provided 'scope' and 'artifacts' vectors. [crates/gwiki/src/exports.rs:48-54] |
-| `WorkflowAsset` | class | 'WorkflowAsset' is a 'pub' struct that statically describes an embedded workflow resource by storing its 'name', 'filename', and 'contents' as ''static' string slices. [crates/gwiki/src/exports.rs:58-62] |
-| `bundled_workflow_assets` | function | Returns the static 'WORKFLOW_ASSETS' slice as a '&'static [WorkflowAsset]'. [crates/gwiki/src/exports.rs:82-84] |
-| `run` | function | Dispatches the given 'ExportCommand' to either 'export_workflow_assets' or 'export_report_file' using 'root', then wraps the single returned 'ExportArtifact' in a one-element 'Vec' and propagates any 'WikiError'. [crates/gwiki/src/exports.rs:86-96] |
-| `export_workflow_assets` | function | Creates a bundle export artifact by converting the provided filename into an 'ExportRequest' with 'ExportKind::Bundle' and 'workflow_assets_bundle()' contents, then delegating to 'write_export' and returning its 'Result<ExportArtifact, WikiError>'. [crates/gwiki/src/exports.rs:98-110] |
-| `export_report_file` | function | Reads the report text from 'source_path' into a string and then delegates to 'write_export' to create a 'Report' export artifact under 'root' with the given 'filename', mapping any file-read failure into a 'WikiError::Io' annotated as '"read export report"'. [crates/gwiki/src/exports.rs:112-131] |
-| `export_graph_artifacts` | function | Exports graph data from 'facts' into a pretty-printed 'graph.json' and a generated 'GRAPH_REPORT.md' under 'root', returning both written artifacts, and if report writing fails it removes the JSON file before propagating the error. [crates/gwiki/src/exports.rs:133-168] |
-| `graph_export_error` | function | Converts a 'GraphAnalyticsError' into a 'WikiError::InvalidInput' with 'field' set to '"graph"' and 'message' populated from the error's string representation. [crates/gwiki/src/exports.rs:170-175] |
-| `export_markdown_report` | function | Creates a report export artifact by wrapping the given filename and markdown contents in an 'ExportRequest' of kind 'Report' and delegating to 'write_export' for the specified root path. [crates/gwiki/src/exports.rs:177-190] |
-| `write_export` | function | Creates the export file under 'root/outputs/<validated relative filename>', ensures its parent directories exist, writes 'request.contents' to disk, and returns an 'ExportArtifact' containing the path, requested kind, and byte count, mapping any I/O failure to 'WikiError::Io'. [crates/gwiki/src/exports.rs:192-214] |
-| `export_relative_path` | function | Validates that 'filename' is a non-empty, non-absolute, strictly relative path containing only normal components or '.' segments, rejects any '..', root, or prefix components, and returns the normalized 'PathBuf' or a 'WikiError' for invalid input. [crates/gwiki/src/exports.rs:216-238] |
-| `invalid_export_filename` | function | Constructs a 'WikiError::InvalidInput' for the 'filename' field with a message stating that the export filename must remain under 'outputs/', including the provided filename. [crates/gwiki/src/exports.rs:240-245] |
-| `workflow_assets_bundle` | function | Builds and returns a single markdown string titled '# GWiki Workflow Assets' by iterating over 'bundled_workflow_assets()' and appending each asset’s name, source filename, and trimmed contents as a section. [crates/gwiki/src/exports.rs:247-260] |
+| `ExportKind` | type | Indexed type `ExportKind` in `crates/gwiki/src/exports.rs`. [crates/gwiki/src/exports.rs:11-15] |
+| `ExportRequest` | class | **ExportRequest is a public struct that encapsulates the parameters required for an export operation: a target filename, an export kind specifier, and the content to be exported.** [crates/gwiki/src/exports.rs:18-22] |
+| `ExportArtifact` | class | 'ExportArtifact' is a struct that encapsulates metadata about a completed export operation, containing the destination file path, the export kind classification, and the number of bytes written. [crates/gwiki/src/exports.rs:25-29] |
+| `ExportCommand` | type | Indexed type `ExportCommand` in `crates/gwiki/src/exports.rs`. [crates/gwiki/src/exports.rs:32-40] |
+| `ExportOutput` | class | ExportOutput encapsulates the results of an export operation, comprising a static command identifier, a ScopeIdentity, and a vector of ExportArtifacts. [crates/gwiki/src/exports.rs:43-47] |
+| `ExportOutput::new` | method | Constructs and returns a new Self instance with the command field hardcoded to "export" and the provided scope and artifacts parameters assigned to their respective fields. [crates/gwiki/src/exports.rs:50-56] |
+| `WorkflowAsset` | class | WorkflowAsset is a struct with three public fields of static string references ('&'static str') representing an asset's name, filename, and contents. [crates/gwiki/src/exports.rs:60-64] |
+| `bundled_workflow_assets` | function | Returns a static reference to a constant slice of 'WorkflowAsset' items bundled with the application. [crates/gwiki/src/exports.rs:84-86] |
+| `run` | function | This function dispatches an 'ExportCommand' enum to the corresponding export handler (either 'export_workflow_assets' or 'export_report_file') and returns the resulting 'ExportArtifact' wrapped in a vector, or a 'WikiError' on failure. [crates/gwiki/src/exports.rs:88-98] |
+| `export_workflow_assets` | function | Exports workflow assets as a bundle file to the specified root path and filename, returning an 'ExportArtifact' on success or a 'WikiError' on failure. [crates/gwiki/src/exports.rs:100-112] |
+| `export_report_file` | function | Reads a report file from the specified source path and exports it with the given filename as an ExportArtifact, returning a WikiError on I/O failure. [crates/gwiki/src/exports.rs:114-133] |
+| `export_graph_artifacts` | function | Exports a 'WikiGraphFacts' instance by serializing it to JSON and rendering a Markdown report, writing both artifacts to the specified root directory and returning their paths or a 'WikiError'. [crates/gwiki/src/exports.rs:135-170] |
+| `graph_export_error` | function | Converts a 'GraphAnalyticsError' into a 'WikiError::InvalidInput' variant with the field "graph" and the error message stringified. [crates/gwiki/src/exports.rs:172-177] |
+| `export_agent_artifacts` | function | Exports a WikiGraph by rendering it to JSON-LD and two LLM-compatible text formats (index and full), persisting each as an artifact file, and returning a vector of the resulting ExportArtifacts. [crates/gwiki/src/exports.rs:184-218] |
+| `write_agent_artifact` | function | Writes an export artifact to disk and appends it to a tracking vector on success, or rolls back all previously written artifacts by deleting them if the write operation fails. [crates/gwiki/src/exports.rs:222-248] |
+| `render_graph_jsonld` | function | # Summary 'render_graph_jsonld' converts a GraphExport into a JSON-LD formatted string by constructing JSON entities from nodes and aggregating citation, audit, and trust relationship edges into entity properties. [crates/gwiki/src/exports.rs:255-329] |
+| `id_references` | function | Converts a slice of string identifiers into a 'serde_json::Value' array where each string is wrapped in a JSON object with an '@id' field. [crates/gwiki/src/exports.rs:331-337] |
+| `jsonld_type` | function | This function maps content kind identifiers to JSON-LD type strings using pattern matching, returning specialized semantic types ('Article', 'SoftwareSourceCode', 'CreativeWork') for specific kinds with 'DigitalDocument' as the default fallback. [crates/gwiki/src/exports.rs:340-347] |
+| `render_llms_index` | function | Generates a markdown-formatted index string containing document and source node link sections with their respective counts extracted from a GraphExport structure. [crates/gwiki/src/exports.rs:352-373] |
+| `render_llms_full` | function | # Summary 'render_llms_full' generates a markdown-formatted string aggregating all documents from a 'GraphExport' with their paths and file contents retrieved from the filesystem rooted at the provided path. [crates/gwiki/src/exports.rs:379-403] |
+| `document_nodes` | function | Filters a GraphExport's nodes collection and returns references to those nodes whose kind passes the 'is_document_node' predicate. [crates/gwiki/src/exports.rs:407-413] |
+| `is_document_node` | function | Returns 'true' if the input string matches one of three document node kinds: "wiki_page", "code", or "document"; otherwise returns 'false'. [crates/gwiki/src/exports.rs:415-417] |
+| `push_link_section` | function | Appends a markdown-formatted section with a heading and bulleted list of links (from the provided nodes' labels and paths) to an output string, or a placeholder if the node list is empty. [crates/gwiki/src/exports.rs:419-428] |
+| `node_label` | function | This function returns the cloned title of the node, or falls back to returning the cloned path if the title is 'None'. [crates/gwiki/src/exports.rs:430-432] |
 
-_Verified by 4 in-file unit tests._
+_8 more symbol(s) not shown — run `gcode outline crates/gwiki/src/exports.rs` for the full list._
+
+_Verified by 7 in-file unit tests._
 

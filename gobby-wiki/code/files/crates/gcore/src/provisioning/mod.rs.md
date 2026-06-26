@@ -10,7 +10,7 @@ freshness: indexed
 
 # crates/gcore/src/provisioning/mod.rs
 
-Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
+Module: [[code/modules/crates/gcore/src/provisioning|crates/gcore/src/provisioning]]
 
 ## Overview
 

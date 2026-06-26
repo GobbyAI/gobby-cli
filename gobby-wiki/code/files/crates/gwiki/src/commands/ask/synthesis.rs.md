@@ -10,7 +10,7 @@ freshness: indexed
 
 # crates/gwiki/src/commands/ask/synthesis.rs
 
-Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
+Module: [[code/modules/crates/gwiki/src/commands/ask|crates/gwiki/src/commands/ask]]
 
 ## Overview
 

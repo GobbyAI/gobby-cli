@@ -24,5 +24,5 @@ Module: [[code/modules/crates/gcore/src|crates/gcore/src]]
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `gobby_home` | function | The function returns the Gobby home directory path by checking the 'GOBBY_HOME' environment variable first, otherwise defaulting to '~/.gobby', or an error if the home directory cannot be determined. [crates/gcore/src/lib.rs:25-32] |
+| `gobby_home` | function | Resolves the Gobby home directory path from the 'GOBBY_HOME' environment variable, defaulting to '~/.gobby' if unset, and returns an error if the user's home directory cannot be determined. [crates/gcore/src/lib.rs:26-33] |
 

@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gcode/src/commands/codewiki/build_parts|crates/gco
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `InfraDescriptor` | class | The 'InfraDescriptor' struct is a metadata container representing an infrastructure service by storing a plain-text summary of the service, a validated workspace-relative path and line citation for its adapter module, and its documented graceful-degradation behavior when unavailable. [crates/gcode/src/commands/codewiki/build_parts/infrastructure.rs:8-20] |
-| `infra_descriptor` | function | The 'infra_descriptor' function maps a specified 'ServiceKind' to an optional 'InfraDescriptor' containing technical metadata, the adapter module path, and degradation behavior for the corresponding infrastructure service. [crates/gcode/src/commands/codewiki/build_parts/infrastructure.rs:27-113] |
-| `build_infrastructure_doc` | function | This function maps services from an optional 'SystemModel' into lexicographically sorted 'InfraSection' structures based on their respective infrastructure descriptors, returning an 'InfrastructureDoc' containing these sections and an empty list of degraded sources. [crates/gcode/src/commands/codewiki/build_parts/infrastructure.rs:121-148] |
+| `InfraDescriptor` | class | Indexed class `InfraDescriptor` in `crates/gcode/src/commands/codewiki/build_parts/infrastructure.rs`. [crates/gcode/src/commands/codewiki/build_parts/infrastructure.rs:8-20] |
+| `infra_descriptor` | function | Indexed function `infra_descriptor` in `crates/gcode/src/commands/codewiki/build_parts/infrastructure.rs`. [crates/gcode/src/commands/codewiki/build_parts/infrastructure.rs:27-113] |
+| `build_infrastructure_doc` | function | Indexed function `build_infrastructure_doc` in `crates/gcode/src/commands/codewiki/build_parts/infrastructure.rs`. [crates/gcode/src/commands/codewiki/build_parts/infrastructure.rs:121-148] |
 

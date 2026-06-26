@@ -10,7 +10,7 @@ freshness: indexed
 
 # crates/gwiki/src/commands/mod.rs
 
-Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
+Module: [[code/modules/crates/gwiki/src/commands|crates/gwiki/src/commands]]
 
 ## Overview
 
@@ -24,7 +24,7 @@ Module: [[code/modules/crates/gwiki/src|crates/gwiki/src]]
 
 | Symbol | Kind | Purpose |
 | --- | --- | --- |
-| `run` | function | Dispatches the given 'Command' enum variant to its corresponding module-level 'execute' function and returns that operation’s 'Result<CommandOutcome, WikiError>'. [crates/gwiki/src/commands/mod.rs:32-106] |
-| `scoped_outcome` | function | Constructs a successful 'CommandOutcome' with exit code '0', a single status message of the form '"{command} resolved scope {scope}"', and a 'CommandResult' containing the supplied JSON 'payload' and 'text'. [crates/gwiki/src/commands/mod.rs:108-119] |
-| `run_analysis_command` | function | Resolves the selected scope, executes the provided analysis closure on that scope’s root path and identity, serializes the returned report to JSON, and packages both the serialized payload and rendered summary into a scoped 'CommandOutcome'. [crates/gwiki/src/commands/mod.rs:121-145] |
+| `run` | function | The 'run' function pattern matches on a 'Command' enum to delegate to the appropriate subcommand execution handler, returning a 'Result' containing either a 'CommandOutcome' or 'WikiError'. [crates/gwiki/src/commands/mod.rs:32-108] |
+| `scoped_outcome` | function | Constructs and returns a 'CommandOutcome' with exit code 0, embedding the provided payload and text into a 'CommandResult' and generating a status message indicating the command resolved the specified scope. [crates/gwiki/src/commands/mod.rs:110-121] |
+| `run_analysis_command` | function | Executes a scoped analysis closure, serializes its generic result to JSON, and returns a CommandOutcome containing both the serialized payload and rendered string representation. [crates/gwiki/src/commands/mod.rs:123-147] |
 
