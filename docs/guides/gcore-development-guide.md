@@ -171,7 +171,7 @@ The crate's default feature set is empty:
 ```toml
 [features]
 default = []
-postgres = ["dep:postgres", "dep:postgres-types", "dep:postgres-openssl", "dep:openssl", "dep:pbkdf2", "dep:sha2"]
+postgres = ["dep:postgres", "dep:postgres-types", "dep:postgres-openssl", "dep:pbkdf2", "dep:sha2"]
 falkor = ["dep:falkordb", "dep:urlencoding"]
 qdrant = ["dep:reqwest", "dep:urlencoding"]
 indexing = ["dep:ignore", "dep:sha2"]
@@ -181,11 +181,19 @@ ai = ["dep:reqwest", "dep:base64", "dep:bytes", "dep:httpdate", "dep:rand", "dep
 full = ["postgres", "falkor", "qdrant", "indexing", "search", "graph-analytics", "ai"]
 ```
 
+`openssl` is intentionally **not** feature-gated: the always-compiled
+`fernet`/`secrets` path pulls `openssl-sys` into every dependency graph, so the
+crate declares `openssl = { version = "0.10", features = ["vendored"] }` as a
+non-optional dependency. This unifies `openssl-sys` to a static (vendored) build
+across all consumers and targets — including graphs that omit `postgres`
+(ghook, gcode's build-dependency graph) — which the Windows release runners
+require because they have no system OpenSSL.
+
 Feature rationale:
 
 | Feature | Enables | Why gated |
 |---------|---------|-----------|
-| `postgres` | `postgres`, `postgres-types`, `postgres-openssl`, `openssl` | Hub validation and adapter code are only needed by datastore consumers. Lightweight binaries should not inherit PostgreSQL. |
+| `postgres` | `postgres`, `postgres-types`, `postgres-openssl` | Hub validation and adapter code are only needed by datastore consumers. Lightweight binaries should not inherit PostgreSQL. |
 | `falkor` | `falkordb`, `urlencoding` | Graph helpers need FalkorDB. `urlencoding` is included because FalkorDB connection URLs must encode passwords safely. |
 | `qdrant` | `reqwest` with `blocking` and `json` | Vector search/storage helpers need HTTP. Other consumers should not pull reqwest. |
 | `indexing` | `ignore`, `sha2` | File walking and content hashing are useful for indexing consumers only. |

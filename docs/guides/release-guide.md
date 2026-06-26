@@ -6,8 +6,8 @@ This guide covers the multi-crate Rust release flow for maintainers.
 
 | Crate | Binary | Version | Tag | Publishes? |
 |---|---|---:|---|---|
-| `gobby-core` | n/a | `0.6.0` | `gobby-core-v0.6.0` | crates.io only |
-| `gobby-code` | `gcode` | `1.3.2` | `gcode-v1.3.2` | crates.io + GitHub binaries |
+| `gobby-core` | n/a | `0.6.1` | `gobby-core-v0.6.1` | crates.io only |
+| `gobby-code` | `gcode` | `1.3.3` | `gcode-v1.3.3` | crates.io + GitHub binaries |
 | `gobby-hooks` | `ghook` | `0.6.2` | `ghook-v0.6.2` | crates.io + GitHub binaries |
 | `gobby-wiki` | `gwiki` | `0.6.5` | `gwiki-v0.6.5` | crates.io + GitHub binaries |
 
@@ -31,12 +31,12 @@ time, so the new core version must be indexed first. `gwiki` additionally
 re-verifies that the published `gobby-core` exposes the `ai` feature.
 
 ```bash
-git tag gobby-core-v0.6.0
-git push origin gobby-core-v0.6.0
+git tag gobby-core-v0.6.1
+git push origin gobby-core-v0.6.1
 
-# Wait for crates.io to index gobby-core 0.6.0.
+# Wait for crates.io to index gobby-core 0.6.1.
 
-git tag gcode-v1.3.2
+git tag gcode-v1.3.3
 git tag ghook-v0.6.2
 git tag gwiki-v0.6.5
 
@@ -44,7 +44,7 @@ git tag gwiki-v0.6.5
 # any tag when more than three tags arrive in a single push, so a batched
 # `git push origin <tag> <tag> <tag> <tag> ...` silently triggers NO release
 # workflows. Push each tag in its own invocation:
-for tag in gcode-v1.3.2 ghook-v0.6.2 gwiki-v0.6.5; do
+for tag in gcode-v1.3.3 ghook-v0.6.2 gwiki-v0.6.5; do
   git push origin "refs/tags/$tag"
 done
 ```
