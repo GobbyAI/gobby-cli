@@ -62,7 +62,7 @@ projects skip those project-local skill writes because Gobby owns CLI wiring.
 
 ### ghook — Hook Dispatcher
 
-Sandbox-tolerant hook dispatcher invoked by host AI CLIs (Claude Code, Codex, Gemini CLI, Qwen CLI, Droid, Grok, and Antigravity) on lifecycle and tool-use events. Spools envelopes to `~/.gobby/hooks/inbox/` *before* POSTing to the local Gobby daemon, so the daemon's drain worker can replay any delivery lost to a sandbox FS-read denial, network blip, or daemon restart. You don't usually invoke it directly — Gobby wires it into your AI CLI for you.
+Sandbox-tolerant hook dispatcher invoked by host AI CLIs (Claude Code, Codex, Qwen CLI, Droid, Grok, and Antigravity) on lifecycle and tool-use events. Spools envelopes to `~/.gobby/hooks/inbox/` *before* POSTing to the local Gobby daemon, so the daemon's drain worker can replay any delivery lost to a sandbox FS-read denial, network blip, or daemon restart. You don't usually invoke it directly — Gobby wires it into your AI CLI for you.
 
 ### gwiki — Research Knowledge Vault
 

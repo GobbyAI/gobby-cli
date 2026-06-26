@@ -40,8 +40,8 @@ On `ask` this applies in addition to the `prompt_token_budget` evidence cap.
 vault. Raw `*.jsonl.gz` archives stay in the present-source reconciliation set,
 but are parsed only when the caller explicitly passes `--raw` for legacy
 fallback. The raw ingest path lives in `crates/gwiki/src/ingest/session.rs` with
-per-CLI adapter submodules (`codex`, `gemini`, `grok`, `qwen`, `droid`, plus the
-Claude Code adapter), a `metadata` module that emits deterministic session
+per-CLI adapter submodules (`codex`, `grok`, `qwen`, `droid`, plus the Claude
+Code adapter), a `metadata` module that emits deterministic session
 frontmatter, and a `redaction` module that redacts secrets on ingest before any
 derived Markdown is written. The CLI surface accepts `--archive-dir <PATH>`
 (directory of `*.jsonl.gz` archives), `--wiki-dir <PATH>` (directory of

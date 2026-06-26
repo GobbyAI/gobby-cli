@@ -206,7 +206,7 @@ Syncs daemon-synthesized Gobby session wiki pages into the wiki vault. By
 default, raw `*.jsonl.gz` archives are used only for presence reconciliation and
 are not parsed as fallback content. Pass `--raw` to opt in to legacy raw
 transcript fallback when no synthesized page exists. Per-CLI adapters recognize
-Claude Code, Codex, Gemini, Grok, Qwen, and Droid archives, normalize each raw
+Claude Code, Codex, Grok, Qwen, and Droid archives, normalize each raw
 fallback into a derived Markdown page with deterministic session frontmatter, and
 redact secrets on ingest.
 
