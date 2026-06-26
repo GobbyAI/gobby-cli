@@ -18,6 +18,8 @@ pub mod search;
 pub mod secrets;
 pub mod setup;
 pub mod skill;
+#[doc(hidden)]
+pub mod test_env;
 pub mod utils;
 pub mod vector;
 pub(crate) mod visibility;

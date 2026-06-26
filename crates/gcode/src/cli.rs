@@ -82,6 +82,41 @@ impl From<AiDepthArg> for gobby_code::commands::codewiki::AiDepth {
     }
 }
 
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, ValueEnum)]
+pub(crate) enum AiProseDepthArg {
+    Brief,
+    #[default]
+    Standard,
+    Deep,
+}
+
+impl From<AiProseDepthArg> for gobby_code::commands::codewiki::ProseDepth {
+    fn from(value: AiProseDepthArg) -> Self {
+        match value {
+            AiProseDepthArg::Brief => Self::Brief,
+            AiProseDepthArg::Standard => Self::Standard,
+            AiProseDepthArg::Deep => Self::Deep,
+        }
+    }
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, ValueEnum)]
+pub(crate) enum AiRegisterArg {
+    Newcomer,
+    Maintainer,
+    Agent,
+}
+
+impl From<AiRegisterArg> for gobby_code::commands::codewiki::ProseRegister {
+    fn from(value: AiRegisterArg) -> Self {
+        match value {
+            AiRegisterArg::Newcomer => Self::Newcomer,
+            AiRegisterArg::Maintainer => Self::Maintainer,
+            AiRegisterArg::Agent => Self::Agent,
+        }
+    }
+}
+
 #[derive(Subcommand)]
 pub(crate) enum Command {
     /// Emit the CLI contract for daemon conformance tests
@@ -334,9 +369,22 @@ pub(crate) enum Command {
         #[arg(long, value_enum, default_value_t = AiDepthArg::Files)]
         ai_depth: AiDepthArg,
         /// Daemon feature profile for aggregate docs (architecture/modules/repo)
-        /// [default: feature_mid]
+        /// [default: opus-first writer chain — claude/opus@high, codex/gpt-5.5@xhigh]
         #[arg(long, value_name = "PROFILE")]
         ai_aggregate_profile: Option<String>,
+        /// Daemon feature profile for grounded verification
+        /// [default: feature_mid]
+        #[arg(long, value_name = "PROFILE")]
+        ai_verify_profile: Option<String>,
+        /// Prose verbosity: brief (terser), standard (default), or deep (longer,
+        /// richer). Orthogonal to --ai-depth; raises the per-page token budget.
+        #[arg(long, value_enum, default_value_t = AiProseDepthArg::Standard)]
+        ai_prose_depth: AiProseDepthArg,
+        /// Audience register for generated prose: newcomer (ELI5, plain
+        /// language), maintainer (why + trade-offs), or agent (terse build
+        /// substrate). Omit to keep the base voice. Grounding holds in all.
+        #[arg(long, value_enum)]
+        ai_register: Option<AiRegisterArg>,
         /// Maximum graph edges to fetch from FalkorDB
         #[arg(long, default_value_t = DEFAULT_CODEWIKI_GRAPH_EDGE_LIMIT, value_parser = positive_usize)]
         edge_limit: usize,
@@ -345,6 +393,13 @@ pub(crate) enum Command {
         /// narrative markdown belongs to gwiki.
         #[arg(long)]
         include_docs: bool,
+        /// Incremental driver: regenerate only pages whose sources or cross-file
+        /// neighbors changed since this git ref, plus aggregate pages whose model
+        /// digest changed. `git diff --name-only <ref>` selects the change set;
+        /// omitting it runs a full content-hash scan. Out-of-scope pages and
+        /// `_meta` are preserved either way.
+        #[arg(long, value_name = "GIT_REF")]
+        since: Option<String>,
         /// Repair-only mode: re-anchor existing pages' `[file:line]` citations
         /// against the current index and exit. No generation, no AI/LLM calls.
         /// Ignores generation flags (`--ai`, `--scope`, `--ai-depth`, …); honors

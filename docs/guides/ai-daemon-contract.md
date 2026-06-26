@@ -274,4 +274,4 @@ The embedding-config migration removes the same-window co-release requirement. I
 
 The daemon should serialize model loads or honor keep-alive settings so Whisper, multimodal generation, and embeddings are not all resident at once unless explicitly configured.
 
-_Last verified: 2026-06-01_
+_Last verified: 2026-06-23_

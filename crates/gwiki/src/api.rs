@@ -54,6 +54,7 @@ pub enum Command {
         scope: ScopeSelection,
         limit: usize,
         include_semantic: bool,
+        token_budget: Option<usize>,
     },
     Ask {
         query: String,
@@ -61,6 +62,7 @@ pub enum Command {
         llm: bool,
         ai: AiRouting,
         require_ai: bool,
+        token_budget: Option<usize>,
     },
     Read {
         target: ReadTarget,
@@ -185,7 +187,13 @@ pub struct IngestFileOptions {
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct SyncSessionsOptions {
     pub archive_dir: Option<PathBuf>,
+    pub wiki_dir: Option<PathBuf>,
     pub limit: Option<usize>,
+    pub raw: bool,
+    /// Generate a daemon-equivalent summary for raw archives that have no daemon
+    /// synthesis, instead of the structural skeleton. Degrades to skeleton when
+    /// AI is unavailable.
+    pub summarize: bool,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]

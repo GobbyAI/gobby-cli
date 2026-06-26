@@ -5,6 +5,7 @@ use gobby_core::cli_contract::{
 pub fn contract() -> CliContract {
     CliContract {
         tool: "gcode",
+        // Additive optional flags are backward-compatible and do not bump this version.
         contract_version: 2,
         summary: "Fast code index CLI for Gobby.",
         global_flags: vec![
@@ -309,7 +310,15 @@ pub fn contract() -> CliContract {
                 flags: vec![
                     FlagContract::value("--out", "DIR"),
                     FlagContract::repeatable_value("--scope", "PATH"),
+                    FlagContract::value("--since", "GIT_REF"),
                     ai_flag(),
+                    ai_depth_flag(),
+                    FlagContract::value("--ai-aggregate-profile", "PROFILE"),
+                    FlagContract::value("--ai-verify-profile", "PROFILE"),
+                    ai_prose_depth_flag(),
+                    ai_register_flag(),
+                    FlagContract::value("--edge-limit", "N"),
+                    FlagContract::switch("--include-docs"),
                     FlagContract::switch("--repair-citations"),
                 ],
                 // Two JSON shapes: a generation run-summary, or — under
@@ -328,6 +337,7 @@ pub fn contract() -> CliContract {
                     "modules",
                     "symbols",
                     "ai_enabled",
+                    "degraded_pages",
                     "pages_scanned",
                     "pages_repaired",
                     "citations_repaired",
@@ -541,6 +551,24 @@ fn format_flag() -> FlagContract {
 fn ai_flag() -> FlagContract {
     FlagContract::value("--ai", "auto|daemon|direct|off")
         .allowed(vec!["auto", "daemon", "direct", "off"])
+}
+
+fn ai_depth_flag() -> FlagContract {
+    FlagContract::value("--ai-depth", "sections|files|symbols")
+        .allowed(vec!["sections", "files", "symbols"])
+}
+
+fn ai_prose_depth_flag() -> FlagContract {
+    FlagContract::value("--ai-prose-depth", "brief|standard|deep")
+        .allowed(vec!["brief", "standard", "deep"])
+}
+
+fn ai_register_flag() -> FlagContract {
+    FlagContract::value("--ai-register", "newcomer|maintainer|agent").allowed(vec![
+        "newcomer",
+        "maintainer",
+        "agent",
+    ])
 }
 
 fn token_budget_flag() -> FlagContract {

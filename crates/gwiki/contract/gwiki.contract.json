@@ -1,6 +1,6 @@
 {
   "tool": "gwiki",
-  "contract_version": 5,
+  "contract_version": 7,
   "summary": "Local-first wiki CLI for capture, search, upkeep, and synthesis.",
   "global_flags": [
     {
@@ -118,6 +118,14 @@
           "allowed_values": [],
           "required": false,
           "repeatable": false
+        },
+        {
+          "name": "--token-budget",
+          "takes_value": true,
+          "value_name": "N",
+          "allowed_values": [],
+          "required": false,
+          "repeatable": false
         }
       ],
       "json_output_keys": [
@@ -132,6 +140,7 @@
         "source_path",
         "result_type",
         "snippet",
+        "hint",
         "score",
         "sources",
         "explanations",
@@ -179,6 +188,14 @@
           "allowed_values": [],
           "required": false,
           "repeatable": false
+        },
+        {
+          "name": "--token-budget",
+          "takes_value": true,
+          "value_name": "N",
+          "allowed_values": [],
+          "required": false,
+          "repeatable": false
         }
       ],
       "json_output_keys": [
@@ -197,6 +214,7 @@
         "truncated",
         "truncated_components",
         "warnings",
+        "hint",
         "ai",
         "synthesis"
       ],
@@ -421,9 +439,25 @@
           "repeatable": false
         },
         {
+          "name": "--wiki-dir",
+          "takes_value": true,
+          "value_name": "PATH",
+          "allowed_values": [],
+          "required": false,
+          "repeatable": false
+        },
+        {
           "name": "--limit",
           "takes_value": true,
           "value_name": "N",
+          "allowed_values": [],
+          "required": false,
+          "repeatable": false
+        },
+        {
+          "name": "--raw",
+          "takes_value": false,
+          "value_name": null,
           "allowed_values": [],
           "required": false,
           "repeatable": false
@@ -438,6 +472,7 @@
         "accepted",
         "skipped",
         "failed",
+        "reconciled",
         "indexed"
       ],
       "hard_dependencies": [

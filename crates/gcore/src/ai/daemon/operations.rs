@@ -2,11 +2,11 @@ use bytes::Bytes;
 
 use crate::ai_context::AiContext;
 use crate::ai_types::{AiError, TextResult, TranscriptionResult, VisionResult};
-use crate::config::AiCapability;
+use crate::config::{AiCapability, FeatureCandidate};
 
 use super::request::{
-    add_optional_text, audio_capability, embeddings_request_body, multipart_form_with_file,
-    text_request_body,
+    TextRequestOptions, add_optional_text, audio_capability, embeddings_request_body,
+    multipart_form_with_file, text_request_body,
 };
 use super::response::{parse_daemon_embeddings, parse_daemon_transcription};
 use super::transport::{daemon_client, daemon_url, read_local_cli_token, with_local_token};
@@ -129,20 +129,62 @@ pub fn generate_via_daemon_with_max_tokens(
     max_tokens: Option<usize>,
     profile: Option<&str>,
 ) -> Result<TextResult, AiError> {
+    generate_text_via_daemon(cfg, prompt, system, max_tokens, profile, None)
+}
+
+/// Pin an explicit provider/model candidate chain for this one call, overriding
+/// the binding's profile/provider/model/reasoning. Each [`FeatureCandidate`]
+/// carries its own optional `reasoning_effort`. Used by callers that need a
+/// specific model (e.g. codewiki's aggregate writer requesting opus-first)
+/// regardless of the binding's default daemon feature profile.
+pub fn generate_via_daemon_with_candidates(
+    cfg: &AiContext,
+    prompt: &str,
+    system: Option<&str>,
+    max_tokens: Option<usize>,
+    candidates: &[FeatureCandidate],
+) -> Result<TextResult, AiError> {
+    generate_text_via_daemon(cfg, prompt, system, max_tokens, None, Some(candidates))
+}
+
+fn generate_text_via_daemon(
+    cfg: &AiContext,
+    prompt: &str,
+    system: Option<&str>,
+    max_tokens: Option<usize>,
+    profile: Option<&str>,
+    candidates_override: Option<&[FeatureCandidate]>,
+) -> Result<TextResult, AiError> {
     let capability = AiCapability::TextGenerate;
     let binding = cfg.binding(capability);
     let client = daemon_client()?;
     let token = read_local_cli_token()?;
     let url = daemon_url(TEXT_GENERATE_PATH);
-    let body = text_request_body(
-        prompt,
-        system,
-        binding.provider.as_deref(),
-        binding.model.as_deref(),
-        cfg.project_id.as_deref(),
-        max_tokens,
-        profile.or(binding.profile.as_deref()),
-    );
+    // An explicit candidate chain pins the exact provider/model sequence: it
+    // supersedes the binding's profile/provider/model so the daemon routes to
+    // the requested candidates only (each candidate carries its own reasoning
+    // pin). Otherwise fall back to the binding's provider/model/profile.
+    let options = match candidates_override {
+        Some(candidates) => TextRequestOptions {
+            provider: None,
+            model: None,
+            project_id: cfg.project_id.as_deref(),
+            max_tokens,
+            profile: None,
+            candidates: Some(candidates),
+            reasoning_effort: None,
+        },
+        None => TextRequestOptions {
+            provider: binding.provider.as_deref(),
+            model: binding.model.as_deref(),
+            project_id: cfg.project_id.as_deref(),
+            max_tokens,
+            profile: profile.or(binding.profile.as_deref()),
+            candidates: binding.candidates.as_deref(),
+            reasoning_effort: binding.reasoning_effort.as_deref(),
+        },
+    };
+    let body = text_request_body(prompt, system, options);
     let _permit = cfg.limiter.acquire();
 
     let value = super::super::retry_with_backoff(

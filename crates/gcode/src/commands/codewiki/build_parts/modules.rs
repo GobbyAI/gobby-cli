@@ -1,12 +1,10 @@
 use super::super::*;
-use std::collections::{BTreeMap, BTreeSet};
+use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
 
 #[allow(clippy::too_many_arguments)]
 #[cfg(test)]
 pub(crate) fn build_module_docs(
     files: &[FileDoc],
-    graph_edges: &[CodewikiGraphEdge],
-    graph_availability: CodewikiGraphAvailability,
     leading_chunks: &BTreeMap<String, LeadingChunk>,
     generate: &mut Option<&mut TextGenerator<'_>>,
     reuse: &mut Option<&mut ReusePlan>,
@@ -15,9 +13,8 @@ pub(crate) fn build_module_docs(
 ) -> anyhow::Result<Vec<ModuleDoc>> {
     build_module_docs_with_filter(
         files,
-        graph_edges,
-        graph_availability,
         leading_chunks,
+        &[],
         generate,
         reuse,
         progress,
@@ -29,15 +26,24 @@ pub(crate) fn build_module_docs(
 #[allow(clippy::too_many_arguments)]
 pub(crate) fn build_module_docs_with_filter(
     files: &[FileDoc],
-    graph_edges: &[CodewikiGraphEdge],
-    graph_availability: CodewikiGraphAvailability,
     leading_chunks: &BTreeMap<String, LeadingChunk>,
+    graph_edges: &[CodewikiGraphEdge],
     generate: &mut Option<&mut TextGenerator<'_>>,
     reuse: &mut Option<&mut ReusePlan>,
     progress: &mut CodewikiProgress,
     module_filter: &dyn Fn(&str) -> bool,
     emit: &mut dyn FnMut(&ModuleDoc) -> anyhow::Result<()>,
 ) -> anyhow::Result<Vec<ModuleDoc>> {
+    // Resolve graph-edge endpoints back to their symbols so each module's brief
+    // can name concrete cross-module collaborators with citations (#885).
+    let symbols_by_id = files
+        .iter()
+        .flat_map(|file| {
+            file.symbols
+                .iter()
+                .map(|doc| (doc.symbol.id.as_str(), &doc.symbol))
+        })
+        .collect::<HashMap<_, _>>();
     let mut module_names = BTreeSet::new();
     for file in files {
         for module in module_ancestors(&file.module) {
@@ -95,10 +101,6 @@ pub(crate) fn build_module_docs_with_filter(
             })
             .collect::<Vec<_>>();
         let prompt_component_ids = prompt_component_ids_for_module(files, &module);
-        let graph_truncated = graph_availability == CodewikiGraphAvailability::Truncated;
-        let dependency_diagram =
-            render_module_dependency_mermaid(&module, files, graph_edges, graph_truncated);
-        let call_diagram = render_module_call_mermaid(&module, files, graph_edges, graph_truncated);
         let fallback = structural_module_summary(&module, &direct_files, &child_modules);
         let source_spans = collect_link_spans(&direct_files, &child_modules);
         // A module's provenance rolls up every file under it (child spans
@@ -133,6 +135,19 @@ pub(crate) fn build_module_docs_with_filter(
                     leading_chunks,
                     prompts::MAX_PROMPT_SOURCE_EXCERPTS,
                 );
+                // Cross-module relationships: edges with one endpoint among this
+                // module's member symbols (this module + descendants) and the
+                // other outside it. Reuses the per-file resolver with the
+                // module's full member-id set as the boundary.
+                let member_ids = files
+                    .iter()
+                    .filter(|file| {
+                        file.module == module || module_is_ancestor(&module, &file.module)
+                    })
+                    .flat_map(|file| file.component_ids.iter().map(String::as_str))
+                    .collect::<HashSet<&str>>();
+                let relationships =
+                    relationship_facts_for_file(&module, &member_ids, &symbols_by_id, graph_edges);
                 let generated = maybe_generate(
                     generate,
                     &prompts::module_prompt(
@@ -141,29 +156,40 @@ pub(crate) fn build_module_docs_with_filter(
                         &child_summaries,
                         &prompt_component_ids,
                         &sources,
+                        &relationships,
                     ),
                     prompts::MODULE_SYSTEM,
-                    PromptTier::Aggregate,
+                    PromptTier::Module,
                 )
                 .unwrap_or_record(fallback, &mut degraded);
-                let citations = citation_list(&source_spans, &generated);
-                let summary = ground_text(&generated, &source_spans, Some(&citations));
+                // Relationship endpoint spans widen the grounding allow-list so
+                // cross-module citations survive; the module's own provenance
+                // (source_spans, used for reuse hashing) stays member-scoped.
+                let mut grounding_spans = source_spans.clone();
+                grounding_spans.extend(relationships.endpoint_spans());
+                let citations = citation_list(&grounding_spans, &generated);
+                let summary = ground_text(&generated, &grounding_spans, Some(&citations));
                 (summary, None)
             }
         };
 
         module_summaries.insert(module.clone(), summary.clone());
         module_sources.insert(module.clone(), source_spans.clone());
+        // Graph availability is informational only and never degrades a module
+        // page; the sole content-gap degradation here is a failed generation.
+        let mut degraded_sources = BTreeSet::new();
+        if degraded {
+            degraded_sources.insert("model-unavailable".to_string());
+        }
         let doc = ModuleDoc {
             module,
             summary,
             source_spans,
             direct_files,
             child_modules,
-            dependency_diagram,
-            call_diagram,
-            graph_availability,
             degraded,
+            degraded_sources: degraded_sources.into_iter().collect(),
+            verify_notes: Vec::new(),
             reused_page,
         };
         emit(&doc)?;

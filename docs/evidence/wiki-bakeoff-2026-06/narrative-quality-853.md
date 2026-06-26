@@ -311,3 +311,82 @@ regen is intentionally deferred to the nightly daemon regen (linked gobby-cron t
 epic's "Honest cost" note: with the serial `AiLimiter` (`max_concurrency = 1`) a full
 generate+verify pass is ~2 calls × 574 pages and is hours-scale — observed **67 s blocked on
 file 1 of 482** before switching to the deterministic structural regen for this closeout.
+
+## 2026-06-20 — AI-on full regen + citation-anchor fix (#897 / #898 / #901, closeout #899)
+
+Full **AI-on** vault regen (`gcode codewiki --out gobby-wiki --ai daemon --ai-depth sections
+--ai-aggregate-profile feature_high`): 602 pages (491 files / 81 modules / 9809 symbols),
+`CODEWIKI_RENDER_VERSION` 10. Lands the #897 deep-wiki narrative renderer plus the #901
+citation-anchor fix.
+
+### `gwiki lint --project` deltas (this regen)
+
+| Metric | First AI-on regen | After #901 fix + orphan cleanup | Δ |
+| --- | --- | --- | --- |
+| `broken_links` | **209** | **0** | **−209** |
+| degraded pages (`model-unavailable`) | 7 | **0** | **−7** |
+| `orphan_pages` | 12 | 9 | −3 (residual 9 are the expected `_*`/catalog index roots) |
+| `missing_backlinks` | 706 | 667 | −39 |
+| `missing_frontmatter` | 1 | 1 | 0 (pre-existing) |
+| `duplicate_aliases` | 0 | 0 | 0 |
+
+### Root causes found this session
+
+1. **`broken_links` 0→209 regression (#901, fixed).** #897's "cite inline" change made the model emit
+   citations as `[path:line](path:line)` markdown links; `text/sanitize.rs::sanitize_model_markdown_links`
+   passed the relative `path:line` target through verbatim, so the colon target never resolved and
+   `gwiki lint` flagged it. Added a re-anchoring pass (`citation_anchor_replacements` /
+   `anchor_citation_target`) at the `ground_text` chokepoint that rewrites relative citation targets
+   `path:line[-end]` → `path#Lline[-Lend]` (the `frontmatter.rs::source_range_href` form). Result across
+   the vault: **2360 anchored `#L` links, 0 broken**. Unit test
+   `reanchors_relative_citation_link_targets_to_line_anchors`.
+2. **Non-deterministic narrative slugs leave orphaned stale pages (systemic — tracked under #878/#900).**
+   Narrative page slugs drift across regens: the original run's `from-files-to-code-facts` /
+   `retrieving-code` were not reproduced this run, which instead emitted `building-the-code-index` /
+   `resolving-relationships` / etc., and superseded pages are **not** garbage-collected. The 2 stale
+   leftovers (`from-files-to-code-facts.md` @11:50, `retrieving-code.md` @10:54) were `cache=false`
+   orphans carrying all 33 residual broken links **and** the lone `degraded` marker — the degradation was
+   a *transient* failure on the original run, not deterministic (the new-slug equivalent regenerated
+   clean). Removing the 2 orphans drove broken_links and degraded both to 0. Codewiki needs stable
+   narrative slugs or orphan GC.
+
+Definition-of-done for codewiki work is now the **regen + `gwiki lint` clean** gate (broken_links 0,
+degraded ≤1, orphans = the `_*` index roots), under epic #878 — not a downstream fix-up epic.
+
+## #894 final pass — full-vault verification & v13 cleanup (2026-06-22)
+
+**Leaf G (#894):** the single full-regen + bake-off + commit. The 601-page vault was already fully
+regenerated at render-version 12 (#904 opus-first writer + sonnet QA, riding the robust verifier from
+Leaves 8–10) and committed. This pass verifies that output and lands the residual v13 (#905) render fix
+without a wasteful from-scratch regen.
+
+**Daemon chains (live probe, `POST /api/llm/generate`):** `feature_low`→claude/haiku (2.7s),
+`feature_mid`→claude/sonnet (2.5s), `feature_high`→codex/gpt-5.5@xhigh (4.5s, `applied_reasoning_effort`
+surfaced). **No gemini in any chain** — confirms the Phase-1 reasoning refactor is deployed and the
+feature_low/mid/high tiers are haiku/sonnet/opus-class.
+
+**Verifier robustness (scoped sample, `crates/gcode/src/search`, 12 pages):** 0 `degraded`, 0
+false-positive verify flags — vs the 8–10/12 `model-unavailable` baseline that motivated this epic. The
+evidence-starved verifier was the bug; giving it the generator's symbol table (Leaf 8) + non-destructive
+frontmatter notes (Leaf 9) fixed it.
+
+**v12→v13 delta applied deterministically (no AI, no 10–17h regen):** the render-version bump 12→13
+globally invalidates page reuse, so a from-scratch regen would re-generate 592 byte-identical pages to
+fix 9. Instead the committed #905 render behavior was replicated in place — removed the model's duplicate
+leading `# H1` on the 7 narrative pages + 1 concept page + `repo.md`, and removed `repo.md`'s orphaned
+dead-code-candidates link (#902 dropped that page). 9 files, 19 deletions.
+
+**Final `gwiki lint --project` (clean gate met):**
+
+| metric | before (#894) | after | note |
+|---|---|---|---|
+| `broken_links` | 1 | **0** | removed the orphaned dead-code-candidates link |
+| `duplicate_aliases` | 0 | 0 | |
+| `missing_backlinks` | 506 | 506 | pre-existing (file/symbol leaf pages) |
+| `missing_frontmatter` | 1 | 1 | pre-existing |
+| `orphan_pages` | 5 | 5 | the `_*` index roots (expected) |
+| duplicate-H1 pages | 9 | **0** | #905 strip applied |
+| `degraded: true` | 1 | 1 | `_ownership` only — genuine `codeowners_unavailable` (no CODEOWNERS file) |
+
+Definition-of-done met: broken_links 0, degraded ≤1 (genuine), orphans = the `_*` index roots, **0
+false-positive degradation**.

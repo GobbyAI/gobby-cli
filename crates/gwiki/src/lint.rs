@@ -9,6 +9,11 @@ use crate::links::{LinkKind, WikiLink, normalize_wiki_path};
 use crate::markdown::{MarkdownDomainRecord, parse_markdown};
 use crate::{ScopeIdentity, WikiError};
 
+mod diagrams;
+
+pub use diagrams::DiagramIssue;
+use diagrams::{invalid_diagrams, render_diagram_issues};
+
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 pub struct LintReport {
     pub command: &'static str,
@@ -19,6 +24,7 @@ pub struct LintReport {
     pub missing_frontmatter: Vec<PathBuf>,
     pub duplicate_aliases: Vec<DuplicateAlias>,
     pub missing_backlinks: Vec<LinkIssue>,
+    pub invalid_diagrams: Vec<DiagramIssue>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]
@@ -89,6 +95,7 @@ pub fn run(vault_root: &Path, scope: ScopeIdentity) -> Result<LintReport, WikiEr
 
     let duplicate_aliases = duplicate_aliases(&pages);
     let missing_backlinks = missing_backlinks(&pages, &outgoing);
+    let invalid_diagrams = invalid_diagrams(&pages);
 
     Ok(LintReport {
         command: "lint",
@@ -99,6 +106,7 @@ pub fn run(vault_root: &Path, scope: ScopeIdentity) -> Result<LintReport, WikiEr
         missing_frontmatter,
         duplicate_aliases,
         missing_backlinks,
+        invalid_diagrams,
     })
 }
 
@@ -122,6 +130,7 @@ pub fn render_text(report: &LintReport) -> String {
         }
     }
     render_link_issues(&mut text, "Missing backlinks", &report.missing_backlinks);
+    render_diagram_issues(&mut text, &report.invalid_diagrams);
     text
 }
 

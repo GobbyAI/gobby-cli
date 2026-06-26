@@ -6,30 +6,27 @@ pub(crate) fn build_architecture_doc(
     files: &[FileDoc],
     modules: &[ModuleDoc],
     graph_edges: &[CodewikiGraphEdge],
-    graph_availability: CodewikiGraphAvailability,
     leading_chunks: &BTreeMap<String, LeadingChunk>,
+    // Deterministic workspace system model (#891). When supplied, seeds the
+    // model-derived topology / runtime-flow Mermaid diagrams; `None` (e.g. the
+    // AI-off / test entry points) omits the diagram section entirely. The model
+    // is the sole source for diagrams — they never read the code graph.
+    system_model: Option<&SystemModel>,
     generate: &mut Option<&mut TextGenerator<'_>>,
     progress: &mut CodewikiProgress,
 ) -> ArchitectureDoc {
     // Decomposition starts at meaningful units — the subsystem roots (a
     // workspace's individual crates), not the directory container above
-    // them — so subsystems, narrative, and the cross-subsystem diagram all
-    // describe the same level.
+    // them — so subsystems and the layered narrative describe the same level.
     let file_paths = files
         .iter()
         .map(|file| file.path.clone())
         .collect::<Vec<_>>();
     let subsystem_names = cluster::subsystem_roots(&file_paths);
+    // Graph availability is informational only and never degrades the
+    // architecture page; the sole content-gap degradation is a failed
+    // generation, recorded below.
     let mut degraded_sources = BTreeSet::new();
-    match graph_availability {
-        CodewikiGraphAvailability::Available => {}
-        CodewikiGraphAvailability::Truncated => {
-            degraded_sources.insert("graph-truncated".to_string());
-        }
-        CodewikiGraphAvailability::Unavailable => {
-            degraded_sources.insert("graph-unavailable".to_string());
-        }
-    }
 
     let mut subsystems = Vec::new();
     let subsystem_modules = modules
@@ -151,19 +148,23 @@ pub(crate) fn build_architecture_doc(
         }
     };
 
-    let dependency_diagram = match graph_availability {
-        CodewikiGraphAvailability::Unavailable => None,
-        CodewikiGraphAvailability::Available | CodewikiGraphAvailability::Truncated => {
-            render_subsystem_dependency_mermaid(&subsystem_names, files, graph_edges)
-        }
-    }
-    .or_else(|| render_architecture_structure_mermaid(&subsystems));
+    // Model-seeded architectural diagrams (#891). Rendered deterministically
+    // from the workspace SystemModel and pre-validated by the renderer's
+    // valid-Mermaid gate; a sparse model or an invalid block yields `None`,
+    // which is normal and never touches `degraded_sources`.
+    let diagrams = system_model.and_then(render_architecture_diagrams);
+
+    // Deterministic service matrix from the same model: the at-a-glance
+    // required/degraded picture an evaluator needs. Same non-degrading contract
+    // as the diagrams — a model with no services yields `None`.
+    let service_matrix = system_model.and_then(render_service_matrix);
 
     ArchitectureDoc {
         source_spans,
         subsystems,
         narrative,
-        dependency_diagram,
+        diagrams,
+        service_matrix,
         degraded_sources: degraded_sources.into_iter().collect(),
     }
 }

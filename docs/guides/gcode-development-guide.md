@@ -26,7 +26,9 @@ switches outline output from the slim projection to the full `Symbol` payload.
 
 `gcode graph clear` and `gcode graph rebuild` are nested under a `graph`
 subcommand group, but the existing read-side graph queries remain top-level:
-`callers`, `usages`, `imports`, and `blast-radius`.
+`callers`, `usages`, `imports`, `path`, and `blast-radius`. `gcode path
+<SYMBOL_A> <SYMBOL_B>` returns the shortest `CALLS` path between two resolved
+symbol queries (`--max-depth` caps the hop count, default `8`).
 
 ## Configuration Resolution
 
@@ -213,13 +215,13 @@ call graph and improves FalkorDB correctness for `callers`, `usages`,
 
 ### Language Support (languages.rs)
 
-18 languages with tree-sitter queries for symbol definitions, imports, and call
+21 languages with tree-sitter queries for symbol definitions, imports, and call
 sites where the grammar exposes a safe surface:
 
 | Tier | Languages |
 |------|-----------|
-| Tier 1 | Python, JavaScript, TypeScript, Go, Rust, Java, C, C++, C#, Ruby, PHP, Swift, Kotlin |
-| Tier 2 | Dart, Elixir |
+| Tier 1 | Python, JavaScript, TypeScript, Go, Rust, Java, C, C++, C#, Ruby, PHP, Swift, Kotlin, Scala, Objective-C |
+| Tier 2 | Dart, Elixir, Lua, Bash |
 | Tier 3 | JSON, YAML |
 
 Each language has a `LanguageSpec` with three tree-sitter queries: `symbol_query`, `import_query`, `call_query`. Empty queries mean that feature is disabled for the language.
@@ -303,6 +305,18 @@ reads to `gcode`. Graph lifecycle operations are Rust-owned FalkorDB operations:
   calls delete any stale file projection, mark `graph_synced=true`, and return
   `status: "skipped"` with `reason: "no_graph_facts"`.
 - `gcode graph rebuild` clears and rebuilds the current resolved project id from PostgreSQL graph facts.
+- `gcode graph cleanup-orphans` is the periodic graph-only reconciliation path
+  (not run on every file sync). It deletes project-wide orphaned graph nodes —
+  comparing `CodeFile.path`/`CodeSymbol.file_path` against PostgreSQL
+  `code_indexed_files` — and then runs project orphan cleanup once.
+- `gcode vector cleanup-orphans` is the Qdrant counterpart: it removes
+  `code_symbols_{project_id}` vector points for files no longer indexed in
+  PostgreSQL.
+- `gcode prune` is the cross-project operator command. It removes stale projects
+  and reconciles orphaned graph + vector projection state across the remaining
+  indexed projects (keeps a confirmation prompt unless `--force`). `gcode
+  --project <path-or-name> prune` scopes projection cleanup to one project, and
+  graph/vector cleanup failures are reported independently.
 
 Graph clear uses `MATCH (n {project: $project})` plus the code-index label
 predicate (`CodeFile`, `CodeSymbol`, `CodeModule`, `UnresolvedCallee`,
@@ -436,6 +450,11 @@ All search/graph commands return a `PagedResponse` envelope:
 
 - `--offset N` skips the first N results
 - `--limit N` caps results per page (default: 10)
+- `--token-budget N` (on `search`, `usages`, and `blast-radius` only) trims
+  returned rows to an approximate token ceiling, estimated as `ceil(chars/4)` per
+  rendered row. Rows are trimmed from the tail after ranking/graph order is fixed;
+  trimmed output populates `hint` in JSON and prints a `refine with ...` narrowing
+  hint in text mode. It is not a global flag and is absent from `outline`/`symbol`.
 - `hint` is populated when FalkorDB is unavailable (graph commands only)
 - Text mode shows a pagination footer: `-- 10 of 47 results (use --offset 10 for more)`
 
@@ -659,4 +678,16 @@ deletes Qdrant collections with the `code_symbols_` prefix. Default standalone
 setup fails on incompatible existing code-index state and prints the overwrite
 rerun guidance.
 
-_Last verified: 2026-05-28_
+### Code Documentation Generation
+
+`gcode codewiki` generates vault-ready hierarchical code documentation
+(architecture/module/per-file Markdown pages with grounded `[file:line]`
+citations) from the same indexed facts. `--scope <PATH>...` limits the doc set,
+`--since <GIT_REF>` drives incremental regeneration of only the pages whose
+sources or cross-file neighbors changed, and `--repair-citations` re-anchors
+existing citations against the current index without any AI calls. AI prose is
+tuned with `--ai`, `--ai-depth`, `--ai-prose-depth`, and `--ai-register`. By
+default it documents code and structured config; `--include-docs` extends it to
+content-only Markdown/text.
+
+_Last verified: 2026-06-23_

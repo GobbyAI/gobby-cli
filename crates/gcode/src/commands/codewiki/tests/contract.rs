@@ -35,7 +35,7 @@ fn generates_hierarchical_docs() {
     assert!(repo.contains("Repository Overview"));
     assert!(module.contains("[[code/files/src/lib.rs\\|src/lib.rs]]"));
     assert!(file.contains("## Overview"));
-    assert!(file.contains("## Key components"));
+    assert!(file.contains("## Reference"));
     assert!(!file.contains("## API Symbols"));
     assert!(file.contains("[[code/modules/src|src]]"));
 }
@@ -190,6 +190,7 @@ fn run_summary_serializes_daemon_contract_keys() {
         modules: 1,
         symbols: 4,
         ai_enabled: false,
+        degraded_pages: Vec::new(),
     };
 
     let value = serde_json::to_value(summary).expect("summary json");
@@ -250,7 +251,7 @@ fn file_page_structural_fallback_is_multi_section_without_symbol_dump() {
     let docs = generate_hierarchical_docs(&input, None);
     let file = rendered_doc(&docs, "code/files/src/lib.rs.md");
 
-    // Overview + How it fits (body) + Key components (rendered) = three sections,
+    // Overview + How it fits (body) + Reference (rendered) = three sections,
     // even with AI off — the page is narrative structure, not a bare summary.
     assert!(
         file.matches("\n## ").count() >= 3,
@@ -258,7 +259,7 @@ fn file_page_structural_fallback_is_multi_section_without_symbol_dump() {
     );
     assert!(file.contains("## Overview"));
     assert!(file.contains("## How it fits"));
-    assert!(file.contains("## Key components"));
+    assert!(file.contains("## Reference"));
     assert!(file.contains("| Symbol | Kind | Purpose |"));
     // None of the old machine surface: no UUID component IDs, no symbol-table
     // header, no full-range `<details>` provenance wall.
@@ -268,7 +269,7 @@ fn file_page_structural_fallback_is_multi_section_without_symbol_dump() {
 }
 
 #[test]
-fn file_page_verify_strips_unsupported_block() {
+fn file_page_verify_records_unsupported_block_notes() {
     let input = CodewikiInput {
         leading_chunks: std::collections::BTreeMap::new(),
         files: vec!["src/lib.rs".to_string()],
@@ -292,7 +293,7 @@ fn file_page_verify_strips_unsupported_block() {
                 .to_string()
         })
     };
-    // Verifier returns the 1-based id of the block carrying the planted marker.
+    // Verifier returns a note for the block carrying the planted marker.
     let mut verifier = |prompt: &str, _system: &str| {
         let id = prompt
             .lines()
@@ -301,7 +302,9 @@ fn file_page_verify_strips_unsupported_block() {
                 body.contains("Fabricated").then(|| num.to_string())
             })
             .expect("planted block is numbered in the verify prompt");
-        Some(format!("[{id}]"))
+        Some(format!(
+            r#"[{{"id":{id},"reason":"Fabricated claim lacks source support."}}]"#
+        ))
     };
 
     let docs = generate_hierarchical_docs_with_verify(
@@ -320,11 +323,94 @@ fn file_page_verify_strips_unsupported_block() {
         "{}",
         file.content
     );
-    assert!(!file.content.contains("Fabricated"), "{}", file.content);
-    assert!(!file.content.contains("mines bitcoin"), "{}", file.content);
+    assert!(file.content.contains("Fabricated"), "{}", file.content);
+    assert!(file.content.contains("mines bitcoin"), "{}", file.content);
+    assert!(file.content.contains("verify_notes:"), "{}", file.content);
     assert!(
-        file.degraded,
-        "stripping an unsupported block degrades the file page"
+        file.content
+            .contains("reason: Fabricated claim lacks source support."),
+        "{}",
+        file.content
+    );
+    assert!(
+        !file.degraded,
+        "verifier notes do not degrade the file page"
+    );
+    assert!(
+        !file.content.contains("model-unavailable"),
+        "{}",
+        file.content
+    );
+}
+
+#[test]
+fn file_page_verify_uses_symbol_table_as_evidence() {
+    let input = CodewikiInput {
+        leading_chunks: std::collections::BTreeMap::new(),
+        files: vec!["src/lib.rs".to_string()],
+        graph_edges: Vec::new(),
+        graph_availability: CodewikiGraphAvailability::Available,
+        symbols: vec![test_symbol(
+            "src/lib.rs",
+            "Client",
+            "class",
+            1,
+            "pub struct Client {",
+        )],
+    };
+
+    let mut generator = |_prompt: &str, system: &str, _tier: PromptTier| {
+        (system == prompts::FILE_SYSTEM).then(|| {
+            "## Overview\n\nThe Client symbol is a class in this file [src/lib.rs:1].\n\n\
+             ## How it fits\n\nIt anchors the module [src/lib.rs:1]."
+                .to_string()
+        })
+    };
+    let mut saw_symbols = false;
+    let docs = {
+        let mut verifier = |prompt: &str, _system: &str| {
+            saw_symbols = prompt.contains("Symbols:\n")
+                && prompt
+                    .contains("| Symbol | Kind | Component | Component ID | Lines | Purpose |")
+                && prompt.contains("| Client | class | Client [class] |");
+            Some(
+                if saw_symbols {
+                    "[]"
+                } else {
+                    r#"[{"id":2,"reason":"Missing symbol evidence."}]"#
+                }
+                .to_string(),
+            )
+        };
+
+        generate_hierarchical_docs_with_verify(
+            &input,
+            Some(&mut generator),
+            Some(&mut verifier),
+            AiDepth::Files,
+        )
+    };
+    let file = docs
+        .iter()
+        .find(|doc| doc.path == "code/files/src/lib.rs.md")
+        .expect("file doc");
+
+    assert!(
+        saw_symbols,
+        "verifier prompt should include symbol evidence"
+    );
+    assert!(
+        file.content.contains("The Client symbol is a class"),
+        "{}",
+        file.content
+    );
+    assert!(
+        !file.degraded,
+        "symbol-supported file claim should survive verification"
+    );
+    assert!(
+        !file.content.contains("verify_notes:"),
+        "supported file claim should not record verifier notes"
     );
 }
 

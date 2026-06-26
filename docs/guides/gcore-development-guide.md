@@ -24,11 +24,13 @@ The baseline crate remains dependency-light. Consumers that only need project di
 | `context` | always | Shared runtime context contracts for project identity, daemon URL, and service configuration. Consumer-specific CLI state stays outside. |
 | `degradation` | always | Shared vocabulary for configured-service unavailability, explicit degraded paths, partial search, stale indexes, skipped artifacts, and fatal core errors. |
 | `setup` | always | Attached and standalone setup contracts. Runtime commands validate externally managed resources and do not implicitly migrate them. |
+| `token_budget` | always | Shared token-budget trimming helpers — bounds prompt/context payloads to a token ceiling so consumers (gwiki `ask`, gcode codewiki) reuse one budgeting primitive. |
 | `postgres` | `postgres` | PostgreSQL hub adapter boundary. Validates Gobby-owned schema and BM25 requirements without creating, altering, or dropping managed objects. |
 | `falkor` | `falkor` | FalkorDB adapter boundary. Graph connection helpers live here without making FalkorDB a baseline dependency. |
 | `qdrant` | `qdrant` | Qdrant adapter boundary for vector search/storage integration. |
 | `indexing` | `indexing` | Generic file walking, hashing, and indexing primitives that are not tied to one domain model. |
 | `search` | `search` | Generic search result and fusion primitives. Code-specific or wiki-specific search behavior stays in consumers. |
+| `graph_analytics` | `graph-analytics` | In-memory graph analytics — weighted Leiden community detection over a consumer-supplied graph. No optional dependency; gated so the public surface stays explicit. |
 
 Feature-gated modules are part of the public module map but compile only when their feature is selected.
 
@@ -202,7 +204,7 @@ Every individual feature must compile in isolation. Do not rely on `--all-featur
 - **Minor bumps (0.x.0)** — additive public API (new functions, new fields). Existing consumers stay compatible.
 - **Pre-1.0 breaking changes** — bump the minor and bump *every* consumer crate's gobby-core dep in the same release. Don't strand consumers on an old gobby-core.
 
-Consumers that depend only on the minor-line contract can pin to a minor version (`gobby-core = "0.5"`). In-tree crates released with `gobby-core` should pin to the current patch floor when they rely on behavior from that patch, for example `gobby-core = "0.5.0"`.
+Consumers that depend only on the minor-line contract can pin to a minor version (`gobby-core = "0.6"`). In-tree crates released with `gobby-core` should pin to the current patch floor when they rely on behavior from that patch, for example `gobby-core = "0.6.0"`.
 
 ## How to Consume
 
@@ -210,7 +212,7 @@ Consumers that depend only on the minor-line contract can pin to a minor version
 
 ```toml
 [dependencies]
-gobby-core = { path = "../gcore", version = "0.5.0" }
+gobby-core = { path = "../gcore", version = "0.6.0" }
 ```
 
 The `path` is for local workspace builds; `version` is required by `cargo publish` and gets used when consumers install the crate from crates.io. Don't drop the `version` field — `cargo publish` will reject the consumer's manifest.
@@ -219,7 +221,7 @@ Opt in to heavier modules explicitly:
 
 ```toml
 [dependencies]
-gobby-core = { path = "../gcore", version = "0.5.0", features = ["postgres", "search"] }
+gobby-core = { path = "../gcore", version = "0.6.0", features = ["postgres", "search"] }
 ```
 
 Small binaries should keep the default empty feature set unless they directly use a feature-gated module.
@@ -228,7 +230,7 @@ Small binaries should keep the default empty feature set unless they directly us
 
 ```toml
 [dependencies]
-gobby-core = "0.5.0"
+gobby-core = "0.6.0"
 ```
 
 Resolves against crates.io. The default crate has no datastore dependencies. It will not pull in PostgreSQL, FalkorDB, Qdrant, reqwest, ignore, sha2, tokio, tracing, or anything else heavy unless the consumer selects the matching feature.

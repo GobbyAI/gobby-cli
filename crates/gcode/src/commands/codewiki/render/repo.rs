@@ -1,16 +1,16 @@
 use super::super::*;
-use super::model_degraded_sources;
-use super::render_subsystem_dependency_mermaid;
+use super::{cell_summary, model_degraded_sources};
+use crate::index::hasher;
 
 pub(crate) fn build_repo_doc(
     files: &[FileDoc],
     modules: &[ModuleDoc],
-    graph_edges: &[CodewikiGraphEdge],
     leading_chunks: &BTreeMap<String, LeadingChunk>,
+    audit_links: &[(&str, &str)],
     generate: &mut Option<&mut TextGenerator<'_>>,
     reuse: &mut Option<&mut ReusePlan>,
     progress: &mut CodewikiProgress,
-) -> (String, bool) {
+) -> (String, bool, String) {
     let top_modules = modules
         .iter()
         .filter(|module| parent_module(&module.module).is_none())
@@ -45,15 +45,17 @@ pub(crate) fn build_repo_doc(
         .collect::<Vec<_>>();
     let fallback = structural_repo_summary(files.len(), modules.len());
     let source_spans = collect_link_spans(&root_files, &top_modules);
+    let source_files = span_files(&source_spans);
+    let repo_key = repo_audit_link_key(audit_links);
     // The repo overview's provenance rolls up every source file, so it is
-    // reusable only when nothing changed at all; nothing downstream consumes
-    // its summary, so the on-disk page is returned verbatim.
-    if let Some(page) = reuse
-        .as_deref_mut()
-        .and_then(|plan| plan.reusable_page("code/repo.md", &span_files(&source_spans)))
-    {
+    // reusable only when nothing changed at all and the deterministic audit-link
+    // appendix set is the same; nothing downstream consumes its summary, so the
+    // on-disk page is returned verbatim.
+    if let Some(page) = reuse.as_deref_mut().and_then(|plan| {
+        plan.reusable_page_keyed_with_sources("code/repo.md", &repo_key, &source_files)
+    }) {
         progress.emit("reusing repo overview (sources unchanged)");
-        return (page, false);
+        return (page, false, repo_key);
     }
     progress.emit("generating repo overview");
     let sources = repo_source_excerpts(files, leading_chunks);
@@ -72,22 +74,26 @@ pub(crate) fn build_repo_doc(
         Generation::Failed | Generation::Skipped => ground_text(&fallback, &source_spans, None),
     };
 
-    let roots = cluster::subsystem_roots(
-        &files
-            .iter()
-            .map(|file| file.path.clone())
-            .collect::<Vec<_>>(),
-    );
-    let module_map = render_subsystem_dependency_mermaid(&roots, files, graph_edges);
     let doc = render_repo_doc(
         &summary,
         &top_modules,
         &root_files,
-        module_map.as_deref(),
+        audit_links,
         &source_spans,
         degraded,
     );
-    (doc, degraded)
+    (doc, degraded, repo_key)
+}
+
+fn repo_audit_link_key(audit_links: &[(&str, &str)]) -> String {
+    let mut key = String::from("repo-audit-links:v1\n");
+    for (label, target) in audit_links {
+        key.push_str(label);
+        key.push('\t');
+        key.push_str(target);
+        key.push('\n');
+    }
+    format!("repo-audit-links:{}", hasher::content_hash(key.as_bytes()))
 }
 
 /// Root-level source excerpts for the repository overview prompt; README-style
@@ -119,7 +125,7 @@ pub(crate) fn render_repo_doc(
     summary: &str,
     modules: &[ModuleLink],
     files: &[FileLink],
-    module_map: Option<&str>,
+    audit_links: &[(&str, &str)],
     source_spans: &[SourceSpan],
     degraded: bool,
 ) -> String {
@@ -140,11 +146,11 @@ pub(crate) fn render_repo_doc(
     // the narrative entry points).
     doc.push_str("## Start here — guided tour\n\n");
     doc.push_str(
-        "New to this codebase? Begin with [[code/narrative/introduction|Introduction]].\n\n",
+        "New to this codebase? Begin with [[code/narrative/01-introduction|Introduction]].\n\n",
     );
-    doc.push_str("1. [[code/narrative/introduction|Introduction]]\n");
-    doc.push_str("2. [[code/narrative/architecture|Architecture]]\n");
-    doc.push_str("3. [[code/narrative/data-flow|Data Flow]]\n\n");
+    doc.push_str("1. [[code/narrative/01-introduction|Introduction]]\n");
+    doc.push_str("2. [[code/narrative/02-architecture|Architecture]]\n");
+    doc.push_str("3. [[code/narrative/03-data-flow|Data Flow]]\n\n");
     doc.push_str(
         "Browse all concepts in the [[code/concepts/index|Concept tree and narrative tours]].\n\n",
     );
@@ -152,20 +158,28 @@ pub(crate) fn render_repo_doc(
         "Ask questions across this vault with `gwiki ask \"...\"`, or find pages with `gwiki search \"...\"`.\n\n",
     );
     write_section(&mut doc, "Overview", &summary);
-    let has_appendix = module_map.is_some() || !modules.is_empty() || !files.is_empty();
+    // Link the deterministic analysis/catalog pages so they are reachable from
+    // the front page instead of orphaned (#904). Only the pages that were
+    // actually generated are passed in, so these links never dangle.
+    if !audit_links.is_empty() {
+        doc.push_str("## Analysis & catalogs\n\n");
+        for (label, target) in audit_links {
+            doc.push_str(&format!("- [[{target}|{label}]]\n"));
+        }
+        doc.push('\n');
+    }
+    let has_appendix = !modules.is_empty() || !files.is_empty();
     if has_appendix {
         doc.push_str("## Reference appendix\n\n");
-    }
-    if let Some(diagram) = module_map {
-        doc.push_str("### Module Map\n\n");
-        doc.push_str(diagram);
-        doc.push('\n');
     }
     if !modules.is_empty() {
         doc.push_str("### Modules\n\n");
         write_markdown_table_header(&mut doc, &["Module", "Summary"]);
         for module in modules {
-            let summary = replace_citations_with_markers(&module.summary, source_spans);
+            // Reference-appendix rows are navigational: keep the module's leading
+            // paragraph, not its full multi-table brief (that lives on its page).
+            let summary =
+                replace_citations_with_markers(&cell_summary(&module.summary), source_spans);
             write_markdown_table_row(&mut doc, [module_wikilink(&module.module), summary]);
         }
         doc.push('\n');

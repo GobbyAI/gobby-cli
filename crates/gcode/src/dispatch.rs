@@ -121,6 +121,26 @@ fn service_config_selection(command: &Command) -> config::ServiceConfigSelection
     }
 }
 
+fn codewiki_ai_options(
+    ai: Option<AiRouteArg>,
+    ai_depth: cli::AiDepthArg,
+    ai_prose_depth: cli::AiProseDepthArg,
+    ai_register: Option<cli::AiRegisterArg>,
+    ai_aggregate_profile: Option<String>,
+    ai_verify_profile: Option<String>,
+) -> commands::codewiki::CodewikiAiOptions {
+    commands::codewiki::CodewikiAiOptions {
+        routing: ai.map(AiRouteArg::into),
+        depth: ai_depth.into(),
+        prose_depth: ai_prose_depth.into(),
+        register: ai_register.map(Into::into),
+        aggregate_profile: ai_aggregate_profile,
+        verify_profile: ai_verify_profile,
+        verify_model: None,
+        verify_api_key: None,
+    }
+}
+
 fn dispatch_early_command<F>(
     cli: &Cli,
     format: output::Format,
@@ -279,7 +299,7 @@ fn run() -> anyhow::Result<()> {
             ensure_project_fresh(&ctx, cli.no_freshness)?;
             commands::status::run(&ctx, format)
         }
-        Command::Invalidate { force } => commands::status::invalidate(&ctx, force),
+        Command::Invalidate { force } => commands::status::invalidate(&ctx, force, format),
         Command::Graph {
             command:
                 GraphCommand::SyncFile {
@@ -526,8 +546,12 @@ fn run() -> anyhow::Result<()> {
             ai,
             ai_depth,
             ai_aggregate_profile,
+            ai_verify_profile,
+            ai_prose_depth,
+            ai_register,
             edge_limit,
             include_docs,
+            since,
             repair_citations,
         } => {
             ensure_project_fresh(&ctx, cli.no_freshness)?;
@@ -538,18 +562,17 @@ fn run() -> anyhow::Result<()> {
                 &ctx,
                 out,
                 scope,
-                commands::codewiki::CodewikiAiOptions {
-                    routing: ai.map(AiRouteArg::into),
-                    depth: ai_depth.into(),
-                    aggregate_profile: ai_aggregate_profile,
-                    // Verify config has no CLI flag; resolved from
-                    // `ai.text_generate.verify_*` inside the generator resolver.
-                    verify_profile: None,
-                    verify_model: None,
-                    verify_api_key: None,
-                },
+                codewiki_ai_options(
+                    ai,
+                    ai_depth,
+                    ai_prose_depth,
+                    ai_register,
+                    ai_aggregate_profile,
+                    ai_verify_profile,
+                ),
                 edge_limit,
                 include_docs,
+                since,
                 format,
                 cli.verbose,
             )

@@ -233,6 +233,10 @@ struct SearchArgs {
     /// Disable semantic vector search for this query.
     #[arg(long = "no-semantic")]
     no_semantic: bool,
+
+    /// Trim results to fit an approximate token budget, emitting a narrowing hint.
+    #[arg(long = "token-budget", value_name = "N", value_parser = parse_positive_usize)]
+    token_budget: Option<usize>,
 }
 
 #[derive(Debug, Args)]
@@ -251,6 +255,10 @@ struct AskArgs {
     /// Fail if synthesis is requested but no AI route succeeds.
     #[arg(long = "require-ai")]
     require_ai: bool,
+
+    /// Trim retrieval hits to fit an approximate token budget, emitting a narrowing hint.
+    #[arg(long = "token-budget", value_name = "N", value_parser = parse_positive_usize)]
+    token_budget: Option<usize>,
 }
 
 #[derive(Debug, Args)]
@@ -259,9 +267,24 @@ struct SyncSessionsArgs {
     #[arg(long, value_name = "PATH")]
     archive_dir: Option<PathBuf>,
 
+    /// Directory containing daemon-synthesized session wiki *.md files.
+    #[arg(long, value_name = "PATH")]
+    wiki_dir: Option<PathBuf>,
+
     /// Maximum number of archives to process.
     #[arg(long, value_name = "N", value_parser = parse_positive_usize)]
     limit: Option<usize>,
+
+    /// Include raw transcript archives when no daemon synthesis exists.
+    #[arg(long)]
+    raw: bool,
+
+    /// For archives with no daemon synthesis, generate a daemon-equivalent
+    /// summary (shared handoff prompt) instead of the structural skeleton.
+    /// Processes raw archives even without --raw; degrades to the skeleton when
+    /// AI is unavailable. A later daemon synthesis supersedes the page.
+    #[arg(long)]
+    summarize: bool,
 }
 
 #[derive(Debug, Args)]
@@ -613,7 +636,10 @@ fn command_from_cli(command: CliCommand, scope: ScopeSelection) -> Result<Comman
             scope,
             options: SyncSessionsOptions {
                 archive_dir: args.archive_dir,
+                wiki_dir: args.wiki_dir,
                 limit: args.limit,
+                raw: args.raw,
+                summarize: args.summarize,
             },
         }),
         CliCommand::Refresh(args) => Ok(Command::Refresh {
@@ -648,6 +674,7 @@ fn command_from_cli(command: CliCommand, scope: ScopeSelection) -> Result<Comman
             scope,
             limit: args.limit,
             include_semantic: !args.no_semantic,
+            token_budget: args.token_budget,
         }),
         CliCommand::Ask(args) => Ok(Command::Ask {
             query: args.question,
@@ -655,6 +682,7 @@ fn command_from_cli(command: CliCommand, scope: ScopeSelection) -> Result<Comman
             llm: args.llm,
             ai: args.ai,
             require_ai: args.require_ai,
+            token_budget: args.token_budget,
         }),
         CliCommand::Read(args) => {
             let target = match (args.path, args.title) {

@@ -69,4 +69,4 @@ Embedding namespace invariants:
 
 See `ai-daemon-contract.md` for the full D6 writer and reader inventory.
 
-_Last verified: 2026-06-01_
+_Last verified: 2026-06-23_

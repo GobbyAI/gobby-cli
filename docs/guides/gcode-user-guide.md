@@ -278,6 +278,29 @@ gcode tree
 Useful for understanding project structure at a glance. Content-only text files
 appear with a zero symbol count once indexed.
 
+## Code Documentation (`gcode codewiki`)
+
+Generate vault-ready, hierarchical Markdown documentation for the indexed
+project — architecture, module, and per-file pages with grounded `[file:line]`
+citations:
+
+```bash
+gcode codewiki --out docs/codewiki
+gcode codewiki --out docs/codewiki --scope crates/gcode/src
+```
+
+- `--out <DIR>` — output directory for the generated Markdown
+- `--scope <PATH>...` — limit docs to indexed files under one or more paths
+- `--since <GIT_REF>` — incremental regeneration of only the pages whose sources
+  or cross-file neighbors changed since a git ref
+- `--repair-citations` — re-anchor existing pages' `[file:line]` citations
+  against the current index without regenerating prose (no AI calls)
+
+AI prose depth and routing are tunable via `--ai-depth`, `--ai-prose-depth`,
+`--ai-register`, and `--ai`. By default codewiki documents code and structured
+config; pass `--include-docs` to also cover content-only Markdown/text. See
+[codewiki.md](codewiki.md) for the full reference.
+
 ## Dependency Graph
 
 Read-side graph commands require FalkorDB. Gobby-managed projects provide this
@@ -351,6 +374,18 @@ Show the import graph for a file:
 ```bash
 gcode imports src/auth/middleware.ts
 ```
+
+### Shortest Path
+
+Find the shortest `CALLS` path from one symbol to another:
+
+```bash
+gcode path "handleRequest" "writeToDatabase"
+gcode path "handleRequest" "writeToDatabase" --max-depth 8
+```
+
+Both arguments are fuzzy symbol queries resolved the same way as the other graph
+commands. `--max-depth` caps how many `CALLS` hops are searched (default: `8`).
 
 ### Blast Radius
 

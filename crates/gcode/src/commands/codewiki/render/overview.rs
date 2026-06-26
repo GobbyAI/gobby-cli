@@ -14,10 +14,23 @@ pub(crate) fn render_architecture_doc(architecture: &ArchitectureDoc) -> String 
     if let Some(narrative) = &architecture.narrative {
         write_section(&mut doc, "Overview", narrative);
     }
-    if let Some(diagram) = &architecture.dependency_diagram {
-        doc.push_str("## Subsystem Map\n\n");
-        doc.push_str(diagram);
-        doc.push('\n');
+    // Model-seeded architectural diagrams (#891). The section string is already
+    // built from validated Mermaid fences by the diagram renderer, so it is
+    // emitted verbatim; its absence is normal and never marks the page degraded.
+    if let Some(diagrams) = &architecture.diagrams {
+        doc.push_str(diagrams);
+        if !doc.ends_with('\n') {
+            doc.push('\n');
+        }
+    }
+    // Deterministic service matrix (#892 facts, this leaf): emitted verbatim
+    // from the validated table string, after the diagrams and before the
+    // subsystem table. Absence is normal and never marks the page degraded.
+    if let Some(service_matrix) = &architecture.service_matrix {
+        doc.push_str(service_matrix);
+        if !doc.ends_with('\n') {
+            doc.push('\n');
+        }
     }
     if !architecture.subsystems.is_empty() {
         doc.push_str("## Subsystems\n\n");
@@ -37,7 +50,9 @@ pub(crate) fn render_architecture_doc(architecture: &ArchitectureDoc) -> String 
                 &mut doc,
                 [
                     module_wikilink(&subsystem.module),
-                    subsystem.responsibility.clone(),
+                    // Compact the subsystem's full brief to its leading paragraph;
+                    // the structured detail lives on the subsystem's own page.
+                    super::cell_summary(&subsystem.responsibility),
                     child_modules,
                 ],
             );
@@ -95,15 +110,6 @@ pub(crate) fn render_hotspots_doc(hotspots: &HotspotsDoc) -> String {
     );
     append_relevant_source_files(&mut doc, &hotspots.source_spans);
     doc.push_str("# Hotspots\n\n");
-
-    if hotspots
-        .degraded_sources
-        .iter()
-        .any(|source| source == "graph-analytics-unavailable")
-    {
-        doc.push_str("analytics unavailable: graph analytics could not be computed.\n\n");
-        return doc;
-    }
 
     let hotspot_ids = hotspots
         .hotspots

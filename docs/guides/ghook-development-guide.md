@@ -5,7 +5,7 @@ Technical internals for developers and agents working in the ghook codebase.
 ## Architecture Overview
 
 ```text
-host AI CLI (Claude Code / Codex / Gemini / Qwen / Droid)
+host AI CLI (Claude Code / Codex / Gemini / Qwen / Droid / Grok / Agy)
   │  spawns: ghook --gobby-owned --cli=<c> --type=<t> [--detach]
   │  pipes:  stdin = hook payload (JSON object)
   ▼
@@ -59,7 +59,7 @@ The original Python `hook_dispatcher.py` ran inside the daemon process. That mad
 | Module | Responsibility |
 |--------|----------------|
 | `main.rs` | Arg parsing (clap), mode dispatch (`--gobby-owned`/`--diagnose`/`--version`), orchestrates the dispatch flow. |
-| `cli_config.rs` | Per-CLI registry (claude/codex/gemini/qwen/droid) — which hooks are critical. Compile-time frozen. |
+| `cli_config.rs` | Per-CLI registry (claude/codex/gemini/qwen/droid/grok/agy) — which hooks are critical. Compile-time frozen. `grok` and `agy` use native snake_case hook names (`session_start`, `session_end`, `pre_compact`, `stop`). |
 | `envelope.rs` | `Envelope` struct + `SCHEMA_VERSION = 1`. Serializes to the inbox JSON shape. |
 | `planned_shutdown.rs` | Stop-only planned shutdown markers, daemon health preflight, and post-enqueue daemon-death suppression. |
 | `transport.rs` | Inbox path resolution, atomic write, enqueue, POST + cleanup, quarantine for malformed stdin. |
@@ -85,7 +85,7 @@ pub struct Envelope {
     pub critical: bool,
     pub hook_type: String,              // host-CLI-specific
     pub input_data: Value,              // verbatim stdin + optional tmux terminal_context
-    pub source: String,                 // "claude" / "codex" / "gemini" / "qwen" / "droid" / passthrough
+    pub source: String,                 // "claude" / "codex" / "gemini" / "qwen" / "droid" / "grok" / "agy" / passthrough
     pub headers: BTreeMap<String, String>,
 }
 ```

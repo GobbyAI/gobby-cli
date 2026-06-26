@@ -38,7 +38,7 @@ pub fn is_symlink_safe(path: &Path, root: &Path) -> bool {
     validate_path(path, root)
 }
 
-/// Check if file appears to be binary (has null bytes in first 8KB).
+/// Check if file appears to be binary (has null bytes anywhere in the stream).
 pub fn is_binary(path: &Path) -> bool {
     use std::io::Read;
     let mut file = match std::fs::File::open(path) {

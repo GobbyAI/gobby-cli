@@ -12,6 +12,84 @@ ID; chunk IDs, Qdrant point IDs, and graph document IDs for the same page must
 merge into one search result while preserving all `sources`, per-source
 `explanations`, and the emitted `fusion_key`.
 
+## Retrieval Primitive: `search` and `ask`
+
+`gwiki search` is the single bounded retrieval primitive for both humans and
+agents. There is no standalone reason-act `research` loop; the calling agent
+composes `search` + `read` itself. Do not reintroduce a `research` command. Each
+search hit carries a bounded query-token snippet (never a full document body),
+provenance (`wiki_page`, `source_path`, `result_type`), contributing `sources`
+with per-source `explanations`, and hit-tied `code_citations`.
+
+`gwiki ask` is a thin bounded-evidence RAG layer over `search`. It retrieves the
+top-k hits, builds a query-centered evidence prompt capped at
+`prompt_token_budget` (~12K estimated tokens), and — only with `--llm` — runs a
+single completion. Keep `ask` thin: it must not grow into a multi-step research
+agent. Without `--llm` it is a pure retrieval command with no AI route.
+Synthesized answers are checked post-generation against the retrieved evidence;
+the verdict lands in `synthesis.citation_check` (see
+`crates/gwiki/src/output.rs`).
+
+Both commands accept `--token-budget <N>`, which trims results/retrieval hits to
+fit an approximate token budget and emits a narrowing hint when hits are dropped.
+On `ask` this applies in addition to the `prompt_token_budget` evidence cap.
+
+## Session Transcript Ingest (`sync-sessions`)
+
+`gwiki sync-sessions` folds daemon-synthesized Gobby session wiki pages into the
+vault. Raw `*.jsonl.gz` archives stay in the present-source reconciliation set,
+but are parsed only when the caller explicitly passes `--raw` for legacy
+fallback. The raw ingest path lives in `crates/gwiki/src/ingest/session.rs` with
+per-CLI adapter submodules (`codex`, `gemini`, `grok`, `qwen`, `droid`, plus the
+Claude Code adapter), a `metadata` module that emits deterministic session
+frontmatter, and a `redaction` module that redacts secrets on ingest before any
+derived Markdown is written. The CLI surface accepts `--archive-dir <PATH>`
+(directory of `*.jsonl.gz` archives), `--wiki-dir <PATH>` (directory of
+synthesized `*.md` pages), `--limit <N>`, and `--raw`; the command contract
+(`crates/gwiki/src/contract.rs`) classifies it with `multimodal:
+"session_transcript"` and the `embeddings`/`FalkorDB graph` degradation sources.
+Keep redaction ahead of vault writes and keep session frontmatter deterministic
+so re-syncing the same archive is idempotent.
+
+## Vault Markdown Normalization (`normalize`)
+
+Markdown is normalized in two places. `crate::markdown::normalize` normalizes at
+write time, so it only fixes *new* writes; `gwiki normalize`
+(`crates/gwiki/src/normalize.rs`, dispatched from
+`crates/gwiki/src/commands/normalize.rs`) is the companion that repairs whitespace
+in docs already on disk (markdownlint repair). Normalization targets authored
+docs and must leave raw captures untouched. The `--check` flag is an exit-code
+gate: `commands::normalize::execute` sets the outcome exit code from
+`normalize::check_exit_code(&report)` so CI fails on un-normalized markdown,
+while write mode always succeeds and must not mutate files in check mode.
+
+## Lint Checks
+
+`gwiki lint` (`crates/gwiki/src/lint.rs`) detects broken links and vault hygiene
+issues, and additionally runs Mermaid diagram checks on curated wiki pages:
+
+- **Mermaid validity** — malformed Mermaid blocks are flagged invalid, and
+  diagram headers are checked against the supported set. `lint`'s `VALID_HEADERS`
+  mirrors gcode's `architecture_diagrams::VALID_HEADERS`; keep the two in sync
+  when the curated wiki generator's header vocabulary changes.
+- **Mermaid grounding** — quoted node labels (`id["label"]`) are extracted from
+  each Mermaid block and checked for support in the surrounding page text, so
+  diagrams cannot assert structure the page does not back. Edge lines and
+  `subgraph … ["Title"]` titles are handled separately from node labels.
+
+## Static Agent Exports (`graph`)
+
+`gwiki graph` (`crates/gwiki/src/exports.rs`) writes the unified graph artifacts
+(`graph.json`, `GRAPH_REPORT.md`) and, alongside them, three static
+agent-context exports under `outputs/`: `llms.txt` (a portable link-indexed
+table of contents over the vault document graph), `llms-full.txt` (the same
+index expanded with each present document's full Markdown body), and
+`graph.jsonld` (a schema.org JSON-LD representation of the vault document graph).
+Export code should surface invalid graph input as typed errors and reuse the
+shared graph analytics metrics rather than recomputing them; the export set is
+written and rolled back as a unit so a partial failure does not leave stale
+agent artifacts on disk.
+
 ## Trust Layer
 
 `gwiki trust` is the shared status surface for agents and humans. It composes

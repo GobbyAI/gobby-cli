@@ -11,9 +11,10 @@ use crate::visibility;
 use super::{
     BuiltDoc, CodewikiAiOptions, CodewikiInput, CodewikiProgress, CodewikiRunSummary,
     DEFAULT_OUT_DIR, DocPruneScope, DocSink, LeadingChunk, MAX_EDGE_LIMIT, ReusePlan,
-    build_codewiki_changes_doc, build_codewiki_index_snapshot, fetch_codewiki_graph_edges,
+    build_audit_context, build_codewiki_changes_doc, build_codewiki_index_snapshot,
+    build_feature_catalog_doc, build_system_model, build_truth_digest, fetch_codewiki_graph_edges,
     generation, in_scope, io, is_core_file, read_ownership_meta, resolve_text_generator,
-    resolve_text_verifier, write_ownership_meta,
+    resolve_text_verifier, write_ownership_meta, write_truth_digest,
 };
 
 // CLI entry point: each parameter maps to a distinct codewiki flag, so the
@@ -26,6 +27,7 @@ pub fn run(
     ai: CodewikiAiOptions,
     edge_limit: usize,
     include_docs: bool,
+    since: Option<String>,
     format: Format,
     verbose: bool,
 ) -> anyhow::Result<()> {
@@ -67,6 +69,20 @@ pub fn run(
         symbols,
         leading_chunks,
     };
+    // Deterministic workspace model (#891), read straight off the project's
+    // Cargo manifests. Seeds the architecture page's model-derived Mermaid
+    // diagrams. A partial/empty model simply omits diagrams — never an error.
+    let system_model = build_system_model(&ctx.project_root);
+    // Deterministic feature catalog (#888), built from the pinned CLI contract
+    // JSONs + dispatch resolver. Read straight off the project root; missing or
+    // unparseable contracts simply omit that binary's section — never an error.
+    let feature_catalog = build_feature_catalog_doc(&ctx.project_root, &input.files);
+    // Deterministic audit context (#889): scans the documented source for
+    // deprecation markers and the test-gated symbol set. Drives the per-symbol
+    // deprecation badge, the `code/deprecations.md` page, and the file page's
+    // test-count collapse. Read straight off the project root; unreadable files
+    // are skipped — never an error, never degrading.
+    let audit_context = build_audit_context(&ctx.project_root, &input);
     let mut generator = resolve_text_generator(ctx, &ai);
     let mut verifier = resolve_text_verifier(ctx, &ai);
     let ai_enabled = generator.is_some();
@@ -78,6 +94,19 @@ pub fn run(
     let out_dir = out.unwrap_or_else(|| DEFAULT_OUT_DIR.to_string());
     let out_path = Path::new(&out_dir);
     let doc_scope = DocPruneScope::from_scopes(&scopes);
+    // `--since <ref>` scopes regeneration to the files git reports changed since
+    // the ref plus their dependents, instead of a full content-hash scan of
+    // every page (Leaf H, #893). A source page whose own sources and neighbors
+    // are all unchanged-since-ref is left exactly as it is; keyed aggregate
+    // pages (architecture/infrastructure/features/audit) still re-check their
+    // model digest, so a manifest/contract change rebuilds them even here.
+    let since_changed = match since.as_deref() {
+        Some(since_ref) => {
+            progress.emit(format!("scoping to git changes since {since_ref}"));
+            Some(git_changed_files(&ctx.project_root, since_ref)?)
+        }
+        None => None,
+    };
     if doc_scope.is_unscoped() {
         progress.emit("reading metadata and hashing snapshot");
     } else {
@@ -98,10 +127,12 @@ pub fn run(
     } else {
         None
     };
-    let mut reuse_plan = ReusePlan::load(&ctx.project_root, out_path, ai_mode)?;
+    let mut reuse_plan =
+        ReusePlan::load_with_since(&ctx.project_root, out_path, ai_mode, since_changed.clone())?;
     let mut reuse = Some(&mut reuse_plan);
     let mut sink =
-        DocSink::open_with_prune_scope(&ctx.project_root, out_path, ai_mode, doc_scope.clone())?;
+        DocSink::open_with_prune_scope(&ctx.project_root, out_path, ai_mode, doc_scope.clone())?
+            .with_since(since_changed);
     let mut generated_pages = 0_usize;
     let mut module_count = 0_usize;
     let mut file_count = 0_usize;
@@ -123,6 +154,9 @@ pub fn run(
         ownership_meta
             .as_mut()
             .map(|meta| (ctx.project_root.as_path(), meta)),
+        Some(&system_model),
+        feature_catalog.as_ref(),
+        Some(&audit_context),
         generator.as_deref_mut(),
         verifier.as_deref_mut(),
         ai_depth,
@@ -151,8 +185,29 @@ pub fn run(
         .iter()
         .filter(|symbol| is_core_file(&symbol.file_path))
         .count();
+    // Surface degraded pages (a failed AI pass fell back to the structural
+    // body, #900) instead of letting them hide silently in the meta cache. Read
+    // before `finish` consumes the sink.
+    let degraded_pages = sink.degraded_docs().to_vec();
+    if !degraded_pages.is_empty() && !ctx.quiet {
+        // Warn on stderr at parity with the per-file "text generation failed ...
+        // record degraded: true" line (text/generation.rs), so a degraded
+        // curated/aggregate pass is visible regardless of --verbose rather than
+        // only summarized in the run result.
+        eprintln!(
+            "codewiki: {} page(s) degraded to structural fallback (AI content \
+             pass failed): {}",
+            degraded_pages.len(),
+            degraded_pages.join(", ")
+        );
+    }
     let changed_paths = sink.finish(index_snapshot)?;
     let skipped = generated_pages.saturating_sub(changed_paths.len());
+    if doc_scope.is_unscoped() {
+        let truth_digest =
+            build_truth_digest(&system_model, &ctx.project_id, file_count, module_count);
+        write_truth_digest(out_path, &doc_scope, &truth_digest)?;
+    }
 
     let summary = CodewikiRunSummary {
         command: "codewiki",
@@ -166,6 +221,7 @@ pub fn run(
         modules: module_count,
         symbols: symbol_count,
         ai_enabled,
+        degraded_pages,
     };
     match format {
         Format::Json => output::print_json(&summary),
@@ -219,6 +275,34 @@ pub(crate) fn validate_edge_limit(edge_limit: usize) -> anyhow::Result<()> {
         return Ok(());
     }
     anyhow::bail!("codewiki --edge-limit must be between 1 and {MAX_EDGE_LIMIT}, got {edge_limit}")
+}
+
+/// Repo-relative paths git reports changed between `since_ref` and the working
+/// tree — the change set that drives `--since` incremental regeneration (Leaf H,
+/// #893). An invalid ref or a missing git binary is surfaced as an error rather
+/// than silently falling back to a full scan, so a typo'd `--since` fails loudly.
+pub(crate) fn git_changed_files(
+    project_root: &Path,
+    since_ref: &str,
+) -> anyhow::Result<std::collections::BTreeSet<String>> {
+    let output = std::process::Command::new("git")
+        .arg("-C")
+        .arg(project_root)
+        .args(["diff", "--name-only", "--relative", since_ref])
+        .output()
+        .map_err(|err| anyhow::anyhow!("failed to run git diff for --since {since_ref}: {err}"))?;
+    if !output.status.success() {
+        anyhow::bail!(
+            "git diff --name-only --relative {since_ref} failed: {}",
+            String::from_utf8_lossy(&output.stderr).trim()
+        );
+    }
+    Ok(String::from_utf8_lossy(&output.stdout)
+        .lines()
+        .map(str::trim)
+        .filter(|line| !line.is_empty())
+        .map(str::to_string)
+        .collect())
 }
 
 /// codewiki documents code and structured config — any file the indexer

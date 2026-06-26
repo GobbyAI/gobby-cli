@@ -62,6 +62,8 @@ fn search_flag_surface_supports_limit_and_semantic_toggle() {
         "--limit",
         "5",
         "--no-semantic",
+        "--token-budget",
+        "1500",
         "ownership",
     ])
     .expect("search flags parse");
@@ -70,6 +72,7 @@ fn search_flag_surface_supports_limit_and_semantic_toggle() {
     };
     assert_eq!(args.limit, 5);
     assert!(args.no_semantic);
+    assert_eq!(args.token_budget, Some(1500));
     assert_eq!(args.query, "ownership");
 }
 
@@ -156,6 +159,7 @@ fn ask_cli_flags_map_to_command_options() {
             llm: true,
             ai: AiRouting::Direct,
             require_ai: true,
+            token_budget: Some(2000),
         }),
         ScopeSelection::topic("docs"),
     )
@@ -167,6 +171,7 @@ fn ask_cli_flags_map_to_command_options() {
         llm,
         ai,
         require_ai,
+        token_budget,
     } = command
     else {
         panic!("expected ask command");
@@ -176,6 +181,7 @@ fn ask_cli_flags_map_to_command_options() {
     assert!(llm);
     assert_eq!(ai, AiRouting::Direct);
     assert!(require_ai);
+    assert_eq!(token_budget, Some(2000));
 }
 
 #[test]
@@ -362,8 +368,11 @@ fn sync_sessions_cli_flags_map_to_command_options() {
         "sync-sessions",
         "--archive-dir",
         "/tmp/session_transcripts",
+        "--wiki-dir",
+        "/tmp/session_wiki",
         "--limit",
         "3",
+        "--raw",
     ])
     .expect("parse sync-sessions command");
     let CliCommand::SyncSessions(args) = cli.command else {
@@ -373,7 +382,12 @@ fn sync_sessions_cli_flags_map_to_command_options() {
         args.archive_dir.as_deref(),
         Some(std::path::Path::new("/tmp/session_transcripts"))
     );
+    assert_eq!(
+        args.wiki_dir.as_deref(),
+        Some(std::path::Path::new("/tmp/session_wiki"))
+    );
     assert_eq!(args.limit, Some(3));
+    assert!(args.raw);
 
     let command = command_from_cli(CliCommand::SyncSessions(args), cli.scope.into())
         .expect("map sync-sessions command");
@@ -388,7 +402,32 @@ fn sync_sessions_cli_flags_map_to_command_options() {
         options.archive_dir.as_deref(),
         Some(std::path::Path::new("/tmp/session_transcripts"))
     );
+    assert_eq!(
+        options.wiki_dir.as_deref(),
+        Some(std::path::Path::new("/tmp/session_wiki"))
+    );
     assert_eq!(options.limit, Some(3));
+    assert!(options.raw);
+
+    let default_cli = Cli::try_parse_from(["gwiki", "sync-sessions"])
+        .expect("parse default sync-sessions command");
+    let CliCommand::SyncSessions(default_args) = default_cli.command else {
+        panic!("expected parsed sync-sessions command");
+    };
+    assert!(!default_args.raw);
+    let default_command = command_from_cli(
+        CliCommand::SyncSessions(default_args),
+        default_cli.scope.into(),
+    )
+    .expect("map default sync-sessions command");
+    let Command::SyncSessions {
+        options: default_options,
+        ..
+    } = default_command
+    else {
+        panic!("expected sync-sessions command");
+    };
+    assert!(!default_options.raw);
 }
 
 #[test]

@@ -1,10 +1,11 @@
 use std::collections::BTreeSet;
 
 use super::super::{
-    AiDepth, CodewikiProgress, FileDoc, Generation, LeadingChunk, PromptTier, ReusePlan,
-    SourceSpan, SymbolDoc, TextGenerator, TextVerifier, VerifyOutcome, citation_list,
-    component_label, file_doc_path, ground_text, maybe_generate, prompts, structural_file_summary,
-    structural_symbol_purpose, verify_and_strip, write_section,
+    AiDepth, CodewikiProgress, DeprecationIndex, FileDoc, Generation, LeadingChunk, PromptTier,
+    RelationshipFacts, ReusePlan, SourceSpan, SymbolDoc, TestIndex, TextGenerator, TextVerifier,
+    VerifyNote, VerifyOutcome, citation_list, component_label, file_doc_path, ground_text,
+    maybe_generate, prompts, structural_file_summary, structural_symbol_purpose, verify_with_notes,
+    write_section,
 };
 use crate::models::Symbol;
 
@@ -21,6 +22,17 @@ pub(crate) fn build_file_doc(
     module: String,
     symbols: Vec<Symbol>,
     leading_chunk: Option<&LeadingChunk>,
+    relationships: &RelationshipFacts,
+    // Deterministic deprecation markers (#889), keyed by `symbol.id`. The CLI
+    // runtime threads the real index in; the AI-off/test entry points pass
+    // `None`, exactly like `system_model`/`feature_catalog`. Stamps the per-symbol
+    // "deprecated" badge into each `SymbolDoc` for the file page's Key components
+    // table.
+    deprecations: Option<&DeprecationIndex>,
+    // Deterministic test-gated symbol ids (same source scan as `deprecations`).
+    // `None` from the AI-off/test entry points. Stamps `SymbolDoc::is_test` so
+    // the file page collapses tests into a single count instead of a row each.
+    tests: Option<&TestIndex>,
     generate: &mut Option<&mut TextGenerator<'_>>,
     verify: &mut Option<&mut TextVerifier<'_>>,
     reuse: &mut Option<&mut ReusePlan>,
@@ -29,12 +41,15 @@ pub(crate) fn build_file_doc(
     position: FileDocPosition,
 ) -> FileDoc {
     // A file doc's provenance cites only its own file, so reuse is decided by
-    // that single hash. Reuse skips every symbol and file LLM call; the
+    // that single hash plus its cross-file neighbor hashes (#885, Leaf H): a
+    // caller/callee or import-target edit invalidates the page even though its
+    // own source is unchanged. Reuse skips every symbol and file LLM call; the
     // recorded summary still feeds module prompts and pages.
     let sources = BTreeSet::from([file.to_string()]);
-    let reused = reuse
-        .as_deref_mut()
-        .and_then(|plan| plan.reusable_page_with_summary(&file_doc_path(file), &sources));
+    let neighbors = relationships.neighbor_files(file);
+    let reused = reuse.as_deref_mut().and_then(|plan| {
+        plan.reusable_page_with_summary_and_neighbors(&file_doc_path(file), &sources, &neighbors)
+    });
     let file_verb = if reused.is_some() {
         "reusing"
     } else if ai_depth.includes_files() {
@@ -47,7 +62,9 @@ pub(crate) fn build_file_doc(
         position.index, position.total, file
     ));
     let symbol_total = symbols.len();
-    let mut degraded = false;
+    let mut model_degraded = false;
+    let mut degraded_sources = BTreeSet::new();
+    let mut verify_notes = Vec::new();
     let symbol_docs = symbols
         .into_iter()
         .enumerate()
@@ -71,7 +88,7 @@ pub(crate) fn build_file_doc(
             } else {
                 Generation::Skipped
             }
-            .unwrap_or_record(fallback, &mut degraded);
+            .unwrap_or_record(fallback, &mut model_degraded);
             let component_id = symbol.id.clone();
             let component_label = component_label(&symbol);
             let source_span = SourceSpan::from_symbol(&symbol);
@@ -80,15 +97,24 @@ pub(crate) fn build_file_doc(
                 std::slice::from_ref(&source_span),
                 Some(&source_span.citation()),
             );
+            let deprecation = deprecations
+                .and_then(|index| index.get(&component_id))
+                .cloned();
+            let is_test = tests.is_some_and(|index| index.contains(&component_id));
             SymbolDoc {
                 symbol,
                 purpose,
                 component_id,
                 component_label,
                 source_span,
+                deprecation,
+                is_test,
             }
         })
         .collect::<Vec<_>>();
+    if model_degraded {
+        degraded_sources.insert("model-unavailable".to_string());
+    }
     let source_excerpt = leading_chunk.map(|chunk| prompts::SourceExcerpt {
         path: file.to_string(),
         line_start: chunk.line_start.max(1),
@@ -137,11 +163,13 @@ pub(crate) fn build_file_doc(
                 &prompt_symbols,
                 source_excerpt.as_slice(),
                 &source_spans,
+                relationships,
                 &symbol_docs,
                 generate,
                 verify,
                 ai_depth,
-                &mut degraded,
+                &mut degraded_sources,
+                &mut verify_notes,
             );
             let summary = file_summary_from_body(&body, file, &symbol_docs);
             (summary, body, None)
@@ -156,7 +184,9 @@ pub(crate) fn build_file_doc(
         source_spans,
         symbols: symbol_docs,
         component_ids,
-        degraded,
+        degraded: !degraded_sources.is_empty(),
+        degraded_sources: degraded_sources.into_iter().collect(),
+        verify_notes,
         reused_page,
     }
 }
@@ -174,11 +204,13 @@ fn build_file_body(
     prompt_symbols: &[prompts::SymbolSummary],
     sources: &[prompts::SourceExcerpt],
     source_spans: &[SourceSpan],
+    relationships: &RelationshipFacts,
     symbol_docs: &[SymbolDoc],
     generate: &mut Option<&mut TextGenerator<'_>>,
     verify: &mut Option<&mut TextVerifier<'_>>,
     ai_depth: AiDepth,
-    degraded: &mut bool,
+    degraded_sources: &mut BTreeSet<String>,
+    verify_notes: &mut Vec<VerifyNote>,
 ) -> String {
     let generated = if ai_depth.includes_files() {
         // Non-code files (no indexed symbols) derive their page from leading
@@ -190,40 +222,39 @@ fn build_file_body(
                 prompts::CONTENT_FILE_SYSTEM,
             ),
             _ => (
-                prompts::file_prompt(file, prompt_symbols, sources),
+                prompts::file_prompt(file, prompt_symbols, sources, relationships),
                 prompts::FILE_SYSTEM,
             ),
         };
-        maybe_generate(generate, &prompt, system, PromptTier::Aggregate)
+        maybe_generate(generate, &prompt, system, PromptTier::Module)
     } else {
         Generation::Skipped
     };
     let text = match generated {
         Generation::Generated(text) => text,
         Generation::Failed => {
-            *degraded = true;
+            degraded_sources.insert("model-unavailable".to_string());
             return structural_file_body(file, symbol_docs);
         }
         Generation::Skipped => return structural_file_body(file, symbol_docs),
     };
-    let text = match verify_and_strip(verify, &text, sources) {
+    let text = match verify_with_notes(verify, &text, prompt_symbols, sources, relationships) {
         VerifyOutcome::Skipped => text,
-        VerifyOutcome::Verified {
-            text,
-            degraded: verify_degraded,
-        } => {
-            *degraded = *degraded || verify_degraded;
+        VerifyOutcome::Verified { text, notes } => {
+            verify_notes.extend(notes);
             text
         }
-        VerifyOutcome::Unusable => {
-            *degraded = true;
-            return structural_file_body(file, symbol_docs);
-        }
     };
-    let citations = citation_list(source_spans, &text);
-    let grounded = ground_text(&text, source_spans, Some(&citations));
+    // Cross-file relationship endpoints widen the grounding allow-list so the
+    // narrative's `[other_file:line]` citations survive `ground_text`; they are
+    // deliberately not added to the page's own `source_spans` provenance, which
+    // must stay scoped to the file for reuse hashing.
+    let mut grounding_spans = source_spans.to_vec();
+    grounding_spans.extend(relationships.endpoint_spans());
+    let citations = citation_list(&grounding_spans, &text);
+    let grounded = ground_text(&text, &grounding_spans, Some(&citations));
     if grounded.trim().is_empty() {
-        *degraded = true;
+        degraded_sources.insert("grounding-empty".to_string());
         return structural_file_body(file, symbol_docs);
     }
     grounded
@@ -231,7 +262,7 @@ fn build_file_body(
 
 /// Deterministic multi-section file body for `--ai off`, generation failure, or
 /// an unverifiable draft: a real `## Overview` and `## How it fits` so the page
-/// keeps narrative structure even without a model. The Key components table is
+/// keeps narrative structure even without a model. The `## Reference` table is
 /// appended by the renderer, so two sections here render as three on the page.
 fn structural_file_body(file: &str, symbols: &[SymbolDoc]) -> String {
     let mut body = String::new();
@@ -244,7 +275,7 @@ fn structural_file_body(file: &str, symbols: &[SymbolDoc]) -> String {
         &mut body,
         "How it fits",
         &format!(
-            "`{file}` is documented from its indexed symbols; see the Key components below \
+            "`{file}` is documented from its indexed symbols; see the Reference table below \
              and the module page for how it connects to sibling files."
         ),
     );

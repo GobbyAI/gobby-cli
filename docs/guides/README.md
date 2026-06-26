@@ -21,4 +21,4 @@ Task-focused documentation for the released gobby-cli crates.
 - [ghook Development Guide](./ghook-development-guide.md) - hook-dispatch implementation details.
 - [gwiki Development Guide](./gwiki-development-guide.md) - research/knowledge-vault CLI internals.
 
-_Last verified: 2026-06-04_
+_Last verified: 2026-06-23_

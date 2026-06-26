@@ -5,6 +5,7 @@ use serde::Deserialize;
 use serde_json::Value;
 
 mod codex;
+mod daemon_wiki;
 mod derived;
 mod droid;
 mod gemini;
@@ -12,8 +13,10 @@ mod grok;
 mod metadata;
 mod qwen;
 mod redaction;
+mod summarize;
 
 use codex::CODEX_SESSION_ADAPTER;
+use daemon_wiki::{DaemonWikiPage, render_session_wiki_markdown};
 use derived::write_session_derived_markdown;
 use droid::DROID_SESSION_ADAPTER;
 use gemini::GEMINI_SESSION_ADAPTER;
@@ -22,11 +25,12 @@ pub(crate) use metadata::ParsedSessionMetadata;
 use metadata::session_metadata_fields;
 use qwen::QWEN_SESSION_ADAPTER;
 use redaction::{redact_session_markdown, redact_session_text};
+pub(crate) use summarize::SessionSummarizer;
 
 use crate::WikiError;
 use crate::ingest::{
-    IngestResult, MetadataValue, markdown_metadata_values, markdown_title, single_line,
-    text_from_utf8_lossy, write_raw_markdown,
+    IngestResult, MetadataValue, markdown_metadata_values, markdown_title, path_to_string,
+    single_line, text_from_utf8_lossy, write_raw_markdown,
 };
 use crate::sources::{CompileStatus, IngestionMethod, SourceDraftRef, SourceKind, SourceManifest};
 
@@ -36,6 +40,25 @@ pub struct SessionFileSnapshot {
     pub file_name: String,
     pub fetched_at: String,
     pub path: PathBuf,
+    pub bytes: Vec<u8>,
+}
+
+/// A daemon-synthesized session wiki `.md` file pulled from the wiki directory.
+///
+/// Unlike [`SessionFileSnapshot`] (raw transcript archives), this carries the
+/// already-synthesized knowledge page. Ingest parses and strips the daemon
+/// frontmatter, then rewrites a gwiki-owned page keyed on the canonical
+/// `session:{external_id}` location shared with the raw fallback so a fresh
+/// synthesis can supersede a previously raw-parsed page.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SessionWikiFileSnapshot {
+    /// Canonical session external id (the `.md` filename stem).
+    pub external_id: String,
+    /// Original daemon mirror path (e.g. `~/.gobby/session_wiki/{external_id}.md`).
+    pub path: PathBuf,
+    /// Timestamp this snapshot was read.
+    pub fetched_at: String,
+    /// Raw bytes of the daemon `.md` file (frontmatter + synthesized body).
     pub bytes: Vec<u8>,
 }
 
@@ -80,9 +103,7 @@ pub(crate) fn ingest_session_file_without_index(
     vault_root: &Path,
     snapshot: SessionFileSnapshot,
 ) -> Result<IngestResult, WikiError> {
-    let envelopes = read_session_archive(&snapshot.path, &snapshot.bytes)?;
-    let adapters = default_session_adapters();
-    let parsed = parse_session_archive(&envelopes, &adapters)?;
+    let parsed = parse_session_archive_bytes(&snapshot.path, &snapshot.bytes)?;
     let title =
         non_empty_string(&parsed.title).unwrap_or_else(|| markdown_title(&snapshot.file_name));
     let source_location = redact_session_text(&snapshot.location);
@@ -102,6 +123,65 @@ pub(crate) fn ingest_session_file_without_index(
         },
     )?;
     let markdown = render_session_markdown(&snapshot, &parsed, &title, &record.content_hash);
+    let markdown = redact_session_markdown(&markdown);
+    let raw_path = write_raw_markdown(vault_root, &record, &markdown)?;
+    write_session_derived_markdown(vault_root, &record, &markdown)?;
+
+    Ok(IngestResult {
+        record,
+        raw_path,
+        asset_path: None,
+    })
+}
+
+/// Ingest a daemon-synthesized session wiki page into the vault.
+///
+/// Parallel to [`ingest_session_file_without_index`] but sourced from the
+/// daemon's `session_wiki/{external_id}.md` synthesis rather than a raw
+/// transcript archive: the daemon frontmatter is parsed and stripped, the
+/// session is registered under the canonical `session:{external_id}` location,
+/// and a single gwiki-owned frontmatter block plus the synthesized body is
+/// written to `knowledge/sources/{id}.md`. The body is re-redacted defensively
+/// before write — the synthesis can lift secrets from the digest verbatim.
+pub(crate) fn ingest_session_wiki_file_without_index(
+    vault_root: &Path,
+    snapshot: SessionWikiFileSnapshot,
+) -> Result<IngestResult, WikiError> {
+    let text = text_from_utf8_lossy(&snapshot.bytes);
+    let page = DaemonWikiPage::parse(&text);
+
+    // Canonical, content-stable session location shared with the raw fallback,
+    // so a fresh synthesis can supersede a previously raw-parsed page.
+    let location = format!("session:{}", snapshot.external_id);
+    let title = page
+        .field("title")
+        .map(|value| single_line(value))
+        .and_then(|value| non_empty_string(&value))
+        .unwrap_or_else(|| format!("Session {}", snapshot.external_id));
+    let source_title = redact_session_text(&title);
+
+    let record = SourceManifest::register_borrowed(
+        vault_root,
+        SourceDraftRef {
+            location: location.clone(),
+            kind: SourceKind::Session,
+            fetched_at: snapshot.fetched_at.clone(),
+            content: &snapshot.bytes,
+            title: Some(source_title.clone()),
+            citation: Some(location.clone()),
+            license: None,
+            ingestion_method: IngestionMethod::Manual,
+            compile_status: CompileStatus::Pending,
+        },
+    )?;
+
+    let markdown = render_session_wiki_markdown(
+        &snapshot,
+        &page,
+        &location,
+        &source_title,
+        &record.content_hash,
+    );
     let markdown = redact_session_markdown(&markdown);
     let raw_path = write_raw_markdown(vault_root, &record, &markdown)?;
     write_session_derived_markdown(vault_root, &record, &markdown)?;
@@ -134,6 +214,18 @@ pub(crate) fn parse_session_archive(
     };
 
     adapter.parse(envelopes)
+}
+
+/// Decode a raw `.jsonl.gz` archive's bytes into a [`ParsedSession`] using the
+/// default per-CLI adapters. Shared by the skeleton ingest path and the
+/// standalone `--summarize` generator.
+pub(crate) fn parse_session_archive_bytes(
+    path: &Path,
+    bytes: &[u8],
+) -> Result<ParsedSession, WikiError> {
+    let envelopes = read_session_archive(path, bytes)?;
+    let adapters = default_session_adapters();
+    parse_session_archive(&envelopes, &adapters)
 }
 
 fn read_session_archive(
@@ -624,6 +716,10 @@ fn render_session_markdown(
             MetadataValue::string(snapshot.location.clone()),
         ),
         (
+            "source_archive",
+            MetadataValue::string(redact_session_text(&path_to_string(&snapshot.path))),
+        ),
+        (
             "fetched_at",
             MetadataValue::string(snapshot.fetched_at.clone()),
         ),
@@ -671,7 +767,6 @@ fn render_session_markdown(
 
     markdown
 }
-
 fn message_heading(role: &str) -> String {
     non_empty_string(&markdown_title(role)).unwrap_or_else(|| "Speaker".to_string())
 }
@@ -693,277 +788,4 @@ fn json_string_field(value: &Value, field: &str) -> Option<String> {
 }
 
 #[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn render_session_markdown_emits_deterministic_session_frontmatter() {
-        let snapshot = SessionFileSnapshot {
-            location: "/tmp/session.jsonl".to_string(),
-            file_name: "session.jsonl".to_string(),
-            fetched_at: "2026-06-16T20:00:00Z".to_string(),
-            path: PathBuf::from("/tmp/session.jsonl"),
-            bytes: Vec::new(),
-        };
-        let parsed = ParsedSession {
-            title: "Fixture session".to_string(),
-            session_type: "claude-code".to_string(),
-            started_at: Some("2026-06-16T20:00:00Z".to_string()),
-            metadata: ParsedSessionMetadata {
-                model: Some("claude-opus-4-8".to_string()),
-                token_totals: std::collections::BTreeMap::from([
-                    ("input_tokens".to_string(), 10),
-                    ("output_tokens".to_string(), 5),
-                ]),
-                git_branch: Some("dev".to_string()),
-                is_subagent: true,
-            },
-            messages: vec![
-                ParsedSessionMessage {
-                    role: "assistant".to_string(),
-                    timestamp: Some("2026-06-16T20:00:00Z".to_string()),
-                    content: "I will inspect.".to_string(),
-                    tool_names: vec!["Read".to_string(), "Bash".to_string()],
-                },
-                ParsedSessionMessage {
-                    role: "assistant".to_string(),
-                    timestamp: Some("2026-06-16T21:01:01Z".to_string()),
-                    content: "Done.".to_string(),
-                    tool_names: vec!["Read".to_string()],
-                },
-            ],
-        };
-
-        let markdown = render_session_markdown(&snapshot, &parsed, &parsed.title, "hash");
-
-        assert!(markdown.contains("model: claude-opus-4-8\n"));
-        assert!(markdown.contains("tool_counts: {\"Bash\":1,\"Read\":2}\n"));
-        assert!(markdown.contains("token_totals: {\"input_tokens\":10,\"output_tokens\":5}\n"));
-        assert!(markdown.contains("duration_seconds: 3661\n"));
-        assert!(
-            markdown.contains(
-                "hour_buckets: {\"2026-06-16T20:00:00Z\":1,\"2026-06-16T21:00:00Z\":1}\n"
-            )
-        );
-        assert!(markdown.contains("is_subagent: true\n"));
-        assert!(markdown.contains("gitBranch: dev\n"));
-    }
-
-    #[test]
-    fn common_session_adapter_accepts_fixture_payload_messages() {
-        let envelopes = vec![SessionArchiveEnvelope {
-            envelope_type: "session".to_string(),
-            timestamp: Some("2026-06-16T20:00:00Z".to_string()),
-            payload: serde_json::json!({
-                "title": "Fixture import",
-                "messages": [
-                    {"role": "user", "content": "Can you summarize this?"},
-                    {"role": "assistant", "timestamp": "2026-06-16T20:00:05Z", "content": "Yes."}
-                ]
-            }),
-        }];
-
-        let adapters = default_session_adapters();
-        let parsed = parse_session_archive(&envelopes, &adapters).expect("parse session fixture");
-
-        assert_eq!(parsed.title, "Fixture import");
-        assert_eq!(parsed.session_type, "session");
-        assert_eq!(parsed.started_at.as_deref(), Some("2026-06-16T20:00:00Z"));
-        assert_eq!(parsed.messages.len(), 2);
-        assert_eq!(parsed.messages[0].role, "user");
-        assert_eq!(parsed.messages[0].content, "Can you summarize this?");
-        assert_eq!(
-            parsed.messages[1].timestamp.as_deref(),
-            Some("2026-06-16T20:00:05Z")
-        );
-    }
-
-    #[test]
-    fn read_session_archive_accepts_raw_claude_code_records() {
-        let bytes = br#"{"type":"user","sessionId":"session-1","message":{"role":"user","content":"Hello"}}
-{"type":"assistant","timestamp":"2026-06-16T20:00:01Z","message":{"role":"assistant","content":[{"type":"text","text":"Hi."}]}}
-"#;
-
-        let envelopes =
-            read_session_archive(Path::new("claude.jsonl"), bytes).expect("read raw archive");
-
-        assert_eq!(envelopes.len(), 2);
-        assert_eq!(envelopes[0].envelope_type, "user");
-        assert_eq!(envelopes[0].timestamp, None);
-        assert!(envelopes[0].payload.get("message").is_some());
-        assert_eq!(
-            envelopes[1].timestamp.as_deref(),
-            Some("2026-06-16T20:00:01Z")
-        );
-    }
-
-    #[test]
-    fn claude_code_adapter_parses_messages_tools_and_sidechains() {
-        let envelopes = vec![
-            SessionArchiveEnvelope {
-                envelope_type: "ai-title".to_string(),
-                timestamp: Some("2026-06-16T20:00:00Z".to_string()),
-                payload: serde_json::json!({
-                    "type": "ai-title",
-                    "timestamp": "2026-06-16T20:00:00Z",
-                    "aiTitle": "Claude Fixture"
-                }),
-            },
-            SessionArchiveEnvelope {
-                envelope_type: "user".to_string(),
-                timestamp: Some("2026-06-16T20:00:01Z".to_string()),
-                payload: serde_json::json!({
-                    "type": "user",
-                    "timestamp": "2026-06-16T20:00:01Z",
-                    "message": {"role": "user", "content": "Inspect this repo."}
-                }),
-            },
-            SessionArchiveEnvelope {
-                envelope_type: "assistant".to_string(),
-                timestamp: Some("2026-06-16T20:00:02Z".to_string()),
-                payload: serde_json::json!({
-                    "type": "assistant",
-                    "timestamp": "2026-06-16T20:00:02Z",
-                    "gitBranch": "dev",
-                    "message": {
-                        "id": "msg_1",
-                        "model": "claude-opus-4-8",
-                        "role": "assistant",
-                        "usage": {
-                            "input_tokens": 10,
-                            "output_tokens": 5
-                        },
-                        "content": [
-                            {"type": "thinking", "thinking": "internal"},
-                            {"type": "text", "text": "I will inspect it."},
-                            {"type": "tool_use", "name": "Read", "input": {"file_path": "Cargo.toml"}}
-                        ]
-                    }
-                }),
-            },
-            SessionArchiveEnvelope {
-                envelope_type: "user".to_string(),
-                timestamp: Some("2026-06-16T20:00:03Z".to_string()),
-                payload: serde_json::json!({
-                    "type": "user",
-                    "timestamp": "2026-06-16T20:00:03Z",
-                    "toolUseResult": {"file": "Cargo.toml"},
-                    "message": {
-                        "role": "user",
-                        "content": [
-                            {
-                                "type": "tool_result",
-                                "tool_use_id": "toolu_1",
-                                "content": "workspace manifest",
-                                "is_error": false
-                            }
-                        ]
-                    }
-                }),
-            },
-            SessionArchiveEnvelope {
-                envelope_type: "assistant".to_string(),
-                timestamp: Some("2026-06-16T20:00:04Z".to_string()),
-                payload: serde_json::json!({
-                    "type": "assistant",
-                    "timestamp": "2026-06-16T20:00:04Z",
-                    "isSidechain": true,
-                    "message": {
-                        "role": "assistant",
-                        "content": [{"type": "text", "text": "Sidechain note."}]
-                    }
-                }),
-            },
-        ];
-
-        let adapters = default_session_adapters();
-        let parsed =
-            parse_session_archive(&envelopes, &adapters).expect("parse Claude Code fixture");
-
-        assert_eq!(parsed.title, "Claude Fixture");
-        assert_eq!(parsed.session_type, "claude-code");
-        assert_eq!(parsed.started_at.as_deref(), Some("2026-06-16T20:00:00Z"));
-        assert_eq!(parsed.metadata.model.as_deref(), Some("claude-opus-4-8"));
-        assert_eq!(parsed.metadata.git_branch.as_deref(), Some("dev"));
-        assert!(parsed.metadata.is_subagent);
-        assert_eq!(parsed.metadata.token_totals.get("input_tokens"), Some(&10));
-        assert_eq!(parsed.metadata.token_totals.get("output_tokens"), Some(&5));
-        assert_eq!(parsed.messages.len(), 4);
-        assert_eq!(parsed.messages[0].role, "user");
-        assert_eq!(parsed.messages[0].content, "Inspect this repo.");
-        assert_eq!(parsed.messages[1].role, "assistant");
-        assert_eq!(parsed.messages[1].tool_names, vec!["Read"]);
-        assert!(parsed.messages[1].content.contains("I will inspect it."));
-        assert!(parsed.messages[1].content.contains("Tool use: Read"));
-        assert!(!parsed.messages[1].content.contains("internal"));
-        assert_eq!(parsed.messages[2].role, "tool result");
-        assert!(parsed.messages[2].content.contains("Tool result: toolu_1"));
-        assert!(parsed.messages[2].content.contains("workspace manifest"));
-        assert_eq!(parsed.messages[3].role, "assistant (sidechain)");
-        assert_eq!(parsed.messages[3].content, "Sidechain note.");
-    }
-
-    #[test]
-    fn claude_code_adapter_parses_real_archive_when_fixture_is_set() {
-        let Ok(path) = std::env::var("GWIKI_CLAUDE_CODE_ARCHIVE_FIXTURE") else {
-            return;
-        };
-        let bytes = std::fs::read(&path).expect("read real Claude Code archive fixture");
-        let envelopes =
-            read_session_archive(Path::new(&path), &bytes).expect("read real Claude Code archive");
-        let adapters = default_session_adapters();
-
-        let parsed =
-            parse_session_archive(&envelopes, &adapters).expect("parse real Claude Code archive");
-
-        assert_eq!(parsed.session_type, "claude-code");
-        assert!(
-            parsed.messages.len() > 1,
-            "expected more than one parsed Claude Code message"
-        );
-        assert!(parsed.messages.iter().any(|message| message.role == "user"));
-        assert!(parsed.messages.iter().any(|message| {
-            message.role == "assistant" || message.role == "assistant (sidechain)"
-        }));
-        assert!(
-            parsed
-                .messages
-                .iter()
-                .any(|message| message.role.starts_with("tool result")),
-            "expected real archive to include at least one tool result"
-        );
-        assert!(parsed.metadata.model.is_some(), "expected model metadata");
-        assert!(
-            parsed.metadata.git_branch.is_some(),
-            "expected gitBranch metadata"
-        );
-        assert!(
-            !parsed.metadata.token_totals.is_empty(),
-            "expected token totals metadata"
-        );
-        assert!(
-            parsed
-                .messages
-                .iter()
-                .any(|message| !message.tool_names.is_empty()),
-            "expected tool name metadata"
-        );
-
-        let snapshot = SessionFileSnapshot {
-            location: path.clone(),
-            file_name: "claude-code-real.jsonl".to_string(),
-            fetched_at: "2026-06-16T00:00:00Z".to_string(),
-            path: PathBuf::from(&path),
-            bytes,
-        };
-        let markdown = render_session_markdown(&snapshot, &parsed, &parsed.title, "fixture-hash");
-
-        assert!(markdown.contains("model: "));
-        assert!(markdown.contains("tool_counts: {"));
-        assert!(markdown.contains("token_totals: {"));
-        assert!(markdown.contains("duration_seconds: "));
-        assert!(markdown.contains("hour_buckets: {"));
-        assert!(markdown.contains("is_subagent: false\n"));
-        assert!(markdown.contains("gitBranch: "));
-    }
-}
+mod tests;

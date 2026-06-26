@@ -1,4 +1,4 @@
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 
 use gobby_core::config::AiRouting;
 use serde::{Deserialize, Serialize};
@@ -27,6 +27,35 @@ pub struct LeadingChunk {
     pub content: String,
     pub line_start: usize,
     pub line_end: usize,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub(crate) struct CodewikiTruthDigest {
+    pub(crate) schema_version: u8,
+    pub(crate) generated_at: String,
+    pub(crate) project_id: String,
+    pub(crate) repo_summary: String,
+    pub(crate) stack_authority: String,
+    pub(crate) stack: Vec<CodewikiTruthStackEntry>,
+    pub(crate) key_paths: BTreeMap<String, String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub(crate) superseded: Vec<CodewikiTruthSuperseded>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub(crate) struct CodewikiTruthStackEntry {
+    pub(crate) service: String,
+    pub(crate) kind: String,
+    pub(crate) adapter_module: String,
+    pub(crate) pulled_in_by: Vec<String>,
+    pub(crate) summary: String,
+    pub(crate) degradation: String,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub(crate) struct CodewikiTruthSuperseded {
+    pub(crate) old: String,
+    pub(crate) new: String,
 }
 
 /// Builds a prompt source excerpt for `file` from its leading chunk.
@@ -150,6 +179,8 @@ pub(crate) struct FileDoc {
     pub(crate) component_ids: Vec<String>,
     /// True when AI generation was attempted for this doc and failed.
     pub(crate) degraded: bool,
+    pub(crate) degraded_sources: Vec<String>,
+    pub(crate) verify_notes: Vec<VerifyNote>,
     /// The on-disk page when the doc was reused without regeneration (#681);
     /// emitting disk content verbatim keeps a forced rewrite lossless.
     pub(crate) reused_page: Option<String>,
@@ -162,6 +193,21 @@ pub(crate) struct SymbolDoc {
     pub(crate) component_id: String,
     pub(crate) component_label: String,
     pub(crate) source_span: SourceSpan,
+    /// Deprecation reason for this symbol, detected by the codewiki source scan
+    /// (#889): `Some(reason)` when a `#[deprecated]` attribute or a `DEPRECATED`
+    /// doc-comment sits above its definition (or in its docstring). Drives the
+    /// visible "deprecated" badge in the file page's `## Key components` row.
+    /// `None` for the common, non-deprecated case. Deterministic, never
+    /// degrading.
+    pub(crate) deprecation: Option<String>,
+    /// Whether this symbol is test-gated (a `#[test]`/`#[cfg(test)]` attribute
+    /// above it, or a tests path), detected by the same deterministic source
+    /// scan that powers the dead-code page. The file page collapses test-gated
+    /// symbols into a single behavior-spec line + count instead of one
+    /// `## Reference` row each, so the readable surface is real code, not a test
+    /// roster. `false` for the common case and for the AI-off/test entry points
+    /// that pass no test index.
+    pub(crate) is_test: bool,
 }
 
 #[derive(Debug, Clone)]
@@ -171,11 +217,10 @@ pub(crate) struct ModuleDoc {
     pub(crate) source_spans: Vec<SourceSpan>,
     pub(crate) direct_files: Vec<FileLink>,
     pub(crate) child_modules: Vec<ModuleLink>,
-    pub(crate) dependency_diagram: Option<String>,
-    pub(crate) call_diagram: Option<String>,
-    pub(crate) graph_availability: CodewikiGraphAvailability,
     /// True when AI generation was attempted for this doc and failed.
     pub(crate) degraded: bool,
+    pub(crate) degraded_sources: Vec<String>,
+    pub(crate) verify_notes: Vec<VerifyNote>,
     /// The on-disk page when the doc was reused without regeneration (#681);
     /// emitting disk content verbatim keeps a forced rewrite lossless.
     pub(crate) reused_page: Option<String>,
@@ -186,7 +231,18 @@ pub(crate) struct ArchitectureDoc {
     pub(crate) source_spans: Vec<SourceSpan>,
     pub(crate) subsystems: Vec<ArchitectureSubsystem>,
     pub(crate) narrative: Option<String>,
-    pub(crate) dependency_diagram: Option<String>,
+    /// Pre-rendered, already-validated architectural Mermaid diagram section
+    /// seeded from the deterministic workspace [`super::SystemModel`] (#891).
+    /// `None` when no model was supplied or the model was too sparse to draw —
+    /// a missing diagram is normal and never marks the page degraded.
+    pub(crate) diagrams: Option<String>,
+    /// Pre-rendered, deterministic service matrix seeded from the same
+    /// [`super::SystemModel`] as `diagrams`: one row per service boundary with a
+    /// fixed required/degraded requirement classification and what pulls it in.
+    /// Gives an evaluator the at-a-glance "what does this need to run" picture;
+    /// the narrative is asked to narrate around it. `None` when no model was
+    /// supplied or it reached no services.
+    pub(crate) service_matrix: Option<String>,
     pub(crate) degraded_sources: Vec<String>,
 }
 
@@ -196,6 +252,97 @@ pub(crate) struct ArchitectureSubsystem {
     pub(crate) responsibility: String,
     pub(crate) child_modules: Vec<String>,
     pub(crate) source_spans: Vec<SourceSpan>,
+}
+
+/// One infrastructure boundary on the deterministic infra-stack page (#892):
+/// what the service is, what pulls it in, the adapter module that talks to it,
+/// and how the workspace behaves when it is unavailable. Built straight from a
+/// [`super::ServiceBoundary`] plus a curated descriptor — no LLM, never
+/// degrading.
+#[derive(Debug, Clone)]
+pub(crate) struct InfraSection {
+    pub(crate) service: String,
+    pub(crate) pulled_in_by: Vec<String>,
+    pub(crate) adapter_module: String,
+    pub(crate) summary: String,
+    pub(crate) degradation: String,
+}
+
+/// The deterministic infra-stack page (#892), one [`InfraSection`] per service
+/// boundary in the system model. `degraded_sources` is always empty: the page
+/// is derived from Cargo manifests + service boundaries and never marks itself
+/// degraded.
+#[derive(Debug, Clone)]
+pub(crate) struct InfrastructureDoc {
+    pub(crate) sections: Vec<InfraSection>,
+    pub(crate) degraded_sources: Vec<String>,
+}
+
+/// One CLI subcommand row on the deterministic feature catalog page (#888):
+/// the contract command name, its contract summary, the contract flag names,
+/// a representative handler entry symbol, and the repo-relative handler file
+/// the catalog wikilinks to as the explaining page. Built straight from the
+/// pinned CLI contract JSON plus a curated dispatch resolver — no LLM.
+#[derive(Debug, Clone)]
+pub(crate) struct FeatureEntry {
+    pub(crate) command: String,
+    pub(crate) summary: String,
+    pub(crate) key_flags: Vec<String>,
+    pub(crate) entry_symbol: String,
+    pub(crate) handler_file: String,
+}
+
+/// One binary's section on the feature catalog page: every subcommand the
+/// binary's pinned contract declares, in contract order.
+#[derive(Debug, Clone)]
+pub(crate) struct FeatureBinarySection {
+    pub(crate) binary: String,
+    pub(crate) entries: Vec<FeatureEntry>,
+}
+
+/// The deterministic feature catalog page (#888), one [`FeatureBinarySection`]
+/// per binary with a pinned contract. `degraded_sources` is always empty: the
+/// page is derived from the contract JSONs + dispatch wiring and never marks
+/// itself degraded.
+#[derive(Debug, Clone)]
+pub(crate) struct FeatureCatalogDoc {
+    pub(crate) sections: Vec<FeatureBinarySection>,
+    pub(crate) degraded_sources: Vec<String>,
+}
+
+/// Map of `symbol.id -> deprecation reason`, built once per run by the
+/// deterministic source scan (#889) and threaded into `build_file_doc` (to
+/// stamp the per-symbol badge) and the `code/deprecations.md` aggregate page.
+/// A `BTreeMap` so the aggregate page lists symbols in a stable order. Empty
+/// when nothing is deprecated; the scan never panics and never degrades.
+pub(crate) type DeprecationIndex = BTreeMap<String, String>;
+
+/// Set of `symbol.id`s that are test-gated, built by the same deterministic
+/// source scan as [`DeprecationIndex`] and threaded into `build_file_doc` to
+/// stamp `SymbolDoc::is_test`. A `BTreeSet` for stable, de-duplicated membership
+/// checks. Empty when nothing is test-gated; the scan never panics or degrades.
+pub(crate) type TestIndex = BTreeSet<String>;
+
+/// One deprecated symbol on the deterministic `code/deprecations.md` page
+/// (#889): its name, kind, defining `file:line`, the detected reason, and the
+/// file it lives in (for grouping + a `file_wikilink`).
+#[derive(Debug, Clone)]
+pub(crate) struct DeprecatedSymbol {
+    pub(crate) file: String,
+    pub(crate) name: String,
+    pub(crate) kind: String,
+    pub(crate) line: usize,
+    pub(crate) reason: String,
+}
+
+/// The deterministic deprecations aggregate page (#889), every deprecated
+/// symbol grouped by file. `degraded_sources` is always empty: the page is
+/// derived from a source scan and never marks itself degraded — even when the
+/// list is empty (it still renders a clear "no deprecations" line).
+#[derive(Debug, Clone)]
+pub(crate) struct DeprecationsDoc {
+    pub(crate) symbols: Vec<DeprecatedSymbol>,
+    pub(crate) degraded_sources: Vec<String>,
 }
 
 #[derive(Debug, Clone)]
@@ -270,6 +417,36 @@ pub(crate) struct SourceSpan {
     pub(crate) line_end: usize,
 }
 
+const VERIFY_NOTE_REASON_LIMIT: usize = 200;
+const VERIFY_NOTE_TRUNCATION: &str = "...";
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize)]
+pub(crate) struct VerifyNote {
+    pub(crate) id: usize,
+    pub(crate) reason: String,
+}
+
+impl VerifyNote {
+    pub(crate) fn new(id: usize, reason: impl AsRef<str>) -> Self {
+        Self {
+            id,
+            reason: normalize_verify_note_reason(reason.as_ref()),
+        }
+    }
+}
+
+fn normalize_verify_note_reason(reason: &str) -> String {
+    let reason = reason.trim();
+    if reason.chars().count() <= VERIFY_NOTE_REASON_LIMIT {
+        return reason.to_string();
+    }
+
+    let keep = VERIFY_NOTE_REASON_LIMIT.saturating_sub(VERIFY_NOTE_TRUNCATION.len());
+    let mut truncated = reason.chars().take(keep).collect::<String>();
+    truncated.push_str(VERIFY_NOTE_TRUNCATION);
+    truncated
+}
+
 #[derive(Debug, Clone, Serialize)]
 pub struct CodewikiRunSummary {
     pub command: &'static str,
@@ -283,6 +460,11 @@ pub struct CodewikiRunSummary {
     pub modules: usize,
     pub symbols: usize,
     pub ai_enabled: bool,
+    /// Pages whose AI content pass failed and fell back to the structural body
+    /// this run (#900). Empty on a fully healthy run. Surfaced here (and logged
+    /// to stderr) so curated/page degradation is visible instead of silently
+    /// cached as healthy.
+    pub degraded_pages: Vec<String>,
 }
 
 #[derive(Debug, Clone, Default, Deserialize, Serialize)]
@@ -316,6 +498,20 @@ pub(crate) struct CodewikiDocMeta {
     /// generation. Missing versions force a one-time rewrite on upgrade.
     #[serde(default)]
     pub(crate) render_version: u32,
+    /// Cross-file neighbor source hashes (#885, Leaf H). A source-file page
+    /// regenerates when a neighbor's content hash changes even if its own
+    /// sources did not, so a caller edit refreshes the callee's relationship
+    /// narrative. Empty for pages with no recorded cross-file neighbors.
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    pub(crate) neighbor_hashes: BTreeMap<String, String>,
+    /// Page-type invalidation digest for derived aggregate pages whose content
+    /// is a function of a model rather than a source-file set (Leaf H): the
+    /// `SystemModel` hash for architecture/infrastructure, and the rendered
+    /// contract/deprecation digest for the feature catalog and audit pages. A
+    /// function-body edit that does not change the model leaves the digest —
+    /// and the page — unchanged. `None` for source-file pages.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub(crate) invalidation_key: Option<String>,
 }
 
 /// One rendered doc plus the degradation outcome of its generation, carried
@@ -328,6 +524,17 @@ pub(crate) struct BuiltDoc {
     /// Grounded summary persisted to the doc meta so a later run can feed it
     /// into parent prompts without regenerating this doc (#681).
     pub(crate) summary: Option<String>,
+    /// Cross-file neighbor files whose content this page's narrative depends on
+    /// (#885, Leaf H). The sink hashes them into `neighbor_hashes` so a
+    /// neighbor change invalidates this page even when its own sources are
+    /// unchanged. Empty for pages with no cross-file dependencies.
+    pub(crate) neighbors: BTreeSet<String>,
+    /// Page-type invalidation digest for derived aggregate pages (Leaf H).
+    /// `None` for source-file pages that invalidate on source/neighbor hashes.
+    pub(crate) invalidation_key: Option<String>,
+    /// True for keyed pages whose digest covers non-source inputs but whose
+    /// provenance source hashes must still match before reuse.
+    pub(crate) invalidation_key_requires_sources: bool,
 }
 
 impl BuiltDoc {
@@ -337,7 +544,40 @@ impl BuiltDoc {
             content,
             degraded: false,
             summary: None,
+            neighbors: BTreeSet::new(),
+            invalidation_key: None,
+            invalidation_key_requires_sources: false,
         }
+    }
+
+    /// A deterministic derived page (architecture, infrastructure, feature
+    /// catalog, audit) keyed on `invalidation_key` rather than a source-file
+    /// set: it is rewritten only when the digest changes (Leaf H).
+    pub(crate) fn derived(
+        path: impl Into<String>,
+        content: String,
+        invalidation_key: String,
+    ) -> Self {
+        Self {
+            path: path.into(),
+            content,
+            degraded: false,
+            summary: None,
+            neighbors: BTreeSet::new(),
+            invalidation_key: Some(invalidation_key),
+            invalidation_key_requires_sources: false,
+        }
+    }
+
+    pub(crate) fn with_source_sensitive_key(mut self) -> Self {
+        self.invalidation_key_requires_sources = true;
+        self
+    }
+
+    /// Records the cross-file neighbor files this page depends on, builder-style.
+    pub(crate) fn with_neighbors(mut self, neighbors: BTreeSet<String>) -> Self {
+        self.neighbors = neighbors;
+        self
     }
 }
 
@@ -376,14 +616,16 @@ pub type TextGenerator<'a> = dyn FnMut(&str, &str, PromptTier) -> Option<String>
 /// just the model call — mirroring [`TextGenerator`] but without a prompt tier.
 pub type TextVerifier<'a> = dyn FnMut(&str, &str) -> Option<String> + 'a;
 
-/// Weight tier of one codewiki generation call. Aggregate docs roll up many
-/// child summaries into one long grounded synthesis and route to a heavier
-/// daemon profile; standard calls (file summaries, symbol purposes) are
-/// high-volume and stay on the default profile.
+/// Weight tier of one codewiki generation call (#904). `Aggregate` is the
+/// top-level repo-wide synthesis — repo overview, architecture, and the curated
+/// narrative/concept layer — and is written opus-first. `Module` is mid-level
+/// per-unit synthesis (module docs and file-body narratives) and routes to
+/// sonnet. `Standard` is high-volume per-symbol prose on the default low tier.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub enum PromptTier {
     #[default]
     Standard,
+    Module,
     Aggregate,
 }
 
@@ -418,18 +660,68 @@ impl AiDepth {
     }
 }
 
+/// Output verbosity for AI prose, orthogonal to [`AiDepth`] (which page tiers
+/// reach the LLM) and to the audience register. Maps to a per-page output token
+/// budget; [`ProseDepth::Standard`] defers to the provider/profile default so a
+/// run without the flag is byte-identical to before this control existed.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord)]
+pub enum ProseDepth {
+    /// Tighter pages: cap output low so prose stays terse.
+    Brief,
+    /// Provider/profile default budget (unchanged behavior).
+    #[default]
+    Standard,
+    /// Richer pages: raise the output budget for longer explanations.
+    Deep,
+}
+
+impl ProseDepth {
+    /// Per-page output token budget, or `None` to defer to the provider/profile
+    /// default. `Standard` returns `None` so the default run is unchanged;
+    /// `Brief`/`Deep` pin a lower/higher ceiling.
+    pub(crate) fn max_tokens(self) -> Option<usize> {
+        match self {
+            ProseDepth::Brief => Some(640),
+            ProseDepth::Standard => None,
+            ProseDepth::Deep => Some(2_400),
+        }
+    }
+}
+
+/// Audience register for AI prose, orthogonal to depth. Every register projects
+/// the same grounded facts and only changes voice; `None` (the default) leaves
+/// the base system prompts untouched so default runs are unchanged.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum ProseRegister {
+    /// ELI5: plain language, defines jargon on first use, leads with the
+    /// problem the code solves.
+    Newcomer,
+    /// Maintainer: leads with why the code is shaped this way and the
+    /// non-obvious trade-offs.
+    Maintainer,
+    /// Build substrate: terse decisions and structure, minimal connective prose.
+    Agent,
+}
+
 #[derive(Clone, Debug, Default)]
 pub struct CodewikiAiOptions {
     pub routing: Option<AiRouting>,
     pub depth: AiDepth,
-    /// Daemon feature profile for aggregate docs; `None` means
-    /// [`super::DEFAULT_AGGREGATE_PROFILE`].
+    /// Output verbosity (per-page token budget). Default keeps prior behavior.
+    pub prose_depth: ProseDepth,
+    /// Audience register layered onto generation prompts. `None` keeps the base
+    /// voice; grounding rules hold in every register.
+    pub register: Option<ProseRegister>,
+    /// Daemon feature profile override for aggregate docs. `None` (the default)
+    /// routes aggregate/curated writing to the opus-first chain
+    /// (`writer_candidate_chain` in `text/generation.rs`); `Some(profile)` pins
+    /// that named daemon feature profile instead.
     pub aggregate_profile: Option<String>,
-    /// Override seams for the grounded verification pass. There is no CLI flag
-    /// for these (verify is config-only): each `None` falls back to the resolved
-    /// `ai.text_generate.verify_*` config, then to the generate model/key and
-    /// [`super::DEFAULT_VERIFY_PROFILE`]. Kept here so the generator set is
-    /// resolved from one options value and the precedence is unit-testable.
+    /// Override seams for the grounded verification pass. Each `None` falls
+    /// back to the resolved `ai.text_generate.verify_*` config, then to the
+    /// generate model/key and [`super::DEFAULT_VERIFY_PROFILE`]. Kept here so
+    /// the generator set is resolved from one options value and the precedence
+    /// is unit-testable.
     pub verify_profile: Option<String>,
     pub verify_model: Option<String>,
     pub verify_api_key: Option<String>,
