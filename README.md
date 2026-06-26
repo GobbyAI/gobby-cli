@@ -38,8 +38,8 @@ AST-aware code search powered by tree-sitter. Indexes 21 languages plus safe
 repo text files into the Gobby PostgreSQL hub, with pg_search BM25 for symbol
 lookup, exact indexed grep over repo content chunks, ranked repo-content search
 across source/docs/config/scripts, file tree
-navigation, and hybrid ranking. In the full Gobby-backed stack, required
-FalkorDB, Qdrant, and embedding sources provide graph-aware search, semantic
+navigation, and hybrid ranking. When FalkorDB, Qdrant, and an embedding
+source are configured, gcode adds graph-aware search, semantic
 search, opt-in graph expansion for exact symbol lookup
 (`gcode search-symbol --with-graph`), dependency analysis (`callers`, `usages`,
 `imports`, `blast-radius`, shortest CALLS `path`), and Rust-owned graph/vector
@@ -51,10 +51,10 @@ daemon stale-project graph cleanup without cwd project resolution.
 
 `gcode codewiki` generates vault-ready hierarchical code documentation
 (repo → modules → files, plus architecture/onboarding/hotspots/changes/ownership
-pages) from the index, with Mermaid diagrams derived from real FalkorDB
-call/import edges, optional AI prose tiers (`--ai-depth`), and citation-checked
-grounding against indexed source spans. gwiki indexes the output as normal
-vault documents.
+pages) from the index, with optional AI prose tiers (`--ai-depth`), validated
+Mermaid architecture diagrams (workspace topology plus runtime/AI-generation
+sequence diagrams), and citation-checked grounding against indexed source
+spans. gwiki indexes the output as normal vault documents.
 
 For non-Gobby-managed projects, `gcode init` installs the bundled `gcode` skill
 for Claude Code, Codex, Droid, Grok, Qwen, and Antigravity CLI. Gobby-managed
