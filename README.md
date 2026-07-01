@@ -27,10 +27,10 @@ This workspace ships three Gobby CLI tools plus a shared library.
 
 | Crate | Binary | Version | Release tag |
 |---|---|---:|---|
-| `gobby-code` | `gcode` | `1.3.3` | `gcode-v1.3.3` |
-| `gobby-core` | n/a | `0.6.1` | `gobby-core-v0.6.1` |
-| `gobby-hooks` | `ghook` | `0.6.2` | `ghook-v0.6.2` |
-| `gobby-wiki` | `gwiki` | `0.6.5` | `gwiki-v0.6.5` |
+| `gobby-code` | `gcode` | `1.4.0` | `gcode-v1.4.0` |
+| `gobby-core` | n/a | `0.7.0` | `gobby-core-v0.7.0` |
+| `gobby-hooks` | `ghook` | `0.7.0` | `ghook-v0.7.0` |
+| `gobby-wiki` | `gwiki` | `0.7.0` | `gwiki-v0.7.0` |
 
 ### gcode — Code Search & Navigation
 
@@ -54,7 +54,10 @@ daemon stale-project graph cleanup without cwd project resolution.
 pages) from the index, with optional AI prose tiers (`--ai-depth`), validated
 Mermaid architecture diagrams (workspace topology plus runtime/AI-generation
 sequence diagrams), and citation-checked grounding against indexed source
-spans. gwiki indexes the output as normal vault documents.
+spans. Aggregate pages can use the daemon-side agentic/tool-backed generation
+route, and `gcode codewiki --purge --out <vault> --force` clears generated
+CodeWiki output before a clean rebuild. gwiki indexes the output as normal
+vault documents.
 
 For non-Gobby-managed projects, `gcode init` installs the bundled `gcode` skill
 for Claude Code, Codex, Droid, Grok, Qwen, and Antigravity CLI. Gobby-managed

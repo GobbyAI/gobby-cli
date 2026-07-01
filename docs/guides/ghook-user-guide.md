@@ -35,6 +35,7 @@ host AI CLI fires hook
       │   └─ fresh marker + unreachable daemon → {"continue":true}; no stdin/enqueue
       ├─ resolves project root (walk up from cwd to .gobby/project.json)
       ├─ reads stdin (the host CLI's hook payload)
+      ├─ stamps machine_id + os, or machine_id_error when unavailable
       ├─ enriches input_data with terminal_context (when TMUX_PANE is valid)
       ├─ writes envelope atomically to ~/.gobby/hooks/inbox/
       └─ POSTs Python-compatible hook payload to the Gobby daemon
@@ -69,6 +70,8 @@ Environment knobs:
 
 - `GOBBY_DAEMON_URL` overrides the daemon URL used for Stop preflight, live
   POSTs, and statusline POSTs.
+- `GOBBY_PORT` overrides only the port, dialed on `127.0.0.1`, when
+  `GOBBY_DAEMON_URL` is not set.
 - `GOBBY_HOME` controls marker lookup; default is `~/.gobby`.
 - `GOBBY_SHUTDOWN_HOOK_ALLOW_SECONDS` overrides freshness when it is a positive
   number; default is 120 seconds.
@@ -208,7 +211,7 @@ Unknown `--cli` values fall back to conservative Claude-like dispatch behavior o
 $ ghook --diagnose --cli=claude --type=session-start
 {
   "schema_version": 2,
-  "ghook_version": "0.5.0",
+  "ghook_version": "0.7.0",
   "cli": "claude",
   "hook_type": "session-start",
   "source": "claude",
@@ -229,7 +232,7 @@ $ ghook --diagnose --cli=claude --type=session-start
   },
   "cli_recognized": true,
   "install_method": "github-release",
-  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.6.0/ghook-aarch64-apple-darwin.tar.gz"
+  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.7.0/ghook-aarch64-apple-darwin.tar.gz"
 }
 ```
 
@@ -238,11 +241,24 @@ Look for:
 - **`cli_recognized: true`** — confirms ghook knows about this CLI explicitly. Unknown CLIs fall back to conservative Claude-like live dispatch behavior.
 - **`critical: true/false`** — does ghook consider this hook type critical under the current per-CLI hook protocol?
 - **`terminal_context_enabled: true`** — this recognized CLI can receive terminal context. `terminal_context_preview` is populated only when the current process has `TMUX` and a valid `TMUX_PANE`.
-- **`daemon_url`** — where will the POST go? If this is wrong, fix `~/.gobby/bootstrap.yaml`.
+- **`daemon_url`** — where will the POST go? If this is wrong, check
+  `GOBBY_DAEMON_URL`, `GOBBY_PORT`, then `~/.gobby/bootstrap.yaml`.
 - **`project_root` / `project_id`** — did ghook correctly walk up from cwd to the project? `null` means no `.gobby/project.json` was found — daemon will receive the envelope without an `X-Gobby-Project-Id` header.
 - **`install_method` / `install_source_url`** — how this `ghook` binary got installed (e.g. `github-release`, `crates-binstall`, `cargo-install`). Both are `null` when the binary was installed without a sidecar-writing installer (e.g. plain `cargo install gobby-hooks`). Useful in bug reports — it tells maintainers exactly which install path a user is on.
 
 The diagnose JSON is validated against `crates/ghook/schemas/diagnose-output.v2.schema.json` in tests, so the schema is stable.
+
+### Machine Identity
+
+Every dispatched JSON object gets the local machine identity before enqueue:
+
+- `machine_id` — value from the local Gobby machine identity file.
+- `os` — normalized local OS name.
+- `machine_id_error` — present instead of `machine_id`/`os` when the identity
+  file is missing, empty, or unreadable.
+
+This stamp replaces any stale `machine_id` or `os` supplied by the host CLI so
+the daemon can route machine-scoped sessions and diagnostics consistently.
 
 ## Inbox & Replay
 

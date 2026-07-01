@@ -23,6 +23,9 @@ main.rs::run_gobby_owned
   ├─ cli_config::CliConfig::for_dispatch(cli)
   │     ── per-CLI critical-hook registry
   │
+  ├─ dispatch::inject_machine_identity
+  │     ── machine_id + os, or machine_id_error
+  │
   ├─ terminal_context::inject  (if TMUX + valid TMUX_PANE are present)
   │
   ├─ envelope::Envelope::new
@@ -84,7 +87,7 @@ pub struct Envelope {
     pub enqueued_at: String,            // RFC 3339 UTC
     pub critical: bool,
     pub hook_type: String,              // host-CLI-specific
-    pub input_data: Value,              // verbatim stdin + optional tmux terminal_context
+    pub input_data: Value,              // stdin plus machine identity and optional tmux terminal_context
     pub source: String,                 // "claude" / "codex" / "qwen" / "droid" / "grok" / "agy" / passthrough
     pub headers: BTreeMap<String, String>,
 }
@@ -98,7 +101,7 @@ pub struct Envelope {
 | `enqueued_at` | Lets the drain worker compute hook latency and detect very-stale envelopes. |
 | `critical` | Recorded so the daemon knows whether the host CLI was told this hook fail-closed. Influences alerting. |
 | `hook_type` | Opaque — exact identifier the host CLI's hook system uses (`session-start`, `PreToolUse`, etc.). |
-| `input_data` | Original stdin verbatim. When `TMUX` is set and `TMUX_PANE` matches `^%\d+$`, `terminal_context` is *injected* into the existing object (mirrors Python's `setdefault`) — never overwritten if already present. |
+| `input_data` | Original stdin with dispatch-owned enrichment. `machine_id` + `os` are stamped from local Gobby machine identity, or `machine_id_error` is emitted when unavailable. When `TMUX` is set and `TMUX_PANE` matches `^%\d+$`, `terminal_context` is *injected* into the existing object (mirrors Python's `setdefault`) — never overwritten if already present. |
 | `source` | Recognized CLI → canonical name from `CliConfig::source`. Unknown CLI → the `--cli` value verbatim, so future CLIs route correctly without code changes. |
 | `headers` | Mirrors what ghook sent (or would have sent) on the POST. Omitted headers are absent keys; **empty-string values are never emitted** — this matches `hook_dispatcher.py:695-700` behavior and is enforced by the schema (`additionalProperties.minLength: 1`). |
 
@@ -156,8 +159,8 @@ Schema:
 ```json
 {
   "install_method": "github-release",
-  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.6.0/ghook-aarch64-apple-darwin.tar.gz",
-  "installed_version": "0.6.0",
+  "install_source_url": "https://github.com/GobbyAI/gobby-cli/releases/download/ghook-v0.7.0/ghook-aarch64-apple-darwin.tar.gz",
+  "installed_version": "0.7.0",
   "installed_at": "2026-04-22T18:30:00Z"
 }
 ```
@@ -232,6 +235,10 @@ Environment:
 - `GOBBY_DAEMON_URL` overrides the daemon URL. The override is applied inside
   `gobby_core::daemon_url::daemon_url()`, so it covers the preflight, live
   POSTs, and the statusline POST uniformly.
+- `GOBBY_PORT` overrides only the port, dialed on `127.0.0.1`, when
+  `GOBBY_DAEMON_URL` is not set.
+- Bootstrap `daemon_url` wins over separate bootstrap host/port fields when no
+  env override is present.
 - `GOBBY_HOME` controls marker lookup.
 - `GOBBY_SHUTDOWN_HOOK_ALLOW_SECONDS` overrides the default 120-second marker
   window when positive and parseable.
@@ -296,6 +303,9 @@ Each module has `#[cfg(test)] mod tests` with comprehensive coverage:
 - **transport.rs**: 13-digit timestamp shape, filename prefix matches `critical`, atomic-write creates parents, no `.tmp` left on success, enqueue produces valid filename, quarantine pair structure.
 - **planned_shutdown.rs**: marker parsing and freshness, allowed intents and source prefixes, env overrides, Stop matching, health reachability, and post-enqueue race suppression.
 - **diagnose.rs**: unknown CLI → not recognized + null source; known CLI/hook combos hit the right critical flags and terminal-context capability; schema validation for both recognized and unrecognized CLIs.
+- **dispatch.rs**: machine identity stamping replaces stale host-provided
+  identity and reports stable `machine_id_error` codes when local identity is
+  missing or empty.
 - **cli_config.rs**: per-CLI critical-hook membership; case-insensitive CLI lookup; unknown CLIs remain unrecognized for diagnose and fall back to conservative Claude-like config on the live dispatch path.
 - **terminal_context.rs**: tmux socket-path parsing edge cases, tmux pane validation, `inject` respects existing context, `inject` no-ops on non-objects, `capture` emits all expected keys when valid.
 
@@ -355,7 +365,7 @@ Almost always config-only. ghook treats `--type` as opaque. To make a hook criti
 
 ## Versioning
 
-ghook is at `0.5.0`. The envelope `SCHEMA_VERSION` is `1`; the diagnose-output schema is `2`. The three version numbers are independent:
+ghook is at `0.7.0`. The envelope `SCHEMA_VERSION` is `1`; the diagnose-output schema is `2`. The three version numbers are independent:
 
 - **Crate version** bumps for any code change (binary behavior, dependencies, perf, etc.).
 - **Envelope `SCHEMA_VERSION`** bumps only when the inbox envelope shape changes in a way the daemon must explicitly handle.

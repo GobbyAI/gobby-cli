@@ -291,6 +291,23 @@ Removes a raw source, its manifest entry, and its raw asset. `--id` is required.
 - `--yes` — Confirm destructive removal.
 - `--keep-asset` — Preserve the raw source asset referenced by `source_asset` frontmatter.
 
+### Purge Generated State (`purge`)
+
+```bash
+gwiki --project /path/to/repo purge --yes
+gwiki --topic rust-async purge --yes
+```
+
+Purges generated/indexed wiki state for an explicit project or topic scope. It
+removes scoped PostgreSQL rows for documents, chunks, links, sources, and
+ingestions, then clears matching Qdrant vectors and FalkorDB wiki graph state
+when those backends are configured. Global purge is rejected; choose a project
+or topic scope.
+
+**Options:**
+- `--yes` — Confirm destructive purge. Without it, `gwiki` reports what would be
+  purged and exits with an input error.
+
 ## Search & Ask
 
 ### Index (`index`)

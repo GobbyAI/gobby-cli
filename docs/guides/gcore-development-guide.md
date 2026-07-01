@@ -23,6 +23,7 @@ The baseline crate remains dependency-light. Consumers that only need project di
 | `config` | always | Shared configuration-resolution contracts. Environment variables, `config_store`, and defaults are represented here as the foundation expands. |
 | `context` | always | Shared runtime context contracts for project identity, daemon URL, and service configuration. Consumer-specific CLI state stays outside. |
 | `degradation` | always | Shared vocabulary for configured-service unavailability, explicit degraded paths, partial search, stale indexes, skipped artifacts, and fatal core errors. |
+| `ai` | `ai` | Shared AI routing, direct/daemon transports, profile tiers, embeddings, and agentic/tool-loop generation primitives. |
 | `setup` | always | Attached and standalone setup contracts. Runtime commands validate externally managed resources and do not implicitly migrate them. |
 | `token_budget` | always | Shared token-budget trimming helpers — bounds prompt/context payloads to a token ceiling so consumers (gwiki `ask`, gcode codewiki) reuse one budgeting primitive. |
 | `postgres` | `postgres` | PostgreSQL hub adapter boundary. Validates Gobby-owned schema and BM25 requirements without creating, altering, or dropping managed objects. |
@@ -171,7 +172,7 @@ The crate's default feature set is empty:
 ```toml
 [features]
 default = []
-postgres = ["dep:postgres", "dep:postgres-types", "dep:postgres-openssl", "dep:pbkdf2", "dep:sha2"]
+postgres = ["dep:postgres", "dep:postgres-types", "dep:postgres-openssl", "dep:base64", "dep:scrypt"]
 falkor = ["dep:falkordb", "dep:urlencoding"]
 qdrant = ["dep:reqwest", "dep:urlencoding"]
 indexing = ["dep:ignore", "dep:sha2"]
@@ -193,13 +194,13 @@ Feature rationale:
 
 | Feature | Enables | Why gated |
 |---------|---------|-----------|
-| `postgres` | `postgres`, `postgres-types`, `postgres-openssl` | Hub validation and adapter code are only needed by datastore consumers. Lightweight binaries should not inherit PostgreSQL. |
+| `postgres` | `postgres`, `postgres-types`, `postgres-openssl`, `base64`, `scrypt` | Hub validation, adapter code, and datastore-backed secret/config helpers are only needed by datastore consumers. Lightweight binaries should not inherit PostgreSQL. |
 | `falkor` | `falkordb`, `urlencoding` | Graph helpers need FalkorDB. `urlencoding` is included because FalkorDB connection URLs must encode passwords safely. |
 | `qdrant` | `reqwest` with `blocking` and `json` | Vector search/storage helpers need HTTP. Other consumers should not pull reqwest. |
 | `indexing` | `ignore`, `sha2` | File walking and content hashing are useful for indexing consumers only. |
 | `search` | no extra dependency today | Search fusion contracts are lightweight, but still opt-in so the public surface remains explicit. |
 | `graph-analytics` | no extra dependency today | In-memory graph analytics remain opt-in so the public surface stays explicit. |
-| `ai` | `reqwest`, `ureq`, and AI payload helpers | AI transport, daemon probing, routing helpers, and the shared blocking OpenAI-compatible embeddings client (`ai::embeddings`, consumed by gcode and gwiki for direct embedding requests) need HTTP clients and multipart payload support. |
+| `ai` | `reqwest`, `ureq`, and AI payload helpers | AI transport, daemon probing, routing helpers, direct/daemon chat transports, profile tiers, agentic/tool-loop generation, and the shared blocking OpenAI-compatible embeddings client (`ai::embeddings`, consumed by gcode and gwiki for direct embedding requests) need HTTP clients and multipart payload support. |
 | `full` | all feature modules | Convenience feature for development and consumers that need the whole foundation layer. |
 
 Every individual feature must compile in isolation. Do not rely on `--all-features` to hide missing feature dependencies.
@@ -212,7 +213,7 @@ Every individual feature must compile in isolation. Do not rely on `--all-featur
 - **Minor bumps (0.x.0)** — additive public API (new functions, new fields). Existing consumers stay compatible.
 - **Pre-1.0 breaking changes** — bump the minor and bump *every* consumer crate's gobby-core dep in the same release. Don't strand consumers on an old gobby-core.
 
-Consumers that depend only on the minor-line contract can pin to a minor version (`gobby-core = "0.6"`). In-tree crates released with `gobby-core` should pin to the current patch floor when they rely on behavior from that patch, for example `gobby-core = "0.6.0"`.
+Consumers that depend only on the minor-line contract can pin to a minor version (`gobby-core = "0.7"`). In-tree crates released with `gobby-core` should pin to the current patch floor when they rely on behavior from that patch, for example `gobby-core = "0.7.0"`.
 
 ## How to Consume
 
@@ -220,7 +221,7 @@ Consumers that depend only on the minor-line contract can pin to a minor version
 
 ```toml
 [dependencies]
-gobby-core = { path = "../gcore", version = "0.6.0" }
+gobby-core = { path = "../gcore", version = "0.7.0" }
 ```
 
 The `path` is for local workspace builds; `version` is required by `cargo publish` and gets used when consumers install the crate from crates.io. Don't drop the `version` field — `cargo publish` will reject the consumer's manifest.
@@ -229,7 +230,7 @@ Opt in to heavier modules explicitly:
 
 ```toml
 [dependencies]
-gobby-core = { path = "../gcore", version = "0.6.0", features = ["postgres", "search"] }
+gobby-core = { path = "../gcore", version = "0.7.0", features = ["postgres", "search"] }
 ```
 
 Small binaries should keep the default empty feature set unless they directly use a feature-gated module.
@@ -238,10 +239,28 @@ Small binaries should keep the default empty feature set unless they directly us
 
 ```toml
 [dependencies]
-gobby-core = "0.6.0"
+gobby-core = "0.7.0"
 ```
 
 Resolves against crates.io. The default crate has no datastore dependencies. It will not pull in PostgreSQL, FalkorDB, Qdrant, reqwest, ignore, sha2, tokio, tracing, or anything else heavy unless the consumer selects the matching feature.
+
+### AI Generation and Secrets
+
+The `ai` feature owns both one-shot generation and agentic/tool-loop generation.
+Consumers choose the tier and transport; `gobby-core` supplies shared profile
+resolution, request/response contracts, retry/timeout behavior, and
+provider-neutral loop accounting. `daemon_agentic_chat` sends the daemon a
+feature profile, project context, max-turn settings, reasoning effort, and a
+`ToolPolicy` that lists allowed tools and whether mutation is allowed. CodeWiki
+uses a read-only policy for aggregate page investigation.
+
+AI config values resolve from datastore-backed config sources first, then
+standalone `~/.gobby/gcore.yaml`, then defaults. Datastore-backed sources may
+resolve `$secret:NAME` through the Gobby secret store; env-only sources reject
+secret references so unresolved placeholders do not leak into outbound HTTP
+headers or daemon requests. Keep Fernet/DEK handling in `secrets`; config
+resolvers should call the source's value resolver rather than decrypting
+directly.
 
 ## Adding a New Helper
 

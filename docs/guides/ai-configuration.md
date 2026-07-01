@@ -75,7 +75,14 @@ sends a heavier profile for aggregate docs (see the
 
 For direct authenticated endpoints, store the token in user-local
 `~/.gobby/gcore.yaml` as `api_key`. Daemon-backed `config_store` values may use
-`$secret:` references where the daemon runtime config supports them.
+`$secret:` references where the daemon runtime config supports them. CLI-only
+env config sources reject `$secret:` placeholders instead of passing unresolved
+secret names to providers.
+
+Daemon-side agentic generation uses the same profile routing plus a tool policy
+from the caller. `gcode codewiki` uses that path for aggregate handbook pages so
+the daemon agent can investigate through read-only gcode tools before writing;
+direct routes use the local provider-neutral tool loop when configured.
 
 ## Mixed Routing Example
 
@@ -143,4 +150,4 @@ frames, transcription, and text calls share one limiter. Use `ai.keep_alive`
 only with providers that understand it; do not send local-provider-only fields
 to cloud OpenAI-compatible endpoints unless that endpoint documents support.
 
-_Last verified: 2026-06-23_
+_Last verified: 2026-07-01_

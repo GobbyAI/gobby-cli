@@ -117,6 +117,13 @@ Current Trust Layer limits:
 
 `gwiki index` rebuilds derived search rows from the vault files already present on disk. It must not re-fetch remote sources or mutate raw source records. After PostgreSQL indexing, it synchronously updates Qdrant vectors and the FalkorDB graph for the same scope; do not add daemon sync flags or delayed daemon-owned index work.
 
+`gwiki purge` is the explicit reset path for generated/indexed state. It
+requires a project or topic scope plus `--yes`; global purge is rejected. The
+command deletes scoped PostgreSQL rows first, then clears scoped Qdrant vectors
+and FalkorDB wiki graph data when those backends are configured. Keep purge
+scoped and summary-producing so operators can verify which backend state was
+removed.
+
 `gwiki refresh` is the source-maintenance path. It refreshes manifest records from `raw/INDEX.md`, using existing global scope flags (`--project` or `--topic <name>`), repeated `--id <SOURCE_ID>` selectors, and `--dry-run`. Do not add `--scope`.
 
 URL refresh compares fetched response bytes to the existing manifest `content_hash`. Local `ingest-file` replay compares the current source file bytes to `content_hash` using the stored local path and effective ingest options. Unchanged sources are reported without rewriting raw files, rerunning AI/media extraction, or indexing. Changed sources get a new content-hash-derived source ID, replace the old manifest entry, remove superseded `raw/<old_id>.md` and `raw/assets/<old_id>.*` paths, then run indexing once after the changed batch.

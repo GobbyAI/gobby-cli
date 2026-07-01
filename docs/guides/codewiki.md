@@ -40,6 +40,12 @@ Repair stale `[file:line]` citations in an existing wiki without any AI calls:
 gcode codewiki --repair-citations
 ```
 
+Remove generated CodeWiki Markdown and metadata before a clean rebuild:
+
+```bash
+gcode codewiki --purge --out /path/to/vault --force
+```
+
 ## Output Tree
 
 The generated tree is hierarchical. It has three layers: a **structural layer**
@@ -89,7 +95,9 @@ emitted (so a run with no SystemModel or no deprecations leaves no dead links).
 Metadata:
 
 - `_meta/codewiki.json` records the docs written in the last run for
-  incremental regeneration.
+  incremental regeneration, including each page's render version. Render
+  versions are tracked by page category so a format change to architecture
+  pages does not invalidate unrelated file pages.
 - `_meta/ownership.json` records ownership data for repeat runs.
 - `_meta/truth_digest.json` is the truth digest — a compact, machine-readable
   set of grounded structural facts (see Truth Digest below). Written on full
@@ -125,11 +133,17 @@ The generator then builds docs bottom-up:
    catalog, deprecations) are emitted from the SystemModel, the pinned CLI
    contract, and the deprecation scan — no LLM calls.
 
-When `ai.text_generate` is configured, gcode calls the shared
-`text_generate` route for generated prose. Generated text is citation-checked
-before write, and — when a verifier profile is configured — passes a grounded
-verification step (see Grounded Verification below). Empty or unavailable
-generation falls back to structural AST-only prose.
+When `ai.text_generate` is configured, gcode calls the shared generation route
+for generated prose. Leaf pages use bounded one-shot generation. Aggregate
+handbook pages can use the daemon-side agentic/tool-backed route, where the
+model investigates through read-only gcode tools before answering and the page
+frontmatter records lane, tool-call count, and turn count. Generated text is
+citation-checked before write, normalized through the strict CodeWiki Markdown
+normalizer, and — when a verifier profile is configured — passes a grounded
+verification step (see Grounded Verification below). Empty or unavailable leaf
+generation falls back to structural AST-only prose; failed agentic aggregate
+generation is treated as a hard failure so unsupported handbook pages do not
+silently degrade into skeleton text.
 
 `--ai-depth` controls how deep AI prose generation reaches; gated tiers use
 structural fallbacks:
@@ -141,11 +155,11 @@ structural fallbacks:
   indexed symbol and can take hours-to-days on large repos with local models;
   reserve it for small repos or scoped runs.
 
-On the daemon route, aggregate docs (architecture, module, and repo prose)
-request a heavier daemon profile because they synthesize many child summaries
-into one long grounded answer; file and symbol docs stay on the daemon default
-profile. The aggregate writer chain defaults to an opus-first profile; override
-it with `--ai-aggregate-profile <PROFILE>`.
+On the daemon route, aggregate docs (architecture, module, repo, curated
+concept, and narrative prose) request a heavier daemon profile because they
+synthesize many child summaries into one long grounded answer; file and symbol
+docs stay on the daemon default profile. The aggregate writer chain defaults to
+an opus-first profile; override it with `--ai-aggregate-profile <PROFILE>`.
 
 ### Prose Depth and Audience Register
 
@@ -253,7 +267,27 @@ If the verifier is routed off, unavailable, or returns a malformed verdict, the
 pass is skipped cleanly and the page is emitted undegraded.
 
 `--ai-verify-profile <PROFILE>` (default `feature_mid`) selects the daemon
-profile used for this pass.
+profile used for this pass. `--ai-verify-scope aggregates|all` controls which
+pages run verification: `aggregates` is the default and verifies curated and
+handbook pages only; `all` also verifies per-file leaves and is substantially
+slower on large repos.
+
+## Purge Flow
+
+`gcode codewiki --purge --out <DIR> --force` is a destructive output cleanup
+mode. It removes generated CodeWiki Markdown under `code/` and CodeWiki metadata
+under `_meta/`, then exits. It does not touch raw wiki sources, authored
+knowledge pages, PostgreSQL index rows, FalkorDB graph data, or Qdrant vectors.
+
+`--purge` conflicts with generation, repair, scope, AI, and graph flags; only
+`--out`, `--format`, and `--force` are relevant. Use it when you want to discard
+generated files before a full rebuild:
+
+```bash
+gcode codewiki --purge --out /path/to/vault --force
+gcode codewiki --out /path/to/vault
+gwiki --project /path/to/project index
+```
 
 ## Truth Digest
 
@@ -333,4 +367,4 @@ Because gcode writes vault-ready Markdown, gwiki only needs to classify and
 index the generated subtree. Re-running codewiki rewrites only changed docs, and
 the next gwiki index run picks up only those changed Markdown files.
 
-_Last verified: 2026-06-23_
+_Last verified: 2026-07-01_
